@@ -9,6 +9,7 @@ the systemTestSpy.py file, which provides library functions related to monitorin
 """
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from os.path import join as _pJoin, abspath as _abspath, expandvars as _expandvars
+import tempfile
 import sys
 from robotremoteserver import test_remote_server as _testRemoteServer, stop_remote_server as _stopRemoteServer
 from robot.libraries.BuiltIn import BuiltIn
@@ -39,7 +40,9 @@ else:
 
 # Paths
 systemTestSourceDir = _pJoin(repoRoot, "tests", "system")
-nvdaProfileWorkingDir = _pJoin(_expandvars('%TEMP%'), "nvdaProfile")
+tempDir = tempfile.gettempdir()
+opSys.directory_should_exist(tempDir)
+nvdaProfileWorkingDir = _pJoin(tempDir, "nvdaProfile")
 nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir, 'nvda.log')
 systemTestSpyAddonName = "systemTestSpy"
 testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
@@ -65,7 +68,7 @@ requiredPythonImportsForSystemTestSpyPackage = [
 def _createNvdaSpyPackage():
 	import os
 	searchPaths = sys.path
-	profileSysTestSpyPackageStagingDir = _pJoin(_expandvars('%TEMP%'), systemTestSpyAddonName)
+	profileSysTestSpyPackageStagingDir = _pJoin(tempDir, systemTestSpyAddonName)
 	# copy in required dependencies, the addon will modify the python path
 	# to point to this sub dir
 	spyPackageLibsDir = _pJoin(profileSysTestSpyPackageStagingDir, "libs")
@@ -87,6 +90,17 @@ def _createNvdaSpyPackage():
 	)
 	return profileSysTestSpyPackageStagingDir
 
+def _createTestIdFileName(name):
+	outDir = builtIn.get_variable_value("${OUTPUT DIR}", )
+	suiteName = builtIn.get_variable_value("${SUITE NAME}")
+	testName = builtIn.get_variable_value("${TEST NAME}")
+	outputFileName = "{suite}-{test}-{name}" \
+		.format(
+		suite=suiteName,
+		test=testName,
+		name=name,
+	).replace(" ", "_")
+	return _pJoin(outDir, "nvdaTestRunLogs", outputFileName)
 
 class nvdaRobotLib(object):
 
@@ -128,10 +142,11 @@ class nvdaRobotLib(object):
 				nvdaLogFilePath=nvdaLogFilePath
 			),
 			shell=True,
-			alias='nvdaAlias'
+			alias='nvdaAlias',
+			stdout=_createTestIdFileName("stdout.txt"),
+			stderr=_createTestIdFileName("stderr.txt"),
 		)
 		return handle
-
 
 	def _connectToRemoteServer(self):
 		"""Connects to the nvdaSpyServer
@@ -184,17 +199,10 @@ class nvdaRobotLib(object):
 	def save_NVDA_log(self):
 		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
 		builtIn.log("saving NVDA log")
-		outDir = builtIn.get_variable_value("${OUTPUT DIR}", )
-		suiteName = builtIn.get_variable_value("${SUITE NAME}")
-		testName = builtIn.get_variable_value("${TEST NAME}")
-		outputFileName = "{suite}-{test}-nvda.log"\
-			.format(
-				suite=suiteName,
-				test=testName,
-			).replace(" ", "_")
+		outputFileName = _createTestIdFileName("nvda.log")
 		opSys.copy_file(
 			nvdaLogFilePath,
-			_pJoin(outDir, "nvdaTestRunLogs", outputFileName)
+			outputFileName
 		)
 
 	def quit_NVDA(self):
