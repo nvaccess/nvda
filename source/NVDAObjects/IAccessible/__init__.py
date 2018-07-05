@@ -124,7 +124,9 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		except COMError:
 			raise NotImplementedError
-		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		# Using the center of the character's bounding rectangle could result in a point
+		# of which IA2 believes that it belongs to a higher offset.
+		point=textInfos.Point(res[0],res[1])
 		return point
 
 	def _get_unit_mouseChunk(self):
