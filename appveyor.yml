@@ -32,7 +32,7 @@ init:
      } else {
       if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
        $version = "pr$env:APPVEYOR_PULL_REQUEST_NUMBER-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
-      } else if($env:APPVEYOR_REPO_BRANCH -eq "master") {
+      } elseif($env:APPVEYOR_REPO_BRANCH -eq "master") {
        $version = "alpha-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
       } else {
        $version = "$env:APPVEYOR_REPO_BRANCH-$env:APPVEYOR_BUILD_NUMBER," + $env:APPVEYOR_REPO_COMMIT.Substring(0, 8)
@@ -41,7 +41,7 @@ init:
       Update-AppveyorBuild -Version $version
       if($env:APPVEYOR_REPO_BRANCH -eq "master") {
        $versionType = "snapshot:alpha"
-      } else if (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
+      } elseif (!$env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
        $versionType = "snapshot:$env:APPVEYOR_REPO_BRANCH"
       }
      }
