@@ -39,7 +39,7 @@ Quits from keyboard
 	wait for speech to finish
 	${actual speech} =	get speech from index until now	${INDEX}
 	assert strings are equal	${actual speech}	${QUIT_DIALOG_TEXT}
-
+	sleep	1	# the dialog is not always receiving the enter keypress, wait a little longer for it
 	send key	enter
 	wait for process	nvdaAlias	timeout=10 sec
 	process should be stopped	nvdaAlias
@@ -53,4 +53,5 @@ Read welcome dialog
 	wait for speech to finish
 	${actual speech} =	get speech from index until now	${INDEX}
 	assert strings are equal	${actual speech}	${WELCOME_DIALOG_TEXT}
+	sleep	1	# the dialog is not always receiving the enter keypress, wait a little longer for it
 	send key	enter
