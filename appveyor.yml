@@ -66,7 +66,6 @@ install:
  - type ssh_known_hosts >> %userprofile%\.ssh\known_hosts
  - cd ..
  - git submodule update --init
- - py -m pip install robotremoteserver
 
 build_script:
  - ps: |
@@ -116,10 +115,7 @@ build_script:
  - cd ..
 
 before_test:
- - py -m pip install robotframework
- - py -m pip install robotremoteserver
- - py -m pip install pyautogui
- - py -m pip install nose
+ - py -m pip install robotframework robotremoteserver pyautogui nose
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
