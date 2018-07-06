@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-08 00:10+1000\n"
-"PO-Revision-Date: 2018-06-11 10:05+0200\n"
+"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"PO-Revision-Date: 2018-06-27 14:37+0200\n"
 "Last-Translator: Niklas Johansson <sleeping.pillow@gmail.com>\n"
 "Language-Team: sv\n"
 "Language: sv\n"
@@ -1129,9 +1129,8 @@ msgid "Browse mode"
 msgstr "Webbläge"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
-#, fuzzy
 msgid "Unlabeled"
-msgstr "etikett"
+msgstr "Utan etikett"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1693,7 +1692,7 @@ msgstr "Ingen lång beskrivning"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
-msgstr "Visar den långa beskrivningen på den här positionen  om den finns."
+msgstr "Visar den långa beskrivningen på den här positionen  om någon hittas."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -3729,6 +3728,7 @@ msgstr ""
 "navigationsobjekt och läser upp den"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
+#, fuzzy
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
@@ -3755,7 +3755,7 @@ msgstr ""
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
-msgstr ""
+msgstr "Vänster"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -4211,6 +4211,8 @@ msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
+"Växlar NVDA:s talvisare, ett flytande fönster som låter dig visa all text "
+"som NVDA säger för tillfället"
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -4233,23 +4235,23 @@ msgstr "Punktskrift kopplad till %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
-msgstr ""
+msgstr "Växla hur sammanhangsinformation ska visas i punktskrift"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
-msgstr ""
+msgstr "Punktmaarkör av"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor on"
-msgstr ""
+msgstr "Punktmarkör på"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
-msgstr ""
+msgstr "Växla punktmarkör på eller av"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
-msgstr ""
+msgstr "Punktmarkören är avslagen"
 
 #. Translators: Reports which braille cursor shape is activated.
 #, fuzzy, python-format
@@ -4258,7 +4260,7 @@ msgstr "Punktskrift kopplad till %s"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 msgid "Cycle through the braille cursor shapes"
-msgstr ""
+msgstr "Växla mellan punktmarkörens utseenden"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4294,7 +4296,7 @@ msgstr "Ingen startmarkering satt"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
-msgstr ""
+msgstr "Dubbelklicka för att koperia eller återställa startmarkören"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
@@ -4302,7 +4304,7 @@ msgstr "Ingen text att kopiera"
 
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
-msgstr ""
+msgstr "Kan inte markera text, dubbelklicka för att kopiera"
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
@@ -4359,15 +4361,15 @@ msgstr "Flyttar punktdisplayen till föregående rad"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Erases the last entered braille cell or character"
-msgstr ""
+msgstr "Radderar den sista inmatade punktcellen eller tecknet"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input and presses the enter key"
-msgstr ""
+msgstr "Översätter punktskriftinmatning och trycker på enter"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
-msgstr ""
+msgstr "Översätter punktskriftsinmatning"
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
@@ -6921,8 +6923,18 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Inget spår spelas"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "Raporterar återstående spårtid, om ett spår spelas,"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Raporterar återstående spårtid, om ett spår spelas,"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the length of the currently playing track, if any"
 msgstr "Raporterar återstående spårtid, om ett spår spelas,"
 
 #. Translators: Describes a command.
@@ -8028,6 +8040,33 @@ msgstr "Installera uppdatering"
 msgid "Please wait"
 msgstr "Var god vänta"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr ""
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr ""
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Tilläggshanterare"
@@ -8701,6 +8740,10 @@ msgstr "Sök automatiskt efter &uppdateringar av NVDA"
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
+msgstr ""
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr ""
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.

@@ -293,10 +293,10 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 %kc:endInclude 
 
 ++ 以系統編輯游標導航 ++[SystemCaret]
-當 [系統焦點 #SystemFocus] 在一個可導航或可編輯文字的[物件 #Objects] 上，您可以利用系統游標，也就是一般所說的編輯游標，在文件裡四處移動。
+當 [系統焦點 #SystemFocus] 在一個可導航或可編輯文字的[物件 #Objects] 上，您可以利用系統編輯游標，（簡稱編輯游標），在文件裡四處移動。
 
-當系統游標位在一個物件上時，您可以按方向鍵、Page Up、Page Down、Home、End等按鍵在文件裡移動。
-若此控制項有支援編輯功能的話，您也可以改變其內的文字。
+當編輯游標位在一個物件上時，您可以按方向鍵、Page Up、Page Down、Home、End等按鍵在文件裡移動。
+若系統有支援此物件編輯功能的話，您也可以改變其內的文字。
 當您逐字元、逐字或字詞、或逐行移動，或者選取文字、取消選取文字時，NVDA都會將其報讀出來。
 
 與編輯游標相關的NVDA按鍵指令列舉如下:
@@ -831,10 +831,12 @@ Excel工作表可含有表單區。
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || 名稱 | 快速鍵 | 說明 |
-| 報讀剩餘時間 | control+shift+r | 報讀目前播放中音軌的剩餘時間。 |
+| 報讀剩餘時間 | control+shift+r | 報讀目前播放中曲目的剩餘時間。 |
+| 報讀已撥放時間 | control+shift+e | 如果有的話，讀出目前播放曲目的已撥放時間。 |
+| 報讀曲目長度 | control+shift+t | 如果有的話，讀出目前播放曲目的長度。 |
 %kc:endInclude
 
-附註: 報讀剩餘時間的快速鍵僅適用於預設格式下，其狀態列上的字串。
+附註: 上述快速鍵方式僅適用於預設格式下，其狀態列上的字串。
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,9 +973,28 @@ NVDA 將套用您目前電腦系統所使用的語言。
 ==== 自動檢查NVDA的更新 ====[GeneralSettingsCheckForUpdates]
 當勾選此核取方塊，NVDA會自動檢查更新版本並通知。
 您也可透過手動來做版本更新檢查，請在NVDA功能表中的「說明」選擇「檢查更新。」
+當手動或自動檢查更新時，NVDA需要將一些訊息發送到更新服務器以便為你的系統接收正確的更新。
+以下資訊每次都會發送: 
+- 當前NVDA版本
+- 作業系統版本
+- 作業系統是64位元或32位元
+
+
+==== 允許NVDA專案收集NVDA使用情況統計 ====[GeneralSettingsGatherUsageStats]
+如果啟用此功能，NV Access 將使用更新檢查中的資訊來追蹤 NVDA 用戶的數量，包括特定的人口統計，如作業系統和國家。
+請注意，雖然你的 IP 地址將用於在更新檢查時得到你的國家，但IP地址永遠不會被保留。
+除了更新所需檢查的強制性資訊之外，還會發送以下額外資訊:
+- NVDA介面語言
+- 此NVDA是可攜式版或安裝版
+- 目前正在使用的語音合成器之名稱（包括附加元件的驅動程序之名稱）
+- 目前正在使用的點字顯示器之名稱（包括附加元件的驅動程序之名稱）
+- 目前正在輸出的點字表（如果使用點字）
+
+
+這些資訊將極大地幫助 NV Access 優先考慮 NVDA 的未來發展。
 
 ==== 是否通知當啟動時有待更新的版本 ====[GeneralSettingsNotifyPendingUpdates]
-當勾選此核取方塊，NVDA會在啟動時通知有待更新的版本，提供安裝。
+當勾選此核取方塊，NVDA會在啟動時通知有待更新的版本，以供安裝。
 也可以從「關閉NVDA」對話框（如果有啟用）、「NVDA功能表」或從「說明功能表」中重新勾選核取方塊，來手動安裝有待更新的版本。
 
 +++ 語音設定 (NVDA+control+v) +++[SpeechSettings]
@@ -1911,6 +1932,8 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 | control+end 鍵 | 點顯器空白鍵加 四,五,六點 |
 | alt 鍵 | 點顯器空白鍵加 一,三,四點 |
 | alt+tab 鍵 | 點顯器空白鍵加 二,三,四,五點 |
+| alt+shift+tab 鍵 | 點顯器空白鍵加 一,二,五,六點 |
+| windows+tab 鍵 | 點顯器空白鍵加 二,三,四點 |
 | escape 鍵 | 點顯器空白鍵加 一,五點 |
 | windows 鍵 | 點顯器空白鍵加 二,四,五,六點 |
 | space 鍵 | 點顯器空白鍵 |
@@ -2427,6 +2450,11 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 
 關於 BrailleNote Touch，請參閱 [Brailliant BI 系列 / BrailleNote Touch HumanWareBrailliant] 章節。
 
+除 BrailleNote PK 外，還支持 braille (BT) 和 QWERTY (QT) 鍵盤。
+對於 BrailleNote QT，不支持PC鍵盤模擬。
+您也可以使用QT鍵盤輸入點字。
+有關詳細資訊，請查閱 BrailleNote 手冊指南的點字終端部分。
+
 請參閱BrailleNote使用說明以獲得詳細資訊。
 在NVDA中，
 您或需在[選擇點顯器 #SelectBrailleDisplay]對話框中
@@ -2434,6 +2462,9 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 當您連接至USB或藍芽，可視可使用的裝置將連接埠設定到「自動」、「USB」或「藍芽」。
 
 在連結BrailleNote Apex的USB客戶端介面之前，你必須安裝HumanWare提供的驅動程式。
+
+在 BrailleNote Apex BT 上，你可以使用一和四點之間的滾輪來獲得各種 NVDA 命令。
+輪子由四個方向的點、中心一個d可點擊的按鈕、和一個可順時針或逆時針旋轉的輪子組成。
 
 以下為 BrailleNote 在 NVDA 的按鍵配置。
 請查閱 BrailleNote 說明文件以找到對應的按鍵。
@@ -2445,6 +2476,7 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
+| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2464,6 +2496,39 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+
+以下是 BrailleNote QT 不是在點字輸入模式時的指令。
+
+|| 名稱 | 按鍵 |
+| NvDA menu | read+n |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow|
+| Right arrow key | rightArrow |
+| Page up key | function+upArrow |
+| Page down key | function+downArrow |
+| Home key | function+leftArrow |
+| End key | function+rightArrow |
+| Control+home keys | read+t |
+| Control+end keys | read+b |
+| Enter key | enter |
+| Backspace key | backspace |
+| Tab key | tab |
+| Shift+tab keys | shift+tab |
+| Windows key | read+w |
+| Alt key | read+m |
+| Toggle input help | read+1 |
+
+以下是滾輪的指令:
+
+|| 名稱 | 按鍵 |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow |
+| Right arrow key | rightArrow |
+| Enter key | center button |
+| Tab key | scroll wheel clockwise |
+| Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
 
 ++ EcoBraille 點顯器 ++[EcoBraille]

@@ -825,16 +825,18 @@ Več informacij o Brskalniškem delovanju in enočrkovnem krmiljenju poiščite 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
 || Ime | Tipka | Opis |
-| Stikalo branja sporočil govorca | control+shift+s | Ko teče diaprojekcija, ta ukaz preklaplja med komentarji govorca za trenutni diapozitiv in vsebino diapozitiva. Ta ukaz ima učinek samo na to kaj NVDA bere in ne na to, kaj je prikazano na zaslonu. | 
+| Stikalo branja sporočil govorca | control+shift+s | Ko teče diaprojekcija, ta ukaz preklaplja med komentarji govorca za trenutni diapozitiv in vsebino diapozitiva. Ta ukaz ima učinek samo na to, kaj NVDA bere in ne na to, kaj je prikazano na zaslonu. | 
 %kc:endInclude
 
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Ime | Tipka | Opis |
-| Sporoči preostanek časa | control+shift+r | Sporoča preostanek časa do konca predvajanja trenutne skladbe, če se. |
+| Sporoči preostanek časa | control+shift+r | Sporoča preostanek časa do konca predvajanja trenutne skladbe, če se katera. |
+| Sporoči pretekli čas | control+shift+e | Sporoča pretečeni čas skladbe, ki se trenutno predvaja, če se katera. |
+| Sporoči dolžino skladbe | control+shift+t | Sporoča dolžino trenutne skladbe v predvajanju, če se katera. |
 %kc:endInclude
 
-Pomnite: Bližnjica poročaj o preostanku časa dela samo s privzetim oblikovanjem niza za foobar vrstico stanja.
+Pomnite: Zgornje bližnjice  delajo samo s privzetim oblikovanjem niza za foobar vrstico stanja.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -924,7 +926,7 @@ Nekaj zvrsti nastavitev ima dodeljene bližnjične tipke.
 Privzeto niso vse zvrsti dostopne prek tipkovničnih ukazov.
 Če želite dostopati do zvrsti ki nima določenih bližnjičnih tipk, uporabite [pogovorno okno Kretenj Vnosa, #InputGestures] da boste lahko določili bližnjico po meri taki zvrsti, kot je tipkovnični ukaz ali dotikabilna kretnja 
 
-Zzvrsti nastavitev, ki se nahajajo v pogovornem oknu NVDA Nastavitev, je orisanih v nadaljevanju.
+Zzvrsti nastavitev, ki se nahajajo v pogovornem oknu NVDA Nastavitev, so orisane v nadaljevanju.
 
 +++ Splošno (NVDA+control+g) +++[GeneralSettings]
 Zvrst Splošno iz pogovornega okna NVDA Nastavitev postavlja vedenje NVDA v celoti, kot je jezik vmesnika in ali naj ali ne NVDA samodejno preverja, če obstajajo posodobitve.
@@ -971,6 +973,26 @@ Ta možnost je na voljo samo v nameščenih kopijah NVDA.
 ==== Samodejno preveri, če obstajajo posodobitve za NVDA ====[GeneralSettingsCheckForUpdates]
 Če je ta možnost izbrana, bo NVDA samodejno preverjala, če obstajajo posodobitve. Če bodo na voljo, vas bo o tem tudi obvestila.
 Lahko pa obstoj posodobitev preverite tudi ročno z ukazom Preveri, če obstaja posodobitev v razdelku Pomoč NVDA menija.
+Neglede na to, ali ročno preverjate, če obstaja posodobitev ali pa to NVDA počne samodejno, je nujno, da NVDA pošlje nekaj informacij strežniku za nadgraditve zaradi tega, da lahko prejmete ustrezno posodobitev za vaš sistem.
+
+Vedno se pošiljajo te informacije:
+- Trenutna različica Nvda
+- različica Operacijskega Sistema
+- Ali je Operacijski Sistem 64 ali 32 biten
+
+
+==== Dovoli projektu NVDA zbiranje statistike rabe NVDA ====[GeneralSettingsGatherUsageStats]
+Če je to omogočeno, bo NV Access uporabila informacije pridobljene ob preverjanju za posodobitve tako, da bo z njihovo pomočjo lažje ugotavljala število uporabnikov NVDA vključno z nekaterimi demografskimi podatki, kot so Operacijski sistem in država izvora.
+Pomnite, čeprav se bo s pomočjo vašega IP naslova izračunala vaša država med preverjanjem za posodobitev, se IP naslov ne bo hranil nikoli.
+Razen obveznih informacij, ki so potrebne za preverbo posodobitve, se trenutno pošiljajo tudi dodatne informacije:
+- jezik NVDA vmesnika
+- Ali je ta kopija prenosljiva ali nameščena
+- Ime trenutne govorne sinteze v uporabi (vključno z imenom dodatka s katerim prihaja)
+- Ime trenotne brajeve vrstice v uporabi (vključno z imenom dodatka s katerim prihaja)
+- Trenutna brajeva tabela za prikaz znakov, (če se brajica uporablja)
+
+
+Te informacije bodo močno pomagale NV Access določiti prioritete pri razvoju NVDA v prihodnosti.
 
 ==== Obvesti za čakajoče posodobitve ob zagonu ====[GeneralSettingsNotifyPendingUpdates]
 Če je to izbrano, vas bo NVDA imformirala, ko je ob zagonu na voljo čakajoča posodobitev in vam ponudila možnost, da jo namestite.
@@ -1370,8 +1392,10 @@ Ta možnost vam omogoča izbiro poznavanja položaja predmeta (1 od 44), ko se p
 
 ==== Ugibaj Informacijo o Položaju Predmeta, ko ta ni na voljo ====[ObjectPresentationGuessPositionInfo]
 Če je poročanje o informaciji položaja predmeta vključeno, ta možnost omogoča NVDA ugibanje o informaciji položaja predmeta, če je drugače nedosegljiva za dan kontrolnik.
-
 Ko je možnost vključena, NVDA sporoča informacijo o položaju večih kontrolnikov, kot so meniji in orodne vrstice, čeprav dejanjsko stanje lahko malenkostno odstopa od sporočene informacije.
+
+==== Zaigraj koordinate predmeta ====[ObjectPresentationObjectCoordinates]
+Izbor tega izbirnika vam omogoči slišati pisk, ki nakazuje, kje se trenutni predmet na zaslonu nahaja. To je uporabno, če uporabljate kretnje dotika za pomik na naslednje in predhodne predmete.
 
 ==== Sporočaj opise Predmeta ====[ObjectPresentationReportDescriptions]
 Odstranite kljukico iz tega izbirnika, če ne želite poleg predmeta prejemati tudi njegovega opisa.
@@ -1911,6 +1935,8 @@ Prosimo, poglejte si dokumentacijo vrstice za točen opis posamezne tipke in nje
 | tipka control+end | brailleSpaceBar+dot4+dot5+dot6 |
 | tipka alt | brailleSpaceBar+dot1+dot3+dot4 |
 | tipka alt+tab | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| tipka alt+shift+tab | brailleSpaceBar+dot1+dot2+dot5+dot6 |
+| tipka windows+tab | brailleSpaceBar+dot2+dot3+dot4 |
 | tipka escape | brailleSpaceBar+dot1+dot5 |
 | tipka windows | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | tipka space | brailleSpaceBar |
@@ -2420,12 +2446,17 @@ BRAILLEX 2D Screen:
 NVDA podpira beležnice iz podjetja [Humanware http://www.humanware.com], ko se obnašajo kot prikazni terminali za bralnik zaslona.
 Podprti so naslednji modeli:
 - BrailleNote Classic (samo serijski priključek)
-- BrailleNote PK (Serial in bluetooth priključki)
-- BrailleNote MPower (Serial in bluetooth priključki)
+- BrailleNote PK (Serijski in bluetooth priključki)
+- BrailleNote MPower (Serijski in bluetooth priključki)
 - BrailleNote Apex (možno priključiti prek USB in Bluetooth)
 -
 
 Za BrailleNote Touch glejte odsek [Brailliant BI Series / BrailleNote Touch #HumanWareBrailliant].
+
+Z izjemo BrailleNote PK, sta obe brajevi (BT) in QWERTY (QT) tipkovnici podprti.
+Za BrailleNote QT velja, da oponašanje računalniške tipkovnice ni podprto.
+Brajeve pike lahko vnašate tudi prek QT tipkovnice.
+Prosimo, preverite odsek brajevega terminala v vodiču beležnice BrailleNote za podrobnosti.
 
 Če vaša naprava podpira več vrst povezave, ko vašo beležnico BrailleNote priključujete v NVDA, boste morali določiti vrata brajevega terminala v možnosteh brajevega terminala.
 Prosimo, podrobnosti preverite v priročniku za uporabo, ki ste ga prejeli zraven vaše beležnice BrailleNote.
@@ -2434,6 +2465,9 @@ Verjetno boste morali vrata določiti tudi v meniju NVDA v pogovornem oknu [Izbe
 Če se priključujete prek starih serijskih vrat, (ali uporabljate pretvornik USB v Serijska vrata) ali nič od tega, morate obvezno določiti komunikacijska vrata za uporabo is seznama strojnih vrat.
 
 Preden boste priključili vašo beležnico BrailleNote Apex z uporabo njenega lastnega USB vmesnega odjemalca, morate namestiti gonilnike, ki jih je priskrbel HumanWare.
+
+Na BrailleNote Apex BT lahko uporabite vrteče se kolesce, ki je nameščeno med pikama 1 in 4 za različne ukaze za NVDA.
+Kolesce sestoji iz štirih smernih pik, sredinskega gumba in kolesca, ki se vrti v smeri in tudi v nasprotni smeri urinega kazalca (ure).
 
 Sledijo BrailleNote ukazi, ki so zvezani na NVDA.
 Prosimo, preverite dokumentacijo naprave, da boste vedeli, kje se posamezna tipka nahaja.
@@ -2445,6 +2479,7 @@ Prosimo, preverite dokumentacijo naprave, da boste vedeli, kje se posamezna tipk
 | Pomakni brajevo vrstico v predhodno vrstico | previous |
 | Pomakni brajevo vrstico v naslednjo vrstico | next |
 | Usmeri na brajevo celico | routing |
+| meni NVDA | space+dot1+dot3+dot4+dot5 (space+n) |
 | Preklapljanje navezovanja brajice | previous+next |
 | tipka Puščica Gor | space+dot1 |
 | tipka Puščica Dol | space+dot4 |
@@ -2463,7 +2498,40 @@ Prosimo, preverite dokumentacijo naprave, da boste vedeli, kje se posamezna tipk
 | tipki Shift+tab | space+dot1+dot2+dot5+dot6 |
 | tipka Windows | space+dot2+dot4+dot5+dot6 (space+w) |
 | tipka Alt | space+dot1+dot3+dot4 (space+m) |
-| Preklop v delovanju vnosne pomoči | space+dot2+dot3+dot6 (space+lower h) |
+| Preklop v delovanju vnosne pomoči | space+dot2+dot3+dot6 (space+spodnji h) |
+
+Sledeči ukazi so pripeti k BrailleNote QT, ko ta ni v načinu vnašanja brajice.
++
+|| Ime | Tipka |
+| meni NVDA | read+n |
+| tipka puščica Gor | upArrow |
+| tipka puščica Dol | downArrow |
+| tipka puščica Levo | leftArrow|
+| tipka puščica Desno | rightArrow |
+| Tipka Stran gor | function+upArrow |
+| tipka Stran dol | function+downArrow |
+| tipka Home | function+leftArrow |
+| tipka End | function+rightArrow |
+| tipki Control+home | read+t |
+| tipki Control+end | read+b |
+| tipki Enter | enter |
+| tipka Backspace | backspace |
+| tipka Tab | tab |
+| tipki Shift+tab | shift+tab |
+| tipka Windows | read+w |
+| tipka Alt | read+m |
+| Stikalo pomoči za vnos | read+1 |
+
+Sledeči ukazi so pripeti k vrtečemu se kolescu:
+
+|| Ime | Tipka |
+| tipka puščica gor | upArrow |
+| tipka puščica Dol | downArrow |
+| tipka puščica Levo | leftArrow |
+| tipka puščica Desno | rightArrow |
+| tipka Enter | center button |
+| tipka Tab | scroll wheel clockwise |
+| tipki Shift+tab | scroll wheel counterclockwise |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
