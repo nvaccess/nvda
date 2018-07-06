@@ -41,9 +41,10 @@ class SystemTestSpy(object):
 
 	def _registerWithExtensionPoints(self):
 		from core import postNvdaStartup
-		from speech import preSpeech
 		postNvdaStartup.register(self._onNvdaStartupComplete)
-		preSpeech.register(self._onNvdaSpeech)
+
+		from synthDrivers.speechSpy import post_speech
+		post_speech.register(self._onNvdaSpeech)
 
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
@@ -151,17 +152,19 @@ class NvdaSpyLib(object):
 
 	def wait_for_specific_speech(self, speech, sinceIndex=None, maxWaitSeconds=5):
 		sinceIndex = 0 if not sinceIndex else sinceIndex
-		try:
-			success, speechIndex = _blockUntilConditionMet(
-				getValue=lambda: self._spy.getIndexOfSpeech(speech, sinceIndex),
-				giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-				shouldStopEvaluator=lambda speechIndex: speechIndex >= 0,
-				intervalBetweenSeconds=0.1,
-				errorMessage="Specific speech did not occur before timeout: {}".format(speech)
-			)
-		except AssertionError:
+		success, speechIndex = _blockUntilConditionMet(
+			getValue=lambda: self._spy.getIndexOfSpeech(speech, sinceIndex),
+			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
+			shouldStopEvaluator=lambda speechIndex: speechIndex >= 0,
+			intervalBetweenSeconds=0.1,
+			errorMessage=None
+		)
+		if not success:
 			self._spy.dumpSpeechToLog()
-			raise
+			raise AssertionError(
+				"Specific speech did not occur before timeout: {}\n"
+				"See NVDA log for dump of all speech.".format(speech)
+			)
 		return speechIndex
 
 	def wait_for_speech_to_finish(self, maxWaitSeconds=5.0):

@@ -27,10 +27,6 @@ import queueHandler
 import speechDictHandler
 import characterProcessing
 import languageHandler
-import extensionPoints
-
-# inform those who want to know that there is new speech
-preSpeech = extensionPoints.Action()
 
 speechMode_off=0
 speechMode_beeps=1
@@ -497,7 +493,6 @@ def speak(speechSequence,symbolLevel=None):
 	"""
 	if not speechSequence: #Pointless - nothing to speak 
 		return
-	preSpeech.notify(speechSequence=speechSequence)
 	import speechViewer
 	if speechViewer.isActive:
 		for item in speechSequence:

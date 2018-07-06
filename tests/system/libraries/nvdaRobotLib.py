@@ -119,6 +119,11 @@ class nvdaRobotLib(object):
 			_createNvdaSpyPackage(),
 			_pJoin(testSpyPackageDest, systemTestSpyAddonName)
 		)
+		# install the test spy speech synth
+		opSys.copy_file(
+			_pJoin(systemTestSourceDir, "libraries", "speechSpy.py"),
+			_pJoin(nvdaProfileWorkingDir, "synthDrivers", "speechSpy.py")
+		)
 
 	def teardown_nvda_profile(self):
 		builtIn.log("Removing files from NVDA profile")
@@ -128,6 +133,9 @@ class nvdaRobotLib(object):
 		opSys.remove_directory(
 			testSpyPackageDest,
 			recursive=True
+		)
+		opSys.remove_file(
+			_pJoin(nvdaProfileWorkingDir, "synthDrivers", "speechSpy.py")
 		)
 
 	def _startNVDAProcess(self):
