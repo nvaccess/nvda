@@ -41,8 +41,7 @@ class FindDialog(wx.Dialog):
 		# Translators: Dialog text for NvDA's find command.
 		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
 		findSizer.Add(textToFind)
-		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
-		self.findTextField.SetValue(text)
+		self.findTextField = wx.ComboBox(self, wx.ID_ANY, text, choices=cursorManager._searchHistory)
 		findSizer.Add(self.findTextField)
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
@@ -85,6 +84,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 
 	_lastFindText=""
 	_lastCaseSensitivity=False
+	_searchHistory=[]
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -157,6 +157,11 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
+		try:
+			CursorManager._searchHistory.remove(text)
+		except ValueError:
+			pass
+		CursorManager._searchHistory.insert(0, text)
 
 	def script_find(self,gesture):
 		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
