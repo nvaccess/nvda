@@ -23,7 +23,7 @@ _audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
-	config.postConfigProfileSwitch.register(handlePostConfigProfileSwitch)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 def changeVoice(synth, voice):
 	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).

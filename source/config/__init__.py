@@ -46,17 +46,17 @@ conf = None
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
-postConfigProfileSwitch = extensionPoints.Action()
+post_configProfileSwitch = extensionPoints.Action()
 #: Notifies when NVDA is saving current configuration.
 #: Handlers can listen to "pre" and/or "post" action to perform tasks prior to and/or after NVDA's own configuration is saved.
 #: Handlers are called with no arguments.
-preConfigSave = extensionPoints.Action()
-postConfigSave = extensionPoints.Action()
+pre_configSave = extensionPoints.Action()
+post_configSave = extensionPoints.Action()
 #: Notifies when configuration is reloaded from disk or factory defaults are applied.
 #: Handlers can listen to "pre" and/or "post" action to perform tasks prior to and/or after NVDA's own configuration is reloaded.
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
-preConfigReset = extensionPoints.Action()
-postConfigReset = extensionPoints.Action()
+pre_configReset = extensionPoints.Action()
+post_configReset = extensionPoints.Action()
 
 def initialize():
 	global conf
@@ -367,7 +367,7 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		postConfigProfileSwitch.notify()
+		post_configProfileSwitch.notify()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -505,7 +505,7 @@ class ConfigManager(object):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
 		# #7598: give others a chance to either save settings early or terminate tasks.
-		preConfigSave.notify()
+		pre_configSave.notify()
 		if not self._shouldWriteProfile:
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
@@ -520,20 +520,20 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
-		postConfigSave.notify()
+		post_configSave.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
 		@param factoryDefaults: C{True} to reset to factory defaults, C{False} to reset to saved configuration.
 		@type factoryDefaults: bool
 		"""
-		preConfigReset.notify(factoryDefaults=factoryDefaults)
+		pre_configReset.notify(factoryDefaults=factoryDefaults)
 		self.profiles = []
 		self._profileCache.clear()
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
-		postConfigReset.notify(factoryDefaults=factoryDefaults)
+		post_configReset.notify(factoryDefaults=factoryDefaults)
 
 	def createProfile(self, name):
 		"""Create a profile.

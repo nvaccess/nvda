@@ -93,7 +93,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		self._uncontSentTime = None
 		#: The modifiers currently being held virtually to be part of the next braille input gesture.
 		self.currentModifiers = set()
-		config.postConfigProfileSwitch.register(self.handlePostConfigProfileSwitch)
+		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
 	def _get_table(self):
 		"""The translation table to use for braille input.

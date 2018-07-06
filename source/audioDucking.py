@@ -117,7 +117,7 @@ def initialize():
 		return
 	_setDuckingState(False)
 	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
-	config.postConfigProfileSwitch.register(handlePostConfigProfileSwitch)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
