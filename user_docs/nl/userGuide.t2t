@@ -174,7 +174,7 @@ Om een toets die u als NVDA programmatoets hebt ingesteld zijn oorspronkelijke f
 
 +++ Toetsenbordindeling +++[KeyboardLayouts]
 Momenteel beschikt NVDA over twee profielen met toetscommando's die toetsenbordindelingen worden genoemd: de desktoptoetsenbordindeling en de laptoptoetsenbordindeling. 
-De standaardinstelling van NVDA is de Desktoptoetsenbordindeling, maar in het NVDA-menu onder Opties en vervolgens in het onderdeel Toetsenbord [NVDA Settings #NVDASettings]  kunt u dit wijzigen in Laptoptoetsenbordindeling.
+De standaardinstelling van NVDA is de Desktoptoetsenbordindeling, maar u kunt dit wijzigen in Laptoptoetsenbordindeling bij  de categorie Toetsenbord in het dialoogvenster [Instellingen van NVDA #NVDASettings] dat u vindt in het NVDA-menu onder Opties.
 
 Bij de Desktoptoetsenbordindeling wordt zeer veel gebruik gemaakt van het numerieke toetsenbord waarbij num lock uit moet staan.
 Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets ingedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
@@ -231,7 +231,7 @@ Bij tablets zoals de Surface Pro van Microsoft , is het schermtoetsenbord altijd
 Om het schermtoetsenbord te laten verdwijnen dubbeltikt u op het schermtoetsenbordikoon of gaat u uit het tekstinvoerveld.
 
 De letters en tekens op het schermtoetsenbord vindt u door met een vinger naar het toetsenbord te gaan, gewoonlijk te vinden onderaan het scherm, waar u vervolgens met uw vinger de toets zoekt van uw keuze. Hiervoor moet het toetsenbord wel actief zijn.
-Zodra u de toets die u wilt gebruiken hebt gevonden, dubbeltikt u op de toets of u haalt uw vinger van de toets al naar gelang de gekozen opties in het onderdeel [Aanraakinteractie-instellingen #TouchInteraction] van de NVDA-instellingen.
+Zodra u de toets die u wilt gebruiken hebt gevonden, dubbeltikt u op de toets of u haalt uw vinger van de toets al naar gelang de gekozen opties in de categorie [Aanraakinteractie-instellingen #TouchInteraction] van de Instellingen van NVDA.
 
 ++ Invoerhulpmodus ++[InputHelpMode]
 Er worden veel NVDA-commando’s genoemd in deze handleiding, maar om op een gemakkelijke manier de verschillende commando’s te leren kennen kunt u het beste Invoerhulp inschakelen. 
@@ -452,8 +452,8 @@ Om een idee te krijgen waar de muis zich op het scherm bevindt kunnen pieptonen 
 Hoe verder de muis naar de bovenkant van het scherm wordt bewogen, hoe hoger de pieptoon wordt.
 Hoe verder de muis naar links wordt bewogen, hoe meer het geluid uit de linker luidspreker lijkt te komen, terwijl het geluid steeds meer van rechts komt als de muis naar rechts wordt bewogen. Hierbij wordt ervan uitgegaan dat de gebruiker over stereoluidsprekers of een stereohoofdtelefoon beschikt.
 
-Deze optie van de muis staat standaard   “uit”.
-Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in het onderdeel [muisinstellingen venster #MouseSettings], bereikbaar vanuit het NVDA-instellingenmenu[NVDA Settings #NVDASettings]. 
+Deze extra muisopties staan standaard   “uit”.
+Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in de categorie [muisinstellingen #MouseSettings] van het dialoogvenster [Instellingen van NVDA #NVDASettings], dat bereikbaar is via Opties in het NVDA-menu. 
 
 Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet gebruiken, zijn er een aantal toetscombinaties in NVDA waarmee muisbewegingen en muiskliks kunnen worden gesimuleerd:
 %kc:beginInclude
@@ -603,7 +603,7 @@ Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergev
 Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zowel verkort als onverkort braille invoeren.
 
 Raadpleegde paragraaf  [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
-U kunt braille configureren via het [onderdeel Brailleïnstellingen #BrailleSettings] onder [Instellingen in het NVDA-menu #NVDASettings].
+U kunt braille configureren via de [categorie Braille #BrailleSettings] in het dialoogvenster [Instellingen van NVDA #NVDASettings].
 
 ++ Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten ++[BrailleAbbreviations]
 Om zoveel mogelijk informatie op een brailleleesregel te krijgen  zijn de volgende afkortingen samengesteld die verwijzen naar het type en de status van een besturingselement alsmede oriëntatiepunten.
@@ -695,7 +695,7 @@ Tot slot kunnen de volgende afkortingen gebruikt worden met betrekking tot orië
 
 ++ Brailleinvoer ++[BrailleInput]
 NVDA ondersteunt de invoer van zowel onverkort als verkort braille via een brailletoetsenbord.
-U kunt een omzettabel selecteren waarmee u braille in tekst kunt laten omzetten met behulp van de [Invoertabelopties#BrailleSettingsInputTable]  onder Braillebij de [NVDA-instellingen #NVDASettings].
+U kunt een omzettabel selecteren waarmee u braille in tekst kunt laten omzetten met behulp van de [Invoertabelopties#BrailleSettingsInputTable]  in de categorie  Braille van  het dialoogvenster  [Instellingen van NVDA #NVDASettings].
 
 Bij gebruik van onverkort braille wordt tekst ingevoegd zodra deze wordt ingevoerd.
 Bij gebruik van verkort braille wordt tekst ingevoegd wanneer u op de spatiebalk of de Enter-toets drukt aan het eind van een woord.
@@ -726,7 +726,7 @@ Door op Escape te drukken wordt het herkenningsresultaat geannuleerd.
 De OCR-functionaliteit van Windows 10 biedt ondersteuning voor veel talen.
 NVDA kan hiervan gebruik maken om tekst uit afbeeldingen en ontoegankelijke toepassingen te herkennen.
 
-U kunt de tekstherkenningstaal onder [Windows 10 OCR #Win10OcrSettings] bij [NVDA-instellingen #NVDASettings] opgeven.
+In de categorie [Windows 10 OCR #Win10OcrSettings] van het dialoogvenster  [Instellingen van NVDA #NVDASettings] kunt u de tekstherkenningstaal opgeven.
 U kunt extra talen toevoegen door in het menu Start, (of met linker Windows-toets +i) Instellingen te kiezen, Tijd en Taal -> Regio & Taal te selecteren   en dan  Een taal toevoegen te kiezen.
 
 %kc:beginInclude
@@ -740,7 +740,7 @@ NVDA beschikt over een aantal applicatie-specifieke kenmerken om het gebruik van
 
 +++ Automatisch Lezen van Kolom- en Rijkoppen +++[WordAutomaticColumnAndRowHeaderReading]
 Bij het navigeren in Microsoft Word-tabellen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
-Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in het dialoogvenster Documentopmaak,dat u vindt bij de [NVDA-instellingen #NVDASettings], ingeschakeld is. 
+Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in de categorie Documentopmaak,welke  u vindt in het dialoogvenster [Instellingen van NVDA #NVDASettings], ingeschakeld is. 
 Ten tweede moet NVDA voor elke tabel weten in welke kolom of rij de kolom-/rijkoppen staan.
 Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u de volgende commando’s gebruiken:
 %kc:beginInclude
@@ -774,7 +774,7 @@ Om eventuele opmerkingen op de positie waar de cursor op dat moment staat te lat
 
 +++ Automatisch Lezen van Kolom- en Rijkoppen +++[ExcelAutomaticColumnAndRowHeaderReading]
 Bij het navigeren in Microsoft Excel-werkbladen  kan NVDA de toepasselijke  kolom- en rijkoppen automatisch melden.
-Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melde  in het dialoogvenster Documentopmaak, dat u vindt bij de [NVDA-instellingen #NVDASettings], ingeschakeld is. 
+Hiertoe moet u er in de eerste plaats voor zorgen dat de optie “Kolom-/Rijkoppen Melden” in de categorie Documentopmaak,welke  u vindt in het dialoogvenster [Instellingen van NVDA #NVDASettings], ingeschakeld is. 
 Ten tweede moet NVDA voor elk werkblad weten in welke kolom of rij de kolom-/rijkoppen staan.
 Nadat u naar de eerste cel in de kolom of rij bent gegaan waar de kolom- of rijkoppen zich bevinden, kunt u een van de volgende commando’s gebruiken:
 %kc:beginInclude
@@ -834,9 +834,11 @@ Voor verdere informatie over Bladermodus en letternavigatie, raadpleegt u de par
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
 | Resterende tijd melden | control+shift+r | Meldt de resterende tijd van het huidige nummer, indien van toepassing. |
+| Verstreken tijd melden | control+shift+e | Meldt, voor zover van toepassing, hoeveel tijd er is verstreken van het nummer dat op dat moment wordt afgespeeld. |
+| Speelduur van nummer melden | control+shift+t | Meldt, voor zover van toepassing, de speelduur van het nummer dat op dat moment wordt afgespeeld. |
 %kc:endInclude
 
-Merk op dat de opdracht "Resterende tijd melden" alleen werkt met de standaard opmaakreeks voor de Foobar-statusregel.
+Merk op dat bovengenoemde sneltoetscombinaties   alleen werken met de standaard opmaakreeks voor de Foobar-statusregel.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -918,14 +920,14 @@ Sommige instellingen kunnen ook gewijzigd worden met sneltoetsen. Deze worden, v
 %kc:settingsSection: || Naam | Desktoptoets  | Laptoptoets | Beschrijving |
 Het dialoogvenster Instellingen van NVDA kent veel configuratieparameters die aan te passen zijn.
 Dit dialoogvenster  bevat een lijst met verscheidene categorieën instellingen waaruit een keuze gemaakt kan worden.
-Wanneer  u een categorie,  (of onderdeel) selecteert, krijgt u verschillende aan deze categorie gerelateerde   instellingen te zien in dit dialoogvenster.
+Wanneer  u een categorie selecteert, krijgt u verschillende aan deze categorie gerelateerde   instellingen te zien in dit dialoogvenster.
 Door de knop 'Toepassen' te gebruiken worden de aangepaste instellingen doorgevoerd zonder dat het dialoogvenster gesloten wordt.
 Als u uw instellingen wilt opslaan en het dialoogvenster Instellingen van NVDA wilt sluiten gebruikt  u de knop 'OK'.
 
 Enkele categorieën instellingen hebben een geheel eigen sneltoets. 
 Als deze wordt ingedrukt, wordt het dialoogvenster Instellingen van NVDA rechtstreeks bij die specifieke categorie geopend.
 Niet alle categorieën  zijn toegankelijk door middel van toetsenbordcommando's.
-Als u toegang wilt krijgen tot categorieën die niet over een eigen sneltoets beschikken kunt u het dialoogvenster Invoerhandelingen #InputGestures] gebruiken om een eigen invoerhandeling, zoals een toetsenbordcommando of een aanraakge baar, toe te voegen voor die  category.
+Als u toegang wilt krijgen tot categorieën die niet over een eigen sneltoets beschikken, kunt u het dialoogvenster Invoerhandelingen #InputGestures] gebruiken om een eigen invoerhandeling, zoals een toetsenbordcommando of een aanraakge baar, toe te voegen voor die  category.
 
 De categorieën instellingen die te vinden zijn in het dialoogvenster Instellingen van NVDA worden hieronder weergegeven.
  
@@ -973,6 +975,25 @@ Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet v
 ==== Automatisch controleren op NVDA updates ====[GeneralSettingsCheckForUpdates]
 Als dit selectievakje is aangevinkt zal NVDA automatisch controleren of er bijgewerkte versies van NVDA beschikbaar zijn en dit laten weten als dit het geval is.
 Handmatig controleren of er een update beschikbaar is, kan ook. Ga dan naar: “Op update controleren” onder Help in het NVDA Menu.
+Wanneer er handmatig of automatisch op updates, wordt gecontroleerd, is het noodzakelijk dat NVDA informatie naar de update-server stuurt zodat u de correcte update voor uw systeem krijgt.
+De volgende informatie wordt altijd verstuurd 
+- Huidige NVDA-versie
+- Versie besturingssysteem
+- Of het besturingssysteem 64- of 32-bit is
+
+
+==== NVDA toestaan dat gebruiksstatistieken worden verzameld ten behoeve van het NVDA-project ====[GeneralSettingsGatherUsageStats]
+Als dit wordt toegestaan zal NV Access de informatie van update checks gebruiken om het aantal NVDA-gebruikers vast te stellen met inbegrip van specifieke demografische gegevens zoals besturingssysteem en land van oorsprong.
+Merk op dat uw IP-adres nooit wordt bewaard, al wordt het wel gebruikt tijdens de update-check om uw land te bepalen.
+Naast de vereiste informatie voor het controleren op updates, wordt de volgende extra informatie momenteel ook verstuurd:
+- interface-taal van NVDA 
+- Of het gaat om een draagbare of geïnstalleerde kopie van NVDA 
+- Naam van de spraaksynthesizer die op dat moment in gebruik is(met inbegrip van de naam van de add-on waar de driver vandaan komt)
+- Naam van de Brailleleesregel die op dat moment in gebruik is ((met inbegrip van de naam van de add-on waar de driver vandaan komt)
+-de huidige Brailleuitvoertabel (als Braille wordt gebruikt)
+
+
+Deze informatie is van grote waarde voor NV Access om te kunnen bepalen waar de aandacht bij voorrang naar moet uitgaan bij de ontwikkeling van NVDA in de toekomst.
 
 ==== Beschikbare Updates bij opstarten melden  ====[GeneralSettingsNotifyPendingUpdates]
 Als deze optie is ingeschakeld zal NVDA u laten weten wanneer er een update beschikbaar is bij het starten van het programma, waarbij u de mogelijkheid wordt geboden deze te installeren.
@@ -1916,6 +1937,8 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 | Ctrl+End | spatiebalk+punt4+punt5+punt6 |
 | Alt | spatiebalk+punt1+punt3+punt4 |
 | Alt+tab | spatiebalk+punt2+punt3+punt4+punt5 |
+| alt+shift+tab-toets | brailleSpatieBalk+punt1+punt2+punt5+punt6 |
+| windows+tab-toets | brailleSpatieBalk+punt2+punt3+punt4 |
 | Escape | spatiebalk+punt1+punt5 |
 | windows-toets | spatiebalk+punt2+punt4+punt5+punt6 |
 | Spatiebalk | braillespatiebalk |
@@ -2427,7 +2450,12 @@ De volgende modellen worden ondersteund:
 - BrailleNote PK (Seriële en bluetooth verbinding)
 - BrailleNote MPower (Seriële en bluetooth verbinding)
 - BrailleNote Apex (USB en Bluetooth verbinding)
--
+ Voor de BrailleNote Touch kunt u de paragraaf   [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] raadplegen.
+ 
+Met uitzondering van de BrailleNote PK, is er ondersteuning voor zowel het braille (BT) als het QWERTY (QT) toetsenbord.
+Voor de BrailleNote QT, is er geen onderrsteuning voor PC toetsenbord-emulatie.
+U kunt ook braillepunten invoeren door het QT-toetsenbord te gebruiken.
+Raadpleeg het onderdeel braille terminal in de handleiding van de BrailleNote voor nadere bijzonderheden.
 
 Als uw toestel meer dan één verbindingstype ondersteunt, moet u bij het koppelen van uw BrailleNote met NVDA de poort van het braille-uitvoerapparaat instellen onder braille-terminal opties.
 Raadpleeg de BrailleNote-handleiding voor meer informatie.
@@ -2436,6 +2464,9 @@ Als u een USB- of bluetooth-verbinding tot stand brengt, kunt u de poort instell
 Als u gebruik maakt van een legacy seriële poort (of van een USB-naar-serieel adapter), of als geen van de voornoemde opties beschikbaar is, moet u uit de lijst met hardware-poorten de te gebruiken communicatiepoortselecteren.
 
 Voor u de BrailleNote Apex met behulp van de USB gebruikersinterface verbindt, moet u de stuurprogramma's  installeren die door HumanWare beschikbaar worden gesteld.
+
+Op de BrailleNote Apex BT, kunt u voor het uitvoeren van verschillende NVDA-commando's het scroll-wieltje gebruiken dat tussen punt 1 en punt 4 zit.
+Het wieltje heeft vier punten met richtingindicatie, een centrale klik-knop, en een wieltje dat met de wijzers van de klok mee kan draaien of tegen de wijzers van de klok in.
 
 Hieronder volgen de BrailleNote-toetscommando's voor NVDA.
 Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie van de toetsen.
@@ -2446,6 +2477,7 @@ Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie va
 | Leesregel naar vorige regel verplaatsen | vorige |
 | Leesregel naar volgende regel verplaatsen | volgende |
 | Naar braillecel springen | routing |
+| NvDA menu | spatie+punt1+punt3+punt4+punt5 (spatie+n) |
 | Braillevolgmodus wisselen | vorige+volgende |
 | Pijl omhoog | spatie+Punt1 |
 | Pijl omlaag | spatie+Punt4 |
@@ -2465,8 +2497,41 @@ Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie va
 | Windows-toets | spatie+punt2+punt4+punt5+punt6 (spatie+w) |
 | Alt | spatie+punt1+punt3+punt4 (spatie+m) |
 | Invoerhulp in-/uitschakelen | spatie+punt2+punt3+punt6 (spatie+kleine h) |
-%kc:endInclude
 
+Voor de BrailleNote QT zijn de volgende commando's van toepassing als deze niet in de braille-invoermodus staat.
+
+|| Naam | Toets |
+| NVDA-menu | Lezen+n |
+| pijltoets Omhoog | Pijlomhoog |
+| pijltoets Omlaag | Pijlomlaag |
+| Pijltoets Links | Pijllinks |
+| Pijltoets Rechts | Pijlrechts |
+| Page uptoets | functiePijlomhoog |
+| Page down-toets | functie+Pijlomlaag |
+| Home-toets | functie+Pijllinks |
+| End-toets | functie+Pijlrechts |
+| Control+home-toetsen | lezen+t |
++| Control+end-toetsen | lezen+b |
+| Enter-toets | enter |
+| Backspace-toets | backspace |
+| Tab-toets | tab |
+| Shift+tab-toetsen | shift+tab |
+| Windows-toets | lezen+w |
++| Alt-toets | lezen+m |
+| Invoerhulp Aan/Uit | lezen+1 |
+
+Met het scrollwieltje kunnen de volgende commando's worden uitgevoerd:
+
+|| Naam | Toets |
+| pijltoets Omhoog | Pijlomhoog |
+| pijltoets Omlaag | Pijlomlaag |
+| pijltoets Links | Pijllinks |
+| pijltoets Rechts | Pijlrechts |
+| Enter-toets | centrale knop |
+| Tab-toets | scroll-wieltje met de klok mee |
+| Shift+tab-toetsen | scroll-wieltje tegen de klok in |
+ %kc:endInclude
+ 
 ++ EcoBraille ++[EcoBraille]
 NVDA biedt ondersteuning voor EcoBraille-leesregels  van [ONCE http://www.once.es/].
 De volgende modellen worden ondersteund:

@@ -61,7 +61,6 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
-	# Translators: The title of the dialog to tell users that add-ons have been force disabled due to incompatibility.
 	if addonHandler.incompatibleAddonsDisabledOnStart():
 		import wx
 		if gui.messageBox(
@@ -74,6 +73,8 @@ def doStartupDialogs():
 			_("Incompatible add-ons disabled"),
 			wx.YES | wx.NO | wx.ICON_EXCLAMATION)==wx.YES:
 				gui.mainFrame.onAddonsManagerCommand(evt=None)
+	if not globalVars.appArgs.secure and not config.isAppX and not config.conf['update']['askedAllowUsageStats']:
+		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
