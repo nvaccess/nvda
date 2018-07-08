@@ -73,18 +73,14 @@ def getLanguageDescription(language):
 			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
 		desc=buf.value
 	if not desc:
-		#Some hard-coded descriptions where we know the language fails on XP and so forth.
+		#Some hard-coded descriptions where we know the language fails on various configurations.
 		desc={
-			# Translators: The name of a language supported by NVDA.
-			"am":pgettext("languageName","Amharic"),
 			# Translators: The name of a language supported by NVDA.
 			"an":pgettext("languageName","Aragonese"),
 			# Translators: The name of a language supported by NVDA.
-			"ar":pgettext("languageName","Arabic"),
+			"ckb":pgettext("languageName","Central Kurdish"),
 			# Translators: The name of a language supported by NVDA.
-			"ne":pgettext("languageName","Nepali"),
-			# Translators: The name of a language supported by NVDA.
-			"sr":pgettext("languageName","Serbian (Latin)"),
+			"kmr":pgettext("languageName","Northern Kurdish"),
 		}.get(language,None)
 	return desc
 
