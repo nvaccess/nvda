@@ -29,30 +29,20 @@ curLang="en"
 
 def localeNameToWindowsLCID(localeName):
 	"""Retreave the Windows locale identifier (LCID) for the given locale name
-	@param localeName: a string of 2letterLanguage_2letterCountry or or just 2letterLanguage
+	@param localeName: a string of 2letterLanguage_2letterCountry or just language (2letterLanguage or 3letterLanguage)
 	@type localeName: string
 	@returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
 	@rtype: integer
 	""" 
-	#Windows Vista is able to convert locale names to LCIDs
-	func_LocaleNameToLCID=getattr(ctypes.windll.kernel32,'LocaleNameToLCID',None)
-	if func_LocaleNameToLCID is not None:
-		localeName=localeName.replace('_','-')
-		LCID=func_LocaleNameToLCID(unicode(localeName),0)
-		# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
-		# This was observed for Aragonese ("an").
-		# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
-		if LCID==LOCALE_CUSTOM_UNSPECIFIED:
-			LCID=LCID_NONE
-	else: #Windows doesn't have this functionality, manually search Python's windows_locale dictionary for the LCID
-		localeName=locale.normalize(localeName)
-		if '.' in localeName:
-			localeName=localeName.split('.')[0]
-		LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==localeName]
-		if len(LCList)>0:
-			LCID=LCList[0]
-		else:
-			LCID=LCID_NONE
+	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
+	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
+	localeName=localeName.replace('_','-')
+	LCID=ctypes.windll.kernel32.LocaleNameToLCID(unicode(localeName),0)
+	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
+	# This was observed for Aragonese ("an").
+	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
+	if LCID==LOCALE_CUSTOM_UNSPECIFIED:
+		LCID=LCID_NONE
 	return LCID
 
 def windowsLCIDToLocaleName(lcid):
