@@ -435,6 +435,9 @@ class DisplayModelDrawFocusRectProcessor(Window):
 			return None
 
 	def event_displayModel_drawFocusRectNotify(self, rect):
+		# Filter out duplicate events
+		if eventHandler.isPendingEvents("displayModel_drawFocusRectNotify"):
+			return
 		from textInfos import Rect
 		self.value = self.makeTextInfo(Rect(*rect)).text
 		eventHandler.queueEvent("valueChange", self)
