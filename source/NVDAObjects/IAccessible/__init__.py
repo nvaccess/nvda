@@ -34,6 +34,7 @@ import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+from documentBase import SelectableTextContainerObject
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -1396,7 +1397,7 @@ the NVDAObject for IAccessible
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
 
 	def event_valueChange(self):
-		if isinstance(self, EditableTextWithAutoSelectDetection):
+		if isinstance(self, SelectableTextContainerObject):
 			self.hasContentChangedSinceLastSelection = True
 			return
 		return super(IAccessible, self).event_valueChange()
