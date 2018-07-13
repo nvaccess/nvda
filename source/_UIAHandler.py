@@ -43,6 +43,9 @@ UIA_SizeOfSetPropertyId=30153
 UIA_LocalizedLandmarkTypePropertyId=30158
 UIA_LandmarkTypePropertyId=30157
 
+# Specific to Windows 10 (note: remove this once IUIAutomation6 interface support is implemented):
+UIA_IsDialogPropertyId = 30174
+
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
@@ -74,6 +77,19 @@ badUIAWindowClassNames=[
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
 	# It does not implement caret/selection, and probably has no new text events.
 	"ConsoleWindowClass",
+]
+
+# #8405: used to detect UIA dialogs prior to Windows 10 RS5.
+UIADialogClassNames=[
+	"#32770",
+	"NUIDialog",
+	"Credential Dialog Xaml Host", # UAC dialog in Anniversary Update and later
+	"Shell_Dialog",
+	"Shell_Flyout",
+	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
+	# Chiefly Uninstall app dialog in Windows 10.
+	# Although it is not listed as a window element, RS5 recognizes this as a proper dialog.
+	"Popup",
 ]
 
 NVDAUnitsToUIAUnits={
