@@ -10,16 +10,21 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - O NVDA anunciará erros gramaticais quando exposto de forma apropriada por páginas da Web no Mozilla Firefox. (#8280)
 - Adicionado suporte para BrailleNote QT e rodinha da Apex BT quando o BrailleNote é usado como uma linha braille com o NVDA. (#6316)
 - Adicionados scripts para anunciar o tempo decorrido e total da faixa atual no Foobar2000. (#6596)
+- O símbolo da tecla command do Mac (⌘) agora é anunciado ao ler o texto com qualquer sintetizador. (#8366)
+- funções ""[roles]"" personalizadas via atributo aria-roledescription no Firefox, Chrome e Internet Explorer agora são suportadas.
+- Nova tabela braille: Sueco braille informático de 8 pontos. (#8227)
 
 
 == Alterações ==
 - A lista de idiomas disponíveis na caixa de diálogo Configurações Gerais agora é ordenada com base nos nomes de idiomas em vez dos códigos ISO 639. (#7284)
 - Adicionado gestos predefinidos para o alt shift tab e o windows tab a todas as linhas Braille da Freedom Scientific suportadas. (#7387)
 - Agora, o usuário é perguntado uma vez na inicialização do NVDA, se está favorável em enviar estatísticas de uso para a NV Access ao verificar automaticamente as atualizações. (#8217)
-- Ao verificar atualizações, se o usuário concordou em permitir o envio de estatísticas de uso para a NV Access, o NVDA agora enviará o nome do atual driver de sintetizador e de linha braille em uso, para auxiliar na melhor priorização de trabalhos futuros nesses drivers. (#8217)
+- Ao verificar atualizações, se o usuário concordou em permitir o envio de estatísticas de uso para a NV Access, agora o NVDA enviará o nome do atual driver de sintetizador e de linha braille em uso, para auxiliar na melhor priorização de trabalhos futuros nesses drivers. (#8217)
+- Transcritor braille liblouis atualizado para a versão 3.6.0. (#8365)
 
 
 == Correção de Falhas ==
+- Os rótulos acessíveis para controles em Google Chrome quando o rótulo não aparece como conteúdo propriamente dito agora são mais facilmente anunciados no modo de navegação. (#4773)
 
 
 == Alterações Específicas para Desenvolvedores ==
