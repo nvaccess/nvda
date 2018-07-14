@@ -703,13 +703,6 @@ class GeneralSettingsPanel(SettingsPanel):
 				item.Disable()
 			settingsSizerHelper.addItem(item)
 
-		# Translators: The label for a setting in general settings to disable untested add-ons.
-		self.disableUntestedAddonsCheckbox=wx.CheckBox(self,label=_("&Disable add-ons that are not tested for the current version of NVDA"))
-		self.disableUntestedAddonsCheckbox.SetValue(config.conf["general"]["disableUntestedAddons"])
-		if globalVars.appArgs.secure or config.isAppX:
-			self.disableUntestedAddonsCheckbox.Disable()
-		settingsSizerHelper.addItem(self.disableUntestedAddonsCheckbox)
-
 	def onCopySettings(self,evt):
 		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
@@ -776,7 +769,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
-		config.conf["general"]["disableUntestedAddons"]=self.disableUntestedAddonsCheckbox.IsChecked()
 
 	def postSave(self):
 		if self.oldLanguage!=config.conf["general"]["language"]:

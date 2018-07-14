@@ -51,13 +51,26 @@ def loadState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
 		state = cPickle.load(file(statePath, "r"))
+		if "disabledAddons" not in state:
+			state["disabledAddons"] = set()
+		if "pendingDisableSet" not in state:
+			state["pendingDisableSet"] = set()
+		if "pendingEnableSet" not in state:
+			state["pendingEnableSet"] = set()
+		if "blacklistedAddons" not in state:
+			state["blacklistedAddons"] = dict()
+		if "whitelistedAddons" not in state:
+			state["whitelistedAddons"] = dict()
 	except:
 		# Defaults.
 		state = {
 			"pendingRemovesSet":set(),
 			"pendingInstallsSet":set(),
 			"disabledAddons":set(),
+			"pendingEnableSet":set(),
 			"pendingDisableSet":set(),
+			"blacklistedAddons":dict(),
+			"whitelistedAddons":dict(),
 		}
 
 def saveState():
@@ -113,15 +126,11 @@ def disableAddonsIfAny():
 	"""
 	Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
-	This does not deal with incompatible add-ons, as these are detected at refresh time.
+	This does not deal with blacklisted add-ons, as these are detected at refresh time.
+	Furthermore, disabling is limited to installed add-ons,
+	whereas blacklisting can also be performed for add-on bundles.
 	"""
 	global _disabledAddons
-	if "disabledAddons" not in state:
-		state["disabledAddons"] = set()
-	if "pendingDisableSet" not in state:
-		state["pendingDisableSet"] = set()
-	if "pendingEnableSet" not in state:
-		state["pendingEnableSet"] = set()
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
 	state["disabledAddons"] -= state["pendingEnableSet"]
@@ -129,10 +138,10 @@ def disableAddonsIfAny():
 	state["pendingDisableSet"].clear()
 	state["pendingEnableSet"].clear()
 
-_incompatibleAddons = set()
-def incompatibleAddonsDisabledOnStart():
-	"""Returns C{True} if incompatible add-ons have been disabled during the last start of NVDA."""
-	return bool(_incompatibleAddons)
+_blacklistedAddons = set()
+def blacklistedAddonsDisabledOnStart():
+	"""Returns C{True} if blacklisted add-ons have been disabled during the last start of NVDA."""
+	return bool(_blacklistedAddons)
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
@@ -146,9 +155,9 @@ def initialize():
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True)
-	# #6275: The add-on refresh could have yielded incompatible add-ons.
+	# #6275: The add-on refresh could have yielded blacklisted add-ons.
 	# Add these to the disabled add-ons
-	state["disabledAddons"] |= _incompatibleAddons
+	state["disabledAddons"] |= _blacklistedAddons
 	saveState()
 
 def terminate():
@@ -185,8 +194,9 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif a.isIncompatible:
-					_incompatibleAddons.add(a.name)
+				elif a.isBlacklisted:
+					log.debugWarning("Add-on %s is blacklisted", name)
+					_blacklistedAddons.add(a.name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -235,6 +245,10 @@ class AddonBase(object):
 		return self.manifest['name']
 
 	@property
+	def version(self):
+		return self.manifest['version']
+
+	@property
 	def minimumNVDAVersion(self):
 		version = self.manifest.get('minimumNVDAVersion')
 		if not version:
@@ -261,15 +275,39 @@ class AddonBase(object):
 	@property
 	def isTested(self):
 		"""True if this add-on is tested for this version of NVDA.
-		Note that the configuration can ignore this property by allowing untested versions to load, which is the default.
 		"""
 		return self.isSupported and self.lastTestedNVDAVersion>=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
 
 	@property
-	def isIncompatible(self):
-		"""True if loading or installing this add-on is prohibited given the current configuration."""
-		return ((not self.isSupported and self.manifest['minimumNVDAVersion'] is not None) or
-			(config.conf['general']['disableUntestedAddons'] and not self.isTested))
+	def isBlacklisted(self):
+		"""C{True} if loading or installing this add-on is not allowed
+		as this specific version of the add-on is blacklisted for this NVDA version."""
+		return self.name in state["blacklistedAddons"]
+
+	def isWhitelisted(self):
+		"""C{True} if loading or installing this add-on is allowed
+		as even though this add-on might be untested, this specific version of the add-on is whitelisted for this NVDA version."""
+		return self.name in state["whitelistedAddons"]
+
+	def _blacklistWhitelistHelper(self, dct, shouldAdd):
+		if shouldAdd:
+			dct[self.name] = (self.version, (buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor))
+		elif self.name in dct:
+			del dct[self.name]
+
+	def blacklist(self, shouldBlacklist):
+		"""Processes this add-on to be added to or removed from the add-ons blacklist."""
+		# Make sure this add-on won't stay in the whitelist.
+		self._blacklistWhitelistHelper(state["whitelistedAddons"], not shouldBlacklist)
+		self._blacklistWhitelistHelper(state["blacklistedAddons"], shouldBlacklist)
+		saveState()		
+
+	def whitelist(self, shouldWhitelist):
+		"""Processes this add-on to be added to or removed from the add-ons whitelist."""
+		# Make sure this add-on won't stay in the blacklist.
+		self._blacklistWhitelistHelper(state["blacklistedAddons"], not shouldWhitelist)
+		self._blacklistWhitelistHelper(state["whitelistedAddons"], shouldWhitelist)
+		saveState()		
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
@@ -356,8 +394,8 @@ class Addon(AddonBase):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			if self.isIncompatible:
-				raise AddonError("Add-on incompatible: minimum NVDA version %s, last tested version %s" % (
+			if self.isBlacklisted:
+				raise AddonError("Add-on in blacklist: minimum NVDA version %s, last tested version %s" % (
 					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
 				))
 			if self.name in state["pendingDisableSet"]:

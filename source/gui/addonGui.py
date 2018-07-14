@@ -127,7 +127,7 @@ class AddonsDialog(wx.Dialog):
 				minimumNVDAVersion=bundle.manifest['minimumNVDAVersion'] or _("unknown"),
 				lastTestedNVDAVersion=bundle.manifest['lastTestedNVDAVersion'] or _("unknown")
 			)
-			if bundle.isIncompatible:
+			if bundle.isBlacklisted:
 				# Translators: The message displayed when installing an add-on package is prohibited.
 				incompatibleMessage = _(
 					"The installation of {summary} {version} by {author} has been blocked for "
@@ -236,7 +236,7 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingEnable:
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			return _("Enabled after restart")
-		elif addon.isIncompatible:
+		elif addon.isBlacklisted:
 			# Translators: The status shown for an addon when it's unsupported or untested
 			# and therefore prohibited.
 			return _("incompatible")
@@ -279,7 +279,7 @@ class AddonsDialog(wx.Dialog):
 			self.enableDisableButton.SetLabel(_("&Enable add-on") if not self._shouldDisable(addon) else _("&Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
-		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove and not addon.isIncompatible)
+		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove and not addon.isBlacklisted)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
