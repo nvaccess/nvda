@@ -6,20 +6,20 @@
 = 2018.3 =
 
 == Các tính năng mới ==
-- NVDA sẽ thông báo các lỗi ngữ pháp khi được hiện thị một cách hợp lý trên các trang web trong Mozilla Firefox. (#8280)
+- NVDA sẽ thông báo các lỗi ngữ pháp khi được hiển thị một cách hợp lý trên các trang web trong Mozilla Firefox. (#8280)
 - Đã hỗ trợ nút cuộn của BrailleNote QT và Apex BT's khi sử dụng BrailleNote như một màn hình chữ nổi với NVDA. (#6316)
-- Đã thêm kịch bản thông báo thời gian còn lại và thông thời gian của track hiện tại trong Foobar2000. (#6596)
+- Đã thêm kịch bản thông báo thời gian còn lại và tổng thời gian của track hiện tại trong Foobar2000. (#6596)
 
 == Các thay đổi ==
-- Danh sách các ngôn ngữ hiện hành torng hộp thoại thiết lập chung giờ đây được sắ xếp theo tên thay vì theo mã ISO 639. (#7284)
+- Danh sách các ngôn ngữ hiện hành trong hộp thoại thiết lập chung giờ đây được sắp xếp theo tên thay vì theo mã ISO 639. (#7284)
 - Thêm thao tác mặc định cho alt shift tab và windows tab với tất cả màn hình chữ nổi của Freedom Scientific được hỗ trợ. (#7387)
-- Giờ đây, người dùng được yêu cầu một lần khi khởi động NVDA nếu họ vui lòng để gửi thông tin thống kê sử dụng cho NV Access khi kiểm tra cập nhật tự động. (#8217)
-- Khi kiểm tra cập nhật, nếu người dùng đồng ý gửi thông tin thống kê sử dụng cho NV Access, NVDA sẽ gửi tên driver của bộ đọc và màn hình chữ nổi hiện tại , nhằm hỗ trợ tốt hơn trong việc ưu tiên cho các cập nhật sắp tới của những drivers này. (#8217)
+- Giờ đây, người dùng được yêu cầu một lần khi khởi động NVDA nếu họ vui lòng gửi thông tin thống kê sử dụng cho NV Access khi kiểm tra cập nhật tự động. (#8217)
+- Khi kiểm tra cập nhật, nếu người dùng đồng ý gửi thông tin thống kê sử dụng cho NV Access, NVDA sẽ gửi tên driver của bộ đọc và màn hình chữ nổi hiện tại , nhằm hỗ trợ tốt hơn trong việc ưu tiên cho các cập nhật sắp tới của những driver này. (#8217)
 - Đã cập nhật liblouis braille translator lên phiên bản 3.6.0. (#8365)
 
 
 == Sửa lỗi ==
-- Nhãn tiếp cận cho các điều khiển trong Google Chrome are giờ đây đã sẵn sàng hơn khi thông báo trong chế độ duyệt khi chúng không được xuất hiện như nội dung  của chính nó. (#4773)
+- Nhãn tiếp cận cho các điều khiển trong Google Chrome giờ đây đã sẵn sàng hơn khi thông báo trong chế độ duyệt khi chúng không được xuất hiện như nội dung  của chính nó. (#4773)
 
 
 == Các thay đổi cho nhà phát triển ==
@@ -79,7 +79,7 @@ Một số tính năng nổi bật trong bản phát hành này bao gồm hỗ t
 - Làm việc xung quanh lỗi trong Task Manager khiến NVDA không cho phép người dùng truy cập nội dung của vài chi tiết về quá trình vận hành. (#8147)
 - Các giọng đọc mới chuẩn Sapi5 không còn bị chậm khi kết thúc quá trình đọc, điều đó giúp  cho việc điều hướng với các giọng đọc này trở nên hiệu quả hơn. (#8174)
 - NVDA không còn thông báo (dấu LTR và RTL) qua màn hình nổi hay khi đọc kí tự khi truy cập biểu tượng đồng hồ trong các phiên bản Windows gần đây. (#5729)
-- Tìm ra các phím cuộn trên màn hình Hims Smart Beetle lại một lần nữa không còn trở nên không tin cậy. (#6086)
+- Tìm ra các phím cuộn trên màn hình Hims Smart Beetle lại một lần nữa  trở nên tin cậy. (#6086)
 - Trong vài điều khiển văn bản, đặc biệt là trong các ứng dụng viết bằng Delphi, các thông tin được cung cấp liên quan đến chỉnh sửa và điều hướng giờ đây đã trở nên đáng tin cậy hơn.. (#636, #8102)
 - Trong Windows 10 RS5, NVDA không còn thông báo thêm thông tin dư thừa khi chuyển cửa  sổ bằng alt+tab. (#8258)
 
