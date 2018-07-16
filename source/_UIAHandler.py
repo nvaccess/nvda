@@ -188,7 +188,8 @@ class UIAHandler(COMObject):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
-				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+				for interface in reversed(CUIAutomation8._com_interfaces_):
 					try:
 						self.clientObject=self.clientObject.QueryInterface(interface)
 						break

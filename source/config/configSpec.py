@@ -188,6 +188,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [update]
 	autoCheck = boolean(default=true)
 	startupNotification = boolean(default=true)
+	allowUsageStats = boolean(default=false)
+	askedAllowUsageStats = boolean(default=false)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)

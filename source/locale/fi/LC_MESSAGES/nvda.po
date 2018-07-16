@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-11 09:30+0200\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"PO-Revision-Date: 2018-07-07 14:02+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1032,6 +1032,11 @@ msgstr "venäjä, taso 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "sanskrit, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "ruotsi, 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6702,9 +6707,17 @@ msgstr "Käynnistä"
 msgid "No track playing"
 msgstr "Kappaleen toisto ei ole käynnissä"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Ilmoittaa tällä hetkellä soitettavan kappaleen jäljellä olevan ajan"
+msgstr "Ilmoittaa toistettavan kappaleen jäljellä olevan ajan."
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Ilmoittaa toistettavan kappaleen kuluneen ajan."
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Ilmoittaa toistettavan kappaleen keston."
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7454,7 +7467,7 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
-"Olet suorittamassa COM-rekisteröinnin korjaustyökalua. Tämä työkalu yrittää "
+"Olet suorittamassa COM-rekisteröintien korjaustyökalua. Tämä työkalu yrittää "
 "korjata yleisiä järjestelmäongelmia, jotka estävät NVDA:ta käsittelemästä "
 "sisältöä useissa ohjelmissa, kuten Firefoxissa ja Internet Explorerissa. "
 "Työkalun on tehtävä muutoksia Windowsin rekisteriin, mikä edellyttää "
@@ -7469,7 +7482,7 @@ msgstr "Varoitus"
 #. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 #. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
 msgid "COM Registration Fixing Tool"
-msgstr "COM-rekisteröinnin korjaustyökalu"
+msgstr "COM-rekisteröintien korjaustyökalu"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
@@ -7477,7 +7490,7 @@ msgstr "Odota, kun NVDA yrittää korjata järjestelmäsi COM-rekisteröintejä.
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
-msgstr "COM-rekisteröinnin korjaustyökalu suoritettu"
+msgstr "COM-rekisteröintien korjaustyökalu suoritettu"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
@@ -7559,7 +7572,7 @@ msgstr "&Asenna NVDA..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "Suorita COM-rekisteröinnin korjaustyökalu..."
+msgstr "Suorita COM-rekisteröintien korjaustyökalu..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7758,6 +7771,43 @@ msgstr "Asenna odottava päivitys"
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Odota"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Käyttötietojen kerääminen"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"NV Access haluaa kerätä käyttötietoja NVDA:n tulevaisuuden parantamiseksi "
+"NVDA:n käynnissä olevista kopioista.\n"
+"\n"
+"Tiedot sisältävät käyttöjärjestelmän version, NVDA:n version ja kielen, "
+"alkuperämaan sekä tietyt NVDA-asetukset, kuten nykyisen syntetisaattorin, "
+"pistenäytön ja pistetaulukon. Puhuttua tai pistenäytöllä näytettyä sisältöä "
+"ei koskaan lähetetä NV Accessille.  Katso käyttöoppaasta luettelo kaikesta "
+"tällä hetkellä kerätystä tiedosta.\n"
+"\n"
+"Sallitko NV Accessin kerätä ajoittain  näitä tietoja NVDA:n parantamiseksi?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Kyllä"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Ei"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -8425,6 +8475,10 @@ msgstr "Tarkista &päivitykset automaattisesti"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Ilmoita käynnistettäessä &odottavasta päivityksestä"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Salli NVDA-projektin kerätä käyttötilastoja"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
