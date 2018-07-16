@@ -29,8 +29,10 @@ import thread
 from win32con import WM_DEVICECHANGE, DBT_DEVNODES_CHANGED
 import appModuleHandler
 from baseObject import AutoPropertyObject
+import re
 
 _driverDevices = OrderedDict()
+USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
 
 class DeviceMatch(
 	namedtuple("DeviceMatch", ("type","id", "port", "deviceInfo"))
@@ -76,8 +78,14 @@ def addUsbDevices(driver, type, ids):
 	@param type: The type of the driver, either C{KEY_HID}, C{KEY_SERIAL} or C{KEY_CUSTOM}.
 	@type type: str
 	@param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
+		Note that alphabetical characters in hexadecimal numbers should be uppercase.
 	@type ids: set of str
+	@raise ValueError: When one of the provided IDs is malformed.
 	"""
+	malformedIds = [id for id in ids if not isinstance(id, basestring) or not USB_ID_REGEX.match(id)]
+	if malformedIds:
+		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
+			% (driver, type, ", ".join(wrongIds)))
 	devs = _getDriver(driver)
 	driverUsb = devs[type]
 	driverUsb.update(ids)
@@ -422,8 +430,8 @@ addUsbDevices("brailliantB", KEY_HID, {
 	"VID_1C71&PID_C00A", # BrailleNote Touch
 })
 addUsbDevices("brailliantB", KEY_SERIAL, {
-	"Vid_1c71&Pid_c005", # Brailliant BI 32, 40 and 80
-	"Vid_1c71&Pid_c021", # Brailliant BI 14
+	"VID_1C71&PID_C005", # Brailliant BI 32, 40 and 80
+	"VID_1C71&PID_C021", # Brailliant BI 14
 })
 addBluetoothDevices("brailliantB", lambda m: (
 	m.type==KEY_SERIAL
