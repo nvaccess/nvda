@@ -83,7 +83,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts(filterFunc=lambda info: "bluetoothName" in info)
+		return braille.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
