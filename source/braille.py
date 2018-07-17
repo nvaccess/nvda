@@ -644,6 +644,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	value=field.get('value',None)
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
+	roleText=field.get('roleText')
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
@@ -676,7 +677,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			# Don't report the role for math here.
 			# However, we still need to pass it (hence "_role").
 			"_role" if role == controlTypes.ROLE_MATH else "role": role,
-			"states": states,"value":value, "current":current, "placeholder":placeholder}
+			"states": states,"value":value, "current":current, "placeholder":placeholder,"roleText":roleText}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -706,7 +707,7 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
 		return (_("%s end") %
-			getBrailleTextForProperties(role=role))
+			getBrailleTextForProperties(role=role,roleText=roleText))
 
 def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""Generates the braille text for the given format field.
