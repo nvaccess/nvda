@@ -831,10 +831,12 @@ Para mais informações sobre o Modo de navegação e navegação por caracter, 
 ++ Foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
-| Anunciar Tempo Restante | control+shift+r | Anuncia o tempo restante da faixa actual em reprodução, caso exista. |
+| Anunciar Tempo Restante | control+shift+r | Anuncia o tempo restante de qualquer faixa em execução |
+| Anunciar tempo passado | control+shift+e | Anuncia o tempo passado de qualquer faixa em execução |
+| Anunciar tempo total | control+shift+t | Anuncia o tempo total de qualquer faixa em execução |
 %kc:endInclude
 
-Nota: O comando para anunciar o tempo restante funciona somente com a cadeia de caracteres de formatação por padrão para a linha de estado do Foobar.
+Nota: Os comandos acima apenas funcionam com a cadeia de caracteres de formatação por padrão para a linha de estado do Foobar.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -904,11 +906,11 @@ Na tabela de livros adicionados:
 %kc:endInclude
 
 + Configurar O NVDA +[ConfiguringNVDA]
-A maioria das configurações do NVDA podem ser alteradas através de diálogos acedidos através do submenu  "Opções" do menu do NVDA.
+A maioria das configurações do NVDA pode ser alterada através de diálogos acedidos através do submenu  "Opções" do menu do NVDA.
 Muitas dessas configurações aparecem no diálogo multi-páginas [Configurações #NVDASettings].
 Em qualquer dos diálogos, pressione "OK" para aceitar as alterações que tenha feito.
 Para dispensar alterações que possa ter feito, pressione "Cancelar" ou "Escape".
-Nalguns destes diálogos pode pressionar a tecla "Aplicar", para que as alterações entrem em vigor sem fechar o diálogo.
+Em alguns destes diálogos pode pressionar a tecla "Aplicar", para que as alterações entrem em vigor sem fechar o diálogo.
 Algumas configurações podem ser feitas por atalhos, que serão indicados quando aplicáveis.
 
 ++ Configurações ++[NVDASettings]
@@ -920,7 +922,7 @@ Estas configurações podem ser aplicadas sem fechar o diálogo, pressionando o 
 Se quiser guardar as suas alterações e fechar o diálogo de configurações do NVDA, deve pressionar o botão "OK".
 
 Algumas das secções possuem teclas de atalho dedicadas.
-Pressionar estas teclas de atalho abrirá o diálogo de configurações do NVDA, com a página dessa secção já seleccionada.
+Se pressionar estas teclas de atalho abrirá o diálogo de configurações do NVDA, com a página dessa secção já seleccionada.
 Note que, por padrão, nem todas as secções das configurações podem ser acedidas por comandos (como por exemplo comandos de teclado, comandos de toque, etc.).
 Se quiser aceder a secções que não possuem atalhos dedicados, use a opção [Definir comandos #InputGestures] para adicionar um comando personalizado para essa secção.
 
@@ -970,7 +972,26 @@ Esta opção só está disponível nas cópias instaladas do NVDA.
 
 ==== Verificar automaticamente actualizações para o NVDA ====[GeneralSettingsCheckForUpdates]
 Se esta opção estiver activa, o NVDA irá verificar automaticamente se existem versões mais actuais do programa, e informá-lo-á, quando uma actualização estiver disponível.
-Poderá também verificar, manualmente, por actualizações, seleccionando "Verificar actualização...", no menu "ajuda", do NVDA.
+Ao verificar, por actualizações,, quer manualmente,  quer automaticamente, o NVDA necessita de enviar ao servidor de actualizações algumas informações para poder que receba a versão correcta.
+As seguintes informações são sempre enviadas:
+- Versão actual do NVDA;
+- Versão do sistema operativo;
+- Se o sistema operativo é de 64 ou 32 bit;
+
+
+==== Permitir que o projeto do NVDA recolha estatísticas de utilização do NVDA ====[GeneralSettingsGatherUsageStats]
+Se esta opção estiver activada, a NV Access usará a informação obtida pela verificação de actualizações para determinar o número de utilizadores do NVDA, incluindo informações como sistema operativo, e país de origem.
+Note que apesar do seu endereço IP ser usado para determinar o seu país, ele nunca é guardado.
+Para além das informações obrigatórias para a selecção da actualização, as seguintes informações adicionais também serão enviadas:
+- Idioma da interface do NVDA;
+- Se o NVDA é uma cópia portátil ou instalada;
+- Nome do sintetizador em utilização (incluindo o nome do extra do driver);
+- Nome da linha Braille em utilização (incluindo o nome do extra do driver);
+- A tabela Braille de saída, se houver linha Braille activa;
+-
+
+Esta informação ajudará a NV Access a prioritizar o desenvolvimento futuro do NVDA.
+
 
 ==== Anunciar actualização pendente no arranque ====[GeneralSettingsNotifyPendingUpdates]
 Se esta opção estiver activa, e  se houver uma actualização pendente para instalação, o NVDA informará, ao arrancar, a sua existência e oferecerá uma opção para a instalar.
@@ -1371,7 +1392,7 @@ Esta opção permite-lhe escolher se terá a informação da posição do object
 ==== Adivinhar a posição do Objecto, quando Indisponível ====[ObjectPresentationGuessPositionInfo]
 Se a opção "Anunciar a Posição do Objecto" estiver activa, permite que o NVDA tente adivinhar a posição de um objecto, quando ela não está disponível de outra forma, para um controlo específico.
 
-Quando activada, O NVDA informá-lo-á sobre mais controlos como menus e barras de ferramentas, porém esta informação poderá ser ligeiramente incorrecta.
+Quando activada, O NVDA informará sobre mais controlos como menus e barras de ferramentas, porém esta informação poderá ser ligeiramente incorrecta.
 
 ==== Anunciar Descrição de Objectos ====[ObjectPresentationReportDescriptions]
 Desmarque esta caixa de verificação, se não precisar de ouvir a descrição anunciada em conjunto com os objectos.
@@ -1485,7 +1506,7 @@ Por exemplo, se a opção estiver activada, se a letra j for pressionada, seria 
 
 +++ Formatação de Documentos (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 A maioria das caixas de verificação desta secção permitem configurar qual é o tipo de formatação que pretende ouvir automaticamente, conforme se move com o cursor pelos documentos.
-Por exemplo, se seleccionar a caixa de verificação para anunciar o nome do tipo de letra, de cada vez que anda pelo texto e chega a um tipo de letra diferente, o nome do tipo de letra será anunciado. 
+Por exemplo, se seleccionar a caixa de verificação para anunciar o nome do tipo de letra, de cada vez que anda pelo texto e chega a um tipo de letra diferente, o nome do novo tipo de letra será anunciado. 
 
 As várias opções estão organizadas em grupos.
 Pode configurar o anúncio de:
@@ -1911,9 +1932,11 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 | Teclas control+end | espaço+ponto 4+ponto 5+ponto 6 |
 | Tecla alt | espaço+ponto 1+ponto 3+ponto 4 |
 | Teclas alt+tab | espaço+ponto 2+ponto 3+ponto 4+ponto 5 |
+| Teclas Alt+Shift+Tab | Espaço+ponto1+ponto2+ponto5+ponto6 |
+| Teclas Windows+Tab | Espaço+ponto2+ponto3+ponto4 |
 | Tecla escape | espaço+ponto 1+ponto 5 |
 | Tecla windows | espaço+ponto 2+ponto 4+ponto 5+ponto 6 |
-| Tecla space | espaço |
+| Tecla Espaço | espaço |
 | Teclas windows+d (minimizar todas as aplicações) | espaço+ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
 | Anunciar a linha actual | espaço+ponto 1+ponto 4 |
 | Menu do NVDA | espaço+ponto 1+ponto 3+ponto 4+ponto 5 |
@@ -2427,6 +2450,11 @@ Os seguintes modelos são suportados:
 
 Para o BrailleNote Touch, veja a secção [HumanWare séries Brailliant BI/B / BrailleNote Touch HumanWareBrailliant].
 
+Excepto para o BrailleNote PK, quer o teclado Braille (BT) quer o teclado QWERTY (QT) são suportados.
+Para o BrailleNote QT, a emulação do teclado PC não é suportada.
+Também pode introduzir Braille usando o teclado QWERTY do modelo QT.
+Por favor, consulte a secção Terminal Braille do manual do BrailleNote para mais informações.
+
 Se o seu dispositivo suporta mais de um tipo de ligação, ao ligar o BrailleNote ao NVDA, deve configurar o braille terminal port nas opções de braille terminal.
 Por favor, consulte os detalhes no manual do BrailleNote.
 No NVDA, também precisa de configurar a porta, nas configurações do Braille.
@@ -2434,6 +2462,9 @@ Se estiver a utilizar a ligação USB ou bluetooth, pode configurar a porta para
 Se estiver a usar a ligação pela porta série, um conversor USB para serial ou se nenhuma das opções anteriores aparecer, tem de configurar a porta a ser usada da lista de portas de comunicação de hardware.
 
 Antes de ligar o BrailleNote Apex usando a interface de cliente USB, deve instalar primeiro os drivers fornecidos pela HumanWare.
+
+No BrailleNote Apex BT, pode usar a roda de deslocamento, situada entre os pontos 1 e 4, para vários comandos do NVDA.
+A roda de deslocamento consiste de 4 pontos directionais, um botão central de confirmação e uma roda que pode rodar nas duas direcções.
 
 Seguem-se as associações de comandos do  BrailleNote para o NVDA.
 Por favor, consulte a documentação do BrailleNote para saber a localização das teclas.
@@ -2445,6 +2476,7 @@ Por favor, consulte a documentação do BrailleNote para saber a localização d
 | Mover a linha braille para a linha anterior | previous |
 | Mover a linha braille para a linha seguinte | next |
 | Encaminhar para a célula braille | routing |
+| Menu do NVDA | Espaço+ponto1+ponto3+ponto4+ponto5 (Espaço+n) |
 | Alternar "Braille segue:" | previous+next |
 | Tecla Seta Acima | espaço+ponto 1 |
 | Tecla Seta Abaixo | espaço+ponto 4 |
@@ -2464,6 +2496,39 @@ Por favor, consulte a documentação do BrailleNote para saber a localização d
 | Tecla Windows | espaço+ponto 2+ponto 4+ponto 5+ponto 6 (espaço+w) |
 | Tecla Alt | espaço+ponto 1+ponto 3+ponto 4 (espaço+m) |
 | Alternar o modo de ajuda de entrada | espaço+ponto 2+ponto 3+ponto 6 (espaço+h rebaixado) |
+
+Seguem-se os comandos para o BrailleNote QT quando não está no modo de digitação Braille.
+
+|| Nome | Tecla de atalho |
+| Menu do NVDA | read+n |
+| Tecla Seta acima | upArrow |
+| Tecla Seta abaixo | downArrow |
+| Tecla seta esquerda | leftArrow|
+| Tecla seta direita | rightArrow |
+| Tecla Página acima | function+upArrow |
+| Tecla Página abaixo | function+downArrow |
+| Tecla Home | function+leftArrow |
+| Tecla End | function+rightArrow |
+| Teclas Control+home | read+t |
+| Teclas Control+end | read+b |
+| Tecla Enter | enter |
+| Tecla Backspace | backspace |
+| Tecla Tab | tab |
+| Teclas Shift+tab | shift+tab |
+| Tecla Windows | read+w |
+| Tecla Alt | read+m |
+| Alternar o modo de ajuda de entrada | read+1 |
+
+Seguem-se os comandos associados à roda de deslocamento:
+
+|| Nome | Tecla de atalho |
+| Tecla Seta acima | upArrow |
+| Tecla Seta abaixo | downArrow |
+| Tecla Seta esquerda | leftArrow |
+| Tecla Seta direita | rightArrow |
+| Tecla Enter | center button |
+| Tecla Tab | scroll wheel no sentido dos ponteiros do relógio |
+| Teclas Shift+tab | scroll wheel no sentido contrário ao dos ponteiros do relógio |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]

@@ -832,9 +832,11 @@ Pour plus d'information concernant le mode navigation et la navigation par lettr
 %kc:beginInclude
 || Nom | Touche | Description |
 | Annonce du temps restant | contrôle+maj+r | Annonce le temps restant pour le morceau en cours. |
+| Annonce du temps écoulé | contrôle+maj+e | annonce le temps écoulé de la piste en cours. |
+| Annonce de la longueur de la piste | contrôle+maj+t | Annonce la longueur de la piste en cours. |
 %kc:endInclude
 
-Note : Le raccourci "Annonce du temps restant" fonctionne seulement avec le format de chaîne par défaut pour la barre d'état de Foobar.
+Note : Les raccourcis ci-dessus fonctionnent seulement avec le format de chaîne par défaut pour la barre d'état de Foobar.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Cette option n'existe que dans les versions installées de NVDA.
 ==== Vérifier automatiquement les mises à jour de NVDA ====[GeneralSettingsCheckForUpdates]
 Si activé, NVDA recherchera automatiquement la dernière version de NVDA et vous informera si une mise à jour est disponible.
 Vous pouvez également vérifier manuellement les mises à jour en sélectionnant "Recherche d'une Mise à Jour..." dans le menu "Aide" du menu NVDA.
+Lors d'une vérification manuelle ou automatique des mises à jour, NVDA doit envoyer certaines informations au serveur dans le but de recevoir la mise à jour appropriée à votre système.
+Les informations suivantes sont toujours envoyées :
+- Version courante de NVDA
+- Version du système d'exploitation
+- Système d'exploitation 32 ou 64 bits
+
+
+==== Autoriser le projet NVDA à collecter certaines informations statistiques d'utilisation ====[GeneralSettingsGatherUsageStats]
+Si ceci est activé, NV Access utilisera les informations de la vérification de mises à jour pour connaître le nombre d'utilisateurs de NVDA en incluant certaines informations démographiques telles que le système d'exploitation et le pays d'origine.
+Bien que votre adresse IP soit utilisée pour déterminer votre pays durant la mise à jour, elle ne sera jamais conservée.
+En plus des informations obligatoires nécessaires à la mise à jour, les informations supplémentaires suivantes sont également envoyées :
+- La langue d'interface de NVDA
+- Copie en cours de NVDA installée ou portables
+- Le nom du synthétiseur vocal actuellement utilisé (incluant le nom du module complémentaire dont provient le pilote)
+- Le nom du terminal braille actuellement utilisé (incluant le nom du module complémentaire dont provient le pilote)
+- La table d'affichage braille en cours (si le braille est activé)
+
+
+Ces informations aident grandement NV Access pour prioritiser les futurs développements de NVDA.
 
 ==== Avertir des mises à jour en attente au démarrage ====[GeneralSettingsNotifyPendingUpdates]
 Si ceci est activé, NVDA vous informera quand il y a une mise à jour en attente au démarrage, et vous offrira la possibilité de l'installer.
@@ -1911,6 +1932,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | touche contrôle+fin | barreEspacebraille+point4+point5+point6 |
 | touche alt | barreEspacebraille+point1+point3+point4 |
 | touche alt+tab | barreEspacebraille+point2+point3+point4+point5 |
+| touche alt+maj+tab | BarreEspacebeBraille+point1+poin2+point5+point6 |
+| touche windows+tab | barreEspaceBraille+point2+point3+point4 |
 | touche échap | barreEspacebraille+point1+point5 |
 | touche Windows | barreEspacebraille+point2+point4+point5+point6 |
 | touche espace | barreEspacebraille |
@@ -2427,6 +2450,11 @@ Les modèles suivants sont supportés :
 
 Pour le BrailleNote Touch, Veuillez vous référer à la section [Séries Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
+Excepté pour le BrailleNote PK, les claviers braille (BT) et QWERTY (QT) sont supportés.
+Pour le BrailleNote QT, l'émulation de clavier PC n'est pas supportée.
+Vous pouvez également entrer les points braille en utilisant le clavier QT.
+Veuillez consulter la section terminal braille du manuel BrailleNote pour plus de détails.
+
 Si votre périphérique supporte plusieurs types de connexion, en connectant votre BrailleNote à NVDA, vous devrez définir le port dans les options de votre afficheur braille.
 Lisez le manuel de votre BrailleNote pour plus de détails.
 Dans NVDA, vous devrez peut-être également configurer le port dans le dialogue [Choisir l'Afficheur Braille #SelectBrailleDisplay].
@@ -2434,6 +2462,9 @@ Si vous le connectez via USB ou Bluetooth, vous pouvez le configurer sur "Automa
 Si vous le connectez à un port série ou un convertisseur USB-Série ou si aucune de ces dernières options n'apparaît, vous devez choisir explicitement le port de communication à utiliser dans la liste des ports matériels.
 
 Avant de connecter votre BrailleNote Apex en utilisant son interface client USB, vous devez installer le pilote fourni par HumanWare.
+
+Sur le BrailleNote Apex BT, vous pouvez utiliser la roue de défilement située entre les points 1 et 4 pour diverses commandes NVDA.
+La roue consiste en 4 points directionnels, un bouton central de clic, et une roue qui peut tourner dans le sens des aiguilles d'une montre ou inversement.
 
 Voici les assignations de touches du BrailleNote pour NVDA.
 Consultez la documentation de votre BrailleNote pour savoir où se situent ces touches.
@@ -2445,6 +2476,7 @@ Consultez la documentation de votre BrailleNote pour savoir où se situent ces t
 | Déplacer l'affichage braille vers la ligne précédente | Précédent |
 | Déplacer l'affichage braille vers la ligne suivante | Suivant |
 | Joindre à la cellule braille | routage |
+| menu NvDA | espace+point1+point3+point4+point5 (espace+n) |
 | Basculer le suivi de l'affichage braille | Précédent+Suivant |
 | Touche Flèche haute | Espace+Point 1 |
 | Touche Flèche basse | Espace+Point 4 |
@@ -2464,8 +2496,41 @@ Consultez la documentation de votre BrailleNote pour savoir où se situent ces t
 | Touche Windows | Espace+Point2+Point4+Point5+Point6 |
 | Touche alt | Espace+Point1+Point3+Point4 (Espace+m) |
 | Basculer aide à la saisie | Espace+Point2+Point3+Point6 (Espace+h en bas) |
-%kc:endInclude
 
+Voici les commandes assignées au BrailleNote QT quand il n'est pas en mode saisie braille :
+
+|| Nom | Touche |
+| menu NvDA | lecture+n |
+| touche flèche haut | flècheHaut |
+| touche flèche bas | flècheBas |
+| touche flèche gauche | flècheGauche |
+| touche flèche droite | flècheDroite |
+| touche pagePrec | fonction+flècheHaut |
+| touche pageSuiv | fonction+flècheBas |
+| touche début | fonction+flècheGauche |
+| touche fin | fonction+flècheDroite |
+| touche contrôle+début | lecture+t |
+| touche contrôle+fin | lecture+b |
+| touche entrer | entrer |
+| touche retour arrière | retourArrière |
+| touche tab | tab |
+| touche maj+tab keys | maj+tab |
+| touche windows | lecture+w |
+| touche alt | lecture+m |
+| bascule de l'aide à la saisie | lecture+1 |
+
+Voici les commandes assignées à la roue de défilement :
+
+|| Nom | Touche |
+| touche flècheHaut | flècheHaut |
+| touche flècheBas | flècheBas |
+| touche flècheGauche | flècheGauche |
+| touche flècheDroite | flècheDroite |
+| touche entrer | bouton central |
+| touche tab | tourner la roue dans le sens des aiguilles d'une montre |
+| touche maj+tab | tourner la roue dans le sens inverse des aiguilles d'une montre |
+%kc:endInclude
+ 
 ++ EcoBraille ++[EcoBraille]
 NVDA supporte Les afficheurs EcoBraille de [ONCE http://www.once.es/].
 Les modèles suivants sont supportés :
