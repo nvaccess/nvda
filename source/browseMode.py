@@ -1058,13 +1058,13 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
-	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig,reason=None):
+	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
 			# Ensure that the name of the field gets presented even if normally it wouldn't. 
 			name=field.get('name')
-			if name and field.getPresentationCategory(ancestors,formatConfig,reason) is None:
+			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
 				textList.append(name)
 				if landmark == "region":
 					# The word landmark is superfluous for regions.
