@@ -133,6 +133,11 @@ class EdgeTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
+		role=field.get('role')
+		# Fields should be treeted as block for certain roles.
+		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting) 
+		if role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH):
+			field['isBlock']=True
 		# ARIA roledescription
 		field['roleText']=obj.roleText
 		# report landmarks
