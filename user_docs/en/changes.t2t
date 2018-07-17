@@ -13,6 +13,10 @@ What's New in NVDA
 - custom roles via the aria-roledescription attribute are now supported in Firefox, Chrome and Internet Explorer.
 - New braille table: Swedish 8 dot computer braille. (#8227)
 - added czech eight dots, central kurdish, esperanto and hungarian braille tables. (#8446)
+- Support has been added to automatically detect braille displays in the background. (#1271)
+ - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.
+ - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
+ - Please consult the documentation for additional details.
 
 
 == Changes ==
@@ -26,11 +30,15 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- Switching braille context presentation when in browse mode no longer causes braille output to stop following. (#7741)
 
 
 == Changes for Developers ==
 - Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
 - A system test framework has been introduced for NVDA. (#708)
+- Some changes have been made to the hwPortUtils module: (#1271)
+ - listUsbDevices now yields dictionaries with device information including hardwareID and devicePath.
+ - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
 
 
 = 2018.2 =

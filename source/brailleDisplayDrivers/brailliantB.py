@@ -2,18 +2,15 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited
+#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
 
-import os
-import _winreg
-import itertools
 import time
 import serial
-import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import bdDetect
 import hwIo
 
 TIMEOUT = 0.2
@@ -78,55 +75,6 @@ DOT1_KEY = 2
 DOT8_KEY = 9
 SPACE_KEY = 10
 
-USB_IDS_HID = {
-	"VID_1C71&PID_C006", # Brailliant BI 32, 40 and 80
-	"VID_1C71&PID_C022", # Brailliant BI 14
-	"VID_1C71&PID_C00A", # BrailleNote Touch
-}
-USB_IDS_SER = (
-	"Vid_1c71&Pid_c005", # Brailliant BI 32, 40 and 80
-	"Vid_1c71&Pid_c021", # Brailliant BI 14
-)
-
-def _getPorts():
-	# HID.
-	for portInfo in hwPortUtils.listHidDevices():
-		if portInfo.get("usbID") in USB_IDS_HID:
-			yield "USB HID", portInfo["devicePath"]
-		# In Windows 10, the Bluetooth vendor and product ids don't get recognised.
-		# Use strings instead.
-		elif portInfo.get("manufacturer") == "Humanware" and portInfo.get("product") == "Brailliant HID":
-			yield "Bluetooth HID", portInfo["devicePath"]
-
-	# USB serial.
-	for usbId in USB_IDS_SER:
-		try:
-			rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,
-				r"SYSTEM\CurrentControlSet\Enum\USB\%s" % usbId)
-		except WindowsError:
-			# A display with this id has never been connected via USB.
-			continue
-		with rootKey:
-			for index in itertools.count():
-				try:
-					keyName = _winreg.EnumKey(rootKey, index)
-				except WindowsError:
-					break # No more sub-keys.
-				try:
-					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-						yield "USB serial", _winreg.QueryValueEx(paramsKey, "PortName")[0]
-				except WindowsError:
-					continue
-
-	# Bluetooth serial.
-	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
-		try:
-			btName = portInfo["bluetoothName"]
-		except KeyError:
-			continue
-		if btName.startswith("Brailliant B") or btName == "Brailliant 80" or "BrailleNote Touch" in btName:
-			yield "Bluetooth serial", portInfo["port"]
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
@@ -134,20 +82,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	isThreadSafe = True
 
 	@classmethod
-	def check(cls):
-		try:
-			next(_getPorts())
-		except StopIteration:
-			# No possible ports found.
-			return False
-		return True
+	def getManualPorts(cls):
+		return braille.getSerialPorts()
 
-	def __init__(self):
+	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 
-		for portType, port in _getPorts():
-			self.isHid = portType.endswith(" HID")
+		for portType, portId, port, portInfo in self._getTryPorts(port):
+			self.isHid = portType == bdDetect.KEY_HID
 			# Try talking to the display.
 			try:
 				if self.isHid:
@@ -155,6 +98,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._serOnReceive)
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue # Couldn't connect.
 			# The Brailliant can fail to init if you try immediately after connecting.
 			time.sleep(DELAY_AFTER_CONNECT)

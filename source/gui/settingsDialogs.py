@@ -2087,9 +2087,8 @@ class BrailleSettingsPanel(SettingsPanel):
 		displayBox = wx.StaticBox(self, label=displayLabel)
 		displayGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(displayBox, wx.HORIZONTAL))
 		settingsSizerHelper.addItem(displayGroup)
-		
-		displayDesc = braille.handler.display.description
-		self.displayNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), value=displayDesc, style=wx.TE_READONLY)
+		self.displayNameCtrl = ExpandoTextCtrl(self, size=(self.scaleSize(250), -1), style=wx.TE_READONLY)
+		self.updateCurrentDisplay()
 		# Translators: This is the label for the button used to change braille display,
 		# it appears in the context of a braille display group on the braille settings panel.
 		changeDisplayBtn = wx.Button(self, label=_("C&hange..."))
@@ -2122,7 +2121,10 @@ class BrailleSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def updateCurrentDisplay(self):
-		displayDesc = braille.handler.display.description
+		if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+			displayDesc = BrailleDisplaySelectionDialog.getCurrentAutoDisplayDescription()
+		else:
+			displayDesc = braille.handler.display.description
 		self.displayNameCtrl.SetValue(displayDesc)
 
 	def onPanelActivated(self):
@@ -2163,14 +2165,28 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		# Finally, ensure that focus is on the list of displays.
 		self.displayList.SetFocus()
 
+	@staticmethod
+	def getCurrentAutoDisplayDescription():
+		description = braille.AUTOMATIC_PORT[1]
+		if (
+			config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME
+			and braille.handler.display.name != "noBraille"
+		):
+			description = "%s (%s)" % (description, braille.handler.display.description)
+		return description
+
 	def updateBrailleDisplayLists(self):
-		driverList = braille.getDisplayList()
+		driverList = [(braille.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
+		driverList.extend(braille.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		displayChoices = [driver[1] for driver in driverList]
 		self.displayList.Clear()
 		self.displayList.AppendItems(displayChoices)
 		try:
-			selection = self.displayNames.index(braille.handler.display.name)
+			if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+				selection = 0
+			else:
+				selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
 		except:
 			pass
@@ -2178,12 +2194,13 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	def updatePossiblePorts(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
-		displayCls = braille._getDisplayDriver(displayName)
 		self.possiblePorts = []
-		try:
-			self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
-		except NotImplementedError:
-			pass
+		if displayName != "auto":
+			displayCls = braille._getDisplayDriver(displayName)
+			try:
+				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+			except NotImplementedError:
+				pass
 		if self.possiblePorts:
 			self.portsList.SetItems([p[1] for p in self.possiblePorts])
 			try:

@@ -28,6 +28,7 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
+import extensionPoints
 
 import extensionPoints
 
@@ -38,6 +39,18 @@ PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
 mainThreadId = thread.get_ident()
+
+#: Notifies when a window message has been received by NVDA.
+#: This allows components to perform an action when several system events occur,
+#: such as power, screen orientation and hardware changes.
+#: Handlers are called with three arguments.
+#: @param msg: The window message.
+#: @type msg: int
+#: @param wParam: Additional message information.
+#: @type wParam: int
+#: @param lParam: Additional message information.
+#: @type lParam: int
+post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
 _isPumpPending = False
@@ -290,6 +303,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
+			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == self.WM_DISPLAYCHANGE:
