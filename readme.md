@@ -230,3 +230,16 @@ To run only the translatable string checks (which check that all translatable st
 ```
 scons checkPot
 ```
+
+You may also use scons to run the system tests, though this will still rely on having set up the dependencies (see `tests/system/readme.md`).
+
+```
+scons systemTests
+```
+
+To run only specific system tests, specify them using the `filter` variable on the command line.
+This filter accepts wildcard characters.
+
+```
+scons systemTests filter="Read welcome dialog"
+```

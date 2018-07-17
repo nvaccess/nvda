@@ -30,6 +30,11 @@ from logHandler import log
 import addonHandler
 import extensionPoints
 
+import extensionPoints
+
+# inform those who want to know that NVDA has finished starting up.
+postNvdaStartup = extensionPoints.Action()
+
 PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
@@ -484,6 +489,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
+	postNvdaStartup.notify()
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
