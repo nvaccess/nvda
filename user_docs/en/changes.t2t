@@ -10,8 +10,13 @@ What's New in NVDA
 - Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#6316)
 - Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)
 - The Mac command key symbol (⌘) is now announced when reading text with any synthesizer. (#8366)
-- custom roles via the aria-roledescription attribute are now supported in Firefox, Chrome and Internet Explorer.
+- custom roles via the aria-roledescription attribute are now supported in all web browsers. (#8449)
 - New braille table: Swedish 8 dot computer braille. (#8227)
+- added czech eight dots, central kurdish, esperanto and hungarian braille tables. (#8446)
+- Support has been added to automatically detect braille displays in the background. (#1271)
+ - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.
+ - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
+ - Please consult the documentation for additional details.
 
 
 == Changes ==
@@ -20,14 +25,20 @@ What's New in NVDA
 - The user is now asked once on NVDA start-up if they are happy sending usage statistics to NV Access when automatically checking for updates. (#8217)
 - When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
 - Updated liblouis braille translator to version 3.6.0. (#8365)
+- updated the path to the correct russian eight-dots Braille table. (#8446)
 
 
 == Bug Fixes ==
 - Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- Switching braille context presentation when in browse mode no longer causes braille output to stop following. (#7741)
 
 
 == Changes for Developers ==
 - Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
+- A system test framework has been introduced for NVDA. (#708)
+- Some changes have been made to the hwPortUtils module: (#1271)
+ - listUsbDevices now yields dictionaries with device information including hardwareID and devicePath.
+ - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
 
 
 = 2018.2 =

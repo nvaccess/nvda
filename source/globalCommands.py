@@ -1728,11 +1728,7 @@ class GlobalCommands(ScriptableObject):
 			if newTetherChoice==braille.handler.TETHER_REVIEW:
 				braille.handler.handleReviewMove(shouldAutoTether=False)
 			else:
-				focus = api.getFocusObject()
-				if focus.treeInterceptor and not focus.treeInterceptor.passThrough:
-					braille.handler.handleGainFocus(focus.treeInterceptor,shouldAutoTether=False)
-				else:
-					braille.handler.handleGainFocus(focus,shouldAutoTether=False)
+				braille.handler.handleGainFocus(api.getFocusObject(),shouldAutoTether=False)
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % labels[newIndex])
@@ -1965,12 +1961,7 @@ class GlobalCommands(ScriptableObject):
 					braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 				braille.handler.mainBuffer.updateDisplay()
 			else:
-				# We just tethered to focus from review,
-				# Handle this case as we just focused the object
-				if obj.treeInterceptor and not obj.treeInterceptor.passThrough:
-					braille.handler.handleGainFocus(obj.treeInterceptor,shouldAutoTether=False)
-				else:
-					braille.handler.handleGainFocus(obj,shouldAutoTether=False)
+				braille.handler.handleGainFocus(obj,shouldAutoTether=False)
 	# Translators: Input help mode message for a braille command.
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE
