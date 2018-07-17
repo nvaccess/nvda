@@ -20,6 +20,7 @@ environment:
 
 init:
  - ps: |
+     iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
      if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
       # Strip "release-" prefix.
       $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
@@ -91,8 +92,8 @@ build_script:
      Set-AppveyorBuildVariable "sconsArgs" $sconsArgs
  - 'echo scons args: %sconsArgs%'
  - py scons.py source %sconsArgs%
- # We don't need launcher to run tests, so run the tests before launcher.
- - py scons.py tests %sconsArgs%
+ # We don't need launcher to run checkPot, so run the checkPot before launcher.
+ - py scons.py checkPot %sconsArgs%
  # The pot gets built by tests, but we don't actually need it as a build artifact.
  - del output\*.pot
  - 'echo scons output targets: %sconsOutTargets%'
@@ -112,6 +113,55 @@ build_script:
  - cd symbols
  - 7z a -tzip -r ..\output\symbols.zip *.dl_ *.ex_ *.pd_
  - cd ..
+
+before_test:
+ - py -m pip install robotframework robotremoteserver pyautogui nose
+ - mkdir testOutput
+ - mkdir testOutput\unit
+ - mkdir testOutput\system
+ - ps: |
+     $errorCode=0
+     $nvdaLauncherFile=".\output\nvda"
+     if(!$env:release) {
+      $nvdaLauncherFile+="_snapshot"
+     }
+     $nvdaLauncherFile+="_${env:version}.exe"
+     echo NVDALauncherFile: $NVDALauncherFile
+     $outputDir=$(resolve-path .\testOutput)
+     $installerLogFilePath="$outputDir\nvda_install.log"
+     $installerProcess=start-process -FilePath "$nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
+     try {
+      $installerProcess | wait-process -Timeout 180
+      $errorCode=$installerProcess.ExitCode
+     } catch {
+      echo NVDA installer process timed out
+      $errorCode=1
+     }
+     Push-AppveyorArtifact $installerLogFilePath
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+
+test_script:
+ - ps: |
+     $errorCode=0
+     $outDir = (Resolve-Path .\testOutput\unit\)
+     $unitTestsXml = "$outDir\unitTests.xml"
+     py -m nose --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
+     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     Push-AppveyorArtifact $unitTestsXml
+     $wc = New-Object 'System.Net.WebClient'
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+ - ps: |
+     $testOutput = (Resolve-Path .\testOutput\)
+     $systemTestOutput = (Resolve-Path "$testOutput\system")
+     $testSource = "./tests/system"
+     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
+     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
+     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
+     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     $wc = New-Object 'System.Net.WebClient'
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
+     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
 artifacts:
  - path: output\*
