@@ -194,6 +194,8 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
+				elif not a.isSupported:
+					log.debugWarning("Add-on %s is blacklisted", name)
 				elif a.isBlacklisted:
 					log.debugWarning("Add-on %s is blacklisted", name)
 					_blacklistedAddons.add(a.name)
@@ -268,9 +270,9 @@ class AddonBase(object):
 		This property returns False if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is missing.
 		"""
 		# If minimumNVDAVersion is None, it will always be less than the current NVDA version.
-		# Therefore, we should account for this
+		# Therefore, we should account for this.
 		minVersion = self.minimumNVDAVersion
-		return minVersion and minVersion<=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
+		return bool(minVersion) and minVersion<=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
 
 	@property
 	def isTested(self):
@@ -284,6 +286,7 @@ class AddonBase(object):
 		as this specific version of the add-on is blacklisted for this NVDA version."""
 		return self.name in state["blacklistedAddons"]
 
+	@property
 	def isWhitelisted(self):
 		"""C{True} if loading or installing this add-on is allowed
 		as even though this add-on might be untested, this specific version of the add-on is whitelisted for this NVDA version."""

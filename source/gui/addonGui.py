@@ -14,6 +14,7 @@ from logHandler import log
 import addonHandler
 import globalVars
 import buildVersion
+import guiHelper
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -30,15 +31,16 @@ class AddonsDialog(wx.Dialog):
 		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
+		entriesSizerHelper = guiHelper.BoxSizerHelper(self, sizer=entriesSizer)
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
 			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are currently disabled. To enable add-ons you must restart NVDA."))
 			mainSizer.Add(addonsDisabledLabel)
 		# Translators: the label for the installed addons list in the addons manager.
-		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
-		entriesSizer.Add(entriesLabel)
-		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		entriesLabel=_("Installed Add-ons")
+		self.addonsList=entriesSizerHelper.addLabeledControl(entriesLabel, wx.ListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 		self.addonsList.InsertColumn(0,_("Package"),width=150)
 		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
@@ -48,40 +50,33 @@ class AddonsDialog(wx.Dialog):
 		# Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
 		self.addonsList.InsertColumn(3,_("Author"),width=300)
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
-		entriesSizer.Add(self.addonsList,proportion=8)
 		settingsSizer.Add(entriesSizer)
-		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
+		entryButtonsHelper=guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-		self.aboutButton=wx.Button(self,label=_("&About add-on..."))
+		self.aboutButton=entryButtonsHelper.addButton(self,label=_("&About add-on..."))
 		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON,self.onAbout)
-		entryButtonsSizer.Add(self.aboutButton)
 		# Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
-		self.helpButton=wx.Button(self,label=_("Add-on &help"))
+		self.helpButton=entryButtonsHelper.addButton(self,label=_("Add-on &help"))
 		self.helpButton.Disable()
 		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
-		entryButtonsSizer.Add(self.helpButton)
 		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-		self.enableDisableButton=wx.Button(self,label=_("&Disable add-on"))
+		self.enableDisableButton=entryButtonsHelper.addButton(self,label=_("&Disable add-on"))
 		self.enableDisableButton.Disable()
 		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
-		entryButtonsSizer.Add(self.enableDisableButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
-		self.addButton=wx.Button(self,label=_("&Install..."))
+		self.addButton=entryButtonsHelper.addButton(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
-		entryButtonsSizer.Add(self.addButton)
 		# Translators: The label for a button to remove either:
 		# Remove the selected add-on in Add-ons Manager dialog.
 		# Remove a speech dictionary entry.
-		self.removeButton=wx.Button(self,label=_("&Remove"))
+		self.removeButton=entryButtonsHelper.addButton(self,label=_("&Remove"))
 		self.removeButton.Disable()
 		self.removeButton.Bind(wx.EVT_BUTTON,self.onRemoveClick)
-		entryButtonsSizer.Add(self.removeButton)
 		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
-		self.getAddonsButton=wx.Button(self,label=_("&Get add-ons..."))
+		self.getAddonsButton=entryButtonsHelper.addButton(self,label=_("&Get add-ons..."))
 		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.onGetAddonsClick)
-		entryButtonsSizer.Add(self.getAddonsButton)
-		settingsSizer.Add(entryButtonsSizer)
+		settingsSizer.Add(entryButtonsHelper.sizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: The label of a button to close the Addons dialog.
 		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
@@ -223,29 +218,36 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.SetFocus()
 
 	def getAddonStatus(self,addon):
-		if addon.isPendingInstall:
-			# Translators: The status shown for a newly installed addon before NVDA is restarted.
-			return _("install")
-		elif addon.isPendingRemove:
-			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-			return _("remove")
-		# Need to do this here, as 'isDisabled' overrides other flags.
-		elif addon.isPendingDisable:
-			# Translators: The status shown for an addon when it requires a restart to become disabled
-			return _("Disabled after restart")
-		elif addon.isPendingEnable:
-			# Translators: The status shown for an addon when it requires a restart to become enabled
-			return _("Enabled after restart")
-		elif addon.isBlacklisted:
-			# Translators: The status shown for an addon when it's unsupported or untested
-			# and therefore prohibited.
-			return _("incompatible")
+		statusList = []
+		if addon.isRunning:
+			# Translators: The status shown for an addon when its currently running in NVDA.
+			statusList.append(_("enabled"))
+		elif not addon.isSupported:
+			# Translators: The status shown for an addon when it is unsupported for the current version of NVDA.
+			# This implies that the add-on is disabled.
+			statusList.append(_("Unsupported"))
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-			return _("disabled")
-		else:
-			# Translators: The status shown for an addon when its currently running in NVDA.
-			return _("enabled")
+			statusList.append(_("disabled"))
+		if addon.isPendingInstall:
+			# Translators: The status shown for a newly installed addon before NVDA is restarted.
+			statusList.append(_("install"))
+		elif addon.isPendingRemove:
+			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+			statusList.append(_("removed after restart"))
+		elif addon.isPendingDisable:
+			# Translators: The status shown for an addon when it requires a restart to become disabled
+			statusList.append(_("Disabled after restart"))
+		elif addon.isPendingEnable:
+			# Translators: The status shown for an addon when it requires a restart to become enabled
+			statusList.append(_("Enabled after restart"))
+		if addon.isBlacklisted:
+			# Translators: The status shown for an addon when it's added to the blacklist.
+			statusList.append(_("blacklisted"))
+		elif addon.isWhitelisted:
+			# Translators: The status shown for an addon when it's added to the whitelist.
+			statusList.append(_("whitelisted"))
+		return ", ".join(statusList)
 
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
