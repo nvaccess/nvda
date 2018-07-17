@@ -22,6 +22,8 @@ What's New in NVDA
 == Changes ==
 - the list of available languages in the General Settings dialog is now sorted based on language names instead of ISO 639 codes. (#7284)
 - Add default gestures for alt shift tab and windows tab with all supported Freedom Scientific braille displays. (#7387)
+- For ALVA BC680 and protocol converter displays, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)
+- For ALVA BC6 displays, the key combination sp2+sp3 will now announce the current date and time, whereas sp1+sp2 emulates the Windows key. (#8230)
 - The user is now asked once on NVDA start-up if they are happy sending usage statistics to NV Access when automatically checking for updates. (#8217)
 - When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
 - Updated liblouis braille translator to version 3.6.0. (#8365)
@@ -31,6 +33,9 @@ What's New in NVDA
 == Bug Fixes ==
 - Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
 - Switching braille context presentation when in browse mode no longer causes braille output to stop following. (#7741)
+- ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)
+- By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)
+- Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)
 
 
 == Changes for Developers ==
