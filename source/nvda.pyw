@@ -194,6 +194,8 @@ if globalVars.appArgs.debugLogging:
 	logLevel=log.DEBUG
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
+if logLevel is log.DEBUG:
+	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 
 log.info("Starting NVDA")
 log.debug("Debug level logging enabled")
