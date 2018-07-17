@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-17 04:29+0100\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"PO-Revision-Date: 2018-07-05 17:34+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -1025,6 +1025,11 @@ msgstr "Ruska razvrstitev 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sanskritska razvrstitev 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Švedska 8 pična računalniška brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2767,11 +2772,11 @@ msgstr "Nalaganje NVDA. Prosimo, počakajte..."
 # lahko tudi izhod (tipka)
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
-msgstr "Vodoravno"
+msgstr "Ležeče"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr "Navpično"
+msgstr "Pokončno"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
@@ -6688,9 +6693,17 @@ msgstr "Zagon"
 msgid "No track playing"
 msgstr "Nobena skladba se ne predvaja"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Sporoča preostanek časa predvajanja skladbe, če se predvaja"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Sporoča pretekli čas  predvajanja skladbe, če se predvaja"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Sporoča dolžino skladbe, če se predvaja"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7737,6 +7750,44 @@ msgstr "Namesti čakajočo posodobitev"
 msgid "Please wait"
 msgstr "Prosimo, počakajte"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA  Zbiranje Podatkov o Rabi"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Zaradi izboljšav NVDA v prihodnosti, NV Access želi zbrati podatke o rabi iz "
+"kopoj NVDA, ki so v teku.\n"
+"\n"
+"Podatki vključujejo različico Operacijskega Sistema, različico NVDA, jezik, "
+"državo izvora, in še nekaj konfiguracijskih podatkov iz NVDA, kot je "
+"trenutna sinteza, brajeva vrstica in brajeva tabela. Nobena govorna ali "
+"vsebina v brajici se ne bo poslala k NV Access.  Prosimo, oglejte si "
+"Uporabniški Vodič za trenuten seznam podatkov, ki se zbirajo.\n"
+"\n"
+"Želite dovoliti NV Access, da občasno zbere te podatke zaradi izboljšave "
+"NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Da"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Ne"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Upravitelj dodatkov"
@@ -8401,6 +8452,10 @@ msgstr "Samodejno preveri, če obstajajo &Posodobitve za NVDA"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Ob zagonu obvesti, ko &čaka posodobitev"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Dovoli projektu NVDA zbiranje statistike rabe NVDA"
 
 # copy (preslikati) mi je bolj všeč kot kopirati
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
