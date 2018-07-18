@@ -46,6 +46,7 @@ import touchHandler
 import winVersion
 import weakref
 import time
+import keyLabels
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -1205,17 +1206,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		#Translators: This is the label for a list of checkboxes
 		# controlling which keys are NVDA modifier keys.
 		modifierBoxLabel = _("&Select NVDA Modifier Keys")
-		self.modifierChoices = [
-			# Translators: This is the label for a choice in the
-			# NVDA key modifier selection list.
-			_("Numpad Insert"),
-			# Translators: This is the label for a choice in the
-			# NVDA key modifier selection list.
-			_("Extended Insert"),
-			# Translators: This is the label for a choice in the
-			# NVDA key modifier selection list.
-			_("CapsLock"),
-		]
+		self.modifierChoices = [keyLabels.localizedKeyLabels[key] for key in keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS]
 		self.kbdList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckableList, choices=self.modifierChoices)
 		checkedItems = []
 		if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
