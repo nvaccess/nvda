@@ -30,9 +30,6 @@ from comtypes.gen.UIAutomationClient import *
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
 
-# Specific to Windows 10 (note: remove this once IUIAutomation6 interface support is implemented):
-UIA_IsDialogPropertyId = 30174
-
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
