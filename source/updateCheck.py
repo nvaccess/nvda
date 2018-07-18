@@ -20,6 +20,7 @@ if not versionInfo.updateVersionType:
 
 import winVersion
 import os
+import inspect
 import threading
 import time
 import cPickle
@@ -30,9 +31,12 @@ import ctypes.wintypes
 import ssl
 import wx
 import languageHandler
+import speech
+import braille
 import gui
 from gui import guiHelper
-from logHandler import log
+from addonHandler import getCodeAddon, AddonError
+from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
@@ -63,6 +67,26 @@ _stateFileName = None
 #: C{None} if it is disabled.
 autoChecker = None
 
+def getQualifiedDriverClassNameForStats(cls):
+	""" fetches the name from a given synthDriver or brailleDisplay class, and appends core for in-built code, the add-on name for code from an add-on, or external for code in the NVDA user profile.
+	Some examples:
+	espeak (core)
+	newfon (external)
+	eloquence (addon:CodeFactory)
+	noBraille (core)
+	"""
+	name=cls.name
+	try:
+		addon=getCodeAddon(cls)
+	except AddonError:
+		addon=None
+	if addon:
+		return "%s (addon:%s)"%(name,addon.name)
+	path=inspect.getsourcefile(cls)
+	if isPathExternalToNVDA(path):
+		return "%s (external)"%name
+	return "%s (core)"%name
+
 def checkForUpdate(auto=False):
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
@@ -72,15 +96,28 @@ def checkForUpdate(auto=False):
 	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
+	allowUsageStats=config.conf["update"]['allowUsageStats']
 	params = {
 		"autoCheck": auto,
+		"allowUsageStats":allowUsageStats,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
 		"osVersion": winVersion.winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
-		"language": languageHandler.getLanguage(),
-		"installed": config.isInstalledCopy(),
 	}
+	if auto and allowUsageStats:
+		synthDriverClass=speech.getSynth().__class__
+		brailleDisplayClass=braille.handler.display.__class__ if braille.handler else None
+		# Following are parameters sent purely for stats gathering.
+		#  If new parameters are added here, they must be documented in the userGuide for transparency.
+		extraParams={
+			"language": languageHandler.getLanguage(),
+			"installed": config.isInstalledCopy(),
+			"synthDriver":getQualifiedDriverClassNameForStats(synthDriverClass) if synthDriverClass else None,
+			"brailleDisplay":getQualifiedDriverClassNameForStats(brailleDisplayClass) if brailleDisplayClass else None,
+			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
+		}
+		params.update(extraParams)
 	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
 	try:
 		res = urllib.urlopen(url)
@@ -215,7 +252,7 @@ class AutoUpdateChecker(UpdateChecker):
 	AUTO = True
 
 	def __init__(self):
-		self._checkTimer = wx.PyTimer(self.check)
+		self._checkTimer = gui.NonReEntrantTimer(self.check)
 		if config.conf["update"]["startupNotification"] and isPendingUpdate():
 			secsTillNext = 0 # Display the update message instantly
 		else:
@@ -306,7 +343,7 @@ class UpdateResultDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 		self.Show()
 
 	def onInstallButton(self, evt):
@@ -357,7 +394,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onInstallButton(self, evt):
 		executeUpdate(self.destPath)
@@ -404,7 +441,7 @@ class UpdateDownloader(object):
 		"""
 		self._shouldCancel = False
 		# Use a timer because timers aren't re-entrant.
-		self._guiExecTimer = wx.PyTimer(self._guiExecNotify)
+		self._guiExecTimer = gui.NonReEntrantTimer(self._guiExecNotify)
 		gui.mainFrame.prePopup()
 		# Translators: The title of the dialog displayed while downloading an NVDA update.
 		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
@@ -555,7 +592,7 @@ class DonateRequestDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 		self.Show()
 
 	def onDonate(self, evt):

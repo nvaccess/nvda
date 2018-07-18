@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
+#Copyright (C) 2012-2018 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
 
 """Add-ons Manager user interface
 The Add-ons Manager allows add-ons to be installed, removed, enabled, disabled and perform other tasks.
@@ -107,7 +107,7 @@ class AddonsDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
@@ -285,6 +285,8 @@ class AddonsDialog(wx.Dialog):
 
 	def onClose(self,evt):
 		self.Destroy()
+		# #7077: If the instance flag isn't cleared, it causes issues when add-ons manager reopens or another add-on is installed remotely.
+		AddonsDialog._instance = None
 		needsRestart = False
 		for addon in self.curAddons:
 			if (addon.isPendingInstall or addon.isPendingRemove

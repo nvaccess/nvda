@@ -33,6 +33,7 @@ import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
 import watchdog
+import extensionPoints
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
@@ -40,6 +41,12 @@ runningTable={}
 NVDAProcessID=None
 _importers=None
 _getAppModuleLock=threading.RLock()
+#: Notifies when another application is taking foreground.
+#: This allows components to react upon application switches.
+#: For example, braille triggers bluetooth polling for braille displaysf necessary.
+#: Handlers are called with no arguments.
+post_appSwitch = extensionPoints.Action()
+
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -236,6 +243,9 @@ def handleAppSwitch(oldMods, newMods):
 	newModsSet = set(newMods)
 	processed = set()
 	nextStage = []
+
+	if not oldMods or oldMods[-1].appName != newMods[-1].appName:
+		post_appSwitch.notify()
 
 	# Determine all apps that are losing focus and fire appropriate events.
 	for mod in reversed(oldMods):
