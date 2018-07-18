@@ -1911,6 +1911,8 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | control+end key | brailleSpaceBar+dot4+dot5+dot6 |
 | alt key | brailleSpaceBar+dot1+dot3+dot4 |
 | alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| alt+shift+tab key | brailleSpaceBar+dot1+dot2+dot5+dot6 |
+| windows+tab key | brailleSpaceBar+dot2+dot3+dot4 |
 | escape key | brailleSpaceBar+dot1+dot5 |
 | windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
 | space key | brailleSpaceBar |
@@ -2427,6 +2429,11 @@ The following models are supported:
 
 For BrailleNote Touch, please refer to  the [Brailliant BI Series / BrailleNote Touch HumanWareBrailliant] section.
 
+Except for BrailleNote PK, both braille (BT) and QWERTY (QT) keyboards are supported.
+For BrailleNote QT, PC keyboard emulation isn't supported.
+You can also enter braille dots using the QT keyboard.
+Please check the braille terminal section of the BrailleNote manual guide for details.
+
 If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
 Please check the BrailleNote manual for details.
 In NVDA, you may also need to set the port in the Braille Settings dialog.
@@ -2434,6 +2441,9 @@ If you are connecting via USB or bluetooth, you can set the port to "Automatic",
 If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
 
 Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+On the BrailleNote Apex BT, you can use the scroll wheel located between dots 1 and 4 for various NVDA commands.
+The wheel consists of four directional dots, a center click button, and a wheel that spins clockwise or counterclockwise.
 
 Following are the BrailleNote command assignments for NVDA.
 Please check your BrailleNote's documentation to find where these keys are located.
@@ -2445,6 +2455,7 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Move braille display to previous line | previous |
 | Move braille display to next line | next |
 | Route to braille cell | routing |
+| NvDA menu | space+dot1+dot3+dot4+dot5 (space+n) |
 | Toggle braille tethered to | previous+next |
 | Up arrow key | space+dot1 |
 | Down arrow key | space+dot4 |
@@ -2464,6 +2475,39 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+
+Following are commands assigned to BrailleNote QT when it is not in braille input mode.
+
+|| Name | Key |
+| NvDA menu | read+n |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow|
+| Right arrow key | rightArrow |
+| Page up key | function+upArrow |
+| Page down key | function+downArrow |
+| Home key | function+leftArrow |
+| End key | function+rightArrow |
+| Control+home keys | read+t |
+| Control+end keys | read+b |
+| Enter key | enter |
+| Backspace key | backspace |
+| Tab key | tab |
+| Shift+tab keys | shift+tab |
+| Windows key | read+w |
+| Alt key | read+m |
+| Toggle input help | read+1 |
+
+Following are commands assigned to the scroll wheel:
+
+|| Name | Key |
+| Up arrow key | upArrow |
+| Down arrow key | downArrow |
+| Left Arrow key | leftArrow |
+| Right arrow key | rightArrow |
+| Enter key | center button |
+| Tab key | scroll wheel clockwise |
+| Shift+tab keys | scroll wheel counterclockwise |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]

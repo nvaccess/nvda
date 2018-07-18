@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-13 23:28+0200\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"PO-Revision-Date: 2018-07-05 16:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -1032,6 +1032,11 @@ msgstr "روسي بدون اختصارات"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "سنسكريتي بدون اختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "سويدي حاسوب برايل 8 نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6611,9 +6616,17 @@ msgstr "ابدأ"
 msgid "No track playing"
 msgstr "لا يوجد ملف صوتي يعمل"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "الإعلان عن الوقت المتبقى من الملف الصوتي الحالي, إن وجد"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "الإعلان عن الوقت المنقضي من الملف الصوتي الحالي, إن وجد"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "الإعلان عن الوقت الإجمالي للملف الصوتي الحالي, إن وجد"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7658,6 +7671,43 @@ msgstr "تثبيت تحديث تم تحميله من قبل"
 msgid "Please wait"
 msgstr "يرجى الانتظار"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "تجميع بيانات استخدام NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"لضمان تطوير NVDA في المستقبل تتمنى منظمة NV Access تجميع بيانات الاستخدام من "
+"النسخ العاملة من NVDA\n"
+"\n"
+"وتضمن البيانات إصدار نظام التشغيل, وإصدار NVDA, واللغة, والدولة, فضلا عن بعض "
+"الإعدادات كآلة النطق العاملة, والسطر الإلكتروني وجدول ترجمة برايل المستخدم. "
+"لم يتم إرسال أي محتوى منطوق أو مكتوب للمنظمة. يرجى الرجوع لدليل المستخدم "
+"لمعرفة قائمة البيانات التي سيتم تجميعها.\n"
+"\n"
+"هل تريد أن تقوم منظمة NV Access بتجميع هذه البيانات على فترات منتظمة كي نطور "
+"NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&نعم"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&لا"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "مدير الإضافات البرمجية"
@@ -8316,6 +8366,10 @@ msgstr "&تحديث nvda آليا"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "الإ&شعار بوجود تحديث ينتظر تثبيته عند بدأ التشغيل"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "إتاحة تجميع مشروع NVDA لإحصائيات الاستخدام"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

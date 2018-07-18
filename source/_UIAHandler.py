@@ -26,22 +26,9 @@ import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
-#Some new win8 UIA constants that could be missing
-UIA_StyleIdAttributeId=40034
-UIA_AnnotationAnnotationTypeIdPropertyId=30113
-UIA_AnnotationTypesAttributeId=40031
-AnnotationType_SpellingError=60001
-UIA_AnnotationObjectsAttributeId=40032
-StyleId_Heading1=70001
-StyleId_Heading9=70009
+#Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
-UIA_FullDescriptionPropertyId=30159
-UIA_LevelPropertyId=30154
-UIA_PositionInSetPropertyId=30152
-UIA_SizeOfSetPropertyId=30153
-UIA_LocalizedLandmarkTypePropertyId=30158
-UIA_LandmarkTypePropertyId=30157
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -188,7 +175,8 @@ class UIAHandler(COMObject):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
-				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+				for interface in reversed(CUIAutomation8._com_interfaces_):
 					try:
 						self.clientObject=self.clientObject.QueryInterface(interface)
 						break
