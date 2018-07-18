@@ -697,15 +697,15 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-<<<<<<< HEAD
-			# Translators: The label of a checkbox in general settings to toggle automatic checking for ad-on updates at startup.
-			item=self.autoCheckForAddonUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &add-on updates when NVDA starts"))
-			item.Value=config.conf["update"]["addonUpdateAtStartup"]
-=======
 			# Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering  
 			item=self.allowUsageStatsCheckBox=wx.CheckBox(self,label=_("Allow the NVDA project to gather NVDA usage statistics"))
 			item.Value=config.conf["update"]["allowUsageStats"]
->>>>>>> master
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizerHelper.addItem(item)
+			# Translators: The label of a checkbox in general settings to toggle automatic checking for ad-on updates at startup.
+			item=self.autoCheckForAddonUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &add-on updates when NVDA starts"))
+			item.Value=config.conf["update"]["addonUpdateAtStartup"]
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
@@ -772,18 +772,14 @@ class GeneralSettingsPanel(SettingsPanel):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if updateCheck:
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
+			config.conf["update"]["addonUpdateAtStartup"]=self.autoCheckForAddonUpdatesCheckBox.IsChecked()
 			config.conf["update"]["allowUsageStats"]=self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
-<<<<<<< HEAD
-		config.conf["update"]["addonUpdateAtStartup"]=self.autoCheckForAddonUpdatesCheckBox.IsChecked()
-		if self.oldLanguage!=newLanguage:
-=======
 
 	def postSave(self):
 		if self.oldLanguage!=config.conf["general"]["language"]:
->>>>>>> master
 			if gui.messageBox(
 				# Translators: The message displayed after NVDA interface language has been changed.
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
