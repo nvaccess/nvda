@@ -45,6 +45,7 @@ What's New in NVDA
  - listUsbDevices now yields dictionaries with device information including hardwareID and devicePath.
  - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
 - Updated wxPython to 4.0.3. (#7077)
+- As NVDA now only supports Windows 7 SP1 and later, the key "minWindowsVersion" used to check if UIA should be enabled for a particular release of Windows has been removed. (#8422)
 
 
 = 2018.2 =
