@@ -2,18 +2,18 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2018 NV Access Limited, Joseph Lee, Babbage B.V.
 
 """handles touchscreen interaction (Windows 8 and later).
 Used to provide input gestures for touchscreens, touch modes and other support facilities.
 In order to use touch features, NVDA must be installed on a touchscreen computer running Windows 8 and later.
 """
 
-import wx
 import threading
 from ctypes import *
 from ctypes.wintypes import *
 import re
+import gui
 import winVersion
 import globalPluginHandler
 import config
@@ -208,7 +208,7 @@ inputCore.registerGestureSource("ts", TouchInputGesture)
 class TouchHandler(threading.Thread):
 
 	def __init__(self):
-		self.pendingEmitsTimer=wx.PyTimer(core.requestPump)
+		self.pendingEmitsTimer=gui.NonReEntrantTimer(core.requestPump)
 		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()
