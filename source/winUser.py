@@ -314,6 +314,9 @@ SW_SHOWNORMAL = 1
 # RedrawWindow() flags
 RDW_INVALIDATE = 0x0001
 RDW_UPDATENOW = 0x0100
+# MsgWaitForMultipleObjectsEx
+QS_ALLINPUT = 0x04ff
+MWMO_ALERTABLE = 0x0002
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)

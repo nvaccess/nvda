@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-11 08:09+0900\n"
+"POT-Creation-Date: 2018-06-29 00:10+1000\n"
+"PO-Revision-Date: 2018-06-28 23:41+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1033,6 +1033,11 @@ msgstr "ロシア語1級点字"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "サンスクリット語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "スウェーデン語8点コンピューター点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6609,9 +6614,17 @@ msgstr "スタート"
 msgid "No track playing"
 msgstr "何も再生されていません"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "もし何か再生されている場合は、現在再生中のトラックの残り時間を報告"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "もし何か再生されている場合は、現在再生中のトラックの経過時間を報告"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "もし何か再生されている場合は、現在再生中のトラックの長さを報告"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7650,6 +7663,43 @@ msgstr "保留中の更新を実行"
 msgid "Please wait"
 msgstr "お待ちください"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA 使用状況統計の収集"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"NVDA を改善するために NV Access は NVDA の使用状況統計を収集したいと考えてい"
+"ます。\n"
+"\n"
+"収集する情報は Windows のバージョン、NVDA のバージョン、言語、国や地域、およ"
+"び NVDA の設定、例えば使用している音声エンジン、点字ディスプレイ、点字テーブ"
+"ルなどです。読み上げたり点字ディスプレイに表示したりする内容は収集しません。 "
+"収集する情報のリストはユーザーガイドを参照してください。\n"
+"\n"
+"NVDA を改善するためにこれらの情報を定期的に NV Access に送信してもよろしいで"
+"すか？"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "はい(&Y)"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "いいえ(&N)"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "アドオン マネージャー"
@@ -8315,6 +8365,10 @@ msgstr "NVDAの更新を自動的に確認(&U)"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "保留中の NVDA の更新を起動時に通知(&P)"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "NVDA プロジェクトに NVDA の使用状況統計の収集を許可する"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
