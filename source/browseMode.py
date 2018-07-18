@@ -1,6 +1,6 @@
 #browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2007-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -825,7 +825,7 @@ class ElementsListDialog(wx.Dialog):
 
 		self.tree.SetFocus()
 		self.initElementType(self.ELEMENT_TYPES[self.lastSelectedElementType][0])
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onElementTypeChange(self, evt):
 		elementType=evt.GetInt()
@@ -1046,14 +1046,14 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 		textList = []
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
-			try:
-				textList.append(attrs["name"])
-			except KeyError:
-				pass
-			if landmark == "region":
-				# The word landmark is superfluous for regions.
-				textList.append(aria.landmarkRoles[landmark])
-			else:
+			# Ensure that the name of the field gets presented even if normally it wouldn't. 
+			name=attrs.get('name')
+			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
+				textList.append(name)
+				if landmark == "region":
+					# The word landmark is superfluous for regions.
+					textList.append(aria.landmarkRoles[landmark])
+			if landmark != "region":
 				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
@@ -1062,14 +1062,14 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
-			try:
-				textList.append(field["name"])
-			except KeyError:
-				pass
-			if landmark == "region":
-				# The word landmark is superfluous for regions.
-				textList.append(braille.landmarkLabels[landmark])
-			else:
+			# Ensure that the name of the field gets presented even if normally it wouldn't. 
+			name=field.get('name')
+			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
+				textList.append(name)
+				if landmark == "region":
+					# The word landmark is superfluous for regions.
+					textList.append(braille.landmarkLabels[landmark])
+			if landmark != "region":
 				# Translators: This is brailled to indicate a landmark (example output: lmk main).
 				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)

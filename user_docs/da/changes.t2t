@@ -3,39 +3,27 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.2 =
+= 2018.3 =
 
 == Nye Funktioner ==
-- NVDA rapporterer nu hvor mange kolonner og rækker en tabel omfatter med tale og punkt. (#2642)
-- Kommandoer til tabelnavigation kan nu benyttes i Google Docs (med braille-tilstand slået til). (#7946)
-- Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
-- Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
-- NVDA kan nu annoncere notifikationer fra apps som Lommeregner og Windows Store. (#8045)
-- Nye punkttabeller: Litauisk ottepunkt, ukrainsk, mongolsk Niveau 2. (#7839)
-- Tilføjede et script, der kan rapportere tekstformatering under den aktuelle punktcelle. (#7106)
-- Det er nu muligt at udskyde installationen af NVDA til et mere bekvemt tidspunkt. (#4263)
- 
- 
-== Ændringer ==
-- Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
-- Opdaterede liblouis Braille Translator til 3.5.0. (#7839)
-- Den litauiske punktoversættelsestabel er blevet omdøbt til litauisk sekspunkt for at undgå forvirring, da vi nu har en tabel til litauisk ottepunkt. (#7839)
-- Det fransk (Canada) niveau 1 og niveau 2 punkttabeller er blevet erstattet med Fransk (Unified) og Fransk (Niveau 2). (#7839)
-- De sekundære markørsammenføringsknapper på Alva BC6, EuroBraille og Papenmeier punktdisplays
- rapporterer nu tekstformateringen under den aktuelle punktcelle. (#7106)
+- NVDA kan nu rapportere grammatikfejl på websider, når dette er passende angivet i Mozilla Firefox. (#8280)
+- Tilføjede understøttelse for BrailleNote QT og Apex BTs rullehjul, når BrailleNote benyttes som punktdisplay. (#6316)
+- Tilføjede scripts til rapportering af den forløbne tid af et spor, samt den aktuelle længde af sporet i Foobar2000. (#6596)
+- Annoncering af Mac-tasten "kommando" (⌘) rapporteres nu korrekt med enhver talesyntese. (#8366)
+- Tilpassede roller der benytter attributten "aria-roledescription" understøttes nu i Mozilla Firefox, Google Chrome og Internet Explorer.
+- Ny punkttabel: Svensk 8 punkt computer braille. (#8227)
 
- 
- == Fejlrettelser ==
-- NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
-- NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
-- NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
-- Mærker på tjekbokse og radioknapper i Chrome og Firefox annonceres ikke længere to gange, når der bruges bogstavnavigation eller tab-tasten benyttes. (#7960)
-- Håndter aria-current med en værdi false som false i stedet for true (#7892).
-- Talesyntesen for stemmerne Windows OneCore vil ikke længere være ude af stand til at indlæse, hvis en konfigureret stemme tilhørende den pågældende syntese er blevet fjernet. (#7999)
-- Det er nu hurtigere at skifte imellem stemmer, når Windows OneCore benyttes. (#7999)
-- Rettede ukorrekt punktoutput for flere punkttabeller, herunder store bogstaver i ottepunkt forkortet dansk punkt. (#7526, #7693)
-- NVDA kan nu rapportere flere typer af punkter i Microsoft Word. (#6778)
-- Udførelse af scriptet til rapportering af tekstformatering vil ikke længere have uventede resultater og flytte læsepositionen. (#7869)
+
+== Ændringer ==
+- Listen over tilgængelige sprog i den generelle indstillingskategori sorteres nu efter navn på de pågældende sprog i stedet for ISO 639. (#7284)
+- Tilføjede standarddefineret inputbevægelse for ALT+Skift+Tab og Windows+Tab for alle Freedom Scientific punktdisplays. (#7387)
+- Brugeren bliver nu spurgt en gang når NVDA starter, om der ønskes at der indsendes brugsstatistikker til NV Access, når der søges efter opdateringer. (#8217)
+- Hvis brugeren har erklæret sig enig i indsendelsen af brugsstatistikker til NV Access under søgningen efter opdateringer, vil NVDA nu sende navnet på den aktuelle driver der benyttes som talesyntese og til punktskrift. Dette vil hjælpe med at prioritere fremtidigt arbejde på disse drivere. (#8217)
+- Opdaterede liblouis punktoversætter til version 3.6.0. (#8365)
+
+
+== Fejlrettelser ==
+- Tilgængelige etiketter i Google Chrome skulle gerne rapporteres oftere i gennemsynstilstand, særligt når selve etiketten ikke vises som indhold. (#4773)
 
 
 == Ændringer for udviklere ==

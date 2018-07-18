@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
+#Copyright (C) 2012-2018 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
 
 import os
 import wx
@@ -92,7 +92,7 @@ class AddonsDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.

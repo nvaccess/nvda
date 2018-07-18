@@ -1,6 +1,6 @@
 #gui/configProfiles.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2013-2018 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -102,7 +102,7 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def __del__(self):
 		ProfilesDialog._instance = None
@@ -335,7 +335,7 @@ class TriggersDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
@@ -397,7 +397,7 @@ class NewProfileDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
-		self.Center(wx.BOTH | wx.Center)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles

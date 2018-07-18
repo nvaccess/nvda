@@ -49,7 +49,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Braille settings
 [braille]
-	display = string(default=noBraille)
+	display = string(default=auto)
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
@@ -188,6 +188,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [update]
 	autoCheck = boolean(default=true)
 	startupNotification = boolean(default=true)
+	allowUsageStats = boolean(default=false)
+	askedAllowUsageStats = boolean(default=false)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
@@ -199,6 +201,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [debugLog]
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
+	gui = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

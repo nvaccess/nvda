@@ -28,11 +28,29 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
+import extensionPoints
+
+import extensionPoints
+
+# inform those who want to know that NVDA has finished starting up.
+postNvdaStartup = extensionPoints.Action()
 
 PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
 mainThreadId = thread.get_ident()
+
+#: Notifies when a window message has been received by NVDA.
+#: This allows components to perform an action when several system events occur,
+#: such as power, screen orientation and hardware changes.
+#: Handlers are called with three arguments.
+#: @param msg: The window message.
+#: @type msg: int
+#: @param wParam: Additional message information.
+#: @type wParam: int
+#: @param lParam: Additional message information.
+#: @type lParam: int
+post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
 _isPumpPending = False
@@ -61,6 +79,8 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
+	if not globalVars.appArgs.secure and not config.isAppX and not config.conf['update']['askedAllowUsageStats']:
+		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -215,6 +235,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
+	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
+	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
+	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	log.info("Using wx version %s"%wx.version())
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
@@ -283,6 +306,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
+			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == self.WM_DISPLAYCHANGE:
@@ -401,11 +425,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
 			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
@@ -467,6 +489,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
+	postNvdaStartup.notify()
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
