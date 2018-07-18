@@ -1206,7 +1206,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		#Translators: This is the label for a list of checkboxes
 		# controlling which keys are NVDA modifier keys.
 		modifierBoxLabel = _("&Select NVDA Modifier Keys")
-		self.modifierChoices = [keyLabels.localizedKeyLabels[key] for key in keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS]
+		self.modifierChoices = [keyLabels.localizedKeyLabels[key] for key in ("numpadinsert", "insert", "capslock")]
 		self.kbdList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckableList, choices=self.modifierChoices)
 		checkedItems = []
 		if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:

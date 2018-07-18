@@ -75,8 +75,6 @@ def isNVDAModifierKey(vkCode,extended):
 	else:
 		return False
 
-SUPPORTED_NVDA_MODIFIER_KEYS = ("insert", "numpadinsert","capslock")
-
 def getNVDAModifierKeys():
 	keys=[]
 	if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
