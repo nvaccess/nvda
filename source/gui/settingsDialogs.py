@@ -5,7 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 import glob
 import os
 import copy
@@ -67,7 +67,7 @@ class SettingsDialog(wx.Dialog):
 
 	class MultiInstanceError(RuntimeError): pass
 
-	__metaclass__=ABCMeta
+	__metaclass__=guiHelper.SIPABCMeta
 	_instances=weakref.WeakSet()
 	title = ""
 	shouldSuspendConfigProfileTriggers = True
@@ -232,7 +232,7 @@ class SettingsPanel(wx.Panel):
 	@type title: str
 	"""
 
-	__metaclass__=ABCMeta
+	__metaclass__=guiHelper.SIPABCMeta
 	title=""
 
 	def __init__(self, parent):
