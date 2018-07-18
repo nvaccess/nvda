@@ -188,7 +188,8 @@ class UIAHandler(COMObject):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
-				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+				for interface in reversed(CUIAutomation8._com_interfaces_):
 					try:
 						self.clientObject=self.clientObject.QueryInterface(interface)
 						break
@@ -305,6 +306,10 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		if not obj:
+			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
+			# There is nothing we can do with these.
+			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
 	def _isUIAWindowHelper(self,hwnd):

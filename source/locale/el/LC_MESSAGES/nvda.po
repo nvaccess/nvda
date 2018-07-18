@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-16 22:20+0200\n"
+"POT-Creation-Date: 2018-05-18 00:10+1000\n"
+"PO-Revision-Date: 2018-05-22 13:53+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -95,9 +95,9 @@ msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "spelling and grammar: {text}"
-msgstr "Ορθογραφικός έλεγχος: {text}"
+msgstr "ορθογραφικός και γραμματικός έλεγχος: {text}"
 
 #. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -566,19 +566,16 @@ msgstr "τέλος %s"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
-#, fuzzy
 msgid "automatically"
-msgstr "αυτόματο"
+msgstr "αυτόματα"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
-#, fuzzy
 msgid "to focus"
-msgstr "Καμία εστίαση"
+msgstr "σε εστίαση"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
-#, fuzzy
 msgid "to review"
-msgstr "Επισκόπηση κειμένου"
+msgstr "σε επισκόπηση"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -594,9 +591,9 @@ msgid "{modifier} released"
 msgstr "{modifier} εκδόθηκε"
 
 #. Translators: Reported when a braille input modifier is pressed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{modifier} pressed"
-msgstr "δεν πατήθηκε"
+msgstr "{modifier} πατήθηκε"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -808,7 +805,6 @@ msgstr "Γαλλικό (ενοποιημένο) οκτάστιγμο braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "French (unified) grade 2"
 msgstr "Γαλλικά (ενοποιημένα) βαθμού 2"
 
@@ -909,15 +905,13 @@ msgstr "Κασμίρι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Lithuanian 8 dot"
-msgstr "Λιθουανικά"
+msgstr "Λιθουανικό οκτάστιγμο"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Lithuanian 6 dot"
-msgstr "Λιθουανικά"
+msgstr "Λιθουανικό εξάστιγμο"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -936,15 +930,13 @@ msgstr "Μανίπιουρι βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Mongolian grade 1"
-msgstr "Ουγγρικά βαθμού 1"
+msgstr "Μογγολικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Mongolian grade 2"
-msgstr "Νορβηγικά βαθμού 2"
+msgstr "Μογγολικά βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2982,7 +2974,6 @@ msgid "Sleep mode on"
 msgstr "Ενεργοποίηση λειτουργίας ύπνου"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-#, fuzzy
 msgid "Toggles sleep mode on and off for the active application."
 msgstr ""
 "Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης της "
@@ -3572,7 +3563,6 @@ msgid "%s copied to clipboard"
 msgstr "%s αντιγράφηκε στο πρόχειρο"
 
 #. Translators: Input help mode message for report current navigator object command.
-#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
 "information, and pressing three times Copies name and value of this object "
@@ -4084,68 +4074,56 @@ msgstr ""
 "τρέχοντος φορτωμένου appModule"
 
 #. Translators: Input help mode message for go to general settings command.
-#, fuzzy
 msgid "Shows NVDA's general settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των γενικών ρυθμίσεων του NVDA"
 
 #. Translators: Input help mode message for go to select synthesizer command.
-#, fuzzy
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου του συνθέτη φωνής του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου επιλογής συνθέτη φωνής για το NVDA"
 
 #. Translators: Input help mode message for go to speech settings command.
-#, fuzzy
 msgid "Shows NVDA's speech settings"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων εκφώνησης του NVDA"
 
 #. Translators: Input help mode message for go to select braille display command.
-#, fuzzy
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου επιλογής οθόνης braille για το NVDA"
 
 #. Translators: Input help mode message for go to braille settings command.
-#, fuzzy
 msgid "Shows NVDA's braille settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
-#, fuzzy
 msgid "Shows NVDA's keyboard settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων πληκτρολογίου του NVDA"
 
 #. Translators: Input help mode message for go to mouse settings command.
-#, fuzzy
 msgid "Shows NVDA's mouse settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#, fuzzy
 msgid "Shows NVDA's review cursor settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του δρομέα επισκόπησης του NVDA"
 
 #. Translators: Input help mode message for go to input composition settings command.
-#, fuzzy
 msgid "Shows NVDA's input composition settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της εισόδου κειμένου του NVDA"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#, fuzzy
 msgid "Shows NVDA's object presentation settings"
 msgstr ""
-"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του αντικειμένου παρουσίασης "
-"του NVDA"
+"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων παρουσίασης αντικειμένου του "
+"NVDA"
 
 #. Translators: Input help mode message for go to browse mode settings command.
-#, fuzzy
 msgid "Shows NVDA's browse mode settings"
 msgstr ""
 "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της λειτουργίας περιήγησης του "
 "NVDA"
 
 #. Translators: Input help mode message for go to document formatting settings command.
-#, fuzzy
 msgid "Shows NVDA's document formatting settings"
 msgstr "Εμφανίζει το παράθυρο διαλόγου της μορφοποίησης εγγράφου του NVDA"
 
@@ -4214,9 +4192,9 @@ msgstr ""
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
-#, fuzzy, python-format
+#, python-format
 msgid "Braille tethered %s"
-msgstr "Η οθόνη braille προσδέθηκε στο %s"
+msgstr "Η οθόνη braille προσδέθηκε σε %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4339,11 +4317,9 @@ msgstr ""
 "braille"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#, fuzzy
 msgid "Reports formatting info for the text under this braille cell"
 msgstr ""
-"Δρομολογεί το δρομέα προς ή ενεργοποιεί το αντικείμενο κάτω από αυτό το κελί "
-"braille"
+"Αναφέρει πληροφορίες για τη μορφοποίηση του κειμένου κάτω από το κελί braile"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -4469,23 +4445,21 @@ msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των Προφίλ διαμόρφωσης του NVDA"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers disabled"
-msgstr "Προφίλ Διαμόρφωσης"
+msgstr "Απενεργοποιημένοι σκανδαλισμοί για το προφίλ διαμόρφωσης"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers enabled"
-msgstr "Προφίλ Διαμόρφωσης"
+msgstr "Ενεργοποιημένοι σκανδαλισμοί για το προφίλ διαμόρφωσης"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#, fuzzy
 msgid ""
 "Toggles disabling of all configuration profile triggers. Disabling remains "
 "in effect until NVDA is restarted"
 msgstr ""
-"Σφάλμα κατά την αποθήκευση του προφίλ διαμόρφωσης - πιθανώς το αρχείο "
-"συστήματος είναι μόνο για ανάγνωση"
+"Πραγματοποιεί εναλλαγή μεταξύ της ενεργοποίησης και της απενεργοποίησης για "
+"όλους τους σκανδαλισμούς των προφίλ διαμόρφωσης. Η απενεργοποίηση παραμένει "
+"σε ισχύ μέχρι την επανεκκίνηση του NVDA"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -6068,9 +6042,9 @@ msgstr "σειρά %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, fuzzy, python-format
+#, python-format
 msgid "through %s"
-msgstr "διακριτή διαγραφή"
+msgstr "έως το %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -6079,9 +6053,9 @@ msgstr "στήλη %s"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "με {rowCount} σειρές και {columnCount} στήλες"
+msgstr "έως τη σειρά {row} στήλη {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6408,9 +6382,8 @@ msgid "grammar error"
 msgstr "γραμματικό σφάλμα"
 
 #. Translators: Reported when moving out of text containing a grammar error.
-#, fuzzy
 msgid "out of grammar error"
-msgstr "εκτός ανορθόγραφου"
+msgstr "εκτός γραμματικού λάθους "
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -6623,14 +6596,13 @@ msgstr "Δεν είναι διαθέσιμη νέα έκδοση"
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "Εγκατάσταση του NVDA"
+msgstr "&Εγκατάσταση του NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#, fuzzy
 msgid "Re-&download update"
-msgstr "&Λήψη ενημερωμένης έκδοσης"
+msgstr "&Επανάληψη λήψης ενημερωμένης έκδοσης"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6647,24 +6619,21 @@ msgid "&Close"
 msgstr "&Κλείσιμο"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "Η έκδοση {version} του NVDA είναι διαθέσιμη"
+msgstr "Η έκδοση {version} του NVDA είναι έτοιμη για εγκατάσταση.\n"
 
 #. Translators: The label of a button to install an NVDA update.
-#, fuzzy
 msgid "&Install update"
-msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
+msgstr "&Εγκατάσταση ενημερωμένης έκδοσης"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#, fuzzy
 msgid "&Postpone update"
-msgstr "&Λήψη ενημερωμένης έκδοσης"
+msgstr "&Αναβολή λήψης ενημερωμένης έκδοσης"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#, fuzzy
 msgid "Unable to postpone update."
-msgstr "Δεν είναι δυνατή η αντιγραφή"
+msgstr "Δεν είναι δυνατή η αναβολή λήψης της ενημερωμένης έκδοσης."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6672,7 +6641,7 @@ msgstr "Λήψη Ενημερωμένης Έκδοσης σε εξέλιξη"
 
 #. Translators: The progress message indicating that a connection is being established.
 msgid "Connecting"
-msgstr "&Σύνδεση σε εξέλιξη"
+msgstr "Σύνδεση σε εξέλιξη"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
@@ -6695,21 +6664,21 @@ msgstr ""
 "Χρειαζόμαστε την βοήθεια σας προκειμένου να συνεχίσουμε να βελτιώνουμε το "
 "NVDA.\n"
 "Αυτό το έργο στηρίζεται πρωτίστως σε δωρεές και επιχορηγήσεις. Κάνοντας μία "
-"δωρεά, βοηθάτε την πλήρους απασχόλησης χρηματοδότηση της ανάπτυξης.\n"
-"Ακόμα και αν δωρίζονται $10 για κάθε κατέβασμα, θα είμαστε σε θέση να "
-"καλύψουμε όλα τα τρέχοντα έξοδα του έργου.\n"
-"Όλες οι δωρεές εισπράττονται από την NV Access, που είναι ένας μη-"
-"κερδοσκοπικός οργανισμός που αναπτύσσει το NVDA.\n"
+"δωρεά, βοηθάτε στη συνέχιση της ανάπτυξης της εφαρμογής.\n"
+"Ακόμα και με δωρεά $10 για κάθε κατέβασμα, θα είμαστε σε θέση να καλύψουμε "
+"όλα τα τρέχοντα έξοδα του έργου.\n"
+"Όλες οι δωρεές εισπράττονται από την NV Access, το μη-κερδοσκοπικό οργανισμό "
+"που αναπτύσσει το NVDA.\n"
 "Σας ευχαριστούμε για την υποστήριξη σας."
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
-msgstr "Παρακαλώ κάνετε Δωρεά"
+msgstr "Παρακαλώ κάντε δωρεά"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 msgid "&Donate"
-msgstr "Δωρεά"
+msgstr "&Δωρεά"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
@@ -6725,7 +6694,9 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr "Ένας δωρεάν αναγνώστης οθόνης ανοικτού κώδικα για τα Microsoft Windows"
+msgstr ""
+"Ένας δωρεάν και ανοιχτού κώδικα αναγνώστης οθόνης για τα Windows της "
+"Microsoft"
 
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
@@ -7398,14 +7369,13 @@ msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protocol converter"
 
 #. Translators: Name of a bluetooth serial communications port.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Bluetooth serial: {portName}"
-msgstr "Σειριακή θύρα: {portName}"
+msgstr "Σειριακή Bluetooth: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
-#, fuzzy
 msgid "Setting HID keyboard simulation not supported"
-msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μαθηματικά."
+msgstr "Δεν υποστηρίζεται η προσομείωση με πληκτρολόγιο HID  ."
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
@@ -7437,9 +7407,8 @@ msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
-msgstr "HumanWare Brailliant BI/B series"
+msgstr "Σειρά HumanWare Brailliant BI/B / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7450,14 +7419,12 @@ msgid "Eurobraille Esys/Esytime/Iris displays"
 msgstr "Eurobraille Esys/Esytime/Iris displays"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
-#, fuzzy
 msgid "HID keyboard input simulation is unavailable."
-msgstr "Η έκδοση {version} του NVDA είναι διαθέσιμη"
+msgstr "Προσομείωση εισόδου πληκτρολογίου HID δε διατίθεται."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
-#, fuzzy
 msgid "Toggle HID keyboard simulation"
-msgstr "Δεν υποστηρίζεται η αλληλεπίδραση με μαθηματικά."
+msgstr "Πραγματοποιεί εναλλαγή της λειτουργίας προσομείωσης πληκτρολογίου HID"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7488,7 +7455,6 @@ msgid "Toggle braille input"
 msgstr "Εναλλαγή εισόδου braille"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr "Σειρά HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
@@ -7627,25 +7593,22 @@ msgid "COM Registration Fixing Tool"
 msgstr "COM Registration Fixing Tool"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
-#, fuzzy
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr ""
-"Παρακαλώ περιμένετε όσο οι ρυθμίσεις αντιγράφονται στη διαμόρφωση του "
-"συστήματος"
+"Παρακαλώ περιμένετε όσο το NVDA προσπαθεί να επιδιορθώσει τις καταχωρήσεις "
+"συστήματος COM."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
 msgstr "Ολοκλήρωση COM Registration Fixing Tool"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "&Settings..."
-msgstr "&Ρυθμίσεις φωνής..."
+msgstr "&Ρυθμίσεις..."
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "NVDA settings"
-msgstr "Δεν υπάρχουν ρυθμίσεις"
+msgstr "Ρυθμίσεις του NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7803,9 +7766,8 @@ msgid "Donate"
 msgstr "Δωρεά"
 
 #. Translators: The label for the menu item to run a pending update.
-#, fuzzy
 msgid "Install pending &update"
-msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
+msgstr "&Εγκατάσταση εκκρεμούς ενημέρωσης"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
@@ -7919,9 +7881,8 @@ msgid "Restart with debug logging enabled"
 msgstr "Επανεκκίνηση με ενεργοποιημένη την καταγραφή του εντοπισμού σφαλμάτων"
 
 #. Translators: An option in the combo box to choose exit action.
-#, fuzzy
 msgid "Install pending update"
-msgstr "Εγκατάσταση ενημερωμένης έκδοσης του NVDA"
+msgstr "Εγκατάσταση εκκρεμούς ενημέρωσης"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -8078,14 +8039,12 @@ msgid "Enabled after restart"
 msgstr "Ενεργοποίηση μετά από επανεκκίνηση"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#, fuzzy
 msgid "disabled"
-msgstr "απενεργοποίηση"
+msgstr "απενεργοποιημένο"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#, fuzzy
 msgid "enabled"
-msgstr "ενεργοποίηση"
+msgstr "ενεργοποιημένο"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8128,6 +8087,8 @@ msgstr "Πληροφορίες Πρόσθετου"
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr ""
+"Τα πρόσθετα δε μπορούν να εγκατασταθούν στην έκδοση του NVDA στο Windows "
+"Store"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8528,30 +8489,28 @@ msgstr "Σφάλμα κατά την αποθήκευση του αρχείου 
 
 #. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
 msgid "Apply"
-msgstr ""
+msgstr "Εφαρμογή"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#, fuzzy
 msgid "&Categories:"
-msgstr "Κατηγορία"
+msgstr "&Κατηγορίες:"
 
 #. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 #, python-format
 msgid "%s Settings Category"
-msgstr ""
+msgstr "Κατηγορία Ρυθμίσεων για %s "
 
 #. Translators: This is the label for the general settings panel.
-#, fuzzy
 msgid "General"
-msgstr "Γενικές ρυθμίσεις"
+msgstr "Γενικά"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8611,7 +8570,7 @@ msgstr "Αυτόματος έλεγχος για &ενημερωμένες εκ�
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
-msgstr ""
+msgstr "Ειδοποίηση για &εκκρεμή ενημέρωση κατά την εκκίνηση"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8676,21 +8635,19 @@ msgid "Language Configuration Change"
 msgstr "Αλλαγή Διαμόρφωσης Γλώσσας"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#, fuzzy
 msgid "&Synthesizer"
-msgstr "&Συνθέτης φωνής:"
+msgstr "&Συνθέτης φωνής"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr ""
+msgstr "&Αλλαγή..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#, fuzzy
 msgid "Select Synthesizer"
-msgstr "Συνθέτης Φωνής"
+msgstr "Επιλογή Συνθέτη Φωνής"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8719,7 +8676,6 @@ msgid "Synthesizer Error"
 msgstr "Σφάλμα Συνθέτη Φωνής"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
 msgstr "Φωνή"
 
@@ -8764,9 +8720,8 @@ msgid "Use &spelling functionality if supported"
 msgstr "Χρήση λειτουργίας &εκφώνησης ανά χαρακτήρα αν υποστηρίζεται"
 
 #. Translators: This is the label for the keyboard settings panel.
-#, fuzzy
 msgid "Keyboard"
-msgstr "πληκτρολόγιο %s"
+msgstr "Πληκτρολόγιο"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8867,9 +8822,8 @@ msgid "&Brightness controls audio coordinates volume"
 msgstr "Έλεγχος της έντασης των ηχητικών συντεταγμένων με τη φωτεινότητα"
 
 #. Translators: This is the label for the review cursor settings panel.
-#, fuzzy
 msgid "Review Cursor"
-msgstr "&Δρομέας επισκόπησης..."
+msgstr "Δρομέας Επισκόπησης"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8892,9 +8846,8 @@ msgid "Simple review mode"
 msgstr "Λειτουργία απλής επισκόπησης"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#, fuzzy
 msgid "Input Composition"
-msgstr "Ρυθμίσεις Εισόδου Κειμένου"
+msgstr "Είσοδος Κειμένου"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -9237,14 +9190,13 @@ msgstr ""
 "καθυστέρηση)"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#, fuzzy
 msgid "Touch Interaction"
-msgstr "Έξοδος από αλληλεπίδραση με μαθηματικά"
+msgstr "Αλληλεπίδραση Αφής"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr ""
+msgstr "Λειτουργία πληκτρολόγησης &αφής"
 
 #. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
@@ -9339,14 +9291,12 @@ msgid "Add Dictionary Entry"
 msgstr "Προσθήκη Καταχώρησης στο Λεξικό"
 
 #. Translators: A label for the braille display on the braille panel.
-#, fuzzy
 msgid "Braille &display"
-msgstr "&Οθόνη Braille:"
+msgstr "&Οθόνη Braille"
 
 #. Translators: This is the label for the braille display selection dialog.
-#, fuzzy
 msgid "Select Braille Display"
-msgstr "Eco Οθόνες Braille"
+msgstr "Επιλογή Οθόνης Braille"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9405,9 +9355,8 @@ msgid "Show &messages indefinitely"
 msgstr "Εμφάνιση μηνύματος επ αόριστον"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "Tether B&raille:"
-msgstr "SuperBraille"
+msgstr "Πρόσδεση οθόνης &Braile"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9422,14 +9371,12 @@ msgid "Focus context presentation:"
 msgstr "Εστίαση σε περιεχόμενο παρουσίασης"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#, fuzzy
 msgid "NVDA"
-msgstr "Έξοδος από το NVDA"
+msgstr "NVDA"
 
 #. Translators: The profile name for normal configuration
-#, fuzzy
 msgid "normal configuration"
-msgstr "(κανονική διαμόρφωση)"
+msgstr "κανονική διαμόρφωση"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9707,29 +9654,29 @@ msgid "&Errors"
 msgstr "&Σφάλματα"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "Ορθογραφικός έλεγχος: {text}"
+msgstr "Εισαγωγή: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "Ορθογραφικός έλεγχος: {text}"
+msgstr "διαγραφή: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
 msgid "track change: {text}"
-msgstr ""
+msgstr "παρακολούθηση αλλαγής: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "σχόλιο: {text} από {author} στις {date}"
+msgstr "Σχόλιο: {comment} από {author} στις {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
-msgstr "σχόλιο: {text} από {author} στις {date}"
+msgstr "{comment} από {author} στις {date}"
 
 msgid "Desktop"
 msgstr "Επιφάνεια Εργασίας"
@@ -10216,9 +10163,8 @@ msgid "No Series defined."
 msgstr "Δεν έχει οριστεί σειρά"
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
-#, fuzzy
 msgid "Chart Elements"
-msgstr "Στοιχεία"
+msgstr "Στοιχεία Γραφήματος"
 
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
@@ -10228,9 +10174,9 @@ msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} σειρά {seriesIndex} από {seriesCount}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "Χρώμα σειράς: {colorName} "
+msgstr "Χρώμα φέτας: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
@@ -10289,74 +10235,65 @@ msgid " {segmentType} {pointIndex} of {pointCount}"
 msgstr " {segmentType} {pointIndex} από {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
-#, fuzzy
 msgid "Primary Category Axis"
-msgstr "Πρωτεύον υποσέλιδο"
+msgstr "Άξονας Κύριας Κατηγορίας"
 
 #. Translators: Indicates Secondary Category Axis
-#, fuzzy
 msgid "Secondary Category Axis"
-msgstr "Κατηγορία {categoryAxisData}: "
+msgstr "Άξονας Δευτερεύουσας Κατηγορίας"
 
 #. Translators: Indicates Primary Value Axis
-#, fuzzy
 msgid "Primary Value Axis"
-msgstr "Πρωτεύουσα κεφαλίδα"
+msgstr "Άξονας Κύριας Τιμής"
 
 #. Translators: Indicates Secondary Value Axis
-#, fuzzy
 msgid "Secondary Value Axis"
-msgstr "Δευτερεύον"
+msgstr "Άξονας Δευτερεύουσας Τιμής"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
-msgstr "Πρωτεύον υποσέλιδο"
+msgstr "Άξονας Κύριας Σειράς"
 
 #. Translators: Indicates Secondary Series Axis
-#, fuzzy
 msgid "Secondary Series Axis"
-msgstr "Δευτερεύον"
+msgstr "Άξονας Δευτερεύουσας Σειράς"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "Τίτλος γραφήματος: {chartTitle}"
+msgstr "Τίτλος: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
-msgstr ""
+msgstr "Εκθετική"
 
 #. Translators: Indicates that trendline type is Linear
-#, fuzzy
 msgid "Linear"
-msgstr "Γραμμή"
+msgstr "Γραμμικό"
 
 #. Translators: Indicates that trendline type is Logarithmic
 msgid "Logarithmic"
-msgstr ""
+msgstr "Λογαριθμική"
 
 #. Translators: Indicates that trendline type is Moving Average
 msgid "Moving Average"
-msgstr ""
+msgstr "Κυλιόμενος μέσος όρος"
 
 #. Translators: Indicates that trendline type is Polynomial
 msgid "Polynomial"
-msgstr ""
+msgstr "Πολυωνυμική"
 
 #. Translators: Indicates that trendline type is Power
 msgid "Power"
-msgstr ""
+msgstr "Δύναμη"
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
-msgstr " τετραγωνισμένο"
+msgstr " τετράγωνο"
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "αριθμητικό πλην"
+msgstr "πλην"
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
@@ -10364,11 +10301,13 @@ msgid ""
 "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
 "{trendlineLabel} "
 msgstr ""
+"{seriesName} γραμμή τάσης: {trendlineType}, όνομα: {trendlineName}, ετικέτα: "
+"{trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
-msgstr ""
+msgstr "{seriesName} γραμμή τάσης: {trendlineType}, όνομα: {trendlineName} "
 
 #. Translators: Details about a chart title in Microsoft Office.
 #, python-brace-format
@@ -10414,9 +10353,9 @@ msgstr ""
 "Καταχώρηση υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr " {segmentType} {pointIndex} από {pointCount}"
+msgstr "Καταχώρηση υπομνήματος {legendEntryIndex} απο {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
+"POT-Creation-Date: 2018-06-29 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA\n"
@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -722,12 +722,12 @@ msgstr "Engelsk (U.K.) Niveau 2"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "Unified English Braille Code grade 1"
+msgstr "Unified English Braille Code niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 2"
-msgstr "Unified English Braille Code grade 2"
+msgstr "Unified English Braille Code niveau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -977,7 +977,7 @@ msgstr "Norsk Niveau 3"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Nepali grade 1"
-msgstr "Nepali Niveau 1"
+msgstr "Nepalesisk Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1036,13 +1036,18 @@ msgstr "Sanskrit Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Svensk 8 punkt computer braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Swedish grade 1"
 msgstr "Svensk Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovak grade 1"
-msgstr "Slovak Niveau 1"
+msgstr "Slovakisk Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1067,7 +1072,7 @@ msgstr "Tamilsk niveau 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Telugu grade 1"
-msgstr "Telegu Niveau 1"
+msgstr "Telugu Niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6689,9 +6694,19 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Intet spor afspilles"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Oplæser den resterende tid for det igangværende spor, hvis det findes"
+msgstr ""
+"Rapporterer den resterende tid for det igangværende spor, hvis tilgængelig"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr ""
+"Rapporterer den forløbne tid for det igangværende spor, hvis tilgængelig"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Rapporterer længden for det igangværende spor, hvis tilgængelig"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7354,7 +7369,7 @@ msgstr "Resultat"
 
 #. Translators: Describes a command.
 msgid "Activates the text at the cursor if possible"
-msgstr "Aktivere teksten under markøren hvis muligt"
+msgstr "Aktiverer teksten under markøren hvis muligt"
 
 #. Translators: Describes a command.
 msgid "Dismiss the recognition result"
@@ -7379,7 +7394,7 @@ msgstr "Genkendelse fejlede"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
-msgstr "konfiguration anvendes"
+msgstr "konfiguration anvendt"
 
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
@@ -7504,7 +7519,7 @@ msgstr ""
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "&Udtale ordbøger"
+msgstr "&Udtaleordbøger"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
@@ -7743,6 +7758,44 @@ msgstr "Installér ventende opdatering"
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Vent venligst"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Indsamling af brugsdata under brugen af NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"For at forbedre NVDA i fremtiden ønsker NV Access at indsamle brugsdata fra "
+"kørende kopier af NVDA.\n"
+"\n"
+"Data inkluderer operativsystemversion, NVDA-version, sprog, oprindelsesland, "
+"samt visse NVDA-indstillinger som f.eks. aktuelle talesyntese, benyttet "
+"punktdisplay og punktskriftsindstillinger. Intet indhold i form af tale "
+"eller punktskrift vil blive sendt til NV Access. Se venligst "
+"brugervejledningen for en aktuel liste over alle indsamlede data.\n"
+"\n"
+"Ønsker du at give tilladelse til, at NV Access regelmæssigt må indsamle "
+"brugsdata til forbedring af NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Ja"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Nej"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -8169,12 +8222,12 @@ msgstr "NVDA er blevet installeret korrekt."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Din installation af NVDA er blevet opdateret korrekt."
+msgstr "Din installation af NVDA er blevet opdateret korrekt. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "Tryk OK for at starte deninstallerede kopi."
+msgstr "Tryk OK for at starte den installerede kopi."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -8422,6 +8475,10 @@ msgstr "Søg automatisk efter  &opdateringer af NVDA"
 msgid "Notify for &pending update on startup"
 msgstr "Meddel om &ventende opdateringer, når NVDA startes"
 
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Tillad at NVDA-projektet indsamler brugsdata om NVDA"
+
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
@@ -8459,8 +8516,7 @@ msgstr "Fejl ved kopiering af NVDA brugerindstillinger"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
-msgstr ""
-"ÐÐ¾ÑÐ¸ÑÑÑÐ²Ð°ÑÑÐºÑ Ð½Ð°Ð»Ð°ÑÑÑÐ²Ð°Ð½Ð½Ñ ÑÑÐ¿ÑÑÐ½Ð¾ ÑÐºÐ¾Ð¿ÑÐ¹Ð¾Ð²Ð°Ð½Ð¾"
+msgstr "Succesfuldt kopieret NVDA-brugerindstillinger"
 
 msgid "This change requires administrator privileges."
 msgstr "Denne ændring kræver administratorrettigheder"
@@ -8657,7 +8713,7 @@ msgstr "Oplæs &rolle når musen flyttes ind over et objekt "
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "&Afspil lydkoordinator under flytning af mus"
+msgstr "&Afspil lydkoordinater under flytning af mus"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -8816,7 +8872,7 @@ msgstr "Automatisk Sig Alt efter &indlæsning af side "
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Include l&ayout tables"
-msgstr "Inkluder l&ayout&tabeller"
+msgstr "Inkluder layout&tabeller"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9031,7 +9087,7 @@ msgstr "Berøringsinteraktion"
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr "Berøringsindtastning"
+msgstr "&Berøringsindtastning"
 
 #. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
