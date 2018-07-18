@@ -3,13 +3,39 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== Novas Funcionalidades ==
+- O NVDA passa a anunciar os erros gramaticais, quando reportados pelo Mozilla Firefox em páginas Web. (#8280)
+- Adicionado suporte para as rodas de deslocamento dos BrailleNote QT e Apex BT, quando usados como linha Braille do NVDA. (#6316)
+- Adicionado comando para anunciar o tempo total e já reproduzido da pista actual no Foobar2000. (#6596)
+- O símbolo da tecla Comando do Mac (⌘) passa a ser anunciada ao ler texto com qualquer sintetizador. (#8366)
+- Funções personalizadas via atributos aria-roledescription passam a ser suportados no Firefox, Chrome e Internet Explorer.
+- Nova tabela Braille: Sueco Braille informático de 8 pontos. (#8227)
+
+
+== Alterações ==
+- A lista de idiomas disponíveis, na secção Geral das configurações do NVDA, passa a ser ordenada pelo nome do idioma e não pelo código ISO 639. (#7284)
+- Adicionados comandos padrão para simular o alt shift tab e windows tab em todas as linhas Braille da Freedom Scientific suportadas. (#7387)
+- O utilizador será perguntado, apenas uma vez, no arranque do NVDA se permitem o envio de dados de utilização para a NV Access, ao verificar automaticamente por actualizações. (#8217)
+- Ao verificar por actualizações, se o utilizador concordou com a recolha de dados de utilização pela NV Access, o NVDA irá enviar o nome dos drivers do sintetizador e da linha Braille em uso, para ajudar na melhor prioritização do trabalho futuro nesses drivers. (#8217)
+- Actualizado o conversor Braille Liblouis para a versão 3.6.0. (#8365)
+
+
+== Correções ==
+- As etiquetas acessíveis de controlos no Google Chrome, quando não fazem parte do conteúdo, são anunciadas mais prontamente em modo de navegação. (#4773)
+
+
+== Alterações para Desenvolvedores ==
+- Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
+
+
 = 2018.2 =
 
 Os destaques desta versão são:
 - Suporte para tabelas no Kindle for PC;
 -  suporte para as linhas Braille BrailleNote Touch e BI14  da Humanware;
 - Melhorias nos sintetizadores Windows OneCore e Sapi5;
-- Melhorias no Microsoft Outlook.
 
 
 == Novas Funcionalidades ==

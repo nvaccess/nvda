@@ -971,8 +971,27 @@ Ova je opcija dostupna samo u instaliranim inačicama NVDA.
 ==== Automatski provjeri postojanje nove verzije NVDA ====[GeneralSettingsCheckForUpdates]
 Ako je ova opcija uključena, NVDA će automatski provjeriti za nadogradnje i obavjestiti vas da je nadogradnja dostupna.
 Također, možete ručno provjeriti postoji li nova inačica kad odaberete provjeri postojanje nadogradnje u podizborniku pomoć u NVDA izborniku.
+Pri ručnom ili automatskom provjeravanju nadogradnje, nužno je da NVDA pošalje neke informacije na server za nadogradnje kako bi vam bila isporučena ispravna nadogradnja za vaš operacijski sustav.
+Slijedeće informacije se uvijek šalju: 
+- Aktualna inačica NVDA
+- Inačica operacijskog sustava
+- bitnost operacijskog sustava
 
-==== Izvjesti o nadogradnjama na čekanju prilikom pokretanja ====[GeneralSettingsNotifyPendingUpdates]
+
+==== Dozvoli NVDA projektu prikupljanje statistike korištenja ====[GeneralSettingsGatherUsageStats]
+Ako je ova opcija omogućena, NV Access će koristiti informacije dobivene od servera za nadogradnje kako bi pratila broj korisnika uključujući opće demografske statistike kao što su to operacijski sustav i zamlja porijekla.
+Imajte na umu da iako vaša IP adresa će biti korištena za izračunavanje vaše države porijekla, ista nije zadržavana na serveru.
+Osim obaveznih informacija koje se šalju pri provjeri nadogradnje, trenutačno se šalju i slijedeće informacije:
+- NVDA jezik sučelja
+- Tip kopije NVDA, instalirana ili prijenosna
+- Naziv trenutno korištene govorne jedinice, uključujući ime dodatka od kojeg potiče driver
+- Naziv trenutno korištenog brajičnog retka, uključujući ime dodatka od kojeg potiče driver
+- Trenutno korištena brajična tablica (ako se koristi brajica)
+
+
+Ove informacije puno pomažu NV Access postaviti prioritete za budući razvoj NVDA.
+
+==== Izvijesti o nadogradnjama na čekanju prilikom pokretanja ====[GeneralSettingsNotifyPendingUpdates]
 Ako je ova opcija omogućena, NVDA će vas informirati ako postoji nadogradnja na čekanju kada se isti ponovno pokrene, te će vam ponuditi mogućnost da sto instalirate.
 Također, Možete ručno instalirati ažuriranje na čekanju iz dijaloškog okvira izlaz (ako je to omogućeno),  Iz NVDA izbornika, ili ako ponovno provjeravate nadogradnju iz izbornika pomoć.
 
@@ -1911,6 +1930,8 @@ Molimo pogledajte dokumentaciju za više informacija o opisu tipki i o tome gdje
 | kontrol+end | BrajičnaRazmaknica+točkica4+točkica5+točkica6 |
 | alt | brajičnaRazmaknica+točkica1+točkica3+točkica4 |
 | alt+tab | brajičnaRazmaknica+točkica2+točkica3+točkica4+točkica5 |
+| alt+shift+tab | Razmaknica+točkica1+točkica2+dočkica5+točkica6 |
+| windows+tab | razmaknica+točkica2+točkica3+točkica4 |
 | escape | brajičnaRazmaknica+točkica1+točkica5 |
 | windows tipka | BrajičnaRazmaknica+točkica2+točkica4+točkica5+točkica6 |
 | razmak | brajičnaRazmaknica |
@@ -2427,6 +2448,11 @@ Sljedeći modeli su podržani:
 
 Za BrailleNote Touch, molimo pogledajte poglavlje [Brailliant BI serije / BrailleNote Touch HumanWareBrailliant].
 
+Izuzimajući BrailleNote PK, braille (BT) i QWERTY (QT) tipkovnice su podržane.
+Za BrailleNote QT, emulacija tipkovnice osobnog računala nije podržana.
+Moguće je također upisivanje brajice koristeći qwerty tipkovnicu.
+Molimo pogledajte poglavlje brajični terminal Braillenote korisničkog uputstva za više informacija.
+
 Ako vaš uređaj podržava više od jedne vrste veze, kada spajate vaš BrailleNote za korištenje sa NVDA, morate postaviti priključak brajičnog terminala u postavkama brajičnog terminala.
 Za više informacija, molimo pogledajte korisničke upute za BrailleNote elektroničku bilježnicu.
 U NVDA ćete možda trebati odabrati priključak u [dijaloškom okviru odabir brajičnog retka #SelectBrailleDisplay].
@@ -2435,7 +2461,10 @@ Ako za spajanje koristite serijski priključak (ili pretvarač sa serijskog prik
 
 Prije spajanja vašeg BrailleNote Apex uz pomoć njegovog Usb klijenta, morate instalirati upravljačke programe koje je napravila tvrtka Human Ware.
 
-Sljede BrailleNote prečaci za korištenje sa NVDA čitačem ekrana.
+Na BrailleNote Apex BT, možete koristiti kotačić koji se nalazi između točkica 1 i 4 za različite NVDA prečace.
+Kotačić se sastoji od četiri usmjerene točke, centralnog gumba za klikanje, i kotačića koji se može vrtiti u smjeru, ili obrnuto od smjera kazaljke na satu.
+
+Slijede BrailleNote prečaci za korištenje sa NVDA čitačem ekrana.
 Molimo pogledajte vaše BrailleNote upute za upotrebu da biste znali gdje su smještene ove tipke.
 
 %kc:beginInclude
@@ -2445,6 +2474,7 @@ Molimo pogledajte vaše BrailleNote upute za upotrebu da biste znali gdje su smj
 | Premjesti brajični redak na prethodni redak | prethodno |
 | Premjesti brajični redak na slijedeći redak | slijedeće |
 | Prebaci se na brajičnu ćeliju | routing |
+| NvDA izbornik | razmaknica+točkica1+točkica3+točkica4+točkica5 (razmaknica+n) |
 | Prebacuj usmjerivanje brajice na | Prethodni+Slijedeći |
 | Strelica Gore | razmak+točkica1 |
 | Strelica Dolje | razmak+točkica4 |
@@ -2463,7 +2493,40 @@ Molimo pogledajte vaše BrailleNote upute za upotrebu da biste znali gdje su smj
 | Shift+tab | razmak+točkica1+točkica2+točkica5+točkica6 |
 | Windows tipka | razmak+točkica2+točkica4+točkica5+točkica6 (razmak+w) |
 | Alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
-| Uključi/isključi pomoč pri unosu | razmak+točkica2+točkica3+točkica6 (razmak+spušteno h) |
+| Uključi/isključi pomoć pri unosu | razmak+točkica2+točkica3+točkica6 (razmak+spušteno h) |
+
+Slijede komande dodijeljene BrailleNote QT kada nije u načinu unosa.
+
+|| Naziv | Prečac |
+| NvDA izbornik | read+n |
+| Strelica gore | upArrow |
+| Strelica dolje | downArrow |
+| Strelica lijevo | leftArrow|
+| Strelica desno | rightArrow |
+| Page up | function+upArrow |
+| Page down | function+downArrow |
+| Home | function+leftArrow |
+| End | function+rightArrow |
+| Ctrl+home | read+t |
+| Ctrl+end | read+b |
+| Enter | enter |
+| Backspace | backspace |
+| Tab | tab |
+| Shift+tab | shift+tab |
+| Windows tipka | read+w |
+| Alt | read+m |
+| uključivanje i isključivanje pomoći pri unosu | read+1 |
+
+Slijede prečaci dodijeljeni kotačiću:
+
+|| Naziv | Prečac |
+| strelica gore | upArrow |
+| strelica dolje | downArrow |
+| Strelica lijevo | leftArrow |
+| strelica desno | rightArrow |
+| Enter | srednja tipka |
+| Tab | kotačić u smijeru kazaljke na satu |
+| Shift+tab | kotačić obrnuto od kazaljke na satu |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
