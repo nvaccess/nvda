@@ -3,6 +3,33 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== Nove značajke ==
+- NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox. (#8280)
+- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#6316)
+- Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)
+- The Mac command key symbol (⌘) is now announced when reading text with any synthesizer. (#8366)
+- custom roles via the aria-roledescription attribute are now supported in Firefox, Chrome and Internet Explorer.
+- New braille table: Swedish 8 dot computer braille. (#8227)
+
+
+== Izmjene ==
+- the list of available languages in the General Settings dialog is now sorted based on language names instead of ISO 639 codes. (#7284)
+- Add default gestures for alt shift tab and windows tab with all supported Freedom Scientific braille displays. (#7387)
+- The user is now asked once on NVDA start-up if they are happy sending usage statistics to NV Access when automatically checking for updates. (#8217)
+- When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
+- Updated liblouis braille translator to version 3.6.0. (#8365)
+
+
+== Ispravke grešaka ==
+- Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
 = 2018.2 =
 Novosti u ovoj inačici uključuju Podršku tablica u Kindle za osobna računala, podršku za Humanware Braillenote touch i BI14 Braille brajične retke, unapređenja za OneCore, kao i za sapi5 govorne jedinice, unapređenja u outlooku, i još puno toga.
 

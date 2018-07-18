@@ -7,47 +7,51 @@ NVDA NVDA_VERSION Brukermanual
 = Innholdsfortegnelse =[toc]
 %%toc
 
-+ introduksjon +
-NonVisual Desktop Access (NVDA) er en skjermleser for Microsoft Windows-operativsystemet. Den er gratis og laget med åpen kildekode.
-NVDA gir tilbakemeldinger via syntetisk tale og punktskrift, og lar blinde og svaksynte få tilgang til datamaskiner som kjører Windows for samme kostnad som seende.
++ introduksjon +[Introduction]
+Velkommen til NVDA!
+
+NonVisual Desktop Access (NVDA) er en gratis skjermleser for Microsoft Windows-operativsystemet. Den er laget med åpen kildekode.
+NVDA gir tilbakemeldinger via syntetisk tale og punktskrift, og gjør blinde og svaksynte personer i stand til å bruke datamaskiner som kjører Windows til samme pris som det seende personer betaler.
 NVDA er utviklet av [NV Access http://www.nvaccess.org/], med bidrag fra fellesskapet.
 
-++ Generelle funksjoner ++
+++ Generelle funksjoner ++[GeneralFeatures]
 NVDA lar blinde og svaksynte få tilgang til og bruke Windows operativsystem og mange tredjeparts applikasjoner.
 
 Blant de viktigste funksjonene er:
-- Støtte for populære applikasjoner, inkludert nettlesere, e-postklienter, chatteprogrammer og kontorpakker
-- Innebygget syntetisk tale som støtter over 43 språk
-- Lesing av tekstformatering hvor dette er tilgjengelig, for eksempel skriftnavn og størrelse, stil og stavefeil
-- Automatisk lesing av tekst under musa og valgfri hørbar indikasjon ved musa plassering
-- Støtte for mange leselister
+- Støtte for populære applikasjoner, inkludert nettlesere, e-postklienter, internett-chatteprogrammer og kontorpakker
+- Innebygget syntetisk tale som støtter over 80 språk
+- Lesing av tekstformatering hvor dette er tilgjengelig, for eksempel fontnavn og -størrelse, stil og stavefeil
+- Automatisk lesing av tekst under musa og valgfri hørbar indikasjon der musepekeren er plassert
+- Støtte for mange leselister, inkludert innskriving av punktskrift på leselister med tastatur
 - Mulig å kjøre fra en USB-minnepinne eller annet flyttbart medium uten behov for installasjon
 - Talende installasjonsprogram som er enkelt å bruke
-- Oversatt til 36 språk
+- Oversatt til 54 språk
 - Støtte for moderne Windows-operativsystemer, inkludert både 32- og 64-bits varianter
 - Mulig å kjøre i Windows-pålogging og i andre sikre skjermer
+- Annonserer kontroller og tekst når en bruker berøringskommandoer
 - Støtte for vanlige tilgjengelighetsgrensesnitt som Microsoft Active Accessibility, Java Access Bridge, IAccessible2 og UI Automation (UI Automation støttes bare i Windows 7 og senere)
-- Støtte for Windows Command Prompt og konsoll-applikasjoner
+- Støtte for Windows kommandolinje og konsoll-applikasjoner
 -
 
-++ Internasjonalisering ++
- Det er viktig at mennesker hvor som helst i verden, uansett hvilket språk de snakker, får lik tilgang til teknologien.
- Foruten engelsk, har NVDA blitt oversatt til 36 språk, inkludert: afrikaansk, albansk, arabisk, brasiliansk portugisisk, bulgarsk, kroatisk, tsjekkisk, dansk, nederlandsk, finsk, fransk, galisisk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, italiensk , japansk, norsk, polsk, portugisisk, rumensk, russisk, serbisk, slovakisk, spansk, svensk, tamil, thai, tradisjonell kinesisk, Taiwansk mandarin, tyrkisk, ukrainsk og vietnamesisk.
+++ Internasjonalisering ++[Internationalization]
+Det er viktig at mennesker hvor som helst i verden, uansett hvilket språk de snakker, får lik tilgang til teknologi.
+Foruten engelsk, har NVDA blitt oversatt til 54 språk, inkludert: afrikaans, albansk, amharisk, arabisk, aragonsk, bulgarsk, burmansk, dansk, farsi, finsk, fransk, galisisk, georgisk, gresk, hebraisk, hindi, irsk, islandsk, italiensk, japansk, kannada, katalansk, kinesisk (tradisjonell og forenklet), kirgisisk, kroatisk, kurdisk, litauisk, makedonsk, mongolsk, nederlandsk, nepali, norsk, polsk, portugisisk (Brasil og Portugal), punjabi, rumensk, russisk, serbisk, slovakisk, slovensk, spansk (Colombia og Spania), svensk, tamil, thai, tsjekkisk, tyrkisk, tysk (Tyskland og Sveits), ukrainsk ungarsk og vietnamesisk.
  
-++ Talesyntetisestøtte ++
-Foruten å gi sine meldinger og brukergrensesnitt på flere språk, kan NVDA også la brukeren få lest innhold på alle språk, så lenge de har en talesyntese som kan snakke det språket.
+++ Talesyntesestøtte ++[SpeechSynthesizerSupport]
+Foruten å formidle meldinger og brukergrensesnitt på flere språk, kan NVDA også la brukeren lese innhold på alle språk, så lenge hun/han har en talesyntese som kan snakke det språket.
 
-Med NVDA følger [eSpeak http://espeak.sourceforge.net/], en flerspråklig talesyntese som er gratis og åpen kildekode.
+Med NVDA følger [eSpeak NG https://github.com/espeak-ng/espeak-ng], en flerspråklig talesyntese som er gratis og med åpen kildekode.
 
 Informasjon om andre talesynteser som NVDA støtter finnes i [Støttede talesynteser #SupportedSpeechSynths]-seksjonen.
 
-++ Punktskriftstøtte ++
-For brukere som har leselist, kan NVDA gi informasjon i punktskrift.
-Se [Støttede leselister #SupportedBrailleDisplays]-seksjonen for informasjon om de støttede leselistene.
+++ Punktskriftstøtte ++[BrailleSupport]
+For brukere som har leselist, kan NVDA gi informasjon i punktskrift. Skriving av både uforkortet og forkortet punktskrift via et punktskrifttastatur støttes også.
 
-NVDA støtter punktskrift for mange språk, inkludert kortskrift, fullskrift og datapunktskrift for enkelte språk.
+Se seksjonen [Støttede leselister #SupportedBrailleDisplays] for informasjon om de støttede leselistene.
 
-++ Lisens og kopibeskyttelse ++
+NVDA støtter punktskrift for mange språk, inkludert fullskrift, kortskrift og datapunktskrift.
+
+++ Lisens og kopibeskyttelse ++[LicenseAndCopyright]
 NVDA er kopibeskyttet NVDA_COPYRIGHT_YEARS NVDA bidragsytere.
 
 NVDA dekkes av GNU General Public License (versjon 2).
@@ -55,27 +59,44 @@ Du er fri til å dele eller endre denne programvaren på alle måter du vil så 
 Dette gjelder både originale og modifiserte eksemplarer av denne programvaren, samt eventuelle avledede verk.
 For ytterligere opplysninger, kan du [se den fullstendige lisensen. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ Systemkrav +
-- Operativsystem: Alle 32- og 64-bits versjoner av Windows XP, Windows Vista og Windows 7 (Inkludert serveroperativsystemer).
++ Systemkrav +[SystemRequirements]
+- Operativsystem: Alle 32- og 64-bits versjoner av Windows 7, Windows 8, Windows 8.1 og Windows 10, og alle serveroperativsystemer fra og med Windows Server 2008 R2.
+- For Windows 7 krever NVDA Service Pack 1 eller høyere.
+- For Windows Server 2008 R2 krever NVDA Service Pack 1 eller høyere.
 - Minne: 256 mb RAM eller mer
 - Prosessorhastighet: 1,0 GHz eller høyere
-- Omtrent 50 MB lagringsplass.
+- Omtrent 90 MB lagringsplass.
 -
 
-+ Få tak i NVDA +
-Hvis du ennå ikke har fått en kopi av NVDA, kan du laste den ned fra [www.nvda-project.org NVDA_URL].
++ Få tak i og installer NVDA +GettingAndSettingUpNVDA]
+Hvis du ennå ikke har fått en kopi av NVDA, kan du laste den ned fra [www.nvaccess.org NVDA_URL].
 
-Gå til nedlastingssiden, og der finner du en lenke for å laste ned den nyeste versjonen av NVDA.
+Gå til nedlastingssiden. Der finner du en lenke for å laste ned den nyeste versjonen av NVDA.
 
-Det er for tiden to måter NVDA er pakket.
-Det ene er en Installer som vil lede deg gjennom installasjon av NVDA slik at du kan kjøre den til enhver tid fra startmenyen.
-Den andre er en selvutpakkende arkiv fil som inneholder en flyttbar versjon av NVDA, som du kan kjøre fra hvor som helst, inkludert USB minnepinner eller CD.
+Når du kjører fila du akkurat har lastet ned, vil den starte en midlertidig kopi av NVDA. Du vil så bli spurt om du ønsker å installere NVDA, lage en flyttbar kopi eller bare fortsette å bruke den midlertidige kopien.
 
-For å få tilgang til Windows-påloggingsskjermen, User Account Control (UAC) skjerm eller andre sikre Windows-skjermer, samt programmer som kjører som administrator i Windows Vista og senere, må du installere NVDA på systemet med installasjonsprogrammet.
-Disse skjermene kan ikke nås ved hjelp av en flyttbar kopi av NVDA.
+Dersom du planlegger å alltid bruke NVDA på denne datamaskinen, bør du velge å installere NVDA. Å installere NVDA gir tilgang til ekstra funksjonalitet slik som automatisk oppstart etter innlogging, muligheten til å lese påloggingsvinduet i Windows og andre sikre skjermer i Windows (som ikke kan gjøres med portable eller midlertidige kopier) og oppretting av snarveier i startmenyen og på skrivebordet.
 
-+ Installere NVDA +
+Fra den installerte kopien av NVDA kan du selv lage en portabel kopi når du måtte ønske det. Hvis du ønsker å ta NVDA med deg på en USB-minnepenn eller et annet skrivbart medium, bør du lage en portabel kopi.
 
+Den portable kopien kan også installeres på en datamaskin på et senere tidspunkt.
+
+Om du imidlertid skulle ønske å kopiere NVDA til et ikke skrivbart medium som for eksempel en CD, bør du bare kopiere pakken du har lastet ned. 
+
+Kjøring av en portabel kopi direkte fra et ikke skrivbart medium støttes ikke.
+
+Bruk av en midlertidig kopi av NVDA er også en mulighet (for eksempel for å demonstrere programvaren), selv å det å starte NVDA på denne måten hver gang kan bli nokså tidkrevende. 
+
+++ Begrensninger i flyttbare og midlertidig utgave ++[PortableAndTemporaryCopyRestrictions]
+Bortsett fra den manglende evnen til å starte automatisk under og/eller etter innlogging, har flyttbare og midlertidige kopier av NVDA også disse begrensningene:
+- Kan ikke samhandle med programmer som kjører med administrative privilegier, med mindre NVDA også kjøres med slike privilegier (ikke anbefalt).
+- Kan ikke lese brukerkontokontrollskjermer (UAC) når du starter et program med administrative privilegier.
+- Windows 8 og senere: Kan ikke støtte inndata fra berøringsskjerm.
+- Windows 8 og senere: Kan ikke tilby blamodus og uttale av skrevne bokstaver i apper fra Windows Store.
+- Windows 8 og senere: Lyddemping støttes ikke.
+-
+
++ Installere NVDA +[InstallingNVDA]
 ++ NVDA Installasjonsprogrammet ++
 Hvis du allerede har NVDA installasjonsprogrammet, trykker du ganske enkelt enter eller dobbeltklikke på filen og installasjonsprogrammet starter.
 
