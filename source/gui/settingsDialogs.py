@@ -414,7 +414,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is
 		# exposed via the IAccessibleName property.
 		global NvdaSettingsCategoryPanelId
-		NvdaSettingsCategoryPanelId = wx.NewId()
+		# #7077: wxPython 4.0.0 to 4.0.2 have a wrap-around bug with wx.NewId function, so use the fixed version below.
+		# Among other things, this allows dialogs and panels to work correctly after using NVDA for a long time.
+		NvdaSettingsCategoryPanelId = wx.NewIdRef()
 		self.container = scrolledpanel.ScrolledPanel(
 			parent = self,
 			id = NvdaSettingsCategoryPanelId,
