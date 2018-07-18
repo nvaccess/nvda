@@ -35,7 +35,7 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.13, 32 bit
+* [Python](http://www.python.org/), version 2.7.15, 32 bit
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
 	* Download from https://www.visualstudio.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
@@ -56,7 +56,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 For reference, the following dependencies are included in Git submodules:
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.4
-* [wxPython](http://www.wxpython.org/), version 4.0.1
+* [wxPython](http://www.wxpython.org/), version 4.0.3
 * [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 37121600
