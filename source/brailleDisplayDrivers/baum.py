@@ -3,16 +3,16 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2017 NV Access Limited
+#Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
 
 import time
 from collections import OrderedDict
 from cStringIO import StringIO
-import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import bdDetect
 import hwIo
 
 TIMEOUT = 0.2
@@ -55,65 +55,6 @@ KEY_NAMES = {
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
-USB_IDS_SER = {
-	"VID_0403&PID_FE70", # Vario 40
-	"VID_0403&PID_FE71", # PocketVario
-	"VID_0403&PID_FE72", # SuperVario/Brailliant 40
-	"VID_0403&PID_FE73", # SuperVario/Brailliant 32
-	"VID_0403&PID_FE74", # SuperVario/Brailliant 64
-	"VID_0403&PID_FE75", # SuperVario/Brailliant 80
-	"VID_0403&PID_FE76", # VarioPro 80
-	"VID_0403&PID_FE77", # VarioPro 64
-	"VID_0904&PID_2000", # VarioPro 40
-	"VID_0904&PID_2001", # EcoVario 24
-	"VID_0904&PID_2002", # EcoVario 40
-	"VID_0904&PID_2007", # VarioConnect/BrailleConnect 40
-	"VID_0904&PID_2008", # VarioConnect/BrailleConnect 32
-	"VID_0904&PID_2009", # VarioConnect/BrailleConnect 24
-	"VID_0904&PID_2010", # VarioConnect/BrailleConnect 64
-	"VID_0904&PID_2011", # VarioConnect/BrailleConnect 80
-	"VID_0904&PID_2014", # EcoVario 32
-	"VID_0904&PID_2015", # EcoVario 64
-	"VID_0904&PID_2016", # EcoVario 80
-	"VID_0904&PID_3000", # RefreshaBraille 18
-}
-
-USB_IDS_HID = {
-	"VID_0904&PID_3001", # RefreshaBraille 18
-	"VID_0904&PID_6101", # VarioUltra 20
-	"VID_0904&PID_6103", # VarioUltra 32
-	"VID_0904&PID_6102", # VarioUltra 40
-	"VID_0904&PID_4004", # Pronto! 18 V3
-	"VID_0904&PID_4005", # Pronto! 40 V3
-	"VID_0904&PID_4007", # Pronto! 18 V4
-	"VID_0904&PID_4008", # Pronto! 40 V4
-	"VID_0904&PID_6001", # SuperVario2 40
-	"VID_0904&PID_6002", # SuperVario2 24
-	"VID_0904&PID_6003", # SuperVario2 32
-	"VID_0904&PID_6004", # SuperVario2 64
-	"VID_0904&PID_6005", # SuperVario2 80
-	"VID_0904&PID_6006", # Brailliant2 40
-	"VID_0904&PID_6007", # Brailliant2 24
-	"VID_0904&PID_6008", # Brailliant2 32
-	"VID_0904&PID_6009", # Brailliant2 64
-	"VID_0904&PID_600A", # Brailliant2 80
-	"VID_0904&PID_6201", # Vario 340
-	"VID_0483&PID_A1D3", # Orbit Reader 20
-}
-
-BLUETOOTH_NAMES = (
-	"Baum SuperVario",
-	"Baum PocketVario",
-	"Baum SVario",
-	"HWG Brailliant",
-	"Refreshabraille",
-	"VarioConnect",
-	"BrailleConnect",
-	"Pronto!",
-	"VarioUltra",
-	"Orbit Reader 20",
-)
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
 	# Translators: Names of braille displays.
@@ -121,73 +62,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	isThreadSafe = True
 
 	@classmethod
-	def check(cls):
-		return True
+	def getManualPorts(cls):
+		return braille.getSerialPorts()
 
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
-		try:
-			next(cls._getAutoPorts(comPorts))
-			ports.update((cls.AUTOMATIC_PORT,))
-		except StopIteration:
-			pass
-		for portInfo in comPorts:
-			# Translators: Name of a serial communications port.
-			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
-		return ports
-
-	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		for portInfo in hwPortUtils.listHidDevices():
-			if portInfo.get("usbID") in USB_IDS_HID:
-				yield portInfo["devicePath"], "USB HID"
-		# Try bluetooth ports last.
-		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
-			port = portInfo["port"]
-			hwID = portInfo["hardwareID"]
-			if hwID.startswith(r"FTDIBUS\COMPORT"):
-				# USB.
-				portType = "USB serial"
-				try:
-					usbID = hwID.split("&", 1)[1]
-				except IndexError:
-					continue
-				if usbID not in USB_IDS_SER:
-					continue
-			elif hwID == r"USB\VID_0483&PID_5740&REV_0200":
-				# Generic STMicroelectronics Virtual COM Port used by Orbit Reader 20.
-				portType = "USB serial"
-			elif "bluetoothName" in portInfo:
-				# Bluetooth.
-				portType = "bluetooth"
-				btName = portInfo["bluetoothName"]
-				if not any(btName.startswith(prefix) for prefix in BLUETOOTH_NAMES):
-					continue
-			else:
-				continue
-			yield port, portType
-
-	def __init__(self, port="Auto"):
+	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._deviceID = None
 
-		if port == "auto":
-			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
-		else:
-			tryPorts = ((port, "serial"),)
-		for port, portType in tryPorts:
+		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == "USB HID"
+			self.isHid = portType == bdDetect.KEY_HID
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 			if self.isHid:
 				try:
