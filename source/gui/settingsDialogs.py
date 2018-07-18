@@ -1207,7 +1207,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		# controlling which keys are NVDA modifier keys.
 		modifierBoxLabel = _("&Select NVDA Modifier Keys")
 		self.modifierChoices = [keyLabels.localizedKeyLabels[key] for key in ("numpadinsert", "insert", "capslock")]
-		self.kbdList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckableList, choices=self.modifierChoices)
+		self.modifierList=sHelper.addLabeledControl(modifierBoxLabel, nvdaControls.CustomCheckableList, choices=self.modifierChoices)
 		checkedItems = []
 		if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
 			checkedItems.append(0)
@@ -1215,8 +1215,8 @@ class KeyboardSettingsPanel(SettingsPanel):
 			checkedItems.append(1)
 		if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
 			checkedItems.append(2)
-		self.kbdList.Checked = checkedItems
-		self.kbdList.Select(0)
+		self.modifierList.Checked = checkedItems
+		self.modifierList.Select(0)
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
 		charsText = _("Speak typed &characters")
@@ -1275,7 +1275,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 
 	def isValid(self):
 		# #2871: check wether at least one key is the nvda key.
-		if not self.kbdList.Checked:
+		if not self.modifierList.Checked:
 			log.debugWarning("No NVDA key set")
 			gui.messageBox(
 				# Translators: Message to report wrong configuration of the NVDA key
@@ -1288,9 +1288,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 	def onSave(self):
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
-		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]= 0 in self.kbdList.Checked
-		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] = 1 in self.kbdList.Checked
-		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = 2 in self.kbdList.Checked
+		config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]= 0 in self.modifierList.Checked
+		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"] = 1 in self.modifierList.Checked
+		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = 2 in self.modifierList.Checked
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()
