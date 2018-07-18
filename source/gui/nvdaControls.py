@@ -53,10 +53,14 @@ class ListCtrlAccPropServer(IAccPropServer_Impl):
 			if idProp == PROPID_ACC_ROLE:
 				return oleacc.ROLE_SYSTEM_CHECKBUTTON, 1
 			if idProp == PROPID_ACC_STATE:
+				states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
 				if self.control.IsChecked(childid-1):
-					return oleacc.STATE_SYSTEM_CHECKED|oleacc.STATE_SYSTEM_SELECTED, 1
-				else:
-					return oleacc.STATE_SYSTEM_SELECTED, 1
+					states |= oleacc.STATE_SYSTEM_CHECKED
+				if self.control.IsSelected(childid-1):
+					# wx doesn't seem to  have a method to check whether a list item is focused.
+					# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
+					states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
+				return states, 1
 		return comtypes.automation.VT_EMPTY, 0
 
 class CustomCheckableList(wx.CheckListBox):
