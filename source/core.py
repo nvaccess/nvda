@@ -235,6 +235,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
+	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
+	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
+	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	log.info("Using wx version %s"%wx.version())
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
@@ -422,11 +425,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
 			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
@@ -451,9 +452,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
-	class CorePump(wx.Timer):
+	class CorePump(gui.NonReEntrantTimer):
 		"Checks the queues and executes functions."
-		def Notify(self):
+		def run(self):
 			global _isPumpPending
 			_isPumpPending = False
 			watchdog.alive()
@@ -470,9 +471,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
 			if _isPumpPending and not _pump.IsRunning():
-				# #3803: A pump was requested, but the timer was ignored by a modal loop
-				# because timers aren't re-entrant.
-				# Therefore, schedule another pump.
+				# #3803: Another pump was requested during this pump execution.
+				# As our pump is not re-entrant, schedule another pump.
 				_pump.Start(PUMP_MAX_DELAY, True)
 	global _pump
 	_pump = CorePump()
