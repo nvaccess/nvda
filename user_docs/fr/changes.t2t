@@ -9,6 +9,8 @@ Quoi de Neuf dans NVDA
 - NVDA Annoncera les erreurs grammaticales correctement exposées dans les pages web sous Mozilla Firefox. (#8280)
 - Ajout du support de la roue de défilement du BrailleNote QT et de l'Apex BT quand le  BrailleNote est utilisé comme afficheur braille parNVDA. (#6316)
 - Ajout de scripts pour annoncer le temps écoulé et le temps total de la piste en cours sous Foobar2000. (#6596)
+- Le symbole touche de commande Mac (⌘) est maintenant annoncé par tous les synthétiseurs durant la lecture de texte. (#8366)
+- Les rôles personnalisés via l'attribut aria-roledescription sont maintenant supportés sous Firefox, Chrome et Internet Explorer.
 
 
 == Changements ==
@@ -16,9 +18,12 @@ Quoi de Neuf dans NVDA
 - Ajout d'un geste par défaut pour alt maj tab et windows tab pour les terminaux braille Freedom Scientific supportés. (#7387)
 - Au démarrage de NVDA, il est maintenant demandé une fois à l'utilisateur s'il souhaite envoyer des statistiques d'utilisation à NV Access lors de la vérification automatique de mises à jour. (#8217)
 - Lors de la vérification de mises à jour, si l'utilisateur a accepté d'envoyer des données statistiques à NV Access, NVDA enverra maintenant le nom du synthétiseur et le terminal braille en cours, pour permettre une meilleure prioritisation du travail futur sur ces pilotes. (#8217)
+- Mise à jour du convertisseur braille Liblouis à la version 3.6.0. (#8365)
+- Nouvelle table braille : braille Suédois informatique 8 points. (#8227)
 
 
 == Corrections de Bogues ==
+- Sous Google Chrome, les étiquettes accessibles des contrôles sont maintenant plus facilement annoncées en mode navigation quand l'étiquette n'apparaît pas elle-même comme un contenu. (#4773)
 
 
 == Changements pour les Développeurs ==

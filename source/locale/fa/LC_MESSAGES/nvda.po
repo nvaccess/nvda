@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-01 17:13+1000\n"
-"PO-Revision-Date: 2018-05-30 05:02+0330\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"PO-Revision-Date: 2018-07-06 11:01+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -28,11 +28,11 @@ msgstr "ورودیِ الفبا‌شماره‌ای"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
-msgstr "حالتِ شکلِ کامل، دو‌بایتی"
+msgstr "حالتِ شکلِ کامل"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
 msgid "Half shaped mode"
-msgstr "حالتِ شکلِ نیمه، تک‌بایتی"
+msgstr "حالتِ شکلِ نیمه"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
@@ -1031,6 +1031,11 @@ msgstr "روسی درجه‌ی 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "سانسکریت درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "سوئدی بریلِ 8 نقطه‌ی رایانه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6662,9 +6667,17 @@ msgstr "شروع"
 msgid "No track playing"
 msgstr "هیچ تِرَکی پخش نمی‌شود"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "زمانِ باقیمانده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "زمانِ سپری‌شده‌ی تِرَکِ در حالِ پخش را اعلام میکند."
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "مدت زمانِ تِرَکِ در حالِ پخش را اعلام میکند."
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7719,6 +7732,44 @@ msgstr "نصبِ به‌روزرسانیِ به‌تعویق‌افتاده"
 msgid "Please wait"
 msgstr "لطفا شکیبا باشید"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "گردآوریِ اطلاعاتِ نحوه استفاده از NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"جهتِ بهبودیِ NVDA در آینده، NV Access میخواهد از نسخه‌های درحالِ اجرای NVDA، "
+"داده‌هایی مبتنی بر نحوه استفاده از صفحه‌خوان را جمع‌آوری کند.\n"
+"\n"
+"این داده‌ها مشتمل است بر نگارشِ سیستم‌عامل، نگارشِ NVDA، زبانِ موردِ استفاده، کشورِ "
+"کاربر، بعلاوه‌ی اطلاعاتِ پیکره‌بَندیِ مشخصی از NVDA، مثلِ موتور سخنگو، نمایشگرِ "
+"بریل، و جدولِ بریلِ موردِ استفاده. هیچ محتوای گفتاری یا بریلی به NV Access "
+"فرستاده نخواهد شد. برای دیدنِ فهرستِ داده‌های جمع‌آوری‌شده، به راهنمای کاربر "
+"مراجعه کنید.\n"
+"\n"
+"آیا به NV Access اجازه میدهید تا به صورت دوره‌ای این داده‌ها را برای بهتر "
+"ساختنِ NVDA جمع‌آوری کند؟"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&بله"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&نه"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "مدیرِ افزونه ها"
@@ -8380,6 +8431,10 @@ msgstr "بررسیِ خودکارِ &به‌روزرسانیها برای NVDA"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "یادآوری برای به‌روزرسانی‌های &در انتظارِ نصب هنگامِ آغاز به کار"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "اجازه دادن به پروژه‌ی NVDA برای جمع‌آوریِ آمارِ نحوه استفاده از NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
