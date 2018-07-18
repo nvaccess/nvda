@@ -50,9 +50,9 @@ class ListCtrlAccPropServer(IAccPropServer_Impl):
 		from IAccessibleHandler import accPropServices
 		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
 		if childid != winUser.CHILDID_SELF:
-			if idProp == PROPID_ACC_ROLE:
+			if idProp == oleacc.PROPID_ACC_ROLE:
 				return oleacc.ROLE_SYSTEM_CHECKBUTTON, 1
-			if idProp == PROPID_ACC_STATE:
+			if idProp == oleacc.PROPID_ACC_STATE:
 				states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
 				if self.control.IsChecked(childid-1):
 					states |= oleacc.STATE_SYSTEM_CHECKED
@@ -72,7 +72,7 @@ class CustomCheckableList(wx.CheckListBox):
 		from IAccessibleHandler import accPropServices
 		#Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[PROPID_ACC_ROLE,PROPID_ACC_STATE]), c_int(2), server, 1)
+		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE]), c_int(2), server, 1)
 		#Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
