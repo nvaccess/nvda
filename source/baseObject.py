@@ -133,10 +133,13 @@ class ScriptableType(AutoPropertyType):
 
 	def __new__(meta, name, bases, dict):
 		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
+		gesturesDictName = "_%s__gestures" % cls.__name__
 		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
 		try:
-			gestures = getattr(cls, "_%s__gestures" % cls.__name__).copy()
+			gestures = getattr(cls, gesturesDictName).copy()
 		except AttributeError:
+			# This class currently has no gestures dictionary,
+			# because no custom __gestures dictionary has been defined.
 			gestures = {}
 		# Python 3 incompatible.
 		for name, script in dict.iteritems():
@@ -147,7 +150,7 @@ class ScriptableType(AutoPropertyType):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
 		if gestures:
-			setattr(cls, "_%s__gestures" % cls.__name__, gestures)
+			setattr(cls, gesturesDictName, gestures)
 		return cls
 
 class ScriptableObject(AutoPropertyObject):
@@ -193,11 +196,14 @@ class ScriptableObject(AutoPropertyObject):
 		@type scriptName: str
 		@raise LookupError: If there is no script with the provided name.
 		"""
+		scriptAttrName = "script_%s" % scriptName
 		# Don't store the instance method, as this causes a circular reference
 		# and instance methods are meant to be generated on retrieval anyway.
-		func = getattr(self.__class__, "script_%s" % scriptName, None)
+		func = getattr(self.__class__, scriptAttrName, None)
 		if not func:
-			raise LookupError("No such script: %s" % scriptName)
+			raise LookupError("No such script on class {className}. Couldn't find attribute: {scriptAttrName}".format(
+				className=self.__class__.__name__, scriptAttrName=scriptAttrName
+			))
 		# Import late to avoid circular import.
 		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
