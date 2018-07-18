@@ -5,12 +5,9 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2018 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
 
-import _winreg
 import serial
 from cStringIO import StringIO
-import itertools
 import os
-import hwPortUtils
 import hwIo
 import braille
 from logHandler import log
@@ -20,6 +17,7 @@ import brailleInput
 from baseObject import AutoPropertyObject
 import weakref
 import time
+import bdDetect
 
 BAUD_RATE = 115200
 PARITY = serial.PARITY_NONE
@@ -134,7 +132,7 @@ class SmartBeetle(BrailleSense4S):
 	Furthermore, the key codes for f2 and f4 are swapped, and it has only two scroll keys.
 	"""
 	numCells=14
-	bluetoothPrefix = "SmartBeetle"
+	bluetoothPrefix = "SmartBeetle(b)"
 	name = "Smart Beetle"
 
 	def _get_keys(self):
@@ -180,10 +178,6 @@ modelMap = [(cls.deviceId,cls) for cls in (
 	SyncBraille,
 )]
 
-USB_IDS_BULK={BrailleEdge.usbId,BrailleSense.usbId}
-
-bluetoothPrefixes={modelCls.bluetoothPrefix for id, modelCls in modelMap if modelCls.bluetoothPrefix}
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
@@ -192,88 +186,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	timeout = 0.2
 
 	@classmethod
-	def check(cls):
-		return True
-
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
-		try:
-			next(cls._getAutoPorts(comPorts))
-			ports.update((cls.AUTOMATIC_PORT,))
-		except StopIteration:
-			pass
-		for portInfo in comPorts:
-			if not "bluetoothName" in portInfo:
-				continue
-			# Translators: Name of a serial communications port.
-			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
-		return ports
-
-	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		# USB bulk
-		for bulkId in USB_IDS_BULK:
-			portType = "USB bulk"
-			try:
-				rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\%s"%bulkId)
-			except WindowsError:
-				continue
-			else:
-				with rootKey:
-					for index in itertools.count():
-						try:
-							keyName = _winreg.EnumKey(rootKey, index)
-						except WindowsError:
-							break
-						try:
-							with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-								yield _winreg.QueryValueEx(paramsKey, "SymbolicName")[0], portType, bulkId
-						except WindowsError:
-							continue
-		# Try bluetooth ports last.
-		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
-			port = portInfo["port"]
-			hwID = portInfo["hardwareID"]
-			if hwID.startswith(r"FTDIBUS\COMPORT"):
-				# USB.
-				portType = "USB serial"
-				try:
-					usbID = hwID.split("&", 1)[1]
-				except IndexError:
-					continue
-				if usbID!=SyncBraille.usbId:
-					continue
-				yield portInfo['port'], portType, usbID
-			elif "bluetoothName" in portInfo:
-				# Bluetooth.
-				portType = "bluetooth"
-				btName = portInfo["bluetoothName"]
-				for prefix in bluetoothPrefixes:
-					if btName.startswith(prefix):
-						btPrefix=prefix
-						break
-				else:
-					btPrefix = None
-				yield portInfo['port'], portType, btPrefix
+	def getManualPorts(cls):
+		return braille.getSerialPorts(filterFunc=lambda info: "bluetoothName" in info)
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
-		if port == "auto":
-			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
-		else:
-			try:
-				btName = next(portInfo.get("bluetoothName","") for portInfo in hwPortUtils.listComPorts() if portInfo.get("port")==port)
-				btPrefix = next(prefix for prefix in bluetoothPrefixes if btName.startswith(prefix))
-				tryPorts = ((port, "bluetooth", btPrefix),)
-			except StopIteration:
-				tryPorts = ()
 
-		for port, portType, identifier in tryPorts:
-			self.isBulk = portType=="USB bulk"
+		for match in self._getTryPorts(port):
+			portType, portId, port, portInfo = match
+			self.isBulk = portType==bdDetect.KEY_CUSTOM
 			# Try talking to the display.
 			try:
 				if self.isBulk:
@@ -301,14 +224,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debugWarning("No response from potential Hims display")
 				self._dev.close()
 				continue
-			if portType=="USB serial":
-				self._model = SyncBraille()
-			elif self.isBulk:
-				self._sendIdentificationRequests(usbId=identifier)
-			elif portType=="bluetooth" and identifier:
-				self._sendIdentificationRequests(bluetoothPrefix=identifier)
-			else:
-				self._sendIdentificationRequests()
+			self._sendIdentificationRequests(match)
 			if self._model:
 				# A display responded.
 				log.info("Found {device} connected via {type} ({port})".format(
@@ -327,25 +243,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.debug("Sending cell count request...")
 		self._sendPacket("\xfb","\x01","\x00"*32)
 
-	def _sendIdentificationRequests(self, usbId=None, bluetoothPrefix=None):
-		log.debug("Considering sending identification requests: usbId=%s, bluetoothPrefix=%s"%(usbId,bluetoothPrefix))
-		if usbId and not bluetoothPrefix:
-			map=[modelTuple for modelTuple in modelMap if modelTuple[1].usbId==usbId]
-		elif not usbId and bluetoothPrefix:
-			map=[modelTuple for modelTuple in modelMap if modelTuple[1].bluetoothPrefix==bluetoothPrefix]
-		elif usbId and bluetoothPrefix:
-			map=[modelTuple for modelTuple in modelMap if modelTuple[1].usbId==usbId and modelCls.bluetoothPrefix==bluetoothPrefix]
-		else: # not usbId and not bluetoothPrefix
-			map=modelMap
+	def _sendIdentificationRequests(self, match):
+		log.debug("Considering sending identification requests for device %s"%str(match))
+		if match.type==bdDetect.KEY_CUSTOM: # USB Bulk
+			map=[modelTuple for modelTuple in modelMap if modelTuple[1].usbId==match.id]
+		elif "bluetoothName" in match.deviceInfo: # Bluetooth
+			map=[modelTuple for modelTuple in modelMap if modelTuple[1].bluetoothPrefix and match.id.startswith(modelTuple[1].bluetoothPrefix)]
+		else: # The only serial device we support which is not bluetooth, is a Sync Braille
+			self._model = SyncBraille()
+			log.debug("Use %s as model without sending an additional identification request"%self._model.name)
+			return
 		if not map:
-			raise ValueError("The specified criteria to send identification requests didn't yield any results")
+			log.debugWarning("The provided device match to send identification requests didn't yield any results")
+			map = modelMap
 		if len(map)==1:
 			modelCls = map[0][1]
 			numCells = self.numCells or modelCls.numCells
 			if numCells:
 				# There is only one model matching the criteria, and we have the proper number of cells.
 				# There's no point in sending an identification request at all, just use this model
-				log.debug("Chose %s as model without sending an additional identification request"%modelCls.name)
+				log.debug("Use %s as model without sending an additional identification request"%modelCls.name)
 				self._model = modelCls()
 				self.numCells = numCells
 				return

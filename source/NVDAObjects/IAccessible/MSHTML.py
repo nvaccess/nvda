@@ -1011,6 +1011,9 @@ class MSHTML(IAccessible):
 		# MSHTML live regions are currently handled with custom code in-process
 		pass
 
+	def _get_roleText(self):
+		return self.HTMLAttributes['aria-roledescription']
+
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
 	"""
