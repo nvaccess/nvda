@@ -542,16 +542,17 @@ Nếu đối tượng đó có thể tương tác được thì bạn có thể 
 Dưới đây là phím tắt để giúp bạn quay trở lại chế độ duyệt tài liệu có chứa đối tượng nhúng:
 %kc:beginInclude
 || Chức năng | Phím | Mô tả |
+Một lệnh quan trọng được cung cấp để trở về trang gốc chứa đối tượng đã nhúng
 | Quay về chế độ duyệt tài liệu | NVDA+control+space | Quay về chế độ duyệt tài liệu |
 %kc:endInclude
 
-+ Đọc nội dung toán học +
++ Đọc nội dung toán học +[ReadingMath]
 Sử dụng MathPlayer 4 từ Design Science, NVDA có thể đọc và tương tác với những nội dung liên quan đến toán học.
 Yêu cầu chương trình MathPlayer 4 phải được cài đặt trên máy tính.
-Bạn có thể tải về tại trang web: http://www.dessci.com/en/products/mathplayer/
+Bạn có thể tải về miễn phí tại trang web: http://www.dessci.com/en/products/mathplayer/
 
 NVDA hỗ trợ một số nội dung toán học sau đây: 
-- Chương trình MathML chạy trên web Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
+- Chương trình MathML chạy trên Mozilla Firefox, Microsoft Internet Explorer và Google Chrome.
 - Design Science MathType với Microsoft Word và Powerpoint.
 Cần phải cài MathType để có thể hoạt động. Lưu ý, chỉ cần cài phiên bản chạy thử là đủ.
 - MathML trong chương trình Adobe Reader.
@@ -852,6 +853,17 @@ Chức năng này chỉ dành cho các sách Kindle có hỗ trợ trình đọc
 Chế độ duyệt được dùng để đọc sách.
 Nó được tự động bật khi mở sách hoặc đưa focus đến phần nội dung sách.
 Trang sách sẽ tự động được chuyển khi di chuyển con trỏ hoặc thực hiện lệnh đọc toàn bộ.
+Bạn có thể di chuyển bằng tay đến trangnn kế với phím pageDown và trở về trang trước
+Kí tự di chuyển nhanh được hỗ trợ cho các liên kết và hình ảnh, nhưng chỉ giới hạn ở trang hiện tại.
+Điều hướng qua liên kết cũng đã bao gồm các chú thích chân trang.
+
++NVDA sớm hỗ trợ việc đọc và điều hướng tương tác nội dung toán học cho các sách với nội dung toán tiếp cận.
++Vui lòng xem phần [Đọc nội dung toán học #ReadingMath] để biết thêm thông tin.
+
++++ Chọn văn bản +++
+Kindle cho phép bạn thực hiện nhiều thao tác trên văn bản được chọn, bao gồm lấy định nghĩa từ điển, thêm ghi chú và đánh dấu, sao chép văn bản vào bộ nhớ tạm và tìm kiếm trên web.
+ Để làm điều đó, trước tiên hãy chọn văn bản một cách bình thường như bạn vẫn làm ở chế độ duyệt; ví dụ: dùng shift và các phím di chuyển con trỏ.
+
 %kc:beginInclude
 Bạn có thể tự chuyển trang với phím Trang trước hoặc phím Trang kế để chuyển về trang trước hoặc trang kế đó.
 %kc:endInclude
@@ -884,6 +896,13 @@ NVDA sẽ xem những ghi chú này (note) như lời bình/chú thích (comment
 + Chọn Edit Note (chỉnh sửa ghi chú).
 +
 
+++ Azardi ++
+%kc:beginInclude
+Khi ở trong bảng xem các sách đã thêm vào:
+|| Name | Key | Description |
+| Enter | enter | mở quyển sách được chọn. |
+| Trình đơn ngữ cảnh| applications | Mở trình đơn ngữ cảnh cho quyển sách được chọn. |
+%kc:endInclude
 + Cấu hình NVDA +
 
 ++ Thực đơn Tùy chọn ++
