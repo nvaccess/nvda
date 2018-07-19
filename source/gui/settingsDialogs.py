@@ -1507,7 +1507,7 @@ class ObjectPresentationPanel(SettingsPanel):
 				self.objCoordinatesCombo.SetSelection(index)
 				break
 		else:
-			log.debugWarning("Could not set object coordinates combo box to current object ocoridnate announcement setting")
+			log.debugWarning("Could not set object coordinates combo box to current object coordinate announcement setting")
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings dialog.
