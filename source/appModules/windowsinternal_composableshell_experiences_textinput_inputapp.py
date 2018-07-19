@@ -16,6 +16,7 @@ import braille
 import ui
 import config
 import winVersion
+from NVDAObjects.UIA import UIA
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -34,7 +35,9 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList":
 			obj = obj.firstChild
 		candidate = obj
-		if obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
+		# Sometimes, due to bad tree traversal, something other than the selected item sees this event.
+		parent = obj.parent
+		if obj.UIAElement.cachedClassName == "ListViewItem" and isinstance(parent, UIA) and parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
 			# Turns out automation ID for the container is different, observed in build 17666 when opening clipboard copy history.
 			candidate = obj.parent.previous
