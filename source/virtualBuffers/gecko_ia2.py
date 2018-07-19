@@ -36,7 +36,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
 			relOffset = offset - formatFieldStart + ia2TextStartOffset
 			obj = self._getNVDAObjectFromOffset(offset)
-			assert issubclass(obj.TextInfo, IA2TextTextInfo), "TextInfo is of type %r" % obj.TextInfo
+			if not issubclass(obj.TextInfo, IA2TextTextInfo):
+				raise LookupError("TextInfo is of type %r and does not provide reliable points" % obj.TextInfo)
 			# Position is irrelevant here, we just need a text info to work with
 			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
 			return info._getPointFromOffset(relOffset)
