@@ -71,9 +71,6 @@ UIADialogClassNames=[
 	"Shell_Dialog",
 	"Shell_Flyout",
 	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
-	# Chiefly Uninstall app dialog in Windows 10.
-	# Although it is not listed as a window element, RS5 recognizes this as a proper dialog.
-	"Popup",
 ]
 
 NVDAUnitsToUIAUnits={
