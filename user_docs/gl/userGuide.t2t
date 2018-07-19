@@ -831,10 +831,12 @@ Para información adicional acerca do modo exploración e da navegación cunha s
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Nome | Tecla | Descripción |
-| Anunciar tempo restante | control+shift+r | Anuncia o tempo restante da pista actualmente en reproducción, se hai algunha. |
+| Anunciar o tempo restante | control+shift+r | Anuncia o tempo restante da pista actualmente en reproducción, se hai algunha. |
+| Anunciar o tempo transcorrido | control+shift+e | Anuncia o tempo transcorrido da pista actual en reprodución, se a hai. |
+| Anunciar a lonxitude da pista | control+shift+t | Anuncia a lonxitude da pista actual en reprodución, se a hai. |
 %kc:endInclude
 
-Nota: o atallo de teclado de anunciado do tempo restante só funciona coa cadea de formato predeterminada para a liña de estado de foobar.
+Nota: os atallos de teclado de arriba só funcionan coa cadea de formato predeterminada para a liña de estado de foobar.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +973,25 @@ Esta opción só está dispoñible para copias instaladas do NVDA.
 ==== Procurar actualizacións para NVDA automáticamente ====[GeneralSettingsCheckForUpdates]
 Se esto está activado, NVDA procurará automáticamente versións actualizadas e informarache cando unha actualización estea dispoñible.
 Tamén podes procurar actualizacións manualmente seleccionando Procurar Actualizacións baixo o menú Axuda no menú NVDA.
+Cando se procuren actualizacións manual ou automáticamente, é necesario para NVDA enviar algunha información ao servidor de actualizacións para recibir a actualización correcta para o teu sistema.
+Envíase sempre a seguinte información: 
+- Versión actual do NVDA
+- Versión do Sistema Operativo
+- Se o Sistema Operativo é de 64 ou de 32 bits
+
+
+==== Permitir que o Proxecto NVDA Recolla Estadísticas de Uso do NVDA ====[GeneralSettingsGatherUsageStats]
+Se esto está activado, NV Access usará a información das procuras de actualizacións para seguir o número de usuarios do NVDA incluíndo datos demográficos particulares coma o Sistema Operativo e o país de orixe.
+Ten en conta que aíndaque o teu enderezo IP usarase para calcular o teu país durante a procura de actualizacións, o enderezo IP nunca se conservará.
+Ademáis da información obrigatoria necesaria para procurar actualizacións, tamén se envía a seguinte información adicional actualmente:
+- Lingua da interfaz do NVDA
+- Se esta copia do NVDA é portable ou instalada
+- O nome do sintetizador de voz actual en uso (incluíndo o nome do complemento que ven co controlador)
+- O nome da pantalla Braille actual en uso (incluíndo o nome do complemento que ven co controlador)
+- A táboa de saída braille actual (se o Braille está en uso)
+
+
+Esta información axuda enormemente a NV Access a priorizar o desenvolvemento futuro do NVDA.
 
 ==== Notificar actualizacións pendentes ao comezar ====[GeneralSettingsNotifyPendingUpdates]
 Se esto está habilitado, o NVDA informarache cando hai unha actualización pendente ao comezar, ofrecéndoche a posibilidade de instalala.
@@ -1370,7 +1391,6 @@ Esta opción permíteche escoller onde desexas ter unha posición do obxecto anu
 
 ==== Deducir a información de Posición do Obxecto cando non estea dispoñible ====[ObjectPresentationGuessPositionInfo]
 Se o anunciado de información de posición do obxecto está desactivada, esta opción permite ao NVDA deducir a información de posición do obxecto cando non estea dispoñible para un control en particular.
-
 Cando estea activada, NVDA anunciará información de posición para máis controis como menús e barras de ferramentas, non obstante esta información poderá ser lixeiramente incorrecta. 
 
 ==== Anunciar Descripcións de Obxectos ====[ObjectPresentationReportDescriptions]
@@ -1911,6 +1931,8 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | tecla control+fin | barra espaciadora braille+ponto4+ponto5+ponto6 |
 | tecla alt | barra espaciadora braille+ponto1+ponto3+ponto4 |
 | tecla alt+tab | barra espaciadora braille+ponto2+ponto3+ponto4+ponto5 |
+| tecla alt+shift+tab | barra espaciadorabraille+ponto1+ponto2+ponto5+ponto6 |
+| tecla windows+tab | barra espaciadora braille+ponto2+ponto3+ponto4 |
 | tecla escape | barra espaciadora braille+ponto1+ponto5 |
 | tecla windows | barra espaciadora braille+ponto2+ponto4+ponto5+ponto6 |
 | tecla espazo | barra espaciadora braille |
@@ -2427,6 +2449,11 @@ Sopórtanse os seguintes modelos:
 
 Para o BrailleNote Touch, por favor consulta a seción [series das Brailliant BI / BrailleNote Touch HumanWareBrailliant].
 
+Excepto para o BrailleNote PK, admítense ambos teclados braille (BT) e QWERTY (QT).
+Para o BrailleNote QT, non se admite a emulación do teclado do PC.
+Tamén podes introducir pontos braille usando o teclado QT.
+Por favor consulta a seción de terminal braille da guía de manual do BrailleNote para detalles.
+
 Se o teu dispositivo soporta máis dun tipo de conexión, cando conectes o teu BrailleNote ao NVDA, debes configurar o porto da terminal braille nas opcións de terminal braille.
 Por favor consulta o manual do BrailleNote para detalles.
 No NVDA, tamén poderías necesitar configurar o porto na caixa de diálogo [Selecionar Pantalla Braille #SelectBrailleDisplay].
@@ -2434,6 +2461,9 @@ Se te estás a conectar a través de USB ou bluetooth, podes configurar o porto 
 Se te estás a conectar utilizando un porto serie (ou un conversor de USB a serie) ou se non aparece ningunha das opcións anteriores, debes escoller explícitamente o porto de comunicación a se utilizar dende a lista de portos hardware.
 
 Antes de conectar o teu BrailleNote Apex utilizando o seu cliente de interface USB, debes instalar os controladores proporcionados por HumanWare.
+
+No BrailleNote Apex BT, podes usar a roda de desprazamento ubicada entre os pontos 1 e 4 para varias ordes do NVDA.
+A roda consiste en  catro pontos direcionais, un clic no botón central, e unha roda que xira no sentido ou contra do sentido das agullas do reloxo.
 
 Seguidamente van as asignacións de ordes do BrailleNote para o NVDA.
 Por favor consulta a documentación do BrailleNote para atopar onde se localizan estas teclas.
@@ -2445,6 +2475,7 @@ Por favor consulta a documentación do BrailleNote para atopar onde se localizan
 | Mover pantalla braille á liña anterior | anterior |
 | Mover pantalla braille á liña seguinte | seguinte |
 | Levar á celda braille | sensores |
+| menú NVDA | espazo+ponto1+ponto3+ponto4+ponto5 (espazo+n) |
 | Activar e desactivar seguemento do braille | anterior+seguinte |
 | Tecla frecha arriba | espazo+ponto1 |
 | Tecla frecha abaixo | espazo+ponto4 |
@@ -2464,6 +2495,39 @@ Por favor consulta a documentación do BrailleNote para atopar onde se localizan
 | Tecla Windows | espazo+ponto2+ponto4+ponto5+ponto6 (espazo+w) |
 | Tecla Alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
 | Activar e desactivar axuda de entrada | espazo+ponto2+ponto3+ponto6 (espazo+h abaixo) |
+
+Seguidamente van as ordes asignadas ao BrailleNote QT cando non está en modo de entrada braille.
+
+|| Nome | Tecla |
+| Menú NVDA | ler+n |
+| Tecla frecha arriba | frecha arriba |
+| Tecla frecha abaixo | frecha abaixo |
+| Tecla frecha esquerda | frecha esquerda |
+| Tecla frecha dereita | frecha dereita |
+| Tecla retroceso de páxina | función+frecha arriba |
+| Tecla avance de páxina | función+frecha abaixo |
+| Tecla inicio | función+frecha esquerda |
+| Tecla fin | función+frecha dereita |
+| Control+teclas inicio | ler+t |
+| Control+teclas fin | ler+b |
+| Tecla intro | intro |
+| Tecla retroceso | retroceso |
+| Tecla tab | tab |
+| Teclas Shift+tab | shift+tab |
+| Tecla Windows | ler+w |
+| Tecla Alt | ler+m |
+| Conmutar axuda de entrada | ler+1 |
+
+Seguidamente van as ordes asignadas á roda de desprazamento:
+
+|| Nome | Tecla |
+| Tecla frecha arriba | frecha arriba |
+| Tecla frecha abaixo | frecha abaixo |
+| Tecla frecha esquerda | frecha esquerda |
+| Tecla frecha dereita | frecha dereita |
+| Tecla intro | botón central |
+| Tecla Tab | desprazar a roda no sentido das agullas do reloxo |
+| tecla Shift+tab | desprazar a roda no sentido contrario ás agullas do reloxo |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
