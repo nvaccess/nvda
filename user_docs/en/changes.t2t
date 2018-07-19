@@ -29,6 +29,7 @@ What's New in NVDA
 - Updated liblouis braille translator to version 3.6.0. (#8365)
 - updated the path to the correct russian eight-dots Braille table. (#8446)
 - Updated eSpeak-ng to 1.49.3dev commit e7e59f9. (#7846)
+- The possible NVDA modifier keys in the keyboard settings category of the NVDA settings dialog are now shown in a list instead of as separate checkboxes. (#4357)
 
 
 == Bug Fixes ==
@@ -50,6 +51,10 @@ What's New in NVDA
  - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
 - Updated wxPython to 4.0.3. (#7077)
 - As NVDA now only supports Windows 7 SP1 and later, the key "minWindowsVersion" used to check if UIA should be enabled for a particular release of Windows has been removed. (#8422)
+- There is now an accessible CustomCheckListBox in gui.nvdaControls. (#7325)
+ - Please use this over wx.CheckListBox because the latter is not accessible.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of the checkable list box in gui.nvdaControls for more info.
 
 
 = 2018.2 =
