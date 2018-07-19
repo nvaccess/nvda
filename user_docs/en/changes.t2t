@@ -17,6 +17,7 @@ What's New in NVDA
  - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.
  - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
  - Please consult the documentation for additional details.
+- Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard (RS5). (#7273)
 
 
 == Changes ==
@@ -41,6 +42,7 @@ What's New in NVDA
 - Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)
 - NVDA no longer announces redundant keyboard layout changes. (#7383)
 - Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)
+- NVDA will recognize more dialogs in Windows 10 and other modern applications. (#7473)
 
 
 == Changes for Developers ==
@@ -55,6 +57,7 @@ What's New in NVDA
  - Please use this over wx.CheckListBox because the latter is not accessible.
 - If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
  - See the implementation of the checkable list box in gui.nvdaControls for more info.
+- UI Automation interfaces updated to 16299 (IUIAutomation6 / IUIAutomationElement9). (#8473)
 
 
 = 2018.2 =
