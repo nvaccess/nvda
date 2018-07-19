@@ -6,12 +6,11 @@
 
 import wx
 from wx.lib.mixins import listctrl as listmix
-from gui.accPropServer import *
+from gui import accPropServer
 import oleacc
 import winUser
-from winUser import EVENT_OBJECT_STATECHANGE
 import comtypes
-from ctypes import *
+from ctypes import c_int
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -43,7 +42,7 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		self.SetSelection(0, numChars)
 		evt.Skip()
 
-class ListCtrlAccPropServer(IAccPropServer_Impl):
+class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		#Import late to prevent circular import.
@@ -80,4 +79,4 @@ class CustomCheckableList(wx.CheckListBox):
 		#Notify winEvent that something changed.
 		#We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
-		winUser.NotifyWinEvent(EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
+		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)

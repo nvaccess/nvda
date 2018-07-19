@@ -32,12 +32,17 @@ class IAccPropServer_Impl(COMObject):
 
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		"""use this method to implement GetPropValue. It  is wrapped by the callback GetPropValue to handle exceptions.
-		See https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx for instructions on implementing accPropServers.
-		See https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx for instructions specifically about this method.
+		For instructions on implementing accPropServers, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx .
+		For instructions specifically about this method, see see https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx .
 		@param pIDString: Contains a string that identifies the property being requested.
-		@type pIDString: A weird comtypes thing you should not mess with.
+			If a single callback object is registered for annotating multiple accessible elements,
+			the identity string can be used to determine which element the request refers to.
+			If the accessible element is HWND-based,
+			IAccessibleHandler.accPropServices.DecomposeHwndIdentityString can be used
+			to extract the HWND/idObject/idChild from the identity string.
+		@type pIDString: str
 		@param dwIDStringLen: Specifies the length of the identity string specified by the pIDString parameter.
-		@type dwIDStringLen: technically dwordd
+		@type dwIDStringLen: int
 		@param idProp: Specifies a GUID indicating the desired property.
 		@type idProp: One of the oleacc.PROPID_* GUIDS
 		"""
