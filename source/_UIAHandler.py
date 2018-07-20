@@ -63,6 +63,16 @@ badUIAWindowClassNames=[
 	"ConsoleWindowClass",
 ]
 
+# #8405: used to detect UIA dialogs prior to Windows 10 RS5.
+UIADialogClassNames=[
+	"#32770",
+	"NUIDialog",
+	"Credential Dialog Xaml Host", # UAC dialog in Anniversary Update and later
+	"Shell_Dialog",
+	"Shell_Flyout",
+	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
+]
+
 NVDAUnitsToUIAUnits={
 	"character":TextUnit_Character,
 	"word":TextUnit_Word,

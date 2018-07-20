@@ -17,6 +17,7 @@ What's New in NVDA
  - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.
  - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
  - Please consult the documentation for additional details.
+- Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard (RS5). (#7273)
 
 
 == Changes ==
@@ -33,12 +34,14 @@ What's New in NVDA
 
 == Bug Fixes ==
 - Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages.(#7754)
 - Switching braille context presentation when in browse mode no longer causes braille output to stop following. (#7741)
 - ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)
 - By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)
 - Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)
 - NVDA no longer announces redundant keyboard layout changes. (#7383)
 - Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)
+- NVDA will recognize more dialogs in Windows 10 and other modern applications. (#7473)
 
 
 == Changes for Developers ==
@@ -49,6 +52,7 @@ What's New in NVDA
  - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
 - Updated wxPython to 4.0.3. (#7077)
 - As NVDA now only supports Windows 7 SP1 and later, the key "minWindowsVersion" used to check if UIA should be enabled for a particular release of Windows has been removed. (#8422)
+- UI Automation interfaces updated to 16299 (IUIAutomation6 / IUIAutomationElement9). (#8473)
 
 
 = 2018.2 =
