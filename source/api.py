@@ -149,6 +149,7 @@ def getFocusDifferenceLevel():
 	return globalVars.focusDifferenceLevel
 
 def getFocusAncestors():
+	"""An array of NVDAObjects that are all parents of the object which currently has focus"""
 	return globalVars.focusAncestors
 
 def getMouseObject():
@@ -244,7 +245,7 @@ def isTypingProtected():
 @rtype: boolean
 """
 	focusObject=getFocusObject()
-	if focusObject and (controlTypes.STATE_PROTECTED in focusObject.states or focusObject.role==controlTypes.ROLE_PASSWORDEDIT):
+	if focusObject and focusObject.isProtected:
 		return True
 	else:
 		return False

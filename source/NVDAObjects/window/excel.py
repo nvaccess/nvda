@@ -704,7 +704,7 @@ class Excel7Window(ExcelBase):
 class ExcelWorksheet(ExcelBase):
 
 
-	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
+	#treeInterceptorClass=ExcelBrowseModeTreeInterceptor
 
 	role=controlTypes.ROLE_TABLE
 
@@ -883,8 +883,6 @@ class ExcelWorksheet(ExcelBase):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
-		for gesture in self.__changeSelectionGestures:
-			self.bindGesture(gesture, "changeSelection")
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
@@ -904,50 +902,7 @@ class ExcelWorksheet(ExcelBase):
 			states.add(controlTypes.STATE_PROTECTED)
 		return states
 
-	def script_changeSelection(self,gesture):
-		# Detect if this script is being repeated a lot (E.g. held down)
-		repeated=scriptHandler.getLastScriptRepeatCount()>=2
-		if repeated and scriptHandler.isScriptWaiting():
-			# This script is being pressed a lot in quick succession and there are more coming.
-			# Just send the gesture and return to not cause a lag.
-			gesture.send()
-			return
-		# Disable Excel's screen updating for the duration of this script to improve performance
-		with self._disableScreenUpdatingForContext():
-			# Fetch the current Excel selection
-			oldSelection=api.getFocusObject()
-			# Pass the key press to Excel
-			gesture.send()
-			newSelection=None
-			curTime=startTime=time.time()
-			# Keep fetching the selection and sleeping until the selection changes 
-			# Provide a longer loop timeout if this script is repeated in quick succession so that Excel has time to catch up.
-			timeout=0.25 if repeated else 0.1
-			while (curTime-startTime)<=timeout:
-				if eventHandler.isPendingEvents('gainFocus'):
-					# The focus moved somewhere else -- stop this script.
-					return
-				if not repeated:
-					# Fetch the current selection
-					newSelection=self._getSelection()
-					if newSelection!=oldSelection:
-						# The selection has changed, therefore exit the loop.
-						break
-				# Selection has not yet changed,  so sleep for a bit.
-				time.sleep(0.015)
-				curTime=time.time()
-			# The selection changed or the loop timed out 
-			if not newSelection:
-				newSelection=self._getSelection()
-			if oldSelection and oldSelection.parent==newSelection.parent:
-				# The new and old selection seem to have the same parent (e.g. the same worksheet).
-				# Ensure the new selection  and old selection have the same instance of that parent so that existing caching can be made use of. 
-				newSelection.parent=oldSelection.parent
-			# Fire a focus event for the new selection
-			eventHandler.executeEvent('gainFocus',newSelection)
-	script_changeSelection.canPropagate=True
-
-	__changeSelectionGestures = (
+	@scriptHandler.script(gestures=(
 		"kb:tab",
 		"kb:shift+tab",
 		"kb:enter",
@@ -992,7 +947,43 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+a",
 		"kb:control+v",
 		"kb:shift+f11",
-	)
+	), canPropagate=True)
+	def script_changeSelection(self,gesture):
+		if scriptHandler.isScriptWaiting():
+			# This script is being pressed a lot in quick succession and there are more coming.
+			# Just send the gesture and return to not cause a lag.
+			gesture.send()
+			return
+		repeatCount=scriptHandler.getLastScriptRepeatCount()
+		# Disable Excel's screen updating for the duration of this script to improve performance
+		with self._disableScreenUpdatingForContext():
+			# Fetch the current Excel selection
+			oldSelection=api.getFocusObject()
+			# Pass the key press to Excel
+			gesture.send()
+			newSelection=None
+			curTime=startTime=time.time()
+			# Keep fetching the selection and sleeping until the selection changes 
+			timeout=0.15
+			while (curTime-startTime)<=timeout:
+				if eventHandler.isPendingEvents('gainFocus') or scriptHandler.isScriptWaiting():
+					# The focus moved somewhere else or another script is queued -- stop this script.
+					return
+				# Fetch the current selection
+				newSelection=self._getSelection()
+				if repeatCount<1 and newSelection!=oldSelection:
+					# The selection has changed, therefore exit the loop.
+					break
+				# Selection has not yet changed,  so sleep for a bit.
+				time.sleep(0.015)
+				curTime=time.time()
+			# The selection changed or the loop timed out 
+			if oldSelection.parent==newSelection.parent:
+				# The new and old selection seem to have the same parent (e.g. the same worksheet).
+				# Ensure the new selection  and old selection have the same instance of that parent so that existing caching can be made use of. 
+				newSelection.parent=oldSelection.parent
+			# Fire a focus event for the new selection
+			eventHandler.executeEvent('gainFocus',newSelection)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 

@@ -933,7 +933,7 @@ Ova opcija je izborno polje koje, kada je označeno, govori programu NVDA da aut
 
 ==== Prikazivanje dodatnih opcija kada izađete iz programa NVDA====[GeneralSettingsShowExitOptions]
 Ova opcija je izborno polje koje kontroliše da li pri izlazu treba da se pokaže dijalog koji vas pita šta želite da uradite.
-Kada je označeno, dijalog će se pojaviti kada izađete iz programa NVDA koji vas pita da li želite da izađete, ponovo pokrenete program ili ponovo pokrenete program bez dodataka.
+Kada je označeno, dijalog će se pojaviti kada izađete iz programa NVDA koji vas pita da li želite da izađete, ponovo pokrenete program,  ponovo pokrenete program bez dodataka ili instalirate odložena ažuriranja (ako postoje).
 Kada nije označeno, NVDA će odmah izaći.
 
 ==== Reprodukuj zvukove kada se NVDA zaustavlja i pokreće ====[GeneralSettingsPlaySounds]
@@ -960,6 +960,10 @@ Ova opcija je dostupna samo za instalirane kopije programa NVDA.
 ==== Automatski proveri dostupna ažuriranja za NVDA ====[GeneralSettingsCheckForUpdates]
 Ako je ovo omogućeno, NVDA će automatski proveravati novija ažuriranja i obavestiće vas ako je novije ažuriranje dostupno.
 Možete takođe ručno proveriti ažuriranja izborom opcije proveri ažuriranja u meniju pomoć NVDA menija.
+
+==== Obavesti za odložena ažuriranja pri pokretanju====[GeneralSettingsNotifyPendingUpdates]
+Ako je ova opcija omogućena, NVDA će vas obavestiti kada imate odloženo ažuriranje pri pokretanju, i ponuditi vam mogućnost instalacije.
+Takođe možete ručno instalirati ažuriranje iz dijaloga izlaza (ako je omogućen ),  iz NVDA menija, ili kada izvršite novu proveru iz menija pomoći.
 
 +++ Izbor sintetizatora(NVDA+kontrol+s) +++[SynthesizerSelection]
 Dijalog sintetizator, koji se nalazi u delu"sintetizator..." u meniju podešavanja, vam dozvoljava da izaberete koji sintetizator NVDA treba da koristi u toku izgovaranja.
@@ -1755,10 +1759,11 @@ NVDA će vas pitati da li to stvarno želite da uradite.
 Kao i za instalaciju, NVDA mora biti pokrenut kako bi dodatak bio u potpunosti uklonjen.
 Dok to ne uradite, status"Ukloni" će biti prikazan za taj dodatak u listi.
 
-Da onemogućite dodatak, aktivirajte dugme onemogući.
-Da omogućite prethodno onemogućen dodatak, aktivirajte omogući dugme.
-Možete omogućiti dodatak ako je njegov status onemogućen ili suspendovan, ili ga onemogućiti ako je njegov status omogućen ili pokrenut.
+Da biste onemogućili dodatak, aktivirajte dugme "Onemogući".
+Da biste omogućili dodatak koji ste prethodno onemogućili, aktivirajte dugme "Omogući".
+Možete onemogućiti dodatak ako je status dodatka "Omogućen", ili ga omogućiti ako je status "Onemogućen".
 Za svaku aktivaciju dugmeta omogući/onemogući, status dodatka ćese promeniti da prikaže šta će se desiti kada se NVDA ponovo pokrene.
+Ako je dodatak prethodno onemogućen, status će prikazati "Omogućeno  nakon ponovnog pokretanja". Ako je dodatak prethodno "Omogućen", status će prikazati "Onemogućeno nakon ponovnog pokretanja"
 Kao i kada instalirate ili uklanjate dodatke, morate ponovo pokrenuti NVDA kako bi promene bile primenjene.
 
 Upravljač takođe ima dugme zatvori koje zatvara dijalog.
@@ -1918,6 +1923,7 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda da biste pogledali opis i r
 | premesti na trenutni fokus | t3 |
 | Premesti brajev red na sledeći red | t4 |
 | Pomeri brajev red  napred za red | t5 ili etouch 3|
+| Prijavi formatiranje teksta ispod brajeve ćelije | secondary routing |
 | Prebaci na brajevu ćeliju | routing |
 | Uključuje i isključuje HID simulaciju tastature | t1+spEnter |
 | premesti se na najgornji red u pregledu | t1+t2 |
@@ -2072,13 +2078,16 @@ Molimo pogledajte uputstvo za upotrebu brajevog reda kako biste saznali raspored
 | Izgovori sve | B6 |
 %kc:endInclude
 
-++ HumanWare Brailliant BI/B Serije ++[HumanWareBrailliant]
-Brailliant BI i B serije brajevih redova firme [HumanWare http://www.humanware.com/], uključujući BI 32, BI 40 i B 80, su podržani kada su povezani putem USB ili Bluetooth veze.
+++ HumanWare Brailliant BI/B serije / BrailleNote Touch  ++[HumanWareBrailliant]
+Brailliant BI i  B serije  brajevih redova firme [HumanWare http://www.humanware.com/], uključujući   BI 14, BI 32, BI 40 i  B 80, su podržani putem USB ili  bluetooth veze.
 Ako brajev red povezujete putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB drajvere koje je napravio proizvođač.
 USB drajveri nisu potrebni ako  je protokol postavljen na OpenBraille.
 
-Slede tasterske prečice za ove brajeve redove za korišćenje uz pomoć NVDA.
+ BrailleNote Touch je takođe podržan, i ne zahteva instalaciju drajvera.
+
+Slede komande za Brailliant BI/B i  BrailleNote touch redove sa programom NVDA.
 Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali opise tastera i njihov raspored.
++++ Komande za sve modele+++
 %kc:beginInclude
 || Ime | Komanda |
 | Pomeri brajev red unazad | Levo |
@@ -2091,16 +2100,34 @@ Molimo pogledajte uputstvo za upotrebu ovih brajevih redova kako biste saznali o
 | strelicaDole | razmak+tačka4 |
 | strelicaLevo | razmak+tačka3 |
 | strelicaDesno | razmak+tačka6 |
-| NVDA meni | c1+c3+c4+c5 (komanda n) |
 | Šift+tab | razmak+tačka1+tačka3 |
 | tab | razmak+tačka4+tačka6 |
 | alt | razmak+tačka1+tačka3+tačka4 (razmak+m) |
 | escape | razmak+tačka1+tačka5 (razmak+e) |
 | enter | tačka8 |
-| windows+d (umanji sve aplikacije) | c1+c4+c5 (komanda d) |
 | windows taster | razmak+tačka3+tačka4 |
 | alt+tab | razmak+tačka2+tačka3+tačka4+tačka5 (razmak+t) |
+| NVDA meni | Razmak+tačka1+tačka3+tačka4+tačka5 (razmak+n) |
+| windows+d  (Minimizuj sve aplikacije) | razmak+tačka1+tačka4+tačka5 (razmak+d) |
+| Izgovori sve| razmak+tačka1+tačka2+tačka3+tačka4+tačka5+tačka6 |
+%kc:endInclude
+
++++ Komande za  Brailliant BI 32, BI 40 i B 80 +++ 
+%kc:beginInclude
+|| Ime | Komanda |
+| NVDA meni | c1+c3+c4+c5 (komanda n) |
+| windows+d (minimizuj sve aplikacije) | c1+c4+c5 (komanda d) |
 | Izgovori sve | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
++++ Komande za Brailliant BI 14 +++ 
+%kc:beginInclude
+|| Ime | Komanda |
+| Strelica gore| Džojstik gore |
+| Strelica dole| džojstik dole|
+| Strelica levo | Džojstik levo|
+| Strelica desno | Džojstik desno|
+| enter  | Akcija džojstika|
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE  / smart beetle /Sync BrailleSerije ++[Hims]
@@ -2252,7 +2279,7 @@ Ovo su Papenmeier prečice dodeljene za korišćenje sa NVDA:
 | Premesti se na prvi sadržani objekat | dn2 |
 | Prebaci se na prethodni objekat | left2 |
 | Prebaci se na sledeći objekat | right2 |
-| Prijavi formatiranje teksta| Gornji red routing tastera |
+| Prijavi formatiranje teksta ispod brajeve ćelije | gornji red routing tastera |
 %kc:endInclude
 
 Trio model ima četiri dodatna tastera koji se nalaze na prednjoj strani brajeve tastature.
@@ -2326,7 +2353,7 @@ Uređaji koji imaju EAB:
 | Premesti se na prvi sadržani objekat | dn2 |
 | Premesti se na sledeći objekat | right2 |
 | Prebaci se na prethodni objekat | left2 |
-| Prijavi formatiranje teksta | gornji red routing tastera |
+| Prijavi formatiranje teksta ispod brajeve ćelije| Gornji routing strip |
 
 BRAILLEX Tiny:
 || Ime | Komanda |
@@ -2341,7 +2368,7 @@ BRAILLEX Tiny:
 | Prebaci se na prvi sadržani objekat | r1+dn |
 | Prebaci se na prvi objekat | r1+left |
 | Prebaci se na sledeći objekat | r1+right |
-| Prijavi formatiranje teksta | reportf |
+| Prijavi formatiranje teksta ispod brajeve ćelije| Gornji routing strip |
 | Izgovori naslov | l1+gore |
 | izgovori statusnu traku | l2+dole |
 
@@ -2350,7 +2377,7 @@ BRAILLEX 2D Screen:
 | izgovori trenutni znak u režimu pregleda | l1 |
 | Aktiviraj trenutni objekat navigacije | l2 |
 | Prebacuj brajev vezan na| r2 |
-| Prijavi formatiranje teksta | reportf |
+| Prijavi formatiranje teksta ispod brajeve ćelije | Gornji routing strip |
 | Premesti brajev red na prethodni red | up |
 | Pomeri brajev red nazad | left |
 | Prebaci brajev red napred | right |
@@ -2369,6 +2396,8 @@ Sledeći modeli su podržani:
 - BrailleNote MPower (Serijska i Bluetooth veza)
 - BrailleNote Apex (USB i bluetooth veza)
 -
+
+Za  BrailleNote Touch, molimo pogledajte sekciju [Brailliant BI serije / BrailleNote Touch HumanWareBrailliant].
 
 Ako vaš uređaj podržava više od jedne vrste veze, kada spajate vaš BrailleNote za korišćenje sa NVDA, morate postaviti priključak brajevog terminala u podešavanjima brajevog terminala.
 Za više informacija, molimo pogledajte korisničko uputstvo za BrailleNote elektronsku beležnicu.
@@ -2471,7 +2500,8 @@ Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
 | Pomeri brajev red unazad| switch1-6left, l1 |
 | Pomeri brajev red u napred| switch1-6Right, l8 |
 | Prebaci se na trenutni fokus| switch1-6Left+switch1-6Right, l1+l8 |
-| Prebaci na brajevu ćeliju| routing, doubleRouting|
+| Prebaci na brajevu ćeliju| routing |
+| Prijavi formatiranje teksta ispod brajeve ćelije| doubleRouting |
 | Prebaci na prethodni red u pregledu| joystick1Up |
 | Prebaci se na sledeći red u pregledu| joystick1Down |
 | Prebaci se na prethodni znak u pregledu| joystick1Left |

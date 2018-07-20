@@ -533,7 +533,10 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).treeInterceptorClass
 
 	def _get_isCurrent(self):
-		return self.HTMLAttributes["aria-current"]
+		isCurrent = self.HTMLAttributes["aria-current"]
+		if isCurrent == "false":
+			isCurrent = None
+		return isCurrent
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
@@ -1007,6 +1010,9 @@ class MSHTML(IAccessible):
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process
 		pass
+
+	def _get_roleText(self):
+		return self.HTMLAttributes['aria-roledescription']
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

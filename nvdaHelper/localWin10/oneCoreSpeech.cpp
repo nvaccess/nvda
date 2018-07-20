@@ -98,6 +98,8 @@ BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance) {
 		VoiceInformation^ info = instance->synth->AllVoices->GetAt(i);
 		voices += info->Id->Data();
 		voices += L":";
+		voices += info->Language->Data();
+		voices += L":";
 		voices += info->DisplayName->Data();
 		if (i != instance->synth->AllVoices->Size - 1) {
 			voices += L"|";

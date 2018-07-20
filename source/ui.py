@@ -32,7 +32,7 @@ HTMLDLG_MODELESS = 0x0040
 HTMLDLG_PRINT_TEMPLATE = 0x0080 
 HTMLDLG_VERIFY = 0x0100 
 
-def browseableMessage(message,title=None , isHtml=False):
+def browseableMessage(message,title=None,isHtml=False):
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
 	@param message: The message in either html or text.

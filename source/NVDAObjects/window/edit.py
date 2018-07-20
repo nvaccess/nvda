@@ -1,10 +1,9 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import locale
-import winVersion
 import comtypes.client
 import struct
 import ctypes
@@ -38,18 +37,6 @@ selOffsetsAtLastCaretEvent=None
 
 TA_BOTTOM=8
 
-#Edit control window messages
-EM_GETSEL=176
-EM_SETSEL=177
-EM_SCROLLCARET=0xb7
-EM_GETLINE=196
-EM_GETLINECOUNT=186
-EM_LINEFROMCHAR=201
-EM_LINEINDEX=187
-EM_LINELENGTH=193
-EM_POSFROMCHAR=214 
-EM_CHARFROMPOS=215
-EM_GETFIRSTVISIBLELINE=0x0ce
 #Rich edit messages
 EM_EXGETSEL=winUser.WM_USER+52
 EM_EXLINEFROMCHAR=winUser.WM_USER+54
@@ -179,13 +166,13 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			try:
 				p=PointLStruct(0,0)
 				winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-				watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,internalP,offset)
+				watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,internalP,offset)
 				winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 			point=textInfos.Point(p.x,p.y)
 		else:
-			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,offset,None)
 			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
 		(left,top,width,height)=self.obj.location
 		point.x=point.x+left
@@ -201,12 +188,30 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			try:
 				p=PointLStruct(x-left,y-top)
 				winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
-				offset=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,internalP)
+				offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,internalP)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
 			p=(x-left)+((y-top)<<16)
-			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_CHARFROMPOS,0,p)&0xffff
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)
+			offset=winUser.LOWORD(res)
+			lineNum=winUser.HIWORD(res)
+			if offset==0xFFFF and lineNum==0xFFFF:
+				raise LookupError("Point outside client aria")
+			if self._getStoryLength() > 0xFFFF:
+				# Returned offsets are 16 bits, therefore for large documents, we need to make sure that the correct offset is returned.
+				# We can calculate this by using the start offset of the line with the retrieved line number.
+				lineStart=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
+				# Get the last 16 bits of the line number
+				lineStart16=lineStart&0xFFFF
+				if lineStart16 > offset:
+					# There are cases where the last 16 bits of the line start are greather than the 16 bits offset.
+					# For example, this happens when the line start offset is 65534 (0xFFFE)
+					# and the offset we need ought to be 65537 (0x10001), which is a 17 bits number
+					# In that case, add 0x10000 to the offset, which will make the eventual formula return the correct offset,
+					# unless a line has more than 65535 characters, in which case we can't get a reliable offset.
+					offset+=0x10000
+				offset = (offset - lineStart16) + lineStart
 		return offset
 
 	def _getCharFormat(self,offset):
@@ -232,7 +237,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return charFormat
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
-		#Basic edit fields do not support formatting at all
+		#Basic edit fields do not support formatting at all.
+		# Formatting for unidentified edit fields is ignored.
+		# Note that unidentified rich edit fields will most likely use L{ITextDocumentTextInfo}.
 		if self.obj.editAPIVersion<1:
 			return super(EditTextInfo,self)._getFormatFieldAndOffsets(offset,formatConfig,calculateOffsets=calculateOffsets)
 		if calculateOffsets:
@@ -282,7 +289,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			start=ctypes.c_uint()
 			end=ctypes.c_uint()
-			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETSEL,ctypes.byref(start),ctypes.byref(end))
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_GETSEL,ctypes.byref(start),ctypes.byref(end))
 			return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
@@ -298,9 +305,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalCharRange,0,winKernel.MEM_RELEASE)
 		else:
-			watchdog.cancellableSendMessage(self.obj.windowHandle,EM_SETSEL,start,end)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_SETSEL,start,end)
 		#Make sure the Window is always scrolled to the caret
-		watchdog.cancellableSendMessage(self.obj.windowHandle,EM_SCROLLCARET,0,0)
+		watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_SCROLLCARET,0,0)
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
@@ -333,7 +340,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
 
 	def _getLineCount(self):
-		return watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETLINECOUNT,0,0)
+		return self.obj.windowTextLineCount
 
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
@@ -379,38 +386,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif winVersion.winVersion.major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
-			lineStart,lineEnd=self._getLineOffsets(offset)
-			if offset>=lineEnd:
-				return offset,offset+1
-			lineText=self._getTextRange(lineStart,lineEnd)
-			lineTextLen=len(lineText)
-			relativeOffset=offset-lineStart
-			if relativeOffset>=lineTextLen:
-				return offset,offset+1
-			#cariage returns are always treeted as a word by themselves
-			if lineText[relativeOffset] in ['\r','\n']:
-				return offset,offset+1
-			#Find the start of the word (possibly moving through space to get to the word first)
-			tempOffset=relativeOffset
-			while tempOffset>=0 and lineText[tempOffset].isspace():
-				tempOffset-=1
-			while tempOffset>=0 and not lineText[tempOffset].isspace():
-				tempOffset-=1
-			tempOffset+=1
-			start=lineStart+tempOffset
-			startOnSpace=True if tempOffset<lineTextLen and lineText[tempOffset].isspace() else False
-			#Find the end of the word and trailing space
-			tempOffset=relativeOffset
-			if startOnSpace:
-				while tempOffset<lineTextLen and lineText[tempOffset].isspace():
-					tempOffset+=1
-			while tempOffset<lineTextLen and not lineText[tempOffset].isspace():
-				tempOffset+=1
-			while tempOffset<lineTextLen and lineText[tempOffset].isspace():
-				tempOffset+=1
-			end=lineStart+tempOffset
-			return start,end
 		else:
 			if self._getTextRange(offset,offset+1) in ['\r','\n']:
 				return offset,offset+1
@@ -423,12 +398,12 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_EXLINEFROMCHAR,0,offset)
 			return res
 		else:
-			return watchdog.cancellableSendMessage(self.obj.windowHandle,EM_LINEFROMCHAR,offset,0)
+			return watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEFROMCHAR,offset,0)
 
 	def _getLineOffsets(self,offset):
 		lineNum=self._getLineNumFromOffset(offset)
-		start=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_LINEINDEX,lineNum,0)
-		length=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_LINELENGTH,offset,0)
+		start=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
+		length=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINELENGTH,offset,0)
 		end=start+length
 		#If we just seem to get invalid line info, calculate manually
 		if start<=0 and end<=0 and lineNum<=0 and self._getLineCount()<=0 and self._getStoryLength()>0:
@@ -773,13 +748,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
-	editAPIUnicode=True
-	# #4291: Use ITextDocument in Windows 7 and later, as it's very slow in earlier versions.
-	useITextDocumentSupport=(winVersion.winVersion.major,winVersion.winVersion.minor)>=(6,1)
 	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):
-		if self.editAPIVersion>1 and (self.useITextDocumentSupport or self.windowClassName.endswith('PT')) and self.ITextDocumentObject:
+		if self.editAPIVersion!=0 and self.ITextDocumentObject:
 			return ITextDocumentTextInfo
 		else:
 			return EditTextInfo
@@ -856,3 +828,10 @@ class RichEdit30(RichEdit):
 
 class RichEdit50(RichEdit):
 	editAPIVersion=5
+
+class UnidentifiedEdit(RichEdit):
+	"""
+	An edit control for which the edit API version is unknown.
+	This class inherrits from L{RichEdit} to ensure L{ITextDocumentTextInfo} initialization failure is handled correctly.
+	"""
+	editAPIVersion=-1
