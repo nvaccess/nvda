@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"POT-Creation-Date: 2018-07-13 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Adriani Botez <adriani.botez@gmail.com>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 2.0.9\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -107,7 +107,7 @@ msgstr "Grammatik: {text}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Fehler in Anwendungsmodul %s"
+msgstr "Fehler in Anwendungsmodul \"%s\""
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
@@ -157,7 +157,7 @@ msgstr "Nie"
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 msgid "Duck when outputting speech and sounds"
-msgstr "Beim Sprechen und Wiedergeben von NVDA-Signaltönen"
+msgstr "Nur während des Sprechens und bei Wiedergabe der Signaltöne"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
@@ -167,7 +167,7 @@ msgstr "Immer"
 #. Translators: Displayed in braille for an object which is a
 #. window.
 msgid "wnd"
-msgstr "Fst"
+msgstr "fst"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
@@ -197,22 +197,22 @@ msgstr "sltr"
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
 msgid "mnubar"
-msgstr "mnülst"
+msgstr "mnlst"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu item.
 msgid "mnuitem"
-msgstr "Mne"
+msgstr "mne"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
 msgid "mnu"
-msgstr "mnü"
+msgstr "mn"
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
-msgstr "Kmbf"
+msgstr "kmbf"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
@@ -227,12 +227,12 @@ msgstr "grf"
 #. Translators: Displayed in braille for an object which is a
 #. help balloon.
 msgid "hlp"
-msgstr "hlf"
+msgstr "mh"
 
 #. Translators: Displayed in braille for an object which is a
 #. tool tip.
 msgid "tltip"
-msgstr "Mhlf"
+msgstr "tt"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -247,7 +247,7 @@ msgstr "ba"
 #. Translators: Displayed in braille for an object which is a
 #. tree view item.
 msgid "tvitem"
-msgstr "BAE"
+msgstr "bae"
 
 #. Translators: Displayed in braille for an object which is a
 #. tab control.
@@ -292,22 +292,22 @@ msgstr "zb"
 #. Translators: Displayed in braille for an object which is a
 #. document.
 msgid "doc"
-msgstr "Dok"
+msgstr "dok"
 
 #. Translators: Displayed in braille for an object which is a
 #. application.
 msgid "app"
-msgstr "App"
+msgstr "app"
 
 #. Translators: Displayed in braille for an object which is a
 #. grouping.
 msgid "grp"
-msgstr "Grp"
+msgstr "grp"
 
 #. Translators: Displayed in braille for an object which is a
 #. embedded object.
 msgid "embedded"
-msgstr "eObj"
+msgstr "emb"
 
 #. Translators: Displayed in braille for an object which is a
 #. end note.
@@ -317,17 +317,17 @@ msgstr "en"
 #. Translators: Displayed in braille for an object which is a
 #. foot note.
 msgid "fnote"
-msgstr "fN"
+msgstr "fn"
 
 #. Translators: Displayed in braille for an object which is a
 #. terminal.
 msgid "term"
-msgstr "EA"
+msgstr "ea"
 
 #. Translators: Displayed in braille for an object which is a
 #. section.
 msgid "sect"
-msgstr "Abs"
+msgstr "abs"
 
 #. Translators: Displayed in braille for an object which is a
 #. toggle button.
@@ -337,7 +337,7 @@ msgstr "umsltr"
 #. Translators: Displayed in braille for an object which is a
 #. split button.
 msgid "splbtn"
-msgstr "Tsltr"
+msgstr "tsltr"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu button.
@@ -386,7 +386,7 @@ msgstr "->"
 
 #. Translators: Displayed in braille when a protected control or a document is encountered.
 msgid "***"
-msgstr "***"
+msgstr "pwd"
 
 #. Translators: Displayed in braille when a required form field is encountered.
 msgid "req"
@@ -402,7 +402,7 @@ msgstr "..."
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "mln"
-msgstr "Mz"
+msgstr "mz"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
@@ -487,7 +487,7 @@ msgstr "Alle Punkte"
 #. Translators: The label for a braille focus context presentation setting that
 #. only shows as much as possible focus context information when the context has changed.
 msgid "Fill display for context changes"
-msgstr "Füllt das Braille-Display bei Kontextänderungen"
+msgstr "Bei Änderrungen im Kontext alle Braille-Module benutzen"
 
 #. Translators: The label for a braille focus context presentation setting that
 #. shows as much as possible focus context information if the focus object doesn't fill up the whole display.
@@ -1023,6 +1023,11 @@ msgstr "Russische Vollschrift"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Indische Vollschrift (Sanskrit)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Schwedisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3679,8 +3684,8 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Liest das aktuelle Zeichen unter dem NVDA-Cursor im Navigator-Objekt vor. Bei "
-"zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein "
+"Liest das aktuelle Zeichen unter dem NVDA-Cursor im Navigator-Objekt vor. "
+"Bei zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein "
 "Beispiel wird angesagt. Bei dreimaligem Drücken wird das Zeichen als "
 "Dezimal- und als Hexadezimalwert gesprochen."
 
@@ -8468,7 +8473,7 @@ msgstr "Beim Start von NVDA &ausstehende Aktualisierungen melden"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr "Erlauben Sie dem NVDA-Projekt, NVDA-Nutzungsstatistiken zu erstellen."
+msgstr "Erlauben Sie dem NVDA-Projekt, NVDA-Nutzungsstatistiken zu sammeln"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
