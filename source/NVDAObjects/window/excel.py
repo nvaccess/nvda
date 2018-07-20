@@ -965,7 +965,7 @@ class ExcelWorksheet(ExcelBase):
 			curTime=startTime=time.time()
 			# Keep fetching the selection and sleeping until the selection changes.
 			# Once the selection changes, keep looping for at least the amount of times the script has been repeated to ensure the selection does not change again. 
-			timeout=0.1
+			timeout=0.15
 			changeCount=-1
 			while changeCount>=0 or (curTime-startTime)<=timeout:
 				if eventHandler.isPendingEvents('gainFocus') or scriptHandler.isScriptWaiting():
@@ -978,10 +978,10 @@ class ExcelWorksheet(ExcelBase):
 					changeCount=0
 				elif changeCount>=0:
 					changeCount+=1
-				if changeCount>=repeatCount:
+				if changeCount>=3:
 					break
 				# Selection has not yet changed,  so sleep for a bit.
-				time.sleep(0.03)
+				time.sleep(0.03*(changeCount+1))
 				curTime=time.time()
 			# The selection changed or the loop timed out 
 			if oldSelection.parent==newSelection.parent:
