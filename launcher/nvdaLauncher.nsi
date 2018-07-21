@@ -18,6 +18,7 @@ VIAddVersionKey "ProductName" "NVDA"
 VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "NVDA launcher file"
 VIAddVersionKey "ProductVersion" "${VERSION}"
+VIAddVersionKey "FileVersion" "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}"
 
 OutFile "${LAUNCHEREXE}"
 
