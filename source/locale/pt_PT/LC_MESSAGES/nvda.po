@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 00:10+1000\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1032,6 +1032,11 @@ msgstr "Russo grau 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sânscrito grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Sueco braille de computador de 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3728,7 +3733,7 @@ msgstr "Modo de voz desligado"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "Modo de voz beeps"
+msgstr "Modo de voz bips"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
@@ -3740,7 +3745,7 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Alterna entre os modos de voz desligado, beeps e falar. Quando está no modo "
+"Alterna entre os modos de voz desligado, bips e falar. Quando está no modo "
 "de fala desligado, o NVDA permanece em  silêncio. Quando está no modo de "
 "beeps, o NVDA apita sempre que seria suposto falar e no modo de fala, o NVDA "
 "fala normalmente."
@@ -3870,18 +3875,18 @@ msgstr "Falar actualizações de barras de progresso"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
-msgstr "Beep para actualizações de barras de progresso"
+msgstr "Bip para actualizações de barras de progresso"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "Beep and speak progress bar updates"
-msgstr "Beep e falar actualizações em barras de progresso"
+msgstr "Bip e falar actualizações em barras de progresso"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"Alterna entre beeps, voz, beeps e voz, e desactivar, para informar "
+"Alterna entre bips, voz, bips e voz, e desactivar, para informar "
 "actualizações de barras de progresso"
 
 #. Translators: presented when the present dynamic changes is toggled.
@@ -6703,9 +6708,17 @@ msgstr "Iniciar"
 msgid "No track playing"
 msgstr "Não existe faixa a tocar"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anuncia o tempo restante de qualquer faixa em execução"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Anuncia o tempo passado de qualquer faixa em execução"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Anuncia o tempo total de qualquer faixa em execução"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7763,6 +7776,42 @@ msgstr "Instalar Actualização pendente"
 msgid "Please wait"
 msgstr "Por favor aguarde"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Recolha de dados de utilização do NVDA"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Para futuramente poder melhorar o NVDA, a NV Access necessita de recolher "
+"informações de utilização do NVDA.\n"
+"\n"
+"Os dados a recolher incluem a versão do sistema Operativo, versão do NVDA, "
+"idioma, país de origem e algumas configurações do NVDA, tais como "
+"sintetizador, linha Braille, e tabela de conversão Braille em utilização. "
+"Nenhum conteúdo falado ou representado em Braille será alguma vez enviado à "
+"NV Access.  Por favor, consulte o Manual do utilizador para ver a lista "
+"completa dos dados recolhidos."
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Sim"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Não"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Gestor de Extras"
@@ -8442,6 +8491,11 @@ msgstr "&Verificar automaticamente actualizações para o NVDA"
 msgid "Notify for &pending update on startup"
 msgstr "Anunciar actualização &pendente no arranque"
 
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+"Permitir que o projeto do NVDA recolha estatísticas de utilização do NVDA"
+
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
@@ -8579,7 +8633,7 @@ msgstr "Anunciar maiús&cula antes de letras maiúsculas"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "&Beep for capitals"
-msgstr "Reproduzir &beeps para maiúsculas"
+msgstr "Reproduzir &bips para maiúsculas"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -8635,8 +8689,7 @@ msgstr "Permitir leitura rápida durante a leitura contínua."
 #. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"Reproduzir beeps se ao escrever letras minúsculas o caps lock estiver "
-"activado"
+"Reproduzir bips se ao escrever letras minúsculas o caps lock estiver activado"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8754,13 +8807,13 @@ msgstr "Falar"
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Beep"
-msgstr "Beep"
+msgstr "Bip"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Speak and beep"
-msgstr "Falar e beep"
+msgstr "Falar e bip"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
