@@ -62,11 +62,11 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				return states, 1
 		return comtypes.automation.VT_EMPTY, 0
 
-class CustomCheckableList(wx.CheckListBox):
-	"""Custom checkable list to fix a11y bugs in the standard wx checkable list."""
+class CustomCheckableListBox(wx.CheckListBox):
+	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
-		super(CustomCheckableList, self).__init__(*args, **kwargs)
+		super(CustomCheckableListBox, self).__init__(*args, **kwargs)
 		#Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		#Register object with COM to fix accessibility bugs in wx.
