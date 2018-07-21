@@ -5,6 +5,8 @@
 #See the file COPYING for more details.
 import os
 import ctypes
+import ctypes.wintypes
+import array
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
 from logHandler import log
@@ -39,3 +41,35 @@ def FaultTolerantFile(name):
 		moveFileResult = ctypes.windll.kernel32.MoveFileExW(f.name, name, MOVEFILE_REPLACE_EXISTING)
 		if moveFileResult == 0:
 			raise ctypes.WinError()
+
+def getFileVersionInfo(name, *attributes):
+	"""Gets the specified file version info attributes from the provided file."""
+	if not isinstance(name, unicode):
+		raise TypeError("name must be unicode")
+	fileVersionInfo = {}
+	# Get size needed for buffer (0 if no info)
+	size = ctypes.windll.version.GetFileVersionInfoSizeW(name, None)
+	if not size:
+		raise RuntimeError("No version information")
+	# Create buffer
+	res = ctypes.create_string_buffer(size)
+	# Load file informations into buffer res
+	ctypes.windll.version.GetFileVersionInfoW(name, None, size, res)
+	r = ctypes.c_uint()
+	l = ctypes.c_uint()
+	# Look for codepages
+	ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
+		ctypes.byref(r), ctypes.byref(l))
+	if not l.value:
+		raise RuntimeError("No codepage")
+	# Take the first codepage (what else ?)
+	codepage = array.array('H', ctypes.string_at(r.value, 4))
+	codepage = "%04x%04x" % tuple(codepage)
+	for attr in attributes:
+		if not ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\%s' % (codepage, attr),
+			ctypes.byref(r), ctypes.byref(l)
+		):
+			raise ValueError("Invalid or unavailable version info attribute: %s" % attr)
+		fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value-1)
+	return fileVersionInfo

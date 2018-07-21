@@ -264,21 +264,21 @@ class AddonBase(object):
 			return None
 		return getNVDAVersionTupleFromString(version)
 
-	@property
-	def isSupported(self):
-		"""True if this add-on is supported on this version of NVDA.
-		This property returns False if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is missing.
+	def isSupported(self, version=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
+		"""True if this add-on is supported on the provided version of NVDA.
+		This method returns False if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is missing.
+		By default, the current version of NVDA is evaluated.
 		"""
 		# If minimumNVDAVersion is None, it will always be less than the current NVDA version.
 		# Therefore, we should account for this.
 		minVersion = self.minimumNVDAVersion
-		return bool(minVersion) and minVersion<=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
+		return bool(minVersion) and minVersion<=version
 
-	@property
-	def isTested(self):
-		"""True if this add-on is tested for this version of NVDA.
+	def isTested(self, version=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
+		"""True if this add-on is tested for the provided version of NVDA.
+		By default, the current version of NVDA is evaluated.
 		"""
-		return self.isSupported and self.lastTestedNVDAVersion>=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)
+		return self.isSupported(version) and self.lastTestedNVDAVersion>=version
 
 	@property
 	def isBlacklisted(self):
