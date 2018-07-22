@@ -409,7 +409,7 @@ class AddonUpdatesDialog(wx.Dialog):
 
 	def onUpdate(self, evt):
 		self.Destroy()
-		# #3208: do not display add-ons manager while updates are in progres.
+		# #3208: do not display add-ons manager while updates are in progress.
 		# Also, Skip the below step if this is an automatic update check.
 		if not self.auto:
 			self.Parent.Destroy()
