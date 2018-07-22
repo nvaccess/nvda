@@ -2064,11 +2064,11 @@ class DictionaryDialog(SettingsDialog):
 		entryDialog.setType(self.tempSpeechDict[editIndex].type)
 		if entryDialog.ShowModal()==wx.ID_OK:
 			self.tempSpeechDict[editIndex]=entryDialog.dictEntry
-			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
-			self.dictList.SetStringItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
+			self.dictList.SetItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
+			self.dictList.SetItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
