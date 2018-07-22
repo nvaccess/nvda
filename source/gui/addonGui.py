@@ -429,10 +429,11 @@ def updateAddonsGenerator(addons, auto=True):
 		if auto:
 			wx.CallLater(1, AddonsDialog(gui.mainFrame).Close)
 		else:
-			gui.mainFrame.onAddonsManagerCommand(None)
+			AddonsDialog(gui.mainFrame).refreshAddonsList()
+			wx.CallLater(1, gui.mainFrame.onAddonsManagerCommand, None)
 		return
-	# #3208: Update (download and install) add-ons one after the other.
-	addonInfo = addons.pop()
+	# #3208: Update (download and install) add-ons one after the other, done by retrieving the first item (as far as current add-ons container is concerned).
+	addonInfo = addons.pop(0)
 	downloader = AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"], addonsToBeUpdated=addons, auto=auto)
 	downloader.start()
 	yield
