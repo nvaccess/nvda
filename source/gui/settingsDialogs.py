@@ -2593,9 +2593,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetFocus()
 
 	def updateListItem(self, item, symbol):
-		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
-		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
-		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
+		self.symbolsList.SetItem(item, 1, symbol.replacement)
+		self.symbolsList.SetItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+		self.symbolsList.SetItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
 	def onSymbolEdited(self):
 		if self.editingItem is not None:
