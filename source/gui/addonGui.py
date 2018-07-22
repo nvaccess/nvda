@@ -412,7 +412,7 @@ class AddonUpdatesDialog(wx.Dialog):
 		# #3208: do not display add-ons manager while updates are in progress.
 		# Also, Skip the below step if this is an automatic update check.
 		if not self.auto:
-			self.Parent.Destroy()
+			self.Parent.Hide()
 		updateAddonsGenerator(self.addonUpdateInfo.values(), auto=self.auto).next()
 
 	def onClose(self, evt):
@@ -456,7 +456,6 @@ class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 		@param auto: Automatic add-on updates or not.
 		@type auto: bool
 		"""
-		super(AddonUpdateDownloader, self).__init__(urls, fileHash)
 		self.urls = urls
 		self.addonName = addonName
 		self.destPath = tempfile.mktemp(prefix="nvda_addonUpdate-", suffix=".nvda-addon")
