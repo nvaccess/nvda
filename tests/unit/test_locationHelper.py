@@ -117,6 +117,18 @@ class TestRectUtilities(unittest.TestCase):
 	def test_valueErrorForUnsuportedInput(self):
 		self.assertRaises(ValueError, RectLTRB, left=10, top=10, right=9, bottom=9)
 
+	def test_expandOrShrink(self):
+		"""Tests the expand or shrink functionality to resize a rectangle given a specified margin."""
+		rect = RectLTRB(left=10, top=10, right=20, bottom=20)
+		self.assertEqual(rect.expandOrShrink(10), RectLTRB(left=0, top=0, right=30, bottom=30))
+		self.assertEqual(rect.expandOrShrink(-2), RectLTRB(left=12, top=12, right=18, bottom=18))
+		self.assertRaises(RuntimeError, rect.expandOrShrink, -10)
+
+		location = RectLTWH(left=10, top=10, width=10, height=10)
+		self.assertEqual(location.expandOrShrink(10), RectLTWH(left=0, top=0, width=30, height=30))
+		self.assertEqual(location.expandOrShrink(-2), RectLTWH(left=12, top=12, width=6, height=6))
+		self.assertRaises(RuntimeError, location.expandOrShrink, -10)
+
 class TestPointOperators(unittest.TestCase):
 
 	def test_add(self):

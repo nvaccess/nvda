@@ -298,13 +298,13 @@ class _RectMixin:
 	def isSubset(self,other):
 		"""Returns whether this rectangle is a subset of other (i.e. whether all points in this rectangle are contained by other)."""
 		if not isinstance(other,RECT_CLASSES):
-			return NotImplemented
+			return False
 		return other.left<=self.left<=self.right<=other.right and other.top<=self.top<=self.bottom<=other.bottom
 
 	def isSuperset(self,other):
 		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
 		if not isinstance(other,RECT_CLASSES):
-			return NotImplemented
+			return False
 		return self.left<=other.left<=other.right<=self.right and self.top<=other.top<=other.bottom<=self.bottom
 
 	def __eq__(self,other):
@@ -324,13 +324,32 @@ class _RectMixin:
 		No intersect results in a rectangle with zeroed coordinates.
 		"""
 		if not isinstance(other,RECT_CLASSES):
-			return NotImplemented
+			raise TypeError("other should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in RECT_CLASSES))
 		left=max(self.left,other.left)
 		top=max(self.top,other.top)
 		right=min(self.right,other.right)
 		bottom=min(self.bottom,other.bottom)
 		if left>right or top>bottom:
 			left=top=right=bottom=0
+		if isinstance(self, RectLTWH):
+			return RectLTWH(left,top,right-left,bottom-top)
+		return RectLTRB(left,top,right,bottom)
+
+	def expandOrShrink(self, margin):
+		"""Expands or shrinks the boundaries of the rectangle with the given margin.
+		For example, if self = Rect(left=10,top=10,right=25,bottom=25) and margin = 10,
+		this results in Rect(left=0,top=0,right=35,bottom=35).
+		If self = Rect(left=10,top=10,right=25,bottom=25) and margin = -5,
+		this results in Rect(left=15,top=15,right=20,bottom=20).
+		"""
+		if not isinstance(margin, int):
+			raise TypeError("Margin should be an integer")
+		left=self.left-margin
+		top=self.top-margin
+		right=self.right+margin
+		bottom=self.bottom+margin
+		if left>right or top>bottom:
+			raise RuntimeError("The provided margin of %d would result in a rectangle with a negative width or height, which is not allowed"%margin)
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left,top,right-left,bottom-top)
 		return RectLTRB(left,top,right,bottom)
