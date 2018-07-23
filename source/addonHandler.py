@@ -83,7 +83,7 @@ def saveState():
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
-	return (addon for addon in getAvailableAddons() if addon.isRunning)
+	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
 def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -204,16 +204,24 @@ def _getAvailableAddonsFromPath(path):
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
 
 _availableAddons = collections.OrderedDict()
-def getAvailableAddons(refresh=False):
+def getAvailableAddons(refresh=False, filterFunc=None):
 	""" Gets all available addons on the system.
+	@param refresh: Whether or not to query the file system for available add-ons.
+	@type refresh: bool
+	@param filterFunc: A function that allows filtering of add-ons.
+		It takes an L{Addon} as its only argument
+		and returns a C{bool} indicating whether the add-on matches the provided filter.
+	@type filterFunc: callable
 	@rtype generator of Addon instances.
 	"""
+	if filterFunc and not callable(filterFunc):
+		raise TypeError("The provided filterFunc is not callable")
 	if refresh:
 		_availableAddons.clear()
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
-	return _availableAddons.itervalues()
+	return (addon for addon in _availableAddons.itervalues() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
