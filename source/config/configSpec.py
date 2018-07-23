@@ -49,7 +49,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Braille settings
 [braille]
-	display = string(default=noBraille)
+	display = string(default=auto)
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
@@ -181,7 +181,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followMouse = boolean(default=False)
 
 [UIA]
-	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 

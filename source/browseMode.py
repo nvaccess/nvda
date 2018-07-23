@@ -1,6 +1,6 @@
 #browseMode.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2007-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -825,7 +825,7 @@ class ElementsListDialog(wx.Dialog):
 
 		self.tree.SetFocus()
 		self.initElementType(self.ELEMENT_TYPES[self.lastSelectedElementType][0])
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onElementTypeChange(self, evt):
 		elementType=evt.GetInt()
@@ -887,7 +887,7 @@ class ElementsListDialog(wx.Dialog):
 	def filter(self, filterText, newElementType=False):
 		# If this is a new element type, use the element nearest the cursor.
 		# Otherwise, use the currently selected element.
-		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
+		defaultElement = self._initialElement if newElementType else self.tree.GetItemData(self.tree.GetSelection())
 		# Clear the tree.
 		self.tree.DeleteChildren(self.treeRoot)
 
@@ -906,7 +906,7 @@ class ElementsListDialog(wx.Dialog):
 			if parent:
 				parent = elementsToTreeItems.get(parent)
 			item = self.tree.AppendItem(parent or self.treeRoot, label)
-			self.tree.SetItemPyData(item, element)
+			self.tree.SetItemData(item, element)
 			elementsToTreeItems[element] = item
 			if element == defaultElement:
 				defaultItem = item
@@ -951,7 +951,7 @@ class ElementsListDialog(wx.Dialog):
 		elif key == wx.WXK_F2:
 			item=self.tree.GetSelection()
 			if item:
-				selectedItemType=self.tree.GetItemPyData(item).item
+				selectedItemType=self.tree.GetItemData(item).item
 				self.tree.EditLabel(item)
 				evt.Skip()
 
@@ -975,14 +975,14 @@ class ElementsListDialog(wx.Dialog):
 
 	def onTreeLabelEditBegin(self,evt):
 		item=self.tree.GetSelection()
-		selectedItemType = self.tree.GetItemPyData(item).item
+		selectedItemType = self.tree.GetItemData(item).item
 		if not selectedItemType.isRenameAllowed:
 			evt.Veto()
 
 	def onTreeLabelEditEnd(self,evt):
 			selectedItemNewName=evt.GetLabel()
 			item=self.tree.GetSelection()
-			selectedItemType = self.tree.GetItemPyData(item).item
+			selectedItemType = self.tree.GetItemData(item).item
 			selectedItemType.rename(selectedItemNewName)
 
 	def _clearSearchText(self):
@@ -1030,7 +1030,7 @@ class ElementsListDialog(wx.Dialog):
 		# Save off the last selected element type on to the class so its used in initialization next time.
 		self.__class__.lastSelectedElementType=self.lastSelectedElementType
 		item = self.tree.GetSelection()
-		item = self.tree.GetItemPyData(item).item
+		item = self.tree.GetItemData(item).item
 		if activate:
 			item.activate()
 		else:
@@ -1046,14 +1046,14 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 		textList = []
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
-			try:
-				textList.append(attrs["name"])
-			except KeyError:
-				pass
-			if landmark == "region":
-				# The word landmark is superfluous for regions.
-				textList.append(aria.landmarkRoles[landmark])
-			else:
+			# Ensure that the name of the field gets presented even if normally it wouldn't. 
+			name=attrs.get('name')
+			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
+				textList.append(name)
+				if landmark == "region":
+					# The word landmark is superfluous for regions.
+					textList.append(aria.landmarkRoles[landmark])
+			if landmark != "region":
 				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
@@ -1062,14 +1062,14 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
-			try:
-				textList.append(field["name"])
-			except KeyError:
-				pass
-			if landmark == "region":
-				# The word landmark is superfluous for regions.
-				textList.append(braille.landmarkLabels[landmark])
-			else:
+			# Ensure that the name of the field gets presented even if normally it wouldn't. 
+			name=field.get('name')
+			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
+				textList.append(name)
+				if landmark == "region":
+					# The word landmark is superfluous for regions.
+					textList.append(braille.landmarkLabels[landmark])
+			if landmark != "region":
 				# Translators: This is brailled to indicate a landmark (example output: lmk main).
 				textList.append(_("lmk %s") % braille.landmarkLabels[landmark])
 		text = super(BrowseModeDocumentTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)

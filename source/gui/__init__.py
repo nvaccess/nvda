@@ -13,6 +13,7 @@ import codecs
 import ctypes
 import weakref
 import wx
+import wx.adv
 import globalVars
 import tones
 import ui
@@ -212,12 +213,12 @@ class MainFrame(wx.Frame):
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
 		try:
-			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.installPendingUpdateMenuItem)
+			self.sysTrayIcon.menu.Remove(self.sysTrayIcon.installPendingUpdateMenuItem)
 		except:
 			log.debug("Error while removing  pending update menu item", exc_info=True)
 			pass
 		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
+			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
 
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
@@ -374,7 +375,7 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
-class SysTrayIcon(wx.TaskBarIcon):
+class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def __init__(self, frame):
 		super(SysTrayIcon, self).__init__()
@@ -401,7 +402,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
+		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
@@ -410,7 +411,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			item = menu_preferences.Append(wx.ID_ANY, _("I&nput gestures..."))
 			self.Bind(wx.EVT_MENU, frame.onInputGesturesCommand, item)
 		# Translators: The label for Preferences submenu in NVDA menu.
-		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
+		self.menu.AppendSubMenu(menu_preferences,_("&Preferences"))
 
 		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -443,7 +444,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
-		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
+		self.menu.AppendSubMenu(menu_tools,_("Tools"))
 
 		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -476,7 +477,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
 		# Translators: The label for the Help submenu in NVDA menu.
-		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
+		self.menu.AppendSubMenu(menu_help,_("&Help"))
 		self.menu.AppendSeparator()
 		# Translators: The label for the menu item to open the Configuration Profiles dialog.
 		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
@@ -507,8 +508,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
-		self.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
-		self.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
+		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
+		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
 		self.menu.Destroy()
@@ -663,7 +664,7 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.kbdList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
@@ -712,7 +713,7 @@ class LauncherDialog(wx.Dialog):
 		self.licenseAgreeCheckbox.Value = False
 		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
 
-		sizer = sHelper.addItem(wx.GridSizer(rows=2, cols=2))
+		sizer = sHelper.addItem(wx.GridSizer(2, 2, 0, 0))
 		self.actionButtons = []
 		# Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
@@ -739,7 +740,7 @@ class LauncherDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:
@@ -823,7 +824,7 @@ class ExitDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
@@ -882,7 +883,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
 		self.Raise()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()
@@ -926,6 +927,38 @@ def shouldConfigProfileTriggersBeSuspended():
 		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
 			return True
 	return False
+
+class NonReEntrantTimer(wx.Timer):
+	"""
+	Before WXPython 4, wx.Timer was nonre-entrant, 
+	meaning that if code within its callback pumped messages (E.g. called wx.Yield) and this timer was ready to fire again, 
+	the timer would not fire until the first callback had completed.
+	However, in WXPython 4, wx.Timer is now re-entrant.
+	Code in NVDA is not written to handle re-entrant timers, so this class provides a Timer with the old behaviour.
+	This should be used in place of wx.Timer and wx.PyTimer where the callback will directly or indirectly call wx.Yield or some how process the Windows window message queue. 
+	For example, NVDA's core pump or other timers that run in NVDA's main thread.
+	Timers on braille display drivers for key detection don't need to use this as they only queue gestures rather than actually executing them.  
+	"""
+
+	def __init__(self, run=None):
+		if run is not None:
+			self.run = run
+		self._inNotify = False
+		super(NonReEntrantTimer,self).__init__()
+
+	def run(self):
+		"""Subclasses can override or specify in constructor.
+		"""
+		raise NotImplementedError
+
+	def Notify(self):
+		if self._inNotify:
+			return
+		self._inNotify = True
+		try:
+			self.run()
+		finally:
+			self._inNotify = False
 
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
