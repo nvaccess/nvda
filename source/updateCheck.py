@@ -35,11 +35,12 @@ import speech
 import braille
 import gui
 from gui import guiHelper
-from addonHandler import getCodeAddon, AddonError
+from addonHandler import getCodeAddon, AddonError, getUntestedAddons
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
+import fileUtils
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -364,21 +365,42 @@ class UpdateAskInstallDialog(wx.Dialog):
 	def __init__(self, parent, destPath, version):
 		self.destPath=destPath
 		self.version = version
-		storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
+		try:
+			self.fileVersion = versionInfo.getNVDAVersionTupleFromString(
+				fileUtils.getFileVersionInfo(destPath, "FileVersion").get("FileVersion")
+			)
+		except ValueError:
+			self.fileVersion = None
+		self.storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
 		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		
-		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-		sHelper.addItem(wx.StaticText(self, label=_("NVDA version {version} is ready to be installed.\n").format(version=version)))
+		untestedAddons = any(getUntestedAddons())
+		if untestedAddons:
+			# Translators: A message indicating that an updated version of NVDA can be installed after reviewing untested add-ons.
+			message = _(
+				"NVDA version {version} has been succesfully downloaded. "
+				"However, your NVDA configuration contains add-ons that are not tested with the new version of NVDA. "
+				"As untested add-ons could be incompatible with the new NVDA version, you have to review the list of possibly incompatible add-ons before continuing.\n"
+			).format(version=version)
+		else:
+			# Translators: A message indicating that an updated version of NVDA is ready to be installed.
+			message = _("NVDA version {version} is ready to be installed.\n").format(version=version)
+		sHelper.addItem(wx.StaticText(self, label=message))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-		# Translators: The label of a button to install an NVDA update.
-		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
-		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
-		installButton.SetFocus()
-		if storeUpdatesDirWritable:
+		if untestedAddons:
+			# Translators: The label of a button to open the incompatible add-ons dialog.
+			viewUntestedAddonsButton = bHelper.addButton(self, wx.ID_OK, label=_("&View untested add-ons"))
+			viewUntestedAddonsButton.Bind(wx.EVT_BUTTON, self.onViewUntestedAddonsButton)
+			viewUntestedAddonsButton.SetFocus()
+		else:
+			# Translators: The label of a button to install an NVDA update.
+			installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
+			installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
+			installButton.SetFocus()
+		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
 			postponeButton.Bind(wx.EVT_BUTTON, self.onPostponeButton)
@@ -391,6 +413,16 @@ class UpdateAskInstallDialog(wx.Dialog):
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+
+	def onViewUntestedAddonsButton(self, evt):
+		from gui.addonGui import IncompatibleAddonsDialog
+		ret = IncompatibleAddonsDialog(self, self.fileVersion).ShowModal()
+		if ret == wx.ID_OK:
+			self.onInstallButton(evt)
+		elif self.storeUpdatesDirWritable:
+			self.onPostponeButton(evt)
+		else:
+			self.EndModal(wx.ID_CLOSE)
 
 	def onInstallButton(self, evt):
 		executeUpdate(self.destPath)

@@ -378,40 +378,53 @@ Description: {description}
 		dialog.installAddon(addonPath, closeAfter=closeAfter)
 		del dialog
 
-class AddonSelectionDialog(wx.Dialog):
-	"""A dialog that presents filtered add-ons in a checkable list,
-	allowing actions to be performed with the result."""
+class IncompatibleAddonsDialog(wx.Dialog):
+	"""A dialog that allows one to blacklist or whitelist add-ons that are incompatible
+	with a current or new version of NVDA."""
 	_instance = None
 	def __new__(cls, *args, **kwargs):
-		if AddonSelectionDialog._instance is None:
-			return super(AddonSelectionDialog, cls).__new__(cls, *args, **kwargs)
-		return AddonSelectionDialog._instance
+		if IncompatibleAddonsDialog._instance is None:
+			return super(IncompatibleAddonsDialog, cls).__new__(cls, *args, **kwargs)
+		return IncompatibleAddonsDialog._instance
 
-	def __init__(self,parent, title, message, addonFilterFunc):
-		if AddonSelectionDialog._instance is not None:
+	def __init__(self,parent, NVDAVersion=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
+		if IncompatibleAddonsDialog._instance is not None:
 			return
-		AddonSelectionDialog._instance = self
-		super(AddonSelectionDialog,self).__init__(parent,title=title)
-		self.addonFilterFunc = filterFunc
+		IncompatibleAddonsDialog._instance = self
+		# Translators: The title of the Incompatible Addons Dialog
+		super(IncompatibleAddonsDialog,self).__init__(parent,title=_("Incompatible Add-ons"))
+		self.NVDAVersion = NVDAVersion
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		AddonSelectionIntroLabel=wx.StaticText(self, label=message)
+		AddonSelectionIntroText = _("To be written")
+		AddonSelectionIntroLabel=wx.StaticText(self, label=AddonSelectionIntroText)
 		mainSizer.Add(AddonSelectionIntroLabel)
 		# Translators: the label for the addons list in the addon selection dialog.
-		entriesLabel=_("Add-ons")
-		self.addonsList=sHelper.addLabeledControl(entriesLabel, wx.CheckListBox, size=(550,350))
-		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
+		entriesLabel=_("Untested add-ons")
+		self.addonsList=sHelper.addLabeledControl(entriesLabel, nvdaControls.AutoWidthColumnListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
+		self.addonsList.InsertColumn(0,_("Package"),width=150)
+		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
+		self.addonsList.InsertColumn(1,_("Version"),width=50)
+		# Translators: The label for a column in add-ons list used to identify the last version of NVDA
+		# this add-on has been tested with.
+		self.addonsList.InsertColumn(2,_("Last tested NVDA version"))
 
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		# Translators: The label of a button to close the Addons dialog.
-		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
-		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER|wx.ALIGN_RIGHT)
-		self.Bind(wx.EVT_CLOSE, self.onClose)
-		self.EscapeId = wx.ID_CLOSE
+		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The continue  button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+		buttonSizer.addButton(self, label=_("Continue"), id=wx.ID_OK)
+		# Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+		buttonSizer.addButton(self, label=_("Cancel"), id=wx.ID_CANCEL)
+		sHelper.addDialogDismissButtons(buttonSizer)
+		mainSizer.Add(settingsSizer,border=20,flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+
+		self.Bind(wx.EVT_BUTTON, self.onContinue, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, lambda evt: self.Close(), id=wx.ID_CLOSE)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.EscapeId = wx.ID_CLOSE
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()
 		self.CentreOnScreen()
@@ -419,8 +432,15 @@ class AddonSelectionDialog(wx.Dialog):
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
-		for addon in addonHandler.getAvailableAddons(filterFunc=self.addonFilterFunc):
-			self.addonsList.Append((addon.manifest['summary'], self.getAddonStatus(addon), addon.manifest['version'], addon.manifest['author']))
+		for addon in addonHandler.getUntestedAddons(self.NVDAVersion):
+			self.addonsList.Append((
+				addon.manifest['summary'],
+				addon.version,
+				addon.manifest.get('lastTestedNVDAVersion') or 
+				# Translators: Displayed for add-ons in the incompatible add-ons dialog
+				# if the last tested NVDA version is not specified.
+				_("not specified")
+			))
 			self.curAddons.append(addon)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.curAddons)
@@ -431,20 +451,22 @@ class AddonSelectionDialog(wx.Dialog):
 				activeIndex=0
 			self.addonsList.Select(activeIndex,on=1)
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
-		else:
-			self.aboutButton.Disable()
-			self.helpButton.Disable()
 
-	def onListItemSelected(self, evt):
-		index=evt.GetIndex()
-		addon=self.curAddons[index] if index>=0 else None
-		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
-		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
+	def onContinue(self, evt):
+		for item in xrange(len(self.curAddons)):
+			if item in self.addonsList.Checked:
+				self.curAddons[item].whitelist(self.NVDAVersion)
+			else:
+				self.curAddons[item].blacklist(self.NVDAVersion)
+		self.ReturnCode = wx.ID_OK
+		self.DestroyChildren()
+		self.Destroy()
+		IncompatibleAddonsDialog._instance = None
 
 	def onClose(self,evt):
 		self.DestroyChildren()
 		self.Destroy()
-		AddonSelectionDialog._instance = None
+		IncompatibleAddonsDialog._instance = None
 
 	def __del__(self):
-		AddonSelectionDialog._instance = None
+		IncompatibleAddonsDialog._instance = None

@@ -18,7 +18,7 @@ import pkgutil
 import shutil
 from cStringIO import StringIO
 import zipfile
-
+from versionInfo import getNVDAVersionTupleFromString
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 
@@ -37,12 +37,6 @@ BUNDLE_MIMETYPE = "application/x-nvda-addon"
 NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
-#: Compiled regular expression to match an NVDA version string.
-#: Supports year.month versions (e.g. 2018.1) and an additional suffix for bug fix releases (e.g. 2018.1.1).
-#: It also matches against strings like 2018.1dev.
-#: Resulting match objects eexpose three groups reflecting release year, release month, and optionally release minor version, respectively.
-#: @type: RegexObject
-NVDA_VERSION_REGEX = re.compile(r"(\d{4,4})\.(\d)(?:\.(\d))?")
 
 state={}
 
@@ -84,6 +78,11 @@ def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
+
+def getUntestedAddons(version=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
+	""" Returns add-ons that are untested for the specified NVDA version.
+	"""
+	return getAvailableAddons(filterFunc=lambda addon: not addon.isTested(version))
 
 def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -694,10 +693,3 @@ docFileName = string(default=None)
 	@property
 	def errors(self):
 		return self._errors
-
-def getNVDAVersionTupleFromString(version):
-	"""Converts a string containing an NVDA version to a tuple of the form (versionYear, versionMajor, versionMinor)"""
-	match = NVDA_VERSION_REGEX.match(version)
-	if not match:
-		raise ValueError(version)
-	return tuple(int(i) if i is not None else 0 for i in match.groups())

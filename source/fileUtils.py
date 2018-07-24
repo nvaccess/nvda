@@ -70,6 +70,8 @@ def getFileVersionInfo(name, *attributes):
 			u'\\StringFileInfo\\%s\\%s' % (codepage, attr),
 			ctypes.byref(r), ctypes.byref(l)
 		):
-			raise ValueError("Invalid or unavailable version info attribute: %s" % attr)
-		fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value-1)
+			log.warning("Invalid or unavailable version info attribute for %r: %s" % (name, attr))
+			fileVersionInfo[attr] = None
+		else:
+			fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value-1)
 	return fileVersionInfo
