@@ -736,7 +736,7 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 		# i.e. the states in both sets.
 		speakNegatives &= negativeStates
 		# #6946: if HALFCHECKED is present but CHECKED isn't, we should make sure we add CHECKED to speakNegatives.
-		if (STATE_HALFCHECKED in negativeStates and STATE_HALFCHECKED not in states):
+		if (STATE_HALFCHECKED in negativeStates and STATE_CHECKED not in states):
 			speakNegatives.add(STATE_CHECKED)
 		if STATES_SORTED & negativeStates and not STATES_SORTED & states:
 			# If the object has just stopped being sorted, just report not sorted.
