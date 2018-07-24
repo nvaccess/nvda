@@ -26,22 +26,9 @@ import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
-#Some new win8 UIA constants that could be missing
-UIA_StyleIdAttributeId=40034
-UIA_AnnotationAnnotationTypeIdPropertyId=30113
-UIA_AnnotationTypesAttributeId=40031
-AnnotationType_SpellingError=60001
-UIA_AnnotationObjectsAttributeId=40032
-StyleId_Heading1=70001
-StyleId_Heading9=70009
+#Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
-UIA_FullDescriptionPropertyId=30159
-UIA_LevelPropertyId=30154
-UIA_PositionInSetPropertyId=30152
-UIA_SizeOfSetPropertyId=30153
-UIA_LocalizedLandmarkTypePropertyId=30158
-UIA_LandmarkTypePropertyId=30157
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -74,6 +61,16 @@ badUIAWindowClassNames=[
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
 	# It does not implement caret/selection, and probably has no new text events.
 	"ConsoleWindowClass",
+]
+
+# #8405: used to detect UIA dialogs prior to Windows 10 RS5.
+UIADialogClassNames=[
+	"#32770",
+	"NUIDialog",
+	"Credential Dialog Xaml Host", # UAC dialog in Anniversary Update and later
+	"Shell_Dialog",
+	"Shell_Flyout",
+	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
 NVDAUnitsToUIAUnits={
@@ -188,12 +185,18 @@ class UIAHandler(COMObject):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
-				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+				for interface in reversed(CUIAutomation8._com_interfaces_):
 					try:
 						self.clientObject=self.clientObject.QueryInterface(interface)
 						break
 					except COMError:
 						pass
+				# Windows 10 RS5 provides new performance features for UI Automation including event coalescing and connection recovery. 
+				# Enable all of these where available.
+				if isinstance(self.clientObject,IUIAutomation6):
+					self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
+					self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
 			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()

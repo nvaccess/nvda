@@ -14,19 +14,10 @@ import itertools
 import serial
 import braille
 import brailleInput
-import hwPortUtils
 import inputCore
 from logHandler import log
 import hwIo
-
-BLUETOOTH_NAMES = ("Braillenote",)
-BLUETOOTH_ADDRS = (
-	# (first, last),
-	(0x0025EC000000, 0x0025EC01869F), # Apex
-)
-USB_IDS = frozenset((
-	"VID_1C71&PID_C004", # Apex
-	))
+import bdDetect
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
@@ -135,69 +126,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	isThreadSafe = True
 
 	@classmethod
-	def check(cls):
-		return True
-
-	@classmethod
-	def _getUSBPorts(cls):
-		return (p["port"] for p in hwPortUtils.listComPorts()
-				if p["hardwareID"].startswith("USB\\") and any(p["hardwareID"][4:].startswith(id) for id in USB_IDS))
-
-	@classmethod
-	def _getBluetoothPorts(cls):
-		for p in hwPortUtils.listComPorts():
-			try:
-				addr = p["bluetoothAddress"]
-				name = p["bluetoothName"]
-			except KeyError:
-				continue
-			if (any(first <= addr <= last for first, last in BLUETOOTH_ADDRS)
-					or any(name.startswith(prefix) for prefix in BLUETOOTH_NAMES)):
-				yield p["port"]
-
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		usb = bluetooth = False
-		# See if we have any USB ports available:
-		try:
-			cls._getUSBPorts().next()
-			usb = True
-		except StopIteration:
-			pass
-		# See if we have any bluetooth ports available:
-		try:
-			cls._getBluetoothPorts().next()
-			bluetooth = True
-		except StopIteration:
-			pass
-		if usb or bluetooth:
-			ports.update([cls.AUTOMATIC_PORT])
-		if usb:
-			ports["usb"] = "USB"
-		if bluetooth:
-			ports["bluetooth"] = "Bluetooth"
-		for p in hwPortUtils.listComPorts():
-			# Translators: Name of a serial communications port
-			ports[p["port"]] = _("Serial: {portName}").format(portName=p["friendlyName"])
-		return ports
+	def getManualPorts(cls):
+		return braille.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self._serial = None
-		if port == "auto":
-			portsToTry = itertools.chain(self._getUSBPorts(), self._getBluetoothPorts())
-		elif port == "usb":
-			portsToTry = self._getUSBPorts()
-		elif port == "bluetooth":
-			portsToTry = self._getBluetoothPorts()
-		else:
-			portsToTry = (port,)
-		for port in portsToTry:
+		for portType, portId, port, portInfo in self._getTryPorts(port):
 			log.debug("Checking port %s for a BrailleNote", port)
 			try:
 				self._serial = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_NONE, onReceive=self._onReceive)
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 			# Check for cell information
 			if self._describe():

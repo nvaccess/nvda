@@ -12,10 +12,14 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <memory>
+#include <functional>
+#include <boost/optional.hpp>
 #include <windows.h>
 #include <set>
 #include <string>
 #include <sstream>
+#include <atlcomcli.h>
 #include <ia2.h>
 #include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
@@ -25,6 +29,34 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "gecko_ia2.h"
 
 using namespace std;
+
+CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
+	std::unique_ptr<IUnknown*,std::function<void(IUnknown**)>> labelElementArray;
+	{
+		IUnknown** ppUnk=nullptr;
+		long nTargets=0;
+		constexpr int numRelations=1;
+		HRESULT res=element->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,numRelations,&ppUnk,&nTargets);
+		labelElementArray = {ppUnk, [=](IUnknown** ppUnk){
+			if(ppUnk) {
+				for(auto i=0; i<nTargets;++i) {
+					if(ppUnk[i]) ppUnk[i]->Release();
+				}
+				CoTaskMemFree(ppUnk);
+			}
+		}};
+		if(res!=S_OK) {
+			LOG_DEBUGWARNING(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY failed with result "<<res);
+			return nullptr;
+		}
+		if(nTargets==0) {
+			LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
+			return nullptr;
+		}
+	}
+	return CComQIPtr<IAccessible2>(labelElementArray.get()[0]);
+}
+
 
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
@@ -233,7 +265,6 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	// Defaults.
 	this->shouldDisableTableHeaders = false;
 	this->hasEncodedAccDescription = false;
-	this->canDetectLabelVisibility=false;
 
 	IServiceProvider* serv = NULL;
 	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&serv) != S_OK)
@@ -260,7 +291,6 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	iaApp = NULL;
 
 	if (wcscmp(toolkitName, L"Gecko") == 0) {
-		this->canDetectLabelVisibility=true;
 		if (wcsncmp(toolkitVersion, L"1.", 2) == 0) {
 			if (wcsncmp(toolkitVersion, L"1.9.2.", 6) == 0) {
 				// Gecko 1.9.2.x.
@@ -283,20 +313,15 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 }
 
 bool isLabelVisible(IAccessible2* pacc2) {
-	VARIANT child, target;
+	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
+	if(!pacc2_2) return false;
+	auto targetAcc=getLabelElement(pacc2_2);
+	if(!targetAcc) return false;
+	CComVariant child;
 	child.vt = VT_I4;
 	child.lVal = 0;
-	if (pacc2->accNavigate(NAVRELATION_LABELLED_BY, child, &target) != S_OK)
-		return false;
-	IAccessible2* targetAcc;
-	HRESULT res;
-	res = target.pdispVal->QueryInterface(IID_IAccessible2, (void**)&targetAcc);
-	VariantClear(&target);
-	if (res != S_OK)
-		return false;
-	VARIANT state;
-	res = targetAcc->get_accState(child, &state);
-	targetAcc->Release();
+	CComVariant state;
+	HRESULT res = targetAcc->get_accState(child, &state);
 	if (res != S_OK)
 		return false;
 	if (state.lVal & STATE_SYSTEM_INVISIBLE)
@@ -540,6 +565,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
 	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
+	std::experimental::optional<bool> isLabelVisibleVal_;
+	// A version of the isLabelVisible function that caches its result
+	auto isLabelVisibleCached=[&]() {
+		if(!isLabelVisibleVal_) {
+			*isLabelVisibleVal_=isLabelVisible(pacc);
+		}
+		return *isLabelVisibleVal_;
+	};
 	const bool nameIsContent = isEmbeddedApp
 		|| role == ROLE_SYSTEM_LINK 
 		|| role == ROLE_SYSTEM_PUSHBUTTON 
@@ -550,16 +583,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		|| role == IA2_ROLE_HEADING 
 		|| role == ROLE_SYSTEM_PAGETAB 
 		|| role == ROLE_SYSTEM_BUTTONMENU
-		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
+		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisibleCached());
 	// Whether this node has a visible label somewhere else in the tree
-	const bool labelVisible = canDetectLabelVisibility // Not all browsers support getting a node's labelledBy node
-		&& nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string
+	const bool labelVisible = nameIsExplicit && name && name[0] //this node must actually have an explicit name, and not be just an empty string
 		&&(!nameIsContent||role==ROLE_SYSTEM_TABLE) // We only need to know if the name won't be used as content or if it is a table (for table summary)
-		&&isLabelVisible(pacc); // actually do the check
+		&&isLabelVisibleCached(); // actually do the check
 	// If the node is explicitly labeled for accessibility, and we haven't used the label as the node's content, and the label does not visibly appear anywhere else in the tree (E.g. aria-label on an edit field)
 	// then ensure that the label is always reported along withe the node
 	// We must exclude tables from this though as table summaries / captions are handled very specifically
-	if(canDetectLabelVisibility&&nameIsExplicit&&!nameIsContent&&(role!=ROLE_SYSTEM_TABLE)&&!labelVisible) {
+	if(nameIsExplicit && !nameIsContent && (role != ROLE_SYSTEM_TABLE) && !labelVisible) {
 		parentNode->addAttribute(L"alwaysReportName",L"true");
 	}
 

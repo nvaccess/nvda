@@ -1,10 +1,11 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2016-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import time
 import wx
+import gui
 import tones
 import ctypes
 import winUser
@@ -205,7 +206,7 @@ def initialize():
 	curMousePos=(x,y)
 	winInputHook.initialize()
 	winInputHook.setCallbacks(mouse=internal_mouseEvent)
-	_shapeTimer = wx.PyTimer(_reportShape)
+	_shapeTimer = gui.NonReEntrantTimer(_reportShape)
 
 def _reportShape():
 	# Translators: Reported when mouse cursor shape changes (example output: edit cursor).

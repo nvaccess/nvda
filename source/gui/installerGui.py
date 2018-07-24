@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2017 NV Access Limited, Babbage B.v.
+#Copyright (C) 2011-2018 NV Access Limited, Babbage B.v.
 
 import os
 import ctypes
@@ -136,7 +136,7 @@ class InstallerDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onInstall(self, evt):
 		self.Hide()
@@ -172,7 +172,7 @@ def showInstallGui():
 		mainSizer.Add(sizer)
 		d.Sizer = mainSizer
 		mainSizer.Fit(d)
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.CentreOnScreen()
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				gui.mainFrame.postPopup()
@@ -228,7 +228,7 @@ class PortableCreaterDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:

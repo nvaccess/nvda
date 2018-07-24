@@ -1911,6 +1911,8 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | control+fine | spazio+punto4+punto5+punto6 |
 | tasto alt | spazio+punto1+punto3+punto4 |
 | alt+tab | spazio+punto2+punto3+punto4+punto5 |
+| alt+shift+tab | Spazio+punto1+punto2+punto5+punto6 |
+| windows+tab | Spazio+punto2+punto3+punto4 |
 | tasto esc | spazio+punto1+punto5 |
 | tasto windows | spazio+punto2+punto4+punto5+punto6 |
 | spazio |spazio |
@@ -2427,6 +2429,11 @@ Sono supportati i seguenti modelli:
 
 Per il BrailleNote Touch, si prega di fare riferimento alla [sezione Brailliant BI Series / BrailleNote Touch HumanWareBrailliant].
 
+Ad eccezione del BrailleNote Pk, sono supportate sia tastiere braille (bt) che qwerty (qt).
+Per il BrailleNote QT, non è supportata l'emulazione tastiera pc.
+è anche possibile inserire i punti braille utilizzando la tastiera Qwerty.
+Si prega di consultare la sezione terminale  del manuale del BrailleNote per ulteriori informazioni.
+
 Se il proprio dispositivo supporta più di un tipo di connessione, quando si connette il Braillenote a NVDA, è necessario impostare  la porta nelle opzioni terminale braille del Braillenote.
 Si prega di consultare il manuale del Braillenote per maggiori informazioni.
 In NVDA, potrebbe anche essere necessario impostare la porta nella finestra [Selezione Display Braille #SelectBrailleDisplay]. 
@@ -2434,6 +2441,9 @@ Se ci si connette via USB o bluetooth, è possibile impostare la porta su "Autom
 Se ci si collega tramite una porta seriale (o un convertitore da USB a seriale) o se nessuna delle opzioni precedenti è disponibile, è necessario scegliere la porta di comunicazione da utilizzare dall'elenco delle porte hardware.
 
 Prima di collegare il BrailleNote Apex utilizzando la sua interfaccia USB, è necessario installare i driver forniti da HumanWare.
+
+Nel BrailleNote Apex BT, è possibile usare la rotella di scorrimento, situata tra i punti 1 e 4, per vari comandi di NVDA.
+La rotella è formata da quattro punti direzionali, un pulsante centrale per cliccare e una rotella che gira in senso orario o in senso antiorario.
 
 Seguono i tasti che sono stati assegnati con NVDA a Braillenote.
 Si prega di consultare la documentazione del BrailleNote per informazioni su dove siano situati i tasti.
@@ -2445,6 +2455,7 @@ Si prega di consultare la documentazione del BrailleNote per informazioni su dov
 | Sposta Display Braille alla riga precedente | previous |
 | Sposta display braille alla riga successiva | next |
 | Route to braille cell | routing |
+| Menu NVDA | spazio+punto1+punto3+punto4+punto5 (spazio+n) |
 | Commuta inseguimento braille | previous+next |
 | Freccia su | spazio+punto1 |
 | Freccia giù | spazio+punto4 |
@@ -2458,12 +2469,45 @@ Si prega di consultare la documentazione del BrailleNote per informazioni su dov
 | Control+end | spazio+punto4+punto5+punto6 |
 | Spazio | spazio |
 | Invio | spazio+punto8 |
-| Backspazio | spazio+punto7 |
+| Backspace | spazio+punto7 |
 | Tasto Tab| spazio+punto2+punto3+punto4+punto5 (spazio+t) |
 | Shift+tab | spazio+punto1+punto2+punto5+punto6 |
 | Tasto Windows | spazio+punto2+punto4+punto5+punto6 (spazio+w) |
 | Tasto Alt | spazio+punto1+punto3+punto4 (spazio+m) |
 | Commuta aiuto immissione | spazio+punto2+punto3+punto6 (spazio+h abbassata) |
+
+Di seguito i comandi relativi al BrailleNote QT quando non è impostato in modalità immissione braille.
+
+|| Nome | Tasto |
+| menu NVDA | read+n |
+| Tasto Freccia su | FrecciaSu |
+| Tasto Freccia giù | FrecciaGiù |
+| Tasto Freccia sinistra | FrecciaSinistra |
+| Tasto freccia destra | FrecciaDestra |
+| Tasto pagina su | function+frecciaSu |
+| Tasto pagina giù | function+frecciaGiù |
+| Tasto Home | function+frecciaSinistra |
+| Tasto End | function+frecciaDestra |
+| Control+home | read+t |
+| Control+end | read+b |
+| Tasto Invio | Invio |
+| Tasto Backspace | backspace |
+| Tasto Tab | tab |
+| Shift+tab | shift+tab |
+| Tasto Windows | read+w |
+| Tasto Alt | read+m |
+| Attiva/disattiva aiuto immissione | read+1 |
+
+Di seguito i comandi assegnati alla rotella di scorrimento:
+
+|| Nome | Tasto |
+| Tasto Freccia su | FrecciaSu |
+| Tasto Freccia giù | FrecciaGiù |
+| Tasto Freccia sinistra | FrecciaSinistra |
+| Tasto freccia destra | FrecciaDestra |
+| Tasto Invio | Pulsante centrale |
+| Tasto Tab | rotella senso orario |
+| Shift+tab | rotella senso antiorario |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]

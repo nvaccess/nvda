@@ -1,6 +1,6 @@
 #speechViewer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,12 +12,12 @@ from logHandler import log
 class SpeechViewerFrame(wx.Dialog):
 
 	def __init__(self, onDestroyCallBack):
-		dialogSize=wx.Size(w=500, h=500)
-		dialogPos=None
+		dialogSize=wx.Size(500, 500)
+		dialogPos=wx.DefaultPosition
 		if not config.conf["speechViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting speechViewer window position")
 			speechViewSection = config.conf["speechViewer"]
-			dialogSize = wx.Size(w=speechViewSection["width"], h=speechViewSection["height"])
+			dialogSize = wx.Size(speechViewSection["width"], speechViewSection["height"])
 			dialogPos = wx.Point(x=speechViewSection["x"], y=speechViewSection["y"])
 		super(SpeechViewerFrame, self).__init__(gui.mainFrame, wx.ID_ANY, _("NVDA Speech Viewer"), size=dialogSize, pos=dialogPos, style=wx.CAPTION | wx.RESIZE_BORDER | wx.STAY_ON_TOP)
 		self.onDestroyCallBack = onDestroyCallBack
@@ -27,7 +27,7 @@ class SpeechViewerFrame(wx.Dialog):
 		self.textCtrl = wx.TextCtrl(self, -1,style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
 		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
 		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
-		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.NewId(),label=_("&Show Speech Viewer on Startup"))
+		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.ID_ANY,label=_("&Show Speech Viewer on Startup"))
 		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
 		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
 		sizer.Add(self.shouldShowOnStartupCheckBox, border=5, flag=wx.ALL)
@@ -49,7 +49,6 @@ class SpeechViewerFrame(wx.Dialog):
 
 	def onDestroy(self, evt):
 		log.debug("SpeechViewer destroyed")
-		self.savePositionInformation()
 		self.onDestroyCallBack()
 		evt.Skip()
 
@@ -79,7 +78,7 @@ def activate():
 	"""
 		Function to call to trigger the speech viewer window to open.
 	"""
-	_setActive(True, SpeechViewerFrame(_cleanup) )
+	_setActive(True, SpeechViewerFrame(_cleanup))
 
 def _setActive(isNowActive, speechViewerFrame=None):
 	global _guiFrame, isActive
@@ -109,4 +108,7 @@ def deactivate():
 	global _guiFrame, isActive
 	if not isActive:
 		return
+	# #7077: If the window is destroyed, text control will be gone, so save speech viewer position before destroying the window.
+	_guiFrame.savePositionInformation()
 	_guiFrame.Destroy()
+	isActive = False
