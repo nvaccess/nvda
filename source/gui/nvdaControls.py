@@ -80,3 +80,55 @@ class CustomCheckableListBox(wx.CheckListBox):
 		#We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
 		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
+
+class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
+	"""
+	An L{AutoWidthColumnListCtrl} with accessible checkboxes per item.
+	In contrast with L{CustomCheckableListBox}, this class supports multiple columns.
+	"""
+
+	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumnIndex="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
+		check_image=None, uncheck_image=None, imgsz=(16, 16)
+	):
+		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
+		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
+		# A list containing the checked items
+		self._checked = []
+		#Import late to prevent circular import.
+		from IAccessibleHandler import accPropServices
+		#Register object with COM to fix accessibility bugs in wx.
+		server = ListCtrlAccPropServer(self)
+		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE]), c_int(2), server, 1)
+		# Register our hook to check/uncheck items with space.
+		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
+		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
+
+	@property
+	def Checked(self):
+		return self._checked
+
+	@Checked.setter
+	def Checked(self, value):
+		for index in xrange(self.ItemCount):
+			self.CheckItem(index, index in value)
+
+	def onCharHook(self,evt):
+		key = evt.GetKeyCode()
+		if key!=wx.WXK_SPACE:
+			evt.Skip()
+			return
+		index = self.FocusedItem
+		if index == -1:
+			evt.Skip()
+			return
+		self.ToggleItem(index)
+
+	def OnCheckItem(self, index, flag):
+		if flag:
+			self._checked.append(index)
+		else:
+			assert index in self._checked
+			self._checked.remove(index)
+		#Notify winEvent that something changed.
+		#We must do this, so that NVDA receives a stateChange.
+		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index+1)
