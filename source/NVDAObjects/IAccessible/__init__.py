@@ -113,11 +113,15 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=False
 
-	def _getOffsetFromPoint(self,x,y):
-		if self.obj.IAccessibleTextObject.nCharacters>0:
-			return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+	@classmethod
+	def _getOffsetFromPointInObject(cls,obj,x,y):
+		if obj.IAccessibleTextObject.nCharacters>0:
+			return obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		else:
 			raise NotImplementedError
+
+	def _getOffsetFromPoint(self,x,y):
+		return self._getOffsetFromPointInObject(self.obj, x, y)
 
 	@classmethod
 	def _getPointFromOffsetInObject(cls,obj,offset):

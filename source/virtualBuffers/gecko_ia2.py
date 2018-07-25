@@ -56,16 +56,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if not obj or not hasattr(obj, "IAccessibleTextObject"):
 			raise LookupError
 		# Find out whether this object contains text that has been stripped in the virtual buffer.
-		for field in reversed(self._getFieldsInRange(start, start+1)):
+		relOffset = IA2TextTextInfo._getOffsetFromPointInObject(obj, x, y)
+		strippedCharsFromStart = 0
+		for field in reversed(self._getFieldsInRange(start, min(end-1, start+relOffset))):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
 				# This is no format field.
 				continue
-			strippedCharsFromStart = field.field.get("strippedCharsFromStart")
-			if strippedCharsFromStart is not None:
-				break
-		else:
-			strippedCharsFromStart = 0
-		relOffset = obj.makeTextInfo(textInfos.Point(x, y))._startOffset
+			strippedCharsFromStart += field.field.get("strippedCharsFromStart", 0)
 		return start - strippedCharsFromStart + relOffset
 
 	def _normalizeControlField(self,attrs):
