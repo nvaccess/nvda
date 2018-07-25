@@ -62,11 +62,13 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				return states, 1
 		return comtypes.automation.VT_EMPTY, 0
 
-class CustomCheckableListBox(wx.CheckListBox):
-	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
+class CustomCheckListBox(wx.CheckListBox):
+	"""
+	Custom checkable list to fix a11y bugs in the standard wx checkable list box.
+	It also adds a new L{CheckItem} method that mimics the behavior of the same method in the CheckListCtrlMixin."""
 
 	def __init__(self, *args, **kwargs):
-		super(CustomCheckableListBox, self).__init__(*args, **kwargs)
+		super(CustomCheckListBox, self).__init__(*args, **kwargs)
 		#Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		#Register object with COM to fix accessibility bugs in wx.
@@ -80,6 +82,14 @@ class CustomCheckableListBox(wx.CheckListBox):
 		#We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
 		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
+
+	def CheckItem(self, index, check=True):
+		checked = set(self.Checked)
+		if check:
+			checked.add(index)
+		elif index in checked:
+			checked.remove(index)
+		self.Checked = checked
 
 class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
 	"""
@@ -105,12 +115,12 @@ class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckLis
 
 	@property
 	def Checked(self):
-		return self._checked
+		return tuple(self._checked)
 
 	@Checked.setter
-	def Checked(self, value):
+	def Checked(self, indexes):
 		for index in xrange(self.ItemCount):
-			self.CheckItem(index, index in value)
+			self.CheckItem(index, index in indexes)
 
 	def onCharHook(self,evt):
 		key = evt.GetKeyCode()
