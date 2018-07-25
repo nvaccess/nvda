@@ -2064,11 +2064,11 @@ class DictionaryDialog(SettingsDialog):
 		entryDialog.setType(self.tempSpeechDict[editIndex].type)
 		if entryDialog.ShowModal()==wx.ID_OK:
 			self.tempSpeechDict[editIndex]=entryDialog.dictEntry
-			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
-			self.dictList.SetStringItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
-			self.dictList.SetStringItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
+			self.dictList.SetItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
+			self.dictList.SetItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
+			self.dictList.SetItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
@@ -2593,9 +2593,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetFocus()
 
 	def updateListItem(self, item, symbol):
-		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
-		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
-		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
+		self.symbolsList.SetItem(item, 1, symbol.replacement)
+		self.symbolsList.SetItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+		self.symbolsList.SetItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
 	def onSymbolEdited(self):
 		if self.editingItem is not None:
@@ -2747,10 +2747,10 @@ class InputGesturesDialog(SettingsDialog):
 					continue
 				treeCom = self.tree.AppendItem(treeCat, command)
 				commandInfo = commands[command]
-				self.tree.SetItemPyData(treeCom, commandInfo)
+				self.tree.SetItemData(treeCom, commandInfo)
 				for gesture in commandInfo.gestures:
 					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
-					self.tree.SetItemPyData(treeGes, gesture)
+					self.tree.SetItemData(treeGes, gesture)
 			if not self.tree.ItemHasChildren(treeCat):
 				self.tree.Delete(treeCat)
 			elif filter:
@@ -2777,7 +2777,7 @@ class InputGesturesDialog(SettingsDialog):
 			item = self.tree.Selection
 		except RuntimeError:
 			return
-		data = self.tree.GetItemPyData(item)
+		data = self.tree.GetItemData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
 		isGesture = isinstance(data, basestring)
 		self.addButton.Enabled = isCommand or isGesture
@@ -2788,10 +2788,10 @@ class InputGesturesDialog(SettingsDialog):
 			return
 
 		treeCom = self.tree.Selection
-		scriptInfo = self.tree.GetItemPyData(treeCom)
+		scriptInfo = self.tree.GetItemData(treeCom)
 		if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
 			treeCom = self.tree.GetItemParent(treeCom)
-			scriptInfo = self.tree.GetItemPyData(treeCom)
+			scriptInfo = self.tree.GetItemData(treeCom)
 		# Translators: The prompt to enter a gesture in the Input Gestures dialog.
 		treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
 		self.tree.SelectItem(treeGes)
@@ -2817,7 +2817,7 @@ class InputGesturesDialog(SettingsDialog):
 					lambda evt, gid=gid, disp=disp: self._addChoice(treeGes, scriptInfo, gid, disp),
 					item)
 			self.PopupMenu(menu)
-			if not self.tree.GetItemPyData(treeGes):
+			if not self.tree.GetItemData(treeGes):
 				# No item was selected, so use the first.
 				self._addChoice(treeGes, scriptInfo, gids[0],
 					self._formatGesture(gids[0]))
@@ -2834,15 +2834,15 @@ class InputGesturesDialog(SettingsDialog):
 		except KeyError:
 			self.pendingAdds.add(entry)
 		self.tree.SetItemText(treeGes, disp)
-		self.tree.SetItemPyData(treeGes, gid)
+		self.tree.SetItemData(treeGes, gid)
 		scriptInfo.gestures.append(gid)
 		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
 		treeGes = self.tree.Selection
-		gesture = self.tree.GetItemPyData(treeGes)
+		gesture = self.tree.GetItemData(treeGes)
 		treeCom = self.tree.GetItemParent(treeGes)
-		scriptInfo = self.tree.GetItemPyData(treeCom)
+		scriptInfo = self.tree.GetItemData(treeCom)
 		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
 		try:
 			# If this was just added, just undo it.

@@ -1403,7 +1403,7 @@ class ExcelCell(ExcelBase):
 			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
 			# Translators: Title of a dialog edit an Excel comment 
 			_("Comment"),
-			defaultValue=commentObj.text() if commentObj else u"",
+			value=commentObj.text() if commentObj else u"",
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
 		def callback(result):
 			if result == wx.ID_OK:
