@@ -1374,19 +1374,19 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No status line found"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			if text == '':
+			if not text.strip():
 				# Translators: Reported when status line exist, but is empty.
 				ui.message(_("no status bar information"))
 			else:
 				ui.message(text)
 		elif scriptHandler.getLastScriptRepeatCount()==1:
-			if text == '':
+			if not  text.strip():
 				# Translators: Reported when status line exist, but is empty.
 				ui.message(_("no status bar information"))
 			else:
 				speech.speakSpelling(text)
 		else:
-			if text == '':
+			if not text.strip():
 				# Translators: Reported when user attempts to copy content of the empty status line.
 				ui.message(_("unable to copy status bar content to clipboard"))
 			else:
