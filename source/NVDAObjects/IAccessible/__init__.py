@@ -119,15 +119,23 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getPointFromOffset(self,offset):
+	@classmethod
+	def _getPointFromOffsetInObject(cls,obj,offset):
 		try:
-			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			res=obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
 		except COMError:
 			raise NotImplementedError
-		# Using the center of the character's bounding rectangle could result in a point
-		# of which IA2 believes that it belongs to a higher offset.
+		# Normally, L{_getPointFromOffset} implementations that rely on
+		# character bounding rectangles use the center point of the rectangle.
+		# However, using the center could result in a point of which Gecko IA2
+		# believes that it belongs to offset+1.
+		# This means that, when you use l{_getOffsetFromPoint}, the result would be offset+1.
+		# Therefore, use the upper left corner of the bounding rectangle in this case.
 		point=textInfos.Point(res[0],res[1])
 		return point
+
+	def _getPointFromOffset(self,offset):
+		return self._getPointFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"

@@ -581,7 +581,7 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	}
 	if (needsStrip && subStart>0) {
 		// There are characters stripped from the start of the text.
-		// We save these characters in an attribute, required for calculating offsets in IA2Text.
+		// We save the number of these characters in an attribute, required for calculating offsets in IA2Text.
 		wostringstream s;
 		s << subStart;
 		textFieldNode->addAttribute(L"strippedCharsFromStart", s.str());

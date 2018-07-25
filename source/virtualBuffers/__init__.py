@@ -137,8 +137,11 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	UNIT_CONTROLFIELD = "controlField"
 	UNIT_FORMATFIELD = "formatField"
 
-	def _getControlFieldAttribs(self,  docHandle, id):
-		start, end = self._getOffsetsFromFieldIdentifier(docHandle, id)
+	def _getControlFieldAttribs(self,  docHandle, id, fieldWithinTextInfo=True):
+		if fieldWithinTextInfo:
+			start, end = self._startOffset, self._endOffset
+		else:
+			start, end = self._getOffsetsFromFieldIdentifier(docHandle, id)
 		# The control starts at the first character.
 		for field in reversed(self._getFieldsInRange(start, start+1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
@@ -344,7 +347,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	def _normalizeFormatField(self, attrs):
 		strippedCharsFromStart = attrs.get("strippedCharsFromStart")
 		if strippedCharsFromStart is not None:
-			assert strippedCharsFromStart.isdigit, "strippedCharsFromStart is no digit, %r" % strippedCharsFromStart
+			assert strippedCharsFromStart.isdigit(), "strippedCharsFromStart isn't a digit, %r" % strippedCharsFromStart
 			attrs["strippedCharsFromStart"] = int(strippedCharsFromStart)
 		return attrs
 

@@ -36,11 +36,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
 			relOffset = offset - formatFieldStart + ia2TextStartOffset
 			obj = self._getNVDAObjectFromOffset(offset)
-			if not issubclass(obj.TextInfo, IA2TextTextInfo):
-				raise LookupError("TextInfo is of type %r and does not provide reliable points" % obj.TextInfo)
-			# Position is irrelevant here, we just need a text info to work with
-			info = obj.makeTextInfo(textInfos.POSITION_FIRST)
-			return info._getPointFromOffset(relOffset)
+			if not hasattr(obj, "IAccessibleTextObject"):
+				raise LookupError("Object doesn't have an IAccessibleTextObject")
+			return IA2TextTextInfo._getPointFromOffsetInObject(obj, relOffset)
 		return super(Gecko_ia2_TextInfo, self)._getPointFromOffset(offset)
 
 	def _getOffsetFromPoint(self,x,y):
@@ -55,7 +53,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				break
 			except LookupError:
 				obj = obj.parent
-		if not obj or not issubclass(obj.TextInfo, IA2TextTextInfo):
+		if not obj or not hasattr(obj, "IAccessibleTextObject"):
 			raise LookupError
 		# Find out whether this object contains text that has been stripped in the virtual buffer.
 		for field in reversed(self._getFieldsInRange(start, start+1)):
@@ -134,7 +132,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		normalizeIA2TextFormatField(attrs)
 		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
 		if ia2TextStartOffset is not None:
-			assert ia2TextStartOffset.isdigit, "ia2TextStartOffset is no digit, %r" % ia2TextStartOffset
+			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
 			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
 		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
 
