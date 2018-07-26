@@ -519,13 +519,17 @@ class EdgeNode(UIA):
 
 	def event_liveRegionChange(self):
 		# #8466: elements with aria-role=alert set fires live region changed event but does not expose the alert text as its name, wihch can be found in its descendants.
-		if self.ariaProperties.get("role") == "alert" and self.treeInterceptor:
+		if self.ariaProperties.get("role") == "alert" and not self.name and self.treeInterceptor:
 			ui.message(self.treeInterceptor.makeTextInfo(self).text)
+		else:
+			super(EdgeNode, self).event_liveRegionChange()
 
 	def event_UIA_systemAlert(self):
 		# #8557: similar to live region change event, some elements does not have a name but text is scattered among its descendants.
-		if self.ariaProperties.get("role") == "alert" and self.treeInterceptor:
+		if self.ariaProperties.get("role") == "alert" and not self.name and self.treeInterceptor:
 			ui.message(self.treeInterceptor.makeTextInfo(self).text)
+		else:
+			super(EdgeNode, self).event_UIA_systemAlert()
 
 class EdgeList(EdgeNode):
 
