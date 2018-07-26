@@ -20,6 +20,7 @@ import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
 from UIAUtils import *
 from . import UIA, UIATextInfo
+import ui
 
 def splitUIAElementAttribs(attribsString):
 	"""Split an UIA Element attributes string into a dict of attribute keys and values.
@@ -429,13 +430,6 @@ class EdgeNode(UIA):
 			charInfo.collapse(True)
 		return range
 
-	def _get_name(self):
-		name=super(EdgeNode,self).name
-		# #8466: elements with aria-role=alert set fires live region changed event but does not expose the alert text as its name, wihch can be found in its descendants.
-		if self.ariaProperties.get("role") == "alert" and self.treeInterceptor:
-			name = self.treeInterceptor.makeTextInfo(self).text
-		return name
-
 	def _get_role(self):
 		role=super(EdgeNode,self).role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
@@ -522,6 +516,16 @@ class EdgeNode(UIA):
 			if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
 				return ariaRole
 		return None
+
+	def event_liveRegionChange(self):
+		# #8466: elements with aria-role=alert set fires live region changed event but does not expose the alert text as its name, wihch can be found in its descendants.
+		if self.ariaProperties.get("role") == "alert" and self.treeInterceptor:
+			ui.message(self.treeInterceptor.makeTextInfo(self).text)
+
+	def event_UIA_systemAlert(self):
+		# #8557: similar to live region change event, some elements does not have a name but text is scattered among its descendants.
+		if self.ariaProperties.get("role") == "alert" and self.treeInterceptor:
+			ui.message(self.treeInterceptor.makeTextInfo(self).text)
 
 class EdgeList(EdgeNode):
 
