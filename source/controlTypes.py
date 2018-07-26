@@ -484,10 +484,10 @@ roleLabels={
 	# Translators: Identifies a thumb control (a button-like control for changing options).
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
-	# Translators: Identifies a chart element.
-	ROLE_CHARTELEMENT:_("chart element"),
 	ROLE_VIDEO:_("video"),
 	ROLE_AUDIO:_("audio"),
+	# Translators: Identifies a chart element.
+	ROLE_CHARTELEMENT:_("chart element"),
 	# Translators: Identifies deleted content. 
 	ROLE_DELETED_CONTENT:_("deleted"),
 	# Translators: Identifies inserted content. 
