@@ -20,51 +20,50 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [general]
 	language = string(default="Windows")
 	saveConfigurationOnExit = boolean(default=True)
-	askToExit = boolean(default=true)
-	playStartAndExitSounds = boolean(default=true)
-	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
-	loggingLevel = string(default="INFO")
-	showWelcomeDialogAtStartup = boolean(default=true)
+	askToExit = boolean(default=True)
+	playStartAndExitSounds = boolean(default=True)
+	loggingLevel = option("DEBUG", "IO", "DEBUGWARNING", "INFO", "OFF", default="INFO")
+	showWelcomeDialogAtStartup = boolean(default=True)
 
 # Speech settings
 [speech]
 	# The synthesiser to use
 	synth = string(default=auto)
-	symbolLevel = integer(default=100)
-	trustVoiceLanguage = boolean(default=true)
+	symbolLevel = integer(min=0, max=300, default=100)
+	trustVoiceLanguage = boolean(default=True)
 	includeCLDR = boolean(default=True)
-	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
+	beepSpeechModePitch = integer(min=50, max=11025, default=10000)
 	outputDevice = string(default=default)
-	autoLanguageSwitching = boolean(default=true)
-	autoDialectSwitching = boolean(default=false)
+	autoLanguageSwitching = boolean(default=True)
+	autoDialectSwitching = boolean(default=False)
 
 	[[__many__]]
-		capPitchChange = integer(default=30,min=-100,max=100)
-		sayCapForCapitals = boolean(default=false)
-		beepForCapitals = boolean(default=false)
-		useSpellingFunctionality = boolean(default=true)
+		capPitchChange = integer(min=-100, max=100, default=30)
+		sayCapForCapitals = boolean(default=False)
+		beepForCapitals = boolean(default=False)
+		useSpellingFunctionality = boolean(default=True)
 
 # Audio settings
 [audio]
-	audioDuckingMode = integer(default=0)
+	audioDuckingMode = integer(min=0, max=2, default=0)
 
 # Braille settings
 [braille]
 	display = string(default=auto)
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
-	expandAtCursor = boolean(default=true)
-	showCursor = boolean(default=true)
-	cursorBlink = boolean(default=true)
-	cursorBlinkRate = integer(default=500,min=200,max=2000)
-	cursorShapeFocus = integer(default=192,min=1,max=255)
-	cursorShapeReview = integer(default=128,min=1,max=255)
-	noMessageTimeout = boolean(default=false)
-	messageTimeout = integer(default=4,min=0,max=20)
-	tetherTo = string(default="focus")
-	autoTether = boolean(default=true)
-	readByParagraph = boolean(default=false)
-	wordWrap = boolean(default=true)
+	expandAtCursor = boolean(default=True)
+	showCursor = boolean(default=True)
+	cursorBlink = boolean(default=True)
+	cursorBlinkRate = integer(min=200, max=2000, default=500)
+	cursorShapeFocus = integer(min=1, max=255, default=192)
+	cursorShapeReview = integer(min=1, max=255, default=128)
+	noMessageTimeout = boolean(default=False)
+	messageTimeout = integer(min=0, max=20, default=4)
+	tetherTo = option("focus", "review", default="focus")
+	autoTether = boolean(default=True)
+	readByParagraph = boolean(default=False)
+	wordWrap = boolean(default=True)
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 
 	# Braille display driver settings
@@ -73,25 +72,25 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Presentation settings
 [presentation]
-		reportKeyboardShortcuts = boolean(default=true)
-		reportObjectPositionInformation = boolean(default=true)
-		guessObjectPositionInformationWhenUnavailable = boolean(default=false)
-		reportTooltips = boolean(default=false)
-		reportHelpBalloons = boolean(default=true)
+		reportKeyboardShortcuts = boolean(default=True)
+		reportObjectPositionInformation = boolean(default=True)
+		guessObjectPositionInformationWhenUnavailable = boolean(default=False)
+		reportTooltips = boolean(default=False)
+		reportHelpBalloons = boolean(default=True)
 		reportObjectDescriptions = boolean(default=True)
 		reportDynamicContentChanges = boolean(default=True)
 		reportAutoSuggestionsWithSound = boolean(default=True)
+
 	[[progressBarUpdates]]
-		reportBackgroundProgressBars = boolean(default=false)
-		#output modes are beep, speak, both, or off
-		progressBarOutputMode = string(default="beep")
+		reportBackgroundProgressBars = boolean(default=False)
+		progressBarOutputMode = option("beep", "speak", "both", "off", default="beep")
 		speechPercentageInterval = integer(default=10)
 		beepPercentageInterval = integer(default=1)
 		beepMinHZ = integer(default=110)
 
 [mouse]
 	enableMouseTracking = boolean(default=True) #must be true for any of the other settings to work
-	mouseTextUnit = string(default="paragraph")
+	mouseTextUnit = option("character", "word", "line", "paragraph", default="paragraph")
 	reportObjectRoleOnMouseEnter = boolean(default=False)
 	audioCoordinatesOnMouseMove = boolean(default=False)
 	audioCoordinates_detectBrightness = boolean(default=False)
@@ -100,11 +99,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	audioCoordinates_maxVolume = float(default=1.0)
 	audioCoordinates_minPitch = integer(default=220)
 	audioCoordinates_maxPitch = integer(default=880)
-	reportMouseShapeChanges = boolean(default=false)
-	ignoreInjectedMouseInput = boolean(default=false)
+	reportMouseShapeChanges = boolean(default=False)
+	ignoreInjectedMouseInput = boolean(default=False)
 
 [speechViewer]
-	showSpeechViewerAtStartup = boolean(default=false)
+	showSpeechViewerAtStartup = boolean(default=False)
 	autoPositionWindow = boolean(default=True)
 	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
 	x = integer()
@@ -115,30 +114,30 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #Keyboard settings
 [keyboard]
-	useCapsLockAsNVDAModifierKey = boolean(default=false)
-	useNumpadInsertAsNVDAModifierKey = boolean(default=true)
-	useExtendedInsertAsNVDAModifierKey = boolean(default=true)
-	keyboardLayout = string(default="desktop")
-	speakTypedCharacters = boolean(default=true)
-	speakTypedWords = boolean(default=false)
-	beepForLowercaseWithCapslock = boolean(default=true)
-	speakCommandKeys = boolean(default=false)
-	speechInterruptForCharacters = boolean(default=true)
-	speechInterruptForEnter = boolean(default=true)
+	useCapsLockAsNVDAModifierKey = boolean(default=False)
+	useNumpadInsertAsNVDAModifierKey = boolean(default=True)
+	useExtendedInsertAsNVDAModifierKey = boolean(default=True)
+	keyboardLayout = option("desktop", "laptop", default="desktop")
+	speakTypedCharacters = boolean(default=True)
+	speakTypedWords = boolean(default=False)
+	beepForLowercaseWithCapslock = boolean(default=True)
+	speakCommandKeys = boolean(default=False)
+	speechInterruptForCharacters = boolean(default=True)
+	speechInterruptForEnter = boolean(default=True)
 	allowSkimReadingInSayAll = boolean(default=False)
 	alertForSpellingErrors = boolean(default=True)
-	handleInjectedKeys= boolean(default=true)
+	handleInjectedKeys= boolean(default=True)
 
 [virtualBuffers]
-	maxLineLength = integer(default=100)
-	linesPerPage = integer(default=25)
+	maxLineLength = integer(min=10, max=250, default=100)
+	linesPerPage = integer(min=5, max=150, default=25)
 	useScreenLayout = boolean(default=True)
-	autoPassThroughOnFocusChange = boolean(default=true)
-	autoPassThroughOnCaretMove = boolean(default=false)
-	passThroughAudioIndication = boolean(default=true)
-	autoSayAllOnPageLoad = boolean(default=true)
-	trapNonCommandGestures = boolean(default=true)
-	enableOnPageLoad = boolean(default=true)
+	autoPassThroughOnFocusChange = boolean(default=True)
+	autoPassThroughOnCaretMove = boolean(default=False)
+	passThroughAudioIndication = boolean(default=True)
+	autoSayAllOnPageLoad = boolean(default=True)
+	trapNonCommandGestures = boolean(default=True)
+	focusFollowsBrowse = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)
@@ -146,36 +145,36 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
 	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
-	detectFormatAfterCursor = boolean(default=false)
-	reportFontName = boolean(default=false)
-	reportFontSize = boolean(default=false)
-	reportFontAttributes = boolean(default=false)
-	reportRevisions = boolean(default=true)
-	reportEmphasis = boolean(default=false)
+	detectFormatAfterCursor = boolean(default=False)
+	reportFontName = boolean(default=False)
+	reportFontSize = boolean(default=False)
+	reportFontAttributes = boolean(default=False)
+	reportRevisions = boolean(default=True)
+	reportEmphasis = boolean(default=False)
 	reportColor = boolean(default=False)
-	reportAlignment = boolean(default=false)
-	reportLineSpacing = boolean(default=false)
-	reportStyle = boolean(default=false)
-	reportSpellingErrors = boolean(default=true)
-	reportPage = boolean(default=true)
+	reportAlignment = boolean(default=False)
+	reportLineSpacing = boolean(default=False)
+	reportStyle = boolean(default=False)
+	reportSpellingErrors = boolean(default=True)
+	reportPage = boolean(default=True)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
 	reportLineIndentationWithTones = boolean(default=False)
 	reportParagraphIndentation = boolean(default=False)
-	reportTables = boolean(default=true)
+	reportTables = boolean(default=True)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
 	reportTableCellCoords = boolean(default=True)
 	reportBorderStyle = boolean(default=False)
 	reportBorderColor = boolean(default=False)
-	reportLinks = boolean(default=true)
-	reportComments = boolean(default=true)
-	reportLists = boolean(default=true)
-	reportHeadings = boolean(default=true)
-	reportBlockQuotes = boolean(default=true)
-	reportLandmarks = boolean(default=true)
-	reportFrames = boolean(default=true)
-	reportClickable = boolean(default=true)
+	reportLinks = boolean(default=True)
+	reportComments = boolean(default=True)
+	reportLists = boolean(default=True)
+	reportHeadings = boolean(default=True)
+	reportBlockQuotes = boolean(default=True)
+	reportLandmarks = boolean(default=True)
+	reportFrames = boolean(default=True)
+	reportClickable = boolean(default=True)
 
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
@@ -184,14 +183,14 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followMouse = boolean(default=False)
 
 [UIA]
-	enabled = boolean(default=true)
-	useInMSWordWhenAvailable = boolean(default=false)
+	enabled = boolean(default=True)
+	useInMSWordWhenAvailable = boolean(default=False)
 
 [update]
-	autoCheck = boolean(default=true)
-	startupNotification = boolean(default=true)
-	allowUsageStats = boolean(default=false)
-	askedAllowUsageStats = boolean(default=false)
+	autoCheck = boolean(default=True)
+	startupNotification = boolean(default=True)
+	allowUsageStats = boolean(default=False)
+	askedAllowUsageStats = boolean(default=False)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
@@ -201,23 +200,23 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportCompositionStringChanges = boolean(default=True)
 
 [debugLog]
-	hwIo = boolean(default=false)
-	audioDucking = boolean(default=false)
-	gui = boolean(default=false)
-	louis = boolean(default=false)
-	timeSinceInput = boolean(default=false)
+	hwIo = boolean(default=False)
+	audioDucking = boolean(default=False)
+	gui = boolean(default=False)
+	louis = boolean(default=False)
+	timeSinceInput = boolean(default=False)
 
 [uwpOcr]
 	language = string(default="")
 
 [upgrade]
-	newLaptopKeyboardLayout = boolean(default=false)
+	newLaptopKeyboardLayout = boolean(default=False)
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
 
 [development]
-	enableScratchpadDir = boolean(default=false)
+	enableScratchpadDir = boolean(default=False)
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification
