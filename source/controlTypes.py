@@ -147,9 +147,11 @@ ROLE_DATAITEM=140
 ROLE_HEADERITEM=141
 ROLE_THUMB=142
 ROLE_CALENDAR=143
-ROLE_CHARTELEMENT=146
 ROLE_VIDEO=144
 ROLE_AUDIO=145
+ROLE_CHARTELEMENT=146
+ROLE_DELETED_CONTENT=147
+ROLE_INSERTED_CONTENT=148
 
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
@@ -482,10 +484,14 @@ roleLabels={
 	# Translators: Identifies a thumb control (a button-like control for changing options).
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
-	# Translators: Identifies a chart element.
-	ROLE_CHARTELEMENT:_("chart element"),
 	ROLE_VIDEO:_("video"),
 	ROLE_AUDIO:_("audio"),
+	# Translators: Identifies a chart element.
+	ROLE_CHARTELEMENT:_("chart element"),
+	# Translators: Identifies deleted content. 
+	ROLE_DELETED_CONTENT:_("deleted"),
+	# Translators: Identifies inserted content. 
+	ROLE_INSERTED_CONTENT:_("inserted"),
 }
 
 stateLabels={
