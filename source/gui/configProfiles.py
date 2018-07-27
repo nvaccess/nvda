@@ -1,6 +1,6 @@
 #gui/configProfiles.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2013 NV Access Limited
+#Copyright (C) 2013-2018 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -102,7 +102,7 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def __del__(self):
 		ProfilesDialog._instance = None
@@ -218,7 +218,7 @@ class ProfilesDialog(wx.Dialog):
 		# Translators: The label of a field to enter a new name for a configuration profile.
 		with wx.TextEntryDialog(self, _("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
-				_("Rename Profile"), defaultValue=oldName) as d:
+				_("Rename Profile"), value=oldName) as d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				return
 			newName = api.filterFileName(d.Value)
@@ -260,6 +260,8 @@ class ProfilesDialog(wx.Dialog):
 		else:
 			config.conf.enableProfileTriggers()
 		self.Destroy()
+		# 7077: Nullify the instance flag, otherwise wxWidgets will think the dialog is active when it is gone.
+		ProfilesDialog._instance = None
 
 	def saveTriggers(self, parentWindow=None):
 		try:
@@ -309,7 +311,6 @@ class TriggersDialog(wx.Dialog):
 				continue
 			triggers.append(TriggerInfo(spec, disp, profile))
 
-		
 		# Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 		triggersText = _("Triggers")
 		triggerChoices = [trig.display for trig in triggers]
@@ -334,7 +335,7 @@ class TriggersDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
@@ -396,7 +397,7 @@ class NewProfileDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles
@@ -461,6 +462,8 @@ class NewProfileDialog(wx.Dialog):
 		# The user is done with the Profiles dialog;
 		# let them get on with editing the profile.
 		parent.Destroy()
+		# Also nullify the instance flag as the profiles dialog itself is dead.
+		ProfilesDialog._instance = None
 
 	def onCancel(self, evt):
 		self.Parent.Enable()
