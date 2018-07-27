@@ -137,6 +137,9 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		This callback is called instead.
 		However, this makes it impossible to process toggle events other than by subclassing this class.
 		Therefore, we manually fire a wx.EVT_CHECKLISTBOX event to bind to.
+		Note that in contrast with wx.CheckListBox, for this class wx.EVT_CHECKLISTBOX is also fired
+		when checking or unchecking an item programatically (i.e. when L{Checked} or L{CheckItem} is used).
+
 		This callback is also used to notify winEvent that something changed.
 		We must do this, so that NVDA receives a stateChange.
 		"""
