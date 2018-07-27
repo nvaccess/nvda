@@ -63,9 +63,7 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 		return comtypes.automation.VT_EMPTY, 0
 
 class CustomCheckListBox(wx.CheckListBox):
-	"""
-	Custom checkable list to fix a11y bugs in the standard wx checkable list box.
-	It also adds a new L{CheckItem} method that mimics the behavior of the same method in the CheckListCtrlMixin."""
+	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
 		super(CustomCheckListBox, self).__init__(*args, **kwargs)
@@ -82,14 +80,6 @@ class CustomCheckListBox(wx.CheckListBox):
 		# We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
 		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
-
-	def CheckItem(self, index, check=True):
-		checked = set(self.Checked)
-		if check:
-			checked.add(index)
-		elif index in checked:
-			checked.remove(index)
-		self.Checked = checked
 
 class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
 	"""
@@ -111,14 +101,16 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 
-	@property
-	def Checked(self):
-		return tuple(index for index in xrange(self.ItemCount) if self.IsChecked(index))
+	def GetCheckedItems(self):
+		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
 
-	@Checked.setter
-	def Checked(self, indexes):
-		for index in xrange(self.ItemCount):
-			self.CheckItem(index, index in indexes)
+	def SetCheckedItems(self, indexes):
+		for i in indexes:
+			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i
+		for i in xrange(self.ItemCount):
+			self.CheckItem(i, i in indexes)
+
+	CheckedItems = property(fget=GetCheckedItems, fset=SetCheckedItems)
 
 	def onCharHook(self,evt):
 		key = evt.GetKeyCode()
