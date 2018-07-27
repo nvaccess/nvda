@@ -59,7 +59,7 @@ For reference, the following dependencies are included in Git submodules:
 * [wxPython](http://www.wxpython.org/), version 4.0.3
 * [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit e7e59f9
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 910f4c2
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
