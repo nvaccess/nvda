@@ -1,6 +1,6 @@
-#IAccProcServer.py:
+#accPropServer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017-2018 NV Access Limited, Derek Riemer
+#Copyright (C) 2017-2018 NV Access Limited, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 

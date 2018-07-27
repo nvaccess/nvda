@@ -45,7 +45,7 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
-		#Import late to prevent circular import.
+		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
 		if childid != winUser.CHILDID_SELF:
@@ -69,17 +69,17 @@ class CustomCheckListBox(wx.CheckListBox):
 
 	def __init__(self, *args, **kwargs):
 		super(CustomCheckListBox, self).__init__(*args, **kwargs)
-		#Import late to prevent circular import.
+		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
-		#Register object with COM to fix accessibility bugs in wx.
+		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
 		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE]), c_int(2), server, 1)
-		#Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
+		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
 	def notifyIAccessible(self, evt):
-		#Notify winEvent that something changed.
-		#We must do this, so that NVDA receives a stateChange.
+		# Notify winEvent that something changed.
+		# We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
 		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
 
@@ -91,7 +91,7 @@ class CustomCheckListBox(wx.CheckListBox):
 			checked.remove(index)
 		self.Checked = checked
 
-class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
+class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
 	"""
 	An L{AutoWidthColumnListCtrl} with accessible checkboxes per item.
 	In contrast with L{CustomCheckableListBox}, this class supports multiple columns.
@@ -102,11 +102,9 @@ class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckLis
 	):
 		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
-		# A list containing the checked items
-		self._checked = []
-		#Import late to prevent circular import.
+		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
-		#Register object with COM to fix accessibility bugs in wx.
+		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
 		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE]), c_int(2), server, 1)
 		# Register our hook to check/uncheck items with space.
@@ -115,7 +113,7 @@ class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckLis
 
 	@property
 	def Checked(self):
-		return tuple(self._checked)
+		return tuple(index for index in xrange(self.ItemCount) if self.IsChecked(index))
 
 	@Checked.setter
 	def Checked(self, indexes):
@@ -134,11 +132,17 @@ class CheckableAutoWidthColumnListCtrl(AutoWidthColumnListCtrl, listmix.CheckLis
 		self.ToggleItem(index)
 
 	def OnCheckItem(self, index, flag):
-		if flag:
-			self._checked.append(index)
-		else:
-			assert index in self._checked
-			self._checked.remove(index)
-		#Notify winEvent that something changed.
-		#We must do this, so that NVDA receives a stateChange.
+		"""
+		The wx CheckListCtrlMixin doesn't fire an event when an item is checked or unchecked.
+		This callback is called instead.
+		However, this makes it impossible to process toggle events other than by subclassing this class.
+		Therefore, we manually fire a wx.EVT_CHECKLISTBOX event to bind to.
+		This callback is also used to notify winEvent that something changed.
+		We must do this, so that NVDA receives a stateChange.
+		"""
+		evt = wx.CommandEvent(wx.wxEVT_CHECKLISTBOX,self.Id)
+		evt.EventObject = self
+		evt.Int = index
+		self.ProcessEvent(evt)
+
 		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index+1)
