@@ -225,6 +225,8 @@ class Gecko_ia2(VirtualBuffer):
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType.startswith('heading') and nodeType[7:].isdigit():
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING],"IAccessible2::attribute_level":[nodeType[7:]]}
+		elif nodeType == "annotation":
+			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_CONTENT_DELETION,IAccessibleHandler.IA2_ROLE_CONTENT_INSERTION]}
 		elif nodeType=="heading":
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
 		elif nodeType=="table":
