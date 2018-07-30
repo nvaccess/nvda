@@ -183,6 +183,10 @@ class EditableTextWithAutoSelectDetection(EditableText):
 	def event_textRemove(self):
 		self.hasContentChangedSinceLastSelection = True
 
+	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
+                super(EditableTextWithAutoSelectDetection,self)._caretScriptPostMovedHelper(speakUnit, gesture, info=None)
+                self.detectPossibleSelectionChange()
+
 class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAutoSelectDetection, EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
 	This should be used when an object does not notify of selection changes.

@@ -248,6 +248,9 @@ class EditableText(TextContainerObject,ScriptableObject):
 		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
 		braille.handler.handleCaretMove(self)
 
+        def script_selectAll (self,gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)                
+
 	__gestures = {
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
@@ -269,6 +272,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:numpadDelete": "caret_delete",
 		"kb:backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
+                "kb:control+a": "selectAll",
 	}
 
 	def initAutoSelectDetection(self):
