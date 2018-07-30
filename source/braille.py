@@ -161,6 +161,10 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# password edit.
 	controlTypes.ROLE_PASSWORDEDIT: _("pwdedt"),
+	# Translators: Displayed in braille for an object which is deleted.
+	controlTypes.ROLE_DELETED_CONTENT: _("del"),
+	# Translators: Displayed in braille for an object which is inserted.
+	controlTypes.ROLE_INSERTED_CONTENT: _("ins"),
 }
 
 positiveStateLabels = {
