@@ -161,6 +161,7 @@ POSITION_ALL="all"
 class Point(object):
 	"""Represents a point on the screen.
 	This is used when associating a point on the screen with a piece of text.
+	@Deprecated: use L{locationHelper.Point} instead.
 	"""
 
 	def __init__(self,x,y):
@@ -174,7 +175,8 @@ class Point(object):
 		self.y=y
 
 class Rect(object):
-	"""Represents a rectangle on the screen."""
+	"""Represents a rectangle on the screen.
+	@Deprecated: use L{locationHelper.Rect} instead."""
 
 	def __init__(self, left, top, right, bottom):
 		"""
