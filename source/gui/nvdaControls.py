@@ -62,6 +62,11 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				return states, 1
 		return comtypes.automation.VT_EMPTY, 0
 
+#: An array with the GUIDs of the properties that an AccPropServer should override for list controls with checkboxes.
+#: The role is supposed to be checkbox, rather than list item.
+#: The state should be overridden to include the checkable state as well as the checked state if the item is checked.
+CHECK_LIST_PROPS = (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE])
+
 class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
@@ -71,7 +76,15 @@ class CustomCheckListBox(wx.CheckListBox):
 		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE]), c_int(2), server, 1)
+		accPropServices.SetHwndPropServer(
+			hwnd=self.Handle,
+			idObject=winUser.OBJID_CLIENT,
+			idChild=0,
+			paProps=CHECK_LIST_PROPS,
+			cProps=len(CHECK_LIST_PROPS),
+			pServer=server,
+			AnnoScope=1
+		)
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
@@ -96,7 +109,15 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(self.Handle, winUser.OBJID_CLIENT, 0, (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE]), c_int(2), server, 1)
+		accPropServices.SetHwndPropServer(
+			hwnd=self.Handle,
+			idObject=winUser.OBJID_CLIENT,
+			idChild=0,
+			paProps=CHECK_LIST_PROPS,
+			cProps=len(CHECK_LIST_PROPS),
+			pServer=server,
+			AnnoScope=1
+		)
 		# Register our hook to check/uncheck items with space.
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
