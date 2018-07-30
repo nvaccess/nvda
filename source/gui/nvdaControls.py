@@ -99,6 +99,10 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	"""
 	An L{AutoWidthColumnListCtrl} with accessible checkboxes per item.
 	In contrast with L{CustomCheckableListBox}, this class supports multiple columns.
+	Also note that this class ignores the L{CheckListCtrlMixin.OnCheckItem} callback.
+	If you want to be notified of checked/unchecked events,
+	create an event handler for wx.EVT_CHECKLISTBOX.
+	This event is only fired when an item is toggled with the mouse or keyboard.
 	"""
 
 	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumnIndex="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
