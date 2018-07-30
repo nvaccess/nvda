@@ -11,6 +11,7 @@ import oleacc
 import winUser
 import comtypes
 from ctypes import c_int
+import inspect
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -121,6 +122,8 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		# Register our hook to check/uncheck items with space.
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
+		# Register an additional event handler to call sendCheckListBoxEvent for mouse clicks if appropriate.
+		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
 
 	def GetCheckedItems(self):
 		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
@@ -143,22 +146,33 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 			evt.Skip()
 			return
 		self.ToggleItem(index)
+		self.sendCheckListBoxEvent(index)
 
-	def OnCheckItem(self, index, flag):
-		"""
-		The wx CheckListCtrlMixin doesn't fire an event when an item is checked or unchecked.
-		This callback is called instead.
-		However, this makes it impossible to process toggle events other than by subclassing this class.
-		Therefore, we manually fire a wx.EVT_CHECKLISTBOX event to bind to.
-		Note that in contrast with wx.CheckListBox, for this class wx.EVT_CHECKLISTBOX is also fired
-		when checking or unchecking an item programatically (i.e. when L{Checked} or L{CheckItem} is used).
+	def onLeftDown(self,evt):
+		"""Additional event handler for mouse clicks to call L{sendCheckListBoxEvent}."""
+		(index, flags) = self.HitTest(evt.GetPosition())
+		evt.Skip()
+		if flags == wx.LIST_HITTEST_ONITEMICON:
+			self.sendCheckListBoxEvent(index)
 
-		This callback is also used to notify winEvent that something changed.
-		We must do this, so that NVDA receives a stateChange.
+	def CheckItem(self, index, check=True):
 		"""
+		Adapted from L{CheckListCtrlMixin} to ignore the OnCheckItem callback and to call L{notifyIAccessible}.
+		"""
+		img_idx = self.GetItem(index).GetImage()
+		if img_idx == 0 and check:
+			self.SetItemImage(index, 1)
+		elif img_idx == 1 and not check:
+			self.SetItemImage(index, 0)
+		self.notifyIAccessible(index)
+
+	def notifyIAccessible(self, index):
+		# Notify winEvent that something changed.
+		# We must do this, so that NVDA receives a stateChange.
+		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index+1)
+
+	def sendCheckListBoxEvent(self, index):
 		evt = wx.CommandEvent(wx.wxEVT_CHECKLISTBOX,self.Id)
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
-
-		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index+1)
