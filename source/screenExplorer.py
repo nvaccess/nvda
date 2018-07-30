@@ -19,9 +19,12 @@ import mouseHandler
 import wx
 
 def playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=None, detectBrightness=True,blurFactor=0):
-	"""Plays a tone indicating the XY-coordinate for the given location. This works for keyboard-based object navigation/focus movement, mouse movement and during touch hover gesture.  
-	@param obj: the coordinate for the location and the screen resolution (typically desktopObject.location)
-	@type obj: int
+	"""Plays a tone indicating the XY-coordinate for the given location.
+	This works for keyboard-based object navigation/focus movement, mouse movement and during touch hover gesture.
+	Left to right adjusting the volume between left and right speakers.
+	Top to bottom adjusts the pitch of the sound.
+	Brightness adjusts the volume of the sound (applicable for mouse movement).
+	Coordinates (x, y) are absolute, and can be negative.
 	"""
 	# Have a fake wx.Point in case min pos is not defined on multiple monitors.
 	if screenMinPos is None:
