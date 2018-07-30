@@ -17,12 +17,14 @@ class Point(namedtuple("Point",("x","y"))):
 	"""Represents a point on the screen."""
 
 	@classmethod
-	def fromNonInts(cls, *nonInts):
-		"""Creates an instance from parameters that aren't integers, such as floats.
+	def fromFloatCollection(cls, *floats):
+		"""Creates an instance from float parameters.
 		The provided parameters will be converted to ints automatically.
-		@raise ValueError: If one of the input parameters can't be converted to int.
+		@raise TypeError: If one of the input parameters isn't a float.
 		"""
-		return cls(*map(int, nonInts))
+		if not all(isinstance(f, float) for f in floats):
+			raise TypeError("All input parameters must be of type float")
+		return cls(*map(int, floats))
 
 	@classmethod
 	def fromCompatibleType(cls, point):
@@ -179,12 +181,14 @@ class _RectMixin:
 	"""Mix-in class for properties shared between RectLTRB and RectLTWH classes"""
 
 	@classmethod
-	def fromNonInts(cls, *nonInts):
-		"""Creates an instance from parameters that aren't integers, such as floats.
+	def fromFloatCollection(cls, *floats):
+		"""Creates an instance from float parameters.
 		The provided parameters will be converted to ints automatically.
-		@raise ValueError: If one of the input parameters can't be converted to int.
+		@raise TypeError: If one of the input parameters isn't a float.
 		"""
-		return cls(*map(int, nonInts))
+		if not all(isinstance(f, float) for f in floats):
+			raise TypeError("All input parameters must be of type float")
+		return cls(*map(int, floats))
 
 	@classmethod
 	def fromCompatibleType(cls, rect):
@@ -196,7 +200,8 @@ class _RectMixin:
 		if isinstance(rect,RECT_CLASSES):
 			if cls is RectLTWH:
 				return cls(rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top)
-			return cls(rect.left, rect.top, rect.right, rect.bottom)
+			elif cls is RectLTRB:
+				return cls(rect.left, rect.top, rect.right, rect.bottom)
 		raise TypeError("rect should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in RECT_CLASSES))
 
 	@classmethod
@@ -205,7 +210,10 @@ class _RectMixin:
 		if isinstance(point,POINT_CLASSES):
 			if cls is RectLTWH:
 				return cls(point.x, point.y, 0, 0)
-			return cls(point.x, point.y, point.x, point.y)
+			elif cls is RectLTRB:
+				return cls(point.x, point.y, point.x, point.y)
+			else:
+				raise RuntimeError("%s is not known as a valid subclass of _RectMixin" % cls.__name__)
 		raise TypeError("point should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in POINT_CLASSES))
 
 	@classmethod
@@ -304,7 +312,7 @@ class _RectMixin:
 	def isSuperset(self,other):
 		"""Returns whether this rectangle is a superset of other (i.e. whether all points of other are contained by this rectangle)."""
 		if not isinstance(other,RECT_CLASSES):
-			return False
+			raise TypeError("other should be one of %s" % ", ".join(cls.__module__+"."+cls.__name__ for cls in RECT_CLASSES))
 		return self.left<=other.left<=other.right<=self.right and self.top<=other.top<=other.bottom<=self.bottom
 
 	def __eq__(self,other):

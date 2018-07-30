@@ -108,11 +108,9 @@ class TestRectUtilities(unittest.TestCase):
 			RECT(450, 450, 490, 990)
 		), location)
 
-	def test_fromNonInts(self):
-		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), RectLTRB.fromNonInts(10.0, 10.0, 20.0, 20.0))
-		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), RectLTRB.fromNonInts("10", "10", "20", "20"))
-		self.assertEqual(RectLTWH(left=10, top=10, width=20, height=20), RectLTWH.fromNonInts(10.0, 10.0, 20.0, 20.0))
-		self.assertEqual(RectLTWH(left=10, top=10, width=20, height=20), RectLTWH.fromNonInts("10", "10", "20", "20"))
+	def test_fromFloatCollection(self):
+		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), RectLTRB.fromFloatCollection(10.0, 10.0, 20.0, 20.0))
+		self.assertEqual(RectLTWH(left=10, top=10, width=20, height=20), RectLTWH.fromFloatCollection(10.0, 10.0, 20.0, 20.0))
 
 	def test_valueErrorForUnsuportedInput(self):
 		self.assertRaises(ValueError, RectLTRB, left=10, top=10, right=9, bottom=9)

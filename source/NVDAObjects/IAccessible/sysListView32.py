@@ -306,7 +306,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
 	def _getColumnLocationRaw(self,index):
-		assert index>0, "INvalid index: %d" % index
+		assert index>0, "Invalid index: %d" % index
 		processHandle=self.processHandle
 		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
 		localRect=RECT(
