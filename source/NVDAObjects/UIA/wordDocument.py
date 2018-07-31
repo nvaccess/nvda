@@ -301,10 +301,8 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	shouldCreateTreeInterceptor=False
 	announceEntireNewLine=True
 
-	def _get_name(self):
-		# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
-		# Translators: The name of a control that shows a Microsoft Word document.
-		return _("Microsoft Word")
+	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
+	name=u""
 
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
