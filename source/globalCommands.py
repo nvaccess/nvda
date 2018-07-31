@@ -1480,7 +1480,7 @@ class GlobalCommands(ScriptableObject):
 		if playObjectCoordinates == "both":
 			playObjectCoordinates = "off"
 			# Translators: A mode where object location coordinates will not be announced.
-			ui.message(_("Do not play Object location tone"))
+			ui.message(_("Do not play object location tone"))
 		elif playObjectCoordinates == "off":
 			playObjectCoordinates = "objNav"
 			# Translators: A mode where object coordinate beep will be heard when using object navigation commands.
