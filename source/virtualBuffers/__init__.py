@@ -137,13 +137,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	UNIT_CONTROLFIELD = "controlField"
 	UNIT_FORMATFIELD = "formatField"
 
-	def _getControlFieldAttribs(self,  docHandle, id, fieldWithinTextInfo=True):
-		if fieldWithinTextInfo:
-			start, end = self._startOffset, self._endOffset
-		else:
-			start, end = self._getOffsetsFromFieldIdentifier(docHandle, id)
-		# The control starts at the first character.
-		for field in reversed(self._getFieldsInRange(start, start+1)):
+	def _getControlFieldAttribs(self,  docHandle, id):
+		info = self.copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
