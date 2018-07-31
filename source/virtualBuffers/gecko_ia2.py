@@ -18,7 +18,7 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
-from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo, getNVDAObjectFromPoint
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -32,6 +32,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs = field.field
 			ia2TextStartOffset = attrs.get("ia2TextStartOffset")
 			if ia2TextStartOffset is None:
+				# No ia2TextStartOffset specified, most likely a format field that doesn't originate from IA2Text.
 				continue
 			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
 			relOffset = offset - formatFieldStart + ia2TextStartOffset
@@ -40,30 +41,6 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				raise LookupError("Object doesn't have an IAccessibleTextObject")
 			return IA2TextTextInfo._getPointFromOffsetInObject(obj, relOffset)
 		return super(Gecko_ia2_TextInfo, self)._getPointFromOffset(offset)
-
-	def _getOffsetFromPoint(self,x,y):
-		# This is only expected to be called when the virtual buffer document has focus.
-		# Use the IAccessible specific getNVDAObjectFromPoint function, since IA2 is expected.
-		obj = getNVDAObjectFromPoint(x, y)
-		if not obj or not isinstance(obj.IAccessibleObject, IAccessible2):
-			raise LookupError
-		while obj:
-			try:
-				start, end = self._getOffsetsFromNVDAObject(obj)
-				break
-			except LookupError:
-				obj = obj.parent
-		if not obj or not hasattr(obj, "IAccessibleTextObject"):
-			raise LookupError
-		# Find out whether this object contains text that has been stripped in the virtual buffer.
-		relOffset = IA2TextTextInfo._getOffsetFromPointInObject(obj, x, y)
-		strippedCharsFromStart = 0
-		for field in reversed(self._getFieldsInRange(start, min(end-1, start+relOffset))):
-			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
-				# This is no format field.
-				continue
-			strippedCharsFromStart += field.field.get("strippedCharsFromStart", 0)
-		return start - strippedCharsFromStart + relOffset
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
