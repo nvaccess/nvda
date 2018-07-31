@@ -441,7 +441,10 @@ class ProtectedDocumentPane(IAccessible):
 	"""The pane that gets focus in case a document opens in protected mode in word
 	This is mapped to the window class _WWB and role oleacc.ROLE_SYSTEM_CLIENT
 	"""
-	
+
+	# This object should not be presented in the focus ancestry as it is redundant.
+	isPresentableFocusAncestor=False
+
 	def event_gainFocus(self):
 		"""On gaining focus, simply set the focus on a child of type word document. 
 		This is just a container window.
