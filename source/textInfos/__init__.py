@@ -68,12 +68,34 @@ class ControlField(Field):
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
+			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_CHART, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
+			role in (
+				controlTypes.ROLE_DELETED_CONTENT,
+				controlTypes.ROLE_INSERTED_CONTENT,
+				controlTypes.ROLE_LINK, 
+				controlTypes.ROLE_HEADING, 
+				controlTypes.ROLE_BUTTON, 
+				controlTypes.ROLE_RADIOBUTTON, 
+				controlTypes.ROLE_CHECKBOX, 
+				controlTypes.ROLE_GRAPHIC, 
+				controlTypes.ROLE_CHART, 
+				controlTypes.ROLE_MENUITEM, 
+				controlTypes.ROLE_TAB, 
+				controlTypes.ROLE_COMBOBOX, 
+				controlTypes.ROLE_SLIDER, 
+				controlTypes.ROLE_SPINBUTTON, 
+				controlTypes.ROLE_PROGRESSBAR, 
+				controlTypes.ROLE_TOGGLEBUTTON, 
+				controlTypes.ROLE_MENUBUTTON, 
+				controlTypes.ROLE_TREEVIEW, 
+				controlTypes.ROLE_CHECKMENUITEM, 
+				controlTypes.ROLE_RADIOMENUITEM
+			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
@@ -139,6 +161,7 @@ POSITION_ALL="all"
 class Point(object):
 	"""Represents a point on the screen.
 	This is used when associating a point on the screen with a piece of text.
+	@Deprecated: use L{locationHelper.Point} instead.
 	"""
 
 	def __init__(self,x,y):
@@ -152,7 +175,8 @@ class Point(object):
 		self.y=y
 
 class Rect(object):
-	"""Represents a rectangle on the screen."""
+	"""Represents a rectangle on the screen.
+	@Deprecated: use L{locationHelper.Rect} instead."""
 
 	def __init__(self, left, top, right, bottom):
 		"""

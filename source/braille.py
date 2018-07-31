@@ -161,6 +161,10 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# password edit.
 	controlTypes.ROLE_PASSWORDEDIT: _("pwdedt"),
+	# Translators: Displayed in braille for an object which is deleted.
+	controlTypes.ROLE_DELETED_CONTENT: _("del"),
+	# Translators: Displayed in braille for an object which is inserted.
+	controlTypes.ROLE_INSERTED_CONTENT: _("ins"),
 }
 
 positiveStateLabels = {
@@ -772,8 +776,11 @@ class TextInfoRegion(Region):
 		from treeInterceptorHandler import TreeInterceptor
 		if isinstance(self.obj, TreeInterceptor):
 			return True
-		# Terminals are inherently multiline, so they don't have the multiline state.
-		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
+		# Terminals and documents are inherently multiline, so they don't have the multiline state.
+		return (
+			self.obj.role in (controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT)
+			or controlTypes.STATE_MULTILINE in self.obj.states
+		)
 
 	def _getSelection(self):
 		"""Retrieve the selection.
