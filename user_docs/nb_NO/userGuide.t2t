@@ -7,136 +7,229 @@ NVDA NVDA_VERSION Brukermanual
 = Innholdsfortegnelse =[toc]
 %%toc
 
-+ introduksjon +
-NonVisual Desktop Access (NVDA) er en fri og åpen kildekode skjermleser for Microsoft Windows-operativsystemet.
-Gir tilbakemeldinger via syntetisk tale og punktskrift, lar blinde og svaksynte få tilgang til datamaskiner som kjører Windows for samme kostnad som seende.
++ introduksjon +[Introduction]
+Velkommen til NVDA!
+
+NonVisual Desktop Access (NVDA) er en gratis skjermleser for Microsoft Windows-operativsystemet. Den er laget med åpen kildekode.
+NVDA gir tilbakemeldinger via syntetisk tale og punktskrift, og gjør blinde og svaksynte personer i stand til å bruke datamaskiner som kjører Windows til samme pris som det seende personer betaler.
 NVDA er utviklet av [NV Access http://www.nvaccess.org/], med bidrag fra fellesskapet.
 
-++ Generelle Funksjoner ++
-NVDA lar blinde og svaksynte få tilgang til og bruke med Windows operativsystem og mange tredjeparts applikasjoner.
+++ Generelle funksjoner ++[GeneralFeatures]
+NVDA lar blinde og svaksynte få tilgang til og bruke Windows operativsystem og mange tredjeparts applikasjoner.
 
-Store høydepunkter inkluderer:
-- Støtte for populære applikasjoner, inkludert nettlesere, e-postklienter, chatteprogrammer og kontorpakker
-- Innebygget syntetisk tale som støtter over 43 språk
-- Lesing av tekstformatering hvor tilgjengelig for eksempel skriftnavn og størrelse, stil og stavefeil
-- Automatisk lesing av tekst under musa og valgfrie hørbar indikasjon ved musens plassering
-- Støtte for mange leselister
-- Mulig å kjøre fra en USB minnepinne eller annet flyttbart medium uten behov for installasjon
-- Enkel å bruke talende installasjonsprogram
-- Oversatt til 36 språk
-- Støtte for moderne Windows-operativsystemer, inkludert både 32 og 64 bits varianter
-- Mulig å kjøre på Windows-pålogging og andre sikre skjermer
+Blant de viktigste funksjonene er:
+- Støtte for populære applikasjoner, inkludert nettlesere, e-postklienter, internett-chatteprogrammer og kontorpakker
+- Innebygget syntetisk tale som støtter over 80 språk
+- Lesing av tekstformatering hvor dette er tilgjengelig, for eksempel fontnavn og -størrelse, stil og stavefeil
+- Automatisk lesing av tekst under musa og valgfri hørbar indikasjon der musepekeren er plassert
+- Støtte for mange leselister, inkludert innskriving av punktskrift på leselister med tastatur
+- Mulig å kjøre fra en USB-minnepinne eller annet flyttbart medium uten behov for installasjon
+- Talende installasjonsprogram som er enkelt å bruke
+- Oversatt til 54 språk
+- Støtte for moderne Windows-operativsystemer, inkludert både 32- og 64-bits varianter
+- Mulig å kjøre i Windows-pålogging og i andre sikre skjermer
+- Annonserer kontroller og tekst når en bruker berøringskommandoer
 - Støtte for vanlige tilgjengelighetsgrensesnitt som Microsoft Active Accessibility, Java Access Bridge, IAccessible2 og UI Automation (UI Automation støttes bare i Windows 7 og senere)
-- Støtte for Windows Command Prompt og konsoll applikasjoner
+- Støtte for Windows kommandolinje og konsoll-applikasjoner
 -
 
-++ Internasjonalisering ++
- Det er viktig at folk hvor som helst i verden, uansett hvilket språk de snakker, får lik tilgang til teknologien.
- Foruten engelsk, har NVDA blitt oversatt til 36 språk, inkludert: afrikaansk, albansk, arabisk, brasiliansk portugisisk, bulgarsk, kroatisk, tsjekkisk, dansk, nederlandsk, finsk, fransk, galisisk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, italiensk , japansk, norsk, polsk, portugisisk, rumensk, russisk, serbisk, slovakisk, spansk, svensk, tamil, thai, tradisjonell kinesisk, Taiwansk mandarin, tyrkisk, ukrainsk og vietnamesisk.
+++ Internasjonalisering ++[Internationalization]
+Det er viktig at mennesker hvor som helst i verden, uansett hvilket språk de snakker, får lik tilgang til teknologi.
+Foruten engelsk, har NVDA blitt oversatt til 54 språk, inkludert: afrikaans, albansk, amharisk, arabisk, aragonsk, bulgarsk, burmansk, dansk, farsi, finsk, fransk, galisisk, georgisk, gresk, hebraisk, hindi, irsk, islandsk, italiensk, japansk, kannada, katalansk, kinesisk (tradisjonell og forenklet), kirgisisk, kroatisk, kurdisk, litauisk, makedonsk, mongolsk, nederlandsk, nepali, norsk, polsk, portugisisk (Brasil og Portugal), punjabi, rumensk, russisk, serbisk, slovakisk, slovensk, spansk (Colombia og Spania), svensk, tamil, thai, tsjekkisk, tyrkisk, tysk (Tyskland og Sveits), ukrainsk ungarsk og vietnamesisk.
  
-++ Talesyntetisestøtte ++
-Foruten å gi sine meldinger og brukergrensesnitt på flere språk, kan NVDA også la brukeren få lest innhold på alle språk, så lenge de har en talesyntese som kan snakke det språket.
+++ Talesyntesestøtte ++[SpeechSynthesizerSupport]
+Foruten å formidle meldinger og brukergrensesnitt på flere språk, kan NVDA også la brukeren lese innhold på alle språk, så lenge hun/han har en talesyntese som kan snakke det språket.
 
-Med NVDA følger [eSpeak http://espeak.sourceforge.net/], en gratis, åpen kilde, flerspråklig talesyntese.
+Med NVDA følger [eSpeak NG https://github.com/espeak-ng/espeak-ng], en flerspråklig talesyntese som er gratis og med åpen kildekode.
 
 Informasjon om andre talesynteser som NVDA støtter finnes i [Støttede talesynteser #SupportedSpeechSynths]-seksjonen.
 
-++ Punktstøtte ++
-For brukere som har leselist, kan NVDA gi informasjon i punktskrift.
-Se [Støttede Leselister #SupportedBrailleDisplays]-seksjonen for informasjon om de støttede leselistene.
+++ Punktskriftstøtte ++[BrailleSupport]
+For brukere som har leselist, kan NVDA gi informasjon i punktskrift. Skriving av både uforkortet og forkortet punktskrift via et punktskrifttastatur støttes også.
 
-NVDA støtter punkt for mange språk, inkludert kortskrift, fullskrift og datapunkt for enkelte språk.
+Se seksjonen [Støttede leselister #SupportedBrailleDisplays] for informasjon om de støttede leselistene.
 
-++ Lisens og kopibeskyttelse ++
+NVDA støtter punktskrift for mange språk, inkludert fullskrift, kortskrift og datapunktskrift.
+
+++ Lisens og kopibeskyttelse ++[LicenseAndCopyright]
 NVDA er kopibeskyttet NVDA_COPYRIGHT_YEARS NVDA bidragsytere.
 
 NVDA dekkes av GNU General Public License (versjon 2).
-Du er fri til å dele eller endre denne programvaren på alle måte du vil så lenge det lisensen medfølger, og gjøre all kildekode tilgjengelig for alle som ønsker den.
+Du er fri til å dele eller endre denne programvaren på alle måter du vil så lenge lisensen medfølger, og du gjør all kildekode tilgjengelig for alle som ønsker den.
 Dette gjelder både originale og modifiserte eksemplarer av denne programvaren, samt eventuelle avledede verk.
 For ytterligere opplysninger, kan du [se den fullstendige lisensen. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ Systemkrav +
-- Operativsystem: Alle 32-biters og 64-bits versjoner av Windows XP, Windows Vista og Windows 7 (Inkludert serveroperativsystemer).
++ Systemkrav +[SystemRequirements]
+- Operativsystem: Alle 32- og 64-bits versjoner av Windows 7, Windows 8, Windows 8.1 og Windows 10, og alle serveroperativsystemer fra og med Windows Server 2008 R2.
+- For Windows 7 krever NVDA Service Pack 1 eller høyere.
+- For Windows Server 2008 R2 krever NVDA Service Pack 1 eller høyere.
 - Minne: 256 mb RAM eller mer
-- Prosessorhastighet: 1.0 GHz eller høyere
-- Omtrent 50 MB lagringsplass.
+- Prosessorhastighet: 1,0 GHz eller høyere
+- Omtrent 90 MB lagringsplass.
 -
 
-+ Få tak i NVDA +
-Hvis du ennå ikke har fått en kopi av NVDA, kan du laste den ned fra [www.nvda-project.org NVDA_URL].
++ Få tak i og installer NVDA +[GettingAndSettingUpNVDA]
+Hvis du ennå ikke har fått tak i en kopi av NVDA, kan du laste den ned fra [www.nvaccess.org NVDA_URL].
 
-Gå til nedlastingssiden, og der finner du en lenke for å laste ned den nyeste versjonen av NVDA.
+Gå til nedlastingssiden. Der finner du en lenke for å laste ned den nyeste versjonen av NVDA.
 
-Det er for tiden to måter NVDA er pakket.
-Det ene er en Installer som vil lede deg gjennom installasjon av NVDA slik at du kan kjøre den til enhver tid fra startmenyen.
-Den andre er en selvutpakkende arkiv fil som inneholder en flyttbar versjon av NVDA, som du kan kjøre fra hvor som helst, inkludert USB minnepinner eller CD.
+Når du kjører fila du akkurat har lastet ned, vil den starte en midlertidig kopi av NVDA. Du vil så bli spurt om du ønsker å installere NVDA, lage en flyttbar kopi eller bare fortsette å bruke den midlertidige kopien.
 
-For å få tilgang til Windows-påloggingsskjermen, User Account Control (UAC) skjerm eller andre sikre Windows-skjermer, samt programmer som kjører som administrator i Windows Vista og senere, må du installere NVDA på systemet med installasjonsprogrammet.
-Disse skjermene kan ikke nås ved hjelp av en flyttbar kopi av NVDA.
+Dersom du planlegger å alltid bruke NVDA på denne datamaskinen, bør du velge å installere NVDA. Å installere NVDA gir tilgang til ekstra funksjonalitet slik som automatisk oppstart etter innlogging, muligheten til å lese påloggingsvinduet i Windows og andre sikre skjermer i Windows (som ikke kan gjøres med portable eller midlertidige kopier) og oppretting av snarveier i startmenyen og på skrivebordet.
 
-+ Installere NVDA +
+Fra den installerte kopien av NVDA kan du selv lage en portabel kopi når du måtte ønske det. Hvis du ønsker å ta NVDA med deg på en USB-minnepenn eller et annet skrivbart medium, bør du lage en portabel kopi.
 
-++ NVDA Installasjonsprogrammet ++
-Hvis du allerede har NVDA installasjonsprogrammet, trykker du ganske enkelt enter eller dobbeltklikke på filen og installasjonsprogrammet starter.
+Den portable kopien kan også installeres på en datamaskin på et senere tidspunkt.
 
-Mens installasjonen lastes, vil du høre NVDA installasjonsmusikk.
-Når den er lastet inn, vil en midlertidig kopi av NVDA følge deg gjennom instruksjonene i installasjonsprogrammet og installere NVDA.
-Merk at hvis du kjørte en annen kopi av NVDA på det tidspunktet du startet installasjonsprogrammet, vil installasjonsprogrammet lukke din forrige kopi og starte sitt eget.
-Dette er nødvendig slik at installasjonsprogrammet kan ordentlig oppdatere eventuelle endrede filer.
-Hvis du allerede har en annen kopi av NVDA installert, vil NVDA installasjonsprogrammet avinstallere det for deg, og deretter vil det begynne å installere NVDA.
+Om du imidlertid skulle ønske å kopiere NVDA til et ikke skrivbart medium som for eksempel en CD, bør du bare kopiere pakken du har lastet ned. 
 
-Når du har fullført installasjonen, vil installasjonsprogrammet varsle deg om at installasjon av NVDA er ferdig.
-Hvis reinstallerer NVDA, kan det deg om å restarte systemet.
-Det er svært viktig at du restarter systemet for å unngå å få uheldige konsekvenser.
-Hvis det ikke ber deg om å restarte, trykk ferdig og installasjonsprogrammet lukkes og starte den nylig installerte versjonen av NVDA.
+Kjøring av en portabel kopi direkte fra et ikke skrivbart medium støttes ikke.
 
-++ NVDA Portable ++
-Hvis du har den flyttbare versjonen av NVDA, er alt du trenger å gjøre å trykke enter eller dobbeltklikke på filen, og følge instruksjonene.
-Den vil spørre deg hvor på systemet du ønsker å plassere filene.
+Bruk av en midlertidig kopi av NVDA er også en mulighet (for eksempel for å demonstrere programvaren), selv å det å starte NVDA på denne måten hver gang kan bli nokså tidkrevende. 
 
-+++ NVDA Portable på en USB-nøkkel +++
-Det er mulig å plassere NVDA på en USB minnepinne, slik at du kan bruke den på andre datasystemer.
+++ Begrensninger i flyttbar og midlertidig utgave ++[PortableAndTemporaryCopyRestrictions]
+Bortsett fra den manglende evnen til å starte automatisk under og/eller etter innlogging, har flyttbare og midlertidige kopier av NVDA også disse begrensningene:
+- Kan ikke samhandle med programmer som kjører med administrative privilegier, med mindre NVDA også kjøres med slike privilegier (ikke anbefalt).
+- Kan ikke lese brukerkontokontrollskjermer (UAC) når du starter et program med administrative privilegier.
+- Windows 8 og senere: Kan ikke støtte inndata fra berøringsskjerm.
+- Windows 8 og senere: Kan ikke tilby blamodus og uttale av skrevne bokstaver i apper fra Windows Store.
+- Windows 8 og senere: Lyddemping støttes ikke.
+-
 
-Når den flyttbare versjonen spør hvor du ønsker å pakke det ut i stasjonen av din USB minnepinne, pluss en valgfri underkatalog hvor du ønsker å plassere NVDA.
++ Installere NVDA +[InstallingNVDA]
+Hvis du installerer NVDA direkte fra pakken du har lastet ned, kan du trykke på knappen "Installer NVDA".
 
-Hvis for eksempel USB-minnepinne er på E:\, kan du skrive i E:\nvda, som vil plassere NVDA i NVDA underkatalogen på USB-minnepinnen.
+Hvis du alt har lukket denne dialogen eller ønsker å installere fra en flyttbar kopi, velger du menyelementet "Installer NVDA" som du finner under "Verktøy" i NVDA-menyen.
 
-Merk at selv om dette betyr at du kan ha NVDA og innstillingene med deg overalt, bare å plugge i USB-minnepinnen, vil ikke starte NVDA automatisk; Du må starte NVDA manuelt fra enten Windows Utforsker eller Kjør Dialogen.
+Installasjonsdialogen som vises, vil bekrefte om du ønsker å installere NVDA og om denne installasjonen vil oppdatere en tidligere installasjon.
 
-For informasjon om autostart av NVDA fra en USB-minnepinne, kan du se denne artikkelen:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+Ved å trykke på "Fortsett"-knappen starter du installasjonen av NVDA.
 
-+ Komme i gang med NVDA +
+Det finnes også noen få valg i denne dialogen som blir forklart nedenfor.
 
-++ Lasting av NVDA ++
-Hvis du har installert NVDA med installasjonsprogrammet, starter NVDA er så enkelt som enten å trykke Ctrl+Alt+N, eller velge NVDA fra NVDA menyen under Programmer på startmenyen.
-I tillegg kan du skrive NVDA inn dialogboksen Kjør, og trykke Enter.
+Så snart installasjonen er fullført, vil du få ei melding om at installasjonen var vellykket.
 
-For å starte den flyttbare versjonen, gå til katalogen du pakket NVDA til, og trykk enter eller dobbeltklikke på nvda.exe.
+Trykk på OK-knappen for å starte den nylig installerte kopien av NVDA.
 
-Når NVDA starter, vil du først høre et stigende sett av toner (som forteller deg at NVDA lastes).
-Avhengig av hvor rask maskinen er, eller hvis du kjører NVDA fra en USB-nøkkel eller annet langsommere medium, kan det ta litt tid å starte.
++++ Start i Windows pålogging+++[StartAtWindowsLogon]   
+Dette valget lar deg avgjøre om NVDA skal starte automatisk eller ikke når du er i innloggingsvinduet i Windows, før du har skrevet inn et passord. Dette gjelder også for brukerkontokontroll og andre sikre skjermer.
+
++++ Lag snarvei på skrivebordet (ctrl+alt+n) +++[CreateDesktopShortcut]
+Dette valget lar deg avgjøre om NVDA skal lage en snarvei på skrivebordet for å starte NVDA. Velger du at snarveien skal opprettes, blir det også knyttet en hurtigtast, Ctrl+Alt+n, til den. Med denne hurtigtasten kan du starte NVDA når du vil.
+
++++ Kopier flyttbar konfigurasjon til gjeldende brukerkonto +++[CopyPortableConfigurationToCurrentUserAccount]   
+Dette er et valg som er tilgjengelig bare når du installerer fra en flyttbar kopi av NVDA. Installerer du fra pakken du har lastet ned, finner du ikke denne muligheten.
+
+Dette valget lar deg avgjøre om brukerkonfigurasjonen fra den kjørende kopien av NVDA skal kopieres til konfigurasjonen for den innloggede brukeren på PC-en, for bruk med den installerte kopien av NVDA. Dette vil ikke kopiere konfigurasjonen for andre brukere av PC-en, og det vil heller ikke kopiere innstillinger til systemkonfigurasjonen for bruk i Windows pålogging eller på andre sikre skjermer.
+  
+++ Lag en flyttbar kopi ++[CreatingAPortableCopy] 
+Hvis du vil lage en flyttbar kopi direkte fra NVDAs nedlastingsfil, trykker du rett og slett på "Lag flyttbar kopi".
+
+Hvis du alt har lukket denne dialogen, eller hvis du kjører en installert kopi av NVDA, velger du menyelementet Lag flyttbar kopi som du finner under Verktøy i NVDA-menyen.
+
+Dialogen som da vises, lar deg velge hvor den flyttbare kopien skal lages. Dette kan være i ei mappe på harddisken din, eller et sted på en USB-minnepinne eller et annet flyttbart medium.
+
+Det er også mulig å velge om NVDA skal kopiere den påloggende brukerens gjeldende NVDA-konfigurasjon for bruk med den nye, flyttbare kopien av NVDA. Dette valget er bare tilgjengelig når du lager en flyttbar kopi fra en installert kopi av NVDA, men ikke fra den nedlastede pakken.
+
+Trykk på Fortsett for å lage den flyttbare kopien.
+
+Så snart den nye kopien er laget, vil det dukke opp ei melding som forteller deg at jobben er vellykket utført.
+ 
+Trykk på OK for å fjerne denne dialogen.
+
++ Kom i gang med NVDA +[GettingStartedWithNVDA]
+++ Start NVDA ++[LaunchingNVDA]
+Hvis du har installert NVDA med installasjonsprogrammet, er det å starte NVDA så enkelt som enten å trykke Ctrl+Alt+n, eller velge NVDA fra NVDA-menyen under Programmer på startmenyen.
+
+I tillegg kan du også skrive NVDA i dialogboksen Kjør, og trykke Enter.
+
+Du kan også sende noen [command line options #CommandLineOptions] som tillater deg å starte NVDA på nytt (-r), avslutte NVDA (-q), slå av programtillegg (--disable-addons), osv.
+
+For installerte kopier lagrer NVDA som standard konfigurasjonen i "roaming"-appdatamappa under gjeldende bruker, "C:\Users\<bruker>\AppData\Roaming"). Dette kan endres slik at NVDA isteden laster konfigurasjonen fra den lokale appdata-mappa. Se seksjonen om [system wide parameters #SystemWideParameters] for flere detaljer.
+
+For å starte den flyttbare versjonen, går du til mappa du pakket NVDA ut i, og trykker enter. Du kan også dobbeltklikke på nvda.exe.
+
+Når NVDA starter, vil du først høre en stigende tonerekke (som forteller deg at NVDA lastes).
+Avhengig av hvor rask maskinen er, eller hvis du kjører NVDA fra et USB-minne eller annet langsommere medium, kan det ta litt tid å starte NVDA.
 Hvis det tar ekstra lang tid, bør NVDA si "Laster NVDA. Vennligst vent..."
 
-Hvis du ikke hører noe av dette, eller du hører Windows-feil lyd, eller et synkende sett av toner, så betyr dette at NVDA har en feil, må du muligens sende en feilrapport til utviklerne.
-Vennligst sjekk NVDA nettsiden for hvordan du gjør dette.
+Hvis du ikke hører noe av dette, eller du hører Windows' feilmeldingslyd, eller en synkende tonerekke, betyr dette at NVDA har en feil. Kanskje du da vil sende en feilrapport til utviklerne? Vennligst sjekk NVDAs nettside for hvordan du gjør dette.
 
-Når NVDA starter for første gang, vil du bli møtt av en dialogboks som gir deg litt grunnleggende informasjon om NVDA spesialtasten og NVDA menyen.
-(Vennligst se nærmere avsnittene om disse temaene.)
-Dialogboksen inneholder også to avkryssingsbokser.
-Den første lar deg kontrollere om NVDA skal bruke CapsLock som en NVDA valgtast, og den andre lar deg kontrollere om Velkommen-dialogen skal vises hver gang NVDA starter.
++++ Velkomstdialog +++[WelcomeDialog]
+Når NVDA starter for første gang, vil du bli møtt av en dialogboks som gir deg litt grunnleggende informasjon om NVDA-spesialtasten og NVDA-menyen. (Vennligst se nærmere avsnittene om disse temaene.)
 
-++ Om NVDA tastaturkommandoer ++
+Dialogboksen inneholder også en kombinasjonsboks og tre avkryssingsbokser.
 
-+++ NVDA-tasten +++
-De fleste NVDA-spesifikke tastaturkommandoer består vanligvis av å trykke en spesiell tast kalt NVDA-tasten, sammen med en eller flere andre taster.
-Et unntak fra dette er tekstlesingskommandoer som bare bruker numpad tastene alene.
+Kombinasjonsboksen lar deg velge tastaturoppsett.
 
-NVDA kan konfigureres slik at enten numpad Sett, Insert eller CapsLock tasten kan brukes som NVDA-tast.
+Den første avkryssingsboksen lar deg kontrollere om NVDA skal bruke CapsLock som en NVDA-valgtast.
 
-Som standard er både Numpad Sett og inserttastene satt som NVDA-taster.
+Den andre avkryssingsboksen lar deg avgjøre om NVDA skal starte automatisk etter at du har logget inn i Windows. Dette valget er bare tilgjengelig i installerte kopier av NVDA.
 
-Hvis du ønsker at en av NVDA spesialtastene skal opptre som opprinnelig tast (for eksempel ønsker å trykke CapsLock når du har satt CapsLock til å være en NVDA endringstast) kan du trykke på tasten to ganger i rask rekkefølge.
+Den tredje avkryssingsboksen lar deg kontrollere om denne velkomstdialogen skal vises hver gang NVDA starter.
+
+++ Om tastaturkommandoer i NVDA ++[AboutNVDAKeyboardCommands]
++++ NVDA-tasten +++[TheNVDAModifierKey]
+NVDA-spesifikke tastaturkommandoer utføres vanligvis ved å trykke en spesiell tast kalt NVDA-tasten, sammen med én eller flere andre taster. Unntak fra dette er først og fremst kommandoer for tekstlesing med stasjonært tastaturoppsett, der en bare bruker tastene på nummertastaturet, men det finnes noen andre unntak også.
+
+NVDA kan konfigureres slik at enten insert-tasten på nummertastaturet, den utvidede insert-tasten eller CapsLock-tasten kan brukes som NVDA-tast.
+
+Som standard er begge insert-tastene definert som NVDA-taster.
+
+Hvis du ønsker at en av NVDA-tastene skal opptre som opprinnelig tast (for eksempel fordi du ønsker å trykke CapsLock når du har satt CapsLock til å være NVDA-tast) kan du trykke på tasten to ganger i rask rekkefølge.
+
++++ Tastaturoppsett +++[KeyboardLayouts]
+NVDA leveres for tida med to sett med tastaturkommandoer, også kjent som tastaturoppsett: stasjonært og bærbart tastaturoppsett.
+
+Som standard er NVDA satt opp til å bruke stasjonært tastaturoppsett. Du kan enkelt bytte til bærbart tastaturoppsett under Tastatur-kategorien i [NVDA Settings #NVDASettings], som du finner under Brukervalg i NVDA-menyen.
+
+Stasjonært tastaturoppsett gjør omfattende bruk av insert-tastene (med NumLock av).
+
+Selv om mange bærbare PC-er ikke har noe fysisk numerisk tast, er det vanlig at de kan emulere et ved å holde nede FN-tasten mens en trykker bokstaver, tall og tegn på høyre side av tastaturet (7, 8, 9, u, i, o, j, k, l osv.). Om dette ikke lar seg gjøre på din bærbare PC, eller om du ikke får slått av NumLock, kan det være lurt av deg å bytte til bærbart tastaturoppsett i stedet.
+ 
+++ Berøringskommandoer i NVDA ++[NVDATouchGestures]
+Kjører du NVDA på en enhet med berøringsskjerm og bruker Windows 8 eller høyere, kan du også kontrollere NVDA direkte via berøringskommandoer.
+
+Så lenge NVDA kjører, vil all berøring av skjermen gå direkte til NVDA. Derfor vil handlinger som kan utføres normalt uten NVDA ikke fungere.
+
++++ Utforske skjermen +++[ExploringTheScreen]
+Den mest grunnleggende handlingen du kan utføre med berøringsskjermen er å annonsere kontrollen eller teksten på et hvilket som helst sted på skjermen. For å gjøre dette, plasserer du én finger et vilkårlig sted på skjermen.
+
+Du kan også holde fingeren på skjermen og flytte den rundt for å få opplest andre kontroller eller tekst som fingeren flytter seg over.
+
++++ Berøringsgester +++[TouchGestures]
+Når NVDA-kommandoer blir beskrevet seinere i denne brukerhåndboka, vil de ofte også inneholde en berøringsgest som kan brukes for å aktivere kommandoen på berøringsskjermen.
+Her følger noen instruksjoner for hvordan du utfører de ulike berøringsgestene.
+
+==== Trykk ====
+Trykk raskt på skjermen med én eller flere fingrer.
+
+Å trykke én gang med én finger er kjent som et trykk. Å trykke med to fingrer samtidig er kjent som et tofingertrykk, osv.
+
+Hvis samme trykk-kommando blir utført raskt flere ganger etter hverandre, vil NVDA oppfatte dette som en multitrykkgest. Å trykke to ganger vil altså ressultere i et dobbelttrykk. Tre trykk etter hverandre vil resultere i et trippeltrykk, osv.
+
+Disse multitrykkgestene gjenkjenner selvfølgelig også hvor mange fingrer som ble brukt, så det er mulig å ha gester som trippeltrykk med to fingrer, trykk med fire fingrer osv.
+
+==== Sveip ====
+Sveip raskt med fingeren over skjermen.
+
+Det er fire mulige sveipegester, avhengig av retningen: sveip mot venstre, sveip mot høyre, sveip opp og sveip ned.
+
+Akkurat som ved trykk, kan mer enn én finger brukes for å utføre gesten. Derfor er gester som sveip opp med to fingrer og sveip mot venstre med fire fingrer mulige.
+
++++ Berøringsmodi +++[TouchModes]
+Siden det er langt flere NVDA-kommandoer enn mulige berøringsgester, har NVDA flere berøringsmodi du kan veksle mellom, og som gjør ulike undergrupper av kommandoer tilgjengelige.
+
+De to modiene er tekstmodus og objektmodus.
+
+Visse NVDA-kommandoer som oppgis i denne brukermanualen kan ha en berøringsmodus oppgitt i klammer etter berøringsgesten.
+
+| 
+
+    
+ 
+
+
 
 +++ Tastaturhjelp Modus +++
 Mange tastaturkommandoer er nevnt gjennom hele resten av denne bruksanvisningen, men en enkel måte å utforske alle de forskjellige tastaturkommandoene er å slå på tastaturhjelp.
