@@ -17,6 +17,7 @@ import eventHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, LiveText
 import watchdog
+from locationHelper import RectLTWH
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -192,7 +193,7 @@ An NVDAObject for a window
 	def _get_location(self):
 		r=ctypes.wintypes.RECT()
 		ctypes.windll.user32.GetWindowRect(self.windowHandle,ctypes.byref(r))
-		return (r.left,r.top,r.right-r.left,r.bottom-r.top)
+		return RectLTWH.fromCompatibleType(r)
 
 	def _get_displayText(self):
 		"""The text at this object's location according to the display model for this object's window."""

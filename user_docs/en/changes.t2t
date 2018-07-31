@@ -6,14 +6,9 @@ What's New in NVDA
 = 2018.3 =
 
 == New Features ==
-<<<<<<< HEAD
-- NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox. (#8280)
-- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#5992, #5993)
-=======
 - NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox and Google Chrome. (#8280)
 - Content marked as being either inserted or deleted in web pages is now reported in Google Chrome. (#8558)
-- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#6316)
->>>>>>> master
+- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#5992, #5993)
 - Added scripts for reporting elapsed and total time of current track in Foobar2000. (#6596)
 - The Mac command key symbol (⌘) is now announced when reading text with any synthesizer. (#8366)
 - Custom roles via the aria-roledescription attribute are now supported in all web browsers. (#8448)
@@ -23,6 +18,7 @@ What's New in NVDA
  - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
  - Please consult the documentation for additional details.
 - Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard paste (October 2018 Update). (#7273)
+- Content marked as a block quote using ARIA (role blockquote) is now supported in Mozilla Firefox 63. (#8577)
 
 
 == Changes ==
@@ -49,8 +45,12 @@ What's New in NVDA
 - NVDA will recognize more dialogs in Windows 10 and other modern applications. (#8405)
 - On Windows 10 October 2018 Update and Server 2019 and above, NVDA no longer fails to track the system focus when an application freezes or floods the system with events. (#7345, #8535)
 - Fixed a case where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
+- Users are now informed when attempting to read or copy an empty status bar. (#7789)
 - In the list of languages in NVDA's General Settings, language name for Burmese is displayed correctly on Windows 7. (#8544)
 - In Microsoft Edge, NVDA will announce notifications such as reading view availability and page load progress. (#8423)
+- Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
+- When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
+- The 64-bit version of Media Player Classic is now supported. (#6066)
 
 
 == Changes for Developers ==
