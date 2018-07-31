@@ -132,7 +132,7 @@ class DriverSetting(AutoPropertyObject):
 	#: @type: str
 	configSpec="string(default=None)"
 
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None):
+	def __init__(self,name,displayNameWithAccelerator,availableInSettingsRing=False,displayName=None):
 		"""
 		@param name: internal name of the setting
 		@type name: str
@@ -140,8 +140,8 @@ class DriverSetting(AutoPropertyObject):
 		@type displayNameWithAccelerator: str
 		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
 		@type displayName: str
-		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
-		@type availableInSynthSettingsRing: bool
+		@param availableInSettingsRing: Will this option be available in synthesizer settings ring?
+		@type availableInSettingsRing: bool
 		"""
 		self.name=name
 		self.displayNameWithAccelerator=displayNameWithAccelerator
@@ -149,7 +149,7 @@ class DriverSetting(AutoPropertyObject):
 			# Strip accelerator from displayNameWithAccelerator.
 			displayName=displayNameWithAccelerator.replace("&","")
 		self.displayName=displayName
-		self.availableInSynthSettingsRing=availableInSynthSettingsRing
+		self.availableInSettingsRing=availableInSettingsRing
 
 class NumericDriverSetting(DriverSetting):
 	"""Represents a numeric driver setting such as rate, volume, pitch or dot firmness."""
@@ -158,7 +158,7 @@ class NumericDriverSetting(DriverSetting):
 		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
 			defaultVal=self.defaultVal,minVal=self.minVal,maxVal=self.maxVal)
 
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,
+	def __init__(self,name,displayNameWithAccelerator,availableInSettingsRing=False,
 		defaultVal=50,minVal=0,maxVal=100,minStep=1,normalStep=5,largeStep=10,displayName=None):
 		"""
 		@param defaultVal: Specifies the default value for a numeric driver setting.
@@ -175,7 +175,7 @@ class NumericDriverSetting(DriverSetting):
 		@type largeStep: int
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		super(NumericDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSettingsRing,displayName=displayName)
 		self.minVal=minVal
 		self.defaultVal=max(defaultVal,self.minVal)
 		self.maxVal=max(maxVal,self.defaultVal)
@@ -187,12 +187,12 @@ class BooleanDriverSetting(DriverSetting):
 	"""Represents a boolean driver setting such as rate boost or automatic time sync.
 	"""
 
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None,defaultVal=False):
+	def __init__(self,name,displayNameWithAccelerator,availableInSettingsRing=False,displayName=None,defaultVal=False):
 		"""
 		@param defaultVal: Specifies the default value for a boolean driver setting.
 		@type defaultVal: bool
 		"""
-		super(BooleanDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		super(BooleanDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSettingsRing,displayName=displayName)
 		self.defaultVal=defaultVal
 
 	def _get_configSpec(self):
