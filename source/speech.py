@@ -1170,7 +1170,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine what text to speak.
 	# Special cases
-	if speakEntry and childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	if childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
 		# #7652: containerContainsText variable is set here, but the actual generation of all other output is handled further down in the general cases section.
 		# This ensures that properties such as name, states and level etc still get reported appropriately.
