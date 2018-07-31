@@ -979,29 +979,32 @@ class DriverSettingsMixin(object):
 		slider.SetLineSize(setting.minStep)
 		slider.SetPageSize(setting.largeStep)
 
-	def makeSettingControl(self,setting):
+	def makeSliderSettingControl(self,setting):
 		"""Constructs appropriate GUI controls for given L{DriverSetting} such as label and slider.
 		@param setting: Setting to construct controls for
 		@type setting: L{DriverSetting}
 		@returns: WXSizer containing newly created controls.
 		@rtype: L{wx.BoxSizer}
 		"""
-		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
-		slider=nvdaControls.EnhancedInputSlider(self,wx.ID_ANY,minValue=setting.minVal,maxValue=setting.maxVal)
-		setattr(self,"%sSlider"%setting.name,slider)
-		slider.Bind(wx.EVT_SLIDER,DriverSettingChanger(self.driver,setting))
-		self._setSliderStepSizes(slider,setting)
-		slider.SetValue(getattr(self.driver,setting.name))
-		sizer.Add(label)
-		sizer.Add(slider)
+		labeledControl = guiHelper.LabeledControlHelper(
+			self,
+			"%s:"%setting.displayNameWithAccelerator,
+			nvdaControls.EnhancedInputSlider,
+			minValue=setting.minVal,
+			maxValue=setting.maxVal
+		)
+		lSlider=labeledControl.control
+		setattr(self,"%sSlider"%setting.name,lSlider)
+		lSlider.Bind(wx.EVT_SLIDER,DriverSettingChanger(self.driver,setting))
+		self._setSliderStepSizes(lSlider,setting)
+		lSlider.SetValue(getattr(self.driver,setting.name))
 		if self.lastControl:
-			slider.MoveAfterInTabOrder(self.lastControl)
-		self.lastControl=slider
-		return sizer
+			lSlider.MoveAfterInTabOrder(self.lastControl)
+		self.lastControl=lSlider
+		return labeledControl.sizer
 
 	def makeStringSettingControl(self,setting):
-		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
+		"""Same as L{makeSliderSettingControl} but for string settings. Returns sizer with label and combobox."""
 
 		labelText="%s:"%setting.displayNameWithAccelerator
 		setattr(self,"_%ss"%setting.name,getattr(self.driver,"available%ss"%setting.name.capitalize()).values())
@@ -1022,7 +1025,7 @@ class DriverSettingsMixin(object):
 		return labeledControl.sizer
 
 	def makeBooleanSettingControl(self,setting):
-		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
+		"""Same as L{makeSliderSettingControl} but for boolean settings. Returns checkbox."""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.name,checkbox)
 		checkbox.Bind(wx.EVT_CHECKBOX,
@@ -1064,7 +1067,7 @@ class DriverSettingsMixin(object):
 						pass
 			else: #create a new control
 				if isinstance(setting,NumericDriverSetting):
-					settingMaker=self.makeSettingControl
+					settingMaker=self.makeSliderSettingControl
 				elif isinstance(setting,BooleanDriverSetting):
 					settingMaker=self.makeBooleanSettingControl
 				else:
