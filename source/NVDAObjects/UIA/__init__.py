@@ -31,6 +31,7 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 import time
+from locationHelper import RectLTWH
 import ui
 
 class UIATextInfo(textInfos.TextInfo):
@@ -794,7 +795,14 @@ class UIA(Window):
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
 		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
-		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
+		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
+		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
+		try:
+			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
+		except COMError:
+			# We can fallback to a known set of dialog classes for window elements.
+			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
+		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
@@ -1294,12 +1302,7 @@ class UIA(Window):
 		if r is None:
 			return
 		# r is a tuple of floats representing left, top, width and height.
-		# However, most NVDA code expecs location coordinates to be ints 
-		left=int(r[0])
-		top=int(r[1])
-		width=int(r[2])
-		height=int(r[3])
-		return left,top,width,height
+		return RectLTWH.fromFloatCollection(*r)
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
