@@ -26,7 +26,6 @@ import api
 import gui
 from logHandler import log
 import braille
-import config
 
 class HelpCommand(object):
 	"""

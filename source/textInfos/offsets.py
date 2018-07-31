@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 import re
 import ctypes
@@ -148,7 +148,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
 	useUniscribe=True #Use uniscribe to calculate word offsets etc
-
+ 
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
