@@ -11,7 +11,6 @@ import oleacc
 import winUser
 import comtypes
 from ctypes import c_int
-import inspect
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
