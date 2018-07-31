@@ -887,7 +887,7 @@ class ElementsListDialog(wx.Dialog):
 	def filter(self, filterText, newElementType=False):
 		# If this is a new element type, use the element nearest the cursor.
 		# Otherwise, use the currently selected element.
-		defaultElement = self._initialElement if newElementType else self.tree.GetItemPyData(self.tree.GetSelection())
+		defaultElement = self._initialElement if newElementType else self.tree.GetItemData(self.tree.GetSelection())
 		# Clear the tree.
 		self.tree.DeleteChildren(self.treeRoot)
 
@@ -906,7 +906,7 @@ class ElementsListDialog(wx.Dialog):
 			if parent:
 				parent = elementsToTreeItems.get(parent)
 			item = self.tree.AppendItem(parent or self.treeRoot, label)
-			self.tree.SetItemPyData(item, element)
+			self.tree.SetItemData(item, element)
 			elementsToTreeItems[element] = item
 			if element == defaultElement:
 				defaultItem = item
@@ -951,7 +951,7 @@ class ElementsListDialog(wx.Dialog):
 		elif key == wx.WXK_F2:
 			item=self.tree.GetSelection()
 			if item:
-				selectedItemType=self.tree.GetItemPyData(item).item
+				selectedItemType=self.tree.GetItemData(item).item
 				self.tree.EditLabel(item)
 				evt.Skip()
 
@@ -975,14 +975,14 @@ class ElementsListDialog(wx.Dialog):
 
 	def onTreeLabelEditBegin(self,evt):
 		item=self.tree.GetSelection()
-		selectedItemType = self.tree.GetItemPyData(item).item
+		selectedItemType = self.tree.GetItemData(item).item
 		if not selectedItemType.isRenameAllowed:
 			evt.Veto()
 
 	def onTreeLabelEditEnd(self,evt):
 			selectedItemNewName=evt.GetLabel()
 			item=self.tree.GetSelection()
-			selectedItemType = self.tree.GetItemPyData(item).item
+			selectedItemType = self.tree.GetItemData(item).item
 			selectedItemType.rename(selectedItemNewName)
 
 	def _clearSearchText(self):
@@ -1030,7 +1030,7 @@ class ElementsListDialog(wx.Dialog):
 		# Save off the last selected element type on to the class so its used in initialization next time.
 		self.__class__.lastSelectedElementType=self.lastSelectedElementType
 		item = self.tree.GetSelection()
-		item = self.tree.GetItemPyData(item).item
+		item = self.tree.GetItemData(item).item
 		if activate:
 			item.activate()
 		else:
