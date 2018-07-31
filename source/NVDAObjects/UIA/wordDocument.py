@@ -204,6 +204,8 @@ class WordDocumentTextInfo(UIATextInfo):
 				prefix=field[0:spaceIndex]
 				fields[index]=field[spaceIndex+1:]
 				lastFormatField['line-prefix']=prefix
+				# Let speech know that line-prefix is safe to be spoken always, as it will only be exposed on the very first formatField on the list item.
+				lastFormatField['line-prefix_speakAlways']=True
 				break
 			else:
 				# Not a controlStart, formatChange or text string. Nothing to do.

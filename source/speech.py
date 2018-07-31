@@ -1635,7 +1635,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				text=""
 			if text:
 				textList.append(text)
-	if unit in (textInfos.UNIT_LINE,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH,textInfos.UNIT_READINGCHUNK):
+	# The line-prefix formatField attribute contains the text for a bullet or number for a list item, when the bullet or number does not appear in the actual text content.
+	# Normally this attribute could be repeated across formatFields within a list item and therefore is not safe to speak when the unit is word or character.
+	# However, some implementations (such as MS Word with UIA) do limit its useage to the very first formatField of the list item.
+	# Therefore, they also expose a line-prefix_speakAlways attribute to allow its usage for any unit.
+	linePrefix_speakAlways=attrs.get('line-prefix_speakAlways',False)
+	if linePrefix_speakAlways or unit in (textInfos.UNIT_LINE,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH,textInfos.UNIT_READINGCHUNK):
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
