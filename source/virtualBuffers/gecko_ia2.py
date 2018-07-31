@@ -269,7 +269,12 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="blockQuote":
-			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])}
+			attrs=[
+				# Search for a tag of blockquote for older implementations before the blockquote IAccessible2 role existed.
+				{"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])},
+				# Also support the new blockquote IAccessible2 role
+				{"IAccessible::role":[IAccessibleHandler.IA2_ROLE_BLOCK_QUOTE]},
+			]
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":

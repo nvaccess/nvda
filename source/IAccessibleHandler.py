@@ -254,6 +254,7 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
 	IA2_ROLE_CONTENT_DELETION:controlTypes.ROLE_DELETED_CONTENT,
 	IA2_ROLE_CONTENT_INSERTION:controlTypes.ROLE_INSERTED_CONTENT,
+	IA2_ROLE_BLOCK_QUOTE:controlTypes.ROLE_BLOCKQUOTE,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
 	"iframe":controlTypes.ROLE_INTERNALFRAME,
