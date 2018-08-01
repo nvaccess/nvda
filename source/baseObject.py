@@ -89,7 +89,7 @@ class AutoPropertyType(ABCMeta):
 					cache=cacheByDefault
 
 			abstract=dict.get('_abstract_%s'%x,False)
-			if g and not s and not d:
+			if g and not (s or d):
 				attr = (CachingGetter if cache else Getter)(g,abstract)
 			else:
 				attr = (abstractproperty if abstract else property)(fget=g,fset=s,fdel=d)
