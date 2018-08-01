@@ -31,6 +31,7 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 import time
+from locationHelper import RectLTWH
 import ui
 
 class UIATextInfo(textInfos.TextInfo):
@@ -422,13 +423,15 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		return range.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+	def _getTextWithFields_text(self,textRange,formatConfig,ignoreEmptyChunks=True,UIAFormatUnits=None):
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param ignoreEmptyChunks: if true, textRanges where the text is empty will not be emitted nor the formatField directly before it. 
+		@param ignoreEmptyChunks: bool
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
@@ -448,8 +451,8 @@ class UIATextInfo(textInfos.TextInfo):
 		log.debug("With further units of: %s"%furtherUIAFormatUnits)
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
-			text=self._getTextFromUIARange(tempRange)
-			if text:
+			text=self._getTextFromUIARange(tempRange) or ""
+			if not ignoreEmptyChunks or text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
 					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
@@ -789,7 +792,14 @@ class UIA(Window):
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
 		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
-		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
+		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
+		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
+		try:
+			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
+		except COMError:
+			# We can fallback to a known set of dialog classes for window elements.
+			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
+		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
@@ -1289,12 +1299,7 @@ class UIA(Window):
 		if r is None:
 			return
 		# r is a tuple of floats representing left, top, width and height.
-		# However, most NVDA code expecs location coordinates to be ints 
-		left=int(r[0])
-		top=int(r[1])
-		width=int(r[2])
-		height=int(r[3])
-		return left,top,width,height
+		return RectLTWH.fromFloatCollection(*r)
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)

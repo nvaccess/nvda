@@ -536,6 +536,12 @@ def ScreenToClient(hwnd, x, y):
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
 
+def ClientToScreen(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ClientToScreen(hwnd, byref(point))
+	return point.x, point.y
+
+
 class STICKYKEYS(Structure):
 	_fields_ = (
 		("cbSize", DWORD),
