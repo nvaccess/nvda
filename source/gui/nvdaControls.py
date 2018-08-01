@@ -43,9 +43,6 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		evt.Skip()
 
 class EnhancedInputSlider(wx.Slider):
-	"""
-	A slider that supports additional key events, such as pageup/pageDown.
-	"""
 
 	def __init__(self,*args, **kwargs):
 		super(EnhancedInputSlider,self).__init__(*args,**kwargs)
