@@ -41,6 +41,7 @@ class Driver(AutoPropertyObject):
 		@raise Exception: If an error occurs.
 		@postcondition: This driver can be used.
 		"""
+		super(Driver, self).__init__()
 
 	def terminate(self):
 		"""Terminate this driver.

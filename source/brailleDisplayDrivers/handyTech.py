@@ -211,13 +211,15 @@ class AtcMixin(object):
 		self._display.atc = True
 
 
-class TimeSyncMixin(object):
-	"""Functionality for displays that support time synchronization."""
+class TimeSyncFirmnessMixin(object):
+	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
 
 	def postInit(self):
-		super(TimeSyncMixin, self).postInit()
+		super(TimeSyncFirmnessMixin, self).postInit()
 		log.debug("Request current display time")
 		self._display.sendExtendedPacket(HT_EXTPKT_GET_RTC)
+		log.debug("Request current dot firmness")
+		self._display.sendExtendedPacket(HT_EXTPKT_GET_FIRMNESS)
 
 	def handleTime(self, timeStr):
 		ords = map(ord, timeStr)
@@ -350,26 +352,26 @@ class EasyBraille(OldProtocolMixin, Model):
 	genericName = name = "Easy Braille"
 
 
-class ActiveBraille(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
 
 
-class ConnectBraille40(TimeSyncMixin, TripleActionKeysMixin, Model):
+class ConnectBraille40(TimeSyncFirmnessMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_CONNECT_BRAILLE_40
 	numCells = 40
 	genericName = "Connect Braille"
 	name = "Connect Braille 40"
 
 
-class Actilino(TimeSyncMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Actilino(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTILINO
 	numCells = 16
 	genericName = name = "Actilino"
 
 
-class ActiveStar40(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveStar40(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_STAR_40
 	numCells = 40
 	name = "Active Star 40"
@@ -522,6 +524,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	timeout = 0.2
 	supportedSettings=(
 		braille.BrailleDisplayDriver.BrailleInputSetting(),
+		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2),
 		# Translators: Name of the ATC (active tactile control) setting in braille settings.
 		# Active tactile control should be left untranslated.
 		BooleanDriverSetting("atc",_("Enable &Active Tactile Control for supported displays")),
@@ -539,6 +542,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 		self.brailleInput = False
+		self._dotFirmness = 1
 		self._hidSerialBuffer = b""
 		self._atc = False
 
@@ -607,18 +611,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._atc = state
 
-	def _get_atc(self):
-		return self._atc
+	def _get_dotFirmness(self):
+		return self._dotFirmness
 
-	def _set_atc(self, state):
-		if self._atc is state:
+	def _set_dotFirmness(self, value):
+		if self._dotFirmness is value:
 			return
 		if isinstance(self._model,AtcMixin):
-			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, state)
+			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, value)
 		else:
-			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
+			log.debugWarning("Changing dot firmness setting for unsupported device %s"%self._model.name)
 		# Regardless whether this setting is supported or not, we want to safe its state.
-		self._atc = state
+		self._dotFirmness = value
 
 	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
@@ -756,8 +760,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				pass
-			elif extPacketType == HT_EXTPKT_GET_RTC and isinstance(self._model, TimeSyncMixin):
-				self._model.handleTime(packet[1:])
+			elif isinstance(self._model, TimeSyncFirmnessMixin):
+				if extPacketType == HT_EXTPKT_GET_RTC:
+					self._model.handleTime(packet[1:])
+				elif extPacketType == HT_EXTPKT_GET_FIRMNESS:
+					self._dotFirmness = ord(packet[1])
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
