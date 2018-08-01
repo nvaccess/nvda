@@ -47,6 +47,7 @@ The following dependencies need to be installed on your system:
 			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
 			* Visual C++ ATL for x86 and x64
 
+
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
 If you didn't pass the --recursive option to git clone, you will need to run `git submodule update --init`.
