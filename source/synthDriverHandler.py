@@ -12,7 +12,7 @@ import baseObject
 import winVersion
 import globalVars
 from logHandler import log
-from  settingsRing import SettingsRing
+from  synthSettingsRing import SynthSettingsRing
 import languageHandler
 import speechDictHandler
 import synthDrivers
@@ -33,7 +33,7 @@ def changeVoice(synth, voice):
 	c.spec.update(synth.getConfigSpec())
 	#start or update the synthSettingsRing
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
-	else:  globalVars.settingsRing = SettingsRing(synth)
+	else:  globalVars.settingsRing = SynthSettingsRing(synth)
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
@@ -130,14 +130,14 @@ class SynthSetting(driverHandler.DriverSetting):
 	"""
 
 	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,displayName=None):
-		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
 
 class NumericSynthSetting(driverHandler.NumericDriverSetting):
 	"""@Deprecated: use L{driverHandler.NumericDriverSetting} instead.
 	"""
 
 	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10,displayName=None):
-		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
+		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
 
 class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
 	"""@Deprecated: use L{driverHandler.BooleanDriverSetting} instead.
@@ -178,7 +178,7 @@ class SynthDriver(driverHandler.Driver):
 	def LanguageSetting(cls):
 		"""Factory function for creating a language setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.DriverSetting("language",_("&Language"),availableInSettingsRing=True,
+		return driverHandler.DriverSetting("language",_("&Language"),availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Language'))
 
@@ -186,14 +186,14 @@ class SynthDriver(driverHandler.Driver):
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.DriverSetting("voice",_("&Voice"),availableInSettingsRing=True,
+		return driverHandler.DriverSetting("voice",_("&Voice"),availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Voice'))
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.DriverSetting("variant",_("V&ariant"),availableInSettingsRing=True,
+		return driverHandler.DriverSetting("variant",_("V&ariant"),availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Variant'))
 
@@ -201,21 +201,21 @@ class SynthDriver(driverHandler.Driver):
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("rate",_("&Rate"),minStep=minStep,availableInSettingsRing=True,
+		return driverHandler.NumericDriverSetting("rate",_("&Rate"),minStep=minStep,availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Rate'))
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,availableInSettingsRing=True,
+		return driverHandler.NumericDriverSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Volume'))
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("pitch",_("&Pitch"),minStep=minStep,availableInSettingsRing=True,
+		return driverHandler.NumericDriverSetting("pitch",_("&Pitch"),minStep=minStep,availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Pitch'))
 
@@ -223,7 +223,7 @@ class SynthDriver(driverHandler.Driver):
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("inflection",_("&Inflection"),minStep=minStep,availableInSettingsRing=True,
+		return driverHandler.NumericDriverSetting("inflection",_("&Inflection"),minStep=minStep,availableInSynthSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Inflection'))
 
@@ -401,7 +401,7 @@ class SynthDriver(driverHandler.Driver):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
 			#Choose first as an initial one
 			for i,s in enumerate(self.supportedSettings): 
-				if s.availableInSettingsRing: return i
+				if s.availableInSynthSettingsRing: return i
 			return None
 		for i,s in enumerate(self.supportedSettings):
 			if s.name=="rate": return i
