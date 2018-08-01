@@ -204,6 +204,12 @@ class OldProtocolMixin(object):
 
 class AtcMixin(object):
 	"""Support for displays with Active Tactile Control (ATC)"""
+	supportedSettings=(
+		# Translators: Name of the ATC (active tactile control) setting in braille settings.
+		# Active tactile control should be left untranslated.
+		BooleanDriverSetting("atc",_("Enable &Active Tactile Control")),
+	)
+
 
 	def postInit(self):
 		super(AtcMixin, self).postInit()
@@ -213,6 +219,10 @@ class AtcMixin(object):
 
 class TimeSyncFirmnessMixin(object):
 	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
+
+	supportedSettings=(
+		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2),
+	)
 
 	def postInit(self):
 		super(TimeSyncFirmnessMixin, self).postInit()
@@ -524,10 +534,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	timeout = 0.2
 	supportedSettings=(
 		braille.BrailleDisplayDriver.BrailleInputSetting(),
-		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2),
-		# Translators: Name of the ATC (active tactile control) setting in braille settings.
-		# Active tactile control should be left untranslated.
-		BooleanDriverSetting("atc",_("Enable &Active Tactile Control for supported displays")),
 	)
 
 
@@ -577,6 +583,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if self.numCells:
 				# A display responded.
 				self._model.postInit()
+				# Add the per model supported settings to the driver instance.
+				for cls in self._model.__class__.__mro__:
+					if hasattr(cls, "supportedSettings"):
+						self.supportedSettings += cls.supportedSettings
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
 				break
@@ -597,6 +607,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# We also must sleep after closing, as it sometimes takes some time for the device to disconnect.
 			# This has been observed for Active Braille displays.
 			time.sleep(self.timeout)
+			# Restore the supported settings tuple
+			self.supportedSettings = BrailleDisplayDriver.supportedSettings
 
 	def _get_atc(self):
 		return self._atc
