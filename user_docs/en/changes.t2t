@@ -51,6 +51,10 @@ What's New in NVDA
 - Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
 - When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
 - The 64-bit version of Media Player Classic is now supported. (#6066)
+- Several improvements to braille support in Microsoft Word with UI Automation enabled:
+ - Reduced overly verbose focus presentation in both speech and braille when focusing a Word document. (#8407)
+ - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
+ - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)
 
 
 == Changes for Developers ==
