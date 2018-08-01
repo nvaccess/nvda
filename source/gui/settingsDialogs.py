@@ -969,7 +969,7 @@ class DriverSettingsMixin(object):
 		self.sizerDict={}
 		self.lastControl=None		
 		super(DriverSettingsMixin,self).__init__(*args,**kwargs)
-		self._curDriverRef = 	weakref.ref(self.driver)
+		self._curDriverRef = weakref.ref(self.driver)
 
 	@property
 	def driver(self):
@@ -1100,7 +1100,7 @@ class DriverSettingsMixin(object):
 				log.debug("refreshing panel")
 			self.sizerDict.clear()
 			self.settingsSizer.Clear(delete_windows=True)
-			self._curDriverRef = 	weakref.ref(self.driver)
+			self._curDriverRef = weakref.ref(self.driver)
 			self.makeSettings(self.settingsSizer)
 		super(DriverSettingsMixin,self).onPanelActivated()
 
