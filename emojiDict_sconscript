@@ -1,0 +1,117 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2018 NV Access Limited, Babbage B.V.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import(
+	'env', 'sourceDir', 
+)
+
+def createCLDREmojiAnnotationsDict(sources, dest):
+	import codecs
+	from xml.etree import ElementTree
+	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
+		dictFile.write(u"symbols:\r\n")
+		for source in sources:
+			tree = ElementTree.parse(source)
+			for element in tree.iter("annotation"):
+				if element.attrib.get("type") == "tts":
+					dictFile.write(u"{emoji}\t{description}\tsome\r\n".format(
+						emoji=element.attrib['cp'],
+						description=element.text.replace(":","")
+					))
+
+emojiDictAction=env.Action(
+	lambda target,source,env: createCLDREmojiAnnotationsDict([src.path for src in source], target[0].path),
+	lambda target,source,env: 'Generating %s'%target[0],
+)
+emojiDictBuilder=env.Builder(
+	action=emojiDictAction,
+	suffix='.dic',
+	src_suffix='.xml',
+)
+env['BUILDERS']['emojiDict']=emojiDictBuilder
+
+CLDRToNVDALocales = {
+	"af":"af_ZA",
+	"am":"am",
+	#"":"an",
+	"ar":"ar",
+	"as":"as",
+	"bg":"bg",
+	"bn":"bn",
+	"ca":"ca",
+	#"":"ckb",
+	"cs":"cs",
+	"da":"da",
+	"de":"de",
+	"de_CH":"de_CH",
+	"el":"el",
+	"en":"en",
+	"es":"es",
+	#"":"es_CO",
+	"fa":"fa",
+	"fi":"fi",
+	"fr":"fr",
+	"ga":"ga",
+	"gl":"gl",
+	"gu":"gu",
+	"he":"he",
+	"hi":"hi",
+	"hr":"hr",
+	"hu":"hu",
+	"id":"id",
+	"is":"is",
+	"it":"it",
+	"ja":"ja",
+	"ka":"ka",
+	#"":"kmr",
+	"kn":"kn",
+	"ko":"ko",
+	#"":"kok",
+	"ky":"ky",
+	"lt":"lt",
+	"mk":"mk",
+	"ml":"ml",
+	"mn":"mn",
+	#"":"mni",
+	"my":"my",
+	"nb":"nb_NO",
+	"ne":"ne",
+	"nl":"nl",
+	"nn":"nn_NO",
+	"pa":"pa",
+	"pl":"pl",
+	"pt":"pt_BR",
+	"pt_pt":"pt_PT",
+	"ro":"ro",
+	"ru":"ru",
+	"sk":"sk",
+	"sl":"sl",
+	"sq":"sq",
+	"sr":"sr",
+	"sv":"sv",
+	"ta":"ta",
+	"te":"te",
+	"th":"th",
+	"tr":"tr",
+	"uk":"uk",
+}
+
+annotationsDir = env.Dir("include/cldr-emoji-annotation/annotations")
+annotationsDerivedDir = env.Dir("include/cldr-emoji-annotation/annotationsDerived")
+for sourceLocale, destLocale in CLDRToNVDALocales.iteritems():
+	emojiSources = [
+		annotationsDir.File("%s.xml" % sourceLocale),
+		annotationsDerivedDir.File("%s.xml" % sourceLocale),
+	]
+	env.emojiDict(sourceDir.Dir("locale/%s" % destLocale).File("emojis.dic"), emojiSources)
