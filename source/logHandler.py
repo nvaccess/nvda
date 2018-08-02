@@ -115,6 +115,8 @@ class Logger(logging.Logger):
 	# Our custom levels.
 	IO = 12
 	DEBUGWARNING = 15
+	# #8516: disable logging completely.
+	OFF = 100
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
@@ -314,7 +316,7 @@ def initialize(shouldDoRemoteLogging=False):
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
-	logging.addLevelName(100, "OFF")
+	logging.addLevelName(Logger.OFF, "OFF")
 	if not shouldDoRemoteLogging:
 		# This produces log entries such as the following:
 		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
@@ -325,7 +327,7 @@ def initialize(shouldDoRemoteLogging=False):
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.setLevel(100)
+			log.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -361,7 +363,7 @@ def setLogLevelFromConfig():
 	levelName=config.conf["general"]["loggingLevel"]
 	level = levelNames.get(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
-	if not level or log.INFO < level < 100:
+	if not level or log.INFO < level < log.OFF:
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
