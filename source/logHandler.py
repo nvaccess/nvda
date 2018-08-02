@@ -314,13 +314,15 @@ def initialize(shouldDoRemoteLogging=False):
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
+	logging.addLevelName(100, "OFF")
 	if not shouldDoRemoteLogging:
 		# This produces log entries such as the following:
 		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
 		# Input: kb(desktop):v
 		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
-		if globalVars.appArgs.secure:
+		if globalVars.appArgs.secure or globalVars.appArgs.noLogging:
 			# Don't log in secure mode.
+			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
 			log.setLevel(100)
@@ -351,14 +353,15 @@ def initialize(shouldDoRemoteLogging=False):
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure:
+	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure or globalVars.appArgs.noLogging:
 		# Log level was overridden on the command line or we're running in secure mode,
 		# so don't set it.
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
 	level = levelNames.get(levelName)
-	if not level or level > log.INFO:
+	# The lone exception to level higher than INFO is "OFF" (100).
+	if not level or log.INFO < level < 100:
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
