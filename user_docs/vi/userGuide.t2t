@@ -11,7 +11,7 @@
 Chào mừng bạn đến với NVDA!
 
 NonVisual Desktop Access (NVDA), (tạm dịch là tiếp cận máy tính không cần thị giác), là một phần mềm đọc màn hình miễn phí, mã nguồn mở trên hệ điều hành windows.
-Cung cấp các phản hồi qua tiếng nói và qua màn hình nổi để giúp người khiếm thị có thể sử dụng được máy tính mà không tốn chi phí.
+Cung cấp các phản hồi qua bộ đọc và qua màn hình nổi để giúp người khiếm thị có thể sử dụng được máy tính mà không tốn chi phí.
 NVDA được phát triển bởi công ty [NV Access https://www.nvaccess.org/], với sự đóng góp và hỗ trợ từ cộng đồng.
 
 ++ Các tính năng chung ++[GeneralFeatures]
@@ -584,7 +584,7 @@ Khi đọc tài liệu, NVDA sẽ đọc bất kỳ nội dung toán học mà n
 Nếu bạn dùng màn hình nổi, nó sẽ hiển thị trên màn hình nổi.
 
 ++ Duyệt và Tương Tác ++[InteractiveNavigation]
-Khi bạn chủ yếu đọc tài liệu này với giọng nói, bạn sẽ muốn đọc một biểu thức dưới dạng chia nhỏ của nó, thay vì nghe toàn bộ một biểu thức tại một thời điểm.
+Khi bạn chủ yếu đọc tài liệu này với bộ đọc, bạn sẽ muốn đọc một biểu thức dưới dạng chia nhỏ của nó, thay vì nghe toàn bộ một biểu thức tại một thời điểm.
 
 Trong chế độ duyệt, bạn có thể làm điều này bằng cách chuyển con trỏ đến phần nội dung toán học và nhấn enter.
 
@@ -1086,7 +1086,7 @@ Nếu không muốn có sự thay đổi về cao độ thì bạn có thể thi
 
 ==== Thông báo chữ in hoa ====[SpeechSettingsSayCapBefore]
 Chọn tùy chọn này sẽ cho phép NVDA đọc thông báo chữ in hoa khi đứng trước chữ in hoa hoặc khi đánh vần
-Thông thường NVDA sẽ thay đổi cao độ khi đọc các chữ cái in hoa nhưng có bộ đọc không hỗ trợ việc thay đổi cao độ nên chức năng này sẽ được sử dụng.
+Thông thường, NVDA sẽ thay đổi cao độ khi đọc các chữ cái in hoa nhưng có bộ đọc không hỗ trợ việc thay đổi cao độ nên chức năng này sẽ được sử dụng.
 
 ==== Bip cho chữ in hoa ====[SpeechSettingsBeepForCaps]
 Nếu được chọn, NVDA sẽ báo tiếng bip khi đứng trước chữ in hoa.
@@ -1338,7 +1338,7 @@ Phân loại này gồm các mục sau:
 
 ==== Thông báo khi hình dạng chuột thay đổi ====[MouseSettingsShape]
 Nếu chọn, NVDA sẽ thông báo khi hình dạng của chuột thay đổi (ví dụ khi tải trang web và phải chờ đợi thì chuột có hình vòng tròn quay, v...v...).
-Thông thường hình dạng của chuột thay đổi khi chuyển qua đối tượng nhập liệu, hoặc thao tác phải chờ lâu.
+Thông thường, hình dạng của chuột thay đổi khi chuyển qua đối tượng nhập liệu, hoặc thao tác phải chờ lâu.
 
 %kc:setting
 ==== Thông báo khi di chuyển chuột ====[MouseSettingsTracking]
@@ -1892,8 +1892,6 @@ Những giọng đọc đó có thể được sử dụng với NVDA.
  - Trang này bao gồm nhiều tập tin cho cả hai trình nhận dạng giọng nói và bộ đọc.
  Chọn tập tin có chứa dữ liệu cho ngôn ngữ của bạn
 Ví dụ tập tin  MSSpeech_TTS_en-US_ZiraPro.msi là giọng cho tiếng anh mỹ.
- -
--
 
 ++ Giọng Windwos OneCore ++[OneCore]
 Windows 10 đi kèm với những giọng đọc mới được gọi là OneCore, hoặc còn gọi là "Mobil voices".
