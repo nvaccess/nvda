@@ -38,8 +38,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			if not obj.location:
 				# Older versions of Adobe Reader have per word objects, but they don't expose a location
 				break
-			left, top, width, height = obj.location
-			return textInfos.Point(left + width / 2, top + height / 2)
+			return textInfos.Point(*obj.location.center)
 		return super(AdobeAcrobat_TextInfo, self)._getPointFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
