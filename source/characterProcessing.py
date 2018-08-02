@@ -356,6 +356,12 @@ def _getSpeechSymbolsForLocale(locale):
 		builtin.load(os.path.join("locale", locale, "symbols.dic"))
 	except IOError:
 		raise LookupError("No symbol information for locale %s" % locale)
+	# Try to load additional emoji data.
+	try:
+		builtin.load(os.path.join("locale", locale, "emojis.dic"),
+			allowComplexSymbols=False)
+	except IOError:
+		log.debugWarning("No emoji information for locale %s" % locale)
 	user = SpeechSymbols()
 	try:
 		# Don't allow users to specify complex symbols
