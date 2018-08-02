@@ -12,6 +12,7 @@ import sys
 import warnings
 from encodings import utf_8
 import logging
+# #7105: Python 3 split the following into two dictionaries.
 from logging import _levelNames as levelNames
 import inspect
 import winsound
