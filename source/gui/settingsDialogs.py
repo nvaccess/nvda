@@ -1454,17 +1454,6 @@ class ObjectPresentationPanel(SettingsPanel):
 		("both", _("Speak and beep")),
 	)
 
-	objCoordinateChoices=[
-		#Translators: A choice in a combo box in object presentation panel to not report object coordinates.
-		("off", _("off")),
-		#Translators: A choice in a combo box in object presentation panel to play object coordinates when moving with object navigation.
-		("objNav", _("when using object navigation")),
-		#Translators: A choice in a combo box in object presentation panel to play object coordinates when focus moves.
-		("focus", _("when focus moves")),
-		#Translators: A choice in a combo box in object presentation panel to play object coordinates when moving both focus and using object navigation.
-		("both", _("both object navigation and focus"))
-	]
-
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: This is the label for a checkbox in the
@@ -1500,9 +1489,10 @@ class ObjectPresentationPanel(SettingsPanel):
 		# Translators: This is the label for a combo box in the
 		# object presentation settings panel.
 		objCoordinatesText = _("&Play object coordinates:")
-		playObjCoordinateChoices = [name for setting, name in self.objCoordinateChoices]
+		import NVDAObjects
+		playObjCoordinateChoices = [name for setting, name in NVDAObjects.objCoordinateChoices]
 		self.objCoordinatesCombo=sHelper.addLabeledControl(objCoordinatesText, wx.Choice, choices=playObjCoordinateChoices)
-		for index, (setting, name) in enumerate(self.objCoordinateChoices):
+		for index, (setting, name) in enumerate(NVDAObjects.objCoordinateChoices):
 			if setting == config.conf["presentation"]["playObjectCoordinates"]:
 				self.objCoordinatesCombo.SetSelection(index)
 				break
@@ -1546,12 +1536,13 @@ class ObjectPresentationPanel(SettingsPanel):
 		self.autoSuggestionSoundsCheckBox.SetValue(config.conf["presentation"]["reportAutoSuggestionsWithSound"])
 
 	def onSave(self):
+		import NVDAObjects
 		config.conf["presentation"]["reportTooltips"]=self.tooltipCheckBox.IsChecked()
 		config.conf["presentation"]["reportHelpBalloons"]=self.balloonCheckBox.IsChecked()
 		config.conf["presentation"]["reportKeyboardShortcuts"]=self.shortcutCheckBox.IsChecked()
 		config.conf["presentation"]["reportObjectPositionInformation"]=self.positionInfoCheckBox.IsChecked()
 		config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"]=self.guessPositionInfoCheckBox.IsChecked()
-		config.conf["presentation"]["playObjectCoordinates"] = self.objCoordinateChoices[self.objCoordinatesCombo.GetSelection()][0]
+		config.conf["presentation"]["playObjectCoordinates"] = NVDAObjects.objCoordinateChoices[self.objCoordinatesCombo.GetSelection()][0]
 		config.conf["presentation"]["reportObjectDescriptions"]=self.descriptionCheckBox.IsChecked()
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=self.progressLabels[self.progressList.GetSelection()][0]
 		config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]=self.reportBackgroundProgressBarsCheckBox.IsChecked()
