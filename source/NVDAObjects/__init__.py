@@ -1194,12 +1194,12 @@ This code is executed if a gain focus event is received by this object.
 
 # Play object coordinates options and their human-readable representations.
 objCoordinateChoices=[
-	#Translators: A choice in a combo box in object presentation panel to not report object coordinates.
+	#Translators: An option to turn off playing of object coordinates.
 	("off", _("off")),
-	#Translators: A choice in a combo box in object presentation panel to play object coordinates when moving with object navigation.
+	#Translators: An option to play object coordinates when moving navigator object.
 	("objNav", _("when using object navigation")),
-	#Translators: A choice in a combo box in object presentation panel to play object coordinates when focus moves.
+	#Translators: An option to play object coordinates when moving system focus.
 	("focus", _("when focus moves")),
-	#Translators: A choice in a combo box in object presentation panel to play object coordinates when moving both focus and using object navigation.
+	#Translators: An option to play object coordinates when moving by focus and object navigation.
 	("both", _("both object navigation and focus"))
 ]
