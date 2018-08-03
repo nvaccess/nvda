@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
 
 import time
 import itertools
@@ -1374,13 +1374,25 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No status line found"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			ui.message(text)
+			if not text.strip():
+				# Translators: Reported when status line exist, but is empty.
+				ui.message(_("no status bar information"))
+			else:
+				ui.message(text)
 		elif scriptHandler.getLastScriptRepeatCount()==1:
-			speech.speakSpelling(text)
+			if not  text.strip():
+				# Translators: Reported when status line exist, but is empty.
+				ui.message(_("no status bar information"))
+			else:
+				speech.speakSpelling(text)
 		else:
-			if api.copyToClip(text):
-				# Translators: The message presented when the status bar is copied to the clipboard.
-				ui.message(_("%s copied to clipboard")%text)
+			if not text.strip():
+				# Translators: Reported when user attempts to copy content of the empty status line.
+				ui.message(_("unable to copy status bar content to clipboard"))
+			else:
+				if api.copyToClip(text):
+					# Translators: The message presented when the status bar is copied to the clipboard.
+					ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
 	script_reportStatusLine.category=SCRCAT_FOCUS
@@ -1728,11 +1740,7 @@ class GlobalCommands(ScriptableObject):
 			if newTetherChoice==braille.handler.TETHER_REVIEW:
 				braille.handler.handleReviewMove(shouldAutoTether=False)
 			else:
-				focus = api.getFocusObject()
-				if focus.treeInterceptor and not focus.treeInterceptor.passThrough:
-					braille.handler.handleGainFocus(focus.treeInterceptor,shouldAutoTether=False)
-				else:
-					braille.handler.handleGainFocus(focus,shouldAutoTether=False)
+				braille.handler.handleGainFocus(api.getFocusObject(),shouldAutoTether=False)
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % labels[newIndex])
@@ -1965,12 +1973,7 @@ class GlobalCommands(ScriptableObject):
 					braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 				braille.handler.mainBuffer.updateDisplay()
 			else:
-				# We just tethered to focus from review,
-				# Handle this case as we just focused the object
-				if obj.treeInterceptor and not obj.treeInterceptor.passThrough:
-					braille.handler.handleGainFocus(obj.treeInterceptor,shouldAutoTether=False)
-				else:
-					braille.handler.handleGainFocus(obj,shouldAutoTether=False)
+				braille.handler.handleGainFocus(obj,shouldAutoTether=False)
 	# Translators: Input help mode message for a braille command.
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE

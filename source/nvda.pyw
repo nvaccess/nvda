@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -51,8 +51,8 @@ except AttributeError:
 else:
 	bufLen=ctypes.c_int()
 	# Use GetCurrentPackageFullName to detect if we are running as a store app.
-	# It returns 0 (success) if in a store app, and an error code otherwise. 
-	config.isAppX=(GetCurrentPackageFullName(ctypes.byref(bufLen),None)==0)
+	# #8362: error 15700 (not a package) error is returned if this is not a Windows Store package.
+	config.isAppX=(GetCurrentPackageFullName(ctypes.byref(bufLen),None)!=15700)
 
 class NoConsoleOptionParser(argparse.ArgumentParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
@@ -194,6 +194,8 @@ if globalVars.appArgs.debugLogging:
 	logLevel=log.DEBUG
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
+if logLevel is log.DEBUG:
+	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 
 log.info("Starting NVDA")
 log.debug("Debug level logging enabled")

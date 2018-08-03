@@ -36,6 +36,12 @@ LOCALE_USER_DEFAULT=0x0400
 LOCALE_NAME_USER_DEFAULT=None
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
+# Wait return types
+WAIT_ABANDONED = 0x00000080L
+WAIT_IO_COMPLETION = 0x000000c0L
+WAIT_OBJECT_0 = 0x00000000L
+WAIT_TIMEOUT = 0x00000102L
+WAIT_FAILED = 0xffffffff
 
 def GetStdHandle(handleID):
 	h=kernel32.GetStdHandle(handleID)
@@ -56,6 +62,11 @@ def CreateFile(fileName,desiredAccess,shareMode,securityAttributes,creationDispo
 		raise ctypes.WinError()
 	return res
 
+def createEvent(eventAttributes=None, manualReset=False, initialState=False, name=None):
+	res = kernel32.CreateEventW(eventAttributes, manualReset, initialState, name)
+	if res==0:
+		raise ctypes.WinError()
+	return res
 
 def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 	"""Wrapper to the kernel32 CreateWaitableTimer function.
@@ -205,7 +216,16 @@ def writeProcessMemory(*args):
 	return kernel32.WriteProcessMemory(*args)
 
 def waitForSingleObject(handle,timeout):
-	return kernel32.WaitForSingleObject(handle,timeout)
+	res = kernel32.WaitForSingleObject(handle,timeout)
+	if res==WAIT_FAILED:
+		raise ctypes.WinError()
+	return res
+
+def waitForSingleObjectEx(handle,timeout, alertable):
+	res = kernel32.WaitForSingleObjectEx(handle,timeout, alertable)
+	if res==WAIT_FAILED:
+		raise ctypes.WinError()
+	return res
 
 SHUTDOWN_NORETRY = 0x00000001
 
