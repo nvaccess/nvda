@@ -5,7 +5,11 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""Module that contains the base NVDA object type"""
+"""Module that contains the base NVDA object type and support services.
+
+In the NVDA world, an object represents graphical elements and provides useful services such as scripts, properties and overlay classes.
+"""
+
 from new import instancemethod
 import time
 import re
@@ -1187,3 +1191,15 @@ This code is executed if a gain focus event is received by this object.
 			return True
 		else:
 			return False
+
+# Play object coordinates options and their human-readable representations.
+objCoordinateChoices=[
+	#Translators: A choice in a combo box in object presentation panel to not report object coordinates.
+	("off", _("off")),
+	#Translators: A choice in a combo box in object presentation panel to play object coordinates when moving with object navigation.
+	("objNav", _("when using object navigation")),
+	#Translators: A choice in a combo box in object presentation panel to play object coordinates when focus moves.
+	("focus", _("when focus moves")),
+	#Translators: A choice in a combo box in object presentation panel to play object coordinates when moving both focus and using object navigation.
+	("both", _("both object navigation and focus"))
+]
