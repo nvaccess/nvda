@@ -248,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			"kb:alt" : ("br(freedomScientific):dot1+dot3+dot4+brailleSpaceBar",),
 			"kb:alt+tab" : ("br(freedomScientific):dot2+dot3+dot4+dot5+brailleSpaceBar",),
 			"kb:alt+shift+tab" : ("br(freedomScientific):dot1+dot2+dot5+dot6+brailleSpaceBar",),
-			"kb:win+tab" : ("br(freedomScientific):dot2+dot3+dot4+brailleSpaceBar",),
+			"kb:windows+tab" : ("br(freedomScientific):dot2+dot3+dot4+brailleSpaceBar",),
 			"kb:escape" : ("br(freedomScientific):dot1+dot5+brailleSpaceBar",),
 			"kb:windows" : ("br(freedomScientific):dot2+dot4+dot5+dot6+brailleSpaceBar",),
 			"kb:windows+d" : ("br(freedomScientific):dot1+dot2+dot3+dot4+dot5+dot6+brailleSpaceBar",),

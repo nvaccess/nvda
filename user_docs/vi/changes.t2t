@@ -4,31 +4,31 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.3 =
-Một số tính năng nổi bật của bản phát hành này bao gồm  hỗ trợ cho biểu đồ trong Microsoft word và  PowerPoint, hỗ trợ các màn hình chữ nổi bao gồm Eurobraille và Optelec protocol converter, cải thiện hỗ trợ cho màn hình nổi của Hims và Optelec, cải thiện khả năng vận hành với Mozilla Firefox 58 trở lên, và còn nhiều nữa.
+Một số tính năng nổi bật của bản phát hành này bao gồm  hỗ trợ cho biểu đồ trong Microsoft word và  PowerPoint, hỗ trợ các màn hình chữ nổi bao gồm Eurobraille và Optelec với bộ chuyển giao thức, cải thiện hỗ trợ cho màn hình nổi của Hims và Optelec, cải thiện khả năng vận hành với Mozilla Firefox 58 trở lên, và còn nhiều nữa.
 
 == Các tính năng mới ==
-- giờ đây đã tương tác được  với các biểu đồ trong Microsoft Word và Microsoft PowerPoint, tương tự như đã hỗ trợ cho biểu đồ trong Microsoft Excel. (#7046)
+- NVDA sẽ thông báo các lỗi ngữ pháp khi tiếp xúc một cách thích hợp trên các trang web trong Mozilla Firefox. (#8280)
+- Đã hỗ trợ nút cuộn của máy BrailleNote QT và Apex BT's khi sử dụng như một màn hình chữ nổi với NVDA. (#6316)
+- Đã thêm kịch bản thông báo thời gian còn lại và tổng thời gian của bài hát hiện tại trong Foobar2000. (#6596)
+ - Kí hiệu command key trên Mac (⌘) giờ đây đã được thông báo khi đọc văn bản với bất kì bộ đọc nào. (#8366)
+- vai trò tùy chỉnh thông qua thuộc tính aria-roledescription hiện được hỗ trợ trong Firefox, Chrome và Internet Explorer.
+ - Bản chữ nổi mới: chữ Braille máy tính Thụy Điển 8 chấm. (#8227)
+- giờ đây, đã tương tác được  với các biểu đồ trong Microsoft Word và Microsoft PowerPoint, tương tự như đã hỗ trợ cho biểu đồ trong Microsoft Excel. (#7046)
 - Trong Microsoft PowerPoint, khi chỉnh sửa một slide: bấm tab đến một biểu đồ, và bấm enter hay khoảng trắng để tương tác với nó.
   - để thoát khỏi biểu đồ và không tương tác với nó nữa, bấm  escape.
 - Ngôn ngữ mới: Kyrgyz.
 - Đã hỗ trợ cho VitalSource Bookshelf. (#7155)
-- Đã hỗ trợ cho Optelec protocol converter, một thiết bị cho phép sử dụng Braille Voyager và  màn hình Satellite với công nghệ giao tiếp ALVA BC6 protocol.
+- Đã hỗ trợ cho màn hình Optelec với bộ chuyển giao thức, một thiết bị cho phép sử dụng Braille Voyager và  màn hình Satellite với công nghệ giao tiếp ALVA BC6 protocol.
 - đã  dùng được đầu vào chữ nổi với màn hình ALVA 640 Comfort. (#7733) 
   - Chức năng đầu vào chữ nổi của NVDA có thể dùng với những thiết bị này cũng như các màn hình nổi BC6 khác với firmware 3.0.0 trở lên.
 - Trong các trình twitter như Chicken Nugget, NVDA sẽ không còn bỏ qua  20 kí tự cuối cùng của 280 kí tự tweets khi đọc chúng. (#7828)
 - NVDA giờ đây đã dùng ngôn ngữ chính xác  để thông báo các kí hiệu  khi văn bản được chọn. (#7687)
 - Trong các phiên bản gần đây của Office 365, phục hồi khả năng điều hướng trong biểu đồ trong  Excel bằng các phím mũi tên. (#7046)
- - đầu ra  văn bản nói hay chữ nổi, vị trí của các điều khiển sẽ được thông báo  với cách sắp xếp giống nhau, bất kể chúng được sắp xếp  như thế nào. (#7076)
+ - đầu ra  bộ đọc hay chữ nổi, vị trí của các điều khiển sẽ được thông báo  với cách sắp xếp giống nhau, bất kể chúng được sắp xếp  như thế nào. (#7076)
 - Trong các ứng dụng như Windows 10 Mail, NVDA sẽ không còn bị lỗi  không đọc các kí tự đã xóa khi bấm phím xóa lùi. (#7456)
 - Tất cả phím trên màn hình nổi Hims Braille Sense Polaris giờ đây đã hoạt động như mong đợi. (#7865)
 - NVDA không còn tình trạng không khởi động được trên Windows 7 và báo lỗi về một api-ms dll bên trong, khi một phiên bản cụ thể của Visual Studio 2017 redistributables đã được cài đặt bởi một ứng dụng khác. (#7975)
-- NVDA sẽ thông báo các lỗi ngữ pháp khi được hiển thị một cách hợp lý trên các trang web trong Mozilla Firefox. (#8280)
-- Đã hỗ trợ nút cuộn của BrailleNote QT và Apex BT's khi sử dụng BrailleNote như một màn hình chữ nổi với NVDA. (#6316)
-- Đã thêm kịch bản thông báo thời gian còn lại và tổng thời gian của track hiện tại trong Foobar2000. (#6596)
- - Kí hiệu trên Mac (⌘) giờ đây đã được thông báo khi đọc văn bản với bất kì bộ đọc nào(#8366)
- - vai trò tùy chỉnh thông qua thuộc tính aria-roledescription hiện được hỗ trợ trong Firefox, Chrome và Internet Explorer.
- - Bản chữ nổi mới: chữ Braille máy tính Thụy Điển 8 chấm..
-- Giờ đây, NVDA có thể tùy ý phát một âm thanh đại diện cho một đối tượng trên màn hình khi điều hướng giữa các điều khiển bằng điều hướng đối tượng. (#6078) (#8227)
+- Giờ đây, NVDA có thể tùy ý phát một âm thanh đại diện cho một đối tượng trên màn hình khi điều hướng giữa các điều khiển bằng chế độ duyệt đối tượng. (#6078)
   - Tùy chọn để bật tính năng này có thể tìm thấy trong cài đặt trình bày đối tượng của NVDA.
  
 == Các thay đổi ==
@@ -38,10 +38,8 @@ Một số tính năng nổi bật của bản phát hành này bao gồm  hỗ 
 - Khi kiểm tra cập nhật, nếu người dùng đồng ý gửi thông tin thống kê sử dụng cho NV Access, NVDA sẽ gửi tên driver của bộ đọc và màn hình chữ nổi hiện tại , nhằm hỗ trợ tốt hơn trong việc ưu tiên cho các cập nhật sắp tới của những driver này. (#8217)
 - Đã cập nhật liblouis braille translator lên phiên bản 3.6.0. (#8365)
 
-
 == Sửa lỗi ==
 - Nhãn tiếp cận cho các điều khiển trong Google Chrome giờ đây đã sẵn sàng hơn khi thông báo trong chế độ duyệt khi chúng không được xuất hiện như nội dung  của chính nó. (#4773)
-
 
 == Các thay đổi cho nhà phát triển ==
 Phần này không được dịch. Vui lòng xem bản tiếng Anh của tài liệu.
