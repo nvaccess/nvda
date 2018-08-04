@@ -133,9 +133,10 @@ def checkForAddonUpdates():
 	addonSummaries = {}
 	for addon in getAvailableAddons():
 		manifest = addon.manifest
+		name = addon.name
 		curVersion = manifest["version"]
-		curAddons[manifest["name"]] = {"summary": manifest["summary"], "version": curVersion}
-		addonSummaries[manifest["name"]] = {"summary": manifest["summary"], "curVersion": curVersion}
+		curAddons[name] = {"summary": manifest["summary"], "version": curVersion}
+		addonSummaries[name] = {"summary": manifest["summary"], "curVersion": curVersion}
 	data = json.dumps(curAddons)
 	# Pseudocode:
 	"""try:
@@ -155,7 +156,10 @@ def autoAddonUpdateCheck():
 	t.start()
 
 def _showAddonUpdateUI():
-	info = checkForAddonUpdates()
+	try:
+		info = checkForAddonUpdates()
+	except:
+		info = None
 	if info is not None:
 		import gui
 		from gui.addonGui import AddonUpdatesDialog
