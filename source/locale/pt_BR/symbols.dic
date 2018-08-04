@@ -1,6 +1,6 @@
 ﻿#locale/pt_BR/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
+#Copyright (c) 2011-2018 NVDA Contributors, Cleverson Casarin Uliana, Rui Batista, Marlin Rodrigues da Silva, Tiago Melo Casal
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -36,7 +36,8 @@ thousands separator	ponto	all	norep	# clássico separador de milhares
 # Standard punctuation/symbols
 !	exclamação
 "	aspas
-\#	cardinal
+# pt_BR: "#" na tabela de caracteres Unicode (caractere U+0023) é nomeado oficialmente como "number sign" (sinal de número) - www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt
+\#	número
 $	cifrão
 £	libra
 €	euro
@@ -79,8 +80,6 @@ _	sublinha
 •	bolinha
 …	reticências
 ...	ponto ponto ponto
-# pt_BR: deixado texto original do caractere ""(U+F0B7), diferenciando por não ser o mesmo que caractere "•" (U+2022)
-	bullet
 “	abre aspas
 ”	fecha aspas
 ‘	apóstrofo esquerdo
@@ -95,7 +94,12 @@ _	sublinha
 ▪	quadradinho negro
 ◾	quadradinho médio negro
 ◦	bolinha branca
-➔	seta apontando para direita
+⇒	seta dupla para a direita
+⇨	seta branca para a direita
+➢	Seta para a direita 3d superior-iluminada
+❖	diamante negro menos x branco
+♣	clube negro
+♦	diamante Negro
 §	parágrafo
 °	graus
 «	abre aspas angulares
@@ -115,7 +119,7 @@ _	sublinha
 →	seta para direita
 ↓	seta para baixo
 ✓	marca de seleção
-✔	marca de seleção em negrito
+✔	marca de seleção realçada
 
 #Mathematical Operators U+2200 to U+220F
 ∀	para todo
@@ -153,13 +157,11 @@ _	sublinha
 ∪	união
 ∫	integral
 ∴	portanto
-# pt_BR: em "∵	porquê" usado a forma acentuada para pronúncia correta com alguns sintetizadores
+# pt_BR: em caracteres "∵", "≤" e "≥", usado circunflexo "porquê", "menor quê ou igual a" e "maior quê ou igual a", para pronúncia correta com alguns sintetizadores
 ∵	porquê
 ∶	razão
 ∷	proporção
-# pt_BR: "menor quê" usado circunflexo para pronúncia correta com alguns sintetizadores
 ≤	menor quê ou igual a
-# pt_BR: "maior quê" usado circunflexo para pronúncia correta com alguns sintetizadores
 ≥	maior quê ou igual a
 ⊂	subconjunto de
 ⊃	superconjunto de
@@ -182,3 +184,6 @@ _	sublinha
 ⅜	três oitavos
 ⅝	cinco oitavos
 ⅞	sete oitavos
+
+# Miscellaneous Technical
+⌘	Tecla Command do Mac

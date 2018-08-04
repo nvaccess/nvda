@@ -10,6 +10,7 @@ import os
 import pkgutil
 import config
 import baseObject
+import winVersion
 import globalVars
 from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
@@ -22,7 +23,7 @@ _audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
-	config.configProfileSwitched.register(handleConfigProfileSwitch)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 def changeVoice(synth, voice):
 	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
@@ -68,6 +69,22 @@ def getSynthList():
 def getSynth():
 	return _curSynth
 
+def getSynthInstance(name):
+	newSynth=_getSynthDriver(name)()
+	if config.conf["speech"].isSet(name):
+		newSynth.loadSettings()
+	else:
+		# Create the new section.
+		config.conf["speech"][name]={}
+		if newSynth.isSupported("voice"):
+			voice=newSynth.voice
+		else:
+			voice=None
+		# We need to call changeVoice here so that required initialisation can be performed.
+		changeVoice(newSynth,voice)
+		newSynth.saveSettings() #save defaults
+	return newSynth
+
 def setSynth(name,isFallback=False):
 	global _curSynth,_audioOutputDevice
 	if name is None: 
@@ -75,7 +92,8 @@ def setSynth(name,isFallback=False):
 		_curSynth=None
 		return True
 	if name=='auto':
-		name='espeak'
+		# Default to OneCore on Windows 10 and above, and eSpeak on previous Operating Systems
+		name='oneCore' if winVersion.winVersion.major>=10 else 'espeak'
 	if _curSynth:
 		_curSynth.cancel()
 		_curSynth.terminate()
@@ -84,20 +102,7 @@ def setSynth(name,isFallback=False):
 	else:
 		prevSynthName = None
 	try:
-		newSynth=_getSynthDriver(name)()
-		if config.conf["speech"].isSet(name):
-			newSynth.loadSettings()
-		else:
-			# Create the new section.
-			config.conf["speech"][name]={}
-			if newSynth.isSupported("voice"):
-				voice=newSynth.voice
-			else:
-				voice=None
-			# We need to call changeVoice here so that required initialisation can be performed.
-			changeVoice(newSynth,voice)
-			newSynth.saveSettings() #save defaults
-		_curSynth=newSynth
+		_curSynth=getSynthInstance(name)
 		_audioOutputDevice=config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"]=name
@@ -113,7 +118,7 @@ def setSynth(name,isFallback=False):
 			setSynth('silence',isFallback=True)
 		return False
 
-def handleConfigProfileSwitch():
+def handlePostConfigProfileSwitch():
 	conf = config.conf["speech"]
 	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
 		setSynth(conf["synth"])

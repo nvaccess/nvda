@@ -1,6 +1,6 @@
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -41,7 +41,7 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
-		api.setNavigatorObject(self)
+		api.setNavigatorObject(self, isFocus=True)
 		self.reportFocus()
 		super(SuggestionListItem,self).event_UIA_elementSelected()
 
@@ -165,6 +165,18 @@ class StartButton(IAccessible):
 		states = super(StartButton, self).states
 		states.discard(controlTypes.STATE_SELECTED)
 		return states
+		
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
+class UIProperty(UIA):
+	#Used for columns in Windows Explorer Details view.
+	#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+	
+	def _get_value(self):
+		value = super(UIProperty, self).value
+		if value is None:
+			return value
+		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -175,39 +187,39 @@ class AppModule(appModuleHandler.AppModule):
 
 		if windowClass in ("Search Box","UniversalSearchBand") and role==controlTypes.ROLE_PANE and isinstance(obj,IAccessible):
 			clsList.insert(0,SearchBoxClient)
-			return
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == "ToolbarWindow32" and role == controlTypes.ROLE_POPUPMENU:
-			parent = obj.parent
-			if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
-				clsList.insert(0, ClassicStartMenu)
-			return
+		if windowClass == "ToolbarWindow32":
+			if role == controlTypes.ROLE_POPUPMENU:
+				parent = obj.parent
+				if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
+					clsList.insert(0, ClassicStartMenu)
+			else:
+				# Check whether this is the notification area, a.k.a. system tray.
+				if isinstance(obj.parent, ClassicStartMenu):
+					return # This can't be a notification area
+				try:
+					# The toolbar's immediate parent is its window object, so we need to go one further.
+					toolbarParent = obj.parent.parent
+					if role != controlTypes.ROLE_TOOLBAR:
+						# Toolbar item.
+						toolbarParent = toolbarParent.parent
+				except AttributeError:
+					toolbarParent = None
+				if toolbarParent and toolbarParent.windowClassName == "SysPager":
+					clsList.insert(0, NotificationArea)
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:
 			clsList.insert(0, SysListView32MenuItem)
-			return
-
-		if windowClass == "ToolbarWindow32":
-			# Check whether this is the notification area, a.k.a. system tray.
-			if isinstance(obj.parent, ClassicStartMenu):
-				return # This can't be a notification area
-			try:
-				# The toolbar's immediate parent is its window object, so we need to go one further.
-				toolbarParent = obj.parent.parent
-				if role != controlTypes.ROLE_TOOLBAR:
-					# Toolbar item.
-					toolbarParent = toolbarParent.parent
-			except AttributeError:
-				toolbarParent = None
-			if toolbarParent and toolbarParent.windowClassName == "SysPager":
-				clsList.insert(0, NotificationArea)
-				return
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		# #5178: Start button in Windows 8.1 and 10 should not have been a list in the first place.
 		if windowClass == "Start" and role in (controlTypes.ROLE_LIST, controlTypes.ROLE_BUTTON):
 			if role == controlTypes.ROLE_LIST:
 				clsList.remove(List)
 			clsList.insert(0, StartButton)
+			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
@@ -219,12 +231,20 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName=="ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
-				clsList.insert(0,SuggestionListItem)
-			elif uiaClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_WINDOW:
-				clsList.insert(0,MultitaskingViewFrameWindow)
-			elif obj.windowClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_LISTITEM:
-				clsList.insert(0,MultitaskingViewFrameListItem)
+			elif uiaClassName == "ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+				clsList.insert(0, SuggestionListItem)
+			elif uiaClassName == "MultitaskingViewFrame" and role == controlTypes.ROLE_WINDOW:
+				clsList.insert(0, MultitaskingViewFrameWindow)
+			# Windows 10 task switch list
+			elif role == controlTypes.ROLE_LISTITEM and (
+				# RS4 and below we can match on a window class
+				windowClass == "MultitaskingViewFrame" or
+				# RS5 and above we must look for a particular UIA automationID on the list
+				isinstance(obj.parent,UIA) and obj.parent.UIAElement.cachedAutomationID=="SwitchItemListControl"
+			):
+				clsList.insert(0, MultitaskingViewFrameListItem)
+			elif uiaClassName == "UIProperty" and role == controlTypes.ROLE_EDITABLETEXT:
+				clsList.insert(0, UIProperty)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
@@ -267,10 +287,11 @@ class AppModule(appModuleHandler.AppModule):
 			# Therefore, if there is a pending focus event, don't bother handling this event.
 			return
 
-		if wClass == "ForegroundStaging":
-			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window before and after it appears.
+		if wClass in ("ForegroundStaging", "LauncherTipWnd", "ApplicationManager_DesktopShellWindow"):
+			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window and foreground staging screen before and after it appears.
 			# This causes NVDA to report "unknown", so ignore it.
 			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
+			# #8137: also seen when opening quick link menu (Windows+X) on Windows 8 and later.
 			return
 
 		if wClass == "WorkerW" and obj.role == controlTypes.ROLE_PANE and obj.name is None:

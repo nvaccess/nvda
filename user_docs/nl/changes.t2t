@@ -3,10 +3,126 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2017.4 =
+= 2018.2 =
+
+Hoogtepunten in deze versie zijn ondersteuning voor tabellen in Kindle voor PC, ondersteuning voor HumanWare BrailleNote Touch en BI14 brailleleesregels, verbeteringen aan zowel Onecore als Sapi5 spraaksynthesizers, verbeteringen in Microsoft Outlook en veel meer.
 
 == Nieuwe Functies ==
-- In bladermodus is het nu mogelijk om  voorbij/naar het begin van een oriëntatiepunt te springen met behulp van de commando's ga voorbij/naar het begin van een containerelement (comma/shift+comma). (#5482)
+- Samengevougde cellen in rijen en kolommen van tabellen worden nu gemeld in spraak en braille. (#2642)
+- NVDA tabelnavigatiecommando's worden nu ondersteund in Google Docs (met Braillemodus ingeschakeld). (#7946)
+- In Kindle voor PC is er de mogelijkheid om tabellen te lezen en er tussen te navigeren. (#7977)
+- Ondersteuning voor de BrailleNote touch en Brailliant BI 14 brailleleesregels via zowel USB als bluetooth. (#6524)
+- In de Windows 10 Fall Creators Update en nieuwer kan NVDA nu notificaties melden van apps zoals Rekenmachine en Windows Store. (#8045)
+- Nieuwe brailletabellen: Litouws 8 punts, Oekraïns, Mongools graad 2. (#7839)
+- Een script toegevoegd om opmaak te melden van de tekst onder een specifieke braillecel. (#7106)
+- Bij het updaten van NVDA is er nu de mogelijkheid om de installatie van de update uit te stellen tot een later gekozen moment. (#4263) 
+- Nieuwe talen: Mongools, Zwitsers Duits.
+- Het is nu mogelijk om control, shift, alt, windows en NVDA in- en uit te schakelen vanaf uw brailletoetsenbord en deze modifiers te combineren met brailleinvoer (bijv. het indrukken van control+s). (#7306) 
+ - U kunt deze nieuwe virtuele modifierschakelaars toewijzen met de commando's die te vinden zijn onder Geëmuleerde systeemtoetsen in het dialoogvenster invoerhandelingen.
+- Herstelde ondersteuning voor de leesregels Handy Tech Braillino en Modular (met oude firmware). (#8016)
+- Datum en tijd voor ondersteunde Handy Tech leesregels (zoals Active Braille en Active Star) worden nu automatisch gesynchroniseerd door NVDA als ze meer dan vijf seconden uit elkaar lopen. (#8016)
+- Er kan nu een invoerhandeling toegewezen worden om triggers voor configuratieprofielen tijdelijk uit te schakelen. (#4935)
+
+
+== Veranderingen ==
+- De statuskolom in het venster voor add-ons beheren is zodanig gewijzigd dat deze nu aangeeft of de add-on in- of uitgeschakeld is in plaats van werkend of onderbroken. (#7929)
+- Liblouis braillevertaler bijgewerkt naar 3.5.0. (#7839)
+- De Litouwse brailletabel is hernoemd naar Litouws 6 punts om verwarring te vermijden met de nieuwe 8 punts tabel. (#7839)
+- De tabellen Frans (Canada) graad 1 en graad 2 zijn verwijderd. In plaats daarvan zullen  resp. de Frans (unified) 6 punts computerbraille en Graad 2 tabellen worden gebruikt. (#7839)
+- De secundaire cursorroutingtoetsen op Alva BC6, EuroBraille en Papenmeier brailleleesregels melden nu informatie over de opmaak voor de tekst onder de braillecel behorend bij die toets. (#7106)
+- Brailletabellen  voor kortschrift schakelen nu terug naar onverkort braille in niet-bewerkbare gevallen (d.w.z. bij besturingselementen zonder cursor of in bladermodus). (#7306)
+- NVDA is nu minder breedsprakig voor afspraken of tijdsloten in de Outlok agenda die een hele dag betreffen. (#7949)
+- Alle voorkeuren van NVDA  bevinden zich nu gegroepeerd in één instellingenvenster onder NVDA-menu -> Opties -> Instellingen, in plaats van verspreid in een veelvoud aan dialoogvensters. (#7302)
+- De standaard spraaksynthesizer bij het gebruik van Windows 10 is nu oneCore stemmen in plaats van eSpeak. (#8176)
+
+
+== Opgeloste Problemen ==
+- NVDA heeft niet langer problemen bij het lezen van  elementen die de focus hebben in het Microsoft Account inlogscherm in instellingen na het invullen van een e-mailadres. (#7997)
+- NVDA heeft niet langer moeite met het lezen van de paginana het teruggaan naar een vorige pagina in Microsoft Edge. (#7997)
+- Op het windows 10 inlogscherm spreekt NVDA niet langer het laatst ingevoerde karakter uit van de pincode bij het ontgrendelen van het scherm. (#7908)
+- IN Chrome en Firefox worden Labels van selectievakjes en keuzerondjes niet langer twee keer gemeldbij het navigeren met tab of snelnavigatie in de bladermodus. (#7960)
+- aria-current waarden met de waarde false worden nu daadwerkelijk behandeld als false in plaats van true. (#7892).
+- Het laden van de driver voor Windows Onecore stemmen gaat niet langer verkeerd wanneer de geconfigureerde stem verwijderd is. (#7999)
+- Het wijzigen van stemmen voor de Windows Onecore stemmen driver is nu een stuk sneller. (#7999)
+- De incorrecte uitvoer voor verschillende brailletabellen, waaronder hoofdletters in 8 punts Deens kortschrift braille, is gecorrigeerd. (#7526, #7693)
+- NVDA is nu in staat om meerdere soorten opsommingstekens te melden in Microsoft Word. (#6778)
+- Het script voor het melden van opmaak zal de positie van de leescursor niet langer verplaatsen. Daarom zal het meerdere keren indrukken van een toegewezen invoerhandeling niet langer verschillende resultaten geven. (#7869)
+- Het is niet langer mogelijk om kortschrift braille in te voeren in situaties waarin dit niet ondersteund wordt (d.w.z. er worden niet langer complete woorden naar het systeem gestuurd buiten tekstinhoud en in de bladermodus). (#7306)
+- Problemen in de stabiliteit van de verbinding met Handy Tech Easy Braille en Braille Wave leesregels zijn opgelost. (#8016)
+- Onder Windows 8 en nieuwer zal NVDA niet langer "onbekend"melden wanneer het Windows+X snelmenu wordt geopend en items in dit menu worden geselecteerd. (#8137)
+- Modelspecifieke toewijzingen aan toetsen voor Hims leesregels functioneren nu daadwerkelijk zoals vermeld in de gebruikershandleiding. (#8096)
+- NVDA zal nu proberen om problemen met COM-registraties op het systeem op te lossen die onder andere Firefox en Internet Explorer ontoegankelijk kunnen maken en resulteren in het veelvoudig melden van "onbekend". (#2807)
+- Er is een oplossing gerealiseerd voor een probleem in Windows Taakbeheer waardoor NVDA gebruikers niet in staat stelde om de inhoud van specifieke procesdetails te bekijken. (#8147)
+- Nieuwere Microsoft SAPI5 stemmen hebben niet langer last van vertraging aan het einde van spraakuitvoer, waardoor het navigeren met deze stemmen veel efficiënter verloopt. (#8174)
+- NVDA meldt niet langer links-naar-rechts- en rechts-naar-links-markeringen in braille of bij het navigeren per karakter in spraak wanneer de klok wordt bekeken in recente versies van Windows. (#5729)
+- Detectie van de scrolltoetsen op Hims Smart Beetle leesregels is opnieuw niet meer onbetrouwbaar. (#6086)
+- In sommige besturingselementen voor tekstinvoer, voornamelijk in Delphi-applicaties, is de informatie over bewerken en navigeren een stuk betrouwbaarder dan voorheen. (#636, #8102)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
+= 2018.1.1 =
+Dit is een speciale versie van NVDA die een probleem oplost in de driver voor de Onecore Windows spraaksynthesizer die zorgde voor het afspelen van de spraak op een te hoge toonhoogte bij gebruik vanaf de Windows 10 April Update (1803). (#8082)  
+
+
+= 2018.1 =
+Hoogtepunten in deze versie zijn ondersteuning voor grafieken in Microsoft Word en PowerPoint, toegevoegde ondersteuning voor brailleleesregels waaronder Eurobraille en de  Optelec protocol converter, verbeterde ondersteuning voor Hims en Optelec brailleleesregels, prestatieverbeteringen voor Mozilla Firefox 58 en nieuwer, en nog veel meer.
+
+== Nieuwe Functies ==
+- Het is nu mogelijk om te werken met grafieken in Microsoft Word en Microsoft PowerPoint op een vergelijkbare manier als in Microsoft Excel. (#7046)
+ - In Microsoft Word: navigeer in bladermodus naar een ingebedde grafiek en druk op enter om interactie met deze grafiek te starten.
+ - In Microsoft PowerPoint tijdens het bewerken van een dia: tab naar een grafiekobject en druk op enter of spatie voor interactie met de grafiek.
+ - OM de interactie met een grafiek af te breken, druk op escape.
+- Nieuwe taal: Kirgizisch.
+- Ondersteuning toegevoegd voor VitalSource Bookshelf. (#7155)
+- Ondersteuning toegevoegd voor de Optelec protocol converter, een apparaat dat iemand in staat stelt om een Braille Voyager of Satellite leesregel aan te sturen via het ALVA BC6 communicatieprotocol. (#6731)
+- Het is nu mogelijk om braille-invoer te gebruiken met een ALVA 640 Comfort brailleleesregel. (#7733) 
+ - De braille-invoerfunctionaliteit van NVDA kan gebruikt worden met deze en andere BC6 leesregelsmet firmware 3.0.0 en nieuwer.
+- Vroege ondersteuning toegevoegd voor Google Sheets met de braille-modus ingeschakeld. (#7935)
+- Ondersteuning voor Eurobraille Esys, Esytime en Iris brailleleesregels. (#7488)
+
+
+== Veranderingen ==
+- De drivers voor HIMS Braille Sense/Braille EDGE/Smart Beetle en Hims Sync Braille leesregels zijn vervangen door één driver. De nieuwe driver wordt automatisch geactiveerd voor voormalige  syncBraille driver gebruikers. (#7459) 
+ - Sommige toetsen, met name de scrolltoetsen, zijn opnieuw toegewezen om beter aan te sluiten bij hoe deze toetsen gebruikt worden binnen producten van Hims. Raadpleeg de gebruikershandleiding voor meer details.
+- Bij het typen op een schermtoetsenbord via aanraakinteractie is het nu standaard zo dat u dubbel moet tikken op een toets om deze te activeren, op de zelfde manier waarop u een ander element zou activeren. (#7309)
+ - Om de bestaande modus ("direct typen met aanraken") te gebruiken waarbij het simpelweg optillen van uw vinger genoeg is om de toets te activeren, moet u deze optie inschakelen in  het nieuwe instellingenvenster aanraakinteractie in het optiesmenu.
+- Het is niet langer nodig om braille expliciet te koppelen aan de focus of de leescursor, aangezien dit vanaf nu standaard automatisch gebeurd. (#2385) 
+ - Houd er rekening mee  dat het koppelen aan de leescursor alleen gebeurt bij het gebruik van een commando voor het bedienen van de leescursor of objectnavigatie. Scrollen activeert dit nieuwe gedrag dus niet.
+
+
+== Opgeloste Problemen ==
+- Het tonen van meldingen in de bladermodus, zoals het bekijken van opmaakinformatie door middel van het twee keer snel indrukken van NVDA+f, gaat niet langer verkeerd wanneer NVDA geïnstalleerd is in een map waarvan de naam niet-ASCII-tekens bevat. (#7474)
+- De focus wordt opnieuw correct hersteld  bij het terugkeren naar Spotify vanuit een andere applicatie. (#7689)
+- In de Windows 10 Fall Creaters Update gaat het bijwerken van NVDA niet langer verkeerd wanneer Beheerde maptoegang is ingeschakeld vanuit het Windows Defender beveiligingscentrum. (#7696)
+- Het detecteren van de scrolltoetsen van Hims Smart Beetle leesregels is niet langer onbetrouwbaar. (#6086)
+- Een lichte prestatieverbetering bij het weergeven van grote hoeveelheden inhoud in Mozilla Firefox 58 en nieuwer. (#7719)
+- In Microsoft Outlook veroorzaakt het lezen van tabellen niet langer fouten. (#6827)
+- Invoerhandelingen van brailleleesregels die modifier-toetsen emuleren, kunnen nu ook gecombineerd worden met andere geëmuleerde systeemtoetsen wanneer één van de invoerhandelingen specifiek is voor een bepaald model leesregel. (#7783)
+- Bladermodus in Mozilla Firefox werkt nu naar behoren in pop-ups die getoond worden door extensies als LastPass en bitwarden. (#7809)
+- NVDA loopt niet langer vast bij iedere focuswijziging wanneer Firefox of Chrome niet meer reageert, bijvoorbeeld vanwege een bevriezingsprobleem of vastloper. (#7818)
+- In Twitter-clients zoals Chicken Nugget zal NVDA de laatste 20 karakters niet langer negeren bij het lezen van tweets met  280 karakters. (#7828)
+- NVDA gebruikt nu de juiste taal voor het melden van symbolen bij het selecteren van tekst. (#7687)
+- In recente versies van Office 365 is het opnieuw mogelijk om door Excel-grafieken te navigeren met de pijltjestoetsen. (#7046)
+- In spraak- en braille-uitvoer worden de diverse statusindicatoren nu altijd in de zelfde volgorde getoond, ongeacht of ze positief of negatief zijn. (#7076)
+- In apps zoals Windows 10 Mail heeft NVDA bij het gebruik van backspace niet langer problemen met het melden van verwijderde karakters. (#7456)
+- Alle toetsen op de Hims Braille Sense Polaris leesregels werken nu zoals verwacht. (#7865)
+- NVDA heeft niet langer problemen met starten onder bepaalde versies van Windows 7 vanwege een foutmelding over een interne  api-ms dll. Opstartproblemen konden zich voordoen  wanneer een bepaalde versie van de Visual Studio 2017 redistributables geÏnstalleerd was door een andere applicatie. (#7975) 
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
+= 2017.4 =
+Hoogtepunten in deze versie zijn sterk verbeterde ondersteuning voor het web zoals standaard bladermodus voor dialoogvensters binnen websites, beter melden van labels van gegroepeerde velden in bladermodus, ondersteuning voor nieuwe Windows 10 technologieën zoals Windows Defender Application Guard en Windows 10 met ARM64, en automatisch melden van schermstand en batterijstatus.  
+Let op: deze versie van NVDA ondersteunt Windows XP en Windows Vista niet meer. De minimumvereiste voor NVDA is nu windows 7 met Service Pack 1.
+
+
+== Nieuwe Functies ==
+- In bladermodus is het nu mogelijk om  voorbij/naar het begin van een oriëntatiepunt te springen met behulp van de commando's ga voorbij/naar het begin van een containerelement (komma/shift+komma). (#5482)
 - In Firefox, Chrome en Internet Explorer omvat snelnavigatie naar invoer- en formuliervelden nu ook invoervelden met opmaakondersteuning (D.w.z. contentEditable). (#5534)
 - In web browsers kan de elementenlijst nu formuliervelden en knoppen weergeven. (#588)
 - Initiële ondersteuning voor Windows 10 op ARM64. (#7508)
@@ -16,6 +132,10 @@ Wat is Nieuw in NVDA
 - Ondersteuning toegevoegd voor nieuwe commandoregelopties om een draagbare versie van NVDA aan te maken. (#6329)
 - Ondersteuning voor Microsoft Edge toegevoegd wanneer dit draait binnen Windows Defender Application Guard (#7600)
 - Wanneer NVDA gebruikt wordt op een laptop of tablet wordt het vanaf nu gemeld als er een adapter wordt aangesloten/losgekoppeld en als de schermstand wijzigt. (#4574, #4612)
+- Nieuwe taal: Macedonisch.
+- Nieuwe brailletabellen: Croatisch graad 1, Viëtnamees graad 1. (#7518, #7565)
+- Ondersteuning toegevoegd voor de Handy Tech Actilino brailleleesregel. (#7590)
+- Braille-invoer wordt nu ondersteund voor leesregels van Handy Tech. (#7590)
 
 
 == Veranderingen ==
@@ -28,20 +148,27 @@ Wat is Nieuw in NVDA
 - Bij het derde keer activeren van het 'lees statusbalk' commando wordt de inhoud van de statusbalk naar het klembord gekopieerd. (#1785)
 - Bij het toewijzen van invoerhandelingen voor een Baum leesregel is het nu mogelijk om specifieke toewijzingen te doen voor het model van de brailleleesregel die momenteel in gebruik is (bijv. VarioUltra of Pronto). (#7517)
 - De sneltoets van het filterveld in de elementenlijst in bladermodus is gewijzigd van alt+f in alt+e. (#7569)
+- Er is een niet toegewezen invoerhandeling toegevoegd voor bladermodus om het melden van lay-outtabellen snel in of uit te schakelen. U kunt deze optie vinden in de categorie bladermodus van het dialoogvenster Invoerhandelingen. (#7634)
+- Liblouis braillevertaler bijgewerkt naar 3.3.0. (#7565)
+- De sneltoets van het keuzerondje reguliere expressie in het dialoogvenster voor uitspraakwoordenboeken is gewijzigd van alt+r in alt+e. (#6782)
+- De bestanden voor Stem-afhankelijke woordenboeken hebben vanaf nu een versienummer en zijn verplaatst naar de map 'speechDicts/voiceDicts.v1'. (#7592)
+- Aanpassingen in versie-afhankelijke bestanden (gebruikersconfiguratie, stem-afhankelijke woordenboeken) worden niet langer opgeslagen wanneer NVDA gestart is vanuit het installatiebestand. (#7688)
+- De Braillino, Bookworm en Modular (met oude firmware) brailleleesregels van  Handy Tech worden niet langer standaard ondersteund. Installeer de  Handy Tech Universele Driver en NVDA add-on om deze leesregels te gebruiken. (#7590)
 
 
 == Opgeloste Problemen ==
 - Links worden nu als zodanig weergegeven in braille in applicaties zoals Microsoft Word. (#6780)
 - NVDA wordt niet langer merkbaar langzamer wanneer er veel tabbladen geopend zijn in Firefox of Chrome web browsers. (#3138)
-- Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
-- In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
-- Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document (#511).
-- Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
-- On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
-- When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
-- It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
-- The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
-- When using a content recognition command (e.g. NVDA+r), NVDA now reports an error message instead of nothing if the navigator object has disappeared. (#7567)
+- De cursorroutingtoetsen van de MDV Lilli brailleleesregel worden niet langer één cel te ver naar rechts geactiveerd. (#7469)
+- In Internet Explorer en andere MSHTML-documenten wordt het HTML5 required attribuut nu ondersteund om de vereiste status van een formulierveld aan te geven. (#7321)
+- Brailleleesregels worden nu bijgewerkt bij het typen van Arabische karakters in een WordPad-document dat links uitgelijnd is. (#511).
+- Toegankelijke labels voor elementen in Mozilla Firefox worden nu  gemeld in bladermodus wanneer het label geen deel uitmaakt van de inhoud. (#4773)
+- In de windows 10 Creators Update heeft NVDA na een herstart niet langer problemen met het benaderen van Firefox. (#7269)
+- Bij het starten van NVDA terwijl Mozilla Firefox de focus heeft, zou bladermodus nu opnieuw beschikbaar moeten zijn. Wanneer bladermodus nog niet werkt, is dit te verhelpen door met alt+tab uit en terug in het venster te navigeren. (#5758)
+- Het is nu mogelijk om wiskundige inhoud te bekijken in Google Chrome op een systeem waarop Mozilla Firefox niet geïnstalleerd is. (#7308)
+- In vergelijking met eerdere installaties van NVDA zouden het besturingssysteem en andere applicaties stabieler  moeten zijn wanneer u NVDA direct start na de installatie, dus voor u het systeem herstart hebt. (#7563)
+- Bij het gebruik van een commando voor tekstherkenning (bijv. NVDA+r) geeft NVDA nu een foutmelding in plaats van geen melding wanneer het navigatorobject verdwenen is. (#7567)
+- De functionaliteit om terug te scrollen is hersteld voor Freedom Scientific brailleleesregels die een linker bumperbalk bevatten. (#7713)
 
 
 == Veranderingen voor Ontwikkelaars ==
@@ -126,7 +253,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 = 2017.2 =
-Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukking in de Windows 10 Makers Update; oplossingen voor verschillende selectieproblemen in bladermodus, inclusief problemen met Alles Selecteren; significante verbeteringen in de ondersteuning van Microsoft Edge; en verbeteringen op het web zoals aangeven van elementen gemarkeerd als huidig (via aria-current).
+Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukking in de Windows 10 Creators Update; oplossingen voor verschillende selectieproblemen in bladermodus, inclusief problemen met Alles Selecteren; significante verbeteringen in de ondersteuning van Microsoft Edge; en verbeteringen op het web zoals aangeven van elementen gemarkeerd als huidig (via aria-current).
 
 == Nieuwe Functies ==
 - Informatie over celranden kan nu worden gemeld in Microsoft Excel via `NVDA+f`. (#3044)
@@ -148,15 +275,15 @@ Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukkin
 - Het mogelijke vastlopen van Mozilla Firefox en andere  Gecko-applicaties waar de multi-process-functie is ingeschakeld, is opgelost. (#6885)
 - De accuratesse van het melden van de achtergrondkleur in de schermoverzichtmodus is verbeterd bij tekst die getekend is met een transparante achtergrond. (#6467)
 - Verbeterde ondersteuning binnen Internet Explorer 11 voor elementbeschrijvingen die beschikbaar zijn op webpagina's (specifiek, ondersteuning voor aria-describedby in iframes en wanneer meerdere ID's zijn opgegeven). (#5784)
-- In de Windows 10 Makers Update werkt NVDA's audio-onderdrukking opnieuw zoals in eerdere Windows-versies (d.w.z. Onderdrukken bij spraak- en geluidsuitvoer, Altijd onderdrukken, en geen onderdrukking zijn allemaal beschikbaar). (#6933)
+- In de Windows 10 Creators Update werkt NVDA's audio-onderdrukking opnieuw zoals in eerdere Windows-versies (d.w.z. Onderdrukken bij spraak- en geluidsuitvoer, Altijd onderdrukken, en geen onderdrukking zijn allemaal beschikbaar). (#6933)
 - Bij bepaalde (UIA) controls waarvoor geen toetsenbordsneltoets is gedefineerd, weigert NVDA nniet langer deze te melden of ernaar te navigeren. (#6779)
 - In sneltoets-informatie voor bepaalde (UIA) controls worden niet langer twee lege spaties toegevoegd. (#6790)
 - Het weigeren van bepaalde toetscombinaties op HIMS leesregels (o.a. spatie+punt4) is opgelost. (#3157)
 - Een probleem opgelost bij het openen van een seriële poort op systemen die gebruik maken van bepaalde niet-Engelse talen waarbij het verbinden met brailleleesregels in sommige gevallen mislukte. (#6845)
 - De kans dat het configuratiebestand  beschadigt bij het afsluiten van Windows is verminderd. Configuratiebestanden worden nu naar een tijdelijk bestand geschreven voordat het eigenlijke configuratiebestand vervangen wordt. (#3165)
 - Bij het twee keer uitvoeren van het lees huidige regel commando om de huidige regel te laten spellen, wordt nu de juiste taal gebruikt voor het spellen van karakters. (#6726)
-- Het navigeren per regel in Microsoft Edge is nu tot wel drie keer zo snel in de Windows 10 Makers Update. (#6994)
-- NVDA meldt niet langer "Web Runtime groepering" wanneer een Microsoft Edge document in de Windows 10 Makers Update de focus krijgt. (#6948)
+- Het navigeren per regel in Microsoft Edge is nu tot wel drie keer zo snel in de Windows 10 Creators Update. (#6994)
+- NVDA meldt niet langer "Web Runtime groepering" wanneer een Microsoft Edge document in de Windows 10 Creators Update de focus krijgt. (#6948)
 - Alle bestaande versies van SecureCRT worden nu ondersteund. (#6302)
 - Adobe Acrobat Reader loopt niet langer vast in bepaalde PDF-documenten (specifiek, de documenten die lege ActualText attributen bevatten). (#7021, #7034)
 - In bladermodus in Microsoft Edge worden interactieve tabellen (ARIA grids) niet langer overgeslagen bij het navigeren naar tabellen met t en shift+t. (#6977)
@@ -189,8 +316,8 @@ Hoogtepunten in deze versie zijn melden van secties en tekstkolommen in Microsof
 - Het minimum voor de knippersnelheid van de braillecursor is nu 200 ms. Wanneer dit eerder lager was ingesteld, zal dit worden verhoogd naar 200 ms. (#6470)
 - Er is een selectievakje toegevoegd aan het dialoogvenster braille-instellingen voor het in/uitschakelen van het knipperen van de braillecursor. Eerder werd een waarde van nul gebruikt om dit te bereiken. (#6470)
 - eSpeak NG bijgewerkt (commit e095f008, 10 januari 2017). (#6717)
-- Vanwege wijzigingen in de Windows 10 Makers Update is de "Altijd onderdrukken" modus niet meer beschikbaar in de audio-onderdrukkingsinstellingen van NVDA. Deze optie is nog wel beschikbaar bij oudere versies van windows 10. (#6684)
-- Vanwege wijzigingen in de Windows 10 Makers Update is het in de "Onderdrukken bij spraak- en geluidsuitvoer" modus niet meer mogelijk om te waarborgen dat de audio volledig onderdrukt is voordat het spreken van de spraak begint. Ook wordt audio na het spreken niet lang genoeg onderdrukt om ervoor te zorgen dat er geen stuitereffect ontstaat in het volume. Deze veranderingen hebben geen effect op oudere versies van windows 10. (#6684)
+- Vanwege wijzigingen in de Windows 10 Creators Update is de "Altijd onderdrukken" modus niet meer beschikbaar in de audio-onderdrukkingsinstellingen van NVDA. Deze optie is nog wel beschikbaar bij oudere versies van windows 10. (#6684)
+- Vanwege wijzigingen in de Windows 10 Creators Update is het in de "Onderdrukken bij spraak- en geluidsuitvoer" modus niet meer mogelijk om te waarborgen dat de audio volledig onderdrukt is voordat het spreken van de spraak begint. Ook wordt audio na het spreken niet lang genoeg onderdrukt om ervoor te zorgen dat er geen stuitereffect ontstaat in het volume. Deze veranderingen hebben geen effect op oudere versies van windows 10. (#6684)
 
 
 == Opgeloste problemen ==
@@ -1072,7 +1199,7 @@ Hoogtepunten in deze versie zijn ondersteuning voor Aziatische karakterinvoer; e
 
 == Veranderingen ==
 - In het NVDA leescursor dialoogvenster is de Follow toetsenbord focus optie hernoemd naar Follow systeem focus voor consistentie met terminologie die elders in NVDA voorkomt.
-- Als braille is tethered to review en de cursor is op een object dat geen tekstobject is (b.v. een bewerkbaar tekstveld), activeren cursor routing toetsen nu het object. (#2386)
+- Als braille aan de leescursor gekoppeld is en de cursor is op een object dat geen tekstobject is (b.v. een bewerkbaar tekstveld), activeren cursor routing toetsen nu het object. (#2386)
 - De optie "instellingen opslaan bij afsluiten" is nu standaard ingeschakeld voor nieuwe configuraties.
 - Bij het updaten van een geïnstalleerde versie van NVDA wordt de bureaublad-sneltoets niet langer teruggezet naar control+alt+n als de gebruiker hem manueel had veranderd in iets anders. (#2572)
 - De add-ons lijst in de Add-ons Manager toont nu de package naam voorafgaand aan zijn status. (#2548)

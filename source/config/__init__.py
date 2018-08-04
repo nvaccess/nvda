@@ -1,12 +1,16 @@
 # -*- coding: UTF-8 -*-
 #config/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Manages NVDA configuration.
+The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
+In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
+For the latter two actions, one can perform actions prior to and/or after they take place.
 """ 
+
 import globalVars
 import _winreg
 import ctypes
@@ -31,15 +35,28 @@ import extensionPoints
 import profileUpgrader
 from .configSpec import confspec
 
+#: True if NVDA is running as a Windows Store Desktop Bridge application
+isAppX=False
+
 #: The active configuration, C{None} if it has not yet been loaded.
-#: @type: ConfigObj
+#: @type: ConfigManager
 conf = None
 
 #: Notifies when the configuration profile is switched.
-#: This allows components to apply changes required by the new configuration.
+#: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
-configProfileSwitched = extensionPoints.Action()
+post_configProfileSwitch = extensionPoints.Action()
+#: Notifies when NVDA is saving current configuration.
+#: Handlers can listen to "pre" and/or "post" action to perform tasks prior to and/or after NVDA's own configuration is saved.
+#: Handlers are called with no arguments.
+pre_configSave = extensionPoints.Action()
+post_configSave = extensionPoints.Action()
+#: Notifies when configuration is reloaded from disk or factory defaults are applied.
+#: Handlers can listen to "pre" and/or "post" action to perform tasks prior to and/or after NVDA's own configuration is reloaded.
+#: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
+pre_configReset = extensionPoints.Action()
+post_configReset = extensionPoints.Action()
 
 def initialize():
 	global conf
@@ -98,7 +115,14 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
-	if installedUserConfigPath and (isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+		if isAppX:
+			# NVDA is running as a Windows Store application.
+			# Although Windows will redirect %APPDATA% to a user directory specific to the Windows Store application,
+			# It also makes existing %APPDATA% files available here. 
+			# We cannot share NVDA user config directories  with other copies of NVDA as their config may be using add-ons
+			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
+			installedUserConfigPath+='_appx'
 		return installedUserConfigPath
 	return u'.\\userConfig\\'
 
@@ -120,7 +144,10 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins","profiles"):
+	subdirs=["speechDicts","profiles"]
+	if not isAppX:
+		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
@@ -237,6 +264,11 @@ def _setSystemConfig(fromPath):
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
+			# Do not copy executables to the system configuration, as this may cause security risks.
+			# This will also exclude pending updates.
+			if f.endswith(".exe"):
+				log.debug("Ignored file %s while copying current user configuration to system configuration"%f)
+				continue
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(curDestDir,f)
 			installer.tryCopyFile(sourceFilePath,destFilePath)
@@ -272,7 +304,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	@type subdir: str
 	"""
-	if globalVars.appArgs.disableAddons:
+	if isAppX or globalVars.appArgs.disableAddons:
 		return
 	if not subdir:
 		subdir = module.__name__
@@ -335,7 +367,7 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		configProfileSwitched.notify()
+		post_configProfileSwitch.notify()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -472,6 +504,8 @@ class ConfigManager(object):
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
 		"""
+		# #7598: give others a chance to either save settings early or terminate tasks.
+		pre_configSave.notify()
 		if not self._shouldWriteProfile:
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
@@ -486,17 +520,20 @@ class ConfigManager(object):
 			log.warning("Error saving configuration; probably read only file system")
 			log.debugWarning("", exc_info=True)
 			raise e
+		post_configSave.notify()
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
 		@param factoryDefaults: C{True} to reset to factory defaults, C{False} to reset to saved configuration.
 		@type factoryDefaults: bool
 		"""
+		pre_configReset.notify(factoryDefaults=factoryDefaults)
 		self.profiles = []
 		self._profileCache.clear()
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
+		post_configReset.notify(factoryDefaults=factoryDefaults)
 
 	def createProfile(self, name):
 		"""Create a profile.

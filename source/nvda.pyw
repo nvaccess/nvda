@@ -1,6 +1,6 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -42,6 +42,18 @@ from logHandler import log
 import winUser
 import winKernel
 
+# Find out if NVDA is running as a Windows Store application
+bufLen=ctypes.c_int()
+try:
+	GetCurrentPackageFullName=ctypes.windll.kernel32.GetCurrentPackageFullName
+except AttributeError:
+	config.isAppX=False
+else:
+	bufLen=ctypes.c_int()
+	# Use GetCurrentPackageFullName to detect if we are running as a store app.
+	# #8362: error 15700 (not a package) error is returned if this is not a Windows Store package.
+	config.isAppX=(GetCurrentPackageFullName(ctypes.byref(bufLen),None)!=15700)
+
 class NoConsoleOptionParser(argparse.ArgumentParser):
 	"""A commandline option parser that shows its messages using dialogs,  as this pyw file has no dos console window associated with it"""
 
@@ -66,8 +78,8 @@ if not winVersion.isSupportedOS():
 	sys.exit(1)
 
 def decodeMbcs(string):
-  """Decode a multi-byte character set string"""
-  return string.decode("mbcs")
+	"""Decode a multi-byte character set string"""
+	return string.decode("mbcs")
 
 #Process option arguments
 parser=NoConsoleOptionParser()
@@ -182,20 +194,19 @@ if globalVars.appArgs.debugLogging:
 	logLevel=log.DEBUG
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
+if logLevel is log.DEBUG:
+	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 
 log.info("Starting NVDA")
 log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 #Accept wm_quit from other processes, even if running with higher privilages
-try:
-	if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
-		raise WinError()
-except AttributeError:
-	pass
+if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
+	raise WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
-if not isSecureDesktop:
+if not isSecureDesktop and not config.isAppX:
 	import easeOfAccess
 	easeOfAccess.notify(3)
 try:
@@ -205,7 +216,7 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
-	if not isSecureDesktop:
+	if not isSecureDesktop and not config.isAppX:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)

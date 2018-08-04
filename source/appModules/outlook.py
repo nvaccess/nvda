@@ -1,6 +1,6 @@
 #appModules/outlook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -24,10 +24,14 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
+from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
+
+#: The number of seconds in a day, used to make all day appointments and selections less verbose.
+#: Type: float
+SECONDS_PER_DAY = 86400.0
 
 oleFlagIconLabels={
 	# Translators: a flag for a Microsoft Outlook message
@@ -99,7 +103,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
 		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.CentreOnScreen()
 		gui.mainFrame.prePopup()
 		d.Show()
 		self._hasTriedoutlookAppSwitch=True
@@ -349,15 +353,21 @@ class CalendarView(IAccessible):
 	_lastStartDate=None
 
 	def _generateTimeRangeText(self,startTime,endTime):
-		startText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
-		endText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
+		startText=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
+		endText=winKernel.GetTimeFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
 		startDate=startTime.date()
 		endDate=endTime.date()
 		if not CalendarView._lastStartDate or startDate!=CalendarView._lastStartDate or endDate!=startDate: 
-			startText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None),startText)
-		if endDate!=startDate:
-			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
+			startDateText=winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None)
+			startText="%s %s"%(startDateText,startText)
 		CalendarView._lastStartDate=startDate
+		if endDate!=startDate:
+			if ((startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and
+				(endDate - startDate).total_seconds()==SECONDS_PER_DAY
+			):
+				# Translators: a message reporting the date of a all day Outlook calendar entry
+				return _("{date} (all day)").format(date=startDateText)
+			endText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
 		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
@@ -392,8 +402,8 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
-				startLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
-				endLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
+				startLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
+				endLimit=u"%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
 				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
 				i=e.currentFolder.items
 				i.sort('[Start]')
@@ -460,13 +470,13 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
 		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		if not cachedChildren:
+			# There are no children
+			# This is unexpected here.
+			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
+			return super(UIAGridRow, self).name
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
-			# #6219: Outlook 2016 started exposing the draft column as a text node.
-			# Users reportedly find this extremely annoying.
-			# Thus we filter it out.
-			if self.appModule.outlookVersion>=16 and e.cachedClassName=="DraftFlagField":
-				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
 			if name and config.conf['documentFormatting']['reportTableHeaders']:
@@ -484,7 +494,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			else:
 				text=name
 			if text:
-				text=text+u","
+				text+=u","
 				textList.append(text)
 		return " ".join(textList)
 
@@ -581,4 +591,3 @@ class DatePickerCell(IAccessible):
 	# Therefore we cannot safely filter out duplicates
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
-

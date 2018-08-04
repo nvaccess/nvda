@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Joseph Lee, Mohammad Suliman
+#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V.
 
 """Support for UI Automation (UIA) controls."""
 
@@ -31,6 +31,8 @@ from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
 import time
+from locationHelper import RectLTWH
+import ui
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -133,6 +135,7 @@ class UIATextInfo(textInfos.TextInfo):
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range"%textRange)
+		fetchAnnotationTypes=False
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 		except (COMError,AttributeError):
@@ -151,11 +154,16 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportColor"]:
 				IDs.add(UIAHandler.UIA_BackgroundColorAttributeId)
 				IDs.add(UIAHandler.UIA_ForegroundColorAttributeId)
+			if formatConfig['reportLineSpacing']:
+				IDs.add(UIAHandler.UIA_LineSpacingAttributeId)
 			if formatConfig['reportLinks']:
 				IDs.add(UIAHandler.UIA_LinkAttributeId)
+			if formatConfig['reportStyle']:
+				IDs.add(UIAHandler.UIA_StyleNameAttributeId)
 			if formatConfig["reportHeadings"]:
 				IDs.add(UIAHandler.UIA_StyleIdAttributeId)
-			if formatConfig["reportSpellingErrors"]:
+			if formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]:
+				fetchAnnotationTypes=True
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher=BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
@@ -192,6 +200,10 @@ class UIATextInfo(textInfos.TextInfo):
 					textPosition="baseline"
 			if textPosition:
 				formatField['text-position']=textPosition
+		if formatConfig['reportStyle']:
+			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
+				formatField["style"]=val
 		if formatConfig["reportAlignment"]:
 			val=fetcher.getValue(UIAHandler.UIA_HorizontalTextAlignmentAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val==UIAHandler.HorizontalTextAlignment_Left:
@@ -213,19 +225,39 @@ class UIATextInfo(textInfos.TextInfo):
 			val=fetcher.getValue(UIAHandler.UIA_ForegroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val,int):
 				formatField['color']=colors.RGB.fromCOLORREF(val)
+		if formatConfig['reportLineSpacing']:
+			val=fetcher.getValue(UIAHandler.UIA_LineSpacingAttributeId,ignoreMixedValues=ignoreMixedValues)
+			if val!=UIAHandler.handler.reservedNotSupportedValue:
+				if val:
+					formatField['line-spacing']=val
 		if formatConfig['reportLinks']:
 			val=fetcher.getValue(UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				if val:
-					formatField['link']
+					formatField['link']=True
 		if formatConfig["reportHeadings"]:
 			styleIDValue=fetcher.getValue(UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
 			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
-		if formatConfig["reportSpellingErrors"]:
+		if fetchAnnotationTypes:
 			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
-				formatField["invalid-spelling"]=True
+			# Some UIA implementations return a single value rather than a tuple.
+			# Always mutate to a tuple to allow for a generic x in y matching 
+			if not isinstance(annotationTypes,tuple):
+				annotationTypes=(annotationTypes,)
+			if formatConfig["reportSpellingErrors"]:
+				if UIAHandler.AnnotationType_SpellingError in annotationTypes:
+					formatField["invalid-spelling"]=True
+				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
+					formatField["invalid-grammar"]=True
+			if formatConfig["reportComments"]:
+				if UIAHandler.AnnotationType_Comment in annotationTypes:
+					formatField["comment"]=True
+			if formatConfig["reportRevisions"]:
+				if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
+					formatField["revision-insertion"]=True
+				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
+					formatField["revision-deletion"]=True
 		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
 		if cultureVal and isinstance(cultureVal,int):
 			try:
@@ -238,7 +270,12 @@ class UIATextInfo(textInfos.TextInfo):
 	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
-			self._rangeObj=_rangeObj.clone()
+			try:
+				self._rangeObj=_rangeObj.clone()
+			except COMError:
+				# IUIAutomationTextRange::clone can sometimes fail, such as in UWP account login screens
+				log.debugWarning("Could not clone range",exc_info=True)
+				raise RuntimeError("Could not clone range")
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			try:
 				sel=self.obj.UIATextPattern.GetSelection()
@@ -253,16 +290,22 @@ class UIATextInfo(textInfos.TextInfo):
 		elif isinstance(position,UIATextInfo): #bookmark
 			self._rangeObj=position._rangeObj
 		elif position==textInfos.POSITION_FIRST:
-			self._rangeObj=self.obj.UIATextPattern.documentRange
+			try:
+				self._rangeObj=self.obj.UIATextPattern.documentRange
+			except COMError:
+				# Error: first position not supported by the UIA text pattern.
+				raise RuntimeError
 			self.collapse()
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 			self.collapse(True)
-		elif position==textInfos.POSITION_ALL:
+		elif position==textInfos.POSITION_ALL or position==self.obj:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
-		elif isinstance(position,UIA):
+		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
+			if isinstance(position,UIA):
+				position=position.UIAElement
 			try:
-				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position)
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
@@ -380,13 +423,15 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		return range.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+	def _getTextWithFields_text(self,textRange,formatConfig,ignoreEmptyChunks=True,UIAFormatUnits=None):
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
+		@param ignoreEmptyChunks: if true, textRanges where the text is empty will not be emitted nor the formatField directly before it. 
+		@param ignoreEmptyChunks: bool
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
@@ -406,8 +451,8 @@ class UIATextInfo(textInfos.TextInfo):
 		log.debug("With further units of: %s"%furtherUIAFormatUnits)
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
-			text=self._getTextFromUIARange(tempRange)
-			if text:
+			text=self._getTextFromUIARange(tempRange) or ""
+			if not ignoreEmptyChunks or text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
 					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
@@ -532,7 +577,11 @@ class UIATextInfo(textInfos.TextInfo):
 					continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
-				childRange=documentTextPattern.rangeFromChild(childElement)
+				try:
+					childRange=documentTextPattern.rangeFromChild(childElement)
+				except COMError as e:
+					log.debug("rangeFromChild failed with %s"%e)
+					childRange=None
 				if not childRange:
 					log.debug("NULL childRange. Skipping")
 					continue
@@ -680,20 +729,20 @@ class UIA(Window):
 			return
 		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
 		for ID in IDs:
-			cacheRequest.addProperty(ID)
+			try:
+				cacheRequest.addProperty(ID)
+			except COMError:
+				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
 		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
-
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif EditableTextWithoutAutoSelectDetection in clsList and (UIAClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
+		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
 				clsList.append(WordDocument)
@@ -743,7 +792,14 @@ class UIA(Window):
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
 		# #5942: In Windows 10 build 14332 and later, Microsoft rewrote various dialog code including that of User Account Control.
-		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog", "Credential Dialog Xaml Host"):
+		# #8405: there are more dialogs scattered throughout Windows 10 and various apps.
+		# Dialog detection is a bit easier on build 17682 and later thanks to IsDialog property.
+		try:
+			isDialog = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDialogPropertyId)
+		except COMError:
+			# We can fallback to a known set of dialog classes for window elements.
+			isDialog = (self.UIAIsWindowElement and UIAClassName in UIAHandler.UIADialogClassNames)
+		if isDialog:
 			clsList.append(Dialog)
 		# #6241: Try detecting all possible suggestions containers and search fields scattered throughout Windows 10.
 		# In Windows 10, allow Start menu search box and Edge's address omnibar to participate in announcing appearance of auto-suggestions.
@@ -762,6 +818,10 @@ class UIA(Window):
 				pass
 		except ValueError:
 			pass
+
+		# Add editableText support if UIA supports a text pattern
+		if self.TextInfo==UIATextInfo:
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -931,6 +991,21 @@ class UIA(Window):
 		except Exception as e:
 			ret="Exception: %s"%e
 		info.append("UIA className: %s"%ret)
+		patternsAvailable = []
+		patternAvailableConsts = dict(
+			(const, name) for name, const in UIAHandler.__dict__.iteritems()
+			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
+		)
+		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
+		for const, name in patternAvailableConsts.iteritems():
+			try:
+				res = self._getUIACacheablePropertyValue(const)
+			except COMError:
+				res = False
+			if res:
+				# Every name has the same format, so the string indexes can be safely hardcoded here.
+				patternsAvailable.append(name[6:-19])
+		info.append("UIA patterns available: %s"%", ".join(patternsAvailable))
 		return info
 
 	def _get_name(self):
@@ -1158,6 +1233,8 @@ class UIA(Window):
 		textList=[]
 		for i in xrange(val.length):
 			e=val.getElement(i)
+			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
+				continue
 			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			if not obj: continue
 			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
@@ -1184,6 +1261,8 @@ class UIA(Window):
 		textList=[]
 		for i in xrange(val.length):
 			e=val.getElement(i)
+			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
+				continue
 			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			if not obj: continue
 			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
@@ -1220,12 +1299,7 @@ class UIA(Window):
 		if r is None:
 			return
 		# r is a tuple of floats representing left, top, width and height.
-		# However, most NVDA code expecs location coordinates to be ints 
-		left=int(r[0])
-		top=int(r[1])
-		width=int(r[2])
-		height=int(r[3])
-		return left,top,width,height
+		return RectLTWH.fromFloatCollection(*r)
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
@@ -1330,6 +1404,19 @@ class UIA(Window):
 		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+	def event_UIA_notification(self, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+		"""
+		Introduced in Windows 10 Fall Creators Update (build 16299).
+		This base implementation announces all notifications from the UIA element.
+		Unlike other events, the text to be announced is not the name of the object, and parameters control how the incoming notification should be processed.
+		Subclasses can override this event and can react to notification processing instructions.
+		"""
+		# Do not announce notifications from background apps.
+		if self.appModule != api.getFocusObject().appModule:
+			return
+		if displayString:
+			ui.message(displayString)
 
 class TreeviewItem(UIA):
 
@@ -1513,7 +1600,7 @@ class SuggestionListItem(UIA):
 		focusControllerFor=api.getFocusObject().controllerFor
 		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
-			api.setNavigatorObject(self)
+			api.setNavigatorObject(self, isFocus=True)
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))

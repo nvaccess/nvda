@@ -1,6 +1,6 @@
 #baseObject.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited
+#Copyright (C) 2007-2018 NV Access Limited, Christopher Toth, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -44,7 +44,9 @@ class AutoPropertyType(type):
 		except KeyError:
 			cacheByDefault=any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
 
-		props=(x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_'))
+		# given _get_myVal, _set_myVal, and _del_myVal: "myVal" would be output 3 times
+		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
+		props={x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_')}
 		for x in props:
 			g=dict.get('_get_%s'%x,None)
 			s=dict.get('_set_%s'%x,None)
@@ -95,11 +97,14 @@ class AutoPropertyObject(object):
 	#: @type: bool
 	cachePropertiesByDefault = False
 
-	def __init__(self):
+
+	def __new__(cls, *args, **kwargs):
+		self = super(AutoPropertyObject, cls).__new__(cls)
 		#: Maps properties to cached values.
 		#: @type: dict
 		self._propertyCache={}
 		self.__instances[self]=None
+		return self
 
 	def _getPropertyViaCache(self,getterMethod=None):
 		if not getterMethod:
@@ -123,6 +128,31 @@ class AutoPropertyObject(object):
 		for instance in cls.__instances.keys():
 			instance.invalidateCache()
 
+class ScriptableType(AutoPropertyType):
+	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
+
+	def __new__(meta, name, bases, dict):
+		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
+		gesturesDictName = "_%s__gestures" % cls.__name__
+		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
+		try:
+			gestures = getattr(cls, gesturesDictName).copy()
+		except AttributeError:
+			# This class currently has no gestures dictionary,
+			# because no custom __gestures dictionary has been defined.
+			gestures = {}
+		# Python 3 incompatible.
+		for name, script in dict.iteritems():
+			if not name.startswith('script_'):
+				continue
+			scriptName = name[len("script_"):]
+			if hasattr(script, 'gestures'):
+				for gesture in script.gestures:
+					gestures[gesture] = scriptName
+		if gestures:
+			setattr(cls, gesturesDictName, gestures)
+		return cls
+
 class ScriptableObject(AutoPropertyObject):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
@@ -138,14 +168,22 @@ class ScriptableObject(AutoPropertyObject):
 	@type scriptCategory: basestring
 	"""
 
+	__metaclass__ = ScriptableType
+
 	def __init__(self):
 		#: Maps input gestures to script functions.
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
+		# This includes gestures specified on decorated scripts.
+		# This does not include the gestures that are added when creating a DynamicNVDAObjectType.
 		for cls in reversed(self.__class__.__mro__):
 			try:
 				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+			except AttributeError:
+				pass
+			try:
+				self.bindGestures(cls._scriptDecoratorGestures)
 			except AttributeError:
 				pass
 		super(ScriptableObject, self).__init__()
@@ -158,11 +196,14 @@ class ScriptableObject(AutoPropertyObject):
 		@type scriptName: str
 		@raise LookupError: If there is no script with the provided name.
 		"""
+		scriptAttrName = "script_%s" % scriptName
 		# Don't store the instance method, as this causes a circular reference
 		# and instance methods are meant to be generated on retrieval anyway.
-		func = getattr(self.__class__, "script_%s" % scriptName, None)
+		func = getattr(self.__class__, scriptAttrName, None)
 		if not func:
-			raise LookupError("No such script: %s" % func)
+			raise LookupError("No such script on class {className}. Couldn't find attribute: {scriptAttrName}".format(
+				className=self.__class__.__name__, scriptAttrName=scriptAttrName
+			))
 		# Import late to avoid circular import.
 		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func

@@ -72,6 +72,8 @@ import appModuleHandler
 appModuleHandler.initialize()
 # Anything which notifies of cursor updates requires braille to be initialized.
 import braille
+# Disable auto detection of braille displays when unit testing.
+config.conf['braille']['display'] = "noBraille"
 braille.initialize()
 # For braille unit tests, we need to construct a fake braille display as well as enable the braille handler
 # Give the display 40 cells

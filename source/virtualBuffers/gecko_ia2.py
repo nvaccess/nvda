@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -29,7 +29,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				attrs[attr]=int(attrVal)
 
 		current = attrs.get("IAccessible2::attribute_current")
-		if current is not None:
+		if current not in (None, 'false'):
 			attrs['current']= current
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
@@ -61,6 +61,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_SORTED_DESCENDING)
 		elif sorted=="other":
 			states.add(controlTypes.STATE_SORTED)
+		roleText=attrs.get("IAccessible2::attribute_roledescription")
+		if roleText:
+			attrs['roleText']=roleText
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
@@ -99,14 +102,29 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
+	def _getExpandedComboBox(self, obj):
+		"""If obj is an item in an expanded combo box, get the combo box.
+		"""
+		if not (obj.windowClassName.startswith('Mozilla') and obj.windowStyle & winUser.WS_POPUP):
+			# This is not a Mozilla popup window, so it can't be an expanded combo box.
+			return None
+		if obj.role not in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_LIST):
+			return None
+		parent = obj.parent
+		# Try a maximum of 2 ancestors, since we might be on the list item or the list.
+		for i in xrange(2):
+			obj = obj.parent
+			if not obj:
+				return None
+			if obj.role == controlTypes.ROLE_COMBOBOX:
+				return obj
+		return None
+
 	def __contains__(self,obj):
-		#Special code to handle Mozilla combobox lists
-		if obj.windowClassName.startswith('Mozilla') and winUser.getWindowStyle(obj.windowHandle)&winUser.WS_POPUP:
-			parent=obj.parent
-			while parent and parent.windowHandle==obj.windowHandle:
-				parent=parent.parent
-			if parent:
-				obj=parent.parent
+		# if this is a Mozilla combo box popup, we want to work with the combo box.
+		combo = self._getExpandedComboBox(obj)
+		if combo:
+			obj = combo
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
@@ -126,6 +144,13 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		if not winUser.isWindow(root.windowHandle):
 			return False
+		if not root.isInForeground:
+			# #7818: Subsequent checks make COM calls.
+			# The chances of a buffer dying while the window is in the background are
+			# low, so don't make COM calls in this case; just treat it as alive.
+			# This prevents freezes on every focus change if the browser process
+			# stops responding; e.g. it froze, crashed or is being debugged.
+			return True
 		try:
 			isDefunct=bool(root.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_DEFUNCT)
 		except COMError:
@@ -200,6 +225,8 @@ class Gecko_ia2(VirtualBuffer):
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType.startswith('heading') and nodeType[7:].isdigit():
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING],"IAccessible2::attribute_level":[nodeType[7:]]}
+		elif nodeType == "annotation":
+			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_CONTENT_DELETION,IAccessibleHandler.IA2_ROLE_CONTENT_INSERTION]}
 		elif nodeType=="heading":
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
 		elif nodeType=="table":
@@ -242,7 +269,12 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="blockQuote":
-			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])}
+			attrs=[
+				# Search for a tag of blockquote for older implementations before the blockquote IAccessible2 role existed.
+				{"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])},
+				# Also support the new blockquote IAccessible2 role
+				{"IAccessible::role":[IAccessibleHandler.IA2_ROLE_BLOCK_QUOTE]},
+			]
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
@@ -283,7 +315,10 @@ class Gecko_ia2(VirtualBuffer):
 		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
-			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			try:
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			except AttributeError:
+				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			if cell.IA2Attributes.get('hidden'):
 				raise LookupError("Found hidden cell") 

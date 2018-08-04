@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -20,6 +20,7 @@ import winKernel
 import braille
 from logHandler import log
 import config
+import time
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(None, DWORD, DWORD, serial.win32.LPOVERLAPPED)
 
@@ -51,7 +52,7 @@ class IoBase(object):
 		self._writeSize = writeSize
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
-		self._recvEvt = threading.Event()
+		self._recvEvt = winKernel.createEvent()
 		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
 		self._writeOl = OVERLAPPED()
 		# Do the initial read.
@@ -72,12 +73,20 @@ class IoBase(object):
 			C{False} if not.
 		@rtype: bool
 		"""
-		if not self._recvEvt.wait(timeout):
-			if _isDebug():
-				log.debug("Wait timed out")
-			return False
-		self._recvEvt.clear()
-		return True
+		timeout= int(timeout*1000)
+		while True:
+			curTime = time.time()
+			res = winKernel.waitForSingleObjectEx(self._recvEvt, timeout, True)
+			if res==winKernel.WAIT_OBJECT_0:
+				return True
+			elif res==winKernel.WAIT_TIMEOUT:
+				if _isDebug():
+					log.debug("Wait timed out")
+				return False
+			elif res==winKernel.WAIT_IO_COMPLETION:
+				if _isDebug():
+					log.debug("Waiting interrupted by completed i/o")
+				timeout -= int((time.time()-curTime)*1000)
 
 	def write(self, data):
 		if _isDebug():
@@ -101,6 +110,7 @@ class IoBase(object):
 			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
 			ctypes.windll.kernel32.CancelIoEx(self._writeFile, byref(self._readOl))
+		winKernel.closeHandle(self._recvEvt)
 
 	def __del__(self):
 		try:
@@ -123,7 +133,7 @@ class IoBase(object):
 		elif error != 0:
 			raise ctypes.WinError(error)
 		self._notifyReceive(self._readBuf[:bytes])
-		self._recvEvt.set()
+		winKernel.kernel32.SetEvent(self._recvEvt)
 		self._asyncRead()
 
 	def _notifyReceive(self, data):
@@ -235,18 +245,27 @@ class Hid(IoBase):
 	"""Raw I/O for HID devices.
 	"""
 
-	def __init__(self, path, onReceive):
+	def __init__(self, path, onReceive, exclusive=True):
 		"""Constructor.
 		@param path: The device path.
 			This can be retrieved using L{hwPortUtils.listHidDevices}.
 		@type path: unicode
 		@param onReceive: A callable taking a received input report as its only argument.
 		@type onReceive: callable(str)
+		@param exclusive: Whether to block other application's access to this device.
+		@type exclusive: bool
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
-		handle = CreateFile(path, winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
-			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		handle = CreateFile(
+			path,
+			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+			0 if exclusive else winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None
+		)
 		if handle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open failed: %s" % ctypes.WinError())
@@ -301,9 +320,27 @@ class Hid(IoBase):
 				log.debug("Set feature failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 
+	def setOutputReport(self,report):
+		"""
+		Write the given report to the device using HidD_SetOutputReport.
+		This is instead of using the standard WriteFile which may freeze with some USB HID implementations.
+		@param report: The report, including its id.
+		@type report: str
+		"""
+		length=len(report)
+		buf=ctypes.create_string_buffer(length)
+		buf.raw=report
+		if _isDebug():
+			log.debug("Set output report: %r" % report)
+		if not ctypes.windll.hid.HidD_SetOutputReport(self._writeFile,buf,length):
+			if _isDebug():
+				log.debug("Set output report failed: %s" % ctypes.WinError())
+			raise ctypes.WinError()
+
 	def close(self):
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
+		self._file = None
 
 class Bulk(IoBase):
 	"""Raw I/O for bulk USB devices.

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2014 NV Access Limited
+#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 
 import threading
 import queueHandler
@@ -16,6 +16,7 @@ from logHandler import log
 import globalPluginHandler
 import config
 import winUser
+import extensionPoints
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
@@ -95,7 +96,15 @@ class _EventExecuter(object):
 
 	def next(self):
 		func, args = next(self._gen)
-		return func(*args, **self.kwargs)
+		try:
+			return func(*args, **self.kwargs)
+		except TypeError:
+			log.warning("Could not execute function {func} defined in {module} module due to unsupported kwargs: {kwargs}".format(
+				func=func.__name__,
+				module=func.__module__ or "unknown",
+				kwargs=self.kwargs
+			), exc_info=True)
+			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
 		funcName = "event_%s" % eventName
@@ -170,7 +179,7 @@ def doPreGainFocus(obj,sleepMode=False):
 		if obj.treeInterceptor and obj.treeInterceptor.isReady and hasattr(obj.treeInterceptor,"event_treeInterceptor_gainFocus"):
 			obj.treeInterceptor.event_treeInterceptor_gainFocus()
 	return True
- 
+
 def doPreDocumentLoadComplete(obj):
 	focusObject=api.getFocusObject()
 	if (not obj.treeInterceptor or not obj.treeInterceptor.isAlive or obj.treeInterceptor.shouldPrepare) and (obj==focusObject or obj in api.getFocusAncestors()):

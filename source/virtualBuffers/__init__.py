@@ -412,6 +412,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def _loadBuffer(self):
 		try:
+			if log.isEnabledFor(log.DEBUG):
+				startTime = time.time()
 			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
@@ -419,6 +421,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			log.error("", exc_info=True)
 			queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone, success=False)
 			return
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("Buffer load took %.3f sec, %d chars" % (
+				time.time() - startTime,
+				NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle)))
 		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
 
 	def _loadBufferDone(self, success=True):

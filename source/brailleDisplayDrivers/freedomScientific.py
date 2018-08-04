@@ -457,6 +457,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_previousLine": ("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
 			"braille_nextLine": ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),
 			"kb:shift+tab": ("br(freedomScientific):dot1+dot2+brailleSpaceBar",),
+<<<<<<< HEAD
 			"kb:tab": ("br(freedomScientific):dot4+dot5+brailleSpaceBar",),
 			"kb:upArrow": ("br(freedomScientific):dot1+brailleSpaceBar",),
 			"kb:downArrow": ("br(freedomScientific):dot4+brailleSpaceBar",),
