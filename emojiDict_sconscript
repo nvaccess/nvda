@@ -19,16 +19,21 @@ Import(
 def createCLDREmojiAnnotationsDict(sources, dest):
 	import codecs
 	from xml.etree import ElementTree
+	from collections import OrderedDict	
+	emojiDict = OrderedDict()
+	for source in sources:
+		tree = ElementTree.parse(source)
+		for element in tree.iter("annotation"):
+			if element.attrib.get("type") == "tts":
+				emojiDict[element.attrib['cp']] = element.text.replace(":","")
+	assert emojiDict, "emojiDict is empty"
 	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
 		dictFile.write(u"symbols:\r\n")
-		for source in sources:
-			tree = ElementTree.parse(source)
-			for element in tree.iter("annotation"):
-				if element.attrib.get("type") == "tts":
-					dictFile.write(u"{emoji}\t{description}\tsome\r\n".format(
-						emoji=element.attrib['cp'],
-						description=element.text.replace(":","")
-					))
+		for emoji, description in emojiDict.iteritems():
+			dictFile.write(u"{emoji}\t{description}\tsome\r\n".format(
+				emoji=emoji,
+				description=description
+			))
 
 emojiDictAction=env.Action(
 	lambda target,source,env: createCLDREmojiAnnotationsDict([src.path for src in source], target[0].path),
