@@ -383,6 +383,8 @@ class AddonUpdatesDialog(wx.Dialog):
 			for entry in sorted(addonUpdateInfo.keys()):
 				addon = addonUpdateInfo[entry]
 				self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
+				self.addonsList.Select(0)
+				self.addonsList.SetItemState(0,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
 			addonsSizerHelper.addItem(entriesSizer)
 		else:
 			# Translators: Message displayed when no add-on updates are available.
