@@ -466,6 +466,20 @@ addUsbDevices("eurobraille", KEY_HID, {
 
 addBluetoothDevices("eurobraille", lambda m: m.id.startswith("Esys"))
 
+# freedomScientific
+addUsbDevices("freedomScientific", KEY_CUSTOM, {
+	"VID_0F4E&PID_0100", # Focus 1
+	"VID_0F4E&PID_0111", # PAC Mate
+	"VID_0F4E&PID_0112", # Focus 2
+	"VID_0F4E&PID_0114", # Focus Blue
+})
+
+addBluetoothDevices("freedomScientific", lambda m: any(m.id.startswith(prefix) for prefix in (
+	"F14", "Focus 14 BT",
+	"Focus 40 BT",
+	"Focus 80 BT",
+)))
+
 # handyTech
 addUsbDevices("handyTech", KEY_SERIAL, {
 	"VID_0403&PID_6001", # FTDI chip

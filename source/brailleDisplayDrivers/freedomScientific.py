@@ -16,6 +16,7 @@ import braille
 import inputCore
 from baseObject import ScriptableObject
 from logHandler import log
+import bdDetect
 import brailleInput
 import hwIo
 import serial
@@ -25,21 +26,6 @@ import _winreg
 TIMEOUT = 0.2
 BAUD_RATE = 57600
 PARITY = serial.PARITY_NONE
-
-# Vendor/product IDs of Freedom Scientific USB devices
-USB_IDS = {
-	"VID_0F4E&PID_0100", # Focus 1
-	"VID_0F4E&PID_0111", # PAC Mate
-	"VID_0F4E&PID_0112", # Focus 2
-	"VID_0F4E&PID_0114", # Focus Blue
-}
-
-# Names of freedom scientific bluetooth devices
-BLUETOOTH_NAMES = (
-	"F14", "Focus 14 BT",
-	"Focus 40 BT",
-	"Focus 80 BT",
-)
 
 #: Model names and number of cells
 MODELS = {
@@ -105,73 +91,10 @@ FOCUS_1_DOTS_TABLE = [
 FOCUS_1_TRANSLATION_TABLE = _makeTranslationTable(FOCUS_1_DOTS_TABLE)
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
-
 	name = "freedomScientific"
 	# Translators: Names of braille displays.
 	description = _("Freedom Scientific Focus/PAC Mate series")
 	isThreadSafe = True
-
-	@classmethod
-	def check(cls):
-		try:
-			next(cls._getAutoPorts(cls._getBluetoothPorts()))
-		except StopIteration:
-			return False
-		return True
-
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		comPorts = cls._getBluetoothPorts()
-		try:
-			next(cls._getAutoPorts(comPorts))
-			ports.update((cls.AUTOMATIC_PORT,))
-		except StopIteration:
-			pass
-		for portInfo in comPorts:
-			# Translators: Name of a serial communications port.
-			ports[portInfo["port"]] = _("Bluetooth: {portName}").format(
-				portName=portInfo["friendlyName"])
-		return ports
-
-	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		# USB
-		for usbId in USB_IDS:
-			try:
-				rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\%s" % usbId)
-			except WindowsError:
-				continue
-			else:
-				with rootKey:
-					for index in itertools.count():
-						try:
-							keyName = _winreg.EnumKey(rootKey, index)
-						except WindowsError:
-							break
-						try:
-							with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-								yield _winreg.QueryValueEx(paramsKey, "SymbolicName")[0], "USB"
-						except WindowsError:
-							continue
-
-		# Bluetooth
-		for portInfo in comPorts:
-			btName = portInfo["bluetoothName"]
-			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in BLUETOOTH_NAMES):
-				continue
-			yield portInfo["port"], "bluetooth"
-
-	@classmethod
-	def _getBluetoothPorts(cls):
-		for p in hwPortUtils.listComPorts():
-			try:
-				btName = p["bluetoothName"]
-			except KeyError:
-				continue
-			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in BLUETOOTH_NAMES):
-				continue
-			yield p
 
 	wizWheelActions = [
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
@@ -198,14 +121,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.gestureMap.add("br(freedomScientific):rightWizWheelUp", *action[1])
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown",*action[2])
 		super(BrailleDisplayDriver,self).__init__()
-		tryPorts = ()
-		if port == "auto":
-			tryPorts = self._getAutoPorts(self._getBluetoothPorts())
-		else:
-			tryPorts = [p for p in self._getBluetoothPorts() if p == port]
-
-		for port, portType in tryPorts:
-			self.isUsb = portType.startswith("USB")
+		for portType, portId, port, portInfo in self._getTryPorts(port):
+			self.isUsb = portType == bdDetect.KEY_CUSTOM
 			# Try talking to the display.
 			try:
 				if self.isUsb:
@@ -213,6 +130,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 
 			# Send an identification request
@@ -457,7 +375,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_previousLine": ("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
 			"braille_nextLine": ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),
 			"kb:shift+tab": ("br(freedomScientific):dot1+dot2+brailleSpaceBar",),
-<<<<<<< HEAD
 			"kb:tab": ("br(freedomScientific):dot4+dot5+brailleSpaceBar",),
 			"kb:upArrow": ("br(freedomScientific):dot1+brailleSpaceBar",),
 			"kb:downArrow": ("br(freedomScientific):dot4+brailleSpaceBar",),
