@@ -306,8 +306,8 @@ def handleAppSwitch(oldMods, newMods):
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
 	App modules provide specific support for a single application.
-	Each app module should be a Python module in the appModules package named according to the executable it supports;
-	e.g. explorer.py for the explorer.exe application.
+	Each app module should be a Python module or a package in the appModules package named according to the executable it supports;
+	e.g. explorer.py for the explorer.exe application or firefox/__init__.py for firefox.exe.
 	It should containa  C{AppModule} class which inherits from this base class.
 	App modules can implement and bind gestures to scripts.
 	These bindings will only take effect while an object in the associated application has focus.
@@ -440,6 +440,16 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 	# optimisation: Make it easy to detect that this hasn't been overridden.
 	chooseNVDAObjectOverlayClasses._isBase = True
+
+	def _get_appPath(self):
+		"""Returns the full path for the executable e.g. 'C:\\Windows\\explorer.exe' for Explorer.
+		@rtype: str
+		"""
+		size = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		path = ctypes.create_unicode_buffer(size.value)
+		winKernel.kernel32.QueryFullProcessImageNameW(self.processHandle, 0, path, ctypes.byref(size))
+		self.appPath = path.value if path else None
+		return self.appPath
 
 	def _get_is64BitProcess(self):
 		"""Whether the underlying process is a 64 bit process.
