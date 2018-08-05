@@ -95,6 +95,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: Names of braille displays.
 	description = _("Freedom Scientific Focus/PAC Mate series")
 	isThreadSafe = True
+	receivesAckPackets = True
 
 	wizWheelActions = [
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
@@ -135,14 +136,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			# Send an identification request
 			self._sendPacket(FS_PKT_QUERY)
-			for _i in xrange(1):
+			for _i in xrange(3):
 				self._dev.waitForRead(TIMEOUT)
 				if self.numCells and self._model:
-					# A display responded.
-					log.info("Found {device} connected via {type} ({port})".format(
-						device=self._model, type=portType, port=port))
 					break
+
+			if self.numCells and self._model:
+				# A display responded.
+				log.info("Found {device} connected via {type} ({port})".format(
+					device=self._model, type=portType, port=port))
+				break
 			self._dev.close()
+
 		else:
 			raise RuntimeError("No Freedom Scientific display found")
 
@@ -211,15 +216,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _handlePacket(self, packetType, arg1, arg2, arg3, payload):
 		"Handle a packet from the device"
 		if packetType == FS_PKT_ACK:
-			self._awaitingAck = False
-			if self._pendingCells:
-				self.display(self._pendingCells)
+			self._handleAck()
 		elif packetType == FS_PKT_NAK:
 			log.debugWarning("NAK received!")
-			self._awaitingAck = False
-			if self._pendingCells:
-				self.display(self._pendingCells)
-
+			self._handleAck()
 		elif packetType == FS_PKT_INFO:
 			self._manufacturer = payload[:24].replace("\x00", "")
 			self._model = payload[24:40].replace("\x00", "")
@@ -267,6 +267,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._handleExtendedKeys(keyBits)
 		else:
 			log.debugWarning("Unknown packet of type: %r" % packetType)
+
+	def _handleAck(self):
+		super(BrailleDisplayDriver, self)._handleAck()
+		if self._pendingCells:
+			self.display(self._pendingCells)
 
 	def _updateKeyBits(self, keyBits, oldKeyBits, keyCount):
 		"""Helper function that reports if keys have been pressed and which keys have been released
