@@ -341,7 +341,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if not self._awaitingAck:
 			cells="".join([chr(x) for x in cells])
 			self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
-			self._awaitingAck = True
 			self._pendingCells = []
 		else:
 			self._pendingCells = cells
