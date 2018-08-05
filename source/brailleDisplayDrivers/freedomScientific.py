@@ -289,7 +289,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if oldKey and not newKey:
 				# A key has been released
 				isRelease = True
-				keyBitsBeforeRelease = oldKeyBits
+				if not keyBitsBeforeRelease:
+					keyBitsBeforeRelease = oldKeyBits
 				oldKeyBits &= ~keyBit
 			elif newKey and not oldKey:
 				oldKeyBits |= keyBit
@@ -297,7 +298,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			keyBit <<= 1
 		return oldKeyBits, isRelease, keyBitsBeforeRelease, newKeysPressed
-		
+
 	def _handleKeys(self, keyBits):
 		"""Send gestures if keys are released and update self._keyBits"""
 		keyBits, isRelease, keyBitsBeforeRelease, newKeysPressed = self._updateKeyBits(keyBits, self._keyBits, 24)
