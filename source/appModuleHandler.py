@@ -478,6 +478,22 @@ class AppModule(baseObject.ScriptableObject):
 			self.is64BitProcess = not res
 		return self.is64BitProcess
 
+	def _get_isWindowsStoreApp(self):
+		"""Whether this process is a Windows Store (immersive) process.
+		An immersive process is a Windows app that runs inside a Windows Runtime (WinRT) container.
+		These include Windows store apps on Windows 8 and 8.1, and Universal Windows Platform (UWP) apps on Windows 10.
+		@rtype: bool
+		"""
+		if winVersion.winVersion.major and winVersion.winVersion.minor == (6, 1):
+			# Windows Store/UWP apps were introduced in Windows 8.
+			self.isWindowsStoreApp = False
+			return False
+		if winUser.user32.IsImmersiveProcess(self.processHandle) != 0:
+			self.isWindowsStoreApp = True
+			return True
+		self.isWindowsStoreApp = False
+		return self.isWindowsStoreApp
+
 	def isGoodUIAWindow(self,hwnd):
 		"""
 		returns C{True} if the UIA implementation of the given window must be used, regardless whether native or not.
