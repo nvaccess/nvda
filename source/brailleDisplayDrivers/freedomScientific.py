@@ -138,14 +138,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			for _i in xrange(1):
 				self._dev.waitForRead(TIMEOUT)
 				if self.numCells and self._model:
+					# A display responded.
+					log.info("Found {device} connected via {type} ({port})".format(
+						device=self._model, type=portType, port=port))
 					break
-			if self.numCells:
-				# A display responded.
-				log.info("Found {device} connected via {type} ({port})".format(
-					device=self._model, type=portType, port=port))
-				break
-			self._dev.close
-
+			self._dev.close()
 		else:
 			raise RuntimeError("No Freedom Scientific display found")
 
@@ -199,7 +196,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg2 = data.read(1)
 		arg3 = data.read(1)
 		log.debug("Got packet of type %r with args: %r %r %r" % (packetType, arg1, arg2, arg3))
-		# Info response is the only packet with payload and checksum
+		# Info and extended key responses are the only packets with payload and checksum
 		if packetType in (FS_PKT_INFO, FS_PKT_EXT_KEY):
 			length = ord(arg1)
 			payload = data.read(length)
