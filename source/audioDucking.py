@@ -117,7 +117,7 @@ def initialize():
 		return
 	_setDuckingState(False)
 	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
-	config.configProfileSwitched.register(handleConfigProfileSwitch)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 _isAudioDuckingSupported=None
 def isAudioDuckingSupported():
@@ -126,7 +126,7 @@ def isAudioDuckingSupported():
 		_isAudioDuckingSupported=config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
 	return _isAudioDuckingSupported
 
-def handleConfigProfileSwitch():
+def handlePostConfigProfileSwitch():
 	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
 
 class AudioDucker(object):

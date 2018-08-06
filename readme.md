@@ -44,7 +44,8 @@ The following dependencies need to be installed on your system:
 			* Desktop development with C++
 		* Then in the Summary list, under Desktop for C++, Optional grouping, ensure the following is selected:
 			* VC++ 2017 v141 toolset (x86,x64)
-			* Windows 10 SDK (10.0.15063.0) for Desktop C++ x86 and x64
+			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
+			* Visual C++ ATL for x86 and x64
 
 
 ### Git Submodules
