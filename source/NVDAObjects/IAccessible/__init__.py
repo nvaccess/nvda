@@ -132,7 +132,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# believes that it belongs to offset+1.
 		# This means that, when you use l{_getOffsetFromPoint}, the result would be offset+1.
 		# We yet stay with the center of the character, though.
-		point=textInfos.Point(res[0]+res[2]/2,res[1]+res[3]/2)
+		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
 		return point
 
 	def _getPointFromOffset(self,offset):
