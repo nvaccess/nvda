@@ -9,7 +9,10 @@
 import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
-import _winreg as winreg
+try:
+	import winreg
+except ImportError:
+	import _winreg as winreg
 import winKernel
 from winKernel import SYSTEMTIME
 import config

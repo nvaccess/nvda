@@ -7,7 +7,10 @@
 from collections import OrderedDict
 import _audiologic
 from synthDriverHandler import SynthDriver, VoiceInfo
-import _winreg
+try:
+	import winreg
+except ImportError:
+	import _winreg as winreg
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.RateSetting(),SynthDriver.PitchSetting(minStep=5),SynthDriver.InflectionSetting(minStep=10),SynthDriver.VolumeSetting(minStep=2))
@@ -19,7 +22,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			r=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Audiologic\Sintesi Audiologic")
+			r=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Audiologic\Sintesi Audiologic")
 			r.Close()
 			return True
 		except:
