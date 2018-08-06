@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 00:10+1000\n"
-"PO-Revision-Date: 2018-06-22 14:58-0300\n"
-"Last-Translator: Tiago Melo Casal <tcasal@intervox.nce.ufrj.br>\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"PO-Revision-Date: 2018-07-11 15:21-0300\n"
+"Last-Translator: Cleverson Casarin Uliana <clever97@gmail.com>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever97@gmail.com>\n"
 "Language: pt_BR\n"
@@ -1037,6 +1037,11 @@ msgstr "Russo, grau 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sânscrito, grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Sueco, braille informático de 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2485,7 +2490,7 @@ msgstr "estilo"
 
 #. Translators: Describes text formatting.
 msgid "indent"
-msgstr "recuo [indentação]"
+msgstr "recuo"
 
 #. Translators: Describes text formatting.
 msgid "alignment"
@@ -3229,35 +3234,35 @@ msgstr "Liga e desliga anunciar os números das linhas"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
-msgstr "Anunciar recuo [indentação] de linha com fala"
+msgstr "Anunciar recuo de linha com fala"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with tones"
-msgstr "Anunciar recuo [indentação] de linha com sons"
+msgstr "Anunciar recuo de linha com sons"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr "Anunciar recuo [indentação] de linha com fala e sons"
+msgstr "Anunciar recuo de linha com fala e sons"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
-msgstr "Desligado o anúncio do recuo [indentação] de linha"
+msgstr "Desligado anunciar recuo de linha"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Cycles through line indentation settings"
-msgstr "Alterna entre as opções de recuo [indentação] de linha"
+msgstr "Alterna entre as opções de recuo de linha"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "desligado anunciar recuo [indentação] de parágrafo"
+msgstr "desligado anunciar recuo de parágrafo"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "ligado anunciar recuo [indentação] de parágrafo"
+msgstr "ligado anunciar recuo de parágrafo"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Liga e desliga anunciar recuo [indentação] de parágrafo"
+msgstr "Liga e desliga anunciar recuo de parágrafo"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -5906,7 +5911,7 @@ msgstr "maiúscula %s"
 
 #. Translators: This is spoken when the given line has no indentation.
 msgid "no indent"
-msgstr "sem recuo [indentação]"
+msgstr "sem recuo"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
@@ -6227,19 +6232,19 @@ msgstr "alinhamento vertical padrão"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
-msgstr "recuo [indentação] à esquerda"
+msgstr "recuo à esquerda"
 
 #. Translators: the message when there is no paragraph format left indent
 msgid "no left indent"
-msgstr "sem recuo [indentação] à esquerda"
+msgstr "sem recuo à esquerda"
 
 #. Translators: the label for paragraph format right indent
 msgid "right indent"
-msgstr "recuo [indentação] à direita"
+msgstr "recuo à direita"
 
 #. Translators: the message when there is no paragraph format right indent
 msgid "no right indent"
-msgstr "sem recuo [indentação] à direita"
+msgstr "sem recuo à direita"
 
 #. Translators: the label for paragraph format hanging indent
 msgid "hanging indent"
@@ -6251,11 +6256,11 @@ msgstr "sem deslocamento no parágrafo"
 
 #. Translators: the label for paragraph format first line indent
 msgid "first line indent"
-msgstr "recuo [indentação] da primeira linha"
+msgstr "recuo da primeira linha"
 
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
-msgstr "sem recuo [indentação] na primeira linha"
+msgstr "sem recuo na primeira linha"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
@@ -8984,7 +8989,7 @@ msgstr "&Números das linhas"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "Anúncio de recuo [&indentação] de linhas:"
+msgstr "Anúncio de recuo de l&inhas:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
@@ -9008,7 +9013,7 @@ msgstr "Fala e sons juntos"
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
-msgstr "Recuo [Indentação] de &parágrafo"
+msgstr "Recuo de &parágrafo"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.

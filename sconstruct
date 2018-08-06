@@ -75,6 +75,8 @@ vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you 
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 if "tests" in COMMAND_LINE_TARGETS:
 	vars.Add("unitTests", "A list of unit tests to run", "")
+if "systemTests" in COMMAND_LINE_TARGETS:
+	vars.Add("filter", "A filter for the name of the system test(s) to run. Wildcards accepted.", "")
 
 #Base environment for this and sub sconscripts
 env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettextTool","t2t",keyCommandsDocTool,'doxygen','recursiveInstall'])

@@ -9,6 +9,9 @@
 - NVDA anunciará erros de gramática cando se expoñan apropriadamente polas páxinas web en Mozilla Firefox. (#8280)
 - Engadida a compatibilidade para as rodas de desprazamento de BrailleNote QT e Apex BT cando se use BrailleNote coma unha pantalla braille co NVDA. (#6316)
 - Engadidos scripts para anunciar o tempo transcorrido e o tempo total da pista actual en Foobar2000. (#6596)
+- O símbolo da tecla Command do Mac (⌘) agora anúnciase ao se ler texto con calquera sintetizador. (#8366)
+- Os roles persoalizados a través do atributo aria-roledescription attribute agora admítense en Firefox, Chrome e Internet Explorer.
+- Nova táboa braille: braille sueco computerizado de 8 pontos. (#8227)
 
 
 == Cambios ==
@@ -16,9 +19,11 @@
 - Engadidos xestos predeterminados para alt shift tab e windows tab con todas as pantallas braille compatibles de Freedom Scientific. (#7387)
 - Agora pregúntaselle ao usuario unha vez no arranque do NVDA se está de acordo enviando estadísticas de uso a NV Access cando se procuren actualizacións automáticamente. (#8217)
 - Ao se procurar actualizacións, se o usuario está de acordo ao permitir o envío de estadísticas de uso a NV Access, o NVDA agora enviará o nome do controlador do sintetizador actual e da pantalla braille en uso, para axudar a establecer unha mellor orde de prioridades para o traballo futuro destes controladores. (#8217)
+- Actualizado o transcriptor braille liblouis á versión 3.6.0. (#8365)
 
 
 == Arranxo de Erros ==
+- As etiquetas accesibles para controis en Google Chrome agora anúncianse máis lexiblemente en modo exploración cando a etiqueta non aparece como contido en si. (#4773)
 
 
 == Cambios para Desenvolvedores ==

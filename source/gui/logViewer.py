@@ -1,3 +1,9 @@
+#gui/logViewer.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2008-2018 NV Access Limited
+
 """Provides functionality to view the NVDA log.
 """
 
@@ -68,7 +74,7 @@ class LogViewer(wx.Frame):
 
 	def onSaveAsCommand(self, evt):
 		# Translators: Label of a menu item in NVDA Log Viewer.
-		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.SAVE | wx.OVERWRITE_PROMPT, parent=self)
+		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, parent=self)
 		if not filename:
 			return
 		try:

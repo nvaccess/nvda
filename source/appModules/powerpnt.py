@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2015 NV Access Limited
+#Copyright (C) 2012-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -33,6 +33,7 @@ from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
 import scriptHandler
+from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
 
 # Window classes where PowerPoint's object model should be used 
@@ -738,9 +739,7 @@ class Shape(PpObject):
 		top=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop)
 		right=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft+pointWidth)
 		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop+pointHeight)
-		width=right-left
-		height=bottom-top
-		return (left,top,width,height)
+		return RectLTRB(left,top,right,bottom).toLTWH()
 
 	def _get_ppShapeType(self):
 		"""Fetches and caches the type of this shape."""
@@ -1261,7 +1260,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.CentreOnScreen()
 		gui.mainFrame.prePopup()
 		d.Show()
 		self.hasTriedPpAppSwitch=True
