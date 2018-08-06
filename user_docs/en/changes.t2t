@@ -3,6 +3,18 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Bug Fixes ==
+- The functionality of the move mouse to navigator object command has been majorly improved in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
+- Mouse tracking and announcing text under the mouse pointer has been improved within Microsoft Edge and other UIA applications. (#8370)
+
+
+== Changes for Developers ==
+- OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow per character retrieval of bounding rectangles instead of points. (#8572)
+- Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)
+
+
 = 2018.3 =
 
 == New Features ==
