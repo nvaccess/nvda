@@ -654,24 +654,25 @@ This manifest file contains key = value pares declaring info such as the add-on'
 +++ Available Fields +++
 Although it is highly suggested that manifests contain all fields, the fields marked as mandatory must be included.
 Otherwise, the add-on will not install.  
-- name (string): A short unique name for the add-on. This is used to differentiate add-ons internally and is not shown to the user. (Mandatory)
+- name (string enclosed in quotes): A short unique name for the add-on. This is used to differentiate add-ons internally and is not shown to the user. (Mandatory)
 - summary (string enclosed in quotes): The name of the add-on as shown to the user. (Mandatory)
 - description (string enclosed in quotes): A sentence or two describing what the add-on does. If this spans multiple lines, you need to enclose this information in triple quotes (""").
-- version (string): The version of this add-on; e.g. 2.0. (Mandatory)
+- version (string enclosed in quotes): The version of this add-on; e.g. 2.0. (Mandatory)
 - author (string enclosed in quotes): The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <mick@kulgan.net>. (Mandatory)
-- url (string): A URL where this add-on, further info and upgrades can be found.
-- docFileName (string): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
+- url (string enclosed in quotes): A URL where this add-on, further info and upgrades can be found.
+- docFileName (string enclosed in quotes): The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
 -
 
 +++ An Example Manifest File +++
 ```
 --- start ---
-name = MyTestAddon
+name = "myTestAddon"
 summary = "Cool Test Add-on"
-version = 1.0
+version = "1.0"
 description = "An example add-on showing how to create add-ons!"
 author = "Michael Curran <mick@kulgan.net>"
-url = http://www.nvda-project.org/wiki/Development
+url = "http://www.nvda-project.org/wiki/Development"
+docFileName = "readme.html"
 --- end ---
 ``` 
 
