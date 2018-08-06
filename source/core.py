@@ -157,7 +157,7 @@ def resetConfiguration(factoryDefaults=False):
 	inputCore.manager.loadLocaleGestureMap()
 	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
-		audioDucking.handleConfigProfileSwitch()
+		audioDucking.handlePostConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
 	
 

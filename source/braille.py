@@ -1567,7 +1567,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
+		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
@@ -1581,7 +1581,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
+		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1963,7 +1963,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleReviewMove(shouldAutoTether=False)
 
-	def handleConfigProfileSwitch(self):
+	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
 		# Do not choose a new display if:
 		if not (

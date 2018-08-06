@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 00:10+1000\n"
-"PO-Revision-Date: 2018-05-22 23:50+0100\n"
+"POT-Creation-Date: 2018-07-27 00:10+1000\n"
+"PO-Revision-Date: 2018-07-29 16:14+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -1022,6 +1022,11 @@ msgstr "Ruský plnopis"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sanskrtský plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Švédské 8-bodové počítačové písmo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6602,9 +6607,17 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Žádná stopa se nepřehrává"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Oznámí zbývající čas u právě hrající stopy"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Oznámí uplynulý čas u právě hrající stopy"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Oznámí délku právě hrající stopy"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -7624,6 +7637,43 @@ msgstr "Nainstalovat staženou aktualizaci"
 msgid "Please wait"
 msgstr "Prosím čekejte"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Shromažďování uživatelských údajů"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Za účelem zlepšení NVDA v budoucnu chce NV Access shromažďovat uživatelské "
+"údaje od každé spuštěné verze NVDA.\n"
+"\n"
+"Údaje zahrnují verzi operačního systému, verzi NVDA, jazyk, zemi původu a "
+"určitá nastavení jako hlasový výstup, braillský řádek a braillskou tabulku. "
+"Nikdy nebude zasílán mluvený či braillský obsah. Seznam všech "
+"shromažďovaných údajů najdete v uživatelské příručce.\n"
+"\n"
+"Chcete, aby organizace NV Access pravidelně shromažďovala tyto údaje pro "
+"zlepšení NVDA?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Ano"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Ne"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Správce doplňků"
@@ -8286,6 +8336,10 @@ msgstr "Automaticky upozorňovat na &aktualizace NVDA"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Upozornit na &staženou aktualizaci při startu"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Umožnit shromažďování statistiky využití NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""

@@ -438,10 +438,16 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 		return False
 
 class ProtectedDocumentPane(IAccessible):
-	"""The pane that gets focus in case a document opens in protected mode in word
+	"""
+	The pane that directly contains a Word document control.
+	This pane exists no matter if the document is protected or not, but specifically gets focus when a document is opened in protected mode, and therefore handles moving focus back to the actual document.
+	This class also suppresses this pane from being presented in the focus ancestry as it contains  redundant information.
 	This is mapped to the window class _WWB and role oleacc.ROLE_SYSTEM_CLIENT
 	"""
-	
+
+	# This object should not be presented in the focus ancestry as it is redundant.
+	isPresentableFocusAncestor=False
+
 	def event_gainFocus(self):
 		"""On gaining focus, simply set the focus on a child of type word document. 
 		This is just a container window.
