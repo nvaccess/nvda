@@ -1214,19 +1214,28 @@ class UIA(Window):
 		return children
 
 	def _get_rowNumber(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowPropertyId,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
 
 	def _get_rowSpan(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowSpanPropertyId,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemRowSpanPropertyId,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		return 1
 
 	def _get_rowHeaderText(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val==UIAHandler.handler.reservedNotSupportedValue:
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -1242,19 +1251,28 @@ class UIA(Window):
 		return " ".join(textList)
 
 	def _get_columnNumber(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemColumnPropertyId,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemColumnPropertyId,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
 
 	def _get_columnSpan(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemColumnSpanPropertyId,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemColumnSpanPropertyId,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		return 1
 
 	def _get_columnHeaderText(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val==UIAHandler.handler.reservedNotSupportedValue:
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
@@ -1270,19 +1288,28 @@ class UIA(Window):
 		return " ".join(textList)
 
 	def _get_rowCount(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridRowCountPropertyId,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridRowCountPropertyId,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		raise NotImplementedError
 
 	def _get_columnCount(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridColumnCountPropertyId,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridColumnCountPropertyId,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
 		raise NotImplementedError
 
 	def _get_table(self):
-		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
+		try:
+			val=self._getUIACacheablePropertyValue(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
+		except COMError:
+			val=UIAHandler.handler.reservedNotSupportedValue
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			e=val.QueryInterface(UIAHandler.IUIAutomationElement).buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			return UIA(UIAElement=e)
