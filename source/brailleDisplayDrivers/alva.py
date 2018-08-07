@@ -107,7 +107,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	timeout = 0.2
 	supportedSettings = (
-		braille.BrailleDisplayDriver.HIDInputSetting(),
+		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),
 	)
 
 	@classmethod

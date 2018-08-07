@@ -2369,7 +2369,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		_BgThread.queueApc(_BgThread.executor)
 
 	@classmethod
-	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal):
+	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal, useConfig=False):
 		"""Factory function for creating dot firmness setting."""
 		return driverHandler.NumericDriverSetting(
 			"dotFirmness",
@@ -2377,25 +2377,28 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			_("Dot firm&ness"),
 			defaultVal=defaultVal,
 			minVal=minVal,
-			maxVal=maxVal
+			maxVal=maxVal,
+			useConfig=useConfig
 		)
 
 	@classmethod
-	def BrailleInputSetting(cls):
+	def BrailleInputSetting(cls, useConfig=True):
 		"""Factory function for creating braille input setting."""
 		return driverHandler.BooleanDriverSetting(
 			"brailleInput",
 			# Translators: Label for a setting in braille settings dialog.
-			_("Braille inp&ut")
+			_("Braille inp&ut"),
+			useConfig=useConfig
 		)
 
 	@classmethod
-	def HIDInputSetting(cls):
+	def HIDInputSetting(cls, useConfig):
 		"""Factory function for creating HID input setting."""
 		return driverHandler.BooleanDriverSetting(
 			"hidKeyboardInput",
 			# Translators: Label for a setting in braille settings dialog.
-			_("&HID keyboard input simulation")
+			_("&HID keyboard input simulation"),
+			useConfig=useConfig
 		)
 
 class BrailleDisplayGesture(inputCore.InputGesture):

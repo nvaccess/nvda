@@ -74,6 +74,8 @@ class Driver(AutoPropertyObject):
 	def getConfigSpec(self):
 		spec=deepcopy(config.confspec[self.configSection]["__many__"])
 		for setting in self.supportedSettings:
+			if not setting.useConfig:
+				continue
 			spec[setting.name]=setting.configSpec
 		return spec
 
@@ -82,6 +84,8 @@ class Driver(AutoPropertyObject):
 		# Make sure the config spec is up to date, so the config validator does its work.
 		conf.spec.update(self.getConfigSpec())
 		for setting in self.supportedSettings:
+			if not setting.useConfig:
+				continue
 			try:
 				conf[setting.name]=getattr(self,setting.name)
 			except UnsupportedConfigParameterError:
@@ -89,17 +93,17 @@ class Driver(AutoPropertyObject):
 				continue
 
 	def loadSettings(self, onlyChanged=False):
-		c=config.conf[self.configSection][self.name]
-		for s in self.supportedSettings:
-			if c.get(s.name) is None:
+		conf=config.conf[self.configSection][self.name]
+		for setting in self.supportedSettings:
+			if not setting.useConfig or conf.get(setting.name) is None:
 				continue
-			val=c[s.name]
-			if onlyChanged and getattr(self,s.name)==val:
+			val=conf[setting.name]
+			if onlyChanged and getattr(self,setting.name)==val:
 				continue
 			try:
-				setattr(self,s.name,val)
+				setattr(self,setting.name,val)
 			except UnsupportedConfigParameterError:
-				log.debugWarning("Unsupported setting %s; ignoring"%s.name, exc_info=True)
+				log.debugWarning("Unsupported setting %s; ignoring"%setting.name, exc_info=True)
 				continue
 
 	@classmethod
@@ -133,16 +137,20 @@ class DriverSetting(AutoPropertyObject):
 	#: @type: str
 	configSpec="string(default=None)"
 
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None):
+	def __init__(self,name, displayNameWithAccelerator,
+		availableInSynthSettingsRing=False, displayName=None, useConfig=True):
 		"""
 		@param name: internal name of the setting
 		@type name: str
 		@param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
 		@type displayNameWithAccelerator: str
-		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
-		@type displayName: str
 		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
 		@type availableInSynthSettingsRing: bool
+		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
+		@type displayName: str
+		@param useConfig: Whether the value of this option is loaded from and saved to NVDA's configuration.
+			Set this to C{False} if the driver deals with loading and saving.
+		@type useConfig: bool
 		"""
 		self.name=name
 		self.displayNameWithAccelerator=displayNameWithAccelerator
@@ -151,6 +159,7 @@ class DriverSetting(AutoPropertyObject):
 			displayName=displayNameWithAccelerator.replace("&","")
 		self.displayName=displayName
 		self.availableInSynthSettingsRing=availableInSynthSettingsRing
+		self.useConfig = useConfig
 
 class NumericDriverSetting(DriverSetting):
 	"""Represents a numeric driver setting such as rate, volume, pitch or dot firmness."""
@@ -159,8 +168,9 @@ class NumericDriverSetting(DriverSetting):
 		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
 			defaultVal=self.defaultVal,minVal=self.minVal,maxVal=self.maxVal)
 
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,
-		defaultVal=50,minVal=0,maxVal=100,minStep=1,normalStep=5,largeStep=10,displayName=None):
+	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
+		defaultVal=50, minVal=0, maxVal=100, minStep=1, normalStep=5, largeStep=10,
+		displayName=None, useConfig=True):
 		"""
 		@param defaultVal: Specifies the default value for a numeric driver setting.
 		@type defaultVal: int
@@ -176,7 +186,8 @@ class NumericDriverSetting(DriverSetting):
 		@type largeStep: int
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		super(NumericDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSynthSettingsRing=availableInSynthSettingsRing,
+			displayName=displayName, useConfig=useConfig)
 		self.minVal=minVal
 		self.defaultVal=max(defaultVal,self.minVal)
 		self.maxVal=max(maxVal,self.defaultVal)
@@ -188,12 +199,14 @@ class BooleanDriverSetting(DriverSetting):
 	"""Represents a boolean driver setting such as rate boost or automatic time sync.
 	"""
 
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None,defaultVal=False):
+	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
+		displayName=None, defaultVal=False, useConfig=True):
 		"""
 		@param defaultVal: Specifies the default value for a boolean driver setting.
 		@type defaultVal: bool
 		"""
-		super(BooleanDriverSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		super(BooleanDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSynthSettingsRing=availableInSynthSettingsRing,
+			displayName=displayName, useConfig=useConfig)
 		self.defaultVal=defaultVal
 
 	def _get_configSpec(self):
