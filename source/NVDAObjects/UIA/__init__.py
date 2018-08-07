@@ -872,6 +872,19 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
+		elif self.windowClassName=="EXCEL6" and self.role==controlTypes.ROLE_PANE:
+			from excel import BadExcelFormulaEdit
+			clsList.append(BadExcelFormulaEdit)
+		elif self.windowClassName=="EXCEL7":
+			if self.role==controlTypes.ROLE_DATAITEM:
+				from excel import ExcelCell
+				clsList.append(ExcelCell)
+			elif self.role==controlTypes.ROLE_DATAGRID:
+				from excel import ExcelWorksheet
+				clsList.append(ExcelWorksheet)
+			elif self.role==controlTypes.ROLE_EDITABLETEXT:
+				from excel import CellEdit
+				clsList.append(CellEdit)
 		elif self.TextInfo == UIATextInfo and (
 			UIAClassName == '_WwG'
 			or self.windowClassName == '_WwG'
@@ -1152,6 +1165,10 @@ class UIA(Window):
 		if punk:
 			return punk.QueryInterface(interface)
 
+	def _get_UIASpreadsheetItemPattern(self):
+		self.UIASpreadsheetItemPattern=self._getUIAPattern(UIAHandler.UIA_SpreadsheetItemPatternId,UIAHandler.IUIAutomationSpreadsheetItemPattern)
+		return self.UIASpreadsheetItemPattern
+
 	def _get_UIAInvokePattern(self):
 		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
 		return self.UIAInvokePattern
@@ -1169,7 +1186,7 @@ class UIA(Window):
 		return self.UIASelectionItemPattern
 
 	def _get_UIATextPattern(self):
-		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=True)
+		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=False)
 		return self.UIATextPattern
 
 	def _get_UIATextEditPattern(self):
