@@ -1,11 +1,14 @@
 #queueHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import types
-from Queue import Queue
+try:
+	from queue import Queue
+except ImportError:
+	from Queue import Queue
 import globalVars
 from logHandler import log
 import watchdog
