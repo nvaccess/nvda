@@ -123,16 +123,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	@classmethod
 	def _getPointFromOffsetInObject(cls,obj,offset):
 		try:
-			res=obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
-		# Normally, L{_getPointFromOffset} implementations that rely on
-		# character bounding rectangles use the center point of the rectangle.
-		# Using the center could result in a point of which Gecko IA2
-		# believes that it belongs to offset+1.
-		# This means that, when you use l{_getOffsetFromPoint}, the result would be offset+1.
-		# We yet stay with the center of the character, though.
-		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(*res.center)
 		return point
 
 	def _getPointFromOffset(self,offset):
