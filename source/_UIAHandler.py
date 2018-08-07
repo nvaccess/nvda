@@ -1,16 +1,23 @@
-# _UIAHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2020 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2011-2021 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from dataclasses import dataclass
 from ctypes import *
 from ctypes.wintypes import *
-from enum import Enum
+from enum import (
+	Enum,
+	IntEnum,
+)
 
 import comtypes.client
 from comtypes.automation import VT_EMPTY
-from comtypes import COMError
+from comtypes import (
+	COMError,
+	GUID,
+	byref,
+)
 from comtypes import *
 import weakref
 import threading
@@ -28,21 +35,22 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
-from comtypes.gen import UIAutomationClient as UIA
-from comtypes.gen.UIAutomationClient import *
+from comInterfaces import UIAutomationClient as UIA
+# F403 unable to detect undefined names
+from comInterfaces.UIAutomationClient import *  # noqa: F403
 import textInfos
 from typing import Dict
 from queue import Queue
 import aria
 
-#Some newer UIA constants that could be missing
-ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
-ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
+
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
 HorizontalTextAlignment_Right=2
 HorizontalTextAlignment_Justified=3
+
+
 
 # The name of the WDAG (Windows Defender Application Guard) process
 WDAG_PROCESS_NAME=u'hvsirdpclient'
@@ -50,6 +58,7 @@ WDAG_PROCESS_NAME=u'hvsirdpclient'
 goodUIAWindowClassNames=[
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	'RAIL_WINDOW',
+	"EXCEL6",
 ]
 
 badUIAWindowClassNames=[
@@ -67,7 +76,6 @@ badUIAWindowClassNames=[
 	"RichEdit20",
 	"RICHEDIT50W",
 	"SysListView32",
-	"EXCEL7",
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
@@ -309,9 +317,6 @@ class UIAHandler(COMObject):
 			self.UIAWindowHandleCache={}
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
-			import UIAHandler
-			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
-			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
 			for propertyId in (UIA_FrameworkIdPropertyId,UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsTextPatternAvailablePropertyId,UIA_IsContentElementPropertyId,UIA_IsControlElementPropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.baseCacheRequest.addPattern(UIA_TextPatternId)
@@ -520,14 +525,15 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
-			lastFocus=eventHandler.lastQueuedFocusObject.UIAElement
+			lastFocusObj = eventHandler.lastQueuedFocusObject
 			# Ignore duplicate focus events.
 			# It seems that it is possible for compareElements to return True, even though the objects are different.
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
 			try:
 				if (
-					self.clientObject.compareElements(sender, lastFocus)
-					and lastFocus.currentHasKeyboardFocus
+					not lastFocusObj.shouldAllowDuplicateUIAFocusEvent
+					and self.clientObject.compareElements(sender, lastFocusObj.UIAElement)
+					and lastFocusObj.UIAElement.currentHasKeyboardFocus
 				):
 					if _isDebug():
 						log.debugWarning("HandleFocusChangedEvent: Ignoring duplicate focus event")
