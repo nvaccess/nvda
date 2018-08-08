@@ -468,7 +468,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
+		#childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		if not cachedChildren:
 			# There are no children
@@ -477,6 +477,16 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			return super(UIAGridRow, self).name
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
+			UIAControlType=e.cachedControlType
+			UIAClassName=e.cachedClassName
+			# We only want to include particular children.
+			if not (
+				# Any text element should be presented.
+				UIAControlType==UIAHandler.UIA_TextControlTypeId
+				# Certain other fields that have a welldefined UIA className can also be included.
+				or UIAClassName in ("CategoryField","FlagField")
+			):
+				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
 			if name and config.conf['documentFormatting']['reportTableHeaders']:
