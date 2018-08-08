@@ -17,6 +17,7 @@ import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
+from UIAUtils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
@@ -468,7 +469,8 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		#childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
+		# We must filter the children for just text and image elements otherwise getCachedChildren fails completely in conversation view.
+		childrenCacheRequest.treeFilter=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_ImageControlTypeId]})
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		if not cachedChildren:
 			# There are no children
