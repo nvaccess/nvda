@@ -34,27 +34,6 @@ from NVDAObjects.UIA import UIA
 #: Type: float
 SECONDS_PER_DAY = 86400.0
 
-oleFlagIconLabels={
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	1:_("purple flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	2:_("Orange flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	3:_("Green flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	4:_("Yellow flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	5:_("Blue flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	6:_("Red flag"),
-}
-
 importanceLabels={
 	# Translators: for a high importance email
 	2:_("high importance"),
