@@ -441,12 +441,6 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# Translators: when an email is unread
 			if unread: textList.append(_("unread"))
 			try:
-				flagIcon=selection.flagIcon
-			except COMError:
-				flagIcon=0
-			flagIconLabel=oleFlagIconLabels.get(flagIcon)
-			if flagIconLabel: textList.append(flagIconLabel)
-			try:
 				attachmentCount=selection.attachments.count
 			except COMError:
 				attachmentCount=0
@@ -482,12 +476,22 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			UIAControlType=e.cachedControlType
 			UIAClassName=e.cachedClassName
 			# We only want to include particular children.
-			if not (
-				# Any text element should be presented.
-				UIAControlType==UIAHandler.UIA_TextControlTypeId
-				# Certain other fields that have a welldefined UIA className can also be included.
-				or UIAClassName in ("CategoryField","FlagField")
-			):
+			# We only include the flagField if the object model's flagIcon or flagStatus is set.
+			# Stops us from reporting "unflagged" which is too verbose.
+			if UIAClassName=="FlagField":
+				try:
+					if not selection.flagIcon and not selection.flagStatus: continue
+				except COMError:
+					continue
+			# the category field should only be reported if the objectModel's categories property actually contains a valid string.
+			# Stops us from reporting "no categories" which is too verbose.
+			elif UIAClassName=="CategoryField":
+				try:
+					if not selection.categories: continue
+				except COMError:
+					continue
+			# And we don't care about anything else that is not a text element. 
+			elif UIAControlType!=UIAHandler.UIA_TextControlTypeId:
 				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
@@ -506,8 +510,11 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			else:
 				text=name
 			if text:
-				text+=u","
-				textList.append(text)
+				if UIAClassName=="FlagField":
+					textList.insert(0,text)
+				else:
+					text+=u","
+					textList.append(text)
 		return " ".join(textList)
 
 	value=None
