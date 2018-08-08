@@ -489,7 +489,8 @@ class ConfigManager(object):
 			profile = self._getProfile(name)
 			profile.manual = True
 			self.profiles.append(profile)
-		self._handleProfileSwitch()
+		if profile:
+			self._handleProfileSwitch()
 
 	def _markWriteProfileDirty(self):
 		if len(self.profiles) == 1:
