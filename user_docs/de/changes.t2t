@@ -6,32 +6,78 @@ Was ist neu in NVDA
 = 2018.3 =
 
 == Neue Funktionen ==
-- NVDA zeigt nun Rechtschreib- und Gramatikfehler auf Webseiten in Firefox an. (#8280)
-- Bei BrailleNote Apex und BrailleNote QT wird nun das Scrollrad vom BrailleNote-Treiber unterstützt. (#6316)
+- NVDA meldet Grammatikfehler, wenn sie von Webseiten in Mozilla Firefox und Google Chrome angemessen dargestellt werden. (#8280)
+- Inhalte, die in Webseiten als eingefügt oder gelöscht gekennzeichnet sind, werden nun in Google Chrome angezeigt. (#8558)
+- Unterstützung für BrailleNote QT und das Scrollrad von Apex BT wurde hinzugefügt, wenn BrailleNote als Braillezeile mit NVDA verwendet wird. (#5992, #5993)
 - Es wurden Skripte für die Anzeige der abgelaufenen und der Gesamtzeit des aktuellen Tracks in Foobar2000 hinzugefügt. (#6596)
 - Das Mac-Befehlstastensymbol (⌘) wird nun beim Lesen von Text mit einem beliebigen Synthesizer angezeigt. (#8366)
-- Benutzerdefinierte Rollen über das Attribut aria-roledescription werden nun in Firefox, Chrome und Internet Explorer unterstützt.
-- Neue Braille-Tabelle: Schwedisches 8-Punkt-Computerbraille. (#8227)
+- Benutzerdefinierte Regeln über das Attribut "aria-roledescription" werden nun in allen Web-Browsern unterstützt. (#8448)
+- Neue Braille-Tabellen: Tschechisches 8-Punkt-Computerbraille, Zentralkurdisch, Esperanto, Ungarisch, Schwedisch 8-Punkt-Computerbrailleschrift. (#8226, #8437)
+- Unterstützung wurde hinzugefügt, um Braillezeilen im Hintergrund automatisch zu erkennen. (#1271)
+ - Braillezeilen ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, HandyTech, Hims, SuperBraille und HumanWare BrailleNote und Brailliant BI/B werden derzeit unterstützt.
+ - Sie können diese Funktion aktivieren, indem Sie die automatische Option aus der Liste der Braillezeilen im Braillezeilen-Auswahldialog von NVDA auswählen.
+ - Weitere Informationen entnehmen Sie bitte der Dokumentation.
+- Unterstützung für verschiedene moderne Eingabefunktionen, die in den letzten Versionen von Windows 10 eingeführt wurden, wurden hinzugefügt. Dazu gehören Emoji-Panel (Fall Creators Update), Diktat (Fall Creators Update), Hardware-Tastatur-Eingabevorschläge (April 2018 Update) und Einfügen aus der Cloud-Zwischenablage (Oktober 2018 Update). (#7273)
+- Inhalte, die mit ARIA (role blockquote) als Blockzitat gekennzeichnet sind, werden nun in Mozilla Firefox 63 unterstützt. (#8577)
 
 
 == Änderungen ==
-- In den Allgemeinen Einstellungen wird die Liste verfügbarer Sprachen nicht mehr nach ISO-639-Codes, sondern nach Sprachennamen sortiert. (#7284)
+- Die Liste der verfügbaren Sprachen im Dialog "Allgemeine Einstellungen" werden nun nach Sprachnamen statt nach ISO-639 sortiert. (#7284)
 - Die Tastenkombinationen Alt+Umschalt+Tab und Windows+Tab können mit allen Freedom Scientific-Zeilen emuliert werden. (#7387)
+- Für ALVA BC680 und Protokollkonverter-Brailezeilen ist es nun möglich, der linken und rechten Smart Pad-, Daumen- und Etouch-Taste unterschiedliche Funktionen zuzuweisen. (#8230)
+- Bei ALVA BC6 Braillezeilen werden nun mit der Tastenkombination sp2+sp3 das aktuelle Datum und die Uhrzeit angezeigt, während sp1+sp2 die Windows-Taste emuliert. (#8230)
 - Der Benutzer wird nun beim Start von NVDA einmal gefragt, ob er bei der automatischen Suche nach Updates die Nutzungsstatistiken an NV Access senden möchte. (#8217)
 - Liblouis-Braille-Übersetzer wurde auf Version 3.6.0 aktualisiert. (#8365)
+- Der Pfad zur korrekten Russischen 8-Punkt-Braille-Tabelle wurde aktualisiert. (#8446)
+- eSpeak-NG aktualisiert auf 1.49.3dev Commit 910f4c2 (#8561)
 - Wenn der Benutzer zugestimmt hat, Nutzungsstatistiken an NV Access zu senden, sendet NVDA nun den Namen des aktuell verwendeten Sprachausgaben-Treibers und der Braillezeile, um eine bessere Priorisierung für zukünftige Arbeiten an diesen Treibern zu ermöglichen. (#8217)
 
 
 == Fehlerkorrekturen ==
 - Zugängliche Beschriftungen für Steuerelemente in Google Chrome werden nun leichter im Lesenmodus angezeigt, wenn die Beschriftung selbst nicht als Inhalt angezeigt wird. (#4773)
+- Benachrichtigungen werden jetzt in Zoom unterstützt. Dazu gehören zum Beispiel der Status "Stummschalten/Stummschalten" und eingehende Nachrichten (#7754).
+- Das Umschalten der Braille-Kontextdarstellung im Browse-Modus führt nicht mehr dazu, dass die Braille-Ausgabe nicht mehr folgt. (#7741)
+- ALVA BC680 Braillezeilen schlagen nicht mehr beim Initialisieren fehl. (#8106)
+- Standardmäßig führen ALVA BC6 Braillezeilen keine emulierten Systemtastaturtasten mehr aus, wenn Tastenkombinationen mit Sp2+Sp3 gedrückt werden, um interne Funktionen auszulösen. (#8230)
+- Das Drücken von Sp2 auf einer ALVA BC6 Braillezeile, um die Alt-Taste zu emulieren, funktioniert jetzt wie angekündigt. (#8360)
+- NVDA kündigt keine redundanten Änderungen am Tastaturlayout mehr an. (#7383, #8419)
+- Die Mausverfolgung ist jetzt viel genauer in Notepad und anderen Klartext-Editoren, wenn es sich um ein Dokument mit mehr als 65.535 Zeichen handelt. (#8397)
+- NVDA erkennt mehr Dialoge in Windows 10 und anderen modernen Anwendungen. (#8405)
+- Unter Windows 10. Oktober 2018 Update und Server 2019 und höher kann NVDA den Systemfokus nicht mehr verfolgen, wenn eine Anwendung das System einfriert oder mit Ereignissen überschwemmt. (#7345, #8535)
+- Anwender werden nun informiert, wenn sie versuchen, eine leere Statusleiste zu lesen oder zu kopieren. (#7789)
+- Es wurde ein Fall behoben, in dem der Zustand eines Kontrollfelds "nicht angehakt" nicht in der Sprachausgabe gemeldet wurden, wenn die Kontrollfelder zuvor halb angehakt wurde. (#6946)
+- In der Liste der Sprachen in den Allgemeinen Einstellungen von NVDA wird der Sprachname für Burmesisch unter Windows 7 korrekt angezeigt. (#8544)
+- In Microsoft Edge meldet NVDA Benachrichtigungen wie die Verfügbarkeit der Leseansicht und den Fortschritt des Seitenladens. (#8423)
+- Ähnlich wie bei anderen mehrzeiligen Textfeldern wird nun die Anzeige am Anfang eines Dokuments auf der Braillezeile so verschoben, dass das erste Zeichen des Dokuments am Anfang der Anzeige steht. (#8406)
+- Beim Navigieren in eine Liste im Web meldet NVDA nun dessen Beschriftung, wenn der Web-Autor eines angegeben hat. (#7652)
+- Bei der manuellen Zuordnung von Funktionen zu Gesten für eine bestimmte Braillezeile erscheinen diese Gesten nun immer als dieser Anzeige zugeordnet. Zuvor tauchten sie auf, als wären sie der gerade aktiven Anzeige zugeordnet. (#8108)
+- Die 64-Bit-Version von Media Player Classic wird nun unterstützt. (#6066)
+- Verschiedene Verbesserungen der Braille-Unterstützung in Microsoft Word mit aktivierter UI-Automatisierung:
+ - Bei der Fokussierung eines Word-Dokuments wurde die Fokussierung für die Sprachausgabe und auf der braillezeile reduziert. (#8407)
+ - Das Cursor-Routing auf der Braillezeile funktioniert nun auch in einer Liste in einem Word-Dokument korrekt. (#7971)
+ - Neu eingefügte Aufzählungen / Zahlen in einem Word-Dokument werden von der Sprachausgabe und auf der Braillezeile korrekt dargestellt. (#7970)
 
 
 == Änderungen für Entwickler ==
 - scriptHandler.script hinzugefügt; kann als decorator für Scripts verwendet werden. (#6266)
+- Für NVDA wurde ein Systemtest-Framework eingeführt. (#708)
+- Im Modul "hwPortUtils" wurden einige Änderungen vorgenommen: (#1271)
+ - Das Skript "listUsbDevices" liefert nun Wörterbücher mit Geräte-Informationen wie Hardware-ID und Geräte-Pfad.
+ - Wörterbücher von "listComPorts" enthalten nun auch einen uSB-ID-Eintrag für COM-Ports mit USB-VID/PID-Informationen in dessen Hardware-ID.
+- wxPython wurde aktualisiert auf 4.0.3. (#7077)
+- Da NVDA jetzt nur noch Windows 7 SP1 und höher unterstützt, wurde der Schlüssel "minWindowsVersion" entfernt, mit dem geprüft wird, ob UIA für eine bestimmte Windows-Version aktiviert werden sollte. (#8422)
+- Sie können sich nun über die neuen Aktionen "config.pre_configSave", "config.post_configSave", "config.pre_configReset" und "config.post_configReset" informieren lassen. (#7598)
+ - Das Skript "config.pre_configSave" wird verwendet, um benachrichtigt zu werden, wenn die Konfiguration von NVDA gespeichert werden soll und "config.post_configSave" wird nach dem Speichern der Konfiguration aufgerufen.
+ - Die Skripte "config.pre_configReset" und "config.post_configReset" enthalten ein Flag (für die Werkseinstellung), um festzulegen, ob die Einstellungen von der Festplatte zurückgeladen werden (false) oder auf die Standardeinstellungen zurückgesetzt werden soll (true).
+- Das Skript "config.configProfileSwitch" wurde in "config.post_configProfileSwitch" umbenannt, um der Tatsache Rechnung zu tragen, dass diese Aktion nach dem Profilwechsel aufgerufen wird. (#7598)a
+- UIA-Schnittstellen wurden aktualisiert auf Windows 10, Oktober 2018 Update und Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
+
+
+= 2018.2.1 =
+Diese Version enthält Übersetzungsaktualisierungen, da eine Funktion, die Probleme verursacht hat, in letzter Minute entfernt wurde.
 
 
 = 2018.2 =
-
 Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kindle für PC, Unterstützung für BrailleNote Touch- und BI14 Braillezeilen von Humanware, Verbesserungen für Onecore- und Sapi5-Sprachausgaben, Verbesserungen in Microsoft Outlook und vieles mehr.
 
 == Neue Funktionen ==
