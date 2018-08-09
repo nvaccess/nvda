@@ -457,14 +457,14 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# We only want to include particular children.
 			# We only include the flagField if the object model's flagIcon or flagStatus is set.
 			# Stops us from reporting "unflagged" which is too verbose.
-			if UIAClassName=="FlagField":
+			if selection and UIAClassName=="FlagField":
 				try:
 					if not selection.flagIcon and not selection.flagStatus: continue
 				except COMError:
 					continue
 			# the category field should only be reported if the objectModel's categories property actually contains a valid string.
 			# Stops us from reporting "no categories" which is too verbose.
-			elif UIAClassName=="CategoryField":
+			elif selection and UIAClassName=="CategoryField":
 				try:
 					if not selection.categories: continue
 				except COMError:
