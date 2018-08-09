@@ -485,12 +485,13 @@ class ConfigManager(object):
 			if profile.manual:
 				del self.profiles[-1]
 				profile.manual = False
-		if name:
-			profile = self._getProfile(name)
-			profile.manual = True
-			self.profiles.append(profile)
-		if profile:
-			self._handleProfileSwitch()
+		if not name:
+			return
+		profile = self._getProfile(name)
+		profile.manual = True
+		self.profiles.append(profile)
+		self._handleProfileSwitch()
+
 
 	def _markWriteProfileDirty(self):
 		if len(self.profiles) == 1:
