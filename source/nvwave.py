@@ -383,7 +383,7 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 
 fileWavePlayer = None
 fileWavePlayerThread=None
-def playWaveFile(fileName, async=True):
+def playWaveFile(fileName, asynchronous=True):
 	"""plays a specified wave file.
 """
 	global fileWavePlayer, fileWavePlayerThread
@@ -393,7 +393,7 @@ def playWaveFile(fileName, async=True):
 		fileWavePlayer.stop()
 	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
-	if async:
+	if asynchronous:
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
 		fileWavePlayerThread=threading.Thread(target=fileWavePlayer.idle)
