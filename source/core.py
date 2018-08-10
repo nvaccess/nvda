@@ -259,7 +259,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",async=False)
+				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -540,7 +540,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",async=False)
+			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible
