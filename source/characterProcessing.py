@@ -357,19 +357,25 @@ class SpeechSymbols(object):
 			fields.append("# %s" % symbol.displayName)
 		return u"\t".join(fields)
 
+_noSymbolLocalesCache = set()
 def _getSpeechSymbolsForLocale(locale):
+	if locale in _noSymbolLocalesCache:
+		raise LookupError
 	builtin = SpeechSymbols()
-	try:
-		builtin.load(os.path.join("locale", locale, "symbols.dic"))
-	except IOError:
-		raise LookupError("No symbol information for locale %s" % locale)
 	if config.conf['speech']['includeUnicodeCLDR']:
 		# Try to load CLDR data when processing is on.
+		# Load the data before loading other symbols,
+		# in order to allow translators to override them.
 		try:
 			builtin.load(os.path.join("locale", locale, "cldr.dic"),
 				allowComplexSymbols=False)
 		except IOError:
 			log.warning("No CLDR data for locale %s" % locale)
+	try:
+		builtin.load(os.path.join("locale", locale, "symbols.dic"))
+	except IOError:
+		_noSymbolLocalesCache.add(locale)
+		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
 	try:
 		# Don't allow users to specify complex symbols
