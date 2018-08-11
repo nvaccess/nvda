@@ -774,24 +774,17 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
-			LanguageRestartDialog(self, self.oldLanguage).ShowModal()
+			LanguageRestartDialog(self).ShowModal()
 
 class LanguageRestartDialog(wx.Dialog):
 
-	def __init__(self, parent, oldLanguage):
+	def __init__(self, parent):
 		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: The message displayed after NVDA interface language has been changed.
-		message = _(
-			"NVDA must be restarted for the new language to take effect.\n"
-			"Select \"restart now\" to restart NVDA and use NVDA in {newLanguage}, or \"restart later\" to continue using NVDA in {currentLanguage} until the next restart."
-		).format(
-			newLanguage=self.getLanguageDescription(config.conf["general"]["language"]),
-			currentLanguage=self.getLanguageDescription(oldLanguage)
-		)
-		sHelper.addItem(wx.StaticText(self, label=message))
+		sHelper.addItem(wx.StaticText(self, label=_("NVDA must be restarted for the new language to take effect.")))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
@@ -814,12 +807,6 @@ class LanguageRestartDialog(wx.Dialog):
 		self.Destroy()
 		config.conf.save()
 		queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-
-	@staticmethod
-	def getLanguageDescription(lang):
-		if lang == "Windows":
-			lang = languageHandler.getWindowsLanguage()
-		return languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang))
 
 class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
