@@ -23,7 +23,7 @@ import contextlib
 from copy import deepcopy
 from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
-from validate import Validator
+from configobj.validate import Validator
 from logHandler import log, levelNames
 from logging import DEBUG
 import shlobj
