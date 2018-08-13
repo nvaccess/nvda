@@ -1464,7 +1464,7 @@ class ObjectPresentationPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# object presentation settings panel.
-		balloonText = _("Report &help balloons")
+		balloonText = _("Report &notifications")
 		self.balloonCheckBox=sHelper.addItem(wx.CheckBox(self,label=balloonText))
 		self.balloonCheckBox.SetValue(config.conf["presentation"]["reportHelpBalloons"])
 
