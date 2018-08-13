@@ -12,4 +12,4 @@ Add-ons should be changed to use configobj.validate instead.
 from configobj.validate import *
 import warnings
 
-warnings.warn("Importing validate directly is deprecated. Please use configobj.validate instead", DeprecationWarning)
+warnings.warn("Importing validate directly is deprecated. Please use configobj.validate instead", DeprecationWarning, stacklevel=2)
