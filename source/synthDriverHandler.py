@@ -17,6 +17,7 @@ import languageHandler
 import speechDictHandler
 import synthDrivers
 import driverHandler
+import warnings
 
 _curSynth=None
 _audioOutputDevice=None
@@ -130,6 +131,8 @@ class SynthSetting(driverHandler.DriverSetting):
 	"""
 
 	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,displayName=None):
+		warnings.warn("synthDriverHandler.SynthSetting is deprecated. Use driverHandler.DriverSetting instead",
+			DeprecationWarning, stacklevel=3)
 		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
 
 class NumericSynthSetting(driverHandler.NumericDriverSetting):
@@ -137,12 +140,19 @@ class NumericSynthSetting(driverHandler.NumericDriverSetting):
 	"""
 
 	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10,displayName=None):
+		warnings.warn("synthDriverHandler.NumericSynthSetting is deprecated. Use driverHandler.NumericDriverSetting instead",
+			DeprecationWarning, stacklevel=3)
 		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
 
 class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
 	"""@Deprecated: use L{driverHandler.BooleanDriverSetting} instead.
 	"""
-	pass
+
+	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
+		displayName=None, defaultVal=False):
+		warnings.warn("synthDriverHandler.BooleanSynthSetting is deprecated. Use driverHandler.BooleanDriverSetting instead",
+			DeprecationWarning, stacklevel=3)
+		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing,displayName,defaultVal)
 
 class SynthDriver(driverHandler.Driver):
 	"""Abstract base synthesizer driver.
