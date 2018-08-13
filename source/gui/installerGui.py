@@ -77,7 +77,15 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 
 def doSilentInstall(startAfterInstall=True):
 	prevInstall=installer.comparePreviousInstall() is not None
-	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,silent=True,startAfterInstall=startAfterInstall)
+	startOnLogon=False if globalVars.appArgs.disableStartOnLogon else config.getStartOnLogonScreen() if prevInstall else True
+	doInstall(
+		installer.isDesktopShortcutInstalled() if prevInstall else True,
+		startOnLogon,
+		False,
+		prevInstall,
+		silent=True,
+		startAfterInstall=startAfterInstall
+	)
 
 class InstallerDialog(wx.Dialog):
 
@@ -101,8 +109,11 @@ class InstallerDialog(wx.Dialog):
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA on the Windows &logon screen")
 		self.startOnLogonCheckbox = sHelper.addItem(wx.CheckBox(self, label=startOnLogonText))
-		self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else True
-		
+		self.startOnLogonCheckbox.Value = (
+			False if globalVars.appArgs.disableStartOnLogon else
+			config.getStartOnLogonScreen() if self.isUpdate else True
+		)
+
 		shortcutIsPrevInstalled=installer.isDesktopShortcutInstalled()
 		if self.isUpdate and shortcutIsPrevInstalled:
 			# Translators: The label of a checkbox option in the Install NVDA dialog.
@@ -203,6 +214,8 @@ class PortableCreaterDialog(wx.Dialog):
 		dirDialogTitle = _("Select portable  directory")
 		directoryEntryControl = groupHelper.addItem(gui.guiHelper.PathSelectionHelper(self, browseText, dirDialogTitle))
 		self.portableDirectoryEdit = directoryEntryControl.pathControl
+		if globalVars.appArgs.portablePath:
+			self.portableDirectoryEdit.Value = os.path.abspath(globalVars.appArgs.portablePath)
 
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		copyConfText = _("Copy current &user configuration")
