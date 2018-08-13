@@ -6,29 +6,64 @@
 = 2018.3 =
 
 == Uudet ominaisuudet =
-- NVDA ilmoittaa Mozilla Firefoxissa kielioppivirheistä, kun tieto niistä välitetään verkkosivuilla asianmukaisesti. (#8280)
-- Lisätty tuki BrailleNote QT:n ja Apex BT:n vieritysrullalle, kun BrailleNotea käytetään pistenäyttönä NVDA:n kanssa. (#6316)
+- NVDA ilmoittaa Mozilla Firefoxissa ja Google Chromessa kielioppivirheistä, kun tieto niistä välitetään verkkosivuilla asianmukaisesti. (#8280)
+- Verkkosivuilla lisättäväksi tai poistettavaksi merkitty sisältö ilmoitetaan nyt Google Chromessa. (#8558)
+- Lisätty tuki BrailleNote QT:n ja Apex BT:n vieritysrullalle, kun BrailleNotea käytetään pistenäyttönä NVDA:n kanssa. (#5992, #5993)
 - Lisätty komennot nykyisen kappaleen kuluneen ajan ja kokonaiskeston ilmoittamiseen Foobar2000:ssa. (#6596)
 - Mac-komentonäppäimen symboli (⌘) puhutaan nyt luettaessa tekstiä mitä tahansa syntetisaattoria käytettäessä. (#8366)
-- Mukautettuja rooleja tuetaan nyt aria-roledescription-attribuutin välityksellä Firefoxissa, Chromessa ja Internet Explorerissa.
-- Uusi pistetaulukko: ruotsalainen 8 pisteen tietokonemerkistö. (#8227)
+- Mukautettuja rooleja tuetaan nyt aria-roledescription-attribuutin välityksellä kaikissa verkkoselaimissa. (#8448)
+- Uusia pistetaulukoita: tšekkiläinen 8 pisteen tietokonemerkistö, keski-kurdi, esperanto, unkarilainen, ruotsalainen 8 pisteen tietokonemerkistö. (#8226, #8437)
+- Lisätty tuki automaattiselle taustalla tapahtuvalle pistenäytön tunnistukselle. (#1271)
+ - Tällä hetkellä tuetaan ALVA-, Baum/HumanWare/APH/Orbit-, Eurobraille-, Handy Tech-, Hims-, SuperBraille- ja HumanWare BrailleNote- sekä Brailliant BI/B -näyttöjä.
+ - Toiminto voidaan ottaa käyttöön valitsemalla vaihtoehto "automaattinen" pistenäyttöluettelosta NVDA:n Valitse pistenäyttö -valintaikkunasta.
+ - Lisätietoja löytyy käyttöoppaasta.
+- Lisätty tuki useille Windows 10:n viimeisimmissä versioissa esitellyille moderneille syöttöominaisuuksille. Näitä ovat emojipaneeli (Fall Creators -päivitys), sanelu (Fall Creators -päivitys), fyysisen näppäimistön syöttöehdotukset (April 2018 -päivitys) sekä pilvileikepöydän liittäminen (October 2018 -päivitys). (#7273)
+- Sisältöä, joka on merkitty sisennetyksi kappaleeksi ARIAn blockquote-roolimääritystä käyttäen, tuetaan nyt Mozilla Firefox 63:ssa. (#8577)
 
 
 == Muutokset ==
 - Yleiset asetukset -valintaikkunan käytettävissä olevien kielten luettelo  lajitellaan nyt ISO 639 -koodien asemesta kielen nimen perusteella. (#7284)
 - Lisätty oletussyötekomentoja Alt+Vaihto+Sarkain- ja Windows+Sarkain-näppäinyhdistelmille kaikille tuetuille Freedom Scientificin pistenäytöille. (#7387)
+- ALVA BC680- ja protokollamuunnin, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)
+- ALVA BC6 -näytöissä näppäinyhdistelmä sp2+sp3 puhuu päivämäärän ja ajan, kun taas sp1+sp2 jäljittelee Windows-näppäintä. (#8230)
 - Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, haluaako hän sallia käyttötilastojen lähettämisen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
 - Jos käyttäjä on sallinut käyttötilastojen lähettämisen NV Accessille, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.6.0. (#8365)
+- Venäläisen 8 pisteen pistetaulukon tiedostopolku korjattu. (#8446)
+- Päivitetty eSpeak-ng versioksi 1.49.3dev muutos 910f4c2 (#8561)
 
 
 == Korjatut ohjelmavirheet ==
 - Esteettömät selitteet  ilmoitetaan nyt herkemmin Google Chromessa selaustilassa oltaessa kun selite ei näy sisällön osana. (#4773)
+- Zoomissa tuetaan nyt ilmoituksia. Niitä ovat esim. mykistyksen/mykistyksen poiston tila sekä saapuvat viestit.(#7754)
+- Pistekirjoitustuloste ei enää lakkaa seuraamasta, kun Kohdistuskontekstin näyttämisasetusta vaihdetaan selaustilassa oltaessa. (#7741)
+- Korjattu ALVA BC680 -pistenäyttöjen alustuksen ajoittainen epäonnistuminen. (#8106)
+- ALVA BC6 -näytöt eivät enää oletusarvoisesti suorita emuloitujen näppäimien painalluksia painettaessa sp2+sp3-näppäimiä sisältäviä  näppäinkomentoja sisäisen toiminnallisuuden käynnistämiseksi. (#8230)
+- Alt-näppäimen emulointi ALVA BC6 -näytön sp2-näppäintä painamalla toimii nyt, kuten on ilmoitettu. (#8360)
+- NVDA ei enää puhu tarpeettomia näppäinasettelun muutoksia. (#7383, #8419)
+- Hiiren seuranta on nyt paljon tarkempaa Muistiossa sekä muissa pelkkäteksti-muokkaussäätimissä oltaessa dokumentissa, jossa on enemmän kuin 65535 merkkiä. (#8397)
+- NVDA tunnistaa enemmän valintaikkunoita Windows 10:ssä ja muissa moderneissa sovelluksissa. (#8405)
+- Järjestelmäkohdistuksen seuraaminen ei enää epäonnistu Windows 10:n October 2018 -päivityksessä ja Server 2019:ssä ja uudemmissa sovelluksen jäädessä jumiin tai ryöpyttäessä järjestelmää tapahtumilla. (#7345, #8535)
+- Käyttäjille ilmoitetaan heidän yrittäessään lukea tai kopioida tyhjää tilariviä. (#7789)
+- Korjattu tilanne, jossa säätimien "ei valittu" -tilaa ei ilmoiteta puheella, mikäli kyseinen säädin oli aiemmin osittain valittu. (#6946)
+- Kielen nimi näytetään burmalle asianmukaisesti NVDA:n yleisten asetusten kieliluettelossa Windows 7:ssä. (#8544)
+- NVDA puhuu Microsoft Edgessä ilmoitukset, kuten lukunäkymän saatavuuden ja sivun lataamisen edistymisen. (#8423)
+- Kun pistenäytöllä ollaan dokumentin alussa, teksti näkyy nyt näytöllä siten, että dokumentin ensimmäinen merkki on näytön vasemmassa reunassa kuten muissakin monirivisissä tekstikentissä. (#8406)
+- Kun verkkosivulla siirrytään luetteloon, NVDA ilmoittaa nyt sen selitteen, mikäli sivun tekijä on sen määrittänyt. (#7652)
+- Kun tietyn pistenäytön toimintoja liitetään syötekomentoihin, kyseiset syötekomennot näkyvät määriteltyinä juuri sille näytölle. Aiemmin ne näkyivät ikään kuin ne olisi määritelty sillä hetkellä käytössä olevalle näytölle. (#8108)
+- Lisätty tuki Media Player Classicin 64-bittiselle versiolle. (#6066)
+- Useita parannuksia Microsoft Wordin pistenäyttötukeen UI Automationin ollessa käytössä:
+ - Vähennetty kohdistuksen näyttämisen puheliaisuutta sekä puheella että pistekirjoituksella, kun kohdistus siirretään Word-dokumenttiin. (#8407)
+ - Kohdistimen siirtäminen pistenäytön kosketuskohdistinnäppäimillä toimii nyt asianmukaisesti oltaessa luettelossa Word-dokumentissa. (#7971)
+ - Äskettäin Word-dokumenttiin lisätyt luettelomerkit/numerot ilmaistaan asianmukaisesti sekä puheella että pistenäytöllä. (#7970)
 
 
 == Muutokset kehittäjille ==
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
+
+= 2018.2.1 =
+Tämä versio sisältää käännöspäivityksiä, jotka johtuivat ongelmia aiheuttaneen ominaisuuden viime hetken poistosta.
 
 
 = 2018.2 =
