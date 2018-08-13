@@ -188,7 +188,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._sendPacket(EB_VISU, EB_VISU_DOT, '0')
 				# A device identification results in multiple packets.
 				# Make sure we've received everything before we continue
-				while self._dev.waitForRead(self.timeout):
+				while self._dev.waitForRead(self.timeout*2):
 					continue
 				if self.numCells and self.deviceType:
 					break
