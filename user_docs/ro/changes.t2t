@@ -5,20 +5,31 @@ Ce este nou în NVDA
 = 2018.3 =
 
 == Noi funcționalități ==
-- NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox. (#8280)
+- NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox și Google Chrome. (#8280)
+- Conținutul care este marcat ca fiind inserat sau șters din paginile web, este acum raportat în Google Chrome. (#8558)
 - Când Braillenote este folosit ca afișaj braille, NVDA este acum compatibil cu joysticurile de rulare ale tastaturilor BrailleNote QT și Apex BT. (#6316)
 - S-au creeat noi scripturi pentru raportarea timpului trecut și timpului total al titlului actual în Foobar2000. (#6596)
 - Acum, simbolul tastei de comandă Mac (⌘) este anunțat la citirea textului cu orice sintetizator. (#8366)
-- Prin atributul aria-roledescription, rolurilr personalizate sunt suportate acum în Firefox, Chrome și Internet Explorer.
-- Tabel braille nou: Suedeză, braille în 8 puncte pentru calculator. (#8227)
-
+- Prin atributul aria-roledescription, rolurilr personalizate sunt suportate acum în toate navigatoarele web.
+- Tabele braille noi: cehă 8 puncte, curdă centrală, esperanto, maghiară și suedeză, braille în 8 puncte pentru calculator. (#8227)
+- A fost adăugat suportul pentru detectarea automată a afișajelor braille din fundal. (#1271)
+- Afișajele ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille și HumanWare BrailleNote și Brailliant BI/B sunt suportate acum.
+ - Puteți activa această caracteristică selectând opțiunea automată din lista afișajelor braille, care se află în dialogul selectării afișajelor braille.
+  - Vă rugăm să consultați documentația pentru mai multe detalii.
+  - S-a adăugat suportul pentru diverse caracteristici de intrare moderne introduse în versiunile recente de Windows 10. Acestea includ panoul de emoji (Fall Creators Update), dictarea (Fall Creators Update), sugestiile de intrare ale tastatturii hardware (April 2018 Update) și lipirea pe planșeta cloud (October 2018 Update). (#7273)
+  - Conținutul marcat ca citat bloc utilizându-se ARIA (role blockquote) este suportat acum în Mozilla Firefox 63. (#8577)
+  
 
 == Modificări ==
-- Acum, lista de limbi disponibile în dialogul setărilor generale este sortată pe baza numelor limbilor și nu pe baza codurilor ISO 639. (#7284)
+- Acum, lista de limbi disponibile în dialogul setărilor generale este sortată pe baza numelor limbilor, nu pe baza codurilor ISO 639. (#7284)
 - S-au adăugat gesturile implicite pentru alt shift tab și pentru windows tab cu toate afișajele braille suportate de la Freedom Scientific. (#7387)
+- Pentru afișajele braille ALVA BC680 și protocol converter, este posibilă atribuirea unor funcții diverse la smart pad-ul stâng sau la cel drept, la tastele tumb sau etouch. (#8230)
+- Pentru afișajele ALVA BC6,combinația de taste sp2+sp3 va anunța data și ora curentă, în timp ce sp1+sp2 simulează tasta Windows (#8230)
 - La prima pornire a acestei versiuni NVDA, utilizatorii vor fi întrebați dacă acceptă ca NVDA să trimită statistici despre modul de folosire către NV Access de fiecare dată când NVDA  caută automat actualizări. (#8217)
 - Dacă utilizatorul acceptă trimiterea statisticilor către NV Access în timpul verificării pentru actualizări noi, NVDA va trimite numele driverului pentru sintetizator și numele driverului pentru afișajul braille conectat. Aceste date vor ajuta la priorizarea lucrărilor din viitor cu referință la sintetizatoare și afișaje braille. (#8217)
 - S-a actualizat traducătorul braille liblouis la versiunea 3.6.0. (#8365)
+- S-a actualizat calea pentru tabelul rusesc în opt puncte pentru calculator. (#8446)
+- S-a actualizat Espeak-NG la 1.49.3dev commit 910f4c2 (#8561)
 
 
 == Defecte rezolvate ==

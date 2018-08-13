@@ -22,7 +22,7 @@ NVDAの主な特徴は以下の通りです。
 - 80以上の言語に対応した音声エンジンを同梱
 - 利用可能な場合、フォント名、サイズ、スタイル及びスペルミスといった書式とドキュメント情報を報告可能
 - マウスカーソル位置のテキスト自動読み上げと、音によりマウスカーソルの位置を報告できるオプション
-- 数多くの点字ディスプレイのサポートと、点字ディスプレイに点字入力キーがある場合の点字入力
+- 数多くの点字ディスプレイのサポートと、点字ディスプレイに点字入力キーがある場合の点字入力、接続された点字ディスプレイの自動検出
 - インストールなしでUSBメモリーや他の携帯型メディアから実行が可能
 - 簡単に利用できるトーキングインストーラー
 - 54ヶ国語への翻訳
@@ -47,6 +47,7 @@ NVDAでサポートしているその他の音声エンジンについては[サ
 ++ 点字ディスプレイサポート ++[BrailleSupport]
 点字ディスプレイがあれば、NVDAは情報を点字で出力することができます。
 点字ディスプレイからの1級点字および2級点字の文字入力にも対応しています。
+多くの機種について、NVDAは点字ディスプレイの接続を自動的に検出します。
 詳細は[サポートされている点字ディスプレイ #SupportedBrailleDisplays]を参照してください。
 
 NVDAでは、多くの言語の点字コードをサポートしており、その多くは、略字、標準点字及びコンピューター点字にも対応しています。
@@ -600,6 +601,7 @@ NVDA は情報を点字ディスプレイに表示することができます。
 点字ディスプレイにパーキンス式キーボードが備わっている場合は、1級点字または2級点字による入力もできます。
 
 [対応している点字ディスプレイ #SupportedBrailleDisplays] も参照してください。
+このセクションでは、それぞれの機種が NVDA の自動検出に対応しているかどうかも説明しています。
 点字ディスプレイの設定については [NVDA設定ダイアログ #NVDASettings] → [点字カテゴリ #BrailleSettings]を参照してください。
 
 ++ コントロールの種類、状態、ランドマークの表記 ++[BrailleAbbreviations]
@@ -1231,9 +1233,12 @@ NVDA設定ダイアログを開かないでこの設定を切り替えたい場�
 このコンボボックスにはシステムで利用可能な点字ディスプレイドライバーが表示されます。
 項目を移動するには矢印キーを押します。
 
+「自動」は接続された点字ディスプレイを自動的に探す機能です。
+「自動」が選択されていて、USB または Bluetooth で接続された点字ディスプレイが検出されたときには、NVDA は自動的にその点字ディスプレイに接続します。
+
 点字なしは、点字ディスプレイを使用しないことを意味します。
 
-サポートされている点字ディスプレイの一覧は、[サポートされている点字ディスプレイ #SupportedBrailleDisplays]セクションを参照してください。
+サポートされている点字ディスプレイの一覧と、各機種の自動検出への対応状況については、[サポートされている点字ディスプレイ #SupportedBrailleDisplays]セクションを参照してください。
 
 ==== ポート ====[SelectBrailleDisplayPort]
 このオプションが有効のとき、選択された点字ディスプレイとの通信を行うポートや接続方法を選ぶことができます。
@@ -1891,16 +1896,34 @@ Windows 10 では OneCore あるいは「モバイル」という名前の新し
 + サポートされている点字ディスプレイ +[SupportedBrailleDisplays]
 この章では、NVDAでサポートされている点字ディスプレイについて述べます。
 
-++ Freedom Scientific社製Focus/PAC Mateシリーズ ++[FreedomScientificFocus]
-すべてのUSBまたはbluetooth接続された[Freedom Scientific http://www.freedomscientific.com/]社製のFocus及びPAC Mateディスプレイをサポートしています。
+++ 自動検出に対応している点字ディスプレイ ++[AutomaticDetection]
+NVDA は USB または Bluetooth で接続された点字ディスプレイを自動検出して接続することができます。
+この機能は NVDA 設定ダイアログの [点字カテゴリ #BrailleSettings] で「点字ディスプレイの選択」を「自動」にすることで有効になります。
+このオプションは初期状態で選択されています。
+
+NVDAが自動検出できる点字ディスプレイは以下の通りです。
+- Handy Tech 点字ディスプレイ
+- Baum/Humanware/APH/Orbit 点字ディスプレイ
+- HumanWare Brailliant BI/Bシリーズ
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 シリーズ
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ
+- Eurobraille Esys/Esytime/Iris 点字ディスプレイ
+-
+
+++ Freedom Scientific Focus/PAC Mateシリーズ ++[FreedomScientificFocus]
+すべてのUSBまたはbluetooth接続された [Freedom Scientific http://www.freedomscientific.com/] Focus および PAC Mate 点字ディスプレイをサポートしています。
 使用するには、Freedom Scientific社製の点字ディスプレイ用ドライバーが必要です。
 お持ちでない場合は、 http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
-このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific社製の Focus/PAC Mate ディスプレイをサポートしています。
+このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific Focus/PAC Mate 点字ディスプレイをサポートしています。
 64ビット版Windowsが実行されていて、ドライバーがすでに他のスクリーンリーダーによってインストールされている場合であっても、他のスクリーンリーダーがNVDAに必要なファイルをインストールしていない可能性もあるため、このリンク先にあるドライバーをインストールする必要があるかもしれません。
 
 NVDAの初期設定では、NVDA はUSBまたはBluetoothによる接続を自動選択します。
 しかし点字設定で "USB" または "Bluetooth" を選ぶことで、接続方法を限定することができます。
 例えばBluetoothで Focus ディスプレイと通信しながら、充電のために USB ポートをつなぎたいときに役立ちます。
+
+これらの機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、これらのディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -1991,11 +2014,11 @@ ALVA Bluetooth ユーティリティーでペアリングした Bluetooth 接続
 | 左矢印キー | spLeft |
 | 右矢印キー | spRight |
 | Enterキー | spEnter, enter |
-| 日付と時刻の報告 | sp1+sp2 |
+| 日付と時刻の報告 | sp2+sp3 |
 | NVDAメニュー | sp1+sp3 |
 | Windows+Dキー (すべてのアプリを最小化) | sp1+sp4 |
 | Windows+Bキー (システムトレイにフォーカスを移動) | sp3+sp4 |
-| Windowsキー | sp2+Sp3, windows |
+| Windowsキー | sp1+sp2, windows |
 | Alt+Tabキー | sp2+sp4 |
 | Ctrl+Homeキー | t3+spUp |
 | Ctrl+Endキー | t3+spDown |
@@ -2005,8 +2028,8 @@ ALVA Bluetooth ユーティリティーでペアリングした Bluetooth 接続
 | Ctrl キー | control |
 %kc:endInclude
 
-++ Handy Tech社製ディスプレイ ++[HandyTech]
-USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech http://www.handytech.de/]社製ディスプレイをサポートしています。
+++ Handy Tech 点字ディスプレイ ++[HandyTech]
+USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech http://www.handytech.de/] 点字ディスプレイをサポートしています。
 古いUSB接続のディスプレイを使用する場合は、Handy Tech社からUSBドライバーを入手してインストールする必要があります。
 
 以下の機種は NVDA が直接サポートしていませんが、[Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] と NVDA アドオンを使うことで使用できます:
@@ -2014,7 +2037,7 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 - Bookworm
 - Modular ディスプレイでファームウェアのバージョンが 1.13 またはそれ以下の場合。ファームウェアはバージョンアップされる場合があります。
 -
-以下は Handy Tech 社製ディスプレイの NVDA用キー割り当てです。
+以下は Handy Tech 点字ディスプレイの NVDA用キー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
 %kc:beginInclude
 || 名称 | キー |
@@ -2043,6 +2066,8 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 [MDV http://www.mdvbologna.it/]社製のLilliディスプレイをサポートしています。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
+
+この機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、これらのディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -2099,6 +2124,8 @@ USB HID モードはその他の環境でも利用できます。
 [hedo Reha-Technik http://www.hedo.de/]製のhedo ProfiLine USBに対応しました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
 
+この機種では点字ディスプレイの自動検出は利用できません。
+
 以下は、このディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
 %kc:beginInclude
@@ -2115,6 +2142,8 @@ USB HID モードはその他の環境でも利用できます。
 ++ hedo MobilLine USB ++[HedoMobilLine]
 [hedo Reha-Technik http://www.hedo.de/]製のhedo MobilLine USBがサポートされました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
+
+この機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、このディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -2258,6 +2287,8 @@ NVDA で利用するときのキー割り当ては以下のとおりです。
 これらのディスプレイの情報は http://www.seika-braille.com/ を参照してください。
 製造者が提供する USB ドライバーをインストールしておく必要があります。
 
+これらの機種では点字ディスプレイの自動検出は利用できません。
+
 NVDA で利用するときのキー割り当ては以下のとおりです。
 キーの場所の説明は点字ディスプレイのマニュアルをお読みください。
 %kc:beginInclude
@@ -2283,9 +2314,10 @@ NVDA で利用するときのキー割り当ては以下のとおりです。
 - BRAILLEX Live 20, BRAILLEX Live および BRAILLEX Live Plus (USB およびBluetooth)
 -
 
+これらの機種では点字ディスプレイの自動検出は利用できません。
+
 BrxCom がインストールされていれば NVDA は BrxCom を使います。
 BrxCom は点字ディスプレイからキーボード入力を可能にするツールで、スクリーンリーダーに依存せず動作します。
-NVDAに対応した新しいバージョンの BrxCom は Papenmeier からリリースされる予定です。
 キーボード入力は Trio および BRAILLEX Live で利用可能です。
 
 多くの機種に Easy Access Bar (EAB) があり、直感的ですばやい操作ができます。
@@ -2363,7 +2395,8 @@ Trio モデルでは点字キーボードの前面に4つのキーがありま�
 -
 
 これらのディスプレイの接続方法はシリアルポートだけです。
-したがって、NVDA設定ダイアログの点字カテゴリでこのドライバを選んでから、ディスプレイが接続されているポートを選択する必要があります。
+したがって、この機種では点字ディスプレイの自動検出は利用できません。
+[点字ディスプレイの選択ダイアログ #SelectBrailleDisplay]でこのドライバーを選んでから、ディスプレイが接続されているポートを選択する必要があります。
 
 一部の機種には、直感的かつ高速な動作を可能にするイージーアクセスバー（EAB）が備わっています。
 EABは4方向に移動させることができ、一般的に各方向に2つのスイッチがあります。
@@ -2540,7 +2573,8 @@ NVDA は [ONCE http://www.once.es/] の EcoBraille ディスプレイに対応�
 - EcoBraille Plus
 -
 
-NVDA設定ダイアログの点字カテゴリで、点字ディスプレイが接続されているポートを指定できます。
+[点字ディスプレイの選択ダイアログ #SelectBrailleDisplay] で、点字ディスプレイが接続されているポートを指定できます。
+これらの機種では点字ディスプレイの自動検出は利用できません。
 
 以下は EcoBraille ディスプレイのコマンド割り当てです。
 これらのキーの場所の詳細は [EcoBraille ドキュメント ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] を参照してください。
@@ -2668,6 +2702,8 @@ Iris および Esys ディスプレイは点字キーボードとテンキーを
 
 点字入力キーを備えている機器を使う場合は、BRLTTY 自身が文字入力の処理を行います。
 NVDAの点字入力テーブル設定は有効ではありません。
+
+BRLTTY では点字ディスプレイの自動検出は利用できません。
 
 以下はNVDA用に割り当てられたBRLTTYのコマンドです。
 BRLTTY用のコマンドが、ディスプレイのコントロールにどのように割り当てられているかに関しては、[BRLTTY key tables documentation http://www.brltty.com/doc/KeyBindings/]を確認してください。
