@@ -31,7 +31,7 @@ import wx
 import json
 
 from configobj import ConfigObj, ConfigObjError
-from validate import Validator
+from configobj.validate import Validator
 
 import config
 import globalVars
