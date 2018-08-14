@@ -211,6 +211,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
+	import configobj
+	log.info("Using configobj version %s with validate version %s"%(configobj.__version__,configobj.validate.__version__))
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)

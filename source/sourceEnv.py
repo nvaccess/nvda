@@ -17,7 +17,7 @@ PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "scons", "src", "engine"),
 	os.path.join(TOP_DIR, "include", "pyserial"),
 	os.path.join(TOP_DIR, "include", "comtypes"),
-	os.path.join(TOP_DIR, "include", "configobj", "src", "configobj"),
+	os.path.join(TOP_DIR, "include", "configobj", "src"),
 	os.path.join(TOP_DIR, "include", "wxPython"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
 )

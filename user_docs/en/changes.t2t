@@ -6,8 +6,8 @@ What's New in NVDA
 = 2018.4 =
 
 == New Features ==
- 
- 
+
+
 == Changes ==
 - "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
 - IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
@@ -24,6 +24,10 @@ What's New in NVDA
  - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
 - If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
  - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+
+
+== Changes for Developers ==
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
 
 
 = 2018.3 =
