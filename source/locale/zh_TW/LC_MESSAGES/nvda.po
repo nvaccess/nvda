@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 00:10+1000\n"
-"PO-Revision-Date: 2018-06-26 11:07+0800\n"
+"POT-Creation-Date: 2018-08-03 19:07+1000\n"
+"PO-Revision-Date: 2018-08-09 07:59+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.13\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -84,11 +84,6 @@ msgstr "未知的語言"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "未知的輸入法"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{layout} - {language}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -369,6 +364,14 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "pwdedt"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "del"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "ins"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -506,6 +509,18 @@ msgstr "總是填入點顯器"
 msgid "Only when scrolling back"
 msgstr "僅當往前捲動時"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "自動偵測"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "藍牙"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -536,25 +551,25 @@ msgstr "lv %s"
 #. Occurences of %s are replaced with the corresponding row numbers.
 #, python-brace-format
 msgid "r{rowNumber}-{rowSpan}"
-msgstr "從第 {rowNumber} 列向下合併了 {rowSpan} 列"
+msgstr "r{rowNumber}-{rowSpan}"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
 #, python-brace-format
 msgid "r{rowNumber}"
-msgstr "第 {rowNumber} 列"
+msgstr "r{rowNumber}"
 
 #. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
 #. Occurences of %s are replaced with the corresponding column numbers.
 #, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
-msgstr "從第 {columnNumber} 欄向右合併了 {columnSpan} 欄"
+msgstr "c{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
 #, python-brace-format
 msgid "c{columnNumber}"
-msgstr "第 {columnNumber} 欄"
+msgstr "c{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -575,9 +590,20 @@ msgstr "系統焦點"
 msgid "to review"
 msgstr "檢閱游標"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "自動偵測"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "未知的點顯器"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "藍牙串列：{port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "串列埠: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -646,6 +672,11 @@ msgstr "保加利亞文八點（電腦）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "中库尔德文一級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "威爾斯文一級"
 
@@ -653,6 +684,11 @@ msgstr "威爾斯文一級"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "威爾斯文二級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "捷克文八點（電腦）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -753,6 +789,11 @@ msgstr "英文（美國）一級"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "英文（美國）二級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "世界文一級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -858,6 +899,11 @@ msgstr "匈牙利文八點（電腦）"
 #. braille settings dialog.
 msgid "Hungarian grade 1"
 msgstr "匈牙利文一級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
+msgstr "匈牙利文二級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1038,6 +1084,11 @@ msgstr "俄文一級"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "梵文一級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "瑞典文八點（電腦）"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2510,15 +2561,25 @@ msgstr "滑桿指標"
 msgid "calendar"
 msgstr "行事曆"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "圖表項目"
-
 msgid "video"
 msgstr "影片"
 
 msgid "audio"
 msgstr "音訊"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "圖表項目"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "已刪除"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "已插入"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3747,6 +3808,14 @@ msgstr "讀出焦點所在的物件，連按兩次，拼讀其資訊。"
 msgid "No status line found"
 msgstr "找不到狀態列"
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "沒有狀態列資訊"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "無法複製狀態列內容至剪貼簿"
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4652,28 +4721,23 @@ msgstr "鍵盤，所有配置"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "阿比西尼亞官話"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "阿拉貢語"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "阿拉伯語"
+msgid "Central Kurdish"
+msgstr "中庫爾德語"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "尼泊爾語"
+msgid "Northern Kurdish"
+msgstr "北庫爾德語"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "塞爾維亞語(拉丁)"
+msgid "Burmese"
+msgstr "緬甸語"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5820,7 +5884,7 @@ msgstr "第%s列"
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
 #, python-format
 msgid "through %s"
-msgstr "合併%s個儲存格"
+msgstr "跨越到第 %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -5831,12 +5895,12 @@ msgstr "第%s欄"
 #. (example output: through row 5 column 3).
 #, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "合併{row}個列儲存格{column}個欄儲存格"
+msgstr "合併到第 {row}  第 {column} 欄"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
 msgid "with {rowCount} rows and {columnCount} columns"
-msgstr "有{rowCount}列{columnCount}欄"
+msgstr "有{rowCount}列 {columnCount}欄"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
 #, python-format
@@ -5853,7 +5917,7 @@ msgstr "有%s列"
 msgid "level %s"
 msgstr "第%s級"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "有%s個項目"
@@ -5965,17 +6029,9 @@ msgstr "背景圖案 {pattern}"
 msgid "line %s"
 msgstr "第%s行"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "已插入"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "沒有插入"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "已刪除"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -7124,14 +7180,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "關"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "沒有表情符號"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 系列/協議轉換器"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "藍牙串列埠：{portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7152,15 +7207,6 @@ msgstr "切換HID鍵盤模擬"
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit braille 點顯器"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "串列埠: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7707,6 +7753,7 @@ msgstr "安裝 (&I)..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "移除 (&R)"
@@ -9258,7 +9305,7 @@ msgstr "無法設定標題，請將文件格式設定中的讀出表格的「列
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "設定第{rowNumber}列 第{columnNumber}欄為欄標題"
+msgstr "設定第{rowNumber}列 第{columnNumber}欄為欄標題的開頭"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -9287,7 +9334,7 @@ msgstr ""
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "設定第{rowNumber}列 第{columnNumber}欄為列標題"
+msgstr "設定第{rowNumber}列 第{columnNumber}欄為列標題的開頭"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
@@ -10682,6 +10729,25 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{layout} - {language}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "阿比西尼亞官話"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "阿拉伯語"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "尼泊爾語"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "塞爾維亞語(拉丁)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "開啟NVDA語音設定對話框"
