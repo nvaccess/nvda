@@ -7,27 +7,74 @@ Traduzido pela Equipa portuguesa do NVDA
 
 == Novas Funcionalidades ==
 - O NVDA passa a anunciar os erros gramaticais, quando reportados pelo Mozilla Firefox em páginas Web. (#8280)
+- Conteúdo marcado como sendo inserido ou apagado, em páginas web, passa a ser anunciado no Google Chrome. (#8558)
 - Adicionado suporte para as rodas de deslocamento dos BrailleNote QT e Apex BT, quando usados como linha Braille do NVDA. (#6316)
 - Adicionado comando para anunciar o tempo total e já reproduzido da pista actual no Foobar2000. (#6596)
 - O símbolo da tecla Comando do Mac (⌘) passa a ser anunciada ao ler texto com qualquer sintetizador. (#8366)
 - Funções personalizadas via atributos aria-roledescription passam a ser suportados no Firefox, Chrome e Internet Explorer.
-- Nova tabela Braille: Sueco Braille informático de 8 pontos. (#8227)
+- Novas tabelas Braille: Checo 8 pontos, Kurdo Central, Esperanto, Húngaro e Sueco Braille informático de 8 pontos. (#8227)
+- Adicionado suporte para detecção automática de linhas braille em segundo plano. (#1271)
+ - São já suportadas as linhas ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, HandyTech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B.
+ - Pode activar esta funcionalidade, seleccionando "Automático" na opção "Linha Braille" do diálogo "Seleccionar linha Braille".
+ - Por favor, consulte a documentação para mais informações.
+- Adicionado suporte para várias formas modernas de introdução de texto, introduzidas em versões recentes do Windows 10. Estão incluidas o painel de emoji (update Fall Creators), ditado (Update Fall Creators), sugestões para o teclado de hardware (Update Abril 2018) e colar do cloud clipboard (Update Outubro 2018). (#7273)
+- Conteúdo marcado como citação usando ARIA (role blockquote) passa a ser suportado no Mozilla Firefox 63. (#8577)
 
 
 == Alterações ==
-- A lista de idiomas disponíveis, na secção Geral das configurações do NVDA, passa a ser ordenada pelo nome do idioma e não pelo código ISO 639. (#7284)
+- A lista de idiomas disponíveis, na secção "Gerais" das configurações do NVDA, passa a ser ordenada pelo nome do idioma e não pelo código ISO 639. (#7284)
 - Adicionados comandos padrão para simular o alt shift tab e windows tab em todas as linhas Braille da Freedom Scientific suportadas. (#7387)
-- O utilizador será perguntado, apenas uma vez, no arranque do NVDA se permitem o envio de dados de utilização para a NV Access, ao verificar automaticamente por actualizações. (#8217)
+- Para as linhas Braille da ALVA, BC680 e protocol converter, já é possível associar funções diferentes para as teclas smart pad, thumb e etouch  da esquerda e direita. (#8230)
+- Para as linhas Braille ALVA BC6, a combinação sp2+sp3 anunciará a data e hora, enquanto que sp1+sp2 simulará a tecla Windows. (#8230)
+- O utilizador será questionado, apenas uma vez, no arranque do NVDA se permitem o envio de dados de utilização para a NV Access, ao verificar automaticamente por actualizações. (#8217)
 - Ao verificar por actualizações, se o utilizador concordou com a recolha de dados de utilização pela NV Access, o NVDA irá enviar o nome dos drivers do sintetizador e da linha Braille em uso, para ajudar na melhor prioritização do trabalho futuro nesses drivers. (#8217)
 - Actualizado o conversor Braille Liblouis para a versão 3.6.0. (#8365)
+- Actualizado o caminho para a tabela Braille correcta Russo 8 pontos. (#8446)
+- Actualizado o eSpeak-ng to 1.49.3dev (commit 910f4c2). (#8561)
 
 
 == Correções ==
 - As etiquetas acessíveis de controlos no Google Chrome, quando não fazem parte do conteúdo, são anunciadas mais prontamente em modo de navegação. (#4773)
+- As notificações já são suportadas no Zoom. Por exemplo, estado mute/unmute e mensagens recebidas. (#7754)
+- Alternar o contexto seguido pela linha Braille em modo de navegação já não provoca a paragem da alternância automática do contexto do Braille. (#7741)
+- As linhas Braille ALVA BC680 já não falham, intermitentemente, a inicialização. (#8106)
+- Por padrão, as linhas ALVA BC6 já não executam a simulação de teclas do sistema ao pressionar combinações de teclas envolvendo sp2+sp3 para activar funcionalidades internas. (#8230)
+- Pressionar sp2 numa linha ALVA BC6 para simular a tecla alt já funciona como previsto. (#8360)
+- O NVDA já não anuncia alterações de esquema de teclado redundantes. (#7383, #8419)
+- O seguimento do rato é agora mais preciso no Notepad e noutros controlos de edição de texto simples, num documento com mais de 65535 caracteres. (#8397)
+- O NVDA passa a reconhecer mais diálogos do Windows 10 e de outras aplicações modernas. (#8405)
+- Na actualização de Outubro de 2018 do Windows 10, Server 2019 e seguintes, o NVDA já não perde o seguimento do foco quando uma aplicação congela ou perde o foco. (#7345, #8535)
+- O utilizador passa a ser informado se tentar ler ou copiar o conteúdo da barra de estado quando esta se encontrar vazia. (#7789)
+- Corrigida a situação em que o estado "Não marcado" de uma caixa de verificação não é anunciado por voz se antes estava parcialmente marcada. (#6946)
+- Na lista de idiomas no diálogo Gerais das configurações do NVDA o nome do idioma Birmanês é corretamente anunciado em Windows 7. (#8544)
+- No Microsoft Edge, o NVDA passa a anunciar as notificações, tais como a disponibilidade da Vista de leitura ou o progresso de carregamento da página. (#8423)
+- Tal como noutros campos de texto multilinha, quando o foco está posicionado no início do texto de um documento, o texto na linha Braille, é posicionado de maneira a que o primeiro caracter do texto ocupe a primeira célula da linha. (#8406)
+- Ao navegar numa página, quando se entra numa lista, o NVDA anunciará o nome da lista, se ele foi indicado pelo autor da página. (#7652)
+- Ao associar, manualmente, comandos a teclas, para uma linha Braille específica, essas teclas passarão a aparecer como associadas para essa linha, e não para a linha activa no momento. (#8108)
+- A versão de 64-bit do Media Player Classic já é suportada. (#6066)
+- Melhoramentos no suporte Braille no Microsoft Word com UI Automation activada:
+ - Reduzida a verbosidade da apresentação do foco quer em voz quer em Braille, ao focar um documento do Word. (#8407)
+ - As teclas routing da linha Braille já funcionam correctamente numa lista de um documento Word. (#7971)
+ - As marcas e os números introduzidos num documento Word já são correctamente anunciados em voz e Braille. (#7970)
 
 
 == Alterações para Desenvolvedores ==
 - Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
+- A system test framework has been introduced for NVDA. (#708)
+- Some changes have been made to the hwPortUtils module: (#1271)
+ - listUsbDevices now yields dictionaries with device information including hardwareID and devicePath.
+ - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
+- Updated wxPython to 4.0.3. (#7077)
+- As NVDA now only supports Windows 7 SP1 and later, the key "minWindowsVersion" used to check if UIA should be enabled for a particular release of Windows has been removed. (#8422)
+- You can now register to be notified about configuration saves/reset actions via new config.pre_configSave, config.post_configSave, config.pre_configReset, and config.post_configReset actions. (#7598)
+ - config.pre_configSave is used to be notified when NVDA's configuration is about to be saved, and config.post_configSave is called after configuration has been saved.
+ - config.pre_configReset and config.post_configReset includes a factory defaults flag to specify if settings are reloaded from disk (false) or reset to defaults (true).
+- config.configProfileSwitch has been renamed to config.post_configProfileSwitch to reflect the fact that this action is called after profile switch takes place. (#7598)
+- UI Automation interfaces updated to Windows 10 October 2018 Update and Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
+
+
+= 2018.2.1 =
+Esta versão apenas corrige alguns problemas de tradução, devido à remoção de uma funcionalidade com problemas.
 
 
 = 2018.2 =

@@ -6,28 +6,75 @@
 = 2018.3 =
 
 == Nuevas Características ==
-- NVDA anunciará errores de gramática cuando se expongan apropiadamente por las páginas web en Mozilla Firefox. (#8280)
+- NVDA anunciará errores de gramática cuando se expongan apropiadamente por las páginas web en Mozilla Firefox y Google Chrome. (#8280)
+- El contenido que se marca como siendo borrado o insertado en páginas web ahora se anuncia en Google Chrome. (#8558)
 - Añadida la compatibilidad para las ruedas de desplazamiento de BrailleNote QT y Apex BT cuando se utilice BrailleNote como una pantalla braille con NVDA. (#6316)
 - Añadidos scripts para anunciar el tiempo transcurrido y el tiempo total de la pista actual en Foobar2000. (#6596)
 - El símbolo de la tecla Command del Mac (⌘) ahora se anuncia al leer texto con cualquier sintetizador. (#8366)
 - Los roles personalizados a través del atributo aria-roledescription attribute ahora se admiten en Firefox, Chrome e Internet Explorer.
-- Nueva tabla braille: braille sueco computerizado de 8 puntos. (#8227)
+- Nuevas tablas braille: braille sueco computerizado de 8 puntos, Curdo central, Esperanto, Húngaro, checo. (#8226, #8437)
+- Se ha añadido el soporte para la detección automática de pantallas braille en segundo plano. (#1271)
+ - Se admiten actualmente las pantallas ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille y HumanWare BrailleNote y Brailliant BI/B.
+ - Puedes habilitar esta característica seleccionando la opción automático desde la lista de pantallas braille en el diálogo seleccionar pantalla braille de NVDA.
+ - Por favor consulta la documentación para detalles adicionales.
+- Se añadió el soporte para varias características de entrada modernas introducidas en versiones recientes de Windows 10. Estas incluyen el panel de emoji (Fall Creators Update), dictado (Fall Creators Update), sugerencias de entrada del teclado hardware (April 2018 Update), y pegar en el portapapeles en la nube (October 2018 Update). (#7273)
+- El contenido marcado como un bloque de cita utilizando ARIA (role blockquote) ahora se admite en Mozilla Firefox 63. (#8577)
 
 
 == Cambios ==
 - La lista de idiomas disponibles en el diálogo opciones Generales ahora se ordena basándose en los nombres de los idiomas en lugar de en los códigos ISO 639. (#7284)
 - Añadidos gestos predeterminados para alt shift tab y windows tab con todas las pantallas braille compatibles de Freedom Scientific. (#7387)
+- Para la ALVA BC680 y pantallas con conversor de protocolo, ahora es posible assignar funciones diferentes a los smart pad izquierdo y derecho, al thumb y a las teclas etouch. (#8230)
+- Para las pantallas ALVA BC6, la combinación de teclas sp2+sp3 ahora anunciará la hora y la fecha actuales, mientras que sp1+sp2 emula la tecla Windows. (#8230)
 - Ahora se le pregunta al usuario una vez en el arranque de NVDA si están de acuerdo enviando estadísticas de uso a NV Access cuando se busquen actualizaciones automáticamente. (#8217)
 - Al buscar actualizaciones, si el usuario está de acuerdo al permitir el envío de estadísticas de uso a NV Access, NVDA ahora enviará el nombre del controlador del sintetizador actual y de la pantalla braille en uso, para ayudar a establecer un mejor orden de prioridades para el trabajo futuro de estos controladores. (#8217)
 - Actualizado el transcriptor braille liblouis a la versión 3.6.0. (#8365)
+- Actualizada la ruta a la tabla braille rusa de 8 puntos correcta. (#8446)
+- Actualizado eSpeak-ng a 1.49.3dev commit 910f4c2 (#8561)
 
 
 == Corrección de Errores ==
 - Las etiquetas accesibles para controles en Google Chrome ahora se anuncian más legiblemente en modo exploración cuando la etiqueta no aparece como contenido en sí. (#4773)
+- Ahora se soportan las notificaciones en Zoom. Por ejemplo, esto incluye silenciar/desilenciar estado, y los mensajes entrantes. (#7754)
+- Cambiar la presentación del contexto braille cuando se esté en modo exploración ya no causa que la salida braille deje de seguir. (#7741)
+- Las pantallas braille ALVA BC680 ya no fallan intermitentemente al inicializarse. (#8106)
+- Por defecto, las pantallas ALVA BC6 ya no ejecutarán teclas emuladas del sistema al pulsar combinaciones de teclas que tengan que ver con sp2+sp3 para disparar funcionalidades internas. (#8230)
+- Al pulsar sp2 en una pantalla ALVA BC6 para emular la tecla alt ahora funciona tal como se anuncia. (#8360)
+- NVDA ya no anuncia cambios redundantes de la distribución de teclado. (#7383, #8419)
+- El seguimiento del ratón ahora es mucho más preciso en el Bloc de notas y en otros controles de edición de texto sin formato cuando se encuentre en un documento con más de 65535 caracteres. (#8397)
+- NVDA reconocerá más diálogos en Windows 10 y otras aplicaciones modernas. (#8405)
+- En la actualización de octubre de 2018 de Windows 10 y de Server 2019 y posterior, NVDA ya no falla al seguir al foco del sistema cuando una aplicación se congela o inunda al sistema con eventos. (#7345, #8535)
+- Ahora se informa a los usuarios cuando intenten leer o copiar una barra de estado vacía. (#7789)
+- Corregido un caso donde el estado "no marcado" en controles no se anuncia en voz si el control ha sido parcialmente marcado anteriormente. (#6946)
+- En la lista de idiomas en las opciones generales de NVDA, el nombre para el idioma birmano se muestra correctamente en Windows 7. (#8544)
+- En Microsoft Edge, NVDA anunciará notificaciones tales como leer la disponibilidad de la vista y el progreso de la carga de la página. (#8423)
+- De forma similar a otros campos de texto multilínea, cuando se coloque al comienzo de un documento en Braille, la pantalla ahora se desplaza de tal forma que el primer carácter del documento se encuentre al principio de la pantalla. (#8406)
+- Al navegar por una lista en la web, NVDA ahora anunciará su etiqueta si el autor de la misma ha proporcionado una. (#7652)
+- Cuando se asignan manualmente funciones a gestos para una pantalla braille en particular, estos gestos ahora siempre aparecen como asignados a esa pantalla. Anteriormente, se mosgtraban como si estuviesen asignados a la pantalla activa en ese momento. (#8108)
+- Ahora se admite la versión de 64 bits del Media Player Classic. (#6066)
+- Varias mejoras al soporte braille en Microsoft Word con UI Automation habilitado:
+ - Reducción de la presentación demasiado verbosa del foco tanto en voz como en braille cuando se enfoque un documento Word. (#8407)
+ - El enrutamiento del cursor en braille ahora funciona correctamente cuando se está en una lista en un documento de Word. (#7971)
+ - Las viñetas/números recién insertados en un documento Word se anuncian correctamente tanto en voz como en braille. (#7970)
 
 
 == Cambios para Desarrolladores ==
 - Añadido scriptHandler.script, el cual puede funcionar como un decorador para scripts en objetos escriptables. (#6266)
+- Se ha introducido un framework de sistema de pruebas para NVDA. (#708)
+- Se han realizado algunos cambios en el módulo hwPortUtils: (#1271)
+ - listUsbDevices ahora genera diccionarios con información de dispositivo incluyendo hardwareID y devicePath.
+ - Los diccionarios generados por listComPorts ahora también contienen una entrada usbID para puertos COM con información USB VID/PID en su ID de hardware.
+- Actualizado wxPython a 4.0.3. (#7077)
+- Dado que NVDA ahora solo es compatible con Windows 7 SP1 y posterior, se ha eliminado la clave "minWindowsVersion" utilizada para comprobar si UIA debería habilitarse para una versión en particular de Windows. (#8422)
+- Ahora puedes registrar para que se te notifique acerca de acciones de guardar/reiniciar la configuración a través de las nuevas acciones config.pre_configSave, config.post_configSave, config.pre_configReset, y config.post_configReset. (#7598)
+ - config.pre_configSave se utiliza para que se te notifique cuando la configuración de NVDA está a punto de guardarse, y config.post_configSave se llama después de que la configuración se haya guardado.
+ - config.pre_configReset y config.post_configReset incluye un indicador de valores predeterminados  de fábrica para especificar si las opciones se recargan desde el disco (false) o se reestablecen a los valores predeterminados (true).
+- config.configProfileSwitch se ha renombrado a config.post_configProfileSwitch para reflejar el hecho de que esta acción se llama después de que el cambio de perfil tenga lugar. (#7598)
+- Interfaces de UI Automation actualizadas a Windows 10 October 2018 Update y Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
+
+
+= 2018.2.1 =
+Esta versión incluye actualizaciones de traducciones debido a la eliminación de última hora de una característica que causó problemas.
 
 
 = 2018.2 =
