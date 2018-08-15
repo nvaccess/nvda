@@ -1259,14 +1259,12 @@ This settings category contains the following options:
 ==== Keyboard layout ====[KeyboardSettingsLayout]
 This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
 
-==== Use capslock as an NVDA modifier key ====[KeyboardSettingsCapsModifier]
-If this checkbox is checked, capslock can be used as an NVDA modifier key.
-
-==== Use extended insert as an NVDA modifier key ====[KeyboardSettingsExtendedInsert]
-If this checkbox is checked, the extended insert key (usually found above the arrow keys, near home and end) can be used as an NVDA modifier key.
-
-==== Use numpad insert as an NVDA modifier key ====[KeyboardSettingsNumpadInsert]
-If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
+==== Select NVDA Modifier Keys ====[KeyboardSettingsModifiers]
+The checkboxes in this list control what keys can be used as [NVDA modifier keys #TheNVDAModifierKey]. The following keys are available to choose from:
+- The caps lock key
+- The insert key on the number pad
+- The extended insert key (usually found above the arrow keys, near home and end)
+-
 
 If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
 Therefore, The NVDA settings dialog will display an error message if all keys are unselected when pressing Ok or Apply.
