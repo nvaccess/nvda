@@ -31,32 +31,25 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
-	std::unique_ptr<IUnknown*,std::function<void(IUnknown**)>> labelElementArray;
-	{
-		IUnknown** ppUnk=nullptr;
-		long nTargets=0;
-		constexpr int numRelations=1;
-		HRESULT res=element->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,numRelations,&ppUnk,&nTargets);
-		labelElementArray = {ppUnk, [=](IUnknown** ppUnk){
-			if(ppUnk) {
-				for(auto i=0; i<nTargets;++i) {
-					if(ppUnk[i]) ppUnk[i]->Release();
-				}
-				CoTaskMemFree(ppUnk);
-			}
-		}};
-		if(res!=S_OK) {
-			LOG_DEBUGWARNING(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY failed with result "<<res);
-			return nullptr;
-		}
-		if(nTargets==0) {
-			LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
-			return nullptr;
-		}
+	IUnknown** ppUnk=nullptr;
+	long nTargets=0;
+	constexpr int numRelations=2;
+	HRESULT res=element->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,numRelations,&ppUnk,&nTargets);
+	if(res!=S_OK) return nullptr;
+	// Grab all the returned IUnknowns and store them as smart pointers within a smart pointer array 
+	// so that any further returns will correctly release all the objects. 
+	auto ppUnk_smart=make_unique<CComPtr<IUnknown>[]>(nTargets);
+	for(int i=0;i<nTargets;++i) {
+		ppUnk_smart[i].Attach(ppUnk[i]);
 	}
-	return CComQIPtr<IAccessible2>(labelElementArray.get()[0]);
+	// we can now free the memory that Gecko  allocated to give us  the IUnknowns
+	CoTaskMemFree(ppUnk);
+	if(nTargets==0) {
+		LOG_DEBUG(L"relationTargetsOfType for IA2_RELATION_LABELLED_BY found no targets");
+		return nullptr;
+	}
+	return CComQIPtr<IAccessible2>(ppUnk_smart[0]);
 }
-
 
 #define NAVRELATION_LABELLED_BY 0x1003
 #define NAVRELATION_NODE_CHILD_OF 0x1005
@@ -569,7 +562,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// A version of the isLabelVisible function that caches its result
 	auto isLabelVisibleCached=[&]() {
 		if(!isLabelVisibleVal_) {
-			*isLabelVisibleVal_=isLabelVisible(pacc);
+			isLabelVisibleVal_=isLabelVisible(pacc);
 		}
 		return *isLabelVisibleVal_;
 	};
