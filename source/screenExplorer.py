@@ -30,7 +30,7 @@ def playLocationCoordinates(x, y, screenWidth, screenHeight, screenMinPos=None, 
 	if screenMinPos is None:
 		screenMinPos = wx.Point()
 	# Do not play any tone if offscreen.
-	if not (0 <= x <= screenWidth or 0 <= y <= screenHeight):
+	if not (screenMinPos.x <= x <= screenWidth or screenMinPos.y <= y <= screenHeight):
 		return
 	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
 	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
