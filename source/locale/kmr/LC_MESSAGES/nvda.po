@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-27 00:10+1000\n"
-"PO-Revision-Date: 2018-07-27 11:07+0100\n"
+"POT-Creation-Date: 2018-08-03 19:07+1000\n"
+"PO-Revision-Date: 2018-08-09 10:08+0100\n"
 "Last-Translator: Imam <imam.kahraman@gmail.com>\n"
 "Language-Team: \n"
 "Language: kmr\n"
@@ -83,10 +83,6 @@ msgstr "zimanê nenas"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "metoda têketina nenas"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -363,6 +359,15 @@ msgstr ""
 msgid "pwdedt"
 msgstr ""
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr ""
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "&girêdan"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr ""
@@ -500,6 +505,18 @@ msgstr "hertim ekranê dagire"
 msgid "Only when scrolling back"
 msgstr "tenê dema paşve tê şemitandin"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "otomatîk"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -564,9 +581,19 @@ msgstr "fokûs kirin"
 msgid "to review"
 msgstr "berçav derbas kirin"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "otomatîk"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "hertim ekranê dagire"
+
+#. Translators: Name of a Bluetooth serial communications port.
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr ""
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+msgid "Serial: {portName}"
+msgstr ""
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -630,6 +657,12 @@ msgstr "kompitûra braille ya 8 noqte ya Bulgarî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "Swêdî asta 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Galerkî asta 1"
 
@@ -637,6 +670,12 @@ msgstr "Galerkî asta 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Galerkî asta 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "kompitûra braille ya 8 noqte ya Swêdî"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -737,6 +776,12 @@ msgstr "Îngîlîzî (DYA) asta 1"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "Îngîlîzî (DYA) asta 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "Almanî asta 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -841,6 +886,12 @@ msgstr "kompitûra braille ya 8 noqte ya Macarî"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "Macarî asta 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "Macarî asta 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1095,25 +1146,25 @@ msgstr "Çînî (Taywan, Mandarîn)"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
-msgstr ""
+msgstr "Focus mode"
 
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
-msgstr ""
+msgstr "Moda geroka înternetê "
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
-msgstr ""
+msgstr "Neetîketkirî"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr ""
+msgstr "Gerana bi tûşa yek tîpî vemiriye"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr ""
+msgstr "Gerana bi hek tûşa yek tîpî pêxistiye"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -1121,131 +1172,134 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
+"Guhertinên gerana bi tûşa yek tîpî pêxistî û vemirî. Dema pêxistî be, tûşên "
+"yek tîpî di moda geroka înternetê de hildipekin bi ser gelek rengên hêmanên "
+"li ser rûpelî. Dema vemirî be, ev tûş derbasî bikaranînê dibin."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
 msgid "Not supported in this document"
-msgstr ""
+msgstr "Di vê belgeyê de nayê vekirin"
 
 #. Translators: the description for the Elements List command in browse mode.
 msgid "Lists various types of elements in this document"
-msgstr ""
+msgstr "Gelek şêwazên hêmanên di vê belgeyê de rêz dike"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
-msgstr ""
+msgstr "Objeya heyî, di belgeyê de çalak dike"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
-msgstr ""
+msgstr "sernivîseke din nîne"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 1"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve di asta 1ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
-msgstr ""
+msgstr "sernivîseke din nîne di asta 1ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve di asta 1ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 1"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne di asta 1ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 2"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve di asta 2ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 2"
-msgstr ""
+msgstr "sernivîseke din nîne di asta 2ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 2"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve di asta 2ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 2"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne di asta 2ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 3"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve di asta 3ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 3"
-msgstr ""
+msgstr "sernivîseke din nîne di asta 3ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 3"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve di asta 3ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 3"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne di asta 3ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 4"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve di asta 4ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 4"
-msgstr ""
+msgstr "sernivîseke din nîne di asta 4ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 4"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve di asta 4ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 4"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne di asta 4ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 5"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve di asta 5ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 5"
-msgstr ""
+msgstr "sernivîseke din nîne di asta 5ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 5"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve di asta 5ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 5"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne di asta 5ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 6"
-msgstr ""
+msgstr "diçe ber bi sernivîsa bê ve di asta 6ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 6"
-msgstr ""
+msgstr "sernivîseke din nîne di asta 6ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 6"
-msgstr ""
+msgstr "diçe ber bi sernivîsa beriya vê ve di asta 6ê de"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 6"
-msgstr ""
+msgstr "sernivîseke beriya vê nîne di asta 6ê de"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next table"
@@ -1509,63 +1563,63 @@ msgstr "bloka girêdanan ya berê pêş ve biqevêze"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr ""
+msgstr "êdî metn piştî komek girêdanên înternetê nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr ""
+msgstr "berepaş diqevêze piştî komek girêdanên înternetê"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr ""
+msgstr "êdî metn beriya komek girêdanên înternetê nema "
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr ""
+msgstr "diçe ber bi nîşana bê ya diyarkirina cihî ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr ""
+msgstr "nîşaneke din a diyarkirina cihî nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr ""
+msgstr "diçe ber bi nîşana beriya bê ya diyarkirina cihî ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
-msgstr ""
+msgstr "nîşaneke beriya vê ya diyarkirina cihî nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr ""
+msgstr "diçe ber bi objeya bê ya pevdanî ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
-msgstr ""
+msgstr "objeyeke din a pevdanî nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr ""
+msgstr "diçe ber bi objeya beriya vê ya pevdanî ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
-msgstr ""
+msgstr "objeyeke pevdanî ya beriya vê nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr ""
+msgstr "diçe ber bi têbîniya vê ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr ""
+msgstr "têbîniyeke din nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr ""
+msgstr "diçe ber bi têbîniya beriya vê ve"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr ""
+msgstr "beriya vê têbînî nema"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next error"
@@ -1595,33 +1649,33 @@ msgstr "&girêdan"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Headings"
-msgstr ""
+msgstr "&Sernivîs"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Form fields"
-msgstr ""
+msgstr "&Meydanên forman"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Buttons"
-msgstr ""
+msgstr "&Pişkok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lan&dmarks"
-msgstr ""
+msgstr "Nîşanên &diyarkirina cihî"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr ""
+msgstr "Lîsteya Hêmanan"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Type:"
-msgstr ""
+msgstr "Şêwaz:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
@@ -1631,12 +1685,12 @@ msgstr "bi fîltr&e bike"
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
 msgid "&Activate"
-msgstr ""
+msgstr "Ç&alak bike"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
-msgstr ""
+msgstr "&Biçe ber bi"
 
 #, python-format
 msgid "%s landmark"
@@ -1651,78 +1705,79 @@ msgstr ""
 #. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
-msgstr ""
+msgstr "hat bijartin %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
-msgstr ""
+msgstr "Pênaseyeke dirêj nîne"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
-msgstr ""
+msgstr "Li vê deverê pênaseya dirêj nîşan dide, heger yek bê dîtin."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
 msgid "Not in a container"
-msgstr ""
+msgstr "Ne di vê konteynerê de ye"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr ""
+"Diçe ber bi destpêka hêmana konteynerê ve, yên weke lîste yan jî tabloyê"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 msgid "Bottom"
-msgstr ""
+msgstr "Binî"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
+msgstr "Diçe pişta dawiya hêmana konteynerê, yên weke lîste û tabloyan"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr ""
+msgstr "hîç"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "some"
-msgstr ""
+msgstr "hinek"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "most"
-msgstr ""
+msgstr "bi pirranî"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "all"
-msgstr ""
+msgstr "hemû"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "character"
-msgstr ""
+msgstr "cûreyê tîpan"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "never"
-msgstr ""
+msgstr "ti carî"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "always"
-msgstr ""
+msgstr "timî"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr ""
+msgstr "bi tenê di bin asta sembolê de"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -1847,7 +1902,7 @@ msgstr "rehnî {color}"
 #. Translators: color (HSV saturation 100% and value 72%)
 msgctxt "color variation"
 msgid "{color}"
-msgstr ""
+msgstr "{color}"
 
 #. Translators: a dark color (HSV saturation 100% and value 44%)
 msgctxt "color variation"
@@ -1917,51 +1972,51 @@ msgstr "qehweyî-zer"
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
-msgstr ""
+msgstr "nayê zanîn"
 
 #. Translators: The word for window of a program such as document window.
 msgid "window"
-msgstr ""
+msgstr "pencere"
 
 #. Translators: Used to identify title bar of a program.
 msgid "title bar"
-msgstr ""
+msgstr "şivika sernivîsê"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr ""
+msgstr "nîvpencere"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
-msgstr ""
+msgstr "diyalog"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
-msgstr ""
+msgstr "qutiya bijartinê"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 msgid "radio button"
-msgstr ""
+msgstr "pişkoka radyoyê"
 
 #. Translators: The word used to identify a static text such as dialog text.
 msgid "text"
-msgstr ""
+msgstr "metn"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
-msgstr ""
+msgstr "sererastkirin"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
-msgstr ""
+msgstr "pişkok"
 
 #. Translators: Text used to identify menu bar of a program.
 msgid "menu bar"
-msgstr ""
+msgstr "şivika menuyê"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
-msgstr ""
+msgstr "bijarteya menuyê"
 
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
@@ -1970,27 +2025,27 @@ msgstr "menu"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr ""
+msgstr "qutiya vekirî"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
-msgstr ""
+msgstr "lîste"
 
 #. Translators: Used to identify a list item such as email list items.
 msgid "list item"
-msgstr ""
+msgstr "bijarteya lîsteyê"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 msgid "graphic"
-msgstr ""
+msgstr "grafîk"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr ""
+msgstr "balona alîkariyê"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr ""
+msgstr "amûra şîretan"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -1998,11 +2053,11 @@ msgstr "link"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 msgid "tree view"
-msgstr ""
+msgstr "grafîka wek darê "
 
 #. Translators: Identifies a tree view item.
 msgid "tree view item"
-msgstr ""
+msgstr "bijarteya grafîka wek darê"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
@@ -2011,68 +2066,68 @@ msgstr "tabulator"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr ""
+msgstr "kontrola tabulator"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr ""
+msgstr "kaşker"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr ""
+msgstr "pencerey pengizî ya bipêşketinê"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr ""
+msgstr "şivika kaşker"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
-msgstr ""
+msgstr "pencereya pengizî ya rewşê"
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
-msgstr ""
+msgstr "tablo"
 
 #. Translators: Identifies a cell in a table.
 msgid "cell"
-msgstr ""
+msgstr "şane"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
 msgid "column"
-msgstr ""
+msgstr "stûn"
 
 #. Translators: Identifies a row (a group of horizontal cells in a table).
 msgid "row"
-msgstr ""
+msgstr "rêz"
 
 #. Translators: Identifies a frame (a smaller window in a webpage or a document).
 #. Translators: Identifies an internal frame. This is usually a frame on a web page; i.e. a web page embedded within a web page.
 msgid "frame"
-msgstr ""
+msgstr "çarçove"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
-msgstr ""
+msgstr "şivika amûran"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
-msgstr ""
+msgstr "sernivîsa stûnê"
 
 #. Translators: Identifies a row header in tables and spreadsheets.
 msgid "row header"
-msgstr ""
+msgstr "sernivîsa rêzê"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr ""
+msgstr "pişkoka ber bi jêr ve vedibe"
 
 #. Translators: Identifies an element.
 msgid "clock"
-msgstr ""
+msgstr "saet"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
-msgstr ""
+msgstr "veqetîner"
 
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
@@ -2080,57 +2135,57 @@ msgstr "formula"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
-msgstr ""
+msgstr "sernivîs"
 
 #. Translators: Identifies a heading level.
 msgid "heading 1"
-msgstr ""
+msgstr "sernivîs 1"
 
 #. Translators: Identifies a heading level.
 msgid "heading 2"
-msgstr ""
+msgstr "sernivîs 2"
 
 #. Translators: Identifies a heading level.
 msgid "heading 3"
-msgstr ""
+msgstr "sernivîs 3"
 
 #. Translators: Identifies a heading level.
 msgid "heading 4"
-msgstr ""
+msgstr "sernivîs 4"
 
 #. Translators: Identifies a heading level.
 msgid "heading 5"
-msgstr ""
+msgstr "sernivîs 5"
 
 #. Translators: Identifies a heading level.
 msgid "heading 6"
-msgstr ""
+msgstr "sernivîs 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 msgid "paragraph"
-msgstr ""
+msgstr "paragraf"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr ""
+msgstr "jibergirtina bi blokî"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
-msgstr ""
+msgstr "cihê nivîsa li ser tabloyê"
 
 #. Translators: Identifies a table body (the main body of the table).
 msgid "table body"
-msgstr ""
+msgstr "gewdeyê tabloyê"
 
 #. Translators: Identifies a table footer (text placed at the end of the table).
 msgid "table footer"
-msgstr ""
+msgstr "cihê têbîniyên jêr ên tabloyê"
 
 #. Translators: Identifies a document (for example, a webpage document).
 msgid "document"
-msgstr ""
+msgstr "belge"
 
 #. Translators: Identifies an animation in a document or a webpage.
 msgid "animation"
@@ -2146,27 +2201,27 @@ msgstr "box"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
-msgstr ""
+msgstr "grûpkirin"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
-msgstr ""
+msgstr "rûpela xisletan"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
-msgstr ""
+msgstr "kanvas"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
-msgstr ""
+msgstr "nivîs"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr ""
+msgstr "kontrolkirina bijarteya menuyê"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr ""
+msgstr "sererastkirina demê"
 
 #. Translators: Identifies an icon.
 msgid "icon"
@@ -2174,56 +2229,56 @@ msgstr "ikon"
 
 #. Translators: Identifies a directory pane.
 msgid "directory pane"
-msgstr ""
+msgstr "nîvpencereya rehber"
 
 #. Translators: Identifies an embedded object such as flash content on webpages.
 msgid "embedded object"
-msgstr ""
+msgstr "objeya pevdanî "
 
 #. Translators: Identifies an end note.
 msgid "end note"
-msgstr ""
+msgstr "têbîniyên li dawiyê"
 
 #. Translators: Identifies a footer (usually text).
 msgid "footer"
-msgstr ""
+msgstr "cihl têbîniyên li binê rûpelî"
 
 #. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
 msgid "foot note"
-msgstr ""
+msgstr "têbiniyên li binê rûpelî"
 
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
 msgid "glass pane"
-msgstr ""
+msgstr "nîvpencereya camî"
 
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 msgid "header"
-msgstr ""
+msgstr "cihê nivîsa ser rûpelî"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr ""
+msgstr "nexşeya wêneyan"
 
 #. Translators: Identifies an input window.
 msgid "input window"
-msgstr ""
+msgstr "pencereya bicihkirinê"
 
 #. Translators: Identifies a label.
 msgid "label"
-msgstr ""
+msgstr "etîket"
 
 #. Translators: Identifies a note field.
 msgid "note"
-msgstr ""
+msgstr "têbînî"
 
 #. Translators: Identifies a page.
 msgid "page"
-msgstr ""
+msgstr "rûpel"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr ""
+msgstr "bijarteya menuya radyoyê"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
@@ -2244,7 +2299,7 @@ msgstr "şiva serarastkirinê"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
-msgstr ""
+msgstr "terminal"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
@@ -2288,10 +2343,10 @@ msgstr "çarçoveya nivîsê"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr ""
+msgstr "pişkoka guhertinê"
 
 msgid "border"
-msgstr ""
+msgstr "sînor"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
@@ -2299,7 +2354,7 @@ msgstr ""
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
-msgstr ""
+msgstr "kûmê li ser tîpan"
 
 #. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
 msgid "chart"
@@ -2311,7 +2366,7 @@ msgstr "kursor"
 
 #. Translators: Identifies a diagram (seen on some websites and on Office documents).
 msgid "diagram"
-msgstr ""
+msgstr "kadrana hejmaran"
 
 #. Translators: Identifies a dial object.
 msgid "dial"
@@ -2319,7 +2374,7 @@ msgstr ""
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
-msgstr ""
+msgstr "lîsteya ber bi jêr ve vedibe"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
@@ -2327,15 +2382,15 @@ msgstr "bişkoka veqetandinê"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
-msgstr ""
+msgstr "pişkoka menuyê"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
-msgstr ""
+msgstr "tora pişkoka ber bi jêr ve vedibe"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
-msgstr ""
+msgstr "matematîk"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2343,11 +2398,11 @@ msgstr "girtin"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 msgid "hot key field"
-msgstr ""
+msgstr "meydana tûşên kurtebiriyê"
 
 #. Translators: Identifies an indicator control.
 msgid "indicator"
-msgstr ""
+msgstr "şanîder"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
@@ -2359,11 +2414,11 @@ msgstr "saunt"
 
 #. Translators: Identifies a whitespace.
 msgid "white space"
-msgstr ""
+msgstr "tîpa li derveyî alfabeyê"
 
 #. Translators: Identifies a tree view button.
 msgid "tree view button"
-msgstr ""
+msgstr "pişkoka grafîka mîna darê"
 
 #. Translators: Identifies an IP address (an IP address field element).
 msgid "IP address"
@@ -2376,7 +2431,7 @@ msgstr "îkona desktopê"
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
-msgstr ""
+msgstr "hişyarî"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2388,11 +2443,11 @@ msgstr "paceya opsîyonê"
 
 #. Translators: Identifies a color chooser.
 msgid "color chooser"
-msgstr ""
+msgstr "hilbijêra rengan"
 
 #. Translators: Identifies a file chooser (to select a file or groups of files from a list).
 msgid "file chooser"
-msgstr ""
+msgstr "hilbijêra dosyayan"
 
 msgid "filler"
 msgstr "alava dagirtinê"
@@ -2482,15 +2537,25 @@ msgstr "kontrola tiliya mezin"
 msgid "calendar"
 msgstr "salname"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "elementa çartê"
-
 msgid "video"
 msgstr "video"
 
 msgid "audio"
 msgstr "audio"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "elementa çartê"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr ""
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr ""
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3705,6 +3770,14 @@ msgstr ""
 msgid "No status line found"
 msgstr ""
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr ""
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4602,27 +4675,22 @@ msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr ""
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
+msgid "Central Kurdish"
 msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
+msgid "Northern Kurdish"
 msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
+msgid "Burmese"
 msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
@@ -5800,7 +5868,7 @@ msgstr ""
 msgid "level %s"
 msgstr ""
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr ""
@@ -5905,16 +5973,8 @@ msgstr ""
 msgid "line %s"
 msgstr ""
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr ""
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
-msgstr ""
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
 msgstr ""
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
@@ -6371,7 +6431,7 @@ msgstr ""
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 msgid "&Donate"
-msgstr ""
+msgstr "&alîkariya aborî bike"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
@@ -6971,10 +7031,10 @@ msgid "Record"
 msgstr ""
 
 msgid "left"
-msgstr ""
+msgstr "çep"
 
 msgid "right"
-msgstr ""
+msgstr "rast"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -6996,12 +7056,12 @@ msgctxt "repeat"
 msgid "off"
 msgstr ""
 
-#. Translators: The name of a braille display.
-msgid "Optelec ALVA 6 series/protocol converter"
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
 msgstr ""
 
-#. Translators: Name of a bluetooth serial communications port.
-msgid "Bluetooth serial: {portName}"
+#. Translators: The name of a braille display.
+msgid "Optelec ALVA 6 series/protocol converter"
 msgstr ""
 
 #. Translators: Message when setting HID keyboard simulation failed.
@@ -7022,14 +7082,6 @@ msgstr ""
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
-msgstr ""
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-msgid "Serial: {portName}"
 msgstr ""
 
 #. Translators: Names of braille displays
@@ -7558,6 +7610,7 @@ msgstr ""
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr ""
@@ -8268,7 +8321,7 @@ msgstr ""
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
-msgstr ""
+msgstr "klavye"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10411,3 +10464,6 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
