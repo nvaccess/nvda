@@ -22,7 +22,7 @@ As características principais são:
 - Sintetizador de voz embutido, que suporta mais de oitenta idiomas;
 - Anuncia a formatação do texto, quando disponível, tal como nome e tamanho do tipo de letra, estilos e erros ortográficos;
 - Anuncia automaticamente o texto sob o rato e dá indicação em áudio (opcional) da posição do periférico;
-- Suporte para diversas linhas Braille, incluindo a introdução de texto através do teclado Braille, nas linhas que o possuem;
+- Suporte para diversas linhas Braille, incluindo a detecção automática da maioria das linhas e a introdução de texto através do teclado Braille, nas linhas que o possuem;
 - Possibilidade de ser executado a partir de dispositivos USB ou através de outros dispositivos portáteis, sem necessitar de instalação;
 - Instalador com voz e fácil de usar;
 - Tradução para 54 idiomas;
@@ -46,7 +46,8 @@ Na secção [Sintetizadores de Voz Suportados #SupportedSpeechSynths] pode ser e
 
 ++ Suporte de Braille ++[BrailleSupport]
 Para os utilizadores que tenham uma linha Braille, o NVDA pode transmitir a informação em braille.
-É também suportada a  introdução de texto, através de um teclado Braille, usando a codificação normal ou abreviada.
+Também é suportada a  introdução de texto, através de um teclado Braille, usando a codificação normal ou abreviada.
+Para além disso, o NVDA, por padrão, detecta automaticamente várias linhas Braille.
 Veja, por favor, a secção [Linhas Braille Suportadas #SupportedBrailleDisplays] para obter mais informações sobre terminais Braille compatíveis.
 
 O NVDA suporta codificação Braille para diversos idiomas, incluindo codificação para Braille literário, abreviado e de computador.
@@ -173,7 +174,7 @@ Se pretender que uma das teclas modificadoras do NVDA actue com a sua função o
 
 +++ Esquemas de Teclado +++[KeyboardLayouts]
 Actualmente, o NVDA vem com dois conjuntos de comandos, conhecidos como Esquemas de teclado. O esquema Desktop, para computadores de secretária, e o esquema Laptop, para computadores portáteis.
-Por padrão, o NVDA está definido para utilizar o esquema de Computadores de Secretária, embora possa alternar para o esquema de Computador Portátil, na secção Teclado, que pode encontrar no diálogo de [configurações #NVDASettings] aberto através do Menu NVDA, "Opções", "Configurações".
+Por padrão, o NVDA está definido para utilizar o esquema de Computadores de Secretária, embora possa alternar para o esquema de Computador Portátil, na secção Teclado, que pode encontrar no diálogo de [configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 O esquema de Desktop faz uso intensivo do bloco numérico (com o NumLock desligado).
 Embora a maioria dos computadores portáteis não tenham um bloco numérico físico, alguns conseguem simulá-lo, mantendo pressionada a tecla FN e pressionando as letras e números, na parte direita do teclado (7 8 9 u i o j k l etc.).
@@ -449,7 +450,7 @@ Quanto mais para cima estiver o rato no ecrã, mais aguda será a entoação dos
 Quanto mais à esquerda ou à direita estiver o rato no ecrã, mais à esquerda ou à direita o som será tocado (assumindo-se que o utilizador tem colunas stereo ou auscultadores).
 
 Esta funcionalidade adicional do NVDA não se encontra activa, por padrão.
-Se pretender utilizar a mesma, pode configurá-la na secção [configurações do rato #MouseSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Opções", "Configurações".
+Se pretender utilizar a mesma, pode configurá-la na secção [configurações do rato #MouseSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar com o rato, o NVDA tem alguns comandos relacionados com o rato:
 %kc:beginInclude
@@ -597,10 +598,11 @@ Quando quiser voltar à leitura do documento, simplesmente pressione Escape.
 
 + Braille +[Braille]
 Se dispõe de uma linha Braille, o NVDA pode usá-la para mostrar as informações em Braille.
-Se a linha Braille possuir um teclado tipo Perkins, pode escrever no PC usando o código Braille normal ou abreviado.
+Se a linha Braille possuir um teclado estilo Perkins, pode escrever no PC usando o código Braille normal ou abreviado.
 
 para informações sobre os dispositivos suportados, por favor leia a secção [Linhas Braille Suportadas#SupportedBrailleDisplays].
-Pode configurar o Braille na secção [Braille #BrailleSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Opções", "Configurações".
+Esta secção também contém informação sobre que linhas Braille suportam a detecção automática do NVDA.
+Pode configurar o Braille na secção [Braille #BrailleSettings], que pode encontrar no diálogo [Configurações #NVDASettings] aberto através do Menu NVDA, "Preferências", "Configurações".
 
 ++ Abreviaturas Braille para tipos e estados de controlos e marcas ++[BrailleAbbreviations]
 Para que caiba o máximo de informaçãon possível na linha Braille, as seguintes abreviaturas são usadas para indicar os tipos e estados de controlos e as marcas.
@@ -906,7 +908,7 @@ Na tabela de livros adicionados:
 %kc:endInclude
 
 + Configurar O NVDA +[ConfiguringNVDA]
-A maioria das configurações do NVDA pode ser alterada através de diálogos acedidos através do submenu  "Opções" do menu do NVDA.
+A maioria das configurações do NVDA pode ser alterada através de diálogos acedidos através do submenu  "Preferências" do menu do NVDA.
 Muitas dessas configurações aparecem no diálogo multi-páginas [Configurações #NVDASettings].
 Em qualquer dos diálogos, pressione "OK" para aceitar as alterações que tenha feito.
 Para dispensar alterações que possa ter feito, pressione "Cancelar" ou "Escape".
@@ -1231,9 +1233,12 @@ Se houver um erro, ao carregar o driver, o NVDA notificará com uma mensagem e c
 Esta caixa combinada contém diversas opções, que dependem dos drivers de linhas Braille disponíveis no seu sistema.
 Utilize as setas para se mover pelas mesmas.
 
+A primeira opção, "Automático", indica ao NVDA para pesquisar, em segundo plano, pelos vários modelos de linha Braille suportados pela detecção automática.
+Com esta funcionalidade activa, se ligar ao computador uma linha Braille suportada, via USB ou Bluetooth, o NVDA irá, automaticamente, activá-la.
+
 O item "Sem Braille" significa que não será utilizado Braille.
 
-Por favor, consulte a secção [Linhas Braille Suportadas#SupportedBrailleDisplays] para obter mais informações sobre as linhas Braille suportadas.
+Por favor, consulte a secção [Linhas Braille Suportadas#SupportedBrailleDisplays] para obter mais informações sobre as linhas Braille suportadas, e quais delas suportam a detecção automática em segundo plano.
 
 ==== Porta ====[SelectBrailleDisplayPort]
 Esta opção, se disponível, permite escolher que porta, ou tipo de ligação, será usada para comunicar com a linha Braille que seleccionou.
@@ -1572,32 +1577,32 @@ Actualmente, só contém uma opção:
 Esta caixa combinada permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
 
 ++ Outras Opções ++[MiscSettings]
-Para além de [Configurações #NVDASettings], o submenu "Opções", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
+Para além de [Configurações #NVDASettings], o submenu "Preferências", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
 
-+++ Dicionários de voz +++[SpeechDictionaries]
-O submenu dos "Dicionários de voz" (que se encontra no menu "Opções") contém diálogos que lhe permitem controlar o modo como o NVDA pronuncia palavras ou expressões em particular.
-Existem três tipos de dicionários de voz.
++++ Dicionários +++[SpeechDictionaries]
+O submenu "Dicionários" (que se encontra no menu "Preferências") contém diálogos que lhe permitem controlar o modo como o NVDA pronuncia palavras ou expressões em particular.
+Existem três tipos de dicionários.
 Os três tipos são:
-- Predefinido: as regras neste dicionário afectam todas as vozes, no NVDA.
-- Voz: As regras neste dicionário afectam apenas a voz do sintetizador que está a ser utilizado no momento.
+- Padrão: as regras neste dicionário afectam todas as vozes, no NVDA.
+- Para voz actual: As regras neste dicionário afectam apenas a voz do sintetizador que está a ser utilizado no momento.
 - Temporário: as regras neste dicionário afectam todas as vozes deste programa, mas apenas para a sessão actual. Estas regras são temporárias e perder-se-ão se o NVDA for reiniciado.
 -
 
 É necessário criar associações de teclas, usando a opção [Definir comandos #InputGestures], para os poder abrir a partir de qualquer lado.
 
-Todos os diálogos do dicionário contêm uma lista de regras, que serão utilizadas para processar o texto.
-O diálogo contém também os botões "Adicionar", "Editar" e "Remover".
+Todos os diálogos dos dicionários contêm uma lista de regras, que serão utilizadas para processar o texto.
+Os diálogos contém também os botões "Adicionar", "Editar" e "Remover".
 
 Para adicionar uma nova regra ao dicionário, pressione o botão "Adicionar", preencha os campos que aparecem na caixa de diálogo e pressione "OK".
 Verá então a sua nova regra na lista de regras.
 Porém, Para se assegurar que a sua regra é guardada, verifique que clica no botão "OK", para sair completamente do diálogo do dicionário, quando acabar de adicionar/editar regras. 
 
-As regras para os dicionários de voz do NVDA permitem-lhe alterar uma sequência de caracteres por outra.
+As regras para os dicionários do NVDA permitem-lhe alterar uma sequência de caracteres por outra.
 Um exemplo simples passaria por ter o NVDA a anunciar a palavra "sapo", cada vez que tivesse de dizer a palavra "pássaro".
 No diálogo para adicionar a regra, o modo mais fácil de fazer isto é escrever a palavra "pássaro", no campo "texto original", e a palavra "sapo", no campo "Substituir por".
 Poderá igualmente escrever uma descrição da regra, no campo de "comentário" (algo como: muda pássaro para sapo).
 
-Os dicionários de voz do NVDA vão muito para além de simples substituição de palavras.
+Os dicionários do NVDA vão muito para além de simples substituição de palavras.
 O diálogo de adicionar regras também contém uma caixa de verificação que diz se pretende que a regra seja ou não sensível às maiúsculas (significando que o NVDA deverá ter em conta se os caracteres estão em maiúsculas ou não.
 O NVDA, por padrão, ignora a distinção entre maiúsculas e minúsculas.
 
@@ -1608,7 +1613,7 @@ Assim, usando o exemplo anterior de substituir a palavra "pássaro" por "sapo", 
 Uma expressão regular é um padrão que contém símbolos especiais que permitem introduzir mais de um caracter ao mesmo tempo, ou introduzir apenas números, ou só letras, referindo alguns exemplos.
 As expressões regulares não são explicadas neste Manual do Utilizador, mas existem muitos tutoriais na Internet que lhe podem proporcionar mais informações.
 
-+++ Pronúncia de Pontuação/Símbolo +++[SymbolPronunciation]
++++ Pronúncia de pontuação e símbolos +++[SymbolPronunciation]
 Este diálogo permite-lhe mudar o modo como a pontuação e outros símbolos são pronunciados, bem como o nível de pontuação em que eles são anunciados.
 
 O idioma, para o qual a pronúncia de símbolos está a ser editada, será mostrado no título do diálogo.
@@ -1891,6 +1896,22 @@ Este sintetizador não suporta [Utilizar a funcionalidade de soletrar #SpeechSet
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
 Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
 
+++ Dispositivos que suportam a detecção automática em segundo plano ++[AutomaticDetection]
+O NVDA possui a funcionalidade de detectar várias linhas Braille em segundo plano, quer via USB quer via bluetooth.
+Esta funcionalidade é activada seleccionando "Automática" como a linha Braille a ser usada no diálogo [Seleccionar linha Braille do NVDA. #BrailleSettings].
+Esta é a opção padrão.
+
+Estas são as linhas que suportam a funcionalidade de detecção automática:
+- Linhas da HandyTech;
+- Linhas da Baum/Humanware/APH/Orbit;
+- Linhas HumanWare das séries Brailliant BI/B;
+- HumanWare BrailleNote
+- SuperBraille
+- Linhas Optelec ALVA série 6;
+- Linhas HIMS das séries Braille Sense/Braille EDGE/Smart Beetle/Sync Braille;
+- Linhas Eurobraille das séries Esys/Esytime/Iris;
+-
+
 ++ Freedom Scientific: Séries Focus e PM ++[FreedomScientificFocus]
 Todas as linhas Focus e PM da [Freedom Scientific http://www.freedomscientific.com/] são suportadas, quando conectadas via USB ou Bluetooth.
 Necessitará dos drivers das linhas Braille da Freedom Scientific instalados no seu sistema.
@@ -1901,6 +1922,8 @@ Se o seu sistema está a correr um Windows de 64 bits e os drivers já foram ins
 Por padrão, o NVDA detecta e liga-se, automaticamente, a estas linhas, quer via USB, quer por Bluetooth.
 No entanto, ao configurar a linha, pode seleccionar, explicitamente, as portas "USB" ou "Bluetooth", para restringir o tipo de ligação a ser usado.
 Isto pode ser útil, se quiser ligar a linha Focus ao NVDA, usando Bluetooth, mas sendo possível carregá-la pela porta USB do seu computador.
+
+Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor, consulte a documentação desta linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -1991,11 +2014,11 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 | Tecla seta esquerda | spLeft |
 | Tecla seta direita | spRight |
 | Tecla Enter | spEnter, Enter |
-| Anunciar hora/data | sp1+sp2 |
+| Anunciar hora/data | sp2+sp3 |
 | Menu do NVDA | sp1+sp3 |
 | Teclas Windows+d (Minimizar todas as aplicações)  | sp1+sp4 |
 | Teclas windows+b (Mover para a Área de notificações) | sp3+sp4 |
-| Tecla Windows | sp2+sp3, Windows |
+| Tecla Windows | sp1+sp2, Windows |
 | Teclas alt+tab | sp2+sp4 |
 | Teclas control+home | t3+spUp |
 | Teclas control+end | t3+spDown |
@@ -2040,9 +2063,11 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-A linha Braille Lilli, disponível em [MDV http://www.mdvbologna.it/], é suportada.
-Não necessitará de quaisquer drivers específicos instalados, para utilizar este terminal.
+As linhas Braille Lilli, disponíveis em [MDV http://www.mdvbologna.it/], são suportadas.
+Não necessitará de quaisquer drivers específicos instalados, para utilizar estes terminais.
 Basta conectar a linha e configurar o NVDA para a utilizar.
+
+Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor, consulte a documentação desta linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -2099,6 +2124,8 @@ Para linhas braille que tenham um joistick:
 A linha hedo ProfiLine USB da [hedo Reha-Technik http://www.hedo.de/] é suportada.
 Deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
 
+Esta linha ainda não suporta a detecção automática em segundo plano do NVDA.
+
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor, consulte a documentação desta linha braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
@@ -2115,6 +2142,8 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 ++ hedo MobilLine USB ++[HedoMobilLine]
 A linha hedo MobilLine USB da [hedo Reha-Technik http://www.hedo.de/] é suportada.
 Deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
+
+Esta linha ainda não suporta a detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor, consulte a documentação desta linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -2258,6 +2287,8 @@ As linhas braille Seika versão 3, 4 e 5 (40 células) e Seika80 (80 células) d
 Pode econtrar mais sobre estas linhas em http://www.seika-braille.com/.
 Deverá, primeiro, instalar os drivers USB fornecidos pelo fabricante.
 
+Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
+
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor, consulte a documentação desta linha braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude
@@ -2282,6 +2313,8 @@ São suportadas as seguintes linhas braille:
 - BRAILLEX Trio (USB e bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus (USB e bluetooth)
 -
+
+Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
 
 Se estiver instalado o BrxCom, o NVDA usará o BrxCom.
 O BrxCom é uma ferramenta que permite a introdução de texto pelo teclado da linha Braille, independentemente do leitor de ecrã.
@@ -2363,7 +2396,8 @@ Os seguintes modelos são suportados:
 -
 
 Note que estas linhas só podem ser ligadas por porta série.
-Por isso, após seleccionar este tipo de linhas, nas configurações do Braille, deve seleccionar a porta onde está ligada a linha Braille.
+Por isso, estas linhas não suportam a detecção automática em segundo plano do NVDA.
+Deve seleccionar a porta onde está ligada a linha Braille após seleccionar este tipo de linhas, no diálogo [Seleccionar linha Braille. #SelectBrailleDisplay]
 
 Alguns dispositivos têm uma barra de acesso fácil, EAB - Easy access bar, que permite  a operação intuitiva e rápida.
 A EAB pode ser movida em quatro direcções, em que cada direcção tem, geralmente, dois interruptores.
@@ -2541,6 +2575,7 @@ Os modelos seguintes são suportados:
 -
 
 No NVDA, pode configurar a que porta série a linha está ligada, no diálogo "configurações de Braille".
+Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de comandos para as linhas EcoBraille com o NVDA.
 Por favor, consulte a documentação [EcoBraille em ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] para uma descrição da localização das teclas.
@@ -2668,6 +2703,8 @@ Quando configurar a linha e porta a utilizar, certifique-se de prestar muita ate
 
 Para as linhas com teclado Braille, actualmente, o BRLTTY trata da escrita em Braille.
 Por isso, a tabela de conversão da escrita do NVDA é irrelevante
+
+O BRLTTY não está envolvido na detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de teclas do BRLTTY com o NVDA.
 Por favor, consulte na documentação do BRLTTY as [tabelas de associação teclas do BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para informação sobre como os comandos do BRLTTY são mapiados nas linhas braille.

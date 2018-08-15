@@ -22,7 +22,7 @@ Zu den wichtigsten Funktionen gehören:
 - Integrierte Sprachausgabe, welche über 80 Landessprachen unterstützt.
 - Ansagen der Textformatierungen und Rechtschreibfehler.
 - Automatische Ansage der Mausposition und optionaler Audiokoordinaten.
-- Unterstützung für zahlreiche Braillezeilen (auch mit Eingabe via Braille-Tastatur).
+- Unterstützung für viele Braillezeilen, einschließlich der Möglichkeit, viele davon automatisch zu erkennen, sowie Braille-Eingabe auf Braillezeilen mit einer Braille-Tastatur.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung durch Sprachausgaben.
 - Übersetzt in rund 54 Sprachen.
@@ -47,6 +47,7 @@ Informationen über weitere unterstützte Sprachausgaben, können Sie im Abschni
 ++ Unterstützung von Braillezeilen ++[BrailleSupport]
 Für Anwender, die eine Braillezeile besitzen, kann NVDA die Informationen in Brailleschrift ausgeben.
 Die Eingabe von Kurz-, Voll- und Basisschrift über die Brailletastatur Ihrer Braillezeile wird ebenfalls unterstützt.
+Zudem erkennt NVDA standardmäßig viele Braillezeilen automatisch.
 Für weitere Informationen schauen Sie bitte im Abschnitt "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
 
 NVDA enthält Braille-Übersetzungstabellen für Computerbraille sowie für Voll- und Kurzschrift für viele Sprachen.
@@ -197,11 +198,11 @@ In den folgenden Abschnitten finden Sie Anweisungen, wie bestimmte Gesten mit de
 Tippen Sie schnell mit einem oder mehreren Fingern
 
 Einmaliges Tippen mit einem Finger wird im Folgenden einfach als Tippen bezeichnet.
-Gleichzeitiges Tippen mit zwei Fingern wird als Zwei-Finger-Tippen bezeichnet, usw.
+Gleichzeitiges Tippen mit zwei Fingern wird als Zwei-Finger-Tippen bezeichnet, etc.
 
 Wenn Sie mehrmals in schneller Folge mit einem oder mehreren Fingern tippen, wird NVDA dies als sog. Mehrfach-Tipp-Geste erkennen.
 zweimaliges Tippen wird z. B. als Doppeltippen erkannt.
-dreimaliges Tippen wird als Dreifach-Tippen erkannt, usw.
+dreimaliges Tippen wird als Dreifach-Tippen erkannt, etc.
 Natürlich wird bei diesen Gesten ebenfalls die Zahl der Finger erkannt, die Sie verwendet haben. ein Doppeltippen mit drei Fingern wird dabei ebenso erkannt wie ein einmaliges Tippen mit vier Fingern.
 
 ==== Streichen ====
@@ -281,7 +282,7 @@ Der Systemfokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das di
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses fokussiert.
 
 Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der Systemfokus verschoben wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie alt+Tab zum Wechseln zwischen laufenden Anwendungen
-Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld etc.), Wert (z. B. der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objekts (z. B. aktiviert, hervorgehoben, ausgewählt etc.).
+Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld, etc.), Wert (z. B., der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objekts (z. B. aktiviert, hervorgehoben, ausgewählt, etc.).
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 %kc:beginInclude
@@ -363,7 +364,7 @@ Hinweis: Um die Tasten auf dem Nummernblock zu benutzen, muss dieser deaktiviert
 
 ++ Befehle zum Betrachten von Text ++[ReviewingText]
 NVDA ermöglicht Ihnen, den [Bildschirminhalt #ScreenReview], den Inhalt des aktuellen [Dokument #DocumentReview]s oder das aktuelle [Objekt #ObjectReview] zeichen-, wort- oder zeilenweise anzuzeigen.
-Dies ist z. B. in Windows-Konsolenfenstern (der Eingabeaufforderung; CMD.exe) oder in anderen Anwendungen sinnvoll, in denen der [System-Cursor #SystemCaret] nicht oder nur eingeschränkt verfügbar ist.
+Dies ist z. B. in Windows-Konsolenfenstern (wie der Eingabeaufforderung, in der PowerShell) oder in anderen Anwendungen sinnvoll, in denen der [System-Cursor #SystemCaret] nicht oder nur eingeschränkt verfügbar ist.
 Ein weiterer Anwendungsfall ist das Lesen von langen Meldungen in Dialogfeldern.
 
 Wenn Sie den NVDA-Cursor bewegen, bewegt sich der System-Cursor nicht mit, sodass beispielsweise die aktuelle Cursor-Position beim Bearbeiten von Text nicht verloren geht.
@@ -441,7 +442,7 @@ Anmerkung: In einigen neueren Anwendungen kann NVDA möglicherweise nicht alle I
 Wenn Sie den Mauszeiger über ein Objekt hinwegbewegen, wird NVDA Informationen über dieses Objekt ausgeben.
 Sofern möglich, wird NVDA den umgebenden Textabsatz lesen, auch wenn sich einige Objekte nur zeilenweise auslesen lassen.
 
-NVDA kann auch so konfiguriert werden, dass der Typ des [Objektes #Objects] angesagt wird, das sich unter dem Mauszeiger befindet (wie z. B. Liste, Schalter usw.).
+NVDA kann auch so konfiguriert werden, dass der Typ des [Objektes #Objects] angesagt wird, das sich unter dem Mauszeiger befindet (wie z. B. Liste, Schalter, etc.).
 Dies könnte für vollblinde Benutzer sinnvoll sein, denen das bloße Vorlesen des Textes unter der Maus nicht genügt.
 
 Mit Hilfe von Signaltönen, die die aktuelle Position des Mauszeigers anzeigen, kann NVDA ihnen zeigen, wo sich die Maus - relativ zur linken oberen Bildschirmecke - befindet.
@@ -600,6 +601,7 @@ Wenn Sie eine Braillezeile besitzen, kann NVDA diese verwenden, um Informationen
 Falls Ihre Braillezeile eine Tastatur besitzt, können Sie außerdem Kurz-, Voll- oder Basisschrift eingeben.
 
 Bitte sehen Sie im Abschnitt [unterstützte Braillezeilen #SupportedBrailleDisplays] nach, um zu erfahren, ob Ihre Braillezeile unterstützt wird.
+Dieser Abschnitt enthält auch Informationen darüber, welche Braillezeilen die automatische Braillezeilenerkennung von NVDA unterstützen.
 Verwenden Sie die Kategorie [Braille #BrailleSettings] im NVDA-Einstellungsdialog, um NVDA an Ihre Braillezeile anzupassen.
 
 ++ Abkürzungen für Steuerelementtypen, Statusanzeigen und Sprungmarken ++[BrailleAbbreviations]
@@ -1232,9 +1234,12 @@ Dies ist die Auswahlliste der verfügbaren Braillezeilen.
 Hier werden Ihnen die zu Verfügung stehenden Auswahlmöglichkeiten aufgelistet, je nachdem, welche Braillezeilen-Treiber auf Ihrem System verfügbar sind.
 Jede dieser Braillezeile ist mit den Pfeiltasten zu erreichen.
 
+Die automatische Option ermöglicht NVDA die Suche nach vielen unterstützten Braillezeilen im Hintergrund.
+Wenn diese Funktion aktiviert ist und Sie eine unterstützte Braillezeile über USB oder Bluetooth anschließen, verbindet sich NVDA automatisch mit dieser Braillezeile.
+
 Der Eintrag "Keine Braillezeile" bedeutet, dass Sie keine Braillezeile verwenden.
 
-Bitte lesen Sie weiter im Abschnitt [Unterstützte Braillezeilen #SupportedBrailleDisplays] für weitere Informationen.
+Im Abschnitt[Unterstützte Braillezeilen #SupportedBrailleDisplays] finden Sie weitere Informationen über unterstützte Braillezeilen und welche davon die automatische Erkennung im Hintergrund unterstützen.
 
 ==== Anschluss ====[SelectBrailleDisplayPort]
 Sofern diese Option verfügbar ist, erlaubt sie Ihnen, den Anschluss auszuwählen, über den die gewählte Braillezeile mit Ihrem Rechner kommunizieren soll.
@@ -1309,7 +1314,7 @@ Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NV
 Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmten Fällen zu deaktivieren. Wenn Sie z. B. mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
 
 +++ Maus (NVDA+Strg+M) +++[MouseSettings]
-Die Kategorie "Maus" in dem Einstellungsdialog bietet Optionen zur Mausverfolgung, zu akustischer Koordinatenanzeige etc. Es sind folgende Optionen enthalten:
+Die Kategorie "Maus" in dem Einstellungsdialog bietet Optionen zur Mausverfolgung, zu akustischer Koordinatenanzeige, etc. Es sind folgende Optionen enthalten:
 
 ==== Form des Mauszeigers ansagen ====[MouseSettingsShape]
 Dieses Kontrollfeld legt fest, ob NVDA bei Änderung des Mauszeigers die Form mit ansagen soll.
@@ -1371,7 +1376,7 @@ Bei eingeschaltetem Modus filtert NVDA nicht wichtige Objekte aus der Hierarchie
 Um den einfachen Darstellungsmodus per Tastenkombination ein- und auszuschalten, können Sie den entsprechenden Befehl an eine Tastenkombination zuweisen. Verwenden Sie hierfür den Dialog [Eingaben #InputGestures].
 
 +++ Objektdarstellung (NVDA+Strg+O) +++[ObjectPresentationSettings]
-Hier kann eingestellt werden, inwieweit NVDA über Position, Beschreibungen von Objekten etc. informieren soll.
+Hier kann eingestellt werden, inwieweit NVDA über Position, Beschreibungen von Objekten, etc. informieren soll.
 Diese Kategorie enthält die folgenden Optionen:
 
 ==== Minihilfen (Tooltipps) ansagen ====[ObjectPresentationReportToolTips]
@@ -1526,7 +1531,7 @@ Konfigurieren können Sie die Meldungen von:
  - Zeilennummern
  - Zeileneinrückungen ausgeben durch: [aus, Sprache, Signaltöne oder Sprache und Signaltöne #lineIndentationOptions]
  - Absatzeinrückungen (z. B. hängender Einzug, Erstzeileneinzug)
- - Zeilenabstand (einfach, doppelt etc.)
+ - Zeilenabstand (einfach, doppelt, etc.)
  - Ausrichtung
 - Informationen über Tabellen
  - Tabellen
@@ -1891,6 +1896,22 @@ Diese Sprachausgabe unterstützt nicht die [Buchstabierfunktionalität #SpeechSe
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
+++ Braillezeilen mit automatischer Erkennung im Hintergrund ++[AutomaticDetection]
+NVDA ermöglicht, viele Braillezeilen im Hintergrund automatisch zu erkennen, entweder über USB oder Bluetooth.
+Dieses Verhalten wird durch die Auswahl der Option "Automatisch als bevorzugte Braillezeile" in den [Braille-Einstellungen #BrailleSettings] erreicht.
+Standardmäßig ist diese Option aktiviert.
+
+Die folgenden Braillezeilen unterstützen diese automatische Erkennung.
+- HandyTech Braillezeilen
+- Baum/Humanware/APH/Orbit Braillezeilen
+- HumanWare Brailliant BI/B Serien
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 Serien
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serien
+- Eurobraille Esys/Esytime/Iris Braillezeilen
+-
+
 ++ Die Focus- und PacMate-Serien von FreedomScientific ++[FreedomScientificFocus]
 Die Braillezeilen Focus 40 Blue und alle PacMate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
@@ -1900,7 +1921,9 @@ Wenn Sie eine 64-Bit-Version von Windows einsetzen und die Treiber bereits von e
 
 Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per USB oder per Bluetooth verbunden ist.
 Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als Anschluss entweder USB oder Bluetooth auswählen.
-Dies kann sinnvoll sein, wenn Sie z. B. eine Focus-Braillezeile per Bluetooth mit NVDA verbinden wollen, aber dennoch den USB-Anschluss Ihres Rechners zum Laden der Zeile verwenden wollen.
+Dies kann sinnvoll sein, wenn Sie z. B. eine Focus-Braillezeile per Bluetooth mit NVDA verbinden wollen, aber dennoch den USB-Anschluss Ihres Rechners zum Laden der Zeile verwenden.
+
+Diese Braillezeilen unterstützen noch nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
 
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
@@ -1961,7 +1984,7 @@ Sie müssen die Zeile lediglich anschließen und in NVDA konfigurieren.
 Hinweis! Die Bluetooth-Verbindung einer ALVA BC6-Braillezeile mit Hilfe des ALVA Bluetooth-Werkzeugs könnte unter NVDA fehlschlagen.
 Wenn Sie eine entsprechende Fehlermeldung erhalten, verbinden Sie die Braillezeile über die Bluetooth-Einstellungen von Windows.
 
-Hinweis! Da Diese Braillezeilen eine eigene Braille-Tastatur besitzen (HID-Tastatur),arbeiten sie eingegebene Braillezeichen selbständig ab. Die eigene Eingabeschnittstelle ist standardmäßig aktiv.
+Hinweis! Da Diese Braillezeilen eine eigene Braille-Tastatur besitzen (HID-Tastatur),arbeiten sie eingegebene Braillezeichen selbstständig ab. Die eigene Eingabeschnittstelle ist standardmäßig aktiv.
 In diesem Fall haben die Einstellungen der Eingabetabelle aus den Braille-Einstellungen keine Wirkung.
 Bei ALVA-Breillezeilen mit aktueller Firmware kann die HID-Tastatur über eine Tastenkombination deaktiviert werden.
 Bitte lesen Sie in der Dokumentation der Braillezeilen für weitere Details nach.
@@ -1991,11 +2014,11 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 | Pfeiltaste nach links | SpLeft |
 | Pfeiltaste nach rechts | SpRight |
 | Eingabetaste | SpEingabe, Eingabe |
-| Datum/Uhrzeit anzeigen | Sp1+Sp2 |
+| Datum/Uhrzeit anzeigen | Sp2+Sp3 |
 | NVDA-Menü | Sp1+Sp3 |
 | Windows-Taste+D (alle Anwendungen minimieren) | Sp1+Sp4 |
 | Windows-Taste+B (Infobereich fokussieren) | sp3+sp4 |
-| Windows-Taste | Sp2+Sp3, Windows |
+| Windows-Taste | Sp1+Sp2, Windows |
 | Alt+Tab | Sp2+Sp4 |
 | Strg+Pos1 | T3+SpUp |
 | Strg+Ende | T3+SpDown |
@@ -2043,6 +2066,8 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 Die Lilli-Braillezeile von der italienischen Firma [MDV http://www.mdvbologna.it/] wird unterstützt.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
 Sie müssen lediglich die Braillezeile anschließen und in NVDA konfigurieren.
+
+Diese Braillezeile unterstützt nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
 
 Folgende Tastenzuweisungen sind in NVDA bei dieser Zeile verfügbar:
 Bitte lesen Sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -2099,6 +2124,8 @@ Für Braillezeilen, die einen Joystick besitzen:
 Die Profiline USB der Firma [Hedo Reha-Technik http://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den USB-Treiber des Herstellers installieren.
 
+Diese Braillezeile unterstützt nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
+
 Die folgenden Tastenkombinationen für diese Braillezeile sind in NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
 %kc:beginInclude
@@ -2115,6 +2142,8 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 ++ Hedo MobilLine USB ++[HedoMobilLine]
 Die MobilLine USB der Firma [Hedo Reha-Technik http://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den USB-Treiber des Herstellers installieren.
+
+Diese Braillezeile unterstützt nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
 
 Die folgenden Tastenkombinationen für diese Braillezeile sind in NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -2283,9 +2312,10 @@ Folgende Braillezeilen werden unterstützt:
 - BRAILLEX Live 20, BRAILLEX Live und BRAILLEX Live Plus (USB und Bluetooth)
 -
 
+Diese Braillezeilen unterstützt nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
+
 Falls BrxCom installiert ist, wird es benutzt.
 BrxCom ist ein Programm, welche Braille-Eingabe unabhängig von Screenreadern ermöglicht. 
-Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
 Die Braille-Eingabe ist bei den Modellen Trio und Braillex Live verfügbar.
 
 Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
@@ -2363,7 +2393,8 @@ Die folgenden Braillezeilen werden unterstützt:
 -
 
 Beachten Sie, dass diese Braillezeilen nur seriell angeschlossen werden können.
-Hierfür müssen Sie in den Braille-Einstellungen von NVDA den Anschluss angeben, mit dem die Braillezeile verbunden ist.
+Aus diesem Grund unterstützen diese Displays nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
+Sie sollten den Port auswählen, an den die Braillezeile angeschlossen ist, nachdem Sie diesen Treiber im Dialog [Braillezeile auswählen #SelectBrailleDisplay] ausgewählt haben.
 
 Einige dieser Braillezeilenmodelle besitzen eine Navigationsleiste, die eine schnelle und intuitive Bedienung ermöglicht.
 Die Navigationsleiste kann in alle vier Richtungen in jeweils zwei Stufen bewegt werden.
@@ -2533,16 +2564,19 @@ Die folgenden Befehle können mit dem Scrollrad ausgeführt werden:
 
 ++ EcoBraille ++[EcoBraille]
 NVDA unterstützt die Ecobraille von [ONCE http://www.once.es/].
-die folgenden Modelle werden unterstützt:
+
+Die folgenden Modelle werden unterstützt:
 - EcoBraille 20
 - EcoBraille 40
 - EcoBraille 80
 - EcoBraille Plus
 -
 
-In dem Dialog zum Auswählen der Braillezeile aus dem Einstellungsdialog von NVDA können Sie den Anschluss festlegen, mit dem die Braillezeile verbunden ist.
+In dem Dialog zum Auswählen der Braillezeile aus dem Einstellungsdialog von NVDA können Sie den seriellen Anschluss festlegen, mit dem die Braillezeile verbunden ist.
 
-Folgende Tasten(Kombinationen) sind bei Verwendung der Ecobraille-Modelle verfügbar:
+Diese Braillezeilen unterstützen nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
+
+Folgende Tastenbelegungen sind bei Verwendung der Ecobraille-Modelle verfügbar:
 Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] nach, um zu erfahren, wo die entsprechenden Tasten zu finden sind.
 
 %kc:beginInclude
@@ -2666,10 +2700,12 @@ Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://www.brltty.
 Dazu laden Sie sich das neueste Treiberpaket herunter und installieren es. Der Name sieht in etwa wie folgt aus: "brltty-win-4.2-3.exe".
 Bei der Konfiguration der Braillezeile und des zu verwendenden Anschlusses, insbesondere bei USB, seien Sie sicher, dass Sie auch die passenden Treiber vom Hersteller bereits auf Ihrem System installiert haben.
 
-Bei Braillezeilen, die eine eigene Braille-Tastatur besitzen, arbeitet BRLTTY die Eingabe von Braillezeichen selbständig ab.
+Bei Braillezeilen, die eine eigene Braille-Tastatur besitzen, arbeitet BRLTTY die Eingabe von Braillezeichen selbstständig ab.
 Die Einstellung der Braille-Eingabetabelle innerhalb von NVDA ist daher wirkungslos.
 
-Folgende BRLTTY-Befehle wurden an NVDA zugewiesen.
+BRLTTY ist nicht an der automatischen Erkennung von Braillezeilen im Hintergrund beteiligt.
+
+Folgende BRLTTY-Befehle wurden in NVDA zugewiesen.
 Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen http://mielke.cc/brltty/doc/KeyBindings/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden können.
 %kc:beginInclude
 || Name | BRLTTY-Befehl |

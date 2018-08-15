@@ -1656,6 +1656,12 @@ class TrayClockWClass(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
 
+	def _get_name(self):
+		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+		if super(TrayClockWClass, self).value is None:
+			return super(TrayClockWClass, self).name
+		return None
+
 class OutlineItem(IAccessible):
 
 	def _get_value(self):
@@ -1833,6 +1839,7 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",
