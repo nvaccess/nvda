@@ -397,7 +397,7 @@ def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
 def getDesktopWindow():
-		return user32.GetDesktopWindow()
+	return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
@@ -485,14 +485,13 @@ def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
 def getPreviousWindow(hwnd):
-		try:
-			return user32.GetWindow(hwnd,GW_HWNDPREV)
-		except WindowsError:
-			return 0
+	try:
+		return user32.GetWindow(hwnd,GW_HWNDPREV)
+	except WindowsError:
+		return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
-
 
 def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
 	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
@@ -541,6 +540,8 @@ def ClientToScreen(hwnd, x, y):
 	user32.ClientToScreen(hwnd, byref(point))
 	return point.x, point.y
 
+def NotifyWinEvent(event, hwnd, idObject, idChild):
+	user32.NotifyWinEvent(event, hwnd, idObject, idChild)
 
 class STICKYKEYS(Structure):
 	_fields_ = (

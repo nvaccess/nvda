@@ -22,7 +22,7 @@ Lo más reseñable incluye:
 - Sintetizador de voz integrado compatible con más de 80 idiomas
 - Anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
 - Anunciado automático de texto bajo el ratón e indicación opcional audible  de la posición del ratón
-- Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas que tengan un teclado braille
+- Soporte para muchas pantallas de braille efímero incluyendo la capacidad de detectar automáticamente muchas de ellas así como la entrada de braille computerizado para pantallas que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
 - Traducido a 54 idiomas
@@ -47,6 +47,7 @@ Se puede encontrar información acerca de otros sintetizadores de voz compatible
 ++ Soporte Braille ++[BrailleSupport]
 Para usuarios que posean una pantalla de braille efímero, NVDA puede mostrar su información en braille. 
 También se soporta tanto la entrada de braille sin contraer como contraída a través de un teclado braille.
+Además, NVDA detectará muchas pantallas braille automáticamente por defecto.
 Por favor consulta la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las pantallas braille soportadas.
 
 NVDA soporta códigos braille para muchos idiomas, incluyendo códigos braille contraído, no contraído y computerizado.
@@ -600,6 +601,7 @@ Si tienes una pantalla braille, NVDA puede mostrar información en braille.
 Si tu pantalla braille tiene un teclado tipo Perkins, también puedes introducir braille contraído o sin contraer.
 
 Por favor consulta la sección [Pantallas Braille admitidas  #SupportedBrailleDisplays] para información  acerca de las pantallas braille soportadas.
+Esta sección también contiene información sobre qué pantallas son compatibles con la función de detección automática de pantallas braille de NVDA.
 Puedes configurar el braille utilizando la [categoría Opciones de Braille #BrailleSettings] del diálogo [Opciones de NVDA #NVDASettings].
 
 ++ Abreviaturas de tipos de Control, estado y puntos de referencia ++[BrailleAbbreviations]
@@ -1231,9 +1233,12 @@ Si hay un error carghando el controlador de la pantalla, NVDA te lo notificará 
 Este cuadro combinado se te presenta con varias opciones dependiendo de qué controladores de pantalla braille estén disponibles en tu sistema.
 Muévete entre estas opciones con las teclas de flechas.
 
+La opción automático permitirá a NVDA buscar muchas pantallas braille admitidas en segundo plano.
+Cuando esta característica esté activada y conectes una pantalla admitida utilizando USB o bluetooth, NVDA conectará automáticamente con ella.
+
 Sin braille significa que no estás utilizando braille.
 
-Por favor consulta la sección [Pantallas Braille Admitidas #SupportedBrailleDisplays] para más información acerca de dichas pantallas braille.
+Por favor consulta la sección [Pantallas Braille Admitidas #SupportedBrailleDisplays] para más información acerca de dichas pantallas braille y de cuáles de ellas admiten la detección automática.
 
 ==== Puerto ====[SelectBrailleDisplayPort]
 Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la pantalla braille que has seleccionado.
@@ -1890,6 +1895,22 @@ Este sintetizador no soporta la [funcionalidad de deletreo #SpeechSettingsUseSpe
 + Pantallas Braille Admitidas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las pantallas braille compatibles con NVDA.
 
+++ Pantallas que admiten la detección automática ++[AutomaticDetection]
+NVDA tiene la capacidad para detectar muchas pantallas braille en segundo plano automáticamente, o a través de USB o de bluetooth.
+Este comportamiento se logra seleccionando la opción Automático como la pantalla braille preferida desde el [cuadro de diálogo Opciones de Braille #BrailleSettings] de NVDA.
+Esta opción está seleccionada predeterminadamente.
+
+Las siguientes pantallas admiten esta funcionalidad de detección automática.
+- Pantallas Handy Tech
+- Pantallas Baum/Humanware/APH/Orbit braille
+- Series de las HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Series de las Optelec ALVA 6
+- Series de las HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Pantallas Eurobraille Esys/Esytime/Iris
+-
+
 ++ Series de la Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
 Todas las pantallas Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] están admitidas.
 Necesitarás los controladores de pantallas braille de Freedom Scientific instalados en tu sistema.
@@ -1900,6 +1921,8 @@ Si tu sistema ejecuta un Windows de 64 bit y los controladores ya se instalaron 
 De manera predeterminada, NVDA puede detectar automáticamente y conectarse a estas pantallas tanto a través de USB como de bluetooth.
 No obstante, cuando se configura la pantalla, puedes seleccionar explícitamente los puertos "USB" o "Bluetooth" para restringir el tipo de conexión a utilizar.
 Esto podría ser útil si quieres conectar la pantalla focus a NVDA utilizando bluetooth, y todavía podrías cargarla utilizando la energía del USB desde tu ordenador.
+
+Estas pantallas todavía no admiten la funcionalidad de detección automática de NVDA.
 
 Seguidamente van las asociaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -1990,11 +2013,11 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 | tecla flecha izquierda | spLeft |
 | tecla flecha derecha | spRight |
 | tecla intro | spEnter, intro |
-| Anunciar fecha/hora | sp1+sp2 |
+| Anunciar fecha/hora | sp2+sp3 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas las aplicaciones) | sp1+sp4 |
 | Tecla windows+b (enfocar la bandeja del sistema) | sp3+sp4 |
-| tecla windows | sp2+sp3, windows |
+| tecla windows | sp1+sp2, windows |
 | tecla alt+tab | sp2+sp4 |
 | tecla control+inicio | t3+spArriba |
 | tecla control+fin | t3+spAbajo |
@@ -2042,6 +2065,8 @@ Por favor conhsulta la documentación de la pantalla para descripciones de dónd
 La pantalla braille Lilli disponible desde [MDV http://www.mdvbologna.it/] se admite.
 No necesitas instalar ningún controlador específico para utilizar esta pantalla.
 Solo enchufa la pantalla y configura NVDA para utilizarla.
+
+Esta pantalla todavía no admite la funcionalidad de detección automática de NVDA.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
@@ -2098,6 +2123,8 @@ Para pantallas que tengan un joystick:
 La hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] está admitida.
 Primero debes instalar los controladores USB proporcionados por el fabricante.
 
+Esta pantalla todavía no admite la funcionalidad de detección automática de NVDA.
+
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
@@ -2114,6 +2141,8 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 ++ hedo MobilLine USB ++[HedoMobilLine]
 Se admite la hedo MobilLine USB de [hedo Reha-Technik http://www.hedo.de/].
 Primero debes instalar los controladores USB proporcionados por el fabricante.
+
+Esta pantalla todavía no admite la funcionalidad de detección automática de NVDA.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor consulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -2257,6 +2286,8 @@ Se admiten las pantallas braille Seika Versión 3, 4 y 5 (40 celdas) y Seika80 (
 Puedes encontrar más información acerca de estas pantallas en http://www.seika-braille.com/.
 Primero debes instalar los controladores USB proporcionados por el fabricante.
 
+Estas pantallas todavía no admiten la funcionalidad de detección automática de NVDA.
+
 Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
 Por favor consulta la documentación de las pantallas para descripciones de dónde se encuentran estas teclas.
 %kc:beginInclude
@@ -2279,12 +2310,13 @@ Se admiten las siguientes pantallas Braille:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB y bluetooth)
--- BRAILLEX Live 20, BRAILLEX Live y BRAILLEX Live Plus (USB y bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live y BRAILLEX Live Plus (USB y bluetooth)
 -
+
+Estas pantallas no admiten la funcionalidad de detección automática de NVDA.
 
 Si está instalado BrxCom, NVDA utilizará BrxCom.
 BrxCom es una herramienta que te permite utilizar la entrada de teclado de la pantalla braille para funcionar independientemente de un lector de pantalla.
-Papenmeier liberará pronto una versión nueva de BrxCom que funcione con NVDA.  
 La entrada es posible con los modelos Trio y BRAILLEX Live.
 
 La mayoría de los dispositivos tienen una Barra de Acceso Fácil (EAB) que permite operar rápida e intuitivamente.
@@ -2362,7 +2394,8 @@ Se admiten las siguientes pantallas Braille:
 -
 
 Ten en cuenta que estas pantallas sólo se pueden conectar a través de un puerto serie.
-Por lo tanto, deberías  seleccionar el puerto al cual está conectada la pantalla después de haber elegido este controlador en el cuadro de diálogo [Seleccionar pantalla Braille #SelectBrailleDisplay].
+Debido a esto, estas pantallas no admiten la funcionalidad de detección automática de NVDA.
+Deberías  seleccionar el puerto al cual está conectada la pantalla después de haber elegido este controlador en el cuadro de diálogo [Seleccionar pantalla Braille #SelectBrailleDisplay].
 
 Algunos de estos dispositivos tienen una barra de acceso rápido (EAB) que permite un accionamiento rápido e intuitivo.
 El EAB se puede mover en cuatro direcciones donde, generalmente, cada dirección tiene dos movimientos.
@@ -2540,6 +2573,7 @@ Se soportan los siguientes modelos:
 -
 
 En NVDA, puedes configurar el puerto serie al que se conecta la pantalla en el cuadro de diálogo [Seleccionar Pantalla Braille #SelectBrailleDisplay].
+Estas pantallas no admiten la funcionalidad de detección automática de NVDA.
 
 Seguidamente van las asignaciones de teclas para las pantallas EcoBraille.
 Por favor consulta la [documentación para EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] para descripciones de donde se pueden encontrar estas teclas.
@@ -2667,6 +2701,8 @@ Cuando configures la línea y puerto a utilizar,  asegúrate de prestar gran ate
 
 Para pantallas que tengan un teclado braille, BRLTTY actualmente maneja la entrada braille por sí mismo.
 Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
+
+BRLTYY no está involucrado en la funcionalidad de detección automática de pantallas braille de NVDA.
 
 Seguidamente van las asignaciones a órdenes de BRLTTY para NVDA.
 Por favor consulta las [listas de claves de vínculos de BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para información acerca de cómo se mapean las órdenes de BRLTTY para controlar las pantallas braille.
