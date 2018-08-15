@@ -979,7 +979,7 @@ This code is executed if a gain focus event is received by this object.
 		@param isFocus: true if the navigator object was set due to a focus change.
 		@type isFocus: bool
 		"""
-		# #2559: coordinate tone playback takes priority.
+		# #2559: coordinate tone playback takes priority, as it should be done regardless of state of braille output at the moment.
 		playObjectCoordinates = config.conf["presentation"]["playObjectCoordinates"]
 		if ((not isFocus and playObjectCoordinates in ("objNav", "both"))
 		or (isFocus and playObjectCoordinates in ("focus", "both"))):
