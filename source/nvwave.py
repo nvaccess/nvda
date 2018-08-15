@@ -7,6 +7,7 @@
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities.
 """
 
+import os
 import threading
 from ctypes import *
 from ctypes.wintypes import *
@@ -329,11 +330,15 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 
 fileWavePlayer = None
 fileWavePlayerThread=None
+
 def playWaveFile(fileName, async=True):
 	"""plays a specified wave file.
-"""
+First attempts to check for user-provided wave files, then falls back to media included with NVDA"""
 	global fileWavePlayer, fileWavePlayerThread
-	f = wave.open(fileName,"r")
+	fullPath = os.path.join(globalVars.appArgs.configPath, fileName)
+	if not os.path.exists(fullPath):
+		fullPath = fileName
+	f = wave.open(fullPath,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
