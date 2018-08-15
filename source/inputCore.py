@@ -411,7 +411,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		#: Handlers are called with one argument:
 		#: @param gesture: The gesture that is about to be executed.
 		#: @type gesture: L{InputGesture}
-		self.decide_ExecuteGesture = extensionPoints.Decider()
+		self.decide_executeGesture = extensionPoints.Decider()
 
 	def executeGesture(self, gesture):
 		"""Perform the action associated with a gesture.
