@@ -1758,6 +1758,38 @@ Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
+| Scroll braille display back | -{t1 or}- +{t1,}+ etouch1 |
+| Move braille display to previous line | t2 |
+| Move to current focus | t3 |
+| Move braille display to next line | t4 |
+
+| Scroll braille display forward | -{t5 or}- +{t5,}+ etouch3 |
+| Route to braille cell | routing |
+| Report text formatting under braille cell | secondary routing |
+| Toggle HID keyboard simulation | t1+spEnter |
+@@ -2006,14 +2006,14 @@ Please see the display's documentation for descriptions of where these keys can
+| Report title | etouch2 |
+| Report status bar | etouch4 |
+| shift+tab key | sp1 |
+
+| alt key | -{sp2}- +{sp2, alt}+ |
+| escape key | sp3 |
+| tab key | sp4 |
+| upArrow key | spUp |
+| downArrow key | spDown |
+| leftArrow key | spLeft |
+| rightArrow key | spRight |
+
+| enter key | spEnter, -{enter|}- +{enter |}+
+| Report date/time | sp2+sp3 |
+| NVDA Menu | sp1+sp3 |
+| windows+d key (minimize all applications) | sp1+sp4 |
+@@ -2024,7 +2024,6 @@ Please see the display's documentation for descriptions of where these keys can
+| control+end key | t3+spDown |
+| home key | t3+spLeft |
+| end key | t3+spRight -{|
+| alt key | alt}- |
+| control key | control |
 | Scroll braille display back | topRouting1 (first cell on display) |
 | Scroll braille display forward | topRouting20/40/80 (last cell on display) |
 | Scroll braille display back | leftAdvanceBar |
