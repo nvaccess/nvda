@@ -23,7 +23,7 @@ Quoi de Neuf dans NVDA
 
 == Changements ==
 - La liste des langues disponibles dans le dialogue Paramètres/Général est maintenant triée dans l'ordre alphabétique des noms des langues au lieu du code ISO 639. (#7284)
-- Ajout d'un geste par défaut pour alt maj tab et windows tab pour les terminaux braille Freedom Scientific supportés. (#7387)
+- Ajout d'un geste par défaut pour alt+maj+tab et windows+tab pour les terminaux braille Freedom Scientific supportés. (#7387)
 - Pour les terminaux ALVA BC680 et protocol converter, il est maintenant possible d'assigner différentes fonctions au smart pad gauche et droit, et aux touches pouce et etouch. (#8230)
 - Pour les terminaux ALVA BC6, la combinaison de touches sp2+sp3 annonce maintenant la date et l'heure courante, et sp1+sp2 émule la touche Windows. (#8230)
 - Au premier démarrage de NVDA, il est maintenant demandé à l'utilisateur s'il souhaite envoyer des statistiques d'utilisation à NV Access lors de la vérification automatique de mises à jour. (#8217)
@@ -36,7 +36,7 @@ Quoi de Neuf dans NVDA
 == Corrections de Bogues ==
 - Sous Google Chrome, les étiquettes accessibles des contrôles sont maintenant plus facilement annoncées en mode navigation quand l'étiquette n'apparaît pas elle-même comme un contenu. (#4773)
 - Les notifications sont maintenant supportées dans Zoom. Par exemple, cela inclut le statut muet/non muet, et les messages entrants. (#7754)
-- En mode navigation, changer de présentation contextuelle du braille ne provoque plus un arrêt du suivi de l'affichage braille. (#7741)
+- En mode navigation, changer de présentation contextuelle du braille ne provoque plus un arrêt du suivi ddu curseur de navigation. (#7741)
 - Les terminaux braille ALVA BC680 n'échouent plus à s'initialiser de manière intermittente. (#8106)
 - Par défaut, les terminaux ALVA BC6 n'exécuteront plus d'émulations du clavier système à l'appui de combinaisons contenant sp2+sp3 pour activer des fonctionnalités internes. (#8230)
 - L'appui sur sp2 sur un terminal ALVA BC6 pour émuler la touche alt fonctionne maintenant comme annoncé. (#8360)
@@ -48,11 +48,11 @@ Quoi de Neuf dans NVDA
 - Correction d'un problème où l'état "non coché" des contrôles n'est pas annoncé quand l'état précédent était "semi-coché". (#6946)
 - Dans la liste des langues du dialogue Paramètres/Général, le nom de la langue birmane s'affiche correctement sous Windows 7. (#8544)
 - Sous Microsoft Edge, NVDA annoncera les notifications telles que la disponibilité de la page en lecture et la progression du chargement de la page. (#8423)
-- Comme dans les autres champs de texte multilignes, quand on se positionne au début d'un document en Braille, l'affichage est maintenant aligné pour que le premier caractère du document soit au début de l'affichage. (#8406)
 - Quand on entre dans une liste sur le web, NVDA annonce maintenant son étiquette si l'auteur en a fourni une. (#7652)
 - Quand on assigne manuellement une fonction à un geste pour un terminal braille particulier, ce geste apparaît maintenant toujours comme assigné à ce terminal. Avant, il apparaissait comme assigné au terminal en cours. (#8108)
 - La version 64-bit de Media Player Classic est maintenant supportée. (#6066)
 - Plusieurs améliorations du support braille sous Microsoft Word avec UI Automation activé:
+ - Comme dans les autres champs de texte multilignes, quand on se positionne au début d'un document en Braille, l'affichage est maintenant aligné pour que le premier caractère du document soit au début de l'affichage. (#8406)
  - Réduction de la présentation de focus trop verbeuse en vocal et en braille à la mise en focus d'un document Word. (#8407)
  - Le routage de curseur en braille fonctionne maintenant correctement quand on se trouve dans une liste dans un document Word. (#7971)
  - Les puces ou numérotations nouvellement insérées dans un document Word sont correctement signalées vocalement et en braille. (#7970)
