@@ -44,7 +44,8 @@ The following dependencies need to be installed on your system:
 			* Desktop development with C++
 		* Then in the Summary list, under Desktop for C++, Optional grouping, ensure the following is selected:
 			* VC++ 2017 v141 toolset (x86,x64)
-			* Windows 10 SDK (10.0.15063.0) for Desktop C++ x86 and x64
+			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
+			* Visual C++ ATL for x86 and x64
 
 
 ### Git Submodules
@@ -59,10 +60,10 @@ For reference, the following dependencies are included in Git submodules:
 * [wxPython](http://www.wxpython.org/), version 4.0.3
 * [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit e7e59f9
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 910f4c2
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
-* [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
+* [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
 * [liblouis](http://www.liblouis.org/), version 3.6.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest

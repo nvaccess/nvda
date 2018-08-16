@@ -22,7 +22,7 @@ Ses points forts sont :
 - Un synthétiseur intégré prenant en charge plus de 80 langues ;
 - L'annonce, quand c'est possible, d'informations de formatage du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe ;
 - L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris ;
-- La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
+- La prise en charge de nombreux afficheurs braille, incluant la capacité de détecter automatiquement beaucoup d'entre eux ainsi que la saisie pour les afficheurs disposant d'un clavier braille ;
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
 - Un installateur parlant facile à utiliser ;
 - Une traduction dans 54 langues ;
@@ -47,6 +47,7 @@ Pour des informations concernant les autres synthétiseurs de parole pris en cha
 ++ Support du Braille ++[BrailleSupport]
 Pour les utilisateurs possédant un terminal braille, NVDA peut afficher ses informations en braille.
 La saisie braille en intégral ou abrégé via un clavier braille est également supportée.
+De plus, NVDA détectera automatiquement beaucoup de terminaux braille par défaut.
 Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille.
 
 NVDA propose de nombreux codes braille couvrant un grand ensemble de langues. Dans bien des cas, le braille intégral et abrégé sont disponibles. Pour les utilisateurs francophones, le braille français unifié est disponible en intégral et abrégé.
@@ -600,6 +601,7 @@ Si vous possédez un afficheur braille, NVDA peut afficher des informations en b
 Si votre terminal braille possède un clavier de type Perkins, vous pouvez également saisir du texte en intégral ou abrégé.
 
 Veuillez consulter la section [Terminaux Braille Pris en Charge #SupportedBrailleDisplays] pour des informations concernant les terminaux braille pris en charge.
+Cette section contient également des informations sur les terminaux qui supportent la détection automatique de terminaux braille en arrière-plan.
 Vous pouvez configurer le braille dans la catégorie [Braille #BrailleSettings] du dialogue [Paramètres #NVDASettings].
 
 ++ Abréviations des Types, États des Contrôles et Repères en Braille ++[BrailleAbbreviations]
@@ -1231,9 +1233,12 @@ S'il y a une erreur au chargement du pilote de l'afficheur, NVDA vous avertira p
 Cette liste déroulante vous présente plusieurs options en fonction des pilotes d'afficheurs brailles présents sur votre système.
 Déplacez-vous entre les options en utilisant les flèches.
 
+L'option automatique permet à NVDA de rechercher beaucoup de terminaux braille en arrière-plan.
+Quand cette fonctionnalité est activée et que vous connectez un terminal braille supporté via USB ou Bluetooth, NVDA se connectera automatiquement à ce terminal.
+
 Pas de braille signifie que vous n'utilisez pas le braille.
 
-Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille.
+Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille et ceux qui supportent la détection automatique en arrière-plan.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Cette option, si disponible, vous permet de choisir quel port ou type de connexion sera utilisé pour communiquer avec l'afficheur braille sélectionné.
@@ -1891,6 +1896,22 @@ Ce synthétiseur ne supporte pas la [fonction d'épellation #SpeechSettingsUseSp
 + Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
 
+++ Terminaux supportant la détection automatique en arrière-plan ++[AutomaticDetection]
+NVDA a la possibilité de détecter beaucoup de terminaux braille automatiquement en arrière-plan, via USB ou Bluetooth.
+Ce comportement est activé en sélectionnant l'option Automatique comme terminal braille préféré dans le [dialogue Paramètres Braille #BrailleSettings].
+Cette option est sélectionnée par défaut.
+
+Les terminaux suivants supportent cette fonctionnalité de détection automatique.
+- Terminaux Handy Tech
+- Terminaux braille Baum/Humanware/APH/Orbit
+- Séries HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Séries Optelec ALVA 6
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
+- Terminaux Eurobraille Esys/Esytime/Iris
+-
+
 ++ Les Terminaux Focus et PAC Mate de chez Freedom Scientific ++[FreedomScientificFocus]
 Tous les terminaux Focus et PAC Mate de chez [Freedom Scientific http://www.freedomscientific.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
 Vous devrez installer les pilotes de terminaux braille de Freedom Scientific sur votre système.
@@ -1901,6 +1922,8 @@ Si votre système est sous Windows 64 bits et que les pilotes ont déjà été i
 Par défaut, NVDA peut automatiquement détecter et se connecter à ces afficheurs via USB ou Bluetooth.
 Lorsque vous configurerez l'afficheur, vous pourrez sélectionner explicitement "USB" ou "Bluetooth" pour restreindre le type de connexion qui sera utilisée.
 Cela peut être utile si vous voulez connecter l'afficheur Focus à NVDA via le Bluetooth tout en le chargeant en utilisant l'USB.
+
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1991,11 +2014,11 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Flèche gauche | spLeft |
 | Flèche droite | spRight |
 | Entrer | spEnter, enter |
-| date et heure | sp1+sp2 |
+| date et heure | sp2+sp3 |
 | Menu NVDA | sp1+sp3 |
 | Touche Windows+d (Minimiser toutes les applications) | sp1+sp4 |
 | Touche Windows+b (focus sur la zone de notification) | sp3+sp4 |
-| Touche Windows | sp2+sp3, windows |
+| Touche Windows | sp1+sp2, windows |
 | Touche alt+tab | sp2+sp4 |
 | Touche contrôle+début | t3+spUp |
 | Touche contrôle+fin | t3+spDown |
@@ -2043,6 +2066,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 Le terminal braille Lilli distribué par [MDV http://www.mdvbologna.it/] est supporté.
 Vous n'avez besoin d'aucun pilote particulier pour utiliser ce terminal.
 Il suffit de brancher le terminal et de configurer NVDA pour l'utiliser.
+
+Ce terminal ne supporte pas la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ce terminal avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2099,6 +2124,8 @@ Pour les terminaux possédant un joystick:
 Le terminal Hedo ProfiLine USB de [Hedo Reha-Technik http://www.hedo.de/] est supporté.
 Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
 
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
+
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
@@ -2115,6 +2142,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 ++ Hedo MobilLine USB ++[HedoMobilLine]
 Le terminal Hedo MobilLine USB de [Hedo Reha-Technik http://www.hedo.de/] est supporté.
 Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
+
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2258,6 +2287,8 @@ Les afficheurs braille Seika Version 3, 4 et 5 (40 caractères) et Seika80 (80 c
 Vous pouvez trouver plus d'informations sur ces afficheurs sur le site http://www.seika-braille.com/.
 Vous devez d'abord installer les pilotes USB fournis par le fabricant.
 
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
+
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
@@ -2283,9 +2314,10 @@ Les afficheurs braille suivant sont supportés :
 - BRAILLEX Live 20, BRAILLEX Live et BRAILLEX Live Plus (USB et Bluetooth)
 -
 
+Ces terminaux ne supporte pas la détection automatique en arrière-plan.
+
 Si BrxCom est installé, NVDA utilisera BrxCom.
 BrxCom est un outil qui permet d'utiliser le clavier braille indépendamment d'un lecteur d'écran.
-Une nouvelle version de BrxCom compatible avec NVDA sera bientôt mise à disposition par Papenmeier.
 La saisie au clavier est possible avec les modèles Trio et BRAILLEX Live.
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
@@ -2363,6 +2395,7 @@ Les afficheurs braille suivants sont supportés :
 -
 
 Notez que ces afficheurs ne peuvent être connectés qu'en port série.
+De ce fait, ils ne supportent pas la détection automatique en arrière-plan.
 Vous devez donc sélectionner le port série où l'afficheur est connecté après avoir sélectionné le pilote dans le dialogue [Choisir l'Afficheur Braille #SelectBrailleDisplay].
 
 Certains de ces périphériques ont une barre d'accès facile (EAB) qui permet une opération rapide et intuitive.
@@ -2541,6 +2574,7 @@ Les modèles suivants sont supportés :
 -
 
 Sous NVDA, vous pouvez définir le port série auquel l'afficheur est connecté dans le dialogue [Choisir l'Afficheur Braille #SelectBrailleDisplay].
+Ces terminaux ne supporte pas la détection automatique en arrière-plan.
 
 Voici les assignations de touche pour les afficheurs EcoBraille.
 Veuillez consulter [la documentation EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] pour connaître la position de ces touches.
@@ -2668,6 +2702,8 @@ Quand vous configurerez le terminal et le port à utiliser, portez une attention
 
 Pour les afficheurs disposant d'un clavier braille, BRLTTY gèrent la saisie du braille.
 L'option table d'entrée n'est donc pas applicable.
+
+BRLTTY n'est pas concerné par la détection automatique en arrière-plan.
 
 Voici les assignations de commandes BRLTTY pour NVDA.
 Veuillez consulter la [documentation assignation des touches de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
