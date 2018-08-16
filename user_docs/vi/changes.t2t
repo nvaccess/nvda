@@ -12,20 +12,21 @@
 - Đã thêm kịch bản thông báo thời gian còn lại và tổng thời gian của bài hát hiện tại trong Foobar2000. (#6596)
 - Kí hiệu command trên Mac (⌘) giờ đây đã được thông báo khi đọc văn bản với bất kì bộ đọc nào. (#8366)
 - vai trò tùy chỉnh thông qua thuộc tính aria-roledescription hiện đã hỗ trợ trong tất cả các trình duyệt. (#8448)
- - Các bảng chữ nổi mới: Czech 8 chấm, Central Kurdish, Esperanto, Hungarian, Thụy Điẻn máy tính 8 chấm. (#8226, #8437)- Đã hỗ trợ tự động nhận ngầm các màn hình chữ nổi. (#1271)
- - Các màn hình ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille và HumanWare BrailleNote và Brailliant BI/B hiện đã được hỗ trợ.
+- Các bảng chữ nổi mới: Czech 8 chấm, Central Kurdish, Esperanto, Hungarian, Thụy Điẻn máy tính 8 chấm. (#8226, #8437)
+- Đã hỗ trợ tự động nhận ngầm các màn hình chữ nổi. (#1271)
+ - Các màn hình ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille, HumanWare BrailleNote và Brailliant BI/B hiện đã được hỗ trợ.
  - Bạn có thể bật tính năng này bằng cách chọn tùy chọn tự động từ danh sách màn hình nổi trong hộp thoại chọn màn hình nổi của NVDA.
  - Vui lòng xem tài liệu để biết thêm chi tiết.
- - Đã hỗ trợ cho nhiều tính năng nhập liệu mới được giới thiệu trong các bản phát hành gần đây của Windows 10. Các hỗ trợ bao gồm emoji panel - bản biểu tượng cảm xúc (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), và cloud clipboard paste (October 2018 Update). (#7273)
- - Nội dung được đánh dấu là đoạn trích dẫn bằng ARIA (role blockquote) giờ đây đã được hỗ trợ trong Mozilla Firefox 63. (#8577)
+- Đã hỗ trợ cho nhiều tính năng nhập liệu mới được giới thiệu trong các bản phát hành gần đây của Windows 10. Các hỗ trợ bao gồm emoji panel - bản biểu tượng cảm xúc (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), và cloud clipboard paste (October 2018 Update). (#7273)
+- Nội dung được đánh dấu là đoạn trích dẫn bằng ARIA (role blockquote) giờ đây đã được hỗ trợ trong Mozilla Firefox 63. (#8577)
 
  
 == Các thay đổi ==
 - Danh sách các ngôn ngữ hiện hành trong hộp thoại thiết lập chung giờ đây được sắp xếp theo tên thay vì theo mã ISO 639. (#7284)
-- Thêm thao tác mặc định cho alt shift tab và windows tab với tất cả màn hình chữ nổi của Freedom Scientific được hỗ trợ. (#7387)
+- Thêm thao tác mặc định cho alt shift tab và windows tab với tất cả màn hình chữ nổi được hỗ trợ của Freedom Scientific. (#7387)
 - Với các màn hình ALVA BC680 và cổng chuyển đổi giao thức, giờ đây đã gán được các chức năng khác nhau cho smart pad trái và phải, các phím thumb và etouch. (#8230)
 - Với các màn hình ALVA BC6, tổ hợp phím sp2+sp3 giờ đây sẽ thông báo ngày giờ hiện tại, trong khi sp1+sp2 là phím Windows. (#8230)
-- Giờ đây, người dùng được yêu cầu một lần khi khởi động NVDA nếu họ vui lòng gửi thông tin thống kê sử dụng cho NV Access khi kiểm tra cập nhật tự động. (#8217)
+- Giờ đây, người dùng được yêu cầu một lần khi khởi động NVDA nếu họ vui lòng gửi thông tin thống kê sử dụng cho NV Access khi kiểm tra cập nhật NVDA. (#8217)
 - Khi kiểm tra cập nhật, nếu người dùng đồng ý gửi thông tin thống kê sử dụng cho NV Access, NVDA sẽ gửi tên driver của bộ đọc và màn hình chữ nổi hiện tại , nhằm hỗ trợ tốt hơn trong việc ưu tiên cho các cập nhật sắp tới của những driver này. (#8217)
 - Đã cập nhật liblouis braille translator lên phiên bản 3.6.0. (#8365)
 - Đã cập nhật đường dẫn chính xác cho bảng chữ nổi tiếng Nga tám chấm. (#8446)
@@ -34,8 +35,8 @@
 
 == Sửa lỗi ==
 - Nhãn tiếp cận cho các điều khiển trong Google Chrome giờ đây đã sẵn sàng hơn khi thông báo trong chế độ duyệt khi chúng không được xuất hiện như nội dung  của chính nó. (#4773)
-- Đã hỗ trợ đọc các thông báo trong Zoom. Ví dụ: đọc trạng thái bật / tắt âm thanh và khi có tin nhắn tới(#7754)
-- Chuyển ngữ cảnh trình bày của chữ nổi khi ở trong chế độ duyệt không còn làm đầu ra chữ nổi bị dừng, không đi theo nữa. (#7741)
+- Đã hỗ trợ đọc các thông báo trong Zoom. Ví dụ: đọc trạng thái bật / tắt âm thanh và khi có tin nhắn tới. (#7754)
+- Chuyển ngữ cảnh trình bày của chữ nổi khi ở trong chế độ duyệt không còn làm đầu ra chữ nổi bị dừng, không đi theo con trỏ trong chế độ duyệt. (#7741)
 - Các màn hình nổi ALVA BC680 không còn tình trạng liên tục không khởi động được. (#8106)
 - Mặc định, các màn hình ALVA BC6 sẽ không còn gọi các phím mô phỏng hệ thống khi bấm các tổ hợp phím liên quan đến sp2+sp3 để gọi các chức năng nội bộ. (#8230)
 - Bấm sp2 trên một màn hình ALVA BC6 để mô phỏng phím alt giờ đã hoạt động như quảng cáo. (#8360)
@@ -47,11 +48,11 @@
 - Sửa lỗi trạng thái "chưa chọn" trên các điều khiển không được thông báo bằng bộ đọc nếu nó đã được chọn trước đó. (#6946)
 - Trong danh sách ngôn ngữ ở hộp thoại thiết lập chung, tên ngôn ngữ của tiếng Burmese đã hiển thị chính xác trên Windows 7. (#8544)
 - Trong Microsoft Edge, NVDA sẽ đọc các thông báo  như trình bày kiểu đọc và tiến trình tải trang. (#8423)
-- Tương tự như các trường nhập liệu nhiều dòng khác, khi đứng ở đầu một tài liệu trong chữ nổi, màn hình giờ đây sẽ cuộn để kí tự đầu tiên của tài liệu sẽ ở trên cùng của màn hình. (#8406)
 - Khi điều hướng vào một danh sách trên web, NVDA sẽ thông báo nhãn của nó nếu được người thiết kế web cung cấp. (#7652)
 - khi gán thủ công một thao tác cho chức năng của một màn hình nổi cụ thể, những thao tác này giờ đây sẽ luôn hiển thị rằng đang được gán cho màn hình đó. Trong khi trước đây, nó hiển thị rằng đã được gán cho màn hình đang được kết nối. (#8108)
 - Đã hỗ trợ phiên bản 64-bit của Media Player Classic. (#6066)
 - Vài cải tiến cho việc hỗ trợ chữ nổi trong Microsoft Word với UI Automation được bật:
+ - Tương tự như các trường nhập liệu nhiều dòng khác, khi đứng ở đầu một tài liệu trong chữ nổi, màn hình giờ đây sẽ cuộn để kí tự đầu tiên của tài liệu sẽ ở trên cùng của màn hình. (#8406)
  - Giảm bớt các chi tiết trình bày trong cả bộ đọc và chữ nổi khi đứng ở một tài liệu Word. (#8407)
  - Cursor routing trong chữ nổi giờ đây đã làm việc chính xác khi ở trong danh sách trong tài liệu Word. (#7971)
  - Các danh sách có / không thứ tự mới được chèn vào trong tài liệu Word đã được thông báo chính xác trong chữ nổi và bộ đọc. (#7970)

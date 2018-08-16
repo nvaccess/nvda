@@ -18,7 +18,7 @@ NVDA được phát triển bởi công ty [NV Access https://www.nvaccess.org/]
 NVDA cho phép người khiếm thị tương tác và sử dụng máy tính với hệ điều hành Windows và các ứng dụng khác.
 
 Một số tính năng nổi bật bao gồm:
-- Hỗ trợ tương tác với các ứng dụng phổ biến như các trình duyệt web, chương trình thư điện tử, chương trình trò chuyện và các bộ ứng dụng văn phòng
+- Hỗ trợ tương tác với các ứng dụng phổ biến như các trình duyệt web, chương trình thư điện tử (e-mail), chương trình trò chuyện (chat) và các bộ ứng dụng văn phòng
 - Tích hợp bộ tổng hợp tiếng nói hỗ trợ hơn 80 ngôn ngữ khác nhau
 - thông báo các thuộc tính của phông chữ (nếu có) như tên phông, kích thước, kiểu chữ, v...v... và thông báo lỗi chính tả
 - Tự động thông báo nội dung và các đối tượng tại con trỏ chuột và tùy chọn báo âm thanh cho vị trí của chuột
@@ -30,7 +30,7 @@ Một số tính năng nổi bật bao gồm:
 - Có khả năng chạy trong cửa sổ đăng nhập của Windows và trong các màn hình bảo vệ khác
 - Thông báo các điều khiển và văn bản khi dùng thao tác trên màn hình cảm ứng
 - Hỗ trợ tương tác với các giao diện tiếp cận phổ biến như Microsoft Active Accessibility, Java Access Bridge, IAccessible2 và UI Automation (UI Automation chỉ được hỗ trợ từ Windows 7 trở lên)
-- Hỗ trợ đọc trong các console như dòng lệnh Windows và những ứng dụng console khác
+- Hỗ trợ đọc trong các cửa sổ console như dòng lệnh Windows (Windows Command Prompt) và những ứng dụng console khác
 - 
 
 ++ Tính quốc tế ++[Internationalization]
@@ -55,14 +55,14 @@ NVDA hỗ trợ các bảng mã chữ nổi cho nhiều ngôn ngữ khác nhau, 
 ++ Giấy phép và bản quyền ++[LicenseAndCopyright]
 Bản quyền NVDA NVDA_COPYRIGHT_YEARS cộng đồng NVDA.
 
-NVDA được bảo vệ bởi GNU General Public License (Phiên bản 2).
+NVDA được bảo vệ bởi giấy phép GNU General Public License (Phiên bản 2).
 Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình miễn là bạn phải kèm theo giấy phép này, cũng như đảm bảo phải cung cấp mã nguồn cho mọi người khi họ cần.
 Điều này được áp dụng cho cả bản gốc, bản chỉnh sửa hay bất kỳ phần phát sinh nào khác.
 Để biết thêm thông tin chi tiết, xin xem đầy đủ nội dung [Giấy phép http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Yêu Cầu Hệ Thống +[SystemRequirements]
 - Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10 và các bản máy chủ từ bản Windows Server 2008 R2.
- - Đối với Win 7, NVDA yêu cầu bản SP1 hoặc cao hơn.
+ - Đối với Windows 7, NVDA yêu cầu bản SP1 hoặc cao hơn.
  - Đối với bản  Windows Server 2008 R2, NVDA yêu cầu bản SP 1 hoặc cao hơn.
  - Bộ nhớ RAM: 256 mb hoặc cao hơn
 - Tốc độ bộ vi xử lý: 1.0 ghz hoặc cao hơn
@@ -75,16 +75,16 @@ Nếu bạn chưa có NVDA thì có thể tải về từ trang web [www.nvacces
 Tìm đến phần Download và bạn sẽ thấy liên kết để tải phiên bản mới nhất của NVDA.
 
 Chạy tập tin vừa tải về sẽ khởi động chương trình NVDA tạm thời.
-Sau đó bạn sẽ được hỏi là bạn muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
+Sau đó, bạn sẽ được hỏi là bạn muốn cài đặt NVDA vào máy, tạo bản chạy trực tiếp hay tiếp tục sử dụng phiên bản tạm thời đó.
 
 Nếu bạn muốn thường xuyên dùng NVDA trên máy này, bạn nên chọn cài đặt vào máy.
 Việc cài đặt NVDA vào máy sẽ cho phép bạn sử dụng một số tính năng như khởi động cùng Windows, chạy NVDA ở màn hình đăng nhập và các màn hình bảo vệ khác (những tính năng đó không được hỗ trợ cho bản chạy tạm thời cũng như bản chạy trực tiếp). Nó cũng không hỗ trợ tự động tạo biểu tượng chương trình trên start menu và desktop.
 Bạn có thể tạo bản chạy trực tiếp sau khi cài đặt NVDA vào máy.
 
 Nếu bạn muốn NVDA có thể chạy từ ổ USB hay các phương tiện lưu trữ khác, bạn có thể chọn chức năng tạo bản chạy trực tiếp.
-Sau này bạn cũng có thể cài bản chạy trực tiếp đó vào máy tính.
-Tuy nhiên nếu bạn muốn tạo bản chạy trực tiếp trên ổ CD (phương tiện lưu trữ chỉ đọc) thì bạn chỉ cần chép bản NVDA tải về lên đĩa CD.
-Hiện tại NVDA chưa hỗ trợ chạy bản chạy trực tiếp trên các phương tiện lưu trữ có thuộc tính chỉ đọc.
+Sau này, bạn cũng có thể cài bản chạy trực tiếp đó vào máy tính.
+Tuy nhiên, nếu bạn muốn tạo bản chạy trực tiếp trên ổ CD (phương tiện lưu trữ chỉ đọc) thì bạn chỉ cần chép bản NVDA tải về lên đĩa CD.
+Hiện tại, NVDA chưa hỗ trợ chạy bản chạy trực tiếp trên các phương tiện lưu trữ có thuộc tính chỉ đọc (read-only).
 
 Bản NVDA tạm thời thường được sử dụng với mục đích demo. Vì bản tạm thời bị giới hạn về thời gian.
 
@@ -128,9 +128,9 @@ Một hộp thoại sẽ xuất hiện cho phép bạn chọn nơi sẽ tạo b�
 Đó có thể là một thư mục trên ổ đĩa cứng, trên ổ USB hay một phương tiện lưu trữ bất kỳ.
 Trên cửa sổ này, bạn cũng có thể chọn tùy chọn chép thư mục cấu hình của người dùng hiện tại sang phiên bản chạy trực tiếp.
 Tùy chọn này chỉ áp dụng khi bạn tạo bản chạy trực tiếp từ bản NVDA đã cài đặt trên máy, không tồn tại khi tạo bản chạy trực tiếp từ gói cài đặt.
-Sau đó nhấn nút "Tiếp tục" để tiến hành tạo bản NVDA chạy trực tiếp.
+Sau đó, nhấn nút "Tiếp tục" để tiến hành tạo bản NVDA chạy trực tiếp.
 Khi hoàn tất, sẽ có một thông báo xác nhận là việc tạo bản chạy trực tiếp đã thành công.
-Nhấn OK để đóng cửa sổ đó.
+Nhấn Đồng ý để đóng cửa sổ đó.
 
 + Bắt đầu với NVDA +[GettingStartedWithNVDA]
 
@@ -465,7 +465,7 @@ Bên cạnh sử dụng trực tiếp chuột thì NVDA cung cấp cho bạn th�
 
 + Chế độ duyệt tài liệu +[BrowseMode]
 Với các tài liệu phức tạp và chỉ đọc như tài liệu web thì sẽ được duyệt bằng chế độ duyệt tài liệu trong NVDA.
-Bao gồm các tài liệu được mở bằng  Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+Bao gồm các tài liệu được mở bằng  Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, nội dung HTML trong Microsoft Outlook, Google Chrome, Adobe Reader và Adobe Flash.
 Chế độ duyệt tài liệu cũng được hỗ trợ cho Microsoft Word.
 
 Trong chế độ duyệt tài liệu, nội dung có thể được duyệt bằng các phím mũi tên.
@@ -798,7 +798,7 @@ Nhấn enter hoặc kích hoạt nút Chuyển đến tại phần chú thích �
 - Công thức (Formulas): Liệt kê các ô có công thức trong bảng tính hiện tại.
 Vị trí của ô cũng được hiển thị cùng với ô đó.
 Nhấn enter hoặc kích hoạt nút Chuyển đến tại công thức để đi đến ô tương ứng.
-- Bảng tính (Sheets): liệt kê các bảng tính trong workbook hiện tại.
+- Bảng tính (Sheets): liệt kê các bảng tính trong tập bảng tính hiện tại.
 Nhấn f2 để đổi tên bảng tính.
 Nhấn enter hoặc nút Chuyển đến để đi đến bảng tính đó.
 - Trường biểu mẫu (Form fields): liệt kê các biểu mẫu có trong bảng tính hiện tại.
@@ -813,7 +813,7 @@ Nhấn NVDA+alt+c để đọc thông báo phần chú thích của ô hiện t�
 Có thể liệt kê toàn bộ các chú thích trong bảng tính hiện tại với phần danh sách thành phần.
 
 +++ Đọc Ô Được Bảo Vệ +++[ExcelReadingProtectedCells]
-Bạn có thể không chuyển focus đến các ô trong một workbook được bảo vệ vì nó được khóa, không cho phép chỉnh sửa.
+Bạn có thể không chuyển focus đến các ô trong một tập bảng tính được bảo vệ vì nó được khóa, không cho phép chỉnh sửa.
 %kc:beginInclude
 Chuyển qua chế độ duyệt bằng cách nhấn NVDA+khoảng trắng. Lúc này, bạn có thể dùng các phím di chuyển để đọc các ô trong bảng tính hiện tại.
 %kc:endInclude
@@ -1992,11 +1992,11 @@ Sau đây là danh sách các phím được gán của mẫu màn hình nổi n
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
 %kc:beginInclude
 || Tên | Phím |
-| Cuộn về trước | t1 hoặc etouch1 |
+| Cuộn về trước | t1, etouch1 |
 | Về dòng trước | t2 |
 | Chuyển đến focus hiện tại | t3 |
 | Chuyển đến dòng kế | t4 |
-| Cuộn tới | t5 hoặc etouch3 |
+| Cuộn tới | t5, etouch3 |
 | Rút về ô chữ nổi | routing |
 | Thông báo định dạng văn bản tại ô chữ nổi | secondary routing |
 | Bật tắt HID keyboard simulation | t1+spEnter |
@@ -2006,7 +2006,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Thông báo tiêu đề | etouch2 |
 | Thông báo thanh trạng thái | etouch4 |
 | Phím shift+tab | sp1 |
-| Phím alt | sp2 |
+| Phím alt | sp2, alt |
 | Phím escape | sp3 |
 | Phím tab | sp4 |
 | Phím mũi tên lên | spUp |
@@ -2024,7 +2024,6 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Phím control+end | t3+spDown |
 | Phím home | t3+spLeft |
 | Phím end | t3+spRight |
-| Phím alt | alt |
 | Phím control | control |
 %kc:endInclude
 
