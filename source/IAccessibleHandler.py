@@ -784,8 +784,7 @@ def processDestroyWinEvent(window,objectID,childID):
 	# so can't use generic focus correction. (#2695)
 	focus=api.getFocusObject()
 	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
-	windowClassName=winUser.getClassName(window)
-	if childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
+	if objectID == 0 and childID==0 and isinstance(focus,BaseCandidateItem) and not eventHandler.isPendingEvents("gainFocus"):
 		obj=focus.container
 		if obj:
 			eventHandler.queueEvent("gainFocus",obj)
