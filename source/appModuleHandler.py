@@ -494,6 +494,36 @@ class AppModule(baseObject.ScriptableObject):
 		self.isWindowsStoreApp = False
 		return self.isWindowsStoreApp
 
+	def _get_appArchitecture(self):
+		"""Returns the target architecture for the specified app.
+		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
+		The following strings are returned:
+		* x86: 32-bit app on 32-bit Windows.
+		* AMD64: x64 app on x64 Windows.
+		* ARM64: 64-bit ARM app on ARM64 Windows.
+		@rtype: str
+		"""
+		if not self.is64BitProcess:
+			# 32-bit app on 32-bit Windows (x86).
+			self.appArchitecture = "x86"
+		else:
+			# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
+			# If running releases between 7 and 10 Version 1507 (build 10240), just assume this is an x64 (AMD64) app.
+			if winVersion.winVersion.build < 10586:
+				self.appArchitecture = "AMD64"
+			else:
+				size = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+				appMachine = ctypes.create_unicode_buffer(size.value)
+				# No need to worry about host's architecture, as this can be queried through environment variables.
+				winKernel.kernel32.IsWow64Process2(self.processHandle, appMachine, None)
+				# If a native app is running (such as x64 app on x64 machines), app machine value is empty.
+				if not appMachine.value:
+					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
+				else:
+					# The only time AMD64 (0x8664) will be returned is if dealing with an x64 app on ARM64 machines.
+					self.appArchitecture = "AMD64"
+		return self.appArchitecture
+
 	def isGoodUIAWindow(self,hwnd):
 		"""
 		returns C{True} if the UIA implementation of the given window must be used, regardless whether native or not.
