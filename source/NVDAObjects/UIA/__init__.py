@@ -423,15 +423,13 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		return range.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,ignoreEmptyChunks=True,UIAFormatUnits=None):
+	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
-		@param ignoreEmptyChunks: if true, textRanges where the text is empty will not be emitted nor the formatField directly before it. 
-		@param ignoreEmptyChunks: bool
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
@@ -452,7 +450,7 @@ class UIATextInfo(textInfos.TextInfo):
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange) or ""
-			if not ignoreEmptyChunks or text:
+			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
 					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
