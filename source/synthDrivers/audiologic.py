@@ -5,7 +5,7 @@
 #Copyright (C) 2008-2010 Gianluca Casalino <gianluca@spazioausili.net>, James Teh <jamie@jantrid.net>
 
 from collections import OrderedDict
-import _audiologic
+from . import _audiologic
 from synthDriverHandler import SynthDriver, VoiceInfo
 try:
 	import winreg

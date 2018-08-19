@@ -9,7 +9,6 @@
 
 try:
 	import winreg
-except:
 	import _winreg as winreg
 import ctypes
 import mathPres

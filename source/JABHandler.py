@@ -6,9 +6,9 @@
 #See the file COPYING for more details.
 
 try:
-	import Queue
+	import queue
 except ImportError:
-	import queue as Queue
+	import Queue as queue
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -295,7 +295,7 @@ isRunning=False
 # the issue, we use this cache as a fallback when either getTopLevelObject or
 # getHWNDFromAccessibleContext fails.
 vmIDsToWindowHandles={}
-internalFunctionQueue=Queue.Queue(1000)
+internalFunctionQueue=queue.Queue(1000)
 internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
 
 def internalQueueFunction(func,*args,**kwargs):

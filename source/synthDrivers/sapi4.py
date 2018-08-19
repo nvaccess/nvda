@@ -15,7 +15,7 @@ from ctypes import *
 from synthDriverHandler import SynthDriver,VoiceInfo
 from logHandler import log
 import speech
-from _sapi4 import *
+from ._sapi4 import *
 import config
 import nvwave
 

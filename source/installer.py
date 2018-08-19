@@ -35,7 +35,7 @@ def _getWSH():
 	return _wsh
 
 defaultStartMenuFolder=versionInfo.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion") as k: 
+with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
 	programFilesPath=winreg.QueryValueEx(k, "ProgramFilesDir")[0] 
 defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
@@ -77,7 +77,7 @@ def getStartMenuFolder(noDefault=False):
 
 def getInstallPath(noDefault=False):
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		return winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
@@ -263,13 +263,11 @@ def isDesktopShortcutInstalled():
 
 def unregisterInstallation(keepDesktopShortcut=False):
 	try:
-		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
-			_winreg.KEY_WOW64_64KEY)
-		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, False)
+		winreg.DeleteKeyEx(winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
+			winreg.KEY_WOW64_64KEY)
+		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, False)
 	except WindowsError:
 		pass
-<<<<<<< HEAD
-=======
 	if easeOfAccess.isSupported:
 		try:
 			winreg.DeleteKeyEx(winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
@@ -277,7 +275,6 @@ def unregisterInstallation(keepDesktopShortcut=False):
 			easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, False)
 		except WindowsError:
 			pass
->>>>>>> Python 3/winreg stage 1: top-lvel source files converted to use winreg or import the Python 3 version.
 	wsh=_getWSH()
 	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
