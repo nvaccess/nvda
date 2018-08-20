@@ -48,7 +48,7 @@ def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		state = pickle.load(file(statePath, "r"))
+		state = pickle.load(open(statePath, "r"))
 	except:
 		# Defaults.
 		state = {
@@ -61,7 +61,7 @@ def loadState():
 def saveState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		pickle.dump(state, file(statePath, "wb"))
+		pickle.dump(state, open(statePath, "wb"))
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
