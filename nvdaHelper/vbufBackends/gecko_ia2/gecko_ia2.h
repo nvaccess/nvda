@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <vbufBase/backend.h>
 
-class GeckoVBufBackend_t: public VBufBackend_t {
+class GeckoVBufBackend_t: public VBufBackendWithInplaceRendering_t {
 	private:
 
 	VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc,
@@ -41,7 +41,7 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 
 	virtual void renderThread_terminate();
 
-	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
+	virtual void renderSubtree(VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
 
 	virtual ~GeckoVBufBackend_t();
 

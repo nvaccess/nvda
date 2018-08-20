@@ -249,3 +249,41 @@ VBufBackend_t::~VBufBackend_t() {
 	LOG_DEBUG(L"base Backend destructor called"); 
 	nhAssert(runningBackends.count(this) == 0);
 }
+
+bool VBufBackendWithInplaceRendering_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
+	if(node->updateAncestor) node=node->updateAncestor;
+	if(!isNodeInBuffer(node)) {
+		LOG_DEBUGWARNING(L"Node at "<<node<<L" not in buffer at "<<this);
+		return false;
+	}
+	LOG_DEBUG(L"Invalidating node "<<node->getDebugInfo());
+	this->lock.acquire();
+	invalidSubtreeIdentifiers.insert(node->identifier);
+	this->lock.release();
+	this->requestUpdate();
+	return true;
+}
+
+void VBufBackendWithInplaceRendering_t::update() {
+	this->lock.acquire();
+	if(this->hasContent()) {
+		auto relativeSelection=saveRelativeSelection();
+		for(auto identifier: invalidSubtreeIdentifiers) {
+			VBufStorage_controlFieldNode_t* node=getControlFieldNodeWithIdentifier(identifier.docHandle,identifier.ID);
+			if(!node) continue;
+			LOG_DEBUG(L"re-rendering subtree at "<<node);
+			int docHandle=0, ID=0;
+			node->getIdentifier(&docHandle,&ID);
+			LOG_DEBUG(L"subtree node has docHandle "<<docHandle<<L" and ID "<<ID);
+			LOG_DEBUG(L"Rendering content");
+			forgetControlFieldNode(node);
+			renderSubtree(node->getParent(),node->getPrevious(),docHandle,ID,node);
+			removeFieldNode(node);
+		}
+		invalidSubtreeList.clear();
+		restoreRelativeSelection(relativeSelection);
+	} else {
+		this->renderSubtree(NULL,NULL,rootDocHandle,rootID);
+	}
+	this->lock.release();
+}

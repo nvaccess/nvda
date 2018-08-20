@@ -374,10 +374,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		return NULL;
 	}
 
-	//Make sure that we don't already know about this object -- protect from loops
-	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)) {
-		LOG_DEBUG(L"a node with this docHandle and ID already exists, returning NULL");
-		return NULL;
+	// If this node is already known in the buffer, move it to this place in the tree and return it.
+	VBufStorage_controlFieldNode_t* existingNode=buffer->getControlFieldNodeWithIdentifier(docHandle,ID);
+	if(existingNode) {
+		this->moveSubtree(existingNode,parentNode,previousNode);
+		return existingNode;
 	}
 
 	//Add this node to the buffer
@@ -1051,15 +1052,15 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 
 void GeckoVBufBackend_t::renderThread_initialize() {
 	registerWinEventHook(renderThread_winEventProcHook);
-	VBufBackend_t::renderThread_initialize();
+	VBufBackendWithInplaceRendering_t::renderThread_initialize();
 }
 
 void GeckoVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
-	VBufBackend_t::renderThread_terminate();
+	VBufBackendWithInplaceRendering_t::renderThread_terminate();
 }
 
-void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
+void GeckoVBufBackend_t::renderSubtree(VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	IAccessible2* pacc=IAccessible2FromIdentifier(docHandle,ID);
 	if(!pacc) {
 		LOG_DEBUG(L"Could not get IAccessible2, returning");
@@ -1069,11 +1070,11 @@ void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int
 		// This is the root node.
 		this->versionSpecificInit(pacc);
 	}
-	this->fillVBuf(pacc, buffer, NULL, NULL);
+	this->fillVBuf(pacc, this, parentNode, previousNode);
 	pacc->Release();
 }
 
-GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
+GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackendWithInplaceRendering_t(docHandle,ID) {
 }
 
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {

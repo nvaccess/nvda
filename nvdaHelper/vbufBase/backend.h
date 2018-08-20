@@ -29,7 +29,7 @@ typedef std::set<VBufBackend_t*> VBufBackendSet_t;
  * Renders content in to a storage buffer for linea access.
  */
 class VBufBackend_t  : public VBufStorage_buffer_t {
-	private:
+	protected:
 
 /**
  * A callback to handle windows being destroyed.
@@ -103,7 +103,7 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * Updates the content of the buffer. 
  * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
  */
-	void update();
+	virtual void update();
 
 /**
  * Destructor, (protected as you must use the destroy method).
@@ -160,6 +160,32 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * Useful for cerializing access to the buffer
  */
 	LockableObject lock;
+
+};
+
+class VBufBackendWithInplaceRendering_t: public VBufBackend_t {
+	private:
+	std::set<VBufStorage_controlFieldNodeIdentifier_t> invalidSubtreeIdentifiers;
+
+	public:
+
+	using VBufBackend_t::VBufBackend_t;
+
+	void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL) {};
+
+	virtual bool invalidateSubtree(VBufStorage_controlFieldNode_t*);
+
+	virtual void update(); 
+
+	/**
+ * Renders content starting from the given doc handle and ID, at the location in the tree given by parent and previous nodes. 
+ * @param parentNode the existing node in this tree that should be the parent of the new content.
+ * @param previousNode the existing node in this tree that should be the previous node of the new content.
+ * @param docHandle the doc handle to start from
+ * @param ID the ID to start from.
+ * @param oldNode an optional node that will be replaced by the rendered content (useful for retreaving cached data) 
+ */
+	virtual void renderSubtree(VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
 };
 
