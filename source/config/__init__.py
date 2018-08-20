@@ -30,7 +30,7 @@ from copy import deepcopy
 from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
 from configobj.validate import Validator
-from logHandler import log, levelToName
+from logHandler import log, levelNames
 from logging import DEBUG
 import shlobj
 import baseObject
@@ -317,7 +317,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	if not subdir:
 		subdir = module.__name__
 	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	dirs = [dir for dir in getConfigDirs(subdir)]
+	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
 	dirs.extend(module.__path__ )
 	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
@@ -425,7 +425,7 @@ class ConfigManager(object):
 			logLevelName = profile["general"]["loggingLevel"]
 		except KeyError as e:
 			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= levelToName.get(logLevelName)):
+		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= levelNames.get(logLevelName)):
 			# Log at level info to ensure that the profile is logged.
 			log.info(u"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(profile))
 		return profile
