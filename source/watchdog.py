@@ -290,7 +290,7 @@ class CancellableCallThread(threading.Thread):
 
 		exc = self._exc_info
 		if exc:
-			raise exc[0], exc[1], exc[2]
+			raise (exc[0], exc[1], exc[2])
 		return self._result
 
 	def run(self):

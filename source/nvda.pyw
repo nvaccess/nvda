@@ -7,6 +7,7 @@
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
 
 import sys
+sys.maxunicode = 65535
 import os
 
 if getattr(sys, "frozen", None):
@@ -30,7 +31,7 @@ locale.setlocale(locale.LC_ALL,'')
 try:
 	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
 except:
-	gettext.install('nvda',unicode=True)
+	gettext.install('nvda')
 
 import time
 import argparse
@@ -202,7 +203,7 @@ if logLevel<=0:
 	logLevel=log.INFO
 if globalVars.appArgs.debugLogging:
 	logLevel=log.DEBUG
-#logHandler.initialize()
+logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 if logLevel is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))

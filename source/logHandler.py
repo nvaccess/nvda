@@ -15,7 +15,8 @@ import logging
 try:
 	from logging import _levelNames as levelNames
 except:
-	from logging import _nameToLevel as levelNames
+	from logging import _nameToLevel as nameToLevel
+	from logging import _levelToName as levelToName
 import inspect
 import winsound
 import traceback
@@ -80,7 +81,7 @@ def getCodePath(f):
 				if not member:
 					continue
 				memberType=type(member)
-				if memberType is FunctionType and member.func_code is f.f_code:
+				if memberType is FunctionType and member.__code__ is f.f_code:
 					# the function was found as a standard method
 					className=cls.__name__
 				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.func_code is f.f_code:
@@ -213,18 +214,7 @@ class RemoteHandler(logging.Handler):
 		except WindowsError:
 			pass
 
-class FileHandler(logging.StreamHandler):
-
-	def __init__(self, filename, mode):
-		# We need to open the file in text mode to get CRLF line endings.
-		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
-		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
-		logging.StreamHandler.__init__(self, utf_8.StreamWriter(open(filename, mode)))
-
-	def close(self):
-		self.flush()
-		self.stream.close()
-		logging.StreamHandler.close(self)
+class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
 		# Only play the error sound if this is a test version.
@@ -246,11 +236,7 @@ class Formatter(logging.Formatter):
 
 	def format(self, record):
 		s = logging.Formatter.format(self, record)
-		if isinstance(s, str):
-			# Log text must be unicode.
-			# The string is probably encoded according to our thread locale, so use mbcs.
-			# If there are any errors, just replace the character, as there's nothing else we can do.
-			s = unicode(s, "mbcs", "replace")
+		print(s)
 		return s
 
 	def formatException(self, ex):
@@ -345,7 +331,7 @@ def initialize(shouldDoRemoteLogging=False):
 		logFormatter = Formatter("%(codepath)s:\n%(message)s")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
-	redirectStdout(log)
+	#redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
 	warnings.simplefilter("default", DeprecationWarning)
@@ -359,9 +345,9 @@ def setLogLevelFromConfig():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
-	level = levelNames.get(levelName)
+	level = nameToLevel.get(levelName)
 	if not level or level > log.INFO:
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
-		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
+		config.conf["general"]["loggingLevel"] = levelToName[log.INFO]
 	log.setLevel(level)
