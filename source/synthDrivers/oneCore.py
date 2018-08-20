@@ -16,7 +16,10 @@ try:
 except ImportError:
 	import _winreg as winreg
 import wave
-import cStringIO
+try:
+	import io as cStringIO
+except:
+	import cStringIO
 from synthDriverHandler import SynthDriver, VoiceInfo
 from logHandler import log
 import config
