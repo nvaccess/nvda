@@ -805,13 +805,14 @@ class TextInfoRegion(Region):
 
 	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if formatConfig["reportFontAttributes"]:
-			if field.get("bold", False):
-				typeform |= louis.bold
-			if field.get("italic", False):
-				typeform |= louis.italic
-			if field.get("underline", False):
-				typeform |= louis.underline
+		if not formatConfig["reportFontAttributes"]:
+			return typeform
+		if field.get("bold", False):
+			typeform |= louis.bold
+		if field.get("italic", False):
+			typeform |= louis.italic
+		if field.get("underline", False):
+			typeform |= louis.underline
 		return typeform
 
 	def _addFieldText(self, text, contentPos, separate=True):
