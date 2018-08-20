@@ -25,7 +25,7 @@ import ctypes
 from logHandler import log
 import config
 import time
-import thread
+import _thread as thread
 from win32con import WM_DEVICECHANGE, DBT_DEVNODES_CHANGED
 import appModuleHandler
 from baseObject import AutoPropertyObject
@@ -82,7 +82,7 @@ def addUsbDevices(driver, type, ids):
 	@type ids: set of str
 	@raise ValueError: When one of the provided IDs is malformed.
 	"""
-	malformedIds = [id for id in ids if not isinstance(id, basestring) or not USB_ID_REGEX.match(id)]
+	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
 		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
 			% (driver, type, ", ".join(wrongIds)))

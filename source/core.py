@@ -363,7 +363,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
 				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
 
-	messageWindow = MessageWindow(unicode(versionInfo.name))
+	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
