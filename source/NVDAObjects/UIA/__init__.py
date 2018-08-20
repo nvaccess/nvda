@@ -641,7 +641,7 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		Fetches per line bounding rectangles from the given UI Automation text range.
 		Note that if the range object doesn't cover a whole line (e.g. a character),
-		the bounding rectangle will be restriked to the range.
+		the bounding rectangle will be restricted to the range.
 		@rtype: [locationHelper.RectLTWH]
 		"""
 		rects = []

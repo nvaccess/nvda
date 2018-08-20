@@ -665,6 +665,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# Can't move forward any further.
 				break
 			if obj == self._endObj:
+				# Override ti with self._end, because self._end ends at the current range's end,
+				# while the ti for self._endObj might contain text that is after the current range.
 				ti = self._end
 		if not rects:
 			raise LookupError

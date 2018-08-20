@@ -327,7 +327,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getPointFromOffset(self,offset):
 		# Purposely do not catch LookupError or NotImplementedError raised by _getBoundingRectFromOffset.
 		rect = self._getBoundingRectFromOffset(offset)
-		# For backwards compatiblity, keep using textInfos.Point instead of locationHelper.Point
+		# For backwards compatibility, keep using textInfos.Point instead of locationHelper.Point
 		return textInfos.Point(*rect.center)
 
 	def _getOffsetFromPoint(self,x,y):
