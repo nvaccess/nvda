@@ -484,7 +484,7 @@ class AppModule(baseObject.ScriptableObject):
 		These include Windows store apps on Windows 8 and 8.1, and Universal Windows Platform (UWP) apps on Windows 10.
 		@rtype: bool
 		"""
-		if winVersion.winVersion.major and winVersion.winVersion.minor == (6, 1):
+		if (winVersion.winVersion.major, winVersion.winVersion.minor) < (6, 2):
 			# Windows Store/UWP apps were introduced in Windows 8.
 			self.isWindowsStoreApp = False
 			return False
@@ -498,8 +498,8 @@ class AppModule(baseObject.ScriptableObject):
 		"""Returns the target architecture for the specified app.
 		This is useful for detecting X86/X64 apps running on ARM64 releases of Windows 10.
 		The following strings are returned:
-		* x86: 32-bit app on 32-bit Windows.
-		* AMD64: x64 app on x64 Windows.
+		* x86: 32-bit x86 app on 32-bit or 64-bit Windows.
+		* AMD64: x64 app on x64 or ARM64 Windows.
 		* ARM64: 64-bit ARM app on ARM64 Windows.
 		@rtype: str
 		"""
@@ -513,11 +513,11 @@ class AppModule(baseObject.ScriptableObject):
 				self.appArchitecture = "AMD64"
 			else:
 				size = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-				appMachine = ctypes.create_unicode_buffer(size.value)
+				appArch = ctypes.create_unicode_buffer(size.value)
 				# No need to worry about host's architecture, as this can be queried through environment variables.
-				winKernel.kernel32.IsWow64Process2(self.processHandle, appMachine, None)
-				# If a native app is running (such as x64 app on x64 machines), app machine value is empty.
-				if not appMachine.value:
+				winKernel.kernel32.IsWow64Process2(self.processHandle, appArch, None)
+				# If a native app is running (such as x64 app on x64 machines), app architecture value is empty.
+				if not appArch.value:
 					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
 				else:
 					# The only time AMD64 (0x8664) will be returned is if dealing with an x64 app on ARM64 machines.
