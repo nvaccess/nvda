@@ -779,6 +779,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					// Add the chunk to the buffer.
 					if(tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart))) {
 						previousNode=tempNode;
+						// Add the IA2Text start offset as an attribute on the node.
+						s << chunkStart;
+						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
+						s.str(L"");
 						// Add text attributes.
 						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
 							previousNode->addAttribute(it->first,it->second);

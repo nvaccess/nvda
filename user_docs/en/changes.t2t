@@ -17,6 +17,7 @@ What's New in NVDA
 == Bug Fixes ==
 - In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
 - When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
+- Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
 
 
 == Changes for Developers ==
@@ -84,6 +85,7 @@ What's New in NVDA
  - Reduced overly verbose focus presentation in both speech and braille when focusing a Word document. (#8407)
  - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
  - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)
+- In Windows 10 1803 and later, it is now possible to install add-ons if the "Use Unicode UTF-8 for worldwide language support" feature is enabled. (#8599)
 
 
 == Changes for Developers ==

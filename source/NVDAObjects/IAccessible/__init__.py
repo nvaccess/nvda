@@ -127,9 +127,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			raise LookupError
 
-	def _getBoundingRectFromOffset(self,offset):
+	@classmethod
+	def _getBoundingRectFromOffsetInObject(cls,obj,offset):
 		try:
-			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
 		if not any(res[2:]):
@@ -139,7 +140,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# Other IA2 implementations, such as the one in LibreOffice,
 			# tend to return the caret rectangle in this case, which is ok.
 			raise LookupError
-		return RectLTWH(*res)
+		return res
+
+	def _getBoundingRectFromOffset(self,offset):
+		return self._getBoundingRectFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"
