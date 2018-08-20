@@ -803,14 +803,15 @@ class TextInfoRegion(Region):
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
-	def _getTypeformFromFormatField(self, field):
+	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if field.get("bold", False):
-			typeform |= louis.bold
-		if field.get("italic", False):
-			typeform |= louis.italic
-		if field.get("underline", False):
-			typeform |= louis.underline
+		if formatConfig["reportFontAttributes"]:
+			if field.get("bold", False):
+				typeform |= louis.bold
+			if field.get("italic", False):
+				typeform |= louis.italic
+			if field.get("underline", False):
+				typeform |= louis.underline
 		return typeform
 
 	def _addFieldText(self, text, contentPos, separate=True):
@@ -860,7 +861,7 @@ class TextInfoRegion(Region):
 				cmd = command.command
 				field = command.field
 				if cmd == "formatChange":
-					typeform = self._getTypeformFromFormatField(field)
+					typeform = self._getTypeformFromFormatField(field, formatConfig)
 					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
