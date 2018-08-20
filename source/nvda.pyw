@@ -102,7 +102,7 @@ installGroup.add_argument('--create-portable',action="store_true",dest='createPo
 installGroup.add_argument('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
 parser.add_argument('--portable-path',dest='portablePath',default=None,type=decodeMbcs,help="The path where a portable copy will be created")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
-parser.add_argument('--disable-start-on-logon',action="store_true",dest='disableStartOnLogon',default=False,help="When installing, disable NVDA's start on the logon screen")
+parser.add_argument('--enable-start-on-logon',type=bool,dest='enableStartOnLogon',default=None,help="When installing, disable NVDA's start on the logon screen")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
 # the downgraded copy won't be started in non-secure mode on secure desktops.
