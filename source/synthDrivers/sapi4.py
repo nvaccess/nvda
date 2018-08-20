@@ -6,6 +6,7 @@
 
 import locale
 from collections import OrderedDict
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except ImportError:

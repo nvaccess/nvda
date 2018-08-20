@@ -8,6 +8,7 @@
 import time
 import nvwave
 import threading
+# #8527: Queue -> queue in Python 3.
 try:
 	import queue
 except ImportError:

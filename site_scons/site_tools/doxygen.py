@@ -23,6 +23,7 @@ import os
 import os.path
 import glob
 from fnmatch import fnmatch
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except:

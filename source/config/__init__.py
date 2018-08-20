@@ -12,6 +12,7 @@ For the latter two actions, one can perform actions prior to and/or after they t
 """ 
 
 import globalVars
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except ImportError:

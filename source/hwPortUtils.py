@@ -9,6 +9,7 @@
 import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except ImportError:

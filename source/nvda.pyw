@@ -171,6 +171,7 @@ if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 
 isSecureDesktop = desktopName == "Winlogon"
 if isSecureDesktop:
+	# #8527: _winreg -> winreg in Python 3.
 	try:
 		import winreg
 	except ImportError:

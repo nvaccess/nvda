@@ -27,6 +27,7 @@ import serial
 
 #for brxcom
 import ctypes as c
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except ImportError:

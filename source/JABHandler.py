@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+# #8527: Queue -> queue in Python 3.
 try:
 	import queue
 except ImportError:

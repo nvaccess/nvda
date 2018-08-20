@@ -7,6 +7,7 @@
 """Utilities for working with the Windows Ease of Access Center.
 """
 
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except ImportError:

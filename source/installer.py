@@ -6,6 +6,7 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+# #8527: _winreg -> winreg in Python 3.
 try:
 	import winreg
 except ImportError:

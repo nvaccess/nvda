@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import types
+# #8527: Queue -> queue in Python 3.
 try:
 	from queue import Queue
 except ImportError:
