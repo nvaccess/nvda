@@ -1,18 +1,19 @@
-# Copyright (C) 2006-2012 NVDA Contributors
+# NVDASimplified Chinese translation message.
+# Copyright (C) 2006-2018 NVDA Contributors
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA Simplified Chinese Team\n"
+"Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-29 00:10+1000\n"
-"PO-Revision-Date: 2018-06-29 14:58+0800\n"
+"POT-Creation-Date: 2018-08-03 19:07+1000\n"
+"PO-Revision-Date: 2018-08-08 18:08+0800\n"
 "Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
-"Language-Team: NVDASimplified Chinese team <vgjh2005@gmail.com>\n"
+"Language-Team: NVDASimplified Chinese team <All volunteers>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -82,11 +83,6 @@ msgstr "未知语言"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "未知输入法"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{layout} - {language}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -366,6 +362,14 @@ msgstr "面板"
 msgid "pwdedt"
 msgstr "密码编辑框"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "删除"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "插入"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "选择"
@@ -376,7 +380,7 @@ msgstr "只读"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 msgid "-"
-msgstr "可扩展"
+msgstr "-"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 msgid "+"
@@ -388,7 +392,7 @@ msgstr "子菜单"
 
 #. Translators: Displayed in braille when a protected control or a document is encountered.
 msgid "***"
-msgstr "受保护"
+msgstr "***"
 
 #. Translators: Displayed in braille when a required form field is encountered.
 msgid "req"
@@ -400,7 +404,7 @@ msgstr "无效"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
 msgid "..."
-msgstr "可自动完成"
+msgstr "..."
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "mln"
@@ -503,6 +507,18 @@ msgstr "盲文显示排满点显器的所有格"
 msgid "Only when scrolling back"
 msgstr "仅在回滚时"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "自动"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "蓝牙"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -572,9 +588,20 @@ msgstr "焦点"
 msgid "to review"
 msgstr "浏览光标"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "自动"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "未知盲文点显器"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "蓝牙串行设备: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "系列: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -640,6 +667,11 @@ msgstr "保加利亚语八点电脑点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "中库尔德语一级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "威尔斯语一级点字"
 
@@ -647,6 +679,11 @@ msgstr "威尔斯语一级点字"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "威尔斯语二级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "捷克语8点电脑点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -747,6 +784,11 @@ msgstr "美式英语一级点字"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "美式英语二级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "世界语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -852,6 +894,11 @@ msgstr "匈牙利语八点电脑点字"
 #. braille settings dialog.
 msgid "Hungarian grade 1"
 msgstr "匈牙利语一级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
+msgstr "匈牙利语二级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2400,7 +2447,7 @@ msgstr "桌面图标"
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 msgid "alert"
-msgstr "警告："
+msgstr "警告"
 
 #. Translators: Identifies desktop pane (the desktop window).
 msgid "desktop pane"
@@ -2506,15 +2553,25 @@ msgstr "触摸控件"
 msgid "calendar"
 msgstr "日历"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "图表元素"
-
 msgid "video"
 msgstr "视频"
 
 msgid "audio"
 msgstr "音频"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "图表元素"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "已删除"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "已插入"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2791,7 +2848,7 @@ msgstr "匹配大小写(&S)"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "无法找到文本\"%s\""
+msgstr "文本 \"%s\" 无法找到"
 
 msgid "Find Error"
 msgstr "查找失败"
@@ -3739,6 +3796,14 @@ msgstr "朗读有焦点的对象，连按两次拼读信息"
 msgid "No status line found"
 msgstr "没有状态栏"
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "没有状态栏信息"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "无法复制状态栏内容到剪贴板"
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4005,7 +4070,7 @@ msgstr ""
 #. (braille can be tethered automatically or to either focus or review position).
 #, python-format
 msgid "Braille tethered %s"
-msgstr "点字光标捆绑到 %s"
+msgstr "点字显示跟随到 %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
@@ -4646,28 +4711,23 @@ msgstr "键盘，所有布局"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "阿比西尼与"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "阿拉贡语"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "阿拉伯语"
+msgid "Central Kurdish"
+msgstr "中库尔德语"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "尼泊尔语"
+msgid "Northern Kurdish"
+msgstr "北库尔德语"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "塞尔维亚语"
+msgid "Burmese"
+msgstr "缅甸语"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5846,7 +5906,7 @@ msgstr "共%s行"
 msgid "level %s"
 msgstr "%s级"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "%s项"
@@ -5957,17 +6017,9 @@ msgstr "背景样式{pattern}"
 msgid "line %s"
 msgstr "行%s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "已插入"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "不插入"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "已删除"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6328,7 +6380,7 @@ msgstr "正在检查更新"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "检查更新时出错！"
+msgstr "检查更新时出错。"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message when a downloaded update file could not be preserved.
@@ -6413,7 +6465,7 @@ msgstr "正在下载"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "下载更新时出错！"
+msgstr "下载更新时出错。"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -7116,14 +7168,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "关"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "没有表情符号"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/协议转换器"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "蓝牙系列: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7144,15 +7195,6 @@ msgstr "切换人体学输入设备键盘触控仿真"
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit 点显器"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "系列: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7426,7 +7468,7 @@ msgstr "重载插件(&R)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
-msgstr "工具(&T)..."
+msgstr "工具(&T)"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
@@ -7693,6 +7735,7 @@ msgstr "安装(&I)..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "移除(&R)"
@@ -8124,7 +8167,7 @@ msgstr "创建 NVDA 的便携副本"
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
-msgstr "要想建立一个 NVDA 的便携版本，请选择路径和其他选项后点击“继续”"
+msgstr "要想建立一个 NVDA 的便携版本，请选择路径和其他选项后点击继续"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -8169,7 +8212,7 @@ msgstr "请稍后，正在创建便携版的 NVDA。"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "NVDA 无法替换或覆盖一个文件！"
+msgstr "NVDA 无法替换或覆盖一个文件。"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
@@ -8206,7 +8249,7 @@ msgstr "另存为(&A)"
 #. Translators: Dialog text presented when NVDA cannot save a log file.
 #, python-format
 msgid "Error saving log: %s"
-msgstr "日志文件 %s 保存失败！"
+msgstr "日志文件保存失败: %s"
 
 #. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
@@ -8282,7 +8325,7 @@ msgstr "应用以保存的配置到欢迎界面和其他安全界面（需要管
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "自动检查更新(&U)"
+msgstr "&自动检查更新NVDA"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
@@ -8383,7 +8426,7 @@ msgstr "音频闪避模式(&D)"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "语音合成器 %s 加载失败！"
+msgstr "语音合成器%s加载失败。"
 
 msgid "Synthesizer Error"
 msgstr "语音合成器错误"
@@ -9053,7 +9096,7 @@ msgstr "随机显示消息(&M)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "点字光标捆绑到(&R)："
+msgstr "点字显示跟随到(&R)："
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -10660,6 +10703,25 @@ msgstr "双倍行间距"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行间距"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{layout} - {language}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "阿比西尼与"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "阿拉伯语"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "尼泊尔语"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "塞尔维亚语"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "打开 NVDA “语音设置”对话框"

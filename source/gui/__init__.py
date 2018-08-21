@@ -35,6 +35,10 @@ import api
 import guiHelper
 import winVersion
 
+# Temporary: #8599: add cp65001 codec
+#            #7105: upgrading to python 3 should fix this issue. See https://bugs.python.org/issue13216
+codecs.register(lambda name: codecs.lookup('utf-8') if name == 'cp65001' else None)
+
 try:
 	import updateCheck
 except RuntimeError:
