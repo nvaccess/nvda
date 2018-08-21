@@ -385,7 +385,9 @@ fileWavePlayer = None
 fileWavePlayerThread=None
 def playWaveFile(fileName, asynchronous=True):
 	"""plays a specified wave file.
-"""
+	@param asynchronous: whether the wave file should be played asynchronously
+	@type hz: bool
+	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
