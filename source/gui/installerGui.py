@@ -77,7 +77,9 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 
 def doSilentInstall(startAfterInstall=True):
 	prevInstall=installer.comparePreviousInstall() is not None
-	startOnLogon=False if globalVars.appArgs.disableStartOnLogon else config.getStartOnLogonScreen() if prevInstall else True
+	startOnLogon=globalVars.appArgs.enableStartOnLogon
+	if startOnLogon is None:
+		startOnLogon=config.getStartOnLogonScreen() if prevInstall else True
 	doInstall(
 		installer.isDesktopShortcutInstalled() if prevInstall else True,
 		startOnLogon,
@@ -109,10 +111,10 @@ class InstallerDialog(wx.Dialog):
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA on the Windows &logon screen")
 		self.startOnLogonCheckbox = sHelper.addItem(wx.CheckBox(self, label=startOnLogonText))
-		self.startOnLogonCheckbox.Value = (
-			False if globalVars.appArgs.disableStartOnLogon else
-			config.getStartOnLogonScreen() if self.isUpdate else True
-		)
+		if globalVars.appArgs.enableStartOnLogon is not None:
+			self.startOnLogonCheckbox.Value = globalVars.appArgs.enableStartOnLogon
+		else:
+			self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else True
 
 		shortcutIsPrevInstalled=installer.isDesktopShortcutInstalled()
 		if self.isUpdate and shortcutIsPrevInstalled:
