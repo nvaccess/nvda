@@ -8,11 +8,10 @@
 import time
 import nvwave
 import threading
-# #8527: Queue -> queue in Python 3.
 try:
-	import queue
+	import Queue as queue # Python 2.7 import
 except ImportError:
-	import Queue as queue
+	import queue # Python 3 import
 from ctypes import *
 import config
 import globalVars

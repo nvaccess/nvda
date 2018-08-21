@@ -5,11 +5,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-# #8527: Queue -> queue in Python 3.
 try:
-	import queue
+	import Queue as queue # Python 2.7 import
 except ImportError:
-	import Queue as queue
+	import queue # Python 3 import
 from ctypes import *
 from ctypes.wintypes import *
 import time

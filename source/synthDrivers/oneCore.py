@@ -11,11 +11,10 @@ import os
 import sys
 from collections import OrderedDict
 import ctypes
-# #8527: _winreg -> winreg in Python 3.
 try:
-	import winreg
+	import _winreg as winreg # Python 2.7 import
 except ImportError:
-	import _winreg as winreg
+	import winreg # Python 3 import
 import wave
 import cStringIO
 from synthDriverHandler import SynthDriver, VoiceInfo
