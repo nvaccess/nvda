@@ -18,9 +18,29 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
-from NVDAObjects.IAccessible import normalizeIA2TextFormatField
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
+
+	def _getPointFromOffset(self,offset):
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		# The format field starts at the first character.
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
+				# This is no format field.
+				continue
+			attrs = field.field
+			ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+			if ia2TextStartOffset is None:
+				# No ia2TextStartOffset specified, most likely a format field that doesn't originate from IA2Text.
+				continue
+			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
+			relOffset = offset - formatFieldStart + ia2TextStartOffset
+			obj = self._getNVDAObjectFromOffset(offset)
+			if not hasattr(obj, "IAccessibleTextObject"):
+				raise LookupError("Object doesn't have an IAccessibleTextObject")
+			return IA2TextTextInfo._getPointFromOffsetInObject(obj, relOffset)
+		return super(Gecko_ia2_TextInfo, self)._getPointFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
@@ -84,7 +104,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
-		return attrs
+		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+		if ia2TextStartOffset is not None:
+			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
+			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
+		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 

@@ -171,10 +171,13 @@ if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 
 isSecureDesktop = desktopName == "Winlogon"
 if isSecureDesktop:
-	import _winreg
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
-		if not _winreg.QueryValueEx(k, u"serviceDebug")[0]:
+		import _winreg as winreg # Python 2.7 import
+	except ImportError:
+		import winreg # Python 3 import
+	try:
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
 			globalVars.appArgs.secure = True
 	except WindowsError:
 		globalVars.appArgs.secure = True
