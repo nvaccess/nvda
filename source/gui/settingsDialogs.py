@@ -6,6 +6,7 @@
 #See the file COPYING for more details.
 
 from abc import abstractmethod
+from six import with_metaclass
 import glob
 import os
 import copy
@@ -49,7 +50,7 @@ import weakref
 import time
 import keyLabels
 
-class SettingsDialog(wx.Dialog):
+class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog)):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -68,7 +69,6 @@ class SettingsDialog(wx.Dialog):
 
 	class MultiInstanceError(RuntimeError): pass
 
-	__metaclass__=guiHelper.SIPABCMeta
 	_instances=weakref.WeakSet()
 	title = ""
 	shouldSuspendConfigProfileTriggers = True
@@ -216,7 +216,7 @@ class SettingsDialog(wx.Dialog):
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(wx.Panel):
+class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel)):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -233,7 +233,6 @@ class SettingsPanel(wx.Panel):
 	@type title: str
 	"""
 
-	__metaclass__=guiHelper.SIPABCMeta
 	title=""
 
 	def __init__(self, parent):

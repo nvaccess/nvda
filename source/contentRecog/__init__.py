@@ -16,12 +16,11 @@ They are implemented using the L{ContentRecognizer} class.
 from collections import namedtuple
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
-class ContentRecognizer(object):
+class ContentRecognizer(with_metaclass(ABCMeta, object)):
 	"""Implementation of a content recognizer.
 	"""
-
-	__metaclass__ = ABCMeta
 
 	def getResizeFactor(self, width, height):
 		"""Return the factor by which an image must be resized
@@ -119,7 +118,7 @@ class RecogImageInfo(object):
 		"""
 		return self.screenTop + int(y / self.resizeFactor)
 
-class RecognitionResult(object):
+class RecognitionResult(with_metaclass(ABCMeta, object)):
 	"""Provides access to the result of recognition by a recognizer.
 	The result is textual, but to facilitate navigation by word, line, etc.
 	and to allow for retrieval of screen coordinates within the text,
@@ -127,8 +126,6 @@ class RecognitionResult(object):
 	Callers use the L{makeTextInfo} method to create a L{TextInfo}.
 	Most implementers should use one of the subclasses provided in this module.
 	"""
-
-	__metaclass__ = ABCMeta
 
 	@abstractmethod
 	def makeTextInfo(self, obj, position):

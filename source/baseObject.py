@@ -10,6 +10,7 @@
 import weakref
 from logHandler import log
 from abc import ABCMeta, abstractproperty
+from six import with_metaclass
 
 class Getter(object):
 
@@ -103,7 +104,7 @@ class AutoPropertyType(ABCMeta):
 			# The __abstractmethods__ set is frozen, therefore we ought to override it.
 			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
 
-class AutoPropertyObject(object):
+class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
 	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
@@ -119,7 +120,6 @@ class AutoPropertyObject(object):
 	Setting _abstract_x to C{True} specifies that x should be abstract.
 	Setting it to C{False} specifies that it should not be abstract.
 	"""
-	__metaclass__=AutoPropertyType
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
 	#: @type: weakref.WeakKeyDictionary
@@ -185,7 +185,7 @@ class ScriptableType(AutoPropertyType):
 			setattr(cls, gesturesDictName, gestures)
 		return cls
 
-class ScriptableObject(AutoPropertyObject):
+class ScriptableObject(with_metaclass(ScriptableType, AutoPropertyObject)):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
 	Scripts are methods named with a prefix of C{script_}; e.g. C{script_foo}.
@@ -199,8 +199,6 @@ class ScriptableObject(AutoPropertyObject):
 		by setting a C{category} attribute on the script method.
 	@type scriptCategory: basestring
 	"""
-
-	__metaclass__ = ScriptableType
 
 	def __init__(self):
 		#: Maps input gestures to script functions.

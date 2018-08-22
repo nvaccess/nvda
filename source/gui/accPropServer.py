@@ -11,8 +11,9 @@ from  comtypes.automation import VT_EMPTY
 from  comtypes import COMObject
 from comInterfaces.Accessibility import IAccPropServer
 from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
-class IAccPropServer_Impl(COMObject):
+class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 	"""Base class for implementing a COM interface for AccPropServer.
 	Please override the _GetPropValue method, not GetPropValue.
 	GetPropValue wraps _getPropValue to catch and log exceptions (Which for some reason NVDA's logger misses when they occur in GetPropValue).
@@ -21,7 +22,6 @@ class IAccPropServer_Impl(COMObject):
 	_com_interfaces_ = [
 		IAccPropServer
 	]
-	__metaclass__ = ABCMeta
 
 	def __init__(self, control, *args, **kwargs):
 		"""Initialize the instance of AccPropServer. 
