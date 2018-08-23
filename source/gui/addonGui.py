@@ -23,6 +23,7 @@ import addonHandler
 import globalVars
 import queueHandler
 import updateCheck
+from . import nvdaControls
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -372,7 +373,8 @@ class AddonUpdatesDialog(wx.Dialog):
 
 		if addonUpdateInfo:
 			entriesSizer=wx.BoxSizer(wx.VERTICAL)
-			self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+			self.addonsList=nvdaControls.AutoWidthColumnCheckListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+			self.addonsList.Bind(wx.EVT_CHECKLISTBOX, self.onAddonsChecked)
 			# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 			self.addonsList.InsertColumn(0,_("Package"),width=150)
 			# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
@@ -383,8 +385,8 @@ class AddonUpdatesDialog(wx.Dialog):
 			for entry in sorted(addonUpdateInfo.keys()):
 				addon = addonUpdateInfo[entry]
 				self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
-				self.addonsList.Select(0)
-				self.addonsList.SetItemState(0,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+			self.addonsList.Select(0)
+			self.addonsList.SetItemState(0,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
 			addonsSizerHelper.addItem(entriesSizer)
 		else:
 			# Translators: Message displayed when no add-on updates are available.
@@ -394,8 +396,9 @@ class AddonUpdatesDialog(wx.Dialog):
 		if addonUpdateInfo:
 			# Translators: The label of a button to update add-ons.
 			label = _("&Update add-ons")
-			updateButton = bHelper.addButton(self, label=label)
-			updateButton.Bind(wx.EVT_BUTTON, self.onUpdate)
+			self.updateButton = bHelper.addButton(self, label=label)
+			self.updateButton.Bind(wx.EVT_BUTTON, self.onUpdate)
+			self.updateButton.Disable()
 
 		# Translators: The label of a button to close a dialog.
 		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Close"))
@@ -409,12 +412,19 @@ class AddonUpdatesDialog(wx.Dialog):
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		wx.CallAfter(self.Show)
 
+	def onAddonsChecked(self, evt):
+		self.updateButton.Enable() if any([self.addonsList.IsChecked(addon) for addon in xrange(self.addonsList.GetItemCount())]) else self.updateButton.Disable()
+
 	def onUpdate(self, evt):
 		self.Destroy()
 		# #3208: do not display add-ons manager while updates are in progress.
 		# Also, Skip the below step if this is an automatic update check.
 		if not self.auto:
 			self.Parent.Hide()
+		availableAddons = sorted(self.addonUpdateInfo.keys())
+		for addon in xrange(self.addonsList.GetItemCount()):
+			if not self.addonsList.IsChecked(addon):
+				del self.addonUpdateInfo[availableAddons[addon]]
 		updateAddonsGenerator(self.addonUpdateInfo.values(), auto=self.auto).next()
 
 	def onClose(self, evt):

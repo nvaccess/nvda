@@ -1002,6 +1002,7 @@ You can also manually install the pending update from the Exit NVDA dialog (if e
 ==== Automatically check for add-on updates when NVDA starts ====[GeneralSettingsCheckForAddonUpdates]
 If this is enabled, NVDA will check for updated versions of NVDA add-ons when it starts.
 You can also check for add-on updates manually via [Add-ons Manager #addonsManager].
+As part of add-on update checks, a list of currently installed add-ons and their versions are sent to NV Access.
 
 +++ Speech Settings (NVDA+control+v) +++[SpeechSettings]
 The speech category in the NVDA Settings dialog contains options that lets you change the speech synthesizer as well as voice characteristics for the chosen synthesizer.
@@ -1824,7 +1825,8 @@ Just like when you install or remove add-ons, you need to restart NVDA in order 
 
 To update add-ons, press Check for add-on updates button.
 If add-on updates are available, a dialog containing a list of add-ons with updates will be displayed.
-Press Update button to update add-ons or Close button to exit.
+From this dialog, check the checkboxes for add-ons you would like to update now, or uncheck ones you do not wish to update.
+Press Update button to update selected add-ons or Close button to exit.
 When update button is pressed, NVDA will download and install add-ons one after another.
 Once add-ons were updated, you'll be returned to add-ons manager.
 Be sure to restart NVDA after updating add-ons in order to use new add-on versions.
