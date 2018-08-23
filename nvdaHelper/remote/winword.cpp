@@ -523,30 +523,33 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if(formatConfig&formatConfig_reportLists) {
 		IDispatchPtr pDispatchListFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_LISTFORMAT,VT_DISPATCH,&pDispatchListFormat)==S_OK&&pDispatchListFormat) {
-			BSTR listString=NULL;
-			if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTSTRING,VT_BSTR,&listString)==S_OK&&listString) {
-				if(SysStringLen(listString)>0) {
-					IDispatchPtr pDispatchParagraphs=NULL;
-					IDispatchPtr pDispatchParagraph=NULL;
-					IDispatchPtr pDispatchParagraphRange=NULL;
-					if(
-						_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs\
-						&&_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
-						&&_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
-						&&_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
-					) {
-						wstring tempText;
-						for(int i=0;listString[i]!=L'\0';++i) {
-							appendCharToXML(listString[i],tempText,true);
-						}
-						formatAttribsStream<<L"line-prefix=\""<<tempText<<L"\" ";
-						long listLevel = -1;
-						if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTLEVELNUMBER,VT_I4,&listLevel)==S_OK) {
-							formatAttribsStream<<L"list-level=\""<<listLevel<<L"\" ";
+			IDispatchPtr pDispatchParagraphs=NULL;
+			IDispatchPtr pDispatchParagraph=NULL;
+			if (
+				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs\
+				&&_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
+			) {
+				long listLevel=0;
+				if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTLEVELNUMBER,VT_I4,&listLevel)==S_OK) {
+					formatAttribsStream<<L"list-level=\""<<listLevel<<L"\" ";
+				}
+				BSTR listString=NULL;
+				if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTSTRING,VT_BSTR,&listString)==S_OK&&listString) {
+					if(SysStringLen(listString)>0) {
+						IDispatchPtr pDispatchParagraphRange=NULL;
+						if(
+							_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
+							&&_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
+						) {
+							wstring tempText;
+							for(int i=0;listString[i]!=L'\0';++i) {
+								appendCharToXML(listString[i],tempText,true);
+							}
+							formatAttribsStream<<L"line-prefix=\""<<tempText<<L"\" ";
 						}
 					}
+					SysFreeString(listString);
 				}
-				SysFreeString(listString);
 			}
 		}
 	}

@@ -1392,6 +1392,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			# %s will be replaced with the line number.
 			text=_("line %s")%lineNumber
 			textList.append(text)
+	if  formatConfig["reportLists"]:
+		listLevel=attrs.get("list-level")
+		oldListLevel=attrsCache.get("list-level") if attrsCache is not None else None
+		if listLevel is not None and listLevel!=oldListLevel:
+			# Translators: report nesting level of lists ( e.g. in word / powerpoint bullets )
+			text=_("level {level}").format(level=listLevel)
+			textList.append(text)
 	if  formatConfig["reportRevisions"]:
 		# Insertion
 		revision=attrs.get("revision-insertion")
@@ -1648,11 +1655,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
-			listLevel=attrs.get("list-level")
-			if listLevel and listLevel > 0:
-				# Translators: report nesting level of lists ( e.g. in word / powerpoint bullets )
-				txt = _("level {level}").format(level=listLevel)
-				textList.append(txt)
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
