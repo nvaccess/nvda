@@ -781,6 +781,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		return NULL;
 	}
 
+	if(buffer!=this&&parentNode) {
+		// We are rendering a subtree of a temp buffer
+		auto existingNode=this->reuseExistingNodeInRender(docHandle,ID);
+		if(existingNode) {
+			// This child already exists on the backend, we can reuse it.
+			return buffer->addReferenceNodeToBuffer(parentNode,previousNode,existingNode);
+		}
+	}
+
 	//Find out block and visibility style
 	bool dontRender=false;
 	bool hidden=false;

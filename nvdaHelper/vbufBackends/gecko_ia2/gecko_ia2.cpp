@@ -380,6 +380,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		return NULL;
 	}
 
+	if(buffer!=this&&parentNode) {
+		// We are rendering a subtree of a temp buffer
+		auto existingNode=this->reuseExistingNodeInRender(docHandle,ID);
+		if(existingNode) {
+			// This child already exists on the backend, we can reuse it.
+			return buffer->addReferenceNodeToBuffer(parentNode,previousNode,existingNode);
+		}
+	}
+
 	//Add this node to the buffer
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
 	nhAssert(parentNode); //new node must have been created
