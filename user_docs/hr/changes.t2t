@@ -6,55 +6,57 @@
 = 2018.3 =
 
 == Nove značajke ==
-- NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox and Google Chrome. (#8280)
-- Content marked as being either inserted or deleted in web pages is now reported in Google Chrome. (#8558)
-- Added support for BrailleNote QT and Apex BT's scroll wheel when BrailleNote is used as a braille display with NVDA. (#5992, #5993)
-- Dodana skripta za izvještavanje o cjelovitom i preostalom vremenu trajanja audio zapisa Foobar2000. (#6596)
-- Simbol mac komandne tipke (⌘) sada se izgovara prilikom čitanja teksta bilo kojim sintetizatorom govora. (#8366)
-- Custom roles via the aria-roledescription attribute are now supported in all web browsers. (#8448)
-- New braille tables: Czech 8 dot, Central Kurdish, Esperanto, Hungarian, Swedish 8 dot computer braille. (#8226, #8437)
-- Support has been added to automatically detect braille displays in the background. (#1271)
- - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.
- - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
- - Please consult the documentation for additional details.
-- Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard paste (October 2018 Update). (#7273)
-- Content marked as a block quote using ARIA (role blockquote) is now supported in Mozilla Firefox 63. (#8577)
+- NVDA će izvještavati o pravopisnim pogreškama, kada je to točno određeno u Mozilla Firefoxu i Google Chromeu. (#8280)
+- Sadržaj koji je označen kao umetnut ili izbrisan na web stranicama sada se čita u Google Chromeu. (#8558)
+- Dodana podrška za BrailleNote QT i Apex BT navigacijski kotačić kada se BrailleNote koristi kao brajični redak sa NVDA. (#5992, #5993)
+- Dodann prečac za čitanjepreostalog i cjelokupnog vremena trenutne pjesme u Foobar2000. (#6596)
+- Simbol Mac komandne tipke (⌘) sada se čita sa bilo kojim sintetizatorom govora prilikom čitanja teksta. (#8366)
+- Prilagođene uloge preko aria-roledescription atributa sada su podržane u svim web preglednicima. (#8448)
+- Nove brajične tablice: Češki osmotočkasta brajica, Centralni Kurdski, Esperanto, Mađarski, Švedski osmotočkasta kompjutorska brajica. (#8226, #8437)
+- Dodana podrška za automatsko otkrivanje brajičnih redaka u pozadini. (#1271)
+ - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille i HumanWare BrailleNote i Brailliant BI/B brajični retci su trenutno podržani.
+ - Ovu značajku možete uključiti ako da označite opciju automatski u spisku brajičnih redaka u NVDA dijaloškom okviru za odabir brajičnih redaka.
+ - Za više informacija, molimo pročitajte korisnički priručnik.
+- Dodana podrška za moderne značajke unosa u posljednjim inačicama Windows 10. Iste uključuju emoji panel (zimska nadogradnja za tvorce), diktiranje (zimska nadogradnja za tvorce), prijedlozi unosa na hardverskoj tipkovnici (nadogradnja za travanj 2018), i lijepljenje u oblačnom međuspremniku (nadogradnja za listopad 2018). (#7273)
+- Sadržaj označen kao citat koristeći (role blockquote) sada je podržan u Mozilla Firefox 63. (#8577)
 
 
 == Izmjene ==
-- Popis dostupnih jezika u dijaloškom okviru općenitih postavki sada je sortiran po imenima jezika umjesto po ISO 639 kodovima. (#7284)
-- dodane podrazumijevane prečice za alt shift tab i windows tab za sve fokus freedomscientific brajične redke. (#7387)
-- For ALVA BC680 and protocol converter displays, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)
-- Pri pokretanju NVDA, korisniku se postavlja pitanje, želi li slati statistiku korištenja NV Accessu prilikom automatskog provjeravanja nadogradnji. (#8217)
-- Prilikom provjere nadogradnje, ako je korisnik pristao na slanje statistika korištenja NV Accessu, NVDA će sada slati ime drivera sintetizatora govora te ime brajičnog retka koji se koristi, kako bi pomogao NV accssu u prioritetima razvoja istih. (#8217)
+- Spisak dostupnih jezika u NVDA općim postavkama, sada je sortiran po imenima jezika umjesto po iso639 kodovima. (#7284)
+- Dodane podrazumijevane geste za Alt+Shift+Tab i Windows+Tab za sve podržane Freedom Scientific brajične redke. (#7387)
+- Za ALVA BC680 i pretvornik protokola brajične redke, sada je moguće dodijeliti razne funkcije za lijevi i desni pametni pad, palčane te etouch tipke. (#8230)
+- Za ALVA BC6 retke, kombinacija tipaka sp2+sp3 sada će izgovarati trenutni datum i vrijeme, gdje će sp1+sp2 oponašati windows tipku. (#8230)
+- Korisnik će biti pitan, jednom kada se NVDA pokrene želi li slati povratne informacije u NV Access prilikom provjere NVDA nadogradnje. (#8217)
+- Prllikom provjere nadogradnje, ako je korisnik pristao na slanje statistika u NV Access, NVDA će slati naziv trenutnog brajičnog retka i govorne jedinice, kako bi sam korisnik pomogao u razvoju tih komponenti. (#8217)
 - Nadograđen liblouis brajični prevoditelj na inačicu 3.6.0. (#8365)
-- Ispravljena ruska osmotočkasta brajična tablica. (#8446)
-- Nadograđen eSpeak-ng na inačicu  1.49.3dev commit 910f4c2 (#8561)
+- Osvježen put do točne ruske osmotočkaste brajične tablice. (#8446)
+- Nadograđen eSpeak-ng na 1.49.3dev commit 910f4c2. (#8561)
 
 
 == Ispravke grešaka ==
-- Dostupne oznake u Google Chromeu sada se izvještavaju više u načinu pregleda kada oznaka se pojavljuje kao sadržaj. (#4773)
-- Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages.(#7754)
-- Switching braille context presentation when in browse mode no longer causes braille output to stop following. (#7741)
-- ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)
-- By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)
-- Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)
-- NVDA no longer announces redundant keyboard layout changes. (#7383, #8419)
-- Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)
-- NVDA will recognize more dialogs in Windows 10 and other modern applications. (#8405)
-- On Windows 10 October 2018 Update and Server 2019 and above, NVDA no longer fails to track the system focus when an application freezes or floods the system with events. (#7345, #8535)
-- Users are now informed when attempting to read or copy an empty status bar. (#7789)
-- Fixed a case where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
-- In the list of languages in NVDA's General Settings, language name for Burmese is displayed correctly on Windows 7. (#8544)
-- In Microsoft Edge, NVDA will announce notifications such as reading view availability and page load progress. (#8423)
-- Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
-- When navigating into a list on the web, NVDA will now report its label if the web author has provided one. (#7652)
-- When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
-- Sada je podržana 64-bitna inačica Media Player Classic. (#6066)
-- Several improvements to braille support in Microsoft Word with UI Automation enabled:
- - Reduced overly verbose focus presentation in both speech and braille when focusing a Word document. (#8407)
- - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
- - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)
+- Dostupne oznake u Google Chromeu sada se isčitavaju u načinu pregleda, kada oznaka se ne pojavljuje kao sadržaj. (#4773)
+- Obavijesti su podržane u Zoomu. Na primjer, to uključuje status utišavanja ili ottišavanja zvuka, te izgovaranje pristiglih poruka. (#7754)
+- Prebacivanje brajične prezentacije konteksta kada se nalazi u načinu pregleda više ne prouzrokuje prekid izlaza u istom sa pozicije praćenja kursora. (#7741)
+- ALVA BC680 brajični redci više ne neuspjevaju se inicijalizirati. (#8106)
+- Podrazumijevano, ALVA BC6 brajični redci više ne pokreću tipke na emuliranoj sustavskoj tipkovnici  prilikom pritiska kombinacija koje uključuju sp2+sp3 kako bi se mogle pozivati unutrašnje funkcije. (#8230)
+- pritisak sp2 na ALVA BC6 redku kako bi se emulirala tipka alt sada radi kako je i napisano. (#8360)
+- NVDA više ne izgovara nepotrebne izmjene tipkovnice. (#7383, #8419)
+- Praćenje miša sada je točnije u Notepadu i drugim poljima za uređivanje kada se nalazite u dokumentu koji sadrži više od 65535 znakova. (#8397)
+- NVDA će prepoznavati više dijaloških okvira u Windowsima 10 i drugim modernim aplikacijama. (#8405)
+- U Windowsima 10 nadogradnji za listopad 2018 te Server 2019 i novijim, NVDA više ne ne uspjeva pratiti fokus sustava kada se program zamrzne ili zablokira sustav sa događajima. (#7345, #8535)
+- Korisnik je sada informiran porukom o nemogučnosti kopiranja prazne statusne trake. (#7789)
+- Ispravljena pogreška u kojoj stanje "nije označeno" na kontrolama nije izgovoreno govorom ako je ista bila polovično odabrana. (#6946)
+- U popisu jezika u NVDA općim postavkama, naziv jezika za burmeški sada se ispravno prikazuje u Windowsima 7. (#8544)
+- U Microsoft Edgeu, NVDA će izgovarati obavijesti poput čidostupnog pregleda čitanja te stanja učitavanja stranice. (#8423)
+- Pri navigaciji lista na stranici, NVDA će izgovoriti oznaku ako je autor dao istu. (#7652)
+- Prilikom pridjeljivanja gesti funkcijama na određenom brajičnom redku, sada se prikazuju kao geste pridjeljene tom brajičnom redku. U prijašnjem stanju, iste su se pokazivale kao geste koje su bile pripisane aktivnom brajičnom redku. (#8108)
+- 64-bitna inačica Media Player Classic sada je podržana. (#6066)
+- Nekoliko poboljšanja u brajičnoj podršci za Microsoft Word sa uključenim UI Automation:
+ - Slično kao u drugim tekstualnim poljima sa više redaka, kada ste pozicionirani na početku dokumenta pomiću brajice, Prvi je znak pozicioniran tako da se nalazi na početku samog brajičnog retka. (#8406)
+ - Smanjena prevelika govorna prezentacija fokusa pri otvaranju Wordovih dokumenata. (#8407)
+ - Routing tipke sadda ponovno rade u Word dokumentima kada se nalazite u spisku nabrajanja. (#7971)
+ - Novoumetnute točkice ili brojevi sada se točno izgovaraju ili prenose u brajicu. (#7970)
+- U Windowsima 10 1803 i novijim, sada je moguće instalirati dodatke, ako je značajka "koristi unicode UTF'8 za međunarodnu jezičnu podršku" uključena. (#8599)
 
 
 == Izmjene za razvojne programere ==
