@@ -545,7 +545,7 @@ def getBrailleTextForProperties(**propertyValues):
 		if level is not None:
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
-			textList.append(_('lv %s')%positionInfo['level'])
+			textList.append(_('lv%s')%positionInfo['level'])
 	if rowNumber:
 		if includeTableCellCoords and not cellCoordsText: 
 			if rowSpan>1:
@@ -743,6 +743,14 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 			lineNumber = field.get("line-number")
 			if lineNumber:
 				textList.append("%s" % lineNumber)
+		if  formatConfig["reportLists"]:
+			listLevel=field.get("list-level")
+			if listLevel:
+				# Translators: reported in braille for nesting level of lists ( e.g. in word / powerpoint bullets)
+				# %s is replaced with the level.
+				textList.append(_('lv%s') % listLevel)
+	if  formatConfig["reportRevisions"]:
+
 		linePrefix = field.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
