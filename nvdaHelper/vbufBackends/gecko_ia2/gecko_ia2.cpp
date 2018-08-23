@@ -380,6 +380,23 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		return NULL;
 	}
 
+	if(buffer!=this&&parentNode) {
+		// We are rendering a subtree of a temp buffer
+		auto existingNode=this->getControlFieldNodeWithIdentifier(docHandle,ID);
+		if(existingNode) {
+			// This node is known by the original buffer and therefore could be re-used.
+			auto i=std::find(this->tempSubtreeList.begin(),this->tempSubtreeList.end(),existingNode);
+			if(i==this->tempSubtreeList.end()) {
+				// This existing node was not marked as invalid, therefore it can be re-used.
+				return buffer->addReferenceNodeToBuffer(parentNode,previousNode,existingNode);
+			} else {
+				// this existing node was marked as invalid also, therefore we can re-render it here anyway.
+				// It therefore should no longer be marked as invalid.
+				this->tempSubtreeList.erase(i);
+			}
+		}
+	}
+
 	//Add this node to the buffer
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
 	nhAssert(parentNode); //new node must have been created

@@ -147,50 +147,36 @@ bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	LOG_DEBUG(L"Invalidating node "<<node->getDebugInfo());
 	this->lock.acquire();
 	bool needsInsert=true;
-	for(VBufStorage_controlFieldNodeList_t::iterator i=invalidSubtreeList.begin();i!=invalidSubtreeList.end();) {
+	auto i=invalidSubtreeList.begin();
+	for(;i!=invalidSubtreeList.end();++i) {
 		VBufStorage_fieldNode_t* existingNode=*i;
 		if(node==existingNode) { //Node already invalidated
 			LOG_DEBUG(L"Node already invalidated");
 			needsInsert=false;
 			break;
-		} else if(isDescendantNode(existingNode,node)) { //An ancestor is already invalidated
-			LOG_DEBUG(L"An ancestor is already invalidated, returning");
-			needsInsert=false;
+		} else if(isDescendantNode(node,existingNode)) { // a descendant is already inserted
+			LOG_DEBUG(L"Inserting invalid subtree before first descendant");
 			break;
-		} else if(isDescendantNode(node,existingNode)) { //A descedndant has been invalidated
-			LOG_DEBUG(L"removing a descendant node from the invalid nodes");
-			//Remove the old descendant
-			invalidSubtreeList.erase(i++);
-			//If no other descendants have been removed yet, insert the real node here
-			//At the place of the first found descendant
-			if(needsInsert) {
-				invalidSubtreeList.insert(i,node);
-				needsInsert=false;
-			}
-		} else { //Unrelated node
-			++i;
 		}
-	}  
-	//If the node still has not been inserted yet, insert it at the end now
+	}
 	if(needsInsert) {
 		LOG_DEBUG(L"Adding node to invalid nodes");
-		invalidSubtreeList.insert(invalidSubtreeList.end(),node);
+		invalidSubtreeList.insert(i,node);
 	}
 	this->lock.release();
-	this->requestUpdate();
+	if(needsInsert) this->requestUpdate();
 	return true;
 }
 
 void VBufBackend_t::update() {
 	if(this->hasContent()) {
-		VBufStorage_controlFieldNodeList_t tempSubtreeList;
 		this->lock.acquire();
 		LOG_DEBUG(L"Updating "<<invalidSubtreeList.size()<<L" subtrees");
 		invalidSubtreeList.swap(tempSubtreeList);
 		this->lock.release();
 		map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*> replacementSubtreeMap;
 		//render all invalid subtrees, storing each subtree in its own buffer
-		for(VBufStorage_controlFieldNodeList_t::iterator i=tempSubtreeList.begin();i!=tempSubtreeList.end();++i) {
+		for(auto i=tempSubtreeList.begin();i!=tempSubtreeList.end();++i) {
 			VBufStorage_controlFieldNode_t* node=*i;
 			LOG_DEBUG(L"re-rendering subtree at "<<node);
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();
@@ -200,10 +186,11 @@ void VBufBackend_t::update() {
 			node->getIdentifier(&docHandle,&ID);
 			LOG_DEBUG(L"subtree node has docHandle "<<docHandle<<L" and ID "<<ID);
 			LOG_DEBUG(L"Rendering content");
-			render(tempBuf,docHandle,ID,node);
+			render(tempBuf,docHandle,ID,node);	
 			LOG_DEBUG(L"Rendered content in temp buffer");
 			replacementSubtreeMap.insert(make_pair(node,tempBuf));
 		}
+		tempSubtreeList.clear();
 		this->lock.acquire();
 		LOG_DEBUG(L"Replacing nodes with content of temp buffers");
 		if(!this->replaceSubtrees(replacementSubtreeMap)) {

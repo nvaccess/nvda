@@ -51,13 +51,14 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
 
+	protected:
+
 /**
  * the list of control field nodes that should be re-rendered the next time the backend is updated.
  * the list is in the order the invalidations were requested.
  */
 	VBufStorage_controlFieldNodeList_t invalidSubtreeList;
-
-	protected:
+	VBufStorage_controlFieldNodeList_t tempSubtreeList;
 
 /**
  * The set of currently running backends

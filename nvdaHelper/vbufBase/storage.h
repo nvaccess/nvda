@@ -57,6 +57,8 @@ class VBufStorage_controlFieldNode_t;
 class VBufStorage_textFieldNode_t;
 class VBufStorage_controlFieldNodeIdentifier_t;
 
+typedef std::list<std::pair<VBufStorage_controlFieldNodeIdentifier_t,int>> VBufStorage_relativeSelection_t;
+
 /**
  * a list of control field nodes.
  */
@@ -310,11 +312,6 @@ class VBufStorage_fieldNode_t {
 class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 	protected:
 
-/**
- * uniquely identifies this control in its buffer.
- */
-	VBufStorage_controlFieldNodeIdentifier_t identifier;
-
 	virtual void generateMarkupTagName(std::wstring& text);
 
 	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
@@ -332,6 +329,11 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 	friend class VBufStorage_buffer_t;
 
 	public:
+
+/**
+ * uniquely identifies this control in its buffer.
+ */
+	const VBufStorage_controlFieldNodeIdentifier_t identifier;
 
 /**
  * retreaves the node's doc handle and ID.
@@ -376,12 +378,30 @@ class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 
 };
 
+class VBufStorage_referenceNode_t: public VBufStorage_fieldNode_t {
+	public:
+	VBufStorage_fieldNode_t* referenceNode;
+	VBufStorage_referenceNode_t(VBufStorage_fieldNode_t* r): VBufStorage_fieldNode_t(0,false), referenceNode(r) {};
+	void generateMarkupTagName(std::wstring& text) { text.append(L"reference"); }; 
+};
+
 /**
  * a buffer that can store text with overlaying fields.
  * it stores the text and fields in an internal tree of nodes.
  */ 
 class VBufStorage_buffer_t {
 	protected:
+
+	std::list<VBufStorage_referenceNode_t*> referenceNodes;
+
+/**
+ * Unlinks this node from its parent and siblings.
+ * Note that this does not delete not enode, nore unregister it from the buffer in any other way.
+ * This is used internally by removeFieldNode and moveSubtree.
+ * @param node the node to unlink
+ * @param removeDescendants if true then its simblings will be appropriately linked to close the gab, but if false, this node's children will be reparented on this node's parent, linking with this node's siblings.
+ */
+	bool unlinkFieldNode(VBufStorage_fieldNode_t* node, bool removeDescendants=true);
 
 /**
  * points to the first node in the tree of nodes.
@@ -621,6 +641,20 @@ class VBufStorage_buffer_t {
  * @returns True if descendant is a descendant of parent, false otherwise.
  */
 	virtual bool isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant);
+
+/**
+ * Moves a subtree from one location to another within the same buffer. 
+ * @param node the node to move
+ * @param newParent the node's new parent node
+ * @param newPrevious the node's new previous node
+ * @returns true if this node was moved, false if it was not (the node was not in the buffer etc).
+ */
+	bool moveSubtree(VBufStorage_fieldNode_t* node, VBufStorage_controlFieldNode_t* newParent, VBufStorage_fieldNode_t* newPrevious);
+
+	VBufStorage_referenceNode_t*  addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node); 
+
+	VBufStorage_relativeSelection_t saveRelativeSelection();
+	bool restoreRelativeSelection(VBufStorage_relativeSelection_t& relativeSelection);
 
 	virtual std::wstring getDebugInfo() const;
 
