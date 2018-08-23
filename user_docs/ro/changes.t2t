@@ -34,14 +34,46 @@ Ce este nou în NVDA
 
 == Defecte rezolvate ==
 - Etichetele accesibile pentru comenzile din Google Chrome sunt acum raportate cu ușurință în modul de navigare atunci când eticheta nu apare ca și conținut în sine. (#4773)
-
-
+- Notificările sunt suportate acum în Zoom. De exemplu, aceasta include starea de activare/dezactivare și mesajele primite. .(#7754)
+- Când sunteți în modul de navigare, commutarea prezentării contextului braille nu mai face ca ieșirea braille să oprească urmărirea. (#7741)
+- Afișajele braille ALVA BC680 nu mai eșuează să se inițializeze. (#8106)
+- În mod implicit, afișajele ALVA BC6 nu vor mai executa taste simulate ale tastaturii sistemului la apăsarea combinațiilor de taste care implică sp2+sp3 pentru declanșarea funcționalității interne. (#8230)
+- Apăsarea sp2 pe un afișaj ALVA BC6 pentru simularea tastei alt funcționează acum ca anunțată. (#8360)
+- NVDA nu mai anunță modificări redundante ale aspectului tastaturii. (#7383, #8419)
+- Urmărirea mausului este mult mai precisă în Notepad și în alte editoare de text într-un document care conține mai mult de 65535 de caractere. (#8397)
+- NVDA recunoaște mai multe dialoguri din Windows 10 și din alte aplicații moderne. (#8405)
+- În Windows 10 October 2018 Update, Server 2019 și mai noi, NVDA nu mai eșuează să urmărească focalizarea sistemului atunci când o aplicație se blochează sau bombardează sistemul cu evenimente. (#7345, #8535)
+- Acum, utilizatorii sunt informați atunci când încearcă să citească sau să copieze o bară de stare goală. (#7789)
+- S-a reparat o eroare care făcea ca atunci când o casetă era nebifată, statutul acesteia să nu fie raportat în vorbire dacă respectiva casetă fusese parțial bifată anterior. (#6946)
+- În lista de limbi din dialogul setărilor NVDA, numele de limbă pentru birmană este afișat corect în Windows 7. (#8544)
+- În microsoft Edge, NVDA va anunța notificări precum disponibilitatea pentru vizualizarea lecturilor și progresul încărcării unei pagini. (#8423)
+- Similar cu multe câmpuri de text multilinie, când este poziționat la începutul unui document în braille, afișajul este afișat astfel încât primul caracter al documentului să fie la începutul afișajului. (#8406)
+- La navigarea într-o listă de pe un site web, NVDA va raporta eticheta acesteia dacă autorul site-ului respectiv a furnizat-o. (#7652)
+- Când se atribuie manual funcții la gesturi pentru un afișaj braille particular, aceste gesturi le vor afișa întotdeauna ca fiind atribuite la acel afișaj. În trecut, funcțiile erau afișate ca și cum ar fi fost atribuite la afișajul braille care era activ în acel moment. (#8108)
+- Versiunea pe 64 de biți a Media Player Classic este suportată acum. (#6066)
+- Au fost activate câteva îmbunătățiri la suportul braille din Microsoft Word cu UI Automation:
+ - La focalizarea unui document Word, s-a redus prezentarea extrem de prolixă a focalizării atât în vorbire, cât și în braille. (#8407)
+ - Acum, deplasarea cursorului în braille funcționează corect atunci când se află într-o listă dintr-un document Word. (#7971)
+ - Bulinele sau numerele nou-inserate într-un document Word sunt raportate corect atât în vorbire, cât și în braille. (#7970)
+ - În Windows 10 1803 sau mai nou, puteți să instalați suplimente dacă este activată caracteristica pentru suportul utilizării Unicode UTF-8 pentru limbile din lumea întreagă. (#8599)
+ 
+ 
 == Modificări pentru dezvoltatori ==
 - S-a adăugat scriptHandler.script, care poate fi folosit pe post de decorator pentru scripturile de pe obiectele scriptabile. (#6266)
+- a fost introdus un test de sistem framework pentru NVDA. (#708)
+- Au fost efectuate niște modificări la modulul hwPortUtils: (#1271)
+ - listUsbDevices oferă acum dicționare cu informații despre dispozitive, inclusiv hardwareID și devicePath.
+ - Dicționarele oferite de listComPorts conțin și o intrare usbID pentru porturile COM cu informații despre USB VID/PID în ID-ul lor hardware.
+- S-a actualizat wxPython la 4.0.3. (#7077)
+- Actualmente, întrucât NVDA suportă doar Windows 7 SP1 și mai nou, tasta „minWindowsVersion”, folosită să verifice dacă UIA ar trebui să fie activat pentru o versiume particulară de Windows, a fost eliminată. (#8422)
+- Acum, vă puteți înregistra pentru a fi notificat cu privire la salvările configurațiilor sau la acțiunile de resetare prin noile config.pre_configSave, config.post_configSave, config.pre_configReset și prin acțiunile config.post_configReset. (#7598)
+ - config.pre_configSave este folosit pentru ca dumneavoastră să fiți notificat atunci când configurația NVDA este pe punctul de a fi salvată, urmând ca după aceea să se apeleze la config.post_configSave.
+ - config.pre_configReset și config.post_configReset includ steagul setărilor din fabrică pentru a specifica dacă setările sunt reîncărcate de pe disk (false) sau dacă resetarea la valorile implicite este necesară (true).
+- config.configProfileSwitch a fost redenumit la config.post_configProfileSwitch pentru a reflecta faptul că această acțiune este apelată după ce comutarea profilului are loc. (#7598)
+- Interfețele UI Automation au fost actualizate la Windows 10 October 2018 Update și Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
 
 
 = 2018.2 =
-
 Caracteristicile principale ale acestei versiuni includ suport pentru citirea și navigarea în tabelele din aplicația Kindle pentru PC, suport pentru afișajele braille de la HumanWare BrailleNote Touch și BI14, precum și rezolvările multor defecte la vocile Windows Onecore și Sapi5. În plus, s-au introdus câteva mici funcții noi în Microsoft Outlook etc.
 
 
