@@ -523,14 +523,14 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if(formatConfig&formatConfig_reportLists) {
 		IDispatchPtr pDispatchListFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_LISTFORMAT,VT_DISPATCH,&pDispatchListFormat)==S_OK&&pDispatchListFormat) {
-			IDispatchPtr pDispatchParagraphs=NULL;
+			IDispatchPtr pDispatchListParagraphs=NULL;
 			IDispatchPtr pDispatchParagraph=NULL;
 			if (
-				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs\
-				&&_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
+				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_LISTPARAGRAPHS,VT_DISPATCH,&pDispatchListParagraphs)==S_OK&&pDispatchListParagraphs\
+				&&_com_dispatch_raw_method(pDispatchListParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
 			) {
 				long listLevel=0;
-				if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTLEVELNUMBER,VT_I4,&listLevel)==S_OK) {
+				if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTLEVELNUMBER,VT_I4,&listLevel)==S_OK&&listLevel) {
 					formatAttribsStream<<L"list-level=\""<<listLevel<<L"\" ";
 				}
 				BSTR listString=NULL;
@@ -1041,7 +1041,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if(initialFormatConfig&formatConfig_reportTables) {
 		neededClosingControlTagCount+=generateTableXML(pDispatchRange,(initialFormatConfig&formatConfig_includeLayoutTables)!=0,args->startOffset,args->endOffset,XMLStream);
 	}
-		IDispatchPtr pDispatchParagraphs=NULL;
+	IDispatchPtr pDispatchParagraphs=NULL;
 	IDispatchPtr pDispatchParagraph=NULL;
 	IDispatchPtr pDispatchParagraphRange=NULL;
 	if(formatConfig&formatConfig_reportComments||initialFormatConfig&formatConfig_reportHeadings) {
@@ -1080,7 +1080,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		detectAndGenerateColumnFormatXML(pDispatchRange, initialFormatAttribsStream);
 	}
 
-	bool firstLoop=true;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
 	do {
@@ -1198,10 +1197,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				}
 			}
 			XMLStream<<L">";
-			if(firstLoop) {
-				formatConfig&=(~formatConfig_reportLists);
-				firstLoop=false;
-			}
 			wstring tempText;
 			if(inlineShapesCount>0) {
 				tempText+=L" ";

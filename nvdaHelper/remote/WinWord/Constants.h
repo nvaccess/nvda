@@ -109,6 +109,7 @@ constexpr int wdDISPID_RANGE_LANGUAGEID = 153;
 constexpr int wdDISPID_RANGE_LISTFORMAT = 68;
 constexpr int wdDISPID_RANGE_MOVE = 109;
 constexpr int wdDISPID_RANGE_MOVEEND = 111;
+constexpr int wdDISPID_RANGE_LISTPARAGRAPHS = 157;
 constexpr int wdDISPID_RANGE_PAGESETUP = 1101;
 constexpr int wdDISPID_RANGE_PARAGRAPHFORMAT = 1102;
 constexpr int wdDISPID_RANGE_PARAGRAPHS = 59;
