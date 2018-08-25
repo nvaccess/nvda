@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee, Thomas Stivers, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ import codecs
 import ctypes
 import weakref
 import wx
+import wx.adv
 import globalVars
 import tones
 import ui
@@ -151,6 +152,7 @@ class MainFrame(wx.Frame):
 		x = width / 2
 		y = height / 2
 		winUser.setCursorPos(x, y)
+		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
@@ -183,8 +185,14 @@ class MainFrame(wx.Frame):
 		try:
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
-			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+			# (example: when trying to open keyboard settings when general settings dialog is open).
 			messageBox(_("An NVDA settings dialog is already open. Please close it first."),_("Error"),style=wx.OK | wx.ICON_ERROR)
+		except MultiCategorySettingsDialog.CategoryUnavailableError:
+			# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+			# (example: when trying to open touch interaction settings on an unsupported system).
+			messageBox(_("The settings panel you tried to open is unavailable on this system."),_("Error"),style=wx.OK | wx.ICON_ERROR)
+
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
@@ -199,6 +207,19 @@ class MainFrame(wx.Frame):
 		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
+	def onExecuteUpdateCommand(self, evt):
+		if updateCheck and updateCheck.isPendingUpdate():
+			updateCheck.executeUpdate()
+
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		try:
+			self.sysTrayIcon.menu.Remove(self.sysTrayIcon.installPendingUpdateMenuItem)
+		except:
+			log.debug("Error while removing  pending update menu item", exc_info=True)
+			pass
+		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
+			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
+
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
@@ -209,41 +230,50 @@ class MainFrame(wx.Frame):
 		else:
 			wx.GetApp().ExitMainLoop()
 
+	def onNVDASettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog)
+
 	def onGeneralSettingsCommand(self,evt):
-		self._popupSettingsDialog(GeneralSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
-	def onSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerDialog)
+	def onSelectSynthesizerCommand(self,evt):
+		self._popupSettingsDialog(SynthesizerSelectionDialog)
 
-	def onVoiceCommand(self,evt):
-		self._popupSettingsDialog(VoiceSettingsDialog)
+	def onSpeechSettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
-	def onBrailleCommand(self,evt):
-		self._popupSettingsDialog(BrailleSettingsDialog)
+	def onSelectBrailleDisplayCommand(self,evt):
+		self._popupSettingsDialog(BrailleDisplaySelectionDialog)
+
+	def onBrailleSettingsCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
-		self._popupSettingsDialog(KeyboardSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
 	def onMouseSettingsCommand(self,evt):
-		self._popupSettingsDialog(MouseSettingsDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
+
+	def onTouchInteractionCommand(self,evt):
+		self._popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
 
 	def onReviewCursorCommand(self,evt):
-		self._popupSettingsDialog(ReviewCursorDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
 
 	def onInputCompositionCommand(self,evt):
-		self._popupSettingsDialog(InputCompositionDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
 
 	def onObjectPresentationCommand(self,evt):
-		self._popupSettingsDialog(ObjectPresentationDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
 
 	def onBrowseModeCommand(self,evt):
-		self._popupSettingsDialog(BrowseModeDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
 
 	def onDocumentFormattingCommand(self,evt):
-		self._popupSettingsDialog(DocumentFormattingDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
-		self._popupSettingsDialog(UwpOcrDialog)
+		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
 	def onSpeechSymbolsCommand(self, evt):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
@@ -257,7 +287,7 @@ class MainFrame(wx.Frame):
 
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
-		
+
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
@@ -309,6 +339,34 @@ class MainFrame(wx.Frame):
 		from gui import installerGui
 		installerGui.showInstallGui()
 
+	def onRunCOMRegistrationFixesCommand(self, evt):
+		if isInMessageBox:
+			return
+		if gui.messageBox(
+			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
+			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
+			# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool 
+			_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+		)==wx.NO:
+			return
+		progressDialog = IndeterminateProgressDialog(mainFrame,
+			# Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool 
+			_("COM Registration Fixing Tool"),
+			# Translators: The message displayed while NVDA is running the COM Registration fixing tool 
+			_("Please wait while NVDA tries to fix your system's COM registrations.")
+		)
+		try:
+			config.execElevated(config.SLAVE_FILENAME,["fixCOMRegistrations"])
+		except:
+			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
+		progressDialog.done()
+		del progressDialog
+		# Translators: The message displayed when the COM Registration Fixing tool completes.
+		gui.messageBox(_("COM Registration Fixing tool complete"),
+			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
+			_("COM Registration Fixing Tool"),
+			wx.OK)
+
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
 			return
@@ -317,7 +375,7 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
-class SysTrayIcon(wx.TaskBarIcon):
+class SysTrayIcon(wx.adv.TaskBarIcon):
 
 	def __init__(self, frame):
 		super(SysTrayIcon, self).__init__()
@@ -326,43 +384,12 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		self.menu=wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
-		# Translators: The label for the menu item to open general Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
-		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
-		# Translators: The label for the menu item to open Synthesizer settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
-		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
-		# Translators: The label for the menu item to open Voice Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume to use"))
-		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
-		# Translators: The label for the menu item to open Braille Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
-		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
-		# Translators: The label for the menu item to open Keyboard Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
-		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
-		# Translators: The label for the menu item to open Mouse Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
-		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
-		# Translators: The label for the menu item to open Review Cursor dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
-		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
-		# Translators: The label for the menu item to open Input Composition Settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Input composition settings..."),_("Configure how NVDA reports input composition and candidate selection for certain languages")) 
-		self.Bind(wx.EVT_MENU, frame.onInputCompositionCommand, item)
-		# Translators: The label for the menu item to open Object Presentation dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
-		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
-		# Translators: The label for the menu item to open Browse Mode settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
-		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
-		# Translators: The label for the menu item to open Document Formatting settings dialog.
-		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
-		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
-		if winVersion.isUwpOcrAvailable():
-			# Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-			item = menu_preferences.Append(wx.ID_ANY, _("&Windows 10 OCR..."))
-			self.Bind(wx.EVT_MENU, frame.onUwpOcrCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,
+			# Translators: The label for the menu item to open NVDA Settings dialog.
+			_("&Settings..."),
+			# Translators: The description for the menu item to open NVDA Settings dialog.
+			_("NVDA settings"))
+		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Default speech dictionary dialog.
@@ -375,7 +402,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
+		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
@@ -384,7 +411,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			item = menu_preferences.Append(wx.ID_ANY, _("I&nput gestures..."))
 			self.Bind(wx.EVT_MENU, frame.onInputGesturesCommand, item)
 		# Translators: The label for Preferences submenu in NVDA menu.
-		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
+		self.menu.AppendSubMenu(menu_preferences,_("&Preferences"))
 
 		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -394,14 +421,14 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
-		if not globalVars.appArgs.secure:
+		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
+		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -409,11 +436,15 @@ class SysTrayIcon(wx.TaskBarIcon):
 				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
-		# Translators: The label for the menu item to reload plugins.
-		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
-		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
+			# Translators: The label for the menu item to run the COM registration fix tool 
+			item = menu_tools.Append(wx.ID_ANY, _("Run COM Registration Fixing tool..."))
+			self.Bind(wx.EVT_MENU, frame.onRunCOMRegistrationFixesCommand, item)
+		if not config.isAppX:
+			# Translators: The label for the menu item to reload plugins.
+			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
-		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
+		self.menu.AppendSubMenu(menu_tools,_("Tools"))
 
 		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
@@ -446,7 +477,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
 		# Translators: The label for the Help submenu in NVDA menu.
-		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
+		self.menu.AppendSubMenu(menu_help,_("&Help"))
 		self.menu.AppendSeparator()
 		# Translators: The label for the menu item to open the Configuration Profiles dialog.
 		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
@@ -462,17 +493,23 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to save current settings.
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
-		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
+			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
+			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
+				# Translators: The label for the menu item to run a pending update.
+				_("Install pending &update"),
+				# Translators: The description for the menu item to run a pending update.
+				_("Execute a previously downloaded NVDA update"))
+			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
-		self.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
-		self.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
+		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
+		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
 		self.menu.Destroy()
@@ -614,7 +651,7 @@ class WelcomeDialog(wx.Dialog):
 		startAfterLogonText = _("&Automatically start NVDA after I log on to Windows")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(self, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
-		if globalVars.appArgs.secure or not config.isInstalledCopy():
+		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")
@@ -627,7 +664,7 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.kbdList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
@@ -676,7 +713,7 @@ class LauncherDialog(wx.Dialog):
 		self.licenseAgreeCheckbox.Value = False
 		self.licenseAgreeCheckbox.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
 
-		sizer = sHelper.addItem(wx.GridSizer(rows=2, cols=2))
+		sizer = sHelper.addItem(wx.GridSizer(2, 2, 0, 0))
 		self.actionButtons = []
 		# Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
@@ -703,7 +740,7 @@ class LauncherDialog(wx.Dialog):
 		mainSizer.Add(sHelper.sizer, border = guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:
@@ -761,14 +798,20 @@ class ExitDialog(wx.Dialog):
 		# Translators: The label for actions list in the Exit dialog.
 		labelText=_("What would you like to &do?")
 		self.actions = [
+			# Translators: An option in the combo box to choose exit action.
+			_("Exit"),
+			# Translators: An option in the combo box to choose exit action.
+			_("Restart")
+		]
+		# Windows Store version of NVDA does not support add-ons yet.
+		if not config.isAppX:
+			# Translators: An option in the combo box to choose exit action.
+			self.actions.append(_("Restart with add-ons disabled"))
 		# Translators: An option in the combo box to choose exit action.
-		_("Exit"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart with add-ons disabled"),
-		# Translators: An option in the combo box to choose exit action.
-		_("Restart with debug logging enabled")]
+		self.actions.append(_("Restart with debug logging enabled"))
+		if updateCheck and updateCheck.isPendingUpdate():
+			# Translators: An option in the combo box to choose exit action.
+			self.actions.append(_("Install pending update"))
 		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
 		self.actionsList.SetSelection(0)
 
@@ -781,10 +824,13 @@ class ExitDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
+		# Because Windows Store version of NVDA does not support add-ons yet, add 1 if action is 2 or above if this is such a case.
+		if action >= 2 and config.isAppX:
+			action += 1
 		if action == 0:
 			wx.GetApp().ExitMainLoop()
 		elif action == 1:
@@ -793,6 +839,9 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
 		elif action == 3:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
+		elif action == 4:
+			if updateCheck:
+				updateCheck.executeUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):
@@ -834,7 +883,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
 		self.Raise()
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()
@@ -878,3 +927,96 @@ def shouldConfigProfileTriggersBeSuspended():
 		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
 			return True
 	return False
+
+class NonReEntrantTimer(wx.Timer):
+	"""
+	Before WXPython 4, wx.Timer was nonre-entrant, 
+	meaning that if code within its callback pumped messages (E.g. called wx.Yield) and this timer was ready to fire again, 
+	the timer would not fire until the first callback had completed.
+	However, in WXPython 4, wx.Timer is now re-entrant.
+	Code in NVDA is not written to handle re-entrant timers, so this class provides a Timer with the old behaviour.
+	This should be used in place of wx.Timer and wx.PyTimer where the callback will directly or indirectly call wx.Yield or some how process the Windows window message queue. 
+	For example, NVDA's core pump or other timers that run in NVDA's main thread.
+	Timers on braille display drivers for key detection don't need to use this as they only queue gestures rather than actually executing them.  
+	"""
+
+	def __init__(self, run=None):
+		if run is not None:
+			self.run = run
+		self._inNotify = False
+		super(NonReEntrantTimer,self).__init__()
+
+	def run(self):
+		"""Subclasses can override or specify in constructor.
+		"""
+		raise NotImplementedError
+
+	def Notify(self):
+		if self._inNotify:
+			return
+		self._inNotify = True
+		try:
+			self.run()
+		finally:
+			self._inNotify = False
+
+def _isDebug():
+	return config.conf["debugLog"]["gui"]
+
+class AskAllowUsageStatsDialog(wx.Dialog):
+	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
+
+	def __init__(self, parent):
+		# Translators: The title of the dialog asking if usage data can be collected 
+		super(AskAllowUsageStatsDialog, self).__init__(parent, title=_("NVDA  Usage Data Collection"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+
+		# Translators: A message asking the user if they want to allow usage stats gathering
+		message=_("In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n\n"
+			"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. " 
+			"No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n\n"
+			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?")
+		sText=sHelper.addItem(wx.StaticText(self, label=message))
+		# the wx.Window must be constructed before we can get the handle.
+		import windowUtils
+		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		sText.Wrap(self.scaleFactor*600) # 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
+
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
+
+		# Translators: The label of a Yes button in a dialog 
+		yesButton = bHelper.addButton(self, wx.ID_YES, label=_("&Yes"))
+		yesButton.Bind(wx.EVT_BUTTON, self.onYesButton)
+
+		# Translators: The label of a No button in a dialog 
+		noButton = bHelper.addButton(self, wx.ID_NO, label=_("&No"))
+		noButton.Bind(wx.EVT_BUTTON, self.onNoButton)
+
+		# Translators: The label of a button to remind the user later about performing some action.
+		remindMeButton = bHelper.addButton(self, wx.ID_CANCEL, label=_("Remind me &later"))
+		remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
+		remindMeButton.SetFocus()
+
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+
+	def onYesButton(self,evt):
+		log.debug("Usage stats gathering has been allowed")
+		config.conf['update']['askedAllowUsageStats']=True
+		config.conf['update']['allowUsageStats']=True
+		self.EndModal(wx.ID_YES)
+
+	def onNoButton(self,evt):
+		log.debug("Usage stats gathering has been disallowed")
+		config.conf['update']['askedAllowUsageStats']=True
+		config.conf['update']['allowUsageStats']=False
+		self.EndModal(wx.ID_NO)
+
+	def onLaterButton(self,evt):
+		log.debug("Usage stats gathering question has been deferred")
+		# evt.Skip() is called since wx.ID_CANCEL is used as the ID for the Ask Later button, 
+		# wx automatically ends the modal itself.
+		evt.Skip()

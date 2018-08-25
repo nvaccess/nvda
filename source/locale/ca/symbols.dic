@@ -9,7 +9,7 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Finals de frase
+# Finals de frase.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Altres
@@ -42,7 +42,7 @@ negative number	menys	none	norep
 # Puntuació estàndard/símbols
 !	signe d'admiració	all
 "	cometes	most
-\#	coixinet	most
+\#	coixinet	some
 $	dòlar	all	norep
 £	lliura esterlina	all	norep
 €	euro	all	norep
@@ -52,8 +52,8 @@ $	dòlar	all	norep
 %	percentatge	some
 &	i comercial	some
 '	apòstrof	all
-(	parèntesi d'obertura	most
-)	parèntesi de tancament	most
+(	parèntesi d'obertura	most	always
+)	parèntesi de tancament	most	always
 *	asterisc	some
 +	més	some
 ,	coma	all	always
@@ -61,9 +61,9 @@ $	dòlar	all	norep
 .	punt	some
 /	barra inclinada	some
 :	dos punts	most	norep
-;punt i coma	most
-<	menor que	most
->	major que	most
+;	punt i coma	most
+<	menor que	some
+>	major que	some
 =	igual	some
 ?	signe d'interrogació	all
 @	arrova	some
@@ -87,7 +87,7 @@ _	guió baix	most
 ”	cometes altes de tancament	most
 ‘	cometes simples d'obertura	most
 ’	cometes simples de tancament	most
-–	guió	most
+–	guió	always
 —	guió llarg	most
 ●	pic	most
 ¨	dièresi	most
@@ -109,56 +109,74 @@ _	guió baix	most
 ®	registrada	some
 ™	marca registrada	some
 ©	copyright	some
-±	Més o menys	most
-×	signe de multiplicar	most
-÷	signe de dividir by	most
+±	Més o menys	some
+×	signe de multiplicar	some
+÷	signe de dividir per	some
 ←	fletxa esquerra	some
+↑	fletxa amunt	some
 →	fletxa dreta	some
+↓	fletxa avall	some
 ✓	vist	some
 ✔	vist	some
-#Operadors matemàtics U+2200 to U+220F
 
+#Operadors matemàtics U+2200 to U+220F
 ∀	per a tot 	none
 ∁	Complement	none
 ∂	Derivada parcial	none
 ∃	existeix	none
 ∄	no existeix	none
-∅	CONJUNT BUIT	none
-∆	INCREMENT	none
-∇	NABLA	none
-∈	PERTANY	none
-∉	NO PERTANY	none
-∊	PERTANY	none
-∋	CONTÉ	none
-∌	NO CONTÉ	none
-∍	CONTÉ	none
-∍	FI DEMOSTRACIÓ	none
-∏	PRODUCTE	none
+∅	conjunt buit	none
+∆	increment	none
+∇	nabla	none
+∈	pertany	none
+∉	no pertany	none
+∊	pertany	none
+∋	conté	none
+∌	no conté	none
+∍	conté	none
+∍	fi demostració	none
+∏	producte	none
 
 # Altres operadors matemàtics
+∑	sumatori	none
+√	arrel quadrada	none
+∛	arrel cúbica	none
+∜	arrel biquadrada	none
+∝	proporcional	none
+∞	infinit	none
+∟	angle recte	none
+∠	angle	none
+∥	paral·lel	none
+∦	no paral·lel	none
+∧	i lògic	none
+∨	o lògica	none
+∩	intersecció	none
+∪	unió	none
+∫	integral	none
+∴	per tant	none
+∵	ja que	none
+∶	raó	none
+∷	proporció	none
+≤	menor o igual	none
+≥	major o igual	none
+⊂	inclòs	none
+⊃	inclou	none
+⊆	inclòs o igual	none
+⊇	inclou o igual a	none
 
-∑	SUMATORI	none
-√	ARREL QUADRADA	none
-∛	ARREL CÚBICA	none
-∜	ARREL BIQUADRADA	none
-∝	PROPORCIONAL	none
-∞	INFINIT	none
-∟	ANGLE RECTE	none
-∠	ANGLE	none
-∥	PARAL·LEL	none
-∦	NO PARAL·LEL	none
-∧	I LÒGIC	none
-∨	O LÒGICA	none
-∩	INTERSECCIÓ	none
-∪	UNIÓ	none
-∫	INTEGRAL	none
-∴	PER TANT	none
-∵	JA QUE	none
-∶	RAÓ	none
-∷	PROPORCIÓ	none
-≤	MENOR O IGUAL	none
-≥	MAJOR O IGUAL	none
-⊂	INCLÒS	none
-⊃	INCLOU	none
-⊆	INCLÒS O IGUAL	none
-⊇	INCLOU O IGUAL A	none
+# Vulgur Fractions U+2150 to U+215E
+⅐	un setè	none
+⅑	un novè	none
+⅒	una desena	none
+⅓	un terç	none
+⅔	dos terços	none
+⅕	una cinquè	none
+⅖	dos cinquens	none
+⅗	tres cinquens	none
+⅘	quatre cinquens	none
+⅙	una sisè	none
+⅚	cinc sisens	none
+⅛	un vuitè	none
+⅜	tres vuitens	none
+⅝	cinc vuitens	none
+⅞	set vuitens	none

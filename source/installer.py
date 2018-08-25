@@ -21,6 +21,7 @@ import versionInfo
 from logHandler import log
 import addonHandler
 import easeOfAccess
+import COMRegistrationFixes
 
 _wsh=None
 def _getWSH():
@@ -36,6 +37,7 @@ with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\Microsoft\Windows\Cur
 defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
 def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,workingDirectory=None,hotkey=None,prependSpecialFolder=None):
+	# #7696: The shortcut is only physically saved to disk if it does not already exist, or one or more properties have changed. 
 	wsh=_getWSH()
 	if prependSpecialFolder:
 		specialPath=wsh.SpecialFolders(prependSpecialFolder)
@@ -44,16 +46,24 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 		os.makedirs(os.path.dirname(path))
 	shortcutExists=os.path.isfile(path)
 	short=wsh.CreateShortcut(path)
-	short.TargetPath=targetPath
-	if arguments:
+	needsSave=not shortcutExists
+	if short.targetPath!=targetPath:
+		short.TargetPath=targetPath
+		needsSave=True
+	if arguments and short.arguments!=arguments:
 		short.arguments=arguments
+		needsSave=True
 	if not shortcutExists and hotkey:
 		short.Hotkey=hotkey
-	if iconLocation:
+		needsSave=True
+	if iconLocation and short.iconLocation!=iconLocation:
 		short.IconLocation=iconLocation
-	if workingDirectory:
+		needsSave=True
+	if workingDirectory and short.workingDirectory!=workingDirectory:
 		short.workingDirectory=workingDirectory
-	short.Save()
+		needsSave=True
+	if needsSave:
+		short.Save()
 
 def getStartMenuFolder(noDefault=False):
 	try:
@@ -412,6 +422,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon,configInLocalAppData)
 	removeOldLibFiles(installDir,rebootOK=True)
+	COMRegistrationFixes.fixCOMRegistrations()
 
 def removeOldLoggedFiles(installPath):
 	datPath=os.path.join(installPath,"uninstall.dat")

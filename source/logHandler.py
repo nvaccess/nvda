@@ -18,7 +18,7 @@ import winsound
 import traceback
 from types import MethodType, FunctionType
 import globalVars
-import versionInfo
+import buildVersion
 
 ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
@@ -32,6 +32,16 @@ RPC_E_CALL_REJECTED = -2147418111
 RPC_E_DISCONNECTED = -2147417848
 LOAD_WITH_ALTERED_SEARCH_PATH=0x8
 
+def isPathExternalToNVDA(path):
+	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
+	if path[0] != "<" and os.path.isabs(path) and not path.startswith(sys.path[0] + "\\"):
+		# This module is external because:
+		# the code comes from a file (fn doesn't begin with "<");
+		# it has an absolute file path (code bundled in binary builds reports relative paths); and
+		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+		return True
+	return False
+
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
 	@param f: the frame object to use
@@ -40,11 +50,7 @@ def getCodePath(f):
 	@rtype: string
 	"""
 	fn=f.f_code.co_filename
-	if fn[0] != "<" and os.path.isabs(fn) and not fn.startswith(sys.path[0] + "\\"):
-		# This module is external because:
-		# the code comes from a file (fn doesn't begin with "<");
-		# it has an absolute file path (code bundled in binary builds reports relative paths); and
-		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+	if isPathExternalToNVDA(fn):
 		path="external:"
 	else:
 		path=""
@@ -190,7 +196,7 @@ class RemoteHandler(logging.Handler):
 
 	def __init__(self):
 		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-		path=os.path.abspath(os.path.join(u"lib",versionInfo.version,u"nvdaHelperRemote.dll"))
+		path=os.path.abspath(os.path.join(u"lib",buildVersion.version,u"nvdaHelperRemote.dll"))
 		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
 			raise OSError("Could not load %s"%path) 
@@ -218,11 +224,8 @@ class FileHandler(logging.StreamHandler):
 		logging.StreamHandler.close(self)
 
 	def handle(self,record):
-		# versionInfo must be imported after the language is set. Otherwise, strings won't be in the correct language.
-		# Therefore, don't import versionInfo if it hasn't already been imported.
-		versionInfo = sys.modules.get("versionInfo")
 		# Only play the error sound if this is a test version.
-		shouldPlayErrorSound = versionInfo and versionInfo.isTestVersion
+		shouldPlayErrorSound =  buildVersion.isTestVersion
 		if record.levelno>=logging.CRITICAL:
 			try:
 				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)

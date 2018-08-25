@@ -3,8 +3,10 @@ Co je nového v programu NVDA
 
 %!includeconf: ../changes.t2tconf
 
-
 = 2017.4 =
+Nejvýznamnější funkce této verze jsou mnohá vylepšení podpory webu včetně výchozího prohlížení webových dialogů, zlepšení hlášení názvů skupin prvků v režimu prohlížení, podpora technologií ve Windows 10 jako strážce aplikace Windows Defender a Windows 10 na ARM64, a automatické hlášení pro otáčení obrazovky a stav baterie.
+Tato verze již nepodporuje Windows XP a Vista. Minimálně se nyní vyžaduje Windows 7 s aktualizací Service Pack 1.
+
 
 == Novinky ==
 - V režimu prohlížení je možné posunovat se na konec či začátek oblastí pomocí příkazů čárka/shift+čárka pro přeskočení skupiny prvků. (#5842)
@@ -17,18 +19,28 @@ Co je nového v programu NVDA
 - Přidaná podpora pro vytvoření přenosné kopie pomocí příkazového řádku. (#6329)
 - Podpora Microsoft Edge přes strážce aplikace Windows Defender. (#7600)
 - Pokud používáte laptop nebo tablet, NVDA oznámí, jestli se baterie nabíjí či nikoliv, a změny při otáčení obrazovky. (#4574, #4612)
+- Nový jazyk: makedonština.
+- Nové braillské tabulky: chorvatský plnopis, vietnamský plnopis. (#7518, #7565)
+- Přidaná podpora braillského řádku Actilino společnosti Handy Tech. (#7590)
+- Přidaná podpora vstupu braillských řádků Handy Tech. (#7590)
 
 
 == Změny ==
 - Minimálně podporovaný operační systém je nyní Windows 7 s aktualizací Service Pack 1 nebo Windows Server 2008 R2 s aktualizací Service Pack 1. (#7546)
 - Dialogová okna ve Firefoxu a Chrome jsou automaticky v režimu prohlížení, pokud nejsou uvnitř webové aplikace. (#4493)
-- Při pohybu tabulátorem nebo rychlé navigaci v režimu prohlížení se již neoznamuje vyskočení z prvků jako např. seznamu nebo tabulky, což zlepší účinnost navigace. (#2591)
-- V režimu prohlížení ve Firefoxu a Chrome při pohybu tabulátorem nebo rychlé navigaci NVDA oznámí názvy skupin formulářových prvků. (#3321)
-- V režimu prohlížení při pohybu po vnořených objektech o/shift+o jsou nyní podporovány prvky audio a video a prvky s Aria rolemi application a dialog. (#7239)
-- Aktualizace Espeak-NG (commit 01919cd48a566cdf34347784b2e74554b376e900) řeší některé problémy při vytváření verzí. (#7385)
+- Při pohybu klávesou tab nebo rychlé navigaci v režimu prohlížení se již neoznamuje vyskočení z prvků jako např. seznamu nebo tabulky, což zlepší účinnost navigace. (#2591)
+- V režimu prohlížení ve Firefoxu a Chrome při pohybu klávesou tab nebo rychlé navigaci NVDA oznámí názvy skupin formulářových prvků. (#3321)
+- V režimu prohlížení při pohybu po vnořených objektech (o a shift+o) jsou nyní podporovány prvky audio a video a prvky s Aria rolemi application a dialog. (#7239)
+- Aktualizace Espeak-NG na verzi 1.49.2 řeší některé problémy při vytváření verzí. (#7385, #7583)
 - Po třetí aktivaci příkazu pro oznámení stavového řádku se obsah stavového řádku zkopíruje do schránky. (#1785)
 - U braillského řádku Baum je možné omezit příkazy kláves při jejich přiřazení na model řádku, který se právě používá (např. VarioUltra nebo Pronto). (#7517)
 - Klávesová zkratka pro filtrování polí v seznamu prvků v režimu prohlížení změněna z alt+f na alt+e. (#7569)
+- Přidaný nevázaný příkaz pro přepínání zahrnutí vzhledových tabulek v režimu prohlížení. Můžete ho najít v kategorii režimu prohlížení v dialogu vstupních příkazů. (#7634)
+- Braillský překladač Liblouis aktualizován na verzi 3.3.0. (#7565)
+- Klávesová zkratka pro přepínač regulárního výrazu v dialogu slovníků změněna z alt+r na alt+e. (#6782)
+- Soubory pro hlasové slovníky jsou nazvány podle verzí a byly přesunuty do adresáře 'speechDicts/voiceDicts.v1'. (#7592)
+- Úpravy souborů podle verzí (uživatelská nastavení, hlasové slovníky) se neukládají, pokud NVDA běží jako dočasná verze. (#7688)
+- Starší braillské řádky Braillino, Bookworm a Modular společnosti Handy Tech nejsou již podporovány ve výchozím nastavení NVDA. Pro jejich použití je třeba nainstalovat Handy Tech Universal Driver a doplněk NVDA. (#7590)
 
 
 == Opravy ==
@@ -43,6 +55,7 @@ Co je nového v programu NVDA
 - Matematický obsah je nyní přístupný v Google Chrome, aniž by musel být v systému nainstalovaný Mozilla Firefox. (#7308)
 - Operační systém a další aplikace by měly být stabilnější hned po instalaci NVDA před restartem ve srovnání s předchozími verzemi NVDA. (#7563)
 - Při rozpoznávání obsahu (např. NVDA+r) NVDA ohlásí chybu, pokud není objekt již dostupný. (#7567)
+- Funkčnost posunutí zpět byla opravena pro braillské řádky Freedom Scientific s levou lištou. (#7713)
 
 
 = 2013.1 =

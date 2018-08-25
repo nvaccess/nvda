@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -33,6 +33,7 @@ import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
 import watchdog
+import extensionPoints
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
@@ -40,6 +41,12 @@ runningTable={}
 NVDAProcessID=None
 _importers=None
 _getAppModuleLock=threading.RLock()
+#: Notifies when another application is taking foreground.
+#: This allows components to react upon application switches.
+#: For example, braille triggers bluetooth polling for braille displaysf necessary.
+#: Handlers are called with no arguments.
+post_appSwitch = extensionPoints.Action()
+
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -237,6 +244,9 @@ def handleAppSwitch(oldMods, newMods):
 	processed = set()
 	nextStage = []
 
+	if not oldMods or oldMods[-1].appName != newMods[-1].appName:
+		post_appSwitch.notify()
+
 	# Determine all apps that are losing focus and fire appropriate events.
 	for mod in reversed(oldMods):
 		if mod in processed:
@@ -331,10 +341,7 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		if winVersion.winVersion.major > 5:
-			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
-		else:
-			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
+		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
@@ -344,16 +351,10 @@ class AppModule(baseObject.ScriptableObject):
 		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
-		# Choose the right function to use to get the executable file name
-		if winVersion.winVersion.major > 5:
-			# For Windows Vista and higher, use QueryFullProcessImageName function
-			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
-		else:
-			GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-		if not GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)):
+		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(self.processHandle, 0, exeFileName, ctypes.byref(length)):
 			raise ctypes.WinError()
 		fileName = exeFileName.value
 		# Get size needed for buffer (0 if no info)
@@ -443,9 +444,21 @@ class AppModule(baseObject.ScriptableObject):
 		self.is64BitProcess = not res
 		return self.is64BitProcess
 
+	def isGoodUIAWindow(self,hwnd):
+		"""
+		returns C{True} if the UIA implementation of the given window must be used, regardless whether native or not.
+		This function is the counterpart of and takes precedence over L{isBadUIAWindow}.
+		If both functions return C{False}, the decision of whether to use UIA for the window is left to core.
+		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
+		"""
+		return False
+
 	def isBadUIAWindow(self,hwnd):
 		"""
-		returns true if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		returns C{True} if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		This function is the counterpart of L{isGoodUIAWindow}.
+		When both functions return C{True}, L{isGoodUIAWindow} takes precedence.
+		If both functions return C{False}, the decision of whether to use UIA for the window is left to core.
 		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
 		"""
 		return False

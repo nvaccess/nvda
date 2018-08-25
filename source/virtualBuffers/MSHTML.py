@@ -51,7 +51,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 	def _normalizeControlField(self,attrs):
 		level=None
 		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
-		if ariaCurrent is not None:
+		if ariaCurrent not in (None, "false"):
 			attrs['current']=ariaCurrent
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
@@ -67,6 +67,9 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
 		if not role:
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
+		roleText=attrs.get('HTMLAttrib::aria-roledescription')
+		if roleText:
+			attrs['roleText']=roleText
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.STATE_HASLONGDESC)

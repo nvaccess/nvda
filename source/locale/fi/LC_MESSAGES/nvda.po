@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:00-0700\n"
+"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"PO-Revision-Date: 2018-07-07 14:02+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -87,6 +87,24 @@ msgstr "Tuntematon syöttömenetelmä"
 #, python-brace-format
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
+
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "Kirjoitus- ja kielioppivirhe: {text}"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "spelling: {text}"
+msgstr "Kirjoitusvirhe: {text}"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr "Kielioppivirhe: {text}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -495,14 +513,6 @@ msgstr "o%s"
 msgid "vlnk"
 msgstr "alnk"
 
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "ei %s"
-
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -519,17 +529,29 @@ msgstr "{number} / {total}"
 msgid "lv %s"
 msgstr "ts %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr "r{rowNumber}-{rowSpan}"
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr "r{rowNumber}"
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "s%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr "s{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -537,9 +559,36 @@ msgstr "s%s"
 msgid "%s end"
 msgstr "%s lop"
 
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+msgid "automatically"
+msgstr "automaattinen"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+msgid "to focus"
+msgstr "kohdistusta"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+msgid "to review"
+msgstr "tarkastelukohdistinta"
+
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
 msgstr "Automaattinen"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr "Syötettä ei tueta"
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr "{modifier} vapautettu"
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, python-brace-format
+msgid "{modifier} pressed"
+msgstr "{modifier} painettu"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -751,18 +800,8 @@ msgstr "ranska (yhdenmukaistettu), 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+msgid "French (unified) grade 2"
 msgstr "ranska (yhdenmukaistettu), taso 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "ranska (Kanada), taso 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "ranska (Kanada), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -798,6 +837,11 @@ msgstr "hindi, taso 1"
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
 msgstr "kroatia, 8 pisteen tietokonemerkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Croatian grade 1"
+msgstr "kroatia, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -856,8 +900,13 @@ msgstr "kashmiri, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
-msgstr "liettua"
+msgid "Lithuanian 8 dot"
+msgstr "liettua, 8 pisteen merkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Lithuanian 6 dot"
+msgstr "liettua, 6 pisteen merkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -876,8 +925,13 @@ msgstr "manipuri, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "mongoli"
+msgid "Mongolian grade 1"
+msgstr "mongoli, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian grade 2"
+msgstr "mongoli, taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -961,6 +1015,11 @@ msgstr "punjabi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr "romania"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "venäläinen tietokonemerkistö"
 
@@ -973,6 +1032,11 @@ msgstr "venäjä, taso 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "sanskrit, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "ruotsi, 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1016,8 +1080,18 @@ msgstr "turkki, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Ukrainian"
+msgstr "ukraina"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Unicode braille"
 msgstr "Unicode-pistekirjoitus"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Vietnamese grade 1"
+msgstr "vietnam, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1526,14 +1600,14 @@ msgstr "Ei edellisiä virheitä"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&Otsikot"
 
@@ -1550,7 +1624,7 @@ msgstr "&Painikkeet"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "Kii&ntopisteet"
 
@@ -1621,33 +1695,6 @@ msgstr "Alareuna"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, loppuun."
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "Ei taulukon solussa"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "Taulukon reuna"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "Siirtää seuraavalle taulukon riville"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "Siirtää edelliselle taulukon riville"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "Siirtää edelliseen taulukon sarakkeeseen"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2462,6 +2509,10 @@ msgstr "asetussäädin"
 msgid "calendar"
 msgstr "kalenteri"
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "kaavioelementti"
+
 msgid "video"
 msgstr "video"
 
@@ -2584,7 +2635,7 @@ msgid "dragging"
 msgstr "vedetään"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "pudotuksen kohde"
 
@@ -2642,6 +2693,11 @@ msgstr "ei painettu"
 msgid "not checked"
 msgstr "ei valittu"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "Vedetty"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr "nykyinen"
@@ -2666,6 +2722,14 @@ msgstr "nykyinen päivämäärä"
 msgid "current time"
 msgstr "nykyinen kellonaika"
 
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "ei %s"
+
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
@@ -2677,7 +2741,7 @@ msgstr ""
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
-msgstr "Asetustiedostovirhe"
+msgstr "Virhe asetustiedostossa"
 
 msgid ""
 "Your gesture map file contains errors.\n"
@@ -2763,6 +2827,47 @@ msgstr "Ei valintaa"
 msgid "Copied to clipboard"
 msgstr "Kopioitu leikepöydälle"
 
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "Ei taulukon solussa"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "Taulukon reuna"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "Siirtää seuraavalle taulukon riville"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "Siirtää edelliselle taulukon riville"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "Siirtää seuraavaan taulukon sarakkeeseen"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "Siirtää edelliseen taulukon sarakkeeseen"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables off"
+msgstr "Asettelutaulukot pois"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+msgid "layout tables on"
+msgstr "Asettelutaulukot käytössä"
+
+#. Translators: Input help mode message for include layout tables command.
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä asettelutaulukoiden ilmaisemisen "
+"selaustilassa."
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
 msgstr "Tekstin tarkastelu"
@@ -2776,10 +2881,12 @@ msgid "System caret"
 msgstr "Järjestelmäkohdistin"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "Hiiri"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "Puhe"
 
@@ -2788,6 +2895,7 @@ msgid "Configuration"
 msgstr "Asetukset"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Pistekirjoitus"
 
@@ -2855,7 +2963,7 @@ msgid "Sleep mode on"
 msgstr "Lepotila käytössä"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+msgid "Toggles sleep mode on and off for the active application."
 msgstr ""
 "Ottaa käyttöön lepotilan tai poistaa sen käytöstä aktiivisessa sovelluksessa."
 
@@ -2995,11 +3103,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "Fontin nimen lukeminen pois"
+msgstr "Fontin ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "Fontin nimen lukeminen käytössä"
+msgstr "Fontin ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -3007,28 +3115,28 @@ msgstr "Ottaa käyttöön fonttimuutosten ilmoittamisen tai poistaa sen käytös
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "Fonttikoon lukeminen pois"
+msgstr "Fonttikoon ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "Fonttikoon lukeminen käytössä"
+msgstr "Fonttikoon ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
 msgstr ""
-"Ottaa käyttöön fonttikoon muutosten ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön fonttikoon muutosten ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "Fonttimääreiden lukeminen pois"
+msgstr "Fonttimääreiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "Fonttimääreiden lukeminen käytössä"
+msgstr "Fonttimääreiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "Ottaa käyttöön fonttimääreiden ilmoittamisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön fonttimääreiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
@@ -3044,15 +3152,15 @@ msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "Korostuksen ilmoittaminen pois"
+msgstr "Korostuksen ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "Korostuksen ilmoittaminen käytössä"
+msgstr "Korostuksen ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Ottaa käyttöön korostuksen ilmoittamisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön korostuksen ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3068,16 +3176,16 @@ msgstr "Ottaa käyttöön värien lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "Tasauksen lukeminen pois"
+msgstr "Tasauksen ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "Tasauksen lukeminen käytössä"
+msgstr "Tasauksen ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
 msgstr ""
-"Ottaa käyttöön tekstin tasauksen ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön tekstin tasauksen ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
@@ -3089,76 +3197,77 @@ msgstr "Tyylin lukeminen käytössä"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Ottaa käyttöön tyylimuutosten ilmoittamisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön tyylimuutosten lukemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "Kirjoitusvirheiden lukeminen pois"
+msgstr "Kirjoitusvirheiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "Kirjoitusvirheiden lukeminen käytössä"
+msgstr "Kirjoitusvirheiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "Ottaa käyttöön kirjoitusvirheiden lukemisen tai poistaa sen käytöstä."
+msgstr ""
+"Ottaa käyttöön kirjoitusvirheiden ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "Sivunumeroiden lukeminen pois"
+msgstr "Sivunumeroiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "Sivunumeroiden lukeminen käytössä"
+msgstr "Sivunumeroiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "Ottaa käyttöön sivunumeroiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön sivunumeroiden ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "Rivinumeroiden lukeminen pois"
+msgstr "Rivinumeroiden ilmoittaminen pois"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "Rivinumeroiden lukeminen käytössä"
+msgstr "Rivinumeroiden ilmoittaminen käytössä"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
-msgstr "Ottaa käyttöön rivinumeroiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön rivinumeroiden ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech"
-msgstr "Ilmoita rivien sisennykset puheella"
+msgstr "Ilmaise rivien sisennykset puheella"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with tones"
-msgstr "Ilmoita rivien sisennykset äänimerkeillä"
+msgstr "Ilmaise rivien sisennykset äänimerkeillä"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation with speech and tones"
-msgstr "Ilmoita rivien sisennykset puheella ja äänimerkeillä"
+msgstr "Ilmaise rivien sisennykset puheella ja äänimerkeillä"
 
 #. Translators: A message reported when cycling through line indentation settings.
 msgid "Report line indentation off"
-msgstr "Rivien sisennysten ilmoittaminen pois"
+msgstr "Rivien sisennysten ilmaiseminen pois"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Cycles through line indentation settings"
-msgstr "Vaihtaa rivien sisennysten ilmoittamisen asetusta."
+msgstr "Vaihtaa rivien sisennysten ilmaisemisen asetusta."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Kappalesisennysten lukeminen pois"
+msgstr "Kappalesisennysten ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Kappalesisennysten lukeminen käytössä"
+msgstr "Kappalesisennysten ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
 msgstr ""
-"Ottaa käyttöön kappalesisennysten ilmoittamisen tai poistaa sen käytöstä."
+"Ottaa käyttöön kappalesisennysten ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
@@ -3174,141 +3283,142 @@ msgstr "Ottaa käyttöön rivivälien ilmoittamisen tai poistaa sen käytöstä.
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "Taulukoiden lukeminen pois"
+msgstr "Taulukoiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "Taulukoiden lukeminen käytössä"
+msgstr "Taulukoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr "Ottaa käyttöön taulukoiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön taulukoiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "Taulukon rivi- ja sarakeotsikoiden lukeminen pois"
+msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "Taulukon rivi- ja sarakeotsikoiden lukeminen käytössä"
+msgstr "Taulukon rivi- ja sarakeotsikoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
 msgstr ""
-"Ottaa käyttöön taulukon rivi- ja sarakeotsikoiden lukemisen tai poistaa sen "
-"käytöstä."
+"Ottaa käyttöön taulukon rivi- ja sarakeotsikoiden ilmaisemisen tai poistaa "
+"sen käytöstä."
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "Taulukon solujen koordinaattien lukeminen pois"
+msgstr "Taulukon solujen koordinaattien ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "Taulukon solujen koordinaattien lukeminen käytössä"
+msgstr "Taulukon solujen koordinaattien ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr ""
-"Ottaa käyttöön taulukon solujen koordinaattien lukemisen tai poistaa sen "
+"Ottaa käyttöön taulukon solujen koordinaattien ilmaisemisen tai poistaa sen "
 "käytöstä."
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "Linkkien lukeminen pois"
+msgstr "Linkkien ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "Linkkien lukeminen käytössä"
+msgstr "Linkkien ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "Ottaa käyttöön linkkien lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön linkkien ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "Kommenttien lukeminen pois"
+msgstr "Kommenttien ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "Kommenttien lukeminen käytössä"
+msgstr "Kommenttien ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr "Ottaa käyttöön kommenttien lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kommenttien ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "Luetteloiden lukeminen pois"
+msgstr "Luetteloiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "Luetteloiden lukeminen käytössä"
+msgstr "Luetteloiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
-msgstr "Ottaa käyttöön luetteloiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön luetteloiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "Otsikoiden lukeminen pois"
+msgstr "Otsikoiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "Otsikoiden lukeminen käytössä"
+msgstr "Otsikoiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
-msgstr "Ottaa käyttöön otsikoiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön otsikoiden ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "Sisennettyjen lainausten lukeminen pois"
+msgstr "Sisennettyjen lainausten ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "Sisennettyjen lainausten lukeminen käytössä"
+msgstr "Sisennettyjen lainausten ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
 msgstr ""
-"Ottaa käyttöön sisennettyjen lainausten lukemisen tai poistaa sen käytöstä."
+"Ottaa käyttöön sisennettyjen lainausten ilmaisemisen tai poistaa sen "
+"käytöstä."
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "Kiintopisteiden lukeminen pois"
+msgstr "Kiintopisteiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "Kiintopisteiden lukeminen käytössä"
+msgstr "Kiintopisteiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "Ottaa käyttöön kiintopisteiden lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kiintopisteiden ilmaiseminen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "Kehysten lukeminen pois"
+msgstr "Kehysten ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "Kehysten lukeminen käytössä"
+msgstr "Kehysten ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
-msgstr "Ottaa käyttöön kehysten lukemisen tai poistaa sen käytöstä."
+msgstr "Ottaa käyttöön kehysten ilmaisemisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "Napsautettavien kohteiden ilmoittaminen pois"
+msgstr "Napsautettavien kohteiden ilmaiseminen pois"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "Napsautettavien kohteiden ilmoittaminen käytössä"
+msgstr "Napsautettavien kohteiden ilmaiseminen käytössä"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
 msgstr ""
-"Ottaa käyttöön napsautettavien kohteiden ilmoittamisen tai poistaa sen "
+"Ottaa käyttöön napsautettavien kohteiden ilmaisemisen tai poistaa sen "
 "käytöstä."
 
 #. Translators: Reported when the user cycles through speech symbol levels
@@ -3353,7 +3463,7 @@ msgstr ""
 "Vaihtaa seuraavaan tarkastelutilaan (esim. objekti, dokumentti tai ruutu) ja "
 "sijoittaa tarkastelukohdan navigointiobjektin kohdalle."
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "Ei edellistä tarkastelutilaa"
 
@@ -3391,7 +3501,7 @@ msgstr "%s kopioitu leikepöydälle"
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
 "Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa tiedot tavataan "
@@ -3885,49 +3995,53 @@ msgid ""
 msgstr ""
 "Lukee aktiivisen sovelluksen tiedostonimen ja ladatun sovellusmoduulin."
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
-msgstr "Avaa NVDA:n Yleiset asetukset -valintaikkunan."
+#. Translators: Input help mode message for go to general settings command.
+msgid "Shows NVDA's general settings"
+msgstr "Näyttää NVDA:n yleiset asetukset."
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
-msgstr "Avaa NVDA:n puhesyntetisaattorin asetusten valintaikkunan."
+#. Translators: Input help mode message for go to select synthesizer command.
+msgid "Shows the NVDA synthesizer selection dialog"
+msgstr "Näyttää NVDA:n puhesyntetisaattorin valitsemisen valintaikkunan."
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "Avaa NVDA:n Puheäänen asetukset -valintaikkunan."
+#. Translators: Input help mode message for go to speech settings command.
+msgid "Shows NVDA's speech settings"
+msgstr "Näyttää NVDA:n puheasetukset."
 
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
-msgstr "Avaa pistenäytön asetusten valintaikkunan."
+#. Translators: Input help mode message for go to select braille display command.
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "Näyttää NVDA:n pistenäytön valitsemisen valintaikkunan."
 
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Avaa NVDA:n Näppäimistöasetukset -valintaikkunan."
+#. Translators: Input help mode message for go to braille settings command.
+msgid "Shows NVDA's braille settings"
+msgstr "Näyttää NVDA:n pistenäytön asetukset."
 
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
-msgstr "Avaa NVDA:n Hiiriasetukset-valintaikkunan."
+#. Translators: Input help mode message for go to keyboard settings command.
+msgid "Shows NVDA's keyboard settings"
+msgstr "Näyttää NVDA:n näppäimistöasetukset."
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Avaa tarkastelukohdistimen asetusten valintaikkunan."
+#. Translators: Input help mode message for go to mouse settings command.
+msgid "Shows NVDA's mouse settings"
+msgstr "Näyttää NVDA:n hiiriasetukset."
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
-msgstr "Avaa syöttömenetelmän asetusten valintaikkunan."
+#. Translators: Input help mode message for go to review cursor settings command.
+msgid "Shows NVDA's review cursor settings"
+msgstr "Näyttää NVDA:n tarkastelukohdistimen asetukset."
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Avaa NVDA:n objektien lukuasetukset -valintaikkunan."
+#. Translators: Input help mode message for go to input composition settings command.
+msgid "Shows NVDA's input composition settings"
+msgstr "Näyttää NVDA:n syöttömenetelmän asetukset."
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Avaa NVDA:n Selaustilan asetukset -valintaikkunan."
+#. Translators: Input help mode message for go to object presentation settings command.
+msgid "Shows NVDA's object presentation settings"
+msgstr "Näyttää NVDA:n objektien lukemisen asetukset."
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Avaa NVDA:n Dokumenttien muotoiluasetukset -valintaikkunan."
+#. Translators: Input help mode message for go to browse mode settings command.
+msgid "Shows NVDA's browse mode settings"
+msgstr "Näyttää NVDA:n selaustilan asetukset."
+
+#. Translators: Input help mode message for go to document formatting settings command.
+msgid "Shows NVDA's document formatting settings"
+msgstr "Näyttää NVDA:n dokumenttien muotoiluasetukset."
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -3975,32 +4089,24 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "puheen tarkastelu pois"
+msgstr "Puheentarkastelu pois"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "puheen tarkastelu käytössä"
+msgstr "Puheentarkastelu käytössä"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Ottaa käyttöön tai poistaa käytöstä Puheen tarkastelun, kelluvan ikkunan, "
+"Ottaa käyttöön tai poistaa käytöstä puheentarkastelun, kelluvan ikkunan, "
 "jonka avulla voit tarkastella NVDA:n tällä hetkellä puhumaa tekstiä."
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "tarkastelukohdistinta"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "kohdistusta"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
+msgid "Braille tethered %s"
 msgstr "Pistenäyttö seuraa %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -4120,6 +4226,10 @@ msgstr ""
 "Siirtää kohdistimen tämän pistesolun alla olevan objektin kohdalle tai avaa "
 "sen."
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "Ilmoittaa tässä pistesolussa olevan tekstin muotoilutiedot."
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "Siirtää pistenäytön edelliselle riville."
@@ -4148,6 +4258,46 @@ msgstr ""
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
 msgstr "Kääntää minkä tahansa pistekirjoitussyötteen."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti Vaihto-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Vaihtaa virtuaalisesti Ctrl-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti Alt-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä."
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+"Vaihtaa virtuaalisesti vasemman Windows-näppäimen tilaa pikanäppäimen "
+"emuloimiseksi pistekirjoitusta syötettäessä"
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+"Vaihtaa virtuaalisesti NVDA-näppäimen tilaa pikanäppäimen emuloimiseksi "
+"pistekirjoitusta syötettäessä"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4199,6 +4349,22 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Näyttää NVDA:n Asetusprofiilit-valintaikkunan."
+
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+msgid "Configuration profile triggers disabled"
+msgstr "Asetusprofiilien käynnistimet poistettu käytöstä"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+msgid "Configuration profile triggers enabled"
+msgstr "Asetusprofiilien käynnistimet otettu käyttöön"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"Ottaa käyttöön kaikki asetusprofiilien käynnistimet tai poistaa ne käytöstä. "
+"Käynnistimet pysyvät poissa käytöstä NVDA:n uudelleenkäynnistykseen saakka."
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -5715,19 +5881,19 @@ msgstr "NVDA:n Python-konsoli"
 
 #. Translators: One of the review modes.
 msgid "Object review"
-msgstr "Objektitarkastelu"
+msgstr "Objektintarkastelu"
 
 #. Translators: One of the review modes.
 msgid "Document review"
-msgstr "Dokumenttitarkastelu"
+msgstr "Dokumentintarkastelu"
 
 #. Translators: One of the review modes.
 msgid "Screen review"
-msgstr "Ruututarkastelu"
+msgstr "Ruuduntarkastelu"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Jäljittelee %s-näppäimen painamista näppäimistöltä"
+msgstr "Jäljittelee näppäimistön %s-näppäimen painamista."
 
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
@@ -5767,20 +5933,27 @@ msgstr "%s valittu sen sijaan"
 msgid "selection removed"
 msgstr "Valinta peruttu"
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "Vedetty"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
 msgstr "rivi %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr "jakaantunut %s"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "sarake %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "jakaantunut rivi {row} sarake {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6025,6 +6198,34 @@ msgstr "jaettu tasaus"
 msgid "align default"
 msgstr "oletustasaus"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "pystysuuntainen tasaus yläreunassa"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "pystysuuntainen tasaus keskellä"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "pystysuuntainen tasaus alareunassa"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "pystysuuntainen tasaus perusviivalla"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "pystysuuntainen tasaus molemmissa reunoissa"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "pystysuuntainen jaettu tasaus"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "pystysuuntainen oletustasaus"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "sisennys vasemmalla"
@@ -6057,34 +6258,6 @@ msgstr "sisennys ensimmäisellä rivillä"
 msgid "no first line indent"
 msgstr "ei ensimmäisen rivin sisennystä"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "pystysuuntainen tasaus yläreunassa"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "pystysuuntainen tasaus keskellä"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "pystysuuntainen tasaus alareunassa"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "pystysuuntainen tasaus perusviivalla"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "pystysuuntainen tasaus molemmissa reunoissa"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "pystysuuntainen jaettu tasaus"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "pystysuuntainen oletustasaus"
-
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
 msgid "line spacing %s"
@@ -6102,6 +6275,14 @@ msgstr "kirjoitusvirhe"
 msgid "out of spelling error"
 msgstr "kirjoitusvirheen loppu"
 
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr "Kielioppivirhe"
+
+#. Translators: Reported when moving out of text containing a grammar error.
+msgid "out of grammar error"
+msgstr "kielioppivirheen loppu"
+
 #. Translators: Indicates end of a table.
 msgid "out of table"
 msgstr "taulukon loppu"
@@ -6112,11 +6293,11 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
 
 msgid "NVDA Speech Viewer"
-msgstr "Puheen tarkastelu"
+msgstr "Puheentarkastelu"
 
 #. Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 msgid "&Show Speech Viewer on Startup"
-msgstr "&Näytä Puheen tarkastelu käynnistettäessä"
+msgstr "&Näytä puheentarkastelu käynnistettäessä"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -6279,14 +6460,22 @@ msgid "Error checking for update."
 msgstr "Virhe tarkistettaessa päivitystä."
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "Virhe"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "NVDA:n päivitys"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr "NVDA {version} on ladattu ja odottaa asentamista."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6298,9 +6487,15 @@ msgstr "Versio {version} on saatavilla."
 msgid "No update available."
 msgstr "Ei päivitystä saatavilla."
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "Lataa ja &asenna päivitys"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "&Asenna NVDA {version}"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+msgid "Re-&download update"
+msgstr "&Lataa päivitys uudelleen"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6315,6 +6510,23 @@ msgstr "Muistuta &myöhemmin"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Sulje"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "NVDA {version} on valmiina asennettavaksi.\n"
+
+#. Translators: The label of a button to install an NVDA update.
+msgid "&Install update"
+msgstr "&Asenna päivitys"
+
+#. Translators: The label of a button to postpone an NVDA update.
+msgid "&Postpone update"
+msgstr "&Lykkää päivitystä"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+msgid "Unable to postpone update."
+msgstr "Päivitystä ei voi lykätä."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6331,15 +6543,6 @@ msgstr "Ladataan"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "Virhe ladattaessa päivitystä."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "Päivitys ladattu. Seuraavaksi se asennetaan."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "Asenna päivitys"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6418,10 +6621,10 @@ msgstr ""
 "URL-osoite: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} on suojattu GNU General Public License (versio 2) -lisenssillä. Voit "
-"vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen "
-"mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä "
-"alkuperäisiä että muokattuja ohjelmistokopioita ja kaikkia johdannaisia.\n"
+"{name} on suojattu GNU GPL 2.0 -lisenssillä. Voit vapaasti jakaa tai muuttaa "
+"tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin "
+"kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja "
+"ohjelmistokopioita ja kaikkia johdannaisia.\n"
 "Voit tarkastella lisenssiä Ohje-valikosta saadaksesi lisätietoja.\n"
 "Lisenssi on luettavissa myös verkossa osoitteessa http://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html\n"
@@ -6504,9 +6707,17 @@ msgstr "Käynnistä"
 msgid "No track playing"
 msgstr "Kappaleen toisto ei ole käynnissä"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Ilmoittaa tällä hetkellä soitettavan kappaleen jäljellä olevan ajan"
+msgstr "Ilmoittaa toistettavan kappaleen jäljellä olevan ajan."
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Ilmoittaa toistettavan kappaleen kuluneen ajan."
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Ilmoittaa toistettavan kappaleen keston."
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6617,6 +6828,11 @@ msgstr "Piilokopio:"
 msgid "unread"
 msgstr "lukematon"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr "Muokataan profiilia {profile}"
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
@@ -6677,6 +6893,11 @@ msgstr "lähetetty: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "Odotetaan Outlookia..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr "{date} (koko päivä)"
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7042,8 +7263,29 @@ msgid "off"
 msgstr "Uudelleentoisto pois"
 
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "Alva BC640/680"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr "Optelec ALVA 6/protokollamuunnin"
+
+#. Translators: Name of a bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth serial: {portName}"
+msgstr "Bluetooth-sarjaportti: {portName}"
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr "HID-näppäimistöemulointia ei tueta"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr "HID-näppäimistöemulointi käytössä"
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr "HID-näppäimistöemulointi pois käytöstä"
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
@@ -7056,19 +7298,31 @@ msgstr "Baum/HumanWare/APH/Orbit"
 #. Translators: Name of a serial communications port.
 #, python-brace-format
 msgid "Serial: {portName}"
-msgstr "Sarja: {portName}"
+msgstr "Sarjaportti: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
+msgstr "HumanWare Brailliant BI/B / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr "Eurobraille Esys/Esytime/Iris"
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr "HID-näppäimistöemulointi ei ole käytettävissä."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr "Ottaa HID-näppäimistöemuloinnin käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7082,12 +7336,25 @@ msgstr "näytön vieritys"
 msgid "line scroll"
 msgstr "rivin vieritys"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "Näyttää Handy Techin ajurin asetustenmääritysikkunan."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr "Pistekirjoituksen syöttö käytössä"
+
+#. Translators: message when braille input is disabled
+msgid "Braille input disabled"
+msgstr "Pistekirjoituksen syöttö poistettu käytöstä"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr "Ottaa käyttöön pistekirjoituksen syötön tai poistaa sen käytöstä."
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7100,10 +7367,6 @@ msgstr "Ei pistenäyttöä"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX (uudet mallit)"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "Siirrä pistesoluun ja lue muotoilut."
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7168,9 +7431,16 @@ msgstr ""
 "Asetuksia ei voitu tallentaa - tiedostojärjestelmä luultavasti vain luku -"
 "tyyppiä"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr "NVDA:n asetusvalintaikkuna on jo auki. Sulje se ensin."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
+"Asetuspaneeli, jota yritit avata, ei ole käytettävissä tässä järjestelmässä."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7189,93 +7459,46 @@ msgstr "Tilapäissanasto"
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "&Yleiset..."
-
-msgid "General settings"
-msgstr "Yleiset asetukset"
-
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&Syntetisaattori..."
-
-msgid "Change the synthesizer to be used"
-msgstr "Vaihda käytettävää syntetisaattoria"
-
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
-msgstr "&Puheääni..."
-
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "P&istekirjoitus..."
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "&Näppäimistö..."
-
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
 msgstr ""
-"Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai "
-"komentonäppäinten lukeminen"
+"Olet suorittamassa COM-rekisteröintien korjaustyökalua. Tämä työkalu yrittää "
+"korjata yleisiä järjestelmäongelmia, jotka estävät NVDA:ta käsittelemästä "
+"sisältöä useissa ohjelmissa, kuten Firefoxissa ja Internet Explorerissa. "
+"Työkalun on tehtävä muutoksia Windowsin rekisteriin, mikä edellyttää "
+"järjestelmänvalvojan oikeuksia. Haluatko varmasti jatkaa?"
 
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "&Hiiri..."
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "Varoitus"
 
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr ""
-"Määritä hiirikohdistimen muodon muutosten ja hiiren alla olevan objektin "
-"lukuasetukset"
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr "COM-rekisteröintien korjaustyökalu"
 
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "&Tarkastelukohdistin..."
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "Odota, kun NVDA yrittää korjata järjestelmäsi COM-rekisteröintejä."
 
-msgid "Configure how and when the review cursor moves"
-msgstr "Määritä, miten ja milloin tarkastelukohdistin liikkuu"
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr "COM-rekisteröintien korjaustyökalu suoritettu"
 
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "Sy&öttömenetelmä..."
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+msgid "&Settings..."
+msgstr "&Asetukset..."
 
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
-msgstr ""
-"Määritä, miten NVDA ilmoittaa tiettyjen kielten syöttömenetelmän ja "
-"ehdotusten valinnan."
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "&Objektien lukeminen..."
-
-msgid "Change reporting of objects"
-msgstr "Muuta objektien lukuasetuksia"
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "S&elaustila..."
-
-msgid "Change virtual buffers specific settings"
-msgstr "Muuta selaustilan asetuksia"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "&Dokumenttien muotoilu..."
-
-msgid "Change settings of document properties"
-msgstr "Muuta dokumenttien muotoiluasetuksia."
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr "Windows 10:n tekstintunnistus..."
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+msgid "NVDA settings"
+msgstr "NVDA:n asetukset"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7329,7 +7552,7 @@ msgstr "Näytä l&oki"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Pu&heen tarkastelu"
+msgstr "Pu&heentarkastelu"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7346,6 +7569,10 @@ msgstr "Luo &massamuistiversio..."
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&Asenna NVDA..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr "Suorita COM-rekisteröintien korjaustyökalu..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7424,6 +7651,14 @@ msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 msgid "Donate"
 msgstr "Lahjoita"
 
+#. Translators: The label for the menu item to run a pending update.
+msgid "Install pending &update"
+msgstr "Asenna odottava &päivitys"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr "Suorita aiemmin ladattu NVDA-päivitys"
+
 msgid "E&xit"
 msgstr "&Sulje"
 
@@ -7464,7 +7699,7 @@ msgstr "Asetukset"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&Näppäimistöasettelu:"
 
@@ -7529,9 +7764,50 @@ msgstr "Käynnistä uudelleen ja poista lisäosat käytöstä"
 msgid "Restart with debug logging enabled"
 msgstr "Käynnistä uudelleen ja ota käyttöön virheenkorjaus-lokitaso"
 
+#. Translators: An option in the combo box to choose exit action.
+msgid "Install pending update"
+msgstr "Asenna odottava päivitys"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Odota"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "Käyttötietojen kerääminen"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"NV Access haluaa kerätä käyttötietoja NVDA:n tulevaisuuden parantamiseksi "
+"NVDA:n käynnissä olevista kopioista.\n"
+"\n"
+"Tiedot sisältävät käyttöjärjestelmän version, NVDA:n version ja kielen, "
+"alkuperämaan sekä tietyt NVDA-asetukset, kuten nykyisen syntetisaattorin, "
+"pistenäytön ja pistetaulukon. Puhuttua tai pistenäytöllä näytettyä sisältöä "
+"ei koskaan lähetetä NV Accessille.  Katso käyttöoppaasta luettelo kaikesta "
+"tällä hetkellä kerätystä tiedosta.\n"
+"\n"
+"Sallitko NV Accessin kerätä ajoittain  näitä tietoja NVDA:n parantamiseksi?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Kyllä"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Ei"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -7674,20 +7950,20 @@ msgstr "asenna"
 msgid "remove"
 msgstr "poista"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "poista käytöstä"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "ei käytössä uudelleenkäynnistyksen jälkeen"
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "ota käyttöön"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "käytössä uudelleenkäynnistyksen jälkeen"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
+msgid "disabled"
 msgstr "ei käytössä"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
+msgid "enabled"
 msgstr "käytössä"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
@@ -7727,6 +8003,11 @@ msgstr "URL-osoite: {url}"
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "Lisäosan tiedot"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr ""
+"Lisäosia ei voi asentaa Microsoft Storesta asennettuun NVDA:n versioon."
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -7878,11 +8159,6 @@ msgstr ""
 "Tämä käynnistin on jo liitetty toiseen profiiliin. Jos jatkat, olemassa "
 "oleva liitos poistetaan ja käynnistin liitetään tähän profiiliin.\n"
 "Haluatko varmasti jatkaa?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "Varoitus"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8092,7 +8368,7 @@ msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon %s."
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "Lokin tarkastelu"
+msgstr "Lokintarkastelu"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
@@ -8115,9 +8391,30 @@ msgstr "Tallenna nimellä"
 msgid "Error saving log: %s"
 msgstr "Virhe tallennettaessa lokia: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "Yleiset asetukset"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "OK"
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr "Peruuta"
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr "Käytä"
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+msgid "&Categories:"
+msgstr "&Kategoriat:"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr "Asetuskategoria: %s"
+
+#. Translators: This is the label for the general settings panel.
+msgid "General"
+msgstr "Yleiset"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8173,6 +8470,15 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "Tarkista &päivitykset automaattisesti"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr "Ilmoita käynnistettäessä &odottavasta päivityksestä"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Salli NVDA-projektin kerätä käyttötilastoja"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8232,9 +8538,20 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "Kieliasetuksen muutos"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
-msgstr "Puhesyntetisaattori"
+#. Translators: A label for the synthesizer on the speech panel.
+msgid "&Synthesizer"
+msgstr "&Syntetisaattori"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr "&Muuta..."
+
+#. Translators: This is the label for the synthesizer selection dialog
+msgid "Select Synthesizer"
+msgstr "Valitse syntetisaattori"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8248,7 +8565,7 @@ msgstr "&Syntetisaattori:"
 msgid "Output &device:"
 msgstr "Ääni&laite:"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "Äänenvoimakkuuden h&iljennys:"
 
@@ -8262,27 +8579,27 @@ msgstr "Syntetisaattoria %s ei voitu ladata."
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "Puheäänen asetukset"
+#. Translators: This is the label for the voice settings panel.
+msgid "Voice"
+msgstr "Puheääni"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "Vaihda kieltä automaattisesti (jos mahdollista)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "Vaihda murretta automaattisesti (jos mahdollista)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "Välimerkki- ja symboli&taso:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä"
 
@@ -8291,82 +8608,82 @@ msgid "Capital pitch change percentage"
 msgstr "Äänenkorkeuden muutos prosentteina isoille kirjaimille"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "Ilmaise isot kirjaimet sanalla \"&iso\""
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "Ilmaise isot kir&jaimet äänimerkillä"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "Käytä tava&ustoimintoa (jos mahdollista)"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "Näppäimistöasetukset"
+#. Translators: This is the label for the keyboard settings panel.
+msgid "Keyboard"
+msgstr "Näppäimistö"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeronäppäimistön Insertiä NVDA-näppäimenä"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Käytä laajennettua Insertiä NVDA-näppäimenä"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "Puhu &kirjoitetut merkit"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "Puhu kirjoitetut &sanat"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "Keskeytä puhe merkkejä kirjoitettaessa"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "Keskeytä puhe Enter-näppäintä painettaessa"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "Käytä pika&lukua jatkuvassa luvussa"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
 "Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "Puhu k&omentonäppäimet"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr "Ilmaise &kirjoitusvirheet kirjoitettaessa toistamalla ääni"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "Käsittele muiden &sovellusten näppäinpainallukset"
 
@@ -8374,102 +8691,98 @@ msgstr "Käsittele muiden &sovellusten näppäinpainallukset"
 msgid "At least one key must be used as the NVDA key."
 msgstr "Vähintään yhtä näppäintä on käytettävä NVDA-näppäimenä."
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "Hiiriasetukset"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "Ilmoita &hiirikohdistimen muodon muutokset"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "Käytä hiiren &seurantaa"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "Teksti&yksikön tarkkuus:"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "Lue hiiren alla olevan objektin &rooli"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "Ilmaise hiiren k&oordinaatit äänimerkeillä"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Äänikoordinaattien &voimakkuutta säädetään ruudun kirkkauden mukaan"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "Tarkastelukohdistimen asetukset"
+#. Translators: This is the label for the review cursor settings panel.
+msgid "Review Cursor"
+msgstr "Tarkastelukohdistin"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "Seuraa järjestelmän &kohdistusta"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "Seuraa järjestelmä&kohdistinta"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "Seuraa &hiirikohdistinta"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "Yksinkertainen tarkastelutila"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
-msgstr "Syöttömenetelmän asetukset"
+#. Translators: This is the label for the Input Composition settings panel.
+msgid "Input Composition"
+msgstr "Syöttömenetelmä"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "Lue kaikki &ehdotukset automaattisesti"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "Lue &valittu ehdotus"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr "Ilmoita lyhyet merkki&kuvaukset aina ehdotuksia luettaessa"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "Ilmoita &lukumerkkijonon muutokset"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "Lue &merkkiyhdistelmien muutokset"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
-msgstr "Objektien lukuasetukset"
+msgstr "Objektien lukeminen"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Speak"
-msgstr "Lue"
+msgstr "Puhu"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
@@ -8481,197 +8794,197 @@ msgstr "Anna äänimerkki"
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Speak and beep"
-msgstr "Lue ja anna äänimerkki"
+msgstr "Puhu ja anna äänimerkki"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
-msgstr "Lue &kuplailmoitukset"
+msgstr "Lue oh&jeselitteet"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "Lue objektien sij&aintitiedot"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "Ar&vaa objektien sijaintitiedot, kun niitä ei ole käytettävissä"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "E&distymispalkkien päivitykset:"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "Ilmaise taustalla olevat edistymispalkit"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "Lue d&ynaamisen sisällön muutokset"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr "Toista ääni &automaattisten ehdotusten tullessa näkyviin"
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
-msgstr "Selaustilan asetukset"
+msgstr "Selaustila"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "&Merkkien enimmäismäärä rivillä"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "R&ivien enimmäismäärä sivulla"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "Lue si&vu automaattisesti sen avauduttua"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "Sisällytä as&ettelutaulukot"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaattinen vuorovaikutustila kohdistuksen muuttuessa"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaattinen vuorovaikutustila kohdistinta siirrettäessä"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "Estä mui&den kuin syötekomentojen pääsy dokumenttiin"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
-msgstr "Dokumenttien muotoiluasetukset"
+msgstr "Dokumenttien muotoilu"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
 msgstr ""
 "Seuraavat asetukset määrittävät, minkä tyyppisiä dokumenttien muotoiluja "
-"NVDA ilmoittaa."
+"NVDA ilmaisee."
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "Fontti"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "&Fontin nimi"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "Fontin &koko"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "Fontin mää&reet"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "K&orostus"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "T&yyli"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "V&ärit"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "Dokumentin tiedot"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "Ko&mmentit"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "M&uokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "Kirjoitusv&irheet"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "Sivut ja välit"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "&Sivut"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "Rivi&numerot"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "Rivien &sisennysten ilmoittaminen:"
+msgstr "Rivien &sisennysten ilmaiseminen:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "Ei käytössä"
 
@@ -8688,90 +9001,99 @@ msgstr "Äänimerkeillä"
 msgid "Both  Speech and Tones"
 msgstr "Puheella ja äänimerkeillä"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "Ka&ppalesisennykset"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "Ri&vivälit"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "T&asaus"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "Taulukon tiedot"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "Ta&ulukot"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "Rivi- ja sarak&eotsikot"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "Solujen koor&dinaatit"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Styles"
 msgstr "Tyylit"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr "Värit ja tyylit"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell borders:"
 msgstr "Solun reunat:"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "Elementit"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&Luettelot"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "Sisennetyt &lainaukset"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "Ke&hykset"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "&Napsautettavat kohteet"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Ilmoita kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+msgid "Touch Interaction"
+msgstr "Kosketuksen vuorovaikutus"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr "&Kosketuskirjoitustila"
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
-msgstr "Windows 10:n tekstintunnistus"
+msgstr "Tekstintunnistus (Windows 10)"
 
 #. Translators: Label for an option in the Windows 10 OCR dialog.
 msgid "Recognition &language:"
@@ -8786,7 +9108,7 @@ msgid "Whole &word"
 msgstr "Koko &sana"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr "Sääntö&lauseke"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -8861,9 +9183,13 @@ msgstr "&Muokkaa"
 msgid "Add Dictionary Entry"
 msgstr "Lisää sanastomääritys"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "Pistekirjoitusasetukset"
+#. Translators: A label for the braille display on the braille panel.
+msgid "Braille &display"
+msgstr "Piste&näyttö"
+
+#. Translators: This is the label for the braille display selection dialog.
+msgid "Select Braille Display"
+msgstr "Valitse pistenäyttö"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8872,6 +9198,13 @@ msgstr "Piste&näyttö:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "Po&rtti:"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "Pistenäyttöä %s ei voitu ladata."
+
+msgid "Braille Display Error"
+msgstr "Pistenäyttövirhe"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -8914,8 +9247,8 @@ msgid "Show &messages indefinitely"
 msgstr "Näytä il&moitukset pysyvästi"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr "Pist&enäyttö seuraa:"
+msgid "Tether B&raille:"
+msgstr "Pistenäyttö s&euraa:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -8929,12 +9262,13 @@ msgstr "Vältä &sanojen katkaisua"
 msgid "Focus context presentation:"
 msgstr "Kohdistuskontekstin näyttäminen:"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "Pistenäyttöä %s ei voitu ladata."
+#. Translators: This is the label for the NVDA settings dialog.
+msgid "NVDA"
+msgstr "NVDA"
 
-msgid "Braille Display Error"
-msgstr "Pistenäyttövirhe"
+#. Translators: The profile name for normal configuration
+msgid "normal configuration"
+msgstr "normaalit asetukset"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9094,11 +9428,819 @@ msgstr "RGB: punainen {rgb.red}, vihreä {rgb.green}, sininen {rgb.blue}"
 msgid "%s items"
 msgstr "%s kohdetta"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
+"dokumenttien muotoiluasetuksista"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
+"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
+"painaminen nollaa solun nykyisen sarakeotsikon."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
+"alkukohdaksi"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
+"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
+"painaminen nollaa solun nykyisen riviotsikon."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "Ei kommentteja"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "Ei taulukossa"
+
 msgid "invoke"
 msgstr "avaa"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Selitteet"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Errors"
+msgstr "V&irheet"
+
+#. Translators: The label shown for an insertion change
+#, python-brace-format
+msgid "insertion: {text}"
+msgstr "Lisäys: {text}"
+
+#. Translators: The label shown for a deletion change
+#, python-brace-format
+msgid "deletion: {text}"
+msgstr "Poisto: {text}"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr "Jäljitetty muutos: {text}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "Kommentti: {comment}, muokkaaja: {author}, päivämäärä: {date}"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "{comment}, muokkaaja: {author}, päivämäärä: {date}"
+
 msgid "Desktop"
 msgstr "Työpöytä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "kolmiulotteinen alue"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "kolmiulotteinen pinottu alue"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "pinottu alue, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "kolmiulotteinen yhdistelmäpalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "kolmiulotteinen pinottu palkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "kolmiulotteinen pinottu palkki, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "kolmiulotteinen pylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "kolmiulotteinen yhdistelmäpylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "kolmiulotteinen pinottu pylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "kolmiulotteinen pinottu pylväs, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "kolmiulotteinen viiva"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "kolmiulotteinen ympyrä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "kolmiulotteinen leikattu ympyrä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "alue"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "pinottu alue"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "Yhdistelmäpalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "ympyrän palkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "pinottu palkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "pinottu palkki, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "kupla"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "kolmiulotteinen kupla"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "yhdistelmäpylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "pinottu pylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "pinottu pylväs, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "yhdistelmäkartiopalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "pinottu kartiopalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "pinottu kartiopalkki, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "kolmiulotteinen kartiopylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "yhdistelmäkartiopylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "pinottu kartiopylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "pinottu kartiopylväs, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "yhdistelmälieriöpalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "pinottu lieriöpalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "pinottu lieriöpalkki, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "kolmiulotteinen lieriöpylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "pinottu lieriöpylväs, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "rengas"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "leikattu rengas"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "viiva"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "viiva ja merkit"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "pinottu viiva ja merkit"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "pinottu viiva ja merkit, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "pinottu viiva"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "pinottu viiva, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "ympyrä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "leikattu ympyrä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "ympyrän ympyrä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "yhdistelmäpyramidipalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "pinottu pyramidipalkki"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "pinottu pyramidipalkki, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "kolmiulotteinen pyramidipylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "yhdistelmäpyramidipylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "pinottu pyramidipylväs"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "pinottu pyramidipylväs, 100 %"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "säteittäinen"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "täytetty säteittäinen"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "säteittäinen ja merkit"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "pörssi"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "avauksen sisältävä pörssi"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "vaihdon sisältävä pörssi"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "avauksen ja vaihdon sisältävä pörssi"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "kolmiulotteinen pinta"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "pinta (näkymä ylhäältä)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "pinta (lankamalli, näkymä ylhäältä)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "kolmiulotteinen pinta (lankamalli)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "piste"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "piste ja viivat"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "piste ja viivat, ei merkkejä"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "piste ja tasoitetut viivat"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "piste ja tasoitetut viivat, ei merkkejä"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "sektori"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "pylväs"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "arvopiste"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "elementti"
+
+#. Translators: Message to be spoken to report Series Color
+#, python-brace-format
+msgid "Series color: {colorName} "
+msgstr "Sarjan väri: {colorName} "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "Näyttöyksikön otsikko"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "Pääyksikön ruudukko"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "Apuyksikön ruudukko"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "Pivot-kaavion pudotusalue"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "Pivot-kaavion kenttäpainike"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "Alas-palkit"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "Arvoviivat"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "Vaihteluväliviivat"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "Säteittäisakselin otsikko"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "Sarjaviivat"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "Ylös-palkit"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "Kulmat"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "Arvotaulukko"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "Pohjataso"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "ei mitään"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "Sivutasot"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "Arvopisteen otsikko"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "virhepalkit"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "x-virhepalkit"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "y-virhepalkit"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "muoto"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "Kaavion otsikko: {chartTitle}, tyyppi: {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "Tässä kaaviossa on 1 sarja"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "Tässä kaaviossa on yhteensä %d sarjaa"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr "sarja {number}: {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "Sarjoja ei määritetty."
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+msgid "Chart Elements"
+msgstr "Kaavioelementit"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "Sarja {seriesIndex} / {seriesCount}: {seriesName}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr "Sektorin väri: {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr "ei muutosta pisteestä {previousIndex}, "
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "Nousua {incrementValue} pistettä pisteestä {previousIndex}, "
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "laskua {decrementValue} pistettä pisteestä {previousIndex}, "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr "Luokka: {categoryAxisData}, "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr "arvo: {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" osa {fractionValue:.2f} prosenttia, sektori {pointIndex} / {pointCount}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} / {pointCount}"
+
+#. Translators: Indicates Primary Category Axis
+msgid "Primary Category Axis"
+msgstr "Ensisijainen luokka-akseli"
+
+#. Translators: Indicates Secondary Category Axis
+msgid "Secondary Category Axis"
+msgstr "Toissijainen luokka-akseli"
+
+#. Translators: Indicates Primary Value Axis
+msgid "Primary Value Axis"
+msgstr "Ensisijainen arvoakseli"
+
+#. Translators: Indicates Secondary Value Axis
+msgid "Secondary Value Axis"
+msgstr "Toissijainen arvoakseli"
+
+#. Translators: Indicates Primary Series Axis
+msgid "Primary Series Axis"
+msgstr "Ensisijainen sarja-akseli"
+
+#. Translators: Indicates Secondary Series Axis
+msgid "Secondary Series Axis"
+msgstr "Toissijainen sarja-akseli"
+
+#. Translators: the title of a chart axis
+#, python-brace-format
+msgid " title: {axisTitle}"
+msgstr " otsikko: {axisTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr "eksponentiaalinen"
+
+#. Translators: Indicates that trendline type is Linear
+msgid "Linear"
+msgstr "lineaarinen"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr "logaritminen"
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr "liukuva keskiarvo"
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr "polynominen"
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr "tehokkuus"
+
+#. Translators: Substitute superscript two by square for R square value
+msgid " square "
+msgstr " kerroin  "
+
+#. Translators: Substitute - by minus in trendline equations.
+msgid " minus "
+msgstr " miinus "
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+"{seriesName}, suuntaviivan tyyppi: {trendlineType}, nimi: {trendlineName}, "
+"selite: {trendlineLabel} "
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr ""
+"{seriesName}, suuntaviivan tyyppi: {trendlineType}, nimi: {trendlineName} "
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr "Kaavion otsikko: {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "nimetön kaavio"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"Kaavion alue, korkeus: {chartAreaHeight}, leveys: {chartAreaWidth}, "
+"yläreuna: {chartAreaTop}, vasen reuna: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "Kaavion alue "
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"Piirtoalue, sisäkorkeus: {plotAreaInsideHeight:.0f}, sisäleveys: "
+"{plotAreaInsideWidth:.0f}, sisäyläreuna: {plotAreaInsideTop:.0f}, vasen "
+"sisäreuna: {plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "Piirtoalue "
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "Seliteosa sarjalle {seriesName} {seriesIndex} / {seriesCount}"
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr "Seliteosa {legendEntryIndex} / {legendEntryCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "Seliteavain sarjalle {seriesName} {seriesIndex} / {seriesCount}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9252,17 +10394,6 @@ msgstr "&Laskentataulukot"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Otsikoita ei voi määrittää. Ota käyttöön taulukon otsikoiden lukeminen "
-"dokumenttien muotoiluasetuksista"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -9476,664 +10607,6 @@ msgstr "{desc} vinoviivat ylhäältä oikealle ja alhaalta oikealle"
 msgid "{desc} {position}"
 msgstr "{desc} {position}"
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "kolmiulotteinen alue"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "kolmiulotteinen pinottu alue"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "pinottu alue, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "kolmiulotteinen yhdistelmäpalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "kolmiulotteinen pinottu palkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "kolmiulotteinen pinottu palkki, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "kolmiulotteinen pylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "kolmiulotteinen yhdistelmäpylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "kolmiulotteinen pinottu pylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "kolmiulotteinen pinottu pylväs, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "kolmiulotteinen viiva"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "kolmiulotteinen ympyrä"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "kolmiulotteinen leikattu ympyrä"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "alue"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "pinottu alue"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "Yhdistelmäpalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "ympyrän palkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "pinottu palkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "pinottu palkki, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "kupla"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "kolmiulotteinen kupla"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "yhdistelmäpylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "pinottu pylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "pinottu pylväs, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "yhdistelmäkartiopalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "pinottu kartiopalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "pinottu kartiopalkki, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "kolmiulotteinen kartiopylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "yhdistelmäkartiopylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "pinottu kartiopylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "pinottu kartiopylväs, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "yhdistelmälieriöpalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "pinottu lieriöpalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "pinottu lieriöpalkki, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "kolmiulotteinen lieriöpylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "pinottu lieriöpylväs, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "rengas"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "leikattu rengas"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "viiva"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "viiva ja merkit"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "pinottu viiva ja merkit"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "pinottu viiva ja merkit, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "pinottu viiva"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "pinottu viiva, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "ympyrä"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "leikattu ympyrä"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "ympyrän ympyrä"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "yhdistelmäpyramidipalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "pinottu pyramidipalkki"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "pinottu pyramidipalkki, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "kolmiulotteinen pyramidipylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "yhdistelmäpyramidipylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "pinottu pyramidipylväs"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "pinottu pyramidipylväs, 100 %"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "säteittäinen"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "täytetty säteittäinen"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "säteittäinen ja merkit"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr "pörssi"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr "avauksen sisältävä pörssi"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr "vaihdon sisältävä pörssi"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr "avauksen ja vaihdon sisältävä pörssi"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "kolmiulotteinen pinta"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "pinta (näkymä ylhäältä)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "pinta (lankamalli, näkymä ylhäältä)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "kolmiulotteinen pinta (lankamalli)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "piste"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "piste ja viivat"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "piste ja viivat, ei merkkejä"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "piste ja tasoitetut viivat"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "piste ja tasoitetut viivat, ei merkkejä"
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "Kaavion otsikko: {chartTitle}, tyyppi: {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "ei määritetty"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "luokka"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "arvo"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "sarja"
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "Akselin {axisName} otsikko on {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "Tässä kaaviossa on 1 sarja"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "Tässä kaaviossa on yhteensä %d sarjaa"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr "sarja {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "Sarjoja ei määritetty."
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "sektori"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "pylväs"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "arvopiste"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "elementti"
-
-#, python-brace-format
-msgid "Series color: {colorName} "
-msgstr "Sarjan väri: {colorName} "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "Näyttöyksikön otsikko"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "Pääyksikön ruudukko"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "Apuyksikön ruudukko"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "Pivot-kaavion pudotusalue"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "Pivot-kaavion kenttäpainike"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "Alas-palkit"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "Arvoviivat"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "Vaihteluväliviivat"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "Säteittäisakselin otsikko"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "Sarjaviivat"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "Ylös-palkit"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "Kulmat"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "Arvotaulukko"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "Pohjataso"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "ei mitään"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "Sivutasot"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "Arvopisteen otsikko"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "virhepalkit"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "x-virhepalkit"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "y-virhepalkit"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "muoto"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "sarja {seriesName} {seriesIndex} / {seriesCount}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr "ei muutosta pisteestä {previousIndex}, "
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Nousua {incrementValue} pistettä pisteestä {previousIndex}, "
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "laskua {decrementValue} pistettä pisteestä {previousIndex}, "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}: "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr "Luokka {categoryAxisData}: "
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr "arvo {valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid ""
-" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
-" osa {fractionValue:.2f} prosenttia, sektori {pointIndex} / {pointCount}"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} / {pointCount}"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "1"
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "2"
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr ""
-"Kaavion akseli, tyyppi: {axisType}, ryhmä: {axisGroup}, otsikko: {axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "Kaavion akseli, tyyppi: {axisType}, ryhmä: {axisGroup}"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "Kaavioakselin otsikko"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "suuntaviiva"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr " neliö "
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr "Kaavion otsikko: {chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "nimetön kaavio"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
-"{chartAreaTop}, left: {chartAreaLeft}"
-msgstr ""
-"Kaavion alue, korkeus: {chartAreaHeight}, leveys: {chartAreaWidth}, "
-"yläreuna: {chartAreaTop}, vasen reuna: {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "Kaavion alue "
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"Piirtoalue, sisäkorkeus: {plotAreaInsideHeight:.0f}, sisäleveys: "
-"{plotAreaInsideWidth:.0f}, sisäyläreuna: {plotAreaInsideTop:.0f}, vasen "
-"sisäreuna: {plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "Piirtoalue "
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "Selite"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "Ei selitettä"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "Seliteosa sarjalle {seriesName} {seriesIndex} / {seriesCount}"
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "Seliteavain sarjalle {seriesName} {seriesIndex} / {seriesCount}"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "lisäys"
@@ -10247,12 +10720,6 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, python-brace-format
-msgid "spelling: {text}"
-msgstr "Kirjoitusvirhe: {text}"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10288,74 +10755,6 @@ msgstr "%.1f riviä"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "Taulukon kuvaus"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"Riviä {rowNumber} ja saraketta {columnNumber} ei löydy sarakeotsikoista"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
-"painaminen nollaa solun nykyisen sarakeotsikon."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
-"alkukohdaksi"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "Riviä {rowNumber} ja saraketta {columnNumber} ei löydy riviotsikoista"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisessä taulukossa. Kahdesti "
-"painaminen nollaa solun nykyisen riviotsikon."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10468,14 +10867,6 @@ msgstr "{offset:.3g} pistettä"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picaa"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "Ei kommentteja"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista."
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr "Yksinkertainen riviväli"
@@ -10488,25 +10879,180 @@ msgstr "Kaksinkertainen riviväli"
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "Ei taulukossa"
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "Avaa NVDA:n Puheäänen asetukset -valintaikkunan."
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&Selitteet"
+#~ msgid "&General settings..."
+#~ msgstr "&Yleiset..."
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Errors"
-msgstr "V&irheet"
+#~ msgid "&Synthesizer..."
+#~ msgstr "&Syntetisaattori..."
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "Vaihda käytettävää syntetisaattoria"
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
+
+#~ msgid "B&raille settings..."
+#~ msgstr "P&istekirjoitus..."
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "&Näppäimistö..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai "
+#~ "komentonäppäinten lukeminen"
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "&Hiiri..."
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr ""
+#~ "Määritä hiirikohdistimen muodon muutosten ja hiiren alla olevan objektin "
+#~ "lukuasetukset"
+
+#~ msgid "&Touch interaction..."
+#~ msgstr "&Kosketuksen vuorovaikutus..."
+
+#~ msgid "Change how NVDA interacts with the touchscreen"
+#~ msgstr ""
+#~ "Muuta tapaa, jolla NVDA on vuorovaikutuksessa kosketusnäytön kanssa."
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "Määritä, miten ja milloin tarkastelukohdistin liikkuu"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "Sy&öttömenetelmä..."
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr ""
+#~ "Määritä, miten NVDA ilmoittaa tiettyjen kielten syöttömenetelmän ja "
+#~ "ehdotusten valinnan."
+
+#~ msgid "&Object presentation..."
+#~ msgstr "&Objektien lukeminen..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "Muuta objektien lukuasetuksia"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "S&elaustila..."
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr "Muuta selaustilan asetuksia"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "&Dokumenttien muotoilu..."
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "Muuta dokumenttien muotoiluasetuksia."
+
+#~ msgid "&Windows 10 OCR..."
+#~ msgstr "Tekstintunnistus (&Windows 10)..."
+
+#~ msgid "General Settings"
+#~ msgstr "Yleiset asetukset"
+
+#~ msgid "Voice Settings"
+#~ msgstr "Puheäänen asetukset"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "Näppäimistöasetukset"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "Hiiriasetukset"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "Tarkastelukohdistimen asetukset"
+
+#~ msgid "Braille Settings"
+#~ msgstr "Pistekirjoitusasetukset"
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "ranska (Kanada), taso 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "ranska (Kanada), taso 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "mongoli"
+
+#~ msgid "Download and &install update"
+#~ msgstr "Lataa ja &asenna päivitys"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "Päivitys ladattu. Seuraavaksi se asennetaan."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr "Siirrä pistesoluun ja lue muotoilut."
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "s%s"
+
+#~ msgid "suspended"
+#~ msgstr "ei käytössä"
+
+#~ msgid "running"
+#~ msgstr "käytössä"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "Alva BC640/680"
+
+#~ msgid "review"
+#~ msgstr "tarkastelukohdistinta"
+
+#~ msgid "focus"
+#~ msgstr "kohdistusta"
+
+#~ msgid "B&raille tethered to:"
+#~ msgstr "Pist&enäyttö seuraa:"
+
+#~ msgid "Not defined"
+#~ msgstr "ei määritetty"
+
+#~ msgid "Value"
+#~ msgstr "arvo"
+
+#~ msgid "Series"
+#~ msgstr "sarja"
+
+#~ msgid "{axisName} Axis is {axisTitle}"
+#~ msgstr "Akselin {axisName} otsikko on {axisTitle}"
+
+#~ msgid "Primary"
+#~ msgstr "1"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+#~ msgstr ""
+#~ "Kaavion akseli, tyyppi: {axisType}, ryhmä: {axisGroup}, otsikko: "
+#~ "{axisTitle}"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+#~ msgstr "Kaavion akseli, tyyppi: {axisType}, ryhmä: {axisGroup}"
+
+#~ msgid "Chart axis title"
+#~ msgstr "Kaavioakselin otsikko"
+
+#~ msgid "trendline"
+#~ msgstr "suuntaviiva"
+
+#~ msgid "Legend"
+#~ msgstr "Selite"
+
+#~ msgid "No legend"
+#~ msgstr "Ei selitettä"
+
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "Näyttää Handy Techin ajurin asetustenmääritysikkunan."

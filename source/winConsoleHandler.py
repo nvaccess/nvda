@@ -2,9 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2009-2018 NV Access Limited, Babbage B.V.
 
-import wx
+import gui
 import winUser
 import winKernel
 import wincon
@@ -61,7 +61,7 @@ def connectConsole(obj):
 	try:
 		wincon.AttachConsole(processID)
 	except WindowsError as e:
-		log.debugWarning("Could not attach console: %s"%e)
+		log.debugWarning("Could not attach console: %r"%e)
 		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
@@ -72,7 +72,7 @@ def connectConsole(obj):
 			raise OSError("could not register eventID %s"%eventID)
 		consoleWinEventHookHandles.append(handle)
 	consoleObject=obj
-	checkDeadTimer=wx.PyTimer(_checkDead)
+	checkDeadTimer=gui.NonReEntrantTimer(_checkDead)
 	checkDeadTimer.Start(CHECK_DEAD_INTERVAL)
 	return True
 
