@@ -1395,9 +1395,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 	if  formatConfig["reportLists"]:
 		listLevel=attrs.get("list-level")
 		oldListLevel=attrsCache.get("list-level") if attrsCache is not None else None
-		if listLevel is not None and listLevel!=oldListLevel:
-			# Translators: report nesting level of lists ( e.g. in word / powerpoint bullets )
-			text=_('level %s')%listLevel
+		if (listLevel or oldListLevel is not None) and listLevel!=oldListLevel:
+			if listLevel:
+				# Translators: report nesting level of lists (e.g. in Word / PowerPoint).
+				text=_('list level %s')%listLevel
+			else:
+				# Translators: Reported when moving out of a list  (e.g. in Word / PowerPoint).
+				text=_("out of list")
 			textList.append(text)
 	if  formatConfig["reportRevisions"]:
 		# Insertion
