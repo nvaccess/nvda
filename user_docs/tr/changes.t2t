@@ -22,21 +22,21 @@ What's New in NVDA
 
 
 == Changes ==
-- The list of available languages in the General Settings dialog is now sorted based on language names instead of ISO 639 codes. (#7284)
-- Add default gestures for alt shift tab and windows tab with all supported Freedom Scientific braille displays. (#7387)
+- The list of available languages in NVDA's General Settings is now sorted based on language names instead of ISO 639 codes. (#7284)
+- Added default gestures for Alt+Shift+Tab and Windows+Tab with all supported Freedom Scientific braille displays. (#7387)
 - For ALVA BC680 and protocol converter displays, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)
 - For ALVA BC6 displays, the key combination sp2+sp3 will now announce the current date and time, whereas sp1+sp2 emulates the Windows key. (#8230)
-- The user is now asked once on NVDA start-up if they are happy sending usage statistics to NV Access when automatically checking for updates. (#8217)
+- The user is asked once when NVDA starts if they are happy sending usage statistics to NV Access when checking for NVDA updates. (#8217)
 - When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
 - Updated liblouis braille translator to version 3.6.0. (#8365)
-- Updated the path to the correct russian eight-dots Braille table. (#8446)
-- Updated eSpeak-ng to 1.49.3dev commit 910f4c2 (#8561)
+- Updated the path to the correct Russian eight-dots Braille table. (#8446)
+- Updated eSpeak-ng to 1.49.3dev commit 910f4c2. (#8561)
 
 
 == Bug Fixes ==
 - Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
-- Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages.(#7754)
-- Switching braille context presentation when in browse mode no longer causes braille output to stop following. (#7741)
+- Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages. (#7754)
+- Switching braille context presentation when in browse mode no longer causes braille output to stop following browse mode cursor. (#7741)
 - ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)
 - By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)
 - Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)
@@ -45,17 +45,18 @@ What's New in NVDA
 - NVDA will recognize more dialogs in Windows 10 and other modern applications. (#8405)
 - On Windows 10 October 2018 Update and Server 2019 and above, NVDA no longer fails to track the system focus when an application freezes or floods the system with events. (#7345, #8535)
 - Users are now informed when attempting to read or copy an empty status bar. (#7789)
-- Fixed a case where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
+- Fixed an issue where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
 - In the list of languages in NVDA's General Settings, language name for Burmese is displayed correctly on Windows 7. (#8544)
 - In Microsoft Edge, NVDA will announce notifications such as reading view availability and page load progress. (#8423)
-- Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
 - When navigating into a list on the web, NVDA will now report its label if the web author has provided one. (#7652)
 - When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
 - The 64-bit version of Media Player Classic is now supported. (#6066)
 - Several improvements to braille support in Microsoft Word with UI Automation enabled:
+ - Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
  - Reduced overly verbose focus presentation in both speech and braille when focusing a Word document. (#8407)
  - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
  - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)
+- In Windows 10 1803 and later, it is now possible to install add-ons if the "Use Unicode UTF-8 for worldwide language support" feature is enabled. (#8599)
 
 
 == Changes for Developers ==

@@ -8,7 +8,10 @@
 import time
 import nvwave
 import threading
-import Queue
+try:
+	import Queue as queue # Python 2.7 import
+except ImportError:
+	import queue # Python 3 import
 from ctypes import *
 import config
 import globalVars
@@ -193,7 +196,7 @@ def stop():
 			if item[0] != _speak:
 				params.append(item)
 			bgQueue.task_done()
-	except Queue.Empty:
+	except queue.Empty:
 		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
 		pass
 	for item in params:
@@ -290,7 +293,7 @@ def initialize():
 		raise OSError("espeak_Initialize %d"%sampleRate)
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
 	espeakDLL.espeak_SetSynthCallback(callback)
-	bgQueue = Queue.Queue()
+	bgQueue = queue.Queue()
 	bgThread=BgThread()
 	bgThread.start()
 
