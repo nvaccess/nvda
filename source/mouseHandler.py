@@ -101,7 +101,7 @@ def internal_mouseEvent(msg,x,y,injected):
 	"""
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
-	if injected and (ignoreInjected or not config.conf['mouse']['handleInjectedMouseControl']):
+	if injected and (ignoreInjected or config.conf['mouse']['ignoreINjectedMouseInput']):
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:
 		return True

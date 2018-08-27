@@ -1353,9 +1353,9 @@ class MouseSettingsPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# mouse settings panel.
-		handleInjectedMouseControlText = _("Handle mouse control from other &applications")
-		self.handleInjectedMouseControlCheckBox=sHelper.addItem(wx.CheckBox(self,label=handleInjectedMouseControlText))
-		self.handleInjectedMouseControlCheckBox.SetValue(config.conf["mouse"]["handleInjectedMouseControl"])
+		ignoreINjectedMouseInputText = _("Ignore mouse input from other &applications")
+		self.ignoreINjectedMouseInputCheckBox=sHelper.addItem(wx.CheckBox(self,label=ignoreINjectedMouseInputText))
+		self.ignoreINjectedMouseInputCheckBox.SetValue(config.conf["mouse"]["ignoreINjectedMouseInput"])
 
 	def onSave(self):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
@@ -1364,7 +1364,7 @@ class MouseSettingsPanel(SettingsPanel):
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
-		config.conf["mouse"]["handleInjectedMouseControl"]=self.handleInjectedMouseControlCheckBox.IsChecked()
+		config.conf["mouse"]["ignoreINjectedMouseInput"]=self.ignoreINjectedMouseInputCheckBox.IsChecked()
 
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
