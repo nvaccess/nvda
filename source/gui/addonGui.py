@@ -399,7 +399,6 @@ class AddonUpdatesDialog(wx.Dialog):
 			label = _("&Update add-ons")
 			self.updateButton = bHelper.addButton(self, label=label)
 			self.updateButton.Bind(wx.EVT_BUTTON, self.onUpdate)
-			self.updateButton.Disable()
 
 		# Translators: The label of a button to close a dialog.
 		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Close"))
@@ -450,7 +449,6 @@ def updateAddonsGenerator(addons, auto=True):
 	downloader = AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"], addonsToBeUpdated=addons, auto=auto)
 	downloader.start()
 	yield
-
 
 class AddonUpdateDownloader(updateCheck.UpdateDownloader):
 	"""Same as downloader class for NVDA screen reader updates.
