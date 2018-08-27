@@ -10,9 +10,12 @@ or to modify a specific kind of data.
 For example, you might wish to notify about a configuration profile switch
 or allow modification of spoken messages before they are passed to the synthesizer.
 See the L{Action}, L{Filter}, L{Decider} classes.
+Actions can be grouped in a container using the L{ActionContainer} class.
 """
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
+from fnmatch import fnmatch
+from collections import MutableMapping, OrderedDict
 
 
 class Action(HandlerRegistrar):
@@ -47,6 +50,136 @@ class Action(HandlerRegistrar):
 				callWithSupportedKwargs(handler, **kwargs)
 			except:
 				log.exception("Error running handler %r for %r" % (handler, self))
+
+class ActionContainer(MutableMapping):
+	"""Bundles a collection of actions together in a container,
+	and allows interested parties to register to be notified when one or more actions occur.
+
+	First, an ActionContainer is created:
+
+	>>> actions= extensionPoints.ActionContainer()
+
+	Interested parties then register to be notified about an action, see
+	L{Action.register} docstring for details of the type of handlers that can be
+	registered:
+
+	>>> def onSomethingHappened(someArg=None):
+		... 	print(someArg)
+	...
+	>>> actions.register('somethingHappened', onSomethingHappened)
+
+	When the action is performed, register handlers are notified, see L{util.callWithSupportedKwargs}
+	for how args passed to notify are mapped to the handler:
+
+	>>> actions.notify('somethingHappened', someArg=42)
+
+	Alternatively, you can use Unix filename pattern matching rules
+	to create an action that will be notified for multiple action names.
+
+	>>> actions.register('something*', onSomethingRandom)
+
+	Then, Calling notify for 'somethingHappened' will trigger both 'somethingHappened' and 'something*'
+	"""
+
+	def __getitem__(self, key):
+		return self._actions[key]
+
+	def __contains__(self, key):
+		return key in self._actions
+
+	def __setitem__(self, key, val):
+		if not isinstance(key, basestring):
+			raise TypeError("Keys in an ActionContainer should be of type basestring")
+		if not isinstance(val, Action):
+			raise TypeError("You can only add items of type Action to an ActionContainer")
+		self._actions[key] = val
+
+	def __delitem__(self, key):
+		del self._actions[key]
+		if key in self._wildcards:
+			self._wildcards.remove(actionName)
+
+	def __iter__(self):
+		return iter(self._actions)
+
+	def __len__(self):
+		return len(self._actions)
+
+	def __init__(self):
+		#: Registered actions.
+		#: This is an OrderedDict where the keys are names
+		#: and the values are instances of L{Action}.
+		self._actions = OrderedDict()
+		#: Actions that are registered as wildcard actions.
+		self._wildcards = set()
+
+	def addAction(self, actionName, isWildcard=False):
+		"""Adds an action to this L{ActionContainer}.
+		To delete an action, call "del self[actionName]"
+		@param actionName: The name of the action to be created.
+		@type actionName: str
+		@param isWildcard: Whether the action name should be treated as a wildcard name.
+			For example, when the actionName is 'msg_*',
+			and L{notify} is called for the 'msg_notify' action,
+			handlers for both 'msg_notify' and 'msg_*' will be notified.
+		@type isWildcard: bool
+		"""
+		if actionName in self:
+			raise ValueError("Action with name %s already exists" % actionName)
+		self[actionName] = Action()
+		if isWildcard:
+			self._wildcards.add(actionName)
+
+	def register(self, actionName, handler, createAction=True, isWildcard=False):
+		"""Allows the registration of handlers for a specified action name.
+		@param actionName: The name of the action for which a handler should be registered.
+		@type actionName: str
+		@param handler: The handler that should be registered with this action.
+			Conditions should match those required by L{HandlerRegistrar.register}.
+		@param createAction: Whether a new action should be automatically created
+			if there isn't an action for the specified action name.
+		@type createAction: bool
+		@param isWildcard: Whether the action name should be treated as a wildcard name.
+			For example, when the actionName is 'msg_*',
+			and L{notify} is called for the 'msg_notify' action,
+			handlers for both 'msg_notify' and 'msg_*' will be notified.
+		@type isWildcard: bool
+		"""
+		if actionName not in self:
+			if not createAction:
+				raise ValueError("An action with name %s does not exist" % actionName)
+			self.createAction(actionName, isWildcard=isWildcard)
+		elif isWildcard and actionName not in self._wildcards:
+			raise RuntimeError("Specified isWilrdcard for existing action %s that isn't a wildcard" % actionName)
+		self[actionName].register(handler)
+
+	def unregister(self, actionName, handler):
+		if actionName not in self:
+			raise ValueError("An action with name %s does not exist" % actionName)
+		self[actionName].unregister(handler)
+
+	def notify(self, actionName, **kwargs):
+		"""Notify all registered handlers that the action has occurred.
+		@param actionName: The name of the action for which the handlers should be notified.
+			If there is a registered wildcard action which name matches L{actionName},
+			the handlers for that action are notified as well.
+		@type actionName: str
+		@param kwargs: Arguments to pass to the handlers.
+			The actionName is also provided when calling the handlers.
+		"""
+		try:
+			actions = [self[actionName]]
+		except KeyError:
+			actions = []
+		actions.extend(
+			self[wildcardName] for wildcardName in self._wildcards if
+			wildcardName != actionName and
+			fnmatch(actionName, wildcardName)
+		)
+		if not actions:
+			raise ValueError("No action registered matching name %s" % actionName)
+		for action in actions:
+			action.notify(actionName=actionName, **kwargs)
 
 class Filter(HandlerRegistrar):
 	"""Allows interested parties to register to modify a specific kind of data.
