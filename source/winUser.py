@@ -142,8 +142,8 @@ VK_LBUTTON=1
 VK_RBUTTON=2
 VK_CANCEL=3
 VK_MBUTTON=4
-VK_XBUTTON=15
-VK_XBUTTON=26
+VK_XBUTTON1=5
+VK_XBUTTON2=6
 VK_BACK=8
 VK_TAB=9
 VK_CLEAR=12
@@ -314,6 +314,9 @@ SW_SHOWNORMAL = 1
 # RedrawWindow() flags
 RDW_INVALIDATE = 0x0001
 RDW_UPDATENOW = 0x0100
+# MsgWaitForMultipleObjectsEx
+QS_ALLINPUT = 0x04ff
+MWMO_ALERTABLE = 0x0002
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
@@ -394,7 +397,7 @@ def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
 def getDesktopWindow():
-		return user32.GetDesktopWindow()
+	return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
@@ -486,14 +489,13 @@ def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
 def getPreviousWindow(hwnd):
-		try:
-			return user32.GetWindow(hwnd,GW_HWNDPREV)
-		except WindowsError:
-			return 0
+	try:
+		return user32.GetWindow(hwnd,GW_HWNDPREV)
+	except WindowsError:
+		return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
-
 
 def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
 	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
@@ -536,6 +538,14 @@ def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
+
+def ClientToScreen(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ClientToScreen(hwnd, byref(point))
+	return point.x, point.y
+
+def NotifyWinEvent(event, hwnd, idObject, idChild):
+	user32.NotifyWinEvent(event, hwnd, idObject, idChild)
 
 class STICKYKEYS(Structure):
 	_fields_ = (

@@ -193,7 +193,25 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
 			p=(x-left)+((y-top)<<16)
-			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)&0xffff
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)
+			offset=winUser.LOWORD(res)
+			lineNum=winUser.HIWORD(res)
+			if offset==0xFFFF and lineNum==0xFFFF:
+				raise LookupError("Point outside client aria")
+			if self._getStoryLength() > 0xFFFF:
+				# Returned offsets are 16 bits, therefore for large documents, we need to make sure that the correct offset is returned.
+				# We can calculate this by using the start offset of the line with the retrieved line number.
+				lineStart=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
+				# Get the last 16 bits of the line number
+				lineStart16=lineStart&0xFFFF
+				if lineStart16 > offset:
+					# There are cases where the last 16 bits of the line start are greather than the 16 bits offset.
+					# For example, this happens when the line start offset is 65534 (0xFFFE)
+					# and the offset we need ought to be 65537 (0x10001), which is a 17 bits number
+					# In that case, add 0x10000 to the offset, which will make the eventual formula return the correct offset,
+					# unless a line has more than 65535 characters, in which case we can't get a reliable offset.
+					offset+=0x10000
+				offset = (offset - lineStart16) + lineStart
 		return offset
 
 	def _getCharFormat(self,offset):

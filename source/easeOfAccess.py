@@ -7,7 +7,10 @@
 """Utilities for working with the Windows Ease of Access Center.
 """
 
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import ctypes
 import winUser
 from winVersion import winVersion
@@ -23,8 +26,8 @@ APP_KEY_PATH = r"%s\ATs\%s" % (ROOT_KEY, APP_KEY_NAME)
 
 def isRegistered():
 	try:
-		_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, APP_KEY_PATH, 0,
-			_winreg.KEY_READ | _winreg.KEY_WOW64_64KEY)
+		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, APP_KEY_PATH, 0,
+			winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
 		return True
 	except WindowsError:
 		return False
@@ -32,8 +35,8 @@ def isRegistered():
 def notify(signal):
 	if not isRegistered():
 		return
-	with _winreg.CreateKey(_winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows NT\CurrentVersion\AccessibilityTemp") as rkey:
-		_winreg.SetValueEx(rkey, APP_KEY_NAME, None, _winreg.REG_DWORD, signal)
+	with winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows NT\CurrentVersion\AccessibilityTemp") as rkey:
+		winreg.SetValueEx(rkey, APP_KEY_NAME, None, winreg.REG_DWORD, signal)
 	keys = []
 	# The user might be holding unwanted modifiers.
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
@@ -60,18 +63,18 @@ def notify(signal):
 
 def willAutoStart(hkey):
 	try:
-		k = _winreg.OpenKey(hkey, ROOT_KEY, 0,
-			_winreg.KEY_READ | _winreg.KEY_WOW64_64KEY)
+		k = winreg.OpenKey(hkey, ROOT_KEY, 0,
+			winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
 		return (APP_KEY_NAME in
-			_winreg.QueryValueEx(k, "Configuration")[0].split(","))
+			winreg.QueryValueEx(k, "Configuration")[0].split(","))
 	except WindowsError:
 		return False
 
 def setAutoStart(hkey, enable):
-	k = _winreg.OpenKey(hkey, ROOT_KEY, 0,
-		_winreg.KEY_READ | _winreg.KEY_WRITE | _winreg.KEY_WOW64_64KEY)
+	k = winreg.OpenKey(hkey, ROOT_KEY, 0,
+		winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY)
 	try:
-		conf = _winreg.QueryValueEx(k, "Configuration")[0].split(",")
+		conf = winreg.QueryValueEx(k, "Configuration")[0].split(",")
 	except WindowsError:
 		conf = []
 	else:
@@ -89,5 +92,5 @@ def setAutoStart(hkey, enable):
 		except ValueError:
 			pass
 	if changed:
-		_winreg.SetValueEx(k, "Configuration", None, _winreg.REG_SZ,
+		winreg.SetValueEx(k, "Configuration", None, winreg.REG_SZ,
 			",".join(conf))
