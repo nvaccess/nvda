@@ -175,8 +175,7 @@ class Serial(IoBase):
 		self._origTimeout = self._ser.timeout
 		# We don't want a timeout while we're waiting for data.
 		self._setTimeout(None)
-		self.inWaiting = self._ser.inWaiting
-		super(Serial, self).__init__(self._ser.hComPort, onReceive)
+		super(Serial, self).__init__(self._ser._port_handle, onReceive)
 
 	def read(self, size=1):
 		data = self._ser.read(size)
@@ -205,21 +204,21 @@ class Serial(IoBase):
 		# #6035: pyserial reconfigures all settings of the port when setting a timeout.
 		# This can cause error 'Cannot configure port, some setting was wrong.'
 		# Therefore, manually set the timeouts using the Win32 API.
-		# Adapted from pyserial 3.1.1.
+		# Adapted from pyserial 3.4.
 		timeouts = COMMTIMEOUTS()
 		if timeout is not None:
 			if timeout == 0:
 				timeouts.ReadIntervalTimeout = win32.MAXDWORD
 			else:
 				timeouts.ReadTotalTimeoutConstant = max(int(timeout * 1000), 1)
-		if timeout != 0 and self._ser._interCharTimeout is not None:
-			timeouts.ReadIntervalTimeout = max(int(self._ser._interCharTimeout * 1000), 1)
-		if self._ser._writeTimeout is not None:
-			if self._ser._writeTimeout == 0:
+		if timeout != 0 and self._ser._inter_byte_timeout is not None:
+			timeouts.ReadIntervalTimeout = max(int(self._ser._inter_byte_timeout * 1000), 1)
+		if self._ser._write_timeout is not None:
+			if self._ser._write_timeout == 0:
 				timeouts.WriteTotalTimeoutConstant = win32.MAXDWORD
 			else:
-				timeouts.WriteTotalTimeoutConstant = max(int(self._ser._writeTimeout * 1000), 1)
-		SetCommTimeouts(self._ser.hComPort, ctypes.byref(timeouts))
+				timeouts.WriteTotalTimeoutConstant = max(int(self._ser._write_timeout * 1000), 1)
+		SetCommTimeouts(self._ser._port_handle, ctypes.byref(timeouts))
 
 class HIDP_CAPS (ctypes.Structure):
 	_fields_ = (

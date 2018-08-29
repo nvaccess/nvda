@@ -2119,6 +2119,8 @@ def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
+	import serial
+	log.info("Using pySerial version %s"%serial.VERSION)
 	# #6140: Migrate to new table names as smoothly as possible.
 	oldTableName = config.conf["braille"]["translationTable"]
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)
