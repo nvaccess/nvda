@@ -410,13 +410,9 @@ std::wstring VBufStorage_textFieldNode_t::getDebugInfo() const {
 void VBufStorage_buffer_t::forgetControlFieldNode(VBufStorage_controlFieldNode_t* node) {
 	nhAssert(node); //Node can't be NULL
 	map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator i=controlFieldNodesByIdentifier.find(node->identifier);
-	if(i==controlFieldNodesByIdentifier.end()) {
-		// Node not known
-		return;
-	}
-	if(i->second==node) {
-		controlFieldNodesByIdentifier.erase(i);
-	}
+	nhAssert(i!=controlFieldNodesByIdentifier.end());
+	nhAssert(i->second==node);
+	controlFieldNodesByIdentifier.erase(i);
 }
 
 bool VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
@@ -438,6 +434,10 @@ bool VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	}
 	if(parent&&previous&&parent!=previous->parent) {
 		LOG_DEBUGWARNING(L"Bad relation: parent at "<<parent<<L" is not a parent of previous at "<<previous<<L". Returning false");
+		return false;
+	}
+	if(!parent&&this->rootNode) {
+		LOG_DEBUGWARNING(L"No parent specified but the root node already exists at "<<this->rootNode<<L". returning false");
 		return false;
 	}
 	VBufStorage_fieldNode_t* next=NULL;
@@ -629,6 +629,9 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			m.erase(i++);
 			continue;
 		}
+		// Reverse iterate over all reference nodes, replacing them with the existing nodes in the original buffer they point to.
+		// We must iterate in reverse as new nodes are always inserted using parent and previous as the location,
+		 // iterating forward would cause a future reference node's previous to be come invalid as it had been replaced. 
 		for(auto i=buffer->referenceNodes.rbegin();i!=buffer->referenceNodes.rend();++i) {
 			VBufStorage_controlFieldNode_t* parent=(*i)->parent;
 			VBufStorage_fieldNode_t* previous=(*i)->previous;
@@ -1174,18 +1177,6 @@ bool VBufStorage_buffer_t::isDescendantNode(VBufStorage_fieldNode_t* parent, VBu
 
 bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
 	return this->nodes.count(node)?true:false;
-}
-
-bool VBufStorage_buffer_t::moveSubtree(VBufStorage_fieldNode_t* node, VBufStorage_controlFieldNode_t* newParent, VBufStorage_fieldNode_t* newPrevious) {
-	if(!unlinkFieldNode(node)) {
-		LOG_DEBUGWARNING(L"moveSubtree: could not unlink node");
-		return false;
-	}
-	if(!insertNode(newParent,newPrevious,node)) {
-		LOG_DEBUGWARNING(L"moveSubtree: could not insert node");
-		return false;
-	}
-	return true;
 }
 
 VBufStorage_referenceNode_t*  VBufStorage_buffer_t::addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {

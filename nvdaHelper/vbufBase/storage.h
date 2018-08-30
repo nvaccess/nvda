@@ -328,12 +328,12 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	friend class VBufStorage_buffer_t;
 
-	public:
-
 /**
  * uniquely identifies this control in its buffer.
  */
-	const VBufStorage_controlFieldNodeIdentifier_t identifier;
+	VBufStorage_controlFieldNodeIdentifier_t identifier;
+
+	public:
 
 /**
  * retreaves the node's doc handle and ID.
@@ -404,8 +404,8 @@ class VBufStorage_buffer_t {
 
 /**
  * Unlinks this node from its parent and siblings.
- * Note that this does not delete not enode, nore unregister it from the buffer in any other way.
- * This is used internally by removeFieldNode and moveSubtree.
+ * Note that this does not actually delete the node, nore unregister it from the buffer in any other way.
+ * This is used internally by removeFieldNode and replaceSubtrees.
  * @param node the node to unlink
  * @param removeDescendants if true then its simblings will be appropriately linked to close the gab, but if false, this node's children will be reparented on this node's parent, linking with this node's siblings.
  */
@@ -649,15 +649,6 @@ class VBufStorage_buffer_t {
  * @returns True if descendant is a descendant of parent, false otherwise.
  */
 	virtual bool isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant);
-
-/**
- * Moves a subtree from one location to another within the same buffer. 
- * @param node the node to move
- * @param newParent the node's new parent node
- * @param newPrevious the node's new previous node
- * @returns true if this node was moved, false if it was not (the node was not in the buffer etc).
- */
-	bool moveSubtree(VBufStorage_fieldNode_t* node, VBufStorage_controlFieldNode_t* newParent, VBufStorage_fieldNode_t* newPrevious);
 
 /**
  * Adds a reference node to the buffer at the location given by parent and previous, pointing to the given existing node in another buffer.

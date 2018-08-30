@@ -26,7 +26,7 @@ using namespace std;
 
 VBufBackendSet_t VBufBackend_t::runningBackends;
 
-VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)UlongToHandle(docHandleArg),NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0), pendingInvalidSubtreesList() {
+VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWindowThreadProcessId((HWND)UlongToHandle(docHandleArg),NULL)), rootDocHandle(docHandleArg), rootID(IDArg), lock(), renderThreadTimerID(0) {
 	LOG_DEBUG(L"Initializing backend with docHandle "<<docHandleArg<<L", ID "<<IDArg);
 }
 
@@ -186,7 +186,7 @@ void VBufBackend_t::update() {
 			node->getIdentifier(&docHandle,&ID);
 			LOG_DEBUG(L"subtree node has docHandle "<<docHandle<<L" and ID "<<ID);
 			LOG_DEBUG(L"Rendering content");
-			render(tempBuf,docHandle,ID,node);	
+			render(tempBuf,docHandle,ID,node);
 			LOG_DEBUG(L"Rendered content in temp buffer");
 			replacementSubtreeMap.insert(make_pair(node,tempBuf));
 		}
@@ -245,8 +245,7 @@ VBufStorage_fieldNode_t* VBufBackend_t::reuseExistingNodeInRender(int docHandle,
 			// This existing node was not marked as invalid, therefore it can be re-used.
 			return existingNode;
 		} else {
-			// this existing node was marked as invalid also, therefore we can re-render it here anyway.
-			// It therefore should no longer be marked as invalid.
+			// This existing node was marked as invalid, so the caller must now re-render it.
 			this->workingInvalidSubtreesList.erase(i);
 		}
 	}
