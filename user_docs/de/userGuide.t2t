@@ -614,11 +614,11 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | aklsltr | Ausklapplistenschalter |
 | dsltr | Drehschalter |
 | tsltr | Trennschaltfläche |
-| Umsltr | Umschalter |
+| umsltr | Umschalter |
 | kmbf | Konbinationsfeld |
 | kf | Kontrollfeld |
 | dlg | Dialogfeld |
-| Dok | Dokument |
+| dok | Dokument |
 | ef | Eingabefeld |
 | kwef | Kennworteingabefeld |
 | eObj | Eingebettetes Objekt |
@@ -633,11 +633,11 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | lst | Liste |
 | bl | Besuchter Link |
 | mnü | Menü |
-| Mnülst | Menüleiste |
+| mnülst | Menüleiste |
 | mnüsltr | Menüschalter |
 | mne | Menüeintrag |
 | strg | Steuerung |
-| Fortschritt | Fortschrittsanzeige |
+| fortschritt | Fortschrittsanzeige |
 | as | Auswahlschalter |
 | rb | Rollbalken |
 | abs | Abschnitt |
@@ -646,14 +646,14 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | tbl | Tabelle |
 | sN | Tabellenspalte N, z. B. S1, S2. |
 | rN | Reihe N in einer Tabelle, z. B. R1, R2. |
-| EA | Eingabeaufforderung |
+| ea | Eingabeaufforderung |
 | wl | Werkzeugleiste |
-| Mhlf | Minihilfe |
-| Gldsltr | Gliederungsschalter |
-| BAE | Eintrag einer Baumstruktur |
+| mhlf | Minihilfe |
+| gldsltr | Gliederungsschalter |
+| bae | Eintrag einer Baumstruktur |
 | ba | Baumansicht |
-| EN | Ein Eintrag in einer Baumansicht in der Ebene N |
-| Fst | Fenster |
+| en | Ein Eintrag in einer Baumansicht in der Ebene N |
+| fst | Fenster |
 | ``⠤⠤⠤⠤⠤`` | Trennlinie |
 
 Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
@@ -718,7 +718,7 @@ Wenn Sie den Cursor im Lesemodus auf eine Grafik bewegen, wird die Inhaltserkenn
 Sie können jedoch trotzdem die Objektnavigation verwenden, um z. B. den Inhalt eines ganzen Anwendungsfensters zu erkennen.
 
 Wenn die Erkennung abgeschlossen ist, wird das Erkennungsergebnis in einem Dokument ähnlich dem Lesemodus angezeigt, in dem Sie das Erkennungsergebnis mit den Pfeiltasten lesen können.
-Drücken Sie die Leertaste oder die eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
+Drücken Sie die Leertaste oder die Eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
 Drücken Sie Escape, um das Erkennungsergebnis zu schließen.
 
 ++ Windows 10-Texterkennung ++[Win10Ocr]
@@ -2753,7 +2753,7 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus, schaltet die Python-Konsole aus. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
-| Keine | --debug-logging | aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
+| Keine | --debug-logging | Aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | Keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
