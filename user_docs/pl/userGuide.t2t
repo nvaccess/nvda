@@ -22,7 +22,7 @@ Najważniejsze właściwości NVDA to:
 - wbudowany syntezator mowy obsługujący ponad 80 języków,
 - ogłaszanie formatowania tekstu, jeśli jest dostępne, takiego jak nazwa i rozmiar czcionki, styl oraz błędy ortograficzne,
 - automatyczne ogłaszanie tekstu znajdującego się pod myszką oraz opcjonalna dźwiękowa sygnalizacja pozycji myszki,
-- wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość wprowadzania tekstu na monitorach z klawiaturą brajlowską,
+- wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość automatycznego wykrywania wielu z nich, oraz wprowadzania tekstu na monitorach z klawiaturą brajlowską,
 - możliwość uruchamiania z pamięci USB lub innych nośników przenośnych bez konieczności instalacji,
 - łatwy w użyciu udźwiękowiony instalator,
 - tłumaczenie na 54 języki,
@@ -47,6 +47,7 @@ Informacje o innych syntezatorach mowy, które obsługuje NVDA można znaleźć 
 ++ Obsługa brajla ++[BrailleSupport]
 Użytkownicy, którzy posiadają monitor brajlowski, mogą za pomocą NVDA odczytywać w brajlu informacje z ekranu. 
 Obsługiwane jest również wprowadzanie brajla z klawiatury brajlowskiej przy pomocy skrótów brajlowskich lub w formie nieskróconej.
+Ponadto, NVDA domyślnie automatycznie wykrywa wiele linijek brajlowskich.
 Zobacz więcej informacji na temat obsługiwanych monitorów brajlowskich w rozdziale [Obsługiwane monitory brajlowskie #SupportedBrailleDisplays].
 
 NVDA obsługuje kody brajla dla wielu języków, w tym brajl zwykły, skróty brajlowskie i brajl komputerowy.
@@ -600,6 +601,7 @@ Jeśli posiadasz monitor brajlowski, NVDA może wyświetlać informacje w brajlu
 Jeśli twój monitor ma klawiaturę brajlowską, możesz wprowadzać brajla skrótami lub w wersji nieskróconej.
 
 Więcej informacji o obsługiwanych monitorach zawiera rozdział [Obsługiwane monitory brajlowskie #SupportedBrailleDisplays].
+Ten rozdział zawiera również informacje o linijkach brajlowskich obsługiwanych przez NVDA funkcją automatycznego wykrywania urządzeń brajlowskich.
 Możesz skonfigurować ustawienia brajlowskie przy użyciu [kategorii ustawień brajla #BrailleSettings]w oknie [Preferencji NVDA #NVDASettings], znajdującym się w podmenu Ustawienia w menu NVDA.
 
 ++ Brajlowskie skróty typu i stanu kontrolki oraz punktów orientacyjnych ++[BrailleAbbreviations]
@@ -832,9 +834,11 @@ Więcej informacji o trybie czytania i nawigacji literami jest dostępne w [rozd
 %kc:beginInclude
 || Polecenie | Klawisz | Opis
 | Podaj pozostały czas | Ctrl+Shift+R | Podaje czas pozostały do końca aktualnie odtwarzanego utworu. |
+| Czas, który upłynął | control+shift+e | Podaje czas, który upłynął w aktualnie odtwarzanej ścieżce. |
+| Długość ścieżki | control+shift+t | Podaje długość aktualnie odtwarzanej ścieżki. |
 %kc:endInclude
 
-Opisana komenda działa tylko dla domyślnego ustawienia formatowania linii statusu dla odtwarzacza.
+Opisane komendy działają tylko dla domyślnego ustawienia formatowania paska stanu odtwarzacza.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +975,25 @@ Ta opcja jest dostępna tylko dla zainstalowanych kopii NVDA.
 ==== Sprawdzaj automatycznie, czy jest nowa wersja ====[GeneralSettingsCheckForUpdates]
 Gdy to pole wyboru jest zaznaczone, NVDA będzie automatycznie sprawdzał dostępność aktualizacji programu i poinformuje, jeżeli jakaś będzie dostępna.
 Możesz również sprawdzać dostępność aktualizacji ręcznie, poleceniem "Sprawdź aktualizacje" w menu Pomoc NVDA.
+Podczas automatycznego lub ręcznego sprawdzania dostępności aktualizacji, konieczne jest przesyłanie przez NVDA  pewnych informacji do serwera aktualizacji, aby otrzymać prawidłową aktualizację dla konkretnego systemu.
+Poniższe informacje są zawsze przesyłane: 
+- Aktualna wersja NVDA
+- Wersja systemu operacyjnego
+- Czy system operacyjny jest 64, czy 32 bitowy
+
+
+==== Zezwalaj projektowi NVDA na zbieranie statystyk użytkowania programu ====[GeneralSettingsGatherUsageStats]
+Gdy włączone, NV Access będzie używać informacji przesyłanych przy sprawdzaniu dostępności aktualizacji, dla określania liczby użytkowników NVDA włączając w to informacje demograficzne, takie jak kraj i system operacyjny.
+O ile twój adres IP będzie użyty do określenia kraju przy sprawdzaniu aktualizacji, to nie jest przechowywany.
+Prócz niezbędnych informacji umożliwiających sprawdzanie aktualizacji,  poniższe dodatkowe informacje są aktualnie przesyłane:
+- Język interfejsu NVDA
+- Czy dana kopia NVDA jest przenośna czy zainstalowana
+- Nazwa aktualnie używanego syntezatora mowy (włączając w to nazwę dodatku, z którego pochodzi sterownik)
+- Nazwa aktualnie używanej linijki brajlowskiej (włączając w to nazwę dodatku, z którego pochodzi sterownik)
+- Brajlowska tablica wyjścia (jeśli brajl jest używany)
+
+
+Te informacje znacząco pomagają NV Access w priorytyzowaniu dalszych prac nad NVDA.
 
 ==== Powiadamiaj o oczekującej aktualizacji przy starcie ====[GeneralSettingsNotifyPendingUpdates]
 Gdy zaznaczone, NVDA poinformuje o oczekującej przy starcie aktualizacji, oferując możliwość jej zainstalowania.
@@ -1210,9 +1233,12 @@ Jeśli wystąpi błąd uruchamiania sterownika, NVDA powiadomi o tym odpowiednim
 Zawartość listy monitorów brajlowskich jest zależna od tego, jakie sterowniki monitorów brajlowskich są zainstalowane w twoim systemie.
 Na liście przemieszczasz się między elementami przy użyciu klawiszy strzałek.
 
+Opcja automatyczna pozwoli NVDA wyszukiwać w tle wiele z obsługiwanych linijek.
+Gdy ta funkcja jest włączona i podłączysz obsługiwaną linijkę przez USB lub bluetooth, NVDA automatycznie połączy się z tym urządzeniem.
+
 "Bez brajla" oznacza, że nie używasz monitora brajlowskiego.
 
-Więcej informacji na temat obsługiwanych monitorów brajlowskich znajdziesz w rozdziale [Obsługiwane Monitory Brajlowskie #SupportedBrailleDisplays].
+Więcej na temat obsługiwanych linijek brajlowskich, oraz informacje, które z nich obsługują automatyczne wykrywanie, znajdziesz w rozdziale [Obsługiwane Monitory Brajlowskie #SupportedBrailleDisplays].
 
 ==== port ====[BrailleSettingsPort]
 Ta opcja, jeśli jest dostępna, pozwala określić jaki port lub typ połączenia będzie użyty do komunikacji z monitorem brajlowskim.
@@ -1870,6 +1896,22 @@ Ten syntezator nie obsługuje [Wykrywania wymowy #SpeechSettingsUseSpelling].
 + Obsługiwane monitory brajlowskie +[SupportedBrailleDisplays]
 Ten rozdział zawiera informacje na temat monitorów brajlowskich wspieranych przez NVDA.
 
+++ Linijki automatycznie wykrywane w tle ++[AutomaticDetection]
+NVDA może automatycznie wykrywać w tle wiele linijek brajlowskich, podłączonych przez USB lub bluetooth.
+To zachowanie ma miejsce, jeśli wybrano opcję automatycznie [w oknie ustawień brajla w NVDA #BrailleSettings] na liście dostępnych linijek brajlowskich.
+Ta opcja jest wybrana domyślnie.
+
+Poniższe linijki brajlowskie mogą być automatycznie wykrywane.
+- Handy Tech 
+- Baum/Humanware/APH/Orbit 
+- HumanWare serie Brailliant BI/B 
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec serii ALVA 6 
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Eurobraille Esys/Esytime/Iris 
+-
+
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 Wszystkie monitory Focus i PAC Mate firmy [Freedom Scientific http://www.freedomscientific.com/] są obsługiwane w trybie połączeń USB i Bluetooth.
 Niezbędne są sterowniki brajlowskie Freedom Scientific zainstalowane w systemie.
@@ -1880,6 +1922,8 @@ Jeśli używasz 64-bitowego Windowsa i sterowniki zostały zainstalowane przez i
 Domyślnie NVDA może wykryć i podłączyć się do tych monitorów przez USB lub bluetooth.
 Konfigurując monitor, możesz wymusić połączenie "USB" or "Bluetooth" aby ograniczyć używany typ połączenia.
 Może to być przydatne, jeśli chcesz połączyć się z monitorem Focus przez bluetooth, ale móc jednocześnie ładować urządzenie z komputera przez port USB.
+
+Te linijki nie są jeszcze obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
 
 Poniżej znajdują się klawisze skrótów NVDA dla tego monitora.
 Zajrzyj do dokumentacji monitora, aby dowiedzieć się gdzie znajdują się opisywane klawisze.
@@ -1911,6 +1955,8 @@ Zajrzyj do dokumentacji monitora, aby dowiedzieć się gdzie znajdują się opis
 | Klawisz Ctrl+End | Brajlowska spacja+Punkt 4+Punkt 5+Punkt 6 |
 | Klawisz Alt | Brajlowska spacja+Punkt 1+Punkt 3+Punkt 4 |
 | Klawisz Alt+Tab | Brajlowska spacja+Punkt 2+Punkt 3+Punkt 4+Punkt 5 |
+| Klawisz alt+shift+tab | brajlowska spacja +punkt1+punkt2+punkt5+punkt6 |
+| Klawisz windows+tab | brajlowska spacja +punkt2+punkt3+punkt4 |
 | Klawisz Escape | Brajlowska spacja+Punkt 1+Punkt 5 |
 | Klawisz Windows | Brajlowska spacja+Punkt 2+Punkt 4+Punkt 5+Punkt 6 |
 | Klawisz spacja | Brajlowska spacja |
@@ -1946,11 +1992,11 @@ Poniżej klawisze monitoraów, których możesz używać z NVDA.
 Aby je odnaleźć, zajrzyj do dokumentacji urządzenia.
 %kc:beginInclude
 || Działanie | Klawisz skrótu |
-| Przewiń brajl do tyłu | T1 albo Etouch1 |
+| Przewiń brajl do tyłu | T1, Etouch1 |
 | Przenieś monitor do poprzedniej linii | T2
 | Przenieś do punktu uwagi | T3 |
 | Przenieś monitor do następnej linii | T4 |
-| Przewiń brajl do przodu | T5 lub Etouch3 |
+| Przewiń brajl do przodu | T5, Etouch3 |
 | Przywołaj do komórki brajla | Routing |
 | Zgłoś formatowanie tekstu pod komórką brajla | drugi routing |
 | Przełącz symulację klawiatury HID | t1+spEnter |
@@ -1960,25 +2006,24 @@ Aby je odnaleźć, zajrzyj do dokumentacji urządzenia.
 | Odczytaj tytuł | Etouch2 |
 | Odczytaj pasek stanu | Etouch4 |
 | Klawisz Shift+Tab | Sp1 |
-| Klawisz Alt | Sp2 |
+| Klawisz Alt | Sp2, alt |
 | Klawisz Escape | Sp3 |
 | Klawisz Tab | Sp4 |
 | Klawisz Strzałka w górę | Sp Up |
 | Klawisz Strzałka w dół | Sp Down |
 | Klawisz Strzałka w lewo | Sp Left |
 | Klawisz Strzałka w prawo | Sp Right |
-| Klawisz Enter | Sp Enter, enter |
-| Odczytaj datę/czas | Sp1+Sp2 |
+| Klawisz Enter | SpEnter, enter |
+| Odczytaj datę/czas | sp2+sp3 |
 | Menu NVDA | Sp1+Sp3 |
 | Klawisz Windows+D (minimalizuje wszystkie okna) | Sp1+Sp4 |
 | Klawisz Windows+B (przejdź do zasobnika systemowego) | Sp3+Sp4 |
-| Klawisz Windows | Sp2+Sp3, windows |
+| Klawisz Windows | sp1+sp2, windows |
 | Klawisz Alt+Tab | Sp2+Sp4 |
 | Klawisz Ctrl+Home | T3+Sp Up |
 | Klawisz Ctrl+End | T3+Sp Down |
 | Klawisz Home | T3+Sp Left |
 | Klawisz End | T3+Sp Right |
-| Klawisz alt | alt |
 | Klawisz control | control |
 %kc:endInclude
 
@@ -2020,6 +2065,8 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 Monitor Lilli Braille firmy [MDV http://www.mdvbologna.it/] jest obsługiwany przez NVDA.
  Nie wymaga instalacji żadnych specjalnych sterowników.
 Wystarczy podłączyć monitor i skonfigurować NVDA aby go używał.
+
+Ta linijka nie jest obsługiwana przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
 
 Poniżej skróty klawiszowe dla tego monitora, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -2076,6 +2123,8 @@ Dla monitorów z joystickiem:
 Hedo ProfiLine USB produkcji [hedo Reha-Technik http://www.hedo.de/] jest obsługiwany.
 Musisz najpierw zainstalować sterowniki USB dostarczane przez producenta.
 
+Ta linijka nie jest jeszcze obsługiwana przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
+
 Poniżej skróty klawiszowe dla tego monitora, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 %kc:beginInclude
@@ -2092,6 +2141,8 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 ++ hedo MobilLine USB ++[HedoMobilLine]
 Hedo MobilLine USB produkcji [hedo Reha-Technik http://www.hedo.de/] jest obsługiwany.
 Musisz najpierw zainstalować sterownik USB dostarczany przez producenta.
+
+Ta linijka nie jest jeszcze obsługiwana przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
 
 Poniżej skróty klawiszowe dla tego monitora, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -2235,6 +2286,8 @@ NVDA obsługuje monitory Seika wersja 3, 4 i 5 (40 znaków) oraz Seika80 (80 zna
 Możesz uzyskać więcej informacji o tych monitorach na stronie http://www.seika-braille.com/.
 Musisz najpierw zainstalować sterowniki USB dostarczane przez producenta.
 
+Te linijki nie są jeszcze obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
+
 Poniżej skróty klawiszowe dla tego monitora, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 %kc:beginInclude
@@ -2260,9 +2313,10 @@ Obsługiwane są następujące monitory:
 - BRAILLEX Live 20, BRAILLEX Live i BRAILLEX Live Plus (USB i bluetooth)
 -
 
+Te linijki nie są jeszcze obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
+
 Jeśli zainstalowany jest BrxCom, NVDA będzie używać BrxCom.
 BrxCom jest to narzędzie, które pozwala używać wprowadzania z klawiatury brajlowskiej niezależnie od używanego programu odczytu ekranu.
-Nowa wersja BrxCom pracująca z NVDA, wkrótce  zostanie wydana przez Papenmeier.  
 Wprowadzanie z klawiatury jest możliwe na modelach Trio i BRAILLEX Live.
 
 Większość urządzeń posiada pasek łatwego dostępu(EAB) umożliwiający intuicyjną i szybką obsługę.
@@ -2340,7 +2394,8 @@ Obsługiwane są następujące monitory:
 -
 
 Te monitory mogą być podłączone wyłącznie przez port szeregowy.
-W związku z tym, po podłączeniu monitora, należy w Ustawieniach Brajla w NVDA wybrać użyty port w oknie [wyboru monitora brajlowskiego #SelectBrailleDisplay].
+W związku z tym, te linijki nie są obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
+Po podłączeniu monitora, należy w Ustawieniach Brajla w NVDA wybrać użyty port w oknie [wyboru monitora brajlowskiego #SelectBrailleDisplay].
 
 Niektóre z tych urządzeń posiadają pasek łatwego dostępu(EAB) umożliwiający intuicyjną i szybką obsługę.
 EAB może być przesunięty w czterech kierunkach, a każdy kierunek generalnie posiada dwa przełączniki.
@@ -2427,6 +2482,11 @@ Następujące modele są obsługiwane:
 
 Dla informacji o BrailleNote Touch, proszę sprawdzić rozdział [Brailliant serii BI/ BrailleNote Touch HumanWareBrailliant].
 
+Z wyjątkiem BrailleNote PK, zarówno klawiatury brajlowskie (BT) i QWERTY (QT) są obsługiwane.
+Dla BrailleNote QT, nie jest obsługiwana emulacja klawiatury PC.
+Można wprowadzać punkty brajlowskie przy użyciu klawiatury QT.
+Więcej szczegółów w rozdziale o terminalach brajlowskich podręcznika BrailleNote.
+
 Jeśli twoje urządzenie obsługuje więcej niż jeden typ połączenia, podłączając notatnik do NVDA, musisz ustawić port terminala brajlowskiego w opcjach terminala brajla.
 Więcej na ten temat można znaleźć w podręczniku urządzenia.
 W NVDA może okazać się konieczne wybranie portu w oknie [wyboru monitora brajlowskiego #SelectBrailleDisplay].
@@ -2434,6 +2494,9 @@ Jeśli łączysz się przez USB lub bluetooth, możesz ustawić port na "automat
 Jeśli łączysz się przy użyciu portu szeregowego, (lub przejściówki USB na port szeregowy) albo jeśli nie pojawia się żadna z poprzednich opcji, musisz ręcznie wybrać używany do komunikacji port na liście portów sprzętowych.
 
 Przed podłączeniem BrailleNote Apex używając jego klienta interfejsu USB, musisz zainstalować sterowniki dostarczane przez HumanWare.
+
+Na BrailleNote Apex BT, dla wywołania różnych komend NVDA, możesz używać kółka przewijania umieszczonego między punktami 1 i 4.
+Kółko składa się z czterech kierunkowych kropek, środkowego przycisku kliknięcia, oraz kółka obracającego się zgodnie lub przeciwnie do ruchu wskazówek zegara.
 
 Poniżej skróty klawiszowe dla BrailleNote, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -2445,6 +2508,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Przenieś wyświetlacz brajla do poprzedniej linii | Previous |
 | Przenieś wyświetlacz brajla do następnej linii | Next |
 | Przywołaj do komórki brajla | Routing |
+| Menu NVDA | spacja+punkt1+punkt3+punkt4+punkt5 (spacja+n) |
 | Przełącz "Brajl związany z..." | Previous+Next |
 | Klawisz Strzałka w górę | Spacja+Punkt 1 |
 | Klawisz Strzałka w dół | Spacja+Punkt 4 |
@@ -2464,6 +2528,39 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Klawisz Windows | Spacja+Punkt 2+Punkt 4+Punkt 5+Punkt 6 (Spacja+w) |
 | Klawisz Alt | Spacja+Punkt 1+Punkt 3+Punkt 4 (Spacja+m) |
 | Przełącz tryb pomocy | Spacja+Punkt 2+Punkt 3+Punkt 6 (Spacja+obniżone h) |
+
+Poniżej komendy przypisane do BrailleNote QT, gdy nie jest on w trybie wprowadzania brajla.
+
+|| Działanie | Klawisz |
+| Menu NVDA | read+n |
+| Klawisz strzałka w górę | strzałka w górę |
+| Klawisz strzałka w dół | strzałka w dół |
+| Klawisz strzałka w lewo | strzałka w lewo|
+| Klawisz strzałka w prawo | strzałka w prawo |
+| Klawisz Page up | function+strzałka w górę |
+| Klawisz Page down | function+strzałka w dół |
+| Klawisz Home | function+strzałka w lewo |
+| Klawisz End | function+strzałka w prawo |
+| Klawisze Control+home | read+t |
+| Control+end Klawisze | read+b |
+| Klawisz Enter | enter |
+| Klawisz Backspace | backspace |
+| Klawisz Tab | tab |
+| Klawisze Shift+tab | shift+tab |
+| Klawisz Windows | read+w |
+| Klawisz Alt | read+m |
+| Przełącz tryb pomocy wprowadzania | read+1 |
+
+Poniżej komendy przypisane do kółka przewijania:
+
+|| Działanie | Klawisz |
+| Klawisz strzałka w górę | strzałka w górę |
+| Klawisz strzałka w dół | strzałka w dół |
+| Klawisz strzałka w lewo | strzałka w lewo |
+| Klawisz strzałka w prawo | strzałka w prawo |
+| Klawisz Enter | środkowy przycisk |
+| Klawisz Tab | obrót kółka przewijania  zgodnie z ruchem wskazówek zegara |
+| Klawisze Shift+tab | obrót kółka przewijania przeciwnie do ruchu wskazówek zegara |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
@@ -2476,6 +2573,7 @@ Obsługiwane są następujące modele:
 -
 
 Możesz ustawić port szeregowy, do którego jest podłączony monitor w oknie [wyboru monitora brajlowskiego #SelectBrailleDisplay].
+Te linijki nie są obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
 
 Poniżej znajdują się skróty klawiszowe dla monitorów EcoBraille.
 Proszę przeczytać [Dokumentację EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] dla uzyskania informacji, gdzie znajdują się te klawisze.
@@ -2603,6 +2701,8 @@ Podczas konfiguracji monitora i używanych portów, należy zwrócić szczególn
 
 Dla monitorów z klawiaturą brajlowską, BRLTTY aktualnie sam zarządza wprowadzaniem brajla.
 W związku z tym, ustawienie w NVDA tabeli wprowadzania nie ma zastosowania.
+
+BRLTTY nie jest obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
 
 Poniżej wykaz poleceń brltty dla NVDA. 
 Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyBindings/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
