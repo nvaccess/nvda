@@ -785,9 +785,9 @@ def processDestroyWinEvent(window,objectID,childID):
 	focus=api.getFocusObject()
 	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
 	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and not eventHandler.isPendingEvents("gainFocus"):
-		#Window handle of ModernCandidateUI destory event is not the same as host application.Use className CiceroUIWndFrame
+		#Window handle of ModernCandidateUI destory event is not the same as host application.CiceroUIWndFrame won't work Use MSCTFIME Composition
 		windowClassName=winUser.getClassName(window)
-		if window==focus.windowHandle or windowClassName == "CiceroUIWndFrame":
+		if window==focus.windowHandle or windowClassName == "MSCTFIME Composition":
 			obj=focus.container
 			if obj:
 				eventHandler.queueEvent("gainFocus",obj)
