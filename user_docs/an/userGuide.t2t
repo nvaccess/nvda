@@ -22,7 +22,7 @@ Lo mas resinyable inclui:
 - Sintetizador de voz integrau que suporta sobre 80 idiomas
 - Anunciau de formato de texto do siga disponible tal como nombre y grandaria d'a fuent, estilo y errors d'ortografía
 - Anunciau automatico de texto baixo lo churi y indicación opcional audible  d'a posición d'o churi
-- Suporte pa muitas linias de braille dinamico incluindo a dentrada de braille en as linias braille con un teclau braille
+- Suporte pa muitas linias braille dinamico incluindo la capacidat de detectar automaticament muitas d'ellas asinas como la dentrada de braille computerizau pa las linias que tiengan un teclau braille
 - Capacidat pa executar-se de raso dende una memoria USB u atros meyos portables sin a necesidat d'instalación
 - Instalador parlant facil d'emplegar
 - Traduciu en 54 idiomas
@@ -45,9 +45,10 @@ O NVDA ye equipau con [eSpeak NG https://github.com/espeak-ng/espeak-ng], un sin
 Se puet trobar información sobre atros sintetizadors de voz que suporta lo NVDA en a sección [Sintetizadors de Voz suportaus #SupportedSpeechSynths].
 
 ++ Suporte Braille ++[BrailleSupport]
-Pa usuarios que poseigan una linia de braille dinamico, o NVDA puet amostrar a suya información en braille. 
-Tamién se suporta tanto a dentrada de braille no contraito como contraito a traviés d'un teclau braille.
-Por favor mira-te a sección [Linias Braille Suportadas #SupportedBrailleDisplays] pa información sobre as linias braille suportadas.
+Pa los usuarios que poseigan una linia de braille dinamico, lo NVDA puet amostrar a suya información en braille. 
+Tamién se suporta tanto la dentrada de braille no contraito como contraito a traviés d'un teclau braille.
+Amás lo NVDA detectará muitas linias braille automaticament de traza predeterminada.
+Por favor mira-te la sección de [linias Braille Suportadas #SupportedBrailleDisplays] pa información sobre las linias braille suportadas.
 
 O NVDA suporta codigos braille pa muitos idiomas, incluindo codigos braille contraito, no contraito y computerizau.
 
@@ -596,10 +597,11 @@ Por favor mira-te [a documentación d'o MathPlayer sobre os comandos de navegaci
 Quan deseyes tornar t'o documento, simplament preta la tecla escape.
 
 + Braille +[Braille]
-Si tiens una linia braille o NVDA puet amostrar información en braille.
-Si a tuya linia braille tien un teclau tipo Perkins, tamién puetz introducir braille contraito u no contraito.
+Si tiens una linia braille lo NVDA puet amostrar información en braille.
+Si la tuya linia braille tien un teclau tipo Perkins, tamién puetz ficar-bi braille contraito u no contraito.
 
-Por favor, mira-te a sección [Pantallas Braille suportadas  #SupportedBrailleDisplays] pa información  arredol d'as linias braille suportadas.
+Por favor, mira-te la sección de [linias Braille suportadas  #SupportedBrailleDisplays] pa información  arredol d'as linias braille suportadas.
+Ixa sección tamién contién información sobre qué linias son compatibles con a función de detección automatica de linias braille d'o NVDA.
 Puetz configurar o braille fendo servir la [categoría d'opcions d'o braille #BrailleSettings] d'o dialogo d'[opcions d'o NVDA #NVDASettings].
 
 ++ Abreviaduras braille de tipo de control, estau y puntos de referencia ++[BrailleAbbreviations]
@@ -1232,7 +1234,7 @@ Iste cuadro combinau se te presenta con quantas opcions pendendo de qué control
 Muéve-te-ne entre ixas opcions con as teclas d'as flechas.
 
 La opción d'automatico permitirá a lo NVDA de mirar muitas linias braille admitidas en segundo plano.
-Quan ista caracteristica siga activada y connectes una linia admitida fendo servir l'USB u lo bluetooth, lo NVDA connectará automaticament con ella.
+Quan ixa caracteristica siga activada y connectes una linia admitida fendo servir l'USB u lo bluetooth, lo NVDA connectará automaticament con ella.
 
 Sin braille quiere decir que no yes fendo servir lo braille.
 
@@ -1892,7 +1894,23 @@ Pa mas información, por favor visita o puesto Web d'Audiologic en www.audiologi
 Iste sintetizador no suporta la [funcionalidat de letreyo #SpeechSettingsUseSpelling].
 
 + Linias Braille Suportadas +[SupportedBrailleDisplays]
-Ista sección contién información sobre as linias braille suportadas por o NVDA.
+Ista sección contién información sobre as linias braille suportadas por lo NVDA.
+
+++ Linias que suportan la detección automatica ++[AutomaticDetection]
+Lo NVDA tien la capacidat pa detectar muitas linias braille en segundo plano automaticament, u a traviés d'USB u de bluetooth.
+Iste comportamiento s'aconsigue trigando la opción d'automatico como la linia braille preferida dende lo [dialogo d'opcions de braille #BrailleSettings] d'o NVDA.
+Ista opción ye trigada predeterminadament.
+
+Las siguients linias suportan ista funcionalidat de detección automatica.
+- Linias Handy Tech
+- Linias Baum/Humanware/APH/Orbit braille
+- Series d'as HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Series d'as Optelec ALVA 6
+- Series d'as HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Linias Eurobraille Esys/Esytime/Iris
+-
 
 ++ Series d'a Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
 Todas las linias Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] se suportan.
@@ -1903,9 +1921,11 @@ Si o tuyo sistema executa un Windows de 64 bits y os controladors ya s'instaloro
 
 Predeterminadament, lo NVDA puet detectar automaticament y connectar-se a istas linias tanto a traviés d'USB como de bluetooth.
 Manimenos, quan se configura a linia, puetz seleccionar explicitament os puertos "USB" u "Bluetooth" ta restrinchir a mena de connexión a emplegar.
-Isto podría estar util si quiers connectar a linia focus a lo NVDA emplegando bluetooth, y encara podrías cargar-la emplegando a enerchía de l'USB dende o tuyo ordinador.
+Isto podría estar util si quiers connectar la linia focus a lo NVDA emplegando bluetooth, y encara podrías cargar-la emplegando a enerchía de l'USB dende o tuyo ordinador.
 
-Seguidament van as asociacions de teclas pa ista linia con o NVDA.
+Istas linias encara no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
+
+Contino va las asociacions de teclas pa ista linia con o NVDA.
 Por favor mira-te la documentación d'a linia pa descriptcions de do puet trobar-se istas teclas.
 %kc:beginInclude
 || Nombre | tecla |
@@ -1941,7 +1961,7 @@ Por favor mira-te la documentación d'a linia pa descriptcions de do puet trobar
 | tecla windows | barra espaciadera braille+punto2+punto4+punto5+punto6 |
 | tecla espacio | barra espaciadera braille |
 | tecla windows+d (minimizar todas as aplicacions) | barra espaciadera braille+punto1+punto2+punto3+punto4+punto5+punto6 |
-| Anunciar a Linia Actual | barra espaciadera braille+punto1+punto4 |
+| Anunciar la Linia Actual | barra espaciadera braille+punto1+punto4 |
 | Menú NVDA | barra espaciadera braille+punto1+punto3+punto4+punto5 |
 
 Pa los modelos mas recients d'a Focus que contienen teclas de garnelas (focus 40, focus 80 y focus blue):
@@ -1959,52 +1979,51 @@ Solament pa la Focus 80:
 Todas dos linias ALVA BC640 y BC680 d'[Optelec http://www.optelec.com/] son suportadas.
 Alternativament puetz connectar una linia antiga d'Optelec, tal como una Braille Voyager, fendo servir un conversor de protocolo furniu por Optelec.
 No te cal instalar garra controlador en especial pa emplegar istas linias.
-Nomás enchega la linia y configura o NVDA pa emplegar-la.
+Nomás enchega la linia y configura lo NVDA pa emplegar-la.
 
-Nota: O NVDA podría no estar capaz d'usar una linia ALVA BC6 con Bluetooth quan s'emparella fendo servir a utilidat ALVA Bluetooth.
+Nota: Lo NVDA podría no estar capaz d'usar una linia ALVA BC6 con Bluetooth quan s'emparella fendo servir la utilidat ALVA Bluetooth.
 Quan haigas emparellau lo tuyo dispositivo fendo servir a suya utilidat y o NVDA no pueda detectar-lo, te recomendamos d'enparellar a tuya linia ALVA d'a forma ordinaria fendo servir as opcions de Bluetooth d'o Windows.
 
 Nota: dau que belunas d'istas linias tienen un teclau braille, maneyan a transcripción de braille ta texto por ellas mesmas por defecto.
 Ixo significa que o sistema de dentrada braille d'o NVDA no se ye emplegando en a situgación predeterminada (ye decir, a tabla de dentrada braille configurada no tien efecto).
 Pa linias ALVA con firmware recient, ye posible desenchegar ixa simulación de teclau HID fendo servir un cenyo de dentrada.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira-te a documentación d'a linia pa descripcions de dó pueden trobar-sen istas teclas.
+Contino va las asignacions de teclas pa ista linia con o NVDA.
+Por favor mira-te la documentación d'a linia pa descripcions de dó pueden trobar-sen istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar a linia braille enta zaga | t1 u etouch1 |
-| Mover a linia braille t'a linia anterior | t2 |
+| Desplazar la linia braille enta zaga | t1, etouch1 |
+| Mover la linia braille t'a linia anterior | t2 |
 | Mover-se-ne t'o foco actual | t3 |
-| Mover a linia braille t'a linia siguient | t4 |
-| Desplazar a linia braille enta debant | t5 u etouch3 |
+| Mover la linia braille t'a linia siguient | t4 |
+| Desplazar la linia braille enta debant | t5, etouch3 |
 | Guidar t'a celda braille | sensor |
 | Anunciar o formato de texto baixo a celda braille | sensors secundarios |
 | Conmutar a simulación de teclau HID | t1+spEnter |
 | Mover-se-ne t'a linia d'alto en a revisión | t1+t2 |
 | Mover-se-ne t'a linia d'abaixo en a revisión | t4+t5 |
 | Alternar o braille ancorau ta | t1+t3 |
-| Anunciar o titol | etouch2 |
-| Anunciar a barra d'estau | etouch4 |
+| Anunciar lo titol | etouch2 |
+| Anunciar la barra d'estau | etouch4 |
 | tecla mayus+tab | sp1 |
-| tecla alt | sp2 |
+| tecla alt | sp2, alt |
 | tecla escape | sp3 |
 | tecla tabulador | sp4 |
 | tecla flecha alto | spUp |
 | tecla flecha abaixo | spDown |
 | tecla flecha cucha | spLeft |
 | tecla flecha dreita | spRight |
-| tecla intro | spEnter |
-| Anunciar a calendata u a hora | sp1+sp2 |
+| tecla intro | spEnter, enter |
+| Anunciar la calendata u la hora | sp2+sp3 |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicacions) | sp1+sp4 |
 | Tecla windows+b (servilla de sistema d'o foco) | sp3+sp4 |
-| tecla windows | sp2+sp3, windows |
+| tecla windows | sp1+sp2, windows |
 | tecla alt+tabuladorb | sp2+sp4 |
 | control+tecla d'inicio | t3+spUp |
 | control+tecla de fin | t3+spDown |
 | tecla d'inicio | t3+spLeft |
 | tecla de fin | t3+spRight |
-| tecla alt | alt |
 | tecla control | control |
 %kc:endInclude
 
@@ -2043,12 +2062,14 @@ Por favor mira-te a documentación d'a linia pa descripcions de do pueden trobar
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-A linia braille Lilli disponible dende [MDV http://www.mdvbologna.it/] ye suportada.
-No amenestes instalar garra controlador especifico ta emplegar ista linia.
+La linia braille Lilli disponible dende [MDV http://www.mdvbologna.it/] ye suportada.
+No te cal instalar garra controlador especifico pa emplegar ista linia.
 Solament enchega a linia y configura lo NVDA ta emplegar-la.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Porfavor mira a documentación d'a linia ta descripcions de do se pueden trobar istas teclas.
+Ista linia encara no suporta la funcionalidat de detección automatica en segundo plan d'o NVDA.
+
+Contino va las asignacions de teclas pa ista linia con o NVDA.
+Porfavor mira-te la documentación d'a linia pa descripcions de do se puede trobar istas teclas.
 %kc:beginInclude
 || Nombre | tecla |
 | Desplazar enta zaga la linia braille | LF |
@@ -2072,15 +2093,15 @@ Istas incluyen:
 -
 Belatras linias fabricadas por Baum tamién podrían funcionar, encara que no son estadas prebadas.
 
-Si se connecta a traviés d'USB as linias que no fan servir l'HID, en primeras has d'instalar os controladors USB proporcionaus por o fabricant.
-A VarioUltra y a Pronto! fan servir l'HID.
-A Refreshabraille y a Orbit Reader 20 pueden fer servir l'HID si son configuradas apropiadament.
+Si se connecta a traviés d'USB as linias que no fan servir l'HID, en primeras has d'instalar los controladors USB proporcionaus por o fabricant.
+La VarioUltra y la Pronto! fan servir l'HID.
+La Refreshabraille y a Orbit Reader 20 pueden fer servir l'HID si son configuradas apropiadament.
 
-O modo de serie USB d'a Orbit Reader 20 actualment no ye suportau que en o Windows 10.
-Cheneralment s'habría de fer servir l'USB HID en cuenta.
+Lo modo de serie USB d'a Orbit Reader 20 actualment no ye suportau que en o Windows 10.
+Por un regular s'habría de fer servir l'USB HID en cuenta.
 
-Contino van as asignacions de teclas pa istas linias con o NVDA.
-Por favor mira-te a tuya documentación d'a linia braille pa descripcions de do se puet trobar istas teclas.
+Contino va las asignacions de teclas pa istas linias con o NVDA.
+Por favor mira-te la tuya documentación d'a linia braille pa descripcions de do se puet trobar istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta zaga | d2 |
@@ -2099,11 +2120,13 @@ Pa linias que tiengan un joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-A hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] ye suportada.
-En primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+La hedo ProfiLine USB d'[hedo Reha-Technik  http://www.hedo.de/] ye suportada.
+En primeras has d'instalar los controladors USB furnius por lo fabricant.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia ta descripcions de do se pueden trobar istas teclas.
+Ista linia encara no suporta la funcionalidat de detección automatica en segundo plan d'o NVDA.
+
+Contino va las asignacions de teclas pa ista linia con o NVDA.
+Por favor mira-te la documentación d'a linia pa descripcions de do se puede trobar istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta dezaga | K1 |
@@ -2116,11 +2139,13 @@ Por favor mira a documentación d'a linia ta descripcions de do se pueden trobar
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-Se suporta a hedo MobilLine USB de [hedo Reha-Technik http://www.hedo.de/].
-En primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+Se suporta la hedo MobilLine USB d'[hedo Reha-Technik http://www.hedo.de/].
+En primeras has d'instalar los controladors USB furnius por lo fabricant.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia ta descripcions de do pueden trobar-sen istas teclas.
+Ista linia encara no suporta la funcionalidat de detección automatica en segundo plan d'o NVDA.
+
+Contino va las asignacions de teclas pa ista linia con o NVDA.
+Por favor mira-te la documentación d'a linia pa descripcions de do puede trobar-sen istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta dezaga | K1 |
@@ -2188,8 +2213,8 @@ O NVDA suporta as linias Braille Sense, Braille EDGE, Smart Beetle y Sync Braill
 Si se connectan a traviés d'USB, amenesterás instalar os controladors USB d'HIMS en o sistema.
 Puetz descargar-los dende aquí: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
-Seguidament van as asignacions de teclas pa istas linias con o NVDA.	
-Por favor mira-te a documentación d'as linias pa descripcions d'án pueden trobar-sen istas teclas.
+Contino va las asignacions de teclas pa istas linias con o NVDA.	
+Por favor mira-te la documentación d'as linias pa descripcions d'án pueden trobar-sen istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Ir t'a celda braille | sensors |
@@ -2256,12 +2281,14 @@ Por favor mira-te a documentación d'as linias pa descripcions d'án pueden trob
 %kc:endInclude
 
 ++ Linias Braille Seika ++[Seika]
-Se suportan as linias braille Seika Versión 3, 4 y 5 (40 celdas) y Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
+Se suporta las linias braille Seika Versions 3, 4 y 5 (40 celdas) y Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
 Puetz trobar mas información sobre istas linias en http://www.seika-braille.com/.
-En primeras has d'instalar os controladors USB proporcionaus por o fabricant.
+En primeras has d'instalar los controladors USB furnius por lo fabricant.
 
-Seguidament van as asignacions de teclas pa ista linia con o NVDA.
-Por favor mira a documentación d'a linia ta descripcions de do se troban istas teclas.
+Istas linias encara no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
+
+Contino va las asignacions de teclas pa istas linias con o NVDA.
+Por favor mira-te la documentación d'a linia pa descripcions de do se troba istas teclas.
 %kc:beginInclude
 || Nombre | tecla |
 | Desplazar a linia braille enta dezaga | cucha |
@@ -2278,29 +2305,30 @@ Por favor mira a documentación d'a linia ta descripcions de do se troban istas 
 %kc:endInclude
 
 ++ Modelos mas recients de Papenmeier BRAILLEX ++[Papenmeier]
-Se suportan as siguients linias Braille: 
+Se suporta las siguients linias Braille: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB y bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live y BRAILLEX Live Plus (USB y bluetooth)
 -
 
-Si ye instalau o BrxCom, NVDA emplegará o BrxCom.
-O BrxCom ye una ferramienta que permit a la dentrada de teclau dende a linia braille  marchar independientment d'un lector de pantalla.
-Papenmeier liberará luego una versión nueva d'o BrxCom que funcione con o NVDA.
-A dentrada de teclau ye posible con os modelos Trio y BRAILLEX Live 20.
+Istas linias encara no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
 
-A mayoría d'os dispositivos tienen una Barra d'Acceso Facil (EAB) que permite operar rapida y intuitivament.
-A EAB puet mover-se-ne en quatro adrezas do en cheneral cada adreza tien dos posicions.
-As series c y Live son as solas excepcións a iste regle.
+Si ye instalau lo BrxCom, lo NVDA emplegará lo BrxCom.
+Lo BrxCom ye una ferramienta que permit a la dentrada de teclau dende la linia braille  marchar independientment d'un lector de pantalla.
+La dentrada de teclau ye posible con os modelos Trio y BRAILLEX Live 20.
 
-A serie c y belatras linias tienen dos ringleras de sensors por o que a ringlera superior s'utiliza ta anunciar información de formato.
-Mantenendo pretada una d'as teclas superiors y pretando a EAB en os dispositivos d'a serie c s'emula a segunda posición.
-As linias d'a serie live no tienen que una flecha d'enrotamiento y a  EAB tien un trango por adreza.
-O segundo trango puet estar emulau pretando una d'as teclas d'enrotamiento y pretando a EAB en a correspondient adreza.
-Pretando y mantenendo as teclas alto, abaixo, dreita y cucha (u a EAB) se causa que l'acción correspondient se repita. 
+La mas gran parti d'os dispositivos tienen una Barra d'Acceso Facil (EAB) que permite operar rapida y intuitivament.
+La EAB puet mover-se-ne en quatro adrezas do en cheneral cada adreza tien dos posicions.
+Las series c y Live son as solas excepcións a iste regle.
 
-Cheneralment, as siguients teclas son disponibles en istas linias braille:
+La serie c y belatras linias tienen dos ringleras de sensors asinas que la ringlera superior s'utiliza pa anunciar información de formato.
+Mantenendo pretada una d'as teclas superiors y pretando la EAB en os dispositivos d'a serie c s'emula la segunda posición.
+Las linias d'a serie live no tienen que una flecha d'enrotamiento y la  EAB tien un trango por adreza.
+Lo segundo trango puet estar emulau pretando una d'as teclas d'enrotamiento y pretando la EAB en a correspondient adreza.
+Pretando y mantenendo las teclas alto, abaixo, dreita y cucha (u la EAB) se causa que l'acción correspondient se repita. 
+
+Por un regular, las siguients teclas son disponibles en istas linias braille:
 || Nombre | Tecla |
 | l1 | Tecla cucha frontal |
 | l2 | Tecla cucha trasera |
@@ -2315,7 +2343,7 @@ Cheneralment, as siguients teclas son disponibles en istas linias braille:
 | dn | 1 trango abaixo |
 | dn2 | 2 trangos abaixo |
 
-Seguidament van as asignacions d'ordens d'a Papenmeier t'o NVDA:
+Contino va las asignacions d'ordens d'a Papenmeier pa lo NVDA:
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta dezaga | cucha |
@@ -2365,14 +2393,15 @@ Se suporta las siguients linias Braille:
 -
 
 Para cuenta que istas linias solament se pueden connectar a traviés d'un puerto serie.
-Por tanto, habrías de seleccionar o puerto t'o que se connecta la linia antis de no haber trigau iste controlador en o dialogo de [seleccionar la linia braille #SelectBrailleDisplay].
+A causa d'ixo, istas linias no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
+Habrías de  trigar lo puerto que bi ye connectada la pantalla dimpués d'haber trigau ixe controlador en o dialogo de [seleccionar linia braille #SelectBrailleDisplay].
 
-Beluns d'istos dispositivos tienen una barra d'acceso rapido (EAB) que permite un accionamiento rapido y intuitivo.
+Beluns d'istos dispositivos tienen una barra d'acceso rapedo (EAB) que permite un accionamiento rapedo y intuitivo.
 L'EAB se puet mover en quatro adrezas an, cheneralment, cada adreza tien dos movimientos.
-Pretando y mantenendo as teclas Alto, abaixo, dreita y cucha (u EAB) se fa que l'acción correspondient siga repetida.
-Os dispositivos mas antigos no tienen una EAB; s'utilizan, en o suyo puesto, teclas frontals .
+Pretando y mantenendo las teclas Alto, abaixo, dreita y cucha (u EAB) se fa que l'acción correspondient siga repetida.
+Los dispositivos mas antigos no tienen una EAB; s'utiliza en cuenta teclas frontals .
 
-Cheneralment, as siguients teclas son disponibles en as linias braille:
+Por un regular, las siguients teclas son disponibles en las linias braille:
 
 || Nombre | Tecla |
 | l1 | Tecla frontal cucha |
@@ -2388,7 +2417,7 @@ Cheneralment, as siguients teclas son disponibles en as linias braille:
 | dn | 1 paso abaixo |
 | dn2 | 2 pasos abaixo |
 
-Seguidament van as asignacions d'ordens d'as Papenmeier t'o NVDA:
+Contino va las asignacions d'ordens d'as Papenmeier pa lo NVDA:
 
 %kc:beginInclude
 Dispositivos con EAB:
@@ -2544,6 +2573,8 @@ Son suportaus os siguients modelos:
 
 En o NVDA puetz establir lo puerto serie que la linia bi ye connectada en o dialogo de [seleccionar linia braille #SelectBrailleDisplay].
 
+Istas linias encara no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
+
 Contino son las asignacions de teclas pa las linias EcoBraille.
 Por favor mira-te la [documentación d'EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] ta descripcions de do se puet trobar ixas teclas.
 
@@ -2588,8 +2619,8 @@ Por tanto, pa ixas linias, habrías de seleccionar o puerto a lo que se connecta
 As linias Iris y Esys tienen un teclau braille con 10 teclas.
 D'as dos teclas colocadas como barra espaciadera, la tecla d'a zurda se corresponde con a tecla de recule y a tecla dreita con a barra espaciadera.
 
-Seguidament va las asignacions de teclas pa istas linias con o NVDA.
-Por favor mira-te a documentación d'a pantalla pa descripcions d'án pueden trobar-sen istas teclas.
+Contino va las asignacions de teclas pa istas linias con o NVDA.
+Por favor mira-te la documentación d'a pantalla pa descripcions d'do puede trobar-sen istas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta zaga | switch1-6Zurda, l1 |
@@ -2670,7 +2701,9 @@ Quan configures a linia y puerto a emplegar,  asegura-te d'amprar gran ficacio a
 Pa linias que tiengan un teclau braille, BRLTTY actualment manea a dentrada braille por ell mesmo.
 Por tanto, a opción tabla braille de dentrada d'o NVDA ye irrelevant.
 
-Contino va las asignacions a ordens BRLTTY ta NVDA.
+BRLTYY no ye embrecau en a funcionalidat de detección automatica en segundo plan de linias braille d'o NVDA.
+
+Contino va las asignacions a ordens BRLTTY pa lo NVDA.
 Por favor mira-te [as [listas de vinclos de teclas de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pa información sobre cómo se mapeyan as ordens de BRLTTY pa controlar as linias braille.
 %kc:beginInclude
 || Nombre | orden de BRLTTY |

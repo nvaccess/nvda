@@ -984,7 +984,6 @@ De volgende informatie wordt altijd verstuurd
 - Versie besturingssysteem
 - Of het besturingssysteem 64- of 32-bit is
 
-
 ==== NVDA toestaan dat gebruiksstatistieken worden verzameld ten behoeve van het NVDA-project ====[GeneralSettingsGatherUsageStats]
 Als dit wordt toegestaan zal NV Access de informatie van update checks gebruiken om het aantal NVDA-gebruikers vast te stellen met inbegrip van specifieke demografische gegevens zoals besturingssysteem en land van oorsprong.
 Merk op dat uw IP-adres nooit wordt bewaard, al wordt het wel gebruikt tijdens de update-check om uw land te bepalen.
@@ -1441,7 +1440,7 @@ Voor bepaalde invoervelden zoals zoekvakken in verrschillende Windows 10 apps, k
 De lijst met suggesties sluit zich wanneer u uit het invoerveld gaat. Voor sommige invoervelden kan NVDA hiervan melding maken.   
 
 +++ Invoersamenstelling +++[InputCompositionSettings]
-Met behulp van deze categorie instellingen  kunt u regelen hoe NVDA de karakters van  Aziatische talen weergeeft, wanneer u deze invoert. Dit geldt voor invoermethodes zoals IME en Text Service.
+Via  de categorie instellingen  Invoersamenstelling kunt u regelen hoe NVDA de karakters van  Aziatische talen weergeeft, wanneer u deze invoert. Dit geldt voor invoermethodes zoals IME en Text Service.
 N.B. Aangezien er grote verschillen bestaan tussen de invoermethodes wat betreft mogelijkheden en de wijze van informatieoverdracht, zal het wellicht nodig zijn de instellingen aan te passen aan de gebruikte invoermethode. Hierdoor wordt typen aangenamer en gemakkelijker.
 
 ==== Automatisch alle beschikbare kandidaten melden ====[InputCompositionReportAllCandidates]
@@ -2548,13 +2547,13 @@ Voor de BrailleNote QT zijn de volgende commando's van toepassing als deze niet 
 | Home-toets | functie+Pijllinks |
 | End-toets | functie+Pijlrechts |
 | Control+home-toetsen | lezen+t |
-+| Control+end-toetsen | lezen+b |
+| Control+end-toetsen | lezen+b |
 | Enter-toets | enter |
 | Backspace-toets | backspace |
 | Tab-toets | tab |
 | Shift+tab-toetsen | shift+tab |
 | Windows-toets | lezen+w |
-+| Alt-toets | lezen+m |
+| Alt-toets | lezen+m |
 | Invoerhulp Aan/Uit | lezen+1 |
 
 Met het scrollwieltje kunnen de volgende commando's worden uitgevoerd:
@@ -2709,7 +2708,7 @@ Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u erv
 Het  Brltty-programma zorgt zelf voor de verwerking van brailleïnvoer van leesregels die over een brailletoetsenbord beschikken.
 Het is dan ook niet relevant dat een invoertabel in NVDA wordt ingesteld.
 
-DBRLTYY maakt geen deel uit van de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+DBRLTYY blijft buiten de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 De volgende brltty-commando's worden in NVDA ondersteund.
 Voor informatie over toetsenbordtabellen kunt u de  [BRLTTY-Documentatie op 
