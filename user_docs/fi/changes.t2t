@@ -7,7 +7,7 @@
 
 == Uudet ominaisuudet =
 - NVDA ilmoittaa Mozilla Firefoxissa ja Google Chromessa kielioppivirheistä, kun tieto niistä välitetään verkkosivuilla asianmukaisesti. (#8280)
-- Verkkosivuilla lisättäväksi tai poistettavaksi merkitty sisältö ilmoitetaan nyt Google Chromessa. (#8558)
+- Verkkosivujen lisättäväksi tai poistettavaksi merkitty sisältö ilmoitetaan nyt Google Chromessa. (#8558)
 - Lisätty tuki BrailleNote QT:n ja Apex BT:n vieritysrullalle, kun BrailleNotea käytetään pistenäyttönä NVDA:n kanssa. (#5992, #5993)
 - Lisätty komennot nykyisen kappaleen kuluneen ajan ja kokonaiskeston ilmoittamiseen Foobar2000:ssa. (#6596)
 - Mac-komentonäppäimen symboli (⌘) puhutaan nyt luettaessa tekstiä mitä tahansa syntetisaattoria käytettäessä. (#8366)
@@ -22,21 +22,21 @@
 
 
 == Muutokset ==
-- Yleiset asetukset -valintaikkunan käytettävissä olevien kielten luettelo  lajitellaan nyt ISO 639 -koodien asemesta kielen nimen perusteella. (#7284)
+- NVDA:n Yleiset asetukset -valintaikkunan käytettävissä olevien kielten luettelo  lajitellaan nyt ISO 639 -koodien asemesta kielen nimen perusteella. (#7284)
 - Lisätty oletussyötekomentoja Alt+Vaihto+Sarkain- ja Windows+Sarkain-näppäinyhdistelmille kaikille tuetuille Freedom Scientificin pistenäytöille. (#7387)
-- ALVA BC680- ja protokollamuunnin, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)
+- ALVA BC680- ja protokollamuunninta käyttävissä pistenäytöissä on nyt mahdollista liittää eri toimintoja vasempaan ja oikeaan älynäppäimistöön sekä peukalo- ja etouch-näppäimiin. (#8230)
 - ALVA BC6 -näytöissä näppäinyhdistelmä sp2+sp3 puhuu päivämäärän ja ajan, kun taas sp1+sp2 jäljittelee Windows-näppäintä. (#8230)
-- Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, haluaako hän sallia käyttötilastojen lähettämisen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
+- Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, sallitaanko käyttötilastojen lähettäminen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
 - Jos käyttäjä on sallinut käyttötilastojen lähettämisen NV Accessille, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.6.0. (#8365)
 - Venäläisen 8 pisteen pistetaulukon tiedostopolku korjattu. (#8446)
-- Päivitetty eSpeak-ng versioksi 1.49.3dev muutos 910f4c2 (#8561)
+- Päivitetty eSpeak-ng versioksi 1.49.3dev muutos 910f4c2. (#8561)
 
 
 == Korjatut ohjelmavirheet ==
 - Esteettömät selitteet  ilmoitetaan nyt herkemmin Google Chromessa selaustilassa oltaessa kun selite ei näy sisällön osana. (#4773)
 - Zoomissa tuetaan nyt ilmoituksia. Niitä ovat esim. mykistyksen/mykistyksen poiston tila sekä saapuvat viestit.(#7754)
-- Pistekirjoitustuloste ei enää lakkaa seuraamasta, kun Kohdistuskontekstin näyttämisasetusta vaihdetaan selaustilassa oltaessa. (#7741)
+- Pistekirjoitustuloste ei enää lakkaa seuraamasta selaustilakohdistinta, kun Kohdistuskontekstin näyttämisasetusta vaihdetaan selaustilassa oltaessa. (#7741)
 - Korjattu ALVA BC680 -pistenäyttöjen alustuksen ajoittainen epäonnistuminen. (#8106)
 - ALVA BC6 -näytöt eivät enää oletusarvoisesti suorita emuloitujen näppäimien painalluksia painettaessa sp2+sp3-näppäimiä sisältäviä  näppäinkomentoja sisäisen toiminnallisuuden käynnistämiseksi. (#8230)
 - Alt-näppäimen emulointi ALVA BC6 -näytön sp2-näppäintä painamalla toimii nyt, kuten on ilmoitettu. (#8360)
@@ -45,7 +45,7 @@
 - NVDA tunnistaa enemmän valintaikkunoita Windows 10:ssä ja muissa moderneissa sovelluksissa. (#8405)
 - Järjestelmäkohdistuksen seuraaminen ei enää epäonnistu Windows 10:n October 2018 -päivityksessä ja Server 2019:ssä ja uudemmissa sovelluksen jäädessä jumiin tai ryöpyttäessä järjestelmää tapahtumilla. (#7345, #8535)
 - Käyttäjille ilmoitetaan heidän yrittäessään lukea tai kopioida tyhjää tilariviä. (#7789)
-- Korjattu tilanne, jossa säätimien "ei valittu" -tilaa ei ilmoiteta puheella, mikäli kyseinen säädin oli aiemmin osittain valittu. (#6946)
+- Korjattu ongelma, jossa säätimien "ei valittu" -tilaa ei ilmoiteta puheella, mikäli kyseinen säädin oli aiemmin osittain valittuna. (#6946)
 - Kielen nimi näytetään burmalle asianmukaisesti NVDA:n yleisten asetusten kieliluettelossa Windows 7:ssä. (#8544)
 - NVDA puhuu Microsoft Edgessä ilmoitukset, kuten lukunäkymän saatavuuden ja sivun lataamisen edistymisen. (#8423)
 - Kun pistenäytöllä ollaan dokumentin alussa, teksti näkyy nyt näytöllä siten, että dokumentin ensimmäinen merkki on näytön vasemmassa reunassa kuten muissakin monirivisissä tekstikentissä. (#8406)
@@ -56,6 +56,7 @@
  - Vähennetty kohdistuksen näyttämisen puheliaisuutta sekä puheella että pistekirjoituksella, kun kohdistus siirretään Word-dokumenttiin. (#8407)
  - Kohdistimen siirtäminen pistenäytön kosketuskohdistinnäppäimillä toimii nyt asianmukaisesti oltaessa luettelossa Word-dokumentissa. (#7971)
  - Äskettäin Word-dokumenttiin lisätyt luettelomerkit/numerot ilmaistaan asianmukaisesti sekä puheella että pistenäytöllä. (#7970)
+- Lisäosien asentaminen on nyt mahdollista Windows 10:n versiossa 1803 ja uudemmissa, jos "Käytä Unicode UTF-8 -merkistöä maailmanlaajuista kielitukea varten" -ominaisuus on käytössä. (#8599)
 
 
 == Muutokset kehittäjille ==
@@ -113,7 +114,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki taulukoille Kindl
 - Korjattu Handy Techin Easy Braille- ja Braille Wave -pistenäyttöjen yhteyden vakauteen liittyviä ongelmia. (#8016)
 - NVDA ei enää ilmoita Windows 8:ssa ja uudemmissa  "tuntematon" pikalinkkivalikkoa (Windows+X) avattaessa ja valittaessa sen kohteita. (#8137)
 - HIMS-pistenäyttöjen mallikohtaiset painikkeiden syötekomennot toimivat nyt kuten käyttöohjeessa ilmoitetaan. (#8096)
-- NVDA yrittää nyt korjata järjestelmän COM-rekisteröinnin ongelmia, jotka aiheuttavat ohjelmien (kuten Firefox ja Internet Explorer) muuttumista esteellisiksi sekä NVDA:n "tuntematon"-ilmoituksia. (#2807)
+- NVDA yrittää nyt korjata järjestelmän COM-rekisteröintien ongelmia, jotka aiheuttavat ohjelmien (kuten Firefox ja Internet Explorer) muuttumista esteellisiksi sekä NVDA:n "tuntematon"-ilmoituksia. (#2807)
 - Kierretty Tehtävienhallinnan ongelma, joka esti NVDA:n käyttäjiä lukemasta prosessien yksityiskohtaisia tietoja. (#8147)
 - Uudet Microsoft SAPI5 -äänet reagoivat nyt nopeammin, mikä tekee niiden käyttämisestä sujuvampaa. (#8174)
 - NVDA ei enää puhu tai näytä pistenäytöllä vasemmalta oikealle ja oikealta vasemmalle osoittavia nuolimerkkejä käytettäessä kelloa Windowsin uusimmissa versioissa. (#5729)
