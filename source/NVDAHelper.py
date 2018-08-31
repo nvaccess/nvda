@@ -6,7 +6,10 @@
 
 import os
 import sys
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import msvcrt
 import versionInfo
 import winKernel
@@ -78,7 +81,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf=create_unicode_buffer(1024)
 	bufSize=c_int(2048)
 	key=HKEY()
-	if windll.advapi32.RegOpenKeyExW(_winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,_winreg.KEY_QUERY_VALUE,byref(key))==0:
+	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:
 		try:
 			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
 				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)

@@ -12,12 +12,12 @@ NVDA 변경 이력
 - Foobar2000에서 현재 재생 시간 및 전체 재생 시간 확인 명령 추가(핫키는 할당되어 잇지 않음). (#6596)
 - 음성 엔진에 상관없이 Mac command key 기호(⌘)가 컨텐츠 읽을시 출력되도록 함. (#8366)
 - aria-roledescription 속성이 적용된 기타 요소 롤이 모든 웹브라우저에서 인식되도록 함. (#8448)
-- New braille tables: Czech 8 dot, Central Kurdish, Esperanto, Hungarian, Swedish 8 dot computer braille. (#8226, #8437)
+- 점자 표기법: 체코어 8점 점자, 중앙 쿠르드어, 에스페란토어, 헝가리어, 스웨덴어 8점 컴퓨터 점자 추가. (#8226, #8437)
 - Support has been added to automatically detect braille displays in the background. (#1271)
  - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille and HumanWare BrailleNote and Brailliant BI/B displays are currently supported.
  - You can enable this feature by selecting the automatic option from the list of braille displays in NVDA's braille display selection dialog.
  - Please consult the documentation for additional details.
-- Added support for various modern input features introduced in recent Windows 10 releases. These include emoji panel (Fall Creators Update), dictation (Fall Creators Update), hardware keyboard input suggestions (April 2018 Update), and cloud clipboard paste (October 2018 Update). (#7273)
+- 최신 윈도우 10 버전에서 추가된 현대식 입력 기능 지원 추가(이모지 패널(Fall Creators Update), 음성 입력(Fall Creators Update), 하드웨어 입력 추천 단어 목록(April 2018 Update),, 클라우드 클립보드 붙여넣기(October 2018 Update) 등). (#7273)
 - 파이어폭스 63 사용시 ARIA로 처리된 인용 문구(role blockquote) 탐색 지원 추가. (#8577)
 
 
@@ -45,14 +45,14 @@ NVDA 변경 이력
 - 윈도우 10 및 머던 앱 사용시 더 많은 대화상자가 인식되도록 함. (#8405)
 - 윈도우 10 October 2018 Update 및 Server 2019 이상 사용시 사용하던 앱이 다운되었거나 수많은 이벤트를 보낼때 시스템 포커스 추적이 먹통되던 문제 수정. (#7345, #8535)
 - 상태 표시줄 내용이 없을때 내용 탐색 및 복사 명령 실행시 오류 메시지가 출력되도록 함. (#7789)
-- Fixed a case where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
-- In the list of languages in NVDA's General Settings, language name for Burmese is displayed correctly on Windows 7. (#8544)
+- Fixed an issue where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
+- 윈도우 7 사용시 NVDA 일반 설정내 언어 목록에서 버마어가 누락된 문제 수정. (#8544)
 - In Microsoft Edge, NVDA will announce notifications such as reading view availability and page load progress. (#8423)
-- Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
 - When navigating into a list on the web, NVDA will now report its label if the web author has provided one. (#7652)
 - When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
-- The 64-bit version of Media Player Classic is now supported. (#6066)
+- Media Player Classic 64비트 버전 지원 추가. (#6066)
 - Several improvements to braille support in Microsoft Word with UI Automation enabled:
+ - Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
  - Reduced overly verbose focus presentation in both speech and braille when focusing a Word document. (#8407)
  - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
  - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)

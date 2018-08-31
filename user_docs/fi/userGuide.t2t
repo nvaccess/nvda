@@ -1232,6 +1232,7 @@ Mikäli näytön ajurin lataamisessa ilmenee virheitä, NVDA ilmoittaa siitä, e
 ==== Pistenäyttö ====[SelectBrailleDisplayDisplay]
 Tämä yhdistelmäruutu sisältää useita vaihtoehtoja riippuen järjestelmään asennetuista pistenäyttöajureista.
 Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
+
 Vaihtoehto "automaattinen" saa NVDA:n etsimään useita tuettuja pistenäyttöjä taustalla.
 Kun tämä ominaisuus on käytössä ja tietokoneeseen liitetään tuettu pistenäyttö USB:tä tai bluetoothia käyttäen, NVDA ottaa kyseisen näytön käyttöön.
 
@@ -1991,11 +1992,11 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | t1 tai etouch1 |
+| Vieritä taaksepäin | t1, etouch1 |
 | Siirrä edelliselle riville | t2 |
 | Siirrä nykyiseen kohdistukseen | t3 |
 | Siirrä seuraavalle riville | t4 |
-| Vieritä eteenpäin | t5 tai etouch3 |
+| Vieritä eteenpäin | t5, etouch3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Ilmoita muotoilutiedot pistesolusta | toissijainen kosketuskohdistinnäppäin |
 | HID-näppäimistöemulointi käyttöön/pois käytöstä | t1+spEnter |
@@ -2005,7 +2006,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Lue ikkunan nimi | etouch2 |
 | Lue tilarivi | etouch4 |
 | Vaihto+Sarkain-näppäinyhdistelmä | sp1 |
-| Alt-näppäin | sp2 |
+| Alt-näppäin | sp2, alt |
 | Esc-näppäin | sp3 |
 | Sarkain-näppäin | sp4 |
 | Nuoli ylös -näppäin | spUp |
@@ -2023,7 +2024,6 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Ctrl+End-näppäinyhdistelmä | t3+spDown |
 | Home-näppäin | t3+spLeft |
 | End-näppäin | t3+spRight |
-| Alt-näppäin | alt |
 | Ctrl-näppäin | control |
 %kc:endInclude
 
@@ -2317,7 +2317,6 @@ Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäyt�
 
 NVDA käyttää BrxComia, mikäli se on asennettu.
 BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
-Papenmeier julkaisee piakkoin tästä työkalusta NVDA:n kanssa toimivan version.
 Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
