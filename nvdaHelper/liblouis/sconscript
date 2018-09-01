@@ -22,17 +22,8 @@ Import([
 
 louisRootDir = env.Dir("#include/liblouis")
 louisSourceDir = louisRootDir.Dir("liblouis")
+louisWindowsDir = louisRootDir.Dir("windows\\include")
 outDir = sourceDir.Dir("louis")
-
-RE_AC_INIT = re.compile(r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)")
-def getLouisVersion():
-	# Get the version from configure.ac.
-	with file(louisRootDir.File("configure.ac").abspath) as f:
-		for line in f:
-			m = RE_AC_INIT.match(line)
-			if m:
-				return m.group("version")
-	return "unknown"
 
 env = env.Clone()
 
@@ -49,12 +40,10 @@ env.Append(CPPDEFINES=[
 	# reserved ISO C names (like strdup) in favour of non-portable conforming
 	# variants that start with an '_'. This removes those deprecation warnings. */
 	"_CRT_NONSTDC_NO_DEPRECATE",
-	("PACKAGE_VERSION", r'\"%s\"' % getLouisVersion()),
-	("UNICODE_BITS", 16),
 	# Tell liblouis.h that we're exporting liblouis dll functions, not importing them.
 	"_EXPORTING",
 ])
-env.Prepend(CPPPATH=[".", louisSourceDir])
+env.Prepend(CPPPATH=[".", louisWindowsDir, louisSourceDir])
 
 liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
 	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned short int"})
