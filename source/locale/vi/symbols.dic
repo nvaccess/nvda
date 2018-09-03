@@ -7,16 +7,16 @@ symbols:
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	chấm
-! sentence ending	chấm than
-? sentence ending	chấm hỏi
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	chấm phẩy
-: phrase ending	hai chấm
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
-in-word '	nháy đơn
-negative number	âm
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,9 +27,9 @@ symbols:
 ? sentence ending	chấm hỏi	all	always
 ; phrase ending	chấm phẩy	most	always
 : phrase ending	hai chấm	most	always
-decimal point		none	always
-in-word '	phẩy trên	all	norep
-negative number	minus	trừ	norep
+decimal point	chấm	none	always
+in-word '	nháy đơn	all	norep
+negative number	âm	none	norep
 
 # Whitespace
 \0	dòng trắng	char	# null
@@ -184,7 +184,7 @@ _	gạch dưới	most
 ⅛	một phần tám	none
 ⅜	ba phần tám	none
 ⅝	năm phần tám	none
-⅞	năm phần tám	none
+⅞	bảy phần tám	none
 
 # Miscellaneous Technical
-⌘	Mac Command key	none
+⌘	Phím Mac Command	none
