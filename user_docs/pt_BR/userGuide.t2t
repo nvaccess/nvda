@@ -2,7 +2,6 @@ Guia do Usuário do NVDA NVDA_VERSION
 Traduzido por: Gustavo Tavares Dantas; Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 %!includeconf: ../userGuide.t2tconf
-%!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 %kc:title: Referência Rápida de Comandos do NVDA NVDA_VERSION
 
 = Índice =[toc]
@@ -1993,11 +1992,11 @@ A seguir estão teclas de comando desta linha para o NVDA.
 Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
 %kc:beginInclude
 || Nome | Tecla |
-| Mover linha braille para trás | t1 ou etouch1 |
+| Mover linha braille para trás | t1, etouch1 |
 | Mover linha braille para a linha anterior | t2 |
 | Mover para o foco atual | t3 |
 | Mover linha braille para a linha seguinte | t4 |
-| Mover linha braille para a frente | t5 ou etouch3 |
+| Mover linha braille para a frente | t5, etouch3 |
 | Guiar para a cela braille | sensor |
 | Anunciar formatação de texto em célula braille | sensor secundário |
 | Alternar a simulação de teclado HID | t1+spEnter |
@@ -2007,7 +2006,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Anunciar título | etouch2 |
 | Ler a barra de status | etouch4 |
 | tecla shift+tab | sp1 |
-| tecla alt | sp2 |
+| tecla alt | sp2, alt |
 | tecla escape | sp3 |
 | tecla tab | sp4 |
 | tecla seta acima | spCima |
@@ -2025,7 +2024,6 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | tecla control+end | t3+spBaixo |
 | tecla home | t3+spEsquerda |
 | tecla end | t3+spDireita |
-| tecla alt | alt |
 | tecla control | control |
 %kc:endInclude
 
@@ -2779,7 +2777,5 @@ Os seguintes valores podem ser definidos sob essa chave do Registro:
 Se você precisar de mais informações ou assistência referente ao NVDA, visite o site do NVDA em NVDA_URL.
 Aqui encontrará documentação adicional, bem como suporte técnico e recursos das comunidades.
 Este site também fornece informações e recursos sobre o desenvolvimento do NVDA.
-
 ""[Para"" conhecer todas as novidades, mudanças e correções introduzidas, consulte o arquivo das novidades que pode ser encontrado no submenu ajuda do menu ""NVDA.]""
-
-""[Você"" pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista de discussão do nvda em português. Envie um e-mail em branco e sem assunto para o endereço [nvdaemportugues+subscribe@googlegroups.com nvdaemportugues%2Bsubscribe@googlegroups.com] para se inscrever nesta ""lista.]""
+""[Você"" pode igualmente obter informações e tirar dúvidas sobre o NVDA na lista de discussão do nvda em português. Envie um e-mail em branco e sem assunto para o endereço ''<a href="mailto:nvdaemportugues+subscribe@googlegroups.com">nvdaemportugues+subscribe@googlegroups.com</a>'' para se inscrever nessa ""lista.]""

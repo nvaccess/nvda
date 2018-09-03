@@ -24,9 +24,9 @@ import os.path
 import glob
 from fnmatch import fnmatch
 try:
-	import winreg
+	import _winreg as winreg # Python 2.7 import
 except:
-	import _winreg as winreg
+	import winreg # python 3 import
 
 def fetchDoxygenPath():
 	try:

@@ -13,9 +13,9 @@ For the latter two actions, one can perform actions prior to and/or after they t
 
 import globalVars
 try:
-	import winreg
+	import _winreg as winreg # Python 2.7 import
 except ImportError:
-	import _winreg as winreg
+	import winreg # Python 3 import
 import ctypes
 import ctypes.wintypes
 import os
@@ -82,7 +82,7 @@ def saveOnExit():
 def isInstalledCopy():
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		instDir=winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return False

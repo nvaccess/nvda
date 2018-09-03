@@ -6,9 +6,9 @@
 
 import types
 try:
-	from queue import Queue
+	from Queue import Queue # Python 2.7 import
 except ImportError:
-	from Queue import Queue
+	from queue import Queue # Python 3 import
 import globalVars
 from logHandler import log
 import watchdog

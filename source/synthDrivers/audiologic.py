@@ -8,9 +8,9 @@ from collections import OrderedDict
 from . import _audiologic
 from synthDriverHandler import SynthDriver, VoiceInfo
 try:
-	import winreg
+	import _winreg as winreg # Python 2.7 import
 except ImportError:
-	import _winreg as winreg
+	import winreg # Python 3 import
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.RateSetting(),SynthDriver.PitchSetting(minStep=5),SynthDriver.InflectionSetting(minStep=10),SynthDriver.VolumeSetting(minStep=2))

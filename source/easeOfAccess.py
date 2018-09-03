@@ -8,9 +8,9 @@
 """
 
 try:
-	import winreg
+	import _winreg as winreg # Python 2.7 import
 except ImportError:
-	import _winreg as winreg
+	import winreg # Python 3 import
 import ctypes
 import winUser
 from winVersion import winVersion

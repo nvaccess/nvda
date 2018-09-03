@@ -120,13 +120,17 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getPointFromOffset(self,offset):
+	@classmethod
+	def _getPointFromOffsetInObject(cls,obj,offset):
 		try:
-			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
-		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(*res.center)
 		return point
+
+	def _getPointFromOffset(self,offset):
+		return self._getPointFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"

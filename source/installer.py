@@ -7,9 +7,9 @@
 from ctypes import *
 from ctypes.wintypes import *
 try:
-	import winreg
+	import _winreg as winreg # Python 2.7 import
 except ImportError:
-	import _winreg as winreg
+	import winreg # Python 3 import
 import threading
 import time
 import os
@@ -35,7 +35,7 @@ def _getWSH():
 	return _wsh
 
 defaultStartMenuFolder=versionInfo.name
-with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
+with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
 	programFilesPath=winreg.QueryValueEx(k, "ProgramFilesDir")[0] 
 defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
@@ -77,7 +77,7 @@ def getStartMenuFolder(noDefault=False):
 
 def getInstallPath(noDefault=False):
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		return winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
@@ -215,12 +215,8 @@ uninstallerRegInfo={
 }
 
 def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
-	try:
-		import winreg
-	except:
-		import _winreg as winreg
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,winreg.KEY_WRITE) as k:
-		for name,value in uninstallerRegInfo.items(): 
+		for name,value in uninstallerRegInfo.iteritems(): 
 			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
