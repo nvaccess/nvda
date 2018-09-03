@@ -283,7 +283,7 @@ class GlobalGestureMap(object):
 					script = None
 				if gestures == "":
 					gestures = ()
-				elif isinstance(gestures, basestring):
+				elif isinstance(gestures, str):
 					gestures = [gestures]
 				for gesture in gestures:
 					try:

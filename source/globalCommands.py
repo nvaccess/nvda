@@ -774,7 +774,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
-				if curObject.name and isinstance(curObject.name, basestring) and not curObject.name.isspace():
+				if curObject.name and isinstance(curObject.name, str) and not curObject.name.isspace():
 					textList.append(curObject.name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -788,7 +788,7 @@ class GlobalCommands(ScriptableObject):
 					# No caret or selection on this object.
 					pass
 			else:
-				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, basestring) and not prop.isspace()]
+				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, str) and not prop.isspace()]
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:
@@ -1414,9 +1414,9 @@ class GlobalCommands(ScriptableObject):
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
-		if not isinstance(title,basestring) or not title or title.isspace():
+		if not isinstance(title,str) or not title or title.isspace():
 			title=obj.appModule.appName if obj.appModule else None
-			if not isinstance(title,basestring) or not title or title.isspace():
+			if not isinstance(title,str) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
 				title=_("No title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
@@ -1810,7 +1810,7 @@ class GlobalCommands(ScriptableObject):
 			text = api.getClipData()
 		except:
 			text = None
-		if not text or not isinstance(text,basestring) or text.isspace():
+		if not text or not isinstance(text,str) or text.isspace():
 			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return

@@ -57,7 +57,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if placeholder:
 			attrs['placeholder']=placeholder
 		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
+		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		#choose role

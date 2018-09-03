@@ -50,7 +50,7 @@ class XMLTextParser(object):
 
 	def _CharacterDataHandler(self,data):
 		cmdList=self._commandList
-		if cmdList and isinstance(cmdList[-1],basestring):
+		if cmdList and isinstance(cmdList[-1],str):
 			cmdList[-1]+=data
 		else:
 			cmdList.append(data)

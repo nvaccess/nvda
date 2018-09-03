@@ -203,7 +203,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 				# This is the most recent formatField we have seen.
 				lastFormatField=field.field
-			elif listItemStarted and isinstance(field,basestring):
+			elif listItemStarted and isinstance(field,str):
 				# This is the first text string within the list.
 				# Remove the text up to the first space, and store it as line-prefix which NVDA will appropriately speak/braille as a bullet.
 				try:

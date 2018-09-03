@@ -144,7 +144,7 @@ def spellTextInfo(info,useCharacterDescriptions=False):
 		return
 	curLanguage=None
 	for field in info.getTextWithFields({}):
-		if isinstance(field,basestring):
+		if isinstance(field,str):
 			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions)
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
@@ -496,7 +496,7 @@ def speak(speechSequence,symbolLevel=None):
 	import speechViewer
 	if speechViewer.isActive:
 		for item in speechSequence:
-			if isinstance(item, basestring):
+			if isinstance(item, str):
 				speechViewer.appendText(item)
 	global beenCanceled, curWordChars
 	curWordChars=[]
@@ -523,7 +523,7 @@ def speak(speechSequence,symbolLevel=None):
 			curLanguage=item.lang
 			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
 				curLanguage=defaultLanguage
-		elif isinstance(item,basestring):
+		elif isinstance(item,str):
 			if not item: continue
 			if autoLanguageSwitching and curLanguage!=prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
@@ -546,7 +546,7 @@ def speak(speechSequence,symbolLevel=None):
 			inCharacterMode=item.state
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
-		if isinstance(item,basestring):
+		if isinstance(item,str):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)
 			if not inCharacterMode:
 				speechSequence[index]+=CHUNK_SEPARATOR
@@ -862,7 +862,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
 		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
+			if onlyInitialFields or any(isinstance(x,str) for x in speechSequence):
 				speak(speechSequence)
 			if not onlyInitialFields: 
 				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
@@ -882,7 +882,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	allIndentation=""
 	indentationDone=False
 	for command in textWithFields:
-		if isinstance(command,basestring):
+		if isinstance(command,str):
 			if reportIndentation and not indentationDone:
 				indentation,command=splitTextIndentation(command)
 				# Combine all indentation into one string for later processing.
@@ -944,7 +944,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	# Don't add this text if it is blank.
 	relativeBlank=True
 	for x in relativeSpeechSequence:
-		if isinstance(x,basestring) and not isBlank(x):
+		if isinstance(x,str) and not isBlank(x):
 			relativeBlank=False
 			break
 	if not relativeBlank:
@@ -1711,7 +1711,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 		#And place the final incomplete phrase in pendingSpeechSequence
 		for index in range(len(speechSequence)-1,-1,-1): 
 			item=speechSequence[index]
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				m=re_last_pause.match(item)
 				if m:
 					before,after=m.groups()

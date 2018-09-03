@@ -828,7 +828,7 @@ class TextInfoRegion(Region):
 		typeform = louis.plain_text
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		for command in info.getTextWithFields(formatConfig=formatConfig):
-			if isinstance(command, basestring):
+			if isinstance(command, str):
 				self._isFormatFieldAtStart = False
 				if not command:
 					continue
@@ -2307,7 +2307,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		"""
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
-		elif isinstance(port, basestring):
+		elif isinstance(port, str):
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
 			if not isUsb and not isBluetooth:
