@@ -77,7 +77,7 @@ class AutoPropertyType(type):
 			else:
 				setattr(self,x,property(fget=g,fset=s,fdel=d))
 
-class AutoPropertyObject(object):
+class AutoPropertyObject(object,metaclass=AutoPropertyType):
 	"""A class that dynamicly supports properties, by looking up _get_* and _set_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
@@ -87,7 +87,6 @@ class AutoPropertyObject(object):
 	Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
 	If _cache_x is not set, L{cachePropertiesByDefault} is used.
 	"""
-	__metaclass__=AutoPropertyType
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
 	#: @type: weakref.WeakKeyDictionary
@@ -154,7 +153,7 @@ class ScriptableType(AutoPropertyType):
 			setattr(cls, gesturesDictName, gestures)
 		return cls
 
-class ScriptableObject(AutoPropertyObject):
+class ScriptableObject(AutoPropertyObject,metaclass=ScriptableType):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
 	Scripts are methods named with a prefix of C{script_}; e.g. C{script_foo}.
@@ -168,8 +167,6 @@ class ScriptableObject(AutoPropertyObject):
 		by setting a C{category} attribute on the script method.
 	@type scriptCategory: basestring
 	"""
-
-	__metaclass__ = ScriptableType
 
 	def __init__(self):
 		#: Maps input gestures to script functions.
