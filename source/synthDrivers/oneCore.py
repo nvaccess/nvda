@@ -315,7 +315,7 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self, ID):
 		voices = self.availableVoices
 		# Try setting the requested voice
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			if voice.ID == ID:
 				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
 				return
@@ -333,16 +333,16 @@ class SynthDriver(SynthDriver):
 		voices = self.availableVoices
 		# Try matching to NVDA language
 		fullLanguage=languageHandler.getWindowsLanguage()
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			if voice.language==fullLanguage:
 				return voice.ID
 		baseLanguage=fullLanguage.split('_')[0]
 		if baseLanguage!=fullLanguage:
-			for voice in voices.itervalues():
+			for voice in voices.values():
 				if voice.language.startswith(baseLanguage):
 					return voice.ID
 		# Just use the first available
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			return voice.ID
 		raise RuntimeError("No voices available")
 

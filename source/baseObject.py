@@ -142,7 +142,7 @@ class ScriptableType(AutoPropertyType):
 			# because no custom __gestures dictionary has been defined.
 			gestures = {}
 		# Python 3 incompatible.
-		for name, script in dict.iteritems():
+		for name, script in dict.items():
 			if not name.startswith('script_'):
 				continue
 			scriptName = name[len("script_"):]
