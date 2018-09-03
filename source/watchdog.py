@@ -218,7 +218,7 @@ def initialize():
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	# Monkey patch comtypes to specially handle cancelled COM calls.
-	comtypes.COMError.__init__ = _COMError_init
+	#comtypes.COMError.__init__ = _COMError_init
 	_watcherThread=threading.Thread(target=_watcher)
 	alive()
 	_watcherThread.start()
@@ -231,7 +231,7 @@ def terminate():
 		return
 	isRunning=False
 	oledll.ole32.CoDisableCallCancellation(None)
-	comtypes.COMError.__init__ = _orig_COMError_init
+	#comtypes.COMError.__init__ = _orig_COMError_init
 	# Wake up the watcher so it knows to finish.
 	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
 		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
