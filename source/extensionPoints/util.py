@@ -179,7 +179,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 		return func(*args, **kwargs)
 
 	supportedKwargs = set(spec.args)
-	for kwarg in kwargs.keys():
+	for kwarg in list(kwargs.keys()):
 		if kwarg not in supportedKwargs:
 			del kwargs[kwarg]
 	return func(*args, **kwargs)
