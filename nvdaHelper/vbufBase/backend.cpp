@@ -47,8 +47,8 @@ void VBufBackend_t::initialize() {
 }
 
 void VBufBackend_t::forceUpdate() {
-	this->cancelPendingUpdate();
-	this->update();
+	//this->cancelPendingUpdate();
+	//this->update();
 }
 
 
@@ -138,37 +138,54 @@ void VBufBackend_t::renderThread_terminate() {
 	runningBackends.erase(this);
 }
 
+bool markNodeAsNonreusableIfInAncestor(VBufStorage_controlFieldNode_t* node, VBufStorage_controlFieldNode_t* ancestor) {
+	auto parent=node->getParent();
+	if(!parent) {
+		return false;
+	} else if(parent==ancestor||markNodeAsNonreusableIfInAncestor(parent,ancestor)) {
+		node->allowReuseInAncestorUpdate=false;
+		return true;
+	}
+	return false;
+}
+
 bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
-	if(node->updateAncestor) node=node->updateAncestor;
+	auto lock=this->lock.scopedAcquire();
 	if(!isNodeInBuffer(node)) {
 		LOG_DEBUGWARNING(L"Node at "<<node<<L" not in buffer at "<<this);
 		return false;
 	}
-	LOG_DEBUG(L"Invalidating node "<<node->getDebugInfo());
-	this->lock.acquire();
-	bool needsInsert=true;
-	auto i=pendingInvalidSubtreesList.begin();
-	for(;i!=pendingInvalidSubtreesList.end();++i) {
-		VBufStorage_fieldNode_t* existingNode=*i;
-		if(node==existingNode) { //Node already invalidated
-			LOG_DEBUG(L"Node already invalidated");
-			needsInsert=false;
-			break;
-		} else if(isDescendantNode(node,existingNode)) { // a descendant is already inserted
-			LOG_DEBUG(L"Inserting invalid subtree before first descendant");
-			break;
+	// If this node requires its parent to be updated, Invalidate the closest ancestor that does not require its parent to be updated. 
+	for(auto tempNode=node;tempNode&&tempNode->requiresParentUpdate;tempNode=tempNode->getParent()) {
+		node=tempNode;
+	}
+	// If this node is already invalidated, do nothing.
+	// If this node is the descendant of a node that is already invalidated,
+	// Ensure that this node and any of its ancestors (up to but not including) the already invalid node, are marked as non-reusable.
+	for(auto i: pendingInvalidSubtreesList) {
+		if(i==node) {
+			return true;
+		} else if(markNodeAsNonreusableIfInAncestor(node,i)) {
+			return true;
 		}
 	}
-	if(needsInsert) {
-		LOG_DEBUG(L"Adding node to invalid nodes");
-		pendingInvalidSubtreesList.insert(i,node);
-	}
-	this->lock.release();
-	if(needsInsert) this->requestUpdate();
+	// If this node is an ancestor of one or more already invalid nodes,
+	// Ensure that the already invalid node and any of its ancestors (up to but not including) this node, are marked as non-reusable. 
+	// Then remove those nodes from the invalidation list.
+	pendingInvalidSubtreesList.remove_if([node](auto i){
+		return markNodeAsNonreusableIfInAncestor(i,node);
+	});
+	// Now mark this node as invalid.
+	pendingInvalidSubtreesList.push_back(node);
+	this->requestUpdate();
 	return true;
 }
 
 void VBufBackend_t::update() {
+	if(inUpdate) {
+		return;
+	}
+	inUpdate=true;
 	if(this->hasContent()) {
 		this->lock.acquire();
 		LOG_DEBUG(L"Updating "<<pendingInvalidSubtreesList.size()<<L" subtrees");
@@ -176,7 +193,8 @@ void VBufBackend_t::update() {
 		this->lock.release();
 		map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*> replacementSubtreeMap;
 		//render all invalid subtrees, storing each subtree in its own buffer
-		for(auto i=workingInvalidSubtreesList.begin();i!=workingInvalidSubtreesList.end();++i) {
+		Beep(1000,50);
+		for(auto i=workingInvalidSubtreesList.begin();i!=workingInvalidSubtreesList.end();) {
 			VBufStorage_controlFieldNode_t* node=*i;
 			LOG_DEBUG(L"re-rendering subtree at "<<node);
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();
@@ -189,7 +207,9 @@ void VBufBackend_t::update() {
 			render(tempBuf,docHandle,ID,node);
 			LOG_DEBUG(L"Rendered content in temp buffer");
 			replacementSubtreeMap.insert(make_pair(node,tempBuf));
+			workingInvalidSubtreesList.erase(i++);
 		}
+		Beep(3000,50);
 		workingInvalidSubtreesList.clear();
 		this->lock.acquire();
 		LOG_DEBUG(L"Replacing nodes with content of temp buffers");
@@ -205,6 +225,7 @@ void VBufBackend_t::update() {
 		this->lock.release();
 	}
 	LOG_DEBUG(L"Update complete");
+	inUpdate=false;
 }
 
 void VBufBackend_t::terminate() {
@@ -237,17 +258,27 @@ VBufBackend_t::~VBufBackend_t() {
 	nhAssert(runningBackends.count(this) == 0);
 }
 
-VBufStorage_fieldNode_t* VBufBackend_t::reuseExistingNodeInRender(int docHandle, int ID)  {
+VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(int docHandle, int ID)  {
+	// Locate a possible existing node with the given docHandle and ID
 	auto existingNode=this->getControlFieldNodeWithIdentifier(docHandle,ID);
-	if(existingNode) {
-		auto i=std::find(this->workingInvalidSubtreesList.begin(),this->workingInvalidSubtreesList.end(),existingNode);
-		if(i==this->workingInvalidSubtreesList.end()) {
-			// This existing node was not marked as invalid, therefore it can be re-used.
-			return existingNode;
-		} else {
-			// This existing node was marked as invalid, so the caller must now re-render it.
-			this->workingInvalidSubtreesList.erase(i);
-		}
+	if(!existingNode) {
+		return nullptr;
 	}
+	// Ensure the node allows us to reuse it
+	if(!existingNode->allowReuseInAncestorUpdate||existingNode->requiresParentUpdate) {
+		return nullptr;
+	}
+	// Ensure that the existing node is a descendant of the subtree currently being re-rendered.
+	auto currentNode=workingInvalidSubtreesList.front();
+	if(!isDescendantNode(currentNode,existingNode)) {
+		return nullptr;
+	}
+	auto i=std::find(this->workingInvalidSubtreesList.begin(),this->workingInvalidSubtreesList.end(),existingNode);
+	if(i==this->workingInvalidSubtreesList.end()) {
+		// This existing node was not marked as invalid, therefore it can be re-used.
+		return existingNode;
+	}
+	// This existing node was marked as invalid, so the caller must now re-render it.
+	this->workingInvalidSubtreesList.erase(i);
 	return nullptr;
 }

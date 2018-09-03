@@ -292,7 +292,7 @@ void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffe
 	LOG_DEBUG(L"Disassociating fieldNode from buffer");
 }
 
-VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), updateAncestor(NULL), attributes() {
+VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), attributes() {
 	LOG_DEBUG(L"field node initialization at "<<this<<L"length is "<<length);
 }
 
@@ -635,7 +635,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 		for(auto i=buffer->referenceNodes.rbegin();i!=buffer->referenceNodes.rend();++i) {
 			VBufStorage_controlFieldNode_t* parent=(*i)->parent;
 			VBufStorage_fieldNode_t* previous=(*i)->previous;
-			VBufStorage_fieldNode_t* referenced=(*i)->referenceNode;
+			VBufStorage_controlFieldNode_t* referenced=(*i)->referenceNode;
 			buffer->removeFieldNode(*i);
 			this->unlinkFieldNode(referenced);
 			buffer->insertNode(parent,previous,referenced);
@@ -646,6 +646,12 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			LOG_DEBUGWARNING(L"Error removing node. Skipping");
 			failedBuffers=true;
 			buffer->clearBuffer();
+			delete buffer;
+			m.erase(i++);
+			continue;
+		}
+		if(!buffer->rootNode) {
+			LOG_DEBUGWARNING(L"Empty temp buffer");
 			delete buffer;
 			m.erase(i++);
 			continue;
@@ -667,7 +673,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 	//Update the controlField info on this buffer using all the buffers in the map
 	//We do this all in one go instead of for each replacement in case there are issues with ordering
 	//e.g. an identifier appears in one place before its removed in another
-	for(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>::iterator i=m.begin();i!=m.end();++i) {
+	for(auto i=m.begin();i!=m.end();++i) {
 		VBufStorage_buffer_t* buffer=i->second;
 		int failedIDs=0;
 		for(map<VBufStorage_controlFieldNodeIdentifier_t,VBufStorage_controlFieldNode_t*>::iterator j=buffer->controlFieldNodesByIdentifier.begin();j!=buffer->controlFieldNodesByIdentifier.end();++j) {
@@ -1179,9 +1185,10 @@ bool VBufStorage_buffer_t::isNodeInBuffer(VBufStorage_fieldNode_t* node) {
 	return this->nodes.count(node)?true:false;
 }
 
-VBufStorage_referenceNode_t*  VBufStorage_buffer_t::addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node) {
-	auto referenceNode=new VBufStorage_referenceNode_t(node);
-	if(!insertNode(parent,previous,referenceNode)) {
+VBufStorage_referenceNode_t*  VBufStorage_buffer_t::addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node) {
+	if(!node) return nullptr;
+	auto referenceNode=new VBufStorage_referenceNode_t(node->identifier.docHandle,node->identifier.ID,node);
+	if(!addControlFieldNode(parent,previous,referenceNode)) {
 		delete referenceNode;
 		return nullptr;
 	}

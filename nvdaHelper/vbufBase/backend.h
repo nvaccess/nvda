@@ -104,6 +104,8 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
+bool inUpdate {false};
+
 /**
  * Updates the content of the buffer. 
  * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
@@ -173,7 +175,7 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * The node is unmarked for re-rendering, but not returned. 
  * this allows the current render in progress (that called this method) to go ahead and re-render that node itself like it had never existed.
   */
-	VBufStorage_fieldNode_t* reuseExistingNodeInRender(int docHandle, int ID) ;
+	VBufStorage_controlFieldNode_t* reuseExistingNodeInRender(int docHandle, int ID) ;
 
 };
 

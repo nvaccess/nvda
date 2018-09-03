@@ -668,11 +668,27 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
+	if(pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell)!=S_OK) {
+		paccTableCell=nullptr;
+	}
+	if(paccTable2) {
+		// Any parts of a table (rows, groupings, cells) cannot be reused when re-rendering all or part of a table,
+		// As their row and column information would need to be re-calculated.
+		//parentNode->allowReuseInAncestorUpdate=false;
+		if(!paccTableCell) {
+			// Re-rendering Any parts of a table between the table and the cells (rows, groupings), must cause their parent/s (all the way up to the table itself) to be re-rendered,
+			// As row and column information must be re-calculated on all cells.
+			// Note though that cells themselves do not need their parents re-rendered when changed as  this will not affect  row and column info on other cells. 
+			//parentNode->requiresParentUpdate=true;
+		} else {
+			parentNode->allowReuseInAncestorUpdate=false;
+		}
+	}
 	// For IAccessibleTable, we must always be passed the table interface by the caller.
 	// For IAccessibleTable2, we can always obtain the cell interface,
 	// which allows us to handle updates to table cells.
 	if (
-		pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell) == S_OK || // IAccessibleTable2
+		 paccTableCell || // IAccessibleTable2
 		(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
 	) {
 		if (paccTableCell) {
@@ -1071,14 +1087,20 @@ void GeckoVBufBackend_t::renderThread_terminate() {
 void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	IAccessible2* pacc=IAccessible2FromIdentifier(docHandle,ID);
 	if(!pacc) {
-		LOG_DEBUG(L"Could not get IAccessible2, returning");
+		LOG_DEBUGWARNING(L"Could not get IAccessible2, returning");
 		return;
 	}
 	if (!oldNode) {
 		// This is the root node.
 		this->versionSpecificInit(pacc);
 	}
-	this->fillVBuf(pacc, buffer, NULL, NULL);
+	if(!this->fillVBuf(pacc, buffer, NULL, NULL)) {
+		if(oldNode) {
+			LOG_DEBUGWARNING(L"No content rendered in update");
+		} else {
+			LOG_DEBUGWARNING(L"No initial content rendered");
+		}
+	}
 	pacc->Release();
 }
 
