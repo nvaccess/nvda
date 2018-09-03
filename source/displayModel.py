@@ -41,7 +41,7 @@ def normalizeRtlString(s):
 			d=unicodedata.decomposition(c)
 			d=d.split(' ') if d else None
 			if d and len(d)==2 and d[0] in ('<initial>','<medial>','<final>','<isolated>'):
-				c=unichr(int(d[1],16))
+				c=chr(int(d[1],16))
 		l.append(c)
 	return u"".join(l)
 

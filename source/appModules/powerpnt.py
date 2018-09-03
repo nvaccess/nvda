@@ -244,7 +244,7 @@ def getBulletText(ppBulletFormat):
 	if t==ppBulletNumbered:
 		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
-		return unichr(ppBulletFormat.character)
+		return chr(ppBulletFormat.character)
 
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
