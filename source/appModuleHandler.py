@@ -77,7 +77,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	FProcessEntry32 = processEntry32W()
 	FProcessEntry32.dwSize = ctypes.sizeof(processEntry32W)
 	ContinueLoop = winKernel.kernel32.Process32FirstW(FSnapshotHandle, ctypes.byref(FProcessEntry32))
-	appName = unicode()
+	appName = str()
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
 			appName = FProcessEntry32.szExeFile

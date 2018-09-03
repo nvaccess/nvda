@@ -46,7 +46,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
-	windll.urlmon.CreateURLMonikerEx(0, unicode( htmlFileName ) , byref(moniker), URL_MK_UNIFORM)
+	windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
 	if not title:
 		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
@@ -54,7 +54,7 @@ def browseableMessage(message,title=None,isHtml=False):
 	dialogString = u"{isHtml};{title};{message}".format( isHtml = isHtmlArgument , title=title , message=message ) 
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
-	windll.mshtml.ShowHTMLDialogEx( gui.mainFrame.Handle , moniker , HTMLDLG_MODELESS , addressof( dialogArguements ) , unicode(DIALOG_OPTIONS ), None)
+	windll.mshtml.ShowHTMLDialogEx( gui.mainFrame.Handle , moniker , HTMLDLG_MODELESS , addressof( dialogArguements ) , DIALOG_OPTIONS, None)
 	gui.mainFrame.postPopup() 
 
 def message(text):

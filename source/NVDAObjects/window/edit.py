@@ -368,7 +368,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
-				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+				text=str(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.

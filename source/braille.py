@@ -417,7 +417,7 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		text=unicode(self.rawText).replace('\0','')
+		text=str(self.rawText).replace('\0','')
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
 			[os.path.join(brailleTables.TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],

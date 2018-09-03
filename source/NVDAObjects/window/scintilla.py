@@ -172,9 +172,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
 		if cp==SC_CP_UTF8:
-			return unicode(buf.value, errors="replace", encoding="utf-8")
+			return str(buf.value, errors="replace", encoding="utf-8")
 		else:
-			return unicode(buf.value, errors="replace", encoding=locale.getlocale()[1])
+			return str(buf.value, errors="replace", encoding=locale.getlocale()[1])
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)

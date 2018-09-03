@@ -60,14 +60,14 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 	def print_help(self, file=None):
 		"""Shows help in a standard Windows message dialog"""
-		winUser.MessageBox(0, unicode(self.format_help()), u"Help", 0)
+		winUser.MessageBox(0, self.format_help(), u"Help", 0)
 
 	def error(self, message):
 		"""Shows an error in a standard Windows message dialog, and then exits NVDA"""
 		out = ""
 		out = self.format_usage()
 		out += "\nerror: %s" % message
-		winUser.MessageBox(0, unicode(out), u"Error", 0)
+		winUser.MessageBox(0, out, u"Error", 0)
 		sys.exit(2)
 
 globalVars.startTime=time.time()
@@ -82,7 +82,7 @@ except:
 # Check OS version requirements
 import winVersion
 if not winVersion.isSupportedOS():
-	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
+	winUser.MessageBox(0, ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
 def decodeMbcs(string):

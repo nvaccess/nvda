@@ -1274,7 +1274,7 @@ class ExcelCell(ExcelBase):
 		getTextExtentPoint = ctypes.windll.gdi32.GetTextExtentPoint32W
 		getTextExtentPoint.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_int, ctypes.POINTER(structText)]
 		getTextExtentPoint.restype = ctypes.c_int
-		sText = unicode(sText)
+		sText = str(sText)
 		#Get the text dimensions
 		ctypes.windll.gdi32.GetTextExtentPoint32W(tempDC, sText, textLength,ctypes.byref(StructText))
 		#Restore the old Font Object

@@ -63,7 +63,7 @@ class SynthDriver(SynthDriver):
 	}
 
 	def _processText(self, text):
-		text = unicode(text)
+		text = str(text)
 		# We need to make several replacements.
 		return text.translate({
 			0x1: None, # used for embedded commands
