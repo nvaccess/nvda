@@ -22,7 +22,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - 80'den fazla dili destekleyen ve programla birlikte kurulan konuşma sentezleyicisi
 - Mevcut olduğunda, yazıtipi adı ve boyutu, sitili, ve imla hataları gibi metin biçimlendirmelerinin bildirimi
 - Fare altındaki metnin otomatik bildirimi ve fare hareketlerinin isteğe bağlı sesle gösterimi
-- Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
+- Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını ve bir çoğunun bilgisayara bağlandığında otomatik olarak tanınmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
 - 54 dile çevrilmiş oluşu
@@ -46,7 +46,8 @@ NVDA tarafından desteklenen diğer sentezleyicilerle ilgili bilgi [Desteklenen 
 
 ++ Braille Desteği ++[BrailleSupport]
 NVDA birçok braille ekranı da desteklemektedir.
-Braille klavyeyle yapılan kısaltmasız ve kısaltmalı braille girişi de ayrıca desteklenir.
+Braille klavyeyle yapılan kısaltmasız ve kısaltmalı braille girişi de desteklenir.
+Ayrıca, NVDA varsayılan durumda birçok braille ekranı otomatik olarak algılayacaktır.
 Lütfen desteklenen braille ekranlarla ilgili bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
 
 NVDA birçok dilde kısaltmalı, kısaltmasız ve bilgisayar braille kodlarını desteklemektedir.
@@ -600,6 +601,7 @@ Eğer braille ekrana sahipseniz, NVDA bilgileri braille olarak gösterebilir.
 Braille ekranınızın perkins tarzı bir klavyesi varsa, kısaltmalı ya da kısaltmasız braille girişi de yapabilirsiniz.
 
 Lütfen desteklenen braille ekranlar hakkında bilgi için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünü inceleyin.
+Bu bölümde ayrıca, NVDA'nın otomatik arka plan braille ekran algılama işlevinin hangi braille ekranlar için geçerli olduğuna dair bilgi de verilmektedir.
 Braille ayarlarını [NVDA ayarları #NVDASettings] iletişim kutusundaki [Braille kategorisinden #BrailleSettings] yapabilirsiniz.
 
 ++ Braille Kontrol türü, Durumu ve Sınırimi kısaltmaları ++[BrailleAbbreviations]
@@ -832,9 +834,11 @@ Tarama kipi ve tek dolaşım tuşları hakkında daha fazla bilgi için, [tarama
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
 | Kalan süreyi oku | kontrol+shift+r | Mevcutsa, çalmakta olan parçanın bitmesi için kalan süreyi okur. |
+| Geçen süreyi oku | control+shift+e | Varsa, çalan parçanın geçen süre bilgisini seslendirir. |
+| Parça süresini oku | control+shift+t | varsa, çalan parça süresini okur. |
 %kc:endInclude
 
-Not: Kalan süreyi oku kısayol tuşu, yalnızca Foobar2000 durum çubuğu varsayılan görünümünde geçerlidir.
+Not: yukarıdaki kısayol tuşları, yalnızca Foobar2000 durum çubuğu varsayılan görünümünde geçerlidir.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,6 +975,25 @@ Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
 ==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====[GeneralSettingsCheckForUpdates]
 Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
 Ek olarak, NVDA Yardım menüsü altında bulunan, güncelleme olup olmadığına bak seçeneğini kullanarak istediğiniz zaman güncelleme kontrolü yapabilirsiniz.
+Manuel veya otomatik olarak güncellemeleri kontrol ederken, sisteminiz için doğru güncellemeyi indirmeniz için NVDA'nın güncelleme sunucusuna bazı bilgileri göndermesi gerekir.
+Aşağıdaki bilgiler, her zaman gönderilir: 
+- Mevcut NVDA sürümü
+- İşletim Sistemi sürümü
+- İşletim Sisteminin 64 veya 32 bit mi olduğu bilgisi
+
+
+==== NVDA projesine NVDA kullanım istatistiklerini toplamak için izin ver ====[GeneralSettingsGatherUsageStats]
+Etkinleştirilmişse, NV Access NVDA kullanıcı sayısını takip etmek için güncelleme kontrollerinden topladığı işletim sistemi, ülke gibi bazı demografik bilgileri kullanır.
+Ülkenizi belirlemek için IP adresi kullanılıyor olsa da, bu bilginin hiçbir suretle kaydedilmediğini not edin.
+Güncellemeleri kontrol etmek için zorunlu olan bilgilerin yanında, aşağıdaki ek bilgiler de gönderilir:
+- NVDA arayüz dili
+- NVDA kopyasının kurulu mu yoksa taşınabilir mi olduğu
+- Kullanılan geçerli konuşma sentezleyici adı (eklentinin adı ve kaynağı dahil)
+- Kullanılan geçerli Braille ekranın adı (eklentinin adı ve kaynağı dahil)
+- Braille çıktısı için kullanılan tablo (tabii braille kullanılıyorsa)
+
+
+Bu bilgi, NVAccess'e NVDA gelişim sürecindeki öncelikleri belirlemesinde önemli bir destek sunmaktadır.
 
 ==== NVDA başladığında Bekleyen Güncelleme Varsa Bildir ====[GeneralSettingsNotifyPendingUpdates]
 Etkinleştirilmişse, NVDA başlangıçta bekleyen bir güncelleme olduğu zaman, kurma seçeneği sunarak size bilgi verecektir.
@@ -1208,11 +1231,14 @@ Braille ekran sürücülerinin yüklenmesi ile ilgili sorun oluşursa NVDA bildi
 
 ==== Braille Ekran ====[SelectBrailleDisplayDisplay]
 Bu seçim kutusunda, sisteminizde hangi braille sürücülerin yüklü olduğuna bağlı olarak, size çeşitli seçenekler sunulacaktır.
-Bu seçenekler arasında yön tuşlarınızı kullanarak dolaşın.
+Bu seçenekler arasında yön tuşlarını kullanarak dolaşın.
+
+Otomatik seçeneği, NVDA'nın arkaplanda desteklenen braille ekranları aramasına olanak tanır.
+Bu özellik etkinleştirildiğinde ve USB ya da bluetooth kullanarak desteklenen bir braille ekranna bağlandığınızda, NVDA bu ekranla otomatik olarak bağlantı kuracaktır.
 
 "Braille Yok", braille kullanmadığınız anlamına gelir.
 
-Lütfen desteklenen braille ekranlarla ilgili daha fazla bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
+Lütfen desteklenen braille ekranlar ve bunların hangilerinin arkaplanda otomatik olarak tanınabildiğiyle ilgili daha fazla bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Bu seçenek, eğer mevcutsa, seçtiğiniz kabartma ekranla hangi port ya da bağlantı tipini kullanarak bağlantı kuracağınızı belirlemenizi sağlar.
@@ -1870,6 +1896,22 @@ Bu sentezleyici [kodlama işlevini #SpeechSettingsUseSpelling] desteklemez.
 + Desteklenen braille ekranlar +[SupportedBrailleDisplays]
 Bu bölümde NVDA tarafından desteklenen braille ekran bilgileri yer almaktadır.
 
+++ arka planda otomatik algılama işlevini destekleyen ekranlar ++[AutomaticDetection]
+NVDA, USB veya bluetooth üzerinden, arka planda otomatik olarak birçok braille ekranı  algılayabilir.
+Bu sonuca, [Braille Ayarları iletişim kutusundan #BrailleSettings] braille ekran olarak otomatik seçeneğini tercih ederek ulaşılabilir.
+Bu seçenek varsayılan olarak seçilidir.
+
+Aşağıdaki ekranlar otomatik algılama işlevini destekler.
+- Handy Tech displays
+- Baum/Humanware/APH/Orbit braille displays
+- HumanWare Brailliant BI/B series
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 series
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
+- Eurobraille Esys/Esytime/Iris displays
+-
+
 ++ Freedom Scientific Focus/PAC Mate Serisi ++[FreedomScientificFocus]
 USB veya bluetooth ile bağlandıklarında, [Freedom Scientific http://www.freedomscientific.com/] tarafından üretilen tüm Focus ve PAC Mate ekranlar desteklenmektedir.
 Freedom Scientific Braille Ekran sürücülerinin sisteminizde yüklü olması gerekecektir.
@@ -1880,6 +1922,8 @@ Sisteminiz 64 bit Windows ise ve sürücüler başka bir ekran okuyucu tarafınd
 Varsayılan olarak, NVDA bu ekranları otomatik olarak bulup USB ya da bluetooth ile bağlanabilir.
 Öte yandan, ekranla ilgili ayarları yaparken, "USB" ya da "Bluetooth" portlarını seçerek bağlantı tipine kendiniz karar verebilirsiniz.
 Bu, örneğin ekranınıza bluetooth ile bağlanıp aynı zamanda USB üzerinden de cihazı şarj etmeye devam etmek istemeniz durumunda faydalı olabilir.
+
+Bu ekranlar henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
 
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
@@ -1948,11 +1992,11 @@ Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol Tuşu |
-| Scroll braille display back | t1 or etouch1 |
+| Scroll braille display back | t1, etouch1 |
 | Braille ekran önceki satır | t2 |
 | Move to current focus | t3 |
 | Braille ekran sonraki satır | t4 |
-| Scroll braille display forward | t5 or etouch3 |
+| Scroll braille display forward | t5, etouch3 |
 | Odağı braille konumuna taşı | routing |
 | braille hücre altındaki metin biçimlendirmesini bildir | secondary routing |
 | HID klavye simülasyonunu açıp kapama | t1+spEnter |
@@ -1962,25 +2006,24 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | Report title | etouch2 |
 | Report status bar | etouch4 |
 | shift+tab tuşu | sp1 |
-| alt tuşu | sp2 |
+| alt tuşu | sp2, alt |
 | esc tuşu | sp3 |
 | tab tuşu | sp4 |
 | Yukarı ok tuşu | spUp |
 | Aşağı ok tuşu | spDown |
 | Sol ok tuşu | spLeft |
 | Sağ ok tuşu | spRight |
-| enter tuşu | spEnter, enter|
-| Report date/time | sp1+sp2 |
+| enter tuşu | spEnter, enter |
+| Saat/tarih bilgisi | sp2+sp3 |
 | NVDA Menüsü | sp1+sp3 |
 | windows+d tuşu (Tüm uygulamaları küçült) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows tuşu | sp2+sp3, windows |
+| windows tuşu | sp1+sp2, windows |
 | alt+tab tuşu | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
-| alt key | alt |
 | control key | control |
 %kc:endInclude
 
@@ -2022,6 +2065,8 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 [MDV http://www.mdvbologna.it/] tarafından üretilen Lilli braille ekranı desteklenmektedir.
 Bu ekranı kullanmak için belirli bir sürücüye gereksiniminiz bulunmamaktadır.
 Yalnızca ekranı takın ve kullanmak için NVDA'yı ayarlayın.
+
+Bu ekran henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
 
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
@@ -2078,6 +2123,8 @@ Kumanda kolu olan ekranlar için:
 Hedo ProfiLine USB, [hedo Reha-Technik http://www.hedo.de/] desteklenmektedir.
 Öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 
+Bu ekran henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
+
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:beginInclude
@@ -2094,6 +2141,8 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 ++ hedo MobilLine USB ++[HedoMobilLine]
 hedo MobilLine USB, [hedo Reha-Technik http://www.hedo.de/] desteklenmektedir.
 Öncelikle üretici tarafından sağlanan USB sürücülerini kurmalısınız.
+
+Bu ekran henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
 
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -2237,6 +2286,8 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
  http://www.seika-braille.com/ adresinde bu ekranlar hakkında daha fazla bilgi bulabilirsiniz.
 Önce üretici tarafından sağlanan USB sürücülerini kurmalısınız.
 
+Bu ekranlar henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
+
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 %kc:beginInclude
@@ -2262,9 +2313,10 @@ Aşağıdaki Braille ekranlar desteklenmektedir:
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
+Bu ekranlar henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
+
 If BrxCom is installed, NVDA will use BrxCom.
 BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
-A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
 Keyboard input is possible with the Trio and BRAILLEX Live models.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
@@ -2342,7 +2394,8 @@ The following Braille displays are supported:
 -
 
 Note that these displays can only be connected via a serial port.
-Therefore, you should select the port to which the display is connected after you have choosen this driver in the Braille Settings dialogue.
+Due to this, these displays do not support NVDA's automatic background braille display detection functionality.
+You should select the port to which the display is connected after you have chosen this driver in the [Select Braille Display #SelectBrailleDisplay] dialog.
 
 Some of these devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -2520,6 +2573,7 @@ The following models are supported:
 -
 
 In NVDA, you can set the serial port to which the display is connected in the Braille Settings dialog.
+These displays do not support NVDA's automatic background braille display detection functionality.
 
 Following are the key assignments for EcoBraille displays.
 Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
@@ -2647,6 +2701,8 @@ Ekranı ve kullanılacak portu ayarlarken, özellikle USB sürücüleri kullanı
 
 Kabartma klavyesi bulunan ekranlar için, BRLTTY şuanda braille girişini kendisi yönetmektedir.
 Dolayısıyla, NVDA'nın braille girdi tablosu ayarı bu ekranları etkilemez.
+
+BRLTTY henüz NVDA'nın otomatik arka plan braille ekran algılama işlevini desteklememektedir.
 
 Aşağıda NVDA için BRLTTY tuş komutları bulunmaktadır.
 Lütfen [BRLTTY tuş komutları listesine http://mielke.cc/brltty/doc/KeyBindings/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.
