@@ -109,7 +109,7 @@ def getAvailableLanguages(presentational=False):
 		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
-	langs = zip(locales,displayNames)
+	langs = list(zip(locales,displayNames))
 	if presentational:
 		langs.sort(key=lambda lang: lang[1])
 	#include a 'user default, windows' language, which just represents the default language for this user account
