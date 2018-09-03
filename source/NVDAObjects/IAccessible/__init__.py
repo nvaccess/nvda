@@ -824,12 +824,12 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
+			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if not hasattr(self.IAccessibleObject,'states'):
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States
-		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		# Readonly should override editable
 		if controlTypes.STATE_READONLY in states:
 			states.discard(controlTypes.STATE_EDITABLE)
