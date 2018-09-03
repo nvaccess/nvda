@@ -1282,7 +1282,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		elif not self.disableAutoPassThrough:
 			self.passThrough = False
 		reportPassThrough(self)
-	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual  caret is not within the currently focused node.
