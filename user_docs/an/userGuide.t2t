@@ -2164,8 +2164,9 @@ os controladors USB no se requieren si o protocolo ye establiu t'OpenBraille.
 
 Tamién se suporta la BrailleNote Touch, y no se requier garra controlador pa instalar-la.
 
-Seguidament van as asignacions de teclas pa las linias Brailliant BI/B y BrailleNote touch con o NVDA.
-Por favor mira-te a documentación d'a linia pa descripcions de do pueden trobar-sen istas teclas.
+Contino va las asignacions de teclas pa las linias Brailliant BI/B y BrailleNote touch con o NVDA.
+Por favor mira-te la documentación d'a linia pa descripcions de do puede trobar-sen istas teclas.
++++ Asignacions de teclas pa totz los modelos +++
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar a linia braille enta zaga | cucha |
@@ -2563,8 +2564,8 @@ Contino va las ordens asignadas a la rueda de desplazamiento:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-O NVDA suporta as linias EcoBraille d'[ONCE http://www.once.es/].
-Son suportaus os siguients modelos:
+Lo NVDA suporta las linias EcoBraille d'[ONCE http://www.once.es/].
+En son suportaus los siguients modelos:
 - EcoBraille 20
 - EcoBraille 40
 - EcoBraille 80
@@ -2572,8 +2573,7 @@ Son suportaus os siguients modelos:
 -
 
 En o NVDA puetz establir lo puerto serie que la linia bi ye connectada en o dialogo de [seleccionar linia braille #SelectBrailleDisplay].
-
-Istas linias encara no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
+Istas linias no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
 
 Contino son las asignacions de teclas pa las linias EcoBraille.
 Por favor mira-te la [documentación d'EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] ta descripcions de do se puet trobar ixas teclas.
@@ -2600,8 +2600,8 @@ Por favor mira-te la [documentación d'EcoBraille ftp://ftp.once.es/pub/utt/bibl
 %kc:endInclude
 
 ++ SuperBraille ++[SuperBraille]
-O dispositivo SuperBraille, disponible prencipalment en Taiwán, puet connectar-se por USB u por serie.
-Como o SuperBraille no tien denguna tecla fisica pa escribir u botons de desplazamiento, toda la dentrada ha a realizar-se a traviés d'un teclau estandar d'ordinador.
+Lo dispositivo SuperBraille, disponible prencipalment en Taiwán, puet connectar-se por USB u por serie.
+Como lo SuperBraille no tien denguna tecla fisica pa escribir u botons de desplazamiento, toda la dentrada ha a realizar-se a traviés d'un teclau estandar d'ordinador.
 A resultas d'ixo, y pa mantener a compatibilidad con atros lectors de pantalla en Taiwán, se furne dos combinacions de teclas pa o desplazamiento d'a linia braille:
 %kc:beginInclude
 || Nombre | Tecla |
@@ -2610,13 +2610,13 @@ A resultas d'ixo, y pa mantener a compatibilidad con atros lectors de pantalla e
 %kc:endInclude
 
 ++ Linias Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-O NVDA suporta las linias Esys, Esytime y Iris d'[Eurobraille http://www.eurobraille.fr/].
-Os dispositivos Esys y Esytime-Evo se suportan quan se connecten a traviés d'USB u bluetooth.
-Os dispositivos Esytime antigos nomás suportan l'USB.
-As linias Iris nomás se pueden connectar a traviés d'un puerto serie.
+Lo NVDA suporta las linias Esys, Esytime y Iris d'[Eurobraille http://www.eurobraille.fr/].
+Los dispositivos Esys y Esytime-Evo se suportan quan se connecten a traviés d'USB u bluetooth.
+Los dispositivos Esytime antigos nomás suportan l'USB.
+Las linias Iris nomás se pueden connectar a traviés d'un puerto serie.
 Por tanto, pa ixas linias, habrías de seleccionar o puerto a lo que se connecta dimpués d'haber trigau iste controlador en o dialogo d'opcions de braille.
 
-As linias Iris y Esys tienen un teclau braille con 10 teclas.
+Las linias Iris y Esys tienen un teclau braille con 10 teclas.
 D'as dos teclas colocadas como barra espaciadera, la tecla d'a zurda se corresponde con a tecla de recule y a tecla dreita con a barra espaciadera.
 
 Contino va las asignacions de teclas pa istas linias con o NVDA.
@@ -2627,6 +2627,7 @@ Por favor mira-te la documentación d'a pantalla pa descripcions d'do puede trob
 | Desplazar a linia braille entadebant | switch1-6Dreita, l8 |
 | Mover-se-ne t'o foco actual | switch1-6Zurda+switch1-6Dreita, l1+l8 |
 | Enrotar t'a celda braille | sensors |
+| Anunciar lo formato d'o texto baixo la celda braille | doble sensor |
 | Mover-se-ne t'a linia anterior en revisión | ceprén1Alto |
 | Mover-se-ne t'a siguient linia en revisión | ceprén1Baixo |
 | Mover-se-ne t'o caracter anterior en revisión | ceprén1Cucha |
