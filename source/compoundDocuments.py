@@ -175,6 +175,8 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def __ne__(self, other):
 		return not self == other
 
+	__hash__ = textInfos.TextInfo.__hash__
+
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
 	SINGLE_TEXTINFO_UNITS = (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD, textInfos.UNIT_LINE, textInfos.UNIT_SENTENCE, textInfos.UNIT_PARAGRAPH)

@@ -325,6 +325,8 @@ class UIATextInfo(textInfos.TextInfo):
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
 
+	__hash__ = textInfos.TextInfo.__hash__
+
 	def _get_NVDAObjectAtStart(self):
 		e=self.UIAElementAtStart
 		if e:

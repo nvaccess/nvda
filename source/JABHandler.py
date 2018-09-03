@@ -356,6 +356,8 @@ class JABContext(object):
 		else:
 			return False
 
+	__hash__ = object.__hash__
+
 	def getVersionInfo(self):
 		info=AccessBridgeVersionInfo()
 		bridgeDll.getVersionInfo(self.vmID,byref(info))

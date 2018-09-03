@@ -218,6 +218,8 @@ class Bookmark(baseObject.AutoPropertyObject):
 	def __ne__(self,other):
 		return not self==other
 
+	__hash__ = baseObject.AutoPropertyObject.__hash__
+
 #Unit constants
 UNIT_CHARACTER="character"
 UNIT_WORD="word"

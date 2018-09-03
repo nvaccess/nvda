@@ -118,6 +118,8 @@ class espeak_VOICE(Structure):
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
+	__hash__ = Structure.__hash__
+
 t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback

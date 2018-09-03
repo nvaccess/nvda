@@ -312,12 +312,13 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject,me
 		if type(self) is not type(other):
 			return False
 		return self._isEqual(other)
- 
+
 	def __ne__(self,other):
 		"""The opposite to L{NVDAObject.__eq__}
 		"""
 		return not self.__eq__(other)
 
+	__hash__ = baseObject.ScriptableObject.__hash__
 	focusRedirect=None #: Another object which should be treeted as the focus if focus is ever given to this object.
 
 	def _get_treeInterceptorClass(self):

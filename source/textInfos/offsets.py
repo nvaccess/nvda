@@ -32,7 +32,9 @@ class Offsets(object):
 
 	def __ne__(self,other):
 		return not self==other
- 
+
+	__hash__ = object.__hash__
+
 def findStartOfLine(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
 @param text: the text to search
@@ -148,13 +150,14 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
 	useUniscribe=True #Use uniscribe to calculate word offsets etc
- 
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
 			return True
 		else:
 			return False
+
+	__hash__ = textInfos.TextInfo.__hash__
 
 	def _get_locationText(self):
 		textList=[]

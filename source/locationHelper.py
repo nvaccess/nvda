@@ -157,6 +157,8 @@ class Point(namedtuple("Point",("x","y"))):
 			return NotImplemented
 		return self.x != other.x or self.y != other.y
 
+	__hash__ = namedtuple.__hash__
+
 	def toPOINT(self):
 		"""Converts self to a L{ctypes.wintypes.POINT}"""
 		return POINT(self.x,self.y)
@@ -177,7 +179,7 @@ class Point(namedtuple("Point",("x","y"))):
 		"""Converts self from client to screen coordinates and returns a new L{Point}"""
 		return Point(*winUser.ClientToScreen(hwnd, *self))
 
-class _RectMixin:
+class _RectMixin(object):
 	"""Mix-in class for properties shared between RectLTRB and RectLTWH classes"""
 
 	@classmethod
@@ -324,6 +326,8 @@ class _RectMixin:
 		if not isinstance(other,RECT_CLASSES):
 			return NotImplemented
 		return other.left != self.left or other.top != self.top or other.right != self.right or other.bottom != self.bottom
+
+	__hash__ = object.__hash__
 
 	def intersection(self,other):
 		"""Returns the intersection of self and other.
