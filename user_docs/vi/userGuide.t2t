@@ -22,7 +22,7 @@ Một số tính năng nổi bật bao gồm:
 - Tích hợp bộ tổng hợp tiếng nói hỗ trợ hơn 80 ngôn ngữ khác nhau
 - thông báo các thuộc tính của phông chữ (nếu có) như tên phông, kích thước, kiểu chữ, v...v... và thông báo lỗi chính tả
 - Tự động thông báo nội dung và các đối tượng tại con trỏ chuột và tùy chọn báo âm thanh cho vị trí của chuột
-- Hỗ trợ nhiều dòng màn hình chữ nổi khác nhau, bao gồm việc tự động dò tìm nhiều thiết bị trong số được hỗ trợ, cũng như khả năng nhập liệu chữ nổi trên màn hình có bàn phím chữ nổi
+- Hỗ trợ nhiều dòng màn hình chữ nổi khác nhau, bao gồm việc tự nhận biết nhiều thiết bị trong số được hỗ trợ, cũng như khả năng nhập liệu chữ nổi trên màn hình có bàn phím chữ nổi
 - có thể chạy trực tiếp từ ổ USB hay các thiết bị lưu trữ khác mà không cần phải cài đặt
 - Dễ dàng cài đặt với gói cài đặt có hỗ trợ giọng nói
 - Được dịch sang 54 ngôn ngữ
@@ -601,7 +601,7 @@ Nếu bạn sử dụng màn hình nổi, NVDA có thể xuất thông tin ra d�
 Nếu màn hình nổi của bạn có bàn phím kiểu Perkins, bạn có thể nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt.
 
 Vui lòng xem phần [các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để biết thêm thông tin về các mẫu màn hình được hỗ trợ.
-Phần này cũng có các thông tin về các màn hình được hỗ trợ tính năng ngầm tự dò tìm của NVDA.
+Phần này cũng có các thông tin về các màn hình được hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #BrailleSettings] trong [hộp thoại cấu hình NVDA #NVDASettings.
 
 ++ Quy ước viết tắt cho loại điều khiển, trạng thái và cột mốc ++[BrailleAbbreviations]
@@ -1238,7 +1238,7 @@ Khi bật tính năng này và bạn kết nối một màn hình được hỗ 
 
 Không có Braille nghĩa là máy bạn không dùng màn hình nổi.
 
-Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để biết thêm thông tin về các màn hình được hỗ trợ và những màn hình nào trong số đó có hỗ trợ tự dò tìm ngầm.
+Vui lòng xem phần [Các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để biết thêm thông tin về các màn hình được hỗ trợ và những màn hình nào trong số đó có hỗ trợ tự nhận biết ngầm.
 
 ==== Cổng ====[SelectBrailleDisplayPort]
 Nếu có tùy chọn này, mục này cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
@@ -1897,11 +1897,11 @@ Bộ đọc này không hỗ trợ [chức năng đánh vần #SpeechSettingsUse
 Phần này gồm thông tin về các dòng màn hình nổi được hỗ trợ bởi NVDA.
 
 ++ Các màn hình được hỗ trợ tự dò  tìm ngầm ++[AutomaticDetection]
-NVDA có khả năng tự dò tìm ngầm nhiều màn hình nổi qua USB hay bluetooth.
+NVDA có khả năng tự nhận biết ngầm nhiều màn hình nổi qua USB hay bluetooth.
 Tính năng này được bật bằng cách chọn tùy chọn tự động trong màn hình ưa thích từ [hộp thoại cài đặt màn hình nổi #BrailleSettings].
 Mặc định, tùy chọn này được bật.
 
-Các màn hình nổi sau đây có hỗ trợ chức năng tự dò tìm.
+Các màn hình nổi sau đây có hỗ trợ chức năng tự nhận biết.
 - Các màn hình Handy Tech
 - Màn hình nổi Baum/Humanware/APH/Orbit
 - HumanWare Brailliant dòng BI/B
@@ -1923,7 +1923,7 @@ Mặc định, NVDA sẽ tự động nhận các thiết bị này khi nó đư
 Tuy nhiên, khi cấu hình màn hình, bạn hoàn toàn có thể chọn cổng "USB" hoặc "bluetooth" để chỉ định cụ thể kiểu kết nối nào sẽ được sử dụng.
 Điều này sẽ thích hợp khi bạn kết nối màn hình Focus với NVDA để sử dụng cổng bluetooth nhưng vẫn muốn sạc bin bằng cáp USB từ máy tính.
 
-Các màn hình này chưa hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Các màn hình này chưa hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
@@ -2068,7 +2068,7 @@ Hỗ trợ màn hình nổi Lilli của [MDV http://www.mdvbologna.it/].
 Bạn không cần cài bất kỳ driver nào khi sử dụng màn hình nổi này với NVDA.
 Bạn chỉ cần cấu hình NVDA sau khi kết nối với máy tính.
 
-Màn hình này không hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
@@ -2125,7 +2125,7 @@ Dành cho các màn hình có cần điều khiển:
 NVDA hỗ trợ mẫu màn hình hedo ProfiLine USB của [hedo Reha-Technik http://www.hedo.de/].
 Trước tiên, bạn cần phải cài driver của nhà sản xuất.
 
-Màn hình này không hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
@@ -2143,7 +2143,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 ++ hedo MobilLine USB ++[HedoMobilLine]
 NVDA hỗ trợ mẫu hedo MobilLine USB của [hedo Reha-Technik http://www.hedo.de/].
 Trước tiên, bạn cần phải cài driver được cung cấp của nhà sản xuất.
-Màn hình này không hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
@@ -2287,7 +2287,7 @@ NVDA hỗ trợ màn hình nổi Seika phiên bản 3, 4 và 5 (40 ô) và Seika
 Bạn có thể đọc thêm thông tin về các mẫu màn hình này tại http://www.seika-braille.com/.
 Bạn cần phải cài driver được cung cấp bởi nhà sản xuất.
 
-Các màn hình này không hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
@@ -2313,7 +2313,7 @@ Hiện đã hỗ trợ các màn hình nổi sau:
 - BRAILLEX Trio (USB and bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB và bluetooth)
 -
-Các màn hình này không hỗ trợ tính năng tự dò tìm  ngầm của NVDA.
+Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Nếu BrxCom được cài, NVDA sẽ sử dụng BrxCom.
 BrxCom là một công cụ, cho phép nhập liệu từ màn hình nổi, hoạt động độc lập với trình đọc màn hình.
@@ -2394,7 +2394,7 @@ Các màn hình nổi sau đây được hỗ trợ:
 -
 
 Lưu ý, những màn hình này chỉ kết nối qua cổng serial.
-Vì vậy, các màn hình này không hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Vì vậy, các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 Bạn cần phải chọn đúng cổng trong [hộp thoại chọn màn hình nổi #SelectBrailleDisplay] sau khi cài driver.
 
 Một số mẫu màn hình sẽ có thanh tiện ích (EAB) giúp truy xuất tiện lợi và nhanh hơn.
@@ -2572,7 +2572,7 @@ Sau đây là các mẫu màn hình được hỗ trợ:
 -
 
 Ở [hộp thoại chọn màn hình nổi #SelectBrailleDisplay] của NVDA, bạn có thể thiết lập cổng serial cho màn hình được kết nối.
-Các màn hình này không hỗ trợ tính năng tự dò tìm ngầm của NVDA.
+Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là các lệnh của các màn hình nổi EcoBraille.
 Vui lòng xem [Tài Liệu của EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] cho phần mô tả vị trí các phím. 
@@ -2701,7 +2701,7 @@ Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ 
 Đối với những màn hình có bàn phím chữ nổi, hiện BRLTTY bản thân nó cũng hỗ trợ nhập liệu kiểu chữ nổi.
 Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 
-BRLTYY không liên quan đến việc hỗ trợ tính năng  tự dò tìm ngầm của NVDA.
+BRLTYY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhận biết của NVDA.
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
 Vui lòng xem [Danh sách phím tắt BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.
