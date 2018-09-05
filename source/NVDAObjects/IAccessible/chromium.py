@@ -40,9 +40,22 @@ class Document(ia2Web.Document):
 			return ChromeVBuf
 		return super(Document, self).treeInterceptorClass
 
+class ComboboxListItem(IAccessible):
+	"""
+	Represents a list item inside a combo box.
+	"""
+
+	def _get_focusRedirect(self):
+		# Chrome 68 and below fires focus on the active list item of combo boxes even when the combo box is collapsed.
+		# We get around this by redirecting focus back up to the combo box itself if the list inside is invisible (I.e. the combo box is collapsed).
+		if self.parent and controlTypes.STATE_INVISIBLE in self.parent.states:
+			return self.parent.parent
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
+	if obj.role==controlTypes.ROLE_LISTITEM and obj.parent and obj.parent.parent and obj.parent.parent.role==controlTypes.ROLE_COMBOBOX:
+		clsList.append(ComboboxListItem)
 	ia2Web.findExtraOverlayClasses(obj, clsList,
 		documentClass=Document)

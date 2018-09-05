@@ -22,7 +22,7 @@ Trăsăturile importante includ:
 - Sintetizator de voce încorporat care funcționează cu peste 80 de limbi
 - Pronunțarea formatării textului, unde este posibil, cum ar fi numele și dimensiunea fontului, stilul și erorile de ortografie
 - Pronunțarea automată a textului de sub cursorul mausului și identificarea audio opțională a poziției mausului
-- Suport pentru multe afișaje actualizabile Braille, incluzând introducerea de braille pentru afișajele braille care au tastatură braille
+- Suport pentru multe afișaje actualizabile Braille, incluzând abilitatea de detectare automată a multora dintre ele, precum și introducerea de braille pentru afișajele braille care au tastatură braille
 - Capacitatea de a rula exclusiv de pe un stick USB sau alte suporturi media portabile fără nevoia instalării
 - Interfață de instalare vorbită, ușor de folosit
 - Tradus în 54 de limbi
@@ -1232,7 +1232,7 @@ Dacă există o eroare la încărcarea driver-ului afișajului, NVDA vă va noti
 Această casetă combinată vă prezintă mai multe opțiuni, depinzând de ce drivere de afișaje braille sunt disponibile pe sistemul dumneavoastră.
 Deplasați-vă printre ele cu săgețile.
 Fără braille înseamnă că nu folosiți braille.
-Citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru mai multe informații despre acestea.
+Citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru mai multe informații despre acestea și care dintre ele suportă detectarea automată în fundal.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Această opțiune, dacă este disponibilă, vă permite să alegeți ce port sau tip de conexiune vor fi utilizate pentru a comunica cu afișajul braille pe care l-ați ales.
@@ -1881,6 +1881,22 @@ Acest sintetizator nu suportă [funcționalitatea de silabisire #SpeechSettingsU
 + Afișajele Braille compatibile +[AfisBrailleCompatibile]
 Această secțiune conține informații despre afișajele Braille suportate de NVDA.
 
+++ Afișaje care suportă detectarea automată în fundal ++[AutomaticDetection]
+NVDA are abilitatea de a detecta multe afișaje braille în fundal și prin USB sau bluetooth.
+Pentru ca NVDA să se comporte astfel, trebuie să selectați opțiunea „Automat” ca afișaj braille preferat din [Setările braille ale NVDA #BrailleSettings].
+Această opțiune este selectată în mod implicit.
+
+Următoarele afișaje braille suportă această funcționalitate de detectare automată.
+- Afișajele Handy Tech
+- Afișajele Baum/Humanware/APH/Orbit
+- Seriile HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Seriile Optelec ALVA 6
+- Seriile HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Afișajele Eurobraille Esys/Esytime/Iris
+-
+
 ++ Freedom Scientific gamele Focus/PAC Mate ++[FreedomScientificFocus]
 Toate afișajele Focus și PAC Mate de la [Freedom Scientific http://www.freedomscientific.com/] sunt suportate dacă sunt conectate prin USB sau bluetooth.
 Veți avea nevoie ca driverele pentru afișajele Braille de la Freedom Scientific să fie instalate în sistemul dumneavoastră.
@@ -1890,7 +1906,9 @@ Dacă sistemul dumneavoastră funcționează cu Windows pe 64 de biți iar drive
 
 Implicit, NVDA poate detecta automat și se conecta la aceste afișaje fie prin USB fie prin bluetooth.
 Totuși, când configurați afișajul, puteți selecta explicit porturile „USB” sau „bluetooth” pentru a restricționa tipul de conexiune folosit.
-Acest lucru ar putea fi util dacă doriți să conectați afișajul de focalizare la NVDA, folosind bluetooth-ul, dar să puteți in continuare să-l incărcați folosind curent de la portul USB al calculatorului dumneavoastră.
+Acest lucru ar putea fi util dacă doriți să conectați afișajul de focalizare la NVDA, folosind bluetooth-ul, dar să puteți in continuare să-l încărcați folosind curent de la portul USB al calculatorului dumneavoastră.
+
+Aceste afișaje nu suportă încă funcționalitatea NVDA-ului  de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2034,6 +2052,8 @@ Afișajul braille Lilli disponibil de la [MDV http://www.mdvbologna.it/] este su
 Nu aveți nevoie de un driver specific instalat pentru a folosi acest afișaj.
 Doar conectați afișajul și configurați NVDA să-l folosească.
 
+Acest afișaj nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
+
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
 %kc:beginInclude
@@ -2089,6 +2109,8 @@ Pentru afișaje care au joystick:
 Dispozitivul hedo ProfiLine USB de la [hedo Reha-Technik http://www.hedo.de/] este suportat.
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
 
+Acest afișaj nu suportă încă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
+
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
 %kc:beginInclude
@@ -2105,6 +2127,8 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 ++ hedo MobilLine USB ++[HedoMobilLine]
 Dispozitivul hedo MobilLine USB de la [hedo Reha-Technik http://www.hedo.de/] este suportat.
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
+
+Acest afișaj nu suportă încă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2248,6 +2272,8 @@ Versiunile de afișaje braille Seika 3, 4 și 5 (cu 40 de celule) și Seika80 (c
 Puteți găsi mai multe informații despre aceste afișaje la http://www.seika-braille.com/ .
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
 
+Aceste afișaje nu suportă încă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
+
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
 %kc:beginInclude
@@ -2272,6 +2298,8 @@ Următoarele afișaje braille sunt suportate:
 - BRAILLEX Trio (USB și bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live și BRAILLEX Live Plus (USB și bluetooth)
 -
+
+Aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Dacă BrxCom este instalat, NVDA va folosi BrxCom.
 BrxCom este un instrument care permite intrărilor de tastatură de la afișajul braille să funcționeze independent de cititorul de ecran.
@@ -2353,6 +2381,7 @@ Următoarele afișaje Braille sunt suportate:
 -
 
 De notat că aceste afișaje pot fi conectate doar printr-un port serial.
+Din această cauză, aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 În consecință, ar trebui să alegeți portul la care este conectat afișajul după ce ați ales acest driver în [Dialogul de selectare al afișajului braille #SelectBrailleDisplay].
 
 Unele dintre aceste dispozitive au o Bară de acces facil (Easy Access Bar - EAB) care permite o operare rapidă și intuitivă.
@@ -2531,6 +2560,7 @@ Următoarele modele sunt suportate:
 -
 
 În NVDA, puteți stabili portul serial la care este conectat afișajul [Dialogul de selectare a afișajului braille #SelectBrailleDisplay].
+Aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de comenzi pentru BrailleNote și NVDA.
 Vă rugăm să consultați [documentația EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/]  pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2658,6 +2688,8 @@ Când configurați afișajul și portul pe care să-l folosească, aveți grijă
 
 Pentru afișaje care au o tastatură braille, BRLTTY procesează independent intrările braille.
 În aceste condiții, configurarea NVDA cu tabelul de intrări braille este irelevantă.
+
+BRLTYY nu este implicat în funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de comenzi pentru BRLTTY și NVDA.
 Vă rugăm să consultați [lista de asocieri de taste BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] pentru informații despre cum sunt mapate comenzile BRLTTY pe controale ale afișajelor braille.

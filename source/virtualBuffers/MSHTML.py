@@ -191,33 +191,9 @@ class MSHTML(VirtualBuffer):
 	def __contains__(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
-		#'select' tag lists have MSAA list items which do not relate to real HTML nodes.
-		#Go up one parent for these and use it instead
-		if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and not isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.role==controlTypes.ROLE_LISTITEM:
-			parent=obj.parent
-			if parent and isinstance(parent,NVDAObjects.IAccessible.MSHTML.MSHTML):
-				obj=parent
-		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
-		#However only helps in IE8.
-		if obj.windowStyle&winUser.WS_POPUP:
-			parent=obj.parent
-			obj.parent=parent
-			while parent and parent.windowHandle==obj.windowHandle:
-				newParent=parent.parent
-				parent.parent=newParent
-				parent=newParent
-			if parent and parent.windowClassName.startswith('Internet Explorer_'):
-				obj=parent
 		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
 			return False
-		newObj=obj
-		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML):
-			if newObj==self.rootNVDAObject:
-				return True
-			if newObj.role in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
-				break
-			newObj=newObj.parent 
-		return False
+		return not self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
 		if self.isLoading:
