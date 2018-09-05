@@ -1623,7 +1623,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif not isFallback and not detected:
 			self._disableDetection()
 
-		firstLoad = not config.conf["braille"].isSet(name)
+		firstLoad = not config.conf[BrailleDisplayDriver._configSection].isSet(name)
 		if firstLoad:
 			config.conf["braille"][name] = {}
 		kwargs = {}
@@ -2369,7 +2369,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		_BgThread.queueApc(_BgThread.executor)
 
 	@classmethod
-	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal, useConfig=False):
+	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):
 		"""Factory function for creating dot firmness setting."""
 		return driverHandler.NumericDriverSetting(
 			"dotFirmness",

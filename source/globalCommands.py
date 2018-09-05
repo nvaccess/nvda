@@ -745,7 +745,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(pos)
 		else:
 			# Translators: reported when there are no other available review modes for this object 
-			ui.message(_("No previous review mode"))
+			ui.reviewMessage(_("No previous review mode"))
 	# Translators: Script help message for previous review mode command.
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW

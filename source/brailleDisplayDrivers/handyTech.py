@@ -207,7 +207,7 @@ class AtcMixin(object):
 	supportedSettings=(
 		# Translators: Name of the ATC (active tactile control) setting in braille settings.
 		# Active tactile control should be left untranslated.
-		BooleanDriverSetting("atc",_("Enable &Active Tactile Control")),
+		#BooleanDriverSetting("atc",_("Enable &Active Tactile Control")),
 	)
 
 
@@ -630,7 +630,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _set_dotFirmness(self, value):
 		if self._dotFirmness is value:
 			return
-		if isinstance(self._model,AtcMixin):
+		if isinstance(self._model,TimeSyncFirmnessMixin):
 			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, value)
 		else:
 			log.debugWarning("Changing dot firmness setting for unsupported device %s"%self._model.name)

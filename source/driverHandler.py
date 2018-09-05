@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2018 NV Access Limited, Leonard de Ruijter
 
-"""Handler for driver functionality that is global to synthesizers nand braille displays."""
+"""Handler for driver functionality that is global to synthesizers and braille displays."""
 
 from baseObject import AutoPropertyObject
 import config
