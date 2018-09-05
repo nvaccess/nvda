@@ -207,7 +207,7 @@ class SynthDriver(SynthDriver):
 			self._processQueue()
 			return
 		# This gets called in a background thread.
-		stream = cStringIO.StringIO(ctypes.string_at(bytes, len))
+		stream = cStringIO.BytesIO(ctypes.string_at(bytes, len))
 		wav = wave.open(stream, "r")
 		self._maybeInitPlayer(wav)
 		data = wav.readframes(wav.getnframes())
@@ -227,7 +227,7 @@ class SynthDriver(SynthDriver):
 			# pos is a time offset in 100-nanosecond units.
 			# Convert this to a byte offset.
 			# Order the equation so we don't have to do floating point.
-			pos = pos * self._bytesPerSec / HUNDRED_NS_PER_SEC
+			pos = pos * self._bytesPerSec // HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
 			self._player.feed(data[prevPos:pos])
 			# _player.feed blocks until the previous chunk of audio is complete, not the chunk we just pushed.
