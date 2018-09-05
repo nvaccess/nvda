@@ -182,7 +182,7 @@ class SynthDriver(driverHandler.Driver):
 	@type lastIndex: int
 	"""
 
-	configSection = "speech"
+	_configSection = "speech"
 
 	@classmethod
 	def LanguageSetting(cls):
@@ -385,7 +385,7 @@ class SynthDriver(driverHandler.Driver):
 
 	def loadSettings(self, onlyChanged=False):
 		# Method override due to specific logic needed when changing a voice.
-		c=config.conf[self.configSection][self.name]
+		c=config.conf[self._configSection][self.name]
 		if self.isSupported("voice"):
 			voice=c.get("voice",None)
 			if not onlyChanged or self.voice!=voice:

@@ -14,8 +14,9 @@ from copy import deepcopy
 class Driver(AutoPropertyObject):
 	"""
 	Abstract base class for drivers, such as speech synthesizer and braille display drivers.
+	Abstract subclasses such as L{braille.BrailleDisplayDriver} should set L{_configSection}.
 
-	At a minimum, drivers must set L{name}, L{description} and L{configSection} and override the L{check} method.
+	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 
 	L{supportedSettings} should be set as appropriate for the settings supported by the driver.
 	Each setting is retrieved and set using attributes named after the setting;
@@ -33,7 +34,7 @@ class Driver(AutoPropertyObject):
 	description = ""
 	#: The configuration section where driver specific subsections should be saved.
 	#: @type: str
-	configSection = ""
+	_configSection = ""
 
 	def __init__(self):
 		"""Initialize this driver.
@@ -72,7 +73,7 @@ class Driver(AutoPropertyObject):
 		return False
 
 	def getConfigSpec(self):
-		spec=deepcopy(config.confspec[self.configSection]["__many__"])
+		spec=deepcopy(config.confspec[self._configSection]["__many__"])
 		for setting in self.supportedSettings:
 			if not setting.useConfig:
 				continue
@@ -80,7 +81,7 @@ class Driver(AutoPropertyObject):
 		return spec
 
 	def saveSettings(self):
-		conf=config.conf[self.configSection][self.name]
+		conf=config.conf[self._configSection][self.name]
 		# Make sure the config spec is up to date, so the config validator does its work.
 		conf.spec.update(self.getConfigSpec())
 		for setting in self.supportedSettings:
@@ -93,7 +94,7 @@ class Driver(AutoPropertyObject):
 				continue
 
 	def loadSettings(self, onlyChanged=False):
-		conf=config.conf[self.configSection][self.name]
+		conf=config.conf[self._configSection][self.name]
 		for setting in self.supportedSettings:
 			if not setting.useConfig or conf.get(setting.name) is None:
 				continue

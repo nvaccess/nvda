@@ -2156,7 +2156,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 
 	There are factory functions to create L{driverHandler.DriverSetting} instances for common display specific settings; e.g. L{DotFirmnessSetting}.
 	"""
-	configSection = "braille"
+	_configSection = "braille"
 	supportedSettings = ()
 	#: Whether this driver is thread-safe.
 	#: If it is, NVDA may initialize, terminate or call this driver  on any thread.
