@@ -3,6 +3,87 @@ Novità in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+Le principali migliorie che caratterizzano questa versione di N VDA si possono riassumere nel riconoscimento automatico di molti display braille, nel supporto a nuove funzioni di Windows10 come l'immissione nel pannello Emoji, e sulla risoluzione di bug e problematiche varie. 
+
+
+== Novità ==
+- NVDA è in grado di leggere gli errori grammaticali se esposti dalle pagine web in maniera appropriata nei browser Mozilla Firefox e Google Chrome. (#8280)
+- In Google Chrome,  vengono supportati gli attributi "inserito" e "cancellato" che fanno riferimento ad un testo. (#8558)
+- Aggiunto il supporto alle rotelle di scorrimento per il BrailleNote QT e Apex BT quando Braillenote viene usato come display Braille in NVDA. (#5992, #5993)
+- Aggiunti gli script per annunciare il tempo trascorso e quello totale durante la riproduzione di una traccia in Foobar2000. (#6596)
+- Il simbolo del tasto Command dei Mac (⌘) ora viene interpretato correttamente durante la lettura con qualsiasi sintesi vocale. (#8366)
+- Vengono supportati in tutti i browser web i ruoli personalizzati tramite l'attributo aria-roledescription (#8448)
+- Nuove tabelle braille: Ceco 8 punti, Curdo centrale, Esperanto, Ungherese, Svedese computer Braille 8 punti. (#8226, #8437)
+- è stato aggiunto il supporto al rilevamento automatico dei display braille in background. (#1271)
+ - Sono attualmente supportati i display ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille e HumanWare BrailleNote e Brailliant BI/B.
+ - è possibile abilitare questa funzione selezionando la voce "automatico" dall'elenco di Display Braille nella finestra di dialogo Selezione Display Braille di NVDA..
+ - Si veda la documentazione per ulteriori dettagli.
+- Aggiunto il supporto a nuovi metodi di immissione introdotti nelle versioni più recenti di Windows 10. Nel dettaglio: pannello emoji (Fall Creators Update), dettatura (Fall Creators Update), suggerimenti di immissione con tastiere hardware (aggiornamento di Aprile 2018), e appunti basati sul cloud (Aggiornamento di ottobre 2018). (#7273)
+- Viene supportato in Mozilla Firefox 63 il contenuto marcato come "blocco tra virgolette" tramite l'attributo ARIA (role blockquote). (#8577)
+
+
+== Changes ==
+- The list of available languages in NVDA's General Settings is now sorted based on language names instead of ISO 639 codes. (#7284)
+- Added default gestures for Alt+Shift+Tab and Windows+Tab with all supported Freedom Scientific braille displays. (#7387)
+- For ALVA BC680 and protocol converter displays, it is now possible to assign different functions to the left and right smart pad, thumb and etouch keys. (#8230)
+- For ALVA BC6 displays, the key combination sp2+sp3 will now announce the current date and time, whereas sp1+sp2 emulates the Windows key. (#8230)
+- The user is asked once when NVDA starts if they are happy sending usage statistics to NV Access when checking for NVDA updates. (#8217)
+- When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
+- Updated liblouis braille translator to version 3.6.0. (#8365)
+- Updated the path to the correct Russian eight-dots Braille table. (#8446)
+- Updated eSpeak-ng to 1.49.3dev commit 910f4c2. (#8561)
+
+
+== Bug Fixes ==
+- Accessible labels for controls in Google Chrome are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- Notifications are now supported in Zoom. For example, this includes mute/unmute status, and incoming messages. (#7754)
+- Switching braille context presentation when in browse mode no longer causes braille output to stop following browse mode cursor. (#7741)
+- ALVA BC680 braille displays no longer intermittently fail to initialize. (#8106)
+- By default, ALVA BC6 displays will no longer execute emulated system keyboard keys when pressing key combinations involving sp2+sp3 to trigger internal functionality. (#8230)
+- Pressing sp2 on an ALVA BC6 display to emulate the alt key now works as advertised. (#8360)
+- NVDA no longer announces redundant keyboard layout changes. (#7383, #8419)
+- Mouse tracking is now much more accurate in Notepad and other plain text edit controls when in a document with more than 65535 characters. (#8397)
+- NVDA will recognize more dialogs in Windows 10 and other modern applications. (#8405)
+- On Windows 10 October 2018 Update and Server 2019 and above, NVDA no longer fails to track the system focus when an application freezes or floods the system with events. (#7345, #8535)
+- Users are now informed when attempting to read or copy an empty status bar. (#7789)
+- Fixed an issue where the "not checked" state on controls is not reported in speech if the control has previously been half checked. (#6946)
+- In the list of languages in NVDA's General Settings, language name for Burmese is displayed correctly on Windows 7. (#8544)
+- In Microsoft Edge, NVDA will announce notifications such as reading view availability and page load progress. (#8423)
+- When navigating into a list on the web, NVDA will now report its label if the web author has provided one. (#7652)
+- When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
+- The 64-bit version of Media Player Classic is now supported. (#6066)
+- Several improvements to braille support in Microsoft Word with UI Automation enabled:
+ - Similar to other multiline text fields, When positioned at the start of a document in Braille, the display is now panned such that the first character of the document is at the start of the display. (#8406)
+ - Reduced overly verbose focus presentation in both speech and braille when focusing a Word document. (#8407)
+ - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
+ - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)
+- In Windows 10 1803 and later, it is now possible to install add-ons if the "Use Unicode UTF-8 for worldwide language support" feature is enabled. (#8599)
+
+
+== Changes for Developers ==
+- Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
+- A system test framework has been introduced for NVDA. (#708)
+- Some changes have been made to the hwPortUtils module: (#1271)
+ - listUsbDevices now yields dictionaries with device information including hardwareID and devicePath.
+ - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
+- Updated wxPython to 4.0.3. (#7077)
+- As NVDA now only supports Windows 7 SP1 and later, the key "minWindowsVersion" used to check if UIA should be enabled for a particular release of Windows has been removed. (#8422)
+- You can now register to be notified about configuration saves/reset actions via new config.pre_configSave, config.post_configSave, config.pre_configReset, and config.post_configReset actions. (#7598)
+ - config.pre_configSave is used to be notified when NVDA's configuration is about to be saved, and config.post_configSave is called after configuration has been saved.
+ - config.pre_configReset and config.post_configReset includes a factory defaults flag to specify if settings are reloaded from disk (false) or reset to defaults (true).
+- config.configProfileSwitch has been renamed to config.post_configProfileSwitch to reflect the fact that this action is called after profile switch takes place. (#7598)
+- UI Automation interfaces updated to Windows 10 October 2018 Update and Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
+
+
+
+
+
+
+
+
+
+
 = 2018.2 =
 
 Le caratteristiche principali di questa versione comprendono il supporto per le tabelle in Kindle per Pc,  la gestione dei Display Braille della HumanWare Braillenote Touch e BI14, grossi miglioramenti sulle voci Onecore e Sapi5, un sensibile miglioramento al supporto di Microsoft Outlook e molto altro.

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.3 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat useiden pistenäyttöjen automaattinen tunnistaminen, tuki uusille Windows 10:n ominaisuuksille kuten emojinsyöttöpaneelille, sekä monet muut bugikorjaukset.
 
 == Uudet ominaisuudet =
 - NVDA ilmoittaa Mozilla Firefoxissa ja Google Chromessa kielioppivirheistä, kun tieto niistä välitetään verkkosivuilla asianmukaisesti. (#8280)
@@ -27,7 +28,7 @@
 - ALVA BC680- ja protokollamuunninta käyttävissä pistenäytöissä on nyt mahdollista liittää eri toimintoja vasempaan ja oikeaan älynäppäimistöön sekä peukalo- ja etouch-näppäimiin. (#8230)
 - ALVA BC6 -näytöissä näppäinyhdistelmä sp2+sp3 puhuu päivämäärän ja ajan, kun taas sp1+sp2 jäljittelee Windows-näppäintä. (#8230)
 - Käyttäjältä kysytään nyt kerran NVDA:n käynnistyessä, sallitaanko käyttötilastojen lähettäminen NV Accessille automaattisen päivitystarkistuksen yhteydessä. (#8217)
-- Jos käyttäjä on sallinut käyttötilastojen lähettämisen NV Accessille, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
+- Jos käyttäjä on sallinut käyttötilastojen lähettämisen, NVDA lähettää nyt päivitystä tarkistettaessa nykyisen syntetisaattorin ja käytössä olevan pistenäytön nimen, jotta niiden ajurien tulevaa kehitystä voidaan priorisoida paremmin. (#8217)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.6.0. (#8365)
 - Venäläisen 8 pisteen pistetaulukon tiedostopolku korjattu. (#8446)
 - Päivitetty eSpeak-ng versioksi 1.49.3dev muutos 910f4c2. (#8561)
@@ -64,7 +65,7 @@ Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/change
 
 
 = 2018.2.1 =
-Tämä versio sisältää käännöspäivityksiä, jotka johtuivat ongelmia aiheuttaneen ominaisuuden viime hetken poistosta.
+Tämä versio sisältää päivitettyjä käännöksiä, jotka johtuivat ongelmia aiheuttaneen ominaisuuden viime hetken poistosta.
 
 
 = 2018.2 =

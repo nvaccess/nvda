@@ -4,16 +4,17 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.3 =
+此版本的新特姓包括支持许多盲文点显器的自动检测，支持新的Windows 10 表情符号输入面板，以及其他错误修复。
 
 == 新特性 ==
-- 当Mozilla Firefox和Google Chrome中的网页正确显示时，NVDA将朗读语法错误。 (#8280)
+- 当Mozilla Firefox和Google Chrome中的网页提供语法检查信息时，NVDA将朗读语法错误。 (#8280)
 - 现在标记为在网页中插入或删除的内容在Google Chrome中朗读。 (#8558)
-- 当BrailleNote用作带NVDA的盲文显示器时，增加了对BrailleNote QT和Apex BT滚轮的支持。 (#6316)- (#5992, #5993)
+- NVDA内用BrailleNote做盲文显示器时，增加了对BrailleNote QT和Apex BT滚轮的支持。 (#6316)- (#5992, #5993)
 - 在Foobar2000中添加了用于报告当前曲目的已用时间和总时间的脚本。 (#6596)
 - 使用任何合成器读取文本时，现在会朗读Mac Command键。 (#8366)
 - 现在，所有Web浏览器都支持通过aria-roledescription属性的自定义标签。 (#8448)
 - 新的盲文表: 捷克语8点电脑点字, 中库尔德语一级点字, 世界语一级点字, 匈牙利语一级点字, 匈牙利语八点电脑点字. (#8227)- (#8226, #8437)
-- 新增后台自动检测盲文显示。 (#1271)
+- 新增后台自动检测盲文显示器功能。 (#1271)
  - 目前支持ALVA，Baum / HumanWare / APH / Orbit，Eurobraille，Handy Tech，Hims，SuperBraille和HumanWare BrailleNote和Brailliant BI / B盲文点显器。
  - 您可以通过NVDA设置的盲文选项中的盲文显示列表选择自动选项来启用此功能。
  - 有关其他详细信息，请参阅用户指南。

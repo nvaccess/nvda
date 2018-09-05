@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.3 =
+Lo subrayable de esta versión incluye la detección automática de muchas pantallas Braille, la admisión para algunas características nuevas de Windows 10 incluyendo el panel de entrada de emojis de Windows 10, y muchas otras correcciones de fallos.
 
 == Nuevas Características ==
 - NVDA anunciará errores de gramática cuando se expongan apropiadamente por las páginas web en Mozilla Firefox y Google Chrome. (#8280)
@@ -56,6 +57,7 @@
  - Reducción de la presentación demasiado verbosa del foco tanto en voz como en braille cuando se enfoque un documento Word. (#8407)
  - El enrutamiento del cursor en braille ahora funciona correctamente cuando se está en una lista en un documento de Word. (#7971)
  - Las viñetas/números recién insertados en un documento Word se anuncian correctamente tanto en voz como en braille. (#7970)
+- En Windows 10 1803 y posteriores, ahora es posible instalar complementos si está activada la característica "Utilizar Unicode UTF-8 para el soporte de idioma en todo el mundo". (#8599)
 
 
 == Cambios para Desarrolladores ==

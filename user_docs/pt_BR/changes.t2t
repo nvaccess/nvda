@@ -5,6 +5,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
 = 2018.3 =
+Os destaques desta versão incluem a detecção automática de muitas Linhas Braille, o suporte a novos recursos do Windows 10 incluindo o Painel de entrada de Emojis do Windows 10, e muitas outras correções de falhas.
 
 == Novas Características ==
 - O NVDA informará erros gramaticais quando exposto de maneira apropriada por páginas web no Mozilla Firefox e no Google Chrome. (#8280)
@@ -13,7 +14,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Adicionados scripts para anunciar o tempo decorrido e total da faixa atual no Foobar2000. (#6596)
 - O símbolo da tecla comando do Mac (⌘) agora é anunciado ao ler o texto com qualquer sintetizador. (#8366)
 - Funções ""[roles]"" personalizadas via atributo aria-roledescription agora são suportadas em todos os navegadores web. (#8448)
-- Novas tabelas braille: Checo de 8 pontos, Curdo Central, Esperanto, Húngaro, Sueco braille informático de 8 pontos. (#8226, #8437)
+- Novas tabelas braille: Tcheco de 8 pontos, Curdo Central, Esperanto, Húngaro, Sueco braille informático de 8 pontos. (#8226, #8437)
 - Suporte foi adicionado para detectar automaticamente as linhas braille em segundo plano. (#1271)
  - São suportadas atualmente as linhas ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille e HumanWare BrailleNote e Brailliant BI/B.
  - Você pode ativar esse recurso selecionando a opção automático na lista de linhas braille na caixa de diálogo de seleção de linhas braille do NVDA.
@@ -24,11 +25,11 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 
 == Alterações ==
 - A lista de idiomas disponíveis nas Configurações gerais do NVDA agora é ordenada com base nos nomes dos idiomas em vez dos códigos ISO 639. (#7284)
-- Adicionado gestos padrões para Alt+Shift+Tab e Windows+Tab à todas as linhas braille da Freedom Scientific suportadas. (#7387)
+- Adicionado comandos ""[gestos]"" padrões para Alt+Shift+Tab e Windows+Tab à todas as linhas braille da Freedom Scientific suportadas. (#7387)
 - Para linhas ALVA BC680 e conversor de protocolo, agora é possível atribuir funções diferentes para a esquerda e direita do teclado inteligente, teclas thumb e etouch. (#8230)
 - Para linhas ALVA BC6, a combinação de teclas sp2+sp3 agora anunciará a data e a hora atuais, enquanto sp1+sp2 emula a tecla Windows. (#8230)
 - É perguntado aos usuários uma vez quando o NVDA inicia se estão favoráveis em enviar estatísticas de uso para a NV Access ao verificar atualizações do NVDA. (#8217)
-- Ao verificar atualizações, se o usuário concordou em permitir o envio de estatísticas de uso para a NV Access, agora o NVDA enviará o nome do atual driver de sintetizador e de linha braille em uso, para auxiliar na melhor priorização de trabalhos futuros nesses drivers. (#8217)
+- Ao verificar atualizações, se o usuário concordou em permitir o envio de estatísticas de uso para a NV Access, agora o NVDA enviará o nome do driver de sintetizador atual e da linha braille em uso, para auxiliar na melhor priorização de trabalhos futuros nesses drivers. (#8217)
 - Transcritor braille liblouis atualizado para a versão 3.6.0. (#8365)
 - Atualizado o caminho para a tabela Braille Russa de oito pontos correta. (#8446)
 - Atualizado eSpeak-ng para a versão 1.49.3dev commit 910f4c2. (#8561)
@@ -36,8 +37,8 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 
 == Correção de Falhas ==
 - Os rótulos acessíveis para controles em Google Chrome quando o rótulo não aparece como conteúdo propriamente dito agora são mais facilmente anunciados no modo de navegação. (#4773)
-- As notificações agora são suportadas no Zoom. Por exemplo, isso inclui o status de sem/com áudio e as mensagens recebidas. (#7754)
-- A apresentação do contexto de alternância braille quando no modo de navegação não faz mais com que a saída braille pare de seguir o cursor do modo de navegação. (#7741)
+- As notificações agora são suportadas no Zoom. Por exemplo, isso inclui o status de silencioso/com áudio e as mensagens recebidas. (#7754)
+- A alternância da apresentação do contexto braille quando no modo de navegação não faz mais com que a saída braille pare de seguir o cursor do modo de navegação. (#7741)
 - Linha braille ALVA BC680 não falha mais intermitentemente ao inicializar. (#8106)
 - Por padrão, a linha ALVA BC6 não executará mais as teclas do teclado do sistema emulado ao pressionar combinações de teclas envolvendo sp2+sp3 para acionar a funcionalidade interna. (#8230)
 - Pressionar sp2 numa linha ALVA BC6 para emular a tecla alt agora funciona como anunciado. (#8360)
@@ -49,7 +50,6 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Corrigido um problema em que o estado "não marcado" nos controles não é informado por fala se o controle tiver sido meio marcado anteriormente. (#6946)
 - Na lista de idiomas nas Configurações Gerais do NVDA, o nome do idioma para birmanês é exibido corretamente no Windows 7. (#8544)
 - No Microsoft Edge, o NVDA anunciará notificações, como a disponibilidade de visualização de leitura e o progresso do carregamento da página. (#8423)
-- Semelhante a outros campos de texto de múltiplas linhas, quando posicionado no início de um documento em Braille, a linha agora é movimentada de forma que o primeiro caractere do documento esteja no início da linha. (#8406)
 - Ao navegar em uma lista na web, o NVDA agora informará seu rótulo se o autor da Web tiver fornecido um. (#7652)
 - Ao atribuir manualmente funções a gestos para uma determinada linha braille, esses gestos agora sempre aparecem como sendo atribuídos a essa linha. Anteriormente, eles apareciam como se fossem atribuídos à linha atualmente ativa. (#8108)
 - Agora é suportada a versão 64-bit do Media Player Classic. (#6066)
@@ -71,7 +71,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Como o NVDA agora suporta apenas o Windows 7 SP1 e posteriores, a chave "minWindowsVersion" usada para verificar se o UIA deve ser ativado para uma determinada versão do Windows foi removida. (#8422)
 - Agora você pode se registrar para ser notificado sobre as ações de salvar/restaurar configuração através das novas ações config.pre_configSave, config.post_configSave, config.pre_configReset e config.post_configReset. (#7598)
  - config.pre_configSave é usado para ser notificado quando a configuração do NVDA está prestes a ser salva, e config.post_configSave é chamado após a configuração ter sido salva.
- - config.pre_configReset e config.post_configReset inclui um sinalizador de padrões de fábrica para especificar se as configurações serão recarregadas a partir do disco (false) ou redefinidas para os padrões (true).
+ - config.pre_configReset e config.post_configReset inclui um sinalizador ""[flag]"" de padrões de fábrica para especificar se as configurações serão recarregadas a partir do disco (false) ou redefinidas para os padrões (true).
 - config.configProfileSwitch foi renomeado para config.post_configProfileSwitch para refletir o fato de que esta ação é chamada após a mudança de perfil. (#7598)
 - Interfaces UI Automation ""[Automação da Interface do Usuário]"" atualizadas para o Windows 10 Atualização de Outubro de 2018 e Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
 
