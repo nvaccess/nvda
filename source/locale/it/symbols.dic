@@ -7,8 +7,8 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s\],;:»]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s\]!,;:»]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s\]\?,;:»]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s\]!,;:»\.!]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s\]\?,;:»\.!]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
@@ -84,7 +84,6 @@ _	sottolineato	most
 •	puntato	some
 …	punto punto punto	all	always
 ...	punto punto punto	all	always
-	puntato	some
 “	aperte virgolette	most
 ”	chiuse virgolette	most
 ‘	aperto apostrofo	most
@@ -95,11 +94,19 @@ _	sottolineato	most
 ¨	dieresi	most
 ‎	marcatore da sinistra a destra	char
 ‏	marcatore da destra a sinistra	char
+	puntato	some
 ■	puntato	some
 ▪	puntato	some
 ◾	puntato	some
 ◦	puntato	some
 §	paragrafo	all
+⇒	doppia freccia a destra	some
+⇨	freccia a destra bianca	some
+➢	punta di freccia a destra	some
+❖	puntato	some
+♣	puntato	some
+♦	puntato	some
+§	section	all
 °	gradi	all	always	#per Loquendo
 «	aperte doppie virgolette
 »	chiuse doppie virgolette
@@ -119,8 +126,8 @@ _	sottolineato	most
 ↓	freccia giù	some
 ✓	segno di spunta	some
 ✔	segno di spunta	some
-#Mathematical Operators U+2200 to U+220F
 
+#Mathematical Operators U+2200 to U+220F
 ∀	per ogni 	none
 ∁	Complemento	none
 ∂	derivata parziale	none
@@ -139,7 +146,6 @@ _	sottolineato	most
 ∏	prodotto n-ario	none
 
 # Miscellaneous Mathematical Operators
-
 ∑	sommatoria n-aria	none
 √	radice quadrata	none
 ∛	RADICE CUBICA	none
