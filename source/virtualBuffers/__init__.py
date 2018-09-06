@@ -177,7 +177,11 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return o.location
 
 	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		try:
+			docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		except LookupError:
+			log.debugWarning("Couldn't get NVDAObject from offset %d" % offset)
+			return None
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObjectInBuffer(self,obj):

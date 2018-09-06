@@ -56,6 +56,9 @@ env.Append(CPPDEFINES=[
 ])
 env.Prepend(CPPPATH=[".", louisSourceDir])
 
+# Upstream liblouis compiles without UNICODE defined.
+env['CPPDEFINES'].remove("UNICODE")
+
 liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
 	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned short int"})
 
@@ -66,6 +69,7 @@ sourceFiles = [
 	"logging.c",
 	"pattern.c",
 	"commonTranslationFunctions.c",
+	"metadata.c",
 	"utils.c",
 ]
 objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
