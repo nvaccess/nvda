@@ -382,7 +382,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 
 	if(buffer!=this&&parentNode) {
 		// We are rendering a subtree of a temp buffer
-		auto existingNode=this->reuseExistingNodeInRender(docHandle,ID);
+		auto existingNode=this->reuseExistingNodeInRender(parentNode,previousNode,docHandle,ID);
 		if(existingNode) {
 			// This child already exists on the backend, we can reuse it.
 			return buffer->addReferenceNodeToBuffer(parentNode,previousNode,existingNode);
@@ -393,6 +393,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
+
+	if(paccTable2) {
+		LOG_DEBUG(L"Setting node's denyReuseIfPreviousSiblingsChanged to true");
+		parentNode->denyReuseIfPreviousSiblingsChanged=true;
+		LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
+		parentNode->requiresParentUpdate=true;
+		LOG_DEBUG(L"Setting node's alwaysRerenderChildren to true");
+		parentNode->alwaysRerenderChildren=true;
+	}
 
 	//Get role -- IAccessible2 role
 	long role=0;
@@ -671,19 +680,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if(pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell)!=S_OK) {
 		paccTableCell=nullptr;
 	}
-	if(paccTable2) {
-		// Any parts of a table (rows, groupings, cells) cannot be reused when re-rendering all or part of a table,
-		// As their row and column information would need to be re-calculated.
-		//parentNode->allowReuseInAncestorUpdate=false;
-		if(!paccTableCell) {
-			// Re-rendering Any parts of a table between the table and the cells (rows, groupings), must cause their parent/s (all the way up to the table itself) to be re-rendered,
-			// As row and column information must be re-calculated on all cells.
-			// Note though that cells themselves do not need their parents re-rendered when changed as  this will not affect  row and column info on other cells. 
-			//parentNode->requiresParentUpdate=true;
-		} else {
-			parentNode->allowReuseInAncestorUpdate=false;
-		}
+
+	if(paccTableCell) {
+		LOG_DEBUG(L"Setting node's requiresParentUpdate back to false as this is a table cell");
+		parentNode->requiresParentUpdate=false;
+		LOG_DEBUG(L"Setting node's alwaysRerenderChildren back to false as this is a table cell");
+		parentNode->alwaysRerenderChildren=false;
 	}
+
 	// For IAccessibleTable, we must always be passed the table interface by the caller.
 	// For IAccessibleTable2, we can always obtain the cell interface,
 	// which allows us to handle updates to table cells.

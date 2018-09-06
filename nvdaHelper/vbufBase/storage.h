@@ -333,14 +333,29 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 /**
  * If true, When this node is invalidated in a backend, its parent will be invalidated instead. 
  * Parent invalidation is also recursive, so that if the parent node sets this variable to true, then the first ancestor that does not set this to true is used for invalidation. 
+ * An example where this might be set is on parts of a table where it is necessary for the table itself to be re-rendered if any part changes.
  */
 	bool requiresParentUpdate {false};
 
 /**
- * If true, then when the parent of this node is re-rendered, then this node can be reused again, rather than being re-rendered itself.
- * Note that parent in this case means a node with the same controlField identifier as this node's parent. It may or may not be the same physical node. 
+ * If true, this node is allowing itself to be reused within a subtree that is being re-rendered. 
+ * This is true by default, but may be set to false if this node or a descendant needs to be re-rendered but its requiresParentUpdate is true.
+ * In that case, the re-render will happen higher up in the ancestors, but ensures that this node is not reused. 
  */
 	bool allowReuseInAncestorUpdate {true};
+
+/**
+ * If True, this node cannot be moved and reused within a subtree being re-rendered, if its previous siblings have changed in anyway.
+ * An example might be where a table is re-rendered and a new row is added in the middle. 
+ * In this case, all rows and cells after the new row must not be reused as their table coordinates would have changed.
+ */
+	bool denyReuseIfPreviousSiblingsChanged {false};
+
+/**
+ * If true, this node's children will always be re-rendered along with this node when being re-rendered.
+ * For example: a table row might set this to ensure that if it is re-rendered, all its cells are as well.
+ */
+	bool alwaysRerenderChildren {false};
 
 /**
  * retreaves the node's doc handle and ID.

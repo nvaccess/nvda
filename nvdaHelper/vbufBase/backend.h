@@ -175,7 +175,7 @@ bool inUpdate {false};
  * The node is unmarked for re-rendering, but not returned. 
  * this allows the current render in progress (that called this method) to go ahead and re-render that node itself like it had never existed.
   */
-	VBufStorage_controlFieldNode_t* reuseExistingNodeInRender(int docHandle, int ID) ;
+	VBufStorage_controlFieldNode_t* reuseExistingNodeInRender(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID) ;
 
 };
 
