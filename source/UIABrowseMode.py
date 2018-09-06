@@ -425,6 +425,18 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	def __contains__(self,obj):
 		if not isinstance(obj,UIA):
 			return False
+		# Ensure that this object is a descendant of the document or is the document itself. 
+		runtimeID=VARIANT()
+		self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID)
+		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+		try:
+			docUIAElement=UIAWalker.normalizeElement(obj.UIAElement)
+		except COMError:
+			docUIAElement=None
+		if not docUIAElement:
+			return False
+		# Ensure that this object also can be reached by the document's text pattern.
 		try:
 			self.rootNVDAObject.makeTextInfo(obj)
 		except LookupError:

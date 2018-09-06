@@ -3,6 +3,7 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 = 2018.3 =
+Caracteristicile principale ale acestei versiuni includ detectarea automată a multor afișaje braille, suport pentru noile caracteristici ale Windows 10 precum panoul de intrare Emoji al Windows 10, dar și multe reparări ale erorilor.
 
 == Noi funcționalități ==
 - NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox și Google Chrome. (#8280)
@@ -13,11 +14,11 @@ Ce este nou în NVDA
 - Prin atributul aria-roledescription, rolurilr personalizate sunt suportate acum în toate navigatoarele web.
 - Tabele braille noi: cehă 8 puncte, curdă centrală, esperanto, maghiară și suedeză, braille în 8 puncte pentru calculator. (#8227)
 - A fost adăugat suportul pentru detectarea automată a afișajelor braille din fundal. (#1271)
-- Afișajele ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille și HumanWare BrailleNote și Brailliant BI/B sunt suportate acum.
+ - Afișajele ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille și HumanWare BrailleNote și Brailliant BI/B sunt suportate acum.
  - Puteți activa această caracteristică selectând opțiunea automată din lista afișajelor braille, care se află în dialogul selectării afișajelor braille.
-  - Vă rugăm să consultați documentația pentru mai multe detalii.
-  - S-a adăugat suportul pentru diverse caracteristici de intrare moderne introduse în versiunile recente de Windows 10. Acestea includ panoul de emoji (Fall Creators Update), dictarea (Fall Creators Update), sugestiile de intrare ale tastatturii hardware (April 2018 Update) și lipirea pe planșeta cloud (October 2018 Update). (#7273)
-  - Conținutul marcat ca citat bloc utilizându-se ARIA (role blockquote) este suportat acum în Mozilla Firefox 63. (#8577)
+ - Vă rugăm să consultați documentația pentru mai multe detalii.
+- S-a adăugat suportul pentru diverse caracteristici de intrare moderne introduse în versiunile recente de Windows 10. Acestea includ panoul de emoji (Fall Creators Update), dictarea (Fall Creators Update), sugestiile de intrare ale tastatturii hardware (April 2018 Update) și lipirea pe planșeta cloud (October 2018 Update). (#7273)
+- Conținutul marcat ca citat bloc utilizându-se ARIA (role blockquote) este suportat acum în Mozilla Firefox 63. (#8577)
   
 
 == Modificări ==
@@ -47,15 +48,15 @@ Ce este nou în NVDA
 - S-a reparat o eroare care făcea ca atunci când o casetă era nebifată, statutul acesteia să nu fie raportat în vorbire dacă respectiva casetă fusese parțial bifată anterior. (#6946)
 - În lista de limbi din dialogul setărilor NVDA, numele de limbă pentru birmană este afișat corect în Windows 7. (#8544)
 - În microsoft Edge, NVDA va anunța notificări precum disponibilitatea pentru vizualizarea lecturilor și progresul încărcării unei pagini. (#8423)
-- Similar cu multe câmpuri de text multilinie, când este poziționat la începutul unui document în braille, afișajul este afișat astfel încât primul caracter al documentului să fie la începutul afișajului. (#8406)
 - La navigarea într-o listă de pe un site web, NVDA va raporta eticheta acesteia dacă autorul site-ului respectiv a furnizat-o. (#7652)
 - Când se atribuie manual funcții la gesturi pentru un afișaj braille particular, aceste gesturi le vor afișa întotdeauna ca fiind atribuite la acel afișaj. În trecut, funcțiile erau afișate ca și cum ar fi fost atribuite la afișajul braille care era activ în acel moment. (#8108)
 - Versiunea pe 64 de biți a Media Player Classic este suportată acum. (#6066)
 - Au fost activate câteva îmbunătățiri la suportul braille din Microsoft Word cu UI Automation:
+ - Similar cu multe câmpuri de text multilinie, când este poziționat la începutul unui document în braille, afișajul este afișat astfel încât primul caracter al documentului să fie la începutul afișajului. (#8406)
  - La focalizarea unui document Word, s-a redus prezentarea extrem de prolixă a focalizării atât în vorbire, cât și în braille. (#8407)
  - Acum, deplasarea cursorului în braille funcționează corect atunci când se află într-o listă dintr-un document Word. (#7971)
  - Bulinele sau numerele nou-inserate într-un document Word sunt raportate corect atât în vorbire, cât și în braille. (#7970)
- - În Windows 10 1803 sau mai nou, puteți să instalați suplimente dacă este activată caracteristica pentru suportul utilizării Unicode UTF-8 pentru limbile din lumea întreagă. (#8599)
+- În Windows 10 1803 sau mai nou, puteți să instalați suplimente dacă este activată caracteristica pentru suportul utilizării Unicode UTF-8 pentru limbile din lumea întreagă. (#8599)
  
  
 == Modificări pentru dezvoltatori ==
@@ -71,6 +72,10 @@ Ce este nou în NVDA
  - config.pre_configReset și config.post_configReset includ steagul setărilor din fabrică pentru a specifica dacă setările sunt reîncărcate de pe disk (false) sau dacă resetarea la valorile implicite este necesară (true).
 - config.configProfileSwitch a fost redenumit la config.post_configProfileSwitch pentru a reflecta faptul că această acțiune este apelată după ce comutarea profilului are loc. (#7598)
 - Interfețele UI Automation au fost actualizate la Windows 10 October 2018 Update și Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
+
+
+= 2018.2.1 =
+Această versiune include actualizări ale traducerilor din cauza eliminării în ultimul moment a unei caracteristici care cauza probleme.
 
 
 = 2018.2 =
