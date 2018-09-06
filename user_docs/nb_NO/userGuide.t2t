@@ -181,7 +181,7 @@ Hvis du ønsker at en av NVDA-tastene skal opptre som opprinnelig tast (for ekse
 +++ Tastaturoppsett +++[KeyboardLayouts]
 NVDA leveres for tida med to sett med tastaturkommandoer, også kjent som tastaturoppsett: stasjonært og bærbart tastaturoppsett.
 
-Som standard er NVDA satt opp til å bruke stasjonært tastaturoppsett. Du kan enkelt bytte til bærbart tastaturoppsett under Tastatur-kategorien i [NVDA-innstillinger #NVDASettings], som du finner under Brukervalg i NVDA-menyen.
+Som standard er NVDA satt opp til å bruke stasjonært tastaturoppsett. Du kan enkelt bytte til bærbart tastaturoppsett under kategorien Tastatur i [NVDA-innstillinger #NVDASettings], som du finner under Brukervalg i NVDA-menyen.
 
 Stasjonært tastaturoppsett gjør omfattende bruk av insert-tastene (med NumLock av).
 
@@ -315,10 +315,10 @@ Microsoft Word og Outlook) |
    
 Når fokus er i en tabell, er følgende tastekommandoer også tilgjengelige:
 || Navn | Tast | Beskrivelse |
-| Flytt til forrige kolonne | Ctrl+Alt+PilVenstre | Flytter systemmarkøren til forrige kolonne (i samme rad) |
-| Flytt til neste kolonne | Ctrl+Alt+PilHøyre | Flytter systemmarkøren til neste kolonne (i samme rad) |
-| Flytt til forrige rad | Ctrl+Alt+PilOpp | Flytter systemmarkøren til forrige rad (i samme kolonne) |
-| Flytt til neste rad | Ctrl+Alt+PilNed | Flytter systemmarkøren til neste rad (i samme kolonne) |
+| Gå til forrige kolonne | Ctrl+Alt+PilVenstre | Flytter systemmarkøren til forrige kolonne (i samme rad) |
+| Gå til neste kolonne | Ctrl+Alt+PilHøyre | Flytter systemmarkøren til neste kolonne (i samme rad) |
+| Gå til forrige rad | Ctrl+Alt+PilOpp | Flytter systemmarkøren til forrige rad (i samme kolonne) |
+| Gå til neste rad | Ctrl+Alt+PilNed | Flytter systemmarkøren til neste rad (i samme kolonne) |
 %kc:endInclude
 
 ++ Objektnavigasjon ++[ObjectNavigation]
@@ -342,7 +342,7 @@ Når du navigerer til et objekt, kan du se på innholdet i det ved hjelp av [tek
 Som standard flyttes navigasjonsobjektet sammen med systemfokus, men denne oppførselen kan slås av og på.
 
 Merk at leselisten følger både [fokus #SystemFocus] og [markør #SystemCaret], så vel som objektnavigasjon og tekstlesing som standard.
-Hvis du vil at den bare skal følge fokus og markør, må du [konfigurere leselist til å knyttes til #BrailleTether] fokus. I dette tilfellet vil leselista ikke følge objektnavigasjon og tekstlesing.
+Hvis du vil at den bare skal følge fokus og markør, må du [konfigurere leselist til å knyttes til #BrailleTether] fokus. I dette tilfellet vil leselisten ikke følge objektnavigasjon og tekstlesing.
 
 Om du vil at leselisten skal følge objektnavigasjon og tekstlesing i stedet, må du [konfigurere leselisten til å knyttes til #BrailleTether] lesing.
 
@@ -350,11 +350,11 @@ Ved objektnavigering bruker du følgende taster:
 %kc:beginInclude
 || Navn | Stasjonær tast | Bærbar tast | Berøring | Beskrivelse |
 | Les gjeldende objekt | NVDA+NumPad5 | NVDA+Ctrl+o | ingen | Leser det gjeldende navigasjonsobjektet. Ved å trykke to ganger staves informasjonen, og trykker du tre ganger kopieres objektets navn og verdi til utklippstavlen. |
-| Flytt til innholdsobjektet | NVDA+NumPad8 | NVDA+Skift+PilOpp | Sveip opp (objektmodus) | Flytter til objektet som inneholder gjeldende navigasjonsobjekt |
-| Flytt til forrige objekt | NVDA+NumPad4 | NVDA+Skift+PilVenstre | Sveip mot venstre (objektmodus) | Flytter til objektet før den gjeldende navigasjonsobjektet |
-| Flytt til neste objekt | NVDA+NumPad6 | NVDA+Skift+PilHøyre | Sveip mot høyre (objektmodus) | Flytter til objektet etter gjeldende navigasjonsobjekt |
-| Flytt til første beholderobjekt | NVDA+NumPad2 | NVDA+Skift+PilNed | Sveip ned (objektmodus) | Flytter til det første innholdsobjektet i det gjeldende navigasjonsobjektet |
-| Flytt til fokusobjekt | NVDA+NumPadMinus | NVDA+SlettBakover | ingen | Flytter til objektet som for øyeblikket har systemfokus, og plasserer også lesemarkøren i posisjonen for systemmarkøren, hvis den vises |
+| Gå til innholdsobjektet | NVDA+NumPad8 | NVDA+Skift+PilOpp | Sveip opp (objektmodus) | Flytter til objektet som inneholder gjeldende navigasjonsobjekt |
+| Gå til forrige objekt | NVDA+NumPad4 | NVDA+Skift+PilVenstre | Sveip mot venstre (objektmodus) | Flytter til objektet før den gjeldende navigasjonsobjektet |
+| Gå til neste objekt | NVDA+NumPad6 | NVDA+Skift+PilHøyre | Sveip mot høyre (objektmodus) | Flytter til objektet etter gjeldende navigasjonsobjekt |
+| Gå til første beholderobjekt | NVDA+NumPad2 | NVDA+Skift+PilNed | Sveip ned (objektmodus) | Flytter til det første innholdsobjektet i det gjeldende navigasjonsobjektet |
+| Gå til fokusobjekt | NVDA+NumPadMinus | NVDA+SlettBakover | ingen | Flytter til objektet som for øyeblikket har systemfokus, og plasserer også lesemarkøren i posisjonen for systemmarkøren, hvis den vises |
 | Aktiver nåværende navigasjonsobjekt | NVDA+NumPadEnter | NVDA+Enter | Dobbelttrykk | Aktiverer gjeldende navigasjonsobjekt (som å klikke med musen eller trykke mellomrom når den har systemfokus) |
 | Flytt systemfokus eller markør til gjeldende leseposisjon | NVDA+Skift+NumPadMinus | NVDA+Skift+SlettBakover | ingen | Flytter systemfokus til gjeldende navigasjonsobjekt når kommandoen trykkes én gang. Trykkes kommandoen to ganger, flyttes systemmarkøren til posisjonen for lesemarkøren |
 | Rapporter om lesemarkørens plassering | NVDA+NumPadDel | NVDA+Del | ingen | Leser informasjon om tekst eller objekt ved lesemarkøren. Dette kan for eksempel omfatte hvor i dokumentet en er (i prosent), avstand fra kanten av arket eller eksakt skjermposisjon. Ved å trykke to ganger kan en få flere detaljer |
@@ -383,13 +383,13 @@ Følgende kommandoer er tilgjengelige for lesing av tekst:
 | Gå til neste linje i lesing | NumPad9 | NVDA+PilNed | bla ned (tekstmodus) | Flytt lesemarkøren til neste tekstlinje |
 | Gå til nederste linje i lesing | Skift+NumPad9 | NVDA+Ctrl+End | ingen | Flytter lesemarkøren til siste linje av teksten |
 | Gå til forrige ord i lesing | NumPad4 | NVDA+Ctrl?PilVenstre | bla med to fingrer mot venstre (tekstmodus) | Flytter lesemarkøren til forrige ord i teksten |
-| Les gjeldende ord i lesing | NumPad5 | NVDA+Ctrl+. | ingen | Les gjeldende ord i teksten der lesemarkøren er plassert. Ved å trykke to ganger staves ordet. Hvis du trykker tre ganger, staves ordet med tegnbeskrivelser. |
+| Les gjeldende ord i lesing | NumPad5 | NVDA+Ctrl+punnktum | ingen | Les gjeldende ord i teksten der lesemarkøren er plassert. Ved å trykke to ganger staves ordet. Hvis du trykker tre ganger, staves ordet med tegnbeskrivelser. |
 | Gå til neste ord i lesing | NumPad6 | NVDA+Ctrl+PilHøyre | bla med to fingrer mot høyre (tekstmodus) | Flytt lesemarkøren til neste ord i teksten |
 | Gå til starten av linjen i lesing | Skift+NumPad1 | NVDA+Home | none | Flytter lesemarkøren til begynnelsen av linjen i teksten |
 | Gå til forrige tegn i lesing | NumPad1 | NVDA+PilVenstre | bla mot venstre (tekstmodus) | Flytter lesemarkøren til forrige tegn på den gjeldende linjen i teksten |
-| Les gjeldende tegn i lesing | NumPad2 | NVDA+. | ingen | Les gjeldende tegn på linjen der lesemarkøren er plassert. Ved å trykke to ganger leses en beskrivelse eller eksempel på det tegnet. Hvis du trykker tre ganger, leses den numeriske verdien av tegnet i desimal og heksadesimal. |
-| Flytt til neste tegn i lesing | NumPad3 | NVDA+PilHøyre | bla mot høyre (tekstmodus) | Flytter lesemarkøren til neste tegn på gjeldende linje i teksten |
-| Flytt til slutten av linjen i lesing | Skift+NumPad3 | NVDA+End | ingen | Flytter lesemarkøren til slutten av gjeldende linje i teksten |
+| Les gjeldende tegn i lesing | NumPad2 | NVDA+punktum | ingen | Les gjeldende tegn på linjen der lesemarkøren er plassert. Ved å trykke to ganger leses en beskrivelse eller eksempel på det tegnet. Hvis du trykker tre ganger, leses den numeriske verdien av tegnet i desimal og heksadesimal. |
+| Gå til neste tegn i lesing | NumPad3 | NVDA+PilHøyre | bla mot høyre (tekstmodus) | Flytter lesemarkøren til neste tegn på gjeldende linje i teksten |
+| Gå til slutten av linjen i lesing | Skift+NumPad3 | NVDA+End | ingen | Flytter lesemarkøren til slutten av gjeldende linje i teksten |
 | Si alle ved lesing | NumPad++ | NVDA+Skift+a | Bla ned med tre fingrer (tekstmodus) | Leser fra gjeldende posisjon av lesemarkøren, og følger under lesing |
 | Velg og kopier fra lesemarkøren | NVDA+F9 | NVDA+F9 | ingen | Starter velg og kopier-prosessen fra den gjeldende posisjonen til lesemarkøren. Selve handlingen blir ikke utført før du forteller NVDA hvor slutten på det valgte tekstområdet er |
 | Velg og kopier til lesemarkøren | NVDA+F10 | NVDA+F10 | ingen | Ved første trykk velges tekst fra det tidligere satte startmerket fram til og med gjeldende posisjon for lesemarkøren. Etter å ha trykket på tasten en gang til, vil teksten bli kopiert til utklippstavlen i Windows |
@@ -405,7 +405,7 @@ Oppsettet er illustrert slik:
 | Forrige tegn | Gjeldende tegn | Neste tegn |
 
 ++ Lesemodi ++[ReviewModes]
-NVDAs [kommandoer for tekstlesing #ReviewingText] kan vise innhold innenfor gjeldende navigatorobjekt, gjeldende dokument eller skjerm, avhengig av hvilket lesemodus som er valgt.
+NVDAs [kommandoer for tekstlesing #ReviewingText] kan vise innhold innenfor gjeldende navigasjonsobjekt, gjeldende dokument eller skjerm, avhengig av hvilket lesemodus som er valgt.
 Lesemodi er en erstatning for det eldre konseptet Flat lesing i NVDA.
 Følgende kommandoer veksler mellom lesemodi:
 %kc:beginInclude
@@ -416,23 +416,23 @@ lesemodus |
 %kc:endInclude
 
 +++ Objektlesing +++[ObjectReview]
-Når du er i objektlesemodus, vil du bare se innholdet i gjeldende [navigatorobjekt #ObjectNavigation]. For objekter som skrivbare tekstfelt eller andre tekstkontroller vil dette normalt være tekstinnholdet. For andre objekter kan dette være navnet og/eller verdien.
+Når du er i objektlesemodus, vil du bare se innholdet i gjeldende [navigasjonsobjekt #ObjectNavigation]. For objekter som skrivbare tekstfelt eller andre tekstkontroller vil dette normalt være tekstinnholdet. For andre objekter kan dette være navnet og/eller verdien.
 
 +++ Dokumentlesing +++[DocumentReview]
-Når [navigatorobjektet #ObjectNavigation] er i et dokument i nettmodus (som ei nettside) eller et annet komplekst dokument (som et OpenOffice-dokument), er det mulig å bytte til modus for dokumentlesing. I denne modusen kan du lese teksten i hele dokumentet.
+Når [navigasjonsobjektet #ObjectNavigation] er i et dokument i nettmodus (som ei nettside) eller et annet komplekst dokument (som et OpenOffice-dokument), er det mulig å bytte til modus for dokumentlesing. I denne modusen kan du lese teksten i hele dokumentet.
 
-Når du bytter fra objektlesing til dokumentlesing, blir lesemarkøren plassert i dokumentet i posisjonen for navigatorobjektet.
+Når du bytter fra objektlesing til dokumentlesing, blir lesemarkøren plassert i dokumentet i posisjonen for navigasjonsobjektet.
 
-Når du forflytter deg omkring i dokumentet med lesekommandoer, blir navigatorobjektet automatisk oppdatert til objektet som for øyeblikket finnes i posisjonen for lesemarkøren.
+Når du flytter deg omkring i dokumentet med lesekommandoer, blir navigasjonsobjektet automatisk oppdatert til objektet som for øyeblikket finnes i posisjonen for lesemarkøren.
 
 Merk at NVDA vil bytte automatisk fra objektlesing til dokumentlesing når du navigerer i dokumenter i nettmodus.
 
 +++ Skjermlesing +++[ScreenReview]    
 Modus for skjermlesing lar deg lese teksten på skjermen slik den presenteres visuelt i det gjeldende programmet. Dette tilsvarer skjermlesing eller musepekerfunksjonalitet i mange andre skjermleserprogrammer for Windows. 
 
-Når du bytter til modus for skjermlesing, settes lesemarkøren i skjermposisjonen for det gjeldende [navigatorobjektet #ObjectNavigation].
+Når du bytter til modus for skjermlesing, settes lesemarkøren i skjermposisjonen for det gjeldende [navigasjonsobjektet #ObjectNavigation].
   
-Når du forflytter deg omkring i dokumentet med lesekommandoer, blir navigatorobjektet automatisk oppdatert til objektet som for øyeblikket finnes i skjermposisjonen for lesemarkøren.
+Når du flytter deg omkring i dokumentet med lesekommandoer, blir navigasjonsobjektet automatisk oppdatert til objektet som for øyeblikket finnes i skjermposisjonen for lesemarkøren.
 
 Merk at i enkelte nyere programmer vil NVDA ikke kunne se teksten som vises på skjermen, enten hele teksten eller deler av den. Dette skyldes nyere teknologier for oppbygging av skjermbildet som det nå er umulig for NVDA å støtte.
    
@@ -451,10 +451,10 @@ Selv om en fysisk mus eller styreflate bør brukes til å navigere med musen, ha
 || Navn | Stasjonær tast | Bærbar tast | Beskrivelse |
 | Klikk med venstre museknapp | NumPad/ | NVDA+PilVenstre | Klikker på venstre museknapp én gang. Dobbeltklikk kan utføres ved å trykke på denne tasten to ganger i rask rekkefølge |
 | Lås venstre museknapp | Skift+NumPad/ | NVDA+Skift+PilVenstre | Låser venstre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den venstre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
-| Klikk høyre museknapp | NumPad* | NVDA+PilHøyre | Klikker på høyre museknapp én gang. |
-| Lås høyre museknapp | Skift+NumPad* | NVDA+Skift+PilHøyre | Låser høyre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den høyre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
-| Flytt musen til gjeldende navigasjonsobjekt | NVDA+Numpad/ | NVDA+Skift+m | Flytter musepekeren til posisjonen til det gjeldende navigatorobjektet og lesemarkøren |
-| Naviger til objektet under musen | NVDA+NumPad* | NVDA+Skift+n | Sett navigatorobjektet til objektet i posisjonen til musepekeren |
+| Klikk høyre museknapp | NumPad stjerne | NVDA+PilHøyre | Klikker på høyre museknapp én gang. |
+| Lås høyre museknapp | Skift+NumPad stjerne | NVDA+Skift+PilHøyre | Låser høyre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den høyre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
+| Flytt musen til gjeldende navigasjonsobjekt | NVDA+Numpad/ | NVDA+Skift+m | Flytter musepekeren til posisjonen til det gjeldende navigasjonsobjektet og lesemarkøren |
+| Naviger til objektet under musen | NVDA+NumPad stjerne | NVDA+Skift+n | Sett navigasjonsobjektet til objektet i posisjonen til muspekeren |
 %kc:endInclude
 
 + Nettmodus +[BrowseMode]
@@ -502,7 +502,7 @@ Følgende taster brukt alene hopper til neste tilgjengelige element. Bruker du d
 - v: besøkt lenke
 - e: redigeringsfelt
 - b: Knapp
-- x: avkrysningsboks
+- x: avkryssingsboks
 - c: kombinasjonsboks
 - r: radioknapp
 - q: blokksitat
@@ -512,13 +512,13 @@ Følgende taster brukt alene hopper til neste tilgjengelige element. Bruker du d
 - d: ARIA-landemerke
 - o: innebygd objekt (lyd- og videospiller, applikasjon, dialog, etc.)
 - 1 til 6: overskriftene på nivå 1 til 6
-- a: annotasjon (kommentar, forfatterrevisjon, etc.)
+- a: merknad (kommentar, forfatterrevisjon, etc.)
 - w: skrivefeil
 - 
 For å gå til begynnelsen eller slutten av beholderelementer som lister og tabeller:
 || Navn | Tast | Beskrivelse |
-| Flytt til begynnelsen av beholderen | Skift+, | Flytter til begynnelsen av beholderen (liste, tabell, etc.) hvor markøren er plassert) |
-| Flytt forbi slutten av beholderen | , | Flytter forbi slutten av beholderen (liste, tabell, etc.) hvor markøren er plassert |
+| Gå til begynnelsen av beholderen | Skift+komma | Flytter til begynnelsen av beholderen (liste, tabell, etc.) hvor markøren er plassert) |
+| Flytt forbi slutten av beholderen | komma | Flytter forbi slutten av beholderen (liste, tabell, etc.) hvor markøren er plassert |
 %kc:endInclude
 
 Noen nettapplikasjoner som Gmail, Twitter og Facebook bruker enkeltbokstaver som hurtigtaster. Hvis du vil benytte disse mens du fortsatt vil bruke piltastene for å lese i nettmodus, kan du deaktivere kommandoene for enkeltbokstavnavigasjon i NVDA midlertidig. 
@@ -545,30 +545,464 @@ Hvis det er tilgjengelig, kan du deretter tabbe rundt i det og samhandle med det
 En tastekommando er tilgjengelig for å gå tilbake til den opprinnelige siden som inneholder det innebygde objektet:
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Flytt til innhold i nettmodusdokument | NVDA+Ctrl+Mellomrom | Flytter fokus ut av det nåværende innebygde objektet, og inn i dokumentet som inneholder det |
+| Gå til innhold i nettmodusdokument | NVDA+Ctrl+Mellomrom | Flytter fokus ut av det nåværende innebygde objektet, og inn i dokumentet som inneholder det |
 %kc:endInclude
 
 + Lese matematisk innhold +[ReadingMath]
+Ved hjelp av MathPlayer 4 fra Design Science kan NVDA lese og interaktivt navigere i matematisk innhold som støttes. Dette forutsetter at MathPlayer 4 er installert på PC-en.
 
+MathPlayer er tilgjengelig som en gratis nedlasting fra: http://www.dessci.com/en/products/mathplayer/
 
-+ Applikasjonsspesifike NVDA-kommandoer +
-NVDA har sine egne ekstra kommandoer for enkelte programmer for å gjøre enkelte oppgaver enklere eller for å gi tilgang til funksjonalitet som ellers ikke er tilgjengelig for brukere med skjermleser.
+NVDA støtter følgende typer matematisk innhold:
+- MathML i Mozilla Firefox, Microsoft Internet Explorer og Google Chrome.
+- Design Science MathType i Microsoft Word og PowerPoint. MathType må være installert for at dette skal fungere. Prøveversjonen er tilstrekkelig.
+- MathML i Adobe Reader.
+Merk at dette ikke er en offisiell standard ennå, så det finnes for tiden ingen offentlig tilgjengelig programvare som kan produsere dette innholdet.
+- Matematikk i Kindle for PC for bøker med tilgjengelig matematikk. 
+Når du leser et dokument, vil NVDA uttale tilgjengelig matematisk innhold når det dukker opp. Bruker du leselist, vil matematisk innhold også bli vist i punktskrift.
 
-++ Foobar2000 ++
+++ Interaktiv navigasjon ++[InteractiveNavigation] 
+Om du arbeider primært med tale, vil du antakelig i de fleste tilfeller ønske å utforsske uttrykket i mindre segmenter, heller enn å høre hele uttrykket på én gang.
+
+Hvis du er i nettmodus, kan du gjøre dette ved å flytte markøren til det matematiske innholdet og trykke Enter.
+
+Om du ikke er i nettmodus:  
++ Flytt lessemarkøren til det matematiske innholdet.
+Som standard følger lesemarkøren systemmarkøren, så du kan normalt benytte systemmarkøren for å flytte til ønsket innhold.
++ Deretter aktiverer du følgende kommando:
++
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Les gjenværende tid | Ctrl+Skift+R | Leser den gjenværende tiden av det gjeldende sporet, hvis noen. |
+| Samhandle med matematisk innhold | NVDA+Alt+m | Starter samhandling med matematisk innhold. |
+%kc:endInclude
+Her kan du bruke MathPlayer-kommandoer, slik som piltastene, for å utforske uttrykket. For eksempel kan du flytte deg gjennom uttrykket ved hjelp av pil venstre og pil høyre, og du kan zoome deg inn på en del av uttrykket med pil ned.
+
+Vennligst se [dokumentasjonen for MathPlayer om navigasjonskommandoer 
+https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for mer informasjon.
+
+Når du ønsker å returnere til dokumentet, trykker du rett og slett på Escape-tasten.      
+
++ Punktskrift +[Braille]
+Har du tilgang til en leselist, kan NVDA presentere informasjon i punktskrift. Om leselisten har et punktskrifttastatur, kan du også skrive inn uforkortet og forkortet punktskrift.
+
+Vennligst se delen [Støttede leselister #SupportedBrailleDisplays] for informasjon om leselistene NVDA har støtte for.
+
+Du kan konfigurere punktskrift ved å bruke [Punktskrift-kategorien #BrailleSettings] i [NVDAs Innstillinger-dialog #NVDASettings].
+
+++ Forkortinger for kontrolltype, situasjon og landemerke ++[BrailleAbbreviations]
+For å få plass til så mye informasjon som mulig på ei leselist, har følgende forkortinger blitt definert. Disse angir så vel kontrolltype og situasjon som landemerker.
+
+|| Forkorting | Kontrolltype |
+| app | applikation |
+| bsit | blokksitat |
+| knp | knapp |
+| ktknp | nedtrekksknapp |
+| snrknp | snurreknapp |
+| splknp | splittknapp |
+| btknp | bytteknapp |
+| kbo | kombinasjonsboks |
+| avk | avkryssingsboks |
+| dlg | dialog |
+| dok | dokument |
+| rdg | redigerbart tekstfelt |
+| pordg | redigerbart passordfelt |
+| innbgd | innebygd objekt |
+| slnot | sluttnotat |
+| fnot | fotnote |
+| gr | grafikk |
+| grp | gruppe |
+| hN | overskrift på nivå N, f.eks. h1, h2. |
+| hjlp | hjelpeballong |
+| lmk | landemerke |
+| lnk | lenke |
+| blnk | besøkt lenke |
+| lst | liste |
+| mny | meny |
+| mnyln | menylinje |
+| mnyknp | menyknapp |
+| me | menyelement |
+| pnl | panel |
+| fdrln | framdriftslinje |
+| rknp | radioknapp |
+| rlflt | rullefelt |
+| del | del |
+| stln | statuslinje |
+| fnktrl | fanekontroll |
+| tbl | tabell |
+| cN | tabellkolonne nummer N, f.eks. c1, c2. |
+| rN | tabellrad nummer N, f.eks. r1, r2. |
+| term | terminal |
+| vkln | verktøylinje |
+| vktps | verktøytips |
+| tv | trevisning |
+| tvknp | trevisningsknapp |
+| tve | trevisningselement |
+| lv N | et trevisningselement har et hierarkisk nivå N|
+| vd | vindu |
+| | separator |
+
+Følgende situasjonsindikatorer er også definert:
+|| Forkorting | Kontrollsituasjon |
+| ... | Vist når et objekt har støtte for autofullfør |
+| | vist når et objekt (f.eks. en bytteknapp) blir trykket på |
+| | vist når et objekt (f.eks. en bytteknapp) ikke blir trykket på |
+| | vist når et objekt (f.eks. en avkryssingsboks) er avkrysset |
+| | vist når et objekt (f.eks. en avkryssingsboks) er halvveis avkrysset |
+| | vist når et objekt (f.eks. en avkryssingsboks) ikke er avkrysset |
+| - | vist når et objekt (f.eks. et element i en trevisning) er sammentrekkbart |
+| + | vist når et objekt (f.eks. et element i en trevisning) er utvidbart |
+| *** | vist når en beskyttet kontroll eller et beskyttet dokument blir oppdaget |
+| klk | vist når et objekt er klikkbart |
+| kmnt | vist når det er en kommentar til en celle i et regneark eller del av en tekst i et dokument |
+,| frml | displayed when there is a formula on a spreadsheet cell |
+,| invalid | displayed when an invalid entry has been made |
+,| ldesc | displayed when an object (usually a graphic) has a long description |
+,| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
+,| req | displayed when a required form field is encountered |
+,| ro | displayed when an object (e.g. an editable text field) is read-only |
+,| sel | displayed when an object is selected |
+,| nsel | displayed when an object is not selected |
+,| sorted asc | displayed when an object is sorted ascending |
+,| sorted desc | displayed when an object is sorted descending |
+,| submnu | displayed when an object has a popup (usually a sub-menu) |
+
+Til slutt er følgende forkortinger for landemerker definert:
+|| Forkorting | Landemerke |
+,| bnnr | banner |
+,| cinf | content info |
+,| cmpl | complementary |
+,| form | form |
+,| main | main |
+| nav | navigasjon |
+| søk | søk |
+| rgn | region |
+
+++ Skrive punktskrift ++[BrailleInput]
+NVDA støtter skriving av både uforkortet og forkortet punktskrift via et punktskrifttastatur.
+
+Du kan velge oversettingstabellen som oversetter fra punktskrift til tekst ved hjelp av innstillingen [inndatatabell #BrailleSettingsInputTable] i kategorien Punktskrift som du finner i [NVDAs Innstillinger #NVDASettings]-dialog.        
+Skriver du uforkortet punktskrift, settes teksten inn så snart den er skrevet. Skriver du forkortet punktskrift, settes teksten inn så snart du trykker mellomrom eller Enter når du har skrevet et ord.
+
+Legg merke til at oversettingen bare gjelder ordet du skriver i punktskrift, og ikke omfatter eksisterende tekst. Hvis du for eksempel benytter en punktskrifttabell som begynner tall med talltegn og du flytter markøren til slutten av et tall, vil du måtte skrive talltegn igjen for å skrive flere tall.
+
+%kc:beginInclude
+Et trykk på punkt 7 sletter sist skrevne punktskriftcelle eller bokstav.
+Punkt 8 oversetter skrevet punktskrift og trykker Enter-tasten.
+Ved å trykke punkt 7 og 8 oversettes skrevet punktskrift, men uten å legge til et mellomrom eller trykke Enter.
 %kc:endInclude
 
-++ Miranda IM ++
++ Gjenkjenning av innhold +[ContentRecognition]
+Når forfattere ikke bidrar med tilstrekkelig informasjon til at en skjermleserbruker skal kunne finne ut av innholdet i noe, kan ulike verktøy brukes for å forsøke å gjenkjenne innholdet i et bilde.
+
+NVDA støtter funksjonaliteten for optisk tegngjenkjenning (OCR) som er bygd inn i Windows 10 for å gjenkjenne tekst fra bilder. Det finnes også verktøy for gjenkjenning av innhold i NVDA-tillegg.
+
+Når du bruker en kommando for innholdsgjenkjenning, gjenkjenner NVDA innholdet fra gjeldende [navigasjonsobjekt #ObjectNavigation].
+
+Som standard følger navigasjonsobjektet systemfokus eller markøren i nettmodus, så du kan vanligvis bare flytte fokus eller nettmodusmarkøren slik du vil. Hvis du for eksempel flytter  nettmodusmarkøren til en grafikk, vil gjenkjenningsverktøyet gjenkjenne innholdet fra grafikken som standard. Imidlertid ønsker du kanskje å kunne bruke objektnavigasjon direkte for å eksempelvis gjenkjenne innholdet i et helt programvindu.  
+
+Så snart gjenkjenning er fullført, vil resultatet bli vist i et dokument tilsvarende nettmodus, slik at du kan lese innholdet ved hjelp av piltastene etc.
+
+Et trykk på mellomrom eller Enter vil aktivere (normalt klikke) på teksten under markøren hvis mulig.
+
+Et trykk på Escape forkaster gjenkjenningsresultatet.
+
+++ Windows 10 OCR ++[Win10Ocr]
+Windows 10 inkluderer OCR for mange språk. NVDA kan bruke dette til å gjenkjenne tekst fra bilder eller utilgjengelige programmer.
+
+Du kan sette språket som skal brukes for tekstgjenkjenning i kategorien [Windows 10 OCR #Win10OcrSettings] i dialogen for [innstillinger i NVDAs #NVDASettings].
+
+Du kan legge til flere språk ved å åpne Startmenyen, velge Innstillinger, velge Tid & språk, deretter velge Region & språk og til slutt velge Legg til språk.
+
+%kc:beginInclude
+For å gjenkjenne teksten i gjeldende navigasjonsobjekt med Windows 10 OCR: Trykk NVDA+r.
+%kc:endInclude
+      
++ Applikasjonsspesifike funksjoner +[ApplicationSpecificFeatures]
+NVDA tilbyr sine egne ekstra funksjoner for enkelte programmer for å gjøre visse oppgaver enklere eller for å gi tilgang til funksjonalitet som ellers ikke er tilgjengelig for brukere med skjermleser.
+
+++ Microsoft Word ++[MicrosoftWord]
++++ Automatisk lesing av kolonne- og radoverskrifter +++[WordAutomaticColumnAndRowHeaderReading]
+NVDA er i stand til å annonsere relevante rad- og kolonneoverskrifter automatisk når en navigerer i tabeller i Microsoft Word. Dette krever først og fremst at valget Rapporter rad- og kolonneoverskrifter i tabeller er slått på. Dette valget finner du under Innstillinger for dokumentformatering i [Innstillinger #NVDASettings]-dialogen i NVDA. Dernest må NVDA vite hvilken rad eller kolonne som inneholder overskriftene i en angitt tabell.
+
+Etter at du har flyttet til første celle i kolonnen eller raden som inneholder overskriftene, bruker du en av følgende kommandoer:
+
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Les siste melding | NVDA+Ctrl+1-4 | Leser en av de siste meldingene, avhengig av tallet trykket, f.eks NVDA+Ctrl+2 leser nest nyeste meldingen. |
+| Sett kolonneoverskrifter | NVDA+Skift+c | Trykker du kommandoen én gang, forteller du NVDA at dette er første overskriftscelle på raden som inneholder kolonneoverskrifter som skal annonseres automatisk når du flytter mellom kolonner nedenfor denne raden. Trykker du to ganger, fjerner du denne innstillingen. |
+| Sett radoverskrifter | NVDA+Skift+r | Trykker du kommandoen én gang, forteller du NVDA at dette er første overskriftscelle i kolonnen som inneholder radoverskrifter som skal 
+annonseres automatisk når du flytter mellom rader etter denne kolonnen. Trykker du to ganger, fjerner du denne innstillingen. |
+%kc:endInclude
+   
+Disse innstillingene blir lagret i dokumentet som bokmerker, som er kompatible med andre skjermleserprogrammer som JAWS.
+
+Dette betyr at brukere av andre skjermlesere som åpner dokumentet på et seinere tidspunkt allerede har kolonne- og radoverskrifter automatisk definert.
+
++++ Nettmodus i Microsoft Word +++[BrowseModeInMicrosoftWord]
+Akkurat som på Internett, kan nettmodus også brukes i Microsoft Word for at du skal kunne bruke funksjoner som Hurtignavigasjon og Elementlisten.
+
+%kc:beginInclude
+For å slå Nettmodus på og av i Microsoft Word, trykker du NVDA+mellomrom.
 %kc:endInclude
 
-++ Poedit ++
+For mer informasjon om Nettmodus og Hurtignavigasjon, kan du se delen om [Nettmodus #BrowseMode].
+
+++++ Elementlisten ++++[WordElementsList]       
+%kc:beginInclude
+Når du er i Nettmodus i Microsoft Word, får du tilgang til Elementlisten ved å trykke NVDA+f7.
+%kc:endInclude
+Elementlisten kan liste overskrifter, lenker, merknader (som inkluderer kommentarer og sporendringer) og feil (for tiden begrenset til stavefeil).
+
++++ Rapportering av kommentarer +++[WordReportingComments]
+%kc:beginInclude
+For å få lest eventuelle kommentarer i gjeldende markørposisjon, trykker du NVDA+Alt+c.
+%kc:endInclude
+Alle kommentarer i dokumentet, sammen med andre sporede endringer, kan også listes i NVDAs elementliste når du velger Merknader som type.
+
+++ Microsoft Excel ++[MicrosoftExcel]
++++ Automatisk lesing av kolonne- og radoverskrifter +++[ExcelAutomaticColumnAndRowHeaderReading]      
+NVDA er i stand til å annonsere relevante rad- og kolonneoverskrifter automatisk når en navigerer i arbeidsark i Microsoft Excel. Dette krever først og fremst at valget Rapporter rad- og kolonneoverskrifter i tabeller er slått på. Dette valget finner du under Innstillinger for dokumentformatering i [Innstillinger #NVDASettings]-dialogen i NVDA. Dernest må NVDA vite hvilken rad eller kolonne som inneholder overskriftene.
+
+Etter at du har flyttet til første celle i kolonnen eller raden som inneholder overskriftene, bruker du en av følgende kommandoer:
+
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Les Kommentarer Vindu | Ctrl+Skift+C | Leser eventuelle kommentarer i kommentarfeltvinduet. |
-| Leser automatisk kommentarer vindu | Ctrl+Skift+A | Leser eventuelle kommentarer i det automatiske kommentarvinduet. |
+| Sett kolonneoverskrifter | NVDA+Skift+c | Trykker du kommandoen én gang, forteller du NVDA at dette er første overskriftscelle på raden som inneholder kolonneoverskrifter som skal annonseres automatisk når du flytter mellom kolonner nedenfor denne raden. Trykker du to ganger, fjerner du denne innstillingen. |
+| Sett radoverskrifter | NVDA+Skift+r | Trykker du kommandoen én gang, forteller du NVDA at dette er første overskriftscelle i kolonnen som inneholder radoverskrifter som skal 
+annonseres automatisk når du flytter mellom rader etter denne kolonnen. Trykker du to ganger, fjerner du denne innstillingen. |
 %kc:endInclude
+   
+Disse innstillingene blir lagret i arbeidsboka som definerte navneområder, som er kompatible med andre skjermleserprogrammer som JAWS.
+
+Dette betyr at brukere av andre skjermlesere som åpner arbeidsboka på et seinere tidspunkt allerede har kolonne- og radoverskrifter automatisk definert.
+
+++++ Elementlisten ++++[ExcelElementsList]       
+Akkurat som på nettet, har NVDA en elementliste for Microsoft Excel som lar deg liste og få tilgang til ulike typer informasjon.
+ 
+%kc:beginInclude
+For å få tilgang til Elementlisten i Excel, trykker du NVDA+F7.
+%kc:endInclude 
+
+Disse typene informasjon er tilgjengelige i Elementlisten:
+- Diagrammer: Dette lister alle diagrammer i det aktive arbeidsarket.
+Du kan velge et diagram og trykke Enter eller Gå til-knappen for å sette fokus på diagrammet. Deretter kan du navigere i det og lese det ved hjelp av piltastene.
+- Kommentarer: Dette lister alle celler i gjeldende arbeidsark som inneholder kommentarer.
+Cellens adresse sammen med kommentaren(e) vises for hver celle. Trykker du Enter eller Gå til-knappen når du er på en listet kommentar, vil du gå direkte til cellen.
+- Formler: Dette lister alle celler i arbeidsarket som inneholder en formel.
+Cellens adresse sammen med dens formel vises for hver celle. Trykker du Enter eller Gå til-knappen når du er på en listet formel, vil du gå direkte til cellen.
+- Ark: Dette lister alle ark i arbeidsboka.
+Trykk F2 når du er på et ark for å gi arket et nytt navn.
+Trykker du Enter eller Gå til-knappen når du er på et listet ark, vil du bytte til dette arket.
+- Skjemafelt: Dette lister alle skjemafelt i det aktive arbeidsarket.
+For hvert skjemafelt viser Elementlisten den alternative teksten for feltet sammen med adressene for feltene det dekker.
+Velger du et skjemafelt og trykker Enter eller Gå til-knappen på det, flytter du til dette feltet i nettmodus.
+- 
+
++++ Rapportere kommentarer +++[ExcelReportingComments] 
+%kc:beginInclude
+For å få lest eventuelle kommentarer i gjeldende celle med fokus, trykker du NVDA+Alt+c.
+%kc:endInclude
+
+Alle kommentarer i arbeidsarket kan også listes i NVDAs elementliste.
+
++++ Lese beskyttede celler +++[ExcelReadingProtectedCells]
+Hvis en arbeidsbok har blitt beskyttet, kan det være umulig å flytte fokus til bestemte celler som har blitt låst for redigering.
+%kc:beginInclude
+For å tillate flytting til låste celler, bytter du til nettmodus ved å trykke NVDA+mellomrom, og deretter bruker du standard forflytningskommandoer i Excel
+som piltastene til å flytte omkring til alle celler i gjeldende arbeidsark.
+%kc:endInclude
+
++++ Skjemafelt +++[ExcelFormFields]
+Arbeidsark i Excel kan omfatte skjemafelt. Du får tilgang til disse via Elementlisten, eller ved hjelp av kommandoene f og Skift+f, som er enkeltbokstavs navigasjonskommandoer for skjemafelt.
+
+Når du flytter til et skjemafelt i nettmodus, kan du trykke Enter eller mellomrom for enten å aktivere det eller bytte til fokusmodus, slik at du kan samhandle med det, avhengig av kontrollen.
+
+For mer informasjon om nettmodus og enkeltbokstavnavigasjon, viser vi til delen [Nettmodus #BrowseMode].
+
+++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Slå på/av lesing av foredragsholders notater | Ctrl+Skift+s | Når du kjører en presentasjon, vil denne kommandoen bytte mellom foredragsholders notater for gjeldende bilde og innholdet i bildet. Dette påvirker bare det NVDA leser, og ikke det som vises på skjermen. |
+%kc:endInclude
+      
+++ Foobar2000 ++[Foobar2000]
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Les gjenværende tid | Ctrl+Skift+r | Leser gjenværende tid for sporet som spilles nå, hvis noe. |
+| Les brukt tid | Ctrl+Skift+e | Leser brukt tid for sporet som spilles nå, hvis noe. |
+| Les sporlengde | Ctrl+Skift+t | Leser lengden for sporet som spilles nå, hvis noe. |
+%kc:endInclude
+
+Merk at hurtigtastene ovenfor bare fungerer med standard formateringsstreng for foobar sin statuslinje.
+
+++ Miranda IM ++[MirandaIM]
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Les siste melding | NVDA+Ctrl+1-4 | Leser en av de siste meldingene, avhengig av tallet trykket. F.eks vil NVDA+Ctrl+2 lese nest nyeste melding. |
+%kc:endInclude
+
+++ Poedit ++[Poedit]
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Les Kommentarvinduet | Ctrl+Skift+c | Leser eventuelle kommentarer i kommentarvinduet. |
+| Les merknader for oversettere | Ctrl+Skift+a | Leser eventuelle merknader for oversettere. |
+%kc:endInclude
+
+++ Skype ++[Skype]
+%kc:beginInclude
+Når du er i en samtale:
+|| Navn | Tast | Beskrivelse |
+| Les melding | NVDA+Ctrl+1-0 | Leser og flytter lesemarkøren til en nylig melding, avhengig av tallet som er trykket; f.eks. vil NVDA+Ctrl+2 lese nest nyeste melding. |
+%kc:endInclude
+
+++ Kindle for PC ++[Kindle]
+NVDA støtter lesing av og navigering i bøker i Amazon Kindle for PC. Denne funksjonaliteten er bare tilgjengelig med bøker merket med "Screen Reader: Supported", og dette kan du sjekke på detaljsiden for boka.
+
+Nettmodus benyttes for å lese boka. Dette slås på automatisk når du åpner en bok eller setter fokus på bokområdet.
+
+Bytting av side vil skje automatisk når du flytter markøren eller bruker Si alt-kommandoen.
+%kc:beginInclude
+Du kan manuelt bla til neste side med pageDown-tasten og til forrige side med pageUp-tasten.
+%kc:endInclude
+
+Enkeltbokstavnavigasjon støttes for lenker og grafikker, men bare innenfor gjeldende side.
+Navigering på lenker omfatter også fotnoter.
+
+NVDA tilbyr tidlig støtte for lesing og interaktiv navigasjon av matematisk innhold for bøker med tilgjengelig matematikk. 
+
+Vennligst se delen [Lese matematisk innhold #ReadingMath] for mer informasjon.
+
++++ Tekstvalg +++[KindleTextSelection]
+Kindle lar deg utføre ulike funksjoner på valgt tekst, som å få en ordlistedefinisjon,
+legge til notater og markeringer, kopiere teksten til utklippstavlen og søke på nettet.
+For å gjøre dette, må du først velge tekst, slik du normalt ville gjort i nettmodus; f.eks. ved å bruke Skift og piltastene.
+%kc:beginInclude
+Så snart du har valgt tekst, trykker du applikasjonstasten eller Skift+F10 for å se tilgjengelige valg for å arbeide med utvalget.
+%kc:endInclude
+
+Om du gjør dette uten å ha valgt tekst, vil valg bli vist for ordet under markøren.
+
++++ Brukernotater +++[KindleUserNotes]
+Du kan legge til et notat angående et ord eller en tekstpassasje. For å gjøre dette, velger du først relevant tekst og går til alternativene for utvalget, som beskrevet ovenfor. Velg deretter Legg til notat.
+
+Når du leser i nettmodus, vil NVDA referere til disse notatene som kommentarer.
+
+For å se på, redigere eller slette et notat:
++ Flytt markøren til teksten som inneholder notatet.
++ Gå til alternativene for utvalget som beskrevet ovenfor.
++ Velg Rediger notat.
++
+
+++ Azardi ++[Azardi]
+%kc:beginInclude
+Når du er i tabellvisningen over bøker som er lagt til:
+|| Navn | Tast | Beskrivelse |
+| Enter | Enter | Åpner valgt bok. |
+| Kontekstmeny | applikasjonstasten | Åpner kontekstmenyen for den valgte boka. |
+%kc:endInclude
+
++ Konfigurere NVDA +[ConfiguringNVDA]
+Det meste av konfigureringen kan gjøres ved hjelp av dialogbokser som du får tilgang til via undermenyen Preferanser i NVDA-menyen.
+
+Mange av disse innstillingene finner du i dialogen [Innstillinger i NVDA #NVDASettings].
+
+I alle dialogbokser trykker du på knappen OK for å akseptere eventuelle endringer du har gjort. For å avbryte eventuelle endringer trykker du på knappen Avbryt eller på Escape-tasten.
+
+I noen dialoger kan du trykke på knappen Bruk for at innstillingene skal tas i bruk umiddelbart, uten å lukke dialogen. 
+
+Noen innstillinger kan også endres ved hjelp av hurtigtaster. Disse er oppgitt, der det er relevant, i delene nedenfor.
+
+++ NVDA-innstillinger ++[NVDASettings]
+%kc:settingsSection: || Navn | Stasjonær tast | Bærbar tast | Beskrivelse |
+NVDAs innstillingsdialog inneholder mange konfigurasjonsparametre som kan endres.
+
+Denne dialogen inneholder en liste med flere kategorier med innstillinger du kan velge fra. 
+
+Når du velger en kategori, vil flere innstillinger knyttet til denne kategorien bli vist i dialogen. Disse innstillingene kan tas i bruk ved å trykke på knappen Bruk, og dialogen blir da stående åpen. 
+
+Vil du lagre innstillingene dine og lukke innstillingsdialogen, kan du trykke på OK-knappen.
+
+Noen innstillingskategorier har tilordnede hurtigtaster. Trykker du på en slik hurtigtast, blir NVDAs innstillingsdialog åpnet i nettopp den kategorien du har valgt.  
+
+Som standard kan du ikke nå alle kategorier med hurtigtastkommandoer.
+
+Ønsker du å få tilgang til kategorier som ikke har en tilordnet hurtigtast, kan du benytte dialogen [Inndatabevegelser #InputGestures] for å legge til en tilpasset bevegelse som en tastaturkommando eller berøringsbevegelse for den kategorien.
+
+Innstillingskategoriene som du finner i innstillingsdialogen i NVDA blir beskrevet nedenfor.
+
++++ Generelt (NVDA+Ctrl+g) +++[GeneralSettings]
+I kategorien Generelt i NVDAs innstillingsdialog settess NVDAs generelle oppførsel, som hvilket språk som skal benyttes i grensesnittet og om NVDA skal se etter oppdateringer.
+ 
+Denne kategorien inneholder disse valgene:
+==== Språk ====[GeneralSettingsLanguage]
+Dette er en kombinasjonsboks som lar deg velge språket som NVDAs brukergrensesnitt og meldinger skal vises i. Det er mange språk å velge mellom, men standardvalg er "Brukerstandard, Windows". Denne innstillingen ber NVDA bruke språket som for øyeblikket er valgt i Windows.
+
+Legg merke til at NVDA må startes på nytt når språket endres. NVDA vil spørre deg om du ønsker å starte NVDA på nytt hvis du endrer innstillingen, og lagre endringene dine.
+
+Trykk på OK, og NVDA vil starte på nytt.
+ 
+==== Lagre konfigurasjon ved avslutning ====[GeneralSettingsSaveConfig]
+Denne innstillingen er en avkryssingsboks som, hvis den er avkrysset, vil be NVDA lagre  gjeldende konfigurasjon automatisk når du avslutter NVDA.
+
+====  Vis avslutningsalternativer når NVDA avsluttes ====[GeneralSettingsShowExitOptions]
+Dette valget er en avkryssingsboks som lar deg velge om det skal vises en dialog med spørsmål om hvilken handling du vil utføre når du avslutter NvDA. 
+Om du setter kryss her, vil en dialog dukke opp når du forsøker å avslutte NVDA. Den vil spørre deg om du ønsker å avslutte, starte på nytt, starte på nytt med tillegg deaktivert, eller installere ventende oppdateringer (hvis noen finnes).
+
+Lar du avkryssingsboksen stå tom, vil NVDA avslutte umiddelbart uten spørsmål.
+
+==== Spill av lyd når NVDA startes eller avsluttes ====[GeneralSettingsPlaySounds]
+   This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
+
+==== Logging level ====[GeneralSettingsLogLevel]
+   This is a combo box that permits you to choose how much NVDA will log as it's running.
+   Generally users should not need to touch this as not too much is logged.
+   However, if you are wanting to provide information in a bug report, then it may be a useful option.
+
+==== Automatically start NVDA after I log on to Windows ====[GeneralSettingsStartAfterLogOn]
+   If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
+   This option is only available for installed copies of NVDA.
+
+==== Use NVDA on the Windows Logon screen (requires administrator privileges) ====[GeneralSettingsStartOnLogOnScreen]
+   If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start
+   automatically at the logon screen when Windows starts.
+   This option is only available for installed copies of NVDA.
+
+==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
+   Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration
+   directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure
+   Windows screens.
+   To make sure that all your settings are transferred, make sure to save your configuration first with
+   control+NVDA+c or Save configuration in the NVDA menu.
+   This option is only available for installed copies of NVDA.
+
+==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
+   If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update
+   is available.
+   You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
+   When manually or automatically checking for updates, it is necessary for NVDA to send some information to the
+   update server in order to receive the correct update for your system.
+   The following information is always sent:
+   - Current NVDA version
+   - Operating System version
+   - Whether the Operating System is 64 or 32 bit
+   ==== Allow the NVDA project to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
+   If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA
+   users including particular demographics such as Operating system and country of origin.
+   Note that although your IP address will be used to calculate your country during the update check, the IP
+   address is never kept.
+   Apart from the mandatory information required to check for updates, the following extra information is also
+   currently sent:
+   - NVDA interface language
+   - Whether this copy of NVDA is portable or installed
+   - Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
+   - Name of the current Braille display in use (including the name of the add-on the driver comes from)
+   - The current output Braille table (if Braille is in use)
+   This information greatly aides NV Access to prioritize future development of NVDA.
+
+==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
+   If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the
+   possibility to install it.
+   You can also manually install the pending update from the Exit NVDA dialog (if enabled), from the NVDA menu,
+   or when you perform a new check from the Help menu.
+
++++ Taleinnstillinger (NVDA+Ctrl+v) +++[SpeechSettings]
+        
