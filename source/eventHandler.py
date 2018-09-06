@@ -143,6 +143,9 @@ def executeEvent(eventName,obj,**kwargs):
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
+		# Allow NVDAObjects to redirect focus events to another object of their choosing.
+		if eventName=="gainFocus" and obj.focusRedirect:
+			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
 		if eventName=="gainFocus" and not doPreGainFocus(obj,sleepMode=sleepMode):
 			return

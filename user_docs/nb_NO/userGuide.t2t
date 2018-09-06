@@ -88,12 +88,12 @@ Kjøring av en portabel kopi direkte fra et ikke skrivbart medium støttes ikke.
 Bruk av en midlertidig kopi av NVDA er også en mulighet (for eksempel for å demonstrere programvaren), selv å det å starte NVDA på denne måten hver gang kan bli nokså tidkrevende. 
 
 ++ Begrensninger i flyttbar og midlertidig utgave ++[PortableAndTemporaryCopyRestrictions]
-Bortsett fra den manglende evnen til å starte automatisk under og/eller etter innlogging, har flyttbare og midlertidige kopier av NVDA også disse begrensningene:
-- Kan ikke samhandle med programmer som kjører med administrative privilegier, med mindre NVDA også kjøres med slike privilegier (ikke anbefalt).
-- Kan ikke lese brukerkontokontrollskjermer (UAC) når du starter et program med administrative privilegier.
-- Windows 8 og senere: Kan ikke støtte inndata fra berøringsskjerm.
-- Windows 8 og senere: Kan ikke tilby blamodus og uttale av skrevne bokstaver i apper fra Windows Store.
-- Windows 8 og senere: Lyddemping støttes ikke.
+Bortsett fra manglende mulighet for å kunne starte automatisk under og/eller etter innlogging, har flyttbare og midlertidige kopier av NVDA også disse begrensningene:
+- kan ikke samhandle med programmer som kjører med administrative privilegier, med mindre NVDA også kjøres med slike privilegier (ikke anbefalt).
+- kan ikke lese brukerkontokontrollskjermer (UAC) når du starter et program med administrative privilegier.
+- Windows 8 og senere: kan ikke støtte inndata fra berøringsskjerm.
+- Windows 8 og senere: kan ikke tilby nettmodus og uttale av skrevne bokstaver i apper fra Windows Store.
+- Windows 8 og senere: lyddemping støttes ikke.
 -
 
 + Installere NVDA +[InstallingNVDA]
@@ -296,238 +296,262 @@ Det er noen viktige kommandoer som er nyttige når du flytter sammen med Systemf
 %kc:endInclude
 
 ++ Navigere med Systemmarkøren ++[SystemCaret]
-::Når et [objekt #Objects] som har navigering og/eller redigering av tekst er [fokusert #SystemFocus], kan du bevege deg i teksten ved hjelp av systemmarkøren, også kjent som redigeringsmarkøren.
+Når [objekter #Objects] som tillater navigering og/eller redigering av tekst er [fokusert #SystemFocus], kan du bevege deg i teksten ved hjelp av systemmarkøren, også kjent som redigeringsmarkøren.
 
 Når fokus er på et objekt som har systemmarkør, kan du bruke piltastene, side opp, side ned, home, end osv. for å bevege deg rundt i teksten.
-Du kan også endre teksten om kontrollen har støtte for redigering.
-NVDA vil lese når du flytter mellom tegn, ord og linje, og vil også lese når du velger og avmarker tekst.
+Du kan også endre teksten om kontrollen støtter redigering.
+NVDA vil annonsere det når du flytter mellom tegn, ord og linje, og vil også opplyse når du markerer eller avmarkerer tekst.
 
-NVDA har følgende tastaturkommandoer i forhold til systemetmarkør:
+NVDA har følgende tastaturkommandoer i tilknytning til systemmarkøren:
 %kc:beginInclude
+|| Navn | Stasjonær tast | Bærbar tast | Beskrivelse |
+| Si alle | NVDA+PilNed | NVDA+a | Starter lesing fra systemmarkørens gjeldende posisjon, og flytter systemmarkøren under lesing |
+| Les gjeldende linje | NVDA+PilOpp | NVDA+l | Leser linjen der systemmarkøren befinner seg. Ved å trykke to ganger staves linjen. Ved å trykke tre ganger staves linjen med tegnbeskrivelse. |
+| Les gjeldende valgt tekst | NVDA+Skift+PilOpp | NVDA+Skift+s | Leser teksten som for øyeblikket er markert |
+| Neste setning | Alt+PilNed | Alt+PilNed | Flytter markøren til neste setning og leser den. (støttes bare i 
+Microsoft Word og Outlook) |
+| Forrige setning | Alt+PilOpp | Alt+PilOpp | Flytter markøren til forrige setning og leser den. 
+(støttes bare i Microsoft Word og Outlook) |
+   
+Når fokus er i en tabell, er følgende tastekommandoer også tilgjengelige:
 || Navn | Tast | Beskrivelse |
-| Si alle | NVDA+Pil Ned | Starter lesing fra gjeldende posisjon til systemetmarkøren, flytter den under lesing |
-| Les gjeldende linje | NVDA+Pil Opp | Leser linjen der systemmarkøren befinner seg. Ved å trykke to ganger staves linjen. |
-| Les gjeldende valgte tekst | NVDA+Skift+Pil Opp | Leser den valgte tekste |
-
-
-Når innenfor en tabell, er følgende sentrale kommandoer også tilgjengelige:
-|| Navn | Tast | Beskrivelse |
-| Flytt til forrige kolonne | Ctrl+Alt+Pil Venstre | Flytter systemmarkøren til forrige kolonne (i samme rad) |
-| Flytt til neste kolonne | Ctrl+Alt+Pil Høyre | Flytter systemmarkøren til neste kolonne (i samme rad) |
-| Flytt til forrige rad | Ctrl+Alt+Pil Opp | Flytter systemmarkøren til forrige rad (i samme kolonne) |
-| Flytt til neste rad | Ctrl+Alt+Pil Ned | Flytter systemmarkøren til neste rad (i samme kolonne) |
+| Flytt til forrige kolonne | Ctrl+Alt+PilVenstre | Flytter systemmarkøren til forrige kolonne (i samme rad) |
+| Flytt til neste kolonne | Ctrl+Alt+PilHøyre | Flytter systemmarkøren til neste kolonne (i samme rad) |
+| Flytt til forrige rad | Ctrl+Alt+PilOpp | Flytter systemmarkøren til forrige rad (i samme kolonne) |
+| Flytt til neste rad | Ctrl+Alt+PilNed | Flytter systemmarkøren til neste rad (i samme kolonne) |
 %kc:endInclude
 
-++ Objektnavigasjon ++
-Mesteparten av tiden, vil du arbeide med applikasjoner ved hjelp av kommandoer som flytter [fokuset #SystemFocus] og [markør #SystemCaret].
-Men noen ganger kan du ønske å utforske det gjeldende programmet eller operativsystemet uten å flytte fokus eller markør.
-Du kan også ønske å arbeide med [objekter #Objects] som ikke kan nås normalt ved hjelp av tastaturet.
-I disse tilfellene kan du bruke objektnavigasjon.
+++ Objektnavigasjon ++[ObjectNavigation]
+Det meste av tiden vil du arbeide med applikasjoner ved hjelp av kommandoer som flytter [fokuset #SystemFocus] og [markøren #SystemCaret]. Men noen ganger kan du ønske å utforske det gjeldende programmet eller operativsystemet uten å flytte fokus eller markør. Kanskje ønsker du også å arbeide med [objekter #Objects] som ikke kan nås normalt ved hjelp av tastaturet. I disse tilfellene kan du bruke objektnavigasjon.
 
-Objektnavigasjon lar deg flytte mellom og få informasjon om de enkelte [objekter #objekter].
-Når du flytter til et objekt, vil NVDA lese det på samme måte som systemet fokus.
-For å lese all tekst som vises på skjermen, kan du i stedet bruke [flatlesing #FlatReview].
+Objektnavigasjon lar deg flytte mellom og få informasjon om de enkelte [objekter #Objects].
 
-Istedet for å måtte flytte frem og tilbake mellom hvert enkelt objekt på systemet, er objektene organisert hierarkisk.
-Dette betyr at noen objekter inneholder andre objekter, og du må flytte inni dem for å få tilgang til de objektene de inneholder.
-For eksempel inneholder en liste listeelementer, så du må flytte inne i listen for å få tilgang dens elementer.
-Hvis du har flyttet til et listeelement, flytter neste og forrige, kommer du til andre listeelementer i samme liste.
-Flytte til et listeelement i hovedobjektet vil ta deg tilbake til listen.
-Du kan deretter flytte forbi listen hvis du ønsker tilgang til andre objekter.
+Når du flytter til et objekt, vil NVDA annonsere det på samme måte som NVDA også annonserer systemfokus.
+For å lese all tekst slik den vises på skjermen, kan du i stedet bruke [flatlesing #ScreenReview].
+
+I stedet for å måtte flytte fram og tilbake mellom hvert enkelt objekt på systemet, er objektene organisert hierarkisk. Dette betyr at noen objekter inneholder andre objekter, og du må flytte inni dem for å få tilgang til de objektene de inneholder. For eksempel inneholder en liste listeelementer, så du må flytte inne i listen for å få tilgang til elementene den inneholder.
+
+Hvis du har fokus på et listeelement, og flytter til neste eller forrige, kommer du til andre listeelementer i samme liste.
+Å flytte til et listeelement i hovedobjektet vil ta deg tilbake til listen. Du kan deretter flytte forbi listen hvis du ønsker tilgang til andre objekter.
+
 Tilsvarende inneholder en verktøylinje kontroller, så du må flytte inne i verktøylinjen for å få tilgang til kontrollene i verktøylinjen.
 
 Objektet som leses kalles navigasjonsobjektet.
-Når du navigerer til et objekt, kan du se gjennom det ved hjelp av [tekstlesingskommandoer #ReviewingText].
-Som standard flyttes navigasjonsobjektet sammen med Systemfokus, men denne oppførselen kan slås av og på.
 
-Merk at leselister følger [fokuset #SystemFocus] og [markør #SystemCaret] som standard, istedet for enn objektnavigasjon og tekstlesing.
-Hvis du vil at den skal følge objektnavigasjon og tekstlesing i stedet, må du [konfigurere leselisten til å bli bundet til #BrailleTether] lesing.
+Når du navigerer til et objekt, kan du se på innholdet i det ved hjelp av [tekstlesingskommandoer #ReviewingText] når du er i [modus for objektlesing #ObjectReview].
+Som standard flyttes navigasjonsobjektet sammen med systemfokus, men denne oppførselen kan slås av og på.
 
-Ved navigering med objekt, bruker du følgende taster:
+Merk at leselisten følger både [fokus #SystemFocus] og [markør #SystemCaret], så vel som objektnavigasjon og tekstlesing som standard.
+Hvis du vil at den bare skal følge fokus og markør, må du [konfigurere leselist til å knyttes til #BrailleTether] fokus. I dette tilfellet vil leselista ikke følge objektnavigasjon og tekstlesing.
 
+Om du vil at leselisten skal følge objektnavigasjon og tekstlesing i stedet, må du [konfigurere leselisten til å knyttes til #BrailleTether] lesing.
+
+Ved objektnavigering bruker du følgende taster:
 %kc:beginInclude
-|| Navn | Stasjonærtaster | Bærbartaster | Beskrivelse |
-| Les gjeldende objekt | NVDA+NumPad5 | NVDA+Ctrl+I | Leser gjeldende navigasjonsobjektet. Ved å trykke to ganger staves informasjonen, og trykke tre ganger kopierer objektets navn og verdi til utklippstavlen. |
-| Flytt til innholdsobjektet | NVDA+NumPad8 | NVDA+Skift+I | Flytter til objektet som inneholder gjeldende navigasjonsobjekt |
-| Flytt til forrige objekt | NVDA+NumPad4 | NVDA+Ctrl+J | Flytter til objektet før den gjeldende navigasjonsobjektet |
-| Flytt til neste objekt | NVDA+NumPad6 | NVDA+Ctrl+L | Flytter til objektet etter gjeldende navigasjonsobjektet |
-| Flytt til første beholderobjekt | NVDA+NumPad2 | NVDA+Skift+, | Flytter til det første objektet i det gjeldende navigasjonsobjektet |
-| Flytt til å fokusere objekt | NVDA+NumPad- | NVDA+Backspace | Flytter til objektet som for øyeblikket har systemfokus, og også plasserer lesemarkøren i Systemmarkørposisjonen, hvis den viser |
-| Aktiver nåværende navigator objekt | NVDA+NumPadEnter | NVDA+Enter | Aktiverer gjeldende navigasjonsobjekt (lik klikke med musen eller trykke mellomrom når den har systemet fokus) |
-| Flytt System fokus eller markør til gjeldende lesestilling | NVDA+Skift+NumPad- | NVDA+Skift+Backspace | Trykket en gang, flytter Systemfokuset til gjeldende navigasjonsobjektet, trykket to ganger flytter systemmarkøren til plasseringen til lesemarkøren |
-| Les navigasjonsobjekt dimensjoner | NVDA+NumPadDelete | NVDA+Delete | Leser det gjeldende navigasjonsobjektets dimensjoner på skjermen i prosent (inkludert avstand fra venstre og toppen av skjermen, og dets bredde og høyde) |
+|| Navn | Stasjonær tast | Bærbar tast | Berøring | Beskrivelse |
+| Les gjeldende objekt | NVDA+NumPad5 | NVDA+Ctrl+o | ingen | Leser det gjeldende navigasjonsobjektet. Ved å trykke to ganger staves informasjonen, og trykker du tre ganger kopieres objektets navn og verdi til utklippstavlen. |
+| Flytt til innholdsobjektet | NVDA+NumPad8 | NVDA+Skift+PilOpp | Sveip opp (objektmodus) | Flytter til objektet som inneholder gjeldende navigasjonsobjekt |
+| Flytt til forrige objekt | NVDA+NumPad4 | NVDA+Skift+PilVenstre | Sveip mot venstre (objektmodus) | Flytter til objektet før den gjeldende navigasjonsobjektet |
+| Flytt til neste objekt | NVDA+NumPad6 | NVDA+Skift+PilHøyre | Sveip mot høyre (objektmodus) | Flytter til objektet etter gjeldende navigasjonsobjekt |
+| Flytt til første beholderobjekt | NVDA+NumPad2 | NVDA+Skift+PilNed | Sveip ned (objektmodus) | Flytter til det første innholdsobjektet i det gjeldende navigasjonsobjektet |
+| Flytt til fokusobjekt | NVDA+NumPadMinus | NVDA+SlettBakover | ingen | Flytter til objektet som for øyeblikket har systemfokus, og plasserer også lesemarkøren i posisjonen for systemmarkøren, hvis den vises |
+| Aktiver nåværende navigasjonsobjekt | NVDA+NumPadEnter | NVDA+Enter | Dobbelttrykk | Aktiverer gjeldende navigasjonsobjekt (som å klikke med musen eller trykke mellomrom når den har systemfokus) |
+| Flytt systemfokus eller markør til gjeldende leseposisjon | NVDA+Skift+NumPadMinus | NVDA+Skift+SlettBakover | ingen | Flytter systemfokus til gjeldende navigasjonsobjekt når kommandoen trykkes én gang. Trykkes kommandoen to ganger, flyttes systemmarkøren til posisjonen for lesemarkøren |
+| Rapporter om lesemarkørens plassering | NVDA+NumPadDel | NVDA+Del | ingen | Leser informasjon om tekst eller objekt ved lesemarkøren. Dette kan for eksempel omfatte hvor i dokumentet en er (i prosent), avstand fra kanten av arket eller eksakt skjermposisjon. Ved å trykke to ganger kan en få flere detaljer |
 %kc:endInclude
 
-Merk: NUMPAD-taster krever Numlock-tasten slått av for å fungere.
+Merk: NUMPAD-taster (taster på det numeriske tastaturet) krever at NumLock-tasten er slått av for å fungere.
 
-++ Lese Tekst ++[ReviewingText]
-Med NVDA kan du lese innholdet i gjeldende [navigasjonsobjekt #ObjectNavigation] (inkludert [flatlesing #FlatReview]) for tegn, ord eller linje.
-Dette er mest nyttig på steder (inkludert Windows konsollen) der det ikke finnes [systemmarkør #SystemCaret].
+++ Lese tekst ++[ReviewingText]
+NVDA lar deg lese innholdet [på skjermen #ScreenReview], i gjeldende [dokument #DocumentReview] eller i gjeldende [object #ObjectReview] tegn for tegn, ord for ord eller linje for linje.
+   
+Dette er mest nyttig på steder (inkludert Windows kommandokonsoll) der det ikke finnes [systemmarkør #SystemCaret].
 For eksempel kan du bruke den til å lese teksten i en lang informasjonmelding i en dialog.
 
-Når du flytter lesemarkøren, og systemmarkøren ikke følger med, slik at du kan se gjennom teksten uten å miste redigeringsposisjon.
-Men som standard, når systemmarkøren beveger seg, følger lesemarkøren med.
-Dette kan slås av og på.
+Når du flytter lesemarkøren, følger systemmarkøren ikke med, slik at du kan se gjennom teksten uten å miste redigeringsposisjonen.
+Men som standard følger lesemarkøren med når systemmarkøren beveger seg. Dette kan slås av og på.
 
-Merk at leselisten følger [fokuset #SystemFocus] og [markøren #SystemCaret] som standard, istedet for objektnavigasjon og tekstlesing.
-Hvis du vil at den skal følge objektnavigasjon og tekstlesing i stedet, må du [konfigurere leselisten til å bli bundet til #BrailleTether] lesing.
+Merk at leselisten følger [fokuset #SystemFocus] og [markøren #SystemCaret] som standard, i stedet for objektnavigasjon og tekstlesing.
+Hvis du vil at den skal følge objektnavigasjon og tekstlesing i stedet, må du [konfigurere leselisten til å bindes til #BrailleTether] lesing.
 
-Følgende sentrale kommandoer er tilgjengelige for lesing av tekst:
+Følgende kommandoer er tilgjengelige for lesing av tekst:
 %kc:beginInclude
-|| Navn | Stasjonærtast | Bærbartast | Beskrivelse |
-| Gå til øverste linje i lesing | Skift+NumPad7 | NVDA+7 | Flytter lesemarkøren til øverste linje i teksten |
-| Gå til forrige linje i lesing | NumPad7 | NVDA+U | Flytter lesemarkøren til forrige tekstlinje |
-| Les gjeldende linje i lesing | Numpad8 | NVDA+I | Les gjeldende tekstlinje der lesemarkøren er plassert. Ved å trykke to ganger staves linjen. Hvis du trykker tre ganger staves linje med tegnbeskrivelser. |
-| Gå til neste linje i lesing | NumPad9 | NVDA+O | Flytt lesemarkøren til neste tekstlinje |
-| Gå til nederste linje i lesing | Skift+NumPad9 | NVDA+9 | Flytter lesemarkøren til siste linje av teksten |
-| Gå til forrige ord i lesing | NumPad4 | NVDA+J | Flytter lesemarkøren til forrige ord i teksten |
-| Les gjeldende ord i lesing | NumPad5 | NVDA+K | Les gjeldende ord i teksten der lesemarkøren er plassert. Ved å trykke to ganger staves ordet. Hvis du trykker tre ganger staves ordet med tegnbeskrivelser. |
-| Gå til neste ord i lesing | NumPad6 | NVDA+L | Flytt lesemarkøren til neste ord i teksten |
-| Gå til starten av linjen i lesing | Skift+NumPad1 | NVDA+Skift+U | Flytter lesemarkøren til begynnelsen av linjen i teksten |
-| Gå til forrige tegn i lesing | NumPad1 | NVDA+M | Flytter lesemarkøren til forrige tegn på den gjeldende linjen i teksten |
-| Les gjeldende tegn i lesing | NumPad2 | NVDA+, | Les gjeldende tegn på linjen der lesemarkøren er plassert. Ved å trykke to ganger leses en beskrivelse eller eksempel på det tegnet. Hvis du trykker tre ganger leses den numeriske verdien av tegnet i desimal og heksadesimal. |
-| Flytt til neste tegn i lesing | NumPad3 | NVDA+. | Flytter lesemarkøren til neste tegn på gjeldende linje i teksten |
-| Flytt til slutten av linjen i lesing | Skift+NumPad3 | NVDA+Skift+O | Flytter lesemarkøren til slutten av gjeldende linje i teksten |
-| Si alle ved lesing | NumPad+ | NVDA+Skift+Pil Ned | Leser fra gjeldende posisjon av lesemarkøren, og følger under lesing |
-| Kopier fra lesemarkøren | NVDA+F9 | NVDA+F9 | Begynner å kopiere tekst fra den gjeldende posisjonen til lesemarkøren. Selve kopien blir ikke utført før du forteller NVDA hvor du skal kopiere til |
-| Kopier til lesemarkøren | NVDA+F10 | NVDA+F10 | Kopier fra plasseringen til lesemarkøren. Kopier fra lesemarkøren til lesemarkørens gjeldende posisjon. Etter å ha trykket på denne tasten, vil teksten bli kopiert til utklippstavlen i Windows |
-| Les tekstformatering | NVDA+F | Les formateringen av teksten der lesemarkøren befinner seg |
+|| Navn | Stasjonær tast | Bærbar tast | Berøring | Beskrivelse |
+| Gå til øverste linje i lesing | Skift+NumPad7 | NVDA+Ctrl+Home | ingen | Flytter lesemarkøren til øverste linje i teksten |
+| Gå til forrige linje i lesing | NumPad7 | NVDA+PilOpp | bla opp (tekstmodus) | Flytter lesemarkøren til forrige tekstlinje |
+| Les gjeldende linje i lesing | Numpad8 | NVDA+Skift?. | ingen | Les gjeldende tekstlinje der lesemarkøren er plassert. Ved å trykke to ganger staves linjen. Hvis du trykker tre ganger, staves linjen med tegnbeskrivelser. |
+| Gå til neste linje i lesing | NumPad9 | NVDA+PilNed | bla ned (tekstmodus) | Flytt lesemarkøren til neste tekstlinje |
+| Gå til nederste linje i lesing | Skift+NumPad9 | NVDA+Ctrl+End | ingen | Flytter lesemarkøren til siste linje av teksten |
+| Gå til forrige ord i lesing | NumPad4 | NVDA+Ctrl?PilVenstre | bla med to fingrer mot venstre (tekstmodus) | Flytter lesemarkøren til forrige ord i teksten |
+| Les gjeldende ord i lesing | NumPad5 | NVDA+Ctrl+. | ingen | Les gjeldende ord i teksten der lesemarkøren er plassert. Ved å trykke to ganger staves ordet. Hvis du trykker tre ganger, staves ordet med tegnbeskrivelser. |
+| Gå til neste ord i lesing | NumPad6 | NVDA+Ctrl+PilHøyre | bla med to fingrer mot høyre (tekstmodus) | Flytt lesemarkøren til neste ord i teksten |
+| Gå til starten av linjen i lesing | Skift+NumPad1 | NVDA+Home | none | Flytter lesemarkøren til begynnelsen av linjen i teksten |
+| Gå til forrige tegn i lesing | NumPad1 | NVDA+PilVenstre | bla mot venstre (tekstmodus) | Flytter lesemarkøren til forrige tegn på den gjeldende linjen i teksten |
+| Les gjeldende tegn i lesing | NumPad2 | NVDA+. | ingen | Les gjeldende tegn på linjen der lesemarkøren er plassert. Ved å trykke to ganger leses en beskrivelse eller eksempel på det tegnet. Hvis du trykker tre ganger, leses den numeriske verdien av tegnet i desimal og heksadesimal. |
+| Flytt til neste tegn i lesing | NumPad3 | NVDA+PilHøyre | bla mot høyre (tekstmodus) | Flytter lesemarkøren til neste tegn på gjeldende linje i teksten |
+| Flytt til slutten av linjen i lesing | Skift+NumPad3 | NVDA+End | ingen | Flytter lesemarkøren til slutten av gjeldende linje i teksten |
+| Si alle ved lesing | NumPad++ | NVDA+Skift+a | Bla ned med tre fingrer (tekstmodus) | Leser fra gjeldende posisjon av lesemarkøren, og følger under lesing |
+| Velg og kopier fra lesemarkøren | NVDA+F9 | NVDA+F9 | ingen | Starter velg og kopier-prosessen fra den gjeldende posisjonen til lesemarkøren. Selve handlingen blir ikke utført før du forteller NVDA hvor slutten på det valgte tekstområdet er |
+| Velg og kopier til lesemarkøren | NVDA+F10 | NVDA+F10 | ingen | Ved første trykk velges tekst fra det tidligere satte startmerket fram til og med gjeldende posisjon for lesemarkøren. Etter å ha trykket på tasten en gang til, vil teksten bli kopiert til utklippstavlen i Windows |
+| Les tekstformatering | NVDA+f | NVDA+f | ingen | Les formateringen av teksten der lesemarkøren befinner seg. Ved å trykke to ganger vises informasjonen i nettmodus |
 %kc:endInclude
 
 Merk: NUMPAD-taster krever at Numlock slås av for å fungere.
 
-For å hjelpe deg til å huske disse kommandoene, er lesekommandoene organisert i et rutenett av tre og tre, med topp til bunnleinje er ord og tegn og venstre til høyre er tidligere, gjeldende og neste.
-Oppsettet er illustrert som følger:
+En god metode for å huske disse lesekommandoene når du bruker stasjonær modus, er å tenke på dem som et rutenett av tre og tre ruter. Fra topp til bunn er det linje, ord og tegn og fra venstre til høyre er det tidligere, gjeldende og neste.
+Oppsettet er illustrert slik:
 | Forrige linje | Gjeldende linje | Neste linje |
 | Forrige ord | Gjeldende ord | Neste ord |
 | Forrige tegn | Gjeldende tegn | Neste tegn |
 
-++ Flat lesing ++ [FlatReview]
-Normalt kan du vanligvis bare lese innholdet i et enkelt [Objekt #Objects], noen objekter lar deg lese innholdet til objekter inni.
-Komplekse dokumenter lar deg lese alt innholdet og programvinduer du kan se teksten på skjermen som det vises visuelt.
-Dette kalles flat lesing.
-Dette ligner på skjermlesing eller musepekerfunksjonalitet i mange andre Windows skjermlesere.
-
-Når du går til flat lesing, vil du bli plassert på plasseringen til den gjeldende [navigatsjonsobjekt #ObjectNavigation].
-Hvis du ikke har brukt objektnavigasjon, vil dette vanligvis være objektet som har [fokuset #SystemFocus].
-For eksempel, hvis navigasjonsobjektet er en knapp, vil du vanligvis bli plassert på teksten på knappen i flat lesing.
-Du kan deretter lese teksten ved hjelp av [tekstlesekommandoer #ReviewingText].
-Du kan også navigere direkte til objektet som har den aktuelle posisjonen til lesemarkøren, slik at du kan bruke [objekt navigasjon #ObjectNavigation] derfra.
-
-Merk at leselisten følger [fokuset #SystemFocus] og [markøren #SystemCaret] som standard, istedet for enn objekt navigasjon og tekstlesing.
-Hvis du vil at den skal følge objektnavigasjon og tekstlesing i stedet, må du [konfigurere leselisten til å bli bundet til #BrailleTether] lesing.
-
-Følgende to kommandoer brukes for å bytte til / fra flat lesing:
+++ Lesemodi ++[ReviewModes]
+NVDAs [kommandoer for tekstlesing #ReviewingText] kan vise innhold innenfor gjeldende navigatorobjekt, gjeldende dokument eller skjerm, avhengig av hvilket lesemodus som er valgt.
+Lesemodi er en erstatning for det eldre konseptet Flat lesing i NVDA.
+Følgende kommandoer veksler mellom lesemodi:
 %kc:beginInclude
-|| Navn | Stasjonærtast | Bærbartast | Beskrivelse |
-| Flytt til flat lesing | NVDA+NumPad7 | NVDA+PageUp | Flytter til flat lesing, plasserer deg ved posisjonen av gjeldende navigasjonsobjektet, slik at du kan se på skjermen (eller dokumentet hvis du er inne i et) med tekstenlesings kommandoer. |
-| Flytt til objektet fra flat lesing | NVDA+NumPad1 | NVDA+PageDown | Navigerer til objektet representert ved teksten på gjeldende posisjon av lesemarkøren i flat lesing |
+|| Navn | Stasjonær tast | Bærbar tast | Berøring | Beskrivelse |
+| Bytt til neste lesemodus | NVDA+numpad7 | NVDA+PageUp | bla opp med to fingrer | Bytter til neste tilgjengelige 
+lesemodus |
+| Bytt til forrige lesemodus | NVDA+numpad1 | NVDA+PageDown | bla ned med to fingrer | Bytter til forrige tilgjengelige lesemodus |
 %kc:endInclude
 
-++ Navigere med musen ++
++++ Objektlesing +++[ObjectReview]
+Når du er i objektlesemodus, vil du bare se innholdet i gjeldende [navigatorobjekt #ObjectNavigation]. For objekter som skrivbare tekstfelt eller andre tekstkontroller vil dette normalt være tekstinnholdet. For andre objekter kan dette være navnet og/eller verdien.
+
++++ Dokumentlesing +++[DocumentReview]
+Når [navigatorobjektet #ObjectNavigation] er i et dokument i nettmodus (som ei nettside) eller et annet komplekst dokument (som et OpenOffice-dokument), er det mulig å bytte til modus for dokumentlesing. I denne modusen kan du lese teksten i hele dokumentet.
+
+Når du bytter fra objektlesing til dokumentlesing, blir lesemarkøren plassert i dokumentet i posisjonen for navigatorobjektet.
+
+Når du forflytter deg omkring i dokumentet med lesekommandoer, blir navigatorobjektet automatisk oppdatert til objektet som for øyeblikket finnes i posisjonen for lesemarkøren.
+
+Merk at NVDA vil bytte automatisk fra objektlesing til dokumentlesing når du navigerer i dokumenter i nettmodus.
+
++++ Skjermlesing +++[ScreenReview]    
+Modus for skjermlesing lar deg lese teksten på skjermen slik den presenteres visuelt i det gjeldende programmet. Dette tilsvarer skjermlesing eller musepekerfunksjonalitet i mange andre skjermleserprogrammer for Windows. 
+
+Når du bytter til modus for skjermlesing, settes lesemarkøren i skjermposisjonen for det gjeldende [navigatorobjektet #ObjectNavigation].
+  
+Når du forflytter deg omkring i dokumentet med lesekommandoer, blir navigatorobjektet automatisk oppdatert til objektet som for øyeblikket finnes i skjermposisjonen for lesemarkøren.
+
+Merk at i enkelte nyere programmer vil NVDA ikke kunne se teksten som vises på skjermen, enten hele teksten eller deler av den. Dette skyldes nyere teknologier for oppbygging av skjermbildet som det nå er umulig for NVDA å støtte.
+   
+++ Navigere med musen ++[NavigatingWithTheMouse]
 Når du beveger musen, leser NVDA som standard den teksten som er under musepekeren når pekeren beveger seg over den.
-Når støttet, vil NVDA lese den omkringliggende tekstavsnitt, men enkelte kontroller kan bare leses på linje.
+Når dette er støttet, vil NVDA lese det omkringliggende tekstavsnittet, men enkelte kontroller kan bare leses som linje.
 
-NVDA kan konfigureres til også å lese den typen [objekt #Objects] under musen når den beveger seg (f.eks liste, knapp, etc.).
-Dette kan være nyttig for helt blinde brukere, som noen ganger, er teksten ikke nok.
+NVDA kan konfigureres til også å lese typen [objekt #Objects] under musen når den beveger seg (f.eks liste, knapp, etc.). Dette kan være nyttig for helt blinde brukere, siden teksten i noen tilfeller ikke er nok.
 
-NVDA gir en måte for brukerne å forstå hvor musen er plassert i forhold til dimensjonene på skjermen ved å si musepekerens koordinater som lyd pip.
-Jo høyere musen er på skjermen, jo høyere er pipene.
-Den videre til venstre eller høyre musen er plassert på skjermen, vil ytterligere venstre eller høyre lyden skal spilles (forutsatt at brukeren har stereohøyttalere eller hodetelefoner).
+NVDA gir brukerne en måte å forstå hvor musen er plassert i forhold til dimensjonene på skjermen ved å indikere musepekerens koordinater som pipelyder. Jo høyere musen er på skjermen, jo høyere på toneskalaen er pipene. Jo lenger til venstre eller høyre musen er plassert på skjermen, desto lenger til venstre eller høyre vil lyden bli avspilt (forutsatt at brukeren har stereohøyttalere eller hodetelefoner).
 
-Disse ekstra mus funksjonene er ikke aktivert som standard i NVDA.
-Hvis du ønsker å dra nytte av dem, kan du konfigurere dem fra [Museinnstillinger #MouseSettings] dialogen, som finnes i NVDA Innstillinger.
+Disse ekstra musefunksjonene er ikke aktivert som standard i NVDA. Hvis du ønsker å dra nytte av dem, kan du konfigurere dem fra kategorien [Museinnstillinger #MouseSettings], som finnes i innstillingsmenyen i NVDA.
 
-Selv om en fysisk mus eller styreflate bør brukes til å navigere med musen, har NVDA noen viktige kommandoer knyttet til mus:
+Selv om en fysisk mus eller styreflate bør brukes til å navigere med musen, har NVDA noen få tastekommandoer knyttet til mus:
 %kc:beginInclude
-|| Navn | Stasjonærtast | Bærbartast | Beskrivelse |
-| Venstre museknapp klikk | NumPad/ | NVDA+Pil Venstre | Klikker på venstre museknapp en gang. Dobbeltklikk kan utføres ved å trykke på denne tasten to ganger i rask rekkefølge |
-| Venstre museknapp lås | Skift+NumPad/ | NVDA+Skift+Pil Venstre | Låser venstre museknapp nede. Trykk igjen for å slippe den. Du drar musen, trykker du denne tasten for å låse den venstre knappen nede og deretter flytte musen enten fysisk eller bruke en av de andre muserouting kommandoene |
-| Høyre museknapp klikk | NumPad* | NVDA+Pil Høyre | Klikker på høyre museknapp en gang. |
-| Høyre museknapp lås | Skift+NumPad* | NVDA+Skift+Pil Høyre | Låser høyre museknapp nede. Trykk igjen for å slippe den. Du drar musen, trykker du denne tasten for å låse den høyre knappen nede og deretter flytte musen enten fysisk eller bruke en av de andre mus routing kommandoer |
-| Flytt musen til gjeldende navigasjonsobjekt | NVDA+Numpad/ | NVDA+Skift+F9 | Flytter musepekeren til plasseringen til det gjeldende navigasjonsobjektet og lesemarkøren |
-| Naviger til objektet under musen | NVDA+NumPad* | NVDA+Skift+F10 | Sett navigasjosnobjektet til objektet i posisjonen til musepekeren |
+|| Navn | Stasjonær tast | Bærbar tast | Beskrivelse |
+| Klikk med venstre museknapp | NumPad/ | NVDA+PilVenstre | Klikker på venstre museknapp én gang. Dobbeltklikk kan utføres ved å trykke på denne tasten to ganger i rask rekkefølge |
+| Lås venstre museknapp | Skift+NumPad/ | NVDA+Skift+PilVenstre | Låser venstre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den venstre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
+| Klikk høyre museknapp | NumPad* | NVDA+PilHøyre | Klikker på høyre museknapp én gang. |
+| Lås høyre museknapp | Skift+NumPad* | NVDA+Skift+PilHøyre | Låser høyre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den høyre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
+| Flytt musen til gjeldende navigasjonsobjekt | NVDA+Numpad/ | NVDA+Skift+m | Flytter musepekeren til posisjonen til det gjeldende navigatorobjektet og lesemarkøren |
+| Naviger til objektet under musen | NVDA+NumPad* | NVDA+Skift+n | Sett navigatorobjektet til objektet i posisjonen til musepekeren |
 %kc:endInclude
 
-+ Bla Modus +
-Komplekse skrivebeskyttede dokumenter som web sider leses i NVDA med Bla lesing.
-Dette gjelder også dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader og Adobe Flash.
++ Nettmodus +[BrowseMode]
+Komplekse skrivebeskyttede dokumenter som nettsider leses i NVDA i det vi kaller nettmodus.
+Dette gjelder dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-meldinger i Microsoft Outlook, Google Chrome, Adobe Reader og Adobe Flash. Du kan også velge å bruke nettmodus i Microsoft Word.
 
-I nettlesermodus er innholdet til dokumentet tilgjengelig i en flat representasjon som kan navigeres med piltastene som om det var et vanlig tekst dokument.
-Alle NVDAs [systemmarkør #SystemCaret] tastekommandoer vil fungere i denne modusen, f.eks si alle, les formatering, bord navigeringskommandoene osv.
-Informasjon som om teksten er en link, overskrift, osv. er lest sammen med teksten når du flytter.
+I nettmodus er innholdet i dokumentet tilgjengelig i en flat representasjon som du kan navigere i med piltastene som om det var et vanlig tekstdokument.
+Alle NVDAs tastekommandoer for [systemmarkør #SystemCaret] vil fungere i denne modusen, f.eks si alle, les formatering, tabellnavigeringskommandoene osv.
+Informasjon som hvorvidt teksten er en lenke, overskrift, osv. blir opplyst sammen med teksten når du flytter deg rundt i dokumentet.
 
-Noen ganger trenger du å kommunisere direkte med kontroller i disse dokumentene.
-For eksempel, må du gjøre dette for redigerbare tekstfelt og lister, slik at du kan skrive tegn og bruk piltastene til å arbeide med kontrollen.
-Dette gjør du ved å bytte til fokusmodus, hvor nesten alle tastene er sendt til kontrollen.
-Når i Bla modus, som standard, vil NVDA automatisk bytte til fokusmodus hvis du klikker på en bestemt kontroll som krever det.
-Motsatt vil tabbe seg til eller klikke på en kontroll som ikke krever Fokusmodusbryter tilbake til bla-modus.
-Du kan også trykke inn eller plass til å bytte til fokusere modus på kontroller som krever det.
-Ved å trykke escape byttes det tilbake til bla-modus.
-I tillegg kan du manuelt påtvinge fokusmodus, etter det vil den forbli i kraft inntil du velger å deaktivere den.
+Noen ganger trenger du å kommunisere direkte med kontroller i disse dokumentene. For eksempel må du gjøre dette for redigerbare tekstfelt og lister, slik at du kan skrive tegn og bruke piltastene til å arbeide med kontrollen. Dette gjør du ved å bytte til fokusmodus, hvor nesten alle tastetrykk blir sendt til kontrollen.
+
+I nettmodus vil NVDA som standard automatisk bytte til fokusmodus hvis du flytter til eller klikker på en bestemt kontroll som krever det.
+Motsatt vil det å flytte til eller klikke på en kontroll som ikke krever fokusmodus bytte tilbake til nettmodus.
+Du kan også trykke enter eller mellomrom for å bytte til fokusmodus i kontroller som krever det.
+Ved å trykke escape byttes det tilbake til nettmodus.
+I tillegg kan du manuelt påtvinge fokusmodus. Den vil forbli aktiv inntil du velger å deaktivere den.
 
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Veksle mellom bla/fokusmoduser | NVDA+Space | Veksler mellom fokusmodus, og bla modus |
-| Avslutt fokusmodus | Escape | Bytter tilbake til bla modus hvis fokusmodus ble tidligere slått til automatisk |
-| Oppdater nettlesermodus modus dokument | NVDA+f5 | Oppdaterer gjeldende dokumentinnhold (nyttig hvis vist innhold synes å mangle i dokumentet) |
-| Finn | NVDA+Ctrl+F | Popper opp en dialogboks der du kan skrive inn tekst å finne i det gjeldende dokumentet |
+| Veksle mellom nett-/fokusmodus | NVDA+Space | Veksler mellom fokusmodus og nettmodus |
+| Avslutt fokusmodus | Escape | Bytter tilbake til nettmodus hvis fokusmodus tidligere ble satt til automatisk |
+| Oppdater nettmodusdokument | NVDA+F5 | Oppdaterer gjeldende dokumentinnhold (nyttig hvis vist innhold synes å mangle i dokumentet. Ikke tilgjengelig i Microsoft Word og Outlook.) |
+| Finn | NVDA+Ctrl+f | Åpner en dialogboks der du kan skrive inn tekst du vil finne i det gjeldende dokumentet |
 | Finn neste | NVDA+F3 | Finner neste forekomst av teksten i dokumentet som du tidligere søkte etter |
-| Finn forrige | NVDA+Skhift+F3 | Finner forrige forekomst av teksten i dokumentet du tidligere søkte etter |
+| Finn forrige | NVDA+Skift+F3 | Finner forrige forekomst av teksten i dokumentet som du tidligere søkte etter |
+| Åpne lang beskrivelse | NVDA+d | Åpner et nytt vindu som inneholder en lang beskrivelse av elementet du er på, hvis det har en slik beskrivelse. |
 %kc:endInclude
 
+++ Enkeltbokstavnavigasjon ++[SingleLetterNavigation]
+For raskere navigasjon, tilbyr NVDA også enkelttegn-tastekommandoer for å hoppe til bestemte felt i dokumentet når en er i nettmodus.
 
-++ Enkeltbokstavnavigasjon ++
-Mens i nettlesermodus modus, for raskere navigasjon, gir NVDA også enkelt tegn-taster til å hoppe til bestemte felt i dokumentet.
+Merk at ikke alle disse kommandoene støttes for alle typer dokumenter.
 
 %kc:beginInclude
-Følgende taster hopper til neste tilgjengelige element, mens med Skift-tasten hopper til forrige element:
-- H: Overskrift
-- L: Liste
-- I: Listeelement
-- T: Tabell
-- K: Lenke
-- N: Tekst uten lenke
-- F: Skjemafelt
-- U: Ikke besøkt lenke
-- V: Besøkt lenke
-- E: Redigeringsfelt
-- B: Knapp
-- X: Avkrysningsboks
-- C: Kombinasjonsboks
-- R: Radioknapp
-- Q: Blokksitat
-- S: Separator
-- M: Ramme
-- G: Grafikk
-- D: ARIA landemerke
-- O: Innebygd objekt
-- 1 til 6: Overskriftene på nivå 1 til 6
--
+Følgende taster brukt alene hopper til neste tilgjengelige element. Bruker du dem sammen med Skift-tasten, hjopper hopper de til forrige element:
+- h: overskrift
+- l: liste
+- i: listeelement
+- t: tabell
+- k: lenke
+- n: tekst uten lenke
+- f: Skjemafelt
+- u: ikke besøkt lenke
+- v: besøkt lenke
+- e: redigeringsfelt
+- b: Knapp
+- x: avkrysningsboks
+- c: kombinasjonsboks
+- r: radioknapp
+- q: blokksitat
+- s: separator
+- m: ramme
+- g: grafikk
+- d: ARIA-landemerke
+- o: innebygd objekt (lyd- og videospiller, applikasjon, dialog, etc.)
+- 1 til 6: overskriftene på nivå 1 til 6
+- a: annotasjon (kommentar, forfatterrevisjon, etc.)
+- w: skrivefeil
+- 
+For å gå til begynnelsen eller slutten av beholderelementer som lister og tabeller:
+|| Navn | Tast | Beskrivelse |
+| Flytt til begynnelsen av beholderen | Skift+, | Flytter til begynnelsen av beholderen (liste, tabell, etc.) hvor markøren er plassert) |
+| Flytt forbi slutten av beholderen | , | Flytter forbi slutten av beholderen (liste, tabell, etc.) hvor markøren er plassert |
 %kc:endInclude
 
-++ Elementlisten ++
-Elementlisten gir tilgang til en liste over enten lenker, overskrifter eller ARIA landemerker i dokumentet.
-Radioknappene lar deg bytte mellom disse tre typer informasjon.
-Det er også et redigeringsfelt i dialogen som lar deg filtrere listen for å hjelpe deg å søke etter et bestemt element på siden.
-Når du har valgt et element, kan du bruke de medfølgende knappene i dialogboksen for å flytte til eller aktivere dette elementet.
+Noen nettapplikasjoner som Gmail, Twitter og Facebook bruker enkeltbokstaver som hurtigtaster. Hvis du vil benytte disse mens du fortsatt vil bruke piltastene for å lese i nettmodus, kan du deaktivere kommandoene for enkeltbokstavnavigasjon i NVDA midlertidig. 
+%kc:beginInclude
+For å slå enkeltbokstavnavigasjon på eller av for gjeldende dokument, trykker du NVDA+Skift+Mellomrom.
+%kc:endInclude
+   
+++ Elementlisten ++[ElementsList]
+Elementlisten gir tilgang til en liste over ulike typer elementer i dokumentet som er relevant i programmet. For eksempel kan listen i en nettleser liste lenker, overskrifter, skjemafelt, knapper eller landemerker.  
+
+Radioknapper lar deg bytte mellom de ulike elementtypene. Det er også et redigeringsfelt i dialogen som lar deg filtrere listen for å hjelpe deg å søke etter et bestemt element på siden. Når du har valgt et element, kan du bruke knappene i dialogboksen for å flytte til eller aktivere dette elementet.
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Bla modus elementliste | NVDA+F7 | Åpner Elementlisten som inneholder linker, overskrifter og landemerker i det gjeldende dokumentet |
+| Nettmodus elementliste | NVDA+F7 | Lister ulike typer elementer i det gjeldende dokumentet |
 %kc:endInclude
 
-++ Innebuygde Objekter ++
-Sider kan inkludere rikt innhold ved hjelp av teknologier som Adobe Flash og Sun Java.
-Når disse finnes i nettlesermodus, vil NVDA lese "innebygd objekt".
-Du kan gå inn i disse objektene for å samhandle med dem.
-Hvis det er tilgjengelig, kan du deretter tabbe rundt i det og samhandle med det som alle andre programmer.
-En tastekommando gis for å gå tilbake til det opprinnelige siden som inneholder det innebygde objektet:
+++ Innebygde objekter ++[ImbeddedObjects]
+Sider kan inkludere rikt innhold ved hjelp av teknologier som Adobe Flash, Oracle Java og HTML5, så vel som applikasjoner og dialoger.
+Når disse blir oppdaget i nettmodus, vil NVDA opplyse "innebygd objekt", "applikasjon" eller "dialog", ut fra hva som er relevant.
+Du kan flytte deg raskt til dem med enkeltbokstavkommandoene o og Skift+o.
+For å samhandle med disse objektene kan du trykke Enter på dem.
+
+Hvis det er tilgjengelig, kan du deretter tabbe rundt i det og samhandle med det som i alle andre programmer.
+En tastekommando er tilgjengelig for å gå tilbake til den opprinnelige siden som inneholder det innebygde objektet:
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Flytt til innehold i nettlesermodus dokument | NVDA+Ctrl+Mellomrom | Flytter fokus ut av det nåværende innebygde objektet, og inn i dokumentet som inneholder det |
+| Flytt til innhold i nettmodusdokument | NVDA+Ctrl+Mellomrom | Flytter fokus ut av det nåværende innebygde objektet, og inn i dokumentet som inneholder det |
 %kc:endInclude
 
-+ Applikasjon Spesifike NVDA kommandoer +
++ Lese matematisk innhold +[ReadingMath]
+
+
++ Applikasjonsspesifike NVDA-kommandoer +
 NVDA har sine egne ekstra kommandoer for enkelte programmer for å gjøre enkelte oppgaver enklere eller for å gi tilgang til funksjonalitet som ellers ikke er tilgjengelig for brukere med skjermleser.
 
 ++ Foobar2000 ++

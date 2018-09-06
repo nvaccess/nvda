@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 00:10+1000\n"
+"POT-Creation-Date: 2018-08-31 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -84,11 +84,6 @@ msgstr "ukjent språk"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "ukjent inndatametode"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -305,9 +300,8 @@ msgstr "knp"
 
 #. Translators: Displayed in braille for an object which is a
 #. document.
-#, fuzzy
 msgid "doc"
-msgstr "punkt"
+msgstr "dok"
 
 #. Translators: Displayed in braille for an object which is a
 #. application.
@@ -383,6 +377,16 @@ msgstr "panel"
 #. password edit.
 msgid "pwdedt"
 msgstr "passordskrivefelt"
+
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "&Lenker"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -524,6 +528,18 @@ msgstr "Fyll alltid leselista"
 msgid "Only when scrolling back"
 msgstr "Bare når en blar tilbake"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatisk"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -594,9 +610,21 @@ msgstr "til fokus"
 msgid "to review"
 msgstr "til les"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatisk"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "Seika leselister"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Bluetooth seriell: {portName}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "Serial: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -662,6 +690,12 @@ msgstr "Bulgarsk 8-punkts datapunktskrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "Svensk nivå 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Valisisk nivå 1"
 
@@ -669,6 +703,12 @@ msgstr "Valisisk nivå 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Valisisk nivå 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "Spansk 8-punkts datapunkt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -771,6 +811,12 @@ msgstr "Engelsk (U.S.) nivå 1"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "Engelsk (U.S.) nivå 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "Tysk nivå 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -879,6 +925,12 @@ msgstr "Ungarsk 8-punkts datapunktskrift"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "Ungarsk nivå 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "Ungarsk nivå 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1148,7 +1200,7 @@ msgstr "Fokusmodus"
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
-msgstr "Blamodus"
+msgstr "Nettmodus"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
@@ -2549,15 +2601,25 @@ msgstr "skyvebryter"
 msgid "calendar"
 msgstr "kalender"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "diagramelement"
-
 msgid "video"
 msgstr "video"
 
 msgid "audio"
 msgstr "lyd"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "diagramelement"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "slettet"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "satt inn"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3467,7 +3529,7 @@ msgstr "Symbolnivå %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Blar gjennom tale symbol nivåer, som bestemmer hvilke symboler blir uttalt"
+"Blar gjennom talesymbolnivåer, som avgjør hvilke symboler som blir uttalt"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "Object has no location"
@@ -3861,6 +3923,15 @@ msgstr "leser gjeldende programstatuslinje og flytter navigatoren til den"
 msgid "No status line found"
 msgstr "Ingen statuslinje funnet"
 
+#. Translators: Reported when status line exist, but is empty.
+#, fuzzy
+msgid "no status bar information"
+msgstr "Ingen formateringsinformasjon"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
@@ -4082,7 +4153,7 @@ msgstr "Viser NVDA objektpresentasjon innstillingsdialogen"
 #. Translators: Input help mode message for go to browse mode settings command.
 #, fuzzy
 msgid "Shows NVDA's browse mode settings"
-msgstr "Viser NVDA blamodus innstillingsdialogen"
+msgstr "Viser NVDAs innstillinger for nettmodus"
 
 #. Translators: Input help mode message for go to document formatting settings command.
 #, fuzzy
@@ -4816,28 +4887,23 @@ msgstr "tastatur, alle oppsett"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amharic"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragonese"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arabisk"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepali"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Serbisk (Latin)"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -6040,7 +6106,7 @@ msgstr "med %s rader"
 msgid "level %s"
 msgstr "nivå %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "med %s elementer"
@@ -6153,17 +6219,9 @@ msgstr "bakgrunnsmønster {pattern}"
 msgid "line %s"
 msgstr "linje %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "satt inn"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "ikke satt inn"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "slettet"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -7328,14 +7386,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "av"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6-serien/protokollkonverterer"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Bluetooth seriell: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 #, fuzzy
@@ -7357,15 +7414,6 @@ msgstr "Bytter simulering av HID-tastatur på/av"
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit-leselister"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "Serial: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7919,6 +7967,7 @@ msgstr "&Installer..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&Fjern"
@@ -8374,7 +8423,7 @@ msgstr "Portabel &mappe:"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
-msgstr "Bla gjennom..."
+msgstr "Bla gjennom ..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
@@ -8913,7 +8962,7 @@ msgstr "Spill en lyd når &autoforslag dukker opp"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
-msgstr "Blamodus"
+msgstr "Nettmodus"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
@@ -8954,7 +9003,7 @@ msgstr "Automatisk fokusmodus ved markørflytting"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
-msgstr "Lydsignal ved fokus- og blamodus"
+msgstr "Lydsignal ved fokus- og nettmodus"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -10948,6 +10997,25 @@ msgstr "Dobbel linjeavstand"
 msgid "1.5 line spacing"
 msgstr "Linjeavstand 1,5"
 
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amharic"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arabisk"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepali"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbisk (Latin)"
+
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "Viser NVDAs dialog for stemmeinnstillinger"
 
@@ -11009,7 +11077,7 @@ msgstr "Linjeavstand 1,5"
 #~ msgstr "Endre rapportering av objekter"
 
 #~ msgid "&Browse mode..."
-#~ msgstr "&Blamodus..."
+#~ msgstr "&Nettmodus ..."
 
 #~ msgid "Change virtual buffers specific settings"
 #~ msgstr "Endre virtuelt buffer spesifike innstillinger"
