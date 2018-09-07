@@ -180,14 +180,13 @@ bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 	});
 	// Now mark this node as invalid.
 	pendingInvalidSubtreesList.push_back(node);
-	LOG_INFO(L"Invalidated node "<<node->getDebugInfo());
+	LOG_DEBUG(L"Invalidated node "<<node->getDebugInfo());
 	this->requestUpdate();
 	return true;
 }
 
 void VBufBackend_t::update() {
 	if(inUpdate) {
-		Beep(550,40);
 		return;
 	}
 	inUpdate=true;

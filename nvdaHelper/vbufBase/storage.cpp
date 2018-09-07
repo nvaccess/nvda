@@ -353,7 +353,6 @@ void VBufStorage_controlFieldNode_t::ensureDescendantsRequireParentUpdate() {
 		auto childControlField=dynamic_cast<VBufStorage_controlFieldNode_t*>(child);
 		if(childControlField) {
 			childControlField->requiresParentUpdate=true;
-			LOG_INFO(L"making child controlField require parent update. childControlField "<<childControlField->getDebugInfo());
 			childControlField->ensureDescendantsRequireParentUpdate();
 		}
 	}
