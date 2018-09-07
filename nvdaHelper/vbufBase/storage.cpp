@@ -347,6 +347,18 @@ VBufStorage_controlFieldNode_t::VBufStorage_controlFieldNode_t(int docHandle, in
 	LOG_DEBUG(L"controlFieldNode initialization at "<<this<<L", with docHandle of "<<identifier.docHandle<<L" and ID of "<<identifier.ID); 
 }
 
+void VBufStorage_controlFieldNode_t::ensureDescendantsRequireParentUpdate() {
+	this->alwaysRerenderChildren=true;
+	for(auto child=this->getFirstChild();child!=nullptr;child=child->getNext()) {
+		auto childControlField=dynamic_cast<VBufStorage_controlFieldNode_t*>(child);
+		if(childControlField) {
+			childControlField->requiresParentUpdate=true;
+			LOG_INFO(L"making child controlField require parent update. childControlField "<<childControlField->getDebugInfo());
+			childControlField->ensureDescendantsRequireParentUpdate();
+		}
+	}
+}
+
 bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
 	*docHandle=this->identifier.docHandle;
 	*ID=this->identifier.ID;
@@ -355,7 +367,7 @@ bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
 
 std::wstring VBufStorage_controlFieldNode_t::getDebugInfo() const {
 	std::wostringstream s;
-	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID;  
+	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID<<L", requiresParentUpdate "<<requiresParentUpdate<<L", allowReuseInAncestorUpdate "<<allowReuseInAncestorUpdate<<L", denyReuseIfPreviousSiblingsChanged "<<denyReuseIfPreviousSiblingsChanged<<L", alwaysRerenderChildren "<<alwaysRerenderChildren;  
 	return s.str();
 }
 
