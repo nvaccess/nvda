@@ -164,7 +164,7 @@ class Gecko_ia2(VirtualBuffer):
 			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
 		except COMError:
 			return None
-		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=pacc,IAccessibleChildID=0)
+		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),IAccessibleChildID=0)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
