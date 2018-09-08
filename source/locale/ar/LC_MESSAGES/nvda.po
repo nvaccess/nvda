@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 00:10+1000\n"
-"PO-Revision-Date: 2018-07-05 16:23+0200\n"
+"POT-Creation-Date: 2018-08-17 00:10+1000\n"
+"PO-Revision-Date: 2018-08-17 04:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -82,11 +82,6 @@ msgstr "لغة غير معروفةلغة غير معروفة"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "طريقة كتابة غير معروفة"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -366,6 +361,14 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "pwdedt"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "del"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "ins"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "(خ)"
@@ -503,6 +506,18 @@ msgstr "ملْء السطر الإلكت&روني دائما"
 msgid "Only when scrolling back"
 msgstr "فقط عند التمرير للخلف"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "آلي"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "يو إس بي"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "بلوتوذ"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -572,9 +587,20 @@ msgstr "للتحديد الحالي"
 msgid "to review"
 msgstr "لمؤشر الاستعراض"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "آلي"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "سطر إلكتروني غير معروف"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "منفذ البلوتوث التسلسلي: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "تسلسلي: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -640,6 +666,11 @@ msgstr "بلغاري برايل الحاسوب 8 نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "كردي رئيسي بدون اختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "ويلشي بدون اختصارات"
 
@@ -647,6 +678,11 @@ msgstr "ويلشي بدون اختصارات"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "ويلشي باختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "تشيكيحاسوب برايل 8 نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -747,6 +783,11 @@ msgstr "إنجليزي أمريكي بدون اختصارات"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "إنجليزي أمريكي بدون اختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "سبرانتو بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -851,6 +892,11 @@ msgstr "مجري برايل حاسوب 8 نقاط"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "مجري باختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
 msgstr "مجري باختصارات"
 
 #. Translators: The name of a braille table displayed in the
@@ -2507,15 +2553,25 @@ msgstr "كائن إبهامي"
 msgid "calendar"
 msgstr "تقويم"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "عنصر المخطط"
-
 msgid "video"
 msgstr "فيديو"
 
 msgid "audio"
 msgstr "صوت"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "عنصر المخطط"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "تم حذف"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "مدرج"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3751,6 +3807,14 @@ msgstr "الإعلان عن الكائن النشط. بالضغط عليه مر�
 msgid "No status line found"
 msgstr "لا يوجد سطر حالة"
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "لا توجد معلومات عن شريط الحالة"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "تعذر نسخ شريط الحالة للحافظة"
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4682,28 +4746,23 @@ msgstr "مفتاح يجري تطبيقه على كل أنماط لوحة الم�
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "الأمهارية"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "الأورجانيزية"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "العربيةعربي بدون اختصارات"
+msgid "Central Kurdish"
+msgstr "كردي مركزي"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "النيبالية"
+msgid "Northern Kurdish"
+msgstr "كردي شمالي"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "سربي (لاتيني)"
+msgid "Burmese"
+msgstr "برمية"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5882,7 +5941,7 @@ msgstr "بِ%s أسطر"
 msgid "level %s"
 msgstr "المستوى %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "بِ%s عناصر"
@@ -5993,17 +6052,9 @@ msgstr "نقش الخلفية {pattern}"
 msgid "line %s"
 msgstr "سَطْر %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "مدرج"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "غير مدرج"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "تم حذف"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -7165,14 +7216,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "تعطيل off [ repeat ]"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "لا يوجد شكل"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "سلسلة الأسطر Optelec ALVA/protocol converter"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "منفذ البلوتوث التسلسلي: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7193,15 +7243,6 @@ msgstr "التبديل بين تفعيل وتعطيل محاكاة لوحة مف
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "الأسطر الإلكترونية Baum/HumanWare/APH/Orbit "
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "تسلسلي: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7756,6 +7797,7 @@ msgstr "&تثبيت..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "إ&زالة"
@@ -10753,6 +10795,25 @@ msgstr "تباعد الأسطر بمسافة مزدوجة"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 تباعد السطر"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "الأمهارية"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "العربيةعربي بدون اختصارات"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "النيبالية"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "سربي (لاتيني)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "إظهار محاورة اعدادات الصوت الخاصة بالبرنامج"

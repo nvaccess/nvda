@@ -12,7 +12,10 @@ For the latter two actions, one can perform actions prior to and/or after they t
 """ 
 
 import globalVars
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import ctypes
 import ctypes.wintypes
 import os
@@ -23,7 +26,7 @@ import contextlib
 from copy import deepcopy
 from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
-from validate import Validator
+from configobj.validate import Validator
 from logHandler import log, levelNames
 from logging import DEBUG
 import shlobj
@@ -32,7 +35,7 @@ import easeOfAccess
 from fileUtils import FaultTolerantFile
 import winKernel
 import extensionPoints
-import profileUpgrader
+from . import profileUpgrader
 from .configSpec import confspec
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -76,11 +79,11 @@ def saveOnExit():
 def isInstalledCopy():
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
-		k=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
-		instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		instDir=winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return False
-	_winreg.CloseKey(k)
+	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir)==os.stat(os.getcwdu()) 
 	except WindowsError:
@@ -98,8 +101,8 @@ CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
 
 def getInstalledUserConfigPath():
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		configInLocalAppData = bool(_winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData=False
 	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
@@ -156,11 +159,11 @@ RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
 	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
-			and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER)):
+			and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)):
 		return True
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
-		val = _winreg.QueryValueEx(k, u"nvda")[0]
+		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
+		val = winreg.QueryValueEx(k, u"nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
 	except (WindowsError, OSError):
 		return False
@@ -169,7 +172,7 @@ def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
 	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
-		easeOfAccess.setAutoStart(_winreg.HKEY_CURRENT_USER, enable)
+		easeOfAccess.setAutoStart(winreg.HKEY_CURRENT_USER, enable)
 		if enable:
 			return
 		# We're disabling, so ensure the run key is cleared,
@@ -177,12 +180,12 @@ def setStartAfterLogon(enable):
 		run = False
 	else:
 		run = enable
-	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
+	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, winreg.KEY_WRITE)
 	if run:
-		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
+		winreg.SetValueEx(k, u"nvda", None, winreg.REG_SZ, sys.argv[0])
 	else:
 		try:
-			_winreg.DeleteValue(k, u"nvda")
+			winreg.DeleteValue(k, u"nvda")
 		except WindowsError:
 			pass
 
@@ -223,11 +226,11 @@ SLAVE_FILENAME = u"nvda_slave.exe"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
-	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_LOCAL_MACHINE):
+	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
 	except WindowsError:
 		return False
 
@@ -235,10 +238,10 @@ def _setStartOnLogonScreen(enable):
 	if easeOfAccess.isSupported:
 		# The installer will have migrated service config to EoA if appropriate,
 		# so we only need to deal with EoA here.
-		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, enable)
+		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
 	else:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
-		_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, winreg.KEY_WRITE)
+		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
