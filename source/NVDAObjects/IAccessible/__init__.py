@@ -416,7 +416,8 @@ the NVDAObject for IAccessible
 			if classString and classString.find('.')>0:
 				modString,classString=os.path.splitext(classString)
 				classString=classString[1:]
-				mod=__import__(modString,globals(),locals(),[])
+				# #8712: Python 3 wants a dot (.) when loading a module from the same folder via relative imports, and this is done via level argument.
+				mod=__import__(modString,globals(),locals(),[],1)
 				newCls=getattr(mod,classString)
 			elif classString:
 				newCls=globals()[classString]
