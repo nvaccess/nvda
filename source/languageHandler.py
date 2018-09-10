@@ -9,9 +9,9 @@ This module assists in NVDA going global through language services such as conve
 """
 
 try:
-	import builtins
+	import __builtin__ as builtins # Python 2.7 import
 except ImportError:
-	import __builtin__ as builtins
+	import builtins # Python 3 import
 import os
 import sys
 import ctypes
