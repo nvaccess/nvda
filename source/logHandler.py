@@ -236,7 +236,6 @@ class Formatter(logging.Formatter):
 
 	def format(self, record):
 		s = logging.Formatter.format(self, record)
-		print(s)
 		return s
 
 	def formatException(self, ex):
