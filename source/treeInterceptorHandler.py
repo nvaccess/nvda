@@ -13,6 +13,30 @@ import textInfos
 import config
 import braille
 
+#: Identifier for a browse mode setting that
+#: will automatically create tree interceptors for loaded web documents (i.e. not for editable documents.
+TI_CREATE_WEBDOCS = "webDocs"
+#: Identifier for a browse mode setting that
+#: will automatically create tree interceptors for all loaded controls that have a tree interceptor class assigned.
+TI_CREATE_ALWAYS = "always"
+#: Identifier for a browse mode setting that
+#: will never create tree interceptors for all loaded controls that have a tree interceptor class assigned,
+#: unless browse mode is manually activated.
+TI_CREATE_NEVER = "never"
+
+shouldCreateTreeInterceptorOptions = [
+	# Translators: An option in browse mode settings to
+	# always enable browse mode for non editable browse mode documents
+	# (i.e. not for Word documents or aria applications).
+	(TI_CREATE_WEBDOCS, _("Always for web documents")),
+	# Translators: An option in browse mode settings to
+	# always enable browse mode when a page is loaded.
+	(TI_CREATE_ALWAYS, _("Always for all supported documents")),
+	# Translators: An option in browse mode settings to
+	# never enable browse mode when a page is loaded.
+	(TI_CREATE_NEVER, _("Never")),
+]
+
 runningTable=set()
 
 def getTreeInterceptor(obj):
@@ -20,14 +44,17 @@ def getTreeInterceptor(obj):
 		if obj in ti:
 			return ti
 
-def update(obj):
+def update(obj, force=False):
 	# Don't create treeInterceptors for objects for which NVDA should sleep.
 	if obj.sleepMode:
 		return None
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:
-		if not obj.shouldCreateTreeInterceptor:
+		if not force and (
+			(obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] == TI_CREATE_NEVER) or
+			(not obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] != TI_CREATE_ALWAYS)
+		):
 			return None
 		try:
 			newClass=obj.treeInterceptorClass
