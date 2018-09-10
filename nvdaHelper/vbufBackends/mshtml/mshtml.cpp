@@ -1245,7 +1245,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 				fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 			}
 			// If any descendant is invalidated, this may change whether this node has no useful content.
-			parentNode->ensureDescendantsRequireParentUpdate();
+			parentNode->alwaysRerenderDescendants=true;
 		}
 	}
 
@@ -1280,16 +1280,12 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 			if(parentNode->getLength()==0) {
 				isBlock=false;
 				buffer->addTextFieldNode(parentNode,previousNode,L" ");
-				// If any descendant is invalidated, this may change whether this node has no useful content.
-				parentNode->ensureDescendantsRequireParentUpdate();
 			}
 		}
 
 		//If a node is interactive, and still has no content, add a space
 		if(isInteractive&&parentNode->getLength()==0) {
 			buffer->addTextFieldNode(parentNode,previousNode,L" ");
-			// If any descendant is invalidated, this may change whether this node has no useful content.
-			parentNode->ensureDescendantsRequireParentUpdate();
 		}
 	}
 

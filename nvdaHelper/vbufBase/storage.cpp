@@ -347,17 +347,6 @@ VBufStorage_controlFieldNode_t::VBufStorage_controlFieldNode_t(int docHandle, in
 	LOG_DEBUG(L"controlFieldNode initialization at "<<this<<L", with docHandle of "<<identifier.docHandle<<L" and ID of "<<identifier.ID); 
 }
 
-void VBufStorage_controlFieldNode_t::ensureDescendantsRequireParentUpdate() {
-	this->alwaysRerenderChildren=true;
-	for(auto child=this->getFirstChild();child!=nullptr;child=child->getNext()) {
-		auto childControlField=dynamic_cast<VBufStorage_controlFieldNode_t*>(child);
-		if(childControlField) {
-			childControlField->requiresParentUpdate=true;
-			childControlField->ensureDescendantsRequireParentUpdate();
-		}
-	}
-}
-
 bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
 	*docHandle=this->identifier.docHandle;
 	*ID=this->identifier.ID;
@@ -558,6 +547,10 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 		return NULL;
 	}
 	controlFieldNodesByIdentifier[controlFieldNode->identifier]=controlFieldNode;
+	// If the node's new parent requires descendants to always be rerendered, copy this etting to the node as well.
+	if(parent&&parent->alwaysRerenderDescendants) {
+		controlFieldNode->alwaysRerenderDescendants=true;
+	}
 	LOG_DEBUG(L"Added new controlFieldNode, returning node");
 	return controlFieldNode;
 }

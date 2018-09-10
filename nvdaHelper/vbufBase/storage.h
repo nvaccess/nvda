@@ -357,13 +357,10 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
  */
 	bool alwaysRerenderChildren {false};
 
-/**
- * Sets the requiresParentUpdate property to true on all descendants of this node, and sets alwaysRerenderChildren to true on this node and all descendants.
- * This method is useful if some alternative text has been added to a node because its descendants don't seem to contain useful content (E.g. an empty link).
- * This ensures that if a descendant is re-rendered, this node should also be re-rendered (as the alternative text may no longer be needed).
- * It also ensures that if this node is re-rendered, none of its children are reused from here or somewhere else in the tree as the reused node may not have been makred as requiring a prent update. 
+/*
+ * If true, all this node's descendants will always be re-rendered along with this node when being re-rendered.
  */
-	void ensureDescendantsRequireParentUpdate();
+	bool alwaysRerenderDescendants {false};
 
 /**
  * retreaves the node's doc handle and ID.

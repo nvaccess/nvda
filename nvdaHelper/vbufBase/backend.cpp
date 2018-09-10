@@ -199,7 +199,7 @@ void VBufBackend_t::update() {
 		//render all invalid subtrees, storing each subtree in its own buffer
 		for(auto i=workingInvalidSubtreesList.begin();i!=workingInvalidSubtreesList.end();) {
 			VBufStorage_controlFieldNode_t* node=*i;
-			LOG_DEBUG(L"re-rendering subtree at "<<node);
+			LOG_DEBUG(L"re-rendering subtree from "<<node->getDebugInfo());
 			VBufStorage_buffer_t* tempBuf=new VBufStorage_buffer_t();
 			nhAssert(tempBuf); //tempBuf can't be NULL
 			LOG_DEBUG(L"Created temp buffer at "<<tempBuf);
@@ -262,7 +262,7 @@ VBufBackend_t::~VBufBackend_t() {
 
 VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID) {
 	LOG_DEBUG(L"Try to reuse node with docHandle "<<docHandle<<L", and ID "<<ID);
-	if(parent->alwaysRerenderChildren) {
+	if(parent->alwaysRerenderDescendants||parent->alwaysRerenderChildren) {
 		LOG_DEBUG(L"Won't  find a node to reuse as parent says always rerender children");
 		return nullptr;
 	}
@@ -277,27 +277,29 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		LOG_DEBUG(L"Existing node refuses to be reused");
 		return nullptr;
 	}
-	VBufStorage_controlFieldNode_t* previousControlFieldNode=nullptr;
-	for(auto tempNode=previous;tempNode!=nullptr;tempNode=tempNode->getPrevious()) {
-		previousControlFieldNode=dynamic_cast<VBufStorage_controlFieldNode_t*>(tempNode);
-		if(previousControlFieldNode) break;
-	}
-	VBufStorage_referenceNode_t* previousReferenceNode=dynamic_cast<VBufStorage_referenceNode_t*>(previousControlFieldNode);
-	if(previousControlFieldNode&&!previousReferenceNode) {
-		LOG_DEBUG(L"Previous controlFieldNode was not a referenceNode");
-		return nullptr;
-	}
-	if(previousReferenceNode) {
-		previousControlFieldNode=previousReferenceNode->referenceNode;
-	}
-	VBufStorage_controlFieldNode_t* previousExistingControlFieldNode=nullptr;
-	for(auto tempNode=existingNode->getPrevious();tempNode!=nullptr;tempNode=tempNode->getPrevious()) {
-		previousExistingControlFieldNode=dynamic_cast<VBufStorage_controlFieldNode_t*>(tempNode);
-		if(previousExistingControlFieldNode) break;
-	}
-	if(previousControlFieldNode!=previousExistingControlFieldNode) {
-		LOG_DEBUG(L"Previous controlFieldNodes differ");
-		return nullptr;
+	if(existingNode->denyReuseIfPreviousSiblingsChanged) {
+		VBufStorage_controlFieldNode_t* previousControlFieldNode=nullptr;
+		for(auto tempNode=previous;tempNode!=nullptr;tempNode=tempNode->getPrevious()) {
+			previousControlFieldNode=dynamic_cast<VBufStorage_controlFieldNode_t*>(tempNode);
+			if(previousControlFieldNode) break;
+		}
+		VBufStorage_referenceNode_t* previousReferenceNode=dynamic_cast<VBufStorage_referenceNode_t*>(previousControlFieldNode);
+		if(previousControlFieldNode&&!previousReferenceNode) {
+			LOG_DEBUG(L"Previous controlFieldNode was not a referenceNode");
+			return nullptr;
+		}
+		if(previousReferenceNode) {
+			previousControlFieldNode=previousReferenceNode->referenceNode;
+		}
+		VBufStorage_controlFieldNode_t* previousExistingControlFieldNode=nullptr;
+		for(auto tempNode=existingNode->getPrevious();tempNode!=nullptr;tempNode=tempNode->getPrevious()) {
+			previousExistingControlFieldNode=dynamic_cast<VBufStorage_controlFieldNode_t*>(tempNode);
+			if(previousExistingControlFieldNode) break;
+		}
+		if(previousControlFieldNode!=previousExistingControlFieldNode) {
+			LOG_DEBUG(L"Previous controlFieldNodes differ");
+			return nullptr;
+		}
 	}
 	auto i=std::find(this->workingInvalidSubtreesList.begin(),this->workingInvalidSubtreesList.end(),existingNode);
 	if(i!=this->workingInvalidSubtreesList.end()) {

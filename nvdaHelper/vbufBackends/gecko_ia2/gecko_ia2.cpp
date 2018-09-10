@@ -780,6 +780,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if (!nameIsContent && name)
 		parentNode->addAttribute(L"name", name);
 
+	if(nameIsContent) {
+		// We may render an accessible name for this node if it has been explicitly set or it has no useful content. 
+		parentNode->alwaysRerenderDescendants=true;
+	}
+
 	if (isVisible) {
 		if ( isImgMap && name ) {
 			// This is an image map with a name. Render the name first.
@@ -926,8 +931,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				// If a link has no name, derive it from the URL.
 				buffer->addTextFieldNode(parentNode, NULL, getNameForURL(value));
 			}
-			// If any descendant is invalidated, this may change whether this node has no useful content.
-			parentNode->ensureDescendantsRequireParentUpdate();
 		}
 
 		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {
@@ -935,8 +938,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 			parentNode->isBlock=false;
-			// If any descendant is invalidated, this may change whether this node has no content. 
-			parentNode->ensureDescendantsRequireParentUpdate();
 		}
 
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {
@@ -944,8 +945,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// and it still has no content, render a space so the user can access the node.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-			// If any descendant is invalidated, this may change whether this node has no useful content.
-			parentNode->ensureDescendantsRequireParentUpdate();
 		}
 	}
 
