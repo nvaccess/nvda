@@ -87,7 +87,7 @@ class AutoPropertyType(ABCMeta):
 					if cache is not None:
 						break
 				else:
-					cache=cacheByDefault
+					cache=cacheByDefault if not isinstance(g, classmethod) else False
 
 			abstract=dict.get('_abstract_%s'%x,False)
 			if g and not (s or d):
