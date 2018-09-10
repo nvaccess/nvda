@@ -213,8 +213,9 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
+			self.curForegroundUIAElement=None
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
+			#self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
 			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
@@ -226,6 +227,24 @@ class UIAHandler(COMObject):
 			self.MTAThreadInitEvent.set()
 		self.MTAThreadStopEvent.wait()
 		self.clientObject.RemoveAllEventHandlers()
+
+	def onForegroundChange(self,hwnd):
+		if self.curForegroundUIAElement:
+			try:
+				self.clientObject.removePropertyChangedEventHandler(self.curForegroundUIAElement,self)
+			except COMError:
+				# The old UIAElement died as the window was closed.
+				# The system should forget the old event registration itself.
+				pass
+		try:
+			self.curForegroundUIAElement=self.clientObject.ElementFromHandle(hwnd)
+		except COMError:
+			log.error("Could not get a UIAElement from new foreground window")
+			return
+		try:
+			self.clientObject.AddPropertyChangedEventHandler(self.curForegroundUIAElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
+		except COMError:
+			log.error("Could not register for UIA property change events for new foreground")
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if not self.MTAThreadInitEvent.isSet():
