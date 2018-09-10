@@ -2,10 +2,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2018.3Beta2\n"
+"Project-Id-Version: 2018.3Beta4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-17 00:10+1000\n"
-"PO-Revision-Date: 2018-08-14 17:36+0800\n"
+"POT-Creation-Date: 2018-08-31 00:10+1000\n"
+"PO-Revision-Date: 2018-09-06 17:20+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <cyeric20@yahoo.com.hk>\n"
 "Language: zh_HK\n"
@@ -587,7 +587,7 @@ msgstr "跟隨焦點"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
-msgstr "跟隨瀏覽"
+msgstr "跟隨易讀游標"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1739,7 +1739,7 @@ msgstr "到了底部"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "移過清單或表格等的結尾位置"
+msgstr "移到清單或表格之後位置"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2919,60 +2919,60 @@ msgstr "在瀏覽模式中，切換是否讀出排版表格"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
-msgstr "文字瀏覽"
+msgstr "T 文字閱讀"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
-msgstr "物件瀏覽"
+msgstr "O 物件瀏覽"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
-msgstr "系統游標"
+msgstr "S 系統游標"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
-msgstr "鼠標"
+msgstr "M 鼠標"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the speech panel
 msgid "Speech"
-msgstr "語音"
+msgstr "S 語音"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
-msgstr "設定"
+msgstr "C 設定"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
-msgstr "點字"
+msgstr "B 點字"
 
 #. Translators: The name of a category of NVDA commands.
 msgctxt "script category"
 msgid "Tools"
-msgstr "工具"
+msgstr "T 工具"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
 msgid "Touch screen"
-msgstr "觸控屏幕"
+msgstr "T 觸控屏幕"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System focus"
-msgstr "系統焦點"
+msgstr "S 系統焦點"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System status"
-msgstr "系統狀態"
+msgstr "S 系統狀態"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Input"
-msgstr "輸入"
+msgstr "I 輸入"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
-msgstr "文件格式"
+msgstr "D 文件格式"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
@@ -3473,35 +3473,35 @@ msgstr "將物件游標移到鼠標所指物件並讀出"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
-msgstr "沒有下一個瀏覽模式了"
+msgstr "沒有下一個閱讀模式了"
 
 #. Translators: Script help message for next review mode command.
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
-msgstr "選用下一個瀏覽模式，可選用的模式包括物件、文件和螢幕三個模式"
+msgstr "選用下一個閱讀模式，可選用的模式包括物件、文件和螢幕三個模式"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
-msgstr "沒有上一個瀏覽模式了"
+msgstr "沒有上一個閱讀模式了"
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
-msgstr "選用上一個瀏覽模式，可選用的模式包括物件、文件和螢幕模式"
+msgstr "選用上一個閱讀模式，可選用的模式包括物件、文件和螢幕模式"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode off"
-msgstr "簡易瀏覽模式關"
+msgstr "簡易閱讀模式關"
 
 #. Translators: The message announced when toggling simple review mode.
 msgid "Simple review mode on"
-msgstr "簡易瀏覽模式開"
+msgstr "簡易閱讀模式開"
 
 #. Translators: Input help mode message for toggle simple review mode command.
 msgid "Toggles simple review mode on and off"
-msgstr "切換開關簡易瀏覽模式"
+msgstr "切換開關簡易閱讀模式"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3531,7 +3531,7 @@ msgstr "沒有位置資訊"
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
-msgstr "讀出瀏覽游標所在的文字或物件的位置資訊。按兩下可進一步提供詳細的內容。"
+msgstr "讀出易讀游標所在的文字或物件的位置資訊。按兩下可進一步提供詳細的內容。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3541,7 +3541,7 @@ msgstr "移到焦點"
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
-msgstr "將物件游標移到系統焦點，可能的話並將瀏覽游標移到編輯游標。"
+msgstr "讓焦點所在的物件成為目前物件，可能的話並將易讀游標移到編輯游標。"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3561,7 +3561,7 @@ msgstr "沒有編輯游標"
 msgid ""
 "Pressed once sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
-msgstr "按一次將系統焦點移到目前物件，連按兩次將編輯游標移到瀏覽游標"
+msgstr "按一次將系統焦點移到目前物件，連按兩次將編輯游標移到易讀游標"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3619,13 +3619,13 @@ msgstr "到了頂端"
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出第一行文字"
+msgstr "在目前物件中將易讀游標移到並讀出第一行文字"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出上一行文字"
+msgstr "在目前物件中將易讀游標移到並讀出上一行文字"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -3633,26 +3633,26 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"在目前物件中讀出瀏覽游標所在的一行文字，連按兩次則把這一行的字元拼讀出來，連"
+"在目前物件中讀出易讀游標所在的一行文字，連按兩次則把這一行的字元拼讀出來，連"
 "按三次則報讀這一整行的配詞解釋"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出下一行文字"
+msgstr "在目前物件中將易讀游標移到並讀出下一行文字"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出最後一行文字"
+msgstr "在目前物件中將易讀游標移到並讀出最後一行文字"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出上一個字詞"
+msgstr "在目前物件中將易讀游標移到並讀出上一個字詞"
 
 #. Translators: Input help mode message for report current word under review cursor command.
 msgid ""
@@ -3660,14 +3660,14 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"在目前物件中讀出瀏覽游標所在的一個單字或詞語，連按兩次則把這一個單字或詞語拼"
+"在目前物件中讀出易讀游標所在的一個單字或詞語，連按兩次則把這一個單字或詞語拼"
 "讀出來，連按三次則報讀單字或詞語的配詞解釋"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出下一個字詞"
+msgstr "在目前物件中將易讀游標移到並讀出下一個字詞"
 
 #. Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
 msgid "Left"
@@ -3677,13 +3677,13 @@ msgstr "到了左端"
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出目前這一行的第一個字元"
+msgstr "在目前物件中將易讀游標移到並讀出目前這一行的第一個字元"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出上一個字元"
+msgstr "在目前物件中將易讀游標移到並讀出上一個字元"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -3692,7 +3692,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"在目前物件中讀出瀏覽游標所在的一個字元，連按兩次則讀出字元或單字的配詞解釋，"
+"在目前物件中讀出易讀游標所在的一個字元，連按兩次則讀出字元或單字的配詞解釋，"
 "連按三次則讀出字元的十進位或十六進位值"
 
 #. Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -3703,25 +3703,25 @@ msgstr "到了右端"
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出下一個字元"
+msgstr "在目前物件中將易讀游標移到並讀出下一個字元"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr "在目前物件中將瀏覽游標移到並讀出目前這一行的最後一個字元"
+msgstr "在目前物件中將易讀游標移到並讀出目前這一行的最後一個字元"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
-msgstr "朗讀關閉"
+msgstr "語音關閉"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "以嗶嗶聲代替朗讀語音"
+msgstr "用嗶嗶聲代替語音"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
-msgstr "朗讀開啟"
+msgstr "語音開啟"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3729,8 +3729,8 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"切換語音模式為關閉、發出嗶嗶聲或朗讀三個模式，切換成關閉的時候 NVDA 不會播出"
-"聲音，切換成發出嗶嗶聲則以嗶嗶聲代替語音朗讀，切換成朗讀則進行一般的語音報讀"
+"切換語音模式為關閉、發出嗶嗶聲或開啟三個模式，切換成關閉的時候 NVDA 不會播出"
+"聲音，切換成發出嗶嗶聲則以嗶嗶聲代替語音，切換成開啟則進行一般的語音報讀"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -3762,7 +3762,7 @@ msgstr "顯示 NVDA 選單"
 msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
-msgstr "在物件中從目前瀏覽游標所在的一行文字往下報讀直到結尾，瀏覽游標跟隨移動"
+msgstr "在物件中從目前易讀游標所在的一行文字往下報讀直到結尾，易讀游標跟隨移動"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -3784,7 +3784,7 @@ msgstr "格式設定"
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
-msgstr "讀出文件中目前瀏覽游標所在字元的格式資訊，連按兩次在瀏覽模式顯示資訊。"
+msgstr "讀出文件中目前易讀游標所在字元的格式資訊，連按兩次在瀏覽模式顯示資訊。"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
@@ -3886,16 +3886,16 @@ msgstr "切換讀出已改變的動態內容開關，動態內容包括在命令
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "瀏覽游標不跟隨編輯游標移動"
+msgstr "易讀游標不跟隨編輯游標移動"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "瀏覽游標跟隨編輯游標移動"
+msgstr "易讀游標跟隨編輯游標移動"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "切換是否讓瀏覽游標跟隨編輯游標移動"
+msgstr "切換是否讓易讀游標跟隨編輯游標移動"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3992,7 +3992,7 @@ msgstr "開啟 NVDA 鼠標設定類別"
 
 #. Translators: Input help mode message for go to review cursor settings command.
 msgid "Shows NVDA's review cursor settings"
-msgstr "開啟 NVDA 瀏覽游標設定類別"
+msgstr "開啟 NVDA 易讀游標設定類別"
 
 #. Translators: Input help mode message for go to input composition settings command.
 msgid "Shows NVDA's input composition settings"
@@ -4134,7 +4134,7 @@ msgstr "標記複製文字起點"
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "selected or copied"
-msgstr "把瀏覽游標目前的所在位置作為複製或選擇文字的起點"
+msgstr "把易讀游標目前的所在位置作為複製或選擇文字的起點"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
@@ -4166,7 +4166,7 @@ msgid ""
 "including the current position of the review cursor is selected. If pressed "
 "twice, the text is copied to the clipboard"
 msgstr ""
-"按一下，將先前設定的文字起點到瀏覽游標所在位置之間的文字選取，連按兩下，則這"
+"按一下，將先前設定的文字起點到易讀游標所在位置之間的文字選取，連按兩下，則這"
 "段文字複製到剪貼簿。"
 
 #. Translators: Input help mode message for a braille command.
@@ -4319,15 +4319,15 @@ msgstr "Windows 10光學字元辨識不可用"
 #. Translators: Describes a command.
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "利用 Windows 10 光學字元辨識辨認出目前瀏覽物件中的文字"
+msgstr "利用 Windows 10 光學字元辨識辨認出目前物件中的文字"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr "模擬電腦鍵盤按鍵"
+msgstr "E 模擬電腦鍵盤按鍵"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
-msgstr "雜項"
+msgstr "M 雜項"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -5811,15 +5811,15 @@ msgstr "NVDA Python 主控台"
 
 #. Translators: One of the review modes.
 msgid "Object review"
-msgstr "物件瀏覽"
+msgstr "物件閱讀"
 
 #. Translators: One of the review modes.
 msgid "Document review"
-msgstr "文件瀏覽"
+msgstr "文件閱讀"
 
 #. Translators: One of the review modes.
 msgid "Screen review"
-msgstr "螢幕瀏覽"
+msgstr "螢幕閱讀"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
@@ -5861,7 +5861,7 @@ msgstr "%s 更新選取"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
-msgstr "已選取的都移除了"
+msgstr "移除了選取的文字"
 
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
@@ -6582,19 +6582,19 @@ msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "將瀏覽物件移到下一欄"
+msgstr "將易讀游標移到下一欄"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
-msgstr "將瀏覽物件移到上一欄"
+msgstr "將易讀游標移到上一欄"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
-msgstr "將瀏覽物件移到下一列"
+msgstr "將易讀游標移到下一列"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "將瀏覽物件移到上一列"
+msgstr "將易讀游標移到上一列"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
 msgid "Suggestions"
@@ -7114,7 +7114,7 @@ msgid "Skype"
 msgstr "Skype"
 
 msgid "Reports and moves the review cursor to a recent message"
-msgstr "把瀏覽游標移到並讀出最近的訊息"
+msgstr "把易讀游標移到並讀出最近的訊息"
 
 #. Translators: Indicates that a contact stopped typing.
 msgid "Typing stopped"
@@ -8279,7 +8279,7 @@ msgstr "%s設定類別"
 
 #. Translators: This is the label for the general settings panel.
 msgid "General"
-msgstr "一般"
+msgstr "G 一般"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8438,7 +8438,7 @@ msgstr "語音合成器錯誤"
 
 #. Translators: This is the label for the voice settings panel.
 msgid "Voice"
-msgstr "語音"
+msgstr "V 語音"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -8481,7 +8481,7 @@ msgstr "有支援時啟用拼字功能(&S)"
 
 #. Translators: This is the label for the keyboard settings panel.
 msgid "Keyboard"
-msgstr "鍵盤"
+msgstr "K 鍵盤"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8579,7 +8579,7 @@ msgstr "隨螢幕亮度改變嗶嗶聲音量(&B)"
 
 #. Translators: This is the label for the review cursor settings panel.
 msgid "Review Cursor"
-msgstr "瀏覽游標"
+msgstr "R 易讀游標"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8599,11 +8599,11 @@ msgstr "跟隨鼠標移動(&M)"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Simple review mode"
-msgstr "簡易瀏覽模式(&S)"
+msgstr "簡易閱讀模式(&S)"
 
 #. Translators: This is the label for the Input Composition settings panel.
 msgid "Input Composition"
-msgstr "輸入法朗讀"
+msgstr "I 輸入法朗讀"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -8632,7 +8632,7 @@ msgstr "報出輸入字根(&C)"
 
 #. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
-msgstr "物件顯示"
+msgstr "O 物件顯示"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
@@ -8704,7 +8704,7 @@ msgstr "自動建議出現時播放音效(&A)"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
-msgstr "瀏覽模式"
+msgstr "B 瀏覽模式"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
@@ -8753,7 +8753,7 @@ msgstr "禁用所有無用指令(&T)"
 
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
-msgstr "文件格式(&F)"
+msgstr "D 文件格式(&F)"
 
 #. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
@@ -9085,11 +9085,11 @@ msgstr "游標閃示率 (以千分之一秒計)(&C)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
-msgstr "跟隨焦點的游標形態(&F)"
+msgstr "跟隨焦點游標的形態(&F)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
-msgstr "跟隨瀏覽的游標形態(&R)"
+msgstr "跟隨易讀游標的形態(&R)"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
