@@ -18,9 +18,29 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
-from NVDAObjects.IAccessible import normalizeIA2TextFormatField
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
+
+	def _getPointFromOffset(self,offset):
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		# The format field starts at the first character.
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
+				# This is no format field.
+				continue
+			attrs = field.field
+			ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+			if ia2TextStartOffset is None:
+				# No ia2TextStartOffset specified, most likely a format field that doesn't originate from IA2Text.
+				continue
+			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
+			relOffset = offset - formatFieldStart + ia2TextStartOffset
+			obj = self._getNVDAObjectFromOffset(offset)
+			if not hasattr(obj, "IAccessibleTextObject"):
+				raise LookupError("Object doesn't have an IAccessibleTextObject")
+			return IA2TextTextInfo._getPointFromOffsetInObject(obj, relOffset)
+		return super(Gecko_ia2_TextInfo, self)._getPointFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
@@ -84,7 +104,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
-		return attrs
+		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+		if ia2TextStartOffset is not None:
+			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
+			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
+		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 
@@ -102,29 +126,7 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
-	def _getExpandedComboBox(self, obj):
-		"""If obj is an item in an expanded combo box, get the combo box.
-		"""
-		if not (obj.windowClassName.startswith('Mozilla') and obj.windowStyle & winUser.WS_POPUP):
-			# This is not a Mozilla popup window, so it can't be an expanded combo box.
-			return None
-		if obj.role not in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_LIST):
-			return None
-		parent = obj.parent
-		# Try a maximum of 2 ancestors, since we might be on the list item or the list.
-		for i in xrange(2):
-			obj = obj.parent
-			if not obj:
-				return None
-			if obj.role == controlTypes.ROLE_COMBOBOX:
-				return obj
-		return None
-
 	def __contains__(self,obj):
-		# if this is a Mozilla combo box popup, we want to work with the combo box.
-		combo = self._getExpandedComboBox(obj)
-		if combo:
-			obj = combo
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:

@@ -1,1 +1,1 @@
-from teamtalk4classic import AppModule
+from .teamtalk4classic import AppModule

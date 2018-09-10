@@ -15,21 +15,21 @@ NVDA 非視覺桌面存取應用程式(Nonvisual Desktop Access)，是一款免�
 NVDA是由[NV Access https://www.nvaccess.org/] 所開發，並包含來自NVDA社群參與者的許多貢獻和回饋。
 
 ++ 特色 ++[GeneralFeatures]
-NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式。
+NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式，
 
 主要特色包括:
-- 支援多種熱門應用程式，包括網頁瀏覽器、郵件軟體、線上聊天軟體及Office套裝軟體。
+- 支援多種熱門應用程式，如網頁瀏覽器、郵件軟體、線上聊天軟體及Office套裝軟體等。
 - 內建的語音合成器支援超過80種語言。
 - 報讀文字格式。例如字型名稱、大小、樣式、拼字錯誤等。
-- 自動讀出鼠標所指的文字，並可透過聲音提示鼠標所在位置。
-- 支援多種點顯器，包括許多可被NVDA自動偵測到，以及具有點字輸入鍵盤的點顯器。
+- 自動讀出鼠標所指的文字，並可透過音調高低提示鼠標所在位置。
+- 支援多種點顯器，包括那些可被自動偵測到，或具有點字輸入鍵盤的點顯器。
 - NVDA可以不需安裝就直接在USB隨身碟或其它可攜式儲存媒體上執行。
 - 提供簡單易用的語音提示功能。
 - 已翻譯成54種語言。
 - 支援新版的Windows作業系統，包含32及64位元的版本。
 - 可於Windows登入畫面及其他安全畫面運作。
-- 當使用觸控手勢時，報讀控制項和文字。
-- 支援常見的無障礙介面，例如Microsoft Active Accessibility, Java Access Bridge, IAccessible2 及 Windows7以後版本才有的UI Automation。
+- 當使用觸控手勢時，可報讀控制項和文字。
+- 支援常見的無障礙介面，例如Microsoft Active Accessibility, Java Access Bridge, IAccessible2 及 Windows7以後版本才有的使用者介面自動化。
 - 支援 Windows 命令提示字元和其它類似的文字介面應用程式 (console application)。
 -
 
@@ -50,10 +50,10 @@ NVDA內嵌有語音引擎  [eSpeak NG https://github.com/espeak-ng/espeak-ng], a
 且NVDA在預設情況下，可以自動偵測到許多的點顯器。
 關於支援的點顯器資訊，請參見[支援的點顯器 #SupportedBrailleDisplays] 這個章節。
 
-NVDA 提供多語系，通常含括一級與二級點字碼、以及電腦點字。
+NVDA 提供多語系點字碼，通常含括一級、二級與電腦點字。
 
 ++ 授權與著作權 ++[LicenseAndCopyright]
-NVDA 著作權2006-2015 是歸屬於所有參與的開發者。
+NVDA 著作權2006-2018 是歸屬於所有參與的開發者。
 
 NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 只要將此公開授權辦法隨附於軟體，您可以自由地以任何形式分享或改變此軟體，並將所有的原始碼提供給需要的人，
@@ -61,11 +61,11 @@ NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 更詳細的內容，請上網 [查看完整版授權辦法 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。 
 
 + 系統需求 +[SystemRequirements]
-- 作業系統:32及64位元微軟Windows 7、Windows 8、Windows 8.1及Window 10，和Windows Server 2008 R2以上所有的伺服器作業系統。
+- 作業系統:32或64位元的微軟Windows 7、Windows 8、Windows 8.1及Window 10，及Windows Server 2008 R2以上所有的伺服器作業系統。
  - 使用Windows 7，NVDA需要SP 1以上的等級。
  - 使用Windows Server 2008 R2，NVDA需要SP 1以上的等級。
 - RAM 記憶體:需要 256MB 以上
-- CPU 速度:1.0Ghz或以上
+- CPU 速度:1.0Ghz以上
 - 約需要90 MB 的儲存空間
 -
 
@@ -1992,11 +1992,11 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 這些按鍵的實際位置，請參閱顯示器的說明文件。
 %kc:beginInclude
 || 名稱 | 按鍵 |
-| Scroll braille display back | t1 or etouch1 |
+| Scroll braille display back | t1, etouch1 |
 | Move braille display to previous line | t2 |
 | Move to current focus | t3 |
 | Move braille display to next line | t4 |
-| Scroll braille display forward | t5 or etouch3 |
+| Scroll braille display forward | t5, etouch3 |
 | Route to braille cell | routing |
 | Report text formatting under braille cell | secondary routing |
 | Toggle HID keyboard simulation | t1+spEnter |
@@ -2006,14 +2006,14 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 | Report title | etouch2 |
 | Report status bar | etouch4 |
 | shift+tab key | sp1 |
-| alt key | sp2 |
+| alt key | sp2, alt |
 | escape key | sp3 |
 | tab key | sp4 |
 | upArrow key | spUp |
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter, enter|
+| enter key | spEnter, enter |
 | Report date/time | sP2+sp3 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
@@ -2024,7 +2024,6 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
-| alt key | alt |
 | control key | control |
 %kc:endInclude
 

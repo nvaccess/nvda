@@ -6,17 +6,21 @@ What's New in NVDA
 = 2018.4 =
 
 == New Features ==
+- New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
 
 
 == Changes ==
 - "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
 - IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
 - NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
+- Updated liblouis braille translator to version 3.7.0. (#8697)
 
 
 == Bug Fixes ==
 - In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
 - When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
+- Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
+- Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
 
 
 == Changes for Developers ==
@@ -32,6 +36,7 @@ What's New in NVDA
 
 
 = 2018.3 =
+Highlights of this release include automatic detection of many Braille displays, support for new Windows 10 features including the Windows 10 Emoji input panel, and many other bug fixes.
 
 == New Features ==
 - NVDA will report grammar errors when appropriately exposed by web pages in Mozilla Firefox and Google Chrome. (#8280)

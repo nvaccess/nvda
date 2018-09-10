@@ -22,7 +22,7 @@ Af væsentlige funktioner kan nævnes:
 - Indbygget talesyntese der understøtter over 80 sprog
 - Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl
 - Læser automatisk teksten under musen op og kan angive musens position akustisk
-- Understøttelse af mange punktdisplays, herunder indtastning af punkt på punktdisplays med et punkttastatur
+- Understøttelse af mange punktdisplays, herunder mulighed for at tilkoble mange af disse automatisk og indtastning af punkt på punktdisplays med et punkttastatur
 - Kan køre fra et USB-drev eller andet bærbart medie uden installation
 - Talende installation der er let at bruge
 - Oversat til 54 sprog
@@ -47,6 +47,7 @@ Oplysninger om andre talesynteser som NVDA understøtter kan findes i afsnittet 
 ++ Understøttelse af punktskrift ++[BrailleSupport]
 Brugere, som har et punktdisplay, kan med NVDA få tekst ud på punktskrift.
 Indtastning på uforkortet og uforkortet punkt er også understøttet ved hjælp af et punkttastatur.
+Desuden kan NVDA tilkoble mange af disse displays automatisk som standard.
 Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 
 NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer braille.
@@ -596,10 +597,11 @@ Læs venligst [dokumentationen om navigationskommandoer til MathPlayer https://w
 Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
 
 + Punktskrift +
-Hvis du ejer et punktdisplay, kan NVDA vise information på punkt.
+Hvis du eger et punktdisplay, kan NVDA vise information på punkt.
 Hvis dit punktdisplay har et punkttastatur, kan du også indtaste forkortet og uforkortet punkt.
 
 Se venligst afsnittet [Understøttede Punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
+Dette afsnit indeholder også yderligere oplysninger om NVDAs automatiske detektion af punktdisplays.
 Du kan konfigurere punkt ved hjælp af [indstillingskategorien Punkt #BrailleSettings] fra dialogen med [NVDAs indstillinger #NVDASettings].
 
 ++ Punktforkortelser for felttyper, felttilstande og landmærker ++[BrailleAbbreviations]
@@ -1231,9 +1233,12 @@ Hvis der er en fejl under indlæsning af driveren til det aktuelle display, vil 
 Denne kombobox viser dig forskellige muligheder  alt efter, hvilke punktdisplay-drivere der er tilgængelige på dit system.
 Brug piletasterne til at flytte imellem de forskellige valgmuligheder.
 
+Den automatiske indstilling gør det muligt for NVDA at søge og automatisk tilkoble understøttede punktdisplays i baggrunden.
+Når denne funktion er slået til, vil NVDA forbinde automatisk med punktdisplayet, hvis det benyttes med Bluetooth eller USB.
+
 "Ingen punkt" betyder, at du i øjeblikket ikke bruger noget punktdisplay.
 
-Læs venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for yderligere oplysninger om understøttede punktdisplays.
+Læs venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for yderligere oplysninger om understøttede punktdisplays, samt hvilke af disse understøtter automatisk tilkobling.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Hvis denne indstilling er tilgængelig, giver den dig mulighed for at vælge, hvilken port eller forbindelsestype du vil benytte for at kommunikere med det punktdisplay, du har valgt.
@@ -1891,6 +1896,22 @@ Denne talesyntese understøtter ikke [stavefunktionalitet #SpeechSettingsUseSpel
 + Understøttede punktdisplays +[SupportedBrailleDisplays]
 Dette afsnit indeholder oplysninger om de punktdisplays, som NVDA understøtter.
 
+++ Displays der understøtter automatisk detektion i baggrunden ++[AutomaticDetection]
+NVDA har evnen til at detektere mange punktdisplays i baggrunden, enten via USB eller Bluetooth.
+Denne adfærd opnås ved at vælge "Automatisk" i NVDAs [dialog med punktindstillinger #BrailleSettings].
+Denne indstilling er valgt som standard.
+
+Følgende displays understøtter denne funktionalitet.
+- Handy Tech displays
+- Baum/Humanware/APH/Orbit braille displays
+- HumanWare Brailliant BI/B series
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 series
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
+- Eurobraille Esys/Esytime/Iris displays
+-
+
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 Der er understøttelse af alle Focus og PAC Mate displays fra [Freedom Scientific http://www.freedomscientific.com/] når de kobles til med USB eller Bluetooth.
 Punktdisplay-driverne fra Freedom Scientific skal vær installeret på dit system.
@@ -1901,6 +1922,8 @@ Hvis dit system kører Windows 64 bit og driverne allerede er blevet  installere
 Som standard kan NVDA automatisk detektere og forbinde til disse displays via USB og Bluetooth.
 Når du konfigurer dette display kan du dog selv vælge, hvilken forbindelsestype du ønsker at benytte.
 Dette kan være nyttigt hvis du ønsker at bruge dit Focus display via Bluetooth, men fortsætte med at oplade dit punktdisplay ved brug af USB fra computeren.
+
+Disse displays understøtter ikke NVDAs automatisk detektion af punktdisplays.
 
 Tastekombinationerne til dette punktdisplay med NVDA er følgende.
 Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan finde knapperne.
@@ -1969,11 +1992,11 @@ Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
-| Rul punktdisplay tilbage | t1 |
+| Rul punktdisplay tilbage | t1, etouch1 |
 | Flyt punktdisplay to forrige linje | t2 |
 | Flyt til aktuelle fokus | t3 |
 | Flyt punktdisplay til næste linje | t4 |
-| Rul punktdisplay fremad | t5 eller etouch3 |
+| Rul punktdisplay fremad | t5, etouch3 |
 | Flyt til punktcelle | markørsammenføringsknapper |
 | Rapportér tekstformatering under den aktuelle punktcelle | sekundære markørsammenføringsknapper |
 | Slå HID-tastatursimulation til og fra | t1+spEnter |
@@ -1983,7 +2006,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rapporter titel | etouch2 |
 | Rapporter statuslinje | etouch4 |
 | shift+tab tast | sp1 |
-| alt tast | sp2 |
+| alt tast | sp2, alt |
 | escape tast | sp3 |
 | tab tast | sp4 |
 | Pil-op | spOp |
@@ -1991,17 +2014,16 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Venstre-pil | spVenstre |
 | Højre-pil | spHøjre |
 | enter tast | spEnter, enter |
-| Rapporter dato/tid | sp1+sp2 |
+| Rapporter dato/tid | sp2+sp3 |
 | NVDA-menu | sp1+sp3 |
 | windows+d tast (Minimer alle programmer) | sp1+sp4 |
 | windows+b key (gå til systembakke) | sp3+sp4 |
-| windows tast | sp2+sp3, Windows |
+| windows tast | sp1+sp2, Windows |
 | alt+tab tast | sp2+sp4 |
 | CTRL+hjem | t3+spUp |
 | CTRL+end | t3+spDown |
 | hjem tast | t3+spLeft |
 | end tast | t3+spRight |
-+| alt key | alt |
 +| control key | control |
 %kc:endInclude
 
@@ -2043,6 +2065,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 Punkttdisplayet Lilli fra [MDV http://www.mdvbologna.it/] er understøttet.
 Installation af særskilte drivere er ikke nødvendig for at kunne bruge dette display.
 Tilslut blot displayet og indstil NVDA til at bruge det.
+
+Dette display understøtter ikke NVDAs automatisk detektion af punktdisplays.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
@@ -2099,6 +2123,8 @@ For displays der har et joystick:
 Hedo ProfiLine USB fra [hedo Reha-Technik http://www.hedo.de/] er understøttet.
 Du skal først installere driveren fra leverandøren, før du kan benytte dette punktdisplay.
 
+Dette display understøtter ikke NVDAs automatisk detektion af punktdisplays.
+
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
@@ -2115,6 +2141,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 ++ hedo MobilLine USB ++[HedoMobilLine]
 Hedo MobilLine USB fra [hedo Reha-Technik http://www.hedo.de/] er understøttet.
 Du skal først installere driveren fra leverandøren, før du kan benytte dette punktdisplay.
+
+Dette display understøtter ikke NVDAs automatisk detektion af punktdisplays.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
@@ -2258,6 +2286,8 @@ Seika Version 3, 4 og 5 (40 celler) og Seika80 (80 celler) punktdisplaysfra [Nip
 Du kan finde yderligere information om disse displays her http://www.seika-braille.com/.
 Du skal først installere USB-driveren fra leverandøren, før du kan bruge dette punktdisplay.
 
+Disse displays understøtter ikke NVDAs automatisk detektion af punktdisplays.
+
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
@@ -2283,9 +2313,10 @@ Følgende punktdisplay er understøttede
 - BRAILLEX Live 20, BRAILLEX Live og BRAILLEX Live Plus (USB and bluetooth)
 - 
 
+Disse displays understøtter ikke NVDAs automatisk detektion af punktdisplays.
+
 Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
 BrxCom er et værktøj der giver dig mulighed for, at bruge  punktdisplayet som et tastatur uafhængigt af en skærmlæser.
-En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
 Indtastning i punkt er mulig med  TRIO og  BRAILLEX Live-modellerne.
 
 De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
@@ -2363,7 +2394,8 @@ Følgende punktdisplays er understøttede:
 -
 
 Bemærk, at disse punktdisplays kun kan opkobles med en serielport.
-Derfor er det nødvendigt at vælge porten, du har koblet dit punktdisplay til, når du har valgt dit punktdisplay. Dette kan indstilles i dialogen [Vælg punktdisplay #SelectBrailleDisplay].
+På grund af dette understøtter disse displays ikke NVDAs automatisk detektion af punktdisplays.
+Det er nødvendigt at vælge porten, du har koblet dit punktdisplay til, når du har valgt driveren. Dette kan indstilles i dialogen [Vælg punktdisplay #SelectBrailleDisplay].
 
 Nogle enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
 EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
@@ -2541,6 +2573,7 @@ Følgende modeller er understøttet:
 -
 
 I NVDA kan du indstille, hvilken seriel port punktdisplayet er forbundet til, i dialogen [Vælg punktdisplay #SelectBrailleDisplay].
+Disse displays understøtter ikke NVDAs automatisk detektion af punktdisplays.
 
 Tastaturkommandoerne til Eco punktdisplays er som følger:
 Se venligst [dokumentationen til EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for en beskrivelse af, hvor disse taster er placeret.
@@ -2654,6 +2687,7 @@ Læs venligst dokumentationen for det pågældende display der beskriver, hvor d
 | skift-tast | punkt7+space, l4 |
 | Tryk skift-tasten | punkt1+punkt7+mellemrum, punkt4+punkt7+mellemrum |
 | Ctrl-tast | punkt7+punkt8+mellemrum, l5 |
+| Tryk Ctrl-tasten | punkt1+punkt7+punkt8+mellemrum, punkt4+punkt7+punkt8+mellemrum |
 | alt-tast | punkt8+mellemrum, l6 |
 | Tryk Alt-tasten | punkt1+punkt8+mellemrum, punkt4+punkt8+mellemrum |
 | Slå HID-tastatursimulation til og fra | esytime):l1+joystick1Down, esytime):l8+joystick1Down |
@@ -2667,6 +2701,8 @@ Under konfigurationen af displayet og den port, der skal bruges, skal du følge 
 
 BRLTTY håndtere selv indtastning på punkt, hvis det tilkoblede punktdisplay har et punkttastatur.
 NVDAs indstilling for oversættelsestabel er derfor ikke relevant.
+
+BRLTYY har ikke noget med NVDAs automatiske detektion af punktdisplays at gøre.
 
 Dette er tastekombinationerne til BRLTTY til brug med NVDA.
 Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/KeyBindings/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.

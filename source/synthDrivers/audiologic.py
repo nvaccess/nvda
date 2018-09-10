@@ -5,9 +5,12 @@
 #Copyright (C) 2008-2010 Gianluca Casalino <gianluca@spazioausili.net>, James Teh <jamie@jantrid.net>
 
 from collections import OrderedDict
-import _audiologic
+from . import _audiologic
 from synthDriverHandler import SynthDriver, VoiceInfo
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.RateSetting(),SynthDriver.PitchSetting(minStep=5),SynthDriver.InflectionSetting(minStep=10),SynthDriver.VolumeSetting(minStep=2))
@@ -19,7 +22,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			r=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Audiologic\Sintesi Audiologic")
+			r=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Audiologic\Sintesi Audiologic")
 			r.Close()
 			return True
 		except:
