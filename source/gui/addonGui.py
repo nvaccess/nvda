@@ -8,7 +8,6 @@ import os
 import wx
 import core
 import config
-import languageHandler
 import gui
 from addonHandler import addonVersionCheck, CompatValues
 from logHandler import log
@@ -26,22 +25,24 @@ class AddonsDialog(wx.Dialog):
 			return super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
 		return AddonsDialog._instance
 
-	def __init__(self,parent):
+	def __init__(self, parent):
 		if AddonsDialog._instance is not None:
 			return
 		AddonsDialog._instance = self
 		# Translators: The title of the Addons Dialog
-		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		title = _("Add-ons Manager")
+		super(AddonsDialog, self).__init__(parent, title=title)
 		self.scalingFactor = dpiScalingHelper.getScaleFactor(self.GetHandle())
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		settingsSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
-			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are currently disabled. To enable add-ons you must restart NVDA."))
-			mainSizer.Add(addonsDisabledLabel)
+			label = _("All add-ons are currently disabled. To enable add-ons you must restart NVDA.")
+			mainSizer.Add(wx.StaticText(self, label=label))
 		# Translators: the label for the installed addons list in the addons manager.
-		entriesLabel=_("Installed Add-ons")
+		entriesLabel = _("Installed Add-ons")
 		self.addonsList = sHelper.addLabeledControl(
 			entriesLabel,
 			nvdaControls.AutoWidthColumnListCtrl,
@@ -60,35 +61,35 @@ class AddonsDialog(wx.Dialog):
 
 		entryButtonsHelper=guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-		self.aboutButton=entryButtonsHelper.addButton(self,label=_("&About add-on..."))
+		self.aboutButton = entryButtonsHelper.addButton(self, label=_("&About add-on..."))
 		self.aboutButton.Disable()
-		self.aboutButton.Bind(wx.EVT_BUTTON,self.onAbout)
+		self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
 		# Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
-		self.helpButton=entryButtonsHelper.addButton(self,label=_("Add-on &help"))
+		self.helpButton = entryButtonsHelper.addButton(self, label=_("Add-on &help"))
 		self.helpButton.Disable()
-		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
+		self.helpButton.Bind(wx.EVT_BUTTON, self.onHelp)
 		# Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-		self.enableDisableButton=entryButtonsHelper.addButton(self,label=_("&Disable add-on"))
+		self.enableDisableButton = entryButtonsHelper.addButton(self, label=_("&Disable add-on"))
 		self.enableDisableButton.Disable()
-		self.enableDisableButton.Bind(wx.EVT_BUTTON,self.onEnableDisable)
+		self.enableDisableButton.Bind(wx.EVT_BUTTON, self.onEnableDisable)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
-		self.addButton=entryButtonsHelper.addButton(self,label=_("&Install..."))
-		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
+		self.addButton = entryButtonsHelper.addButton(self, label=_("&Install..."))
+		self.addButton.Bind(wx.EVT_BUTTON, self.onAddClick)
 		# Translators: The label for a button to remove either:
 		# Remove the selected add-on in Add-ons Manager dialog.
 		# Remove a speech dictionary entry.
-		self.removeButton=entryButtonsHelper.addButton(self,label=_("&Remove"))
+		self.removeButton = entryButtonsHelper.addButton(self, label=_("&Remove"))
 		self.removeButton.Disable()
-		self.removeButton.Bind(wx.EVT_BUTTON,self.onRemoveClick)
+		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemoveClick)
 		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
-		self.getAddonsButton=entryButtonsHelper.addButton(self,label=_("&Get add-ons..."))
-		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.onGetAddonsClick)
+		self.getAddonsButton = entryButtonsHelper.addButton(self, label=_("&Get add-ons..."))
+		self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
 		settingsSizer.Add(entryButtonsHelper.sizer)
-		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		mainSizer.Add(settingsSizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.TOP)
 		# Translators: The label of a button to close the Addons dialog.
 		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
 		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER|wx.ALIGN_RIGHT)
+		mainSizer.Add(closeButton, border=20, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.CENTER | wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 		mainSizer.Fit(self)
@@ -102,19 +103,19 @@ class AddonsDialog(wx.Dialog):
 
 	def onAddClick(self, evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
-		fd=wx.FileDialog(self,message=_("Choose Add-on Package File"),
+		fd = wx.FileDialog(self, message=_("Choose Add-on Package File"),
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 		wildcard=(_("NVDA Add-on Package (*.{ext})")+"|*.{ext}").format(ext=addonHandler.BUNDLE_EXTENSION),
-		defaultDir="c:",style=wx.FD_OPEN)
-		if fd.ShowModal()!=wx.ID_OK:
+		defaultDir="c:", style=wx.FD_OPEN)
+		if fd.ShowModal() != wx.ID_OK:
 			return
-		addonPath=fd.GetPath()
+		addonPath = fd.GetPath()
 		self.installAddon(addonPath)
 
 	def installAddon(self, addonPath, closeAfter=False):
 		try:
 			try:
-				bundle=addonHandler.AddonBundle(addonPath)
+				bundle = addonHandler.AddonBundle(addonPath)
 			except:
 				log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
 				# Translators: The message displayed when an error occurs when opening an add-on package for adding. 
@@ -412,6 +413,7 @@ class IncompatibleAddonsDialog(wx.Dialog):
 		# Translators: The title of the Incompatible Addons Dialog
 		super(IncompatibleAddonsDialog,self).__init__(parent,title=_("Incompatible Add-ons"))
 		self.NVDAVersion = NVDAVersion
+
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
