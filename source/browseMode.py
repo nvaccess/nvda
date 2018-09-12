@@ -252,6 +252,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
 
+	def event_treeInterceptor_gainFocus(self):
+		reportPassThrough(self)
+
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
 		controlTypes.ROLE_EDITABLETEXT,

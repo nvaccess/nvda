@@ -32,6 +32,7 @@ import scriptHandler
 import browseMode
 import inputCore
 import ctypes
+import treeInterceptorHandler
 
 excel2010VersionMajor=14
 
@@ -433,13 +434,12 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
-	# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
-	disableAutoPassThrough=True
-
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
-		self.passThrough=True
-		browseMode.reportPassThrough.last=True
+		# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
+		self.disableAutoPassThrough = self.passThrough = config.conf['virtualBuffers']['createTIOnLoad'] != treeInterceptorHandler.TI_CREATE_ALWAYS
+		if self.passThrough:
+			browseMode.reportPassThrough.last = True
 
 	def _get_currentNVDAObject(self):
 		obj=api.getFocusObject()
@@ -857,6 +857,10 @@ class ExcelWorksheet(ExcelBase):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
+		# #8716: When enable browse mode for loaded documents is set to never, a tree interceptor isn't created.
+		# However, we want a tree interceptor to be present from the start to accomodate using the elements list in browse mode.
+		if config.conf['virtualBuffers']['createTIOnLoad'] == treeInterceptorHandler.TI_CREATE_NEVER:
+			treeInterceptorHandler.update(self, force=True)
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
