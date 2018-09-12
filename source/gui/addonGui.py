@@ -17,6 +17,7 @@ import globalVars
 import buildVersion
 import guiHelper
 import nvdaControls
+import dpiScalingHelper
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -33,6 +34,7 @@ class AddonsDialog(wx.Dialog):
 		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		self.scalingFactor = dpiScalingHelper.getScaleFactor(self.GetHandle())
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
@@ -40,15 +42,20 @@ class AddonsDialog(wx.Dialog):
 			mainSizer.Add(addonsDisabledLabel)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=_("Installed Add-ons")
-		self.addonsList=sHelper.addLabeledControl(entriesLabel, nvdaControls.AutoWidthColumnListCtrl, style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.addonsList = sHelper.addLabeledControl(
+			entriesLabel,
+			nvdaControls.AutoWidthColumnListCtrl,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
+			size=self.scaleSize((550, 350))
+		)
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-		self.addonsList.InsertColumn(0,_("Package"),width=150)
+		self.addonsList.InsertColumn(0, _("Package"), width=self.scaleSize(150))
 		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-		self.addonsList.InsertColumn(1,_("Status"),width=50)
+		self.addonsList.InsertColumn(1, _("Status"), width=self.scaleSize(50))
 		# Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
-		self.addonsList.InsertColumn(2,_("Version"),width=50)
+		self.addonsList.InsertColumn(2, _("Version"), width=self.scaleSize(50))
 		# Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
-		self.addonsList.InsertColumn(3,_("Author"),width=300)
+		self.addonsList.InsertColumn(3, _("Author"), width=self.scaleSize(300))
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
 
 		entryButtonsHelper=guiHelper.ButtonHelper(wx.HORIZONTAL)
@@ -90,7 +97,10 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.SetFocus()
 		self.CentreOnScreen()
 
-	def onAddClick(self,evt):
+	def scaleSize(self, size):
+		return dpiScalingHelper.scaleSize(self.scalingFactor, size)
+
+	def onAddClick(self, evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 		fd=wx.FileDialog(self,message=_("Choose Add-on Package File"),
 		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.

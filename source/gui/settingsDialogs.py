@@ -47,6 +47,7 @@ import winVersion
 import weakref
 import time
 import keyLabels
+import dpiScalingHelper
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -108,8 +109,7 @@ class SettingsDialog(wx.Dialog):
 		self.hasApply = hasApplyButton
 
 		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		self.scaleFactor = dpiScalingHelper.getScaleFactor(self.GetHandle())
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
@@ -204,10 +204,7 @@ class SettingsDialog(wx.Dialog):
 		"""Helper method to scale a size using the logical DPI
 		@param size: The size (x,y) as a tuple or a single numerical type to scale
 		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
-
+		dpiScalingHelper.scaleSize(self.scaleFactor, size)
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
