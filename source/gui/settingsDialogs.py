@@ -1552,12 +1552,6 @@ class BrowseModePanel(SettingsPanel):
 			index=0
 		self.createTIOnLoadList.SetSelection(index)
 
-		# Translators: This is the label for a checkbox in the
-		# browse mode settings panel.
-		respectPassThroughOnLoadText = _("Remember browse mode state when loading new documents")
-		self.respectPassThroughOnLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=respectPassThroughOnLoadText))
-		self.respectPassThroughOnLoadCheckBox.SetValue(config.conf["virtualBuffers"]["respectPassThroughOnLoad"])
-
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
 		maxLengthLabelText = _("&Maximum number of characters on one line")
@@ -1603,6 +1597,12 @@ class BrowseModePanel(SettingsPanel):
 		autoPassThroughOnCaretMoveText = _("Automatic focus mode for caret movement")
 		self.autoPassThroughOnCaretMoveCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnCaretMoveText))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
+
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings panel.
+		respectPassThroughOnLoadText = _("Remember focus mode state when loading new web documents")
+		self.respectPassThroughOnLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=respectPassThroughOnLoadText))
+		self.respectPassThroughOnLoadCheckBox.SetValue(config.conf["virtualBuffers"]["respectPassThroughOnLoad"])
 
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.

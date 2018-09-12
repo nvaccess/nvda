@@ -51,15 +51,24 @@ def update(obj, force=False):
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:
-		if not force and (
-			(obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] == TI_CREATE_NEVER) or
-			(not obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] != TI_CREATE_ALWAYS)
-		):
-			return None
 		try:
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
+		# Import late to avoid circular input.
+		if not force:
+			from browseMode import BrowseModeTreeInterceptor, lastDisableAutoPassThrough
+			if (
+				(obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] == TI_CREATE_NEVER) or
+				(not obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] != TI_CREATE_ALWAYS) or 
+				# When report pass through on load is on and the tree interceptor class is a browse mode one,
+				# we should not create a tree interceptor if pass through has earlier been enabled explicitly.
+				(config.conf['virtualBuffers']['respectPassThroughOnLoad'] and
+					issubclass(newClass, BrowseModeTreeInterceptor) and
+					lastDisableAutoPassThrough
+				)
+			):
+				return None
 		ti=newClass(obj)
 		if not ti.isAlive:
 			return None
@@ -103,6 +112,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		#: The root object of the tree wherein events and scripts are intercepted.
 		#: @type: L{NVDAObjects.NVDAObject}
 		self.rootNVDAObject = rootNVDAObject
+		self.createdByObject = rootNVDAObject.shouldCreateTreeInterceptor
 
 	def terminate(self):
 		"""Terminate this interceptor.

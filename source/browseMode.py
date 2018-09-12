@@ -57,8 +57,10 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 				# that can be navigated with the cursor keys like in a text document
 				ui.message(_("Browse mode"))
 		lastReportedPassThrough = treeInterceptor.passThrough
+		# Trigger an update of lastDisableAutoPassThrough, if necessary.
+		treeInterceptor.disableAutoPassThrough = treeInterceptor.disableAutoPassThrough
 lastReportedPassThrough = False
-lastAutoPassThrough = False
+lastDisableAutoPassThrough = False
 
 def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
@@ -255,9 +257,11 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return self._disableAutoPassThrough
 
 	def _set_disableAutoPassThrough(self, state):
-		global lastAutoPassThrough
+		if self.createdByObject:
+			# Globally remember the pass through state.
+			global lastDisableAutoPassThrough
+			lastDisableAutoPassThrough = state
 		self._disableAutoPassThrough = state
-		lastAutoPassThrough = not state
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
