@@ -10,6 +10,7 @@ import core
 import config
 import languageHandler
 import gui
+from addonHandler import addonVersionCheck, CompatValues
 from logHandler import log
 import addonHandler
 import globalVars
@@ -121,7 +122,10 @@ class AddonsDialog(wx.Dialog):
 				minimumNVDAVersion=bundle.manifest['minimumNVDAVersion'] or _("unknown"),
 				lastTestedNVDAVersion=bundle.manifest['lastTestedNVDAVersion'] or _("unknown")
 			)
-			if bundle.isBlacklisted:
+
+			if (addonVersionCheck.isAddonCompatibilityKnown(bundle) and
+					addonVersionCheck.isAddonConsideredIncompatible(bundle)
+			):
 				# Translators: The message displayed when installing an add-on package is prohibited.
 				incompatibleMessage = _(
 					"The installation of {summary} {version} by {author} has been blocked for "
@@ -236,12 +240,12 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingEnable:
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
-		if addon.isBlacklisted:
+		if addonVersionCheck.isAddonConsideredIncompatible(addon):
 			# Translators: The status shown for an addon when it's added to the blacklist.
-			statusList.append(_("blacklisted"))
-		elif addon.isWhitelisted:
+			statusList.append(_("blacklisted")) # Reef note: note sure about this terminology, I dont think its very user friendly
+		elif addonVersionCheck.isAddonConsideredCompatible(addon):
 			# Translators: The status shown for an addon when it's added to the whitelist.
-			statusList.append(_("whitelisted"))
+			statusList.append(_("whitelisted")) # Reef note: note sure about this terminology, I dont think its very user friendly
 		return ", ".join(statusList)
 
 	def refreshAddonsList(self,activeIndex=0):
@@ -276,7 +280,11 @@ class AddonsDialog(wx.Dialog):
 			self.enableDisableButton.SetLabel(_("&Enable add-on") if not self._shouldDisable(addon) else _("&Disable add-on"))
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
-		self.enableDisableButton.Enable(addon is not None and not addon.isPendingRemove and not addon.isBlacklisted)
+		self.enableDisableButton.Enable(
+			addon is not None and
+			not addon.isPendingRemove and
+			not addonVersionCheck.isAddonConsideredIncompatible(addon)
+		)
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
@@ -432,7 +440,7 @@ class IncompatibleAddonsDialog(wx.Dialog):
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
-		for addon in addonHandler.getUntestedAddons(self.NVDAVersion):
+		for addon in addonHandler.getAddonsWithUnknownCompatibility(self.NVDAVersion):
 			self.addonsList.Append((
 				addon.manifest['summary'],
 				addon.version,
@@ -455,9 +463,8 @@ class IncompatibleAddonsDialog(wx.Dialog):
 	def onContinue(self, evt):
 		for item in xrange(len(self.curAddons)):
 			if item in self.addonsList.Checked:
-				self.curAddons[item].whitelist(self.NVDAVersion)
-			else:
-				self.curAddons[item].blacklist(self.NVDAVersion)
+				compatValue = CompatValues.ManuallySetCompatible
+				addonVersionCheck.addonCompatState.setAddonCompatibility(self.curAddons[item], compatValue)
 		self.ReturnCode = wx.ID_OK
 		self.DestroyChildren()
 		self.Destroy()

@@ -29,6 +29,8 @@ from logHandler import log
 import winKernel
 import re
 import buildVersion
+import addonVersionCheck
+from addonVersionCheck import CompatValues
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -51,10 +53,6 @@ def loadState():
 			state["pendingDisableSet"] = set()
 		if "pendingEnableSet" not in state:
 			state["pendingEnableSet"] = set()
-		if "blacklistedAddons" not in state:
-			state["blacklistedAddons"] = dict()
-		if "whitelistedAddons" not in state:
-			state["whitelistedAddons"] = dict()
 	except:
 		# Defaults.
 		state = {
@@ -63,8 +61,6 @@ def loadState():
 			"disabledAddons":set(),
 			"pendingEnableSet":set(),
 			"pendingDisableSet":set(),
-			"blacklistedAddons":dict(),
-			"whitelistedAddons":dict(),
 		}
 
 def saveState():
@@ -79,10 +75,15 @@ def getRunningAddons():
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
-def getUntestedAddons(version=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
+def getAddonsWithUnknownCompatibility(version=buildVersion.getNextReleaseVersionTuple()):
 	""" Returns add-ons that are untested for the specified NVDA version.
 	"""
-	return getAvailableAddons(filterFunc=lambda addon: not addon.isTested(version))
+	compatState = addonVersionCheck.addonCompatState
+	return getAvailableAddons(
+		filterFunc=lambda addon: (
+			CompatValues.Unknown == compatState.getAddonCompatibilityForNVDAVersion(addon, version)
+		)
+	)
 
 def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -137,26 +138,19 @@ def disableAddonsIfAny():
 	state["pendingDisableSet"].clear()
 	state["pendingEnableSet"].clear()
 
-_blacklistedAddons = set()
-def blacklistedAddonsDisabledOnStart():
-	"""Returns C{True} if blacklisted add-ons have been disabled during the last start of NVDA."""
-	return bool(_blacklistedAddons)
-
 def initialize():
 	""" Initializes the add-ons subsystem. """
 	if config.isAppX:
 		log.info("Add-ons not supported when running as a Windows Store application")
 		return
 	loadState()
+	addonVersionCheck.initAddonCompatibilityState()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True)
-	# #6275: The add-on refresh could have yielded blacklisted add-ons.
-	# Add these to the disabled add-ons
-	state["disabledAddons"] |= _blacklistedAddons
 	saveState()
 
 def terminate():
@@ -193,11 +187,11 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif not a.isSupported:
+				elif addonVersionCheck.isAddonConsideredIncompatible(a):
 					log.debugWarning("Add-on %s is blacklisted", name)
-				elif a.isBlacklisted:
-					log.debugWarning("Add-on %s is blacklisted", name)
-					_blacklistedAddons.add(a.name)
+					# #6275: The add-on refresh could have yielded blacklisted add-ons.
+					# Add these to the disabled add-ons
+					_disabledAddons.add(a.name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -270,54 +264,6 @@ class AddonBase(object):
 		if not version:
 			return None
 		return getNVDAVersionTupleFromString(version)
-
-	def isSupported(self, version=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
-		"""True if this add-on is supported on the provided version of NVDA.
-		This method returns False if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is missing.
-		By default, the current version of NVDA is evaluated.
-		"""
-		# If minimumNVDAVersion is None, it will always be less than the current NVDA version.
-		# Therefore, we should account for this.
-		minVersion = self.minimumNVDAVersion
-		return bool(minVersion) and minVersion<=version
-
-	def isTested(self, version=(buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor)):
-		"""True if this add-on is tested for the provided version of NVDA.
-		By default, the current version of NVDA is evaluated.
-		"""
-		return self.isSupported(version) and self.lastTestedNVDAVersion>=version
-
-	@property
-	def isBlacklisted(self):
-		"""C{True} if loading or installing this add-on is not allowed
-		as this specific version of the add-on is blacklisted for this NVDA version."""
-		return self.name in state["blacklistedAddons"]
-
-	@property
-	def isWhitelisted(self):
-		"""C{True} if loading or installing this add-on is allowed
-		as even though this add-on might be untested, this specific version of the add-on is whitelisted for this NVDA version."""
-		return self.name in state["whitelistedAddons"]
-
-	def _blacklistWhitelistHelper(self, dct, shouldAdd):
-		if shouldAdd:
-			dct[self.name] = (self.version, (buildVersion.version_year,buildVersion.version_major,buildVersion.version_minor))
-		elif self.name in dct:
-			del dct[self.name]
-
-	def blacklist(self, shouldBlacklist):
-		"""Processes this add-on to be added to or removed from the add-ons blacklist."""
-		# Make sure this add-on won't stay in the whitelist.
-		self._blacklistWhitelistHelper(state["whitelistedAddons"], not shouldBlacklist)
-		self._blacklistWhitelistHelper(state["blacklistedAddons"], shouldBlacklist)
-		saveState()
-
-	def whitelist(self, shouldWhitelist):
-		"""Processes this add-on to be added to or removed from the add-ons whitelist."""
-		# Make sure this add-on won't stay in the blacklist.
-		self._blacklistWhitelistHelper(state["blacklistedAddons"], not shouldWhitelist)
-		self._blacklistWhitelistHelper(state["whitelistedAddons"], shouldWhitelist)
-		saveState()
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
@@ -404,7 +350,7 @@ class Addon(AddonBase):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			if self.isBlacklisted:
+			if addonVersionCheck.isAddonConsideredIncompatible(self):
 				raise AddonError("Add-on in blacklist: minimum NVDA version %s, last tested version %s" % (
 					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
 				))

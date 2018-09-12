@@ -35,7 +35,7 @@ import speech
 import braille
 import gui
 from gui import guiHelper
-from addonHandler import getCodeAddon, AddonError, getUntestedAddons
+from addonHandler import getCodeAddon, AddonError, getAddonsWithUnknownCompatibility
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
@@ -376,7 +376,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		untestedAddons = any(getUntestedAddons())
+		untestedAddons = any(getAddonsWithUnknownCompatibility())
 		if untestedAddons:
 			# Translators: A message indicating that an updated version of NVDA can be installed after reviewing untested add-ons.
 			message = _(
