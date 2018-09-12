@@ -43,7 +43,8 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	@param onlyIfChanged: if true reporting will not happen if the last reportPassThrough reported the same thing.
 	@type onlyIfChanged: bool
 	"""
-	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
+	global lastReportedPassThrough
+	if not onlyIfChanged or treeInterceptor.passThrough != lastReportedPassThrough:
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
 			sound = r"waves\focusMode.wav" if treeInterceptor.passThrough else r"waves\browseMode.wav"
 			nvwave.playWaveFile(sound)
@@ -55,8 +56,9 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 				# Translators: The mode that presents text in a flat representation
 				# that can be navigated with the cursor keys like in a text document
 				ui.message(_("Browse mode"))
-		reportPassThrough.last = treeInterceptor.passThrough
-reportPassThrough.last = False
+		lastReportedPassThrough = treeInterceptor.passThrough
+lastReportedPassThrough = False
+lastAutoPassThrough = False
 
 def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
@@ -246,8 +248,16 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
-	disableAutoPassThrough = False
+	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
+
+	def _get_disableAutoPassThrough(self):
+		return self._disableAutoPassThrough
+
+	def _set_disableAutoPassThrough(self, state):
+		global lastAutoPassThrough
+		self._disableAutoPassThrough = state
+		lastAutoPassThrough = not state
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
