@@ -259,7 +259,7 @@ class UIAHandler(COMObject):
 		try:
 			self.pendingForegroundUIAElement=self.clientObject.ElementFromHandle(hwnd)
 		except COMError:
-			log.error("Could not get a UIAElement from new foreground window")
+			log.debugWarning("Could not get a UIAElement from new foreground window")
 			return
 		# Event registration/unregistration must be always done from the MTA thread, otherwise deadlocks can occur with our UI.
 		self.MTAThreadQueue.put_nowait(self._onForegroundChange)
