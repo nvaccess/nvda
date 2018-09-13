@@ -68,7 +68,7 @@ Les points forts de cette version incluent la détection automatique de beaucoup
  - les dictionnaires fournis par listComPorts contiennent maintenant aussi une entrée usbID pour les ports COM par USB information VID/PID dans leur hardware ID.
 - Mise à jour de wxPython à la version 4.0.3. (#7077)
 - Comme NVDA ne supporte plus que Windows 7 SP1 et au-delà, la clé "minWindowsVersion" utilisée pour vérifier si UIA devrait être activé pour une version donnée de Windows a été supprimée. (#8422)
-- Vous pouvez maintenant demander à être notifié des actions de sauvegardes/réinitialosations de configuration via les nouvelles actions config.pre_configSave, config.post_configSave, config.pre_configReset, et config.post_configReset. (#7598)
+- Vous pouvez maintenant demander à être notifié des actions de sauvegardes/réinitialisations de configuration via les nouvelles actions config.pre_configSave, config.post_configSave, config.pre_configReset, et config.post_configReset. (#7598)
  - config.pre_configSave est utilisé pour être notifié quand la configuration de NVDA est sur le point d'être sauvegardée, et config.post_configSave est appelé après que la configuration ait été sauvegardée.
  - config.pre_configReset et config.post_configReset incluent un drapeau de paramètres par défaut pour spécifier si les paramètres sont rechargés depuis le disque (false) ou réinitialisés aux paramètres par défaut (true).
 - config.configProfileSwitch a été renommé en config.post_configProfileSwitch pour refléter le fait que cette action est appelée après qu'un changement de profil ait pris effet. (#7598)
