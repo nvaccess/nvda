@@ -198,7 +198,7 @@ class UIAHandler(COMObject):
 						pass
 				# Windows 10 RS5 provides new performance features for UI Automation including event coalescing and connection recovery. 
 				# Enable all of these where available.
-				if False: #isinstance(self.clientObject,IUIAutomation6):
+				if isinstance(self.clientObject,IUIAutomation6):
 					self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
 					self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
 			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
