@@ -172,7 +172,7 @@ def doPreGainFocus(obj,sleepMode=False):
 				newForeground=obj
 		api.setForegroundObject(newForeground)
 		import UIAHandler
-		if UIAHandler.isUIAAvailable:
+		if UIAHandler.isUIAAvailable and UIAHandler.handler:
 			# Notify UIAHandler of the new foreground so that it can deregister old events and register new ones 
 			UIAHandler.handler.onForegroundChange(newForeground.windowHandle)
 		executeEvent('foreground',newForeground)
