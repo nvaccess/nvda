@@ -22,7 +22,7 @@ Glavni poudarki so:
 - Vgrajena govorna sinteza, ki podpira več kot 80 jezikov
 - Poročanje o postavitvi besedila, kjer je to mogoče; na primer velikost in ime pisave, slogovne in črkovne nepravilnosti
 - Samodejno obvestilo o besedilu pod miško in zvočna indikacija o položaju miške, če to želite
-- Podpora za precejšnje število brajevih vrstic vključno s podporo vnosa v brajici za vrstice, ki vsebujejo brajevo tipkovnico
+- Podpora za precejšnje število brajevih vrstic vključno s podporo vnosa v brajici za vrstice, ki vsebujejo brajevo tipkovnico ter samodejno zaznavo večine izmed njih
 - Možno uporabljati preko USB ključka ali drugega prenosljivega medija brez potrebe po namestitvi v računalnik
 - Govorna podpora ob namestitvi v sistem
 - Prevedeno v 54 jezikov
@@ -47,6 +47,7 @@ Informacije o drugih govornih sintezah, ki jih podpira NVDA, lahko najdete v raz
 ++ Podpora Brajici ++[BrailleSupport]
 Za tiste, ki posedujejo brajevo vrstico, NVDA lahko prikazuje sporočila in druge aktivnosti tudi na njih.
 Podprt je tudi vnos prek brajeve tipkovnice in sicer tako način tipkanja s krajšavami kot normalen vnos.
+Še več, NVDA bo privzeto samodejno prepoznala večino od njih.
 Prosimo, oglejte si razdelek [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
 
 NVDA podpira precej brajevih kodnih tabel vključno z računalniškimi, kratkopisnimi in normalnimi za veliko jezikov.
@@ -600,6 +601,7 @@ Ko se boste želeli vrniti v dokument, preprosto pritisnite tipko Escape.
 In če je na vaši vrstici tipkovnica v Perkinsovem slogu, lahko tudi vnašate normalno in skrajšano brajico.
 
 Prosimo, oglejte si razdelek [Podprtih Brajevih Vrstic #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
+Ta razdelek vsebuje tudi informacije o tem, katere vrstice podpirajo funkcijo samodejne zaznave brajeve v vrstice v ozadju prek NVDA.
 Brajico lahko nastavite v [zvrsti Brajica #BrailleSettings]  pogovornega okna [Nastavitve NVDA #NVDASettings].
 
 ++ Brajeve okrajšave mejnikov, stanja in tipov kontrolnika ++[BrailleAbbreviations]
@@ -974,7 +976,6 @@ Ta možnost je na voljo samo v nameščenih kopijah NVDA.
 Če je ta možnost izbrana, bo NVDA samodejno preverjala, če obstajajo posodobitve. Če bodo na voljo, vas bo o tem tudi obvestila.
 Lahko pa obstoj posodobitev preverite tudi ročno z ukazom Preveri, če obstaja posodobitev v razdelku Pomoč NVDA menija.
 Neglede na to, ali ročno preverjate, če obstaja posodobitev ali pa to NVDA počne samodejno, je nujno, da NVDA pošlje nekaj informacij strežniku za nadgraditve zaradi tega, da lahko prejmete ustrezno posodobitev za vaš sistem.
-
 Vedno se pošiljajo te informacije:
 - Trenutna različica Nvda
 - različica Operacijskega Sistema
@@ -1232,9 +1233,12 @@ Ko ste enkrat izbrali vašo željeno brajevo vrstico, lahko pritisnete gumb V re
 Ta spustni seznam vam predstavlja več možnosti, ki so odvisne od tega, kateri gonilniki brajevih vrstic so na voljo v vašem sistemu.
 Med temi možnostmi se premikate s puščicami.
 
+Možnost samodejne prepoznave bo dovolila NVDA, da bo iskala med večjim številom podprtih brajevih vrstic v ozadju.
+Ko je ta značilnost izbrana in priključite podprto vrstico z uporabo USB ali Bluetooth povezave, se NVDA samodejno poveže s to vrstico.
+
 Brez brajice pomeni, da ne uporabljate brajice.
 
-Prosimo, glejte razdelek [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
+Prosimo, glejte razdelek [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah in katere od njih podpirajo samodejno zaznavo v ozadju .
 
 ==== Vrata ====[SelectBrailleDisplayPort]
 Ta možnost, če je na voljo, omogoča izbiro vrat ali tip povezave, ki se bo uporabljala za komunikacijo z brajevo vrstico, ki ste jo izbrali.
@@ -1392,10 +1396,8 @@ Ta možnost vam omogoča izbiro poznavanja položaja predmeta (1 od 44), ko se p
 
 ==== Ugibaj Informacijo o Položaju Predmeta, ko ta ni na voljo ====[ObjectPresentationGuessPositionInfo]
 Če je poročanje o informaciji položaja predmeta vključeno, ta možnost omogoča NVDA ugibanje o informaciji položaja predmeta, če je drugače nedosegljiva za dan kontrolnik.
-Ko je možnost vključena, NVDA sporoča informacijo o položaju večih kontrolnikov, kot so meniji in orodne vrstice, čeprav dejanjsko stanje lahko malenkostno odstopa od sporočene informacije.
 
-==== Zaigraj koordinate predmeta ====[ObjectPresentationObjectCoordinates]
-Izbor tega izbirnika vam omogoči slišati pisk, ki nakazuje, kje se trenutni predmet na zaslonu nahaja. To je uporabno, če uporabljate kretnje dotika za pomik na naslednje in predhodne predmete.
+Ko je možnost vključena, NVDA sporoča informacijo o položaju večih kontrolnikov, kot so meniji in orodne vrstice, čeprav dejanjsko stanje lahko malenkostno odstopa od sporočene informacije.
 
 ==== Sporočaj opise Predmeta ====[ObjectPresentationReportDescriptions]
 Odstranite kljukico iz tega izbirnika, če ne želite poleg predmeta prejemati tudi njegovega opisa.
@@ -1894,6 +1896,22 @@ Ta govorna sinteza ne podpira  [funkcije črkovanja #SpeechSettingsUseSpelling].
 + Podprte Brajeve Vrstice +[SupportedBrailleDisplays]
 Ta razdelek vsebuje informacije o brajevih vrsticah, ki jih podpira NVDA.
 
+++ Vrstice, ki podpirajo samodejno zaznavo v ozadju ++[AutomaticDetection]
+NVDA je zmožna zaznati precejšnje število brajevih vrstic v ozadju samodejno tako prek USB povezave kot prek Bluetooth povezave.
+To vedenje se doseže z izbiro možnosti Samodejno kot prednostne brajeve vrstice iz NVDA [pogovornega okna Nastavitev Brajice #BrailleSettings].
+Privzeto je ta možnost izbrana.
+
+Sledeče vrstice podpirajo funkcijo samodejne zaznave.
+- Handy Tech vrstice
+- Baum/Humanware/APH/Orbit brajeve vrstice
+- HumanWare Brailliant BI/B serija
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 serija
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije
+- Eurobraille Esys/Esytime/Iris vrstice
+-
+
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
 Vse Focus in PAC Mate vrstice iz [podjetja Freedom Scientific, http://www.freedomscientific.com/] so podprte, ko so na računalnik priključene prek USB ali bluetooth povezave.
 V sistemu boste morali imeti nameščene gonilnike za Freedom Scientific rajeve vrstice.
@@ -1901,9 +1919,11 @@ V sistemu boste morali imeti nameščene gonilnike za Freedom Scientific rajeve 
 Čeprav ta stran omenja samo Focus Blue vrstico, gonilniki podpirajo vse Freedom Scientific Focus in Pacmate vrstice.
 Če na vašem sistemu tečejo 64-bitna Okna in so gonilniki že bili nameščeni ob namestitvi drugega bralnika zaslona, boste verjetno gonilnike morali še vedno namestiti s te povezave, saj se datoteke, ki jih potrebuje NVDA, morda niso namestile ob drugem bralniku zaslona.
 
-Privzeto NVDA zna samodejno zaznati in s s temi vrsticami tudi povezati prek USB ali bluetooth povezave.
+Privzeto NVDA zna samodejno zaznati in se s temi vrsticami tudi povezati prek USB ali bluetooth povezave.
 Vseeno pa lahko ob konfiguraciji vrstice eksplicitno določite "USB" ali "bluetooth" vrata, da omejite tip povezave v uporabi.
 To je lahko uporabno ob tem, ko želite Focus vrstico priključiti na računalnik in jo povezati z NVDA prek bluetooth povezave, vseeno pa jo želite polniti prek USB vhoda, ko je tako priključena v sistem.
+
+Te vrstice še ne podpirajo funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
 
 Sledeče prirejene tipke predstavljajo naslednje NVDA ukaze za to vrstico.
 Prosimo, poglejte si dokumentacijo vrstice za točen opis posamezne tipke in njenega položaja.
@@ -1966,17 +1986,17 @@ Ko ste sparili svojo napravo z uporabo tega orodja in NVDA ne zaznava vaše napr
 
 Pomnite: čeprav ima nekaj od teh vrstic brajevo tipkovnico, te privzeto same upravljajo s prevodom iz brajice v besedilo.
 To pomeni, da sistem brajevega vnosa, ki ga uporablja NVDA, ni v uporabi v privzeti situaciji (t.j. nastavitev za tabelo brajevega vnosa nima nobenega učinka).
-Pri vrsticah ALVA z zadnjo strojno kodo (firmware) je možno onemogočiti ta HID simulacijo tipkovnice z uporabo kretnje vnosa.
+Pri vrsticah ALVA z zadnjo strojno kodo (firmware) je možno onemogočiti to HID simulacijo tipkovnice z uporabo kretnje vnosa.
 
 Sledeče tipke so pripete k naslednjim ukazom v NVDA za to vrstico.
 Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipka nahaja.
 %kc:beginInclude
 || Ime | Tipka |
-| Pomakni brajevo vrstico nazaj | t1 ali etouch1 |
+| Pomakni brajevo vrstico nazaj | t1,etouch1 |
 | Premakni brajevo vrstico v prejšnjo vrstico | t2 |
 | Premakni na trenutni položaj žarišča | t3 |
 | Premakni brajevo vrstico v naslednjo vrstico | t4 |
-| Pomakni brajevo vrstico naprej | t5 ali etouch3 |
+| Pomakni brajevo vrstico naprej | t5, etouch3 |
 | Usmeri na brajevo celico | routing |
 | Sporočaj oblikovanje besedila pod brajevo celico | secondary routing |
 | Stikalo HID simulacije tipkovnice | t1+spEnter |
@@ -1986,7 +2006,7 @@ Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipk
 | Sporoči naslov | etouch2 |
 | Sporoči vrstico stanja | etouch4 |
 | tipka shift+tab | sp1 |
-| tipka alt | sp2 |
+| tipka alt | sp2, alt |
 | tipka escape | sp3 |
 | tipka tab | sp4 |
 | tipka puščicaGor | spUp |
@@ -1994,17 +2014,16 @@ Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipk
 | tipka puščicaLevo | spLeft |
 | tipka puščicaDesno | spRight |
 | tipka enter | spEnter, enter |
-| Sporoči datum/čas | sp1+sp2 |
+| Sporoči datum/čas | sp2+sp3 |
 | Meni NVDA | sp1+sp3 |
 | tipka windows+d (minimiranje vseh programov) | sp1+sp4 |
 | tipka windows+b (postavi se v sistemski pladenj) | sp3+sp4 |
-| tipka windows | sp2+sp3, windows |
+| tipka windows | sp1+sp2, windows |
 | tipka alt+tab | sp2+sp4 |
 | tipka control+home | t3+spUp |
 | tipka control+end | t3+spDown |
 | tipka home | t3+spLeft |
 | tipka end | t3+spRight |
-| tipka alt | alt |
 | tipka control | control |
 %kc:endInclude
 
@@ -2045,7 +2064,9 @@ Prosimo, glejte dokumentacijo vrstice, da boste vedeli, kje senahaja katera tipk
 ++ MDV Lilli ++[MDVLilli]
 Brajeva vrstica Lilli na voljo z [MDV http://www.mdvbologna.it/] je podprta.
 Za uporabo te vrstice vam ni potrebno namestiti posebnih gonilnikov.
-Potrebno je samo vrstico priključiti in konfigurirati NVDA.
+Vrstico je potrebno samo priključiti in konfigurirati NVDA.
+
+Ta vrstica ne podpira funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
 
 Sledeče tipke so prirejene za uporabo te vrstice z NVDA.
 Prosimo, poglejte si dokumentacijo za opis položaja tipk.
@@ -2077,7 +2098,7 @@ Za VarioUltra, Pronto! uporabite HID.
 Refreshabraille in Orbit Reader 20 lahko uporabljata HID če bosta pravilno nastavljeni.
 
 USB serial delovanje vrstice Orbit Reader 20 je trenutno podprto samo v sistemu Windows 10.
-Namesto tega raje v drugih primerih uporabite USB HID.
+V drugih primerih namesto tega raje uporabite USB HID.
 
 Sledeče tipke teh vrstic so prirejene za delovanje skupaj z NVDA.
 Prosimo, poglejte si dokumentacijo vrstice za točen opis položaja posamezne tipke.
@@ -2102,6 +2123,8 @@ Velja za vrstice, ki imajo krmilno palčko:
 Hedo ProfiLine USB iz [podjetja hedo Reha-Technik http://www.hedo.de/] je podprta.
 Najprej morate namestiti USB gonilnik, ki ga je oskrbel izdelovalec.
 
+Ta vrstica ne podpira funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
+
 Sledeče tipke so prirejene za delovanje z NVDA.
 Prosimo, poglejte si dokumentacijo vrstice, za opis položaja posamezne tipke.
 %kc:beginInclude
@@ -2118,6 +2141,8 @@ Prosimo, poglejte si dokumentacijo vrstice, za opis položaja posamezne tipke.
 ++ hedo MobilLine USB ++[HedoMobilLine]
 Hedo MobilLine USB iz [podjetja hedo Reha-Technik http://www.hedo.de/] je podprta.
 Najprej morate za uprabo te vrstice namestiti gonilnik, ki ga je oskrbel izdelovalec.
+
+Ta vrstica ne podpira funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
 
 Sledeče tipke so prirejene za delovanje z NVDA.
 Prosimo, oglejte si dokumentacijo za točen opis položaja posamezne tipke.
@@ -2261,6 +2286,8 @@ Brajeve vrstice Seika v različici 3, 4 in 5 (40 celic) in Seika80 (80 celic) iz
 Več informacij o teh vrsticah lahko najdete na http://www.seika-braille.com/.
 Obvezno morate najprej namestiti USB gonilnike, ki ste jih prejeli s strani proizvajalca.
 
+Ta vrstica ne podpira funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
+
 Sledijo tipke, ki so pripete k NVDA ukazom.
 Prosimo, oglejte si dokumentacijo vrstic za opis točne lokacije, kjer lahko posamezne tipke najdete.
 %kc:beginInclude
@@ -2286,9 +2313,10 @@ Podprte so naslednje Brajeve vrstice:
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
+Te vrstice ne podpirajo funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
+
 Če je bil BrxCom nameščen, bo NVDA BrxCom uporabila.
 BrxCom je orodje, ki omogoča neodvisno uporabo tipkovnice brajeve vrstice od bralnika zaslona.
-Nova različica orodja BrxCom, ki dela z NVDA, bo kmalu na voljo prek njegovega izdelovalca Papenmeier.
 Vnašanje prek tipkovnice je mogoče z vrsticami Trio in BRAILLEX Live.
 
 Večina vrstic ima t.i. lahko dostopni trak (v angleščini Easy Access Bar - EAB), ki omogoča hitro in intuitivno izvajanje operacij.
@@ -2366,7 +2394,8 @@ Podprte so naslednje Brajeve vrstice:
 -
 
 Opozarjamo, da te vrstice lahko priključite samo prek serijskih vrat.
-Torej morate vrata, na katera je vrstica priključena, določiti potem, ko ste izbrali ta gonilnik v pogovornem oknu [Izberi Brajevo Vrstico #SelectBrailleDisplay].
+Zaradi tega te vrstice ne podpirajo funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
+Izbrati morate vrata, prek katerih se vrstica povezuje potem, ko ste izbrali ta gonilnik v pogovornem oknu [Izberi Brajevo Vrstico #SelectBrailleDisplay].
 
 Nekaj teh vrstic ima lahko dostopni trak (v Angleščini Easy Access Bar - EAB), ki omogoča hitro in intuitivno izvajanje operacij.
 Trak se lahko premakne v štiri smeri in vsaka smer ima v splošnem dve stikali.
@@ -2544,6 +2573,7 @@ Podprti so naslednji modeli:
 -
 
 Serijska vrata, prek katerih je vrstica priključena v sistem, v NVDA lahko izberete v pogovornem oknu [Izberi Brajevo Vrstico #SelectBrailleDisplay.
+Te vrstice ne podpirajo funkcije samodejne zaznave brajeve vrstice v ozadju v NVDA.
 
 Sledijo ukazi v NVDA s posameznimi tipkami z vrstice.
 Prosimo, poglejte [EcoBraille dokumentacijo ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] za podrobnosti o položaju posamezne tipke.
@@ -2671,6 +2701,8 @@ Ko boste nastavljali vrstico in vrata, ki jih boste uporabljali, posebno pozorno
 
 Za vrstice, ki imajo brajevo tipkovnico, BRLTTY sam upravlja brajev vnos.
 Tako nastavitev vnosne brajeve tabele v NVDA ni relevantna.
+
+BRLTTY ni vključen v funkcijo samodejne zaznave brajeve vrstice v ozadju v NVDA.
 
 Sledeči ukazi so BRLTTY ukazi, ki jih razume NVDA.
 Prosimo, poglejte [BRLTTY dokumentacijo tabele povezanih tipk http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.

@@ -1259,14 +1259,12 @@ This settings category contains the following options:
 ==== Keyboard layout ====[KeyboardSettingsLayout]
 This combo box lets you choose what type of keyboard layout NVDA should use. Currently the two that come with NVDA are Desktop and Laptop.
 
-==== Use capslock as an NVDA modifier key ====[KeyboardSettingsCapsModifier]
-If this checkbox is checked, capslock can be used as an NVDA modifier key.
-
-==== Use extended insert as an NVDA modifier key ====[KeyboardSettingsExtendedInsert]
-If this checkbox is checked, the extended insert key (usually found above the arrow keys, near home and end) can be used as an NVDA modifier key.
-
-==== Use numpad insert as an NVDA modifier key ====[KeyboardSettingsNumpadInsert]
-If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
+==== Select NVDA Modifier Keys ====[KeyboardSettingsModifiers]
+The checkboxes in this list control what keys can be used as [NVDA modifier keys #TheNVDAModifierKey]. The following keys are available to choose from:
+- The caps lock key
+- The insert key on the number pad
+- The extended insert key (usually found above the arrow keys, near home and end)
+-
 
 If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
 Therefore, The NVDA settings dialog will display an error message if all keys are unselected when pressing Ok or Apply.
@@ -1992,11 +1990,11 @@ Following are key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
-| Scroll braille display back | t1 or etouch1 |
+| Scroll braille display back | t1, etouch1 |
 | Move braille display to previous line | t2 |
 | Move to current focus | t3 |
 | Move braille display to next line | t4 |
-| Scroll braille display forward | t5 or etouch3 |
+| Scroll braille display forward | t5, etouch3 |
 | Route to braille cell | routing |
 | Report text formatting under braille cell | secondary routing |
 | Toggle HID keyboard simulation | t1+spEnter |
@@ -2006,14 +2004,14 @@ Please see the display's documentation for descriptions of where these keys can 
 | Report title | etouch2 |
 | Report status bar | etouch4 |
 | shift+tab key | sp1 |
-| alt key | sp2 |
+| alt key | sp2, alt |
 | escape key | sp3 |
 | tab key | sp4 |
 | upArrow key | spUp |
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter, enter|
+| enter key | spEnter, enter |
 | Report date/time | sp2+sp3 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
@@ -2024,7 +2022,6 @@ Please see the display's documentation for descriptions of where these keys can 
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
-| alt key | alt |
 | control key | control |
 %kc:endInclude
 

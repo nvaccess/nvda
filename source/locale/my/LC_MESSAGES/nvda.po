@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-d9b0092\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 00:10+1000\n"
-"PO-Revision-Date: 2018-06-10 17:59+0630\n"
+"POT-Creation-Date: 2018-08-17 00:10+1000\n"
+"PO-Revision-Date: 2018-08-19 10:44+0630\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: my\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -82,11 +82,6 @@ msgstr "အမည်မသိဘာသာစကား"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "အမည်မသိအသွင်းနည်းလမ်း"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -366,6 +361,14 @@ msgstr "မျက်နှာပြင်"
 msgid "pwdedt"
 msgstr "စကားဝက်တည်းဖြတ်ရန်"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "ဒီလိတ်"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "အင်းစန့်"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "ရွေးထားပြီး"
@@ -505,6 +508,18 @@ msgstr "အမြဲဖြည့်စွက်ဖေါ်ပြချက်"
 msgid "Only when scrolling back"
 msgstr "scroll ပြန်လုပ်သောအခါ"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "အလိုအလျောက်"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -574,9 +589,20 @@ msgstr "focus ယူရန်"
 msgid "to review"
 msgstr "ပြန်လည်သုံးသပ်ရန်"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "အလိုအလျောက်"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "အမည်မသိသောဘရေးမျက်နှာြပင်"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Bluetooth Serial: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "နံပါတ်စဉ် : {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -642,6 +668,11 @@ msgstr "ဘူဂေးရီးယား အစက် ၈ စက် ဘရေ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "ကာဒစ်အလည်ပိုင်း ဂရိတ် ၁"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "ဝေလ ဂရိတ် ၁"
 
@@ -649,6 +680,11 @@ msgstr "ဝေလ ဂရိတ် ၁"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "ဝေလ ဂရိတ် ၂"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "ချက် အစက် ၈ စက်  ကွန်ပျူတာ ဘရေး"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -749,6 +785,11 @@ msgstr "အင်္ဂလိပ်(ယူအက်စ်) ဂရိတ် ၁"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "အင်္ဂလိပ်(ယူအက်စ်) ဂရိတ် ၂"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "အက်စပန်ရမ်ဒို ဂရိတ် ၁"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -854,6 +895,11 @@ msgstr "ဟန်ဂေရီ အစက် ၈ စက် ကွန်ပျူ�
 #. braille settings dialog.
 msgid "Hungarian grade 1"
 msgstr "ဟန်ဂေရီ ဂရိတ် ၁"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
+msgstr "ဟန်ဂေရီ ဂရိတ် ၂"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1034,6 +1080,11 @@ msgstr "ရုရှ ဂရိတ် ၁"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "သက္ကတ ဂရိတ် ၁"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "ဆွစ်ဒင် အစက် ၈ စက်  ကွန်ပျူတာ ဘရေး"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2506,15 +2557,25 @@ msgstr "ဖိခလုတ်အထိန်း"
 msgid "calendar"
 msgstr "ပြက္ခဒိန်"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr ""
-
 msgid "video"
 msgstr "ဗီဒီယို"
 
 msgid "audio"
 msgstr "အော်ဒီရို"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "ချပ် အယ်လီမန့်"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "ဖျက်ထားသည်"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ကြားထိုးထည့်သွင်းပြီး"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2731,7 +2792,9 @@ msgstr "%s အခြေအနေမဟုတ်ပါ"
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
 "More details about the errors can be found in the log file."
-msgstr "သင်၏စီစဉ်ချထားပုံစနစ်ဖိုင်တွင်အမှားများပါဝင်နေသည်။သင်၏စီစဉ်ချထားပုံစနစ်ကို စက်ရုံထုတ် ပုံသေစနစ်သို့ ပြန်လည်ထားရှိပြီး။အမှားများအကြောင်းနောက်ထပ် အသေးစိတ်အချက်များကို လော့ဂ်ဖိုင်ထဲတွင်တွေ့နိုင်သည်"
+msgstr ""
+"Your configuration file contains errors. Your configuration has been reset to factory defaults.\n"
+"More details about the errors can be found in the log file."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -2938,9 +3001,8 @@ msgid "Sleep mode on"
 msgstr "စနစ်အနားယူသည့်ပုံစံဖွင့်ထားသည်"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-#, fuzzy
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "အသက်ဝင်နေသည့်အသုံးချဆော့ဖ်ဝဲအတွက် အနားယူသည့်ပုံစံဖွင့်ရန်ပိတ်ရန်ခလုတ်"
+msgstr "Toggles sleep mode on and off for the active application."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3663,6 +3725,14 @@ msgstr "စနစ်အသက်ဝင်ရာဝတ္ထုကိုပြန
 msgid "No status line found"
 msgstr "အခြေအနေပြစာကြောင်းမရှိပါ"
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "Status bar တွင်အချက်အလက်မရှိပါ"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "unable to copy status bar content to clipboard"
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar "
@@ -4016,11 +4086,8 @@ msgstr ""
 "အသက်ဝင်စေရန်"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#, fuzzy
 msgid "Reports formatting info for the text under this braille cell"
-msgstr ""
-"ဤဘရေးဆဲလ်အောက်ရှိဝတ္ထုသို့အညွှန်းမြားကိုလမ်းကြောင်းပြရန် သို့မဟုတ်\n"
-"အသက်ဝင်စေရန်"
+msgstr "Reports formatting info for the text under this braille cell"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -4052,23 +4119,23 @@ msgstr "ဘရေးရိုက်သွင်းမှုအားလုံး
 
 #. Translators: Input help mode message for a braille command.
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4110,21 +4177,16 @@ msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "NVDA Configuration Profiles  စကားပြောကွက်ပြန်ရန်"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers disabled"
-msgstr "စီစဉ်ချထားပုံစနစ် ကောက်ကြောင်းဖိုင်"
+msgstr "Configuration profile triggers disabled"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers enabled"
-msgstr "စီစဉ်ချထားပုံစနစ် ကောက်ကြောင်းဖိုင်"
+msgstr "Configuration profile triggers enabled"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#, fuzzy
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
-msgstr ""
-"စီစဉ်ချထားပုံစနစ်ကောက်ကြောင်းဖိုင်ခလုတ်ဖြုတ်မှုများသိမ်းဆည်းရာတွင်\n"
-"အမှားရှိ - ဖတ်ရန်သက်သက်ဖိုင်စနစ်ဖြစ်နိုင်သည်"
+msgstr "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4536,30 +4598,23 @@ msgstr "ကီးဘုတ်၊စီစဉ်ချထားပုံအား
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "အမ်ဟဲရစ်"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
-msgstr "အာရာဂွန်"
+msgstr "အာရာဂွန်နစ်"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "အာရဗီ"
+msgid "Central Kurdish"
+msgstr "အလယ်ပိုင်း ကားဒစ်"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr ""
-"\t\n"
-"နီပေါ"
+msgid "Northern Kurdish"
+msgstr "မြောက်ပိုင်း ကားဒစ်"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "ဆားဗီးယား(လက်တင်)"
+msgid "Burmese"
+msgstr "မြန်မာ"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5702,9 +5757,9 @@ msgstr "အတန်း %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, fuzzy, python-format
+#, python-format
 msgid "through %s"
-msgstr "စာလုံးကန့်လတ်ဖြတ်လိုင်းဖြင့်ဖြတ်ထားခြင်း"
+msgstr "through %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -5713,9 +5768,9 @@ msgstr "အတိုင် %s"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "အတန်း {rowCount} နှင့် အတိုင် {columnCount} တို့ဖြင့်"
+msgstr "through row {row} column {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -5737,7 +5792,7 @@ msgstr "အတန်းနံပါတ် %s ဖြင့်"
 msgid "level %s"
 msgstr "အဆင့် %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "အမယ် %s ဖြင့်"
@@ -5852,17 +5907,9 @@ msgstr "နောက်ခံအဆင်{pattern}"
 msgid "line %s"
 msgstr "လိုင်းနံပါတ် %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ကြားထိုးထည့်သွင်းပြီး"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "ကြားထိုးထည့်သွင်းမှုမရှိ"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "ဖျက်ထားသည်"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6043,12 +6090,11 @@ msgstr "စာလုံးပေါင်းအမှားကုန်ဆုံ
 
 #. Translators: Reported when text contains a grammar error.
 msgid "grammar error"
-msgstr ""
+msgstr "grammar error"
 
 #. Translators: Reported when moving out of text containing a grammar error.
-#, fuzzy
 msgid "out of grammar error"
-msgstr "စာလုံးပေါင်းအမှားကုန်ဆုံးပြီ"
+msgstr "out of grammar error"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -6244,7 +6290,7 @@ msgstr "NVDA နောက်ဆုံးရအဆင့်မြှင့်တ�
 #. and is pending to be installed.
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
-msgstr ""
+msgstr "NVDA version {version} has been downloaded and is pending installation."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6258,14 +6304,13 @@ msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "NVDA ထည့်သွင်းတပ်ဆင်ရန်"
+msgstr "&NVDA Install ပြုလုပ်ရန် {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#, fuzzy
 msgid "Re-&download update"
-msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုဒေါင်းလုဒ်ချရန်"
+msgstr "Re-&download update"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6282,24 +6327,21 @@ msgid "&Close"
 msgstr "ပိတ်ရန်"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "NVDA မူကွဲဗားရှင်း {version} ကိုရရှိနိုင်ပါပြီ"
+msgstr "NVDA version {version} is ready to be installed.\n"
 
 #. Translators: The label of a button to install an NVDA update.
-#, fuzzy
 msgid "&Install update"
-msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုကိုထည့်သွင်းတပ်ဆင်ပါ"
+msgstr "&update ထည့်သွင်းရန်"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#, fuzzy
 msgid "&Postpone update"
-msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုဒေါင်းလုဒ်ချရန်"
+msgstr "&Update ခေတ္တရပ်ထားရန်"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#, fuzzy
 msgid "Unable to postpone update."
-msgstr "မိတ္တူမကူးနိုင်ပါ"
+msgstr "Unable to postpone update."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6471,14 +6513,12 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "လက်ရှိဖွင့်ထားသောအသံဖိုင်၊သီချင်းအတွက်ကျန်ရှိသောအချိန်ရှိလျှင်ပြန်ပြောရန်"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the elapsed time of the currently playing track, if any"
-msgstr "လက်ရှိဖွင့်ထားသောအသံဖိုင်၊သီချင်းအတွက်ကျန်ရှိသောအချိန်ရှိလျှင်ပြန်ပြောရန်"
+msgstr "Reports the elapsed time of the currently playing track, if any"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the length of the currently playing track, if any"
-msgstr "လက်ရှိဖွင့်ထားသောအသံဖိုင်၊သီချင်းအတွက်ကျန်ရှိသောအချိန်ရှိလျှင်ပြန်ပြောရန်"
+msgstr "Reports the length of the currently playing track, if any"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6592,7 +6632,7 @@ msgstr "မဖတ်ရသေး"
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
-msgstr ""
+msgstr "Profile အားပြင်ဆင်ခြင်း {profile}"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
@@ -7021,53 +7061,41 @@ msgctxt "repeat"
 msgid "off"
 msgstr "ပိတ်ထား"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "Emoji မရှိ"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
-msgstr ""
-
-#. Translators: Name of a bluetooth serial communications port.
-#, fuzzy, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "နံပါတ်စဉ် : {portName}"
+msgstr "Optelec ALVA 6 series/protocol converter"
 
 #. Translators: Message when setting HID keyboard simulation failed.
-#, fuzzy
 msgid "Setting HID keyboard simulation not supported"
-msgstr "သင်္ချာဆိုင်ရာတုံ့ပြန်မှုထောက်ပံ့မထားပါ"
+msgstr "Setting HID keyboard simulation not supported"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
-msgstr ""
+msgstr "HID keyboard simulation enabled"
 
 #. Translators: Message when HID keyboard simulation is disabled.
 msgid "HID keyboard simulation disabled"
-msgstr ""
+msgstr "HID keyboard simulation disabled"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
 msgid "Toggles HID keyboard simulation"
-msgstr ""
+msgstr "Toggles HID keyboard simulation"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit ဘရေးပုံဖော်မျက်နှာပြင်"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "နံပါတ်စဉ် : {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
-msgstr "HumanWare Brailliant BI/B စီးရီး"
+msgstr "HumanWare Brailliant BI/B series / BrailleNote Touch"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
@@ -7075,17 +7103,15 @@ msgstr "EcoBraille ပုံဖော်မျက်နှာပြင်"
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
-msgstr ""
+msgstr "Eurobraille Esys/Esytime/Iris displays"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
-#, fuzzy
 msgid "HID keyboard input simulation is unavailable."
-msgstr "NVDA မူကွဲဗားရှင်း {version} ကိုရရှိနိုင်ပါပြီ"
+msgstr "HID keyboard input simulation is unavailable."
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
-#, fuzzy
 msgid "Toggle HID keyboard simulation"
-msgstr "သင်္ချာဆိုင်ရာတုံ့ပြန်မှုထောက်ပံ့မထားပါ"
+msgstr "Toggle HID keyboard simulation"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7105,22 +7131,19 @@ msgstr "Handy Tech ဘရေးပုံဖော်မျက်နှာပြ�
 
 #. Translators: message when braille input is enabled
 msgid "Braille input enabled"
-msgstr ""
+msgstr "Braille input enabled"
 
 #. Translators: message when braille input is disabled
-#, fuzzy
 msgid "Braille input disabled"
-msgstr "ဘရေးပုံဖော်မျက်နှာပြင်"
+msgstr "Braille input disabled "
 
 #. Translators: description of the script to toggle braille input
-#, fuzzy
 msgid "Toggle braille input"
-msgstr "ဘရေးရိုက်သွင်းမှုအားလုံးအား ဘာသာပြန်ရန်"
+msgstr "Toggle braille input"
 
 #. Translators: The name of a series of braille displays.
-#, fuzzy
 msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle စီးရီး"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7205,7 +7228,7 @@ msgstr "NVDA ချိန်ညှိမှုစကားပြောကွက�
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
-msgstr ""
+msgstr "The settings panel you tried to open is unavailable on this system."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7232,6 +7255,9 @@ msgid ""
 "programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure "
 "you wish to proceed?"
 msgstr ""
+"You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many "
+"programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure "
+"you wish to proceed?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -7242,26 +7268,23 @@ msgstr "သတိပေးချက်"
 #. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 #. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
 msgid "COM Registration Fixing Tool"
-msgstr ""
+msgstr "COM Registration Fixing Tool"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
-#, fuzzy
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
-msgstr "ချိန်ညှိမှုများကိုစီစဉ်ချထားပုံစနစ်သို့မိတ္တူကူးယူနေစဉ်ကျေးဇူးပြု၍ခေတ္တစောင့်ပါ"
+msgstr "Please wait while NVDA tries to fix your system's COM registrations."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
-msgstr ""
+msgstr "COM Registration Fixing tool complete"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "&Settings..."
-msgstr "&Voice settings..."
+msgstr "&Settings... များ"
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "NVDA settings"
-msgstr "ချိန်ညှိစရာများမရှိပါ"
+msgstr "NVDA settings များ"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7326,7 +7349,7 @@ msgstr "NVDA ထည့်သွင်းတပ်ဆင်ရန်"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr ""
+msgstr "Run COM Registration Fixing tool..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7406,13 +7429,12 @@ msgid "Donate"
 msgstr "လှူဒါန်းရန်"
 
 #. Translators: The label for the menu item to run a pending update.
-#, fuzzy
 msgid "Install pending &update"
-msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုကိုထည့်သွင်းတပ်ဆင်ပါ"
+msgstr "Install pending &update"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
-msgstr ""
+msgstr "Execute a previously downloaded NVDA update"
 
 msgid "E&xit"
 msgstr "ထွက်ရန်"
@@ -7513,9 +7535,8 @@ msgid "Restart with debug logging enabled"
 msgstr "ပြင်ဆင်ခြင်းဘက်သို့ ပြောင်းရန် ခေတ္တစောင့်ဆိုင်းပါ"
 
 #. Translators: An option in the combo box to choose exit action.
-#, fuzzy
 msgid "Install pending update"
-msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုကိုထည့်သွင်းတပ်ဆင်ပါ"
+msgstr "Install pending update"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7523,34 +7544,35 @@ msgstr "ခေတ္တစောင့်ဆိုင်းပါ"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
-msgstr ""
+msgstr "NVDA  Usage Data Collection"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
-"In order to improve NVDA in the future, NV Access wishes to collect usage "
-"data from running copies of NVDA.\n"
+"In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n"
 "\n"
-"Data includes Operating System version, NVDA version, language, country of "
-"origin, plus certain NVDA configuration such as current synthesizer, braille "
-"display and braille table. No spoken or braille content will be ever sent to "
-"NV Access.  Please refer to the User Guide for a current list of all data "
-"collected.\n"
+"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display "
+"and braille table. No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n"
 "\n"
-"Do you wish to allow NV Access to periodically collect this data in order to "
-"improve NVDA?"
+"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
 msgstr ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display "
+"and braille table. No spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for a current list of all data collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
 
 #. Translators: The label of a Yes button in a dialog
 msgid "&Yes"
-msgstr ""
+msgstr "&Yes"
 
 #. Translators: The label of a No button in a dialog
 msgid "&No"
-msgstr ""
+msgstr "&No"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "ထပ်ပေါင်းစွမ်းရည်မန်နေဂျာ"
+msgstr "Add-ons မန်နေဂျာ"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
 msgid "All add-ons are currently disabled. To enable add-ons you must restart NVDA."
@@ -7597,6 +7619,7 @@ msgstr "ထည့်သွင်းတပ်ဆင်ရန်"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "ဖယ်ရှားရန်"
@@ -7677,21 +7700,19 @@ msgstr "ဖယ်ရှားရန်"
 
 #. Translators: The status shown for an addon when it requires a restart to become disabled
 msgid "Disabled after restart"
-msgstr ""
+msgstr "Restart လုပ်ပြီး ပြန်ပိတ်ထားရန်"
 
 #. Translators: The status shown for an addon when it requires a restart to become enabled
 msgid "Enabled after restart"
-msgstr ""
+msgstr "Restart လုပ်ပြီးပြန်ဖွင့်ထားရန်"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#, fuzzy
 msgid "disabled"
-msgstr "မသုံးနိုင်အောင်ပိတ်ထားသည်"
+msgstr "ပိတ်ထားသည်"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#, fuzzy
 msgid "enabled"
-msgstr "သုံးနိုင်အောင်ဖွင့်ထားသည်"
+msgstr "ဖွင့်ထားသည်"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8136,30 +8157,28 @@ msgstr "အမှားကိုမှတ်တမ်းရေးသွင်း
 
 #. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
-msgstr ""
+msgstr "အိုကေ"
 
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
-msgstr ""
+msgstr "ပယ်ဖျက်ရန်"
 
 #. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
 msgid "Apply"
-msgstr ""
+msgstr "အတည်ပြုရန်"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#, fuzzy
 msgid "&Categories:"
-msgstr "အမျိုးအမည်ခွဲခြားမှု"
+msgstr "အမျိုးအမည်ခွဲခြားမှု:"
 
 #. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 #, python-format
 msgid "%s Settings Category"
-msgstr ""
+msgstr "%s Settings Category"
 
 #. Translators: This is the label for the general settings panel.
-#, fuzzy
 msgid "General"
-msgstr "အထွေထွေချိန်ညှိမှုများ"
+msgstr "အထွေထွေ"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8216,11 +8235,11 @@ msgstr "NVDA သို့နောက်ဆုံးရအဆင့်မြှ�
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
-msgstr ""
+msgstr "Notify for &pending update on startup"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr ""
+msgstr "Allow the NVDA project to gather NVDA usage statistics"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8278,21 +8297,19 @@ msgid "Language Configuration Change"
 msgstr "ဘာသာစကားစီစဉ်ချထားပုံစနစ်ပြောင်းရန်"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#, fuzzy
 msgid "&Synthesizer"
-msgstr "ဆင်သဆိုက်ဇာ"
+msgstr "&Synthesizer"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr ""
+msgstr "C&hange..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#, fuzzy
 msgid "Select Synthesizer"
-msgstr "ဆင်သဆိုက်ဇာ"
+msgstr "Synthesizer ရွေးချယ်ရန်"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8321,9 +8338,8 @@ msgid "Synthesizer Error"
 msgstr "ဆင်သဆိုက်ဇာအမှား"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
-msgstr "စကားသံ"
+msgstr "အသံ"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -8365,9 +8381,8 @@ msgid "Use &spelling functionality if supported"
 msgstr "အထောက်အပံ့ပေးထားလျှင်စာလုံးပေါင်းလုပ်ဆောင်မှုကိုအသုံးပြုရန်"
 
 #. Translators: This is the label for the keyboard settings panel.
-#, fuzzy
 msgid "Keyboard"
-msgstr "%s ကီးဘုတ်"
+msgstr "ကီးဘုတ်"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8464,9 +8479,8 @@ msgid "&Brightness controls audio coordinates volume"
 msgstr "တောက်ပမှုအထိန်း အော်ဒီယို ကိုသြဒိနိတ် အသံအတိုးအကျယ်"
 
 #. Translators: This is the label for the review cursor settings panel.
-#, fuzzy
 msgid "Review Cursor"
-msgstr "ခြုံငုံကြည့်ရှုမှုအညွှန်းမြား"
+msgstr "Review Cursor"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8489,9 +8503,8 @@ msgid "Simple review mode"
 msgstr "ရိုးရှင်းသောခြုံငုံကြည့်ရှုမှုနည်းလမ်းပုံစံ"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#, fuzzy
 msgid "Input Composition"
-msgstr "ဖွဲ့စည်းစပ်ဟပ်ပုံချိန်ညှိမှုများအသွင်း"
+msgstr "Input Composition"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -8826,14 +8839,13 @@ msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "အညွှန်းမြားနောက်ပုံသွင်ပြောင်းလဲချထားမှုအကြောင်းပြန်ရန်(နှောင့်နှေးမှုတစ်ခုဖြစ်နိုင်သည်)"
 
 #. Translators: This is the label for the touch interaction settings panel.
-#, fuzzy
 msgid "Touch Interaction"
-msgstr "သင်္ချာဆိုင်ရာတုံ့ပြန်မှုမှထွက်ရန်"
+msgstr "Touch Interaction"
 
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr ""
+msgstr "&Touch typing အနေထား"
 
 #. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
@@ -8852,9 +8864,8 @@ msgid "Whole &word"
 msgstr "စကားလုံးတစ်ခုလုံး"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-#, fuzzy
 msgid "Regular &expression"
-msgstr "ပုံမှန်တွေ့နေကျအသုံးအနှုန်းများ"
+msgstr "ရိုးရိုး &ဖေါ်ပြချက်"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -8929,14 +8940,12 @@ msgid "Add Dictionary Entry"
 msgstr "အဘိဓာန်ထည့်သွင်းမှုပေါင်းထည့်ရန်"
 
 #. Translators: A label for the braille display on the braille panel.
-#, fuzzy
 msgid "Braille &display"
-msgstr "ဘရေးပုံဖော်မျက်နှာပြင်"
+msgstr "ဘရေး &မျက်နှာပြင်"
 
 #. Translators: This is the label for the braille display selection dialog.
-#, fuzzy
 msgid "Select Braille Display"
-msgstr "EcoBraille ပုံဖော်မျက်နှာပြင်"
+msgstr "Braille Display အားရွှေးချယ်ရန်"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8994,9 +9003,8 @@ msgid "Show &messages indefinitely"
 msgstr "မက်ဆေ့များအား အကန့်အသတ်မရှိပြသရန်"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "Tether B&raille:"
-msgstr "ဆူပါဘရေးလ်"
+msgstr "Tether B&raille:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9011,14 +9019,12 @@ msgid "Focus context presentation:"
 msgstr "ရွေးချယ်စကားဆက်ဖေါ်ပြချက်"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#, fuzzy
 msgid "NVDA"
-msgstr "NVDA မှထွက်ရန်"
+msgstr "NVDA"
 
 #. Translators: The profile name for normal configuration
-#, fuzzy
 msgid "normal configuration"
-msgstr "(ပုံမှန်စီစဉ်ချထားပုံစနစ်)"
+msgstr "ပုံမှန် configuration"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9090,11 +9096,11 @@ msgstr "{main}({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "အသွင်းအမူအရာကိုသွင်းရန်"
+msgstr "Enter input gesture:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "အသုံးပြုသူသတ်မှတ်သည့်အမူအရာသိမ်းဆည်းရာတွင်အမှားရှိနေသည်- ဖတ်ရန်သက်သက်ဖိုင်စနစ်ဖြစ်နိုင်သည်"
+msgstr "Error saving user defined gestures - probably read only file system."
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -9103,7 +9109,7 @@ msgstr "သင်္ချာဆိုင်ရာတုံ့ပြန်မှ
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr "သင်္ချာဆိုင်ရာတုံ့ပြန်မှုထောက်ပံ့မထားပါ"
+msgstr "Math interaction not supported."
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -9142,7 +9148,7 @@ msgstr "အသစ်ပြန်စစ်ပြီး"
 
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
-msgstr "မှတ်တမ်းဖိုင်ခေါ်တင်နေသည်"
+msgstr "Loading document..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -9182,7 +9188,7 @@ msgstr "ခေါင်းစီးများမသတ်မှတ်နို
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "အတန်း{rowNumber} အတိုင် {columnNumber}  ကိုအတိုင်ခေါင်းစီး၏အစအဖြစ်သတ်မှတ်ရန် "
+msgstr "Set row {rowNumber} column {columnNumber} as start of column headers"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -9202,12 +9208,14 @@ msgstr "အတန်း{rowNumber} အတိုင် {columnNumber}  ကို�
 msgid ""
 "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current "
 "column header for this cell."
-msgstr "တစ်ကြိမ်နှိပ်လျှင်ဤဆဲလ်အကွက်ကို အောက်ဘက်နှင့် ဤဇယားအတွင်း ညာဘက်ရှိဆဲလ်များအားလုံးအတွက်ပထမဆုံးအတိုင်ခေါင်းစီးဟုသတ်မှတ်သည်။နှစ်ကြိမ်နှိပ်လျှင် ဤဆဲလ်အတွက်အတိုင်ခေါင်းစီးကိုမေ့လျော့မည်"
+msgstr ""
+"Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current "
+"column header for this cell."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "အတန်း{rowNumber} အတိုင် {columnNumber}  ကိုအတန်းခေါင်းစီး၏အစအဖြစ်သတ်မှတ်ရန် "
+msgstr "Set row {rowNumber} column {columnNumber} as start of row headers"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #, python-brace-format
@@ -9227,7 +9235,9 @@ msgstr "အတန်း{rowNumber} အတိုင် {columnNumber}  ကို�
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row "
 "header for this cell."
-msgstr "တစ်ကြိမ်နှိပ်လျှင်ဤဆဲလ်အကွက်ကို အောက်ဘက်နှင့် ဤဇယားအတွင်း ညာဘက်ရှိဆဲလ်များအားလုံးအတွက်ပထမဆုံးအတန်းခေါင်းစီးဟုသတ်မှတ်သည်။နှစ်ကြိမ်နှိပ်လျှင် ဤဆဲလ်အတွက်အတန်းခေါင်းစီးကိုမေ့လျော့မည်"
+msgstr ""
+"Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row "
+"header for this cell."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "No comments"
@@ -9235,7 +9245,7 @@ msgstr "မှတ်ချက်မရှိ"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "စနစ်ကရက်ရှိသည့်နေရာမှမှတ်ချက်စာသားကိုအကြောင်းပြန်ရန်"
+msgstr "Reports the text of the comment where the System caret is located."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -9256,29 +9266,29 @@ msgid "&Errors"
 msgstr "&အမှားများ"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "စာလုံးပေါင်း: {text}"
+msgstr "ထည့်သွင်းခြင်း: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "စာလုံးပေါင်း: {text}"
+msgstr "ပယ်ဖျက်ခြင်း: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
 msgid "track change: {text}"
-msgstr ""
+msgstr "track change: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "မှတ်ချက် : {text} {date} တွင် {author} ထံမှ"
+msgstr "Comment: {comment} အားဖြင့် {author} တွင် {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
-msgstr "မှတ်ချက် : {text} {date} တွင် {author} ထံမှ"
+msgstr "{comment} အားဖြင့် {author} တွင် {date}"
 
 msgid "Desktop"
 msgstr "အလုပ်စားပွဲပြင်"
@@ -9653,7 +9663,7 @@ msgstr "အမယ်"
 #. Translators: Message to be spoken to report Series Color
 #, python-brace-format
 msgid "Series color: {colorName} "
-msgstr "စီးရီးအတွဲ အရောင် :{colorName}"
+msgstr "Series color: {colorName} "
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Display Unit Label"
@@ -9761,12 +9771,11 @@ msgstr "စီးရီး {number}{name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
-msgstr "စီးရီးအတွဲသတ်မှတ်ထားခြင်းမရှိ"
+msgstr "No Series defined."
 
 #. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
-#, fuzzy
 msgid "Chart Elements"
-msgstr "အခြေခံအစိတ်အပိုင်းများ"
+msgstr "ဇယား Elements"
 
 #. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 #. Translators: Details about a series in a chart.
@@ -9776,37 +9785,37 @@ msgid "{seriesName} series {seriesIndex} of {seriesCount}"
 msgstr "{seriesName} စီးရီး {seriesCount} ၏ {seriesIndex}"
 
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr "စီးရီးအတွဲ အရောင် :{colorName}"
+msgstr "Slice color: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr "{previousIndex} ပွိုင့်မှအပြောင်းအလဲမရှိ"
+msgstr "no change from point {previousIndex}, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} ပွိုင့်မှ {incrementValue} တိုးမြှင့်ပြီး"
+msgstr "Increased by {incrementValue} from point {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} ပွိုင့်မှ {decrementValue} လျော့ယူပြီး"
+msgstr "decreased by {decrementValue} from point {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}:"
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 #, python-brace-format
 msgid "Category {categoryAxisData}: "
-msgstr "မျိုးမည်ခွဲခြားမှု {categoryAxisData}"
+msgstr "Category {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -9825,93 +9834,84 @@ msgstr "တန်ဖိုး{valueAxisData}"
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 #, python-brace-format
 msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr "{pointCount} ၏ ရာခိုင်နှုန်းအစိတ် {pointIndex} အစိတ်အပိုင်း {fractionValue:.2f}"
+msgstr " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
 #, python-brace-format
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr "{pointCount} ၏ {segmentType}{pointIndex}"
+msgstr " {segmentType} {pointIndex} of {pointCount}"
 
 #. Translators: Indicates Primary Category Axis
-#, fuzzy
 msgid "Primary Category Axis"
-msgstr "ပင်မအောက်မှတ်စု"
+msgstr "ပင်မ Category Axis"
 
 #. Translators: Indicates Secondary Category Axis
-#, fuzzy
 msgid "Secondary Category Axis"
-msgstr "မျိုးမည်ခွဲခြားမှု {categoryAxisData}"
+msgstr "တစ်ဆင့်ခံ {categoryAxisData}"
 
 #. Translators: Indicates Primary Value Axis
-#, fuzzy
 msgid "Primary Value Axis"
-msgstr "ပင်မခေါင်းစီး"
+msgstr "ပင်မ Value Axis"
 
 #. Translators: Indicates Secondary Value Axis
-#, fuzzy
 msgid "Secondary Value Axis"
-msgstr "တစ်ဆင့်ခံဝင်ရိုးအုပ်စု"
+msgstr "တစ်ဆင့်ခံ Value Axis"
 
 #. Translators: Indicates Primary Series Axis
-#, fuzzy
 msgid "Primary Series Axis"
-msgstr "ပင်မအောက်မှတ်စု"
+msgstr "ပင်မအောက် Series Axis"
 
 #. Translators: Indicates Secondary Series Axis
-#, fuzzy
 msgid "Secondary Series Axis"
-msgstr "တစ်ဆင့်ခံဝင်ရိုးအုပ်စု"
+msgstr "တစ်ဆင့်ခံ Series Axis"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "ပုံပြစာရင်းကားချပ်အမည် : {chartTitle}"
+msgstr "ခေါင်းစဥ်: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
-msgstr ""
+msgstr "အိစ်ပိုနယ်ရှယ်"
 
 #. Translators: Indicates that trendline type is Linear
-#, fuzzy
 msgid "Linear"
-msgstr "မျဉ်းလိုင်း"
+msgstr "လိုင်နီယာ"
 
 #. Translators: Indicates that trendline type is Logarithmic
 msgid "Logarithmic"
-msgstr ""
+msgstr "လိုဂာရစ်မစ်"
 
 #. Translators: Indicates that trendline type is Moving Average
 msgid "Moving Average"
-msgstr ""
+msgstr "Average ရွှေ့ခြင်း"
 
 #. Translators: Indicates that trendline type is Polynomial
 msgid "Polynomial"
-msgstr ""
+msgstr "ပိုလီနိုမီနယ်"
 
 #. Translators: Indicates that trendline type is Power
 msgid "Power"
-msgstr ""
+msgstr "ပါဝါ"
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
-msgstr "နှစ်ထပ်ကိန်းပြုထားသော"
+msgstr " square "
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "နံပါတ်ခလုတ်ခုံ အနှုတ်"
+msgstr "အနုတ်"
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} "
-msgstr ""
+msgstr "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
-msgstr ""
+msgstr "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
 
 #. Translators: Details about a chart title in Microsoft Office.
 #, python-brace-format
@@ -9929,7 +9929,7 @@ msgstr "ပုံပြစာရင်းကားချပ် ဧရိယာ �
 
 #. Translators: Indicates the chart area of a Microsoft Office chart.
 msgid "Chart area "
-msgstr "ပုံပြစာရင်းကားချပ်ဧရိယာ"
+msgstr "Chart area "
 
 #. Translators: Details about the plot area of a Microsoft Office chart.
 #, python-brace-format
@@ -9942,7 +9942,7 @@ msgstr ""
 
 #. Translators: Indicates the plot area of a Microsoft Office chart.
 msgid "Plot area "
-msgstr "ပလော့ထုတ်ယူရန်ဧရိယာ"
+msgstr "Plot area "
 
 #. Translators: a message for the legend entry of a chart in MS Office
 #, python-brace-format
@@ -9950,9 +9950,9 @@ msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr "{seriesCount} ၏ {seriesName}{seriesIndex} စီးရီးအတွက်အညွှန်းအမှတ်အသားအသွင်း"
 
 #. Translators: the legend entry for a chart in Microsoft Office
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr "{pointCount} ၏ {segmentType}{pointIndex}"
+msgstr "Legend entry {legendEntryIndex} ၏ {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -10137,7 +10137,9 @@ msgstr "{address} ကိုအတိုင်ခေါင်းစီးအဖ�
 msgid ""
 "Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current "
 "column header for this cell."
-msgstr "တစ်ကြိမ်နှိပ်လျှင်ဤဆဲလ်အကွက်ကို အောက်ဘက်နှင့် ဤနယ်ပယ်အတွင်း ညာဘက်ရှိဆဲလ်များအားလုံးအတွက်ပထမဆုံးအတိုင်ခေါင်းစီးဟုသတ်မှတ်သည်။နှစ်ကြိမ်နှိပ်လျှင် ဤဆဲလ်အတွက်အတိုင်ခေါင်းစီးကိုမေ့လျော့မည်"
+msgstr ""
+"Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current "
+"column header for this cell."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -10162,7 +10164,9 @@ msgstr "အတန်းခေါင်းစီးတွင် {address} ကိ�
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current "
 "row header for this cell."
-msgstr "တစ်ကြိမ်နှိပ်လျှင်ဤဆဲလ်အကွက်ကို အောက်ဘက်နှင့် ဤနယ်ပယ်အတွင်း ညာဘက်ရှိဆဲလ်များအားလုံးအတွက်ပထမဆုံးအတန်းခေါင်းစီးဟုသတ်မှတ်သည်။နှစ်ကြိမ်နှိပ်လျှင် ဤဆဲလ်အတွက်အတန်းခေါင်းစီးကိုမေ့လျော့မည်"
+msgstr ""
+"Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current "
+"row header for this cell."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
@@ -10588,6 +10592,27 @@ msgstr "လိုင်းအစိတ်အကျဲတန်ဖိုး ၂ �
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "လိုင်းအစိတ်အကျဲတန်ဖိုး ၁.၅ ဆ"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "အမ်ဟဲရစ်"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "အာရဗီ"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr ""
+#~ "\t\n"
+#~ "နီပေါ"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "ဆားဗီးယား(လက်တင်)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "NVDA စကားသံချိန်ညှိမှုစကားပြောကွက်ကိုပြရန်"
