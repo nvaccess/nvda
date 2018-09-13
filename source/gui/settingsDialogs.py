@@ -1537,20 +1537,6 @@ class BrowseModePanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Lazily import this.
-		from treeInterceptorHandler import shouldCreateTreeInterceptorOptions
-
-		# Translators: The label for a setting in browse mode settings to 
-		# select the browse mode state on page load.
-		createTIOnLoadLabelText = _("Enable browse mode for loaded documents:")
-		self.createTIOnLoadValues = [x[0] for x in shouldCreateTreeInterceptorOptions]
-		createTIOnLoadChoices = [x[1] for x in shouldCreateTreeInterceptorOptions]
-		self.createTIOnLoadList = sHelper.addLabeledControl(createTIOnLoadLabelText, wx.Choice, choices=createTIOnLoadChoices)
-		try:
-			index=self.createTIOnLoadValues.index(config.conf["virtualBuffers"]["createTIOnLoad"])
-		except:
-			index=0
-		self.createTIOnLoadList.SetSelection(index)
 
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
@@ -1573,6 +1559,27 @@ class BrowseModePanel(SettingsPanel):
 		useScreenLayoutText = _("Use &screen layout (when supported)")
 		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
+
+		# Lazily import this.
+		from treeInterceptorHandler import shouldCreateTreeInterceptorOptions
+
+		# Translators: The label for a setting in browse mode settings to 
+		# select the browse mode state on page load.
+		createTIOnPageLoadLabelText = _("&Enable browse mode on page load:")
+		self.createTIOnPageLoadValues = [x[0] for x in shouldCreateTreeInterceptorOptions]
+		createTIOnPageLoadChoices = [x[1] for x in shouldCreateTreeInterceptorOptions]
+		self.createTIOnPageLoadList = sHelper.addLabeledControl(createTIOnPageLoadLabelText, wx.Choice, choices=createTIOnPageLoadChoices)
+		try:
+			index=self.createTIOnPageLoadValues.index(config.conf["virtualBuffers"]["createTIOnPageLoad"])
+		except:
+			index=0
+		self.createTIOnPageLoadList.SetSelection(index)
+
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings panel.
+		respectPassThroughOnPageLoadText = _("Remember manually activated focus mode on page load")
+		self.respectPassThroughOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=respectPassThroughOnPageLoadText))
+		self.respectPassThroughOnPageLoadCheckBox.SetValue(config.conf["virtualBuffers"]["respectPassThroughOnPageLoad"])
 
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
@@ -1600,12 +1607,6 @@ class BrowseModePanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		respectPassThroughOnLoadText = _("Remember focus mode state when loading new web documents")
-		self.respectPassThroughOnLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=respectPassThroughOnLoadText))
-		self.respectPassThroughOnLoadCheckBox.SetValue(config.conf["virtualBuffers"]["respectPassThroughOnLoad"])
-
-		# Translators: This is the label for a checkbox in the
-		# browse mode settings panel.
 		passThroughAudioIndicationText = _("Audio indication of focus and browse modes")
 		self.passThroughAudioIndicationCheckBox = sHelper.addItem(wx.CheckBox(self, label=passThroughAudioIndicationText))
 		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
@@ -1617,11 +1618,11 @@ class BrowseModePanel(SettingsPanel):
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
 	def onSave(self):
-		config.conf["virtualBuffers"]["createTIOnLoad"] = self.createTIOnLoadValues[self.createTIOnLoadList.GetSelection()]
-		config.conf["virtualBuffers"]["respectPassThroughOnLoad"]=self.respectPassThroughOnLoadCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["createTIOnPageLoad"] = self.createTIOnPageLoadValues[self.createTIOnPageLoadList.GetSelection()]
+		config.conf["virtualBuffers"]["respectPassThroughOnPageLoad"]=self.respectPassThroughOnPageLoadCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]=self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()

@@ -28,10 +28,10 @@ shouldCreateTreeInterceptorOptions = [
 	# Translators: An option in browse mode settings to
 	# always enable browse mode for non editable browse mode documents
 	# (i.e. not for Word documents or aria applications).
-	(TI_CREATE_WEBDOCS, _("Always for web documents")),
+	(TI_CREATE_WEBDOCS, _("For web pages")),
 	# Translators: An option in browse mode settings to
 	# always enable browse mode when a page is loaded.
-	(TI_CREATE_ALWAYS, _("Always for all supported documents")),
+	(TI_CREATE_ALWAYS, _("For all supported documents")),
 	# Translators: An option in browse mode settings to
 	# never enable browse mode when a page is loaded.
 	(TI_CREATE_NEVER, _("Never")),
@@ -59,11 +59,11 @@ def update(obj, force=False):
 		if not force:
 			from browseMode import BrowseModeTreeInterceptor, lastDisableAutoPassThrough
 			if (
-				(obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] == TI_CREATE_NEVER) or
-				(not obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnLoad'] != TI_CREATE_ALWAYS) or 
+				(obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnPageLoad'] == TI_CREATE_NEVER) or
+				(not obj.shouldCreateTreeInterceptor and config.conf['virtualBuffers']['createTIOnPageLoad'] != TI_CREATE_ALWAYS) or 
 				# When report pass through on load is on and the tree interceptor class is a browse mode one,
 				# we should not create a tree interceptor if pass through has earlier been enabled explicitly.
-				(config.conf['virtualBuffers']['respectPassThroughOnLoad'] and
+				(config.conf['virtualBuffers']['respectPassThroughOnPageLoad'] and
 					issubclass(newClass, BrowseModeTreeInterceptor) and
 					lastDisableAutoPassThrough
 				)

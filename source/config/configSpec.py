@@ -128,8 +128,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	handleInjectedKeys= boolean(default=true)
 
 [virtualBuffers]
-	createTIOnLoad = option("webDocs", "always", "never", default="webDocs")
-	respectPassThroughOnLoad = boolean(default=True)
 	maxLineLength = integer(default=100)
 	linesPerPage = integer(default=25)
 	useScreenLayout = boolean(default=True)
@@ -138,6 +136,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
+	createTIOnPageLoad = option("webDocs", "always", "never", default="webDocs")
+	respectPassThroughOnPageLoad = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)
