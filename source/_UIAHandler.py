@@ -233,7 +233,10 @@ class UIAHandler(COMObject):
 		while True:
 			func=self.MTAThreadQueue.get()
 			if func:
-				func()
+				try:
+					func()
+				except:
+					log.error("Exception in function queued to UIA MTA thread",exc_info=True)
 			else:
 				break
 		self.clientObject.RemoveAllEventHandlers()
@@ -249,11 +252,13 @@ class UIAHandler(COMObject):
 				# The old UIAElement died as the window was closed.
 				# The system should forget the old event registration itself.
 				pass
-		self.currentForegroundUIAElement=pendingForegroundUIAElement
 		try:
-			self.clientObject.AddPropertyChangedEventHandler(self.currentForegroundUIAElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
+			self.clientObject.AddPropertyChangedEventHandler(pendingForegroundUIAElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
 		except COMError:
 			log.error("Could not register for UIA property change events for new foreground")
+			self.currentForegroundUIAElement=None
+		else:
+			self.currentForegroundUIAElement=pendingForegroundUIAElement
 
 	def onForegroundChange(self,hwnd):
 		try:
