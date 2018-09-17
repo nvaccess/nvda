@@ -90,12 +90,12 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	execInThread(threadID,[=,&res](){
 		// Unmarshal the IUnknown pointer from the COM global interface table.
 		IUnknownPtr mapiObject=nullptr;
-		res=pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,(void**)&mapiObject);
+		res=pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,(void**)static_cast<IUnknown**>(&mapiObject));
 		if(res!=S_OK) {
 			LOG_ERROR(L"Could not unmarshal object, code "<<res);
 			return;
 		}
-		LOG_INFO(L"MAPI object in GUI thread: "<<mapiObject);
+		LOG_INFO(L"MAPI object in GUI thread: "<<static_cast<IUnknown*>(mapiObject));
 		// Fetch the wanted property from the MAPI object
 		std::unique_ptr<SPropValue,funcType_MAPIFreeBuffer> propValue {nullptr,MAPIFreeBuffer};
 		{
