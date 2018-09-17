@@ -64,7 +64,7 @@ class LocaleDataMap(object):
 		"""Invalidate all data within this locale map.
 		This will cause a new data object to be created for every locale that is next requested.
 		"""
-		"""		self._dataMap.clear()
+		self._dataMap.clear()
 
 class CharacterDescriptions(object):
 	"""
@@ -362,7 +362,7 @@ def _getSpeechSymbolsForLocale(locale):
 	if locale in _noSymbolLocalesCache:
 		raise LookupError
 	builtin = SpeechSymbols()
-	if config.conf['speech']['includeUnicodeCLDR']:
+	if config.conf['speech']['includeCLDR']:
 		# Try to load CLDR data when processing is on.
 		# Load the data before loading other symbols,
 		# in order to allow translators to override them.
@@ -370,7 +370,7 @@ def _getSpeechSymbolsForLocale(locale):
 			builtin.load(os.path.join("locale", locale, "cldr.dic"),
 				allowComplexSymbols=False)
 		except IOError:
-			log.warning("No CLDR data for locale %s" % locale)
+			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
 		builtin.load(os.path.join("locale", locale, "symbols.dic"))
 	except IOError:
@@ -652,3 +652,10 @@ def processSpeechSymbol(locale, symbol):
 	except KeyError:
 		pass
 	return symbol
+
+def clearSpeechSymbols():
+	"""Clears the symbol data cached by the locale speech symbol processors.
+	This will cause new data to be fetched for the next request to pronounce symbols.
+	"""
+	SpeechSymbolProcessor.localeSymbols.invalidateAllData()
+	_localeSpeechSymbolProcessors.invalidateAllData()
