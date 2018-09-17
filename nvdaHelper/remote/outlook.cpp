@@ -89,10 +89,10 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	// Execute the following code in Outlook's GUI thread. 
 	execInThread(threadID,[=,&res](){
 		// Unmarshal the IUnknown pointer from the COM global interface table.
-		IUnknownPtr mapiObject;
-		pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,(void**)&mapiObject);
+		IUnknownPtr mapiObject=nullptr;
+		res=pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,(void**)&mapiObject);
 		if(res!=S_OK) {
-			LOG_ERROR(L"Could not marshal object");
+			LOG_ERROR(L"Could not unmarshal object, code "<<res);
 			return;
 		}
 		LOG_INFO(L"MAPI object in GUI thread: "<<mapiObject);
