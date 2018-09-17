@@ -1096,10 +1096,11 @@ class VoiceSettingsPanel(SettingsPanel):
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
 		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, emoji descriptions will be spoken for encountered emojis).
-		emojiProcessingText = _("Speak emoji descriptions")
-		self.emojiProcessingCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=emojiProcessingText))
-		self.emojiProcessingCheckbox.SetValue(config.conf["speech"]["emojiProcessing"])
+		# voice settings panel (if checked, data from the unicode CLDR will be used
+		# to speak emoji descriptions).
+		includeUnicodeCLDRText = _("Use Unicode Consortium data to speak emo&ji descriptions")
+		self.includeUnicodeCLDRCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=includeUnicodeCLDRText))
+		self.includeUnicodeCLDRCheckbox.SetValue(config.conf["speech"]["includeUnicodeCLDR"])
 
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
@@ -1185,7 +1186,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
-		config.conf["speech"]["emojiProcessing"]=self.emojiProcessingCheckbox.IsChecked()
+		config.conf["speech"]["includeUnicodeCLDR"]=self.includeUnicodeCLDRCheckbox.IsChecked()
 		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()

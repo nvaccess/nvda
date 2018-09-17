@@ -60,6 +60,12 @@ class LocaleDataMap(object):
 		except KeyError:
 			pass
 
+	def invalidateAllData(self):
+		"""Invalidate all data within this locale map.
+		This will cause a new data object to be created for every locale that is next requested.
+		"""
+		"""		self._dataMap.clear()
+
 class CharacterDescriptions(object):
 	"""
 	Represents a map of characters to one or more descriptions (examples) for that character.
@@ -357,13 +363,13 @@ def _getSpeechSymbolsForLocale(locale):
 		builtin.load(os.path.join("locale", locale, "symbols.dic"))
 	except IOError:
 		raise LookupError("No symbol information for locale %s" % locale)
-	if config.conf['speech']['emojiProcessing']:
-		# Try to load emoji data when emoji processing is on.
+	if config.conf['speech']['includeUnicodeCLDR']:
+		# Try to load CLDR data when processing is on.
 		try:
-			builtin.load(os.path.join("locale", locale, "emojis.dic"),
+			builtin.load(os.path.join("locale", locale, "cldr.dic"),
 				allowComplexSymbols=False)
 		except IOError:
-			log.warning("No emoji information for locale %s" % locale)
+			log.warning("No CLDR data for locale %s" % locale)
 	user = SpeechSymbols()
 	try:
 		# Don't allow users to specify complex symbols

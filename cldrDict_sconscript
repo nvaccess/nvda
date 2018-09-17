@@ -16,35 +16,35 @@ Import(
 	'env', 'sourceDir', 
 )
 
-def createCLDREmojiAnnotationsDict(sources, dest):
+def createCLDRAnnotationsDict(sources, dest):
 	import codecs
 	from xml.etree import ElementTree
 	from collections import OrderedDict	
-	emojiDict = OrderedDict()
+	cldrDict = OrderedDict()
 	for source in sources:
 		tree = ElementTree.parse(source)
 		for element in tree.iter("annotation"):
 			if element.attrib.get("type") == "tts":
-				emojiDict[element.attrib['cp']] = element.text.replace(":","")
-	assert emojiDict, "emojiDict is empty"
+				cldrDict[element.attrib['cp']] = element.text.replace(":","")
+	assert cldrDict, "cldrDict is empty"
 	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
 		dictFile.write(u"symbols:\r\n")
-		for emoji, description in emojiDict.iteritems():
-			dictFile.write(u"{emoji}\t{description}\tsome\r\n".format(
-				emoji=emoji,
+		for pattern, description in cldrDict.iteritems():
+			dictFile.write(u"{pattern}\t{description}\tsome\r\n".format(
+				pattern=pattern,
 				description=description
 			))
 
-emojiDictAction=env.Action(
-	lambda target,source,env: createCLDREmojiAnnotationsDict([src.path for src in source], target[0].path),
+cldrDictAction=env.Action(
+	lambda target,source,env: createCLDRAnnotationsDict([src.path for src in source], target[0].path),
 	lambda target,source,env: 'Generating %s'%target[0],
 )
-emojiDictBuilder=env.Builder(
-	action=emojiDictAction,
+cldrDictBuilder=env.Builder(
+	action=cldrDictAction,
 	suffix='.dic',
 	src_suffix='.xml',
 )
-env['BUILDERS']['emojiDict']=emojiDictBuilder
+env['BUILDERS']['cldrDict']=cldrDictBuilder
 
 NVDAToCLDRLocales = {
 	"af_ZA":("af",),
@@ -115,10 +115,10 @@ NVDAToCLDRLocales = {
 annotationsDir = env.Dir("include/cldr-emoji-annotation/annotations")
 annotationsDerivedDir = env.Dir("include/cldr-emoji-annotation/annotationsDerived")
 for destLocale, sourceLocales in NVDAToCLDRLocales.iteritems():
-	emojiSources = []
+	cldrSources = []
 	# First add all annotations, then the derived ones.
 	for sourceLocale in sourceLocales:
-		emojiSources.append(annotationsDir.File("%s.xml" % sourceLocale))
+		cldrSources.append(annotationsDir.File("%s.xml" % sourceLocale))
 	for sourceLocale in sourceLocales:
-		emojiSources.append(annotationsDerivedDir.File("%s.xml" % sourceLocale))
-	env.emojiDict(sourceDir.Dir("locale/%s" % destLocale).File("emojis.dic"), emojiSources)
+		cldrSources.append(annotationsDerivedDir.File("%s.xml" % sourceLocale))
+	env.cldrDict(sourceDir.Dir("locale/%s" % destLocale).File("cldr.dic"), cldrSources)
