@@ -110,6 +110,6 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 		retVal->lVal=propValue->Value.l;
 	});
 	// Unregister the IUnknown from the COM global interface table as we don't need it anymore.
-	res=pGIT->RevokeInterfaceFromGlobal(cookie);
-	return RPC_S_OK;
+	pGIT->RevokeInterfaceFromGlobal(cookie);
+	return res;
 }
