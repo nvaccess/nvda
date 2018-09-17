@@ -35,8 +35,8 @@ typedef struct {
 	} Value;
 } SPropValue;
 
-using funcType_HrGetOneProp=HRESULT(__stdcall *)(IUnknown*,ULONG,SPropValue**);
-using funcType_MAPIFreeBuffer=ULONG(__stdcall *)(SPropValue*);
+using funcType_HrGetOneProp=HRESULT(STDAPICALLTYPE *)(IUnknown*,ULONG,SPropValue**);
+using funcType_MAPIFreeBuffer=ULONG(STDAPICALLTYPE *)(SPropValue*);
 
 // Our RPC function
 error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const long threadID, IUnknown* mapiObject, const unsigned long mapiPropTag, VARIANT* retVal) {
@@ -57,7 +57,11 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 		LOG_ERROR(L"Could not load mapi32.dll");
 		return -1;
 	}
-	auto HrGetOneProp=(funcType_HrGetOneProp)GetProcAddress(mapi32lib,"HrGetOneProp@12");
+	auto HrGetOneProp=(funcType_HrGetOneProp)GetProcAddress(mapi32lib,"HrGetOneProp");
+	if(!HrGetOneProp) {
+		// Some versions of mapi32.dll name the HrGetOneProp symbol with an arguments size suffix 
+		HrGetOneProp=(funcType_HrGetOneProp)GetProcAddress(mapi32lib,"HrGetOneProp@12");
+	}
 	if(!HrGetOneProp) {
 		LOG_ERROR(L"Could not locate function HrGetOneProp in mapi32.dll");
 		return -1;
