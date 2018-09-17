@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 
 // A Smart Library handle.
-// Constrcut it with a handle returned by LoadLibrary or similar.
+// Construct it with a handle returned by LoadLibrary or similar.
 // Once the object goes out of scope, FreeLibrary will automatically be called on the handle. 
 class CLoadedLibrary {
 	private:
