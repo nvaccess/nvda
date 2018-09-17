@@ -38,8 +38,11 @@ VERB_REPLYTOSENDER=102
 VERB_REPLYTOALL=103
 VERB_FORWARD=104
 executedVerbLabels={
+	# Translators: the last action taken on an Outlook mail message
 	VERB_REPLYTOSENDER:_("replied"),
+	# Translators: the last action taken on an Outlook mail message
 	VERB_REPLYTOALL:_("REPLIED ALL"),
+	# Translators: the last action taken on an Outlook mail message
 	VERB_FORWARD:_("forwarded"),
 }
 
