@@ -5,7 +5,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import Queue
+try:
+	import Queue as queue # Python 2.7 import
+except ImportError:
+	import queue # Python 3 import
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -292,7 +295,7 @@ isRunning=False
 # the issue, we use this cache as a fallback when either getTopLevelObject or
 # getHWNDFromAccessibleContext fails.
 vmIDsToWindowHandles={}
-internalFunctionQueue=Queue.Queue(1000)
+internalFunctionQueue=queue.Queue(1000)
 internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
 
 def internalQueueFunction(func,*args,**kwargs):

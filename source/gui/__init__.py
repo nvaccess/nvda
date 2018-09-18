@@ -23,16 +23,16 @@ import versionInfo
 import speech
 import queueHandler
 import core
-import guiHelper
-from settingsDialogs import *
+from . import guiHelper
+from .settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import keyboardHandler
-import logViewer
+from . import logViewer
 import speechViewer
 import winUser
 import api
-import guiHelper
+from . import guiHelper
 import winVersion
 
 # Temporary: #8599: add cp65001 codec

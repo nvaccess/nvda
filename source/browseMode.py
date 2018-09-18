@@ -1272,16 +1272,20 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		scriptHandler.queueScript(script, gesture)
 
+	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
 		if controlTypes.STATE_COLLAPSED in oldFocusStates:
 			self.passThrough = True
+			# When a control (such as a combo box) is expanded, we expect that its descendants will be classed as being outside the browseMode document.
+			# We save off the expanded control so that the next focus event within the browseMode document can see if it is for the control,
+			# and if so, it disables passthrough, as the control has obviously been collapsed again.
+			self.currentExpandedControl=oldFocus
 		elif not self.disableAutoPassThrough:
 			self.passThrough = False
 		reportPassThrough(self)
-	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual  caret is not within the currently focused node.
@@ -1382,6 +1386,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if self.passThrough:
 				self._replayFocusEnteredEvents()
 				nextHandler()
+			return
+		# If a control has been expanded by the collapseOrExpandControl script, and this focus event is for it,
+		# disable passThrough and report the control, as the control has obviously been collapsed again.
+		# Note that whether or not this focus event was for that control, the last expanded control is forgotten, so that only the next focus event for the browseMode document can handle the collapsed control.
+		lastExpandedControl=self.currentExpandedControl
+		self.currentExpandedControl=None
+		if self.passThrough and obj==lastExpandedControl:
+			self.passThrough=False
+			reportPassThrough(self)
+			nextHandler()
 			return
 		if enteringFromOutside and not self.passThrough and self._lastFocusObj==obj:
 			# We're entering the document from outside (not returning from an inside object/application; #3145)
@@ -1515,7 +1529,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We found a cached result.
 				return doResult(inApp)
 			objs.append(obj)
-			if obj.role in self.APPLICATION_ROLES:
+			if (
+				# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
+				obj.role in self.APPLICATION_ROLES 
+				# Anything inside a combo box should be treated as being outside a browseMode document.
+				or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+			):
 				return doResult(True)
 			# Cache container.
 			container = obj.container
