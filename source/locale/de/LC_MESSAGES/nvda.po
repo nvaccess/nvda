@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 00:10+1000\n"
+"POT-Creation-Date: 2018-09-14 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -4037,8 +4037,8 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"Die Nächste Taste, die Sie drücken, wird nicht von NVDA behandelt, sondern "
-"direkt an Windows weitergereicht."
+"Die nächste gedrückte Taste wird von NVDA überhaupt nicht behandelt, sie "
+"wird direkt an Windows weitergereicht."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -4161,19 +4161,19 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "Sprachbetrachte deaktiviert"
+msgstr "Sprachbetrachter ausgeschaltet"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "Sprachbetrachter aktiviert"
+msgstr "Sprachbetrachter eingeschaltet"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
-"Zeigt den Sprachbetrachter an, ein freischwebendes Fenster, das sämtliche "
-"gesprochenen Meldungen enthält."
+"Schaltet den NVDA-Sprachbetrachter um. Ein schwebendes Fenster, mit dem Sie "
+"den gesamten Text anzeigen können, den NVDA gerade ausgibt."
 
 #. Translators: Reports which position braille is tethered to
 #. (braille can be tethered automatically or to either focus or review position).
@@ -4183,8 +4183,7 @@ msgstr "Braillezeile gekoppelt: %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
-"Koppelt die Braillezeile wahlweise an den Fokus oder an den NVDA-Cursor."
+msgstr "Schaltet die Kopplung der Braille-Darstellung um."
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4200,11 +4199,11 @@ msgstr ""
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
-msgstr "Braille-Cursor aus"
+msgstr "Braille-Cursor ausgeschaltet"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor on"
-msgstr "Braille-Cursor ein"
+msgstr "Braille-Cursor eingeschaltet"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
@@ -4212,7 +4211,7 @@ msgstr "Schaltet den Braille-Cursor um."
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 msgid "Braille cursor is turned off"
-msgstr "Braille-Cursor ist ausgeschaltet."
+msgstr "Braille-Cursor ist ausgeschaltet"
 
 #. Translators: Reports which braille cursor shape is activated.
 #, python-format
@@ -4225,7 +4224,7 @@ msgstr "Schaltet zwischen den cursor-Varianten um."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
-msgstr "Die Zwischenablage ist leer."
+msgstr "Die Zwischenablage ist leer"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
