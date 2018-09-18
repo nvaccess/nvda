@@ -123,7 +123,7 @@ def getCharacterDescription(locale,character):
 	if not desc and not locale.startswith('en'):
 		desc=getCharacterDescription('en',character)
 	return desc
- 
+
 # Speech symbol levels
 SYMLVL_NONE = 0
 SYMLVL_SOME = 100
@@ -659,3 +659,12 @@ def clearSpeechSymbols():
 	"""
 	SpeechSymbolProcessor.localeSymbols.invalidateAllData()
 	_localeSpeechSymbolProcessors.invalidateAllData()
+
+def handlePostConfigProfileSwitch(prevConf=None):
+	if not prevConf:
+		return
+	if prevConf["speech"]["includeCLDR"] is not config.conf["speech"]["includeCLDR"]:
+		# Either included or excluded CLDR data, so clear the cache.
+		clearSpeechSymbols()
+
+config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)

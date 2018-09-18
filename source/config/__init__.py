@@ -364,13 +364,14 @@ class ConfigManager(object):
 		if not self._shouldHandleProfileSwitch:
 			self._pendingHandleProfileSwitch = True
 			return
-		init = self.rootSection is None
+		currentRootSection = self.rootSection
+		init = currentRootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		post_configProfileSwitch.notify()
+		post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -439,6 +440,9 @@ class ConfigManager(object):
 
 	def __setitem__(self, key, val):
 		self.rootSection[key] = val
+
+	def dict(self):
+		return self.rootSection.dict()
 
 	def listProfiles(self):
 		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
@@ -900,13 +904,13 @@ class AggregatedSection(object):
 		self._cache[key] = val
 		return val
 
-	def iteritems(self):
+	def __iter__(self):
 		keys = set()
 		# Start with the cached items.
 		for key, val in self._cache.iteritems():
 			keys.add(key)
 			if val is not KeyError:
-				yield key, val
+				yield key
 		# Walk through the profiles and spec looking for items not yet cached.
 		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
 			if not profile:
@@ -915,15 +919,36 @@ class AggregatedSection(object):
 				if key in keys:
 					continue
 				keys.add(key)
-				# Use __getitem__ so caching, AggregatedSections, etc. are handled.
-				try:
-					yield key, self[key]
-				except KeyError:
-					# This could happen if the item is in the spec but there's no default.
-					pass
+				yield key
+
+	def iteritems(self):
+		for key in self:
+			try:
+				yield (key, self[key])
+			except KeyError:
+				# This could happen if the item is in the spec but there's no default.
+				pass
 
 	def copy(self):
 		return dict(self.iteritems())
+
+	def dict(self):
+		"""Return a deepcopy of self as a dictionary.
+		Adapted from L{configobj.Section.dict}.
+		"""
+		newdict = {}
+		for entry in self:
+			this_entry = self[entry]
+			if isinstance(this_entry, AggregatedSection):
+				this_entry = this_entry.dict()
+			elif isinstance(this_entry, list):
+				# create a copy rather than a reference
+				this_entry = list(this_entry)
+			elif isinstance(this_entry, tuple):
+				# create a copy rather than a reference
+				this_entry = tuple(this_entry)
+			newdict[entry] = this_entry
+		return newdict
 
 	def __setitem__(self, key, val):
 		spec = self._spec.get(key) if self.spec else None

@@ -1098,7 +1098,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel (if checked, data from the unicode CLDR will be used
 		# to speak emoji descriptions).
-		includeCLDRText = _("Use Unicode Consortium data to speak emo&ji descriptions")
+		includeCLDRText = _("Include Unicode Consortium data when processing characters and symbols")
 		self.includeCLDRCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=includeCLDRText))
 		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
 
