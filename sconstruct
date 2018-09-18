@@ -174,7 +174,7 @@ env64['projectResFile'] = resFile
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
 
-env.SConscript('source/comInterfaces_sconscript',exports=['env', 'sourceDir'])
+env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
 #Process nvdaHelper scons files
 env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
