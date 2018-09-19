@@ -29,11 +29,12 @@ What's New in NVDA
  - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
 - If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
  - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
-
-
-== Changes for Developers ==
 - Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
 
+
+= 2018.3.1 =
+This is a minor release to fix a critical bug in NVDA which caused 32 bit versions of Mozilla Firefox to crash. (#8759)
+ 
 
 = 2018.3 =
 Highlights of this release include automatic detection of many Braille displays, support for new Windows 10 features including the Windows 10 Emoji input panel, and many other bug fixes.
