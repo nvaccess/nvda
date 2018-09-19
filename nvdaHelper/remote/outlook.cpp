@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 constexpr ULONG PT_LONG=3;
 constexpr ULONG MAPI_E_NOTFOUND=0x8004010f;
+constexpr ULONG PROP_TYPE_MASK=0xffff;
 
 typedef struct {
 	ULONG ulPropTag;
@@ -44,7 +45,7 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 		LOG_ERROR(L"NULL MAPI object");
 		return E_INVALIDARG;
 	}
-	if((mapiPropTag&0xffff)!=PT_LONG) {
+	if((mapiPropTag&PROP_TYPE_MASK)!=PT_LONG) {
 		// Right now this function only supports MAPI properties with a type of long.
 		// To support more types, we would need to know how to correctly pack them into a VARIANT.
 		LOG_ERROR(L"Unsupported MAPI prop type");
@@ -89,7 +90,7 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	execInThread(threadID,[=,&res](){
 		// Unmarshal the IUnknown pointer from the COM global interface table.
 		IUnknownPtr mapiObject=nullptr;
-		res=pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,(void**)static_cast<IUnknown**>(&mapiObject));
+		res=pGIT->GetInterfaceFromGlobal(cookie,IID_IUnknown,reinterpret_cast<void**>(&mapiObject));
 		if(res!=S_OK) {
 			LOG_ERROR(L"Could not unmarshal object, code "<<res);
 			return;
