@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 from comtypes import COMError
+from comtypes.hresult import S_OK
 import comtypes.client
 import comtypes.automation
 import ctypes
@@ -443,7 +444,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			if mapiObject:
 				v=comtypes.automation.VARIANT()
 				res=NVDAHelper.localLib.nvdaInProcUtils_outlook_getMAPIProp(self.appModule.helperLocalBindingHandle,self.windowThreadID,mapiObject,PR_LAST_VERB_EXECUTED,ctypes.byref(v))
-				if res==0:
+				if res==S_OK:
 					verbLabel=executedVerbLabels.get(v.value,None)
 					if verbLabel:
 						textList.append(verbLabel)

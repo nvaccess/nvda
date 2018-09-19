@@ -23,8 +23,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 // The following declarations come from MAPIDEFS.h which is no longer included in the Windows SDK
 
-#define PT_LONG ((ULONG)3)
-#define MAPI_E_NOTFOUND 0x8004010f
+constexpr ULONG PT_LONG=3;
+constexpr ULONG MAPI_E_NOTFOUND=0x8004010f;
 
 typedef struct {
 	ULONG ulPropTag;
@@ -40,22 +40,21 @@ using funcType_MAPIFreeBuffer=ULONG(STDAPICALLTYPE *)(SPropValue*);
 
 // Our RPC function
 error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const long threadID, IUnknown* mapiObject, const unsigned long mapiPropTag, VARIANT* retVal) {
-	LOG_INFO(L"MAPI object in rpc thread: "<<mapiObject);
 	if(!mapiObject) {
 		LOG_ERROR(L"NULL MAPI object");
-		return -1;
+		return E_INVALIDARG;
 	}
 	if((mapiPropTag&0xffff)!=PT_LONG) {
 		// Right now this function only supports MAPI properties with a type of long.
 		// To support more types, we would need to know how to correctly pack them into a VARIANT.
 		LOG_ERROR(L"Unsupported MAPI prop type");
-		return -1;
+		return E_INVALIDARG;
 	}
 	// Load mapi32 and manually lookup the functions we need.
 	CLoadedLibrary mapi32lib=LoadLibrary(L"mapi32.dll");
 	if(!mapi32lib) {
 		LOG_ERROR(L"Could not load mapi32.dll");
-		return -1;
+		return E_UNEXPECTED;
 	}
 	auto HrGetOneProp=(funcType_HrGetOneProp)GetProcAddress(mapi32lib,"HrGetOneProp");
 	if(!HrGetOneProp) {
@@ -64,12 +63,12 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	}
 	if(!HrGetOneProp) {
 		LOG_ERROR(L"Could not locate function HrGetOneProp in mapi32.dll");
-		return -1;
+		return E_UNEXPECTED;
 	}
 	auto MAPIFreeBuffer=(funcType_MAPIFreeBuffer)GetProcAddress(mapi32lib,"MAPIFreeBuffer");
 	if(!MAPIFreeBuffer) {
 		LOG_ERROR(L"Could not locate function MAPIFreeBuffer in mapi32.dll");
-		return -1;
+		return E_UNEXPECTED;
 	}
 	// NVDA gave us an IUnknown pointer representing the MAPI object from Outlook.
 	// As the MAPIProp interface is not marshallable, we need to access it from its original STA thread as a real (non-proxied) raw pointer.
@@ -95,7 +94,6 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 			LOG_ERROR(L"Could not unmarshal object, code "<<res);
 			return;
 		}
-		LOG_INFO(L"MAPI object in GUI thread: "<<static_cast<IUnknown*>(mapiObject));
 		// Fetch the wanted property from the MAPI object
 		std::unique_ptr<SPropValue,funcType_MAPIFreeBuffer> propValue {nullptr,MAPIFreeBuffer};
 		{
@@ -103,9 +101,14 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 			res=HrGetOneProp(mapiObject,mapiPropTag,&_propValue);
 			propValue.reset(_propValue);
 		}
-		if(res!=S_OK||!propValue) {
+		if(res!=S_OK) {
 			// We should be quiet about  the error where the property does not exist as this happens most of the time.
 			if(res!=MAPI_E_NOTFOUND) LOG_ERROR(L"Could not fetch MAPI property, code "<<res);
+			return;
+		}
+		if(!propValue) {
+			LOG_ERROR(L"NULL property value");
+			res=E_UNEXPECTED;
 			return;
 		}
 		// Pack the property value into the VARIANT for returning.
