@@ -141,7 +141,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				bundle = addonHandler.AddonBundle(addonPath)
 			except:
 				log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
-				# Translators: The message displayed when an error occurs when opening an add-on package for adding. 
+				# Translators: The message displayed when an error occurs when opening an add-on package for adding.
 				gui.messageBox(_("Failed to open add-on package file at %s - missing file or invalid file format")%addonPath,
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
@@ -201,7 +201,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 						summary=summary,
 						newVersion=newVersion
 					)
-					if curVersion==newVersion else 
+					if curVersion==newVersion else
 					# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 					_("A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?").format(
 						summary=summary,
@@ -344,14 +344,14 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
 		manifest=self.curAddons[index].manifest
-		# Translators: message shown in the Addon Information dialog. 
+		# Translators: message shown in the Addon Information dialog.
 		message=_("""{summary} ({name})
 Version: {version}
 Author: {author}
 Description: {description}
 """).format(**manifest)
 		url=manifest.get('url')
-		if url: 
+		if url:
 			# Translators: the url part of the About Add-on information
 			message+=_("URL: {url}").format(url=url)
 		minimumNVDAVersion=manifest['minimumNVDAVersion']
@@ -388,7 +388,7 @@ Description: {description}
 				_("Could not {state} the {description} add-on.").format(
 					state=_("disable") if shouldDisable else _("enable"),
 					description=addon.manifest['summary']
-				), 
+				),
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
@@ -405,8 +405,8 @@ Description: {description}
 	def handleRemoteAddonInstall(cls, addonPath):
 		# Add-ons cannot be installed into a Windows store version of NVDA
 		if config.isAppX:
-			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app 
-			gui.messageBox(_("Add-ons cannot be installed in the Windows Store version of NVDA"), 
+			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+			gui.messageBox(_("Add-ons cannot be installed in the Windows Store version of NVDA"),
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
@@ -509,7 +509,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				"",  # check box field
 				addon.manifest['summary'],
 				addon.version,
-				addon.manifest.get('lastTestedNVDAVersion') or 
+				addon.manifest.get('lastTestedNVDAVersion') or
 				# Translators: Displayed for add-ons in the incompatible add-ons dialog
 				# if the last tested NVDA version is not specified.
 				_("not specified")
