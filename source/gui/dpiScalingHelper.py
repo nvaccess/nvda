@@ -20,3 +20,11 @@ def getScaleFactor(windowHandle):
 	import windowUtils
 	return windowUtils.getWindowScalingFactor(windowHandle)
 
+class DpiScalingHelperMixin(object):
+	""" mixin to provide size scaling """
+	def __init__(self, windowHandle):
+		self._scaleFactor = getScaleFactor(windowHandle)
+
+	def scaleSize(self, size):
+		assert getattr(self, u"_scaleFactor", None)
+		return scaleSize(self._scaleFactor, size)

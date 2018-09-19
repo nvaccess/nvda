@@ -133,6 +133,7 @@ def disableAddonsIfAny():
 	global _disabledAddons
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
+	state["disabledAddons"] |= set(getAddonsWithUnknownCompatibility())
 	state["disabledAddons"] -= state["pendingEnableSet"]
 	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
@@ -152,6 +153,30 @@ def initialize():
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True)
 	saveState()
+
+def showUnknownCompatDialog():
+	unknownCompatAddons = list(getAddonsWithUnknownCompatibility())
+	if not len(unknownCompatAddons) > 0:
+		log.debug("No unknown compat addons.")
+		return
+
+	from gui import addonGui, mainFrame, runScriptModalDialog
+	incompatibleAddons = addonGui.IncompatibleAddonsDialog(
+		mainFrame,
+		unknownCompatAddons
+	)
+	def afterDialog(res):
+		# we may need to change the enabled addons / restart nvda here
+		shouldPromptRestart = False
+		for addon in unknownCompatAddons:
+			if addonVersionCheck.isAddonConsideredCompatible(addon):
+				addon.enable(True)
+				shouldPromptRestart = True
+		saveState()
+		if shouldPromptRestart:
+			addonGui.checkForRestart()
+	runScriptModalDialog(incompatibleAddons, afterDialog)
+
 
 def terminate():
 	""" Terminates the add-ons subsystem. """

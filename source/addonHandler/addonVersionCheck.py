@@ -20,6 +20,12 @@ def initAddonCompatibilityState():
 	global addonCompatState
 	addonCompatState = AddonCompatibilityState()
 
+# A named tuple was being used for the version state key, however pickle is unable to save a named tuple.
+# https://stackoverflow.com/questions/4677012/python-cant-pickle-type-x-attribute-lookup-failed
+def createVersionStateKey(addonName, addonVersion, NVDAVersionTuple):
+	# type: (basestring, basestring, tuple) -> dict
+	return (addonName, addonVersion, NVDAVersionTuple)
+
 class CompatValues(object):
 	(
 		Unknown,
@@ -58,7 +64,7 @@ class AddonCompatibilityStateSaver(object):
 		statePath = os.path.join(globalVars.appArgs.configPath, self.STATE_FILENAME)
 		try:
 			with open(statePath, "wb") as f:
-				cPickle.dump(f, state)
+				cPickle.dump(state, f)
 		except IOError:
 			pass
 		except cPickle.PickleError:
@@ -72,8 +78,6 @@ class AddonCompatibilityState(object):
 	- Addons that have been tested against this version of NVDA are considered compatible
 	- Addons that have not been tested, are considered to have unknown compatibility."""
 
-	VersionStateKey = namedtuple("AddonVersionStateKey", ["addonName", "addonVersion", "NVDAVersionTuple"])
-
 	def __init__(
 			self,
 			NVDAVersionTuple=buildVersion.getNextReleaseVersionTuple(),
@@ -83,7 +87,7 @@ class AddonCompatibilityState(object):
 		self._persistence = statePersistance
 		state = self._persistence.loadState() # Reef Note: this is a potential source of bugs, if there are several
 		# instances of this class state will not be in sync.
-		self.addonVersionState = state  # type: Dict[AddonCompatibilityState.VersionStateKey, CompatValues]
+		self.addonVersionState = state  # type: Dict[tuple, CompatValues]
 
 	def setAddonCompatibility(self, addon, compatibilityStateValue=CompatValues.Unknown):
 		# type: (addonHandler.AddonBase, CompatValues) -> None
@@ -109,7 +113,7 @@ class AddonCompatibilityState(object):
 			self._setAddonCompat(addon, compatibilityStateValue)
 
 	def _setAddonCompat(self, addon, compat):
-		addonKey = self.VersionStateKey(
+		addonKey = createVersionStateKey(
 			addonName=addon.name,
 			addonVersion=addon.version,
 			NVDAVersionTuple=self.NVDAVersionTuple
@@ -133,7 +137,7 @@ class AddonCompatibilityState(object):
 		if autoCompat is not CompatValues.Unknown:
 			return autoCompat
 
-		addonKey = self.VersionStateKey(
+		addonKey = createVersionStateKey(
 			addonName=addon.name,
 			addonVersion=addon.version,
 			NVDAVersionTuple=NVDAVersionTuple

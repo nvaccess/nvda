@@ -45,22 +45,29 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
+		empty = (comtypes.automation.VT_EMPTY, 0)
+		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
+		if control is None:
+			return empty
+
 		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
-		if childid != winUser.CHILDID_SELF:
-			if idProp == oleacc.PROPID_ACC_ROLE:
-				return oleacc.ROLE_SYSTEM_CHECKBUTTON, 1
-			if idProp == oleacc.PROPID_ACC_STATE:
-				states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
-				if self.control.IsChecked(childid-1):
-					states |= oleacc.STATE_SYSTEM_CHECKED
-				if self.control.IsSelected(childid-1):
-					# wx doesn't seem to  have a method to check whether a list item is focused.
-					# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
-					states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
-				return states, 1
-		return comtypes.automation.VT_EMPTY, 0
+		if childid == winUser.CHILDID_SELF:
+			return empty
+
+		if idProp == oleacc.PROPID_ACC_ROLE:
+			return oleacc.ROLE_SYSTEM_CHECKBUTTON, 1
+
+		if idProp == oleacc.PROPID_ACC_STATE:
+			states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
+			if control.IsChecked(childid-1):
+				states |= oleacc.STATE_SYSTEM_CHECKED
+			if control.IsSelected(childid-1):
+				# wx doesn't seem to  have a method to check whether a list item is focused.
+				# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
+				states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
+			return states, 1
 
 #: An array with the GUIDs of the properties that an AccPropServer should override for list controls with checkboxes.
 #: The role is supposed to be checkbox, rather than list item.
@@ -179,3 +186,15 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
+
+	def Destroy(self):
+		from IAccessibleHandler import accPropServices
+		accPropServices.ClearHwndProps(
+			hwnd=self.Handle,
+			idObject=winUser.OBJID_CLIENT,
+			idChild=0,
+			paProps=CHECK_LIST_PROPS,
+			cProps=len(CHECK_LIST_PROPS)
+		)
+		AutoWidthColumnListCtrl.Destroy(self)
+
