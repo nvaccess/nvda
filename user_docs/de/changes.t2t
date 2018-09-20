@@ -3,6 +3,35 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Neue Features ==
+- Neue Braille-Tabellen: Chinesische Voll- und Kurzschrift (China, Mandarin). (#5553)
+
+
+== Änderungen ==
+- Der Menüeintrag "Hilfesprechblasen ausgeben" im Dialogfeld Objektpräsentationen wurde in "Benachrichtigungen mitteilen" umbenannt, um die Meldung von Benachrichtigungen in Windows 8 und höher aufzunehmen. (#5789)
+- In den Tastatureinstellungen von NVDA werden die Kontrollkästchen zum Aktivieren oder Deaktivieren der NVDA-Taste nun in einer Liste und nicht mehr als separate Kontrollkästchen angezeigt.
+- NVDA zeigt unter einigen Windows-Versionen keine doppelten Informationen mehr an, wenn die Uhr in der Taskleiste vorgelesen wird. (#4364)
+- Liblouis Braille-Übersetzer auf Version 3.7.0 aktualisiert. (#8697)
+
+
+== Fehlerbehebungen ==
+- In Outlook 2016/365 werden der Kategorie- und Kennzeichenstatus für Nachrichten gemeldet. (#8603)
+- Wenn NVDA auf Sprachen wie Kirgyz, Mongolisch oder Mazedonisch eingestellt ist, wird beim Start kein Dialog mehr angezeigt, der davor warnt, dass die Sprache vom Betriebssystem nicht unterstützt wird. (#8064)
+- Wenn Sie die Maus auf das Navigatorobjekt bewegen, wird die Maus nun viel genauer auf die Position im Fokusmodus in Mozilla Firefox, Google Chrome und Acrobat Reader DC bewegt. (#6460)
+- Der Umgang mit Auswahlschaltern im Web in Firefox, Chrome und Internet Explorer wurde verbessert. (#8664)
+
+
+== Änderungen für Entwickler ==
+- Die Funktion "gui.nvdaControls" beinhaltet nun zwei Klassen zum Erstellen zugänglicher Listen mit Kontrollkästchen. (#7325)
+ - "CustomCheckListBox" ist eine zugängliche Unterklasse von "wx.CheckListBox".
+ - "AutoWidthColumnCheckListCtrl" fügt zugängliche Kontrollkästchen zu einem "AutoWidthColumnListCtrl" hinzu, welches wiederum auf "wx.ListCtrl" basiert.
+- Wenn ein wx-Widget noch nicht zugänglich ist, können Sie dies über eine Instanz von "gui.accPropServer.IAccPropServer_impl" erledigen. (#7491)
+ - Schauen Sie nach in den Implementierung von "gui.nvdaControls.ListCtrlAccPropServer" für weitere Informationen.
+- Paket "configobj" auf 5.1.0dev Commit 5b5de48a aktualisiert. (#4470)
+
+
 = 2018.3 =
 Zu den Highlights dieser Version gehören die automatische Erkennung vieler Braillezeilen, die Unterstützung neuer Windows 10-Funktionen, einschließlich des Windows 10 Emoji-Eingabebereichs und viele andere Fehlerbehebungen.
 
@@ -13,7 +42,7 @@ Zu den Highlights dieser Version gehören die automatische Erkennung vieler Brai
 - Es wurden Skripte für die Anzeige der abgelaufenen und der Gesamtzeit des aktuellen Tracks in Foobar2000 hinzugefügt. (#6596)
 - Das Mac-Befehlstastensymbol (⌘) wird nun beim Lesen von Text mit einem beliebigen Synthesizer angezeigt. (#8366)
 - Benutzerdefinierte Regeln über das Attribut "aria-roledescription" werden nun in allen Web-Browsern unterstützt. (#8448)
-- Neue Braille-Tabellen: Tschechisches 8-Punkt-Computerbraille, Zentralkurdisch, Spranisch (Esperanto), Ungarisch, Schwedisch 8-Punkt-Computerbrailleschrift. (#8226, #8437)
+- Neue Braille-Tabellen: Tschechisches 8-Punkt-Computerbraille, Zentralkurdisch, Spanisch (Esperanto), Ungarisch, Schwedisches 8-Punkt-Computerbraille. (#8226, #8437)
 - Unterstützung wurde hinzugefügt, um Braillezeilen im Hintergrund automatisch zu erkennen. (#1271)
  - Braillezeilen ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, HandyTech, Hims, SuperBraille und HumanWare BrailleNote und Brailliant BI/B werden derzeit unterstützt.
  - Sie können diese Funktion aktivieren, indem Sie die automatische Option aus der Liste der Braillezeilen im Braillezeilen-Auswahldialog von NVDA auswählen.
@@ -57,6 +86,7 @@ Zu den Highlights dieser Version gehören die automatische Erkennung vieler Brai
  - Das Cursor-Routing auf der Braillezeile funktioniert nun auch in einer Liste in einem Word-Dokument korrekt. (#7971)
  - Neu eingefügte Aufzählungen / Zahlen in einem Word-Dokument werden von der Sprachausgabe und auf der Braillezeile korrekt dargestellt. (#7970)
 - Ab Windows 10 1803 ist es nun möglich, Erweiterungen zu installieren, wenn die Funktion "Unicode UTF-8 für weltweite Sprachunterstützung verwenden" aktiviert ist. (#8599)
+- iTunes 12.9 ist mit NVDA wieder bedienbar. (#8744)
 
 
 == Änderungen für Entwickler ==
