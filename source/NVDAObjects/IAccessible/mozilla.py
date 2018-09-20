@@ -25,11 +25,18 @@ class Mozilla(ia2Web.Ia2Web):
 
 	def _getPhysicalFocus(self):
 		try:
-			paccFocus=self.IAccessibleObject.accParent.accFocus
+			paccParent=self.IAccessibleObject.accParent
 		except COMError:
+			paccParent=None
+		if not paccParent:
 			return
-		if paccFocus:
-			return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(paccFocus),IAccessibleChildID=0)
+		try:
+			paccFocus=paccParent.accFocus
+		except COMError:
+			paccFocus=None
+		if not paccFocus:
+			return
+		return IAccessible(IAccessibleObject=IAccessibleHandler.normalizeIAccessible(paccFocus),IAccessibleChildID=0)
 
 	def setFocus(self):
 		oldFocus=self._getPhysicalFocus()
