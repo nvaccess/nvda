@@ -912,7 +912,7 @@ Die meisten NVDA-Einstellungen können über Dialogfelder vorgenommen werden, we
 Viele Einstellungen können in einem mehrseitigen [Dialogfeld #NVDASettings] geändert werden. 
 In allen Einstellungsdialogen können Sie den "OK"-Schalter drücken, um die Einstellungen zu übernehmen und dn Dialog zu schließen.
 Um Einstellungen zu verwerfen, drücken Sie den "Abbrechen"-Schalter oder die Escape-Taste.
-Für manche Einstellungen können Sie auch "Übernehmen" drücken, um weiterhin im Einstellungsdialog zu bleiben.
+Für manche Einstellungen können Sie auch auf "Übernehmen" drücken, um weiterhin im Einstellungsdialog zu bleiben.
 Einige Einstellungen können auch durch Kurztasten geändert werden. Diese Kurztasten werden in den entsprechenden Abschnitten aufgelistet.
 
 ++ die Einstellungen ++[settings]
@@ -1791,7 +1791,7 @@ Im Dialog "Erweiterungen verwalten", den Sie über das Untermenü Extras im NVDA
 Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusätzlichen Code enthalten, um NVDA-Funktionen zu verändern oder zu erweitern. Es ist auf diese Weise sogar möglich, neue Braillezeilen- oder Sprachausgabentreiber hinzuzufügen.
 
 Die Erweiterungsverwaltung enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
-Für jede Erweiterung wird Ihnen der Name, der Status, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine URL als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und klicken Sie anschließend auf die Schaltfläche "Über...".
+Für jede Erweiterung wird Ihnen der Name, der Status, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine URL als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und klicken Sie anschließend auf die Schaltfläche "Info...".
 Falls für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
 
 Um weitere Erweiterungen herunterzuladen und zu installieren, klicken Sie auf den Schalter "Erweiterungen herunterladen...".
@@ -1930,7 +1930,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile rückwärtsscrollen | topRouting1 (Erstes Braille-Modul) |
-| Braillezeile vorwärtsscrollen | topRouting20/40/80 (Letztes Braillemodul) |
+| Braillezeile vorwärtsscrollen | topRouting20/40/80 (Letztes Braille-Modul) |
 | Braillezeile rückwärtsscrollen | leftAdvanceBar |
 | Braillezeile vorwärtsscrollen | rightAdvanceBar |
 | Kopplung der Brailleanzeige umschalten | leftGDFButton+rightGDFButton |
@@ -2044,7 +2044,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Braillezeile weiter scrollen | Rechts, nach unten, B6 |
 | Eine Zeile nach oben springen | B4 |
 | Eine Zeile nach unten springen | B5 |
-| Zum Braillemodul springen | Routing-Taste |
+| Zum Braille-Modul springen | Routing-Taste |
 | Umschalt+Tabulatortaste | Escape-Taste, linke triple-aktionstaste auf+ab |
 | Alt-Taste | B2+B4+B5 |
 | Escape-Taste | B4+B6 |
@@ -2152,7 +2152,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Braillezeile vorwärtsscrollen | K3 |
 | Braillezeile zur vorherigen Zeile bewegen | B2 |
 | Braillezeile zur nächsten Zeile bewegen | B5 |
-| Cursor zum Braillemodul bewegen | Routing-Taste |
+| Cursor zum Braille-Modul bewegen | Routing-Taste |
 | Kopplung der Braillezeile umschalten | K2 |
 | Alles ansagen | B6 |
 %kc:endInclude
@@ -2584,7 +2584,7 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/b
 | Braillezeile vorwärtsscrollen | T4 |
 | Braillezeile zur vorherigen Zeile bewegen | T1 |
 | Braillezeile zur nächsten Zeile scrollen | T5 |
-| Cursor zum ausgewählten Braillemodul bewegen | Routing-Taste |
+| Cursor zum ausgewählten Braille-Modul bewegen | Routing-Taste |
 | Aktuelles NAvigator-Objekt aktivieren | T3 |
 | Zum nächsten Darstellungsmodus wechseln | F1 |
 | Zum übergeordneten Objekt bewegen | F2 |
@@ -2626,7 +2626,7 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Rückwärtsscrollen | Wechsel1-6links, l1 |
 | Vorwärtsscrollen | Wechsel1-6Rechts, l8 |
 | Zum aktuellen Fokus ziehen | Wechsel1-6Links+Wechsel1-6Rechts, l1+l8 |
-| Cursor zum aktuellen Braillemodul ziehen | Routing-Taste |
+| Cursor zum aktuellen Braille-Modul ziehen | Routing-Taste |
 | Textformatierung an der Braillezelle ausgeben | Doppel-Routing-Taste |
 | NVDA-Cursor zur vorherigen Zeile ziehen | Joystick1oben |
 | NVDA-Cursor zur nächsten Zeile ziehen | Joystick1unten |
@@ -2712,7 +2712,7 @@ Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen http://
 | Braillezeile vorwärtsscrollen | fwinrt (Eine Zeilenlänge nach rechts bewegen) |
 | Braillezeile zur vorherigen Zeile bewegen | lnup (Eine Zeile nach oben bewegen) |
 | Braillezeile zur nächsten Zeile bewegen | lndn (Eine Zeile nach unten bewegen) |
-| Cursor zum Braillemodul ziehen | Routing-Taste (Cursor zum Zeichen bewegen) |
+| Cursor zum Braille-Modul ziehen | Routing-Taste (Cursor zum Zeichen bewegen) |
 %kc:endInclude
 
 + Erweiterte Themen +[AdvancedTopics]
