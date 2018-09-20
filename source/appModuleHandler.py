@@ -172,7 +172,7 @@ def fetchAppModule(processID,appName):
 
 	if doesAppModuleExist(modName):
 		try:
-			return importlib.import_module("appModules.%s" % modName, package="appMOdules").AppModule(processID, appName)
+			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
 		except:
 			log.error("error in appModule %r"%modName, exc_info=True)
 			# We can't present a message which isn't unicode, so use appName, not modName.
