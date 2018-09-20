@@ -170,7 +170,7 @@ Masaüstü klavye düzeninde sadece numaratördeki tuşları kullanan metin ince
 Numaratördeki insert, diğer insert, veya büyük harf kilidi tuşlarından birisi NVDA değişken tuşu olarak ayarlanabilir.
 Varsayılan olarak, numaratördeki insert ve diğer insert tuşlarının her ikisi NVDA değişken tuşu olarak atanmıştır.
 
-NVDA değişken tuşu olarak atadığınızbir tuşun, kendi özgün görevini yapmasını istiyorsanız, (Örneğin NVDA tuşu olarak büyük harfkilidi tuşunu ayarladıysanız, büyük harf kilidini açabilmek için), bu tuşa peşpeşe 2 kez basmanız gerekir.
+NVDA değişken tuşu olarak atadığınız bir tuşun, kendi özgün görevini yapmasını istiyorsanız, (Örneğin NVDA tuşu olarak büyük harfkilidi tuşunu ayarladıysanız, büyük harf kilidini açabilmek için), bu tuşa peşpeşe 2 kez basmanız gerekir.
 
 +++ Klavye Düzenleri +++[KeyboardLayouts]
 NVDA şu an 2 klavye düzeniyle gelmektedir.
@@ -1259,14 +1259,12 @@ Bu kategoride aşağıdaki seçenekler mevcuttur:
 ==== Klavye Düzeni ====[KeyboardSettingsLayout]
 Bu seçim kutusu, NVDA'nın hangi tür klavye düzenini kullanacağını seçmenizi sağlar. Şu an itibariyle NVDA ile gelen 2 düzen masaüstü ve dizüstü düzenleridir.
 
-==== Büyük Harf Kilidini NVDA Tuşu Olarak Kullan ====[KeyboardSettingsCapsModifier]
-Bu oanay kutusu işaretlenirse, büyük harf kilidi tuşu NVDA değişken tuşu olarak kullanılabilir.
-
-==== Normal insert tuşunu NVDA Tuşu Olarak Kullan ====[KeyboardSettingsExtendedInsert]
-Bu onay kutusu işaretlenirse, genellikle yön tuşlarının üzerinde home ve end tuşlarının yanında bulunan insert tuşu NVDA değişken tuşu olarak kullanılabilir.
-
-==== Numaratördeki insert tuşunu NVDA Değişken Tuşu Olarak Kullan ====[KeyboardSettingsNumpadInsert]
-Bu onay kutusu işaretlenirse, numaratördeki insert tuşu NVDA değişken tuşu olarak kullanılabilir.
+==== NVDA Değişken Tuşlarını Belirleyin ====[KeyboardSettingsModifiers]
+Bu listedeki onay kutuları hangi tuşların [NVDA değişken tuşları #TheNVDAModifierKey] olarak kullanılabileceğini belirler. Aşağıdaki tuşlar belirlenebilir:
+- Büyük harf tuşu (Caps lock)
+- Sayısal tuş takımındaki ınsert tuşu
+- Normal insert tuşu (genellikle ok tuşları üzerinde, home ve end tuşlarının yanında bulunur)
+-
 
 Hiçbir tuş NVDA tuşu olarak ayarlanmazsa, bazı NVDA komutları kullanılamaz.
 Dolayısıyla, bütün tuşlar seçilmemiş durumdaysa, Klavye Ayarları iletişim kutusu tamam düğmesine basıldığında bir hata mesajı gösterir.

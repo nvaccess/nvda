@@ -3,6 +3,38 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== New Features ==
+- New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
+
+
+== Changes ==
+- "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
+- IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
+- NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
+- Updated liblouis braille translator to version 3.7.0. (#8697)
+
+
+== Bug Fixes ==
+- In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
+- When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
+- Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
+- Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
+
+
+== Changes for Developers ==
+- gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
+ - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+
+
+== Changes for Developers ==
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+
+
 = 2018.3 =
 Highlights of this release include automatic detection of many Braille displays, support for new Windows 10 features including the Windows 10 Emoji input panel, and many other bug fixes.
 
@@ -58,6 +90,7 @@ Highlights of this release include automatic detection of many Braille displays,
  - Cursor routing in braille now works correctly when in a list in a Word document. (#7971)
  - Newly inserted bullets/numbers in a Word document are correctly reported in both speech and braille. (#7970)
 - In Windows 10 1803 and later, it is now possible to install add-ons if the "Use Unicode UTF-8 for worldwide language support" feature is enabled. (#8599)
+- NVDA will no longer make iTunes 12.9 and newer completely unusable to interact with. (#8744)
 
 
 == Changes for Developers ==

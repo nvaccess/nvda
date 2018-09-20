@@ -3,6 +3,30 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Uudet ominaisuudet ==
+- Uusia pistetaulukoita: mandariinikiina (Kiina) tasot 1 ja 2. (#5553)
+
+
+== Muutokset ==
+- Objektien lukeminen -valintaikkunan "Lue ohjeselitteet" -asetuksen uusi nimi on "Lue ilmoitukset", jotta siihen sisältyy ilmoitusruutujen lukeminen Windows 8:ssa ja uudemmissa. (#5789)
+- NVDA-toimintonäppäimiä käyttöön ottavat tai käytöstä poistavat valintaruudut  näytetään nyt näppäimistöasetuksissa erillisten sijaan luettelona.
+- NVDA ei enää näytä tarpeetonta tietoa luettaessa kelloa ilmoitusalueelta joissakin Windows-versioissa. (#4364)
+- Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.7.0. (#8697)
+
+
+== Korjatut ohjelmavirheet ==
+- Viestien luokka ja lipun tila luetaan Outlook 2016:ssa/365:ssä. (#8603)
+- Kun NVDA:n kieleksi on asetettu esim. kirgiisi, mongoli tai makedonia, se ei näytä enää käynnistyessään valintaikkunaa, jossa varoitetaan, ettei käyttöjärjestelmä tue kyseistä kieltä. (#8064)
+- Hiiren siirtäminen navigointiobjektiin siirtää nyt hiiren paljon tarkemmin selaustilan sijaintiin Mozilla Firefoxissa, Google Chromessa ja Acrobat Reader DC:ssä. (#6460)
+- Vuorovaikutusta verkkosivuilla olevien yhdistelmäruutujen kanssa on paranneltu Firefoxissa, Chromessa ja Internet Explorerissa. (#8664)
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2018.3 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat useiden pistenäyttöjen automaattinen tunnistaminen, tuki uusille Windows 10:n ominaisuuksille kuten emojinsyöttöpaneelille, sekä monet muut bugikorjaukset.
 
@@ -58,6 +82,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat useiden pistenäyttöj
  - Kohdistimen siirtäminen pistenäytön kosketuskohdistinnäppäimillä toimii nyt asianmukaisesti oltaessa luettelossa Word-dokumentissa. (#7971)
  - Äskettäin Word-dokumenttiin lisätyt luettelomerkit/numerot ilmaistaan asianmukaisesti sekä puheella että pistenäytöllä. (#7970)
 - Lisäosien asentaminen on nyt mahdollista Windows 10:n versiossa 1803 ja uudemmissa, jos "Käytä Unicode UTF-8 -merkistöä maailmanlaajuista kielitukea varten" -ominaisuus on käytössä. (#8599)
+- NVDA ei enää tee iTunes 12.9:stä ja uudemmista täysin käyttökelvotonta. (#8744)
 
 
 == Muutokset kehittäjille ==
