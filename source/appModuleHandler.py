@@ -18,6 +18,7 @@ import os
 import sys
 import winVersion
 import pkgutil
+import importlib
 import threading
 import tempfile
 import comtypes.client
@@ -93,8 +94,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# Try querying the app module for the name of the app being hosted.
 	try:
 		# Python 2.x can't properly handle unicode module names, so convert them.
-		mod = __import__("appModules.%s" % appName.encode("mbcs"),
-			globals(), locals(), ("appModules",))
+		mod = importlib.import_module("appModules.%s" % appName.encode("mbcs"), package="appModules")
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
 		pass
@@ -172,7 +172,7 @@ def fetchAppModule(processID,appName):
 
 	if doesAppModuleExist(modName):
 		try:
-			return __import__("appModules.%s" % modName, globals(), locals(), ("appModules",)).AppModule(processID, appName)
+			return importlib.import_module("appModules.%s" % modName, package="appMOdules").AppModule(processID, appName)
 		except:
 			log.error("error in appModule %r"%modName, exc_info=True)
 			# We can't present a message which isn't unicode, so use appName, not modName.

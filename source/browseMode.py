@@ -887,7 +887,11 @@ class ElementsListDialog(wx.Dialog):
 	def filter(self, filterText, newElementType=False):
 		# If this is a new element type, use the element nearest the cursor.
 		# Otherwise, use the currently selected element.
-		defaultElement = self._initialElement if newElementType else self.tree.GetItemData(self.tree.GetSelection())
+		# #8753: wxPython 4 returns "invalid tree item" when the tree view is empty, so use initial element if appropriate.
+		try:
+			defaultElement = self._initialElement if newElementType else self.tree.GetItemData(self.tree.GetSelection())
+		except:
+			defaultElement = self._initialElement
 		# Clear the tree.
 		self.tree.DeleteChildren(self.treeRoot)
 
