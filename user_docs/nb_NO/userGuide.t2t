@@ -21,7 +21,7 @@ Blant de viktigste funksjonene er:
 - Støtte for populære applikasjoner, inkludert nettlesere, e-postklienter, internett-chatteprogrammer og kontorpakker
 - Innebygget syntetisk tale som støtter over 80 språk
 - Lesing av tekstformatering hvor dette er tilgjengelig, for eksempel fontnavn og -størrelse, stil og stavefeil
-- Automatisk lesing av tekst under musa og valgfri hørbar indikasjon der musepekeren er plassert
+- Automatisk lesing av tekst under musen og valgfri hørbar indikasjon der muspekeren er plassert
 - Støtte for mange leselister, inkludert innskriving av punktskrift på leselister med tastatur
 - Mulig å kjøre fra en USB-minnepinne eller annet flyttbart medium uten behov for installasjon
 - Talende installasjonsprogram som er enkelt å bruke
@@ -75,15 +75,15 @@ Gå til nedlastingssiden. Der finner du en lenke for å laste ned den nyeste ver
 
 Når du kjører fila du akkurat har lastet ned, vil den starte en midlertidig kopi av NVDA. Du vil så bli spurt om du ønsker å installere NVDA, lage en flyttbar kopi eller bare fortsette å bruke den midlertidige kopien.
 
-Dersom du planlegger å alltid bruke NVDA på denne datamaskinen, bør du velge å installere NVDA. Å installere NVDA gir tilgang til ekstra funksjonalitet slik som automatisk oppstart etter innlogging, muligheten til å lese påloggingsvinduet i Windows og andre sikre skjermer i Windows (som ikke kan gjøres med portable eller midlertidige kopier) og oppretting av snarveier i startmenyen og på skrivebordet.
+Dersom du planlegger å alltid bruke NVDA på denne datamaskinen, bør du velge å installere NVDA. Å installere NVDA gir tilgang til ekstra funksjonalitet slik som automatisk start etter innlogging, muligheten til å lese påloggingsvinduet og andre sikre skjermer i Windows (som ikke kan gjøres med portable eller midlertidige kopier) og oppretting av snarveier i startmenyen og på skrivebordet.
 
-Fra den installerte kopien av NVDA kan du selv lage en portabel kopi når du måtte ønske det. Hvis du ønsker å ta NVDA med deg på en USB-minnepenn eller et annet skrivbart medium, bør du lage en portabel kopi.
+Fra den installerte kopien av NVDA kan du selv lage en flyttbar kopi når du måtte ønske det. Hvis du ønsker å ta NVDA med deg på en USB-minnepenn eller et annet skrivbart medium, bør du lage en flyttbar kopi.
 
 Den portable kopien kan også installeres på en datamaskin på et senere tidspunkt.
 
 Om du imidlertid skulle ønske å kopiere NVDA til et ikke skrivbart medium som for eksempel en CD, bør du bare kopiere pakken du har lastet ned. 
 
-Kjøring av en portabel kopi direkte fra et ikke skrivbart medium støttes ikke.
+Kjøring av en flyttbar kopi direkte fra et ikke skrivbart medium støttes ikke.
 
 Bruk av en midlertidig kopi av NVDA er også en mulighet (for eksempel for å demonstrere programvaren), selv å det å starte NVDA på denne måten hver gang kan bli nokså tidkrevende. 
 
@@ -428,7 +428,7 @@ Når du flytter deg omkring i dokumentet med lesekommandoer, blir navigasjonsobj
 Merk at NVDA vil bytte automatisk fra objektlesing til dokumentlesing når du navigerer i dokumenter i nettmodus.
 
 +++ Skjermlesing +++[ScreenReview]    
-Modus for skjermlesing lar deg lese teksten på skjermen slik den presenteres visuelt i det gjeldende programmet. Dette tilsvarer skjermlesing eller musepekerfunksjonalitet i mange andre skjermleserprogrammer for Windows. 
+Modus for skjermlesing lar deg lese teksten på skjermen slik den presenteres visuelt i det gjeldende programmet. Dette tilsvarer skjermlesing eller muspekerfunksjonalitet i mange andre skjermleserprogrammer for Windows. 
 
 Når du bytter til modus for skjermlesing, settes lesemarkøren i skjermposisjonen for det gjeldende [navigasjonsobjektet #ObjectNavigation].
   
@@ -437,23 +437,23 @@ Når du flytter deg omkring i dokumentet med lesekommandoer, blir navigasjonsobj
 Merk at i enkelte nyere programmer vil NVDA ikke kunne se teksten som vises på skjermen, enten hele teksten eller deler av den. Dette skyldes nyere teknologier for oppbygging av skjermbildet som det nå er umulig for NVDA å støtte.
    
 ++ Navigere med musen ++[NavigatingWithTheMouse]
-Når du beveger musen, leser NVDA som standard den teksten som er under musepekeren når pekeren beveger seg over den.
+Når du beveger musen, leser NVDA som standard den teksten som er under muspekeren når pekeren beveger seg over den.
 Når dette er støttet, vil NVDA lese det omkringliggende tekstavsnittet, men enkelte kontroller kan bare leses som linje.
 
 NVDA kan konfigureres til også å lese typen [objekt #Objects] under musen når den beveger seg (f.eks liste, knapp, etc.). Dette kan være nyttig for helt blinde brukere, siden teksten i noen tilfeller ikke er nok.
 
-NVDA gir brukerne en måte å forstå hvor musen er plassert i forhold til dimensjonene på skjermen ved å indikere musepekerens koordinater som pipelyder. Jo høyere musen er på skjermen, jo høyere på toneskalaen er pipene. Jo lenger til venstre eller høyre musen er plassert på skjermen, desto lenger til venstre eller høyre vil lyden bli avspilt (forutsatt at brukeren har stereohøyttalere eller hodetelefoner).
+NVDA gir brukerne en måte å forstå hvor musen er plassert i forhold til dimensjonene på skjermen ved å indikere muspekerens koordinater som pipelyder. Jo høyere musen er på skjermen, jo høyere på toneskalaen er pipene. Jo lenger til venstre eller høyre musen er plassert på skjermen, desto lenger til venstre eller høyre vil lyden bli avspilt (forutsatt at brukeren har stereohøyttalere eller hodetelefoner).
 
-Disse ekstra musefunksjonene er ikke aktivert som standard i NVDA. Hvis du ønsker å dra nytte av dem, kan du konfigurere dem fra kategorien [Museinnstillinger #MouseSettings], som finnes i innstillingsmenyen i NVDA.
+Disse ekstra musfunksjonene er ikke aktivert som standard i NVDA. Hvis du ønsker å dra nytte av dem, kan du konfigurere dem fra kategorien [Musinnstillinger #MouseSettings], som finnes i innstillingsmenyen i NVDA.
 
 Selv om en fysisk mus eller styreflate bør brukes til å navigere med musen, har NVDA noen få tastekommandoer knyttet til mus:
 %kc:beginInclude
 || Navn | Stasjonær tast | Bærbar tast | Beskrivelse |
-| Klikk med venstre museknapp | NumPad/ | NVDA+PilVenstre | Klikker på venstre museknapp én gang. Dobbeltklikk kan utføres ved å trykke på denne tasten to ganger i rask rekkefølge |
-| Lås venstre museknapp | Skift+NumPad/ | NVDA+Skift+PilVenstre | Låser venstre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den venstre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
-| Klikk høyre museknapp | NumPad stjerne | NVDA+PilHøyre | Klikker på høyre museknapp én gang. |
-| Lås høyre museknapp | Skift+NumPad stjerne | NVDA+Skift+PilHøyre | Låser høyre museknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den høyre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
-| Flytt musen til gjeldende navigasjonsobjekt | NVDA+Numpad/ | NVDA+Skift+m | Flytter musepekeren til posisjonen til det gjeldende navigasjonsobjektet og lesemarkøren |
+| Klikk med venstre musknapp | NumPad skråstrek | NVDA+PilVenstre | Klikker på venstre musknapp én gang. Dobbeltklikk kan utføres ved å trykke på denne tasten to ganger i rask rekkefølge |
+| Lås venstre musknapp | Skift+NumPad skråstrek | NVDA+Skift+PilVenstre | Låser venstre musknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den venstre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
+| Klikk høyre musknapp | NumPad stjerne | NVDA+PilHøyre | Klikker på høyre musknapp én gang. |
+| Lås høyre musknapp | Skift+NumPad stjerne | NVDA+Skift+PilHøyre | Låser høyre musknapp nede. Trykk igjen for å slippe den. Når du drar musen, trykker du denne tasten for å låse den høyre knappen nede og deretter flytte musen enten fysisk eller ved å bruke en av de andre kommandoene for flytting av musen |
+| Flytt musen til gjeldende navigasjonsobjekt | NVDA+Numpad skråstrek | NVDA+Skift+m | Flytter muspekeren til posisjonen til det gjeldende navigasjonsobjektet og lesemarkøren |
 | Naviger til objektet under musen | NVDA+NumPad stjerne | NVDA+Skift+n | Sett navigasjonsobjektet til objektet i posisjonen til muspekeren |
 %kc:endInclude
 
@@ -599,13 +599,13 @@ For å få plass til så mye informasjon som mulig på ei leselist, har følgend
 | ktknp | nedtrekksknapp |
 | snrknp | snurreknapp |
 | splknp | splittknapp |
-| btknp | bytteknapp |
+| bknp | bytteknapp |
 | kbo | kombinasjonsboks |
 | avk | avkryssingsboks |
 | dlg | dialog |
 | dok | dokument |
-| rdg | redigerbart tekstfelt |
-| pordg | redigerbart passordfelt |
+| red | redigerbart tekstfelt |
+| pored | redigerbart passordfelt |
 | innbgd | innebygd objekt |
 | slnot | sluttnotat |
 | fnot | fotnote |
@@ -627,7 +627,7 @@ For å få plass til så mye informasjon som mulig på ei leselist, har følgend
 | rlflt | rullefelt |
 | del | del |
 | stln | statuslinje |
-| fnktrl | fanekontroll |
+| fktrl | fanekontroll |
 | tbl | tabell |
 | cN | tabellkolonne nummer N, f.eks. c1, c2. |
 | rN | tabellrad nummer N, f.eks. r1, r2. |
@@ -654,25 +654,25 @@ Følgende situasjonsindikatorer er også definert:
 | *** | vist når en beskyttet kontroll eller et beskyttet dokument blir oppdaget |
 | klk | vist når et objekt er klikkbart |
 | kmnt | vist når det er en kommentar til en celle i et regneark eller del av en tekst i et dokument |
-,| frml | displayed when there is a formula on a spreadsheet cell |
-,| invalid | displayed when an invalid entry has been made |
-,| ldesc | displayed when an object (usually a graphic) has a long description |
-,| mln | displayed when an edit field allows typing multiple lines of text such as comment fields on websites |
-,| req | displayed when a required form field is encountered |
-,| ro | displayed when an object (e.g. an editable text field) is read-only |
-,| sel | displayed when an object is selected |
-,| nsel | displayed when an object is not selected |
-,| sorted asc | displayed when an object is sorted ascending |
-,| sorted desc | displayed when an object is sorted descending |
-,| submnu | displayed when an object has a popup (usually a sub-menu) |
+| frml | vist når det er en formel i en regnearkcelle |
+| ugyldig | vist når det er gjort en ugyldig oppføring |
+| lbskr | vist når et objekt (vanligvis en grafikk)) har en lang beskrivelse |
+| mln | vist når et redigeringsfelt tillater skriving av flere tekstlinjer, som kommentarfelt på nettsider |
+| pkrv | vist når et påkrevd skjemafelt blir funnet |
+| skrbsk | vist når et objekt (for eksempel et redigerbart tekstfelt) er skrivebeskyttet |
+| vlg | vist når et objekt er valgt |
+| ivlg | vist når et objekt ikke er valgt |
+| sort stig | vist når et objekt er sortert i stigende rekkefølge |
+| sort synk | vist når et objekt er sortert i synkende rekkefølge |
+| umny | vist når et objekt har en sprettopp (vanligvis en undermeny) |
 
 Til slutt er følgende forkortinger for landemerker definert:
 || Forkorting | Landemerke |
-,| bnnr | banner |
-,| cinf | content info |
-,| cmpl | complementary |
-,| form | form |
-,| main | main |
+| bnnr | banner |
+| iinf | innholdsinfo |
+| kmpl | komplementær |
+| skjema | skjema |
+| hoved | hoved |
 | nav | navigasjon |
 | søk | søk |
 | rgn | region |
@@ -930,9 +930,10 @@ Som standard kan du ikke nå alle kategorier med hurtigtastkommandoer.
 Innstillingskategoriene som du finner i innstillingsdialogen i NVDA blir beskrevet nedenfor.
 
 +++ Generelt (NVDA+Ctrl+g) +++[GeneralSettings]
-I kategorien Generelt i NVDAs innstillingsdialog settess NVDAs generelle oppførsel, som hvilket språk som skal benyttes i grensesnittet og om NVDA skal se etter oppdateringer.
+Kategorien Generelt i NVDAs innstillingsdialog inneholder valg for NVDAs generelle oppførsel, som hvilket språk som skal benyttes i grensesnittet og om NVDA skal se etter oppdateringer.
  
 Denne kategorien inneholder disse valgene:
+
 ==== Språk ====[GeneralSettingsLanguage]
 Dette er en kombinasjonsboks som lar deg velge språket som NVDAs brukergrensesnitt og meldinger skal vises i. Det er mange språk å velge mellom, men standardvalg er "Brukerstandard, Windows". Denne innstillingen ber NVDA bruke språket som for øyeblikket er valgt i Windows.
 
@@ -950,59 +951,181 @@ Om du setter kryss her, vil en dialog dukke opp når du forsøker å avslutte NV
 Lar du avkryssingsboksen stå tom, vil NVDA avslutte umiddelbart uten spørsmål.
 
 ==== Spill av lyd når NVDA startes eller avsluttes ====[GeneralSettingsPlaySounds]
-   This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
+Dette valget er en avkryssingsboks som, hvis den er avkrysset, ber NVDA spille av lyder når den startes eller avsluttes.
 
-==== Logging level ====[GeneralSettingsLogLevel]
-   This is a combo box that permits you to choose how much NVDA will log as it's running.
-   Generally users should not need to touch this as not too much is logged.
-   However, if you are wanting to provide information in a bug report, then it may be a useful option.
+==== Loggnivå ====[GeneralSettingsLogLevel]
+Dette er en kombinasjonsboks som lar deg avgjøre hvor mye NVDA logger når den kjører.
 
-==== Automatically start NVDA after I log on to Windows ====[GeneralSettingsStartAfterLogOn]
-   If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
-   This option is only available for installed copies of NVDA.
+Generelt bør ikke brukerne ha behov for å endre denne innstillinger, siden ikke for mye blir logget som standard. Skulle du som bruker likevel ønske å logge mer informasjon, for eksempel i forbindelse med en feilrapport, kan denne innstillingen være nyttig.
+  
+==== Start NVDA automatisk når jeg har logget inn i Windows ====[GeneralSettingsStartAfterLogOn]
+Hvis dette valget er slått på, vil NVDA starte automatisk så snart du har logget inn i Windows.
 
-==== Use NVDA on the Windows Logon screen (requires administrator privileges) ====[GeneralSettingsStartOnLogOnScreen]
-   If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start
-   automatically at the logon screen when Windows starts.
-   This option is only available for installed copies of NVDA.
+Dette valget er bare tilgjengelig i installerte kopier av NVDA.
 
-==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====[GeneralSettingsCopySettings]
-   Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration
-   directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure
-   Windows screens.
-   To make sure that all your settings are transferred, make sure to save your configuration first with
-   control+NVDA+c or Save configuration in the NVDA menu.
-   This option is only available for installed copies of NVDA.
+==== Bruk NVDA i innloggingsvinduet i Windows (krever administratorrettigheter) ====[GeneralSettingsStartOnLogOnScreen]
+Slå på dette valget hvis du logger inn i Windows ved å oppgi brukernavn og passord, og behøver skjermleserstøtte i innloggingsvinduet. Da vil NVDA starte automatisk i innloggingsvinduet når Windows starter.
 
-==== Automatically check for updates to NVDA ====[GeneralSettingsCheckForUpdates]
-   If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update
-   is available.
-   You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
-   When manually or automatically checking for updates, it is necessary for NVDA to send some information to the
-   update server in order to receive the correct update for your system.
-   The following information is always sent:
-   - Current NVDA version
-   - Operating System version
-   - Whether the Operating System is 64 or 32 bit
-   ==== Allow the NVDA project to gather NVDA usage statistics ====[GeneralSettingsGatherUsageStats]
-   If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA
-   users including particular demographics such as Operating system and country of origin.
-   Note that although your IP address will be used to calculate your country during the update check, the IP
-   address is never kept.
-   Apart from the mandatory information required to check for updates, the following extra information is also
-   currently sent:
-   - NVDA interface language
-   - Whether this copy of NVDA is portable or installed
-   - Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
-   - Name of the current Braille display in use (including the name of the add-on the driver comes from)
-   - The current output Braille table (if Braille is in use)
-   This information greatly aides NV Access to prioritize future development of NVDA.
+Dette valget er bare tilgjengelig i installerte kopier av NVDA.
 
-==== Notify for pending updates on startup ====[GeneralSettingsNotifyPendingUpdates]
-   If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the
-   possibility to install it.
-   You can also manually install the pending update from the Exit NVDA dialog (if enabled), from the NVDA menu,
-   or when you perform a new check from the Help menu.
+==== Bruk gjeldende lagrede innstillinger i innloggingsvinduet og på andre sikre skjermer (krever administratorrettigheter ====[GeneralSettingsCopySettings]
+Ved å trykke på denne knappen kopieres de gjeldende lagrede brukerinnstillingene i NVDA til NVDAs mappe for systeminnstillinger. NVDA vil da benytte disse innstillingene når NVDA kjøres i innloggingsvinduet, i dialogen for brukerkontokontroll og på andre sikre skjermer i Windows. 
+
+For å være sikker på at alle innstillinger dine blir overført, bør du først lagre innstillingene ved enten å trykke NVDA+Ctrl+c eller velge Lagre innstillinger i NVDA-menyen.   
+
+Dette valget er bare tilgjengelig i installerte kopier av NVDA.
+
+==== Se etter oppdateringer for NVDA automatisk ====[GeneralSettingsCheckForUpdates]
+Hvis dette er slått på, vil NVDA automatisk se etter oppdaterte versjoner av NVDA og fortelle deg det hvis en oppdatering er tilgjengelig. 
+
+Du kan også se etter oppdateringer manuelt. Det gjør du ved å velge Se etter oppdateringer under Hjelp i NVDA-menyen.
+
+Når NVDA ser etter oppdateringer, manuelt eller automatisk, må NVDA sende litt informasjon til oppdateringsserveren for å kunne motta riktig oppdatering til systemet ditt. Følgende informasjon blir alltid sendt:
+- Gjeldende versjon av NVDA
+- Versjon av operativsystemet
+- Om operativsystemet er 64- eller 32-biters
+
+==== La NVDA-prosjektet få tilgang til bruksstatistikk for NVDA ====[GeneralSettingsGatherUsageStats]
+Hvis dette er aktivert, vil NV Access benytte informasjon fra Se etter oppdateringer for å spore antallet brukere, inkludert visse demografiske verdier slik som operativsystem og opprinnelsesland.
+Vær oppmerksom på at selv om din IP-adresse vil bli brukt til å avgjøre landet ditt under oppdateringssjekken, blir aldri IP-adressen beholdt.
+Bortsett fra informasjonen som er påkrevd for å se etter oppdateringer, sendes også følgende ekstra informasjon:
+- Språket som brukes i NVDAs grensesnitt
+- Om denne kopien av NVDA er flyttbar eller installert
+- Navnet på gjeldende talesyntese som er i bruk (inkludert navnet på tillegget driveren kommer fra)
+- Navnet på gjeldende leselist som er i bruk (inkludert navnet på tillegget driveren kommer fra)
+- Gjeldende punktskrifttabell for utdata (hvis punktskrift benyttes)
+
+Denne informasjonen hjelper NV Access i stor grad med å prioritere framtidig utvikling av NVDA. 
+
+==== Varsle om ventende oppdatering ved oppstart ====[GeneralSettingsNotifyPendingUpdates]
+Hvis dette er slått på, vil NVDA si ifra ved oppstart når det finnes en ventende oppdatering. Du får også et valg om å installere den. 
+
+Du kan også installere en ventende oppdatering selv fra Avslutt NVDA-dialogen (hvis aktivert), fra NVDA-menyen eller når du ser etter en oppdatering fra Hjelp-menyen. 
 
 +++ Taleinnstillinger (NVDA+Ctrl+v) +++[SpeechSettings]
-        
+Kategorien Tale i NVDAs innstillingsdialog inneholder valg som lar deg endre både talesyntese og stemmekarakteristika for den valgte talesyntesen.
+
+Ønsker du en raskere, alternativ måte for å kunne kontrollere stemmeparametre fra hvor som helst, bør du se på delen [Innstillingsring for talesyntese #SynthSettingsRing].
+
+Kategorien Taleinnstillinger inneholder følgende valg:
+
+==== Change synthesizer ====[SpeechSettingsChange]
+Det første valget i kategorien Taleinnstillinger er knappen Endre ... Med denne knappen aktiverer du dialogen [Velg talesyntese #SelectSynthesizer] which allows you to select the active speech synthesizer and output
+   device.
+   This dialog opens on top of the NVDA Settings dialog.
+   Saving or dismissing the settings in the Select Synthesizer dialog will return you to the NVDA Settings
+   dialog.
+   ==== Voice ====[SpeechSettingsVoice]
+   The Voice option is a combo box listing all the voices of the current synthesizer that you have installed.
+   You can use the arrow keys to listen to all the various choices.
+   Left and Up arrow take you up in the list, while right and down arrow move you down in the list.
+   ==== Variant ====[SpeechSettingsVariant]
+   If you are using the Espeak NG synthesizer that is packaged with NVDA, this is a combo box that lets you
+   select the Variant the synthesizer should speak with.
+   ESpeak NG's Variants are rather like voices, as they provide slightly different attributes to the eSpeak NG
+   voice.
+   Some variants will sound like a male, some like a female, and some even like a frog.
+   ==== Rate ====[SpeechSettingsRate]
+   This option allows you to change the rate of your voice.
+   This is a slider that goes from 0 to 100, (0 being the slowest, 100 being the fastest).
+   ==== Pitch ====[SpeechSettingsPitch]
+   This option allows you to change the pitch of the current voice.
+   It is a slider which goes from 0 to 100, (0 being the lowest pitch and 100 being the highest).
+   ==== Volume ====[SpeechSettingsVolume]
+   This option is a slider which goes from 0 to 100, (0 being the lowest volume and 100 being the highest).
+   ==== Inflection ====[SpeechSettingsInflection]
+   This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer
+   should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak NG).
+   ==== Automatic Language switching ====[SpeechSettingsLanguageSwitching]
+   This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if
+   the text being read specifies its language.
+   This option is enabled by default.
+   Currently only the eSpeak NG synthesizer supports automatic language switching.
+   ==== Automatic Dialect switching ====[SpeechSettingsDialectSwitching]
+   This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual
+   language changes.
+   For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K.,
+   then the synthesizer will switch accents if this option is enabled.
+   This option is disabled by default.
+   %kc:setting
+   ==== Punctuation/Symbol Level ====[SpeechSettingsSymbolLevel]
+   Key: NVDA+p
+   This allows you to choose the amount of punctuation and other symbols that should be spoken as words.
+   For example, when set to all, all symbols will be spoken as words.
+   This option applies to all synthesizers, not just the currently active synthesizer.
+   ==== Trust voice's language for processing symbols and characters ====[SpeechSettingsTrust]
+   On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols
+   and characters.
+   If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you
+   may wish to turn this off to force NVDA to use its global language setting instead.
+   ==== Capital pitch change percentage ====[SpeechSettingsCapPitchChange]
+   This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital
+   letter.
+   This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
+   For no pitch change you would use 0.
+   ==== Say "cap" before capitals ====[SpeechSettingsSayCapBefore]
+   This setting is a checkbox that, when checked, tells NVDA to say the word "cap" before any capital letter when
+   spoken as an individual character such as when spelling.
+   Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this
+   well, so perhaps this option may be of use.
+   ==== Beep for capitals ====[SpeechSettingsBeepForCaps]
+   If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by
+   itself.
+   Like the "say cap for capitals" checkbox, this is useful for Synthesizers that can't change their pitch for
+   capital letters.
+   ==== Use spelling functionality if supported ====[SpeechSettingsUseSpelling]
+   Some words consist of only one character, but the pronunciation is different depending on whether the
+   character is being spoken as an individual character (such as when spelling) or a word.
+   For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
+   This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
+   Most synthesizers do support it.
+   This option should generally be enabled.
+   However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it
+   is enabled.
+   If you are having problems with the pronunciation of individual characters, try disabling this option.
+   +++ Select Synthesizer (NVDA+control+s) +++[SelectSynthesizer]
+   The Synthesizer dialog, which can be opened by activating the Change... button in the speech category of the
+   NVDA settings dialog, allows you to select which Synthesizer NVDA should use to speak with.
+   Once you have selected your synthesizer of choice, you can press Ok and NVDA will load the selected
+   Synthesizer.
+   If there is an error loading the synthesizer, NVDA will notify you with a message, and continue using the
+   previous synthesizer.
+   ==== Synthesizer ====[SelectSynthesizerSynthesizer]
+   This option allows you to choose the synthesizer you wish NVDA to use for speech output.
+   For a list of the Synthesizers that NVDA supports, please see the [Supported Speech Synthesizers
+   #SupportedSpeechSynths] section.
+   One special item that will always appear in this list is "No speech", which allows you to use NVDA with no
+   speech output whatsoever.
+   This may be useful for someone who wishes to only use NVDA with braille, or perhaps to sighted developers who
+   only wish to use the Speech Viewer.
+   ==== Output device ====[SelectSynthesizerOutputDevice]
+   This option allows you to choose the sound card that NVDA should instruct the selected synthesizer to speak
+   through.
+   %kc:setting
+   ==== Audio Ducking Mode ====[SelectSynthesizerDuckingMode]
+   Key: NVDA+shift+d
+   On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications
+   while NVDA is speaking, or all the time while NVDA is running.
+   - No Ducking: NVDA will never lower the volume of other audio.
+   - Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking
+   or playing sounds. This may not work for all synthesizers.
+   - Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
+   -
+   This option is only available if NVDA has been installed.
+   It is not possible to support audio ducking for portable and temporary copies of NVDA.
+   +++ Synth settings ring +++[SynthSettingsRing]
+   If you wish to quickly change speech settings without going to the Speech category of the NVDA settings
+   dialog, there are some NVDA key commands that allow you to move through the most common speech settings from
+   anywhere while running NVDA:
+   %kc:beginInclude
+   || Name | Desktop key | Laptop key | Description |
+   | Move to next synth setting | NVDA+control+rightArrow | NVDA+shift+control+rightArrow | Moves to the next
+   available speech setting after the current, wrapping around to the first setting again after the last |
+   | Move to previous synth setting | NVDA+control+leftArrow | NVDA+shift+control+leftArrow | Moves to the next
+   available speech setting before the current, wrapping around to the last setting after the first |
+   | Increment current synth setting | NVDA+control+upArrow | NVDA+shift+control+upArrow | increases the current
+   speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+   | Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the
+   current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+   %kc:endInclude
+           
