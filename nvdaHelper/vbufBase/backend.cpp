@@ -186,10 +186,6 @@ bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 }
 
 void VBufBackend_t::update() {
-	if(inUpdate) {
-		return;
-	}
-	inUpdate=true;
 	if(this->hasContent()) {
 		this->lock.acquire();
 		LOG_DEBUG(L"Updating "<<pendingInvalidSubtreesList.size()<<L" subtrees");
@@ -227,7 +223,6 @@ void VBufBackend_t::update() {
 		this->lock.release();
 	}
 	LOG_DEBUG(L"Update complete");
-	inUpdate=false;
 }
 
 void VBufBackend_t::terminate() {
@@ -278,6 +273,10 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		return nullptr;
 	}
 	if(existingNode->denyReuseIfPreviousSiblingsChanged) {
+		// This node is not allowed to be reused if any of its previous siblings have changed.
+		// We work this out by walking back to the previous controlFieldNode in its siblings, and ensuring that it is a reference node that references the existing node's first previous controlFieldNode.
+		// As we know that buffers are always rendered in a forward direction, we can garantee that if the previous controlFieldNode is correct,
+		// then all previous nodes before that are also correct.
 		VBufStorage_controlFieldNode_t* previousControlFieldNode=nullptr;
 		for(auto tempNode=previous;tempNode!=nullptr;tempNode=tempNode->getPrevious()) {
 			previousControlFieldNode=dynamic_cast<VBufStorage_controlFieldNode_t*>(tempNode);
@@ -285,6 +284,8 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		}
 		VBufStorage_referenceNode_t* previousReferenceNode=dynamic_cast<VBufStorage_referenceNode_t*>(previousControlFieldNode);
 		if(previousControlFieldNode&&!previousReferenceNode) {
+			// This is a controlFieldNode but not a referenceNode.
+			// Therefore this node has been newly added.
 			LOG_DEBUG(L"Previous controlFieldNode was not a referenceNode");
 			return nullptr;
 		}
@@ -297,6 +298,9 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 			if(previousExistingControlFieldNode) break;
 		}
 		if(previousControlFieldNode!=previousExistingControlFieldNode) {
+			// The previous node differs from the existing previous node.
+			// We already know its not because a node was added, therefore this must be either a removal or a move.
+			// either way, this means that  the given node's previous siblings have changed.
 			LOG_DEBUG(L"Previous controlFieldNodes differ");
 			return nullptr;
 		}

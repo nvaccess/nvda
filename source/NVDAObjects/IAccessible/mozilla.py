@@ -34,7 +34,7 @@ class Mozilla(ia2Web.Ia2Web):
 	def setFocus(self):
 		oldFocus=self._getPhysicalFocus()
 		super(Mozilla,self).setFocus()
-		# Although all versions of Firefox block in setFocus until the physical focus has moved,
+		# Although all versions of Firefox block inSetFocus or in accFocus until    the physical focus has moved,
 		# Firefox 57 and above return before they fire a focus winEvent communicating the focus change to ATs.
 		# Therefore, If the call to setFocus did change the physical focus,
 		# Wait for a focus event to be queued to NVDA before returning.

@@ -105,11 +105,6 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
 /**
- * Tracks if the  backend is currently being updated, and if so does not allow update to become reentrant.
-  */
-	bool inUpdate {false};
-
-/**
  * Updates the content of the buffer. 
  * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
  */

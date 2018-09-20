@@ -120,7 +120,7 @@ template<typename TableType> inline void fillTableCounts(VBufStorage_controlFiel
 	}
 }
 
-inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer_t* tableBuffer) {
+inline int getTableIDFromCell(IAccessibleTableCell* tableCell) {
 	IUnknown* unk = NULL;
 	if (tableCell->get_table(&unk) != S_OK || !unk)
 		return 0;
@@ -130,26 +130,8 @@ inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer
 	unk->Release();
 	if (res != S_OK || !acc)
 		return 0;
-	HWND docHwnd;
-	int id;
-	if (acc->get_windowHandle(&docHwnd) != S_OK
-			|| acc->get_uniqueID((long*)&id) != S_OK) {
-		acc->Release();
-		return 0;
-	}
-	const int docHandle = HandleToUlong(docHwnd);
-	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
-	if (!node) {
-		acc->Release();
-		return 0;
-	}
-	IAccessibleTable2* table = NULL;
-	if (acc->QueryInterface(IID_IAccessibleTable2, (void**)&table) != S_OK || !table) {
-		acc->Release();
-		return 0;
-	}
-	fillTableCounts<IAccessibleTable2>(node, acc, table);
-	table->Release();
+	int id=0;
+	acc->get_uniqueID((long*)&id);
 	acc->Release();
 	return id;
 }
@@ -393,15 +375,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,ID,TRUE);
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
-
-	if(paccTable2) {
-		LOG_DEBUG(L"Setting node's denyReuseIfPreviousSiblingsChanged to true");
-		parentNode->denyReuseIfPreviousSiblingsChanged=true;
-		LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
-		parentNode->requiresParentUpdate=true;
-		LOG_DEBUG(L"Setting node's alwaysRerenderChildren to true");
-		parentNode->alwaysRerenderChildren=true;
-	}
 
 	//Get role -- IAccessible2 role
 	long role=0;
@@ -681,11 +654,28 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		paccTableCell=nullptr;
 	}
 
-	if(paccTableCell) {
-		LOG_DEBUG(L"Setting node's requiresParentUpdate back to false as this is a table cell");
-		parentNode->requiresParentUpdate=false;
-		LOG_DEBUG(L"Setting node's alwaysRerenderChildren back to false as this is a table cell");
-		parentNode->alwaysRerenderChildren=false;
+	if(paccTable2) {
+		// We are rendering a node that is part of a table (row group, row or cell).
+		// Set some properties to ensure that this and other nodes in the table aare correctly re-rendered if the table changes,
+		// so that the table's row and column cordinates remain accurate.
+		// setting denyReuseIfPreviousSiblingsChange ensures that if any part of the table is added or removed previous to this node,
+		// his node will not be reused (as its row / column coordinates would now be out of date).
+		LOG_DEBUG(L"Setting node's denyReuseIfPreviousSiblingsChanged to true");
+		parentNode->denyReuseIfPreviousSiblingsChanged=true;
+		if(!paccTableCell) { // just rows and row groups
+			// setting requiresParentUpdate ensures that if this node is specifically invalidated,
+			// its parent will also be invalidated.
+			// For example, if this is a table row, its rerendering may change the number of cells inside. 
+			// this in tern would affect the coordinates of all table cells in table rows after this row.
+			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
+			LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
+			parentNode->requiresParentUpdate=true;
+			// Setting alwaysRerenderChildren ensures that if this node is rerendered, none of its children are reused.
+			// For example, if this is a table row that is rerendered (perhaps due to a previous table row being added),
+			// this row's cells can't be reused because their coordinates would now be out of date.
+			LOG_DEBUG(L"Setting node's alwaysRerenderChildren to true");
+			parentNode->alwaysRerenderChildren=true;
+		}
 	}
 
 	// For IAccessibleTable, we must always be passed the table interface by the caller.
@@ -700,7 +690,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
 			if (!paccTable2) {
 				// This is an update; we're not rendering the entire table.
-				tableID = updateTableCounts(paccTableCell, this);
+				tableID = getTableIDFromCell(paccTableCell);
 			}
 			paccTableCell->Release();
 			paccTableCell = NULL;

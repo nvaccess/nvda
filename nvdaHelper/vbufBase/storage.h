@@ -357,7 +357,7 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
  */
 	bool alwaysRerenderChildren {false};
 
-/*
+/**
  * If true, all this node's descendants will always be re-rendered along with this node when being re-rendered.
  */
 	bool alwaysRerenderDescendants {false};
