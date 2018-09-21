@@ -82,11 +82,13 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin):
 		SettingsDialog._instances.add(obj)
 		return obj
 
-	def __init__(self, parent,
-	             resizeable=False,
-	             hasApplyButton=False,
-	             settingsSizerOrientation=wx.VERTICAL,
-	             multiInstanceAllowed=False):
+	def __init__(
+			self, parent,
+			resizeable=False,
+			hasApplyButton=False,
+			settingsSizerOrientation=wx.VERTICAL,
+			multiInstanceAllowed=False
+	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window

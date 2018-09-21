@@ -61,19 +61,26 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		settingsSizer = wx.BoxSizer(wx.VERTICAL)
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
+		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
 			label = _("All add-ons are currently disabled. To enable add-ons you must restart NVDA.")
-			mainSizer.Add(wx.StaticText(self, label=label))
+			firstTextSizer.Add(wx.StaticText(self, label=label))
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel = _("Installed Add-ons")
-		self.addonsList = sHelper.addLabeledControl(
-			entriesLabel,
-			nvdaControls.AutoWidthColumnListCtrl,
-			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
-			size=self.scaleSize((550, 350))
+		firstTextSizer.Add(wx.StaticText(self, label=entriesLabel))
+		mainSizer.Add(
+			firstTextSizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.TOP|wx.LEFT|wx.RIGHT
+		)
+		self.addonsList = listAndButtonsSizerHelper.addItem(
+			nvdaControls.AutoWidthColumnListCtrl(
+				parent=self,
+				style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
+				size=self.scaleSize((550, 350))
+			)
 		)
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 		self.addonsList.InsertColumn(0, _("Package"), width=self.scaleSize(150))
@@ -85,7 +92,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.InsertColumn(3, _("Author"), width=self.scaleSize(300))
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
 
-		entryButtonsHelper=guiHelper.ButtonHelper(wx.HORIZONTAL)
+		entryButtonsHelper=guiHelper.ButtonHelper(wx.VERTICAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 		self.aboutButton = entryButtonsHelper.addButton(self, label=_("&About add-on..."))
 		self.aboutButton.Disable()
@@ -110,14 +117,31 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 		self.getAddonsButton = entryButtonsHelper.addButton(self, label=_("&Get add-ons..."))
 		self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
-		settingsSizer.Add(entryButtonsHelper.sizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.TOP)
+		listAndButtonsSizerHelper.addItem(entryButtonsHelper.sizer)
+
+		mainSizer.Add(
+			listAndButtonsSizerHelper.sizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL
+		)
+
+		mainSizer.Add(
+			wx.StaticLine(self),
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.TOP | wx.BOTTOM | wx.EXPAND
+		)
+
 		# Translators: The label of a button to close the Addons dialog.
 		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
 		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
-		mainSizer.Add(closeButton, border=20, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.CENTER | wx.ALIGN_RIGHT)
+		mainSizer.Add(
+			closeButton,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.CENTER | wx.ALIGN_RIGHT
+		)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
+
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
