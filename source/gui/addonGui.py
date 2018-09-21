@@ -390,15 +390,15 @@ Description: {description}
 		url=manifest.get('url')
 		if url:
 			# Translators: the url part of the About Add-on information
-			message+=_("URL: {url}").format(url=url)
+			message+=_("\nURL: {url}").format(url=url)
 		minimumNVDAVersion=manifest['minimumNVDAVersion']
 		if minimumNVDAVersion:
 			# Translators: the minimum NVDA version part of the About Add-on information
-			message+=_("Minimum required NVDA version: {version}").format(version=minimumNVDAVersion)
+			message+=_("\nMinimum required NVDA version: {version}").format(version=minimumNVDAVersion)
 		lastTestedNVDAVersion=manifest['lastTestedNVDAVersion']
 		if lastTestedNVDAVersion:
 			# Translators: the last NVDA version tested part of the About Add-on information
-			message+=_("Last NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
+			message+=_("\nLast NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
