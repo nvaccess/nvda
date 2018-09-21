@@ -117,6 +117,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 		self.getAddonsButton = entryButtonsHelper.addButton(self, label=_("&Get add-ons..."))
 		self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
+		# Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
+		self.incompatAddonsButton = entryButtonsHelper.addButton(self, label=_("&Manage incompatible add-ons..."))
+		self.incompatAddonsButton.Bind(wx.EVT_BUTTON, self.onIncompatAddonsShowClick)
 		listAndButtonsSizerHelper.addItem(entryButtonsHelper.sizer)
 
 		mainSizer.Add(
@@ -425,6 +428,33 @@ Description: {description}
 		ADDONS_URL = "http://addons.nvda-project.org"
 		os.startfile(ADDONS_URL)
 
+	def onIncompatAddonsShowClick(self, evt):
+		from addonHandler.addonVersionCheck import CompatValues
+		compatState = addonVersionCheck.addonCompatState
+		version = buildVersion.getNextReleaseVersionTuple()
+		addons = list(addonHandler.getAvailableAddons(
+			filterFunc=lambda addon: (
+					compatState.getAddonCompatibilityForNVDAVersion(addon, version) in
+					CompatValues.UserInterventionSet
+			)
+		))
+		incompatibleAddons = IncompatibleAddonsDialog(self, addons)
+
+		def afterDialog(res):
+			# here we need to check if the compatibility has changed.
+			# addons that have become incompat should be disabled, and a restart prompt shown
+			# addons that have become compat should be visible, but not enabled unless they already were.
+			for addon in addonHandler.getAvailableAddons(
+				filterFunc=lambda addon: (
+						CompatValues.ManuallySetIncompatible == compatState.getAddonCompatibilityForNVDAVersion(addon, version)
+				)
+			):
+				addon.enable(shouldEnable=False)
+			self.refreshAddonsList()
+
+		from gui import runScriptModalDialog
+		runScriptModalDialog(incompatibleAddons, afterDialog)
+
 	@classmethod
 	def handleRemoteAddonInstall(cls, addonPath):
 		# Add-ons cannot be installed into a Windows store version of NVDA
@@ -528,7 +558,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
-		for addon in self.unknownCompatibilityAddonsList:
+		for idx, addon in enumerate(self.unknownCompatibilityAddonsList):
 			self.addonsList.Append((
 				"",  # check box field
 				addon.manifest['summary'],
@@ -538,6 +568,9 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				# if the last tested NVDA version is not specified.
 				_("not specified")
 			))
+			compatState = addonVersionCheck.addonCompatState
+			shouldCheck = compatState.getAddonCompatibility(addon) == CompatValues.ManuallySetCompatible
+			self.addonsList.CheckItem(idx, check=shouldCheck)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.unknownCompatibilityAddonsList)
 		if curAddonsLen>0:
@@ -553,7 +586,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			checked = self.addonsList.IsChecked(itemIndex)
 			compatValue = CompatValues.ManuallySetCompatible if checked else CompatValues.ManuallySetIncompatible
 			addon = self.unknownCompatibilityAddonsList[itemIndex]
-			addonVersionCheck.addonCompatState.setAddonCompatibility(addon, compatValue)
+			compatState = addonVersionCheck.addonCompatState
+			compatState.setAddonCompatibility(addon, compatValue)
 
 	def onContinue(self, evt):
 		try:

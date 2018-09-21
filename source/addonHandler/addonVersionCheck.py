@@ -39,6 +39,7 @@ class CompatValues(object):
 	CompatibleValuesSet = [Compatible, ManuallySetCompatible]
 	AutoDeducedValuesSet = [Unknown, Compatible, Incompatible]
 	ManualValuesSet = [ManuallySetCompatible, ManuallySetIncompatible]
+	UserInterventionSet = [Unknown, ManuallySetIncompatible, ManuallySetCompatible]
 
 class AddonCompatibilityStateSaver(object):
 
