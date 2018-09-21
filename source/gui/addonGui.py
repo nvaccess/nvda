@@ -92,6 +92,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.InsertColumn(3, _("Author"), width=self.scaleSize(300))
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
 
+		# this is the group of buttons that affects the currently selected addon
 		entryButtonsHelper=guiHelper.ButtonHelper(wx.VERTICAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 		self.aboutButton = entryButtonsHelper.addButton(self, label=_("&About add-on..."))
@@ -105,27 +106,36 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.enableDisableButton = entryButtonsHelper.addButton(self, label=_("&Disable add-on"))
 		self.enableDisableButton.Disable()
 		self.enableDisableButton.Bind(wx.EVT_BUTTON, self.onEnableDisable)
-		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
-		self.addButton = entryButtonsHelper.addButton(self, label=_("&Install..."))
-		self.addButton.Bind(wx.EVT_BUTTON, self.onAddClick)
 		# Translators: The label for a button to remove either:
 		# Remove the selected add-on in Add-ons Manager dialog.
 		# Remove a speech dictionary entry.
 		self.removeButton = entryButtonsHelper.addButton(self, label=_("&Remove"))
 		self.removeButton.Disable()
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemoveClick)
-		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
-		self.getAddonsButton = entryButtonsHelper.addButton(self, label=_("&Get add-ons..."))
-		self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
-		# Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
-		self.incompatAddonsButton = entryButtonsHelper.addButton(self, label=_("&Manage incompatible add-ons..."))
-		self.incompatAddonsButton.Bind(wx.EVT_BUTTON, self.onIncompatAddonsShowClick)
 		listAndButtonsSizerHelper.addItem(entryButtonsHelper.sizer)
 
 		mainSizer.Add(
 			listAndButtonsSizerHelper.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
 			flag=wx.ALL
+		)
+
+		# the following buttons are more general and apply regardless of the current selection.
+		generalActions=guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
+		self.getAddonsButton = generalActions.addButton(self, label=_("&Get add-ons..."))
+		self.getAddonsButton.Bind(wx.EVT_BUTTON, self.onGetAddonsClick)
+		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
+		self.addButton = generalActions.addButton(self, label=_("&Install..."))
+		self.addButton.Bind(wx.EVT_BUTTON, self.onAddClick)
+		# Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
+		self.incompatAddonsButton = generalActions.addButton(self, label=_("&Manage incompatible add-ons..."))
+		self.incompatAddonsButton.Bind(wx.EVT_BUTTON, self.onIncompatAddonsShowClick)
+
+		mainSizer.Add(
+			generalActions.sizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.LEFT | wx.RIGHT
 		)
 
 		mainSizer.Add(
