@@ -74,7 +74,10 @@ globalVars.startTime=time.time()
 # Check OS version requirements
 import winVersion
 if not winVersion.isSupportedOS():
-	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
+	msg = ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)
+	if hasattr(msg, 'decode'):
+		msg = msg.decode('mbcs')
+	winUser.MessageBox(0, msg, None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
 def decodeMbcs(string):
