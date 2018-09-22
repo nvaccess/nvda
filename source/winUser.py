@@ -514,9 +514,9 @@ IDRETRY=4
 IDCANCEL=3
 
 def MessageBox(hwnd, text, caption, type):
-	if hasattr(text, 'decode'):
+	if isinstance(text, bytes):
 		text = text.decode('mbcs')
-	if caption and hasattr(caption, 'decode'):
+	if isinstance(caption, bytes):
 		caption = caption.decode('mbcs')
 	res = user32.MessageBoxW(hwnd, text, caption, type)
 	if res == 0:
