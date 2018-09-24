@@ -442,13 +442,11 @@ Description: {description}
 		from addonHandler.addonVersionCheck import CompatValues
 		compatState = addonVersionCheck.addonCompatState
 		version = buildVersion.getNextReleaseVersionTuple()
-		addons = list(addonHandler.getAvailableAddons(
-			filterFunc=lambda addon: (
-					compatState.getAddonCompatibilityForNVDAVersion(addon, version) in
-					CompatValues.UserInterventionSet
-			)
-		))
-		incompatibleAddons = IncompatibleAddonsDialog(self, addons)
+		incompatibleAddons = IncompatibleAddonsDialog(
+			parent=self,
+			displayManuallySetCompatibilityAddons=True,
+			NVDAVersion=version
+		)
 
 		def afterDialog(res):
 			# here we need to check if the compatibility has changed.
@@ -498,16 +496,26 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __init__(
 			self,
 			parent,
-			unknownCompatibilityAddonsList,
+			displayManuallySetCompatibilityAddons,
 			NVDAVersion=buildVersion.getNextReleaseVersionTuple()
 	):
 		if IncompatibleAddonsDialog._instance() is not None:
-			log.debug("Attempting to open multiple IncompatibleAddonsDialog instances, exiting early.")
-			return
+			raise RuntimeError("Attempting to open multiple IncompatibleAddonsDialog instances")
 		import weakref
 		IncompatibleAddonsDialog._instance = weakref.ref(self)
 
-		self.unknownCompatibilityAddonsList = unknownCompatibilityAddonsList
+		compatState = addonHandler.addonVersionCheck.addonCompatState
+		if displayManuallySetCompatibilityAddons:
+			self.unknownCompatibilityAddonsList = list(addonHandler.getAvailableAddons(
+				filterFunc=lambda addon: (
+						compatState.getAddonCompatibilityForNVDAVersion(addon, NVDAVersion) in
+						CompatValues.UserInterventionSet
+				)
+			))
+		else:
+			self.unknownCompatibilityAddonsList = list(addonHandler.getAddonsWithUnknownCompatibility(NVDAVersion))
+		if not len(self.unknownCompatibilityAddonsList) > 0:
+			raise RuntimeError("No unknown compat addons.")
 
 		# Translators: The title of the Incompatible Addons Dialog
 		wx.Dialog.__init__(self, parent, title=_("Incompatible Add-ons"))
@@ -522,10 +530,10 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The title of the Incompatible Addons Dialog
 		introText = _(
 			"The compatibility of the following add-ons is not known, they have not been tested "
-			"against this version of NVDA. Please review the list and select any add-ons that you "
+			"against NVDA version {}. Please review the list and select any add-ons that you "
 			"do not wish to be disabled. Untested add-ons may cause instability while using NVDA. "
 			"Please contact the add-on author for further assistance."
-		)
+		).format("%s.%s.%s" % NVDAVersion)
 		AddonSelectionIntroLabel=wx.StaticText(self, label=introText)
 		AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
 		sHelper.addItem(AddonSelectionIntroLabel)

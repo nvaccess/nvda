@@ -155,16 +155,16 @@ def initialize():
 	saveState()
 
 def showUnknownCompatDialog():
-	unknownCompatAddons = list(getAddonsWithUnknownCompatibility())
-	if not len(unknownCompatAddons) > 0:
-		log.debug("No unknown compat addons.")
-		return
-
 	from gui import addonGui, mainFrame, runScriptModalDialog
-	incompatibleAddons = addonGui.IncompatibleAddonsDialog(
-		mainFrame,
-		unknownCompatAddons
-	)
+	try:
+		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
+			parent=mainFrame,
+			displayManuallySetCompatibilityAddons=False
+		)
+	except RuntimeError:
+		log.debug("Unable to open IncompatibleAddonsDialog", exc_info=True)
+		return
+	unknownCompatAddons = incompatibleAddons.unknownCompatibilityAddonsList
 	def afterDialog(res):
 		# we may need to change the enabled addons / restart nvda here
 		shouldPromptRestart = False
