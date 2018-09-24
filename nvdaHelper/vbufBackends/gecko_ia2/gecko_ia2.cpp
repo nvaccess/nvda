@@ -34,7 +34,8 @@ CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
 	constexpr int numRelations=2;
-	HRESULT res=element->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,numRelations,&ppUnk,&nTargets);
+	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
+	HRESULT res=element->get_relationTargetsOfType(CComBSTR(IA2_RELATION_LABELLED_BY),numRelations,&ppUnk,&nTargets);
 	if(res!=S_OK) return nullptr;
 	// Grab all the returned IUnknowns and store them as smart pointers within a smart pointer array 
 	// so that any further returns will correctly release all the objects. 
