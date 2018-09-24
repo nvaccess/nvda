@@ -299,7 +299,7 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 		}
 		if(previousControlFieldNode!=previousExistingControlFieldNode) {
 			// The previous node differs from the existing previous node.
-			// We already know its not because a node was added, therefore this must be either a removal or a move.
+			// We already know it's not because a node was added, therefore this must be either a removal or a move.
 			// either way, this means that  the given node's previous siblings have changed.
 			LOG_DEBUG(L"Previous controlFieldNodes differ");
 			return nullptr;

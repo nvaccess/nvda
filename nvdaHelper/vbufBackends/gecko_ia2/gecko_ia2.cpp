@@ -660,14 +660,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		// Set some properties to ensure that this and other nodes in the table aare correctly re-rendered if the table changes,
 		// so that the table's row and column cordinates remain accurate.
 		// setting denyReuseIfPreviousSiblingsChange ensures that if any part of the table is added or removed previous to this node,
-		// his node will not be reused (as its row / column coordinates would now be out of date).
+		// this node will not be reused (as its row / column coordinates would now be out of date).
 		LOG_DEBUG(L"Setting node's denyReuseIfPreviousSiblingsChanged to true");
 		parentNode->denyReuseIfPreviousSiblingsChanged=true;
 		if(!paccTableCell) { // just rows and row groups
 			// setting requiresParentUpdate ensures that if this node is specifically invalidated,
 			// its parent will also be invalidated.
-			// For example, if this is a table row, its rerendering may change the number of cells inside. 
-			// this in tern would affect the coordinates of all table cells in table rows after this row.
+			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
+			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
 			LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
 			parentNode->requiresParentUpdate=true;
