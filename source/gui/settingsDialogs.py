@@ -1560,7 +1560,7 @@ class BrowseModePanel(SettingsPanel):
 		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 
-		# Lazily import this.
+		# Import late to avoid circular import.
 		from treeInterceptorHandler import shouldCreateTreeInterceptorOptions
 
 		# Translators: The label for a setting in browse mode settings to 
@@ -1571,7 +1571,7 @@ class BrowseModePanel(SettingsPanel):
 		self.createTIOnPageLoadList = sHelper.addLabeledControl(createTIOnPageLoadLabelText, wx.Choice, choices=createTIOnPageLoadChoices)
 		try:
 			index=self.createTIOnPageLoadValues.index(config.conf["virtualBuffers"]["createTIOnPageLoad"])
-		except:
+		except ValueError:
 			index=0
 		self.createTIOnPageLoadList.SetSelection(index)
 

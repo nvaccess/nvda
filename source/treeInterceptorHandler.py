@@ -55,7 +55,7 @@ def update(obj, force=False):
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
-		# Import late to avoid circular input.
+		# Import late to avoid circular import.
 		if not force:
 			from browseMode import BrowseModeTreeInterceptor, lastDisableAutoPassThrough
 			if (

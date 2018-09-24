@@ -437,7 +437,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	def __init__(self,rootNVDAObject):
 		super(ExcelBrowseModeTreeInterceptor,self).__init__(rootNVDAObject)
 		# This treeInterceptor starts in focus mode, thus escape should not switch back to browse mode
-		self.disableAutoPassThrough = self.passThrough = config.conf['virtualBuffers']['createTIOnPageLoad'] != treeInterceptorHandler.TI_CREATE_ALWAYS
+		passThrough = config.conf['virtualBuffers']['createTIOnPageLoad'] != treeInterceptorHandler.TI_CREATE_ALWAYS
+		self.disableAutoPassThrough =		self.passThrough = passThrough
 		# Make this tree interceptor behave like it is always manually created, since it starts in focus mode by default.
 		self.createdByObject = False
 		if self.passThrough:
