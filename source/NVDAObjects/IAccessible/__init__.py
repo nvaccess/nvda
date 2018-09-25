@@ -120,13 +120,17 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getPointFromOffset(self,offset):
+	@classmethod
+	def _getPointFromOffsetInObject(cls,obj,offset):
 		try:
-			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
-		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(*res.center)
 		return point
+
+	def _getPointFromOffset(self,offset):
+		return self._getPointFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"
@@ -1656,6 +1660,12 @@ class TrayClockWClass(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
 
+	def _get_name(self):
+		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+		if super(TrayClockWClass, self).value is None:
+			return super(TrayClockWClass, self).name
+		return None
+
 class OutlineItem(IAccessible):
 
 	def _get_value(self):
@@ -1833,6 +1843,7 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",

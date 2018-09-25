@@ -3,12 +3,76 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+Glavne karakteristike ove verzije uključuju automatsko prepoznavanje puno brajevih redova, podrška za nove Windows 10 karakteristike uključujući Windows 10 panel za unos emotikona, i puno ispravljenih grešaka.
+
+== Nove karakteristike ==
+- NVDA će prijavljivati gramatičke greške kada su ispravno prikazane na Web stranicama u programu Mozilla Firefox. (#8280)
+- Sadržaj koji je označen kao ubačen ili obrisan na Web stranicama se sada prijavljuje u programu  Google Chrome. (#8558)
+- Dodata podržka za BrailleNote QT i  Apex BT scroll wheel kada se BrailleNote koristi kao brajev red sa programom NVDA. (#5992, #5993)
+- Dodate skripte za prijavljivanje proteklog i ukupnog trajanja  trenutnog zapisa u programu Foobar2000. (#6596)
+- Simbol za Mac komandni taster   (⌘) se sada izgovara kada se čitaju tekstovi sa bilo kojim sintetizatorom. (#8366)
+- Prilagođeni elementi koji koriste aria-roledescription atribut su sada podržani u svim Web pretraživačima. (#8448)
+- Nove brajeve tabele: Češki osmotačkasti, Centralni Kurdiški, Esperanto, Mađarski, Švedski osmotačkasti kompjuterski brajev kod. (#8226, #8437)
+- Dodata podrška za automatsko prepoznavanje brajevih redova u pozadini. (#1271)
+ - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille i HumanWare BrailleNote i Brailliant BI/B redovi su trenutno podržani.
+ - Možete omogućiti ovu opciju u dijalogu za izbor brajevog reda, izborom opcije automatski.
+ - Molimo pogledajte dokumentaciju za dodatne detalje.
+- Dodata podrška za različite moderne načine unosa u verzijama Windowsa 10. One uključuju panel emotikona (jesenje  Creators ažuriranje), diktiranje (jesenje creators ažuriranje), predlozi za unos teksta na hardverskoj tastaturi (aprilsko ažuriranje 2018), i privremena memorija u oblaku (oktobarsko ažuriranje 2018). (#7273)
+- Sadržaj označen kao citat korišćenjem ARIA (role blockquote) je sada podržan u programu Mozilla Firefox 63. (#8577)
+
+
+== Promene ==
+- Lista jezika u dijalogu opštih podešavanja je sada sortirana po imenima jezika umesto po ISO 639 kodovima. (#7284)
+- Dodate podrazumevane komande za alt šift tab i  windows tab za sve podržane Freedom Scientific brajeve redove. (#7387)
+- Za ALVA BC680 i  protocol converter redove, moguće je odrediti različite funkcije za left i  right smart pad, thumb i  etouch tastere. (#8230)
+- Za ALVA BC6 redove, kombinacija sp2+sp3 će sada izgovarati trenutni datum i vreme, a sp1+sp2 emulira taster Windows. (#8230)
+- Korisnik će jednom biti upitan kada se NVDA pokrene  da li se slažu sa slanjem podataka o korišćenju kompaniji  NV Access kada se proveravaju ažuriranja. (#8217)
+- Kada se proveravaju ažuriranja, ako je korisnik dozvolio slanje podataka o korišćenju, NVDA će poslati ime trenutnog sintetizatora i brajevog reda koji se trenutno koriste, kako bi pomogli u određivanju prioriteta za rad na njihovim drajverima. (#8217)
+- Ažuriran  liblouis brajev prevodilac na verziju 3.6.0. (#8365)
+- Ažurirana adresa za ispravnu Rusku  osmotačkastu brajevu tabelu. (#8446)
+- Ažuriran  eSpeak-ng na 1.49.3dev commit 910f4c2. (#8561)
+
+
+== Ispravljene greške ==
+- Pristupačne oznake za kontrole u programu  Google Chrome se sada češće prijavljuju u režimu pretraživanja   kada se oznaka  ne pojavljuje kao deo sadržaja. (#4773)
+- Obaveštenja su sada podržana u aplikaciji  Zoom. Na primer, ovo uključuje status mikrofona, i primljene poruke. (#7754)
+- Menjanje predstavljanja sadržaja na brajevom redu u režimu pretraživanja više ne izaziva prestanak praćenja kursora. (#7741)
+- ALVA BC680 se sada ispravno inicializuju. (#8106)
+- Po podrazumevanim podešavanjima, ALVA BC6 redovi više neće koristiti emulirane sistemske tastere kada se pritiskaju kombinacije sa tasterima sp2+sp3. (#8230)
+- Taster sp2 na ALVA BC6 brajevom redu za emuliranje alt tastera sada radi ispravno. (#8360)
+- NVDA više ne izgovara bespotrebne promene izgleda tastature. (#7383, #8419)
+- Praćenje miša je sada puno preciznije u programu Notepad i drugim kontrolama za uređivanje teksta kada ste u dokumentu sa više od 65535 znakova. (#8397)
+- NVDA će prepoznati više dijaloga u Windowsu 10 i drugim modernim aplikacijama. (#8405)
+- Na Windows 10 oktobarskom ažuriranju 2018, Server 2019 i novijim verzijama, NVDA više ne greši u praćenju sistemskog fokusa kada neka aplikacija prestane sa radom ili  izbacuje previše događaja. (#7345, #8535)
+- Korisnik sada dobija informaciju kada pokuša da pročita ili kopira praznu statusnu traku. (#7789)
+- Ispravljena greška  kada izborni okvir koji "nije označen" nije ispravno izgovoren ako je kontrola ranije bila polovično označena. (#6946)
+- U listi jezika opštih podešavanja programa NVDA, ime jezika za Burmese se ispravno prikazuje na Windowsu 7. (#8544)
+- U programu  Microsoft Edge, NVDA će izgovarati obaveštenja kao što su dostupnost čitača i napredak učitavanja stranice. (#8423)
+- Kada se nalazite na Web listi, NVDA će prijaviti njenu oznaku ako je Web autor odredio oznaku. (#7652)
+- Kada ručno određujete funkcije za komande na brajevom redu, te komande se sada ispravno uvek prikazuju za taj red. Ranije, one su se prikazivale kao određene za trenutni brajev red. (#8108)
+-  64-bitna verzija programa   Media Player Classic je sada podržana. (#6066)
+- Nekoliko poboljšanja za podršku sa brajevim redom u programu  Microsoft Word sa UI Automation omogućenom:
+ - Slično kao i u drugim višelinijskim poljima za uređivanje, kada se nalazite na početku dokumenta na brajevom redu, red se pomera tako da  je prvi znak dokumenta na  početku reda. (#8406)
+ - Smanjena količina sadržaja  predstavljanja fokusa kada se fokusirate  na Word dokument. (#8407)
+ - Prebacivanje kursora sada ispravno radi kada ste u listi u Word dokumentu. (#7971)
+ - Novo ubačena nabrajanja /brojevi u Word dokumentu se sada ispravno izgovaraju i prikazuju na brajevom redu. (#7970)
+- Na  Windowsu 10 1803 i novijim, moguće je instalirati dodatke ako je opcija "Koristi Unicode UTF-8 za podršku jezika širom sveta" omogućena. (#8599)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2018.2.1 =
+Ova verzija sadrži ažurirane prevode zbog uklonjene karakteristike u poslednjem trenutku koja je izazvala probleme.
+
+ 
 = 2018.2 =
 
 Glavne karakteristike ove verzije uključuju podršku za tabele u programu Kindle za  PC, podrška za Humanware BrailleNote Touch i  BI14 brajeve redove, poboljšanja za Onecore i Sapi5 sintetizatore govora, poboljšanja u programu Microsoft Outlook i još puno toga.
 
 == Nove karakteristike ==
-- Redovi i kolone koje pokriva određena ćelija u tabeli se sada izgovaraju i ispisuju na brajevom redu. (#2642)
 - NVDA komande za navigaciju kroz tabele su  sada podržane u servisu  Google Docs (sa omogućenim brajevim režimom). (#7946)
 - Dodata sposobnost čitanja i navigacije kroz tabele u programu Kindle za  PC. (#7977)
 - Podrška za  BrailleNote touch i  Brailliant BI 14 brajeve redove putem USB i  bluetooth veze. (#6524)
@@ -20,7 +84,6 @@ Glavne karakteristike ove verzije uključuju podršku za tabele u programu Kindl
  - Možete podesiti ove tastere korišćenjem kategorije emulirani sistemski tasteri u dijalogu ulazne komande.
 - Vraćena podrška za brajeve redove Handy Tech Braillino i  Modular (sa starijom verzijom softvera ). (#8016)
 - Vreme i datum za podržane Handy Tech uređaje (na primer Active Braille i  Active Star) će sada automatski biti sinhronizovano sa programom  NVDA kada se razlikuje više od 5 sekundi. (#8016)
-- U listi poruka programa  Microsoft Outlook, NVDA sada prijavljuje da li je na poruku odgovoreno ili je prosleđena. (#6911)
 - Ulazna komanda se može dodeliti za deaktiviranje svih aktivatora profila podešavanja. (#4935)
 
 
@@ -58,6 +121,7 @@ Glavne karakteristike ove verzije uključuju podršku za tabele u programu Kindl
 - NVDA više ne prijavljuje (Oznake s leva na desno i  oznake s desna na levo ) na brajevom redu ili kada se izgovara slovo po slovo sat u Windows traci obaveštenja u novijim verzijama Windowsa. (#5729)
 - Prepoznavanje tastera za pomeranje Hims Smart Beetle brajevih redova  ponovo radi ispravno. (#6086)
 - U određenim tekstualnim kontrolama, posebno u  Delphi aplikacijama, informacije koje se pružaju o navigaciji i uređivanju su sada dosta preciznije. (#636, #8102)
+- U Windowsu 10 verzija RS5, NVDA više ne prijavljuje suvišne informacije kada menjate aplikacije komandom alt+tab. (#8258)
 
 
 == Promene za programere ==

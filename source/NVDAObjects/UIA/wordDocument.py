@@ -161,11 +161,6 @@ class WordDocumentTextInfo(UIATextInfo):
 				docInfo=self.obj.makeTextInfo(textInfos.POSITION_ALL)
 				self.setEndPoint(docInfo,"endToEnd")
 
-	def _getTextWithFields_text(self,textRange,formatConfig,ignoreEmptyChunks=False,UIAFormatUnits=None):
-		# This override just changes ignoreEmptyChunks to false by default.
-		# We need this so that graphics and other embeded objects in MS Word get exposed.
-		return super(WordDocumentTextInfo,self)._getTextWithFields_text(textRange,formatConfig,ignoreEmptyChunks,UIAFormatUnits)
-
 	def _get_isCollapsed(self):
 		res=super(WordDocumentTextInfo,self).isCollapsed
 		if res: 
@@ -182,6 +177,18 @@ class WordDocumentTextInfo(UIATextInfo):
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
+		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
+		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
+		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
+		for index in xrange(len(fields)):
+			field=fields[index]
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				continue
+			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd":
+				formatChange=textInfos.FieldCommand("formatChange",textInfos.FormatField())
+				fields.insert(index,formatChange)
+				fields.insert(index+1,"")
+			break
 		##7971: Microsoft Word exposes list bullets as part of the actual text.
 		# This then confuses NVDA's braille cursor routing as it expects that there is a one-to-one mapping between characters in the text string and   unit character moves.
 		# Therefore, detect when at the start of a list, and strip the bullet from the text string, placing it in the text's formatField as line-prefix.

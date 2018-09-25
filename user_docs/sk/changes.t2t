@@ -3,6 +3,63 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+Prednosti tejto verzie zahŕňajú automatické pripájanie k mnohým braillovským riadkom, podporu pre nové funkcie operačného systému Windows 10 vrátane panela pre zadávanie emoji, a ďalšie opravy.
+
+== Nové vlastnosti ==
+- Ak sa na webovej stránke zobrazujú gramatické  chyby, NVDA ich dokáže oznamovať. Funguje v prehliadačoch Firefox a Chrome.  (#8280)
+- V prehliadači Google Chrome je oznamovaný obsah, ktorý je označený ako vložený alebo odstránený. (#8558)
+- Pridaná podpora pre skrolovacie koliesko so smerovými tlačidlami na riadkoch BrailleNote QT a Apex BT. (#5992, #5993)
+- Pridané klávesové skratky na oznamovanie uplynutého času a celkovej dĺžky skladby v prehrávači Foobar 2000. (#6596)
+- Symbol pre kláves Command (na klávesnici MAC ⌘) je odteraz správne oznamovaný všetkými syntézami reči. (#8366)
+- Vlastné označenia rolí pri využití atribútu aria-roledescription sú  odteraz oznamované vo všetkých webových prehliadačoch. (#8448)
+- Nové braillovské tabuľky: Český 8-bodový počítačový braill, Stredná kurdčina, Esperanto, Maďarčina, Švédsky 8-bodový počítačový braill. (#8226, #8437)
+- Pridaná automatická detekcia braillovských riadkov na pozadí. (#1271)
+ - Podporované sú riadky ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille a HumanWare BrailleNote a Brailliant BI/B.
+ - Ak chcete využívať túto funkciu, ako braillovský riadok v nastaveniach zvoľte možnosť automatické.
+ - Podrobnosti nájdete v používateľskej príručke.
+- Pridaná podpora pre rôzne metódy vstupu predstavené v systéme Windows 10. Jedná sa o panel na vkladanie Emoji (pridané v aktualizácii Fall Creators), diktovanie hlasom(slovenčina nie je podporovaná, funkcia bola pridaná vo verzii Windows 10 Fall Creators), automatické návrhy pre písanie na hardwarovej klávesnici (aktualizácia z Apríla 2018), a použitie zdieľanej schránky v cloude (aktualizácia október 2018). (#7273)
+- NVDA odteraz oznamuje Obsah označený ako citácia cez atribút aria role blockquote v prehliadači Mozilla Firefox 63. (#8577)
+
+
+== Zmeny ==
+- Odteraz je zoznam jazykov v kategórii všeobecné nastavenia zoradený abecedne a nie podľa špecifikácie ISO 639. (#7284)
+- Pre všetky podporované riadky od spoločnosti Freedom scientific boli pridané emulácie skratiek alt+shift+tab a windows+tab. (#7387)
+- Na riadkoch ALVA BC680 a protocol converter je možné používať rozšírené klávesy umiestnené po stranách riadka a Etouch tlačidlá. (#8230)
+- Upravené skratky na riadku ALVA BC6. Odteraz kombinácia sp2+sp3 oznamuje aktuálny čas a dátum, skratka sp1+sp2 emuluje kláves Windows. (#8230)
+- Po štarte sa vás NVDA pýta, či súhlasí so zasielaním a zhromažďovaním údajov z počítača. (#8217)
+- Ak odsúhlasíte   zhromažďovanie údajov, NVDA vždy pri kontrole aktualizácií odošle na server informáciu o používanom hlasovom výstupe a braillovskom riadku. Vývojári tak dokážu zistiť, ktoré ovládače majú mať pri vývoji prednosť. (#8217)
+- Prekladová tabuľka  liblouis  aktualizovaná na verziu  3.6.0. (#8365)
+- Opravená cesta k tabuľke pre Ruský 8-bodový počítačový kód. (#8446)
+- Hlasový výstup eSpeak-ng aktualizovaný na verziu 1.49.3dev commit 910f4c2. (#8561)
+
+
+== opravy ==
+- Prístupné Označenia prvkov sú lepšie oznamované v prehliadači Google chrome aj vtedy, ak nie sú priamo obsahom webovej stránky. (#4773)
+- Pridaná podpora pre upozornenia v programe Zoom. NVDA tak odteraz oznamuje prichádzajúce správy, stlmenie a zapnutie mikrofónu. (#7754)
+- Ak zmeníte prezentáciu kontextu v režime prehliadania, Braillovský kurzor správne sleduje prezerací kurzor. (#7741)
+- Opravená chyba s inicializáciou riadka ALVA BC680. (#8106)
+- Ak na riadku ALVA BC6 stlačíte kombináciu zahŕňajúcu tlačidlá sp2+sp3, riadok viac nebude emulovať skratky z počítačovej klávesnice. (#8230)
+- Skratka sp2 na riadku ALVA BC6 emuluje kláves alt tak, ako je uvedené v používateľskej príručke. (#8360)
+- NVDA viac zbytočne neoznamuje zmeny rozloženia klávesnice. (#7383, #8419)
+- Sledovanie myšky je odteraz oveľa presnejšie v poznámkovom bloku a editačných poliach obsahujúcich čistý text, v ktorých je viac ako 65535 znakov. (#8397)
+- NVDA dokáže rozpoznať viac dialógov v systéme Windows 10 a moderných aplikáciách. (#8405)
+- NVDA dokáže správne sledovať systémový fokus na systémoch Windows 10 (aktualizácia z októbra 2018, server 2019 a novších) aj v prípade, že aplikácia zamrzne alebo zahltí systém udalosťami. (#7345, #8535)
+- NVDA oznámi, ak sa pokúsite prečítať alebo skopírovať do schránky prázdny stavový riadok. (#7789)
+- Odteraz NVDA správne hlasom oznamuje, ak odčiarknete začiarkávacie políčko, ktoré bolo predtým čiastočne začiarknuté. (#6946)
+- Vo všeobecných nastaveniach NVDA v systéme Windows 7 sa správne zobrazuje jazyk Barmčina. (#8544)
+- NVDA odteraz oznamuje upozornenia v prehliadači Microsoft Edge (napríklad načítanie stránky, dostupnosť zobrazenia na čítanie). (#8423)
+- Pri vstupe do zoznamu v režime prehliadania NVDA oznámi názov zoznamu, ak je uvedený. (#7652)
+- Ak priradíte skratky konkrétnemu braillovskému riadku, zobrazujú sa skutočne len pre tento braillovský riadok. Doteraz sa zobrazovali pre riadok, ktorý bol zvolený v nastaveniach. (#8108)
+- Pridaná podpora pre 64-bitovú verziu prehrávača Media player Classic. (#6066)
+- Vylepšená podpora pre braillovské riadky v aplikácii MS Word s použitím UI Automation:
+ - Ak sa vo viacriadkovom editačnom poli presuniete na začiatok riadka, prvý znak sa zobrazí na prvom znaku braillovského riadka. (#8406)
+ - NVDA neoznamuje nadbytočné informácie ak získa fokus dokument MS Word. (#8407)
+ - prechod na znak v brailly funguje aj v zoznamoch v dokumentoch MS Word. (#7971)
+ - Odteraz sú správne oznamované novopridané odrážky a položky v zoznamoch v dokumentoch MS Word. (#7970)
+- Odteraz je možné inštalovať doplnky do NVDA v systémoch Windows 10 od verzie 1803 aj v prípade, ak je začiarknutá možnosť použiť kódovanie unicode UTF-8 pre celosvetovú jazykovú podporu. (#8599)
+
+
 = 2018.2 =
 
 Prednosti tejto verzie zahŕňajú podporu pre čítanie tabuliek v programe Kindle (desktop), podporu pre braillovské riadky Humanwear BrailleNote Touch a BI14, vylepšenú podporu pre hlasy Onecore a SAPI5, opravy pre Microsoft Outlook a oveľa viac.
