@@ -94,7 +94,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# Try querying the app module for the name of the app being hosted.
 	# Python 2.x can't properly handle unicode module names, so convert them.
 	# No longer the case in Python 3.
-	if sys.version.startswith("2"):
+	if sys.version_info.major == 2:
 		appName = appName.encode("mbcs")
 	try:
 		mod = importlib.import_module("appModules.%s" % appName, package="appModules")
