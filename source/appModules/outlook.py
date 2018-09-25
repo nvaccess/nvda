@@ -5,11 +5,15 @@
 #See the file COPYING for more details.
 
 from comtypes import COMError
+from comtypes.hresult import S_OK
 import comtypes.client
+import comtypes.automation
+import ctypes
 from hwPortUtils import SYSTEMTIME
 import scriptHandler
 import winKernel
 import comHelper
+import NVDAHelper
 import winUser
 from logHandler import log
 import textInfos
@@ -29,6 +33,20 @@ from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterc
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
+
+PR_LAST_VERB_EXECUTED=0x10810003
+VERB_REPLYTOSENDER=102
+VERB_REPLYTOALL=103
+VERB_FORWARD=104
+executedVerbLabels={
+	# Translators: the last action taken on an Outlook mail message
+	VERB_REPLYTOSENDER:_("replied"),
+	# Translators: the last action taken on an Outlook mail message
+	VERB_REPLYTOALL:_("REPLIED ALL"),
+	# Translators: the last action taken on an Outlook mail message
+	VERB_FORWARD:_("forwarded"),
+}
+
 
 #: The number of seconds in a day, used to make all day appointments and selections less verbose.
 #: Type: float
@@ -419,6 +437,23 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				unread=False
 			# Translators: when an email is unread
 			if unread: textList.append(_("unread"))
+			try:
+				mapiObject=selection.mapiObject
+			except COMError:
+				mapiObject=None
+			if mapiObject:
+				v=comtypes.automation.VARIANT()
+				res=NVDAHelper.localLib.nvdaInProcUtils_outlook_getMAPIProp(
+					self.appModule.helperLocalBindingHandle,
+					self.windowThreadID,
+					mapiObject,
+					PR_LAST_VERB_EXECUTED,
+					ctypes.byref(v)
+				)
+				if res==S_OK:
+					verbLabel=executedVerbLabels.get(v.value,None)
+					if verbLabel:
+						textList.append(verbLabel)
 			try:
 				attachmentCount=selection.attachments.count
 			except COMError:

@@ -173,7 +173,7 @@ Ako želite da koristite neki od ovih tastera kao da NVDA nije pokrenut(na prime
 
 +++ Rasporedi tastature +++[KeyboardLayouts]
 NVDA dolazi sa dva rasporeda komandi (poznati kao rasporedi tastature): Desktop raspored i laptop raspored.
-Po podrazumevanim podešavanjima, NVDA  je podešen da koristi desktop raspored, ali možete promeniti raspored u podešavanjima tastature, koja se nalaze u podešavanjima u NVDA meniu.
+Po podrazumevanim podešavanjima,   NVDA koristi desktop raspored tastature, međutim možete lako prebaciti NVDA na laptop raspored tastature u kategoriji tastatura [dijaloga NVDA podešavanja#NVDASettings], koji se dobija  izborom stavke opcije iz NVDA menija.
 
 Desktop raspored koristi numeričku tastaturu(sa numlock tasterom isključenim).
 Iako većina laptopova nema numeričku tastaturu, neki laptopovi mogu da koriste FN taster zajedno sa brojevima na desnoj strani tastature(7, 8, 9, u, i, o, j, k, l, i tako dalje.).
@@ -230,7 +230,7 @@ Za tablet računare kao što su  Microsoft Surface Pro, tastatura na ekranu je u
 Da biste odbacili tastaturu, dodirnite ikonicu tastature na ekranu ili se pomerite dalje od polja za unos teksta.
 
 Dok je tastatura na ekranu aktivna, da biste pronašli tastere na tastaturi, prebacite vaš prst na lokaciju tastature (obično na dnu ekrana ), a zatim se krećite po tastaturi jednim prstom.
-Kada pronađete taster koji želite da pritisnete, dodirnite taster dva puta ili podignite vaš prst, u zavisnosti od podešavanja izabranih u dijalogu [interakcija sa ekranom osetljivim na dodir#TouchInteraction].
+Kada pronađete taster koji želite da pritisnete, dodirnite taster 2 puta ili otpustite prst, u zavisnosti od podešavanja izabranih u [kategoriji podešavanja ekrana osetljivog na dodir#TouchInteraction] NVDA podešavanja.
 
 ++ Režim pomoći za unos++[InputHelpMode]
 Puno komandi je spomenuto kroz ovaj vodič, ali lak način da saznate šta svaka komanda radi je da uključite pomoć za unos.
@@ -449,7 +449,7 @@ NVDA pruža način da saznate gde se miš nalazi tako što reprodukuje zvučne s
 Što je miš dalje od leve ili desne strane, signal će biti reprodukovan sa leve ili desne strane(ukoliko korisnik ima stereo zvučnike ili slušalice).
 
 Ove dodatne karakteristike miša nisu uključene po podrazumevanim podešavanjima u programu NVDA.
-Ako želite da iskoristite njihove prednosti, možete da ih podesite iz[podešavanja miša#MouseSettings], iz opcije podešavanja u NVDA meniu.
+Ako želite da iskoristite njihove prednosti, možete ih podesiti iz kategorije [podešavanja miša#MouseSettings] [NVDA podešavanja #NVDASettings], koja se nalaze u NVDA meniju izborom stavke opcije.
 
 Iako bi trebalo koristiti fizički miš za navigaciju sa mišem, NVDA ima nekoliko glavnih komandi koje su vezane za miš:
 %kc:beginInclude
@@ -600,7 +600,7 @@ Ako koristite brajev red, NVDA može prikazati informacije na brajevom pismu.
 Ako vaš brajev red ima tastaturu, takođe možete pisati u skraćenom i standardnom  brajevom pismu.
 
 Molimo pročitajte [podržani brajevi redovi#SupportedBrailleDisplays] deo za informacije o posebnim komandama za brajeve redove.
-Možete podesiti brajev red korišćenjem dijaloga [brajeva podešavanja#BrailleSettings].
+Možete podesiti brajev red korišćenjem kategorije [brajev red #BrailleSettings] [NVDA podešavanja #NVDASettings].
 
 ++ Skraćenice za vrste kontrola, stanje i orjentire++[BrailleAbbreviations]
 Kako bi što je više informacija moguće stalo na brajev red, sledeće skraćenice su dodate za vrste kontrola stanje kao i orjentire.
@@ -2558,8 +2558,11 @@ Molimo pogledajte dokumentaciju brajevog reda za opis i raspored ovih tastera.
 | windows taster | tačka1+tačka2+tačka3+tačka4+backspace |
 | Taster za velika slova | tačka7+backspace, tačka8+backspace |
 | numLock taster | tačka3+backspace, tačka6+backspace |
-| šift taster | tačka7+razmak, l4 |
-| kontrol taster | tačka7+tačka8+razmak, tačka1+tačka7+tačka8+razmak, tačka4+tačka7+tačka8+razmak, l5 |
+| Uključuje i isključuje taster šift | tačka1+tačka7+razmak, tačka4+tačka7+razmak |
+| kontrol taster | tačka7+tačka8+razmak, l5 |
+| Uključuje i isključuje  kontrol taster | tačka1+tačka7+tačka8+razmak, tačka4+tačka7+tačka8+razmak |
+| alt taster | tačka8+razmak, l6 |
+| Uključuje i isključuje alt taster| tačka1+tačka8+razmak, tačka4+tačka8+razmak |
 | alt taster | tačka8+razmak, tačka1+tačka8+razmak, tačka4+tačka8+razmak, l6 |
 | Uključuje i isključuje HID simulaciju unosa tastature| esytime):l1+joystick1Down, esytime):l8+joystick1Down |
 %kc:endInclude

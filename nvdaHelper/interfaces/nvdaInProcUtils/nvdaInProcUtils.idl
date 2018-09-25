@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2018 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -56,5 +56,16 @@ interface NvdaInProcUtils {
 	error_status_t dumpOnCrash([in] handle_t bindingHandle, [in,string] const wchar_t* minidumpPath);
 
 	error_status_t IA2Text_findContentDescendant([in] handle_t bindingHandle, [in] const unsigned long hwnd, [in] long parentID, [in] long what, [out] long* descendantID, [out] long* descendantOffset);
+
+/*
+ * Fetches the  requested property from the given MAPIProp object.
+ * @param threadID the threadID of the Outlook GUI thread where the MAPI object came from.
+ * @param mapiObject the IUnknown interface of the MAPI object of a mail item in Outlook.
+ * Fetch it from the Outlook object model with something like Something like application.activeExplorer().selection.item(1).mapiObject
+ * @param mapiPropTag the property tag for the requested property. 
+ * In the form 0xAAAABBBB (where AAAA is the tag and BBBB is the type).
+ * @param value a pointer to a VARIANT that will hold the result.
+ */
+ 	error_status_t outlook_getMAPIProp(const long threadID, [in] IUnknown* mapiObject, const unsigned long mapiPropTag, [out] VARIANT* val);
 
 }
