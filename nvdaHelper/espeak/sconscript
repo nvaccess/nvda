@@ -157,6 +157,13 @@ env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspat
 #Compile all dictionaries
 missingDicts=['zhy', ] #'mt','tn','tt']
 dictSourcePath=espeakRepo.Dir('dictsource').abspath
+# Remove emoji files before compiling dictionaries.
+# Currently many of these simply crash eSpeak at runtime.
+# Also, our own emoji processing using CLDR data is preferred.
+emojiGlob = os.path.join(espeakRepo.abspath,'dictsource','*_emoji')
+for f in glob(emojiGlob):
+	print("Removing emoji file: %s"%f)
+	os.remove(f)
 for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
 	lang=f.name.split('_')[0]
 	if lang in missingDicts: continue
