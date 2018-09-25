@@ -212,6 +212,9 @@ env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
 
+# Build unicode CLDR dictionaries
+env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
+
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
 	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")
