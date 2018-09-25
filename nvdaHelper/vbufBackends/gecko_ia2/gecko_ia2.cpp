@@ -284,7 +284,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 		return;
 	}
 	if(toolkitName) {
-		this->toolkitName=toolkitName;
+		this->toolkitName = std::wstring(toolkitName, SysStringLen(toolkitName));
 	}
 	BSTR toolkitVersion = NULL;
 	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
