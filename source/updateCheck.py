@@ -400,7 +400,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		installButton.SetFocus()
 		if showAddonCompat:
 			# Translators: The label of a button to review add-ons prior to NVDA update.
-			reviewAddonsButton = bHelper.addButton(self, label=_("&Review addons"))
+			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
 		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
@@ -419,7 +419,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onReviewAddonsButton(self, evt):
 		from gui import addonGui, mainFrame
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
-			parent=mainFrame,
+			parent=self,
 			displayManuallySetCompatibilityAddons=False,
 			NVDAVersion=versionInfo.getNVDAVersionTupleFromString(self.version)
 		)

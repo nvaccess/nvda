@@ -6,6 +6,8 @@
 
 import os
 import ctypes
+
+import buildVersion
 import shellapi
 import winUser
 import wx
@@ -85,6 +87,11 @@ class InstallerDialog(wx.Dialog):
 		self.isUpdate=isUpdate
 		# Translators: The title of the Install NVDA dialog.
 		super(InstallerDialog, self).__init__(parent, title=_("Install NVDA"))
+
+		import addonHandler
+		self.version = buildVersion.getNextReleaseVersionTuple()
+		shouldAskAboutAddons = any(addonHandler.getAddonsWithUnknownCompatibility(version=self.version))
+
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
@@ -96,6 +103,13 @@ class InstallerDialog(wx.Dialog):
 			if not os.path.isdir(installer.defaultInstallPath):
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
+		if shouldAskAboutAddons:
+			# Translators: A message in the installer to let the user know that some addons are not compatible.
+			msg+=_(
+				"\n\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+				"These add-ons will be disabled prior to installation. "
+				"If you rely on these add-ons please review the list to manually enable them before installation."
+			)
 		sHelper.addItem(wx.StaticText(self,label=msg))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
@@ -128,6 +142,11 @@ class InstallerDialog(wx.Dialog):
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		continueButton.SetDefault()
 		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
+
+		# Translators: The label of a button to launch the add-on compatibility review dialog.
+		reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."), id=wx.ID_OK)
+		reviewAddonButton.SetDefault()
+		reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
 		
 		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
@@ -145,6 +164,16 @@ class InstallerDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
+
+	def onReviewAddons(self, evt):
+		from gui import addonGui, mainFrame
+		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
+			parent=self,
+			displayManuallySetCompatibilityAddons=False,
+			NVDAVersion=versionInfo.getNVDAVersionTupleFromString(self.version)
+		)
+		incompatibleAddons.ShowModal()
+		incompatibleAddons.Destroy()
 
 def showInstallGui():
 	gui.mainFrame.prePopup()
