@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-11 11:02+0100\n"
-"Last-Translator: Oaron <oaron1@gmail.com>\n"
+"POT-Creation-Date: 2018-08-24 10:04+1000\n"
+"PO-Revision-Date: 2018-08-24 21:58+0100\n"
+"Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -82,11 +82,6 @@ msgstr "ismeretlen nyelv"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "Ismeretlen beviteli mód"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -366,6 +361,14 @@ msgstr "tlt"
 msgid "pwdedt"
 msgstr "jlsz"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "trl"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "besz"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "kij"
@@ -503,6 +506,18 @@ msgstr "A lehető legtöbb információ"
 msgid "Only when scrolling back"
 msgstr "Csak visszagörgetéssel"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatikus"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -572,9 +587,20 @@ msgstr "Aktív elem"
 msgid "to review"
 msgstr "Áttekintő kurzor"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatikus"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "Ismeretlen braille kijelző"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Bluetooth soros port: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "Soros: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -640,6 +666,11 @@ msgstr "Bolgár 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "Közép-kurd, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Velszi, rövidítési fokozat 1"
 
@@ -647,6 +678,11 @@ msgstr "Velszi, rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Velszi, rövidítési fokozat 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "Cseh 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -747,6 +783,11 @@ msgstr "Angol (Egyesült Államokbeli), rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "Angol (Egyesült Államokbeli), rövidítési fokozat 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "Eszperantó, rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -851,6 +892,11 @@ msgstr "Magyar 8 pontos számítógépes braille"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "Magyar irodalmi braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
 msgstr "Magyar irodalmi braille"
 
 #. Translators: The name of a braille table displayed in the
@@ -1032,6 +1078,11 @@ msgstr "Orosz, rövidítési fokozat 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Szanszkrit, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Svéd 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2504,15 +2555,25 @@ msgstr "Lapvezérlő"
 msgid "calendar"
 msgstr "Naptár"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "Diagramelem"
-
 msgid "video"
 msgstr "video"
 
 msgid "audio"
 msgstr "audio"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "Diagramelem"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Törölt"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "Beszúrt"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3801,6 +3862,14 @@ msgstr "Aktív elem bemondása, kétszeri lenyomásra betűzése."
 msgid "No status line found"
 msgstr "Az állapotsor nem található."
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "Az állapotsor üres."
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "Az állapotsor tartalmát nem lehet a vágólapra helyezni."
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4744,28 +4813,23 @@ msgstr "Billentyűzet, összes kiosztás"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amhara"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragóniai"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arab"
+msgid "Central Kurdish"
+msgstr "Közép-kurd"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepáli"
+msgid "Northern Kurdish"
+msgstr "Észak-kurd"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Szerb (Latin)"
+msgid "Burmese"
+msgstr "Burmai"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5947,7 +6011,7 @@ msgstr "%s sorral"
 msgid "level %s"
 msgstr "%s. szint"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "%s elemmel"
@@ -6058,17 +6122,9 @@ msgstr "Háttér mintázata {pattern}"
 msgid "line %s"
 msgstr "%s. sor"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "Beszúrt"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "Nem beszúrt"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "Törölt"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6693,9 +6749,17 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Nincs lejátszás alatt lévő szám"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "Bemondja a lejátszás alatt lévő szám eltelt idejét"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "Bemondja a lejátszás alatt lévő szám hosszát"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6812,32 +6876,32 @@ msgstr "{profile} profil szerkesztése"
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "purple flag"
-msgstr "Lila jelző"
+msgstr "Lila jelölő"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Orange flag"
-msgstr "Narancs jelző"
+msgstr "Narancs jelölő"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Green flag"
-msgstr "Zöld jelző"
+msgstr "Zöld jelölő"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Yellow flag"
-msgstr "Sárga jelző"
+msgstr "Sárga jelölő"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Blue flag"
-msgstr "Kék jelző"
+msgstr "Kék jelölő"
 
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 msgid "Red flag"
-msgstr "Vörös jelző"
+msgstr "Piros jelölő"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -6924,75 +6988,75 @@ msgstr "Felolvassa a megjegyzés ablak tartalmát."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "Cím helyőrző"
+msgstr "Cím"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "Szöveg helyőrző"
+msgstr "Szöveg"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "Főcím helyőrző"
+msgstr "Főcím"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "Alcím helyőrző"
+msgstr "Alcím"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Függőleges cím helyőrző"
+msgstr "Függőleges cím"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "Függőleges szöveg helyőrző"
+msgstr "Függőleges szöveg"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "Objektum helyőrző"
+msgstr "Objektum"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "Diagram helyőrző"
+msgstr "Diagram"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Bitmap helyőrző"
+msgstr "Bitmap"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
-msgstr "Médiatartalom helyőrző"
+msgstr "Médiatartalom"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Szervezeti diagram helyőrző"
+msgstr "Szervezeti diagram"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "Táblázat helyőrző"
+msgstr "Táblázat"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "Diaszám helyőrző"
+msgstr "Diaszám"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "Élőfej helyőrző"
+msgstr "Élőfej"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "Élőláb helyőrző"
+msgstr "Élőláb"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "Dátum helyőrző"
+msgstr "Dátum"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Függőleges objektum helyőrző"
+msgstr "Függőleges objektum"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "Kép helyőrző"
+msgstr "Kép"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
@@ -7045,7 +7109,7 @@ msgstr "Minta miniatűrök"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 #, python-brace-format
 msgid "Slide {slideNumber}"
-msgstr "{slideNumber}. Dia"
+msgstr "{slideNumber}. dia"
 
 #. Translators:   an unlabelled item in Powerpoint another shape is overlapping
 msgid "other item"
@@ -7233,14 +7297,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "kikapcsolva"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "Nincs emodzsi"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 series/protocol converter"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Bluetooth soros port: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7261,15 +7324,6 @@ msgstr "HID billentyűzet szimuláció engedélyezése vagy letiltása"
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit braille kijelzők"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "Soros: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7743,6 +7797,45 @@ msgstr "Frissítés telepítése"
 msgid "Please wait"
 msgstr "Kérem, várjon"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "NVDA használati adatok gyűjtése"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"Az NVDA fejlesztése érdekében az NV Access használati adatokat szeretne "
+"gyűjteni a programról.\n"
+"\n"
+"Ilyen adatok pl. a Windows verziója, az NVDA verziója, a felhasználói "
+"felület nyelve, a felhasználó országa, ill. bizonyos NVDA beállítások, mint "
+"a használt beszédszintetizátor, Braille kijelző, és braille fordítótábla. Az "
+"NVDA által bemondott, vagy braille kimenetre küldött tartalmat sosem rögzít "
+"az NV Access.  A felhasználói útmutatóban megtalálja a gyűjtött adatok "
+"listáját.\n"
+"\n"
+"Engedélyezi, hogy az NV Access rendszeresen használati adatokat gyűjtsön az "
+"NVDA fejlesztése érdekében?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "&Igen"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "&Nem"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Bővítménykezelő"
@@ -7792,6 +7885,7 @@ msgstr "&Hozzáadás"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "El&távolítás"
@@ -8412,6 +8506,10 @@ msgstr "NVDA F&rissítések automatikus ellenőrzése"
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "Figyelmeztessen függőben lévő frissítésre az induláskor"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr "Engedélyezi, hogy az NVDA projekt használati adatokat gyűjtsön"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -9191,7 +9289,7 @@ msgstr "B&ekezdésenkénti olvasás"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "&Ne válassza el a szavakat, ha lehet"
+msgstr "&Szöveg tördelése a kijelző végénél"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
@@ -10816,6 +10914,25 @@ msgstr "dupla sorköz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amhara"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arab"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepáli"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Szerb (Latin)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "Megnyitja az NVDA hangbeállítások párbeszédablakát."

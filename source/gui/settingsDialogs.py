@@ -1095,6 +1095,13 @@ class VoiceSettingsPanel(SettingsPanel):
 		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=trustVoiceLanguageText))
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
+		# Translators: This is the label for a checkbox in the
+		# voice settings panel (if checked, data from the unicode CLDR will be used
+		# to speak emoji descriptions).
+		includeCLDRText = _("Include Unicode Consortium data (including emoji) when processing characters and symbols")
+		self.includeCLDRCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=includeCLDRText))
+		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
+
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
@@ -1179,6 +1186,11 @@ class VoiceSettingsPanel(SettingsPanel):
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
+		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
+		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
+		if currentIncludeCLDR is not newIncludeCldr:
+			# Either included or excluded CLDR data, so clear the cache.
+			characterProcessing.clearSpeechSymbols()
 		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
