@@ -374,7 +374,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.fileVersion = None
 		self.storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
-		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
+		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)

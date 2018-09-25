@@ -18,6 +18,7 @@ import installer
 from logHandler import log
 import gui
 from gui import guiHelper
+from gui.dpiScalingHelper import DpiScalingHelperMixin
 import tones
 
 def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False,startAfterInstall=True):
@@ -81,12 +82,13 @@ def doSilentInstall(startAfterInstall=True):
 	prevInstall=installer.comparePreviousInstall() is not None
 	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,silent=True,startAfterInstall=startAfterInstall)
 
-class InstallerDialog(wx.Dialog):
+class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 
 	def __init__(self, parent, isUpdate):
 		self.isUpdate=isUpdate
 		# Translators: The title of the Install NVDA dialog.
-		super(InstallerDialog, self).__init__(parent, title=_("Install NVDA"))
+		wx.Dialog.__init__(self, parent, title=_("Install NVDA"))
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		import addonHandler
 		self.version = buildVersion.getNextReleaseVersionTuple()
@@ -110,7 +112,8 @@ class InstallerDialog(wx.Dialog):
 				"These add-ons will be disabled prior to installation. "
 				"If you rely on these add-ons please review the list to manually enable them before installation."
 			)
-		sHelper.addItem(wx.StaticText(self,label=msg))
+		text = sHelper.addItem(wx.StaticText(self, label=msg))
+		text.Wrap(self.scaleSize(600))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA on the Windows &logon screen")
@@ -143,10 +146,11 @@ class InstallerDialog(wx.Dialog):
 		continueButton.SetDefault()
 		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
 
-		# Translators: The label of a button to launch the add-on compatibility review dialog.
-		reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."), id=wx.ID_OK)
-		reviewAddonButton.SetDefault()
-		reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
+		if shouldAskAboutAddons:
+			# Translators: The label of a button to launch the add-on compatibility review dialog.
+			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."), id=wx.ID_OK)
+			reviewAddonButton.SetDefault()
+			reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
 		
 		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
@@ -170,7 +174,7 @@ class InstallerDialog(wx.Dialog):
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=False,
-			NVDAVersion=versionInfo.getNVDAVersionTupleFromString(self.version)
+			NVDAVersion=self.version
 		)
 		incompatibleAddons.ShowModal()
 		incompatibleAddons.Destroy()
