@@ -8,6 +8,7 @@ What's New in NVDA
 == New Features ==
 - New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
 - Replied / Forwarded status is now reported on mail items in the Microsoft Outlook message list. (#6911)
+- NVDA is now able to read descriptions for emoji as well as other characters that are part of the Unicode Common Locale Data Repository. (#6523)
 
 
 == Changes ==
@@ -32,6 +33,7 @@ What's New in NVDA
 - If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
  - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
 - Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+- The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)
 
 
 = 2018.3.1 =
