@@ -30,10 +30,18 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
+CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
-	constexpr int numRelations=2;
+	// We only need to request one relation target
+	int numRelations=1;
+	// However, a bug in Chrome causes a buffer overrun if numRelations is less than the total number of targets the node has.
+	// Therefore, If this is Chrome, request all targets (by setting numRelations to 0) as this works around the bug.
+	// There is no major performance hit to fetch all targets in Chrome as Chrome is already fetching all targets either way.
+	// In Firefox there would be extra cross-proc calls.
+	if(this->toolkitName.compare(L"Chrome")==0) {
+		numRelations=0;
+	}
 	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
 	HRESULT res=element->get_relationTargetsOfType(CComBSTR(IA2_RELATION_LABELLED_BY),numRelations,&ppUnk,&nTargets);
 	if(res!=S_OK) return nullptr;
@@ -275,6 +283,9 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 		iaApp->Release();
 		return;
 	}
+	if(toolkitName) {
+		this->toolkitName = std::wstring(toolkitName, SysStringLen(toolkitName));
+	}
 	BSTR toolkitVersion = NULL;
 	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
 		iaApp->Release();
@@ -306,7 +317,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-bool isLabelVisible(IAccessible2* pacc2) {
+bool GeckoVBufBackend_t::isLabelVisible(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if(!pacc2_2) return false;
 	auto targetAcc=getLabelElement(pacc2_2);
