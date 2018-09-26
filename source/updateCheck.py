@@ -388,7 +388,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			message = message + _(
 				"\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
 				"These add-ons will be disabled prior to installation. "
-				"If you rely on these add-ons please review the list to manually enable them before installation."
+				"If you rely on these add-ons, please review the list to manually enable them before installation."
 			)
 		text = sHelper.addItem(wx.StaticText(self, label=message))
 		text.Wrap(self.scaleSize(500))
@@ -417,7 +417,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.CentreOnScreen()
 
 	def onReviewAddonsButton(self, evt):
-		from gui import addonGui, mainFrame
+		from gui import addonGui
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=False,

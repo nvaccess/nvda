@@ -4,9 +4,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import cPickle
+from six.moves import cPickle
 import os
-from collections import namedtuple
 
 import buildVersion
 import globalVars
@@ -81,22 +80,21 @@ class AddonCompatibilityState(object):
 
 	def __init__(
 			self,
-			NVDAVersionTuple=buildVersion.getNextReleaseVersionTuple(),
-			statePersistance = AddonCompatibilityStateSaver()
+			NVDAVersionTuple=buildVersion.getCurrentVersionTuple(),
+			statePersistence=AddonCompatibilityStateSaver()
 	):
 		self.NVDAVersionTuple = NVDAVersionTuple
-		self._persistence = statePersistance
-		state = self._persistence.loadState() # Reef Note: this is a potential source of bugs, if there are several
+		self._persistence = statePersistence
+		state=self._persistence.loadState() # Reef Note: this is a potential source of bugs, if there are several
 		# instances of this class state will not be in sync.
 		self.addonVersionState = state  # type: Dict[tuple, CompatValues]
 
 	def setAddonCompatibility(self, addon, compatibilityStateValue=CompatValues.Unknown):
 		# type: (addonHandler.AddonBase, CompatValues) -> None
-		"""
-
-		:param addon:
-		:param compatibilityStateValue: unknown allows falling back to auto deduced value
-		:return:
+		"""Sets the compatibility for an addon. Does not save the value to file.
+		@param addon: The addon to set compatibility for
+		@param compatibilityStateValue: Unknown allows falling back to auto deduced value
+		@return:
 		"""
 		acceptedUserSetCompatVals = [
 			CompatValues.Unknown,
@@ -132,7 +130,10 @@ class AddonCompatibilityState(object):
 
 	def getAddonCompatibilityForNVDAVersion(self, addon, NVDAVersionTuple):
 		"""
-		:type addon: addonHandler.Addon
+		Get the addon compatibility for a given version of NVDA
+		@param addon: The addon to check for compatibility
+		@param NVDAVersionTuple: The NVDA version tuple eg (2018.1.1)
+		@return: CompatValues
 		"""
 		autoCompat = self._getAutoDeduducedAddonCompat(addon)
 		if autoCompat is not CompatValues.Unknown:
@@ -149,9 +150,14 @@ class AddonCompatibilityState(object):
 			return autoCompat
 
 	def getAddonCompatibility(self, addon):
+		"""
+		Get compatibility for the addon against the version of NVDA this class was instantiated with.
+		@param addon: The addon to check compatibility for
+		@return: CompatValues
+		"""
 		return self.getAddonCompatibilityForNVDAVersion(addon, self.NVDAVersionTuple)
 
-DEFAULT_NVDA_VERSION = buildVersion.getNextReleaseVersionTuple()
+DEFAULT_NVDA_VERSION = buildVersion.getCurrentVersionTuple()
 
 def hasAddonGotRequiredSupport(addon, version=DEFAULT_NVDA_VERSION):
 	"""True if this add-on is supported by the given version of NVDA.
@@ -170,11 +176,11 @@ def isAddonTested(addon, version=DEFAULT_NVDA_VERSION):
 	"""
 	return hasAddonGotRequiredSupport(addon, version) and addon.lastTestedNVDAVersion >= version
 
-def isAddonConsideredIncompatible(addon, version=buildVersion.getNextReleaseVersionTuple()):
+def isAddonConsideredIncompatible(addon, version=buildVersion.getCurrentVersionTuple()):
 	return addonCompatState.getAddonCompatibilityForNVDAVersion(addon, version) in CompatValues.IncompatibleValuesSet
 
-def isAddonConsideredCompatible(addon, version=buildVersion.getNextReleaseVersionTuple()):
+def isAddonConsideredCompatible(addon, version=buildVersion.getCurrentVersionTuple()):
 	return addonCompatState.getAddonCompatibilityForNVDAVersion(addon, version) in CompatValues.CompatibleValuesSet
 
-def isAddonCompatibilityKnown(addon, version=buildVersion.getNextReleaseVersionTuple()):
+def isAddonCompatibilityKnown(addon, version=buildVersion.getCurrentVersionTuple()):
 	return CompatValues.Unknown != addonCompatState.getAddonCompatibilityForNVDAVersion(addon, version)

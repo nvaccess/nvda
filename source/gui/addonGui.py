@@ -20,7 +20,7 @@ import guiHelper
 import nvdaControls
 from dpiScalingHelper import DpiScalingHelperMixin
 
-def checkForRestart():
+def promptUserForRestart():
 	# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 	restartMessage = _(
 		"Changes were made to add-ons. "
@@ -312,8 +312,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
 		if addonVersionCheck.isAddonConsideredIncompatible(addon):
-			# Translators: The status shown for an addon when it's added to the blacklist.
-			statusList.append(_("blacklisted")) # Reef note: note sure about this terminology, I dont think its very user friendly
+			# Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
+			statusList.append(_("incompatible")) # Reef note: note sure about this terminology, I dont think its very user
+		# friendly
 		elif addonVersionCheck.isAddonConsideredCompatible(addon):
 			# Translators: The status shown for an addon when it's added to the whitelist.
 			statusList.append(_("whitelisted")) # Reef note: note sure about this terminology, I dont think its very user friendly
@@ -374,7 +375,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				needsRestart = True
 				break
 		if needsRestart:
-			checkForRestart()
+			promptUserForRestart()
 
 
 	def onAbout(self,evt):
@@ -382,26 +383,31 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if index<0: return
 		manifest=self.curAddons[index].manifest
 		# Translators: message shown in the Addon Information dialog.
-		message=_("""{summary} ({name})
-Version: {version}
-Author: {author}
-Description: {description}
-""").format(**manifest)
+		message=[_(
+			"{summary} ({name})\n"
+			"Version: {version}\n"
+			"Author: {author}\n"
+			"Description: {description}\n"
+		).format(**manifest)]
 		url=manifest.get('url')
 		if url:
 			# Translators: the url part of the About Add-on information
-			message+=_("\nURL: {url}").format(url=url)
+			message.append(_("URL: {url}").format(url=url))
 		minimumNVDAVersion=manifest['minimumNVDAVersion']
 		if minimumNVDAVersion:
-			# Translators: the minimum NVDA version part of the About Add-on information
-			message+=_("\nMinimum required NVDA version: {version}").format(version=minimumNVDAVersion)
+			message.append(
+				# Translators: the minimum NVDA version part of the About Add-on information
+				_("Minimum required NVDA version: {version}").format(version=minimumNVDAVersion)
+			)
 		lastTestedNVDAVersion=manifest['lastTestedNVDAVersion']
 		if lastTestedNVDAVersion:
-			# Translators: the last NVDA version tested part of the About Add-on information
-			message+=_("\nLast NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
+			message.append(
+				# Translators: the last NVDA version tested part of the About Add-on information
+				_("Last NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
+			)
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
-		gui.messageBox(message, title, wx.OK)
+		gui.messageBox("\n".join(message), title, wx.OK)
 
 	def onHelp(self, evt):
 		index = self.addonsList.GetFirstSelected()
@@ -415,8 +421,8 @@ Description: {description}
 		if index<0: return
 		addon=self.curAddons[index]
 		shouldDisable = self._shouldDisable(addon)
-		# Counterintuitive, but makes sense when context is taken into account.
 		try:
+			# Counterintuitive, but makes sense when context is taken into account.
 			addon.enable(not shouldDisable)
 		except addonHandler.AddonError:
 			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
@@ -441,7 +447,7 @@ Description: {description}
 	def onIncompatAddonsShowClick(self, evt):
 		from addonHandler.addonVersionCheck import CompatValues
 		compatState = addonVersionCheck.addonCompatState
-		version = buildVersion.getNextReleaseVersionTuple()
+		version = buildVersion.getCurrentVersionTuple()
 		incompatibleAddons = IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=True,
@@ -497,11 +503,10 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self,
 			parent,
 			displayManuallySetCompatibilityAddons,
-			NVDAVersion=buildVersion.getNextReleaseVersionTuple()
+			NVDAVersion=buildVersion.getCurrentVersionTuple()
 	):
 		if IncompatibleAddonsDialog._instance() is not None:
 			raise RuntimeError("Attempting to open multiple IncompatibleAddonsDialog instances")
-		import weakref
 		IncompatibleAddonsDialog._instance = weakref.ref(self)
 
 		compatState = addonHandler.addonVersionCheck.addonCompatState
@@ -567,7 +572,6 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.SetAffirmativeId(continueID)
 		self.SetEscapeId(continueID)
 		button.Bind(wx.EVT_BUTTON, self.onContinue)
-		#self.Bind(wx.EVT_BUTTON, self.onContinue, id=continueID)
 
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()

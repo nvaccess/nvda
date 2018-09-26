@@ -75,7 +75,7 @@ def getRunningAddons():
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
-def getAddonsWithUnknownCompatibility(version=buildVersion.getNextReleaseVersionTuple()):
+def getAddonsWithUnknownCompatibility(version=buildVersion.getCurrentVersionTuple()):
 	""" Returns add-ons that are untested for the specified NVDA version.
 	"""
 	compatState = addonVersionCheck.addonCompatState
@@ -174,7 +174,7 @@ def showUnknownCompatDialog():
 				shouldPromptRestart = True
 		saveState()
 		if shouldPromptRestart:
-			addonGui.checkForRestart()
+			addonGui.promptUserForRestart()
 	runScriptModalDialog(incompatibleAddons, afterDialog)
 
 

@@ -91,7 +91,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		import addonHandler
-		self.version = buildVersion.getNextReleaseVersionTuple()
+		self.version = buildVersion.getCurrentVersionTuple()
 		shouldAskAboutAddons = any(addonHandler.getAddonsWithUnknownCompatibility(version=self.version))
 
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -110,7 +110,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			msg+=_(
 				"\n\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
 				"These add-ons will be disabled prior to installation. "
-				"If you rely on these add-ons please review the list to manually enable them before installation."
+				"If you rely on these add-ons, please review the list to manually enable them before installation."
 			)
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(600))
@@ -170,7 +170,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.Destroy()
 
 	def onReviewAddons(self, evt):
-		from gui import addonGui, mainFrame
+		from gui import addonGui
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=False,

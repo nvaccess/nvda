@@ -33,10 +33,10 @@ def _updateVersionFromVCS():
 		pass
 
 
-def formatVersionString():
+def formatDevVersionString():
 	return "%s.%s.%sdev"%(version_year,version_major,version_minor)
 
-def getNextReleaseVersionTuple():
+def getCurrentVersionTuple():
 	return (version_year, version_major, version_minor)
 
 # ticket:3763#comment:19: name must be str, not unicode.
@@ -46,7 +46,7 @@ version_year=2018
 version_major=3
 version_minor=0
 version_build=0
-version=formatVersionString()
+version=formatDevVersionString()
 publisher="unknown"
 updateVersionType=None
 try:
