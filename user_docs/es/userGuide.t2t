@@ -1259,14 +1259,12 @@ Esta categoría Opciones contiene los siguientes ajustes:
 ==== Disposición del Teclado ====[KeyboardSettingsLayout]
 Este cuadro combinado te permite elegir qué tipo de disposición de teclado debería utilizar NVDA. Actualmente los dos que vienen con NVDA son Escritorio y Portátil.
 
-==== Utilizar BloqMayus como una tecla modificadora de NVDA ====[KeyboardSettingsCapsModifier]
-Si esta casilla de verificación está marcada, el BloqMayus puede utilizarse como una tecla modificadora de NVDA.
-
-==== Utilizar el insert extendido como una tecla modificadora de NVDA ====[KeyboardSettingsExtendedInsert]
-Si esta casilla de verificación está marcada, la tecla insert (normalmente encontrada encima de las teclas de flecha, cerca de inicio y fin) puede utilizarse como una tecla modificadora de NVDA.
-
-==== Utilizar insert del teclado numérico como tecla modificadora de NVDA ====[KeyboardSettingsNumpadInsert]
-Si esta casilla de verificación está marcada, la tecla insert del teclado numérico puede utilizarse como una tecla modificadora de NVDA.
+==== Seleccionar Teclas Modificadoras de NVDA ====[KeyboardSettingsModifiers]
+Las casillas de verificación en esta lista controlan qué teclas pueden utilizarse como [teclas modificadoras de NVDA #TheNVDAModifierKey]. Las siguientes teclas están dispponibles para elegir:
+- La tecla bloqueo de mayúsculas
+- La tecla insertar en el tecládo numérico
+- La tecla insertar extendida (encontrada normalmente encima de las teclas de flecha, cerca de inicio y fin)
+-
 
 Si no se elige ninguna tecla como la tecla NVDA podría ser imposible acceder a ciertas órdenes de NVDA.
 Por lo tanto, el diálogo Opciones de NVDA mostrará un mensaje de error si todas las teclas están sin seleccionar  cuando se pulse Aceptar.

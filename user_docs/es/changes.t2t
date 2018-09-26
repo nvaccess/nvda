@@ -3,6 +3,35 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Nuevas Características ==
+- Nuevas tablas braille: Chino (China, Mandarín) grado 1 y grado 2. (#5553)
+
+
+== Cambios ==
+- "Anunciar globos de ayuda" en el diálogo Presentación de Objetos se ha renombrado como "Anunciar notificaciones" para incluir el anunciado de notificaciones del sistema en Windows 8 y posteriores. (#5789)
+- EN las opciones de teclado de NVDA, las casillas de verificación para activar o desactivar las teclas modificadoras de NVDA ahora se muestran en una lista en lugar de en casillas de verificación separadas.
+- NVDA ya no presenta información redundante al leer el reloj de la bandeja del sistema en algunas versiones de Windows. (#4364)
+- Actualizado el transcriptor braille liblouis a la versión 3.7.0. (#8697)
+
+
+== Corección de Errores ==
+- En Outlook 2016/365, se anuncian la categoría y el estado de la marca para los mensajes. (#8603)
+- Cuando NVDA se configure para idiomas tales como Kirgyz, Mongol o Macedonio, ya no muestra un diálogo en un aviso al arrancar que el idioma no se admite por el sistema operativo. (#8064)
+- Al mover el ratón al navegador de objetos ahora será mucho más preciso mover el ratón a la posición del modo exploración en Mozilla Firefox, Google Chrome y Acrobat Reader DC. (#6460)
+- Se ha mejorado interactuar con cuadros combinados en la web en Firefox, Chrome e Internet Explorer. (#8664)
+
+
+== Cambios para Desarrolladores ==
+- gui.nvdaControls ahora contiene dos clases para crear listas accesibles con casillas de verificación. (#7325)
+ - CustomCheckListBox es una sub-clase accesible de wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl añade casillas de verificación accesibles a un AutoWidthColumnListCtrl, el cual está basado en si mísmo en wx.ListCtrl.
+- Si necesitas hacer un wx widget accesible que no lo es todavía, es posible hacerlo utilizando una instancia de gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Consulta la implementación de gui.nvdaControls.ListCtrlAccPropServer para más información.
+- Actualizado configobj a 5.1.0dev commit 5b5de48a. (#4470)
+
+
 = 2018.3 =
 Lo subrayable de esta versión incluye la detección automática de muchas pantallas Braille, la admisión para algunas características nuevas de Windows 10 incluyendo el panel de entrada de emojis de Windows 10, y muchas otras correcciones de fallos.
 

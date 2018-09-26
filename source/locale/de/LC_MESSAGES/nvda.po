@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-14 00:10+1000\n"
+"POT-Creation-Date: 2018-09-18 14:57+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -1140,6 +1140,16 @@ msgstr "Unicode-Braille"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamesischee Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chinesische Vollschrift (China, Mandarin)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chinesische Kurzschrift (China, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2843,7 +2853,7 @@ msgstr "Batterie wird nicht aufgeladen: %d Prozent"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
-msgstr "NVDA ist bereit."
+msgstr "NVDA ist bereit"
 
 #. Translators: Title of a dialog to find text.
 msgid "Find"
@@ -2851,12 +2861,12 @@ msgstr "Suchen"
 
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
-msgstr "Geben Sie die zu suchende Zeichenkette ein."
+msgstr "Geben Sie den zu suchenden Text ein."
 
 #. Translators: An option in find dialog to perform case-sensitive search.
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Case &sensitive"
-msgstr "Groß- / Kleinschreibung &beachten"
+msgstr "Groß- / Kleinschreibung &berücksichtigen"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -2867,37 +2877,37 @@ msgstr "Fehler beim Suchen"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "Sucht die Zeichenkette ab der aktuellen Cursorposition."
+msgstr "Sucht nach dem eingegebenen Text ab der aktuellen Cursor-Position."
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Sucht das nächste Vorkommen der zuvor eingegebenen Zeichenkette ab der "
-"aktuellen Cursorposition."
+"Sucht das nächste Vorkommen des zuvor eingegebenen Textes ab der "
+"aktuellen Cursor-Position."
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Sucht das vorherige Vorkommen der zuvor eingegebenen Zeichenkette ab der "
-"aktuellen Cursorposition."
+"Sucht das vorherige Vorkommen des zuvor eingegebenen Textes ab der "
+"aktuellen Cursor-Position."
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
-msgstr "Keine Auswahl."
+msgstr "Keine Auswahl"
 
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "Copied to clipboard"
-msgstr "In die Zwischenablage kopiert."
+msgstr "In die Zwischenablage kopiert"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
-msgstr "Nicht in einer Tabellenzelle."
+msgstr "Nicht in einer Tabellenzelle"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -3105,7 +3115,7 @@ msgstr ""
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
-msgstr "Keine Einstellungen."
+msgstr "Keine Einstellungen"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
@@ -3569,7 +3579,7 @@ msgstr ""
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
-msgstr "Keine Standortinformationen"
+msgstr "Keine Standort-Informationen"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -4006,7 +4016,7 @@ msgstr "Schaltet die Kopplung des Navigators an den Fokus um."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
-msgstr "Kein System-Akkumulator"
+msgstr "Kein Akku"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
@@ -4239,7 +4249,7 @@ msgstr "Liest den Inhalt der Zwischenablage vor."
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
-msgstr "Startmarke gesetzt."
+msgstr "Startmarke gesetzt"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command (that is, marks the current review cursor position as the starting point for text to be selected).
 msgid ""
@@ -4249,7 +4259,7 @@ msgstr "Setzt eine Startmarke an die aktuelle Cursor-Position."
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
-msgstr "Keine Startmarke gesetzt."
+msgstr "Keine Startmarke gesetzt"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 msgid "Press twice to copy or reset the start marker"
@@ -4261,7 +4271,7 @@ msgstr "Kein Text zum Kopieren markiert"
 
 #. Translators: Presented when unable to select the marked text.
 msgid "Can't select text, press twice to copy"
-msgstr "Kein Text zum Auswählen vorhanden, zweimal drücken, für Kopieren."
+msgstr "Kein Text zum Auswählen vorhanden, zweimal drücken, um zu kopieren."
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
@@ -4831,13 +4841,13 @@ msgid "unknown %s"
 msgstr "Unbekannt %s"
 
 msgid "on"
-msgstr "ein"
+msgstr "eingeschaltet"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "aus"
+msgstr "ausgeschaltet"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -6914,36 +6924,6 @@ msgstr "Ungelesen"
 msgid "Editing profile {profile}"
 msgstr "Profiel {profile} in Bearbeitung"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Lilafarbene Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Orangefarbene Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Grüne Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Gelbe Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Blaue Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Rote Kennzeichnung"
-
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "Hohe Priorität"
@@ -7828,7 +7808,7 @@ msgstr "&Portable Kopie erstellen"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr "Weite&rhin ausführen"
+msgstr "&Fortsetzen"
 
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
@@ -8746,20 +8726,10 @@ msgstr "&Buchstabierfunktion verwenden (falls verfügbar)"
 msgid "Keyboard"
 msgstr "Tastatur"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "&Dauergroßschreibtaste als NVDA-Taste verwenden"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Einfügetaste des &Nummernblocks als NVDA-Taste verwenden"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Einfüge-Taste der &erweiterten Tastatur als NVDA-Taste verwenden"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "NVDA-Taste auswählen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8925,8 +8895,8 @@ msgstr "&Minihilfen (Tooltipps) ausgeben"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "&Hilfesprechblasen ausgeben"
+msgid "Report &notifications"
+msgstr "&Benachrichtigungen mitteilen"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.

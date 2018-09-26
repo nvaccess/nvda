@@ -1259,14 +1259,12 @@ Ta zvrst nastavitev vsebuje naslednje možnosti:
 ==== Razporeditev tipk ====[KeyboardSettingsLayout]
 Na tem spustnem seznamu se nahajajo razporeditve tipk, po katerih mora delati NVDA. Izbirate lahko med večimi razporeditvami. Trenutno sta na voljo razporeditvi "Običajna" in Prenosnik.
 
-==== Uporabljaj capslock kot NVDA prikrojevalno tipko ====[KeyboardSettingsCapsModifier]
-Če je ta izbirnik izbran, se lahko capslock uporablja kot NVDA prikrojevalna tipka.
-
-==== Uporabljaj glavni insert kot prikrojevalno tipko NVDA ====[KeyboardSettingsExtendedInsert]
-Če je ta izbirnik izbran, je glavni insert (tipka, ki se nahaja nad puščicami, običajno zraven tipk  home in end) v službi kot NVDA prikrojevalna tipka.
-
-==== Uporabljaj številski insert kot prikrojevalno tipko NVDA ====
-Če je ta izbirnik izbran, se lahko insert na številskem delu tipkovnice uporablja kot NVDA prikrojevalna tipka.
+==== Določi NVDA Prikrojevalne Tipke ====[KeyboardSettingsModifiers]
+Izbirnik na tem seznamu nadzira, katere tipke se lahko uporabijo kot [NVDA prikrojevalne tipke #TheNVDAModifierKey].
+- Tipka caps lock
+- Tipka insert na številskem delu
+- Tipka insert (običajno postavljena nad puščicami, zraven tipk home in end)
+-
 
 Če nobena tipka ni izbrana kot NVDA prikrojevalna tipka, potem se ne mora izvesti cela kopica ukazov nad NVDA.
 Zaradi tega bo pogovorno okno NVDA Nastavitev prikazalo sporočilo o napaki, če ob pritisku gumba V redu ne bo izbrana nobena tipka.
