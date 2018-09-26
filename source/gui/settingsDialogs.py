@@ -2525,13 +2525,22 @@ class SpeechSymbolsDialog(SettingsDialog):
 		super(SpeechSymbolsDialog, self).__init__(parent)
 
 	def makeSettings(self, settingsSizer):
-		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+		self.filteredSymbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: The label of a text field to search for symbols in the speech symbols dialog.
+		filterText = pgettext("speechSymbols", "&Filter by:")
+		self.filterEdit = sHelper.addLabeledControl(filterText, wx.TextCtrl)
+		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
+
 		# Translators: The label for symbols list in symbol pronunciation dialog.
 		symbolsText = _("&Symbols")
-		self.symbolsList = sHelper.addLabeledControl(symbolsText, nvdaControls.AutoWidthColumnListCtrl, autoSizeColumnIndex=0, style=wx.LC_REPORT | wx.LC_SINGLE_SEL)
+		self.symbolsList = sHelper.addLabeledControl(
+			symbolsText,
+			nvdaControls.AutoWidthColumnListCtrl,autoSizeColumnIndex=1,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
+		)
 		# Translators: The label for a column in symbols list used to identify a symbol.
 		self.symbolsList.InsertColumn(0, _("Symbol"))
 		self.symbolsList.InsertColumn(1, _("Replacement"))
@@ -2540,9 +2549,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 		self.symbolsList.InsertColumn(3, _("Preserve"))
-		for symbol in symbols:
-			item = self.symbolsList.Append((symbol.displayName,))
-			self.updateListItem(item, symbol)
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
@@ -2579,12 +2585,6 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.preserveList = changeSymbolHelper.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
 		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
 
-		# disable the "change symbol" controls until a valid item is selected.
-		self.replacementEdit.Disable()
-		self.levelList.Disable()
-		self.preserveList.Disable()
-
-
 		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 		addButton = bHelper.addButton(self, label=_("&Add"))
@@ -2596,30 +2596,76 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addButton.Bind(wx.EVT_BUTTON, self.OnAddClick)
 		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
 
-		self.editingItem = None
+		# Populate the unfiltered list with symbols.
+		self.filter()
 
 	def postInit(self):
 		self.symbolsList.SetFocus()
 
-	def updateListItem(self, item, symbol):
-		self.symbolsList.SetItem(item, 1, symbol.replacement)
-		self.symbolsList.SetItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
-		self.symbolsList.SetItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
+	def filter(self, filterText=None):
+		index = self.symbolsList.GetFirstSelected()
+		oldFilteredSymbols = self.filteredSymbols
+		if not filterText:
+			self.filteredSymbols = self.symbols
+		else:
+			#Do case-insensitive matching by lowering both filterText and each symbols's text.
+			filterText=filterText.lower()
+			self.filteredSymbols = [
+				symbol for symbol in self.symbols
+				if filterText in symbol.displayName.lower()
+				or filterText in symbol.replacement.lower()
+			]
+		self.symbolsList.ItemCount = len(self.filteredSymbols)
+		# When filtering and there was a selection before, try to preserve the selection in the list.
+		if index != -1:
+			try:
+				index = self.filteredSymbols.index(oldFilteredSymbols[index])
+			except ValueError:
+				index = -1
+		if index == -1:
+			if self.symbolsList.ItemCount:
+				index = 0
+			else:
+				self.editingItem = None
+				# disable the "change symbol" controls, since there are no items in the list.
+				self.replacementEdit.Disable()
+				self.levelList.Disable()
+				self.preserveList.Disable()
+				return
+		# Change the selection
+		self.symbolsList.Select(index)
+		self.symbolsList.Focus(index)
+		# We don't get a new focus event with the new index.
+		self.symbolsList.sendListItemFocusedEvent(index)
+
+	def getItemTextForList(self, list, item, column):
+		if list is not self.symbolsList:
+			raise RuntimeError("Method called by unknown list control")
+		symbol = self.filteredSymbols[item]
+		if column == 0:
+			return symbol.displayName
+		elif column == 1:
+			return symbol.replacement
+		elif column == 2:
+			return characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level]
+		elif column == 3:
+			return characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve]
+		else:
+			raise ValueError("Unknown column: %d" % column)
 
 	def onSymbolEdited(self):
 		if self.editingItem is not None:
 			# Update the symbol the user was just editing.
 			item = self.editingItem
-			symbol = self.symbols[item]
+			symbol = self.filteredSymbols[item]
 			symbol.replacement = self.replacementEdit.Value
 			symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
 			symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
-			self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
 		# Update the editing controls to reflect the newly selected symbol.
 		item = evt.GetIndex()
-		symbol = self.symbols[item]
+		symbol = self.filteredSymbols[item]
 		self.editingItem = item
 		# ChangeValue and Selection property used because they do not cause EVNT_CHANGED to be fired.
 		self.replacementEdit.ChangeValue(symbol.replacement)
@@ -2638,6 +2684,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 			identifier = entryDialog.identifierTextCtrl.GetValue()
 			if not identifier:
 				return
+		# Clean the filter, so we can select the new entry.
+		self.filterEdit.Value=""
+		self.filter()
 		for index, symbol in enumerate(self.symbols):
 			if identifier == symbol.identifier:
 				# Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
@@ -2657,25 +2706,27 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addedSymbol.level = characterProcessing.SYMLVL_ALL
 		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
-		item = self.symbolsList.Append((addedSymbol.displayName,))
-		self.updateListItem(item, addedSymbol)
-		self.symbolsList.Select(item)
-		self.symbolsList.Focus(item)
+		self.symbolsList.ItemCount = len(self.symbols)
+		index = self.symbolsList.ItemCount - 1
+		self.symbolsList.Select(index)
+		self.symbolsList.Focus(index)
+		# We don't get a new focus event with the new index.
+		self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
 
 	def OnRemoveClick(self, evt):
 		index = self.symbolsList.GetFirstSelected()
-		symbol = self.symbols[index]
+		symbol = self.filteredSymbols[index]
 		self.pendingRemovals[symbol.identifier] = symbol
-		# Deleting from self.symbolsList focuses the next item before deleting,
-		# so it must be done *before* we delete from self.symbols.
-		self.symbolsList.DeleteItem(index)
-		del self.symbols[index]
+		del self.filteredSymbols[index]
+		self.symbolsList.ItemCount = len(self.filteredSymbols)
+		if self.filteredSymbols is not self.symbols:
+			self.symbols.remove(symbol)
 		index = min(index, self.symbolsList.ItemCount - 1)
 		self.symbolsList.Select(index)
 		self.symbolsList.Focus(index)
-		# We don't get a new focus event with the new index, so set editingItem.
-		self.editingItem = index
+		# We don't get a new focus event with the new index.
+		self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
 
 	def onOk(self, evt):
@@ -2693,6 +2744,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 			log.error("Error saving user symbols info: %s" % e)
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)
+
+	def onFilterEditTextChange(self, evt):
+		self.filter(self.filterEdit.Value)
+		evt.Skip()
 
 class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.

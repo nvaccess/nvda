@@ -14,8 +14,11 @@ from ctypes import c_int
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
-	A list control that allows you to specify a column to resize to take up the remaining width of a wx.ListCtrl
+	A list control that allows you to specify a column to resize to take up the remaining width of a wx.ListCtrl.
+	It also changes L{OnGetItemText} to call L{Parent.getItemTextForList} when it is implemented,
+	and adds a l{sendListItemFocusedEvent} method.
 	"""
+
 	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumnIndex="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
 		""" initialiser
 			Takes the same parameter as a wx.ListCtrl with the following additions:
@@ -25,6 +28,18 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		wx.ListCtrl.__init__(self, parent, id, pos, size, style)
 		listmix.ListCtrlAutoWidthMixin.__init__(self)
 		self.setResizeColumn(autoSizeColumnIndex)
+
+	def OnGetItemText(self, item, column):
+		try:
+			return self.Parent.getItemTextForList(self, item, column)
+		except AttributeError:
+			return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
+
+	def sendListItemFocusedEvent(self, index):
+		evt = wx.ListEvent(wx.wxEVT_LIST_ITEM_FOCUSED, self.Id)
+		evt.EventObject = self
+		evt.Index = index
+		self.ProcessEvent(evt)
 
 class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 	"""
@@ -179,3 +194,4 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
+
