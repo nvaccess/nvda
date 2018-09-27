@@ -34,6 +34,10 @@
 - 更新configobj版本维5.1.0dev commit 5b5de48a。 (#4470)
 
 
+= 2018.3.1 =
+这是NVDA的一个临时修复版，主要修复了32位版本的Mozilla Firefox崩溃的BUG。 (#8759)
+
+
 = 2018.3 =
 此版本的新特姓包括支持许多盲文点显器的自动检测，支持新的Windows 10 表情符号输入面板，以及其他错误修复。
 
@@ -1465,7 +1469,7 @@
  - This is supported for both NVDA itself and add-ons.
  - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts.
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
- - See http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
+ - See https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
 - It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details.
 - Add-on translation support can now be used within the add-on installTasks module. (#2715)
 
@@ -2122,7 +2126,7 @@ Notable features of this release include greatly simplified object navigation; v
 - 当朗读出输入的单词时，退格现在可以正确处理。 (#306)
 - 请勿在Windows资源管理器/ Windows外壳程序中错误地报告某些上下文菜单的“开始菜单”。 (#257)
 - 当没有其他有用的内容时，NVDA现在可以正确处理Mozilla Gecko中的ARIA标签。 (#156)
-- NVDA不再不正确地启用对焦模式，以便在焦点更改时更新其值的可编辑文本字段;例如http://tigerdirect.com/。 (#220)
+- NVDA不再不正确地启用对焦模式，以便在焦点更改时更新其值的可编辑文本字段;例如https://tigerdirect.com/。 (#220)
 - NVDA现在将尝试从某些以前会导致其完全冻结的情况中恢复。 NVDA可能需要长达10秒才能检测并从这种冻结中恢复。
 - 将NVDA语言设置为“用户默认”时，请使用用户的Windows显示语言设置，而不是Windows语言环境设置。 (#353)
 - NVDA现在认识到AIM 7中存在控制措施。
@@ -2390,7 +2394,7 @@ Notable features of this release include greatly simplified object navigation; v
 = 0.5 =
 - NVDA现在有一个名为eSpeak的内置合成器，由Jonathan Duddington开发。它非常灵敏和轻便，并且支持许多不同的语言。 Sapi合成器仍然可以使用，但默认情况下会使用eSpeak。
  - eSpeak不依赖于任何特殊软件的安装，因此可以在任何计算机上，USB拇指驱动器上或任何地方与NVDA配合使用。 
- - 有关eSpeak的更多信息，或者查找其他版本，请访问http://espeak.sourceforge.net/。
+ - 有关eSpeak的更多信息，或者查找其他版本，请访问https://espeak.sourceforge.net/。
 - 修复在Internet Explorer / Outlook Express可编辑窗格中按删除时发布错误字符的错误。
 - 增加了对Skype中更多编辑字段的支持。
 - 当焦点位于需要加载的窗口上时，VirtualBuffers只会被加载。这解决了Outlook Express中预览窗格打开时出现的一些问题。
