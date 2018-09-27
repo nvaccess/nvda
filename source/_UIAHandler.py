@@ -4,10 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-try:
-	from Queue import Queue # Python 2.7 import
-except ImportError:
-	from queue import Queue # Python 3 import
 from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
@@ -160,8 +156,8 @@ class UIAHandler(COMObject):
 	def __init__(self):
 		super(UIAHandler,self).__init__()
 		self.MTAThreadInitEvent=threading.Event()
+		self.MTAThreadStopEvent=threading.Event()
 		self.MTAThreadInitException=None
-		self.MTAThreadQueue=Queue()
 		self.MTAThread=threading.Thread(target=self.MTAThreadFunc)
 		self.MTAThread.daemon=True
 		self.MTAThread.start()
@@ -171,7 +167,7 @@ class UIAHandler(COMObject):
 
 	def terminate(self):
 		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
-		self.MTAThreadQueue.put_nowait(None)
+		self.MTAThreadStopEvent.set()
 		#Wait for the MTA thread to die (while still message pumping)
 		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
 			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
@@ -187,6 +183,25 @@ class UIAHandler(COMObject):
 				isUIA8=True
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
+			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
+			pfm=self.clientObject.proxyFactoryMapping
+			for index in xrange(pfm.count):
+				e=pfm.getEntry(index)
+				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
+					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
+					try:
+						oldWinEvents=e.getWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID)
+					except IndexError:
+						# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
+						oldWinEvents=None
+					if oldWinEvents:
+						# As winEvents were mapped, replace them with an empty list
+						e.setWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID,[])
+						# Changes to an enty are not automatically picked up.
+						# Therefore remove the entry and re-insert it.
+						pfm.removeEntry(index)
+						pfm.insertEntry(index,e)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
 				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
@@ -217,10 +232,8 @@ class UIAHandler(COMObject):
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
-			self.pendingForegroundUIAElement=None
-			self.currentForegroundUIAElement=None
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			#self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
+			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
 			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
@@ -230,44 +243,8 @@ class UIAHandler(COMObject):
 			self.MTAThreadInitException=e
 		finally:
 			self.MTAThreadInitEvent.set()
-		while True:
-			func=self.MTAThreadQueue.get()
-			if func:
-				try:
-					func()
-				except:
-					log.error("Exception in function queued to UIA MTA thread",exc_info=True)
-			else:
-				break
+		self.MTAThreadStopEvent.wait()
 		self.clientObject.RemoveAllEventHandlers()
-
-	def _onForegroundChange(self):
-		pendingForegroundUIAElement=self.pendingForegroundUIAElement
-		if pendingForegroundUIAElement==self.currentForegroundUIAElement:
-			return
-		if self.currentForegroundUIAElement:
-			try:
-				self.clientObject.removePropertyChangedEventHandler(self.currentForegroundUIAElement,self)
-			except COMError:
-				# The old UIAElement died as the window was closed.
-				# The system should forget the old event registration itself.
-				pass
-		try:
-			self.clientObject.AddPropertyChangedEventHandler(pendingForegroundUIAElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
-		except COMError:
-			log.error("Could not register for UIA property change events for new foreground")
-			self.currentForegroundUIAElement=None
-		else:
-			self.currentForegroundUIAElement=pendingForegroundUIAElement
-
-	def onForegroundChange(self,hwnd):
-		try:
-			self.pendingForegroundUIAElement=self.clientObject.ElementFromHandle(hwnd)
-		except COMError:
-			log.debugWarning("Could not get a UIAElement from new foreground window")
-			return
-		# Event registration/unregistration must be always done from the MTA thread, otherwise deadlocks can occur with our UI.
-		self.MTAThreadQueue.put_nowait(self._onForegroundChange)
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
 		if not self.MTAThreadInitEvent.isSet():

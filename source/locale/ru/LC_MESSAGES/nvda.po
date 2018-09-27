@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-31 00:10+1000\n"
-"PO-Revision-Date: 2018-09-05 13:54+0800\n"
+"POT-Creation-Date: 2018-09-18 14:57+1000\n"
+"PO-Revision-Date: 2018-09-20 16:02+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1141,6 +1141,16 @@ msgstr "Вьетнамский (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Китайский (Китай, Мандарин) (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Китайский (Китай, Мандарин) (вторая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Китайский (Гонконг, Кантонский)"
 
@@ -2062,7 +2072,7 @@ msgstr "графика"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "всплывающее системное сообщение"
+msgstr "системное уведомление"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
@@ -6893,36 +6903,6 @@ msgstr "Непрочитано"
 msgid "Editing profile {profile}"
 msgstr "Редактирование профиля {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Лиловый флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Оранжевый флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Зелёный флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Жёлтый флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Синий флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Красный флажок"
-
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "высокая важность"
@@ -8703,20 +8683,10 @@ msgstr "Использовать по&символьное чтение, есл�
 msgid "Keyboard"
 msgstr "Клавиатура"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Использовать CapsLock как клавишу-модификатор NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Использовать Insert на цифровом блоке как клавишу-модификатор NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Использовать обычный Insert как клавишу-модификатор NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "Клавиши-&модификаторы NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8881,8 +8851,8 @@ msgstr "Читать всплывающие &подсказки"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Читать &всплывающие системные сообщения"
+msgid "Report &notifications"
+msgstr "Читать системные &уведомления"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9453,7 +9423,7 @@ msgid "No speech"
 msgstr "Нет речи"
 
 msgid "word"
-msgstr "Слово"
+msgstr "слово"
 
 #. Translators: current position in a document as a percentage of the document length
 #, python-brace-format
@@ -10972,3 +10942,33 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid "purple flag"
+#~ msgstr "Лиловый флажок"
+
+#~ msgid "Orange flag"
+#~ msgstr "Оранжевый флажок"
+
+#~ msgid "Green flag"
+#~ msgstr "Зелёный флажок"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Жёлтый флажок"
+
+#~ msgid "Blue flag"
+#~ msgstr "Синий флажок"
+
+#~ msgid "Red flag"
+#~ msgstr "Красный флажок"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Использовать CapsLock как клавишу-модификатор NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Использовать Insert на цифровом блоке как клавишу-модификатор NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Использовать обычный Insert как клавишу-модификатор NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Читать &всплывающие системные сообщения"

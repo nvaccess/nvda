@@ -3,6 +3,35 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Novas Características ==
+- Novas táboas braille: Chinés (China, Mandarín) grao 1 e grao 2. (#5553)
+
+
+== Cambios ==
+- "Anunciar globos de axuda" no diálogo Presentación de Obxectos renomeouse como "Anunciar notificacións" para incluir o anunciado de notificacións do sistema en Windows 8 e posteriores. (#5789)
+- Nas opcións de teclado do NVDA, as caixas de verificación para activar ou desactivar as teclas modificadoras do NVDA agora amósanse nunha listaxe en lugar de en caixas de verificación separadas.
+- O NVDA xa non presenta información redundante ao ler o reloxo da bandexa do sistema nalgunhas versións de Windows. (#4364)
+- Actualizado o transcriptor braille liblouis á versión 3.7.0. (#8697)
+
+
+== Coreción de Erros ==
+- En Outlook 2016/365, anúncianse a categoría e o estado da marca para as mensaxes. (#8603)
+- Cando o NVDA se configure para idiomas coma Kirgyz, Mongol ou Macedonio, xa non amosa un diálogo nun aviso ao arrancar que a lingua non se admite polo sistema operativo. (#8064)
+- Ao mover o rato ao navegador de obxectos agora será moito máis preciso mover o rato á posición dol modo exploración en Mozilla Firefox, Google Chrome e Acrobat Reader DC. (#6460)
+- Mellorouse interactuar coas caixas combinadas na web en Firefox, Chrome e Internet Explorer. (#8664)
+
+
+== Cambios para Desenvolvedores ==
+- gui.nvdaControls agora contén dúas clases para crear listaxes accesibles con caixas de verificación. (#7325)
+ - CustomCheckListBox é unha sub-clase accesible de wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl engade caixas de verificación accesibles a un AutoWidthColumnListCtrl, o que está baseado en si mesmo en wx.ListCtrl.
+- Se necesitas facer un wx widget accesible que non o é aínda, é posible facelo usando unha instancia de gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Consulta a implementación de gui.nvdaControls.ListCtrlAccPropServer para máis información.
+- Actualizado configobj a 5.1.0dev commit 5b5de48a. (#4470)
+
+
 = 2018.3 =
 O subliñable desta versión inclúe a deteción automática de moitas pantallas Braille, a admisión para algunhas características novas do Windows 10 incluíndo o panel de entrada de emojis do Windows 10, e moitos outros arranxos de fallos.
 
