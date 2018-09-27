@@ -29,10 +29,11 @@ Ce este nou în NVDA
  - AutoWidthColumnCheckListCtrl adaugă casete de bifat accesibile la un AutoWidthColumnListCtrl, care este bazat pe wx.ListCtrl.
 - Dacă aveți nevoie să faceți un widget wx accesibil care să nu existe deja, puteți face astfel utilizând o instanță a gui.accPropServer.IAccPropServer_impl. (#7491)
  - Vedeți implementarea gui.nvdaControls.ListCtrlAccPropServer pentru mai multe informații.
-
- 
-== Alte câteva modificări pentru Dezvoltatori ==
 - S-a actualizat configobj la 5.1.0dev commit 5b5de48a. (#4470)
+
+
+= 2018.3.1 =
+Aceasta este o versiune minoră care repară un defect critic din NVDA, defect care făcea ca versiunile de Mozilla Firefox bazate pe 32 de biți să dea rateuri. (#8759)
 
 
 = 2018.3 =
