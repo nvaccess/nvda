@@ -29,8 +29,11 @@
  - AutoWidthColumnCheckListCtrl engade caixas de verificación accesibles a un AutoWidthColumnListCtrl, o que está baseado en si mesmo en wx.ListCtrl.
 - Se necesitas facer un wx widget accesible que non o é aínda, é posible facelo usando unha instancia de gui.accPropServer.IAccPropServer_impl. (#7491)
  - Consulta a implementación de gui.nvdaControls.ListCtrlAccPropServer para máis información.
-- Actualizado configobj a 5.1.0dev commit 5b5de48a. (#4470)
 
+
+= 2018.3.1 =
+Esta é unha versión menor para arranxar un erro crítico en NVDA que facía que as versións de 32 bits de Mozilla Firefox se colgaran. (#8759)
+ 
 
 = 2018.3 =
 O subliñable desta versión inclúe a deteción automática de moitas pantallas Braille, a admisión para algunhas características novas do Windows 10 incluíndo o panel de entrada de emojis do Windows 10, e moitos outros arranxos de fallos.
@@ -1479,7 +1482,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
  - Esto sopórtase tanto para NVDA mesmo como para os complementos.
  - Deben utilizarse xgettext e msgfmt de GNU gettext para criar calquera ficheiro PO e MO. As ferramentas de Python non soportan mensaxes contextuais.
  - Para xgettext, pasa o argumento de liña de órdenes --keyword=pgettext:1c,2 para habilitar a inclusión de mensaxes contextuais.
- - Mira http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para máis información.
+ - Mira https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para máis información.
 - Agora é posible acceder ós módulos compilados de NVDA onde foran sobreescribidos por módulos de terceiros. Olla o módulo nvdaBuiltin para detalles.
 - Agora pode utilizarse o soporte de traducción de complementos dentro do módulo installTasks do complemento. (#2715)
 
@@ -2122,7 +2125,7 @@ O máis suliñable desta versión inclúe o soporte para edicións de 64 bit de 
 - O Retroceso agora é manexado correctamente cando se falan palabras ó se escribir. (#306)
 - Non se anuncia incorrectamente "Menú inicio" para certos menús de contexto no Windows Explorer/Windows shell. (#257)
 - NVDA agora manexa correctamente etiquetas de ARIA en Mozilla Gecko cando non hai outro contido útil. (#156)
-- NVDA xa non activa incorrectamente o modo foco automáticamente para campos de texto editable que actualizan o seu valor cando o foco cambia; ex.: http://tigerdirect.com/. (#220)
+- NVDA xa non activa incorrectamente o modo foco automáticamente para campos de texto editable que actualizan o seu valor cando o foco cambia; ex.: https://tigerdirect.com/. (#220)
 - NVDA agora intentará recuperarse dalgunhas situacións que anteriormente causarían que se colgara completamente. Poderá tomar sobre 10 segundos para que NVDA detecte e se recupere de tales colgues.
 - Cando a lingua do NVDA está axustada a "User default", utiliza a lingua do usuario de Windows configurada en lugar da local de windows.
 - NVDA agora recoñece a existencia de controis en AIM 7.
@@ -2401,7 +2404,7 @@ O máis suliñable desta versión inclúe o soporte para edicións de 64 bit de 
 
 
 = 0.5 =
-- NVDA ten agora un sintetizador incorporado chammado eSpeak, desenrolado por Jonathan Duddington. é moi áxil e lixeiro, e ten soporte para moitas linguas diferentes. Os sintetizadores Sapi todavía poden ser utilizados, pero eSpeak será utilizado de maneira predeterminada. eSpeak non depende de ningún software especial para seren instalado, así que pode ser utilizado con NVDA en calquier ordenador, nun lápiz de memoria USB, ou calquer outro. Para máis información sobre eSpeak, ou para atopar outras versións, vai a http://espeak.sourceforge.net/.
+- NVDA ten agora un sintetizador incorporado chammado eSpeak, desenrolado por Jonathan Duddington. é moi áxil e lixeiro, e ten soporte para moitas linguas diferentes. Os sintetizadores Sapi todavía poden ser utilizados, pero eSpeak será utilizado de maneira predeterminada. eSpeak non depende de ningún software especial para seren instalado, así que pode ser utilizado con NVDA en calquier ordenador, nun lápiz de memoria USB, ou calquer outro. Para máis información sobre eSpeak, ou para atopar outras versións, vai a https://espeak.sourceforge.net/.
 - Corrección do fallo onde era anunciado o caracter incorrecto cando se premía Suprimir en paneis editables de Internet Explorer / Outlook Express.
 - Engadido soporte para máis campos de edición en Skype.
 - Os modos virtuais só se cargan cando o foco está sobre a ventá que necesita ser cargada. Esto arranxa algúns problemas cando o panel anterior está activado en Outlook Express.
