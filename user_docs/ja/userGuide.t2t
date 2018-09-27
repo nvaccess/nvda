@@ -58,7 +58,7 @@ NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 NVDAはGNU 一般公衆利用許諾契約書 (Version 2) によって保護されています。
 この内容に同意いただき、必要としている方にソースコードを提供していただける場合、本ソフトウェアの配布や改良は自由に行うことができます。
 この規定は、オリジナルのソフトウェアと改良版を含むソフトウェアのコピー、さらにその派生物にも適用されます。
-本ライセンスについての詳細は、[オンライン http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]で確認してください。
+本ライセンスについての詳細は、[オンライン https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]で確認してください。
 
 + システム要件 +[SystemRequirements]
 - オペレーティングシステム: 32ビット版と64ビット版の Windows 7, Windows 8, Windows 8.1, Windows 10 および Windows Server 2008 R2 以降のサーバー用オペレーティングシステム
@@ -560,7 +560,7 @@ Gmail, Twitter, Facebook などのWebアプリでは、アルファベットの�
 + 数式の読み上げ +[ReadingMath]
 Design Science の MathPlayer 4 を使うと NVDA で数式の読み上げと対話的なナビゲーションが可能です。
 この機能を使うためにはコンピューターに MathPlayer 4 をインストールしてください。
-MathPlayer は以下から無料でダウンロードできます: http://www.dessci.com/en/products/mathplayer/
+MathPlayer は以下から無料でダウンロードできます: https://www.dessci.com/en/products/mathplayer/
 
 NVDA は次の種類の数式コンテンツに対応します:
 - Mozilla Firefox, Microsoft Internet Explorer および Google Chrome における MathML
@@ -1259,14 +1259,12 @@ NVDA設定ダイアログのキーボードカテゴリでは、NVDAでのキー
 ==== キーボード配列 ====[KeyboardSettingsLayout]
 このコンボボックスでは、NVDAでどのキーボード配列を使用するかを選ぶことができます。現在、NVDAにあるのはデスクトップ配列とラップトップ配列です。
 
-==== 英語キーボードのCapsLockキーをNVDA制御キーとして使用 ====[KeyboardSettingsCapsModifier]
-チェックされている場合、CapsLockキーがNVDA制御キーとして動作します。ただし日本語キーボードではCapsLockキーをNVDA制御キーとして使用できません。
-
-==== InsertキーをNVDA制御キーとして使用 ====[KeyboardSettingsExtendedInsert]
-チェックされている場合、Insertキー (通常は矢印キーの上のHomeキーやEndキーの近くにあります) をNVDA制御キーとして使用することができます。
-
-==== テンキーのInsertキーをNVDA制御キーとして使用 ====[KeyboardSettingsNumpadInsert]
-チェックされている場合、テンキー上のInsertキーをNVDA制御キーとして使用することができます。
+==== NVDA制御キーの選択 ====[KeyboardSettingsModifiers]
+このリストコントロールにはチェックボックスがあり、どのキーを [NVDA制御キー #TheNVDAModifierKey] として使用するかを選択できます。以下のキーから選択できます:
+- CapsLock キー（日本語キーボードでは使用できません）
+- テンキー Insert キー（NumLock がオフの場合の数字0のキー）
+- メイン Insert キー（矢印キーの上の Home キーや End キーの近くにあります）
+-
 
 NVDA制御キーがどのキーにも割り当てられていないと、NVDAの機能を呼び出すことができなくなります。
 そこで、どのキーもNVDA制御キーに選択されないまま、NVDA設定ダイアログで OK または適用ボタンを押すと、エラーメッセージを表示します。
@@ -1867,8 +1865,8 @@ Microsoft Speech Platformでは、通常はサーバーベースの読み上げ�
 これらの音声はNVDAでも使用できます。
 
 これらの音声を使用するには、ふたつのコンポーネントをインストールしてください。
-- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Version 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - このページには、多くの音声認識及び音声合成のためのファイルが含まれています。
 目的の言語/音声のデータを含んでいるファイルを選択してください。
 例えば、MSSpeech_TTS_en-US_ZiraPro.msiというファイルはアメリカ英語の音声です。
@@ -1913,9 +1911,9 @@ NVDAが自動検出できる点字ディスプレイは以下の通りです。
 -
 
 ++ Freedom Scientific Focus/PAC Mateシリーズ ++[FreedomScientificFocus]
-すべてのUSBまたはbluetooth接続された [Freedom Scientific http://www.freedomscientific.com/] Focus および PAC Mate 点字ディスプレイをサポートしています。
+すべてのUSBまたはbluetooth接続された [Freedom Scientific https://www.freedomscientific.com/] Focus および PAC Mate 点字ディスプレイをサポートしています。
 使用するには、Freedom Scientific社製の点字ディスプレイ用ドライバーが必要です。
-お持ちでない場合は、 http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
+お持ちでない場合は、 https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
 このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific Focus/PAC Mate 点字ディスプレイをサポートしています。
 64ビット版Windowsが実行されていて、ドライバーがすでに他のスクリーンリーダーによってインストールされている場合であっても、他のスクリーンリーダーがNVDAに必要なファイルをインストールしていない可能性もあるため、このリンク先にあるドライバーをインストールする必要があるかもしれません。
 
@@ -1976,7 +1974,7 @@ Focus 80 のみ:
 %kc:endInclude
 
 ++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
-USBまたはbluetooth接続された[Optelec http://www.optelec.com/]社製のALVA BC640及びBC680ディスプレイの両方をサポートします。
+USBまたはbluetooth接続された[Optelec https://www.optelec.com/]社製のALVA BC640及びBC680ディスプレイの両方をサポートします。
 Braille Voyager などの旧式ディスプレイを、 Optelec 社のプロトコルコンバーター経由で接続することもできます。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
@@ -2028,7 +2026,7 @@ ALVA Bluetooth ユーティリティーでペアリングした Bluetooth 接続
 %kc:endInclude
 
 ++ Handy Tech 点字ディスプレイ ++[HandyTech]
-USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech http://www.handytech.de/] 点字ディスプレイをサポートしています。
+USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech https://www.handytech.de/] 点字ディスプレイをサポートしています。
 古いUSB接続のディスプレイを使用する場合は、Handy Tech社からUSBドライバーを入手してインストールする必要があります。
 
 以下の機種は NVDA が直接サポートしていませんが、[Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] と NVDA アドオンを使うことで使用できます:
@@ -2062,7 +2060,7 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-[MDV http://www.mdvbologna.it/]社製のLilliディスプレイをサポートしています。
+[MDV https://www.mdvbologna.it/]社製のLilliディスプレイをサポートしています。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
 
@@ -2084,7 +2082,7 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit 点字ディスプレイ ++[Baum]
-USB, Bluetooth またはシリアルポートで接続される[Baum http://www.baum.de/cms/en/]、[HumanWare http://www.humanware.com/]、[APH http://www.aph.org/]および[Orbit http://www.orbitresearch.com/]の点字ディスプレイをサポートしています。
+USB, Bluetooth またはシリアルポートで接続される[Baum https://www.baum.de/cms/en/]、[HumanWare https://www.humanware.com/]、[APH https://www.aph.org/]および[Orbit https://www.orbitresearch.com/]の点字ディスプレイをサポートしています。
 サポートしているディスプレイには以下のものが含まれます。
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2120,7 +2118,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-[hedo Reha-Technik http://www.hedo.de/]製のhedo ProfiLine USBに対応しました。
+[hedo Reha-Technik https://www.hedo.de/]製のhedo ProfiLine USBに対応しました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
 
 この機種では点字ディスプレイの自動検出は利用できません。
@@ -2139,7 +2137,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-[hedo Reha-Technik http://www.hedo.de/]製のhedo MobilLine USBがサポートされました。
+[hedo Reha-Technik https://www.hedo.de/]製のhedo MobilLine USBがサポートされました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
 
 この機種では点字ディスプレイの自動検出は利用できません。
@@ -2158,7 +2156,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ HumanWare製Brailliant BI/Bシリーズ / BrailleNote Touch ++[HumanWareBrailliant]
-USBまたはBluetooth接続された[HumanWare http://www.humanware.com/]製の BI 14, BI 32, BI 40 および B 80 を含むBrailliant BI および B シリーズのディスプレイに対応しています。
+USBまたはBluetooth接続された[HumanWare https://www.humanware.com/]製の BI 14, BI 32, BI 40 および B 80 を含むBrailliant BI および B シリーズのディスプレイに対応しています。
 USB接続で HumanWare プロトコルを使用する場合は、事前に製造元から提供されたUSBドライバーをインストールする必要があります。
 プロトコルとして OpenBraille を使用する場合は USB ドライバーは不要です。
 
@@ -2210,9 +2208,9 @@ BrailleNote Touch にも対応しています。ドライバーをインスト�
 %kc:endInclude
 
 ++ HIMS製 Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ ++[Hims]
-[HIMS http://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle および Sync Braille ディスプレイを USB または Bluetooth で接続すれば NVDA で利用できます。
+[HIMS https://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle および Sync Braille ディスプレイを USB または Bluetooth で接続すれば NVDA で利用できます。
 USB 接続のときは HIMS 社が提供する USB ドライバーをインストールしておく必要があります。
-USB ドライバーのダウンロード: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+USB ドライバーのダウンロード: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 NVDA で利用するときのキー割り当ては以下のとおりです。
 キーの場所の説明は点字ディスプレイのマニュアルをお読みください。
@@ -2282,8 +2280,8 @@ NVDA で利用するときのキー割り当ては以下のとおりです。
 %kc:endInclude
 
 ++ 清華 点字ディスプレイ ++[Seika]
-[日本テレソフト http://www.nippontelesoft.com/] 社の 清華バージョン3, 4 および 5 (40セル) および 清華80 (80セル) 点字ディスプレイをサポートしています。
-これらのディスプレイの情報は http://www.seika-braille.com/ を参照してください。
+[日本テレソフト https://www.nippontelesoft.com/] 社の 清華バージョン3, 4 および 5 (40セル) および 清華80 (80セル) 点字ディスプレイをサポートしています。
+これらのディスプレイの情報は https://www.seika-braille.com/ を参照してください。
 製造者が提供する USB ドライバーをインストールしておく必要があります。
 
 これらの機種では点字ディスプレイの自動検出は利用できません。
@@ -2472,7 +2470,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA は [Humanware http://www.humanware.com] の BrailleNote ノートテイカーに対応しており、スクリーンリーダーのための点字ディスプレイ端末として使うことができます。
+NVDA は [Humanware https://www.humanware.com] の BrailleNote ノートテイカーに対応しており、スクリーンリーダーのための点字ディスプレイ端末として使うことができます。
 次の機種に対応しています:
 - BrailleNote Classic (シリアル接続のみ)
 - BrailleNote PK (シリアル接続およびBluetooth接続)
@@ -2564,7 +2562,7 @@ BrailleNote Apex BT では、1の点と4の点の間にあるスクロールホ�
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA は [ONCE http://www.once.es/] の EcoBraille ディスプレイに対応しています。
+NVDA は [ONCE https://www.once.es/] の EcoBraille ディスプレイに対応しています。
 次の機種に対応しています:
 - EcoBraille 20
 - EcoBraille 40
@@ -2610,7 +2608,7 @@ SuperBraille には物理的なキーやスクロールボタンがないため�
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris ディスプレイ ++[Eurobraille]
-NVDA は [Eurobraille http://www.eurobraille.fr/] の Esys, Esytime および Iris ディスプレイに対応しています。
+NVDA は [Eurobraille https://www.eurobraille.fr/] の Esys, Esytime および Iris ディスプレイに対応しています。
 Esys および Esytime-Evo デバイスは USB または Bluetooth での接続に対応します。
 旧モデルの Esytime デバイスは USB 接続のみに対応します。
 Iris ディスプレイはシリアルポートでの接続にのに対応します。
@@ -2694,8 +2692,8 @@ Iris および Esys ディスプレイは点字キーボードとテンキーを
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/]を使うとNVDAをより多くの点字ディスプレイに対応させることができます。
-使用するには、[BRLTTY for Windows http://www.brltty.com/download.html]をインストールする必要があります。
+[BRLTTY https://www.brltty.com/]を使うとNVDAをより多くの点字ディスプレイに対応させることができます。
+使用するには、[BRLTTY for Windows https://www.brltty.com/download.html]をインストールする必要があります。
 最新のパッケージ、例えばbrltty-win-4.2-2.exeのような名前のものをダウンロードしてインストールしてください。
 ディスプレイで使用するポートの設定を行う際、特にUSB接続のディスプレイを使用し製造元のドライバーをインストールしている場合、説明を注意深く確認してください。
 
@@ -2705,7 +2703,7 @@ NVDAの点字入力テーブル設定は有効ではありません。
 BRLTTY では点字ディスプレイの自動検出は利用できません。
 
 以下はNVDA用に割り当てられたBRLTTYのコマンドです。
-BRLTTY用のコマンドが、ディスプレイのコントロールにどのように割り当てられているかに関しては、[BRLTTY key tables documentation http://www.brltty.com/doc/KeyBindings/]を確認してください。
+BRLTTY用のコマンドが、ディスプレイのコントロールにどのように割り当てられているかに関しては、[BRLTTY key tables documentation https://www.brltty.com/doc/KeyBindings/]を確認してください。
 %kc:beginInclude
 || 名称 | BRLTTYコマンド |
 | 点字表示を前にスクロール | fwinlt (左に1画面進む) |
