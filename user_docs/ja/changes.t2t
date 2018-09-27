@@ -3,6 +3,39 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== 新機能 ==
+- 新しい点字テーブル: 中国語点字(中国、標準中国語)1級および2級 (#5553)
+
+
+== 変更点 ==
+- オブジェクト表示カテゴリの「バルーン情報の報告」が「通知の報告」に変更されました。この設定の対象には Windows 8 以降のトースト通知が含まれます。 (#5789)
+- NVDA 設定のキーボードカテゴリにおいて、NVDA制御キーの有効・無効を変更するチェックボックスが、リストにまとめられました。
+- NVDA が Windows タスクトレイの時計を読み上げるときに不要な情報を含まないようになりました。 (#4364)
+- liblouis 点訳エンジンを 3.7.0 に更新しました。 (#8697)
+
+
+== バグ修正 ==
+- Outlook 2016/365 においてメッセージのカテゴリーとフラグの状態を報告するようになりました。 (#8603)
+- NVDA の言語でキルギス語、モンゴル語、マセドニア語などが選択されている場合に、これらの言語がオペレーティングシステムでサポートされていないという警告を起動時に表示しないようになりました。 (#8064)
+- Mozilla Firefox, Google Chrome, Acrobat Reader DC などのブラウズモードで、ナビゲーターオブジェクトにマウスポインタを移動する場合の処理がより正確に行われるようになりました。(#6460)
+- Firefox, Chrome, Internet Explorer などのウェブコンテンツにおけるコンボボックスの操作が改良されました。(#8664)
+
+
+== 開発者向けの変更 ==
+- gui.nvdaControls は以下の2つのクラスを提供します。アクセシブルなチェックボックス付きのリストを作成できます。 (#7325)
+ - CustomCheckListBox はアクセシブルな wx.CheckListBox のサブクラスです。
+ - AutoWidthColumnCheckListCtrl は AutoWidthColumnListCtrl にアクセシブルなチェックリストを追加します。これは wx.ListCtrl の派生クラスです。
+- アクセシブルでない wx widget をアクセシブルにする場合には gui.accPropServer.IAccPropServer_impl のインスタンスを使用できます。 (#7491)
+ - 詳細は gui.nvdaControls.ListCtrlAccPropServer の実装を参照してください。
+- configobj を 5.1.0dev commit 5b5de48a に更新しました。 (#4470)
+
+
+= 2018.3.1 =
+このリリースの変更点は32ビット版 Mozilla Firefox のクラッシュに関する重要な不具合修正です。 (#8759)
+
+
 = 2018.3 =
 このリリースのハイライトは、点字ディスプレイの自動検出、Windows 10 絵文字パネルなどへの対応、多くのバグ修正です。
 
@@ -58,6 +91,7 @@ NVDA最新情報
  - Wordドキュメントのリストにおいて、点字ディスプレイのタッチカーソルに関する処理を修正しました。 (#7971)
  - Wordドキュメントの箇条書き挿入において、音声および点字ディスプレイのビュレットや番号に関する報告を修正しました。 (#7970)
 - Windows 10 バージョン 1803 以降の「ワールドワイド言語サポートで Unicode UTF-8 を使用」が有効の場合に、アドオンのインストールで不具合が起こらないようになりました。 (#8599)
+- iTunes 12.9 以降が NVDA で操作できない不具合を修正しました。 (#8744)
 
 
 == 開発者向けの変更 ==
@@ -1449,7 +1483,7 @@ NVDA最新情報
  - この処理は NVDA 自身およびアドオンでサポートされます。
  - GNU gettext の中の xgettext および msgfmt が PO および MO ファイル作成に必要です。Pythonのツールはメッセージのコンテクストに対応していません。
  - xgettext において --keyword=ppgettext:1c,2 コマンドライン引数をあたえることで、メッセージのコンテキストが含まれるようになります。
- - 詳細は http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts を参照してください。
+ - 詳細は https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts を参照してください。
 - ビルトインのNVDAモジュールがサードパーティのモジュールによってオーバーライドされたときに、ビルトインのモジュールにアクセスできるようになりました。nvdaBuiltin モジュールを参照してください。
 - アドオンの翻訳サポートがアドオンの installTasks モジュールで使われるようになりました。
 
@@ -2105,7 +2139,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - Backspace is now handled correctly when speaking typed words. (#306)
 - Don't incorrectly report "Start menu" for certain context menus in Windows Explorer/the Windows shell. (#257)
 - NVDA now correctly handles ARIA labels in Mozilla Gecko when there is no other useful content. (#156)
-- NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. http://tigerdirect.com/. (#220)
+- NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. https://tigerdirect.com/. (#220)
 - NVDA will now attempt to recover from some situations which would previously cause it to freeze completely. It may take up to 10 seconds for NVDA to detect and recover from such a freeze.
 - When the NVDA language is set to "User default", use the user's Windows  display language setting instead of the Windows locale setting. (#353)
 - NVDA now recognises the existence of controls in AIM 7.
@@ -2373,7 +2407,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 = 0.5 =
 - NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will be used by default.
  - eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
- - For more info on eSpeak, or to find other versions, go to http://espeak.sourceforge.net/.
+ - For more info on eSpeak, or to find other versions, go to https://espeak.sourceforge.net/.
 - Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
 - Added support for more edit fields in Skype.
 - VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.

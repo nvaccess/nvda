@@ -10,7 +10,7 @@
 
 
 == Các thay đổi ==
-- Đổi tên tùy chọn "Đọc các thông báo trợ giúp" trong hộp thoại trình bày đối tượng thành "Đọc các thông báo" để bao gồm việc đọc các thông báo trong Windows 8 và cao hơn. (#5789)
+- Đổi tên tùy chọn "Đọc các thông báo trợ giúp" trong hộp thoại trình bày đối tượng thành "Đọc các thông báo" để bao gồm việc đọc các thông báo toast trong Windows 8 và cao hơn. (#5789)
 - Trong cài đặt bàn phím của NVDA, các hộp kiểm để bật / tắt các phím bổ trợ NVDA giờ đây hiển thị thành một danh sách thay vì là các hộp kiểm riêng lẻ.
 - NVDA sẽ không còn đọc các thông tin thừa  khi xem đồng hồ từ khay hệ thống trên vài phiên bản Windows. (#4364)
 - Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.7.0. (#8697)
@@ -25,6 +25,9 @@
 
 == Các thay đổi cho nhà phát triển ==
 Phần này không được dịch. Vui lòng xem bản tiếng Anh của tài liệu.
+
+= 2018.3.1 =
+Đây là bản phát hành phụ nhằm sửa một lỗi nghiêm trọng của NVDA làm cho các phiên bản 32 bit của Mozilla Firefox bị sự cố. (#8759)
 
 
 = 2018.3 =
@@ -89,7 +92,7 @@ Các cải tiến của bản phát hành này bao gồm khả năng tự nhận
 Phần này không được dịch. Vui lòng xem bản tiếng Anh của tài liệu.
 
 = 2018.2.1 =
-Bản phát hành này bao gồm các cập nhật phiên dịch vì xảy ra lỗi từ việc gỡ bộ một tính năng.
+Bản phát hành này bao gồm các cập nhật phiên dịch vì xảy ra lỗi từ việc gỡ bỏ một tính năng.
 
 
 = 2018.2 =
@@ -142,7 +145,7 @@ Một số tính năng nổi bật trong bản phát hành này bao gồm hỗ t
 - Từ Windows 8 trở lên, NVDA sẽ không còn đọc "không xác định" khi mở trình đơn các liên kết nhanh (Windows+X) và chọn các thành phần từ trình đơn này. (#8137)
 - Vài thao tác cho các nút trên màn hình nổi của Hims đã hoạt động như được  quảng cáo trong hướng dẫn sử dụng. (#8096)
 - NVDA sẽ cố gắng sửa lỗi hệ thống COM registration khiến cho các chương trình như Firefox và Internet Explorer trở nên không tiếp cận  và NVDA thông báo "không xác định". (#2807)
-- Làm việc xung quanh lỗi trong Task Manager khiến NVDA không cho phép người dùng truy cập nội dung của vài chi tiết về quá trình vận hành. (#8147)
+- Làm việc về lỗi trong Task Manager khiến NVDA không cho phép người dùng truy cập nội dung của vài chi tiết về quá trình vận hành. (#8147)
 - Các giọng đọc mới chuẩn Sapi5 không còn bị chậm khi kết thúc quá trình đọc, điều đó giúp  cho việc điều hướng với các giọng đọc này trở nên hiệu quả hơn. (#8174)
 - NVDA không còn thông báo (dấu LTR và RTL) qua màn hình nổi hay khi đọc kí tự khi truy cập biểu tượng đồng hồ trong các phiên bản Windows gần đây. (#5729)
 - Tìm ra các phím cuộn trên màn hình Hims Smart Beetle lại một lần nữa  trở nên tin cậy. (#6086)

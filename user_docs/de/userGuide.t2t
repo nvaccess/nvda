@@ -58,7 +58,7 @@ Copyright NVDA_COPYRIGHT_YEARS NVDA-Mitwirkende.
 NVDA steht unter der GNU General Public License (Version 2).
 Sie sind berechtigt, diese Software nach Belieben weiterzugeben und zu ändern, solange Sie die Software zusammen mit einer Kopie dieser Lizenz und den ursprünglichen Quellcode herausgeben.
 Dies bezieht sich sowohl auf das Original sowie auch auf modifizierte Kopien dieser Software sowie alle Weiterentwicklungen.
-Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
+Für weitere Informationen können Sie entweder die [englischsprachige https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche https://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
 
 + Systemvoraussetzungen +[SystemRequirements]
 - Betriebssystem: Microsoft Windows 7, Windows 8, Windows 8.1 und Windows 10 (alle 32- und 64-Bit-Versionen, inkl. Server-Betriebssysteme).
@@ -560,7 +560,7 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 + Mathematische Inhalte lesen +[ReadingMath]
 Sie können Mathplayer 4 von Design Science verwenden, um mit NVDA in mathematischen Inhalten zu navigieren.
 Hierfür ist die Installation von Mathplayer 4 notwendig.
-Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/mathplayer/
+Mathplayer kann hier heruntergeladen werden: https://www.dessci.com/en/products/mathplayer/
 
 NVDA unterstützt die folgenden mathematischen Inhalte:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer und Google Chrome.
@@ -931,7 +931,7 @@ Falls Sie Kategorien oder Dialoge öffnen wollen, die nicht über zugewiesene Ta
 Weiter unten finden Sie Erläuterungen zu jeder Kategorie aus dem NVDA-Einstellungsdialog.
 
 +++ Allgemein (NVDA+Strg+G) +++[GeneralSettings]
-Hier können allgemeingültige Einstellungen von NVDA vorgenommen werden. Sie können z. B. die Sprache einstellen, in der die Meldungen und Dialoge von NVDA angezeigt werden sollen. Sie können auch festlegen, dass regelmäßig geprüft werden soll, ob Aktualisierungen für NVDA verfügbar sind.
+Hier können allgemeingültige Einstellungen von NVDA vorgenommen werden. Sie können z. B. die Sprache einstellen, in der die Meldungen und Dialoge von NVDA angezeigt werden sollen. Sie können auch festlegen, dass regelmäßig geprüft werden soll, ob Updates für NVDA verfügbar sind.
 Diese Kategorie enthält die folgenden Optionen:
 
 ==== Sprache ====[GeneralSettingsLanguage]
@@ -948,7 +948,7 @@ Diese Option ist ein Kontrollfeld, wenn aktiviert, speichert NVDA jedes Mal beim
 
 ==== Optionen zum Beenden von NVDA anzeigen ====[GeneralSettingsShowExitOptions]
 Mit diesem Kontrollkästchen legen Sie fest, ob beim Beenden von NVDA ein Dialog angezeigt wird. Hier können Sie verschiedene Aktionen auslösen.
-Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder eine ausstehende Aktualisierung installieren möchten.
+Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder eine ausstehende Update installieren möchten.
 Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 
 ==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====[GeneralSettingsPlaySounds]
@@ -972,10 +972,10 @@ Wenn Sie diesen Schalter betätigen, wird Ihre benutzerdefinierte Konfiguration 
 Speichern Sie zuvor Ihre Konfiguration, um sicherzustellen, dass auch tatsächlich all Ihre Einstellungen übernommen wurden. Sie können dies im NVDA-Menü oder mit der Tastenkombination NVDA+Strg+C tun.
 Diese Option ist nur in der installierten Version verfügbar!
 
-==== Automatisch nach Aktualisierungen suchen ====[GeneralSettingsCheckForUpdates]
-Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
-Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen" aus dem Hilfe-Menü auswählen.
-Um beim Prüfen auf Aktualisierungen von NVDA sicherzustellen, dass Sie auch wirklich die passende Aktualisierung erhalten, ist es notwendig, einige Informationen an den Update-Server von NV Access zu senden. Dies gilt sowohl für die manuelle als auch für die automatische Prüfung auf Aktualisierungen.
+==== Automatisch nach Updates suchen ====[GeneralSettingsCheckForUpdates]
+Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Updates und informiert sie, wenn eine aktualisierte Version verfügbar ist.
+Sie können auch manuell auf Updates prüfen, indem Sie "nach Updates suchen" aus dem Hilfe-Menü auswählen.
+Um beim Prüfen auf Updates von NVDA sicherzustellen, dass Sie auch wirklich die passende Update erhalten, ist es notwendig, einige Informationen an den Update-Server von NV Access zu senden. Dies gilt sowohl für die manuelle als auch für die automatische Prüfung auf Updates.
 Die folgenden Informationen werden immer gesendet:
 - Aktuelle NVDA-Version
 - Betriebssystemversion
@@ -995,9 +995,9 @@ Wenn die Option aktiviert ist, werden die folgenden Daten zusätzlich gesendet:
 
 Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
 
-==== Beim Start von NVDA ausstehende Aktualisierungen melden ====[GeneralSettingsNotifyPendingUpdates]
-Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Aktualisierung aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
-Sie können die ausstehende Aktualisierung auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
+==== Beim Start von NVDA ausstehende Updates melden ====[GeneralSettingsNotifyPendingUpdates]
+Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Update aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
+Sie können die ausstehende Update auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Updates aus dem Hilfe-Menü installieren
 
 +++ Stimme- und Sprachausgabe (NVDA+Strg+V) +++[SpeechSettings]
 Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden und wie sich die Akustik der Stimme anhören soll.
@@ -1404,7 +1404,7 @@ Deaktivieren Sie einfach diese Option, wenn Sie die Ansage der Objektbeschreibun
 ==== Ausgabe des Fortschrittsbalkens ====[ObjectPresentationProgressBarOutput]
 Tastenkombination: NVDA+U
 
-Diese Option kontrolliert, wie NVDA die Aktualisierungen der Fortschrittsbalken ansagen soll.
+Diese Option kontrolliert, wie NVDA die Updates der Fortschrittsbalken ansagen soll.
 
 Die folgenden Optionen stehen zur Auswahl:
 - Aus: Bei Änderungen werden keine Fortschrittsmeldungen angesagt.
@@ -1609,7 +1609,7 @@ Wenn Sie das Muster auf "ganze Wörter" anwenden lassen, hat dies zur Folge, das
 Wenn Sie also das Wort "Vogel" wie im vorherigen Beispiel durch "Frosch" ersetzen und den Auswahlschalter auf "ganze Wörter setzen, wird die Regel nicht auf "Singvogel" oder "Vogelhaus" zutreffen.
 
 Ein regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies erlaubt Ihnen, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen zur gleichen Zeit zutrifft 
-Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in Englisch) http://docs.python.org/library/re.html]
+Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in Englisch) https://docs.python.org/library/re.html]
 
 +++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++[SymbolPronunciation]
 In diesem Dialog können Sie die Aussprache von Satz- und Sonderzeichen verändern und festlegen, ab welcher Symbolebene dieses angesagt werden soll. 
@@ -1780,7 +1780,7 @@ Wenn dieses Kontrollkästchen aktiviert ist, wird der Sprachbetrachter geöffnet
 Sofern möglich, wird dessen Fenster dieselbe Position sowie die gleiche Größe wie bei der letzten Verwendung einnehmen.	
 
 Während der Sprachbetrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
-Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
+Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Update der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
 
 Um den Sprachbetrachter per Tastenkombination ein- oder auszuschalten, müssen Sie diesem mittels des []Dialog Eingaben #InputGestures] eine eigene Tastenkombination zuweisen.
 
@@ -1865,8 +1865,8 @@ Die "Microsoft Speech Plattform" stellt Stimmen für viele Sprachen zur Verfügu
 Diese Stimmen können auch in NVDA eingebunden werden.
 
 Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten installieren:
-- Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Plattform - Server Runtime Sprachen (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Server Runtime (Version 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Plattform - Server Runtime Sprachen (Version 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27224
  - Diese Webseite enthält viele Dateien für Sprachein- und -ausgabe.
  Suchen Sie sich die tts-Dateien passend zu der von Ihnen gewünschten Sprache heraus.
  Beispiel: Die Datei MSSpeech_TTS_de-DE_Hedda.msi ist eine deutsche Stimme.
@@ -1882,12 +1882,12 @@ Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/hel
 Bitte bedenken Sie dabei, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
 Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
 Dieses Problem kann nur durch Änderungen in Windows behoben werden.
-Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
+Wir hoffen, dass dies im Rahmen einer Update von Windows geschehen wird.
 
 ++ AudioLogic TTS 3 ++[Audiologic]
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
 Um sie in NVDA nutzen zu können, müssen Sie die Sprachausgabe auf Ihrem System installiert haben.
-Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter http://www.audiologic.it/.
+Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter https://www.audiologic.it/.
 
 Diese Sprachausgabe unterstützt nicht die [Buchstabierfunktionalität #SpeechSettingsUseSpelling].
 
@@ -1911,9 +1911,9 @@ Die folgenden Braillezeilen unterstützen diese automatische Erkennung.
 -
 
 ++ Die Focus- und PacMate-Serien von FreedomScientific ++[FreedomScientificFocus]
-Die Braillezeilen Focus 40 Blue und alle PacMate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
+Die Braillezeilen Focus 40 Blue und alle PacMate-Zeilen von der amerikanischen Firma [FreedomScientific https://www.freedomscientific.com/] werden unterstützt.
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
-Falls Sie sie noch nicht installiert haben, können Sie die Treiber von der Website [hier http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
+Falls Sie sie noch nicht installiert haben, können Sie die Treiber von der Website [hier https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
 Wenn Sie eine 64-Bit-Version von Windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von dieser Adresse installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
@@ -1974,7 +1974,7 @@ Nur für Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA 6 Serie/Protokoll-Converter ++[OptelecALVA]
-Beide Braillezeilen - die BC640 und die BC680 - von [Optelec http://www.optelec.de/] werden via USB und BlueTooth unterstützt.
+Beide Braillezeilen - die BC640 und die BC680 - von [Optelec https://www.optelec.de/] werden via USB und BlueTooth unterstützt.
 Sie können alternativ auch ältere Optelec-Braillezeilen wie beispielsweise das Braille Voyager mit NVDA verwenden. Dazu benötigen Sie den Protokoll-Converter von Optelec.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
 Sie müssen die Zeile lediglich anschließen und in NVDA konfigurieren.
@@ -2026,7 +2026,7 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 %kc:endInclude
 
 ++ HandyTech-Braillezeilen ++[HandyTech]
-Die meisten Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
+Die meisten Braillezeilen der Firma [HandyTech GmbH https://www.handytech.de/] werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
 bei älteren Usb-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
 
 Die folgenden Braillezeilenmodelle werden nicht ohne weiteres unterstützt; sie können Sie jedoch unter Zuhilfenahme des [universaltreibers https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber] und der NVDA-Erweiterung verwenden:
@@ -2060,7 +2060,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-Die Lilli-Braillezeile von der italienischen Firma [MDV http://www.mdvbologna.it/] wird unterstützt.
+Die Lilli-Braillezeile von der italienischen Firma [MDV https://www.mdvbologna.it/] wird unterstützt.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
 Sie müssen lediglich die Braillezeile anschließen und in NVDA konfigurieren.
 
@@ -2082,7 +2082,7 @@ Bitte lesen Sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 %kc:endInclude
 
 ++ Braillezeilen von Baum/HumanWare/APH/Orbit ++[Baum]
-einige [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/], [APH http://www.aph.org/] und [Orbit http://www.orbitresearch.com/]-Braillezeilen werden unterstützt, sofern sie seriell, per USB oder Bluetooth mit dem Rechner verbunden werden.
+einige [Baum https://www.baum.de/], [HumanWare https://www.humanware.de/], [APH https://www.aph.org/] und [Orbit https://www.orbitresearch.com/]-Braillezeilen werden unterstützt, sofern sie seriell, per USB oder Bluetooth mit dem Rechner verbunden werden.
 Dies sind auch:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2118,7 +2118,7 @@ Für Braillezeilen, die einen Joystick besitzen:
 %kc:endInclude
 
 ++ Hedo Profiline USB ++[HedoProfiLine]
-Die Profiline USB der Firma [Hedo Reha-Technik http://www.hedo.de/] werden unterstützt.
+Die Profiline USB der Firma [Hedo Reha-Technik https://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den USB-Treiber des Herstellers installieren.
 
 Diese Braillezeile unterstützt nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
@@ -2137,7 +2137,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ Hedo MobilLine USB ++[HedoMobilLine]
-Die MobilLine USB der Firma [Hedo Reha-Technik http://www.hedo.de/] werden unterstützt.
+Die MobilLine USB der Firma [Hedo Reha-Technik https://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den USB-Treiber des Herstellers installieren.
 
 Diese Braillezeile unterstützt nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
@@ -2156,7 +2156,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B-Serie / BrailleNote Touch ++[HumanWareBrailliant]
-Die Braillezeilen der Serien BI und B von [HumanWare http://www.humanware.de/], so auch die BI 14, BI 32, BI 40 und BI 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
+Die Braillezeilen der Serien BI und B von [HumanWare https://www.humanware.de/], so auch die BI 14, BI 32, BI 40 und BI 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
 Wenn Sie die Zeile über USB anschließen wollen während das Übertragungsprotokoll HumanWare verwendet wird, müssen Sie zunächst den USB-Treiber des Herstellers installieren.
 Verwenden Sie hingegen das Protokoll OpenBraille, wird kein USB-Treiber benötigt.
 
@@ -2208,9 +2208,9 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Syncbraille Serie ++[Hims]
-NVDA unterstützt die Braillezeilenmodelle Braille Sense, Edge, Syncbraille und Smart Beetle von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
+NVDA unterstützt die Braillezeilenmodelle Braille Sense, Edge, Syncbraille und Smart Beetle von [Hims https://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
 Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch den USB-Treiber von HIMS auf Ihrem System installieren.
-Sie können diese von folgender Seite herunterladen: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Sie können diese von folgender Seite herunterladen: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Folgende Tastenkombinationen sind in NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -2280,8 +2280,8 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ Seika-Braillezeilen ++[Seika]
-Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Modulen und die Seika 80 mit 80 Modulen der Firma [Nippon Telesoft #http://www.nippontelesoft.com/]werden unterstützt.
-Informationen zu diesen Zeilen erhalten Sie auf [[http://www.seika-braille.com]]
+Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Modulen und die Seika 80 mit 80 Modulen der Firma [Nippon Telesoft #https://www.nippontelesoft.com/]werden unterstützt.
+Informationen zu diesen Zeilen erhalten Sie auf [[https://www.seika-braille.com]]
 Zuerst müssen Sie den USB-Treiber des Herstellers von der mitgelieferten CD-ROM installieren.
 
 Die folgenden Tastenkombinationen für diese Braillezeile sind in NVDA verfügbar:
@@ -2468,7 +2468,7 @@ BRAILLEX 2D Screen
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA unterstützt die BrailleNote-Modelle von [HumanWare http://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
+NVDA unterstützt die BrailleNote-Modelle von [HumanWare https://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
 Die folgenden Modelle werden unterstützt:
 - BrailleNote Classic (nur serielle Verbindung)
 - BrailleNote PK (Seriell und Bluetooth)
@@ -2560,7 +2560,7 @@ Die folgenden Befehle können mit dem Scrollrad ausgeführt werden:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA unterstützt die Ecobraille von [ONCE http://www.once.es/].
+NVDA unterstützt die Ecobraille von [ONCE https://www.once.es/].
 
 Die folgenden Modelle werden unterstützt:
 - EcoBraille 20
@@ -2608,7 +2608,7 @@ Aus Kompatibilitätsgründen wurden deshalb zwei Tastenkombinationen definiert:
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris-Braillezeilen ++[Eurobraille]
-NVDA unterstützt die Esys-, Esytime- und Iris-Braillezeilen von [Eurobraille http://www.eurobraille.fr/].
+NVDA unterstützt die Esys-, Esytime- und Iris-Braillezeilen von [Eurobraille https://www.eurobraille.fr/].
 Esys und Esytime-Evo-Geräte können mit NVDA via USB oder Bluetooth verbunden werden.
 Ältere Esytime-Geräte können nur via USB verbunden werden.
 Iris-Braillezeilen können nur über eine serielle Schnittstelle angebunden werden.
@@ -2692,8 +2692,8 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
-Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
+Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows https://www.brltty.com/download.html].
 Dazu laden Sie sich das neueste Treiberpaket herunter und installieren es. Der Name sieht in etwa wie folgt aus: "brltty-win-4.2-3.exe".
 Bei der Konfiguration der Braillezeile und des zu verwendenden Anschlusses, insbesondere bei USB, seien Sie sicher, dass Sie auch die passenden Treiber vom Hersteller bereits auf Ihrem System installiert haben.
 
@@ -2703,7 +2703,7 @@ Die Einstellung der Braille-Eingabetabelle innerhalb von NVDA ist daher wirkungs
 BRLTTY ist nicht an der automatischen Erkennung von Braillezeilen im Hintergrund beteiligt.
 
 Folgende BRLTTY-Befehle wurden in NVDA zugewiesen.
-Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen http://mielke.cc/brltty/doc/KeyBindings/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden können.
+Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen https://mielke.cc/brltty/doc/KeyBindings/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden können.
 %kc:beginInclude
 || Name | BRLTTY-Befehl |
 | Braillezeile rückwärtsscrollen | fwinlt (Eine Zeilenlänge nach links bewegen) |

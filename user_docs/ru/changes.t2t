@@ -6,12 +6,12 @@
 = 2018.4 =
 
 == Новое ==
-- Добавлены новые брайлевские таблицы: Китайский (КНР, Мандарин) первой и второй ступени. (#5553)
+- Добавлены новые брайлевские таблицы: Китайский (Китай, Мандарин) первой и второй ступени. (#5553)
 
 
 == Изменения ==
 - Для более точного определения всплывающих уведомлений появившихся в Windows 8, флажок "Читать всплывающие системные сообщения" в категории "Представление объекта" диалога настроек NVDA был переименован в "Читать системные уведомления". (#5789)
-- В категории "Клавиатура" диалога настроек NVDA, флажки определяющие использование клавиш-модификаторов NVDA, теперь представлены в виде списка, а не как отдельные элементы.
+- В категории "Клавиатура" диалога настроек NVDA, флажки определяющие использование клавиш-модификаторов NVDA, теперь представлены в виде списка, а не как отдельные элементы управления.
 - NVDA на некоторых версиях Windows больше не сообщает избыточную информацию при чтении часов в системном трее. (#4364)
 - Liblouis braille translator обновлён до версии 3.7.0. (#8697)
 
@@ -24,12 +24,16 @@
 
 
 == Изменения для разработчиков ==
-- Модуль configobj обновлён до версии 5.1.0dev (коммит 5b5de48a). (#4470)
 - В модуль gui.nvdaControls добавлены два класса для создания доступных списков с элементами-флажками. (#7325)
  - CustomCheckListBox является доступным подклассом wx.CheckListBox.
  - AutoWidthColumnCheckListCtrl добавляет доступные флажки к AutoWidthColumnListCtrl, который сам наследуется от wx.ListCtrl.
 - Если вам необходимо реализовать доступность для недоступного wx-виджета, то это можно сделать с помощью экземпляра gui.accPropServer.IAccPropServer_impl. (#7491)
  - Для получения дополнительной информации, обратитесь к реализации gui.nvdaControls.ListCtrlAccPropServer.
+- Модуль configobj обновлён до версии 5.1.0dev (коммит 5b5de48a). (#4470)
+
+
+= 2018.3.1 =
+Это небольшое обновление исправляет ошибку в NVDA, из-за которой 32-разрядная версия Mozilla Firefox могла аварийно завершать работу. (#8759)
 
 
 = 2018.3 =
@@ -70,7 +74,7 @@
 - Исправлены периодические ошибки инициализации брайлевских дисплеев ALVA BC680. (#8106)
 - На брайлевских дисплеях ALVA BC6, по умолчанию больше не выполняется эмуляция клавиш системной клавиатуры с помощью комбинаций включающих в себя клавиши sp2+sp3, используемыми самими дисплеями для внутренних целей. (#8230)
 - Нажатие sp2 для эмуляции клавиши alt на дисплеях ALVA BC6 теперь работает корректно. (#8360)
-- NVDA больше не сообщает избыточную информацию при изменении раскладки клавиатуры. (#7383, #8419)
+- NVDA больше не сообщает ошибочное переключение раскладки клавиатуры. (#7383, #8419)
 - Отслеживание мыши теперь работает более корректно в Блокноте и в других текстовых элементах управления содержащих более 65535 символов. (#8397)
 - NVDA теперь определяет большее число диалоговых окон в Windows 10 и в других современных приложениях. (#8405)
 - NVDA теперь корректно отслеживает системный фокус в подвисших приложениях или при большом числе системных событий на Windows 10 October 2018 Update и Server 2019 и в более поздних версиях Windows. (#7345, #8535)
@@ -1490,7 +1494,7 @@ Highlights of this release include support for Asian character input; experiment
  - This is supported for both NVDA itself and add-ons.
  - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts.
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
- - See http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
+ - See https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
 - It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details.
 - Add-on translation support can now be used within the add-on installTasks module. (#2715)
 
@@ -2413,9 +2417,9 @@ This release fixes several security and other important issues found in NVDA 201
 
 
 = 0.5 =
-- NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will  be used by default. eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. For more info on eSpeak, or to find other versions, go to http://espeak.sourceforge.net/.
+- NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will  be used by default. eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. For more info on eSpeak, or to find other versions, go to https://espeak.sourceforge.net/.
  - eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
- - For more info on eSpeak, or to find other versions, go to http://espeak.sourceforge.net/.
+ - For more info on eSpeak, or to find other versions, go to https://espeak.sourceforge.net/.
 - Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
 - Added support for more edit fields in Skype.
 - VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.
