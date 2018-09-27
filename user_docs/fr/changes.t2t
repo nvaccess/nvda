@@ -3,6 +3,39 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Nouvelles Fonctionnalités ==
+- Nouvelles tables braille : Chinois (Chine, Mandarin) intégral et abrégé. (#5553)
+
+
+== Changements ==
+- "Annoncer les bulles d'aide" dans le dialogue de Présentation des Objets a été renommé en "Annoncer les notifications" pour inclure l'annonce notifications toast sous Windows 8 et au-delà. (#5789)
+- Dans les paramètres clavier de NVDA, les cases à cocher permettant d'activer ou désactiver les touches NVDA sont maintenant affichées dans une liste plutôt que comme des cases à cocher séparées.
+- NVDA n'annoncera plus d'informations redondantes à la lecture de l'horloge de la barre des tâches système sous certaines versions de Windows. (#4364)
+- mise à jour du traducteur braille liblouis à la version  3.7.0. (#8697)
+
+
+== Corrections de bogues ==
+- Sous Outlook 2016/365, la catégorie et l'indicateur d'état sont annoncés pour les messages. (#8603)
+- Quand NVDA est configuré pour des langues telles que Kirgiz, Mongol ou Macédonien, il n'affiche plus au démarrage un dialogue avertissant que la langue n'est pas supportée par le système d'exploitation. (#8064)
+- Sous Mozilla Firefox, Google Chrome et Acrobat Reader DC, amener la souris à l'objet de navigation amènera maintenant la souris à la position en mode navigation. (#6460)
+- L'interaction avec les listes déroulantes sous Firefox, Chrome et Internet Explorer a été améliorée. (#8664)
+
+
+== Changements pour les Développeurs ==
+- gui.nvdaControls contient maintenant deux classes pour créer des listes accessibles avec des cases à cocher. (#7325)
+ - CustomCheckListBox est une sous-classe accessible de wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl ajoute des cases à cocher accessibles à un contrôle AutoWidthColumnListCtrl, qui est lui-même basé sur wx.ListCtrl.
+- Si vous avez besoin de rendre accessible un widget wx qui ne l'est pas déjà, il est possible de le faire en utilisant une instance de gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Consultez  l'implementation de gui.nvdaControls.ListCtrlAccPropServer pour plus d'informations.
+- configobj mis à jour à la version 5.1.0dev commit 5b5de48a. (#4470)
+
+
+= 2018.3.1 =
+Ceci est une version mineure pour corriger un bogue critique de NVDA qui provoquait le plantage de la version 32 bits de Mozilla Firefox. (#8759)
+ 
+
 = 2018.3 =
 Les points forts de cette version incluent la détection automatique de beaucoup de terminaux Braille, le support de nouvelles fonctionnalités de Windows 10 incluant le panneau de saisie des Emoji, et beaucoup de corrections de bogues.
 
@@ -28,7 +61,7 @@ Les points forts de cette version incluent la détection automatique de beaucoup
 - Pour les terminaux ALVA BC680 et protocol converter, il est maintenant possible d'assigner différentes fonctions au smart pad gauche et droit, et aux touches pouce et etouch. (#8230)
 - Pour les terminaux ALVA BC6, la combinaison de touches sp2+sp3 annonce maintenant la date et l'heure courante, et sp1+sp2 émule la touche Windows. (#8230)
 - Au premier démarrage de NVDA, il est maintenant demandé à l'utilisateur s'il souhaite envoyer des statistiques d'utilisation à NV Access lors de la vérification automatique de mises à jour. (#8217)
-- Lors de la vérification de mises à jour, si l'utilisateur a accepté d'envoyer des données statistiques à NV Access, NVDA enverra maintenant le nom du synthétiseur et le terminal braille en cours, pour permettre une meilleure prioritisation du travail futur sur ces pilotes. (#8217)
+- Lors de la vérification de mises à jour, si l'utilisateur a accepté d'envoyer des données statistiques à NV Access, NVDA enverra maintenant le nom du synthétiseur et le terminal braille en cours, pour permettre une meilleure priorisation du travail futur sur ces pilotes. (#8217)
 - Mise à jour du convertisseur braille Liblouis à la version 3.6.0. (#8365)
 - Mise à jour du chemin vers la bonne table braille russe 8 points. (#8446)
 - Mise à jour de eSpeak-ng au niveau 1.49.3dev commit 910f4c2 (#8561)
@@ -58,6 +91,7 @@ Les points forts de cette version incluent la détection automatique de beaucoup
  - Le routage de curseur en braille fonctionne maintenant correctement quand on se trouve dans une liste dans un document Word. (#7971)
  - Les puces ou numérotations nouvellement insérées dans un document Word sont correctement signalées vocalement et en braille. (#7970)
 - Sous Windows 10 1803 et au-delà, il est maintenant possible d'installer des modules complémentaires si la fonctionnalité "Utiliser Unicode UTF-8 pour le support mondial des langues" est activé. (#8599)
+- Il n'est plus impossible d'interagir avec iTunes 12.9 et au-delà avec NVDA. (#8744)
 
 
 == Changements pour les Développeurs ==
@@ -1462,7 +1496,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
  - Ceci est supporté aussi bien pour NVDA que pour les modules complémentaires.
  - xgettext et msgfmt de GNU Gettext doivent être utiliser pour créer tout fichier po ou mo. Les outils Python ne supportent pas les messages de contextes.
  - Pour xgettext, passez le paramètre de ligne de commande --keyword=pgettext:1c,2 pour activer l'inclusion des messages de contextes.
- - Visitez http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts pour plus d'informations.
+ - Visitez https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts pour plus d'informations.
 - Il est maintenant possible d'accéder aux modules intégrés de NVDA afin d'en étendre les fonctionnalités. Reportez-vous au module nvdaBuiltin pour plus de détails.
 - Le support de traduction dans les Modules complémentaires est maintenant supporté dans le module installTask du module complémentaire. (#2715)
 
@@ -2120,7 +2154,7 @@ Les points forts principaux de cette version comprennent le support des édition
 - La touche retour-arrière est maintenant traitées correctement en mode écho clavier par mots. (#306)
 - Ne pas dire de manière incorrecte "Menu Démarrer" en présence des menus contextuels dans l'Explorateur Windows / le shell Windows. (#257)
 - NVDA gère désormais correctement les étiquettes ARIA dans Mozilla Gecko lorsqu'il n'y a pas d'autres contenus utiles. (#156)
-- NVDA ne passe plus automatiquement en mode formulaire de façon incorrecte dans les champs modifiables qui mettent à jour leur valeur lors des changements de focus, comme c’était le cas pour http://tigerdirect.com/. (#220)
+- NVDA ne passe plus automatiquement en mode formulaire de façon incorrecte dans les champs modifiables qui mettent à jour leur valeur lors des changements de focus, comme c’était le cas pour https://tigerdirect.com/. (#220)
 - NVDA tentera, désormais, de se remettre de certaines situations qui, auparavant, provoquaient son gel complet. Cela peut prendre jusqu'à 10 secondes avant que NVDA ne détecte et récupère d'un tel gel.
 - Quand la langue NVDA est réglée sur "User-Default", utiliser la langue d'affichage de l’utilisateur Windows au lieu de la configuration locale Windows. (#353)
 - NVDA reconnaît maintenant l'existence des contrôles dans AOL Instant Messenger 7.
@@ -2387,7 +2421,7 @@ Accès au contenu web grâce aux nouveaux tampons virtuels en développement (pr
 = 0.5 =
 - NVDA dispose maintenant d'une synthèse vocale intégrée appelée eSpeak, développée par Jonathan Duddington. Elle est très réactive, légère et elle prend en charge beaucoup de langues différentes. Les synthèses vocales Sapi peuvent encore être utilisées, mais eSpeak sera utilisée par défaut.
  - eSpeak ne dépend d'aucun logiciel spécial pour être installée, elle peut donc être utilisée avec NVDA sur n'importe quel ordinateur, sur une clef USB, ou partout.
- - Pour plus d'informations au sujet d'eSpeak, où pour trouver d'autres versions, aller à http://espeak.sourceforge.net/.
+ - Pour plus d'informations au sujet d'eSpeak, où pour trouver d'autres versions, aller à https://espeak.sourceforge.net/.
 - Correction d'un bogue où le mauvais caractère était annoncé lors de l'appui sur supprime dans les volets éditables dans Internet Explorer / Outlook Express.
 - Ajout du support pour plus de champs d'édition dans Skype.
 - Les tampons virtuels ne sont chargés que lorsque le focus es sur la fenêtre qui a besoin d'être chargée. Ceci corrige quelques problèmes quand le volet de visualisation est actifdans Outlook Express.
