@@ -194,4 +194,3 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
-
