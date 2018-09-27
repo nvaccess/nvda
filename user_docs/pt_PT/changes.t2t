@@ -1520,7 +1520,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
  - Recurso suportado tanto pelo próprio NVDA como por seus complementos. 
  - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts. 
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts. 
- - Consulte http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para mais informações. 
+ - Consulte https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para mais informações. 
 - It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details. 
 - Add-on translation support can now be used within the add-on installTasks module. (#2715) 
 
@@ -2177,7 +2177,7 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 - Backspace agora é controlado corretamente quando se fala palavras ao escrever. (#306)
 - Não se anuncia incorretamente "menu iniciar" para certos menus de contexto no Windows Explorer/Windows shell. (#257)
 - O NVDA agora processa corretamente etiquetas de ARIA no mozilla Gecko quando não há outro conteúdo útil. (#156)
-- O NVDA já não ativa incorretamente o modo de foco automaticamente para campos de texto editável que atualizam seu valor quando o foco muda; ex.: http://tigerdirect.com/. (#220)
+- O NVDA já não ativa incorretamente o modo de foco automaticamente para campos de texto editável que atualizam seu valor quando o foco muda; ex.: https://tigerdirect.com/. (#220)
 - O NVDA agora tentará recuperar-se de algumas situações que anteriormente o fariam travar completamente. Poderá levar cerca de 10 segundos para que o NVDA detecte e se recupere de tais travamentos.
 - quando o idioma do NVDA está configurado para "User default", utiliza o idioma do usuário do Windows configurado em lugar do local do Windows.
 - O NVDA agora reconhece a existência de controles em AIM 7.
@@ -2465,7 +2465,7 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 = 0.5 =
 - O NVDA ten agora um sintetizador integrado chammado eSpeak, desenvolvido por Jonathan Duddington. É muito ágil e rápido, e ten suporte para muitos idiomas diferentes. Os sintetizadores Sapi todavía podem ser usados, mas o eSpeak será utilizado por padrão.
  - O eSpeak não depende de nenhum software especial para ser instalado, pelo que pode ser utilizado com o NVDA em qualquer computador, nun dispositivo USB ou qualquer outro.
- - Para mais informações sobre o eSpeak, ou para encontrar outras versões, visite http://espeak.sourceforge.net/.
+ - Para mais informações sobre o eSpeak, ou para encontrar outras versões, visite https://espeak.sourceforge.net/.
 - Correção da falha onde era anunciado o caractere incorreto quando se pressionava Delete em painéis editáveis do Internet Explorer / Outlook Express.
 - adicionado suporte para mais campos de edição no Skype.
 - Os buffers virtuais agora só são carregados quando o foco está sobre a janela que necessita ser carregada. Isto resolve alguns problemas onde o painel anterior era ativado no Outlook Express.
