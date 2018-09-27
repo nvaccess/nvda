@@ -2602,7 +2602,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def postInit(self):
 		self.symbolsList.SetFocus()
 
-	def filter(self, filterText=None):
+	def filter(self, filterText=''):
 		index = self.symbolsList.GetFirstSelected()
 		oldFilteredSymbols = self.filteredSymbols
 		if not filterText:
