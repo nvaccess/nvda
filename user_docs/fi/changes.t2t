@@ -27,6 +27,10 @@
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
 
 
+= 2018.3.1 =
+Tämä versio korjaa kriittisen ohjelmavirheen, joka aiheutti Mozilla Firefoxin 32-bittisten versioiden kaatumisen. (#8759)
+
+
 = 2018.3 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat useiden pistenäyttöjen automaattinen tunnistaminen, tuki uusille Windows 10:n ominaisuuksille kuten emojinsyöttöpaneelille, sekä monet muut bugikorjaukset.
 
@@ -1973,7 +1977,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Askelpalauttimen painaminen käsitellään nyt oikein kirjoitettuja sanoja luettaessa. (#306)
 - Tietyistä Resurssienhallinnan ja Windowsin käyttöliittymän tilannekohtaisista valikoista ei enää virheellisesti ilmoiteta, että ne ovat Käynnistä-valikkoja. (#257)
 - NVDA käsittelee nyt oikein Mozilla Geckon ARIA-luokat, kun muuta käyttökelpoista sisältöä ei ole saatavilla. (#156)
-- NVDA ei enää virheellisesti ota käyttöön automaattista vuorovaikutustilaa muokattaville tekstikentille, jotka päivittävätsisältöään kohdistuksen muuttuessa (esim. osoitteessa http://tigerdirect.com/). (#220)
+- NVDA ei enää virheellisesti ota käyttöön automaattista vuorovaikutustilaa muokattaville tekstikentille, jotka päivittävätsisältöään kohdistuksen muuttuessa (esim. osoitteessa https://tigerdirect.com/). (#220)
 - NVDA yrittää nyt palautua joistakin tilanteista, jotka ennen aiheuttivat sen täydellisen jumittumisen. Tällaisen tilanteen havaitseminen ja siitä palautuminen voi kestää jopa 10 sekuntia.
 - Käyttäjän näyttökieliasetusta käytetään Windowsin maa-asetuksen sijaan, kun NVDA:n kieleksi on asetettu "User default". (#353)
 - NVDA tunnistaa nyt AOL Instant Messenger 7:n säädint.
@@ -2241,7 +2245,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 == 0.5 ==
 - NVDA:ssa on nyt sisäänrakennettu eSpeak-puhesyntetisaattori, joka tukee useita kieliä ja on erittäin herkkä ja kevyt. SAPI-syntetisaattoreita voidaan edelleen käyttää, mutta eSpeakia käytetään oletusarvoisesti.
 eSpeak ei ole riippuvainen mistään erikoisohjelmistoista, joten sitä voidaan käyttää NVDA:ssa millä tahansa tietokoneella, muistitikulla jne.
-Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoitteessa http://espeak.sourceforge.net/.
+Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoitteessa https://espeak.sourceforge.net/.
 - Korjattu vika, joka aiheutti  väärän merkin lukemisen painettaessa Delete-näppäintä Internet Explorerin ja Outlook Expressin muokkausruuduissa.
 - Lisätty tuki useimmille Skypen muokkauskentille.
 - Näennäispuskurit ladataan vain, kun kohdistus on ikkunassa, joka tarvitsee niitä. Korjaa joitakin ongelmia Outlook Expressin esikatseluruudun ollessa käytössä.
