@@ -1259,14 +1259,12 @@ Esta categoría Opcións contén os seguintes axustes:
 ==== Disposición do Teclado ====[KeyboardSettingsLayout]
 Esta caixa combinada permíteche escoller que tipo de distribución de teclado debería utilizar NVDA. Actualmente os dous que veñen co NVDA son Sobremesa e Portátil.
 
-==== Usar BloqMaius como unha tecla modificadora do NVDA ====[KeyboardSettingsCapsModifier]
-Se esta caixa de verificación está marcada, o BloqMaius pode utilizarse como unha tecla modificadora do NVDA.
-
-==== Usar o insert extendido coma unha tecla modificadora do NVDA ====[KeyboardSettingsExtendedInsert]
-Se esta caixa de verificación está marcada, a tecla insert (normalmente atopada enriba das teclas de frecha, preto de inicio e fin) pode utilizarse como unha tecla modificadora do NVDA.
-
-==== Usar o insert do teclado numérico como tecla modificadora de NVDA ====[KeyboardSettingsExtendedInsert][KeyboardSettingsNumpadInsert]
-Se esta caixa de verificación está marcada, a tecla insert do teclado numérico pode utilizarse coma unha tecla modificadora do NVDA.
+==== Selecionar Teclas Modificadoras do NVDA ====[KeyboardSettingsModifiers]
+As caixas de verificación nesta listaxe controlan que teclas poden usarse coma [teclas modificadoras do NVDA #TheNVDAModifierKey]. As seguintes teclas están disppoñibles para se escoller:
+- A tecla bloqueo de maiúsculas
+- A tecla insertar no tecládo numérico
+- A tecla insertar extendida (atopada normalmente enriba das teclas de frecha, preto de inicio e fin)
+-
 
 Se non se escolle ningunha tecla como a tecla NVDA podería ser imposible acceder a certas ordes de NVDA.
 Polo tanto, o diálogo Opcións do NVDA amosará unha mesaxe de erro se todas as teclas están sen seleccionar  cando se prema Aceptar.
@@ -1991,11 +1989,11 @@ Seguidamente van as asignacións de teclas para esta pantalla co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
 %kc:beginInclude
 || Nome | Tecla |
-| Desprazar pantalla braille cara atrás | t1 ou etouch1 |
+| Desprazar pantalla braille cara atrás | t1, etouch1 |
 | Mover a pantalla braille á liña anterior | t2 |
 | Mover ao foco actual | t3 |
 | Mover a pantalla braille á a liña seguinte | t4 |
-| Desprazar pantalla braille cara adiante | t5 ou etouch3 |
+| Desprazar pantalla braille cara adiante | t5, etouch3 |
 | Guiar á celda braille | sensor |
 | Anunciar formato de texto baixo a celda braille | sensores secundarios |
 | Conmutar a simulación de teclado HID | t1+spEnter |
@@ -2005,7 +2003,7 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | Anunciar o título | etouch2 |
 | Anunciar a barra de estado | etouch4 |
 | tecla shift+tab | sp1 |
-| tecla alt | sp2 |
+| tecla alt | sp2, alt |
 | tecla escape | sp3 |
 | tecla tab | sp4 |
 | tecla frecha arriba | spUp |
@@ -2023,7 +2021,6 @@ Por favor consulta a documentación da pantalla para descripcións de onde poden
 | tecla control+fin | t3+spAbaixo |
 | tecla inicio | t3+spEsquerda |
 | tecla fin | t3+spDereita |
-| tecla alt | alt |
 | tecla control | control |
 %kc:endInclude
 

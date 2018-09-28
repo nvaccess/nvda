@@ -35,7 +35,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++[Internationalization]
 Jeder Mensch auf der Welt sollte den gleichen Zugang zur Information und zu moderner Technologie erhalten, unabängig von seiner Sprache.
-NVDA wurde neben Englisch bislang in 54 weiteren Sprachen übersetzt, darunter sind: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Aragonesisch, Bulgarisch, Birmanisch, Chinesisch (traditionell und vereinfacht), Tschechisch, Dänisch, Deutsch (Deutschland), Deutsch (Schweiz), Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch,  Hebräisch, Hindi (Nordindien), Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Katalanisch, Kirgisisch, Koreanisch, Kroatisch, Litauisch, mazedonisch, Mongolisch, Nepalesisch, Niederländisch, Norwegisch, Polnisch, Portugiesisch (Portugal), Portugiesisch (Brasilien), Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slowenisch, Spanisch (Spanien), Spanisch (Kolumbien), Schwedisch, Tamilisch, Thai, Ungarisch,  Türkisch, Ukrainisch sowie Vietnamesisch.
+NVDA wurde neben Englisch bislang in 54 weiteren Sprachen übersetzt, darunter sind: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Aragonesisch, Bulgarisch, Birmanisch, Chinesisch (traditionell und vereinfacht), Tschechisch, Dänisch, Deutsch (Deutschland), Deutsch (Schweiz), Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Hebräisch, Hindi (Nordindien), Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Katalanisch, Kirgisisch, Koreanisch, Kroatisch, Litauisch, mazedonisch, Mongolisch, Nepalesisch, Niederländisch, Norwegisch, Polnisch, Portugiesisch (Portugal), Portugiesisch (Brasilien), Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slowenisch, Spanisch (Spanien), Spanisch (Kolumbien), Schwedisch, Tamilisch, Thai, Ungarisch, Türkisch, Ukrainisch sowie Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++[SpeechSynthesizerSupport]
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
@@ -343,7 +343,7 @@ Standardmäßig folgt der Navigator dem Systemfokus, diese Kopplung kann jedoch 
 Bedenken Sie, dass die Braillezeile standardmäßig sowohl dem [Fokus #SystemFocus] und dem [System-Cursor #SystemCaret] als auch dem Navigator und dem NVDA-Cursor folgt.
 Wenn die Braillezeile nur dem Fokus oder dem Systemcursor folgen soll, müssen Sie die [Kopplung der Braillezeile #BrailleTether] so einstellen, dass die Braillezeile dem Fokus folgt.
 Bedenken Sie, dass die Braillezeile in einem solchen Fall nicht mehr der Objektnavigation und der Bildschirmdarstellung folgt.
-Wenn die Braillezeile dem NVDA-Cursor Bzw. dem Navigator folgen soll, müssen Sie die [Kopplung der Braillezeile #BrailleTether] so einstellen, dass die Braillezeile dem NVDA-Cursor folgt.
+Wenn die Braillezeile dem NVDA-Cursor bzw. dem Navigator folgen soll, müssen Sie die [Kopplung der Braillezeile #BrailleTether] so einstellen, dass die Braillezeile dem NVDA-Cursor folgt.
 
 Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 
@@ -614,11 +614,11 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | aklsltr | Ausklapplistenschalter |
 | dsltr | Drehschalter |
 | tsltr | Trennschaltfläche |
-| Umsltr | Umschalter |
+| umsltr | Umschalter |
 | kmbf | Konbinationsfeld |
 | kf | Kontrollfeld |
 | dlg | Dialogfeld |
-| Dok | Dokument |
+| dok | Dokument |
 | ef | Eingabefeld |
 | kwef | Kennworteingabefeld |
 | eObj | Eingebettetes Objekt |
@@ -633,11 +633,11 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | lst | Liste |
 | bl | Besuchter Link |
 | mnü | Menü |
-| Mnülst | Menüleiste |
+| mnülst | Menüleiste |
 | mnüsltr | Menüschalter |
 | mne | Menüeintrag |
 | strg | Steuerung |
-| Fortschritt | Fortschrittsanzeige |
+| fortschritt | Fortschrittsanzeige |
 | as | Auswahlschalter |
 | rb | Rollbalken |
 | abs | Abschnitt |
@@ -646,14 +646,14 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | tbl | Tabelle |
 | sN | Tabellenspalte N, z. B. S1, S2. |
 | rN | Reihe N in einer Tabelle, z. B. R1, R2. |
-| EA | Eingabeaufforderung |
+| ea | Eingabeaufforderung |
 | wl | Werkzeugleiste |
-| Mhlf | Minihilfe |
-| Gldsltr | Gliederungsschalter |
-| BAE | Eintrag einer Baumstruktur |
+| mhlf | Minihilfe |
+| gldsltr | Gliederungsschalter |
+| bae | Eintrag einer Baumstruktur |
 | ba | Baumansicht |
-| EN | Ein Eintrag in einer Baumansicht in der Ebene N |
-| Fst | Fenster |
+| en | Ein Eintrag in einer Baumansicht in der Ebene N |
+| fst | Fenster |
 | ``⠤⠤⠤⠤⠤`` | Trennlinie |
 
 Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
@@ -713,12 +713,12 @@ NVDA unterstützt die in Windows 10 enthaltene Texterkennung, um Text aus Bilder
 Über NVDA-Erweiterungen können zusätzliche Werkzeuge zur Inhaltserkennung bereitgestellt werden.
 
 Wenn Sie ein Werkzeug zur Inhaltserkennung verwenden, bezieht sich die Erkennung grundsätzlich auf das aktuelle [Navigator-Objekt #ObjectNavigation].
-Da der Navigator standardmäßig an den Fokus Bzw. den Lesemodus gekoppelt ist, können Sie normalerweise einfach den Fokus an die gewünschte Stelle innerhalb der Anwendung oder im Dokument bewegen.
+Da der Navigator standardmäßig an den Fokus bzw. den Lesemodus gekoppelt ist, können Sie normalerweise einfach den Fokus an die gewünschte Stelle innerhalb der Anwendung oder im Dokument bewegen.
 Wenn Sie den Cursor im Lesemodus auf eine Grafik bewegen, wird die Inhaltserkennung diese Grafik erkennen.
 Sie können jedoch trotzdem die Objektnavigation verwenden, um z. B. den Inhalt eines ganzen Anwendungsfensters zu erkennen.
 
 Wenn die Erkennung abgeschlossen ist, wird das Erkennungsergebnis in einem Dokument ähnlich dem Lesemodus angezeigt, in dem Sie das Erkennungsergebnis mit den Pfeiltasten lesen können.
-Drücken Sie die Leertaste oder die eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
+Drücken Sie die Leertaste oder die Eingabetaste, um den Text (üblicherweise durch Klicken) zu aktivieren.
 Drücken Sie Escape, um das Erkennungsergebnis zu schließen.
 
 ++ Windows 10-Texterkennung ++[Win10Ocr]
@@ -908,11 +908,11 @@ Wenn Sie sich in der Tabellenansicht der hinzugefügten Bücher befinden:
 %kc:endInclude
 
 + NVDA konfigurieren +[ConfiguringNVDA]
-Die meisten NVDA-Einstellungen können über Dialogfelder vorgenommen werden, welche man im Untermenü Anpassen  des NVDA-Menü findet. 
+Die meisten NVDA-Einstellungen können über Dialogfelder vorgenommen werden, welche man im Untermenü Anpassen des NVDA-Menü findet. 
 Viele Einstellungen können in einem mehrseitigen [Dialogfeld #NVDASettings] geändert werden. 
 In allen Einstellungsdialogen können Sie den "OK"-Schalter drücken, um die Einstellungen zu übernehmen und dn Dialog zu schließen.
 Um Einstellungen zu verwerfen, drücken Sie den "Abbrechen"-Schalter oder die Escape-Taste.
-Für manche Einstellungen können Sie auch "Übernehmen" drücken, um weiterhin im Einstellungsdialog zu bleiben.
+Für manche Einstellungen können Sie auch auf "Übernehmen" drücken, um weiterhin im Einstellungsdialog zu bleiben.
 Einige Einstellungen können auch durch Kurztasten geändert werden. Diese Kurztasten werden in den entsprechenden Abschnitten aufgelistet.
 
 ++ die Einstellungen ++[settings]
@@ -1087,7 +1087,7 @@ Wenn ein Fehler auftritt, wird NVDA einen Fehlerton abspielen und die vorherige 
 ==== Sprachausgabe ====[SelectSynthesizerSynthesizer]
 Diese Option legt fest, welche Sprachausgabe beim Verwenden von NVDA wiedergegeben werden soll.
 
-Eine Liste aller  von NVDA unterstützten Sprachausgaben finden Sie im Abschnitt [Unterstützte Sprachausgaben #SupportedSpeechSynths].
+Eine Liste aller von NVDA unterstützten Sprachausgaben finden Sie im Abschnitt [Unterstützte Sprachausgaben #SupportedSpeechSynths].
 
 In der Liste der verfügbaren Sprachausgaben gibt es auch den Eintrag "Keine Sprachausgabe". Damit wird NVDA stumm gestellt.
 Dies ist beispielsweise für Anwender nützlich, die nur mit einer Braillezeile arbeiten möchten. Aber auch Entwickler können davon profitieren, wenn Sie nur den Sprachbetrachter für Ihre Tests nutzen möchten.
@@ -1176,7 +1176,7 @@ Wird diese Option aktiviert, zeigt NVDA alle Meldungen dauerhaft auf der Braille
 Tastenkombination: NVDA+Strg+T
 
 Diese Option legt fest, ob die Braillezeile dem System-Cursor, dem Navigator-Objekt / NVDA-Cursor oder beiden Navigationsmethoden folgen soll. 
-Wenn beiden Navigationsarten gefolgt wird, verfolgt die Braillezeile den Fokus Bzw. den Systemcursor, sobald dieser seine Position ändert (z. B. beim Drücken von Tab oder Shift-tab zum Bewegen des Fokus oder beim Drücken der Pfeiltasten zum Bewegen des Cursors in einem Text). 
+Wenn beiden Navigationsarten gefolgt wird, verfolgt die Braillezeile den Fokus bzw. den Systemcursor, sobald dieser seine Position ändert (z. B. beim Drücken von Tab oder Shift-tab zum Bewegen des Fokus oder beim Drücken der Pfeiltasten zum Bewegen des Cursors in einem Text). 
 Sobald Sie den Navigator oder Befehle zum Betrachten von Text verwenden, wird die Braillezeile automatisch an den NVDA-Cursor gekoppelt, bis sich der Fokus bewegt.
 
 ==== absatzweise lesen ====[BrailleSettingsReadByParagraph]
@@ -1260,14 +1260,12 @@ Sie enthält die folgenden Optionen:
 ==== Tastaturschema ====[KeyboardSettingsLayout]
 In dieser Liste können Sie zwischen dem Schema "Desktop" oder "Laptop" auswählen.
 
-==== Dauergroßschreibtaste als NVDA-Taste verwenden ====[KeyboardSettingsCapsModifier]
-Wenn dieses Kontrollfeld aktiviert ist, können Sie die Dauergroßschreibtaste als NVDA-Taste verwenden.
-
-==== Einfügetaste der erweiterten Tastatur als NVDA-Taste verwenden ====[KeyboardSettingsExtendedInsert]
-Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste des Nummernblocks als NVDA-Taste verwenden.
-
-==== Einfügetaste des Nummernblocks als NVDA-Taste verwenden ====[KeyboardSettingsNumpadInsert]
-Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste des Nummernblocks als NVDA-Taste verwenden.
+==== NVDA-Tasten auswählen ====[KeyboardSettingsModifiers]
+Die Kontrollkästchen in dieser Liste legen fest, welche Tasten als [NVDA-Tasten #TheNVDAModifierKey] verwendet werden können. Die folgenden Tasten stehen zur Auswahl:
+- Die Dauergroßschreibtaste
+- Die Einfügetaste auf dem Nummernblock
+- Die erweiterte Einfügetaste (meistens über den Pfeiltasten, nah bei Pos1 und Ende)
+-
 
 Wenn Sie keine dieser Tasten als NVDA-Tasten festlegen, können Sie nicht mehr auf bestimmte Funktionen von NVDA zugreifen.
 Aus diesem Grund wird eine Fehlermeldung angezeigt, wenn Sie keine Taste als NVDA-Taste verwenden. 
@@ -1427,7 +1425,7 @@ Schaltet die Ansage von neuen Inhalten in bestimmten Programmen wie Terminals un
 
 ==== Klang bei automatischen Vorschlägen abspielen ====[ObjectPresentationSuggestionSounds]
 Wenn diese Option aktiviert ist, spielt NVDA einen Klang ab, wenn eine Vorschlagsliste erscheint beziehungsweise ausgeblendet wird.
-Vorschlagslisten sind Listen mit vorgeschlagenen Einträgen basierend auf Text, den Sie in bestimmte  Eingabefelder oder Dokumente eingeben.
+Vorschlagslisten sind Listen mit vorgeschlagenen Einträgen basierend auf Text, den Sie in bestimmte Eingabefelder oder Dokumente eingeben.
 Ein Beispiel für ein solches Eingabefeld ist das Suchfeld im Startmenü in Windows Vista oder neuer. Wenn Sie dort einen Suchbegriff eingeben, zeigt Ihnen Windows eine Liste mit Suchvorschlägen, die auf Ihrem Suchbegriff basieren.
 Weitere Beispiele für Eingabefelder mit Vorschlagslisten sind Suchfelder in diversen Windows-10-Anwendungen.
 Die Vorschlagsliste wird geschlossen, sobald Sie mit dem Fokus das Eingabefeld verlassen. NVDA kann Sie manchmal darüber informieren, sobald dies geschieht.
@@ -1791,7 +1789,7 @@ Im Dialog "Erweiterungen verwalten", den Sie über das Untermenü Extras im NVDA
 Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusätzlichen Code enthalten, um NVDA-Funktionen zu verändern oder zu erweitern. Es ist auf diese Weise sogar möglich, neue Braillezeilen- oder Sprachausgabentreiber hinzuzufügen.
 
 Die Erweiterungsverwaltung enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
-Für jede Erweiterung wird Ihnen der Name, der Status, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine URL als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und klicken Sie anschließend auf die Schaltfläche "Über...".
+Für jede Erweiterung wird Ihnen der Name, der Status, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine URL als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und klicken Sie anschließend auf die Schaltfläche "Info...".
 Falls für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
 
 Um weitere Erweiterungen herunterzuladen und zu installieren, klicken Sie auf den Schalter "Erweiterungen herunterladen...".
@@ -1930,7 +1928,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile rückwärtsscrollen | topRouting1 (Erstes Braille-Modul) |
-| Braillezeile vorwärtsscrollen | topRouting20/40/80 (Letztes Braillemodul) |
+| Braillezeile vorwärtsscrollen | topRouting20/40/80 (Letztes Braille-Modul) |
 | Braillezeile rückwärtsscrollen | leftAdvanceBar |
 | Braillezeile vorwärtsscrollen | rightAdvanceBar |
 | Kopplung der Brailleanzeige umschalten | leftGDFButton+rightGDFButton |
@@ -1992,11 +1990,11 @@ Bitte lesen Sie in der Dokumentation der Braillezeilen für weitere Details nach
 Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 %kc:beginInclude
 || Name | Taste |
-| Braillezeile rückwärtsscrollen | T1 oder etouch1 |
+| Braillezeile rückwärtsscrollen | T1, eTouch1 |
 | Braillezeile zur vorherigen Zeile ziehen | T2 |
 | Zum Fokus bewegen | T3 |
 | Braillezeile zur nächsten Zeile ziehen | T4 |
-| Braillezeile weiterscrollen | T5 oder etouch3 |
+| Braillezeile weiterscrollen | T5, eTouch3 |
 | Zum aktuellen Modul auf der Braillezeile springen | Routing-Taste |
 | Textformatierung am aktuellen Modul ausgeben | Obere Routing-Taste |
 | HID-Tastatursimulation ein- oder ausschalten | T1+spEingabe |
@@ -2006,7 +2004,7 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 | Titelzeile anzeigen | etouch2 |
 | Statuszeile anzeigen | etouch4 |
 | Umschalt+Tab | Sp1 |
-| Alt-Taste | Sp2 |
+| Alt-Taste | Sp2, Alt |
 | Escape-Taste | Sp3 |
 | Tab-Taste | Sp4 |
 | Pfeiltaste nach oben | SpUp |
@@ -2024,7 +2022,6 @@ Folgende Tastenkombinationen für diese Braillezeilen sind in NVDA zugeordnet.
 | Strg+Ende | T3+SpDown |
 | Pos1 | T3+SpLeft |
 | Ende | T3+SpRight |
-| Alt-Taste | Alt |
 | Strg-Taste | Steuerung |
 %kc:endInclude
 
@@ -2045,7 +2042,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Braillezeile weiter scrollen | Rechts, nach unten, B6 |
 | Eine Zeile nach oben springen | B4 |
 | Eine Zeile nach unten springen | B5 |
-| Zum Braillemodul springen | Routing-Taste |
+| Zum Braille-Modul springen | Routing-Taste |
 | Umschalt+Tabulatortaste | Escape-Taste, linke triple-aktionstaste auf+ab |
 | Alt-Taste | B2+B4+B5 |
 | Escape-Taste | B4+B6 |
@@ -2153,7 +2150,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Braillezeile vorwärtsscrollen | K3 |
 | Braillezeile zur vorherigen Zeile bewegen | B2 |
 | Braillezeile zur nächsten Zeile bewegen | B5 |
-| Cursor zum Braillemodul bewegen | Routing-Taste |
+| Cursor zum Braille-Modul bewegen | Routing-Taste |
 | Kopplung der Braillezeile umschalten | K2 |
 | Alles ansagen | B6 |
 %kc:endInclude
@@ -2250,7 +2247,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Strg+Pfeil nach links | Punkt2+Leertaste |
 | Umschalt+Alt+Pfeil nach links | Punkt2+Punkt7+F1 |
 | Alt+Pfeil nach links | Punkt2+Punkt7 |
-| Pfeil nach rechts | Punkt6+Leertaste, Pfeil rechts auf der linken Seite  |
+| Pfeil nach rechts | Punkt6+Leertaste, Pfeil rechts auf der linken Seite |
 | Strg+Umschalt+Pfeil nach rechts | Punkt5+Punkt8+Leertaste+F1 |
 | Strg+Pfeil nach rechts | Punkt5+Leertaste |
 | Umschalt+Alt+Pfeil nach rechts | Punkt5+Punkt7+F1 |
@@ -2450,7 +2447,7 @@ BRAILLEX Tiny
 | Zum ersten untergeordneten Objekt bewegen | R1+Ab |
 | Zum vorherigen Objekt bewegen | R1+Links |
 | Zum nächsten Objekt bewegen | R1+Rechts |
-| Textformatierung am Modul  ausgeben | obere Routing-Taste |
+| Textformatierung am Modul ausgeben | obere Routing-Taste |
 | Titelzeile der aktuellen Anwendung anzeigen | L1+Auf |
 | Statuszeile anzeigen | L2+Ab |
 
@@ -2585,7 +2582,7 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/b
 | Braillezeile vorwärtsscrollen | T4 |
 | Braillezeile zur vorherigen Zeile bewegen | T1 |
 | Braillezeile zur nächsten Zeile scrollen | T5 |
-| Cursor zum ausgewählten Braillemodul bewegen | Routing-Taste |
+| Cursor zum ausgewählten Braille-Modul bewegen | Routing-Taste |
 | Aktuelles NAvigator-Objekt aktivieren | T3 |
 | Zum nächsten Darstellungsmodus wechseln | F1 |
 | Zum übergeordneten Objekt bewegen | F2 |
@@ -2612,7 +2609,7 @@ Aus Kompatibilitätsgründen wurden deshalb zwei Tastenkombinationen definiert:
 
 ++ Eurobraille Esys/Esytime/Iris-Braillezeilen ++[Eurobraille]
 NVDA unterstützt die Esys-, Esytime- und Iris-Braillezeilen von [Eurobraille http://www.eurobraille.fr/].
-Esys und Esytime-Evo-Geräte  können mit NVDA via USB oder Bluetooth verbunden werden.
+Esys und Esytime-Evo-Geräte können mit NVDA via USB oder Bluetooth verbunden werden.
 Ältere Esytime-Geräte können nur via USB verbunden werden.
 Iris-Braillezeilen können nur über eine serielle Schnittstelle angebunden werden.
 Deshalb müssen Sie für diese Braillezeile gesondert die Schnittstelle auswählen, nachdem der Treiber in den Braille-Einstellungen von NVDA aktiviert wurde.
@@ -2627,7 +2624,7 @@ Für mehr Details über die Positionen der Tasten auf der Braillezeile lesen Sie
 | Rückwärtsscrollen | Wechsel1-6links, l1 |
 | Vorwärtsscrollen | Wechsel1-6Rechts, l8 |
 | Zum aktuellen Fokus ziehen | Wechsel1-6Links+Wechsel1-6Rechts, l1+l8 |
-| Cursor zum aktuellen Braillemodul ziehen | Routing-Taste |
+| Cursor zum aktuellen Braille-Modul ziehen | Routing-Taste |
 | Textformatierung an der Braillezelle ausgeben | Doppel-Routing-Taste |
 | NVDA-Cursor zur vorherigen Zeile ziehen | Joystick1oben |
 | NVDA-Cursor zur nächsten Zeile ziehen | Joystick1unten |
@@ -2713,7 +2710,7 @@ Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturbelegungen http://
 | Braillezeile vorwärtsscrollen | fwinrt (Eine Zeilenlänge nach rechts bewegen) |
 | Braillezeile zur vorherigen Zeile bewegen | lnup (Eine Zeile nach oben bewegen) |
 | Braillezeile zur nächsten Zeile bewegen | lndn (Eine Zeile nach unten bewegen) |
-| Cursor zum Braillemodul ziehen | Routing-Taste (Cursor zum Zeichen bewegen) |
+| Cursor zum Braille-Modul ziehen | Routing-Taste (Cursor zum Zeichen bewegen) |
 %kc:endInclude
 
 + Erweiterte Themen +[AdvancedTopics]
@@ -2754,7 +2751,7 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
 | -s | --secure | Sicherer Modus, schaltet die Python-Konsole aus. |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
-| Keine | --debug-logging | aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
+| Keine | --debug-logging | Aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | Keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |

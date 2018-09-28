@@ -3,7 +3,37 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Nuevas Características ==
+- Nuevas tablas braille: Chino (China, Mandarín) grado 1 y grado 2. (#5553)
+
+
+== Cambios ==
+- "Anunciar globos de ayuda" en el diálogo Presentación de Objetos se ha renombrado como "Anunciar notificaciones" para incluir el anunciado de notificaciones del sistema en Windows 8 y posteriores. (#5789)
+- EN las opciones de teclado de NVDA, las casillas de verificación para activar o desactivar las teclas modificadoras de NVDA ahora se muestran en una lista en lugar de en casillas de verificación separadas.
+- NVDA ya no presenta información redundante al leer el reloj de la bandeja del sistema en algunas versiones de Windows. (#4364)
+- Actualizado el transcriptor braille liblouis a la versión 3.7.0. (#8697)
+
+
+== Corección de Errores ==
+- En Outlook 2016/365, se anuncian la categoría y el estado de la marca para los mensajes. (#8603)
+- Cuando NVDA se configure para idiomas tales como Kirgyz, Mongol o Macedonio, ya no muestra un diálogo en un aviso al arrancar que el idioma no se admite por el sistema operativo. (#8064)
+- Al mover el ratón al navegador de objetos ahora será mucho más preciso mover el ratón a la posición del modo exploración en Mozilla Firefox, Google Chrome y Acrobat Reader DC. (#6460)
+- Se ha mejorado interactuar con cuadros combinados en la web en Firefox, Chrome e Internet Explorer. (#8664)
+
+
+== Cambios para Desarrolladores ==
+- gui.nvdaControls ahora contiene dos clases para crear listas accesibles con casillas de verificación. (#7325)
+ - CustomCheckListBox es una sub-clase accesible de wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl añade casillas de verificación accesibles a un AutoWidthColumnListCtrl, el cual está basado en si mísmo en wx.ListCtrl.
+- Si necesitas hacer un wx widget accesible que no lo es todavía, es posible hacerlo utilizando una instancia de gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Consulta la implementación de gui.nvdaControls.ListCtrlAccPropServer para más información.
+- Actualizado configobj a 5.1.0dev commit 5b5de48a. (#4470)
+
+
 = 2018.3 =
+Lo subrayable de esta versión incluye la detección automática de muchas pantallas Braille, la admisión para algunas características nuevas de Windows 10 incluyendo el panel de entrada de emojis de Windows 10, y muchas otras correcciones de fallos.
 
 == Nuevas Características ==
 - NVDA anunciará errores de gramática cuando se expongan apropiadamente por las páginas web en Mozilla Firefox y Google Chrome. (#8280)
@@ -48,14 +78,15 @@
 - Corregido un caso donde el estado "no marcado" en controles no se anuncia en voz si el control ha sido parcialmente marcado anteriormente. (#6946)
 - En la lista de idiomas en las opciones generales de NVDA, el nombre para el idioma birmano se muestra correctamente en Windows 7. (#8544)
 - En Microsoft Edge, NVDA anunciará notificaciones tales como leer la disponibilidad de la vista y el progreso de la carga de la página. (#8423)
-- De forma similar a otros campos de texto multilínea, cuando se coloque al comienzo de un documento en Braille, la pantalla ahora se desplaza de tal forma que el primer carácter del documento se encuentre al principio de la pantalla. (#8406)
 - Al navegar por una lista en la web, NVDA ahora anunciará su etiqueta si el autor de la misma ha proporcionado una. (#7652)
-- Cuando se asignan manualmente funciones a gestos para una pantalla braille en particular, estos gestos ahora siempre aparecen como asignados a esa pantalla. Anteriormente, se mosgtraban como si estuviesen asignados a la pantalla activa en ese momento. (#8108)
+- Cuando se asignan manualmente funciones a gestos para una pantalla braille en particular, estos gestos ahora siempre aparecen como asignados a esa pantalla. Anteriormente, se mostraban como si estuviesen asignados a la pantalla activa en ese momento. (#8108)
 - Ahora se admite la versión de 64 bits del Media Player Classic. (#6066)
 - Varias mejoras al soporte braille en Microsoft Word con UI Automation habilitado:
+ - De forma similar a otros campos de texto multilínea, cuando se coloque al comienzo de un documento en Braille, la pantalla ahora se desplaza de tal forma que el primer carácter del documento se encuentre al principio de la pantalla. (#8406)
  - Reducción de la presentación demasiado verbosa del foco tanto en voz como en braille cuando se enfoque un documento Word. (#8407)
  - El enrutamiento del cursor en braille ahora funciona correctamente cuando se está en una lista en un documento de Word. (#7971)
  - Las viñetas/números recién insertados en un documento Word se anuncian correctamente tanto en voz como en braille. (#7970)
+- En Windows 10 1803 y posteriores, ahora es posible instalar complementos si está activada la característica "Utilizar Unicode UTF-8 para el soporte de idioma en todo el mundo". (#8599)
 
 
 == Cambios para Desarrolladores ==
