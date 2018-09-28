@@ -1657,22 +1657,27 @@ CHAR_RTL_MARK = u'\u200F'
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
-	Depending on the version of Windows name or value contains left-to-right or right-to-left  characters, so  remove them from both.
+	Depending on the version of Windows name or value contains left-to-right or right-to-left characters, so remove them from both.
 	"""
 
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
-		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
-		if super(TrayClockWClass, self).value is None:
-			return super(TrayClockWClass, self).name.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
-		return None
+	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+		ClockValue = super(TrayClockWClass, self).value
+		ClockName = super(TrayClockWClass, self).name
+		if ClockValue is None:
+			ClockName = ClockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		else:
+			ClockName = ''
+		return ClockName
 
 	def _get_value(self):
-		if super(TrayClockWClass, self).value is None:
-			return super(TrayClockWClass, self).value
-		return super(TrayClockWClass, self).value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		ClockValue = super(TrayClockWClass, self).value
+		if not ClockValue is None:
+			ClockValue = ClockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return ClockValue
 
 class OutlineItem(IAccessible):
 
