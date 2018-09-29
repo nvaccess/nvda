@@ -1220,12 +1220,16 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
+	containerContainsText="" #: used for item counts for lists
+
 	# Determine what text to speak.
 	# Special cases
-	if speakEntry and childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	if childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
-		# Translators: Speaks number of items in a list (example output: list with 5 items).
-		return roleText+" "+_("with %s items")%childControlCount
+		# #7652: containerContainsText variable is set here, but the actual generation of all other output is handled further down in the general cases section.
+		# This ensures that properties such as name, states and level etc still get reported appropriately.
+		# Translators: Number of items in a list (example output: list with 5 items).
+		containerContainsText=_("with %s items")%childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
 		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
@@ -1250,8 +1254,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			+ (" %s" % stateText if stateText else "")
 			+ (" %s" % ariaCurrentText if ariaCurrent else ""))
 
-	# General cases
-	elif (
+	# General cases.
+	if (
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
@@ -1263,7 +1267,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			if valueText:
 				log.error("valueText exists when expected none: valueText:'%s' placeholderText:'%s'"%(valueText,placeholderText))
 			valueText = placeholderText
-		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
+		out.extend(x for x in (nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),containerContainsText,ariaCurrentText,valueText,descriptionText,levelText,keyboardShortcutText) if x)
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
@@ -1689,7 +1693,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				text=""
 			if text:
 				textList.append(text)
-	if unit in (textInfos.UNIT_LINE,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH,textInfos.UNIT_READINGCHUNK):
+	# The line-prefix formatField attribute contains the text for a bullet or number for a list item, when the bullet or number does not appear in the actual text content.
+	# Normally this attribute could be repeated across formatFields within a list item and therefore is not safe to speak when the unit is word or character.
+	# However, some implementations (such as MS Word with UIA) do limit its useage to the very first formatField of the list item.
+	# Therefore, they also expose a line-prefix_speakAlways attribute to allow its usage for any unit.
+	linePrefix_speakAlways=attrs.get('line-prefix_speakAlways',False)
+	if linePrefix_speakAlways or unit in (textInfos.UNIT_LINE,textInfos.UNIT_SENTENCE,textInfos.UNIT_PARAGRAPH,textInfos.UNIT_READINGCHUNK):
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)

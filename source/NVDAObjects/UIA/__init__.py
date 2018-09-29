@@ -449,7 +449,7 @@ class UIATextInfo(textInfos.TextInfo):
 		log.debug("With further units of: %s"%furtherUIAFormatUnits)
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
-			text=self._getTextFromUIARange(tempRange)
+			text=self._getTextFromUIARange(tempRange) or ""
 			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:

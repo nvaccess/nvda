@@ -22,7 +22,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Yli 80 kieltä tukeva sisäänrakennettu puhesyntetisaattori
 - Tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkillä
-- Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen näytöissä, joissa on pistenäppäimistö
+- Tuki useille pistenäytöille, mukaan lukien mahdollisuus monen eri mallin automaattiseen tunnistamiseen sekä pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen näytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
 - Käännökset 54 kielelle
@@ -45,9 +45,10 @@ NVDA:n mukana toimitetaan [eSpeak NG https://github.com/espeak-ng/espeak-ng], mo
 Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
 
 ++ Pistenäyttötuki ++[BrailleSupport]
-NVDA voi antaa palautteen pistekirjoituksella sellaisille käyttäjille, joilla on käytössään pistenäyttö.
-Lisäksi tuetaan sekä lyhenne- että tavallisen pistekirjoituksen syöttämistä pistekirjoitusnäppäimistöltä.
-Katso tietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+NVDA voi antaa palautteen pistekirjoituksella käyttäjille, joilla on käytössään pistenäyttö.
+Sekä lyhenne- että tavallisen pistekirjoituksen syöttämistä tuetaan pistekirjoitusnäppäimistöltä.
+Lisäksi NVDA tunnistaa oletusarvoisesti useita pistenäyttöjä automaattisesti.
+Tietoja tuetuista pistenäytöistä löytyy [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
 
 NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, lyhennekirjoitus ja tavallinen sekä tietokonemerkistö mukaan lukien.
 
@@ -596,11 +597,12 @@ Katso lisätietoja selauskomennoista [MathPlayerin ohjeesta. https://www.dessci.
 Paina Esc-näppäintä, kun haluat palata takaisin dokumenttiin.
 
 + Pistekirjoitus +[Braille]
-Mikäli sinulla on pistenäyttö, NVDA voi antaa palautteen pistekirjoituksella.
-Jos käyttämässäsi näytössä on Perkins-tyylinen näppäimistö, voit lisäksi syöttää lyhenne- ja tavallista pistekirjoitusta.
+NVDA voi antaa palautteen pistekirjoituksella, mikäli käytössä on pistenäyttö.
+Jos näytössä on Perkins-tyylinen näppäimistö, lisäksi on mahdollista syöttää lyhenne- ja tavallista pistekirjoitusta.
 
-Katso tietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
-Voit määrittää pistekirjoituksen asetukset [Pistekirjoitus-kategoriasta #BrailleSettings] [Asetukset #NVDASettings]-valintaikkunasta.
+Tietoja tuetuista pistenäytöistä on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
+Tässä kappaleessa on  tietoja myös siitä, mitkä näytöt tukevat NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistustoiminnallisuutta.
+Pistekirjoituksen asetukset määritetään [Asetukset #NVDASettings]-valintaikkunan [Pistekirjoitus-kategoriasta #BrailleSettings].
 
 ++ Säädintyyppien ja -tilojen sekä kiintopisteiden lyhenteet ++[BrailleAbbreviations]
 Jotta pistenäytölle mahtuisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa sekä kiintopisteitä.
@@ -980,9 +982,9 @@ Seuraavat tiedot lähetetään aina:
 - Onko käyttöjärjestelmä 64- vai 32-bittinen
 
 
-==== Salli NVDA-projektin kerätä käyttötilastoja ====[GeneralSettingsGatherUsageStats]
+==== Salli käyttötilastojen kerääminen ====[GeneralSettingsGatherUsageStats]
 Jos tämä on käytössä, NV Access käyttää päivitystarkistusten tietoja NVDA-käyttäjien määrän seuraamiseen, mukaan lukien tietyt väestötilastolliset tiedot kuten käyttöjärjestelmä sekä alkuperämaa.
-Huom: IP-osoitettasi ei koskaan säilytetä, vaikka sitä käytetäänkin päivitystarkistuksen aikana maasi selvittämiseen.
+Huom: IP-osoitetta ei säilytetä, vaikka sitä käytetäänkin päivitystarkistuksen aikana käyttäjän maan selvittämiseen.
 Päivitysten tarkistamiseen tarvittavien pakollisten tietojen lisäksi lähetetään tällä hetkellä myös seuraavat lisätiedot:
 - NVDA:n käyttöliittymän kieli
 - Onko NVDA asennettu vai käytetäänkö massamuistiversiota
@@ -1228,14 +1230,17 @@ Kun olet valinnut haluamasi pistenäytön, NVDA ottaa sen käyttöön painettuas
 Mikäli näytön ajurin lataamisessa ilmenee virheitä, NVDA ilmoittaa siitä, eikä mahdollisesti käytössä olevaa pistenäyttöä vaihdeta.
 
 ==== Pistenäyttö ====[SelectBrailleDisplayDisplay]
-Tämä yhdistelmäruutu sisältää useita vaihtoehtoja riippuen järjestelmääsi asennetuista pistenäyttöajureista.
-Liiku vaihtoehtojen välillä nuolinäppäimillä.
+Tämä yhdistelmäruutu sisältää useita vaihtoehtoja riippuen järjestelmään asennetuista pistenäyttöajureista.
+Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
+
+Vaihtoehto "automaattinen" saa NVDA:n etsimään useita tuettuja pistenäyttöjä taustalla.
+Kun tämä ominaisuus on käytössä ja tietokoneeseen liitetään tuettu pistenäyttö USB:tä tai bluetoothia käyttäen, NVDA ottaa kyseisen näytön käyttöön.
 
 "Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
 
-Katso lisätietoja tuetuista pistenäytöistä [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta.
+Lisätietoja tuetuista pistenäytöistä sekä siitä, mitkä niistä tukevat taustalla tapahtuvaa automaattista tunnistusta, on [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 
-+==== Portti ====[SelectBrailleDisplayPort]
+==== Portti ====[SelectBrailleDisplayPort]
 Tällä asetuksella voit, mikäli se on käytettävissä, valita, mitä porttia tai yhteystyyppiä valitsemasi pistenäytön kanssa käytetään.
 Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot käyttämällesi pistenäytölle.
 
@@ -1254,18 +1259,16 @@ Kategoria sisältää seuraavat asetukset:
 ==== Näppäimistöasettelu ====[KeyboardSettingsLayout]
 Tästä yhdistelmäruudusta voit valita, mitä näppäimistöasettelua NVDA käyttää. Tällä hetkellä käytettävissä olevat kaksi vaihtoehtoaovat Pöytäkone ja Kannettava.
 
-==== Käytä Capslockia NVDA-näppäimenä ====[KeyboardSettingsCapsModifier]
-Jos tämä valintaruutu on valittuna, Capslock-näppäintä voidaan käyttää NVDA-näppäimenä.
-
-==== Käytä laajennettua Insertiä NVDA-näppäimenä ====[KeyboardSettingsExtendedInsert]
-Jos tämä valintaruutu on valittuna, laajennettua Insert-näppäintä (löytyy yleensä nuolinäppäinten yläpuolelta Home- ja End-näppäinten läheltä) voidaan käyttää NVDA-näppäimenä.
-
-==== Käytä numeronäppäimistön Insertiä NVDA-näppäimenä ====[KeyboardSettingsNumpadInsert]
-Jos tämä valintaruutu on valittuna, numeronäppäimistön Insertiä voidaan käyttää NVDA-näppäimenä.
-
-Jos NVDA-näppäimeksi ei ole valittu mitään, tiettyjen NVDA-komentojen käyttäminen voi olla mahdotonta.
-Tämän vuoksi Asetukset-valintaikkuna näyttää virheilmoituksen, mikäli näppäimiä ei ole valittuna OK-painiketta painettaessa.
-Kun virheilmoitus on kuitattu, vähintään yksi näppäin on valittava ennen kuin tehdyt muutokset voidaan hyväksyä ja valintaikkuna sulkea asianmukaisesti OK-painiketta painamalla.
+==== Valitse NVDA-toiminto-näppäimet ====[KeyboardSettingsModifiers]
+Tämän luettelon valintaruuduilla on mahdollista määrittää, mitä näppäimiä voidaan käyttää [NVDA-toimintonäppäiminä. #TheNVDAModifierKey] Valittavissa ovat seuraavat näppäimet:
+- Caps lock
+- laskinnäppäimistön Insert
+- laajennettu Insert (löytyy tavallisesti nuolinäppäinten yläpuolelta, Home- ja End-näppäinten läheltä)
+-
+ 
+Jos yhtään näppäintä ei ole valittu, joidenkin NVDA-komentojen käyttäminen voi olla mahdotonta.
+Tämän vuoksi Asetukset-valintaikkuna näyttää virheilmoituksen, mikäli näppäimiä ei ole valittuna OK- tai Käytä-painiketta painettaessa.
+Kun virheilmoitus on kuitattu, vähintään yksi näppäin on valittava ennen kuin valintaikkuna voidaan sulkea asianmukaisesti painamalla OK-painiketta.
 
 %kc:setting
 ==== Puhu kirjoitetut merkit ====[KeyboardSettingsSpeakTypedCharacters]
@@ -1891,6 +1894,22 @@ Tämä syntetisaattori ei tue [tavaustoimintoa #SpeechSettingsUseSpelling].
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
+++ Taustalla tapahtuvaa automaattista tunnistusta tukevat näytöt ++[AutomaticDetection]
+NVDA:n on mahdollista tunnistaa useita pistenäyttöjä automaattisesti taustalla joko USB:tä tai bluetoothia käyttäen.
+Automaattinen tunnistus otetaan käyttöön valitsemalla käytettäväksi pistenäytöksi Automaattinen NVDA:n [Pistekirjoituksen asetukset -valintaikkunasta. #BrailleSettings]
+Tämä vaihtoehto on oletusarvoisesti valittuna.
+
+Seuraavat näytöt tukevat automaattista tunnistusta.
+- Handy Tech
+- Baum/Humanware/APH/Orbit
+- HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Eurobraille Esys/Esytime/Iris
+-
+
 ++ Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
 Kaikkia [Freedom Scientificin http://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
 Näiden näyttöjen käyttämiseksi on asennettava ajurit.
@@ -1901,6 +1920,8 @@ Jos käytät 64-bittistä Windowsia ja ajurit on jo asennettu jonkin toisen ruud
 NVDA tunnistaa oletusarvoisesti pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:n tai bluetoothin kautta.
 Yhteystyypin rajoittamiseksi voit kuitenkin myös itse valita USB-portin tai bluetoothin näytön asetuksia määritettäessä.
 Tästä voi olla hyötyä, jos haluat yhdistää Focus-näytön  NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
+
+Nämä näytöt eivät vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1969,11 +1990,11 @@ Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäess�
 Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
-| Vieritä taaksepäin | t1 tai etouch1 |
+| Vieritä taaksepäin | t1, etouch1 |
 | Siirrä edelliselle riville | t2 |
 | Siirrä nykyiseen kohdistukseen | t3 |
 | Siirrä seuraavalle riville | t4 |
-| Vieritä eteenpäin | t5 tai etouch3 |
+| Vieritä eteenpäin | t5, etouch3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäin |
 | Ilmoita muotoilutiedot pistesolusta | toissijainen kosketuskohdistinnäppäin |
 | HID-näppäimistöemulointi käyttöön/pois käytöstä | t1+spEnter |
@@ -1983,7 +2004,7 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Lue ikkunan nimi | etouch2 |
 | Lue tilarivi | etouch4 |
 | Vaihto+Sarkain-näppäinyhdistelmä | sp1 |
-| Alt-näppäin | sp2 |
+| Alt-näppäin | sp2, alt |
 | Esc-näppäin | sp3 |
 | Sarkain-näppäin | sp4 |
 | Nuoli ylös -näppäin | spUp |
@@ -1991,17 +2012,16 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 | Nuoli vasemmalle -näppäin | spLeft |
 | Nuoli oikealle -näppäin | spRight |
 | Enter-näppäin | spEnter, enter |
-| Lue päiväys/aika | sp1+sp2 |
+| Lue päivämäärä/aika | sp2+sp3 |
 | NVDA-valikko | sp1+sp3 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | sp1+sp4 |
 | Windows+B-näppäinyhdistelmä (siirrä kohdistus järjestelmätarjottimelle) | sp3+sp4 |
-| Windows-näppäin | sp2+sp3, windows |
+| Windows-näppäin | sp1+sp2, windows |
 | Alt+Sarkain-näppäinyhdistelmä | sp2+sp4 |
 | Ctrl+Home-näppäinyhdistelmä | t3+spUp |
 | Ctrl+End-näppäinyhdistelmä | t3+spDown |
 | Home-näppäin | t3+spLeft |
 | End-näppäin | t3+spRight |
-| Alt-näppäin | alt |
 | Ctrl-näppäin | control |
 %kc:endInclude
 
@@ -2043,6 +2063,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 [MDV:n http://www.mdvbologna.it/] Lilli-pistenäyttöä tuetaan.
 Sen käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
+
+Tämä näyttö ei tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
 
 Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2099,6 +2121,8 @@ Malleissa, joissa on ohjaustappi:
 [Hedo Reha-Technikin  http://www.hedo.de/] hedo ProfiLine USB -pistenäyttöä tuetaan.
 Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
 
+Tämä näyttö ei vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
@@ -2115,6 +2139,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 ++ hedo MobilLine USB ++[HedoMobilLine]
 [Hedo Reha-Technikin http://www.hedo.de/] hedo MobilLine USB -pistenäyttöä tuetaan.
 Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
+
+Tämä näyttö ei vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -2258,6 +2284,8 @@ Katso laitteen käyttöohjeesta kuvaukset näppäinten paikoista.
 Lisätietoja näistä pistenäytöistä löytyy osoitteesta http://www.seika-braille.com/.
 Tietokoneelle on asennettava valmistajan toimittamat USB-ajurit.
 
+Nämä näytöt eivät vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
@@ -2283,9 +2311,10 @@ Seuraavia pistenäyttöjä tuetaan:
 - BRAILLEX Live 20, BRAILLEX Live sekä BRAILLEX Live Plus (USB ja bluetooth)
 -
 
+Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+
 NVDA käyttää BrxComia, mikäli se on asennettu.
 BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
-Papenmeier julkaisee piakkoin tästä työkalusta NVDA:n kanssa toimivan version.
 Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
@@ -2363,7 +2392,8 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 Huomaa, että nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
-Tämän vuoksi portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
+Tämän vuoksi Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Portti, johon laite on liitetty, tulee valita sen jälkeen, kun pistenäytön ajuri on valittu [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
 
 Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan liikuttaa neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -2458,7 +2488,7 @@ Katso lisätietoja BrailleNote-käyttöoppaan pistenäyttökappaleesta.
 Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.
 Portin määrittäminen voi olla tarpeen myös NVDA:n [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunassa.
-Mikäli laite on kytketty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
+Mikäli laite on liitetty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
 Jos liitäntänä käytetään sarjaporttia (tai USB-sarjaporttisovitinta) tai jos mikään edellisistä vaihtoehdoista ei ole käytettävissä, on käytettävä yhteysportti valittava sarjaporttiluettelosta.
 
 HumanWaren toimittamat ajurit on asennettava ennen kuin BrailleNote Apex kytketään sen USB-asiakasliitännällä.
@@ -2541,6 +2571,7 @@ Seuraavia malleja tuetaan:
 -
 
 Voit määrittää näytön käyttämän sarjaportin [Valitse pistenäyttö #SelectBrailleDisplay] -valintaikkunasta.
+Nämä näytöt eivät tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
 
 Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
 Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
@@ -2668,6 +2699,8 @@ Käytettävää pistenäyttöä ja porttia määritettäessä on syytä kiinnitt
 
 BRLTTY huolehtii tällä hetkellä itse pistesyötöstä näytöissä, joissa on pistenäppäimistö.
 Tämän vuoksi NVDA:n syöttötaulukkoasetuksella ei ole merkitystä.
+
+BRLTTY ei tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
 
 Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
 Katso [BRLTTY:n näppäinsidosluetteloita http://mielke.cc/brltty/doc/KeyBindings/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.

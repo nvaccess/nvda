@@ -803,8 +803,10 @@ class TextInfoRegion(Region):
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
-	def _getTypeformFromFormatField(self, field):
+	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
+		if not formatConfig["reportFontAttributes"]:
+			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold
 		if field.get("italic", False):
@@ -860,7 +862,7 @@ class TextInfoRegion(Region):
 				cmd = command.command
 				field = command.field
 				if cmd == "formatChange":
-					typeform = self._getTypeformFromFormatField(field)
+					typeform = self._getTypeformFromFormatField(field, formatConfig)
 					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
@@ -1567,7 +1569,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
+		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
@@ -1581,7 +1583,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
+		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1963,7 +1965,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleReviewMove(shouldAutoTether=False)
 
-	def handleConfigProfileSwitch(self):
+	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
 		# Do not choose a new display if:
 		if not (

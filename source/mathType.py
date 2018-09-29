@@ -7,7 +7,10 @@
 """Utilities for working with MathType.
 """
 
-import _winreg as winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import ctypes
 import mathPres
 

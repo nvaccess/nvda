@@ -8,12 +8,14 @@ from collections import defaultdict
 import textInfos
 import eventHandler
 import UIAHandler
+from logHandler import log
 import controlTypes
 import ui
 import speech
 import api
 import browseMode
 from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation, UIATextAttributeQuicknavIterator, TextAttribUIATextInfoQuickNavItem
+from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
 
@@ -102,6 +104,9 @@ class WordDocumentTextInfo(UIATextInfo):
 		field=super(WordDocumentTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		if automationID.startswith('UIA_AutomationId_Word_Page_'):
 			field['page-number']=automationID.rsplit('_',1)[-1]
+		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
+			field['role']=controlTypes.ROLE_EMBEDDEDOBJECT
+			field['alwaysReportName']=True
 		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
 			field['content']=obj.name
@@ -146,6 +151,16 @@ class WordDocumentTextInfo(UIATextInfo):
 			return res
 		return super(WordDocumentTextInfo,self).move(unit,direction,endPoint)
 
+	def expand(self,unit):
+		super(WordDocumentTextInfo,self).expand(unit)
+		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
+		# This among other things causes a newly inserted bullet not to be spoken or brailled.
+		# Therefore work around this by detecting if the expand to line failed, and moving the end of the range to the end of the document manually.
+		if  self.isCollapsed:
+			if self.move(unit,1,endPoint="end")==0:
+				docInfo=self.obj.makeTextInfo(textInfos.POSITION_ALL)
+				self.setEndPoint(docInfo,"endToEnd")
+
 	def _get_isCollapsed(self):
 		res=super(WordDocumentTextInfo,self).isCollapsed
 		if res: 
@@ -155,10 +170,56 @@ class WordDocumentTextInfo(UIATextInfo):
 		return not bool(self.text)
 
 	def getTextWithFields(self,formatConfig=None):
+		if self.isCollapsed:
+			# #7652: We cannot fetch fields on collapsed ranges otherwise we end up with repeating controlFields in braille (such as list list list). 
+			return []
 		fields=super(WordDocumentTextInfo,self).getTextWithFields(formatConfig=formatConfig)
 		if len(fields)==0: 
 			# Nothing to do... was probably a collapsed range.
 			return fields
+		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
+		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
+		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
+		for index in xrange(len(fields)):
+			field=fields[index]
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				continue
+			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd":
+				formatChange=textInfos.FieldCommand("formatChange",textInfos.FormatField())
+				fields.insert(index,formatChange)
+				fields.insert(index+1,"")
+			break
+		##7971: Microsoft Word exposes list bullets as part of the actual text.
+		# This then confuses NVDA's braille cursor routing as it expects that there is a one-to-one mapping between characters in the text string and   unit character moves.
+		# Therefore, detect when at the start of a list, and strip the bullet from the text string, placing it in the text's formatField as line-prefix.
+		listItemStarted=False
+		lastFormatField=None
+		for index in xrange(len(fields)):
+			field=fields[index]
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				if field.field.get('role')==controlTypes.ROLE_LISTITEM and field.field.get('_startOfNode'):
+					# We are in the start of a list item.
+					listItemStarted=True
+			elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
+				# This is the most recent formatField we have seen.
+				lastFormatField=field.field
+			elif listItemStarted and isinstance(field,basestring):
+				# This is the first text string within the list.
+				# Remove the text up to the first space, and store it as line-prefix which NVDA will appropriately speak/braille as a bullet.
+				try:
+					spaceIndex=field.index(' ')
+				except ValueError:
+					log.debugWarning("No space found in this text string")
+					break
+				prefix=field[0:spaceIndex]
+				fields[index]=field[spaceIndex+1:]
+				lastFormatField['line-prefix']=prefix
+				# Let speech know that line-prefix is safe to be spoken always, as it will only be exposed on the very first formatField on the list item.
+				lastFormatField['line-prefix_speakAlways']=True
+				break
+			else:
+				# Not a controlStart, formatChange or text string. Nothing to do.
+				break
 		# Fill in page number attributes where NVDA expects
 		try:
 			page=fields[0].field['page-number']
@@ -178,6 +239,8 @@ class WordDocumentTextInfo(UIATextInfo):
 		for index,field in enumerate(fields):
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
 				runtimeID=field.field['runtimeID']
+				if not runtimeID:
+					continue
 				if runtimeID in seenStarts:
 					pendingRemoves.append(field.field)
 				else:
@@ -244,6 +307,9 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	treeInterceptorClass=WordBrowseModeDocument
 	shouldCreateTreeInterceptor=False
 	announceEntireNewLine=True
+
+	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
+	name=u""
 
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)

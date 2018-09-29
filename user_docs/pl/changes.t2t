@@ -3,6 +3,71 @@ Co nowego w NVDA.
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+Najważniejsze zmiany w tej wersji to automatyczne wykrywanie wielu linijek brajlowskich, obsługa nowych funkcji Windows 10  (w tym panel wprowadzania EMOI) i wiele poprawek błędów.
+
+== Nowe funkcje =
+- NVDA będzie zgłaszać błędy pisowniw Mozilla Firefox, gdy są prawidłowo oznaczone przez strony internetowe. (#8280)
+- Treść oznaczona jako wstawiona lub usunięta na stronach internetowych, jest teraz zgłaszana w Google Chrome. (#8558)
+- Dodana obsługa kółka przewijania BrailleNote QT i Apex BT gdy BrailleNote  jest używany jako linijka brajlowska w NVDA. (#6316)
+- Dodane skrypty zgłaszania czasu całkowitego i czasu, który upłynął dla bieżącej ścieżki w Foobar2000. (#6596)
+- Symbol klawisza komendy Mac (⌘) jest wypowiadany podczas czytania tekstu dowolnym syntezatorem. (#8366)
+- Własne role zdefiniowane atrybutem aria-roledescription  są teraz obsługiwane we wszystkich przeglądarkach.
+- Nowe tablice brajlowskie: czeski 8-punktowy, środkowo kurdyjski, Esperanto, węgierski, szwedzki 8-punktowy  brajl komputerowy. (#8226, #8437)
+- Dodana obsługa automatycznego wykrywania w tle linijek brajlowskich. (#1271)
+ - Obsługiwane są obecnie ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille i HumanWare BrailleNote i Brailliant BI/B.
+ - Można włączyć tę funkcję zaznaczając opcję automatyczny na liście linijek brajlowskich w oknie wyboru monitora brajlowskiego NVDA.
+ - Więcej szczegółów w dokumentacji.
+- Dodana obsługa różnych nowych metod wprowadzania z ostatnich wersji Windows 10. Są to panel emoji (aktualizacja Fall Creators), dyktowanie (aktualizacja Fall Creators), sugestie wprowadzania klawiatury sprzętowej (aktualizacja kwiecień 2018) i wklejanie ze schowka w chmurze (aktualizacja październik 2018). (#7273)
+- Treść oznaczona jako blok cytatu przy użyciu ARIA (role blockquote) jest obsługiwana w Mozilla Firefox 63. (#8577)
+
+
+== Zmiany ==
+- Lista dostępnych języków w ustawieniach ogólnych jest teraz sortowana  według nazw, zamiast ich kodu ISO 639. (#7284)
+- Dodano domyślne zdarzenia wejścia dla alt shift tab i windows tab we wszystkich obsługiwanych linijkach brajlowskich Freedom Scientific. (#7387)
+- Dla linijek ALVA BC680 i protocol converter, można przypisać różne funkcje do lewego i prawego smart pada, oraz klawiszy thumb i etouch. (#8230)
+- Dla linijek ALVA BC6, kombinacja klawiszy sp2+sp3 oznajmia aktualną datę i czas, natomiast sp1+sp2 emuluje klawisz Windows. (#8230)
+- Użytkownik jest teraz jednorazowo pytany przy starcie NVDA o zgodę na przesyłanie statystyk użycia do NV Access podczas automatycznego sprawdzania aktualizacji. (#8217)
+- Podczas sprawdzania aktualizacji, jeśli użytkownik zgodził się  na przesyłanie statystyk użycia do NV Access, NVDA prześle nazwę używanego sterownika syntezatora i linijki brajlowskiej, aby możliwe było lepsze oszacowanie priorytetu przyszłych prac nad tymi sterownikami. (#8217)
+- Translator brajlowski liblouis zaktualizowany do wersji 3.6.0. (#8365)
+- Zaktualizowana ścieżka do prawidłowej tablicy brajlowskiej rosyjski 8-punktowy. (#8446)
+- Zaktualizowany eSpeak-ng do 1.49.3dev commit 910f4c2 (#8561)
+
+
+== Poprawki błędów ==
+- Etykiety dostępności dla kontrolek w Google Chrome są teraz bardziej czytelnie zgłaszane w trybie czytania, gdy etykieta nie pojawia się jako fragment treści. (#4773)
+- Powiadomienia są obsługiwane w programie Zoom. Dla przykładu, obejmuje to stan wyciszenia i wiadomości przychodzące. (#7754)
+- Przełączenie kontekstu prezentacji brajla w trybie czytania nie powoduje zatrzymania wyświetlania brajla. (#7741)
+- Linijki ALVA BC680 nie powodują sporadycznych problemów inicjalizacji. (#8106)
+- Domyślnie, linijki ALVA BC6 nie będą uruchamiać emulowanych klawiszy systemowych, gdy naciśnięto kombinacje zawierające sp2+sp3  dla uruchomienia wewnętrznych funkcji. (#8230)
+- Naciśnięcie sp2 na linijce ALVA BC6  dla emulacji klawisza alt działa zgodnie z opisem. (#8360)
+- NVDA nie oznajmia zbędnych zmian układu klawiatury. (#7383, #8419)
+- Śledzenie myszy jest teraz bardziej dokładne w notatniku i innych kontrolkach edycji zwykłego tekstu, jeśli długość treści przekracza 65535 znaków. (#8397)
+- NVDA rozpoznaje więcej okien dialogowych w Windows 10 i innych nowoczesnych aplikacjach. (#8405)
+- W Windows 10 aktualizacja październik 2018 i Server 2019 lub nowszych, rozwiązany problem niepowodzenia śledzenia przez NVDA punktu uwagi, gdy aplikacja przestała odpowiadać, albo zasypuje system dużą ilością generowanych zdarzeń. (#7345, #8535)
+- Użytkownicy są teraz informowani przy próbie czytania lub kopiowania pustego paska stanu. (#7789)
+- Naprawiony przypadek, gdy stan "niezaznaczone"  na kontrolkach nie był zgłaszany mową jeśli kontrolka wcześniej była w stanie częściowego zaznaczenia. (#6946)
+- Na liście języków w ustawieniach ogólnych NVDA, nazwa języka birmańskiego jest wyświetlana prawidłowo w Windows 7. (#8544)
+- W Microsoft Edge, NVDA będzie oznajmiać powiadomienia takie jak dostępność widoku odczytu albo postęp wczytywania strony. (#8423)
+- Po wejściu do listy na stronie internetowej, NVDA zgłosi etykietę listy, jeśli została zdefiniowana przez autora strony. (#7652)
+- Podczas ręcznego przypisywania funkcji do zdarzeń wejścia dla konkretnej linijki brajlowskiej, te zdarzenia wejścia są wyświetlane jako przypisane do tej linijki. Wcześniej wyświetlały się jako przypisane do aktualnie używanej linijki. (#8108)
+- Obsługiwana jest 64-bitowa wersja Media Player Classic. (#6066)
+- Kilka poprawek obsługi brajla w Microsoft Word z włączoną UI Automation:
+ - Podobnie do innych wielowierszowych kontrolek tekstu, na początku dokumentu w brajlu linijka jest tak pozycjonowana, że pierwszy znak dokumentu znajduje się na początku linijki. (#8406)
+ - Zmniejszona przesadna gadatliwość prezentacji punktu uwagi w mowie i brajlu podczas ustawiania punktu uwagi na dokumencie Word. (#8407)
+ - Przywoływanie kursora brajlowskiego działa prawidłowo  na listach dokumentu Word. (#7971)
+ - Nowo wstawiane punktory lub numery w dokumencie Word są prawidłowo oznajmiane mową i brajlem. (#7970)
+- W Windows 10 1803 i nowszych, możliwa jest teraz instalacja dodatków, gdy włączone jest używanie Unicode UTF-8 dla ogólnoświatowej obsługi języków. (#8599)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2018.2.1 =
+To wydanie zawiera aktualizacje tłumaczeń związane  z usunięciem w ostatniej chwili funkcjonalności powodującej problemy.
+
+
 = 2018.2 =
 
 Najważniejsze zmiany w tej wersji to obsługa tabel w Kindle dla PC, wsparcie linijek brajlowskich Humanware BrailleNote Touch i BI14 Braille, poprawki obsługi głosów mobilnych i syntezatorów Sapi5, poprawki w Microsoft Outlook i wiele więcej.
@@ -11,17 +76,16 @@ Najważniejsze zmiany w tej wersji to obsługa tabel w Kindle dla PC, wsparcie l
 - Zasięg wierszy i kolumn komórek tabeli jest zgłaszany mową i brajlem. (#2642)
 - Komendy nawigacji po tabelach są obsługiwane w dokumentach Google (z włączonym trybem brajlowskim). (#7946)
 - Możliwość odczytywania tabel i nawigacji wewnątrz nich w Kindle dla PC. (#7977)
-- Obsługa linijek HumanWare BrailleNote touch and Brailliant BI 14 przez USB i bluetooth. (#6524)
+- Obsługa linijek HumanWare BrailleNote touch i Brailliant BI 14 przez USB i bluetooth. (#6524)
 - W aktualizacji Windows 10 Fall Creators Update i nowszych, NVDA może zgłaszać powiadomienia z aplikacji takich jak Kalkulator i Sklep Windows. (#8045)
 - Nowe tablice brajlowskie: litewski 8-punktowy, ukraiński, mongolski stopień 2. (#7839)
 - Dodany skrypt zgłaszający informacje formatowania tekstu pod konkretną komórką brajlowską. (#7106)
 - Można odłożyć na później instalację aktualizacji NVDA po jej pobraniu. (#4263) 
 - Nowe języki: mongolski, szwajcarski niemiecki.
-- Można teraz przełączać control, shift, alt, windows and NVDA z klawiatury brajlowskiej i łączyć te przełączniki z wprowadzaniem brajla (np. nacisnąć control+s). (#7306) 
+- Można teraz przełączać control, shift, alt, windows i NVDA z klawiatury brajlowskiej i łączyć te przełączniki z wprowadzaniem brajla (np. nacisnąć control+s). (#7306) 
  - Można przypisać te przełączniki do klawiszy przy użyciu poleceń w kategorii emulowane klawisze systemowe w oknie zdarzenia wejścia.
 - Przywrócona obsługa linijek brajlowskich Handy Tech Braillino i Modular (ze starym firmware). (#8016)
 - Data i czas obsługiwanych urządzeń Handy Tech (takich jak Active Braille i Active Star) będzie automatycznie synchronizowana przez NVDA , jeśli nastąpi rozsynchronizowanie dłuższe niż 5 sekund. (#8016)
-- Na liście wiadomości Microsoft Outlook, NVDA  zgłasza  czy wiadomość jest odpowiedziana, albo przesłana dalej. (#6911)
 - Można przypisać zdarzenie wejścia dla tymczasowego wyłączenia  wszystkich wyzwalaczy profili konfiguracji. (#4935)
 
 
@@ -55,9 +119,7 @@ Najważniejsze zmiany w tej wersji to obsługa tabel w Kindle dla PC, wsparcie l
 - NVDA próbuje teraz naprawiać problemy rejestracji  system COM powodujące niedostępność programów takich jak Firefox i Internet Explorer, skutkujące odczytywaniem  "nieznane" przez NVDA. (#2807)
 - Obejście błędu w managerze zadań, powodującego brak dostępu użytkownika  do określonych szczegółów dotyczących procesów. (#8147)
 - Nowsze głosy Microsoft SAPI5 nie powodują opóźnień na końcu mowy, co czyni pracę z użyciem tych głosów bardziej efektywną. (#8174)
-- NVDA nie zgłasza od teraz znaczników kierunku tekstu (od prawej do lewej, lub od lewej do prawej) w trybie czytania mową znakami, lub brajlem,  podczas odczytywania zegara w nowszych wersjach Windows . (#5729)
-- Naprawione wykrywanie klawiszy przewijania na linijkach Hims Smart Beetle. (#6086)
-- W niektórych kontrolkach tekstowych, szczególnie w aplikacjach Delphi, informacje o edycji i nawigacji są bardziej wiarygodne. (#636, #8102)
+- W Windows 10 RS5, NVDA nie zgłasza nadmiarowych zbędnych informacji  podczas przełączania zadań przy użyciu alt+tab. (#8258)
 
 
 == Zmiany dla programistów ==
@@ -204,7 +266,7 @@ Najważniejsze zmiany w tej wersji to wprowadzanie brajla skrótami, obsługa no
 - Możesz wybrać informację kontekstową pokazywaną na monitorze brajlowskim gdy obiekt otrzymuje punkt uwagi przy użyciu nowego ustawienia "kontekst prezentacji punktu uwagi" w ustawieniach brajlowskich. (#217)
  - Przykładowo: opcje "Wypełnij wyświetlacz dla zmian kontekstu" i "Tylko przy przechodzeniu wstecz" mogą poprawić wydajność pracy z listami i menu, ponieważ elementy nie będą stale zmieniać położenia na monitorze.
  - Więcej w rozdziale o ustawieniu "Kontekstowa prezentacja punktu uwagi" w podręczniku użytkownika.
-- W Firefox i Chrome, NVDA obsługuje złożone dynamiczne siatki takie jak arkusze kalkulacyjne, w których tylko część treści może być załadowana lub wyświetlana (szczególnie obsługiwane są atrybuty aria-rowcount, aria-colcount, aria-rowindex and aria-colindex  wprowadzone w ARIA 1.1). (#7410)
+- W Firefox i Chrome, NVDA obsługuje złożone dynamiczne siatki takie jak arkusze kalkulacyjne, w których tylko część treści może być załadowana lub wyświetlana (szczególnie obsługiwane są atrybuty aria-rowcount, aria-colcount, aria-rowindex i aria-colindex  wprowadzone w ARIA 1.1). (#7410)
 
 
 == Zmiany ==
@@ -566,7 +628,7 @@ Najważniejsze zmiany w tej wersji to poprawki wydajności w Windows 10; obecno�
 - Microsoft Excel: wyświetlanie listy arkuszy i zmiana nazwy arkusza jest możliwe na liście elementów (NVDA+f7). (#4630, #4414)
 - Można teraz ustawić, czy symbole są przesyłane do syntezatorów mowy (np. aby spowodować pauzę lub zmianę intonacji) w ustawieniach wymowy symboli. (#5234)
 - Microsoft Excel: NVDA odczytuje wiadomości wprowadzania ustawione przez autora arkuszana komórkach. (#5051)
-- Obsługa monitorów brajlowskich Baum Pronto! V4 and VarioUltra połączonych przez bluetooth. (#3717)
+- Obsługa monitorów brajlowskich Baum Pronto! V4 i VarioUltra połączonych przez bluetooth. (#3717)
 - Wsparcie edycji tekstu sformatowanego w aplikacjach Mozilla,  np. dokumenty Google z włączoną obsługą brajla w Firefox,   albo kompozycja HTML w Mozilla Thunderbird. (#1668)
 - Wsparcie edycji tekstu sformatowanego w Google Chrome i przeglądarkach bazujących na Chrome, np. Google Docs z włączoną obsługą brajla. (#2634)
  - Wymagane Chrome wersja 47 lub nowsza.
@@ -704,7 +766,7 @@ Główne zmiany w tej wersji, to tryb czytania dla dokumentów Microsoft Word i 
 - W Skype dla pulpitu można teraz czytać ostatnie wiadomości przy użyciu NVDA+control+1 do NVDA+control+0; np. NVDA+control+1 dla ostatniej wiadomości, NVDA+control+0 dla dziesiątej od końca. (#3210)
 - W konwersacji w Skype dla pulpitu, NVDA zgłasza, gdy kontakt pisze. (#3506)
 - NVDA może teraz zostać po cichu zainstalowany przy użyciu wiersza poleceń bez uruchamiania zainstalowanej kopii po instalacji. Aby to zrobić, użyj przełącznika --install-silent. (#4206)
-- Wsparcie dla monitorów brajlowskich Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus. (#4614)
+- Wsparcie dla monitorów brajlowskich Papenmeier BRAILLEX Live 20, BRAILLEX Live i BRAILLEX Live Plus. (#4614)
 
 
 == Zmiany ==
@@ -818,7 +880,7 @@ Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angiels
 - Microsoft Excel: specyficzne dla NVDA okno edycji komentarzy aktualnie wybranej komórki po naciśnięciu shift+f2 by przejść do trybu edycji komentarzy. (#2920)
 - Microsoft Excel: informacja zwrotna mową i brajlem po użyciu większej liczby skrótów klawiaturowych do nawigacji i zaznaczania komórek (#4211) w tym:
  - Pionowo po stronach (pageUp i pageDown);
- - Poziomo po stronach (alt+pageUp and alt+pageDown);
+ - Poziomo po stronach (alt+pageUp i alt+pageDown);
  - Rozszerzenie zaznaczenia (powyższe klawisze z klawiszem Shift); oraz
  - Zaznaczenie aktualnego obszaru (control+shift+8).
 - Microsoft Excel: zgłaszaj pionowe i poziome wyrównanie komórek poleceniem odczytania formatowania (NVDA+f) oraz automatycznie, jeśli włączona jest opcja odczytywania wyrównania tekstu w ustawieniach formatowania dokumentu. (#4212)
