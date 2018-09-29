@@ -1665,19 +1665,16 @@ class TrayClockWClass(IAccessible):
 
 	def _get_name(self):
 	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
-		ClockValue = super(TrayClockWClass, self).value
-		ClockName = super(TrayClockWClass, self).name
-		if ClockValue is None:
-			ClockName = ClockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
-		else:
-			ClockName = ''
-		return ClockName
+		if super(TrayClockWClass, self).value is None:
+			clockName = super(TrayClockWClass, self).name
+			return clockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return None
 
 	def _get_value(self):
-		ClockValue = super(TrayClockWClass, self).value
-		if not ClockValue is None:
-			ClockValue = ClockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
-		return ClockValue
+		clockValue = super(TrayClockWClass, self).value
+		if not clockValue is None:
+			clockValue = clockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return clockValue
 
 class OutlineItem(IAccessible):
 

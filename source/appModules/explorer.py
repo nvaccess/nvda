@@ -183,10 +183,10 @@ class ReadOnlyEditBox(IAccessible):
 #These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
 
 	def _get_windowText(self):
-		WindowText = super(ReadOnlyEditBox, self).windowText
-		if  WindowText  is not None and controlTypes.STATE_READONLY in self.states:
-			return WindowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
-		return WindowText
+		windowText = super(ReadOnlyEditBox, self).windowText
+		if windowText is not None and controlTypes.STATE_READONLY in self.states:
+			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return windowText
 
 class AppModule(appModuleHandler.AppModule):
 
