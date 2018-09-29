@@ -1234,7 +1234,7 @@ Esta caixa de combinação apresenta várias opções, dependendo de quais drive
 Mova-se entre essas opções com as setas.
 
 A opção automático permitirá que o NVDA pesquise muitas linhas braille suportadas em segundo plano.
-Quando esta funcionalidade está ativada e você liga uma linha suportada utilizando USB ou bluetooth, o NVDA conecta-se automaticamente a esta linha.
+Quando esta funcionalidade está ativada e você liga uma linha suportada utilizando USB""[Barramento Serial Universal]""  ou bluetooth, o NVDA conecta-se automaticamente a esta linha.
 
 O item "Sem Braille" significa que o braille não está sendo usado.
 
@@ -1257,16 +1257,14 @@ A categoria Teclado no diálogo de Configurações do NVDA contém opções que 
 Essa categoria de configurações contém as seguintes opções:
 
 ==== Esquema de teclado ====[KeyboardSettingsLayout]
-Esta caixa de combinação permite-lhe escolher o esquema de teclado que o NVDA utilizará. Atualmente, os dois que vêm com este leitor de tela são o Computador de mesa ""[Desktop]"" e o Computador portátil ""[Laptop]"".
+Esta caixa de combinação permite-lhe escolher o esquema ""[leiaute]"" de teclado que o NVDA utilizará. Atualmente, os dois que vêm com este leitor de tela são o Computador de mesa ""[Desktop]"" e o Computador portátil ""[Laptop]"".
 
-==== Usar capslock como uma tecla modificadora do NVDA ====[KeyboardSettingsCapsModifier]
-Se esta caixa de seleção estiver marcada, o capslock poderá ser usado como uma tecla modificadora do NVDA.
-
-==== Usar Insert Estendido Como uma Tecla Modificadora do NVDA ====[KeyboardSettingsExtendedInsert]
-Se esta caixa de seleção estiver marcada, a tecla Insert estendido (que encontra-se normalmente acima das setas, perto do Home e do End) poderá ser usada como uma tecla modificadora do NVDA.
-
-==== Usar Insert do Teclado Numérico Como uma Tecla Modificadora do NVDA ====[KeyboardSettingsNumpadInsert]
-Se esta caixa de seleção estiver marcada, o Insert do bloco numérico poderá também ser utilizado como uma tecla modificadora do NVDA.
+==== Selecione as Teclas Modificadoras do NVDA ====[KeyboardSettingsModifiers]
+As caixas de seleção nesta lista controlam quais teclas podem ser usadas como [Teclas modificadoras do NVDA #TheNVDAModifierKey]. As seguintes teclas estão disponíveis para escolha:
+- A tecla capslock
+- A tecla insert do teclado numérico
+- A tecla insert estendida (geralmente encontrada acima das teclas de seta, perto de home e end)
+-
 
 Caso nenhuma tecla seja escolhida como modificadora do NVDA, poderá ser impossível executar certos comandos.
 Por isso, o diálogo de Configurações do NVDA exibirá uma mensagem de erro se todas as teclas estiverem desselecionadas quando você pressionar Ok ou Aplicar.
@@ -2093,7 +2091,7 @@ Entre elas estão:
 -
 Algumas outras linhas braille fabricadas pela Baum podem funcionar, embora ainda não tenham sido testadas.
 
-Caso queira conectar via USB a linhas que não usam HID, primeiro deve instalar os drivers USB fornecidos pelo fabricante.
+Caso queira conectar via USB a linhas que não usam HID ""[Dispositivos de Interface Humana]"", primeiro deve instalar os drivers USB fornecidos pelo fabricante.
 A VarioUltra e Pronto! usam HID.
 A Refreshabraille e a Orbit Reader 20 podem usar o HID se configurado apropriadamente.
 

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 10:04+1000\n"
-"PO-Revision-Date: 2018-08-26 13:02+0200\n"
+"POT-Creation-Date: 2018-09-18 14:57+1000\n"
+"PO-Revision-Date: 2018-09-18 09:59+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1138,6 +1138,16 @@ msgstr "Unicode-pistekirjoitus"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "vietnam, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "mandariinikiina (Kiina), taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "mandariinikiina (Kiina), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6605,7 +6615,7 @@ msgid ""
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
-"Tarvitsemme apuasi voidaksemme jatkaa NVDA:n parantelua.\n"
+"Tarvitsemme apuasi voidaksemme jatkaa NVDA:n kehittämistä.\n"
 "Tämä projekti perustuu etupäässä lahjoituksiin ja avustuksiin. "
 "Lahjoittamalla autat rahoittamaan täysipäiväistä kehitystä.\n"
 "Jos kutakin latausta kohti lahjoitettaisiin edes 10 dollaria, kykenisimme "
@@ -6883,36 +6893,6 @@ msgstr "lukematon"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Muokataan profiilia {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Liila lippu"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Oranssi lippu"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Vihreä lippu"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Keltainen lippu"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Sininen lippu"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Punainen lippu"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8669,20 +8649,10 @@ msgstr "Käytä tava&ustoimintoa (jos mahdollista)"
 msgid "Keyboard"
 msgstr "Näppäimistö"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Käytä numeronäppäimistön Insertiä NVDA-näppäimenä"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Käytä laajennettua Insertiä NVDA-näppäimenä"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "V&alitse NVDA-toimintonäppäimet"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8846,8 +8816,8 @@ msgstr "Lue &työkaluvihjeet"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Lue oh&jeselitteet"
+msgid "Report &notifications"
+msgstr "Lue &ilmoitukset"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10921,6 +10891,36 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "purple flag"
+#~ msgstr "Liila lippu"
+
+#~ msgid "Orange flag"
+#~ msgstr "Oranssi lippu"
+
+#~ msgid "Green flag"
+#~ msgstr "Vihreä lippu"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Keltainen lippu"
+
+#~ msgid "Blue flag"
+#~ msgstr "Sininen lippu"
+
+#~ msgid "Red flag"
+#~ msgstr "Punainen lippu"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Käytä numeronäppäimistön Insertiä NVDA-näppäimenä"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Käytä laajennettua Insertiä NVDA-näppäimenä"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Lue oh&jeselitteet"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"

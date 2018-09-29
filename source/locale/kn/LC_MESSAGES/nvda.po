@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-10663,552b45f\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:29-0700\n"
+"POT-Creation-Date: 2018-09-14 00:10+1000\n"
+"PO-Revision-Date: 2018-09-13 09:19-0700\n"
 "Last-Translator: siddalingeshwar ingalagi <ingalagisiddu@gmail.com>\n"
 "Language-Team: Kannada <ingalagisiddu@gmail.com>\n"
 "Language: kn\n"
@@ -84,10 +84,23 @@ msgstr "ಅಪರಿಚಿತ ಭಾಷೆ"
 msgid "unknown input method"
 msgstr "ಅಪರಿಚಿತ ಹೂಡುವಳಿ ವಿಧಾನ"
 
-#. Translators: the message announcing the language and keyboard layout when it changes
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, fuzzy, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "ಕಾಗುಣಿತ ದೋಷ"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, fuzzy, python-brace-format
+msgid "spelling: {text}"
+msgstr "ಕಾಗುಣಿತ ದೋಷ"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
+msgid "grammar: {text}"
+msgstr ""
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -373,6 +386,16 @@ msgstr "ಗಣಕ ಸಮಿತಿ"
 msgid "pwdedt"
 msgstr ""
 
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "ಸಂವಾದ ಚೌಕ"
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "ಕೊಂ&ಡಿ"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "ಸೆಲ್"
@@ -519,6 +542,18 @@ msgstr "ಬ್ರೈಲ್ &ಪ್ರದರ್ಶಕ:"
 msgid "Only when scrolling back"
 msgstr ""
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "ಸ್ವಯಂಚಾಲಿತ"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -528,14 +563,6 @@ msgstr "h%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "ಭೇಟಿಯಾದ ಕೊಂಡಿ"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "%s ಇಲ್ಲ"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -553,17 +580,29 @@ msgstr "{total} ರಲ್ಲಿ {number}ನೆಯದು"
 msgid "lv %s"
 msgstr "lv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr ""
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr ""
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr ""
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr ""
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -571,9 +610,51 @@ msgstr "c%s"
 msgid "%s end"
 msgstr "%s ಮುಗಿದಿದೆ"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+#, fuzzy
+msgid "automatically"
 msgstr "ಸ್ವಯಂಚಾಲಿತ"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+#, fuzzy
+msgid "to focus"
+msgstr "ಗಮನಿಸಿಲ್ಲ"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+#, fuzzy
+msgid "to review"
+msgstr "ಪಠ್ಯ ಪರಿಶೀಲನೆ"
+
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "Seika ಬ್ರೈಲ್ ಪ್ರದರ್ಶನಗಳು"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "ಅನುಕ್ರಮ: {portName}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "ಅನುಕ್ರಮ: {portName}"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr ""
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr ""
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, fuzzy, python-brace-format
+msgid "{modifier} pressed"
+msgstr "ಒತ್ತಲಾಗಿದೆ"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -628,6 +709,12 @@ msgstr "ಬಲ್ಗೇರಿಯನ್ ಗಣಕಯಂತ್ರ ಬ್ರೆ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "ಸ್ವೀಡಿಷ್ ದರ್ಜೆ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Welsh ವರ್ಗ 1"
 
@@ -635,6 +722,12 @@ msgstr "Welsh ವರ್ಗ 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Welsh ವರ್ಗ 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "ಸ್ಪ್ಯಾನಿಷ್ 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ್ರೈಲ್"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -740,6 +833,12 @@ msgstr "ಇಂಗ್ಲೀಷ್ (US) ನಲ್ಲಿ ದರ್ಜೆ 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "ಜರ್ಮನ್ ದರ್ಜೆ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
 msgstr "ಸ್ಪ್ಯಾನಿಷ್ 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ್ರೈಲ್"
 
@@ -792,18 +891,9 @@ msgstr "ಫ್ರೆಂಚ್ (ಏಕೀಕೃತ) 8 ಡಾಟ್ ಕಂಪ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+#, fuzzy
+msgid "French (unified) grade 2"
 msgstr "ಫ್ರೆಂಚ್ (ಏಕೀಕೃತ) ದರ್ಜೆ 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "ಫ್ರೆಂಚ್ (ಕೆನಡಾ) ದರ್ಜೆ 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "french (Canada) grade 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -843,12 +933,24 @@ msgstr "Croatian 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ್ರೈಲ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Croatian grade 1"
+msgstr "ಲ್ಯಾಟಿನ್    ದರ್ಜೆ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "ಹಂಗೇರಿಯನ್ 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ್ರೈಲ್"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "ಹಂಗೇರಿಯನ್ ದರ್ಜೆ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "ಹಂಗೇರಿಯನ್ ದರ್ಜೆ 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -898,8 +1000,14 @@ msgstr "ಕಶ್ಮೀರಿ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
+msgid "Lithuanian 8 dot"
 msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Lithuanian 6 dot"
+msgstr "ಫಿನ್ನಿಶ್ 6 ಡಾಟ್"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -918,8 +1026,15 @@ msgstr "ಮಣಿಪುರಿ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "ಮಂಗೋಲಿಯನ್"
+#, fuzzy
+msgid "Mongolian grade 1"
+msgstr "ಹಂಗೇರಿಯನ್ ದರ್ಜೆ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Mongolian grade 2"
+msgstr "ನಾರ್ವೇಜಿಯನ್ ದರ್ಜೆ 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1006,6 +1121,11 @@ msgstr "ಪನ್ಜಾಬಿ ವರ್ಗ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "ಗಣಕ ಯಂತ್ರ ಸಂಕೇತಕ್ಕಾಗಿ ರಷ್ಯನ್ ಬ್ರೈಲ್ "
 
@@ -1018,6 +1138,12 @@ msgstr "ರಷ್ಯಾದ ದರ್ಜೆ 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "ಸಂಸ್ಕ್ೃತ ವರ್ಗ 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Swedish 8 dot computer braille"
+msgstr "ಸ್ಪ್ಯಾನಿಷ್ 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ್ರೈಲ್"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1064,9 +1190,20 @@ msgstr "ಟರ್ಕಿಷ್ ದರ್ಜೆ 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Ukrainian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 #, fuzzy
 msgid "Unicode braille"
 msgstr "ಬ್ರೈಲ್ ಇಲ್ಲ"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Vietnamese grade 1"
+msgstr "ಅಸ್ಸಾಮೀಸ್ "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1582,14 +1719,14 @@ msgstr "ಹಿಂದಕ್ಕಿಲ್ಲ ವಿಂಗಡಿತ"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "ಕೊಂ&ಡಿ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&ಷಿರೋನಾಮೆಗಳು"
 
@@ -1608,7 +1745,7 @@ msgstr "ಗುಂಡಿ"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "ಹೆಗ್ಗು&ರುತು"
 
@@ -1680,33 +1817,6 @@ msgstr "ಸಂಪೂರ್ಣ ಕೆಳಗೆ"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "ಅಂತಿಮದ ಧಾರಕ ಅಂಶಕ್ಕೆ ಚಲಿಸುತ್ತದೆ, ಅದು ಕೋಷ್ಟಕ ಅಥವ ಪಟ್ಟಿಯಾಗಿರಬಹುದು"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "ಕೋಷ್ಟಕದ ಕೋಶದಲ್ಲಿಲ್ಲ"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "ಕೋಷ್ಟಕದ ಕೊನೆ"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "ಮುಂದಿನ ಕೋಷ್ಟಕದ ಪಂಕ್ತಿಗೆ ಚಲಿಸುತ್ತದೆ"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "ಹಿಂದಿನ ಕೋಷ್ಟಕದ ಪಂಕ್ತಿಗೆ ಚಲಿಸುತ್ತದೆ"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "ಮುಂದಿನ ಕೋಷ್ಟಕದ ಅಂಕಣಕ್ಕೆ ಚಲಿಸುತ್ತದೆ"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "ಹಿಂದಿನ ಕೋಷ್ಟಕದ ಅಂಕಣಕ್ಕೆ ಚಲಿಸುತ್ತದೆ"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2540,6 +2650,22 @@ msgstr ""
 msgid "audio"
 msgstr ""
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr ""
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "ಅಳಿಸು"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "ಸೇರ್ಪಡೆ"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "ಲಭ್ಯವಿಲ್ಲ"
@@ -2656,7 +2782,7 @@ msgid "dragging"
 msgstr "ಎಳೆಯಲಾಗುತ್ತಿದೆ"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "ಬೀಳಿಸಬಹುದಾದ ಗುರಿ"
 
@@ -2716,6 +2842,11 @@ msgstr "ಒತ್ತಲಾಗಿದೆ"
 msgid "not checked"
 msgstr "ಗುರುತಿಸಿಲ್ಲ"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "ಎಳೆಯುವುದನ್ನು ಮುಗಿಸಿದೆ"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr ""
@@ -2741,6 +2872,14 @@ msgstr ""
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
 msgstr ""
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "%s ಇಲ್ಲ"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2839,6 +2978,48 @@ msgstr "ಯಾವುದನ್ನೂ ಆಯ್ದುಕೊಂಡಿಲ್ಲ"
 msgid "Copied to clipboard"
 msgstr "ಪಲಕಕ್ಕೆ ಪ್ರತಿಯಾಗಿದೆ"
 
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "ಕೋಷ್ಟಕದ ಕೋಶದಲ್ಲಿಲ್ಲ"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "ಕೋಷ್ಟಕದ ಕೊನೆ"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "ಮುಂದಿನ ಕೋಷ್ಟಕದ ಪಂಕ್ತಿಗೆ ಚಲಿಸುತ್ತದೆ"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "ಹಿಂದಿನ ಕೋಷ್ಟಕದ ಪಂಕ್ತಿಗೆ ಚಲಿಸುತ್ತದೆ"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "ಮುಂದಿನ ಕೋಷ್ಟಕದ ಅಂಕಣಕ್ಕೆ ಚಲಿಸುತ್ತದೆ"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "ಹಿಂದಿನ ಕೋಷ್ಟಕದ ಅಂಕಣಕ್ಕೆ ಚಲಿಸುತ್ತದೆ"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables off"
+msgstr "ಕೋಷ್ಟಕಗಳನ್ನು ಹೇಳುವುದು ಆಫ್"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables on"
+msgstr "ಕೋಷ್ಟಕಗಳನ್ನು ಹೇಳುವುದು ಆನ್"
+
+#. Translators: Input help mode message for include layout tables command.
+#, fuzzy
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "ಕೋಷ್ಟಕಗಳನ್ನು ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
 msgstr "ಪಠ್ಯ ಪರಿಶೀಲನೆ"
@@ -2852,10 +3033,12 @@ msgid "System caret"
 msgstr "ಗಣಕ ವ್ಯವಸ್ತೆಯ ತೆರೆಬಾಣ ಕ್ಯಾರೆಟ್ "
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "ಮೌಸ್"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "ಮಾತು"
 
@@ -2864,6 +3047,7 @@ msgid "Configuration"
 msgstr "ಸಂರಚನೆ"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "ಬ್ರೈಲ್"
 
@@ -2931,7 +3115,8 @@ msgid "Sleep mode on"
 msgstr "ನಿದ್ರಾ ಸ್ಥಿತಿಗೆ ಮರಳಿತು"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
 msgstr ""
 "ಸಕ್ರೀಯಾತ್ಮಕ ತಂತ್ರಾಂಶಗಳಿಗಾಗಿ ನಿದ್ರಾ ಸ್ಥಿತಿಯನ್ನು ಇಲ್ಲವಾಗಿಸುವುದಕ್ಕೆ ಅಥವಾ ಚಾಲನೆಗೊಳಿಸುವುದಕ್ಕೆ "
 "ಅದಲುಬದಲು ಮಾಡುತ್ತದೆ"
@@ -3428,7 +3613,7 @@ msgstr ""
 "ಮುಂದಿನ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿಗೆ ಇರಿಸುತ್ತದೆ (ಉದಾ. ವಸ್ತು, ದಸ್ತಾವೇಜು ಅಥವಾ ಪರದೆ) ಮತ್ತು ಸಂಚಲಿತ ವಸ್ತುವಿನ "
 "ತುದಿಯಲ್ಲಿ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿಯನ್ನು ಇರಿಸುತ್ತದೆ"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "ಹಿಂದಕ್ಕಿಲ್ಲ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿ "
 
@@ -3468,9 +3653,10 @@ msgid "%s copied to clipboard"
 msgstr "%s ಅನ್ನು ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಳಿಸಲಾಗಿದೆ"
 
 #. Translators: Input help mode message for report current navigator object command.
+#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this information, and "
-"pressing three times Copies name and value of this  object to the clipboard"
+"pressing three times Copies name and value of this object to the clipboard"
 msgstr ""
 "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಸಂಚಲಿತ ವಸ್ತುವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ. ಇದನ್ನೇ ಎರಡು ಸಲ ಒತ್ತಿದರೆ, ಮಾಹಿತಿಯಲ್ಲಿನ ಅಕ್ಷರಗಳನ್ನು "
 "ಹೇಳುತ್ತದೆ, ತತಕ್ಷಣಕ್ಕೆ  ಮೂರು ಬಾರಿ ಒತ್ತಿದರೆ ವಸ್ತುವಿನ ಹೆಸರು ಮತ್ತು ಮೌಲ್ಯಗಳನ್ನು ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಳಿಸುತ್ತದೆ"
@@ -3784,6 +3970,15 @@ msgstr ""
 msgid "No status line found"
 msgstr "ಯಾವುದೇ ಸ್ಥಿತಿಯ ಸಾಲು ಕಂಡುಬಂದಿಲ್ಲ"
 
+#. Translators: Reported when status line exist, but is empty.
+#, fuzzy
+msgid "no status bar information"
+msgstr "ಸ್ಥಳದ ಮಾಹಿತಿಯಿಲ್ಲ"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
@@ -3958,48 +4153,64 @@ msgid ""
 "loaded appModule"
 msgstr "ಸಕ್ರಿಯಗೊಂಡ ತಂತ್ರಾಂಶದ ಕಡತದ ಹೆಸರಿನ ಜೊತೆಗೆ  ಪ್ರಸ್ತುತ ಮೂಡುವ ತಂತ್ರಾಂಶದ ಮಾದರಿಯನ್ನು ಹೇಳುತ್ತದೆ."
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
+#. Translators: Input help mode message for go to general settings command.
+#, fuzzy
+msgid "Shows NVDA's general settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಸಾಮಾನ್ಯ ಸಂರಚನೆಗಳ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
+#. Translators: Input help mode message for go to select synthesizer command.
+#, fuzzy
+msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಧ್ವನಿ ಸಂಶ್ಲೇಷಕ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "ಎನ್ವೀಡೀಯೇಯ ಧ್ವನಿಗಳ ಸಂಯೋಜನೆಯ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
-
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
-msgstr "ಎನ್ವೀಡೀಯೇಯ ಬ್ರೈಲ್ ಸಂಯೋಜನೆಯ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
-
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "ಎನ್ವೀಡೀಯೇಯ ಕೀಲಿಮಣೆ  ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
-
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
+#. Translators: Input help mode message for go to speech settings command.
+#, fuzzy
+msgid "Shows NVDA's speech settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಮೌಸ್ ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
+#. Translators: Input help mode message for go to select braille display command.
+#, fuzzy
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "ಎನ್ವೀಡೀಯೇಯ ಬ್ರೈಲ್ ಸಂಯೋಜನೆಯ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
+
+#. Translators: Input help mode message for go to braille settings command.
+#, fuzzy
+msgid "Shows NVDA's braille settings"
+msgstr "ಎನ್ವೀಡೀಯೇಯ ಬ್ರೈಲ್ ಸಂಯೋಜನೆಯ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
+
+#. Translators: Input help mode message for go to keyboard settings command.
+#, fuzzy
+msgid "Shows NVDA's keyboard settings"
+msgstr "ಎನ್ವೀಡೀಯೇಯ ಕೀಲಿಮಣೆ  ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
+
+#. Translators: Input help mode message for go to mouse settings command.
+#, fuzzy
+msgid "Shows NVDA's mouse settings"
+msgstr "ಎನ್ವೀಡೀಯೇಯ ಮೌಸ್ ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
+
+#. Translators: Input help mode message for go to review cursor settings command.
+#, fuzzy
+msgid "Shows NVDA's review cursor settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಪರಿಶೀಲನಾ ಕರ್ಸರ್ರಿನ ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
+#. Translators: Input help mode message for go to input composition settings command.
+#, fuzzy
+msgid "Shows NVDA's input composition settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಆದಾನದ ರಚನೆಯ ಸಂಯೋಜನೆಯ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
+#. Translators: Input help mode message for go to object presentation settings command.
+#, fuzzy
+msgid "Shows NVDA's object presentation settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ವಸ್ತು ಮಂಡನೆಯ ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
+#. Translators: Input help mode message for go to browse mode settings command.
+#, fuzzy
+msgid "Shows NVDA's browse mode settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಹುಡುಕಾಟದ ಬಗೆಯ ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
+#. Translators: Input help mode message for go to document formatting settings command.
+#, fuzzy
+msgid "Shows NVDA's document formatting settings"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ದಸ್ತಾವೇಜು ಶೈಲಿಯ ಸಂಯೋಜನೆಗಳ ಸಂವಾದವನ್ನು ತೋರುತ್ತದೆ"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
@@ -4062,18 +4273,10 @@ msgstr ""
 "ಎನ್ವೀಡೀಯೇಯ ಮಾತಿನ ಪರಿಶೀಲನೆಯನ್ನು ಬದಲಾಯಿಸುತ್ತದೆ. ಅದು ಒಂದು ಚಲಿಸುವ ಫಲಕ, ಎನ್ವೀಡೀಯೇಯು ಹೇಳುವ ಎಲ್ಲಾ "
 "ಪಠ್ಯಗಳನ್ನು ನೋಡಲು ಅನುಮತಿಸುತ್ತದೆ."
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "ಪರಿಶೀಲನೆ"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "ಗಮನಿತ"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
-#, python-format
-msgid "Braille tethered to %s"
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
+#, fuzzy, python-format
+msgid "Braille tethered %s"
 msgstr "ಬ್ರೈಲ್ %s ಗೆ ಟೆದರ್ ಆಗಿದೆ"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -4188,6 +4391,11 @@ msgstr "ಬ್ರೈಲ್ ಪ್ರದರ್ಶನವನ್ನು ಮುಂದ�
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "ಈ ಬ್ರೈಲ್ ಸೆಲ್ ಕೆಳಗೆ ವಸ್ತುವನ್ನು ಸಕ್ರೀಯಗೊಳಿಸುತ್ತದೆ ಅಥವ ಸೂಚಕವನ್ನು ಇರಿಸುತ್ತದೆ"
 
+#. Translators: Input help mode message for Braille report formatting command.
+#, fuzzy
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "ಈ ಬ್ರೈಲ್ ಸೆಲ್ ಕೆಳಗೆ ವಸ್ತುವನ್ನು ಸಕ್ರೀಯಗೊಳಿಸುತ್ತದೆ ಅಥವ ಸೂಚಕವನ್ನು ಇರಿಸುತ್ತದೆ"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "ಬ್ರೈಲ್ ಪ್ರದರ್ಶನವನ್ನು ಹಿಂದಿನ ಸಾಲಿಗೆ ಚಲಿಸುತ್ತದೆ"
@@ -4215,6 +4423,28 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
 msgstr ""
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
@@ -4262,6 +4492,24 @@ msgstr "ಕೊನೆಯಲ್ಲಿದ್ದ ಬೆರಳಿನ ಸ್ಥಾನ�
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಸಂರಚನೆಯ ಬದಿನೋಟಗಳಸಂವಾದವನ್ನು ತೋರಿಸುತ್ತದೆ"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers disabled"
+msgstr "ಸಂರಚನೆಯ ಬದಿನೋಟಗಳು"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers enabled"
+msgstr "ಸಂರಚನೆಯ ಬದಿನೋಟಗಳು"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+#, fuzzy
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains in effect "
+"until NVDA is restarted"
+msgstr ""
+"ಸಂರಚನೆಯ ಬದಿ ನೋಟ ಪ್ರಚೋದಕವನ್ನು ಉಳಿಸುವಲ್ಲಿ ದೋಶಪೂರಿತವಾಗಿದೆ- ಬರೀ ಓದಬಲ್ಲ ಕಡತ ವ್ಯವಸ್ಥೆಯಾಗಿರಬಹುದು"
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -4294,7 +4542,7 @@ msgstr "ಇತರೆ"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "ಕಂಟ್ರೋಲ್+ಆಲ್ಟ್+ಎನ್"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -4669,28 +4917,23 @@ msgstr "ಕೀಲಿಮಣೆ, ಎಲ್ಲಾ ವಿನ್ಯಾಸ"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "ಅಮ್ಹಾರಿಕ್"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "ಅರಗೊನೀಸ್"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "ಅರೇಬಿಕ್"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "ನೇಪಾಳಿ"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "ಸೇರ್ಬಿಯನ್ ಲಾಟಿನ್"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5870,20 +6113,27 @@ msgstr "%s ಆಯ್ಕೆಗೊಂಡಿದೆ"
 msgid "selection removed"
 msgstr "ಆಯ್ಕೆಮಾಡಿದ್ದನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "ಎಳೆಯುವುದನ್ನು ಮುಗಿಸಿದೆ"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
 msgstr "ಪಂಕ್ತಿ %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, fuzzy, python-format
+msgid "through %s"
+msgstr "ಸ್ಟ್ರೈಕ್ ತ್ರೂ"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "ಅಂಕಣ %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "ಜೊತೆಗೆ {rowCount} ಪಂಕ್ತಿಗಳು ಮತ್ತು {columnCount} ಅಂಕಣಗಳು"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -5905,7 +6155,7 @@ msgstr "%s ಪಂಕ್ತಿಗಳೊಂದಿಗೆ"
 msgid "level %s"
 msgstr "ಹಂತ %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "%s ವಸ್ತುಗಳೊಂದಿಗೆ"
@@ -6018,20 +6268,10 @@ msgstr ""
 msgid "line %s"
 msgstr "ಸಾಲು %s "
 
-#. Translators: Reported when text is marked as having been inserted
-#, fuzzy
-msgid "inserted"
-msgstr "ಸೇರ್ಪಡೆ"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 #, fuzzy
 msgid "not inserted"
 msgstr "ಾಯ್ಕೆಯನ್ನು ಮಾಡಲಾಗಿಲ್ಲ"
-
-#. Translators: Reported when text is marked as having been deleted
-#, fuzzy
-msgid "deleted"
-msgstr "ಅಳಿಸು"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 #, fuzzy
@@ -6138,6 +6378,34 @@ msgstr "ಹರಡಿಕೊಂಡ ಹೊಂದಿತ"
 msgid "align default"
 msgstr "ಮೊದಲಿನಂತೆ ಹೊಂದಿತ"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "ಸಂಪೂರ್ಣ ಮೇಲಕ್ಕೆ ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "ಮಧ್ಯಕ್ಕೆ  ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "ಸಂಪೂರ್ಣ ಕೆಳಕ್ಕೆ  ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "ಮೂಲಾಧಾರಿತ  ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "ಸರಿಹೊಂದಿತ ಲಂಬ "
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "ಹರಡಿಕೊಂಡ ಲಂಬ ಹೊಂದಿತ "
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "ಮೊದಲಿನಂತೆ  ಲಂಬ ಹೊಂದಿತ "
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "ಎಡಕ್ಕೆ ಪದನಿರ್ಧಾರಕ"
@@ -6170,34 +6438,6 @@ msgstr "ಮೊದಲ ಸಾಲಿನ ಪದನಿರ್ಧಾರಕ"
 msgid "no first line indent"
 msgstr "ಮೊದಲ ಸಾಲಿನ ಪದನಿರ್ಧಾರಕ ಿರುವುದಿಲ್ಲ"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "ಸಂಪೂರ್ಣ ಮೇಲಕ್ಕೆ ಲಂಬ ಹೊಂದಿತ "
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "ಮಧ್ಯಕ್ಕೆ  ಲಂಬ ಹೊಂದಿತ "
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "ಸಂಪೂರ್ಣ ಕೆಳಕ್ಕೆ  ಲಂಬ ಹೊಂದಿತ "
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "ಮೂಲಾಧಾರಿತ  ಲಂಬ ಹೊಂದಿತ "
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "ಸರಿಹೊಂದಿತ ಲಂಬ "
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "ಹರಡಿಕೊಂಡ ಲಂಬ ಹೊಂದಿತ "
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "ಮೊದಲಿನಂತೆ  ಲಂಬ ಹೊಂದಿತ "
-
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, fuzzy, python-format
 msgid "line spacing %s"
@@ -6213,6 +6453,15 @@ msgstr "ಕಾಗುಣಿತ ದೋಷ"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
+msgstr "ಕಾಗುಣಿತ ದೋಷದಾಚೆಗೆ"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr ""
+
+#. Translators: Reported when moving out of text containing a grammar error.
+#, fuzzy
+msgid "out of grammar error"
 msgstr "ಕಾಗುಣಿತ ದೋಷದಾಚೆಗೆ"
 
 #. Translators: Indicates end of a table.
@@ -6393,14 +6642,22 @@ msgid "Error checking for update."
 msgstr "ನವೀಕರಣಗಳನ್ನು ಹುಡುಕುವಲ್ಲಿ ದೋಷವಾಗಿದೆ"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "ದೋಷ"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "ಎನ್ವೀಡೀಯೇ ನವೀಕರಣ"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6412,9 +6669,16 @@ msgstr "ಎನ್ವೀಡೀಯೇ {version} ಆವ್ಋತ್ತಿ ಲಭ್
 msgid "No update available."
 msgstr "ಯಾವುದೇ ನವೀಕರಣಗಳು ಲಭ್ಯವಿಲ್ಲ"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "ನವೀಕರಣವನ್ನು ಇಳಿಸಿಕೊಳ್ಳಿರಿ ಮತ್ತು &ಸ್ಥಾಪಿಸಿರಿ"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, fuzzy, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "ಎನ್ವೀಡೀಯೇಯನ್ನು ಅನುಸ್ಥಾಪಿಸಿ"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+#, fuzzy
+msgid "Re-&download update"
+msgstr "&ನವೀಕರಣ ಇಳಿಸಿಕೊಳ್ಳಿರಿ"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6429,6 +6693,26 @@ msgstr "ಇನ್ಯಾವಾಗಲಾದರು & ನನಗೆ ನೆನಪಿ�
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&ಮುಚ್ಚಿ"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, fuzzy, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "ಎನ್ವೀಡೀಯೇ {version} ಆವ್ಋತ್ತಿ ಲಭ್ಯವಿದೆ."
+
+#. Translators: The label of a button to install an NVDA update.
+#, fuzzy
+msgid "&Install update"
+msgstr "ನವೀಕರಣವನ್ನು ಸ್ಥಾಪಿಸಿ"
+
+#. Translators: The label of a button to postpone an NVDA update.
+#, fuzzy
+msgid "&Postpone update"
+msgstr "&ನವೀಕರಣ ಇಳಿಸಿಕೊಳ್ಳಿರಿ"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+#, fuzzy
+msgid "Unable to postpone update."
+msgstr "ಪ್ರತಿಗೊಳಿಸಿಕೊಳ್ಳಲು  ಪಠ್ಯವಿಲ್ಲ"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6445,15 +6729,6 @@ msgstr "ಇಳಿಸಿಕೊಳ್ಳುತ್ತಿದೆ"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "ನವೀಕರಣವನ್ನು ಇಳಿಸಿಕೊಳ್ಳುವಲ್ಲಿ ದೋಷವಾಗಿದೆ."
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "ನವೀಕರಣವನ್ನು ಇಳಿಸಿಕೊಳ್ಳಲಾಗಿದೆ. ಇದು ಈಗ ಸ್ಥಾಪನೆಗೊಳ್ಳಲಿದೆ."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "ನವೀಕರಣವನ್ನು ಸ್ಥಾಪಿಸಿ"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6609,8 +6884,18 @@ msgstr "ಪ್ರಾರಂಭ"
 msgid "No track playing"
 msgstr "ಯಾವುದೇ ಗೀತೆ ಆಡುತ್ತಿಲ್ಲ"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "ಯಾವುದಾದರು ಇದ್ದಲ್ಲಿ, ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಗೀತೆಯ ಉಳಿದಿರುವ ಸಮಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "ಯಾವುದಾದರು ಇದ್ದಲ್ಲಿ, ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಗೀತೆಯ ಉಳಿದಿರುವ ಸಮಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the length of the currently playing track, if any"
 msgstr "ಯಾವುದಾದರು ಇದ್ದಲ್ಲಿ, ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಗೀತೆಯ ಉಳಿದಿರುವ ಸಮಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
 
 #. Translators: Describes a command.
@@ -6721,6 +7006,11 @@ msgstr "ಮರೆಮಾಚಿತ ಕಾರ್ಬನ್ ಪ್ರತಿ:"
 msgid "unread"
 msgstr "ಓದಿಲ್ಲದ"
 
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr ""
+
 #. Translators: a flag for a Microsoft Outlook message
 #. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
 #, fuzzy
@@ -6782,6 +7072,11 @@ msgstr "ಕಳುಹಿಸಲಾಗಿದೆ: %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "ಔಟ್ಲುಕ್ಕಿಗೆ ಕಾಯುತ್ತಿದೆ..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr ""
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7143,35 +7438,62 @@ msgctxt "repeat"
 msgid "off"
 msgstr "ಮತ್ತೇಮತ್ತೆಬೇಡ"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 ಶ್ರೇಣಿ"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr ""
+
+#. Translators: Message when setting HID keyboard simulation failed.
+#, fuzzy
+msgid "Setting HID keyboard simulation not supported"
+msgstr "ಗಣೀತದ ಸಂಸರ್ಗಕ್ಕೆ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr ""
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr ""
 
 #. Translators: Names of braille displays.
 #, fuzzy
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/ಮಾನವವಸ್ತು/APH ಬ್ರೈಲ್ ಪ್ರದರ್ಶನಗಳು"
 
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "ಅನುಕ್ರಮ: {portName}"
-
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
 msgstr "ಮಾನವವಸ್ತು ಬ್ರೈಲ್ ಠಿಪ್ಪಣಿ"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
+#, fuzzy
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
 msgstr "ಮಾನವವಸ್ತು ಬ್ರೈಲಿಯೆಂಟ್ BI/B ಶ್ರೇಣಿ"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille ಪ್ರದರ್ಶನಗಳು"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+#, fuzzy
+msgid "HID keyboard input simulation is unavailable."
+msgstr "ಎನ್ವೀಡೀಯೇ {version} ಆವ್ಋತ್ತಿ ಲಭ್ಯವಿದೆ."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+#, fuzzy
+msgid "Toggle HID keyboard simulation"
+msgstr "ಗಣೀತದ ಸಂಸರ್ಗಕ್ಕೆ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7185,12 +7507,28 @@ msgstr "ಚಲನಪಟ್ಟಿ ಪ್ರದರ್ಶನ"
 msgid "line scroll"
 msgstr "ಸಾಲಿನ ಚಲನಪಟ್ಟಿ"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "ಹ್ಯಾಂಡೀಟೆಕ್ ಬ್ರೈಲ್ ಪ್ರದರ್ಶನಗಳು"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "ಹ್ಯಾಂಡೀಟೆಕ್ ಚಾಲಕ ಸಂರಚನೆಯ ವಿಂಡೋವನ್ನು ತೋರಿಸು"
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr ""
+
+#. Translators: message when braille input is disabled
+#, fuzzy
+msgid "Braille input disabled"
+msgstr "ಬ್ರೈಲ್ &ಪ್ರದರ್ಶಕ:"
+
+#. Translators: description of the script to toggle braille input
+#, fuzzy
+msgid "Toggle braille input"
+msgstr "ಬ್ರೈಲ್ ಇಲ್ಲ"
+
+#. Translators: The name of a series of braille displays.
+#, fuzzy
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "ಹಿಮ್ಸ್ ಬ್ರೈಲ್ ಸೆನ್ಸ್/ಬ್ರೈಲ್ ಕೊನೆಯ ಶ್ರೇಣಿ"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7203,10 +7541,6 @@ msgstr "ಬ್ರೈಲ್ ಇಲ್ಲ"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier braillex ಹೊಸಾ ಮಾದರಿಗಳು"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr "ಮಾರ್ಗಿಸಿ ಮತ್ತು ಶೈಲಿಯನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7271,9 +7605,15 @@ msgstr "ಸಂರಚನೆಗಳನ್ನು ಉಳಿಸಲಾಗಿದೆ"
 msgid "Could not save configuration - probably read only file system"
 msgstr "ಸಂಭವನೀಯ ಬರೀ ಓದುವ ಕಡತದಿಂದಾಗಿ ಸಂರಚನೆಗಳನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ"
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr "ಈಗಾಗಲೇ ಎನ್ವೀಡೀಯೇಯ ಸಂರಚನೆಯ ಸಂವಾದವು ತೆರೆದಿದೆ, ದಯವಿಟ್ಟು ಮೊದಲು ಅದನ್ನು ಮುಚ್ಚಿ"
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7292,87 +7632,43 @@ msgstr "ತಾತ್ಕಾಲಿಕ ಶಬ್ದಕೋಶ"
 msgid "About NVDA"
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಬಗ್ಗೆ"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "&ಸಾಮಾನ್ಯ ಸಂಯೋಜನೆಗಳು..."
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to fix common "
+"system problems that stop NVDA from being able to access content in many programs "
+"including Firefox and Internet Explorer. This tool must make changes to the System "
+"registry and therefore requires administrative access. Are you sure you wish to proceed?"
+msgstr ""
 
-msgid "General settings"
-msgstr "ಸಾಮಾನ್ಯ ಸಂಯೋಜನೆಗಳು"
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "ಎಚ್ಚರಿಕೆ"
 
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&ಸಂಶ್ಲೇಷಕ..."
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr ""
 
-msgid "Change the synthesizer to be used"
-msgstr "ಉಪಯೋಗಿಸುವ ಸಂಶ್ಲೇಷಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ"
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+#, fuzzy
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "ಗಣಕದ  ಸಮ್ರಚನೆಗೆ ಸಂಯೋಜನೆಗಳನ್ನು ಪ್ರತಿಗೊಳಿಸುವ ತನಕ ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ"
 
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr ""
+
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "&Settings..."
 msgstr "&ಧ್ವನಿ ಸಂಯೋಜನೆಗಳು..."
 
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "ಧ್ವನಿ, ಗತಿ, ಮಟ್ಟ ಮತ್ತು ಏರಿಳಿತವನ್ನು ಉಪಯೋಗಿಸಲು ಆಯ್ಕೆಮಾಡಿ"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "ಬ್ರೈ&ಲ್ ಸಂಯೋಜನೆಗಳು"
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "&ಕೀಲಿಮಣೆ ಸಂಯೋಜನೆಗಳು..."
-
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "ಬರೆದ ಅಕ್ಷರಗಳನ್ನು, ಪದಗಳನ್ನು ಅಥವಾ ಆದೇಶದ ಕೀಲಿಗಳನ್ನು ಹೇಳಲು ಕೀಲಿಮಣೆಯ ವಿನ್ಯಾಸವನ್ನು ಸಂರಚಿಸಿ"
-
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "&ಮೌಸ್ ಸಂಯೋಜನೆಗಳು..."
-
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr "ಮೌಸ್ ಆಕಾರವನ್ನು ಮತ್ತು ಮೌಸ್ ಕೆಳಗಿರುವ ವಸ್ತುವನ್ನು ಪ್ರಕಟಿಸುವುದನ್ನು ಬದಲಾಯಿಸಿ"
-
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "ಪರಿಶೀಲನಾ &ಸೂಚಕ..."
-
-msgid "Configure how and when the review cursor moves"
-msgstr "ಪರಿಶೀಲನಾ ಸೂಚಕವು ಹೆಂಗೆ ಮತ್ತು ಯಾವಾಗ ಚಲಿಸಬೇಕೆಂಬುದನ್ನು ಸಂರಚಿಸಿ"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "&ಊಡುವಳಿ ರಚನೆಯ ಸಂಯೋಜನೆಗಳು..."
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for certain "
-"languages"
-msgstr ""
-"ಕೆಲವು ಭಾಷೆಗಳಿಗೆ ಊಡುವಳಿ ರಚನೆಯನ್ನು ಮತ್ತು ಅಭ್ಯರ್ತಿಯ ಆಯ್ಕೆಯನ್ನು ಹೇಗೆ ಎನ್ವೀಡೀಯೇಯು "
-"ಪ್ರಕಟಿಸಬೇಕೆಂಬುವುದನ್ನು ಸಂರಚಿಸಿ"
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "&ವಸ್ತು ಮಂಡನೆ."
-
-msgid "Change reporting of objects"
-msgstr "ವಸ್ತುಗಳನ್ನು ಪ್ರಕಟಿಸುವುದನ್ನು ಬದಲಾಯಿಸಿ"
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "&ಹುಡುಕಾಟದ ವಿಧಾನ..."
-
-msgid "Change virtual buffers specific settings"
-msgstr "ಮಿತ್ಯ ತಾತ್ಕಾಲಿಕ ಸ್ಮ್ಋತಿ ಸಂಗ್ರಾಹಕಗಳ ನಿರ್ಧಿಷ್ಟ ಸಂಯೋಜನೆಗಳನ್ನು ಬದಲಾಯಿಸಿ"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "ದಸ್ತಾವೇಜು &ಅಂದಗೊಳಿಕೆ."
-
-msgid "Change settings of document properties"
-msgstr "ದಸ್ತಾವೇಜಿನ ಸ್ವತ್ತಿನ ಸಂಯೋಜನೆಗಳನ್ನು ಬದಲಾಯಿಸಿ"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr ""
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "NVDA settings"
+msgstr "ಯಾವುದೇ ಸಂರಚನೆಗಳಿಲ್ಲ"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7445,6 +7741,10 @@ msgstr "ಕೊಂಡೊಯ್ಯುವಂತಹ ಪ್ರತಿಯನ್ನು �
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&ಎನ್ವೀಡಿಯೇಯನ್ನು ಅನುಸ್ಥಾಪಿಸು..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr ""
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7524,6 +7824,15 @@ msgstr "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಸಮ್ರಚನೆಗಳ�
 msgid "Donate"
 msgstr "ದೇಣಿಗೆ ನೀಡಿ"
 
+#. Translators: The label for the menu item to run a pending update.
+#, fuzzy
+msgid "Install pending &update"
+msgstr "ನವೀಕರಣವನ್ನು ಸ್ಥಾಪಿಸಿ"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr ""
+
 msgid "E&xit"
 msgstr "ನಿ&ರ್ಗಮಿಸು"
 
@@ -7563,7 +7872,7 @@ msgstr "ಆಯ್ಕೆಗಳು"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&ಕೀಲಿಮಣೆ ವಿನ್ಯಾಸ"
 
@@ -7631,9 +7940,40 @@ msgstr "ನಿಶಕ್ತಗೊಂಡ add-onಗಳೊಂದಿಗೆ ಮರು�
 msgid "Restart with debug logging enabled"
 msgstr "ನಿಶಕ್ತಗೊಂಡ add-onಗಳೊಂದಿಗೆ ಮರುಪ್ರಾರಂಭಿಸಿ "
 
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Install pending update"
+msgstr "ನವೀಕರಣವನ್ನು ಸ್ಥಾಪಿಸಿ"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage data from "
+"running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of origin, plus "
+"certain NVDA configuration such as current synthesizer, braille display and braille "
+"table. No spoken or braille content will be ever sent to NV Access.  Please refer to "
+"the User Guide for a current list of all data collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to improve "
+"NVDA?"
+msgstr ""
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr ""
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr ""
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -7686,6 +8026,7 @@ msgstr "&ಅನುಸ್ಥಾಪಿಸಿ..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&ತೆಗೆದುಹಾಕಿ"
@@ -7771,23 +8112,23 @@ msgstr "ಅನುಸ್ಥಾಪಿಸಿ"
 msgid "remove"
 msgstr "ತೆಗೆದುಹಾಕಿ"
 
-#. Translators: The status shown for an addon when its disabled.
-#, fuzzy
-msgid "disable"
-msgstr "ಸಂಪಾದಿಸಬಹುದಾದ"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr ""
 
-#. Translators: The status shown for an addon when its enabled.
-#, fuzzy
-msgid "enable"
-msgstr "ಕೋಷ್ಟಕ"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr ""
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "ಅಮಾನತ್ತುಗೊಂಡಿರುವ"
+#, fuzzy
+msgid "disabled"
+msgstr "ಸಂಪಾದಿಸಬಹುದಾದ"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "ಚಾಲ್ತಿಯಲ್ಲಿದೆ"
+#, fuzzy
+msgid "enabled"
+msgstr "ಕೋಷ್ಟಕ"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 #, fuzzy
@@ -7828,6 +8169,10 @@ msgstr "ಯೂ ಆರ್ ಎಲ್ {url}"
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "ಸಹವರ್ತಿ  ಮಾಹಿತಿ"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr ""
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -7976,11 +8321,6 @@ msgid ""
 msgstr ""
 "ಈ ಪ್ರಚೋದಕವು ಹಿಂದೆಯೇ ಬೇರೆಯ ಬದಿನೋಟದಜೊತೆಗೆ ಸೇರಿಕೊಂಡಿದೆ.\n"
 "ನೀವು ಮುಂದುವರೆದರೆ ಇದನ್ನು ಆ ಕೋಶದಿಂದ ತೆಗೆದು ಹಾಕಿ ಇದರ ಜೊತೆ ಸೇರಿಸಲಾಗುತ್ತದೆ. ಮುಂದುವರಿಸಬೇಕೆ?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "ಎಚ್ಚರಿಕೆ"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8204,8 +8544,31 @@ msgstr "ಇದರಂತೆಯೇ ಉಳಿಸಿ"
 msgid "Error saving log: %s"
 msgstr "ಲಾಗ್ %s ಉಳಿಸುವುದರಲ್ಲಿ ದೋಷವಾಗಿದೆ"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr ""
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr ""
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr ""
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+#, fuzzy
+msgid "&Categories:"
+msgstr "ವರ್ಗ"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr ""
+
+#. Translators: This is the label for the general settings panel.
+#, fuzzy
+msgid "General"
 msgstr "ಸಾಮಾನ್ಯ ಸಂಯೋಜನೆಗಳು"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
@@ -8259,6 +8622,15 @@ msgstr ""
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
 msgstr "ತನ್ತಾನೇ  ಎನ್ವೀಡೀಯೇಯ ನವೀಕರಣವನ್ನು &ಹುಡುಕಿ"
+
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr ""
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8317,8 +8689,21 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "ಬಾಷೆಯ ಸಂರಚನೆಯ ಬದಲಾವಣೆ"
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
+#. Translators: A label for the synthesizer on the speech panel.
+#, fuzzy
+msgid "&Synthesizer"
+msgstr "&ಸಂಶ್ಲೇಷಕ"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr ""
+
+#. Translators: This is the label for the synthesizer selection dialog
+#, fuzzy
+msgid "Select Synthesizer"
 msgstr "ಸಂಶ್ಲೇಷಕ"
 
 #. Translators: This is a label for the select
@@ -8333,7 +8718,7 @@ msgstr "&ಸಂಶ್ಲೇಷಕ"
 msgid "Output &device:"
 msgstr "ಹೂಡು&ವಳಿ ಸಾಧನ:"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr ""
 
@@ -8347,27 +8732,28 @@ msgstr "%s ಸಂಶ್ಲೇಷಕವನ್ನು ಮೂಡಿಸಲು ಸಾ�
 msgid "Synthesizer Error"
 msgstr "ಸಂಶ್ಲೇಷಕದ ದೋಷ"
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "ಧ್ವನಿ ಸಂಯೋಜನೆಗಳು"
+#. Translators: This is the label for the voice settings panel.
+#, fuzzy
+msgid "Voice"
+msgstr "ಧ್ವನಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "(ಬೆಂಬಲಿಸಿದರೆ) ಸ್ವಯಮ್ಚಾಲನೆಯಲ್ಲಿ ಭಾಷೆಯು ಪರಿವರ್ತನೆಗೊಳ್ಳುವುದು"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "(ಬೆಂಬಲಿಸಿದರೆ) ಸ್ವಯಮ್ಚಲನೆಯಲ್ಲಿ ಆಡುಭಾಷೆಗೆ ಪರಿವರ್ತಿಸುವುದು"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "ಲಾಂಚನ/ಚಿನ್ಹೆಯ &ಮಟ್ಟ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "ಅಕ್ಷರಗಳು ಮತ್ತು ಚಿನ್ಹೆಗಳನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಧ್ವನಿಯ ಭಾಷೆಯನ್ನು ನಂಬಿ"
 
@@ -8376,81 +8762,82 @@ msgid "Capital pitch change percentage"
 msgstr "ದೊಡ್ಡಕ್ಷರ ಮಟ್ಟ ಬದಲಾವಣೆ ಶೆಕಡವಾರು"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "ದೊಡ್ಡ ಅಕ್ಷರಗಳನ್ನು ಹೇಳುವ ಮೊದಲು ದೊಡ್ಡ ಎಂದು &ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&ದೊಡ್ಡ ಅಕ್ಷರಗಳಿಗೆ ಶಬ್ದಮಾಡಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "ಬೆಂಬಲಿಸಿದರೆ & ಪದಗಳ ುಚ್ಛರಿಸುವ ಕಾರ್ಯವನ್ನು ಉಪಯೋಗಿಸಿ"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "ಕೀಲಿಮಣೆ ಸಂಯೋಜನೆಗಳು"
+#. Translators: This is the label for the keyboard settings panel.
+#, fuzzy
+msgid "Keyboard"
+msgstr "%s ಕೀಲಿಮಣೆ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "ಕ್ಯಾಪ್ಸ್ಲಾಕ್ ಕೀಯನ್ನು ಎನ್ವೀಡೀಯೇಯ ಕೀಯಂತೆ ಉಪಯೋಗಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "ನಮ್ಪ್ಯಾಡ್ ಇನ್ಸರ್ಟ್ ಕೀಯನ್ನು ಎನ್ವೀಡೀಯೇಯ ಕೀಯಂತೆ ಉಪಯೋಗಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "ವಿಸ್ತರಿಸಿದ ಕೀಯನ್ನು ಎನ್ವೀಡೀಯೇಯ ಕೀಯಂತೆ ಉಪಯೋಗಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "ಬರೆದ&ಅಕ್ಷರಗಳನ್ನು ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "ಬರೆದ&ಪದಗಳನ್ನು ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "ಬರೆದ ಅಕ್ಷರಗಳನ್ನು ಹೇಳುವುದನ್ನು ತಡೆಗಟ್ಟಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "ಎಂಟರ್ ಕೀ ಒತ್ತಿದಾಗ ಮಾತನ್ನು ತಡೆಗಟ್ಟಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "ಎಲ್ಲವನ್ನು ಹೇಳುವುದರಲ್ಲಿ ಪದರ&ಓದುವುದನ್ನು ಅನುಮತಿಸು"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "ಕ್ಯಾಪ್ಸ್ಲಾಕ್ ಆನಾಗಿರುವಾಗ ಚಿಕ್ಕ ಅಕ್ಷರಗಳನ್ನು ಬರೆದಾಗ ಶಬ್ದ ಮಾಡಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "ಆದೇಶದ&ಕೀಲಿಗಳನ್ನು ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "ಇತರ &ಬಳಕಗಳಿಂದ ಕೀಲಿಗಳನ್ನು ನಿಭಾಯಿಸಿ"
 
@@ -8458,94 +8845,92 @@ msgstr "ಇತರ &ಬಳಕಗಳಿಂದ ಕೀಲಿಗಳನ್ನು ನ�
 msgid "At least one key must be used as the NVDA key."
 msgstr "ಎನ್ವೀಡೀಯೇಯ ಕೀಯಾಗಿ ಒಂದನ್ನಾದರು ಕೀಯನ್ನು ಉಪಯೋಗಿಸಬೇಕು"
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "ಮೌಸ್ ಸಂಯೋಜನೆಗಳು"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "ಮೌಸ್ &ಆಕಾರದ ಬದಲಾವಣೆಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "ಮೌಸ್ &ದಾರಿಯನ್ನು ಶಕ್ತಗೊಳಿಸಿ"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "ಪಠ್ಯ ಸೂಕ್ಷ್ಮತೆಯ &ಘಟಕ:"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "ಮೌಸ್ ವಸ್ತುವಿಗೆ ಚಲಿಸಿದಾಗ &ಉರುಳಿದಾಗ ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "ಮೌಸ್ ಚಲಿಸಿದಾಗ ಆಡಿಯೋವನ್ನು &ಪ್ಲೇ ಮಾಡಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "&ಹೊಳೆಯುವಿಕೆಯು ಆಡಿಯೋ ಶಬ್ದದ ಗತಿಯನ್ನು ನಿಯಂತ್ರಿಸುತ್ತದೆ"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "ಪರಿಶೀಲನಾ ಸೂಚಕ ಸಂಯೋಜನೆಗಳು"
+#. Translators: This is the label for the review cursor settings panel.
+#, fuzzy
+msgid "Review Cursor"
+msgstr "ಪರಿಶೀಲನಾ &ಸೂಚಕ..."
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "ಸಿಸ್ಟೆಮ್ &ಗಮನಿತವನ್ನು ಹಿಂಬಾಲಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr " &ತೆರೆಬಾಣವನ್ನು ಹಿಂಬಾಲಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "&ಮೌಸ್ ಸೂಚಕವನ್ನು ಹಿಂಬಾಲಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "ಸರಳ ಪರಿಶೀಲನಾ ಸ್ಥಿತಿ"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
+#. Translators: This is the label for the Input Composition settings panel.
+#, fuzzy
+msgid "Input Composition"
 msgstr "ಹೂಡುವಳಿ ರಚನೆಯ ಸಂಯೋಜನೆಗಳು"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr " ಲಭ್ಯವಿರುವ & ಎಲ್ಲಾಅಭ್ಯರ್ತಿಯನ್ನು ತಾನಾಗಿಯೇ ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "&ಆಯ್ಕೆಯಾಗಿರುವ ಅಭ್ಯರ್ತಿಯನ್ನು ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr "ಅಭ್ಯರ್ತಿಯನ್ನು &ಪ್ರಕಟಿಸುವಾಗ ಚಿಕ್ಕ ಅಕ್ಷರಗಳನ್ನು ಮತ್ತು ವಿವರಣೆಗಳನ್ನು ಯಾವಾಗಲೂ ಸೇರಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "&ಓದುತ್ತಿರುವ ಪುಂಜದಲ್ಲಿ ಬದಲಾವಣೆಗಳನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "&ರಚಿಸುವಿಕೆಯ ಪುಂಜದಲ್ಲಿ ಬದಲಾವಣೆಗಳನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "ವಸ್ತು ಪ್ರದರ್ಶನ"
 
@@ -8568,187 +8953,187 @@ msgid "Speak and beep"
 msgstr "ಮಾತುಮತ್ತು ಶಬ್ದ "
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "&ಟೂಲ್ಟಿಪ್ಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &help balloons"
 msgstr "&ಸಹಾಯ ಬಲೂನ್ಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "ವಸ್ತುವಿನ ಸಮೀಪ &ಕೀಲಿಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "ವಸ್ತುವಿನ &ಸ್ಥಿತಿಯ ಮಾಹಿತಿಯನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "ಲಭ್ಯವಿರದಾಗ ವಸ್ತುವಿನ &ಸ್ಥಿತಿಯ ಮಾಹಿತಿಯನ್ನು ಊಹಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "ವಸ್ತುವಿನ &ವಿವರಣೆಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "ಪ್ರಗತಿಯ &ಪಟ್ಟಿಕೆ ಹುಟ್ಟುವಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "ಹಿನ್ನೆಲೆಯ ಪ್ರಗತಿಯ ಪಟ್ಟಿಕೆಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "ಸಂಚಲನಾತ್ಮಕ &ಪರಿವಿಡಿಗಳ ಬದಲಾವಣೆಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr ""
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "ಹುಡುಕಾಟದ ಸ್ಥಿತಿ"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "&ಒಂದು ಸಾಲಿನಲ್ಲಿ ಗರಿಷ್ಟ ಅಕ್ಷರಗಳು"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "&ಒಂದು ಪುಟಕ್ಕೆ ಸಾಲುಗಳ ಸಂಖ್ಯೆ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "(ಬೆಂಬಲಿತವಿದ್ದಾಗ) &ಪರದೆಯ ವಿನ್ಯಾಸವನ್ನು ಬಳಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "ಪುಟವು ಮೂಡಿದ ಮೇಲೆ ತಾನಾಗಿಯೇ &ಎಲ್ಲವನ್ನು ಹೇಳಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "ವಿನ್ಯಾಸದ ಕೋ&ಷ್ಟಕಗಳನ್ನು ಒಳಪಡಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "ಗಮನಿತದ ಬದಲಾವಣೆಗಳಿಗೆ ಸ್ವಯಂಚಾಲಿತ ಗಮನಿತದ ಸ್ಥಿತಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "ತೆರೆಬಾಣದ ಚಲನೆಗೆ ಸ್ವಯಂಚಾಲಿತ ಗಮನಿತ ಸ್ಥಿತಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "ಗಮನಿತ ಸ್ಥಿತಿಗೆ ಮತ್ತು ಹುಡುಕಾಟ ಸ್ಥಿತಿಗೆ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "ಆದೇಶವಲ್ಲದ ಸೂಚನೆಗಳು ದಸ್ತಾವೇಜನ್ನು ತಲುಪುವುದನ್ನು ಹಿಡಿಯಿರಿ"
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "ದಸ್ತಾವೇಜು ಅಂದಗೊಳಿಸುವಿಕೆ"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr ""
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Font name"
 msgstr "ಅಕ್ಷರ ವಿನ್ಯಾಸದ ಹೆಸರು"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Font &size"
 msgstr "ಅಕ್ಷರದ ಅಳತೆ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Font attri&butes"
 msgstr "ಅಕ್ಷರಶೈಲಿ &ಗುಣವಿಶೇಶಕವನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "E&mphasis"
 msgstr "&ಪುಟಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr ""
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 #, fuzzy
 msgid "Document information"
 msgstr "ದಾಖಲೆಯ ಶೈಲಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Co&mments"
 msgstr "ಪ್ರತಿಕ್ರಿಯೆಗಳು"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Editor revisions"
 msgstr "&ಸಂಪಾದಕತ್ವದ ಪರಿಶ್ಕರಣಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Spelling e&rrors"
 msgstr "ಕಾಗುಣಿತ ದೋಷ"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Line &numbers"
 msgstr "ರೇಖೆಯ &ಸಂಖ್ಯೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
@@ -8761,7 +9146,7 @@ msgstr "&ಸಾಲಿನ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Off"
 msgstr "ಮುಚ್ಚಿತು"
@@ -8780,100 +9165,110 @@ msgstr ""
 msgid "Both  Speech and Tones"
 msgstr ""
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 #, fuzzy
 msgid "&Paragraph indentation"
 msgstr "&ವಾಕ್ಯವೃಂದದ ಪದಜಾಗ ನಿರ್ಧರಣೆಯನ್ನು ಪ್ರಕಟಿಸಿ"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 #, fuzzy
 msgid "&Line spacing"
 msgstr "%s ಆಯ್ದುಕೊಳ್ಳಲಾಗುತ್ತಿದೆ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Alignment"
 msgstr "ಹೊಂದಿತ"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 #, fuzzy
 msgid "Table information"
 msgstr "ಸ್ಥಳದ ಮಾಹಿತಿಯಿಲ್ಲ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Tables"
 msgstr "ಕೋಷ್ಟಕ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Row/column h&eaders"
 msgstr "ಅಂಕಣದ ಶಿರೋಲೇಖ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Cell c&oordinates"
 msgstr "ಕೋಷ್ಟಕದ ಕೋಶದ &ಸಂಯೋಜಿತಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Styles"
 msgstr "ಶೈಲಿ"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Cell borders:"
 msgstr "ಕೋಷ್ಟಕದ ಕೋಶದ &ಸಂಯೋಜಿತಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 #, fuzzy
 msgid "Elements"
 msgstr "ಅಂಶಗಳ ಪಟ್ಟಿ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Block &quotes"
 msgstr "ಉಲ್ಲೇಖಿತ ಪಠ್ಯಖಂಡ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Clickable"
 msgstr "ಒತ್ತಬಹುದಾದ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr "(ಕರ್ಸರ್ ಘೋಶಣೆಯ ನಂತರ) ಶೈಲಿಗಳ ಬದಲಾವಣೆಗಳನ್ನು ಹೇಳಿ"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+#, fuzzy
+msgid "Touch Interaction"
+msgstr "ಗಣೀತದ ಸಂಸರ್ಗವನ್ನು ನಿರ್ಗಮಿಸಿ"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr ""
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr ""
 
@@ -8891,7 +9286,8 @@ msgid "Whole &word"
 msgstr "ಇಡೀ &ಪದ"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+#, fuzzy
+msgid "Regular &expression"
 msgstr "&ಕ್ರಮಬದ್ಧ ಅಭಿವ್ಯಕ್ತಿ, "
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -8967,9 +9363,15 @@ msgstr "&ಸಂಪಾದಿಸಿ"
 msgid "Add Dictionary Entry"
 msgstr "ಶಬ್ದಕೋಶಕ್ಕೆ ಸೇರಿಸಿ"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "ಬ್ರೈಲ್ ಸಂಯೋಜನೆಗಳು"
+#. Translators: A label for the braille display on the braille panel.
+#, fuzzy
+msgid "Braille &display"
+msgstr "ಬ್ರೈಲ್ &ಪ್ರದರ್ಶಕ:"
+
+#. Translators: This is the label for the braille display selection dialog.
+#, fuzzy
+msgid "Select Braille Display"
+msgstr "EcoBraille ಪ್ರದರ್ಶನಗಳು"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8978,6 +9380,13 @@ msgstr "ಬ್ರೈಲ್ &ಪ್ರದರ್ಶಕ:"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&ಸಂಚರಿತ"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "%s ಪ್ರದರ್ಶಕವನ್ನು ಮೂಡಿಸಲು ಆಗುವುದಿಲ್ಲ."
+
+msgid "Braille Display Error"
+msgstr "ಬ್ರೈಲ್ ಪ್ರದರ್ಶಕ ದೋಷ"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9024,8 +9433,8 @@ msgstr ""
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 #, fuzzy
-msgid "B&raille tethered to:"
-msgstr "ಬ್ರೈಲ್ ಇದಕ್ಕೆ ಟೆದರ್ ಆಗಿದೆ:"
+msgid "Tether B&raille:"
+msgstr "ಬ್ರೈಲ್"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9040,12 +9449,15 @@ msgstr "ಸಾಧ್ಯವಾದಾಗ&ಪದಗಳನ್ನು ಬಿಡಿಸ�
 msgid "Focus context presentation:"
 msgstr "ಮುಂದಕ್ಕಿಲ್ಲ ಟಿಪ್ಪಣಿ "
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "%s ಪ್ರದರ್ಶಕವನ್ನು ಮೂಡಿಸಲು ಆಗುವುದಿಲ್ಲ."
+#. Translators: This is the label for the NVDA settings dialog.
+#, fuzzy
+msgid "NVDA"
+msgstr "ಎನ್ವೀಡೀಯೇಯನ್ನು ನಿಷ್ಕ್ರಮಣಗೊಳಿಸಿ "
 
-msgid "Braille Display Error"
-msgstr "ಬ್ರೈಲ್ ಪ್ರದರ್ಶಕ ದೋಷ"
+#. Translators: The profile name for normal configuration
+#, fuzzy
+msgid "normal configuration"
+msgstr "(normal configuration) ಸಾಮಾನ್ಯ ಸಂರಚನೆ"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9207,11 +9619,820 @@ msgstr "RGB ಕೆಂಪು {rgb.red}, ಹಸಿರು {rgb.green}, ನೀಲಿ
 msgid "%s items"
 msgstr "%s ಸಾಮಗ್ರಿಗಳು"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document Formatting "
+"Settings"
+msgstr ""
+"ಶಿರೋಲೇಖಗಳನ್ನು ಇರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ. ಕೋಷ್ಟಕಗಳ ಶಿರೋಲೇಖಗಳನ್ನು ಪ್ರಕಟಿಸುವುದನ್ನು ದಯವಿಟ್ಟು ದಸ್ತಾವೇಜಿನ "
+"ಶೈಲಿಯ ಸಮ್ಯೋಜನೆಯಲ್ಲಿ ಶಕ್ತಗೊಳಿಸಿ"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "ಪಂಕ್ತಿಯನ್ನು ಹೊಂದಿಸಿ {rowNumber} ಅಂಕಣ {columnNumber} ಪ್ರಾರಂಭಿಕದಂತೆ"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"ಈಗಾಗಲೇ {rowNumber}  ಪಂಕ್ತಿಯನ್ನು ಮತ್ತು {columnNumber}  ಅಂಕಣವನ್ನು ಅಂಕಣ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭದಲ್ಲಿ "
+"ಇರಿಸಲಾಗಿದೆ"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "ಅಂಕಣ ಶಿರೋಲೇಖದಿಂದ {rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "ಅಂಕಣ ಶಿರೋಲೇಖದಲ್ಲಿ {rowNumber} ಪಂಕ್ತಿಯು ಮತ್ತು {columnNumber} ಅಂಕಣವು ಸಿಕ್ಕಿಲ್ಲ"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells lower and to "
+"the right of it within this table. Pressing twice will forget the current column header "
+"for this cell."
+msgstr ""
+"ಒಂದು ಬಾರಿ ಒತ್ತಿದರೆ, ಈ ಕೋಶವನ್ನು ಮೊದಲನೆಯ ಅಂಕಣದ ಶಿರೋಲೇಖವನ್ನಾಗಿ ಕೆಳಗಿನ ಯಾವುದಾದರು ಕೋಶಕ್ಕೆ "
+"ಇರಿಸುತ್ತದೆ ಮತ್ತು ಇದೇ ಕೋಷ್ಟಕದಲ್ಲಿ ಬಲಕ್ಕೆ ಇರಿಸುತ್ತದೆ. ಎರಡು ಬಾರಿ ಒತ್ತಿದರೆ ಈ ಕೋಶಕ್ಕೆ ಚಾಲ್ತಿಯಲ್ಲಿರುವ "
+"ಅಂಕಣದ ಶಿರೋಲೇಖವನ್ನು ಮರೆಯುತ್ತದೆ."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "{rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭದಂತೆ ಇರಿಸಿ"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"ಈಗಾಗಲೇ {rowNumber} ಪಂಕ್ತಿಯನ್ನು ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭದಂತೆ "
+"ಇರಿಸಿದೆ"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದಿಂದ {rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದಲ್ಲಿ {rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣ ಸಿಕ್ಕಿಲ್ಲ"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower and to the "
+"right of it within this table. Pressing twice will forget the current row header for "
+"this cell."
+msgstr ""
+"ಒಂದು ಬಾರಿ ಒತ್ತಿದರೆ, ಈ ಕೋಶವನ್ನು ಮೊದಲನೆಯ ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖವನ್ನಾಗಿ ಕೆಳಗಿನ ಯಾವುದಾದರು ಕೋಶಕ್ಕೆ "
+"ಇರಿಸುತ್ತದೆ ಮತ್ತು ಇದೇ ಕೋಶ್ಟಕದ ಬಲಕ್ಕೆ ಇರಿಸುತ್ತದೆ. ಎರಡು ಬಾರಿ ಒತ್ತಿದರೆ ಈ ಕೋಶಕ್ಕೆ ಚಾಲ್ತಿಯಲ್ಲಿರುವ "
+"ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖವನ್ನು ಮರೆಯುತ್ತದೆ."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+#, fuzzy
+msgid "No comments"
+msgstr "ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಯಿಲ್ಲ."
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "ಗಣಕದ ತೆರೆಬಾಣ ಇರುವಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯೆಯ ಪಠ್ಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "ಕೋಷ್ಟಕದೊಳಗಿಲ್ಲ"
+
 msgid "invoke"
 msgstr "ಪ್ರಾರ್ಥಿಸು"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&ಠಿಪ್ಪಣಿಗಳು"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Errors"
+msgstr "ದೋಷ"
+
+#. Translators: The label shown for an insertion change
+#, fuzzy, python-brace-format
+msgid "insertion: {text}"
+msgstr "ಕಾಗುಣಿತ ದೋಷ"
+
+#. Translators: The label shown for a deletion change
+#, fuzzy, python-brace-format
+msgid "deletion: {text}"
+msgstr "ಕಾಗುಣಿತ ದೋಷ"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr ""
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "ಪ್ರತಿಕ್ರಿಯೆ {text} {author} ರವರಿಂದ {date} ರಂದು"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "ಪ್ರತಿಕ್ರಿಯೆ {text} {author} ರವರಿಂದ {date} ರಂದು"
+
 msgid "Desktop"
 msgstr "ಮೇಲ್ತೆರೆ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "3D ಕ್ಷೇತ್ರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "3 ಆಯಾಮದ ಬಣಿವೆಯಾದ ಪ್ರದೇಶ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಪ್ರದೇಶ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "3 ಆಯಾಮದ ಗೊಂಚಲಿನ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "3 ಆಯಾಮದ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "3 ಆಯಾಮದ 100ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "3 ಆಯಾಮದ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "3 ಆಯಾಮದ ಗೊಂಚಲಿನ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "3 ಆಯಾಮದ ಬಣಿವೆಯಾದ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "3 ಆಯಾಮದ 100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "3 ಆಯಾಮದ ರೇಖೆ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "3 ಆಯಾಮದ ಕಾಸು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "ಸಿಡಿಸಿದ 3d ಕಾಸು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "ಪ್ರದೇಶ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "ಬಣಿವೆಯಾದ ಪ್ರದೇಶ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "ಗೊಂಚಲಿನ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "ಕಾಸಿನ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "ನೀರ್ಗುಳ್ಳೆ, "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "ನೀರ್ಗುಳ್ಳೆಯ ಜೊತೆಗೆ 3D ಪರಿಣಾಮಗಳು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "ಗೊಂಚಲಿನ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "ಬಣಿವೆಯಾದ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "ಗೊಂಚಲಿನ ಕೋನದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "ಬಣಿವೆಯಾದ ಕೋನದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "3 ಆಯಾಮದ ಕೋನ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "ಗೊಂಚಲಿನ ಕೋನ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "ಬಣಿವೆಯಾದ ಕೋನ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "ಕ್ಲಸ್ಟರ್ ಸಿಲಿಂಡರ್ ಬಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "ಸ್ಟ್ಯಾಕ್ಡ್ ಸಿಲಿಂಡರ್ ಬಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಸಿಲಿಂಡರ್ ಬಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "3D ಸಿಲಿಂಡರ್ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಸಿಲಿಂಡರ್ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "ಡೌನಟ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "ಸ್ಪೋಡಗೊಂಡ ಡೌನಟ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "ರೇಖೆ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "ಸಾಲುಗಳ ಜೊತೆಗೆ ಗುರುತುಗಳು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "ಜೋಡಿಸಲಾದ   ಸಾಲುಗಳ ಗುರುತುಗಳು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "ನೂರುರಶ್ಶ್ಟು ಜೋಡಿಸಲಾದ   ಸಾಲುಗಳ ಗುರುತುಗಳು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "ಜೋಡಿಸಲಾದ ಸಾಲು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "ನೂರುರಶ್ಶ್ಟು ಜೋಡಿಸಲಾದ   ಸಾಲು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "ಪೈ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "ಸ್ಪೋಟಿಸಿತು ಪೈ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "ಪೈ ಆಪ್ ಪೈ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "ಕ್ಲಸ್ಟರ್ ಪಿರಮಿಡ್ ಬಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಬಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಬಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "3D ಪಿರಮಿಡ್ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "ಕ್ಲಸ್ಟರ್ ಪಿರಮಿಡ್ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಅಂಕಣ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "ತುಬ್ಬೆಲೆ, ಸರ್ವದರ್ಶಿನಿ; , ರಡಾರು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "ತುಂಬಿದ ರಾಡಾರ್"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "ರಾಡಾರ್ ಜೊತೆಗೆ ದತ್ತಾಂಶಗಳ ಗುರುತುಗಳು "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "ಹೆಚ್ಚು ಕಡಿಮೆ-ಮುಚ್ಚಿ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "ತೆರೆದ ಹೆಚ್ಚು ಕಡಿಮೆ-ಮುಚ್ಚಿ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "ಧ್ವನಿಯ ಶಕ್ತಿಯನ್ನು- ಹೆಚ್ಚಿಸುವುದು- ಕಡಮೆಗೊಳಿಸುವುದು ಮುಚ್ಚುವುದು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "ಧ್ವನಿಯ ಶಕ್ತಿಯನ್ನು- ತೆರೆಯುವುದು- ಹೆಚ್ಚಿಸುವುದು- ಕಡಮೆಗೊಳಿಸುವುದು- ಮುಚ್ಚುವುದು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "3D ಮೇಲ್ಮೈ, "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "(top View) (ಸಂಪೂರ್ಣ ಮೇಲೆ ) ಹೊರ ರೂಪವನ್ನು ವೀಕ್ಷಿಸಿ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "(top) (ಸಂಪೂರ್ಣ ಮೇಲೆ ) ಹೊರ ರೂಪವನ್ನು ವೀಕ್ಷಿಸಿ ತಂತಿಯಿಂದ ಚೌಕಟ್ಟನ್ನು ಬಿಗಿಯಾಗಿ  ಕಟ್ಟು, "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "3ಡಿ  ತಂತಿಯಿಂದ ಮೆಲ್ಮೈ ಚೌಕಟ್ಟನ್ನು ಬಿಗಿಯಾಗಿ  ಕಟ್ಟು, (wireframe)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "ಚದರಿಸು"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "ರೇಖೆಗಳಲ್ಲಿ ಚೆದುರಿದ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "ಚೆದುರಿದ ಸಾಲುಗಳು ಮತ್ತು ಯಾವುದೇ ದತ್ತಾಂಶ ಗುರುತುಗಳು ಇಲ್ಲ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "ಚೆದುರಿದ ಸಾಲುಗಳು  ಸಮತಟ್ಟಾಗುತ್ತದೆ "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "ಚೆದುರಿದ ಸಾಲುಗಳು  ಸಮತಟ್ಟಾಗುತ್ತದೆ ಮತ್ತು ಯಾವುದೇ ದತ್ತಾಂಶ ಗುರುತುಗಳು ಇಲ್ಲ"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "ಚೂರುಮಾಡುವುದು"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "ಅಂಕಣ ನಕ್ಷೆ"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "ದತ್ತಾಂಶ ಸೂಚಿಸು"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "ಐಟೆಮ್"
+
+#. Translators: Message to be spoken to report Series Color
+#, python-brace-format
+msgid "Series color: {colorName} "
+msgstr " ಸರಣಿ ಬಣ್ಣ: {colorName} "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "ಘಟಕದ ಶೀರ್ಶಿಕೆಯ ಪ್ರದರ್ಶನ "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "ಪ್ರಮುಕ ಗ್ರಿಡ್ ಸಾಲುಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "ಅಪ್ರಾಪ್ತ  ಗ್ರಿಡ್ ಸಾಲುಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "ಪಿವೋಟ್ ನಕ್ಷೆಯ ಬೀಳಿಸುವ ವಲಯ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "ಪಿವೋಟ್ ನಕ್ಷೆಯ ಕ್ಷೇತ್ರದ ಗುಂಡಿ "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "ಅಡ್ಡ ಪಟ್ಟಿಗಳ  ಕೆಳಗೆ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "ಕೆಳಗೆ ಬೀಳುವ ಸಾಲುಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "ಮೇಲ್ ಮಟ್ಟ ಕೆಳ ಮಟ್ಟ ಸಾಲುಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "ರಾಡಾರ್ ಪ್ರವೇಶ ಶೀರ್ಶಿಕೆಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "ಸರಣಿ ಸಾಲುಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "ಮೇಲಿನ ಅಡ್ಡ ಪಟ್ಟಿಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "ಮೂಲೆಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "ದತ್ತಾಂಶಗಳ ಕೋಷ್ಟಕ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "ನೆಲ, ಅಂಗಣ,"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "ಇಲ್ಲದಿರುವಿಕೆ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "ಗೋಡೆಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "ದತ್ತಾಂಶದ ಶೀರ್ಶಿಕೆ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "ದೋಶ ಪಟ್ಟಿಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "X ಎಕ್ಸ್ ದೋಶ ಪಟ್ಟಿಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "Y ವಾಯ್ ದೋಶ ಪಟ್ಟಿಗಳು"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "ಆಕಾರ"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "ನಕ್ಷೆ;  ಶೀರ್ಷಿಕೆ: {chartTitle}, ಮಾದರಿ: {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "ಈ ನಕ್ಷೆಯಲ್ಲಿ 1 ಸರಣಿ ಇದೆ"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "ಈ ನಕ್ಷೆಯ ಪಟ್ಟಿಯಲ್ಲಿ ಒಟ್ಟು %d ಸರಣಿ ಇವೆ"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr "ಸರಣಿ {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "ಯಾವುದೇ ಸರಣಿ ವ್ಯಾಖ್ಯಾನಿಸಲಾಗಿಲ್ಲ."
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+#, fuzzy
+msgid "Chart Elements"
+msgstr "ಅಂಶಗಳ ಪಟ್ಟಿ"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} ಸರಣಿಗಳ  ಹೆಸರು {seriesIndex} ಸರಣಿಯ ಸೂಚಿ ಅದರ ಸರಣಿಯ ೆಣಿಕೆ {seriesCount}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, fuzzy, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr " ಸರಣಿ ಬಣ್ಣ: {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr "ಸ್ಥಳದಿಂದ ಯಾವುದೇ ಬದಲಾವಣೆ ಇಲ್ಲ {previousIndex},"
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "{previousIndex} ಬಿಂದುವಿನಿಂದ {incrementValue} ಹೆಚ್ಚಾಗಿದೆ,"
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "ಬಿಂದುವಿನಿಂದ {decrementValue} ಕಡಿಮೆಯಾಗಿದೆ {previousIndex},"
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}"
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr "ವರ್ಗ {categoryAxisData}:"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr "ಧ್ವನಿಯ ಶಕ್ತಿ {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr "ತತ ಕ್ಷಣದ {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} of {pointCount}"
+
+#. Translators: Indicates Primary Category Axis
+#, fuzzy
+msgid "Primary Category Axis"
+msgstr "ಪ್ರಾಥಮಿಕ ಪಾದಲೇಖ"
+
+#. Translators: Indicates Secondary Category Axis
+#, fuzzy
+msgid "Secondary Category Axis"
+msgstr "ವರ್ಗ {categoryAxisData}:"
+
+#. Translators: Indicates Primary Value Axis
+#, fuzzy
+msgid "Primary Value Axis"
+msgstr "ಪ್ರಾಥಮಿಕ ಶಿರೋಲೇಖ"
+
+#. Translators: Indicates Secondary Value Axis
+#, fuzzy
+msgid "Secondary Value Axis"
+msgstr "ಮಾಧ್ಯಮಿಕ"
+
+#. Translators: Indicates Primary Series Axis
+#, fuzzy
+msgid "Primary Series Axis"
+msgstr "ಪ್ರಾಥಮಿಕ ಪಾದಲೇಖ"
+
+#. Translators: Indicates Secondary Series Axis
+#, fuzzy
+msgid "Secondary Series Axis"
+msgstr "ಮಾಧ್ಯಮಿಕ"
+
+#. Translators: the title of a chart axis
+#, fuzzy, python-brace-format
+msgid " title: {axisTitle}"
+msgstr "ನಕ್ಷೆಯ  ಶೀರ್ಷಿಕೆ: {chartTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Linear
+#, fuzzy
+msgid "Linear"
+msgstr "ರೇಖೆ"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr ""
+
+#. Translators: Substitute superscript two by square for R square value
+#, fuzzy
+msgid " square "
+msgstr "ಚಚ್ಚೌಕಗೊಂಡಿತು, ಚತುಷ್ಕೋನಗೊಂಡಿತು "
+
+#. Translators: Substitute - by minus in trendline equations.
+#, fuzzy
+msgid " minus "
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ  ವ್ಯವಕಲನ"
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr ""
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr "ನಕ್ಷೆಯ  ಶೀರ್ಷಿಕೆ: {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "ಶೀರ್ಷಿಕೆರಹಿತ ನಕ್ಷೆ"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, "
+"left: {chartAreaLeft}"
+msgstr ""
+"ನಕ್ಷೆಯ ಕ್ಷೇತ್ರ, ೆತ್ತರ: {chartAreaHeight}, ಜೊತೆಗೆ: {chartAreaWidth}, ಸಂಪೂರ್ಣ ಮೇಲೆ: "
+"{chartAreaTop}, ಎಡ: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "ನಕ್ಷೆಯ ಪ್ರದೇಶ"
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"ಕಥಾವಸ್ತುವಿನ ಪ್ರದೇಶದಲ್ಲಿ, ಎತ್ತರ ಒಳಗೆ: {plotAreaInsideHeight:.0f}, ಒಳಬದಿ ಜೊತೆಗೆ: "
+"{plotAreaInsideWidth:.0f}, ಸಂಪೂರ್ಣ ಮೇಲಿನ ೊಳಬದಿ: {plotAreaInsideTop:.0f}, ಎಡ ೊಳಬದಿ: "
+"{plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "ಕಥಾವಸ್ತುವಿನ ಪ್ರದೇಶದಲ್ಲಿ"
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "ಸರಣಿ {seriesName} ಲೆಜೆಂಡ್ ಪ್ರವೇಶದ {seriesIndex} {seriesCount}"
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, fuzzy, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr " {segmentType} {pointIndex} of {pointCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "ಸರಣಿ {seriesName} {seriesIndex} {seriesCount} ಲೆಜೆಂಡ್ ಕೀ"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9377,17 +10598,6 @@ msgstr ""
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} ಮೂಲಕ {end}"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document Formatting "
-"Settings"
-msgstr ""
-"ಶಿರೋಲೇಖಗಳನ್ನು ಇರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ. ಕೋಷ್ಟಕಗಳ ಶಿರೋಲೇಖಗಳನ್ನು ಪ್ರಕಟಿಸುವುದನ್ನು ದಯವಿಟ್ಟು ದಸ್ತಾವೇಜಿನ "
-"ಶೈಲಿಯ ಸಮ್ಯೋಜನೆಯಲ್ಲಿ ಶಕ್ತಗೊಳಿಸಿ"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -9607,661 +10817,6 @@ msgstr ""
 msgid "{desc} {position}"
 msgstr ""
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "3D ಕ್ಷೇತ್ರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "3 ಆಯಾಮದ ಬಣಿವೆಯಾದ ಪ್ರದೇಶ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಪ್ರದೇಶ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "3 ಆಯಾಮದ ಗೊಂಚಲಿನ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "3 ಆಯಾಮದ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "3 ಆಯಾಮದ 100ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "3 ಆಯಾಮದ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "3 ಆಯಾಮದ ಗೊಂಚಲಿನ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "3 ಆಯಾಮದ ಬಣಿವೆಯಾದ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "3 ಆಯಾಮದ 100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "3 ಆಯಾಮದ ರೇಖೆ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "3 ಆಯಾಮದ ಕಾಸು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "ಸಿಡಿಸಿದ 3d ಕಾಸು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "ಪ್ರದೇಶ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "ಬಣಿವೆಯಾದ ಪ್ರದೇಶ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "ಗೊಂಚಲಿನ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "ಕಾಸಿನ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "ನೀರ್ಗುಳ್ಳೆ, "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "ನೀರ್ಗುಳ್ಳೆಯ ಜೊತೆಗೆ 3D ಪರಿಣಾಮಗಳು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "ಗೊಂಚಲಿನ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "ಬಣಿವೆಯಾದ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "ಗೊಂಚಲಿನ ಕೋನದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "ಬಣಿವೆಯಾದ ಕೋನದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಡ್ಡಮರ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "3 ಆಯಾಮದ ಕೋನ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "ಗೊಂಚಲಿನ ಕೋನ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "ಬಣಿವೆಯಾದ ಕೋನ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "100 ಪ್ರತಿಶತ ಬಣಿವೆಯಾದ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "ಕ್ಲಸ್ಟರ್ ಸಿಲಿಂಡರ್ ಬಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "ಸ್ಟ್ಯಾಕ್ಡ್ ಸಿಲಿಂಡರ್ ಬಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಸಿಲಿಂಡರ್ ಬಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "3D ಸಿಲಿಂಡರ್ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಸಿಲಿಂಡರ್ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "ಡೌನಟ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "ಸ್ಪೋಡಗೊಂಡ ಡೌನಟ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "ರೇಖೆ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "ಸಾಲುಗಳ ಜೊತೆಗೆ ಗುರುತುಗಳು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "ಜೋಡಿಸಲಾದ   ಸಾಲುಗಳ ಗುರುತುಗಳು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "ನೂರುರಶ್ಶ್ಟು ಜೋಡಿಸಲಾದ   ಸಾಲುಗಳ ಗುರುತುಗಳು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "ಜೋಡಿಸಲಾದ ಸಾಲು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "ನೂರುರಶ್ಶ್ಟು ಜೋಡಿಸಲಾದ   ಸಾಲು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "ಪೈ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "ಸ್ಪೋಟಿಸಿತು ಪೈ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "ಪೈ ಆಪ್ ಪೈ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "ಕ್ಲಸ್ಟರ್ ಪಿರಮಿಡ್ ಬಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಬಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಬಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "3D ಪಿರಮಿಡ್ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "ಕ್ಲಸ್ಟರ್ ಪಿರಮಿಡ್ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "100 ರಷ್ಟು ಸ್ಟ್ಯಾಕ್ಡ್ ಪಿರಮಿಡ್ ಅಂಕಣ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "ತುಬ್ಬೆಲೆ, ಸರ್ವದರ್ಶಿನಿ; , ರಡಾರು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "ತುಂಬಿದ ರಾಡಾರ್"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "ರಾಡಾರ್ ಜೊತೆಗೆ ದತ್ತಾಂಶಗಳ ಗುರುತುಗಳು "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr "ಹೆಚ್ಚು ಕಡಿಮೆ-ಮುಚ್ಚಿ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr "ತೆರೆದ ಹೆಚ್ಚು ಕಡಿಮೆ-ಮುಚ್ಚಿ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr "ಧ್ವನಿಯ ಶಕ್ತಿಯನ್ನು- ಹೆಚ್ಚಿಸುವುದು- ಕಡಮೆಗೊಳಿಸುವುದು ಮುಚ್ಚುವುದು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr "ಧ್ವನಿಯ ಶಕ್ತಿಯನ್ನು- ತೆರೆಯುವುದು- ಹೆಚ್ಚಿಸುವುದು- ಕಡಮೆಗೊಳಿಸುವುದು- ಮುಚ್ಚುವುದು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "3D ಮೇಲ್ಮೈ, "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "(top View) (ಸಂಪೂರ್ಣ ಮೇಲೆ ) ಹೊರ ರೂಪವನ್ನು ವೀಕ್ಷಿಸಿ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "(top) (ಸಂಪೂರ್ಣ ಮೇಲೆ ) ಹೊರ ರೂಪವನ್ನು ವೀಕ್ಷಿಸಿ ತಂತಿಯಿಂದ ಚೌಕಟ್ಟನ್ನು ಬಿಗಿಯಾಗಿ  ಕಟ್ಟು, "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "3ಡಿ  ತಂತಿಯಿಂದ ಮೆಲ್ಮೈ ಚೌಕಟ್ಟನ್ನು ಬಿಗಿಯಾಗಿ  ಕಟ್ಟು, (wireframe)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "ಚದರಿಸು"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "ರೇಖೆಗಳಲ್ಲಿ ಚೆದುರಿದ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "ಚೆದುರಿದ ಸಾಲುಗಳು ಮತ್ತು ಯಾವುದೇ ದತ್ತಾಂಶ ಗುರುತುಗಳು ಇಲ್ಲ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "ಚೆದುರಿದ ಸಾಲುಗಳು  ಸಮತಟ್ಟಾಗುತ್ತದೆ "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "ಚೆದುರಿದ ಸಾಲುಗಳು  ಸಮತಟ್ಟಾಗುತ್ತದೆ ಮತ್ತು ಯಾವುದೇ ದತ್ತಾಂಶ ಗುರುತುಗಳು ಇಲ್ಲ"
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "ನಕ್ಷೆ;  ಶೀರ್ಷಿಕೆ: {chartTitle}, ಮಾದರಿ: {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "ಉಲ್ಲೇಖಿಸಲ್ಪಟ್ಟಿಲ್ಲ"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "ವರ್ಗ"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "ಮೌಲ್ಯ"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "ಸರಣಿ"
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "{axisName} ಅಕ್ಷರೇಖೆ ಆಗಿದೆ {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "ಈ ನಕ್ಷೆಯಲ್ಲಿ 1 ಸರಣಿ ಇದೆ"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "ಈ ನಕ್ಷೆಯ ಪಟ್ಟಿಯಲ್ಲಿ ಒಟ್ಟು %d ಸರಣಿ ಇವೆ"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr "ಸರಣಿ {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "ಯಾವುದೇ ಸರಣಿ ವ್ಯಾಖ್ಯಾನಿಸಲಾಗಿಲ್ಲ."
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "ಚೂರುಮಾಡುವುದು"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "ಅಂಕಣ ನಕ್ಷೆ"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "ದತ್ತಾಂಶ ಸೂಚಿಸು"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "ಐಟೆಮ್"
-
-#, python-brace-format
-msgid "Series color: {colorName} "
-msgstr " ಸರಣಿ ಬಣ್ಣ: {colorName} "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "ಘಟಕದ ಶೀರ್ಶಿಕೆಯ ಪ್ರದರ್ಶನ "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "ಪ್ರಮುಕ ಗ್ರಿಡ್ ಸಾಲುಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "ಅಪ್ರಾಪ್ತ  ಗ್ರಿಡ್ ಸಾಲುಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "ಪಿವೋಟ್ ನಕ್ಷೆಯ ಬೀಳಿಸುವ ವಲಯ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "ಪಿವೋಟ್ ನಕ್ಷೆಯ ಕ್ಷೇತ್ರದ ಗುಂಡಿ "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "ಅಡ್ಡ ಪಟ್ಟಿಗಳ  ಕೆಳಗೆ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "ಕೆಳಗೆ ಬೀಳುವ ಸಾಲುಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "ಮೇಲ್ ಮಟ್ಟ ಕೆಳ ಮಟ್ಟ ಸಾಲುಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "ರಾಡಾರ್ ಪ್ರವೇಶ ಶೀರ್ಶಿಕೆಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "ಸರಣಿ ಸಾಲುಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "ಮೇಲಿನ ಅಡ್ಡ ಪಟ್ಟಿಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "ಮೂಲೆಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "ದತ್ತಾಂಶಗಳ ಕೋಷ್ಟಕ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "ನೆಲ, ಅಂಗಣ,"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "ಇಲ್ಲದಿರುವಿಕೆ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "ಗೋಡೆಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "ದತ್ತಾಂಶದ ಶೀರ್ಶಿಕೆ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "ದೋಶ ಪಟ್ಟಿಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "X ಎಕ್ಸ್ ದೋಶ ಪಟ್ಟಿಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "Y ವಾಯ್ ದೋಶ ಪಟ್ಟಿಗಳು"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "ಆಕಾರ"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} ಸರಣಿಗಳ  ಹೆಸರು {seriesIndex} ಸರಣಿಯ ಸೂಚಿ ಅದರ ಸರಣಿಯ ೆಣಿಕೆ {seriesCount}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr "ಸ್ಥಳದಿಂದ ಯಾವುದೇ ಬದಲಾವಣೆ ಇಲ್ಲ {previousIndex},"
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "{previousIndex} ಬಿಂದುವಿನಿಂದ {incrementValue} ಹೆಚ್ಚಾಗಿದೆ,"
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "ಬಿಂದುವಿನಿಂದ {decrementValue} ಕಡಿಮೆಯಾಗಿದೆ {previousIndex},"
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}"
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr "ವರ್ಗ {categoryAxisData}:"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr "ಧ್ವನಿಯ ಶಕ್ತಿ {valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr "ತತ ಕ್ಷಣದ {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} of {pointCount}"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "ಪ್ರಾಥಮಿಕ"
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "ಮಾಧ್ಯಮಿಕ"
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "ನಕ್ಷೆಯ ಅಕ್ಷರೇಕೆ, ಮಾದರಿ: {axisType}, ಗುಂಪು: {axisGroup}, ಶೀರ್ಶಿಕೆ: {axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "ನಕ್ಷೆಯ ಅಕ್ಷರೇಕೆ, ಮಾದರಿ: {axisType}, ಗುಂಪು: {axisGroup}"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "ನಕ್ಷೆಯ ಅಕ್ಷದ ಶೀರ್ಶಿಕೆ"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "ಪ್ರವೃತಿಯ ಗಡಿ ಸಾಲು, ಟ್ರೆಂಟ್ ಸಾಲು"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr "ಚಚ್ಚೌಕಗೊಂಡಿತು, ಚತುಷ್ಕೋನಗೊಂಡಿತು "
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr "ನಕ್ಷೆಯ  ಶೀರ್ಷಿಕೆ: {chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "ಶೀರ್ಷಿಕೆರಹಿತ ನಕ್ಷೆ"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, "
-"left: {chartAreaLeft}"
-msgstr ""
-"ನಕ್ಷೆಯ ಕ್ಷೇತ್ರ, ೆತ್ತರ: {chartAreaHeight}, ಜೊತೆಗೆ: {chartAreaWidth}, ಸಂಪೂರ್ಣ ಮೇಲೆ: "
-"{chartAreaTop}, ಎಡ: {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "ನಕ್ಷೆಯ ಪ್ರದೇಶ"
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"ಕಥಾವಸ್ತುವಿನ ಪ್ರದೇಶದಲ್ಲಿ, ಎತ್ತರ ಒಳಗೆ: {plotAreaInsideHeight:.0f}, ಒಳಬದಿ ಜೊತೆಗೆ: "
-"{plotAreaInsideWidth:.0f}, ಸಂಪೂರ್ಣ ಮೇಲಿನ ೊಳಬದಿ: {plotAreaInsideTop:.0f}, ಎಡ ೊಳಬದಿ: "
-"{plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "ಕಥಾವಸ್ತುವಿನ ಪ್ರದೇಶದಲ್ಲಿ"
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "ದಂತಕಥೆ"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "ಯಾವುದೇ ದಂತಕಥೆಯಿಲ್ಲ"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "ಸರಣಿ {seriesName} ಲೆಜೆಂಡ್ ಪ್ರವೇಶದ {seriesIndex} {seriesCount}"
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "ಸರಣಿ {seriesName} {seriesIndex} {seriesCount} ಲೆಜೆಂಡ್ ಕೀ"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "ಸೇರ್ಪಡೆ"
@@ -10374,12 +10929,6 @@ msgstr "ಪ್ರತಿಕ್ರಿಯೆ {text} {author} ರವರಿಂದ {da
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text} {author} ರವರಿಂದ {date} ರಂದು"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, fuzzy, python-brace-format
-msgid "spelling: {text}"
-msgstr "ಕಾಗುಣಿತ ದೋಷ"
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10417,68 +10966,6 @@ msgstr ""
 #, fuzzy
 msgid "Table description"
 msgstr "ವಿಸ್ತೃತ ವಿವರಣೆಯನ್ನ ಹೊಂದಿರುವ"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "ಪಂಕ್ತಿಯನ್ನು ಹೊಂದಿಸಿ {rowNumber} ಅಂಕಣ {columnNumber} ಪ್ರಾರಂಭಿಕದಂತೆ"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"ಈಗಾಗಲೇ {rowNumber}  ಪಂಕ್ತಿಯನ್ನು ಮತ್ತು {columnNumber}  ಅಂಕಣವನ್ನು ಅಂಕಣ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭದಲ್ಲಿ "
-"ಇರಿಸಲಾಗಿದೆ"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "ಅಂಕಣ ಶಿರೋಲೇಖದಿಂದ {rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "ಅಂಕಣ ಶಿರೋಲೇಖದಲ್ಲಿ {rowNumber} ಪಂಕ್ತಿಯು ಮತ್ತು {columnNumber} ಅಂಕಣವು ಸಿಕ್ಕಿಲ್ಲ"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells lower and to "
-"the right of it within this table. Pressing twice will forget the current column header "
-"for this cell."
-msgstr ""
-"ಒಂದು ಬಾರಿ ಒತ್ತಿದರೆ, ಈ ಕೋಶವನ್ನು ಮೊದಲನೆಯ ಅಂಕಣದ ಶಿರೋಲೇಖವನ್ನಾಗಿ ಕೆಳಗಿನ ಯಾವುದಾದರು ಕೋಶಕ್ಕೆ "
-"ಇರಿಸುತ್ತದೆ ಮತ್ತು ಇದೇ ಕೋಷ್ಟಕದಲ್ಲಿ ಬಲಕ್ಕೆ ಇರಿಸುತ್ತದೆ. ಎರಡು ಬಾರಿ ಒತ್ತಿದರೆ ಈ ಕೋಶಕ್ಕೆ ಚಾಲ್ತಿಯಲ್ಲಿರುವ "
-"ಅಂಕಣದ ಶಿರೋಲೇಖವನ್ನು ಮರೆಯುತ್ತದೆ."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "{rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭದಂತೆ ಇರಿಸಿ"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"ಈಗಾಗಲೇ {rowNumber} ಪಂಕ್ತಿಯನ್ನು ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದ ಪ್ರಾರಂಭದಂತೆ "
-"ಇರಿಸಿದೆ"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದಿಂದ {rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣವನ್ನು ತೆಗೆಯಲಾಗಿದೆ"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖದಲ್ಲಿ {rowNumber} ಪಂಕ್ತಿ ಮತ್ತು {columnNumber} ಅಂಕಣ ಸಿಕ್ಕಿಲ್ಲ"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower and to the "
-"right of it within this table. Pressing twice will forget the current row header for "
-"this cell."
-msgstr ""
-"ಒಂದು ಬಾರಿ ಒತ್ತಿದರೆ, ಈ ಕೋಶವನ್ನು ಮೊದಲನೆಯ ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖವನ್ನಾಗಿ ಕೆಳಗಿನ ಯಾವುದಾದರು ಕೋಶಕ್ಕೆ "
-"ಇರಿಸುತ್ತದೆ ಮತ್ತು ಇದೇ ಕೋಶ್ಟಕದ ಬಲಕ್ಕೆ ಇರಿಸುತ್ತದೆ. ಎರಡು ಬಾರಿ ಒತ್ತಿದರೆ ಈ ಕೋಶಕ್ಕೆ ಚಾಲ್ತಿಯಲ್ಲಿರುವ "
-"ಪಂಕ್ತಿಯ ಶಿರೋಲೇಖವನ್ನು ಮರೆಯುತ್ತದೆ."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10596,15 +11083,6 @@ msgstr "{offset:.3g} ಅಂಕೆಗಳು"
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} ಪಿಕಸ್"
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-#, fuzzy
-msgid "No comments"
-msgstr "ಯಾವುದೇ ಪ್ರತಿಕ್ರಿಯೆಯಿಲ್ಲ."
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "ಗಣಕದ ತೆರೆಬಾಣ ಇರುವಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯೆಯ ಪಠ್ಯವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ"
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr ""
@@ -10616,28 +11094,3 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "ಕೋಷ್ಟಕದೊಳಗಿಲ್ಲ"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&ಠಿಪ್ಪಣಿಗಳು"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-#, fuzzy
-msgid "&Errors"
-msgstr "ದೋಷ"
-
-#. Translators: The name of a series of braille displays.
-#, fuzzy
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "ಹಿಮ್ಸ್ ಬ್ರೈಲ್ ಸೆನ್ಸ್/ಬ್ರೈಲ್ ಕೊನೆಯ ಶ್ರೇಣಿ"
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "ಹಿಮ್ಸ್ ಸಿಂಕ್ ಬ್ರೈಲ್"

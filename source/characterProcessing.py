@@ -1,6 +1,6 @@
 #characterProcessing.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2010-2011 NV Access Inc, World Light Information Limited, Hong Kong Blind Union
+#Copyright (C) 2010-2018 NV Access Limited, World Light Information Limited, Hong Kong Blind Union, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -11,6 +11,7 @@ import collections
 import re
 from logHandler import log
 import globalVars
+import config
 
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
@@ -58,6 +59,12 @@ class LocaleDataMap(object):
 			del self._dataMap[locale]
 		except KeyError:
 			pass
+
+	def invalidateAllData(self):
+		"""Invalidate all data within this locale map.
+		This will cause a new data object to be created for every locale that is next requested.
+		"""
+		self._dataMap.clear()
 
 class CharacterDescriptions(object):
 	"""
@@ -116,7 +123,7 @@ def getCharacterDescription(locale,character):
 	if not desc and not locale.startswith('en'):
 		desc=getCharacterDescription('en',character)
 	return desc
- 
+
 # Speech symbol levels
 SYMLVL_NONE = 0
 SYMLVL_SOME = 100
@@ -350,11 +357,24 @@ class SpeechSymbols(object):
 			fields.append("# %s" % symbol.displayName)
 		return u"\t".join(fields)
 
+_noSymbolLocalesCache = set()
 def _getSpeechSymbolsForLocale(locale):
+	if locale in _noSymbolLocalesCache:
+		raise LookupError
 	builtin = SpeechSymbols()
+	if config.conf['speech']['includeCLDR']:
+		# Try to load CLDR data when processing is on.
+		# Load the data before loading other symbols,
+		# in order to allow translators to override them.
+		try:
+			builtin.load(os.path.join("locale", locale, "cldr.dic"),
+				allowComplexSymbols=False)
+		except IOError:
+			log.debugWarning("No CLDR data for locale %s" % locale)
 	try:
 		builtin.load(os.path.join("locale", locale, "symbols.dic"))
 	except IOError:
+		_noSymbolLocalesCache.add(locale)
 		raise LookupError("No symbol information for locale %s" % locale)
 	user = SpeechSymbols()
 	try:
@@ -632,3 +652,19 @@ def processSpeechSymbol(locale, symbol):
 	except KeyError:
 		pass
 	return symbol
+
+def clearSpeechSymbols():
+	"""Clears the symbol data cached by the locale speech symbol processors.
+	This will cause new data to be fetched for the next request to pronounce symbols.
+	"""
+	SpeechSymbolProcessor.localeSymbols.invalidateAllData()
+	_localeSpeechSymbolProcessors.invalidateAllData()
+
+def handlePostConfigProfileSwitch(prevConf=None):
+	if not prevConf:
+		return
+	if prevConf["speech"]["includeCLDR"] is not config.conf["speech"]["includeCLDR"]:
+		# Either included or excluded CLDR data, so clear the cache.
+		clearSpeechSymbols()
+
+config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)

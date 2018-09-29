@@ -2,10 +2,43 @@ Ce este nou în NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2018.4 =
+
+== Noi Funcționalități ==
+- Noi tabele braille: chineză (China, mandarină) gradele 1 și 2. (#5553)
+
+
+== Modificări ==
+- Opțiunea „Anunță baloane de ajutor” din dialogul de prezentare a obiectelor a fost redenumită în „Anunță notificări”, pentru a include notificările toast din Windows 8 și mai nou. (#5789)
+- În setările tastaturii din NVDA, casetele de bifat pentru activarea sau dezactivarea tastelor modificatoare ale acestui cititor de ecran sunt afișate acum într-o listă, mai degrabă decât separat.
+- NVDA nu va mai prezenta informații redundante la citirea ceasului din zona de notificare (system tray) pe unele versiuni de windows. (#4364)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.7.0. (#8697)
+
+
+== Defecte Rezolvate ==
+- În Outlook 2016/365, categoria și starea flag sunt raportate pentru mesaje. (#8603)
+- Când NVDA este setat în limbi precum kirghiză, mongolă sau macedoneană, nu va mai afișa un dialog la pornire prin care să îl informeze pe utilizator că limba nu este suportată de sistemul de operare. (#8064)
+- deplasarea mausului îl va muta cu mai multă acuratețe la poziția modului de navigare din Mozilla Firefox, Google Chrome și Acrobat Reader DC. (#6460)
+- A fost îmbunătățită interacțiunea cu casetele combinate pe web în Firefox, Chrome și Internet Explorer. (#8664)
+
+
+== Modificări pentru Dezvoltatori ==
+- Acum, gui.nvdaControls conține două clase care să creeze liste accesibile cu casete de bifat. (#7325)
+ - CustomCheckListBox este o subclasă accesibilă a wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adaugă casete de bifat accesibile la un AutoWidthColumnListCtrl, care este bazat pe wx.ListCtrl.
+- Dacă aveți nevoie să faceți un widget wx accesibil care să nu existe deja, puteți face astfel utilizând o instanță a gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Vedeți implementarea gui.nvdaControls.ListCtrlAccPropServer pentru mai multe informații.
+
+ 
+== Alte câteva modificări pentru Dezvoltatori ==
+- S-a actualizat configobj la 5.1.0dev commit 5b5de48a. (#4470)
+
+
 = 2018.3 =
 Caracteristicile principale ale acestei versiuni includ detectarea automată a multor afișaje braille, suport pentru noile caracteristici ale Windows 10 precum panoul de intrare Emoji al Windows 10, dar și multe reparări ale erorilor.
 
-== Noi funcționalități ==
+== Noi Funcționalități ==
 - NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox și Google Chrome. (#8280)
 - Conținutul care este marcat ca fiind inserat sau șters din paginile web, este acum raportat în Google Chrome. (#8558)
 - Când Braillenote este folosit ca afișaj braille, NVDA este acum compatibil cu joysticurile de rulare ale tastaturilor BrailleNote QT și Apex BT. (#6316)
@@ -33,7 +66,7 @@ Caracteristicile principale ale acestei versiuni includ detectarea automată a m
 - S-a actualizat Espeak-NG la 1.49.3dev commit 910f4c2 (#8561)
 
 
-== Defecte rezolvate ==
+== Defecte Rezolvate ==
 - Etichetele accesibile pentru comenzile din Google Chrome sunt acum raportate cu ușurință în modul de navigare atunci când eticheta nu apare ca și conținut în sine. (#4773)
 - Notificările sunt suportate acum în Zoom. De exemplu, aceasta include starea de activare/dezactivare și mesajele primite. .(#7754)
 - Când sunteți în modul de navigare, commutarea prezentării contextului braille nu mai face ca ieșirea braille să oprească urmărirea. (#7741)
@@ -59,7 +92,7 @@ Caracteristicile principale ale acestei versiuni includ detectarea automată a m
 - În Windows 10 1803 sau mai nou, puteți să instalați suplimente dacă este activată caracteristica pentru suportul utilizării Unicode UTF-8 pentru limbile din lumea întreagă. (#8599)
  
  
-== Modificări pentru dezvoltatori ==
+== Modificări pentru Dezvoltatori ==
 - S-a adăugat scriptHandler.script, care poate fi folosit pe post de decorator pentru scripturile de pe obiectele scriptabile. (#6266)
 - a fost introdus un test de sistem framework pentru NVDA. (#708)
 - Au fost efectuate niște modificări la modulul hwPortUtils: (#1271)

@@ -3,6 +3,30 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Nove karakteristike ==
+- Nove brajeve tabele: Kineska(Kina, Mandarinski) stepen 1 i stepen 2. (#5553)
+
+
+== Promene ==
+- "Prijavi pomoćne balone" u dijalogu predstavljanje objekata se sada zove "Prijavi obaveštenja" kako bi uključilo prijavljivanje obaveštenja u Windowsu 8 i novijim. (#5789)
+- U dijalogu podešavanja tastature, izborna polja za izbor NVDA tastera su sada u listi, i više nisu prikazana kao posebno izborno polje za svaki taster.
+- NVDA više neće prikazivati bespotrebne informacije kada se čita sat u sistemskoj traci na određenim verzijama Windowsa. (#4364)
+- Ažuriran liblouis brajev prevodilac  na verziju 3.7.0. (#8697)
+
+
+== Ispravljene greške ==
+- U programu Outlook 2016/365, kategorija i status zastave se prijavljuju za poruke. (#8603)
+- Kada je NVDA podešen da koristi jezike kao što su Kirgijški, Mongolski ili Makedonski, više ne prikazuje dijalog pri pokretanju koji obaveštava da operativni sistem ne podržava trenutni jezik. (#8064)
+- Pomeranje miša na navigacioni objekat će sada puno preciznije pomerati miš u režimu pretraživanja programa Mozilla Firefox, Google Chrome i Acrobat Reader DC. (#6460)
+- Interakcija sa izbornim okvirima na Webu u programima Firefox, Chrome i Internet Explorer je poboljšana. (#8664)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2018.3 =
 Glavne karakteristike ove verzije uključuju automatsko prepoznavanje puno brajevih redova, podrška za nove Windows 10 karakteristike uključujući Windows 10 panel za unos emotikona, i puno ispravljenih grešaka.
 
@@ -38,7 +62,7 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje puno braje
 - Pristupačne oznake za kontrole u programu  Google Chrome se sada češće prijavljuju u režimu pretraživanja   kada se oznaka  ne pojavljuje kao deo sadržaja. (#4773)
 - Obaveštenja su sada podržana u aplikaciji  Zoom. Na primer, ovo uključuje status mikrofona, i primljene poruke. (#7754)
 - Menjanje predstavljanja sadržaja na brajevom redu u režimu pretraživanja više ne izaziva prestanak praćenja kursora. (#7741)
-- ALVA BC680 se sada ispravno inicializuju. (#8106)
+- ALVA BC680 brajevi redovi se sada ispravno inicializuju. (#8106)
 - Po podrazumevanim podešavanjima, ALVA BC6 redovi više neće koristiti emulirane sistemske tastere kada se pritiskaju kombinacije sa tasterima sp2+sp3. (#8230)
 - Taster sp2 na ALVA BC6 brajevom redu za emuliranje alt tastera sada radi ispravno. (#8360)
 - NVDA više ne izgovara bespotrebne promene izgleda tastature. (#7383, #8419)
@@ -51,13 +75,14 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje puno braje
 - U programu  Microsoft Edge, NVDA će izgovarati obaveštenja kao što su dostupnost čitača i napredak učitavanja stranice. (#8423)
 - Kada se nalazite na Web listi, NVDA će prijaviti njenu oznaku ako je Web autor odredio oznaku. (#7652)
 - Kada ručno određujete funkcije za komande na brajevom redu, te komande se sada ispravno uvek prikazuju za taj red. Ranije, one su se prikazivale kao određene za trenutni brajev red. (#8108)
--  64-bitna verzija programa   Media Player Classic je sada podržana. (#6066)
+- 64-bitna verzija programa   Media Player Classic je sada podržana. (#6066)
 - Nekoliko poboljšanja za podršku sa brajevim redom u programu  Microsoft Word sa UI Automation omogućenom:
  - Slično kao i u drugim višelinijskim poljima za uređivanje, kada se nalazite na početku dokumenta na brajevom redu, red se pomera tako da  je prvi znak dokumenta na  početku reda. (#8406)
  - Smanjena količina sadržaja  predstavljanja fokusa kada se fokusirate  na Word dokument. (#8407)
  - Prebacivanje kursora sada ispravno radi kada ste u listi u Word dokumentu. (#7971)
  - Novo ubačena nabrajanja /brojevi u Word dokumentu se sada ispravno izgovaraju i prikazuju na brajevom redu. (#7970)
 - Na  Windowsu 10 1803 i novijim, moguće je instalirati dodatke ako je opcija "Koristi Unicode UTF-8 za podršku jezika širom sveta" omogućena. (#8599)
+- ITunes 12.9 i novije verzije se  ponovo mogu koristiti. (#8744)
 
 
 == Promene za programere ==
