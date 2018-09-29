@@ -5,11 +5,15 @@
 #See the file COPYING for more details.
 
 from comtypes import COMError
+from comtypes.hresult import S_OK
 import comtypes.client
+import comtypes.automation
+import ctypes
 from hwPortUtils import SYSTEMTIME
 import scriptHandler
 import winKernel
 import comHelper
+import NVDAHelper
 import winUser
 from logHandler import log
 import textInfos
@@ -17,6 +21,7 @@ import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
+from UIAUtils import createUIAMultiPropertyCondition
 import api
 import controlTypes
 import config
@@ -29,38 +34,23 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
 
-#: When in a list view, the message classes which should not be announced for an item.
-#: For these, it should be safe to assume that their names consist of only one word.
-silentMessageClasses = [
-	"IPM.Appointment",
-	"IPM.Contact",
-	"IPM.Note", # The class for a message
-]
+PR_LAST_VERB_EXECUTED=0x10810003
+VERB_REPLYTOSENDER=102
+VERB_REPLYTOALL=103
+VERB_FORWARD=104
+executedVerbLabels={
+	# Translators: the last action taken on an Outlook mail message
+	VERB_REPLYTOSENDER:_("replied"),
+	# Translators: the last action taken on an Outlook mail message
+	VERB_REPLYTOALL:_("REPLIED ALL"),
+	# Translators: the last action taken on an Outlook mail message
+	VERB_FORWARD:_("forwarded"),
+}
+
 
 #: The number of seconds in a day, used to make all day appointments and selections less verbose.
 #: Type: float
 SECONDS_PER_DAY = 86400.0
-
-oleFlagIconLabels={
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	1:_("purple flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	2:_("Orange flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	3:_("Green flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	4:_("Yellow flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	5:_("Blue flag"),
-	# Translators: a flag for a Microsoft Outlook message
-	# See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-	6:_("Red flag"),
-}
 
 importanceLabels={
 	# Translators: for a high importance email
@@ -111,7 +101,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
 		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.CentreOnScreen()
 		gui.mainFrame.prePopup()
 		d.Show()
 		self._hasTriedoutlookAppSwitch=True
@@ -445,16 +435,25 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				unread=selection.unread
 			except COMError:
 				unread=False
+			# Translators: when an email is unread
+			if unread: textList.append(_("unread"))
 			try:
-				messageClass=selection.messageClass
+				mapiObject=selection.mapiObject
 			except COMError:
-				messageClass=None
-			try:
-				flagIcon=selection.flagIcon
-			except COMError:
-				flagIcon=0
-			flagIconLabel=oleFlagIconLabels.get(flagIcon)
-			if flagIconLabel: textList.append(flagIconLabel)
+				mapiObject=None
+			if mapiObject:
+				v=comtypes.automation.VARIANT()
+				res=NVDAHelper.localLib.nvdaInProcUtils_outlook_getMAPIProp(
+					self.appModule.helperLocalBindingHandle,
+					self.windowThreadID,
+					mapiObject,
+					PR_LAST_VERB_EXECUTED,
+					ctypes.byref(v)
+				)
+				if res==S_OK:
+					verbLabel=executedVerbLabels.get(v.value,None)
+					if verbLabel:
+						textList.append(verbLabel)
 			try:
 				attachmentCount=selection.attachments.count
 			except COMError:
@@ -467,33 +466,19 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				importance=1
 			importanceLabel=importanceLabels.get(importance)
 			if importanceLabel: textList.append(importanceLabel)
-			if self.appModule.outlookVersion<15:
-				# Translators: when an email is unread
-				if unread: textList.append(_("unread"))
-				if messageClass=="IPM.Schedule.Meeting.Request":
-					# Translators: the email is a meeting request
-					textList.append(_("meeting request"))
-			elif messageClass is not None:
-				# Replied or forwarded state for this message is available from the object's value.
-				# We must parse this value correctly, as it may contain redundant information, such as the message class and read value.
-				# We only expose the unread state, and message class for non-messages.
-				# The several states are localized and separated by a space.
-				# Example output: 'Meeting request Replied Read'
-				valueParts = self._getUIACacheablePropertyValue(UIAHandler.UIA_ValueValuePropertyId).split(" ")
-				valueCount = len(valueParts)
-				# The last valuePart indicates whether the message is read or unread.
-				# Do not expose the read state
-				lastPart = valueCount if unread else valueCount-1
-				# The first valuePart is the type of the selection, e.g. Message, Contact.
-				# We can safely assume that the classes in silentMessageClasses are one word.
-				# For messages other than regular mail messages (e.g. meeting request), the message class is relevant.
-				firstPart = max(1, valueCount-2) if messageClass in silentMessageClasses else 0
-				textList.extend(valueParts[firstPart:lastPart])
+			try:
+				messageClass=selection.messageClass
+			except COMError:
+				messageClass=None
+			if messageClass=="IPM.Schedule.Meeting.Request":
+				# Translators: the email is a meeting request
+				textList.append(_("meeting request"))
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
+		# We must filter the children for just text and image elements otherwise getCachedChildren fails completely in conversation view.
+		childrenCacheRequest.treeFilter=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_ImageControlTypeId]})
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		if not cachedChildren:
 			# There are no children
@@ -502,6 +487,26 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			return super(UIAGridRow, self).name
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
+			UIAControlType=e.cachedControlType
+			UIAClassName=e.cachedClassName
+			# We only want to include particular children.
+			# We only include the flagField if the object model's flagIcon or flagStatus is set.
+			# Stops us from reporting "unflagged" which is too verbose.
+			if selection and UIAClassName=="FlagField":
+				try:
+					if not selection.flagIcon and not selection.flagStatus: continue
+				except COMError:
+					continue
+			# the category field should only be reported if the objectModel's categories property actually contains a valid string.
+			# Stops us from reporting "no categories" which is too verbose.
+			elif selection and UIAClassName=="CategoryField":
+				try:
+					if not selection.categories: continue
+				except COMError:
+					continue
+			# And we don't care about anything else that is not a text element. 
+			elif UIAControlType!=UIAHandler.UIA_TextControlTypeId:
+				continue
 			name=e.cachedName
 			columnHeaderTextList=[]
 			if name and config.conf['documentFormatting']['reportTableHeaders']:
@@ -519,8 +524,11 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			else:
 				text=name
 			if text:
-				text+=u","
-				textList.append(text)
+				if UIAClassName=="FlagField":
+					textList.insert(0,text)
+				else:
+					text+=u","
+					textList.append(text)
 		return " ".join(textList)
 
 	value=None

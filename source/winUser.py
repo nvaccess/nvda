@@ -120,6 +120,18 @@ WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
 WM_PAINT=0x000F
 WM_GETOBJECT=0x003D
+#Edit control window messages
+EM_GETSEL=176
+EM_SETSEL=177
+EM_SCROLLCARET=0xb7
+EM_GETLINE=196
+EM_GETLINECOUNT=186
+EM_LINEFROMCHAR=201
+EM_LINEINDEX=187
+EM_LINELENGTH=193
+EM_POSFROMCHAR=214 
+EM_CHARFROMPOS=215
+EM_GETFIRSTVISIBLELINE=0x0ce
 #Clipboard formats
 CF_TEXT=1
 #mapVirtualKey constants
@@ -130,8 +142,8 @@ VK_LBUTTON=1
 VK_RBUTTON=2
 VK_CANCEL=3
 VK_MBUTTON=4
-VK_XBUTTON=15
-VK_XBUTTON=26
+VK_XBUTTON1=5
+VK_XBUTTON2=6
 VK_BACK=8
 VK_TAB=9
 VK_CLEAR=12
@@ -302,6 +314,9 @@ SW_SHOWNORMAL = 1
 # RedrawWindow() flags
 RDW_INVALIDATE = 0x0001
 RDW_UPDATENOW = 0x0100
+# MsgWaitForMultipleObjectsEx
+QS_ALLINPUT = 0x04ff
+MWMO_ALERTABLE = 0x0002
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
@@ -382,7 +397,7 @@ def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
 def getDesktopWindow():
-		return user32.GetDesktopWindow()
+	return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
@@ -470,14 +485,13 @@ def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
 def getPreviousWindow(hwnd):
-		try:
-			return user32.GetWindow(hwnd,GW_HWNDPREV)
-		except WindowsError:
-			return 0
+	try:
+		return user32.GetWindow(hwnd,GW_HWNDPREV)
+	except WindowsError:
+		return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
-
 
 def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
 	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
@@ -500,6 +514,10 @@ IDRETRY=4
 IDCANCEL=3
 
 def MessageBox(hwnd, text, caption, type):
+	if isinstance(text, bytes):
+		text = text.decode('mbcs')
+	if isinstance(caption, bytes):
+		caption = caption.decode('mbcs')
 	res = user32.MessageBoxW(hwnd, text, caption, type)
 	if res == 0:
 		raise WinError()
@@ -520,6 +538,14 @@ def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
+
+def ClientToScreen(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ClientToScreen(hwnd, byref(point))
+	return point.x, point.y
+
+def NotifyWinEvent(event, hwnd, idObject, idChild):
+	user32.NotifyWinEvent(event, hwnd, idObject, idChild)
 
 class STICKYKEYS(Structure):
 	_fields_ = (

@@ -27,7 +27,10 @@ import serial
 
 #for brxcom
 import ctypes as c
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import winUser
 
 #for scripting
@@ -206,9 +209,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def connectBrxCom(self):#connect to brxcom server (provided by papenmeier)
 		try:
-			brxcomkey=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\FHP\\BrxCom")
-			value, vtype = _winreg.QueryValueEx(brxcomkey, "InstallPath")
-			_winreg.CloseKey(brxcomkey)
+			brxcomkey=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\FHP\\BrxCom")
+			value, vtype = winreg.QueryValueEx(brxcomkey, "InstallPath")
+			winreg.CloseKey(brxcomkey)
 			self._brxnvda = c.cdll.LoadLibrary(str(value+"\\brxnvda.dll"))
 			if(self._brxnvda.brxnvda_init(str(value+"\\BrxCom.dll").decode("mbcs"))==0):
 				self._baud=1 #prevent bluetooth from connecting

@@ -13,7 +13,10 @@ import os
 from ctypes import *
 import comtypes.client
 from comtypes import COMError
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import audioDucking
 import NVDAHelper
 import globalVars
@@ -90,7 +93,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,cls.COM_CLASS)
+			r=winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,cls.COM_CLASS)
 			r.Close()
 			return True
 		except:

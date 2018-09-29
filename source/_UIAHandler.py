@@ -26,22 +26,9 @@ import UIAUtils
 
 from comtypes.gen.UIAutomationClient import *
 
-#Some new win8 UIA constants that could be missing
-UIA_StyleIdAttributeId=40034
-UIA_AnnotationAnnotationTypeIdPropertyId=30113
-UIA_AnnotationTypesAttributeId=40031
-AnnotationType_SpellingError=60001
-UIA_AnnotationObjectsAttributeId=40032
-StyleId_Heading1=70001
-StyleId_Heading9=70009
+#Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
-UIA_FullDescriptionPropertyId=30159
-UIA_LevelPropertyId=30154
-UIA_PositionInSetPropertyId=30152
-UIA_SizeOfSetPropertyId=30153
-UIA_LocalizedLandmarkTypePropertyId=30158
-UIA_LandmarkTypePropertyId=30157
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -74,6 +61,16 @@ badUIAWindowClassNames=[
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
 	# It does not implement caret/selection, and probably has no new text events.
 	"ConsoleWindowClass",
+]
+
+# #8405: used to detect UIA dialogs prior to Windows 10 RS5.
+UIADialogClassNames=[
+	"#32770",
+	"NUIDialog",
+	"Credential Dialog Xaml Host", # UAC dialog in Anniversary Update and later
+	"Shell_Dialog",
+	"Shell_Flyout",
+	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
 NVDAUnitsToUIAUnits={
@@ -186,14 +183,39 @@ class UIAHandler(COMObject):
 				isUIA8=True
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
+			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
+			pfm=self.clientObject.proxyFactoryMapping
+			for index in xrange(pfm.count):
+				e=pfm.getEntry(index)
+				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
+					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
+					try:
+						oldWinEvents=e.getWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID)
+					except IndexError:
+						# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
+						oldWinEvents=None
+					if oldWinEvents:
+						# As winEvents were mapped, replace them with an empty list
+						e.setWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID,[])
+						# Changes to an enty are not automatically picked up.
+						# Therefore remove the entry and re-insert it.
+						pfm.removeEntry(index)
+						pfm.insertEntry(index,e)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
-				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+				for interface in reversed(CUIAutomation8._com_interfaces_):
 					try:
 						self.clientObject=self.clientObject.QueryInterface(interface)
 						break
 					except COMError:
 						pass
+				# Windows 10 RS5 provides new performance features for UI Automation including event coalescing and connection recovery. 
+				# Enable all of these where available.
+				if isinstance(self.clientObject,IUIAutomation6):
+					self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
+					self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
 			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
@@ -305,6 +327,10 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		if not obj:
+			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
+			# There is nothing we can do with these.
+			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
 	def _isUIAWindowHelper(self,hwnd):

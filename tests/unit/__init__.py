@@ -73,6 +73,8 @@ appModuleHandler.initialize()
 # Anything which notifies of cursor updates requires braille to be initialized.
 # Furthermore, for braille unit tests, we need to construct a fake braille display as well as enable the braille and braille input handlers
 import braille
+# Disable auto detection of braille displays when unit testing.
+config.conf['braille']['display'] = "noBraille"
 braille.initialize()
 import brailleInput
 brailleInput.initialize()

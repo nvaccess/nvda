@@ -32,6 +32,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
+	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -49,7 +50,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Braille settings
 [braille]
-	display = string(default=noBraille)
+	display = string(default=auto)
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
@@ -181,13 +182,14 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followMouse = boolean(default=False)
 
 [UIA]
-	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 
 [update]
 	autoCheck = boolean(default=true)
 	startupNotification = boolean(default=true)
+	allowUsageStats = boolean(default=false)
+	askedAllowUsageStats = boolean(default=false)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)

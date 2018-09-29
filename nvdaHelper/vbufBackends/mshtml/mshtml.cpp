@@ -472,6 +472,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-roledescription",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-valuenow",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-sort",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-labelledby",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -915,7 +916,8 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	//All inner parts of a table (rows, cells etc) if they are changed must re-render the entire table.
 	//This must be done even for nodes with display:none.
 	if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TR")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"TD")==0)) {
-		parentNode->updateAncestor=tableInfo->tableNode;
+		parentNode->requiresParentUpdate=true;
+		parentNode->allowReuseInAncestorUpdate=false;
 	}
 
 	//We do not want to render any content for dontRender nodes
@@ -1242,6 +1244,8 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 				previousNode=buffer->addTextFieldNode(parentNode,NULL,contentString);
 				fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 			}
+			// If any descendant is invalidated, this may change whether this node has no useful content.
+			parentNode->alwaysRerenderDescendants=true;
 		}
 	}
 
