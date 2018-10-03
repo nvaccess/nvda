@@ -301,7 +301,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_locationText(self):
 		"""A message that explains the location of the text position in friendly terms."""
-		return None
+		try:
+			curPoint = self.pointAtStart
+		except (NotImplementedError, LookupError):
+			return None
+		# Translators: the current position's screen coordinates in pixels
+		return _("Positioned at {x}, {y}").format(x=curPoint.x,y=curPoint.y)
 
 	def _get_boundingRect(self):
 		"""The bounding rectangle for the visible text in this range.
