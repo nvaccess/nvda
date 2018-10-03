@@ -98,12 +98,12 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore for now, get the screen coordinates, and if the word object model is available, use our legacy code to get the location text.
 		om=self.obj.WinwordWindowObject
 		if not om:
-			raise NotImplementedError
+			return
 		try:
 			r=om.rangeFromPoint(left,top)
 		except (COMError,NameError):
 			log.debugWarning("MS Word object model does not support rangeFromPoint")
-			raise NotImplementedError
+			return
 		from  NVDAObjects.window.winword import WordDocumentTextInfo
 		i=WordDocumentTextInfo(self.obj,None,_rangeObj=r)
 		return i.locationText
