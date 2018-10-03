@@ -568,7 +568,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		offset=self._rangeObj.information(wdHorizontalPositionRelativeToPage)
 		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
-		textList.append(_("{distance} from left  edge of page").format(distance=distance))
+		textList.append(_("{distance} from left edge of page").format(distance=distance))
 		offset=self._rangeObj.information(wdVerticalPositionRelativeToPage)
 		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
