@@ -277,14 +277,14 @@ NVDA stellt zahlreiche Werkzeuge zum Erkunden von und Navigieren in Anwendungen 
 Jede Anwendung sowie das Betriebssystem selbst besteht aus vielen Objekten.
 Ein Objekt ist ein einzelner Eintrag wie bspw. eine Textpassage, ein Schalter, ein Kontrollfeld, ein Regler, eine Liste oder ein Eingabefeld.
 
-++ Mit dem Systemfokus navigieren ++[SystemFocus]
-Der Systemfokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das die Tastendrücke von der Tastatur entgegennimmt.
+++ Mit dem System-Fokus navigieren ++[SystemFocus]
+Der System-Fokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das die Tastendrücke von der Tastatur entgegennimmt.
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses fokussiert.
 
-Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der Systemfokus verschoben wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie alt+Tab zum Wechseln zwischen laufenden Anwendungen
+Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der System-Fokus bewegt wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie alt+Tab zum Wechseln zwischen laufenden Anwendungen
 Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld, etc.), Wert (z. B., der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objekts (z. B. aktiviert, hervorgehoben, ausgewählt, etc.).
 
-Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
+Einige nützliche Tastenkombinationen zum Navigieren mit dem System-Fokus sind:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
 | Aktuellen Fokus ansagen | NVDA+Tabulatortaste | NVDA+Tabulatortaste | Spricht das aktuell fokussierte Objekt. Bei zweimal Drücken werden die Informationen buchstabiert. |
@@ -338,7 +338,7 @@ so ähnlich enthält eine Symbolleiste ebenfalls Steuerelemente und Sie müssen 
 
 Das Objekt, das momentan angezeigt wird, wird als NAvigator-Objekt bezeichnet.
 Wenn Sie sich zu einem Objekt bewegt haben und der Modus [Objektdarstellung #ObjectReview] ist aktiv, können Sie sich das Objekt mit den [Befehlen zum Betrachten von Text #ReviewingText] anschauen.
-Standardmäßig folgt der Navigator dem Systemfokus, diese Kopplung kann jedoch ein- und ausgeschaltet werden.
+Standardmäßig folgt der Navigator dem System-Fokus, diese Kopplung kann jedoch umgeschaltet werden.
 
 Bedenken Sie, dass die Braillezeile standardmäßig sowohl dem [Fokus #SystemFocus] und dem [System-Cursor #SystemCaret] als auch dem Navigator und dem NVDA-Cursor folgt.
 Wenn die Braillezeile nur dem Fokus oder dem Systemcursor folgen soll, müssen Sie die [Kopplung der Braillezeile #BrailleTether] so einstellen, dass die Braillezeile dem Fokus folgt.
@@ -356,7 +356,7 @@ Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 | Zum ersten untergeordneten Objekt navigieren | NVDA+Num 2 | NVDA+Umschalt+Pfeiltaste nach unten | Nach unten streichen (Objektmodus) | Navigiert zum ersten untergeordneten Objekt ausgehend vom aktuellen NAvigator-Objekt. |
 | Zum Fokus-Objekt navigieren | NVDA+Num Minus | NVDA+Rücktaste | Keine | Navigiert zum aktuell fokussierten Objekt und zieht den NVDA-Cursor zum System-Cursor, sofern dieser sichtbar ist. |
 | Aktuelles Navigator-Objekt aktivieren | NVDA+Num Eingabetaste | NVDA+Eingabetaste | Doppeltippen | Aktiviert das aktuelle Navigator-Objekt (ähnlich einem Mausklick oder dem Drücken der Leertaste). |
-| System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum NVDA-Cursor ziehen | NVDA+Umschalt+Num Minus | NVDA+Umschalt+Rücktaste | Keine | Wird diese Tastenkombination einmal gedrückt, wird der Systemfokus zum aktuellen Navigator-Objekt gezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum NVDA-Cursor gezogen. |
+| System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum NVDA-Cursor ziehen | NVDA+Umschalt+Num Minus | NVDA+Umschalt+Rücktaste | Keine | Wird diese Tastenkombination einmal gedrückt, wird der System-Fokus zum aktuellen Navigator-Objekt gezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum NVDA-Cursor gezogen. |
 | Position des NVDA-Cursors ansagen | NVDA+Num Entfernen | NVDA+Entfernen | Keine | Meldet Informationen über die Position des Textes oder des Objektes, in welchem sich der NVDA-Cursor befindet, z. B. Dokumentposition in Prozent oder die exakte Objektposition. Zweimaliges Drücken der Tastenkombination meldet möglicherweise weitere Informationen. |
 %kc:endInclude
 
@@ -1045,11 +1045,11 @@ Wenn Sie beispielsweise ein amerikanisch-englisches Dokument lesen, in dem Textp
 Diese Option ist standardmäßig deaktiviert.
 
 %kc:setting
-==== Zeichen/Symbolebene ====[SpeechSettingsSymbolLevel]
+==== Ausführlichkeitsstufe ====[SpeechSettingsSymbolLevel]
 Tastenkombination: NVDA+P
 
 Hier kann eingestellt werden, ob und wie viele Satz- und Sonderzeichen NVDA als Wort aussprechen soll.
-Wenn hier "alle" ausgewählt ist, spricht NVDA alle Symbole, als wären diese ausgeschrieben.
+Wenn hier "Alle" ausgewählt ist, spricht NVDA alle Symbole, als wären diese ausgeschrieben.
 Diese Option gilt für alle Sprachausgaben, nicht nur für die aktuell gewählte.
 
 ==== beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen ====[SpeechSettingsTrust]
@@ -1289,7 +1289,7 @@ Wenn diese Option aktiviert ist, wird die Sprache jedes Mal unterbrochen, wenn S
 ==== Sprache beim Drücken der Eingabetaste unterbrechen ====[KeyboardSettingsSpeechInteruptForEnter]
 Ist diese Option aktiviert, so wird die Sprache jedes Mal unterbrochen, wenn Sie die Eingabetaste drücken. Diese Option ist standardmäßig aktiviert.
 
-==== Navigation während "alles lesen" erlauben ====[KeyboardSettingsSkimReading]
+==== Navigation während "Alles lesen" erlauben ====[KeyboardSettingsSkimReading]
 Wenn diese Option aktiviert ist, Unterbrechen Navigationsbefehle nun nicht mehr den Lesevorgang beim Lesen eines Dokuments mit NVDA+Pfeil Ab. Hierzu gehören sowohl die Schnellnavigationstasten als auch die Befehle zum Navigieren zwischen Zeilen und Absätzen. Diese Option ist standardmäßig deaktiviert.
 
 ==== Signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die Dauergroßschreibung aktiv ist ====[KeyboardSettingsBeepLowercase]
@@ -1354,7 +1354,7 @@ Diese Kategorie beeinflusst das Verhalten des NVDA-Cursors.
 Folgende Optionen sind enthalten:
 
 %kc:setting
-==== Systemfokus verfolgen ====[ReviewCursorFollowFocus]
+==== System-Fokus verfolgen ====[ReviewCursorFollowFocus]
 Tastenkombination: NVDA+7
 
 Wenn eingeschaltet, platziert sich der NVDA-Cursor immer auf dem Objekt, das den Fokus besitzt, sobald sich der Fokus ändert.
@@ -2592,7 +2592,7 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/b
 | Zum nächsten Objekt bewegen | F6 |
 | Zum Fokus bewegen | F7 |
 | Zum ersten untergeordneten Objekt bewegen | F8 |
-| Systemfokus oder Cursor zum aktuellen NAvigator-Objekt bewegen | F9 |
+| System-Fokus oder Cursor zum aktuellen NAvigator-Objekt bewegen | F9 |
 | Position des NVDA-Cursors angeben | F0 |
 | Kopplung der Braillezeile umschalten | A |
 %kc:endInclude
