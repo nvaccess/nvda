@@ -3,6 +3,43 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== Novas Funcionalidades ==
+- Novas tabelas Braille: Chinês (China, Mandarin) grau 1 e grau 2. (#5553)
+
+
+== Alterações ==
+- "Anunciar balões de ajuda" no diálogo Apresentação de Objectos foi renomeado para "Anunciar notificações" para incluir o anúncio de notificações (toast) no Windows 8 e seguintes. (#5789)
+- No diálogo Teclado as caixas de verificação para activar/desactivar as teclas modificadoras do NVDA passam a estar numa lista, em vez de caixas de verificação separadas.
+- O NVDA já não anuncia informação redundante ao ler o relógio na barra de notificações em algumas versões do Windows. (#4364)
+- Actualizado o conversor Braille liblouis para a versão 3.7.0. (#8697)
+
+
+== Bug Fixes ==
+- No Outlook 2016/365, as bandeiras da categoria e do estado das mensagens já são anunciadas. (#8603)
+- Quando o NVDA está configurado para idiomas como Kirgyz, Mongol ou Macedónio, já não apresenta um diálogo, no arranque, a avisar que o idioma não é suportado pelo sistema operativo. (#8064)
+- O comando para mover o rato para o objecto de navegação move, com mais precisão, o rato para a posição actual no modo de navegação no Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
+- A interacção com caixas combbinadas no Firefox, Chrome e Internet Explorer foi melhorada. (#8664)
+
+
+== Changes for Developers ==
+- gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
+ - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+
+
+= 2018.3.2 =
+Apenas para corrigir um bug que provocava falhas no Google Chrome ao navegar por tweetts em www.twitter.com. (#8777)
+
+ 
+= 2018.3.1 =
+Apenas para corrigir um bug que provocava falhas na versão de 32 bit do Mozilla Firefox. (#8759)
+ 
+
 = 2018.3 =
 Os destaques desta versão são:
 - Detecção automática de várias linhas Braille;
