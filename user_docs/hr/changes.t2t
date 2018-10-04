@@ -3,6 +3,38 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== New Features ==
+- New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
+
+
+== Changes ==
+- "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
+- IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
+- NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
+- Updated liblouis braille translator to version 3.7.0. (#8697)
+
+
+== Bug Fixes ==
+- In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
+- When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
+- Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
+- Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
+
+
+== Changes for Developers ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
+
+
+= 2018.3.2 =
+This is a minor release to work around a crash in Google Chrome when navigating tweetts on www.twitter.com. (#8777)
+
+ 
+= 2018.3.1 =
+This is a minor release to fix a critical bug in NVDA which caused 32 bit versions of Mozilla Firefox to crash. (#8759)
+
+
 = 2018.3 =
 Novosti u ovoj inačici uključuju automatsko otkrivanje nekoliko brajičnih redaka, podrška za nove značajke u Windowsima 10, uključujući emoji panel, te mnogo drugih ispravaka grešaka.
 
@@ -28,7 +60,7 @@ Novosti u ovoj inačici uključuju automatsko otkrivanje nekoliko brajičnih red
 - Za ALVA BC680 i pretvornik protokola brajične redke, sada je moguće dodijeliti razne funkcije za lijevi i desni pametni pad, palčane te etouch tipke. (#8230)
 - Za ALVA BC6 retke, kombinacija tipaka sp2+sp3 sada će izgovarati trenutni datum i vrijeme, gdje će sp1+sp2 oponašati windows tipku. (#8230)
 - Korisnik će biti pitan, jednom kada se NVDA pokrene želi li slati povratne informacije u NV Access prilikom provjere NVDA nadogradnje. (#8217)
-- Prllikom provjere nadogradnje, ako je korisnik pristao na slanje statistika u NV Access, NVDA će slati naziv trenutnog brajičnog retka i govorne jedinice, kako bi sam korisnik pomogao u razvoju tih komponenti. (#8217)
+- Prilikom provjere nadogradnje, ako je korisnik pristao na slanje statistika u NV Access, NVDA će slati naziv trenutnog brajičnog retka i govorne jedinice, kako bi sam korisnik pomogao u razvoju tih komponenti. (#8217)
 - Nadograđen liblouis brajični prevoditelj na inačicu 3.6.0. (#8365)
 - Osvježen put do točne ruske osmotočkaste brajične tablice. (#8446)
 - Nadograđen eSpeak-ng na 1.49.3dev commit 910f4c2. (#8561)
