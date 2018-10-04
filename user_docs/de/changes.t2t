@@ -32,6 +32,10 @@ Was ist neu in NVDA
 - Paket "configobj" auf 5.1.0dev Commit 5b5de48a aktualisiert. (#4470)
 
 
+= 2018.3.2 =
+In dieser Version wurde ein Fehler behoben, der einen Absturz in Google Chrome bei der Navigation durch Tweets auf www.twitter.com zur Folge hatte. (#8777)
+
+
 = 2018.3.1 =
 Dies ist ein kleineres Update, in dem ein kritischer Fehler in NVDA behoben wurde, der zum Absturz von 32-Bit-Versionen von Mozilla Firefox führte. (#8759)
  
@@ -77,7 +81,7 @@ Zu den Highlights dieser Version gehören die automatische Erkennung vieler Brai
 - NVDA kündigt keine redundanten Änderungen am Tastaturlayout mehr an. (#7383, #8419)
 - Die Mausverfolgung ist jetzt viel genauer in Notepad und anderen Editoren, wenn es sich um ein Dokument mit mehr als 65.535 Zeichen handelt. (#8397)
 - NVDA erkennt mehr Dialoge in Windows 10 und anderen modernen Anwendungen. (#8405)
-- Unter Windows 10. Oktober 2018 Update und Server 2019 und höher kann NVDA den Systemfokus nicht mehr verfolgen, wenn eine Anwendung das System einfriert oder mit Ereignissen überschwemmt. (#7345, #8535)
+- Unter Windows 10. Oktober 2018 Update und Server 2019 und höher kann NVDA den System-Fokus nicht mehr verfolgen, wenn eine Anwendung das System einfriert oder mit Ereignissen überschwemmt. (#7345, #8535)
 - Anwender werden nun informiert, wenn sie versuchen, eine leere Statusleiste zu lesen oder zu kopieren. (#7789)
 - Es wurde ein Problem behoben, in dem der Zustand eines Kontrollfelds "nicht angehakt" nicht in der Sprachausgabe gemeldet wurden, wenn die Kontrollfelder zuvor halb angehakt wurde. (#6946)
 - In der Liste der Sprachen in den Allgemeinen Einstellungen von NVDA wird der Sprachname für Burmesisch unter Windows 7 korrekt angezeigt. (#8544)
@@ -1415,7 +1419,7 @@ Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetod
 
 
 == Änderungen ==
-- Im Dialog für die NVDA-Cursor-Einstellungen wurde die Einstellung "Tastaturfokus verfolgen" in "Systemfokus verfolgen" umbenannt, um mit anderen Teilen von NVDA zu harmonieren, in denen diese Namensgebung verwendet wird.
+- Im Dialog für die NVDA-Cursor-Einstellungen wurde die Einstellung "Tastaturfokus verfolgen" in "System-Fokus verfolgen" umbenannt, um mit anderen Teilen von NVDA zu harmonieren, in denen diese Namensgebung verwendet wird.
 - Wenn die Braillezeile an den Navigator gekoppelt ist und gerade ein objekt angezeigt wird, das kein Textobjekt ist (wie z. B. ein Eingabefeld), kann das objekt durch Drücken der Cursorroutingtasten aktiviert werden. (#2386)
 - Die Option "Einstellungen beim Beenden speichern" ist bei neuen Konfigurationen nun standardmäßig aktiviert.
 - Beim Aktualisieren von NVDA wird die Tastenkombination der Desktop-Verknüpfung nun nicht mehr auf Strg+Alt+N zurückgesetzt, wenn der Anwender diese manuell geändert haben sollte. (#2572)
