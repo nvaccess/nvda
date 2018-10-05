@@ -137,6 +137,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
+	createTIOnPageLoad = option("webDocs", "always", "never", default="webDocs")
+	respectPassThroughOnPageLoad = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)

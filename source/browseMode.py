@@ -44,7 +44,8 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 	@param onlyIfChanged: if true reporting will not happen if the last reportPassThrough reported the same thing.
 	@type onlyIfChanged: bool
 	"""
-	if not onlyIfChanged or treeInterceptor.passThrough != reportPassThrough.last:
+	global lastReportedPassThrough
+	if not onlyIfChanged or treeInterceptor.passThrough != lastReportedPassThrough:
 		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
 			sound = r"waves\focusMode.wav" if treeInterceptor.passThrough else r"waves\browseMode.wav"
 			nvwave.playWaveFile(sound)
@@ -56,8 +57,11 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 				# Translators: The mode that presents text in a flat representation
 				# that can be navigated with the cursor keys like in a text document
 				ui.message(_("Browse mode"))
-		reportPassThrough.last = treeInterceptor.passThrough
-reportPassThrough.last = False
+		lastReportedPassThrough = treeInterceptor.passThrough
+		# Trigger an update of lastDisableAutoPassThrough, if necessary.
+		treeInterceptor.disableAutoPassThrough = treeInterceptor.disableAutoPassThrough
+lastReportedPassThrough = False
+lastDisableAutoPassThrough = False
 
 def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
@@ -247,11 +251,24 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
-	disableAutoPassThrough = False
+	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
+
+	def _get_disableAutoPassThrough(self):
+		return self._disableAutoPassThrough
+
+	def _set_disableAutoPassThrough(self, state):
+		if self.createdByObject:
+			# Globally remember the pass through state.
+			global lastDisableAutoPassThrough
+			lastDisableAutoPassThrough = state
+		self._disableAutoPassThrough = state
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
+
+	def event_treeInterceptor_gainFocus(self):
+		reportPassThrough(self)
 
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
