@@ -11,6 +11,11 @@ import NVDAHelper
 import config
 import textInfos
 
+HIGH_SURROGATE_FIRST = u"\uD800"
+HIGH_SURROGATE_LAST = u"\uDBFF"
+LOW_SURROGATE_FIRST = u"\uDC00"
+LOW_SURROGATE_LAST = u"\uDFFF"
+
 class Offsets(object):
 	"""Represents two offsets."""
 
@@ -223,10 +228,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getCharacterOffsets(self,offset):
 		# Windows Unicode is UTF-16, so a character may be two offsets for code points beyond 16 bits.
 		char = self._getTextRange(offset, offset + 1)
-		if u'\uD800' <= char <= u'\uDBFF':
+		if HIGH_SURROGATE_FIRST <= char <= HIGH_SURROGATE_LAST:
 			# High (leading) surrogate; next offset is also part of this character.
 			return offset, offset + 2
-		elif offset > 0 and u'\uDC00' <= char <= u'\uDFFF':
+		elif offset > 0 and LOW_SURROGATE_FIRST <= char <= LOW_SURROGATE_LAST:
 			# Low (trailing) surrogate; previous offset is also part of this character.
 			return offset - 1, offset + 1
 		return offset, offset + 1
