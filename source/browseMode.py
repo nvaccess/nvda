@@ -481,9 +481,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			return gesture.send()
 		# #3215 ARIA menus should get the Escape key unconditionally so they can handle it without invoking browse mode first
 		obj = api.getFocusObject()
-		if obj:
-			if obj.role in self.IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES:
-				return gesture.send()
+		if obj and obj.role in self.IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES:
+			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
 		reportPassThrough(self)
