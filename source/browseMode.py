@@ -1120,9 +1120,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastCaretPosition = None
 		#: True if the last caret move was due to a focus change.
 		self._lastCaretMoveWasFocus = False
-		# Holds the last object requested to take focus by setFocusToObj. 
-		# It is checked and cleared by the next gainFocus event so that we can ignore reporting focus events caused by the caret setting focus as it moves.
-		self._pendingFocusObject=None
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
@@ -1246,7 +1243,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""
 		Sets focus to the given object in this browseMode document.
 		"""
-		self._pendingFocusObject=obj
+		self._lastFocusObj=obj
 		obj.setFocus()
 
 	def _shouldSetFocusToObj(self, obj):
@@ -1403,8 +1400,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
-		pendingFocusObject=self._pendingFocusObject
-		self._pendingFocusObject=None
+		lastFocusObj=self._lastFocusObj
 		enteringFromOutside=self._enteringFromOutside
 		self._enteringFromOutside=False
 		if not self.isReady:
@@ -1448,8 +1444,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
+		try:
+			lastFocusInfo=self.makeTextInfo(lastFocusObj) if lastFocusObj else None
+		except LookupError:
+			lastFocusInfo=None
 		#We only want to update the caret and speak the field if we're not in the same one as before
-		if not self._hadFirstGainFocus or obj!=pendingFocusObject:
+		if not self._hadFirstGainFocus or not lastFocusInfo or focusInfo.compareEndPoints(lastFocusInfo,"startToStart")!=0 or focusInfo.compareEndPoints(lastFocusInfo,"endToEnd")>0:
 			# The newly focused node is not due to the caret moving.
 			oldPassThrough=self.passThrough
 			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
