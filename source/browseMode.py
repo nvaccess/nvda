@@ -305,8 +305,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		# many controls that are read-only should not switch to passThrough. 
 		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
 		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
-		# #3215: Also allow ARIA menus
-		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_RADIOMENUITEM, controlTypes.ROLE_CHECKMENUITEM):
+		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
 			return False
 		# Any roles or states for which we always switch to passThrough
 		if role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or controlTypes.STATE_EDITABLE in states:
@@ -474,6 +473,11 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
 			return gesture.send()
+		# #3215 ARIA menus should get the Escape key unconditionally so they can handle it without invoking browse mode first
+		obj = api.getFocusObject()
+		if obj:
+			if obj.role in (controlTypes.ROLE_MENUITEM, controlTypes.ROLE_RADIOMENUITEM, controlTypes.ROLE_CHECKMENUITEM):
+				return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
 		reportPassThrough(self)
