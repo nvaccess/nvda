@@ -5,22 +5,22 @@
 
 = 2018.4 =
 
-== New Features ==
-- New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
+== Nove značajke ==
+- Nove brajične tablice: Kineski (Kina, Mandarinski) s tonovima i bez tonova. (#5553)
 
 
-== Changes ==
-- "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
-- IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
-- NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
-- Updated liblouis braille translator to version 3.7.0. (#8697)
+== Izmjene ==
+- Opcija "izvijesti o pomoćnim balončićima" u dijaloškom okviru prezentacija objekta preimenovana je "izgovaraj obavijesti" kako bi uključivala obavijesti u windowsima 8 i novijim. (#5789)
+- U NVDA postavkama tipkovnice, potvrdni okviri za izbor NVDA modifikacijskih tipki sada su prikazani u jednom popisu umjesto odvojenog prikaza.
+- NVDA više neće prikazivati izlišne informacije pri prikazivanju sata u nekim inačicama Windowsa. (#4364)
+- Nadograđen liblouis brajični prevoditelj na inačicu 3.7.0. (#8697)
 
 
-== Bug Fixes ==
-- In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
-- When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
-- Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
-- Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
+== Ispravke grešaka ==
+- U Outlooku 2016/365, kategorija i status zastavice sada se izgovaraju za poruke. (#8603)
+- Kada je NVDA postavljen na jezike kao što su to  Kirgizijski, Mongolski ili Makedonski, više se ne pojavljuje upozorenje o nepodržanosti jezika od strane operativnog sustava. (#8064)
+- Pomičući miš, sada će se isti pomicati točnije u poziciju načina fokusa u Mozilla Firefoxu, Google Chromeu i Acrobat Reader DC. (#6460)
+- Interakcija sa odabirnim okvirima na web stranicama u  Firefoxu, Chromeu i Internet Exploreru je poboljšana. (#8664)
 
 
 == Changes for Developers ==
@@ -28,11 +28,11 @@ Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesk
 
 
 = 2018.3.2 =
-This is a minor release to work around a crash in Google Chrome when navigating tweetts on www.twitter.com. (#8777)
+Ovo je mali hotfix koji ispravlja rušenje u Google Chromeu pri kretanju po tweetovima na www.twitter.com. (#8777)
 
  
 = 2018.3.1 =
-This is a minor release to fix a critical bug in NVDA which caused 32 bit versions of Mozilla Firefox to crash. (#8759)
+Ovo je ispravka pogreške, koja je prouzrokovala rušenje NVDA, pri pokrenutom pregledniku Mozilla firefox u 32 bitnoj inačici. (#8759)
 
 
 = 2018.3 =

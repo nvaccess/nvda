@@ -1257,16 +1257,14 @@ Kategorija tipkovnica u NVDA dijaloškom okviru postavki sadrži opcije kojima s
 Ova kategorija postavki sadrži slijedeće opcije:
 
 ==== Izgled tipkovnice ====[KeyboardSettingsLayout]
-Ova vam opcija omogućuje odabir izgleda tipkovnice koji će NVDA koristiti. Trenutno uz NVDA dolazi izgled tipkovnice za stolna i izgled tipkovnice za prijenosna računala.
+Ova vam opcija omogućuje odabir izgleda tipkovnice kojeg će NVDA koristiti. Trenutno uz NVDA dolazi izgled tipkovnice za stolna i izgled tipkovnice za prijenosna računala.
 
-==== Koristi capslock kao NVDA modifikacijsku tipku ====[KeyboardSettingsCapsModifier]
-Ako je ovaj potvrdni okvir odabran, Capslock se može koristiti kao NVDA modifikacijska tipka.
-
-==== Koristi prošireni insert kao NVDA modifikacijsku tipku ====[KeyboardSettingsExtendedInsert]
-Ako je ovaj potvrdni okvir odabran, prošireni insert (često se može na tipkovnicama pronaći iznad kursorskih tipaka, blizu tipaka home i end), može se koristiti kao NVDA modifikacijska tipka.
-
-==== Koristi numerički insert kao NVDA modifikacijsku tipku ====[KeyboardSettingsNumpadInsert]
-Ako je potvrdni okvir odabran, insert na numeričkoj tipkovnici može se koristiti kao NVDA modifikacijska tipka.
+==== Odaberi NVDA modifikacijske tipke ====[KeyboardSettingsModifiers]
+Ovi potvrdni okviri u ovom popisu određuju, koja će se [NVDA modifikacijska tipka ili tipke #TheNVDAModifierKey] koristiti kao NVDA tipka. Slijedee tipke su dostupne:
+- caps lock
+- Numerički insert
+- Proširena tipka insert (obično se nalazi iznad strelica, blizu home i end tipki)
+-
 
 Ako ni jedna tipka nije izabrana kao NVDA modifikacijska tipka, možda će biti nemoguće pristupiti većini NVDA funkcija.
 Međutim, ako ne odaberete niti jednu modifikacijsku tipku, a pritom pritisnete OK ili primijeni, NVDA će prikazati poruku o grešci.
