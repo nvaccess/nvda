@@ -40,17 +40,6 @@ typedef enum {
 	TREEDIRECTION_SYMMETRICAL_BACK
 } TreeDirection;
 
-class VBufStorage_textContainer_t: protected std::wstring {
-	protected:
-	~VBufStorage_textContainer_t();
-
-	public:
-	VBufStorage_textContainer_t(std::wstring str);
-	virtual const std::wstring& getString();
-	virtual void destroy();
-
-};
-
 class VBufStorage_buffer_t;
 class VBufStorage_fieldNode_t;
 class VBufStorage_controlFieldNode_t;
@@ -650,7 +639,7 @@ class VBufStorage_buffer_t {
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
-	virtual VBufStorage_textContainer_t*  getTextInRange(int startOffset, int endOffset, bool useMarkup=false);
+	virtual std::wstring  getTextInRange(int startOffset, int endOffset, bool useMarkup=false);
 
 /**
  * Expands the given offset to the start and end offsets of the containing line.
