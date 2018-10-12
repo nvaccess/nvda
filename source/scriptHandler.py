@@ -115,6 +115,11 @@ def findScript(gesture):
 		if func and getattr(func, 'canPropagate', False):
 			return func
 
+	# Configuration profile activation scripts
+	func = _getObjScript(globalCommands.configProfileActivationCommands, gesture, globalMapScripts)
+	if func:
+		return func
+
 	# Global commands.
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
 	if func:
