@@ -680,8 +680,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
 			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
-			LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
-			parentNode->requiresParentUpdate=true;
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			if(role!=ROLE_SYSTEM_ROW) {
+				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
+				parentNode->requiresParentUpdate=true;
+			}
 			// Setting alwaysRerenderChildren ensures that if this node is rerendered, none of its children are reused.
 			// For example, if this is a table row that is rerendered (perhaps due to a previous table row being added),
 			// this row's cells can't be reused because their coordinates would now be out of date.
