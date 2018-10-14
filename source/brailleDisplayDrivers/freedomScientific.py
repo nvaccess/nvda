@@ -3,15 +3,14 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited
+#Copyright (C) 2008-2018 NV Access Limited, Bram Duvigneau
 
-from ctypes import *
-from ctypes.wintypes import *
-from collections import OrderedDict
+"""
+Braille display driver for Freedom Scientific braille displays.
+"""
+
 from cStringIO import StringIO
 import itertools
-import os
-import hwPortUtils
 import braille
 import inputCore
 from baseObject import ScriptableObject
@@ -20,7 +19,6 @@ import bdDetect
 import brailleInput
 import hwIo
 import serial
-import _winreg
 
 
 TIMEOUT = 0.2
@@ -59,6 +57,12 @@ def _makeTranslationTable(dotsTable):
 	@param dotsTable: The list of 8 bitmasks to use for every dot
 	"""
 	def isoDot(number):
+		"""
+		Returns the ISO 11548 formatted braille dot for the given number.
+
+		@param number: The dot to encode (0-8)
+		@type number: int
+		"""
 		return 1 << ((number + 1) - 1)
 
 	outputTable = [0] * 256
@@ -91,6 +95,7 @@ FOCUS_1_DOTS_TABLE = [
 FOCUS_1_TRANSLATION_TABLE = _makeTranslationTable(FOCUS_1_DOTS_TABLE)
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+	"Driver for Freedom Scientific braille displays"
 	name = "freedomScientific"
 	# Translators: Names of braille displays.
 	description = _("Freedom Scientific Focus/PAC Mate series")
@@ -98,12 +103,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	receivesAckPackets = True
 
 	wizWheelActions = [
-		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+		# Translators: The name of a key on a braille display, that scrolls the display
+		# to show previous/next part of a long line.
 		(_("display scroll"), ("globalCommands", "GlobalCommands", "braille_scrollBack"),
-		("globalCommands", "GlobalCommands", "braille_scrollForward")),
+			("globalCommands", "GlobalCommands", "braille_scrollForward")),
 		# Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
 		(_("line scroll"), ("globalCommands", "GlobalCommands", "braille_previousLine"),
-		("globalCommands", "GlobalCommands", "braille_nextLine")),
+			("globalCommands", "GlobalCommands", "braille_nextLine")),
 	]
 
 	def __init__(self, port="auto"):
@@ -112,6 +118,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._pendingCells = []
 		self._keyBits = 0
 		self._extendedKeyBits = 0
+		self._ignoreKeyReleases = False
+		self._model = None
+		self._manufacturer = None
+		self._firmwareVersion = None
 		self.translationTable = None
 		self.leftWizWheelActionCycle = itertools.cycle(self.wizWheelActions)
 		action = self.leftWizWheelActionCycle.next()
@@ -120,8 +130,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.rightWizWheelActionCycle = itertools.cycle(self.wizWheelActions)
 		action = self.rightWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):rightWizWheelUp", *action[1])
-		self.gestureMap.add("br(freedomScientific):rightWizWheelDown",*action[2])
-		super(BrailleDisplayDriver,self).__init__()
+		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2])
+		super(BrailleDisplayDriver, self).__init__()
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			self.isUsb = portType == bdDetect.KEY_CUSTOM
 			# Try talking to the display.
@@ -129,7 +139,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				if self.isUsb:
 					self._dev = hwIo.Bulk(port, 1, 0, self._onReceive, writeSize=0, onReceiveSize=56)
 				else:
-					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+					self._dev = hwIo.Serial(
+						port, baudrate=BAUD_RATE, parity=PARITY,
+						timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -152,8 +164,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			raise RuntimeError("No Freedom Scientific display found")
 
 		self._configureDisplay()
-		self.gestureMap.add("br(freedomScientific):topRouting1", "globalCommands", "GlobalCommands", "braille_scrollBack")
-		self.gestureMap.add("br(freedomScientific):topRouting%d" % self.numCells,"globalCommands", "GlobalCommands", "braille_scrollForward")
+		self.gestureMap.add("br(freedomScientific):topRouting1",
+			"globalCommands", "GlobalCommands", "braille_scrollBack")
+		self.gestureMap.add("br(freedomScientific):topRouting%d" % self.numCells,
+			"globalCommands", "GlobalCommands", "braille_scrollForward")
 
 	def terminate(self):
 		try:
@@ -186,7 +200,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg3 = handleArg(arg3)
 		packet = [packetType, arg1, arg2, arg3, data]
 		if data:
-			packet.append(chr(self._calculateChecksum(''.join(packet))))
+			packet.append(chr(self._calculateChecksum("".join(packet))))
 		self._dev.write("".join(packet))
 
 	def _onReceive(self, data):
@@ -196,11 +210,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			packetType = data
 			data = self._dev
-		
+
 		arg1 = data.read(1)
 		arg2 = data.read(1)
 		arg3 = data.read(1)
-		log.debug("Got packet of type %r with args: %r %r %r" % (packetType, arg1, arg2, arg3))
+		log.debug("Got packet of type %r with args: %r %r %r", packetType, arg1, arg2, arg3)
 		# Info and extended key responses are the only packets with payload and checksum
 		if packetType in (FS_PKT_INFO, FS_PKT_EXT_KEY):
 			length = ord(arg1)
@@ -228,7 +242,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if self.numCells in (44, 70, 84,):
 				# Focus 1: apply custom translation table
 				self.translationTable = FOCUS_1_TRANSLATION_TABLE
-			log.debug("Device info: manufacturer: %s model: %s, version: %s" % (self._manufacturer, self._model, self._firmwareVersion))
+			log.debug("Device info: manufacturer: %s model: %s, version: %s",
+				self._manufacturer, self._model, self._firmwareVersion)
 		elif packetType == FS_PKT_WHEEL:
 			wheelNumber = ((ord(arg1) >> 3) & 0X7)
 			count = ord(arg1) & 0X7
@@ -239,7 +254,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			isDown = wheelNumber % 2 == 1
 			if isRight:
 				isDown = not isDown
-			for i in xrange(count):
+			for _i in xrange(count):
 				gesture = WizWheelGesture(isDown, isRight)
 				try:
 					inputCore.manager.executeGesture(gesture)
@@ -252,7 +267,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			isTopRow = (self._model.lower().startswith("focus") and keyGroup == -1) or \
 				(self._model.lower().startswith("pm display") and keyGroup == 1)
 			if isPress:
-				# Ignore keypresses, 
+				# Ignore keypresses
 				return
 			gesture = RoutingGesture(key, isTopRow)
 			try:
@@ -266,14 +281,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			keyBits = ord(payload[0]) >> 4
 			self._handleExtendedKeys(keyBits)
 		else:
-			log.debugWarning("Unknown packet of type: %r" % packetType)
+			log.debugWarning("Unknown packet of type: %r", packetType)
 
 	def _handleAck(self):
+		"Displays any queued cells after receiving an ACK"
 		super(BrailleDisplayDriver, self)._handleAck()
 		if self._pendingCells:
 			self.display(self._pendingCells)
 
-	def _updateKeyBits(self, keyBits, oldKeyBits, keyCount):
+	@staticmethod
+	def _updateKeyBits(keyBits, oldKeyBits, keyCount):
 		"""Helper function that reports if keys have been pressed and which keys have been released
 		based on old and new keybits.
 		"""
@@ -327,7 +344,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				pass
 			self._ignoreKeyReleases = True
 
-	def _calculateChecksum(self, data):
+	@staticmethod
+	def _calculateChecksum(data):
 		"Calculate the checksum for extended packets"
 		checksum = 0
 		for byte in data:
@@ -335,11 +353,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		checksum = checksum & 0xFF
 		return checksum
 
-	def display(self,cells):
+	def display(self, cells):
 		if self.translationTable:
 			cells = _translate(cells, FOCUS_1_DOTS_TABLE)
 		if not self._awaitingAck:
-			cells="".join([chr(x) for x in cells])
+			cells = "".join([chr(x) for x in cells])
 			self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
 			self._pendingCells = []
 		else:
@@ -347,34 +365,40 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _configureDisplay(self):
 		"""Enable extended keys on Focus firmware 3 and up"""
-		if self._model and self._firmwareVersion and self._model.startswith("Focus") and ord(self._firmwareVersion[0]) >= ord('3'):
+		if not self._model or not self._firmwareVersion:
+			return
+		if self._model.startswith("Focus") and ord(self._firmwareVersion[0]) >= ord("3"):
 			# Focus 2 or later. Make sure extended keys support is enabled.
-			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.", self._model, self._firmwareVersion)
+			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.",
+				self._model, self._firmwareVersion)
 			self._sendPacket(FS_PKT_CONFIG, "\x02")
 
-	def script_toggleLeftWizWheelAction(self,gesture):
+	def script_toggleLeftWizWheelAction(self, _gesture):
 		action = self.leftWizWheelActionCycle.next()
-		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1],replace=True)
-		self.gestureMap.add("br(freedomScientific):leftWizWheelDown",*action[2],replace=True)
+		self.gestureMap.add("br(freedomScientific):leftWizWheelUp", *action[1], replace=True)
+		self.gestureMap.add("br(freedomScientific):leftWizWheelDown", *action[2], replace=True)
 		braille.handler.message(action[0])
 
-	def script_toggleRightWizWheelAction(self,gesture):
+	def script_toggleRightWizWheelAction(self, _gesture):
 		action = self.rightWizWheelActionCycle.next()
-		self.gestureMap.add("br(freedomScientific):rightWizWheelUp",*action[1],replace=True)
-		self.gestureMap.add("br(freedomScientific):rightWizWheelDown",*action[2],replace=True)
+		self.gestureMap.add("br(freedomScientific):rightWizWheelUp", *action[1], replace=True)
+		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2], replace=True)
 		braille.handler.message(action[0])
 
-	__gestures={
+	__gestures = {
 		"br(freedomScientific):leftWizWheelPress": "toggleLeftWizWheelAction",
 		"br(freedomScientific):rightWizWheelPress": "toggleRightWizWheelAction",
 	}
 
-	gestureMap=inputCore.GlobalGestureMap({
+	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(freedomScientific):routing",),
-			"braille_scrollBack": ("br(freedomScientific):leftAdvanceBar", "br(freedomScientific):leftBumperBarUp","br(freedomScientific):rightBumperBarUp",),
-			"braille_scrollForward": ("br(freedomScientific):rightAdvanceBar", "br(freedomScientific):leftBumperBarDown", "br(freedomScientific):rightBumperBarDown",),
-			"braille_previousLine": ("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
+			"braille_scrollBack": ("br(freedomScientific):leftAdvanceBar",
+				"br(freedomScientific):leftBumperBarUp", "br(freedomScientific):rightBumperBarUp",),
+			"braille_scrollForward": ("br(freedomScientific):rightAdvanceBar",
+				"br(freedomScientific):leftBumperBarDown", "br(freedomScientific):rightBumperBarDown",),
+			"braille_previousLine":
+				("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
 			"braille_nextLine": ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),
 			"kb:shift+tab": ("br(freedomScientific):dot1+dot2+brailleSpaceBar",),
 			"kb:tab": ("br(freedomScientific):dot4+dot5+brailleSpaceBar",),
@@ -399,24 +423,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		}
 	})
 
+# pylint: disable=abstract-method
 class InputGesture(braille.BrailleDisplayGesture):
+	"Base gesture for this braille display"
 	source = BrailleDisplayDriver.name
 
 class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
-
+	"Handle keys and braille input for Freedom Scientific braille displays"
 	keyLabels = [
 		# Braille keys (byte 1)
-		'dot1','dot2','dot3','dot4','dot5','dot6','dot7','dot8',
+		"dot1", "dot2", "dot3", "dot4", "dot5", "dot6", "dot7", "dot8",
 		# Assorted keys (byte 2)
-		'leftWizWheelPress','rightWizWheelPress',
-		'leftShiftKey','rightShiftKey',
-		'leftAdvanceBar','rightAdvanceBar',
+		"leftWizWheelPress", "rightWizWheelPress",
+		"leftShiftKey", "rightShiftKey",
+		"leftAdvanceBar", "rightAdvanceBar",
 		None,
-		'brailleSpaceBar',
+		"brailleSpaceBar",
 		# GDF keys (byte 3)
-		'leftGDFButton','rightGDFButton',
+		"leftGDFButton", "rightGDFButton",
 		None,
-		'leftBumperBarUp','leftBumperBarDown','rightBumperBarUp','rightBumperBarDown',
+		"leftBumperBarUp", "leftBumperBarDown", "rightBumperBarUp", "rightBumperBarDown",
 	]
 	extendedKeyLabels = [
 	# Rocker bar keys.
@@ -424,9 +450,10 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 	]
 
 	def __init__(self, keyBits, extendedKeyBits):
-		super(KeyGesture,self).__init__()
-		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num) & 1]
-		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num) & 1]
+		super(KeyGesture, self).__init__()
+		keys = [self.keyLabels[num] for num in xrange(24) if (keyBits>>num) & 1]
+		extendedKeys = [self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num) & 1]
+		# pylint: disable=invalid-name
 		self.id = "+".join(keys+extendedKeys)
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
 		if not extendedKeyBits and not keyBits & ~(0xff | (1 << 0xf)):
@@ -436,17 +463,22 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 				self.space = True
 
 class RoutingGesture(InputGesture):
+	"Gesture to handle cursor routing and second row of routing keys on older models"
 	def __init__(self, routingIndex, topRow=False):
 		if topRow:
+			# pylint: disable=invalid-name
 			self.id = "topRouting%d"%(routingIndex+1)
 		else:
+			# pylint: disable=invalid-name
 			self.id = "routing"
 			self.routingIndex = routingIndex
-		super(RoutingGesture,self).__init__()
+		super(RoutingGesture, self).__init__()
 
 class WizWheelGesture(InputGesture):
+	"Gesture to handle wiz wheels movements"
 	def __init__(self, isDown, isRight):
 		which = "right" if isRight else "left"
 		direction = "Down" if isDown else "Up"
+		# pylint: disable=invalid-name
 		self.id = "%sWizWheel%s" % (which, direction)
 		super(WizWheelGesture, self).__init__()
