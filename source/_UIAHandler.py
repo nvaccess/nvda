@@ -183,6 +183,25 @@ class UIAHandler(COMObject):
 				isUIA8=True
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
+			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
+			pfm=self.clientObject.proxyFactoryMapping
+			for index in xrange(pfm.count):
+				e=pfm.getEntry(index)
+				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
+					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
+					try:
+						oldWinEvents=e.getWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID)
+					except IndexError:
+						# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
+						oldWinEvents=None
+					if oldWinEvents:
+						# As winEvents were mapped, replace them with an empty list
+						e.setWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID,[])
+						# Changes to an enty are not automatically picked up.
+						# Therefore remove the entry and re-insert it.
+						pfm.removeEntry(index)
+						pfm.insertEntry(index,e)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
 				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.

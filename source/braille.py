@@ -1774,10 +1774,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
-		If a key is pressed the message will be dismissed by the next text being written to the display
+		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0:
+		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0 or text is None:
 			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
