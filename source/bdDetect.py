@@ -163,7 +163,7 @@ class Detector(object):
 	This should only be used by the L{braille} module.
 	"""
 
-	def __init__(self):
+	def __init__(self, usb=True, bluetooth=True, limitToDevices=None):
 		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
@@ -176,7 +176,7 @@ class Detector(object):
 		self._detectBluetooth = False
 		self._runningApcLock = threading.Lock()
 		# Perform initial scan.
-		self._startBgScan(usb=True, bluetooth=True)
+		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	@property
 	def _scanQueuedSafe(self):
@@ -190,10 +190,11 @@ class Detector(object):
 		with self._queuedScanLock:
 			self._scanQueued = state
 
-	def _startBgScan(self, usb=False, bluetooth=False):
+	def _startBgScan(self, usb=False, bluetooth=False, limitToDevices=None):
 		with self._queuedScanLock:
 			self._detectUsb = usb
 			self._detectBluetooth = bluetooth
+			self._limitToDevices = limitToDevices
 			if not self._scanQueued:
 				self._scanQueued = True
 				if self._runningApcLock.locked():
@@ -224,11 +225,12 @@ class Detector(object):
 					self._scanQueued = False
 					detectUsb = self._detectUsb
 					detectBluetooth = self._detectBluetooth
+					limitToDevices = self._limitToDevices
 				if detectUsb:
 					if self._stopEvent.isSet():
 						continue
 					for driver, match in getDriversForConnectedUsbDevices():
-						if self._stopEvent.isSet():
+						if self._stopEvent.isSet() or (self._limitToDevices and driver not in self._limitToDevices):
 							continue
 						if braille.handler.setDisplayByName(driver, detected=match):
 							return
@@ -244,7 +246,7 @@ class Detector(object):
 							btDevs = self._btDevs
 							btDevsCache = btDevs
 					for driver, match in btDevs:
-						if self._stopEvent.isSet():
+						if self._stopEvent.isSet() or (self._limitToDevices and driver not in self._limitToDevices):
 							continue
 						if btDevsCache is not btDevs:
 							btDevsCache.append((driver, match))
@@ -256,13 +258,13 @@ class Detector(object):
 						with self._btDevsLock:
 							self._btDevs = btDevsCache
 
-	def rescan(self):
+	def rescan(self, usb=True, bluetooth=True, limitToDevices=None):
 		"""Stop a current scan when in progress, and start scanning from scratch."""
 		self._stopBgScan()
 		with self._btDevsLock:
 			# A Bluetooth com port or HID device might have been added.
 			self._btDevs = None
-		self._startBgScan(usb=True, bluetooth=True)
+		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
 		if msg == WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:
