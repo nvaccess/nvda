@@ -254,6 +254,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		raise NotImplementedError
 
 	def event_treeInterceptor_gainFocus(self):
+		"""Triggered when this browse mode interceptor gains focus.
+		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
+		"""
 		reportPassThrough(self)
 
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
@@ -1136,10 +1140,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
-		"""Triggered when this browse mode document gains focus.
-		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
-		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
-		"""
 		doSayAll=False
 		hadFirstGainFocus=self._hadFirstGainFocus
 		if not hadFirstGainFocus:

@@ -33,7 +33,10 @@ def update(obj, force=False):
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
-		if not force and not config.conf['virtualBuffers']['enableOnPageLoad']:
+		if not force and (
+			not config.conf['virtualBuffers']['enableOnPageLoad'] or
+			getattr(obj.appModule, "disableBrowseModeByDefault", False)
+		):
 			# Import late to avoid circular import.
 			from browseMode import BrowseModeTreeInterceptor
 			# Disabling enableOnPageLoad should only affect browse mode tree interceptors.
