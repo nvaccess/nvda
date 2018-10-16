@@ -1574,7 +1574,7 @@ class BrowseModePanel(SettingsPanel):
 
 		# Translators: The label for a checkbox in browse mode settings to 
 		# enable browse mode on page load.
-		enableOnPageLoadText = _("&Enable browse mode on page load:")
+		enableOnPageLoadText = _("&Enable browse mode on page load")
 		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
 		self.enableOnPageLoadCheckBox.SetValue(config.conf["virtualBuffers"]["enableOnPageLoad"])
 
