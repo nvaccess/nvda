@@ -255,7 +255,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if isRight:
 				isDown = not isDown
 			for _i in xrange(count):
-				gesture = WizWheelGesture(isDown, isRight)
+				gesture = WizWheelGesture(self._model, isDown, isRight)
 				try:
 					inputCore.manager.executeGesture(gesture)
 				except inputCore.NoInputGestureAction:
@@ -269,7 +269,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if isPress:
 				# Ignore keypresses
 				return
-			gesture = RoutingGesture(key, isTopRow)
+			gesture = RoutingGesture(self._model, key, isTopRow)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
@@ -323,7 +323,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ignoreKeyReleases = False
 		self._keyBits = keyBits
 		if isRelease and not self._ignoreKeyReleases:
-			gesture = KeyGesture(keyBitsBeforeRelease, self._extendedKeyBits)
+			gesture = KeyGesture(self._model, keyBitsBeforeRelease, self._extendedKeyBits)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
@@ -337,7 +337,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ignoreKeyReleases = False
 		self._extendedKeyBits = keyBits
 		if isRelease and not self._ignoreKeyReleases:
-			gesture = KeyGesture(self._keyBits, keyBitsBeforeRelease)
+			gesture = KeyGesture(self._model, self._keyBits, keyBitsBeforeRelease)
 			try:
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
@@ -430,6 +430,10 @@ class InputGesture(braille.BrailleDisplayGesture):
 	"Base gesture for this braille display"
 	source = BrailleDisplayDriver.name
 
+	def __init__(self, model):
+		self.model = model.replace(" ", "")
+		super(InputGesture, self).__init__()
+
 class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 	"Handle keys and braille input for Freedom Scientific braille displays"
 	keyLabels = [
@@ -451,8 +455,8 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 	"leftRockerBarUp", "leftRockerBarDown", "rightRockerBarUp", "rightRockerBarDown",
 	]
 
-	def __init__(self, keyBits, extendedKeyBits):
-		super(KeyGesture, self).__init__()
+	def __init__(self, model, keyBits, extendedKeyBits):
+		super(KeyGesture, self).__init__(model)
 		keys = [self.keyLabels[num] for num in xrange(24) if (keyBits>>num) & 1]
 		extendedKeys = [self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num) & 1]
 		# pylint: disable=invalid-name
@@ -466,7 +470,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 class RoutingGesture(InputGesture):
 	"Gesture to handle cursor routing and second row of routing keys on older models"
-	def __init__(self, routingIndex, topRow=False):
+	def __init__(self, model, routingIndex, topRow=False):
 		if topRow:
 			# pylint: disable=invalid-name
 			self.id = "topRouting%d"%(routingIndex+1)
@@ -474,13 +478,13 @@ class RoutingGesture(InputGesture):
 			# pylint: disable=invalid-name
 			self.id = "routing"
 			self.routingIndex = routingIndex
-		super(RoutingGesture, self).__init__()
+		super(RoutingGesture, self).__init__(model)
 
 class WizWheelGesture(InputGesture):
 	"Gesture to handle wiz wheels movements"
-	def __init__(self, isDown, isRight):
+	def __init__(self, model, isDown, isRight):
 		which = "right" if isRight else "left"
 		direction = "Down" if isDown else "Up"
 		# pylint: disable=invalid-name
 		self.id = "%sWizWheel%s" % (which, direction)
-		super(WizWheelGesture, self).__init__()
+		super(WizWheelGesture, self).__init__(model)
