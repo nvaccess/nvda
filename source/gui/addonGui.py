@@ -12,6 +12,7 @@ import core
 import config
 import gui
 from addonHandler import addonVersionCheck, CompatValues
+from addonHandler.addonVersionCheck import CURRENT_NVDA_VERSION
 from logHandler import log
 import addonHandler
 import globalVars
@@ -447,11 +448,10 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onIncompatAddonsShowClick(self, evt):
 		from addonHandler.addonVersionCheck import CompatValues
 		compatState = addonVersionCheck.addonCompatState
-		version = buildVersion.getCurrentVersionTuple()
 		incompatibleAddons = IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=True,
-			NVDAVersion=version
+			NVDAVersion=self.version
 		)
 
 		def afterDialog(res):
@@ -460,7 +460,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# addons that have become compat should be visible, but not enabled unless they already were.
 			for addon in addonHandler.getAvailableAddons(
 				filterFunc=lambda addon: (
-						CompatValues.ManuallySetIncompatible == compatState.getAddonCompatibilityForNVDAVersion(addon, version)
+						CompatValues.ManuallySetIncompatible == compatState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION)
 				)
 			):
 				addon.enable(shouldEnable=False)
@@ -503,7 +503,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self,
 			parent,
 			displayManuallySetCompatibilityAddons,
-			NVDAVersion=buildVersion.getCurrentVersionTuple()
+			NVDAVersion=CURRENT_NVDA_VERSION
 	):
 		if IncompatibleAddonsDialog._instance() is not None:
 			raise RuntimeError("Attempting to open multiple IncompatibleAddonsDialog instances")
@@ -513,7 +513,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if displayManuallySetCompatibilityAddons:
 			self.unknownCompatibilityAddonsList = list(addonHandler.getAvailableAddons(
 				filterFunc=lambda addon: (
-						compatState.getAddonCompatibilityForNVDAVersion(addon, NVDAVersion) in
+						compatState.getAddonCompatibility(addon, NVDAVersion) in
 						CompatValues.UserInterventionSet
 				)
 			))
@@ -591,7 +591,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				_("not specified")
 			))
 			compatState = addonVersionCheck.addonCompatState
-			shouldCheck = compatState.getAddonCompatibility(addon) == CompatValues.ManuallySetCompatible
+			shouldCheck = compatState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION) == CompatValues.ManuallySetCompatible
 			self.addonsList.CheckItem(idx, check=shouldCheck)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.unknownCompatibilityAddonsList)
@@ -609,7 +609,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			compatValue = CompatValues.ManuallySetCompatible if checked else CompatValues.ManuallySetIncompatible
 			addon = self.unknownCompatibilityAddonsList[itemIndex]
 			compatState = addonVersionCheck.addonCompatState
-			compatState.setAddonCompatibility(addon, compatValue)
+			compatState.setAddonCompatibility(addon, compatibilityStateValue=compatValue)
 
 	def onContinue(self, evt):
 		try:

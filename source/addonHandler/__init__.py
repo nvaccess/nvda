@@ -75,13 +75,13 @@ def getRunningAddons():
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
-def getAddonsWithUnknownCompatibility(version=buildVersion.getCurrentVersionTuple()):
+def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
 	""" Returns add-ons that are untested for the specified NVDA version.
 	"""
 	compatState = addonVersionCheck.addonCompatState
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
-			CompatValues.Unknown == compatState.getAddonCompatibilityForNVDAVersion(addon, version)
+			CompatValues.Unknown == compatState.getAddonCompatibility(addon, version)
 		)
 	)
 
