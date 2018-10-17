@@ -21,7 +21,6 @@ import hwIo
 import serial
 
 
-TIMEOUT = 0.2
 BAUD_RATE = 57600
 PARITY = serial.PARITY_NONE
 
@@ -101,6 +100,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	description = _("Freedom Scientific Focus/PAC Mate series")
 	isThreadSafe = True
 	receivesAckPackets = True
+	timeout = 0.2
 
 	wizWheelActions = [
 		# Translators: The name of a key on a braille display, that scrolls the display
@@ -141,7 +141,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				else:
 					self._dev = hwIo.Serial(
 						port, baudrate=BAUD_RATE, parity=PARITY,
-						timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+						timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -149,7 +149,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Send an identification request
 			self._sendPacket(FS_PKT_QUERY)
 			for _i in xrange(3):
-				self._dev.waitForRead(TIMEOUT)
+				self._dev.waitForRead(self.timeout)
 				if self.numCells and self._model:
 					break
 
