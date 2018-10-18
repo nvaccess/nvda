@@ -1230,7 +1230,6 @@ NVDA wird die Braillezeile verwenden, sobald Sie einen Eintrag ausgewählt und a
 Wenn ein Fehler auftritt, wird NVDA einen Fehlerton abspielen und die vorherige Braillezeile weiterhin verwenden, sofern vorhanden.
 
 ==== Braillezeile ====[SelectBrailleDisplayDisplay]
-Dies ist die Auswahlliste der verfügbaren Braillezeilen.
 Hier werden Ihnen die zu Verfügung stehenden Auswahlmöglichkeiten aufgelistet, je nachdem, welche Braillezeilen-Treiber auf Ihrem System verfügbar sind.
 Jede dieser Braillezeile ist mit den Pfeiltasten zu erreichen.
 
@@ -1312,7 +1311,8 @@ Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NV
 Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmten Fällen zu deaktivieren. Wenn Sie z. B. mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
 
 +++ Maus (NVDA+Strg+M) +++[MouseSettings]
-Die Kategorie "Maus" in dem Einstellungsdialog bietet Optionen zur Mausverfolgung, zu akustischer Koordinatenanzeige, etc. Es sind folgende Optionen enthalten:
+Die Kategorie "Maus" in dem Einstellungsdialog bietet Optionen zur Mausverfolgung, zu akustischer Koordinatenanzeige, etc.
+Es sind folgende Optionen enthalten:
 
 ==== Form des Mauszeigers ansagen ====[MouseSettingsShape]
 Dieses Kontrollfeld legt fest, ob NVDA bei Änderung des Mauszeigers die Form mit ansagen soll.
@@ -2284,6 +2284,8 @@ Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Modulen und die Seika
 Informationen zu diesen Zeilen erhalten Sie auf [[https://www.seika-braille.com]]
 Zuerst müssen Sie den USB-Treiber des Herstellers von der mitgelieferten CD-ROM installieren.
 
+Diese Braillezeilen unterstützen noch nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
+
 Die folgenden Tastenkombinationen für diese Braillezeile sind in NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
 %kc:beginInclude
@@ -2561,7 +2563,6 @@ Die folgenden Befehle können mit dem Scrollrad ausgeführt werden:
 
 ++ EcoBraille ++[EcoBraille]
 NVDA unterstützt die Ecobraille von [ONCE https://www.once.es/].
-
 Die folgenden Modelle werden unterstützt:
 - EcoBraille 20
 - EcoBraille 40
@@ -2569,8 +2570,7 @@ Die folgenden Modelle werden unterstützt:
 - EcoBraille Plus
 -
 
-In dem Dialog zum Auswählen der Braillezeile aus dem Einstellungsdialog von NVDA können Sie den seriellen Anschluss festlegen, mit dem die Braillezeile verbunden ist.
-
+In dem [Dialog zum Auswählen der Braillezeile #SelectBrailleDisplay] aus dem Einstellungsdialog von NVDA können Sie den seriellen Anschluss festlegen, mit dem die Braillezeile verbunden ist.
 Diese Braillezeilen unterstützen nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
 
 Folgende Tastenbelegungen sind bei Verwendung der Ecobraille-Modelle verfügbar:
