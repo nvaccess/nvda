@@ -1661,6 +1661,9 @@ class TrayClockWClass(IAccessible):
 	"""
 
 	def _get_role(self):
+		# On Windows 10 Anniversary update and later the text 'clock' is included in the name so having clock in the control type is redundant.
+		if super(TrayClockWClass, self).value is None:
+			return controlTypes.ROLE_BUTTON
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
