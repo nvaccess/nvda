@@ -314,11 +314,10 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			statusList.append(_("Enabled after restart"))
 		if addonVersionCheck.isAddonConsideredIncompatible(addon):
 			# Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
-			statusList.append(_("incompatible")) # Reef note: note sure about this terminology, I dont think its very user
-		# friendly
+			statusList.append(_("incompatible"))
 		elif addonVersionCheck.isAddonConsideredCompatible(addon):
 			# Translators: The status shown for an addon when it's added to the whitelist.
-			statusList.append(_("whitelisted")) # Reef note: note sure about this terminology, I dont think its very user friendly
+			statusList.append(_("compatibility set manually"))
 		return ", ".join(statusList)
 
 	def refreshAddonsList(self,activeIndex=0):
@@ -441,7 +440,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.enableDisableButton.SetLabel(_("&Enable add-on") if shouldDisable else _("&Disable add-on"))
 		self.refreshAddonsList(activeIndex=index)
 
-	def onGetAddonsClick(self,evt):
+	def onGetAddonsClick(self, evt):
 		ADDONS_URL = "http://addons.nvda-project.org"
 		os.startfile(ADDONS_URL)
 
