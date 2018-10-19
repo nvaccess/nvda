@@ -10,13 +10,13 @@ import os.path
 import gettext
 import glob
 import tempfile
-import cPickle
+from six.moves import cPickle
 import inspect
 import itertools
 import collections
 import pkgutil
 import shutil
-from cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 import zipfile
 from versionInfo import getNVDAVersionTupleFromString
 from configobj import ConfigObj, ConfigObjError
@@ -29,8 +29,8 @@ from logHandler import log
 import winKernel
 import re
 import buildVersion
-import addonVersionCheck
-from addonVersionCheck import CompatValues
+from . import addonVersionCheck
+from .addonVersionCheck import CompatValues
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
