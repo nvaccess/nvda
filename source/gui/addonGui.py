@@ -296,16 +296,16 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		statusList = []
 		if addon.isRunning:
 			# Translators: The status shown for an addon when its currently running in NVDA.
-			statusList.append(_("enabled"))
+			statusList.append(_("Enabled"))
 		elif globalVars.appArgs.disableAddons or addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-			statusList.append(_("disabled"))
+			statusList.append(_("Disabled"))
 		elif addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
-			statusList.append(_("install"))
+			statusList.append(_("Install"))
 		if addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-			statusList.append(_("removed after restart"))
+			statusList.append(_("Removed after restart"))
 		elif addon.isPendingDisable:
 			# Translators: The status shown for an addon when it requires a restart to become disabled
 			statusList.append(_("Disabled after restart"))
@@ -314,10 +314,10 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			statusList.append(_("Enabled after restart"))
 		if addonVersionCheck.isAddonConsideredIncompatible(addon):
 			# Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
-			statusList.append(_("incompatible"))
+			statusList.append(_("Incompatible"))
 		elif addonVersionCheck.isAddonConsideredCompatible(addon):
 			# Translators: The status shown for an addon when it's added to the whitelist.
-			statusList.append(_("compatibility set manually"))
+			statusList.append(_("Compatibility set manually"))
 		return ", ".join(statusList)
 
 	def refreshAddonsList(self,activeIndex=0):
@@ -549,8 +549,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL,
 			size=self.scaleSize((maxControlWidth, 350))
 		)
-		# Translators: The label for a column in add-ons list used to check / uncheck whether the add-on is whitelisted.
-		self.addonsList.InsertColumn(0, _("White list"), width=self.scaleSize(70))
+		# Translators: The label for a column in add-ons list used to check / uncheck whether the add-on is manually set  compatible
+		self.addonsList.InsertColumn(0, _("Compatible"), width=self.scaleSize(70))
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 		self.addonsList.InsertColumn(1, _("Package"), width=self.scaleSize(150))
 		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
@@ -560,7 +560,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.InsertColumn(3, _("Last tested NVDA version"), width=self.scaleSize(180))
 
 		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The continue  button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+		# Translators: The continue button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 		continueID = wx.ID_OK
 		button = buttonSizer.addButton(self, label=_("Continue"), id=continueID)
 		sHelper.addDialogDismissButtons(buttonSizer)
