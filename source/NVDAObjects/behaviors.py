@@ -594,7 +594,7 @@ class _FakeTableCell(NVDAObject):
 		return id(self.parent.parent)
 
 	def _get_states(self):
-		return self.parent.states
+		return self.parent.states - {controlTypes.STATE_CHECKED}
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
