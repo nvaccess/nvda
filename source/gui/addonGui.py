@@ -11,7 +11,7 @@ import wx
 import core
 import config
 import gui
-from addonHandler import addonVersionCheck, CompatValues
+from addonHandler import addonVersionCheck, compatValues
 from addonHandler.addonVersionCheck import CURRENT_NVDA_VERSION
 from logHandler import log
 import addonHandler
@@ -445,23 +445,21 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		os.startfile(ADDONS_URL)
 
 	def onIncompatAddonsShowClick(self, evt):
-		from addonHandler.addonVersionCheck import CompatValues
-		compatState = addonVersionCheck.addonCompatState
 		incompatibleAddons = IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=True,
 			NVDAVersion=self.version
 		)
-
 		def afterDialog(res):
 			# here we need to check if the compatibility has changed.
 			# addons that have become incompat should be disabled, and a restart prompt shown
 			# addons that have become compat should be visible, but not enabled unless they already were.
-			for addon in addonHandler.getAvailableAddons(
-				filterFunc=lambda addon: (
-						CompatValues.ManuallySetIncompatible == compatState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION)
-				)
-			):
+			from addonHandler.compatValues import MANUALLY_SET_INCOMPATIBLE
+			getAddonCompatibility = addonVersionCheck.addonCompatState.getAddonCompatibility
+			manuallySetIncompatibleAddons = addonHandler.getAvailableAddons(
+				filterFunc=lambda addon: ( MANUALLY_SET_INCOMPATIBLE == getAddonCompatibility(addon, CURRENT_NVDA_VERSION))
+			)
+			for addon in manuallySetIncompatibleAddons:
 				addon.enable(shouldEnable=False)
 			self.refreshAddonsList()
 
@@ -513,7 +511,11 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.unknownCompatibilityAddonsList = list(addonHandler.getAvailableAddons(
 				filterFunc=lambda addon: (
 						compatState.getAddonCompatibility(addon, NVDAVersion) in
-						CompatValues.UserInterventionSet
+						[
+							compatValues.UNKNOWN,
+							compatValues.MANUALLY_SET_INCOMPATIBLE,
+							compatValues.MANUALLY_SET_COMPATIBLE,
+						]
 				)
 			))
 		else:
@@ -590,7 +592,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				_("not specified")
 			))
 			compatState = addonVersionCheck.addonCompatState
-			shouldCheck = compatState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION) == CompatValues.ManuallySetCompatible
+			compatValue = compatState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION)
+			shouldCheck = compatValue == compatValues.MANUALLY_SET_COMPATIBLE
 			self.addonsList.CheckItem(idx, check=shouldCheck)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.unknownCompatibilityAddonsList)
@@ -605,7 +608,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def saveState(self):
 		for itemIndex in xrange(len(self.unknownCompatibilityAddonsList)):
 			checked = self.addonsList.IsChecked(itemIndex)
-			compatValue = CompatValues.ManuallySetCompatible if checked else CompatValues.ManuallySetIncompatible
+			compatValue = compatValues.MANUALLY_SET_COMPATIBLE if checked else compatValues.MANUALLY_SET_INCOMPATIBLE
 			addon = self.unknownCompatibilityAddonsList[itemIndex]
 			compatState = addonVersionCheck.addonCompatState
 			compatState.setAddonCompatibility(addon, compatibilityStateValue=compatValue)

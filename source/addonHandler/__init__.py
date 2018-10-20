@@ -30,7 +30,7 @@ import winKernel
 import re
 import buildVersion
 from . import addonVersionCheck
-from .addonVersionCheck import CompatValues
+from . import compatValues
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -81,7 +81,7 @@ def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VER
 	compatState = addonVersionCheck.addonCompatState
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
-			CompatValues.Unknown == compatState.getAddonCompatibility(addon, version)
+			compatValues.UNKNOWN == compatState.getAddonCompatibility(addon, version)
 		)
 	)
 
