@@ -30,6 +30,7 @@ import winKernel
 import re
 import buildVersion
 from . import addonVersionCheck
+from .addonVersionCheck import AddonCompatibilityState, isAddonConsideredIncompatible, isAddonConsideredCompatible
 from . import compatValues
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -78,10 +79,9 @@ def getRunningAddons():
 def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
 	""" Returns add-ons that are untested for the specified NVDA version.
 	"""
-	compatState = addonVersionCheck.addonCompatState
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
-			compatValues.UNKNOWN == compatState.getAddonCompatibility(addon, version)
+			compatValues.UNKNOWN == AddonCompatibilityState.getAddonCompatibility(addon, version)
 		)
 	)
 
@@ -145,7 +145,7 @@ def initialize():
 		log.info("Add-ons not supported when running as a Windows Store application")
 		return
 	loadState()
-	addonVersionCheck.initAddonCompatibilityState()
+	AddonCompatibilityState.initialise()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
@@ -169,7 +169,7 @@ def showUnknownCompatDialog():
 		# we may need to change the enabled addons / restart nvda here
 		shouldPromptRestart = False
 		for addon in unknownCompatAddons:
-			if addonVersionCheck.isAddonConsideredCompatible(addon):
+			if isAddonConsideredCompatible(addon):
 				addon.enable(True)
 				shouldPromptRestart = True
 		saveState()
@@ -212,7 +212,7 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif addonVersionCheck.isAddonConsideredIncompatible(a):
+				elif isAddonConsideredIncompatible(a):
 					log.debugWarning("Add-on %s is blacklisted", name)
 					# #6275: The add-on refresh could have yielded blacklisted add-ons.
 					# Add these to the disabled add-ons
@@ -375,7 +375,7 @@ class Addon(AddonBase):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			if addonVersionCheck.isAddonConsideredIncompatible(self):
+			if isAddonConsideredIncompatible(self):
 				raise AddonError("Add-on in blacklist: minimum NVDA version %s, last tested version %s" % (
 					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
 				))

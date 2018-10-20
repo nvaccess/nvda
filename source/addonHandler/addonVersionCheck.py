@@ -13,13 +13,6 @@ from logHandler import log
 from typing import Dict
 from . import compatValues
 
-
-addonCompatState = None  # type: AddonCompatibilityState
-
-def initAddonCompatibilityState():
-	global addonCompatState
-	addonCompatState = AddonCompatibilityState()
-
 # A named tuple was being used for the version state key, however pickle is unable to save a named tuple.
 # https://stackoverflow.com/questions/4677012/python-cant-pickle-type-x-attribute-lookup-failed
 def createVersionStateKey(addonName, addonVersion, NVDAVersionTuple):
@@ -66,18 +59,25 @@ class AddonCompatibilityState(object):
 	- Addons that do not have the required support in NVDA are considered incompatible
 	- Addons that have been tested against this version of NVDA are considered compatible
 	- Addons that have not been tested, are considered to have unknown compatibility."""
+	_persistence = None
+	_addonVersionState = None
 
-	def __init__(
-			self,
-			statePersistence=AddonCompatibilityStateSaver()
+	@classmethod
+	def initialise(
+			cls,
+			statePersistence=AddonCompatibilityStateSaver(),
+			forceReInit=False
 	):
-		self._persistence = statePersistence
-		state=self._persistence.loadState() # Reef Note: this is a potential source of bugs, if there are several
-		# instances of this class state will not be in sync.
-		self.addonVersionState = state  # type: Dict[tuple, CompatValues]
+		# don't auto re-init
+		if cls._addonVersionState is not None and not forceReInit:
+			return
+		cls._persistence = statePersistence
+		state = cls._persistence.loadState()
+		cls._addonVersionState = state  # type: Dict[tuple, CompatValues]
 
+	@classmethod
 	def setAddonCompatibility(
-			self,
+			cls,
 			addon,
 			NVDAVersion=CURRENT_NVDA_VERSION,
 			compatibilityStateValue=compatValues.UNKNOWN
@@ -89,6 +89,7 @@ class AddonCompatibilityState(object):
 		@param compatibilityStateValue: Unknown allows falling back to auto deduced value
 		@return:
 		"""
+		cls.initialise()
 		acceptedUserSetCompatVals = [
 			compatValues.UNKNOWN,
 			compatValues.MANUALLY_SET_COMPATIBLE,
@@ -96,24 +97,26 @@ class AddonCompatibilityState(object):
 		]
 		assert compatibilityStateValue in acceptedUserSetCompatVals
 
-		autoDeduced = self._getAutoDeduducedAddonCompat(addon, NVDAVersion)
+		autoDeduced = cls._getAutoDeduducedAddonCompat(addon, NVDAVersion)
 
 		# we only use the provided value if the compatibility can not be automatically deduced.
 		if autoDeduced is not compatValues.UNKNOWN:
-			self._setAddonCompat(addon, NVDAVersion, autoDeduced)
+			cls._setAddonCompat(addon, NVDAVersion, autoDeduced)
 		else:
-			self._setAddonCompat(addon, NVDAVersion, compatibilityStateValue)
-		self._persistence.saveState(self.addonVersionState)
+			cls._setAddonCompat(addon, NVDAVersion, compatibilityStateValue)
+		cls._persistence.saveState(cls._addonVersionState)
 
-	def _setAddonCompat(self, addon, NVDAVersionTuple, compat):
+	@classmethod
+	def _setAddonCompat(cls, addon, NVDAVersionTuple, compat):
 		addonKey = createVersionStateKey(
 			addonName=addon.name,
 			addonVersion=addon.version,
 			NVDAVersionTuple=NVDAVersionTuple
 		)
-		self.addonVersionState[addonKey] = compat
+		cls._addonVersionState[addonKey] = compat
 
-	def _getAutoDeduducedAddonCompat(self, addon, NVDAVersionTuple):
+	@classmethod
+	def _getAutoDeduducedAddonCompat(cls, addon, NVDAVersionTuple):
 		if not hasAddonGotRequiredSupport(addon, version=NVDAVersionTuple):
 			return compatValues.AUTO_DEDUCED_INCOMPATIBLE
 		elif isAddonTested(addon, version=NVDAVersionTuple):
@@ -121,14 +124,16 @@ class AddonCompatibilityState(object):
 		else:
 			return compatValues.UNKNOWN
 
-	def getAddonCompatibility(self, addon, NVDAVersionTuple=CURRENT_NVDA_VERSION):
+	@classmethod
+	def getAddonCompatibility(cls, addon, NVDAVersionTuple=CURRENT_NVDA_VERSION):
 		"""
 		Get the addon compatibility for a given version of NVDA
 		@param addon: The addon to check for compatibility
 		@param NVDAVersionTuple: The NVDA version tuple eg (2018.1.1)
 		@return: CompatValues
 		"""
-		autoCompat = self._getAutoDeduducedAddonCompat(addon, NVDAVersionTuple)
+		cls.initialise()
+		autoCompat = cls._getAutoDeduducedAddonCompat(addon, NVDAVersionTuple)
 		if autoCompat is not compatValues.UNKNOWN:
 			return autoCompat
 
@@ -138,7 +143,7 @@ class AddonCompatibilityState(object):
 			NVDAVersionTuple=NVDAVersionTuple
 		)
 		try:
-			return self.addonVersionState[addonKey]
+			return cls._addonVersionState[addonKey]
 		except KeyError:
 			return autoCompat
 
@@ -163,9 +168,9 @@ def isAddonConsideredIncompatible(addon, version=CURRENT_NVDA_VERSION):
 	return not isAddonConsideredIncompatible(addon, version)
 
 def isAddonConsideredCompatible(addon, version=CURRENT_NVDA_VERSION):
-	compat = addonCompatState.getAddonCompatibility(addon, version)
+	compat = AddonCompatibilityState.getAddonCompatibility(addon, version)
 	return bool(compat & compatValues.COMPATIBLE_BIT)
 
 def isAddonCompatibilityKnown(addon, version=CURRENT_NVDA_VERSION):
-	compat = addonCompatState.getAddonCompatibility(addon, version)
+	compat = AddonCompatibilityState.getAddonCompatibility(addon, version)
 	return bool(compat & compatValues.KNOWN_MASK)

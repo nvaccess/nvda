@@ -12,7 +12,7 @@ import core
 import config
 import gui
 from addonHandler import addonVersionCheck, compatValues
-from addonHandler.addonVersionCheck import CURRENT_NVDA_VERSION
+from addonHandler.addonVersionCheck import CURRENT_NVDA_VERSION, AddonCompatibilityState
 from logHandler import log
 import addonHandler
 import globalVars
@@ -455,7 +455,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# addons that have become incompat should be disabled, and a restart prompt shown
 			# addons that have become compat should be visible, but not enabled unless they already were.
 			from addonHandler.compatValues import MANUALLY_SET_INCOMPATIBLE
-			getAddonCompatibility = addonVersionCheck.addonCompatState.getAddonCompatibility
+			getAddonCompatibility = AddonCompatibilityState.getAddonCompatibility
 			manuallySetIncompatibleAddons = addonHandler.getAvailableAddons(
 				filterFunc=lambda addon: ( MANUALLY_SET_INCOMPATIBLE == getAddonCompatibility(addon, CURRENT_NVDA_VERSION))
 			)
@@ -506,11 +506,10 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			raise RuntimeError("Attempting to open multiple IncompatibleAddonsDialog instances")
 		IncompatibleAddonsDialog._instance = weakref.ref(self)
 
-		compatState = addonHandler.addonVersionCheck.addonCompatState
 		if displayManuallySetCompatibilityAddons:
 			self.unknownCompatibilityAddonsList = list(addonHandler.getAvailableAddons(
 				filterFunc=lambda addon: (
-						compatState.getAddonCompatibility(addon, NVDAVersion) in
+						AddonCompatibilityState.getAddonCompatibility(addon, NVDAVersion) in
 						[
 							compatValues.UNKNOWN,
 							compatValues.MANUALLY_SET_INCOMPATIBLE,
@@ -591,8 +590,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				# if the last tested NVDA version is not specified.
 				_("not specified")
 			))
-			compatState = addonVersionCheck.addonCompatState
-			compatValue = compatState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION)
+			compatValue = AddonCompatibilityState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION)
 			shouldCheck = compatValue == compatValues.MANUALLY_SET_COMPATIBLE
 			self.addonsList.CheckItem(idx, check=shouldCheck)
 		# select the given active addon or the first addon if not given
@@ -610,8 +608,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			checked = self.addonsList.IsChecked(itemIndex)
 			compatValue = compatValues.MANUALLY_SET_COMPATIBLE if checked else compatValues.MANUALLY_SET_INCOMPATIBLE
 			addon = self.unknownCompatibilityAddonsList[itemIndex]
-			compatState = addonVersionCheck.addonCompatState
-			compatState.setAddonCompatibility(addon, compatibilityStateValue=compatValue)
+			AddonCompatibilityState.setAddonCompatibility(addon, compatibilityStateValue=compatValue)
 
 	def onContinue(self, evt):
 		try:

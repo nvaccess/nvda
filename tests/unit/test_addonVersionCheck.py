@@ -11,6 +11,7 @@ import versionInfo
 from addonHandler import AddonBase
 from addonHandler import addonVersionCheck
 from addonHandler import compatValues
+from addonHandler.addonVersionCheck import AddonCompatibilityState
 
 def versionString(version):
 	return "{}.{}.{}".format(*version)
@@ -127,13 +128,13 @@ class TestAddonCompatibilityState(unittest.TestCase):
 				msg = "Unable to find addon key in state dict. Key: {} Dict contents: {}".format(addonKey, self.state)
 				raise AssertionError(msg)
 
-	_compatValStrings = [
-		"UNKNOWN",
-		"AUTO_DEDUCED_COMPATIBLE",
-		"AUTO_DEDUCED_INCOMPATIBLE",
-		"MANUALLY_SET_COMPATIBLE",
-		"MANUALLY_SET_INCOMPATIBLE"
-	]
+	_compatValStrings = {
+		compatValues.UNKNOWN: "UNKNOWN",
+		compatValues.AUTO_DEDUCED_COMPATIBLE: "AUTO_DEDUCED_COMPATIBLE",
+		compatValues.AUTO_DEDUCED_INCOMPATIBLE: "AUTO_DEDUCED_INCOMPATIBLE",
+		compatValues.MANUALLY_SET_COMPATIBLE: "MANUALLY_SET_COMPATIBLE",
+		compatValues.MANUALLY_SET_INCOMPATIBLE: "MANUALLY_SET_INCOMPATIBLE"
+	}
 
 	def assertCompatValuesMatch(self, actual, expected):
 		if actual != expected:
@@ -147,90 +148,88 @@ class TestAddonCompatibilityState(unittest.TestCase):
 		self.mockStateSaver = self.MockStateSaver(NVDAVersionTuple=CurrentNVDAVersionTuple)
 		if addon is not None and compatVal is not None:
 			self.mockStateSaver.setReturnOnLoad(addon, compatVal)
-		self.compatState = addonVersionCheck.AddonCompatibilityState(
-			statePersistence=self.mockStateSaver
-		)
+		AddonCompatibilityState.initialise(statePersistence=self.mockStateSaver, forceReInit=True)
 
 	def setUp(self):
 		self.resetMockStateSaver()
 
 	def test_getAddonCompatibility_noState_testedAndSupported_compatible(self):
 		compatibleAddon = mockAddon()
-		compat = self.compatState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_COMPATIBLE)
 
 	def test_getAddonCompatibility_noState_testedNotSupported_incompatible(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
-		compat = self.compatState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_INCOMPATIBLE)
 
 	def test_getAddonCompatibility_noState_notTestedNotSupported_incompatible(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString, lastTestedNVDAVersion=LastNVDAVersionString)
-		compat = self.compatState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_INCOMPATIBLE)
 
 	def test_getAddonCompatibility_noState_notTestedWithSupport_unknown(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
-		compat = self.compatState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.UNKNOWN)
 
 	def test_getAddonCompatibility_stateUnknown_testedAndSupported_compatible(self):
 		compatibleAddon = mockAddon()
 		self.resetMockStateSaver(compatibleAddon, compatValues.UNKNOWN)
-		compat = self.compatState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_COMPATIBLE)
 
 	def test_getAddonCompatibility_stateUnknown_incompatible(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
 		self.resetMockStateSaver(addonNotSupported, compatValues.UNKNOWN)
-		compat = self.compatState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_INCOMPATIBLE)
 
 	def test_getAddonCompatibility_stateUnknown_unknown(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
 		self.resetMockStateSaver(notTestedAddon, compatValues.UNKNOWN)
-		compat = self.compatState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.UNKNOWN)
 
 	def test_getAddonCompatibility_whiteListed_compatible(self):
 		compatibleAddon = mockAddon()
 		self.resetMockStateSaver(compatibleAddon, compatValues.MANUALLY_SET_COMPATIBLE)
-		compat = self.compatState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_COMPATIBLE)  # auto deduced compat trumps manual set compat
 
 	def test_getAddonCompatibility_whiteListed_untestedWithSupport_manuallySetCompatible(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
 		self.resetMockStateSaver(notTestedAddon, compatValues.MANUALLY_SET_COMPATIBLE)
-		compat = self.compatState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.MANUALLY_SET_COMPATIBLE)
 
 	def test_getAddonCompatibility_whiteListed_testedWithoutSupport_incompatible(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
 		self.resetMockStateSaver(addonNotSupported, compatValues.MANUALLY_SET_COMPATIBLE)
-		compat = self.compatState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_INCOMPATIBLE)  # auto deduced incompat trumps manual set compat
 
 	def test_getAddonCompatibility_blackListed_testedWithSupport_compatible(self):
 		compatibleAddon = mockAddon()
 		self.resetMockStateSaver(compatibleAddon, compatValues.MANUALLY_SET_INCOMPATIBLE)
-		compat = self.compatState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(compatibleAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_COMPATIBLE)  # auto deduced compat trumps manual set incompat
 
 	def test_getAddonCompatibility_blackListed_untestedWithSupport_manuallySetIncompatible(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
 		self.resetMockStateSaver(notTestedAddon, compatValues.MANUALLY_SET_INCOMPATIBLE)
-		compat = self.compatState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(notTestedAddon, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.MANUALLY_SET_INCOMPATIBLE)
 
 	def test_getAddonCompatibility_blackListed_testedWithoutSupport_incompatible(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
 		self.resetMockStateSaver(addonNotSupported, compatValues.MANUALLY_SET_INCOMPATIBLE)
-		compat = self.compatState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
+		compat = AddonCompatibilityState.getAddonCompatibility(addonNotSupported, CurrentNVDAVersionTuple)
 		self.assertCompatValuesMatch(compat, compatValues.AUTO_DEDUCED_INCOMPATIBLE)  # auto deduced incompt trumps manual set incompat
 
 	def test_setAddonCompatibility_testedWithSupportToUnknown_compatibleStored(self):
 		compatibleAddon = mockAddon()
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			compatibleAddon,
 			NVDAVersion=CurrentNVDAVersionTuple
 		)
@@ -239,7 +238,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_testedWithoutSupportToUnknown_incompatibleStored(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			addonNotSupported,
 			NVDAVersion=CurrentNVDAVersionTuple
 		)
@@ -248,7 +247,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_untestedWithoutSupportToUnknown_incompatibleStored(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString, lastTestedNVDAVersion=LastNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			addonNotSupported,
 			NVDAVersion=CurrentNVDAVersionTuple
 		)
@@ -257,7 +256,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_untestedWithSupportToUnknown_unknownStored(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			notTestedAddon,
 			NVDAVersion=CurrentNVDAVersionTuple
 		)
@@ -266,7 +265,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_testedWithSupportToCompatible_compatibleStored(self):
 		compatibleAddon = mockAddon()
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			compatibleAddon,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_COMPATIBLE
@@ -276,7 +275,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_testedWithoutSupportToCompatible_incompatibleStored(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			addonNotSupported,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_COMPATIBLE
@@ -286,7 +285,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_untestedWithoutSupportToCompatible_incompatibleStored(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString, lastTestedNVDAVersion=LastNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			addonNotSupported,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_COMPATIBLE
@@ -296,7 +295,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_untestedWithSupportToCompatible_manuallySetCompatibleStored(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			notTestedAddon,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_COMPATIBLE
@@ -306,7 +305,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_testedWithSupportToIncompatible_compatibleStored(self):
 		compatibleAddon = mockAddon()
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			compatibleAddon,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
@@ -316,7 +315,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_testedWithoutSupportToIncompatible_incompatibleStored(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			addonNotSupported,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
@@ -326,7 +325,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_untestedWithoutSupportToIncompatible_incompatibleStored(self):
 		addonNotSupported = mockAddon(minNVDAVersion=NextNVDAVersionString, lastTestedNVDAVersion=LastNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			addonNotSupported,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
@@ -336,7 +335,7 @@ class TestAddonCompatibilityState(unittest.TestCase):
 
 	def test_setAddonCompatibility_untestedWithSupportToIncompatible_manuallySetIncompatibleStored(self):
 		notTestedAddon = mockAddon(lastTestedNVDAVersion=LastNVDAVersionString)
-		self.compatState.setAddonCompatibility(
+		AddonCompatibilityState.setAddonCompatibility(
 			notTestedAddon,
 			NVDAVersion=CurrentNVDAVersionTuple,
 			compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
