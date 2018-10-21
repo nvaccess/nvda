@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/freedomScientific.py
+			#brailleDisplayDrivers/freedomScientific.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -9,7 +9,7 @@
 Braille display driver for Freedom Scientific braille displays.
 """
 
-from cStringIO import StringIO
+from six import BytesIO
 import itertools
 import braille
 import inputCore
@@ -205,7 +205,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _onReceive(self, data):
 		if self.isUsb:
-			data = StringIO(data)
+			data = BytesIO(data)
 			packetType = data.read(1)
 		else:
 			packetType = data
