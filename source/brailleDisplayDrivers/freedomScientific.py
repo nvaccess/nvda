@@ -447,7 +447,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		"brailleSpaceBar",
 		# GDF keys (byte 3)
 		"leftGDFButton", "rightGDFButton",
-		None,
+		None, None,
 		"leftBumperBarUp", "leftBumperBarDown", "rightBumperBarUp", "rightBumperBarDown",
 	]
 	extendedKeyLabels = [
