@@ -30,13 +30,22 @@ using namespace Windows::Storage::Streams;
 using namespace Microsoft::WRL;
 using namespace Windows::Media;
 using namespace Windows::Foundation::Collections;
+using Windows::Foundation::Metadata::ApiInformation;
+
+bool __stdcall ocSpeech_supportsProsodyOptions() {
+	return ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 5, 0);
+}
 
 OcSpeech* __stdcall ocSpeech_initialize() {
 	auto instance = new OcSpeech;
 	instance->synth = ref new SpeechSynthesizer();
-	auto options = instance->synth->Options;
-	options->AppendedSilence = SpeechAppendedSilence::Min;
-	options->PunctuationSilence = SpeechPunctuationSilence::Min;
+	if (ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7, 0)) {
+		auto options = instance->synth->Options;
+		options->AppendedSilence = SpeechAppendedSilence::Min;
+		options->PunctuationSilence = SpeechPunctuationSilence::Min;
+	} else {
+		LOG_DEBUGWARNING(L"Appended/PunctuationSilence not supported");
+	}
 	return instance;
 }
 
