@@ -72,12 +72,6 @@ class SynthDriver(SynthDriver):
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
-	supportedSettings = (
-		SynthDriver.VoiceSetting(),
-		SynthDriver.RateSetting(),
-		SynthDriver.PitchSetting(),
-		SynthDriver.VolumeSetting(),
-	)
 
 	@classmethod
 	def check(cls):
@@ -93,26 +87,30 @@ class SynthDriver(SynthDriver):
 		super(SynthDriver, self).__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
+		self.supportedSettings = [SynthDriver.VoiceSetting()]
+		if self._dll.ocSpeech_supportsProsodyOptions():
+			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
+			self._dll.ocSpeech_getVolume.restype = ctypes.c_double
+			self._dll.ocSpeech_getRate.restype = ctypes.c_double
+			self.supportedSettings.extend((
+				SynthDriver.RateSetting(),
+				SynthDriver.PitchSetting(),
+				SynthDriver.VolumeSetting(),
+			))
+		else:
+			log.debugWarning("Prosody options not supported")
 		self._handle = self._dll.ocSpeech_initialize()
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player= None
-		self._dll.ocSpeech_getPitch.restype = ctypes.c_double
-		self._dll.ocSpeech_getVolume.restype = ctypes.c_double
-		self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		# Initialize state.
 		self._queuedSpeech = []
 		self._wasCancelled = False
 		self._isProcessing = False
 		# Initialize the voice to a sane default
 		self.voice=self._getDefaultVoice()
-		# Set initial values for parameters that can't be queried.
-		# This initialises our cache for the value.
-		self.rate = 50
-		self.pitch = 50
-		self.volume = 100
 
 	def _maybeInitPlayer(self, wav):
 		"""Initialize audio playback based on the wave header provided by the synthesizer.

@@ -23,6 +23,7 @@ typedef struct {
 } OcSpeech;
 
 extern "C" {
+export bool __stdcall ocSpeech_supportsProsodyOptions();
 export OcSpeech* __stdcall ocSpeech_initialize();
 export void __stdcall ocSpeech_terminate(OcSpeech* instance);
 export void __stdcall ocSpeech_setCallback(OcSpeech* instance, ocSpeech_Callback fn);
