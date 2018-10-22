@@ -34,6 +34,9 @@ using namespace Windows::Foundation::Collections;
 OcSpeech* __stdcall ocSpeech_initialize() {
 	auto instance = new OcSpeech;
 	instance->synth = ref new SpeechSynthesizer();
+	auto options = instance->synth->Options;
+	options->AppendedSilence = SpeechAppendedSilence::Min;
+	options->PunctuationSilence = SpeechPunctuationSilence::Min;
 	return instance;
 }
 
