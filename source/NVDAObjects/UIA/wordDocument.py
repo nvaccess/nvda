@@ -89,6 +89,25 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 
 class WordDocumentTextInfo(UIATextInfo):
 
+	def _get_locationText(self):
+		rects=self._rangeObj.getBoundingRectangles()
+		left=rects[0]
+		top=rects[1]
+		# UIA has no good way yet to convert coordinates into user-configured distances such as inches or centimetres.
+		# Nor can it give us specific distances from the edge of a page.
+		# Therefore for now, get the screen coordinates, and if the word object model is available, use our legacy code to get the location text.
+		om=self.obj.WinwordWindowObject
+		if not om:
+			return super(WordDocumentTextInfo,self).locationText
+		try:
+			r=om.rangeFromPoint(left,top)
+		except (COMError,NameError):
+			log.debugWarning("MS Word object model does not support rangeFromPoint")
+			return super(WordDocumentTextInfo,self).locationText
+		from  NVDAObjects.window.winword import WordDocumentTextInfo as WordObjectModelTextInfo
+		i=WordObjectModelTextInfo(self.obj,None,_rangeObj=r)
+		return i.locationText
+
 	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
 		if UIAFormatUnits is None and self.UIAFormatUnits:
 			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types 

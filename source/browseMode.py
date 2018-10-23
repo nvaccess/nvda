@@ -10,6 +10,7 @@ import winsound
 import time
 import weakref
 import wx
+import core
 from logHandler import log
 import documentBase
 import review
@@ -278,6 +279,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_CHECKMENUITEM,
 		})
 
+	IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES = frozenset({
+		controlTypes.ROLE_MENUITEM,
+		controlTypes.ROLE_RADIOMENUITEM,
+		controlTypes.ROLE_CHECKMENUITEM,
+		})
+
 	def shouldPassThrough(self, obj, reason=None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
@@ -471,6 +478,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
+			return gesture.send()
+		# #3215 ARIA menus should get the Escape key unconditionally so they can handle it without invoking browse mode first
+		obj = api.getFocusObject()
+		if obj and obj.role in self.IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES:
 			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
@@ -1042,7 +1053,9 @@ class ElementsListDialog(wx.Dialog):
 				speech.cancelSpeech()
 				item.moveTo()
 				item.report()
-			wx.CallLater(100, move)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(100, move)
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 

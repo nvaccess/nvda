@@ -4,6 +4,38 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2018.4 =
+
+== Novas Características ==
+- Novas tabelas braille: Chinês (China, Mandarim), grau 1 e grau 2. (#5553)
+
+
+== Alterações ==
+- "Anunciar balões de ajuda" na caixa de diálogo "Apresentações de objetos" foi renomeado para "Anunciar notificações" para incluir anúncios de notificações do sistema no Windows 8 e versões posteriores. (#5789)
+- Nas configurações do teclado do NVDA, as caixas de seleção para ativar ou desativar as teclas modificadoras do NVDA agora são exibidas em uma lista, e não como caixas de seleção separadas.
+- O NVDA não apresentará mais informações redundantes ao ler o relógio da bandeja do sistema ""[system tray]"" em algumas versões do Windows. (#4364)
+- Atualizado o transcritor braille liblouis para a versão 3.7.0. (#8697)
+
+
+== Correção de Falhas ==
+- No Outlook 2016/365, a categoria e o status do sinalizador são informados para mensagens. (#8603)
+- Quando o NVDA está configurado para idiomas como o Quirguiz, o Mongol ou o Macedônio, ele não exibe mais uma caixa de diálogo no aviso de inicialização de que o idioma não é suportado pelo sistema operacional. (#8064)
+- Mover o mouse para o objeto de navegação agora moverá com muito mais precisão o mouse para a posição do modo de navegação no Mozilla Firefox, Google Chrome e Acrobat Reader DC. (#6460)
+- Interação com caixas de combinação na Web no Firefox, no Chrome e no Internet Explorer foi aprimorada. (#8664)
+
+
+== Alterações Específicas para Desenvolvedores ==
+- O gui.nvdaControls agora contém duas classes para criar listas acessíveis com caixas de seleção. (#7325)
+ - CustomCheckListBox é uma subclasse acessível de wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adiciona caixas de seleção acessíveis a um AutoWidthColumnListCtrl, que em si é baseado em wx.ListCtrl.
+- Se você precisar tornar um widget wx acessível que ainda não esteja, é possível fazer isso usando uma instância de gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Veja a implementação do gui.nvdaControls.ListCtrlAccPropServer para mais informações.
+
+
+== Alterações Específicas para Desenvolvedores ==
+- Configobj atualizado para 5.1.0dev commit 5b5de48a. (#4470)
+
+
 = 2018.3 =
 Os destaques desta versão incluem a detecção automática de muitas Linhas Braille, o suporte a novos recursos do Windows 10 incluindo o Painel de entrada de Emojis do Windows 10, e muitas outras correções de falhas.
 
@@ -59,6 +91,7 @@ Os destaques desta versão incluem a detecção automática de muitas Linhas Bra
  - Rolagem de cursor em braille agora funciona corretamente quando em uma lista em um documento do Word. (#7971)
  - Os marcadores/números inseridos recentemente em um documento do Word são informados corretamente em fala e braille. (#7970)
 - Em Windows 10 1803 e posteriores, agora é possível instalar complementos se o recurso "Usar Unicode UTF-8 para suporte de linguagem mundial" estiver ativado. (#8599)
+- O NVDA não irá mais tornar o iTunes 12.9 e mais recente completamente inutilizável para interagir. (#8744)
  
 
 == Alterações Específicas para Desenvolvedores ==

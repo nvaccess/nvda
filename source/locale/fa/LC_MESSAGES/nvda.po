@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 00:10+1000\n"
-"PO-Revision-Date: 2018-08-11 05:30+0330\n"
+"POT-Creation-Date: 2018-09-18 14:57+1000\n"
+"PO-Revision-Date: 2018-09-19 13:26+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -1137,6 +1137,16 @@ msgstr "بریلِ یونیکُد"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "ویتنامی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "چینی (چین، ماندارین) درجه ۱"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "چینی (چین، ماندارین) درجه ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4588,11 +4598,11 @@ msgstr "numpad delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
-msgstr "جهت‌نمای چپ"
+msgstr "جهتنمای چپ"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
-msgstr "جهت‌نمای راست"
+msgstr "جهتنمای راست"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "up arrow"
@@ -4600,7 +4610,7 @@ msgstr "جهتنمای بالا"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "down arrow"
-msgstr "جهت‌نمای پایین"
+msgstr "جهتنمای پایین"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
@@ -6844,36 +6854,6 @@ msgstr "خوانده نشده"
 msgid "Editing profile {profile}"
 msgstr "گروهِ {profile} در حالِ ویرایش"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "پرچمِ بنفش"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "پرچمِ نارنجی"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "پرچمِ سبز"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "پرچمِ زرد"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "پرچمِ آبی"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "پرچمِ قرمز"
-
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "پیام با اهمیتِ بالا"
@@ -8625,20 +8605,10 @@ msgstr "استفاده از قابلیت &هِجّی کردن در صورت پش
 msgid "Keyboard"
 msgstr "صفحه‌کلید"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "استفاده از CapsLock به عنوان یک کلیدِ مب&دلِ NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "استفاده از اینْسِرتِ صفحه کلیدِ ا&عداد به عنوانِ یک کلیدِ مبدلِ NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "استفاده از اینْسِرتِ اص&لی به عنوانِ یک کلیدِ مبدل NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "کلیدهای مبدل NVDA را &انتخاب کنید"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8801,8 +8771,8 @@ msgstr "اعلامِ پیام‌های &راهنما"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "اعلامِ &بالن‌های راهنما"
+msgid "Report &notifications"
+msgstr "اعلامِ نوتیفیکِیشِن‌ها"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10868,6 +10838,36 @@ msgstr "فاصله‌ی خطّیِ دوبرابر"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "فاصله‌ی یِکُنیم خطّی"
+
+#~ msgid "purple flag"
+#~ msgstr "پرچمِ بنفش"
+
+#~ msgid "Orange flag"
+#~ msgstr "پرچمِ نارنجی"
+
+#~ msgid "Green flag"
+#~ msgstr "پرچمِ سبز"
+
+#~ msgid "Yellow flag"
+#~ msgstr "پرچمِ زرد"
+
+#~ msgid "Blue flag"
+#~ msgstr "پرچمِ آبی"
+
+#~ msgid "Red flag"
+#~ msgstr "پرچمِ قرمز"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "استفاده از CapsLock به عنوان یک کلیدِ مب&دلِ NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "استفاده از اینْسِرتِ صفحه کلیدِ ا&عداد به عنوانِ یک کلیدِ مبدلِ NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "استفاده از اینْسِرتِ اص&لی به عنوانِ یک کلیدِ مبدل NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "اعلامِ &بالن‌های راهنما"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"
