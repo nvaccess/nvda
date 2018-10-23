@@ -909,7 +909,6 @@ class AggregatedSection(object):
 		self._cache[key] = val
 		return val
 
-<<<<<<< HEAD
 	def items(self):
 		keys = set()
 		# Start with the cached items.
