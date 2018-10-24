@@ -1230,7 +1230,22 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				return
 			if obj==self.rootNVDAObject:
 				return
-			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+			# Set focus to this object, if
+			if (
+				# We actually found an object to set focus to.
+				focusObj
+				# And there are no future focus events already queued:
+				# If there were then setting focus here would be a waste of time as the focus would be replaced anyway.
+				and not eventHandler.isPendingEvents("gainFocus")
+				# And this object is not the root of the document:
+				# Setting focus to the document itself is not what the user would ever expect.
+				and focusObj!=self.rootNVDAObject 
+				# This object does not already have focus
+				and focusObj != api.getFocusObject() 
+				# And Only if this browseMode implementation actually wants to set focus to this kind of object:
+				# For instance, we may wish to set focus to a button, but not a div (if it does not have a tabindex).
+				and self._shouldSetFocusToObj(focusObj)
+			):
 				self.setFocusToObj(focusObj)
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
@@ -1449,7 +1464,17 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		except LookupError:
 			lastFocusInfo=None
 		#We only want to update the caret and speak the field if we're not in the same one as before
-		if not self._hadFirstGainFocus or not lastFocusInfo or focusInfo.compareEndPoints(lastFocusInfo,"startToStart")!=0 or focusInfo.compareEndPoints(lastFocusInfo,"endToEnd")>0:
+		if (
+			# We always want to report and update if this is the very first focus event.
+			not self._hadFirstGainFocus
+			# We should alrways report and update if the last focus no longer exists (I.e. it no longer has a position in the document):
+			or not lastFocusInfo 
+			# We should report and update if The new focus starts at a different position to the last focus
+			or focusInfo.compareEndPoints(lastFocusInfo,"startToStart")!=0
+			# We should report and update if the new focus ends after the last focus:
+			# It is either at an entirely different position, or it is wider.
+			or focusInfo.compareEndPoints(lastFocusInfo,"endToEnd")>0
+		):
 			# The newly focused node is not due to the caret moving.
 			oldPassThrough=self.passThrough
 			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
