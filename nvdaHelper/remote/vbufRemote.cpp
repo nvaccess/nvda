@@ -32,7 +32,10 @@ const map<wstring,VBufBackend_create_proc> VBufBackendFactoryMap {
 extern "C" {
 
 VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int docHandle, int ID, const wchar_t* backendName) {
-
+	if(!backendName) {
+		LOG_ERROR(L"backendName is NULL");
+		return nullptr;
+	}
 	auto i=VBufBackendFactoryMap.find(backendName);
 	if(i==VBufBackendFactoryMap.end()) {
 		LOG_ERROR(L"Unknown backend: "<<backendName);
@@ -46,7 +49,7 @@ VBufRemote_bufferHandle_t VBufRemote_createBuffer(handle_t bindingHandle, int do
 	backend->initialize();
 	// Stop nvdaHelperRemote from being unloaded while a backend exists.
 	HINSTANCE tempHandle=nullptr;
-	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&tempHandle)) {
+	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,reinterpret_cast<LPCWSTR>(dllHandle),&tempHandle)) {
 		LOG_ERROR(L"Could not keep nvdaHelperRemote loaded for backend!");
 	}
 	return (VBufRemote_bufferHandle_t)backend;

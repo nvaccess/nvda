@@ -30,8 +30,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-UINT WM_HTML_GETOBJECT=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
-
 void incBackendLibRefCount() {
 	HMODULE h=NULL;
 	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&h);
@@ -1307,10 +1305,15 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	return parentNode;
 }
 
+UINT getHTMLWindowMessage() {
+	static UINT wm=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
+	return wm;
+}
+
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	LOG_DEBUG(L"Getting document from window "<<docHandle);
-	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),WM_HTML_GETOBJECT,0,0);
+	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),getHTMLWindowMessage(),0,0);
 	if(res==0) {
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
