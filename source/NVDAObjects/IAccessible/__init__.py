@@ -3,7 +3,9 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes.automation import IEnumVARIANT, VARIANT
 from comtypes import COMError, IServiceProvider, GUID
+from comtypes.hresult import S_OK
 import ctypes
 import os
 import re
@@ -1213,6 +1215,38 @@ the NVDAObject for IAccessible
 
 	def _get_columnHeaderText(self):
 		return self._tableHeaderTextHelper("column")
+
+	def _get_selectionContainer(self):
+		if self.table:
+			return self.table
+
+	def getSelectedItemsCount(self,maxCount):
+		# To fetch the number of selected items, we first try MSAA's accSelection, but if that fails in any way, we fall back to using IAccessibleTable2's nSelectedCells, if we are on an IAccessible2 table.
+		# Currently Chrome does not implement accSelection, thus for Google Sheets we must use nSelectedCells when on a table.
+		try:
+			sel=self.IAccessibleObject.accSelection
+		except COMError as e:
+			log.debugWarning("Error fetching accSelection, %s"%e)
+			sel=None
+		if sel:
+			try:
+				enumObj=sel.QueryInterface(IEnumVARIANT)
+			except COMError as e:
+				enumObj=None
+			if enumObj:
+				numItemsFetched=ctypes.c_ulong()
+				itemsBuf=(VARIANT*(maxCount+1))()
+				res=enumObj._IEnumVARIANT__com_Next(maxCount,itemsBuf,ctypes.byref(numItemsFetched))
+				if res!=S_OK:
+					return numItemsFetched.value if numItemsFetched.value<=maxCount else sys.maxint
+				else:
+					log.debugWarning("Error in IEnumVARIANT::Next, code %s"%res)
+		if self.IAccessibleTable2Object:
+			try:
+				return self.IAccessibleTable2Object.nSelectedCells
+			except COMError as e:
+				log.debugWarning("Error calling IAccessibleTable2::nSelectedCells, %s"%e)
+		return 0
 
 	def _get_table(self):
 		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
