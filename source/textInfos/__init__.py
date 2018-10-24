@@ -10,6 +10,7 @@ In order to access text content for a widget, a L{TextInfo} implementation is re
 A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
 """
 
+import operator
 import weakref
 import re
 import baseObject
@@ -511,6 +512,22 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def _get_start(self):
+		""" Returns an object representing the start of this textInfo, which can be used for ordered comparisons against the end of another textInfo of the same type."""
+		return TextInfoEndpoint(self,True)
+
+	def _set_start(self,other):
+		"""Updates this textInfo such that its start is positioned at the given end of another textInfo of the same type.""" 
+		self.start.update(other)
+
+	def _get_end(self):
+		""" Returns an object representing the end of this textInfo, which can be used for ordered comparisons against the end of another textInfo of the same type."""
+		return TextInfoEndpoint(self,False)
+
+	def _set_end(self,other):
+		"""Updates this textInfo such that its end is positioned at the given end of another textInfo of the same type.""" 
+		self.end.update(other)
+
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
@@ -532,3 +549,63 @@ class DocumentWithPageTurns(baseObject.ScriptableObject):
 		@raise RuntimeError: If there are no further pages.
 		"""
 		raise NotImplementedError
+
+class TextInfoEndpoint(object):
+	"""
+	Represents one end of a TextInfo object, allowing ordering comparison with an end of another TextInfo object of the same type, via < <= ==, >= > and !=.
+	"""
+
+	def __init__(self,textInfo,isStart=True):
+		"""
+		@param textInfo: The textInfo whos endpoint should be represented.
+		@type textInfo: L{TextInfo}
+		@param isStart: true if this endpoint represents the start of the given textInfo, or false if it represents the end.
+		@type isStart: bool
+		"""
+		self.textInfo=textInfo
+		self.isStart=isStart
+
+	def _ensureValidOther(self,other):
+		if not isinstance(other,TextInfoEndpoint):
+			raise TypeError("%s is not a TextInfoEndpoint"%other)
+		if type(other.textInfo) is not type(self.textInfo):
+			raise TypeError("%s is not a %s"%(other.textInfo,type(self.textInfo)))
+
+	endpointStringTable={
+		(True,True):"startToStart",
+		(True,False):"startToEnd",
+		(False,True):"endToStart",
+		(False,False):"endToEnd",
+	}
+
+	def _getDelta(self,other):
+		self._ensureValidOther(other)
+		return self.textInfo.compareEndPoints(other.textInfo,self.endpointStringTable[(self.isStart,other.isStart)])
+
+	def __lt__(self,other):
+		return operator.lt(self._getDelta(other),0)
+
+	def __le__(self,other):
+		return operator.ge(self._getDelta(other),0)
+
+	def __eq__(self,other):
+		return operator.eq(self._getDelta(other),0)
+
+	def __ge__(self,other):
+		return operator.ge(self._getDelta(other),0)
+
+	def __gt__(self,other):
+		return operator.gt(self._getDelta(other),0)
+
+	def __ne__(self,other):
+		return operator.ne(self._getDelta(other),0)
+
+	def update(self,other):
+		"""Updates the enclosing textInfo of this endpoint such that this endpoint now is positioned at the given endpoint.""" 
+		self._ensureValidOther(other)
+		self.textInfo.setEndPoint(other.textInfo,self.endpointStringTable[(self.isStart,other.isStart)])
+
+	def __repr__(self):
+		endString="Start" if self.isStart else "End"
+		return "%s of %s object at %X"%(endString,type(self.textInfo),id(self))
+
