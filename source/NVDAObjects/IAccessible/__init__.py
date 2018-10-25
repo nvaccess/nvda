@@ -1219,6 +1219,7 @@ the NVDAObject for IAccessible
 	def _get_selectionContainer(self):
 		if self.table:
 			return self.table
+		return super(IAccessible,self).selectionContainer
 
 	def getSelectedItemsCount(self,maxCount):
 		# To fetch the number of selected items, we first try MSAA's accSelection, but if that fails in any way, we fall back to using IAccessibleTable2's nSelectedCells, if we are on an IAccessible2 table.
