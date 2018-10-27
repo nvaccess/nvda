@@ -660,10 +660,16 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	current=field.get('current', None)
 	placeholder=field.get('placeholder', None)
 	roleText=field.get('roleText')
+	name=field.get('name')
+	alwaysReportName=field.get('alwaysReportName')
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
-		# The only item we report for these fields is clickable, if present.
+		# Always braille the name of a field if it is forced.
+		# This is for the fallback case where a div or a span (which has no other presentation) has its name reported if explicitly set by the author using aria-label etc. 
+		if alwaysReportName and name and field.get("_startOfNode"):
+			text.append(name)
+		#  report  clickable if present.
 		if controlTypes.STATE_CLICKABLE in states:
 			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
 		if current:
