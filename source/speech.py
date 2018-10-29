@@ -1109,7 +1109,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
 	childControlCount=int(attrs.get('_childcontrolcount',"0"))
-	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
+	alwaysReportName=attrs.get('alwaysReportName',False)
+	alwaysReportDescription=attrs.get('alwaysReportDescription',False)
+	isBlock=attrs.get('_isBlock',False)
+	if reason==controlTypes.REASON_FOCUS or alwaysReportName:
 		name=attrs.get('name',"")
 	else:
 		name=""
@@ -1225,14 +1228,17 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
 		out = []
+		# Always speak the name of a field if it is forced.
+		# This is for the fallback case where a div or a span (which has no other presentation) has its name announced if explicitly set by the author using aria-label etc. 
+		if alwaysReportName and nameText:
+			out.append(nameText)
 		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
 			# Clickable.
 			out.append(getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE])))
 		if ariaCurrent:
 			out.append(ariaCurrentText)
 		return CHUNK_SEPARATOR.join(out)
-	else:
-		return ""
+	return ""
 
 def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,unit=None,extraDetail=False , initialFormat=False, separator=CHUNK_SEPARATOR):
 	if not formatConfig:
