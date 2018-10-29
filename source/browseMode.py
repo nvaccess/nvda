@@ -1067,6 +1067,8 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			name=attrs.get('name')
 			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
 				textList.append(name)
+				# As the name is being explicitly reported along with the landmark, we must ensure that it is not reported again generically
+				attrs['alwaysReportName']=False
 				if landmark == "region":
 					# The word landmark is superfluous for regions.
 					textList.append(aria.landmarkRoles[landmark])
@@ -1082,6 +1084,8 @@ class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 			# Ensure that the name of the field gets presented even if normally it wouldn't. 
 			name=field.get('name')
 			if name and field.getPresentationCategory(ancestors,formatConfig) is None:
+				# As the name is being explicitly reported along with the landmark, we must ensure that it is not reported again generically
+				field['alwaysReportName']=False
 				textList.append(name)
 				if landmark == "region":
 					# The word landmark is superfluous for regions.

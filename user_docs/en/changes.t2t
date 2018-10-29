@@ -30,6 +30,7 @@ What's New in NVDA
 - NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
 - In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)
 - NVDA no longer refuses to report the focus on web pages where the new focus replaces a control that no longer exists. (#6606, #8341)
+- In BrowseMode, NVDA will now always report labels on divs and spans explicitly set by the web author. (#8886)
 
 
 == Changes for Developers ==
