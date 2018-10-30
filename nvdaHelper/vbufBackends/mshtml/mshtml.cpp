@@ -23,35 +23,24 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
+#include <remote/dllmain.h>
 #include <common/log.h>
 #include "node.h"
 #include "mshtml.h"
 
 using namespace std;
 
-HINSTANCE backendLibHandle=NULL;
-UINT WM_HTML_GETOBJECT;
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-		backendLibHandle=hModule;
-		WM_HTML_GETOBJECT=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
-	}
-	return TRUE;
-}
-
 void incBackendLibRefCount() {
 	HMODULE h=NULL;
-	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)backendLibHandle,&h);
+	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&h);
 	nhAssert(res); //Result of upping backend lib ref count
-	LOG_DEBUG(L"Increased backend lib ref count");
+	LOG_DEBUG(L"Increased  remote lib ref count");
 }
 
 void decBackendLibRefCount() {
-	BOOL res=FreeLibrary(backendLibHandle);
+	BOOL res=FreeLibrary(dllHandle);
 	nhAssert(res); //Result of freeing backend lib
-	LOG_DEBUG(L"Decreased backend lib ref count");
+	LOG_DEBUG(L"Decreased remote lib ref count");
 }
 
 VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement) {
@@ -1316,10 +1305,15 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	return parentNode;
 }
 
+UINT getHTMLWindowMessage() {
+	static UINT wm=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
+	return wm;
+}
+
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	LOG_DEBUG(L"Getting document from window "<<docHandle);
-	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),WM_HTML_GETOBJECT,0,0);
+	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),getHTMLWindowMessage(),0,0);
 	if(res==0) {
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
@@ -1369,7 +1363,7 @@ MshtmlVBufBackend_t::~MshtmlVBufBackend_t() {
 	LOG_DEBUG(L"Mshtml backend destructor");
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* MshtmlVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new MshtmlVBufBackend_t(docHandle,ID);
 	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;
