@@ -727,7 +727,18 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 	# but only if it is either focused or this is something other than a change event.
 	# The condition stops "not selected" from being spoken in some broken controls
 	# when the state change for the previous focus is issued before the focus change.
-	if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states and (reason != REASON_CHANGE or STATE_FOCUSED in states):
+	if (
+		STATE_SELECTABLE in states 
+		and (reason != REASON_CHANGE or STATE_FOCUSED in states)
+		and role in (
+			ROLE_LISTITEM, 
+			ROLE_TREEVIEWITEM, 
+			ROLE_TABLEROW,
+			ROLE_TABLECELL,
+			ROLE_TABLECOLUMNHEADER,
+			ROLE_TABLEROWHEADER
+		)
+	):
 		speakNegatives.add(STATE_SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
 	if (role in (ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_CHECKMENUITEM) or STATE_CHECKABLE in states)  and (STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or STATE_FOCUSED in states):
