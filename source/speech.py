@@ -313,6 +313,20 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	newPropertyValues['current']=obj.isCurrent
 	if allowedProperties.get('placeholder', False):
 		newPropertyValues['placeholder']=obj.placeholder
+	# When speaking an object due to a focus change, the 'selected' state should not be reported if only one item is selected.
+	# This is because that one item will be the focused object, and saying selected is redundant.
+	# Rather, 'unselected' will be spoken for an unselected object if 1 or more items are selected. 
+	states=newPropertyValues.get('states')
+	if states is not None and reason==controlTypes.REASON_FOCUS:
+		if (
+			controlTypes.STATE_SELECTABLE in states 
+			and controlTypes.STATE_FOCUSABLE in states
+			and controlTypes.STATE_SELECTED in states
+			and obj.selectionContainer 
+			and obj.selectionContainer.getSelectedItemsCount(2)==1
+		):
+			states.discard(controlTypes.STATE_SELECTED)
+			states.discard(controlTypes.STATE_SELECTABLE)
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
