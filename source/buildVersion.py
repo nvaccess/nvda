@@ -37,7 +37,7 @@ def formatDevVersionString():
 	return "%s.%s.%sdev"%(version_year,version_major,version_minor)
 
 def getCurrentVersionTuple():
-	return (version_year, version_major, version_minor)
+	return version_year, version_major, version_minor
 
 # ticket:3763#comment:19: name must be str, not unicode.
 # Otherwise, py2exe will break.

@@ -38,6 +38,85 @@ def promptUserForRestart():
 	if wx.YES == result:
 		core.restart()
 
+class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
+	def __init__(self, parent, title, message,
+			userConfirmationMessage=None,
+			errorDialog=False,
+			showAddonInfoFunction=None
+	):
+		wx.Dialog.__init__(self, parent, title=title)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
+		iconID = wx.ART_WARNING if not errorDialog else wx.ART_ERROR
+		icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
+		self.SetIcon(icon)
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
+
+		text = wx.StaticText(self, label=message)
+		text.Wrap(self.scaleSize(self.GetSize().Width))
+		contentsSizer.addItem(text)
+
+		if userConfirmationMessage:
+			confirmedCheckbox = wx.CheckBox(
+					parent=self,
+					label=userConfirmationMessage
+				)
+			contentsSizer.addItem(confirmedCheckbox)
+			confirmedCheckbox.Bind(wx.EVT_CHECKBOX, self._toggleEnabledStateOfAffirmativeAction)
+			self.confirmedCheckbox = confirmedCheckbox
+
+		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		if showAddonInfoFunction:
+			addonInfoButton = buttonHelper.addButton(
+				self,
+				# Translators: A button in the addon installation warning / blocked dialog which shows
+				# more information about the addon
+				label=_("&About add-on...")
+			)
+			addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: showAddonInfoFunction())
+		if errorDialog:
+			okButton = buttonHelper.addButton(
+				self,
+				id=wx.ID_OK,
+				# Translators: A button in the addon installation blocked dialog which
+				label=_("OK")
+			)
+			okButton.SetDefault()
+			okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+		else:
+			yesButton = buttonHelper.addButton(
+				self,
+				id=wx.ID_YES,
+				# Translators: A button in the addon installation warning dialog which
+				label=_("Yes")
+			)
+			yesButton.SetDefault()
+			yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
+			if userConfirmationMessage:
+				yesButton.Disable()
+			self.yesButton = yesButton
+			noButton = buttonHelper.addButton(
+				self,
+				id=wx.ID_NO,
+				# Translators: A button in the addon installation warning dialog which
+				label=_("No")
+			)
+			noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
+		contentsSizer.addDialogDismissButtons(buttonHelper)
+
+		mainSizer.Add(
+			contentsSizer.sizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL
+		)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+
+	def _toggleEnabledStateOfAffirmativeAction(self, evt):
+		self.yesButton.Enable(self.confirmedCheckbox.IsChecked())
+
 class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	@classmethod
 	def _instance(cls):
@@ -173,57 +252,94 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		addonPath = fd.GetPath()
 		self.installAddon(addonPath)
 
+	def _showAddonRequiresNVDAUpdateDialog(self, bundle):
+		# Translators: Displayed in the compatibility message when a version is unknown.
+		unknownVersionString = _("unknown")
+		# Translators: The message displayed when installing an add-on package is prohibited, because it requires
+		# a later version of NVDA than is currently installed.
+		incompatibleMessage = _(
+			"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
+			"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
+		).format(
+			summary=bundle.manifest['summary'],
+			version=bundle.manifest['version'],
+			NVDAVersion="%d.%d (%s)" % (buildVersion.version_year, buildVersion.version_major, buildVersion.version),
+			minimumNVDAVersion=bundle.manifest['minimumNVDAVersion'] or unknownVersionString
+		)
+		ConfirmAddonInstallDialog(
+			parent=self,
+			# Translators: The title of a dialog presented when an error occurs.
+			title=_("Error"),
+			message=incompatibleMessage,
+			errorDialog=True,
+			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
+		).ShowModal()
+
+	def _showAddonUntestedDialog(self, bundle):
+		# Translators: A message asking the user to confirm they understand the risks of installing an untested addon
+		confirmInstallMessage = _(
+			"{summary} {version} has not been tested with this version of NVDA, "
+			"installing this add-on is not recommended.\n\n"
+			"Are you sure you want to install this add-on?\n"
+			"Only install add-ons from trusted sources.\n"
+		).format(**bundle.manifest)
+		# Translators: A message asking the user to confirm that they are aware that this addon has not been tested.
+		confirmAddonNotTestedMessage = _("I understand that this add-on has not been tested with my version of NVDA")
+
+		return ConfirmAddonInstallDialog(
+			parent=self,
+			# Translators: Title for message asking if the user really wishes to install an Addon.
+			title=_("Warning: Untested Add-on Installation"),
+			message=confirmInstallMessage,
+			userConfirmationMessage=confirmAddonNotTestedMessage,
+			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
+		).ShowModal()
+
+	def _showConfirmAddonInstallDialog(self, bundle):
+		# Translators: A message asking the user if they really wish to install an addon.
+		confirmInstallMessage = _(
+			"Are you sure you want to install this add-on?\n"
+			"Only install add-ons from trusted sources.\n"
+			"Addon: {summary} {version}"
+		).format(**bundle.manifest)
+
+		return ConfirmAddonInstallDialog(
+			parent=self,
+			# Translators: Title for message asking if the user really wishes to install an Addon.
+			title=_("Add-on Installation"),
+			message=confirmInstallMessage,
+			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
+		).ShowModal()
+
 	def installAddon(self, addonPath, closeAfter=False):
 		try:
 			try:
 				bundle = addonHandler.AddonBundle(addonPath)
 			except:
-				log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
-				# Translators: The message displayed when an error occurs when opening an add-on package for adding.
-				gui.messageBox(_("Failed to open add-on package file at %s - missing file or invalid file format")%addonPath,
+				log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
+				gui.messageBox(
+					# Translators: The message displayed when an error occurs when opening an add-on package for adding.
+					_("Failed to open add-on package file at %s - missing file or invalid file format") % addonPath,
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
-					wx.OK | wx.ICON_ERROR)
-				return
-			# Translators: The message displayed to give information about the compatibility of this add-on with certain NVDA versions.
-			versionInfoMessage = _(
-				"The minimum compatible NVDA version for this add-on is {minimumNVDAVersion}.\n"
-				"The last version of NVDA this add-on has been reported to work with is {lastTestedNVDAVersion}"
-			).format(
-				# Translators: Displayed in the compatibility message when a version is unknown.
-				minimumNVDAVersion=bundle.manifest['minimumNVDAVersion'] or _("unknown"),
-				lastTestedNVDAVersion=bundle.manifest['lastTestedNVDAVersion'] or _("unknown")
-			)
-
-			if (addonVersionCheck.isAddonCompatibilityKnown(bundle) and
-					addonVersionCheck.isAddonConsideredIncompatible(bundle)
-			):
-				# Translators: The message displayed when installing an add-on package is prohibited.
-				incompatibleMessage = _(
-					"The installation of {summary} {version} by {author} has been blocked for "
-					"installation within NVDA version {NVDAVersion}.\n{versionInfoMessage}"
-				).format(
-					NVDAVersion="%d.%d (%s)"%(
-						buildVersion.version_year, buildVersion.version_major, buildVersion.version
-					) if buildVersion.isTestVersion else buildVersion.version,
-					versionInfoMessage=versionInfoMessage, **bundle.manifest
+					wx.OK | wx.ICON_ERROR
 				)
-				gui.messageBox(incompatibleMessage,
-					# Translators: The title of a dialog presented when an error occurs.
-					_("Error"),
-					wx.OK | wx.ICON_ERROR)
 				return
 
-			# Translators: A message asking the user if they really wish to install an addon.
-			if gui.messageBox(_(
-				"Are you sure you want to install this add-on? "
-				"Only install add-ons from trusted sources.\n"
-				"Addon: {summary} {version}\nAuthor: {author}\n{versionInfoMessage}"
-			).format(versionInfoMessage=versionInfoMessage,**bundle.manifest),
-				# Translators: Title for message asking if the user really wishes to install an Addon.
-				_("Add-on Installation"),
-				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
+			if not addonVersionCheck.hasAddonGotRequiredSupport(bundle):
+				self._showAddonRequiresNVDAUpdateDialog(bundle)
 				return
+
+			if not addonVersionCheck.isAddonTested(bundle):
+				if wx.YES != self._showAddonUntestedDialog(bundle):
+					return
+				AddonCompatibilityState.setAddonCompatibility(
+					addon=bundle,
+					compatibilityStateValue=compatValues.MANUALLY_SET_COMPATIBLE
+				)
+			elif wx.YES != self._showConfirmAddonInstallDialog(bundle):
+				return
+
 			prevAddon=None
 			for addon in self.curAddons:
 				if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
@@ -323,6 +439,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
+		shouldEnableIncompatAddonsButton = False
 		for addon in addonHandler.getAvailableAddons():
 			self.addonsList.Append((
 				addon.manifest['summary'],
@@ -331,6 +448,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				addon.manifest['author']
 			))
 			self.curAddons.append(addon)
+			shouldEnableIncompatAddonsButton = (
+				shouldEnableIncompatAddonsButton or (
+					addonVersionCheck.hasAddonGotRequiredSupport(addon, version=addonVersionCheck.CURRENT_NVDA_VERSION)
+					and not addonVersionCheck.isAddonTested(addon, version=addonVersionCheck.CURRENT_NVDA_VERSION)
+				)
+			)
+		self.incompatAddonsButton.Enable(shouldEnableIncompatAddonsButton)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.curAddons)
 		if curAddonsLen>0:
@@ -377,11 +501,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if needsRestart:
 			promptUserForRestart()
 
-
 	def onAbout(self,evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
 		manifest=self.curAddons[index].manifest
+		self._showAddonInfo(manifest)
+
+	def _showAddonInfo(self, manifest):
 		# Translators: message shown in the Addon Information dialog.
 		message=[_(
 			"{summary} ({name})\n"
@@ -448,7 +574,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		incompatibleAddons = IncompatibleAddonsDialog(
 			parent=self,
 			displayManuallySetCompatibilityAddons=True,
-			NVDAVersion=self.version
+			NVDAVersion=buildVersion.getCurrentVersionTuple()
 		)
 		def afterDialog(res):
 			# here we need to check if the compatibility has changed.
@@ -534,9 +660,9 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		maxControlWidth = 550
 		# Translators: The title of the Incompatible Addons Dialog
 		introText = _(
-			"The compatibility of the following add-ons is not known, they have not been tested "
-			"against NVDA version {}. Please review the list and select any add-ons that you "
-			"do not wish to be disabled. Untested add-ons may cause instability while using NVDA. "
+			"The compatibility of the following add-ons is not known, they have not been tested against NVDA version {}. "
+			"Please use the checkboxes to indicate add-ons that should remain available"
+			"Warning: Untested add-ons may cause instability while using NVDA. "
 			"Please contact the add-on author for further assistance."
 		).format("%s.%s.%s" % NVDAVersion)
 		AddonSelectionIntroLabel=wx.StaticText(self, label=introText)
@@ -550,8 +676,9 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL,
 			size=self.scaleSize((maxControlWidth, 350))
 		)
+
 		# Translators: The label for a column in add-ons list used to check / uncheck whether the add-on is manually set  compatible
-		self.addonsList.InsertColumn(0, _("Compatible"), width=self.scaleSize(70))
+		self.addonsList.InsertColumn(0, _("Available"), width=self.scaleSize(70))
 		# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 		self.addonsList.InsertColumn(1, _("Package"), width=self.scaleSize(150))
 		# Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).

@@ -149,23 +149,29 @@ class AddonCompatibilityState(object):
 
 def hasAddonGotRequiredSupport(addon, version=CURRENT_NVDA_VERSION):
 	"""True if this add-on is supported by the given version of NVDA.
-	This method returns False if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is missing.
+	This method returns True if the supported state is unsure, e.g. because the minimumNVDAVersion manifest key is
+	missing. A missing manifest key likely means that the add-on has not been updated since the introduction of
+	the add-on version check feature in 2018.4. We assume support is present in this case to minimise the impact
+	of this feature to users. This behaviour may change in the future.
 	By default, the current version of NVDA is evaluated.
 	"""
 	# If minimumNVDAVersion is None, it will always be less than the current NVDA version.
-	# Therefore, we should account for this.
 	minVersion = addon.minimumNVDAVersion
-	return bool(minVersion) and minVersion <= version
+	return minVersion <= version
 
 
 def isAddonTested(addon, version=CURRENT_NVDA_VERSION):
 	"""True if this add-on is tested for the given version of NVDA.
 	By default, the current version of NVDA is evaluated.
 	"""
+	# Hard code minor to zero, so minor updates are not considered new versions.
+	# Minor updates are very unlikely to cause incompatibility.
+	version = (version[0], version[1], 0)  # Year, major, minor
+	# if lastTestedNVDAVersion is None it will be less than version.
 	return hasAddonGotRequiredSupport(addon, version) and addon.lastTestedNVDAVersion >= version
 
 def isAddonConsideredIncompatible(addon, version=CURRENT_NVDA_VERSION):
-	return not isAddonConsideredIncompatible(addon, version)
+	return not isAddonConsideredCompatible(addon, version)
 
 def isAddonConsideredCompatible(addon, version=CURRENT_NVDA_VERSION):
 	compat = AddonCompatibilityState.getAddonCompatibility(addon, version)
