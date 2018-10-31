@@ -1225,6 +1225,10 @@ the NVDAObject for IAccessible
 		sel=self.IAccessibleObject.accSelection
 		if not sel:
 			raise NotImplementedError
+		# accSelection can return a child ID of a simple element, for instance in QT tree tables. 
+		# Therefore treet this as a single selection.
+		if isinstance(sel,int) and sel>0:
+			return 1
 		enumObj=sel.QueryInterface(IEnumVARIANT)
 		if not enumObj:
 			raise NotImplementedError
