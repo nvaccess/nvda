@@ -325,8 +325,12 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			and obj.selectionContainer 
 			and obj.selectionContainer.getSelectedItemsCount(2)==1
 		):
+			# We must copy the states set and  put it back in newPropertyValues otherwise mutating the original states set in-place will wrongly change the cached states.
+			# This would then cause 'selected' to be announced as a change when any other state happens to change on this object in future.
+			states=states.copy()
 			states.discard(controlTypes.STATE_SELECTED)
 			states.discard(controlTypes.STATE_SELECTABLE)
+			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
