@@ -1251,18 +1251,16 @@ Această categorie de setări conține următoarele opțiuni:
 ==== Schemă tastatură ====[KeyboardSettingsLayout]
 Această listă de selecție vă lasă să alegeți ce tip de așezare a tastaturii ar trebui să folosească NVDA. În prezent, cele două care vin cu NVDA sunt schema pentru calculatoare de birou și schema pentru laptopuri.
 
-==== Folosește CapsLock ca tastă de modificare NVDA ====[KeyboardSettingsCapsModifier]
-Dacă este bifată această casetă, CapsLock poate fi folosită ca tastă de modificare NVDA.
+==== Selectează tastele modificatoare ale NVDA ====[KeyboardSettingsModifiers]
+Casetele de bifat din această listă controlează tastele care pot fi folosite ca [taste modificatoare NVDA #TheNVDAModifierKey]. Mai jos vă sunt prezentate tastele disponibile din care puteți alege:
+- Tasta caps lock
+- Tasta insert de pe blocul numeric
+- Tasta suplimentară de insert, găsită de obicei deasupra tastelor săgeată, lângă home și end
+-
 
-==== Folosește tasta Insert principală ca tastă de modificare NVDA ====[KeyboardSettingsExtendedInsert]
-Dacă este bifată această casetă, tasta Insert principală (aflată de obicei deasupra tastelor direcționale, lângă Home și End) poate fi folosită ca tastă de modificare NVDA.
-
-==== Folosește tasta Insert din blocul numeric ca tastă de modificare NVDA ====[KeyboardSettingsNumpadInsert]
-Dacă este bifată această casetă, tasta Insert de pe tastele numerice poate fi folosită ca tastă de modificare NVDA.
-
-Dacă nu este aleasă nicio tastă ca tastă NVDA, ar putea fi imposibil de accesat anumite comenzi NVDA.
-În consecință, dialogul de setări al NVDA va afișa un mesaj de eroare dacă toate tastele rămân deselectate când apăsați butonul OK.
-După ce revocați mesajul de eroare, va trebui să selectați cel puțin una din taste înainte de a putea apăsa OK și a închide cum trebuie fereastra de dialog. 
+Dacă nicio tastă nu este aleasă ca tastă NVDA, accesarea anumitor comenzi NVDA poate fi cu neputință.
+În consecință, dialogul NVDA va afișa un mesaj de eroare dacă toate tastele sunt neselectate la apăsarea butoanelor OK sau Se aplică.
+După închiderea mesajului de eroare, trebuie să selectați cel puțin una înainte de a putea să apăsați OK ca să închideți dialogul cum trebuie.
 
 %kc:setting
 ==== Pronunță caracterele tastate ====[KeyboardSettingsSpeakTypedCharacters]

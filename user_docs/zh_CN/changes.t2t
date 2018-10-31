@@ -3,6 +3,37 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+== 新特性 ==
+- 新盲文表： 中文中国汉语现行点字，中文中国汉语双拼点字。 (#5553)
+
+
+== 修改 ==
+- “对象演示文稿”对话框中的“朗读帮助气球”已重命名为“朗读通知”，包括Windows 8及更高版本中的Toast通知朗读。 (#5789)
+- 在NVDA的键盘设置中，启用或禁用NVDA键的复选框现在显示在列表而不是单独的复选框中。
+- 在某些版本的Windows上读取时钟系统托盘时，NVDA将不再显示冗余信息。 (#4364)
+- 将liblouis盲文翻译器更新至3.7.0。 (#8697)
+
+
+== 错误修复==
+- 在Outlook 2016/365中，将朗读邮件的类别和标志状态。 (#8603)
+- 当NVDA设置为吉尔吉斯，蒙古或马其顿等语言时，将不再显示启动警告对话框，因为操作系统不支持该语言。 (#8064)
+- 当鼠标移动到导航器对象时可以更准确地将鼠标移动到Mozilla Firefox，Google Chrome和Acrobat Reader DC的浏览位置。 (#6460)
+- 改进了与Firefox，Chrome和Internet Explorer浏览器上的组合框的交互效果。 (#8664)
+
+
+== 开发者更改 ==
+- gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
+ - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+
+
+== 开发者更改 ==
+- 更新configobj版本维5.1.0dev commit 5b5de48a。 (#4470)
+
+
 = 2018.3 =
 此版本的新特姓包括支持许多盲文点显器的自动检测，支持新的Windows 10 表情符号输入面板，以及其他错误修复。
 
@@ -59,6 +90,7 @@
  - 盲文中的光标路由现在可以在Word文档的列表中正常工作。 (#7971)
  - 在Word文档中新插入的项目符号/数字可以在语音和盲文中正确朗读。 (#7970)
 - 在Windows 10 1803及更高版本中，如果启用了“使用Unicode UTF-8支持全球语言”功能，则现在可以安装插件。 (#8599)
+- 修复NVDA将不再使iTunes 12.9和更新版本完全无法与之交互的BUG。 (#8744)
 
 
 == 开发者更改 ==
