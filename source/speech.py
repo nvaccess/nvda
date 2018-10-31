@@ -320,6 +320,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	if states is not None and reason==controlTypes.REASON_FOCUS:
 		if (
 			controlTypes.STATE_SELECTABLE in states 
+			and controlTypes.STATE_FOCUSABLE in states
 			and controlTypes.STATE_SELECTED in states
 			and obj.selectionContainer 
 			and obj.selectionContainer.getSelectedItemsCount(2)==1

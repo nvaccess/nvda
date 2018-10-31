@@ -724,12 +724,17 @@ def processNegativeStates(role, states, reason, negativeStates=None):
 		raise TypeError("negativeStates must be a set for this reason")
 	speakNegatives = set()
 	# Add the negative selected state if the control is selectable,
-	# but only if it is either focused or this is something other than a change event.
+	# but only if it is reported for the reason of focus, or this is a change to the focused object. 
 	# The condition stops "not selected" from being spoken in some broken controls
 	# when the state change for the previous focus is issued before the focus change.
 	if (
-		STATE_SELECTABLE in states 
-		and (reason != REASON_CHANGE or STATE_FOCUSED in states)
+		# Only include if the object is actually selectable
+		STATE_SELECTABLE in states
+		# Only include if the object is focusable (E.g. ARIA grid cells, but not standard html tables)
+		and STATE_FOCUSABLE in states
+		# Only include  if reporting the focus or when states are changing on the focus.
+		# This is to avoid exposing it for things like caret movement in browse mode. 
+		and (reason == REASON_FOCUS or (reason == REASON_CHANGE and STATE_FOCUSED in states))
 		and role in (
 			ROLE_LISTITEM, 
 			ROLE_TREEVIEWITEM, 
