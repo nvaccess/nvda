@@ -182,4 +182,12 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 typedef VBufBackend_t*(*VBufBackend_create_proc)(int,int);
 
+// The backend creation functions
+VBufBackend_t* AdobeAcrobatVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* AdobeFlashVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* lotusNotesRichTextVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* MshtmlVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* WebKitVBufBackend_t_createInstance(int docHandle, int ID);
+
 #endif

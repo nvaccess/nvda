@@ -84,7 +84,7 @@ HWND findRealMozillaWindow(HWND hwnd) {
 	return hwnd;
 }
 
-IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
+static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
 	IServiceProvider* pserv=NULL;
 	IAccessible2* pacc2=NULL;
@@ -680,8 +680,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
 			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
-			LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
-			parentNode->requiresParentUpdate=true;
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			if(role!=ROLE_SYSTEM_ROW) {
+				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
+				parentNode->requiresParentUpdate=true;
+			}
 			// Setting alwaysRerenderChildren ensures that if this node is rerendered, none of its children are reused.
 			// For example, if this is a table row that is rerendered (perhaps due to a previous table row being added),
 			// this row's cells can't be reused because their coordinates would now be out of date.
@@ -1125,14 +1128,7 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID);
 	return backend;
-}
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-	}
-	return true;
 }

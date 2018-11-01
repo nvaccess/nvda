@@ -30,18 +30,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-VBufStorage_textContainer_t::VBufStorage_textContainer_t(wstring str): wstring(str) {}
-
-VBufStorage_textContainer_t::~VBufStorage_textContainer_t() {}
-
-const wstring& VBufStorage_textContainer_t::getString() {
-	return *this;
-}
-
-void VBufStorage_textContainer_t::destroy() {
-	delete this;
-}
-
 //controlFieldNodeIdentifier implementation
 
 VBufStorage_controlFieldNodeIdentifier_t::VBufStorage_controlFieldNodeIdentifier_t(int docHandleArg, int IDArg) : docHandle(docHandleArg), ID(IDArg) {
@@ -924,7 +912,7 @@ int VBufStorage_buffer_t::getTextLength() const {
 	return length;
 }
 
-VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, bool useMarkup) {
+wstring  VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, bool useMarkup) {
 	if(this->rootNode==NULL) {
 		LOG_DEBUGWARNING(L"buffer is empty, returning NULL");
 		return NULL;
@@ -936,7 +924,7 @@ VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffs
 	wstring text;
 	this->rootNode->getTextInRange(startOffset,endOffset,text,useMarkup);
 	LOG_DEBUG(L"Got text between offsets "<<startOffset<<L" and "<<endOffset<<L", returning true");
-	return new VBufStorage_textContainer_t(text);
+	return text;
 }
 
 VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribs, const std::wstring &regexp, int *startOffset, int *endOffset) {
