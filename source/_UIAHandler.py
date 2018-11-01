@@ -364,9 +364,32 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# the window does support UIA natively, but
-			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
-			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
-				return False
+			# MS Word documents now have a very usable UI Automation implementation. However,
+			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
+			# Therefore refuse to use UIA for builds earlier than this, if we can inject in-process.
+			if (
+				# An MS Word document window 
+				windowClass=="_WwG" 
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and appModule.helperLocalBindingHandle 
+				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
+				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				# We can only safely check the version of known Office apps using the Word document control.
+				# Other uses for now we just need to assume the implementation is bad.
+				if appModule.appName not in ('outlook','winword'):
+					log.debugWarning("Unknown application using MS Word document control: %s"%appModule.appName)
+					return False
+				try:
+					versionMajor,versionMinor,versionBuild,versionPatch=[int(x) for x in appModule.productVersion.split('.')]
+				except Exception as e:
+					log.error("Error parsing versioninformation %s, %s"%(appModule.productVersion,e))
+					return True
+				if (
+					versionMajor<16
+					or versionMajor==16 and versionMinor==0 and versionBuild<9000
+				):
+					return False
 		return bool(res)
 
 	def isUIAWindow(self,hwnd):
