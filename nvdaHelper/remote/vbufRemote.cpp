@@ -152,7 +152,8 @@ int VBufRemote_getTextLength(VBufRemote_bufferHandle_t buffer) {
 int VBufRemote_getTextInRange(VBufRemote_bufferHandle_t buffer, int startOffset, int endOffset, wchar_t** text, boolean useMarkup) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	 wstring textString=backend->getTextInRange(startOffset,endOffset,useMarkup!=false);
+	 wstring textString;
+	 backend->getTextInRange(startOffset,endOffset,textString,useMarkup!=false);
 	backend->lock.release();
 	if(textString.empty()) {
 		return false;
