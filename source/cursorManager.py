@@ -7,7 +7,7 @@
 """
 Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
-"""
+	"""
 
 import wx
 import core
@@ -31,7 +31,7 @@ class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity):
+	def __init__(self, parent, cursorManager, text, caseSensitivity, searchEntries):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
@@ -42,8 +42,11 @@ class FindDialog(wx.Dialog):
 		# Translators: Dialog text for NvDA's find command.
 		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
 		findSizer.Add(textToFind)
-		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
-		self.findTextField.SetValue(text)
+		self.findTextField = wx.ComboBox(self, wx.ID_ANY, choices = searchEntries,style=wx.CB_DROPDOWN)
+
+		# if there is a privious list of searched entries, make sure we present the last searched value already selected
+		if searchEntries:
+			self.findTextField.Select(0)
 		findSizer.Add(self.findTextField)
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
@@ -61,6 +64,9 @@ class FindDialog(wx.Dialog):
 
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
+		# update the list of searched entries so that it can be exibited in the next find dialog call
+		self.activeCursorManager.updateSearchEntries(text)
+		
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
 		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 		# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
@@ -88,6 +94,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 
 	_lastFindText=""
 	_lastCaseSensitivity=False
+	_searchEntries = []
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -146,6 +153,21 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
 
+	def updateSearchEntries(self, text):
+		# we can not accept entries that differ only on text case because of a wxComboBox limitation on MS Windows
+		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
+		#notice also that python 2 does not offer caseFold functionality so lower is the best we can have for comparing strings
+		for index, item in enumerate(self._searchEntries):
+			if(item.lower() == text.lower()):
+				#if the user has selected a privious search term in the list or retyped an already listed term ,  this item perhaps is not the first of the list
+				if index != 0:
+					# move it to the beginning of the list as we want it to  become the current search item
+					self._searchEntries.pop(index)
+					self._searchEntries.insert(0, item)
+				return
+		#not yet listed. Add it as the current search term
+		self._searchEntries.insert(0, text)
+
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
 			return
@@ -162,7 +184,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
+		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, self._searchEntries)
 		gui.mainFrame.prePopup()
 		d.Show()
 		gui.mainFrame.postPopup()
