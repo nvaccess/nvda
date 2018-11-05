@@ -351,12 +351,6 @@ class UIAHandler(COMObject):
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
-		if windowClass=="NetUIHWND":
-			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
-			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
-			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
-			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
-				return False
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
@@ -376,10 +370,10 @@ class UIAHandler(COMObject):
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
 			):
 				# We can only safely check the version of known Office apps using the Word document control.
-				# Other uses for now we just need to assume the implementation is bad.
-				if appModule.appName not in ('outlook','winword'):
+				# Other uses for now we just need to assume the implementation is good.
+				if appModule.appName not in ('outlook','winword','excel'):
 					log.debugWarning("Unknown application using MS Word document control: %s"%appModule.appName)
-					return False
+					return True
 				try:
 					versionMajor,versionMinor,versionBuild,versionPatch=[int(x) for x in appModule.productVersion.split('.')]
 				except Exception as e:

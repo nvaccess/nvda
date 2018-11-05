@@ -740,6 +740,8 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif UIAClassName=="NetUIDropdownAnchor":
+			clsList.append(NetUIDropdownAnchor)
 		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
@@ -1602,3 +1604,14 @@ class SuggestionListItem(UIA):
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
+
+# NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
+class NetUIDropdownAnchor(UIA):
+
+	def _get_name(self):
+		name=super(NetUIDropdownAnchor,self).name
+		# In MS Office 2010, these combo boxes had no name.
+		# However, the name can be found as the direct previous sibling label element. 
+		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
+			name=self.previous.name
+		return name
