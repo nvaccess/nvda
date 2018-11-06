@@ -62,10 +62,25 @@ class FindDialog(wx.Dialog):
 		self.CentreOnScreen()
 		self.findTextField.SetFocus()
 
+	def updateSearchEntries(self, searchEntries, currentSearchTerm):
+		# we can not accept entries that differ only on text case because of a wxComboBox limitation on MS Windows
+		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
+		#notice also that python 2 does not offer caseFold functionality so lower is the best we can have for comparing strings
+		for index, item in enumerate(searchEntries):
+			if(item.lower() == currentSearchTerm.lower()):
+				#if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the current search becomes the first item of the list,
+				#  as we want it to  become the default search item in the next find dialog call
+				# If the current search term differs from the current item only in case letters, we will choose to store the new search as we can not store both.
+				searchEntries.pop(index)
+				searchEntries.insert(0, currentSearchTerm)
+				return
+		#not yet listed. Add it as the current search term
+		searchEntries.insert(0, currentSearchTerm)
+	
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
 		# update the list of searched entries so that it can be exibited in the next find dialog call
-		self.activeCursorManager.updateSearchEntries(text)
+		self.updateSearchEntries(self.activeCursorManager._searchEntries, text)
 		
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
 		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
@@ -152,22 +167,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
-
-	def updateSearchEntries(self, text):
-		# we can not accept entries that differ only on text case because of a wxComboBox limitation on MS Windows
-		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
-		#notice also that python 2 does not offer caseFold functionality so lower is the best we can have for comparing strings
-		for index, item in enumerate(self._searchEntries):
-			if(item.lower() == text.lower()):
-				#if the user has selected a privious search term in the list or retyped an already listed term ,  this item perhaps is not the first of the list
-				if index != 0:
-					# move it to the beginning of the list as we want it to  become the current search item
-					self._searchEntries.pop(index)
-					self._searchEntries.insert(0, item)
-				return
-		#not yet listed. Add it as the current search term
-		self._searchEntries.insert(0, text)
-
+	
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
 			return
