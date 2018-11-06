@@ -663,9 +663,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
-		# The only item we report for these fields is clickable, if present.
-		if controlTypes.STATE_CLICKABLE in states:
-			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
 		if current:
 			text.append(getBrailleTextForProperties(current=current))
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
@@ -829,6 +826,7 @@ class TextInfoRegion(Region):
 		ctrlFields = []
 		typeform = louis.plain_text
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
+		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				self._isFormatFieldAtStart = False
@@ -872,7 +870,21 @@ class TextInfoRegion(Region):
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
+						textList=[]
+						states=field.get('states')
+						if states and controlTypes.STATE_CLICKABLE in states:
+							if not inClickable:
+								# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
+								# Report it if there is nothing else interesting about the field, but not if the user turned it off. 
+								if formatConfig['reportClickable']:
+									field._presCat=presCat=field.getPresentationCategory(ctrlFields,formatConfig)
+									if not presCat or presCat is field.PRESCAT_LAYOUT:
+										textList.append(positiveStateLabels[controlTypes.STATE_CLICKABLE])
+							inClickable=len(ctrlFields)+1
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+						if text:
+							textList.append(text)
+						text=" ".join(textList)
 					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
@@ -893,6 +905,9 @@ class TextInfoRegion(Region):
 					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
+					if inClickable and inClickable>len(ctrlFields):
+						# We just exited the inner most clickable. Allow reporting of further clickables
+						inClickable=False
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
