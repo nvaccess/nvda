@@ -7,7 +7,7 @@
 """
 Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
-	"""
+"""
 
 import wx
 import core
@@ -44,7 +44,7 @@ class FindDialog(wx.Dialog):
 		findSizer.Add(textToFind)
 		self.findTextField = wx.ComboBox(self, wx.ID_ANY, choices = searchEntries,style=wx.CB_DROPDOWN)
 
-		# if there is a privious list of searched entries, make sure we present the last searched value already selected
+		# if there is a previous list of searched entries, make sure we present the last searched term  selected by default
 		if searchEntries:
 			self.findTextField.Select(0)
 		findSizer.Add(self.findTextField)
@@ -63,18 +63,23 @@ class FindDialog(wx.Dialog):
 		self.findTextField.SetFocus()
 
 	def updateSearchEntries(self, searchEntries, currentSearchTerm):
+		if not currentSearchTerm:
+			return
+		if not searchEntries:
+			searchEntries.insert(0, currentSearchTerm)
+			return
 		# we can not accept entries that differ only on text case because of a wxComboBox limitation on MS Windows
 		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
 		#notice also that python 2 does not offer caseFold functionality so lower is the best we can have for comparing strings
 		for index, item in enumerate(searchEntries):
 			if(item.lower() == currentSearchTerm.lower()):
-				#if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the current search becomes the first item of the list,
-				#  as we want it to  become the default search item in the next find dialog call
+				#if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the current search term becomes the first item of the list,
+				# so that it will appear selected by default when the dialog is shown again
 				# If the current search term differs from the current item only in case letters, we will choose to store the new search as we can not store both.
 				searchEntries.pop(index)
 				searchEntries.insert(0, currentSearchTerm)
 				return
-		#not yet listed. Add it as the current search term
+		# not yet listed. Save it.
 		searchEntries.insert(0, currentSearchTerm)
 	
 	def onOk(self, evt):
@@ -167,7 +172,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if not willSayAllResume(gesture): speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
-	
+
 	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
 			return
