@@ -13,7 +13,7 @@ installedPythonMinor = sys.version_info.minor
 installedPythonArchitecture = platform.architecture()[0]
 # Ensure, that we are running with Python 2.7 32-bit, otherwise inform the user and exit.
 if installedPythonArchitecture != requiredPythonArchitecture and installedPythonMajor != requiredPythonMajor and installedPythonMinor != requiredPythonMinor:
-	print "This script is started with Python "+str(installedPythonMajor)+"."+str(installedPythonMinor)+" "+installedPythonArchitecture+", however to build NVDA you have to use Python", str(requiredPythonMajor),".",str(requiredPythonMinor), requiredPythonArchitecture+"."
+	print "This script is started with Python "+str(installedPythonMajor)+"."+str(installedPythonMinor)+" "+installedPythonArchitecture+", however to build NVDA you have to use Python", str(requiredPythonMajor)+"."+str(requiredPythonMinor), requiredPythonArchitecture+"."
 	print "Please install the needed version of Python and launch SCons again, or if you have mulltiple versions of Python installed start this script with required version explicitly."
 	sys.exit()
 else:
