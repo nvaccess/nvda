@@ -1555,14 +1555,14 @@ class GlobalCommands(ScriptableObject):
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
 		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
-		# Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
+		# Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 		# If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-		message = _("%s is currently running") % appName
+		message = _("%s is currently running.") % appName
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
-			# Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-			# For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+			# Translators: Indicates the name of the appModule for the current program (example output: and explorer module is loaded).
+			# For example, the complete message for Windows explorer is: Explorer.exe is currenty running. explorer module is loaded..
 			# This message will not be presented if there is no module for the current program.
 			message += _(" %s module is loaded") % mod.appModuleName.split(".")[0]
 		ui.message(message)
