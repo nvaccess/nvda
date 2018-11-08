@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 19:07+1000\n"
-"PO-Revision-Date: 2018-08-03 18:53+0900\n"
+"POT-Creation-Date: 2018-09-28 00:10+1000\n"
+"PO-Revision-Date: 2018-09-30 13:22+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1139,6 +1139,16 @@ msgstr "Unicode 点字"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "ベトナム語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "中国語点字(中国、標準中国語)1級"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "中国語点字(中国、標準中国語)2級"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6586,8 +6596,8 @@ msgstr ""
 "ドを利用したソフトウェアにも適用されます。\n"
 "本ライセンスについての詳細は、ヘルプメニューのライセンスを参照してくださ"
 "い。\n"
-"また、オンラインで以下のページから確認することもできます: http://www.gnu.org/"
-"licenses/old-licenses/gpl-2.0.html\n"
+"また、オンラインで以下のページから確認することもできます: https://www.gnu."
+"org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "{name}は、視覚障害者への補助を無料でオープンソースのソリューションで推進して"
 "いる、非営利団体のNV Accessが提供しています。\n"
@@ -6788,36 +6798,6 @@ msgstr "未読"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "編集中のプロファイル {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "パープルのフラグ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "オレンジのフラグ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "グリーンのフラグ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "イエローのフラグ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "ブルーのフラグ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "レッドのフラグ"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8558,20 +8538,10 @@ msgstr "サポートされている場合スペル読み機能を使用(&S)"
 msgid "Keyboard"
 msgstr "キーボード"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "英語キーボードのCapsLockキーをNVDA制御キーとして使用"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "テンキーのInsertキーをNVDA制御キーとして使用"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "InsertキーをNVDA制御キーとして使用"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "NVDA制御キーの選択(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8734,8 +8704,8 @@ msgstr "ツールチップ情報の報告(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "バルーン情報の報告(&H)"
+msgid "Report &notifications"
+msgstr "通知の報告(&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10791,6 +10761,36 @@ msgstr "2行の行間"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5行の行間"
+
+#~ msgid "purple flag"
+#~ msgstr "パープルのフラグ"
+
+#~ msgid "Orange flag"
+#~ msgstr "オレンジのフラグ"
+
+#~ msgid "Green flag"
+#~ msgstr "グリーンのフラグ"
+
+#~ msgid "Yellow flag"
+#~ msgstr "イエローのフラグ"
+
+#~ msgid "Blue flag"
+#~ msgstr "ブルーのフラグ"
+
+#~ msgid "Red flag"
+#~ msgstr "レッドのフラグ"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "英語キーボードのCapsLockキーをNVDA制御キーとして使用"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "テンキーのInsertキーをNVDA制御キーとして使用"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "InsertキーをNVDA制御キーとして使用"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "バルーン情報の報告(&H)"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} {layout}"

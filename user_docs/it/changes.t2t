@@ -1428,7 +1428,7 @@ Le novità principali in questa versione sono costituite dal supporto all'immiss
  - Viene garantito il supporto sia per NVDA che per i componenti aggiuntivi.
  - Devono essere utilizzati xgettext e msgfmt da GNU gettext per la creazione dei file PO e MO. Gli strumenti python non supportano i messaggi di contesto.
  - Per xgettext, passare --keyword=pgettext:1c,2 come argomento da linea di comando per abilitare l'inclusione dei messaggi di contesto.
- - vedere http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts per maggiori informazioni.
+ - vedere https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts per maggiori informazioni.
 - è ora possibile accedere ai moduli interni a NVDA quando essi sono sovrascritti da moduli di terze parti. Si veda nvdaBuiltin module per dettagli.
 - Può essere utilizzato il supporto alla traduzione dei componenti aggiuntivi all'interno del modulo installTasks. (#2715)
 
@@ -2054,7 +2054,7 @@ Le maggiori novità di questa release riguardano la capacità di funzionare anch
 - Il tasto Backspace ora non crea più problemi quando NVDA è configurato per pronunciare le parole digitate.
 - Non viene più riportata erroneamente la voce menù avvio in alcuni menù di contesto in esplora risorse. (#257)
 - NVDA ora interpreta correttamente le etichette Aria in Mozilla Gecko quando non esiste altro contenuto. (#156)
-- NVDA non abilita più automaticamente la modalità focus nei campi editazione di testo che aggiornano il proprio valore quando cambia il focus; ad esempio http://tigerdirect.com/. (#220)
+- NVDA non abilita più automaticamente la modalità focus nei campi editazione di testo che aggiornano il proprio valore quando cambia il focus; ad esempio https://tigerdirect.com/. (#220)
 - NVDA cercherà di recuperare alcune situazioni nelle quali in precedenza si bloccava per lunghi periodi. Sono necessari circa 10 secondi allo screen reader per riavviarsi.
 - Quando la lingua di NVDA è impostata su "User Default", viene usata la lingua scelta dall'utente nelle impostazioni lingua di Windows, piuttosto che altre opzioni. (#353)
 - NVDA ora riconosce l'esistenza di controlli in AIM7.
@@ -2322,7 +2322,7 @@ Le maggiori novità di questa release riguardano la capacità di funzionare anch
 = 0.5 =
 - NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will be used by default.
  - eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
- - For more info on eSpeak, or to find other versions, go to http://espeak.sourceforge.net/.
+ - For more info on eSpeak, or to find other versions, go to https://espeak.sourceforge.net/.
 - Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
 - Added support for more edit fields in Skype.
 - VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.

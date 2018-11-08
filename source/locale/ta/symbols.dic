@@ -18,7 +18,7 @@ decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥]?\d)
 # Treat dash differently when it is sandwitched between a number and a tamil character.
-# tamil unicode range is U+0B80–U+0BFF according to http://en.wikipedia.org/wiki/Tamil_script  
+# tamil unicode range is U+0B80–U+0BFF according to https://en.wikipedia.org/wiki/Tamil_script  
 tamilNumberDash	(?<=[0-9])\-(?=[஀-௿])
 
 symbols:
