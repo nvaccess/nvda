@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-18 14:57+1000\n"
+"POT-Creation-Date: 2018-10-19 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -2884,16 +2884,16 @@ msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Sucht das nächste Vorkommen des zuvor eingegebenen Textes ab der "
-"aktuellen Cursor-Position."
+"Sucht das nächste Vorkommen des zuvor eingegebenen Textes ab der aktuellen "
+"Cursor-Position."
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Sucht das vorherige Vorkommen des zuvor eingegebenen Textes ab der "
-"aktuellen Cursor-Position."
+"Sucht das vorherige Vorkommen des zuvor eingegebenen Textes ab der aktuellen "
+"Cursor-Position."
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2985,7 +2985,7 @@ msgstr "Touch Screen"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System focus"
-msgstr "Systemfokus"
+msgstr "System-Fokus"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System status"
@@ -3492,7 +3492,7 @@ msgstr "Schaltet die Ansage der anklickbaren Elemente um."
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
 #, python-format
 msgid "Symbol level %s"
-msgstr "Satzzeichenebene %s"
+msgstr "Ausführlichkeitsstufe: %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
@@ -3950,7 +3950,7 @@ msgstr ""
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
-msgstr "Keine Aktualisierung der Fortschrittsanzeige"
+msgstr "Keine Update der Fortschrittsanzeige"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
@@ -3958,11 +3958,11 @@ msgstr "Fortschrittsbalken ansagen"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
-msgstr "Nur Signaltöne bei Aktualisierung der Fortschrittsbalken."
+msgstr "Nur Signaltöne bei Update der Fortschrittsbalken."
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "Beep and speak progress bar updates"
-msgstr "Signaltöne und Ansage bei Aktualisierung der Fortschrittsbalken"
+msgstr "Signaltöne und Ansage bei Update der Fortschrittsbalken"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -3970,7 +3970,7 @@ msgid ""
 "progress bar updates"
 msgstr ""
 "Umschalten zwischen Signaltönen, Sprachausgabe, Signaltöne und Ansage und "
-"stumm für die Ansage der Aktualisierung der Fortschrittsbalken. "
+"stumm für die Ansage der Update der Fortschrittsbalken. "
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -5989,7 +5989,7 @@ msgstr "Leer"
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
 msgid "cap %s"
-msgstr "Großes %s"
+msgstr "Groß %s"
 
 #. Translators: This is spoken when the given line has no indentation.
 msgid "no indent"
@@ -6529,15 +6529,15 @@ msgstr "NVDA-Meldung"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "Aktualisierungen werden gesucht"
+msgstr "Updates werden gesucht"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "Aktualisierungen werden gesucht"
+msgstr "Updates werden gesucht"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "Fehler bei der Suche nach Aktualisierungen"
+msgstr "Fehler bei der Suche nach Updates"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of the message when a downloaded update file could not be preserved.
@@ -6567,7 +6567,7 @@ msgstr "NVDA Version {version} ist verfügbar."
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "Keine Aktualisierung verfügbar."
+msgstr "Kein Update verfügbar."
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6577,11 +6577,11 @@ msgstr "NVDA {version} &installieren"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 msgid "Re-&download update"
-msgstr "Aktualisierung neu &herunterladen"
+msgstr "Update neu &herunterladen"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
-msgstr "Aktualisierung &herunterladen"
+msgstr "Update &herunterladen"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 msgid "Remind me &later"
@@ -6600,7 +6600,7 @@ msgstr "NVDA Version {version} ist bereit zur Installation.\n"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
-msgstr "Aktualisierung &installieren"
+msgstr "Update &installieren"
 
 #. Translators: The label of a button to postpone an NVDA update.
 msgid "&Postpone update"
@@ -6608,11 +6608,11 @@ msgstr "Installation &später durchführen"
 
 #. Translators: The message when a downloaded update file could not be preserved.
 msgid "Unable to postpone update."
-msgstr "Die Installation der Aktualisierung konnte nicht verschoben werden."
+msgstr "Die Installation der Update konnte nicht verschoben werden."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
-msgstr "Aktualisierung herunterladen"
+msgstr "Update herunterladen"
 
 #. Translators: The progress message indicating that a connection is being established.
 msgid "Connecting"
@@ -6624,7 +6624,7 @@ msgstr "Download läuft..."
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "Fehler beim Herunterladen der Aktualisierung."
+msgstr "Fehler beim Herunterladen der Update."
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6641,8 +6641,8 @@ msgstr ""
 "können Sie die Weiterentwicklung von NVDA sicherstellen.\n"
 "Selbst wenn Sie nur 10 Euro für jede heruntergeladene Version spenden, "
 "können wir alle laufenden Kosten decken.\n"
-"Ihre Spenden gehen hierbei an NV-Access, eine ehrenamtlich arbeitende "
-"Organisation, die NVDA weiterentwickelt.\n"
+"Ihre Spenden gehen hierbei an NV-Access, eine gemeinnützige Organisation, "
+"die NVDA weiterentwickelt.\n"
 "Vielen Dank für Ihre Unterstützung!"
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -6711,15 +6711,14 @@ msgstr ""
 "Original sowie auch auf modifizierte Kopieen dieser Software sowie alle "
 "Weiterentwicklungen.\n"
 "Für weitere Informationen finden  Sie die Lizenz im Hilfe-menü.\n"
-"Des weiteren können Sie entweder die [englischsprachige http://www.gnu.org/"
+"Des weiteren können Sie entweder die [englischsprachige https://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche "
-"http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die "
+"https://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die "
 "englische Originalversion besitzt nach wie vor die offizielle "
 "Rechtsgültigkeit.\n"
 "\n"
-"{name} wird von NV Access entwickelt, einer ehrenamtlich arbeitenden "
-"Organisation, die freie und quelloffene Software für blinde und "
-"sehbehinderte entwickelt.\n"
+"{name} wird von NV Access entwickelt, einer gemeinnützigen Organisation, die "
+"freie und quelloffene Software für blinde und sehbehinderte entwickelt.\n"
 "Falls Sie NVDA nützlich finden und dessen Entwicklung fördern wollen, können "
 "Sie dies mit einer Spende tun. Sie können dies über den Menüpunkt Spenden im "
 "Hilfe-Menü tun."
@@ -7632,7 +7631,7 @@ msgstr "Python-&Konsole"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "&Erweiterungen verwalten..."
+msgstr "Erweiterungen &verwalten..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
@@ -7660,18 +7659,18 @@ msgstr "Benutzer&handbuch"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "&Befehlsreferenz"
+msgstr "Kurzü&bersicht der Befehle"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
 msgstr "Was ist &neu in NVDA"
 
 msgid "NVDA &web site"
-msgstr "NVDA-&Webseite"
+msgstr "NVDA-&Homepage"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "Lizenz&bestimmungen"
+msgstr "L&izenz"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
@@ -7683,7 +7682,7 @@ msgstr "Willkommens&dialog"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "Nach &Updates suchen..."
+msgstr "Nach &Update suchen..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -7725,11 +7724,11 @@ msgstr "S&penden"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
-msgstr "Ausstehende Aktualisierung &installieren"
+msgstr "Ausstehendes Update &installieren"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
-msgstr "Eine zuvor heruntergeladene NVDA-Aktualisierung ausführen"
+msgstr "Eine zuvor heruntergeladene NVDA-Update ausführen"
 
 msgid "E&xit"
 msgstr "&Beenden"
@@ -7796,7 +7795,7 @@ msgstr "Lizenzbestimmungen"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
-msgstr "A&kzeptieren"
+msgstr "&Akzeptieren"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 msgid "&Install NVDA on this computer"
@@ -7840,7 +7839,7 @@ msgstr "Im Debug-Modus neu starten"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Install pending update"
-msgstr "Ausstehende Aktualisierung installieren"
+msgstr "Ausstehendes Update installieren"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7867,13 +7866,13 @@ msgstr ""
 "Um NVDA in Zukunft zu verbessern, möchte NV Access Nutzungsdaten von "
 "laufenden Kopien von NVDA sammeln.\n"
 "\n"
-"Zu den Daten gehören Betriebssystemversion, NVDA-Version, Sprache, "
-"Herkunftsland sowie bestimmte NVDA-Konfigurationen wie aktuelle "
-"Sprachausgabe, aktuelle Braillezeile und die verwendete Braille-Tabelle. Es "
-"wird weder gesprochene noch Braille-Inhalte jemals an NV Access gesendet.  "
-"Eine aktuelle Liste aller gesammelten Daten finden Sie im Benutzerhandbuch.\n"
-"Möchten Sie NV Access erlauben, diese Daten regelmäßig zu sammeln, um NVDA "
-"zu verbessern?"
+"Zu den Daten gehören Betriebssystem-, NVDA-Version, Sprache, Herkunftsland "
+"sowie bestimmte NVDA-Konfigurationen wie aktuelle Sprachausgabe, aktuelle "
+"Braillezeile und die verwendete Braille-Tabelle. Es wird weder gesprochene "
+"noch Braille-Inhalte jemals an NV Access gesendet.  Eine aktuelle Liste "
+"aller gesammelten Daten finden Sie im Benutzerhandbuch.\n"
+"Möchten Sie NV Access Limited erlauben, diese Daten regelmäßig zu sammeln, "
+"um NVDA zu verbessern?"
 
 #. Translators: The label of a Yes button in a dialog
 msgid "&Yes"
@@ -7916,11 +7915,11 @@ msgstr "Autor"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "&Info zu dieser Erweiterung..."
+msgstr "&Info"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "&Hilfe zu dieser Erweiterung"
+msgstr "&Hilfe"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -7998,7 +7997,7 @@ msgstr ""
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "die Erweiterung wird installiert"
+msgstr "Die Erweiterung wird installiert"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
@@ -8015,7 +8014,7 @@ msgstr "Möchten Sie die Erweiterung wirklich aus NVDA entfernen?"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
-msgstr "Erweiterung &entfernen"
+msgstr "Erweiterung ent&fernen"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "install"
@@ -8043,7 +8042,7 @@ msgstr "Aktiviert"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "Erweiterung &aktivieren"
+msgstr "&Aktivieren"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
 msgid ""
@@ -8272,7 +8271,8 @@ msgstr "NVDA wird installiert"
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr ""
-"Bitte warten Sie, während Ihre vorhandene NVDA-Version aktualisiert wird."
+"Bitte warten Sie, während Ihre bestehende Installation von NVDA aktualisiert "
+"wird."
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
@@ -8284,10 +8284,10 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"Fehler während der Installation beim Löschen oder Überschreiben einer Datei. "
-"Eine andere Instanz von NVDA scheint noch aktiv zu sein. Bitte stellen Sie "
-"sicher, dass alle Instanzen beendet sind und starten Sie anschließend den "
-"Installationsvorgang erneut."
+"Die Installation konnte eine Datei nicht entfernen oder überschreiben. Eine "
+"weitere Kopie von NVDA kann auf einem anderen angemeldeten Benutzerkonto "
+"ausgeführt werden. Bitte stellen Sie sicher, dass alle installierten Kopien "
+"von NVDA beendet sind und versuchen Sie die Installation erneut."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -8304,7 +8304,7 @@ msgstr ""
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "NVDA wurde erfolgreich installiert. "
+msgstr "NVDA wurde erfolgreich installiert."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
@@ -8313,8 +8313,7 @@ msgstr "Die Installation von NVDA wurde erfolgreich aktualisiert. "
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr ""
-"Bitte klicken Sie auf \"OK\", um die installierte Version jetzt zu starten."
+msgstr "Bitte drücken Sie auf \"OK\", um die installierte Kopie zu starten."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -8335,7 +8334,7 @@ msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"Eine ältere Version von NVDA wurde auf Ihrem System gefunden. Diese Version "
+"Eine frühere NVDA-Version wurde auf Ihrem System gefunden. Diese Version "
 "wird nun aktualisiert."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
@@ -8379,10 +8378,11 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
-"Sie sind im Begriff, eine ältere Version von NVDA zu installieren. Wenn Sie "
-"diese Version tatsächlich installieren wollen, sollten Sie zunächst die "
-"bereits instalierte Version von NVDA über die Systemsteuerung "
-"deinstallieren, bevor Sie die Installation dieser Version fortsetzen."
+"Sie sind im Begriff, eine frühere Version von NVDA als die aktuell "
+"installierte Version zu installieren. Wenn Sie wirklich zu einer älteren "
+"Version zurückkehren möchten, sollten Sie zunächst die Installation "
+"abbrechen und NVDA vollständig deinstallieren, bevor Sie diese Version "
+"installieren."
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
@@ -8398,8 +8398,8 @@ msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"Um eine portable Version von NVDA zu erstellen, geben Sie den Zielpfad und "
-"weitere Optionen an und betätigen Sie den Schalter \"fortsetzen\"."
+"Um eine portable NVDA-Version zu erstellen, geben Sie den Zielpfad und "
+"weitere Optionen an und drücken Sie auf \"Fortsetzen\"."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -8566,12 +8566,12 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "Automatisch nach &Aktualisierungen suchen"
+msgstr "Automatisch nach &Updates suchen"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
-msgstr "Beim Start von NVDA &ausstehende Aktualisierungen melden"
+msgstr "Beim Start von NVDA &ausstehende Updates melden"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
@@ -8695,7 +8695,7 @@ msgstr "&Dialekte automatisch wechseln (falls unterstützt)"
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
-msgstr "Z&eichen- und Symbolebene:"
+msgstr "Ausführ&lichkeitsstufe"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -8819,7 +8819,7 @@ msgstr "NVDA-Cursor"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Follow system &focus"
-msgstr "System&fokus verfolgen"
+msgstr "System-&Fokus verfolgen"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.

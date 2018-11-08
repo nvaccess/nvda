@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-17 00:10+1000\n"
+"POT-Creation-Date: 2018-10-26 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA\n"
@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1139,6 +1139,18 @@ msgstr "Unicode-punkt"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamesisk niveau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Kinesisk (Taiwan, Mandarin)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Kinesisk (Taiwan, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6631,7 +6643,7 @@ msgstr "en skærmlæser til Microsoft Windows, der er gratis og open source."
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Bidragydere"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6665,8 +6677,8 @@ msgstr ""
 "for enhver, der måtte ønske det. Dette gælder for såvel originalen som "
 "modificerede udgaver af denne software såvel som ethvert afledt produkt.\n"
 "For flere detaljer henvises til menuen Hjælp, hvor du finder licensen.\n"
-"Den kan ligeledes findes online på: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"Den kan ligeledes findes online på: https://www.gnu.org/licenses/old-"
+"licenses/gpl-2.0.html\n"
 "\n"
 "{name} er udviklet af NV Access, en non-profit organisation, der har til "
 "formål at hjælpe og støtte gratis og open source løsninger for  blinde og "
@@ -6870,36 +6882,6 @@ msgstr "ulæst"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Redigerer profil {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "lilla flag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Orange flag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Grønt flag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Gult flag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Blåt flag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Rødt flag"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7572,7 +7554,7 @@ msgstr "Input&bevægelser..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "&Præferencer"
+msgstr "Opsætning"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -8668,20 +8650,11 @@ msgstr "Brug &stavefunktion hvis understøttes"
 msgid "Keyboard"
 msgstr "Tastatur"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Brug Caps Lock som NVDA-tast"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Brug numerisk Insert som NVDA-tast"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Brug udvidet Insert som NVDA-tast"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Brug Caps Lock som NVDA-tast"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8844,8 +8817,9 @@ msgstr "Oplys &værktøjstips"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Oplys &hjælpeballoner"
+#, fuzzy
+msgid "Report &notifications"
+msgstr "Oplys &værktøjstips"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10918,6 +10892,36 @@ msgstr "dobbelt linjeafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 linjeafstand"
+
+#~ msgid "purple flag"
+#~ msgstr "lilla flag"
+
+#~ msgid "Orange flag"
+#~ msgstr "Orange flag"
+
+#~ msgid "Green flag"
+#~ msgstr "Grønt flag"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Gult flag"
+
+#~ msgid "Blue flag"
+#~ msgstr "Blåt flag"
+
+#~ msgid "Red flag"
+#~ msgstr "Rødt flag"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Brug Caps Lock som NVDA-tast"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Brug numerisk Insert som NVDA-tast"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Brug udvidet Insert som NVDA-tast"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Oplys &hjælpeballoner"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"

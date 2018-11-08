@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 19:07+1000\n"
+"POT-Creation-Date: 2018-09-28 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -1138,6 +1138,16 @@ msgstr "Braille Unicode"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamita grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chinês (China, Mandarin) Grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chinês (China, Mandarin) Grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6681,13 +6691,13 @@ msgstr ""
 "todas as cópias originais e modificadas deste software, para além de "
 "qualquer trabalho relacionado com este programa.\n"
 "Para mais detalhes, pode ver a licença no menu Ajuda.\n"
-"A mesma também pode ser consultada online em: http://www.gnu.org/licenses/"
+"A mesma também pode ser consultada online em: https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "O {name} é desenvolvido pela NV Access, uma instituição sem fins lucrativos "
-"que tem por missão ajudar e promover soluções livre e open source para "
+"que tem por missão ajudar e promover soluções livres e open source para "
 "pessoas cegas e com baixa visão.\n"
-"Se achar que o NVDA é útil e se pretender contribuir na sua melhoria, por "
+"Se considerar que o NVDA é útil e pretender contribuir na sua melhoria, por "
 "favor concidere fazer um donativo à NV Access. Pode fazê-lo através do item "
 "\"Efectuar um donativo a partir do menu do NVDA."
 
@@ -6885,36 +6895,6 @@ msgstr "não lida"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "A editar o perfil {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Bandeira púrpura"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Bandeira laranja"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Bandeira verde"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Bandeira amarela"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Bandeira azul"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Bandeira vermelha"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8688,21 +8668,10 @@ msgstr "Utilizar funcionalidade de &soletrar se suportada"
 msgid "Keyboard"
 msgstr "Teclado"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Utilizar CapsLock como uma tecla modificadora do NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Utilizar Insert do bloco numérico como uma tecla modificadora do NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr ""
-"Utilizar Insert do bloco intermédio como uma tecla modificadora do NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Seleccionar teclas modificadoras do NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8866,8 +8835,8 @@ msgstr "Anunciar &sugestões"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Anunciar &balões de ajuda"
+msgid "Report &notifications"
+msgstr "Anunciar &notificatões"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10952,6 +10921,38 @@ msgstr "espaçamento duplo"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaçamento  1,5 linhas"
+
+#~ msgid "purple flag"
+#~ msgstr "Bandeira púrpura"
+
+#~ msgid "Orange flag"
+#~ msgstr "Bandeira laranja"
+
+#~ msgid "Green flag"
+#~ msgstr "Bandeira verde"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Bandeira amarela"
+
+#~ msgid "Blue flag"
+#~ msgstr "Bandeira azul"
+
+#~ msgid "Red flag"
+#~ msgstr "Bandeira vermelha"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Utilizar CapsLock como uma tecla modificadora do NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr ""
+#~ "Utilizar Insert do bloco numérico como uma tecla modificadora do NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr ""
+#~ "Utilizar Insert do bloco intermédio como uma tecla modificadora do NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Anunciar &balões de ajuda"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"
