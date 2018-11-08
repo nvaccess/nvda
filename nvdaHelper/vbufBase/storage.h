@@ -40,22 +40,13 @@ typedef enum {
 	TREEDIRECTION_SYMMETRICAL_BACK
 } TreeDirection;
 
-class VBufStorage_textContainer_t: protected std::wstring {
-	protected:
-	~VBufStorage_textContainer_t();
-
-	public:
-	VBufStorage_textContainer_t(std::wstring str);
-	virtual const std::wstring& getString();
-	virtual void destroy();
-
-};
-
 class VBufStorage_buffer_t;
 class VBufStorage_fieldNode_t;
 class VBufStorage_controlFieldNode_t;
 class VBufStorage_textFieldNode_t;
 class VBufStorage_controlFieldNodeIdentifier_t;
+
+typedef std::list<std::pair<VBufStorage_controlFieldNodeIdentifier_t,int>> VBufStorage_relativeSelection_t;
 
 /**
  * a list of control field nodes.
@@ -234,11 +225,6 @@ class VBufStorage_fieldNode_t {
 	bool isHidden;
 
 /**
- * points to an optional ancestor node which should be re-rendered instead of this node, if this node changes.
- */
-	VBufStorage_controlFieldNode_t* updateAncestor;
-
-/**
  * points to this node's parent control field node.
  * it is garenteed that this node will be one of the parent's children (firstChild [next next...] or lastChild [previous previous...]).
  */
@@ -310,11 +296,6 @@ class VBufStorage_fieldNode_t {
 class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 	protected:
 
-/**
- * uniquely identifies this control in its buffer.
- */
-	VBufStorage_controlFieldNodeIdentifier_t identifier;
-
 	virtual void generateMarkupTagName(std::wstring& text);
 
 	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
@@ -331,7 +312,44 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	friend class VBufStorage_buffer_t;
 
+/**
+ * uniquely identifies this control in its buffer.
+ */
+	VBufStorage_controlFieldNodeIdentifier_t identifier;
+
 	public:
+
+/**
+ * If true, When this node is invalidated in a backend, its parent will be invalidated instead. 
+ * Parent invalidation is also recursive, so that if the parent node sets this variable to true, then the first ancestor that does not set this to true is used for invalidation. 
+ * An example where this might be set is on parts of a table where it is necessary for the table itself to be re-rendered if any part changes.
+ */
+	bool requiresParentUpdate {false};
+
+/**
+ * If true, this node is allowing itself to be reused within a subtree that is being re-rendered. 
+ * This is true by default, but may be set to false if this node or a descendant needs to be re-rendered but its requiresParentUpdate is true.
+ * In that case, the re-render will happen higher up in the ancestors, but ensures that this node is not reused. 
+ */
+	bool allowReuseInAncestorUpdate {true};
+
+/**
+ * If True, this node cannot be moved and reused within a subtree being re-rendered, if its previous siblings have changed in anyway.
+ * An example might be where a table is re-rendered and a new row is added in the middle. 
+ * In this case, all rows and cells after the new row must not be reused as their table coordinates would have changed.
+ */
+	bool denyReuseIfPreviousSiblingsChanged {false};
+
+/**
+ * If true, this node's children will always be re-rendered along with this node when being re-rendered.
+ * For example: a table row might set this to ensure that if it is re-rendered, all its cells are as well.
+ */
+	bool alwaysRerenderChildren {false};
+
+/**
+ * If true, all this node's descendants will always be re-rendered along with this node when being re-rendered.
+ */
+	bool alwaysRerenderDescendants {false};
 
 /**
  * retreaves the node's doc handle and ID.
@@ -377,11 +395,37 @@ class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 };
 
 /**
+ * A node that references another fieldNode.
+ * When rendering a subtree in a temporary buffer to update existing content,
+ * This node class is used to indicate where an existing node should be reused.
+ */
+class VBufStorage_referenceNode_t: public VBufStorage_controlFieldNode_t {
+	public:
+	VBufStorage_controlFieldNode_t* referenceNode;
+	VBufStorage_referenceNode_t(int docHandle, int ID, VBufStorage_controlFieldNode_t* r): VBufStorage_controlFieldNode_t(docHandle,ID,false), referenceNode(r) {};
+	void generateMarkupTagName(std::wstring& text) { text.append(L"reference"); }; 
+};
+
+/**
  * a buffer that can store text with overlaying fields.
  * it stores the text and fields in an internal tree of nodes.
  */ 
 class VBufStorage_buffer_t {
 	protected:
+
+/**
+ * Holds all the reference nodes for this buffer.
+ */
+	std::list<VBufStorage_referenceNode_t*> referenceNodes;
+
+/**
+ * Unlinks this node from its parent and siblings.
+ * Note that this does not actually delete the node, nore unregister it from the buffer in any other way.
+ * This is used internally by removeFieldNode and replaceSubtrees.
+ * @param node the node to unlink
+ * @param removeDescendants if true then its simblings will be appropriately linked to close the gab, but if false, this node's children will be reparented on this node's parent, linking with this node's siblings.
+ */
+	bool unlinkFieldNode(VBufStorage_fieldNode_t* node, bool removeDescendants=true);
 
 /**
  * points to the first node in the tree of nodes.
@@ -595,7 +639,7 @@ class VBufStorage_buffer_t {
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
-	virtual VBufStorage_textContainer_t*  getTextInRange(int startOffset, int endOffset, bool useMarkup=false);
+	virtual bool getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
 
 /**
  * Expands the given offset to the start and end offsets of the containing line.
@@ -621,6 +665,14 @@ class VBufStorage_buffer_t {
  * @returns True if descendant is a descendant of parent, false otherwise.
  */
 	virtual bool isDescendantNode(VBufStorage_fieldNode_t* parent, VBufStorage_fieldNode_t* descendant);
+
+/**
+ * Adds a reference node to the buffer at the location given by parent and previous, pointing to the given existing node in another buffer.
+ * @param parent the parent in this buffer of the added reference node.
+ * @param previous the previous node in this buffer of the added reference node.
+ * @param node the existing node from another buffer that the reference node should point to.
+ */
+	VBufStorage_referenceNode_t*  addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node); 
 
 	virtual std::wstring getDebugInfo() const;
 

@@ -10,6 +10,7 @@ import winsound
 import time
 import weakref
 import wx
+import core
 from logHandler import log
 import documentBase
 import review
@@ -278,6 +279,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_CHECKMENUITEM,
 		})
 
+	IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES = frozenset({
+		controlTypes.ROLE_MENUITEM,
+		controlTypes.ROLE_RADIOMENUITEM,
+		controlTypes.ROLE_CHECKMENUITEM,
+		})
+
 	def shouldPassThrough(self, obj, reason=None):
 		"""Determine whether pass through mode should be enabled (focus mode) or disabled (browse mode) for a given object.
 		@param obj: The object in question.
@@ -471,6 +478,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
+			return gesture.send()
+		# #3215 ARIA menus should get the Escape key unconditionally so they can handle it without invoking browse mode first
+		obj = api.getFocusObject()
+		if obj and obj.role in self.IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES:
 			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
@@ -1042,7 +1053,9 @@ class ElementsListDialog(wx.Dialog):
 				speech.cancelSpeech()
 				item.moveTo()
 				item.report()
-			wx.CallLater(100, move)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(100, move)
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
@@ -1217,14 +1230,36 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				return
 			if obj==self.rootNVDAObject:
 				return
-			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-				focusObj.setFocus()
+			# Set focus to this object, if
+			if (
+				# We actually found an object to set focus to.
+				focusObj
+				# And there are no future focus events already queued:
+				# If there were then setting focus here would be a waste of time as the focus would be replaced anyway.
+				and not eventHandler.isPendingEvents("gainFocus")
+				# And this object is not the root of the document:
+				# Setting focus to the document itself is not what the user would ever expect.
+				and focusObj!=self.rootNVDAObject 
+				# This object does not already have focus
+				and focusObj != api.getFocusObject() 
+				# And Only if this browseMode implementation actually wants to set focus to this kind of object:
+				# For instance, we may wish to set focus to a button, but not a div (if it does not have a tabindex).
+				and self._shouldSetFocusToObj(focusObj)
+			):
+				self.setFocusToObj(focusObj)
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
+
+	def setFocusToObj(self,obj):
+		"""
+		Sets focus to the given object in this browseMode document.
+		"""
+		self._lastFocusObj=obj
+		obj.setFocus()
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -1380,6 +1415,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
+		lastFocusObj=self._lastFocusObj
 		enteringFromOutside=self._enteringFromOutside
 		self._enteringFromOutside=False
 		if not self.isReady:
@@ -1423,12 +1459,23 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
+		try:
+			lastFocusInfo=self.makeTextInfo(lastFocusObj) if lastFocusObj else None
+		except LookupError:
+			lastFocusInfo=None
 		#We only want to update the caret and speak the field if we're not in the same one as before
-		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
-			# The virtual caret is not within the focus node.
+		if (
+			# We always want to report and update if this is the very first focus event.
+			not self._hadFirstGainFocus
+			# We should alrways report and update if the last focus no longer exists (I.e. it no longer has a position in the document):
+			or not lastFocusInfo 
+			# We should report and update if The new focus starts at a different position to the last focus
+			or focusInfo.compareEndPoints(lastFocusInfo,"startToStart")!=0
+			# We should report and update if the new focus ends after the last focus:
+			# It is either at an entirely different position, or it is wider.
+			or focusInfo.compareEndPoints(lastFocusInfo,"endToEnd")>0
+		):
+			# The newly focused node is not due to the caret moving.
 			oldPassThrough=self.passThrough
 			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
 			if not oldPassThrough and (passThrough or sayAllHandler.isRunning()):
