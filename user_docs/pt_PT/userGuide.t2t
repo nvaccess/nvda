@@ -1259,15 +1259,13 @@ Segue uma descrição das várias opções:
 ==== Esquema do teclado ====[KeyboardSettingsLayout]
 Esta caixa de combinação permite-lhe escolher qual o esquema do teclado que o NVDA utiliza. Actualmente, os dois esquemas incluídos no NVDA são o Desktop, para computadores de secretária, e o Laptop, para computadores portáteis.
 
-==== Utilizar o Caps Lock como uma tecla modificadora do NVDA ====[KeyboardSettingsCapsModifier]
-Se esta caixa de verificação estiver marcada, o Caps Lock pode ser usado como uma tecla modificadora do NVDA.
-
-==== Utilizar Insert do bloco numérico como uma tecla modificadora do NVDA ====[KeyboardSettingsExtendedInsert]
-Se esta caixa de verificação estiver marcada, a tecla Insert do bloco numérico pode ser utilizada como uma tecla modificadora do NVDA.
-
-==== Utilizar Insert do bloco intermédio como uma tecla modificadora do NVDA ====[KeyboardSettingsNumpadInsert]
-Se esta caixa de verificação estiver marcada, a tecla Insert do bloco intermédio (que se encontra normalmente acima das setas, perto do Home e End) pode ser usada como uma tecla modificadora do NVDA.
-
+==== Seleccionar teclas modificadoras do NVDA ====[KeyboardSettingsModifiers]
+As caixas de verificação desta lista controlam que teclas serão usadas como [teclas modificadoras do NVDA #TheNVDAModifierKey]. Pode escolher entre as seguintes teclas:
+- A tecla CapsLock;
+- O Insert do bloco numérico;
+- O Insert do bloco intermédio.
+-
+ 
 Se nenhuma tecla for seleccionada como tecla NVDA, poderá ser impossível aceder a algumas funções deste.
 Por isso, o diálogo de configurações do NVDA mostrará uma mensagem de erro, se todas as teclas estiverem desmarcadas ao pressionar o botão "Ok".
 Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla, antes de pressionar "Ok" para fechar o diálogo convenientemente.

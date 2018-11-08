@@ -24,7 +24,7 @@
 
 
 == Các thay đổi cho nhà phát triển ==
-Phần này không được dịch. Vui lòng xem bản tiếng Anh của tài liệu.
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t.
 
 = 2018.3.2 =
 Đây là bản phát hành phụ nhằm giải quyết sự cố trong  Google Chrome khi điều hướng qua các tweett trên trang www.twitter.com. (#8777)
@@ -93,7 +93,7 @@ Các cải tiến của bản phát hành này bao gồm khả năng tự nhận
 
  
 == Các thay đổi cho nhà phát triển ==
-Phần này không được dịch. Vui lòng xem bản tiếng Anh của tài liệu.
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t.
 
 = 2018.2.1 =
 Bản phát hành này bao gồm các cập nhật phiên dịch vì xảy ra lỗi từ việc gỡ bỏ một tính năng.
@@ -159,7 +159,7 @@ Một số tính năng nổi bật trong bản phát hành này bao gồm hỗ t
 
 == Các thay đổi cho nhà phát triển ==
 
-Phần này không được dịch. Vui lòng xem bản tiếng Anh để biết thêm thông tin.
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t.
 
 = 2018.1.1 =
 Đây là bản phát hành đặc biệt  của NVDA, sửa một lỗi trong driver của bộ đọc OneCore, khiến cho nó bị đọc nhanh và cao hơn trong Windows 10 Redstone 4 (1803). (#8082) 
@@ -208,16 +208,9 @@ Một số tính năng nổi bật trong bản phát hành này là hỗ trợ s
 - Tất cả các phím trên màn hình the Hims Braille Sense Polaris đã hoạt động như mong muốn. (#7865)
 
 
-== Thay Đổi cho Nhà Phát Triển ==
-- Added a hidden boolean flag to the braille section in the configuration: "outputPass1Only". (#7301, #7693, #7702) 
- - This flag defaults to true. If false, liblouis multi pass rules will be used for braille output.
-- A new dictionary (braille.RENAMED_DRIVERS) has been added to allow for smooth transition for users using drivers that have been superseded by others. (#7459)
-- Updated comtypes package to 1.1.3. (#7831)
-- Implemented a generic system in braille.BrailleDisplayDriver to deal with displays which send confirmation/acknowledgement packets. See the handyTech braille display driver as an example. (#7590, #7721)
-- A new "isAppX" variable in the config module can be used to detect if NVDA is running as a Windows Desktop Bridge Store app. (#7851)
-- For document implementations such as NVDAObjects or browseMode that have a textInfo, there is now a new documentBase.documentWithTableNavigation class that can be inherited from to gain standard table navigation scripts. Please refer to this class to see which helper methods must be provided by your implementation for table navigation to work. (#7849)
-- The scons batch file now better handles when  Python 3 is also installed, making use of the launcher to specifically launch python 2.7 32 bit. (#7541)
-- hwIo.Hid now takes an additional parameter exclusive, which defaults to True. If set to False, other applications are allowed to communicate with a device while it is connected to NVDA. (#7859)
+== Các thay Đổi cho Nhà Phát Triển ==
+
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t.
 
 
 = 2017.4 =
@@ -275,7 +268,7 @@ Lưu ý, từ phiên bản NVDA này trở đi, sẽ không còn hỗ trợ cho 
 - Chức năng cuộn trở lại của màn hình nổi Freedom Scientific đã hoạt động. (#7713)
 
 
-== Thay Đổi cho Nhà Phát Triển ==
+== Các thay Đổi cho Nhà Phát Triển ==
 - "scons tests" sẽ kiểm tra những chuỗi dịch có chú thích của người dịch không. Bạn có thể chạy độc lập với "scons checkPot". (#7492)
 - Có mô đun extensionPoints mới cung cấp framework để bật khả năng mở rộng mã tại điểm cụ thể của mã. Điều này giúp các chương trình khác muốn đăng ký để được thông báo khi có action xuất hiện (extensionPoints.Action), để chỉnh sửa các loại dữ liệu (extensionPoints.Filter) hoặc tham gia quá trình quyết định một việc sẽ được hoàn tất (extensionPoints.Decider). (#3393)
 - Đã có thể đăng ký thông báo khi thay đổi hồ sơ cấu hình với config.configProfileSwitched Action. (#3393)
@@ -360,7 +353,7 @@ Những chức năng nổi bật trong phiên bản này là cho phép nhập li
 - Trong Firefox và Chrome, khi thực hiện lệnh di chuyển trong bảng ở chế độ duyệt sẽ bỏ qua những ô có thuộc tính ẩn. (#6652, #5655)
 
 
-== Thay Đổi cho Nhà Phát Triển ==
+== Các thay Đổi cho Nhà Phát Triển ==
 - Đã thêm mili giây vào phần đánh dấu thời gian trong  bản ghi. (#7163)
 - NVDA phải được build với Visual Studio Community 2015. Đã ngưng hỗ trợ cho bộ Visual Studio Express. (#7110)
  - Cũng yêu cầu cài đặt thêm bộ Windows 10 Tools và SDK; có thể chọn khi cài đặt Visual Studio.
@@ -409,7 +402,7 @@ Một số điểm nổi bật trong bản phát hành này bao gồm: hỗ tr�
 - Sửa một số lỗi hiếm gặp khi chọn ở chế độ duyệt. (#7131)
 
 
-== Thay Đổi Dành Cho Nhà Phát Triển ==
+== Các Thay Đổi Cho Nhà Phát Triển ==
 - Các tham số dòng lệnh đã được xử lý bởi mô-đun argparser của Python, thay vì là optparser. Điều này sẽ cho phép xử lý riêng các tùy chọn như -r và -q. (#6865)
 - core.callLater sẽ ở hàng chờ hàm gọi đến hàng chờ chính của NVDA sau một khoảng độ trễ được chỉ định, thay vì can thiệp phần lõi và thực thi trực tiếp.  Điều này sẽ giúp ngưng sự cố đóng băng hoặc treo sau khi phần lõi xử lý hàm gọi, ví dụ như khi gọi hàm giữa chừng để hiển thị hộp thông báo. (#6797) 
 - Thuộc tính InputGesture.identifiers đã được thay đổi, vì vậy nó sẽ không còn được normalize. (#6945)
@@ -468,7 +461,7 @@ Một số tính năng mới nổi bật trong phiên bản này bao ;gồm thô
 - NVDA không còn bị lỗi sau khi đóng chương trình Windows Media Player trong khi focus nằm tại điều khiển thanh trượt. (#5467)
 
 
-== Thay đổi dành cho nhà phát triển ==
+== Các thay đổi cho nhà phát triển ==
 - Các tập tin cấu hình cũng như hồ sơ cá nhân đều tự động được nâng cấp để đáp ứng những yêu cầu chỉnh sửa schema. Nếu có lỗi khi nâng cấp, hộp thoại thông báo sẽ xuất hiện, cấu hình sẽ được khởi tạo lại và tập tin cấu hình cũ được lưu trong bản ghi log của NVDA tại cấp 'Info'. (#6470)
 
 
@@ -525,8 +518,8 @@ Các điểm chính trong phiên bản này bao gồm, cải thiện Microsoft E
 - Khi bật multi-process trong Firefox, các ô soạn thảo và chế độ duyệt đã hoạt động tốt. (#6380)
 
 
-== Thay đổi dành cho nhà phát triển ==
-Các thay đổi này hiện chưa  được dịch sang tiếng Việt. Vui lòng xem phần tiếng Anh changes.t2t
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem phiên bản tiếng Anh changes.t2t
 
 
 = Các phiên bản cũ =

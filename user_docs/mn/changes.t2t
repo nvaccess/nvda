@@ -1,29 +1,29 @@
-What's New in NVDA
+NVDA программын шинэчлэл болон засварчлал
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
 
-== New Features ==
-- New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
+== Шинэлэг онцлогууд ==
+- Шинэ брайль бичгүүд: Хятад (Хятад, Мандурин) grade 1 болон grade 2. (#5553)
 
 
-== Changes ==
+== Өөрчлөлтүүд ==
 - "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
 - IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
 - NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
 - Updated liblouis braille translator to version 3.7.0. (#8697)
 
 
-== Bug Fixes ==
+== засварчилсан алдаанууд ==
 - In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
 - When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
 - Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
 - Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
 
 
-== Changes for Developers ==
+== Хөгжүүлэгчдэд зориулсан өөрчлөлтүүд ==
 - gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
  - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
  - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
