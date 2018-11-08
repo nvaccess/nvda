@@ -605,7 +605,9 @@ class ExcelBase(Window):
 			app=self.excelWindowObject.application
 			app.screenUpdating=False
 			yield
+			import tones; tones.beep(550,30)
 			app.screenUpdating=True
+			import tones; tones.beep(750,30)
 		finally:
 			self.appModule._inDisableExcelScreenUpdatingForContext=False
 
@@ -621,6 +623,10 @@ class ExcelBase(Window):
 		# Disable Excel's screen updating during spreadsheet focus events to speed up data collection.
 		with self._disableScreenUpdatingForContext():
 			super(ExcelBase,self).event_gainFocus()
+
+	def event_becomeNavigatorObject(self):
+		with self._disableScreenUpdatingForContext():
+			super(ExcelBase,self).event_becomeNavigatorObject()
 
 	@staticmethod
 	def getCellAddress(cell, external=False,format=xlA1):
