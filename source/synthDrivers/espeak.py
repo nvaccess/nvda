@@ -7,7 +7,7 @@
 
 import os
 from collections import OrderedDict
-import _espeak
+from . import _espeak
 import Queue
 import threading
 import languageHandler

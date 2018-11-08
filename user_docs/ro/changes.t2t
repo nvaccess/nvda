@@ -2,35 +2,116 @@ Ce este nou în NVDA
 
 
 %!includeconf: ../changes.t2tconf
-= 2018.3 =
 
-== Noi funcționalități ==
-- NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox. (#8280)
-- Când Braillenote este folosit ca afișaj braille, NVDA este acum compatibil cu joysticurile de rulare ale tastaturilor BrailleNote QT și Apex BT. (#6316)
-- S-au creeat noi scripturi pentru raportarea timpului trecut și timpului total al titlului actual în Foobar2000. (#6596)
-- Acum, simbolul tastei de comandă Mac (⌘) este anunțat la citirea textului cu orice sintetizator. (#8366)
-- Prin atributul aria-roledescription, rolurilr personalizate sunt suportate acum în Firefox, Chrome și Internet Explorer.
-- Tabel braille nou: Suedeză, braille în 8 puncte pentru calculator. (#8227)
+= 2018.4 =
+
+== Noi Funcționalități ==
+- Noi tabele braille: chineză (China, mandarină) gradele 1 și 2. (#5553)
 
 
 == Modificări ==
-- Acum, lista de limbi disponibile în dialogul setărilor generale este sortată pe baza numelor limbilor și nu pe baza codurilor ISO 639. (#7284)
+- Opțiunea „Anunță baloane de ajutor” din dialogul de prezentare a obiectelor a fost redenumită în „Anunță notificări”, pentru a include notificările toast din Windows 8 și mai nou. (#5789)
+- În setările tastaturii din NVDA, casetele de bifat pentru activarea sau dezactivarea tastelor modificatoare ale acestui cititor de ecran sunt afișate acum într-o listă, mai degrabă decât separat.
+- NVDA nu va mai prezenta informații redundante la citirea ceasului din zona de notificare (system tray) pe unele versiuni de windows. (#4364)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.7.0. (#8697)
+
+
+== Defecte Rezolvate ==
+- În Outlook 2016/365, categoria și starea flag sunt raportate pentru mesaje. (#8603)
+- Când NVDA este setat în limbi precum kirghiză, mongolă sau macedoneană, nu va mai afișa un dialog la pornire prin care să îl informeze pe utilizator că limba nu este suportată de sistemul de operare. (#8064)
+- deplasarea mausului îl va muta cu mai multă acuratețe la poziția modului de navigare din Mozilla Firefox, Google Chrome și Acrobat Reader DC. (#6460)
+- A fost îmbunătățită interacțiunea cu casetele combinate pe web în Firefox, Chrome și Internet Explorer. (#8664)
+
+
+== Modificări pentru Dezvoltatori ==
+- Acum, gui.nvdaControls conține două clase care să creeze liste accesibile cu casete de bifat. (#7325)
+ - CustomCheckListBox este o subclasă accesibilă a wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adaugă casete de bifat accesibile la un AutoWidthColumnListCtrl, care este bazat pe wx.ListCtrl.
+- Dacă aveți nevoie să faceți un widget wx accesibil care să nu existe deja, puteți face astfel utilizând o instanță a gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Vedeți implementarea gui.nvdaControls.ListCtrlAccPropServer pentru mai multe informații.
+
+ 
+== Alte câteva modificări pentru Dezvoltatori ==
+- S-a actualizat configobj la 5.1.0dev commit 5b5de48a. (#4470)
+
+
+= 2018.3 =
+Caracteristicile principale ale acestei versiuni includ detectarea automată a multor afișaje braille, suport pentru noile caracteristici ale Windows 10 precum panoul de intrare Emoji al Windows 10, dar și multe reparări ale erorilor.
+
+== Noi Funcționalități ==
+- NVDA raportează acum greșeli gramaticale la expunerea lor apropiată de către paginile web din Mozilla Firefox și Google Chrome. (#8280)
+- Conținutul care este marcat ca fiind inserat sau șters din paginile web, este acum raportat în Google Chrome. (#8558)
+- Când Braillenote este folosit ca afișaj braille, NVDA este acum compatibil cu joysticurile de rulare ale tastaturilor BrailleNote QT și Apex BT. (#6316)
+- S-au creeat noi scripturi pentru raportarea timpului trecut și timpului total al titlului actual în Foobar2000. (#6596)
+- Acum, simbolul tastei de comandă Mac (⌘) este anunțat la citirea textului cu orice sintetizator. (#8366)
+- Prin atributul aria-roledescription, rolurilr personalizate sunt suportate acum în toate navigatoarele web.
+- Tabele braille noi: cehă 8 puncte, curdă centrală, esperanto, maghiară și suedeză, braille în 8 puncte pentru calculator. (#8227)
+- A fost adăugat suportul pentru detectarea automată a afișajelor braille din fundal. (#1271)
+ - Afișajele ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille și HumanWare BrailleNote și Brailliant BI/B sunt suportate acum.
+ - Puteți activa această caracteristică selectând opțiunea automată din lista afișajelor braille, care se află în dialogul selectării afișajelor braille.
+ - Vă rugăm să consultați documentația pentru mai multe detalii.
+- S-a adăugat suportul pentru diverse caracteristici de intrare moderne introduse în versiunile recente de Windows 10. Acestea includ panoul de emoji (Fall Creators Update), dictarea (Fall Creators Update), sugestiile de intrare ale tastatturii hardware (April 2018 Update) și lipirea pe planșeta cloud (October 2018 Update). (#7273)
+- Conținutul marcat ca citat bloc utilizându-se ARIA (role blockquote) este suportat acum în Mozilla Firefox 63. (#8577)
+  
+
+== Modificări ==
+- Acum, lista de limbi disponibile în dialogul setărilor generale este sortată pe baza numelor limbilor, nu pe baza codurilor ISO 639. (#7284)
 - S-au adăugat gesturile implicite pentru alt shift tab și pentru windows tab cu toate afișajele braille suportate de la Freedom Scientific. (#7387)
+- Pentru afișajele braille ALVA BC680 și protocol converter, este posibilă atribuirea unor funcții diverse la smart pad-ul stâng sau la cel drept, la tastele tumb sau etouch. (#8230)
+- Pentru afișajele ALVA BC6,combinația de taste sp2+sp3 va anunța data și ora curentă, în timp ce sp1+sp2 simulează tasta Windows (#8230)
 - La prima pornire a acestei versiuni NVDA, utilizatorii vor fi întrebați dacă acceptă ca NVDA să trimită statistici despre modul de folosire către NV Access de fiecare dată când NVDA  caută automat actualizări. (#8217)
 - Dacă utilizatorul acceptă trimiterea statisticilor către NV Access în timpul verificării pentru actualizări noi, NVDA va trimite numele driverului pentru sintetizator și numele driverului pentru afișajul braille conectat. Aceste date vor ajuta la priorizarea lucrărilor din viitor cu referință la sintetizatoare și afișaje braille. (#8217)
 - S-a actualizat traducătorul braille liblouis la versiunea 3.6.0. (#8365)
+- S-a actualizat calea pentru tabelul rusesc în opt puncte pentru calculator. (#8446)
+- S-a actualizat Espeak-NG la 1.49.3dev commit 910f4c2 (#8561)
 
 
-== Defecte rezolvate ==
+== Defecte Rezolvate ==
 - Etichetele accesibile pentru comenzile din Google Chrome sunt acum raportate cu ușurință în modul de navigare atunci când eticheta nu apare ca și conținut în sine. (#4773)
-
-
-== Modificări pentru dezvoltatori ==
+- Notificările sunt suportate acum în Zoom. De exemplu, aceasta include starea de activare/dezactivare și mesajele primite. .(#7754)
+- Când sunteți în modul de navigare, commutarea prezentării contextului braille nu mai face ca ieșirea braille să oprească urmărirea. (#7741)
+- Afișajele braille ALVA BC680 nu mai eșuează să se inițializeze. (#8106)
+- În mod implicit, afișajele ALVA BC6 nu vor mai executa taste simulate ale tastaturii sistemului la apăsarea combinațiilor de taste care implică sp2+sp3 pentru declanșarea funcționalității interne. (#8230)
+- Apăsarea sp2 pe un afișaj ALVA BC6 pentru simularea tastei alt funcționează acum ca anunțată. (#8360)
+- NVDA nu mai anunță modificări redundante ale aspectului tastaturii. (#7383, #8419)
+- Urmărirea mausului este mult mai precisă în Notepad și în alte editoare de text într-un document care conține mai mult de 65535 de caractere. (#8397)
+- NVDA recunoaște mai multe dialoguri din Windows 10 și din alte aplicații moderne. (#8405)
+- În Windows 10 October 2018 Update, Server 2019 și mai noi, NVDA nu mai eșuează să urmărească focalizarea sistemului atunci când o aplicație se blochează sau bombardează sistemul cu evenimente. (#7345, #8535)
+- Acum, utilizatorii sunt informați atunci când încearcă să citească sau să copieze o bară de stare goală. (#7789)
+- S-a reparat o eroare care făcea ca atunci când o casetă era nebifată, statutul acesteia să nu fie raportat în vorbire dacă respectiva casetă fusese parțial bifată anterior. (#6946)
+- În lista de limbi din dialogul setărilor NVDA, numele de limbă pentru birmană este afișat corect în Windows 7. (#8544)
+- În microsoft Edge, NVDA va anunța notificări precum disponibilitatea pentru vizualizarea lecturilor și progresul încărcării unei pagini. (#8423)
+- La navigarea într-o listă de pe un site web, NVDA va raporta eticheta acesteia dacă autorul site-ului respectiv a furnizat-o. (#7652)
+- Când se atribuie manual funcții la gesturi pentru un afișaj braille particular, aceste gesturi le vor afișa întotdeauna ca fiind atribuite la acel afișaj. În trecut, funcțiile erau afișate ca și cum ar fi fost atribuite la afișajul braille care era activ în acel moment. (#8108)
+- Versiunea pe 64 de biți a Media Player Classic este suportată acum. (#6066)
+- Au fost activate câteva îmbunătățiri la suportul braille din Microsoft Word cu UI Automation:
+ - Similar cu multe câmpuri de text multilinie, când este poziționat la începutul unui document în braille, afișajul este afișat astfel încât primul caracter al documentului să fie la începutul afișajului. (#8406)
+ - La focalizarea unui document Word, s-a redus prezentarea extrem de prolixă a focalizării atât în vorbire, cât și în braille. (#8407)
+ - Acum, deplasarea cursorului în braille funcționează corect atunci când se află într-o listă dintr-un document Word. (#7971)
+ - Bulinele sau numerele nou-inserate într-un document Word sunt raportate corect atât în vorbire, cât și în braille. (#7970)
+- În Windows 10 1803 sau mai nou, puteți să instalați suplimente dacă este activată caracteristica pentru suportul utilizării Unicode UTF-8 pentru limbile din lumea întreagă. (#8599)
+ 
+ 
+== Modificări pentru Dezvoltatori ==
 - S-a adăugat scriptHandler.script, care poate fi folosit pe post de decorator pentru scripturile de pe obiectele scriptabile. (#6266)
+- a fost introdus un test de sistem framework pentru NVDA. (#708)
+- Au fost efectuate niște modificări la modulul hwPortUtils: (#1271)
+ - listUsbDevices oferă acum dicționare cu informații despre dispozitive, inclusiv hardwareID și devicePath.
+ - Dicționarele oferite de listComPorts conțin și o intrare usbID pentru porturile COM cu informații despre USB VID/PID în ID-ul lor hardware.
+- S-a actualizat wxPython la 4.0.3. (#7077)
+- Actualmente, întrucât NVDA suportă doar Windows 7 SP1 și mai nou, tasta „minWindowsVersion”, folosită să verifice dacă UIA ar trebui să fie activat pentru o versiume particulară de Windows, a fost eliminată. (#8422)
+- Acum, vă puteți înregistra pentru a fi notificat cu privire la salvările configurațiilor sau la acțiunile de resetare prin noile config.pre_configSave, config.post_configSave, config.pre_configReset și prin acțiunile config.post_configReset. (#7598)
+ - config.pre_configSave este folosit pentru ca dumneavoastră să fiți notificat atunci când configurația NVDA este pe punctul de a fi salvată, urmând ca după aceea să se apeleze la config.post_configSave.
+ - config.pre_configReset și config.post_configReset includ steagul setărilor din fabrică pentru a specifica dacă setările sunt reîncărcate de pe disk (false) sau dacă resetarea la valorile implicite este necesară (true).
+- config.configProfileSwitch a fost redenumit la config.post_configProfileSwitch pentru a reflecta faptul că această acțiune este apelată după ce comutarea profilului are loc. (#7598)
+- Interfețele UI Automation au fost actualizate la Windows 10 October 2018 Update și Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
+
+
+= 2018.2.1 =
+Această versiune include actualizări ale traducerilor din cauza eliminării în ultimul moment a unei caracteristici care cauza probleme.
 
 
 = 2018.2 =
-
 Caracteristicile principale ale acestei versiuni includ suport pentru citirea și navigarea în tabelele din aplicația Kindle pentru PC, suport pentru afișajele braille de la HumanWare BrailleNote Touch și BI14, precum și rezolvările multor defecte la vocile Windows Onecore și Sapi5. În plus, s-au introdus câteva mici funcții noi în Microsoft Outlook etc.
 
 

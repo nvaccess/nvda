@@ -11,7 +11,7 @@ import gui
 from logHandler import log
 import appModuleHandler
 import globalVars
-import guiHelper
+from . import guiHelper
 
 class ProfilesDialog(wx.Dialog):
 	shouldSuspendConfigProfileTriggers = True
@@ -218,7 +218,7 @@ class ProfilesDialog(wx.Dialog):
 		# Translators: The label of a field to enter a new name for a configuration profile.
 		with wx.TextEntryDialog(self, _("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
-				_("Rename Profile"), defaultValue=oldName) as d:
+				_("Rename Profile"), value=oldName) as d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				return
 			newName = api.filterFileName(d.Value)

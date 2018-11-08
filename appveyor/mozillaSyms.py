@@ -29,8 +29,6 @@ DLL_NAMES = [
 	"ISimpleDOM.dll",
 	"minHook.dll",
 	"nvdaHelperRemote.dll",
-	"VBufBackend_adobeFlash.dll",
-	"VBufBackend_gecko_ia2.dll",
 ]
 DLL_FILES = [f
 	for dll in DLL_NAMES

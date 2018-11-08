@@ -135,6 +135,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 
 
 	UNIT_CONTROLFIELD = "controlField"
+	UNIT_FORMATFIELD = "formatField"
 
 	def _getControlFieldAttribs(self,  docHandle, id):
 		info = self.copy()
@@ -155,6 +156,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		ID = ctypes.c_int()
 		node=VBufRemote_nodeHandle_t()
 		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
+		if not any((docHandle.value, ID.value)):
+			raise LookupError("Neither docHandle nor ID found for offset %d" % offset)
 		return docHandle.value, ID.value
 
 	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
@@ -169,11 +172,17 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 	def _getPointFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
+		if not o.location:
+			raise LookupError
 		left, top, width, height = o.location
 		return textInfos.Point(left + width / 2, top + height / 2)
 
 	def _getNVDAObjectFromOffset(self,offset):
-		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		try:
+			docHandle,ID=self._getFieldIdentifierFromOffset(offset)
+		except LookupError:
+			log.debugWarning("Couldn't get NVDAObject from offset %d" % offset)
+			return None
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObjectInBuffer(self,obj):
@@ -252,11 +261,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 					return placeholder
 		return None
 
-	def getTextWithFields(self,formatConfig=None):
-		start=self._startOffset
-		end=self._endOffset
-		if start==end:
-			return ""
+	def _getFieldsInRange(self,start,end):
 		text=NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle,start,end,True)
 		if not text:
 			return ""
@@ -269,6 +274,13 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				elif isinstance(field,textInfos.FormatField):
 					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
+
+	def getTextWithFields(self,formatConfig=None):
+		start=self._startOffset
+		end=self._endOffset
+		if start==end:
+			return ""
+		return self._getFieldsInRange(start,end)
 
 	def _getWordOffsets(self,offset):
 		#Use VBuf_getBufferLineOffsets with out screen layout to find out the range of the current field
@@ -334,6 +346,10 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
+		strippedCharsFromStart = attrs.get("strippedCharsFromStart")
+		if strippedCharsFromStart is not None:
+			assert strippedCharsFromStart.isdigit(), "strippedCharsFromStart isn't a digit, %r" % strippedCharsFromStart
+			attrs["strippedCharsFromStart"] = int(strippedCharsFromStart)
 		return attrs
 
 	def _getLineNumFromOffset(self, offset):
@@ -350,6 +366,12 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 			ID=ctypes.c_int()
 			node=VBufRemote_nodeHandle_t()
 			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID),ctypes.byref(node))
+			return startOffset.value,endOffset.value
+		elif unit == self.UNIT_FORMATFIELD:
+			startOffset=ctypes.c_int()
+			endOffset=ctypes.c_int()
+			node=VBufRemote_nodeHandle_t()
+			NVDAHelper.localLib.VBuf_locateTextFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 

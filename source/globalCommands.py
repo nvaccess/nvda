@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
 
 import time
 import itertools
@@ -1203,7 +1203,9 @@ class GlobalCommands(ScriptableObject):
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
 			import wx
-			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
@@ -1374,13 +1376,25 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No status line found"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			ui.message(text)
+			if not text.strip():
+				# Translators: Reported when status line exist, but is empty.
+				ui.message(_("no status bar information"))
+			else:
+				ui.message(text)
 		elif scriptHandler.getLastScriptRepeatCount()==1:
-			speech.speakSpelling(text)
+			if not  text.strip():
+				# Translators: Reported when status line exist, but is empty.
+				ui.message(_("no status bar information"))
+			else:
+				speech.speakSpelling(text)
 		else:
-			if api.copyToClip(text):
-				# Translators: The message presented when the status bar is copied to the clipboard.
-				ui.message(_("%s copied to clipboard")%text)
+			if not text.strip():
+				# Translators: Reported when user attempts to copy content of the empty status line.
+				ui.message(_("unable to copy status bar content to clipboard"))
+			else:
+				if api.copyToClip(text):
+					# Translators: The message presented when the status bar is copied to the clipboard.
+					ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
 	script_reportStatusLine.category=SCRCAT_FOCUS

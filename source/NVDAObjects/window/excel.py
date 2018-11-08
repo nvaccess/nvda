@@ -200,7 +200,7 @@ backgroundPatternLabels={
 		xlPatternRectangularGradient:_("rectangular gradient"),
 	}
 
-from excelCellBorder import getCellBorderStyleDescription
+from .excelCellBorder import getCellBorderStyleDescription
 
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
@@ -1448,7 +1448,7 @@ class ExcelCell(ExcelBase):
 			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
 			# Translators: Title of a dialog edit an Excel comment 
 			_("Comment"),
-			defaultValue=commentObj.text() if commentObj else u"",
+			value=commentObj.text() if commentObj else u"",
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
 		def callback(result):
 			if result == wx.ID_OK:

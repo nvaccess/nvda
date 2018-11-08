@@ -53,6 +53,14 @@ class Ia2Web(IAccessible):
 			return roleText
 		return super(Ia2Web,self).roleText
 
+	def _get_states(self):
+		states=super(Ia2Web,self).states
+		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
+		# This is necessary for other code that calculates how selection of cells should be spoken.
+		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
+			states.add(controlTypes.STATE_FOCUSABLE)
+		return states
+
 class Document(Ia2Web):
 	value = None
 

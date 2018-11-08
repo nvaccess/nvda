@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-29 00:10+1000\n"
-"PO-Revision-Date: 2018-06-28 17:33+0100\n"
-"Last-Translator: zvonimir Stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2018-08-31 00:10+1000\n"
+"PO-Revision-Date: 2018-08-31 14:18+0100\n"
+"Last-Translator: Zvonimir Stanečić <zvonimirek222@webczatnet.pl>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -85,11 +85,6 @@ msgstr "Nepoznat jezik"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "nepoznata metoda unosa"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -369,6 +364,14 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "pwdedt"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "del"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "ins"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -506,6 +509,18 @@ msgstr "Uvijek popunjavaj brajični redak"
 msgid "Only when scrolling back"
 msgstr "Samo prilikom prebacivanja brajičnog redka u nazad"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatski"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -575,9 +590,20 @@ msgstr "na fokus"
 msgid "to review"
 msgstr "na pregled"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatski"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "Nepoznat brajični redak"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Bluetooth Serijski: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "Serijski priključak: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -643,6 +669,11 @@ msgstr "Bugarski 8-točkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "Centralni Kurdski puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Velški puno pismo"
 
@@ -650,6 +681,11 @@ msgstr "Velški puno pismo"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Velški kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "Češka osmotočkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -750,6 +786,11 @@ msgstr "Engleski (Sjedinjene Američke Države) puno pismo"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "Engleski (Sjedinjene Američke Države) kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "Esperanto puno pismo0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -858,6 +899,11 @@ msgstr "Mađarski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Hungarian grade 2"
+msgstr "Mađarski kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Icelandic 8 dot computer braille"
 msgstr "Islandski 8 točkasta kompjutorska brajica"
 
@@ -919,7 +965,7 @@ msgstr "Letonski puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Malayalam grade 1"
-msgstr "Malajalamski puno pismo"
+msgstr "Malajalamsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -929,12 +975,12 @@ msgstr "Manipuri Puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 1"
-msgstr "Mongolski puno pismo"
+msgstr "Mongolsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Mongolian grade 2"
-msgstr "Mongolski kratkopis"
+msgstr "Mongolsko puno pismo s engleskim kratkopisom"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1044,12 +1090,12 @@ msgstr "Švedska osmotočkasta kompjutorska brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Swedish grade 1"
-msgstr "Švedski puno pismo"
+msgstr "Švedsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovak grade 1"
-msgstr "Slovački puno pismo"
+msgstr "Slovačko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1059,17 +1105,17 @@ msgstr "Slovenska osmotočkasta kompjutorska brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian grade 1"
-msgstr "Slovenski puno pismo"
+msgstr "Slovensko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Serbian grade 1"
-msgstr "Srpski puno pismo"
+msgstr "Srpsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Tamil grade 1"
-msgstr "Tamilski puno pismo"
+msgstr "Tamilsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1094,7 +1140,7 @@ msgstr "Unicode brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
-msgstr "Vijetnamski puno pismo"
+msgstr "Vijetnamsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1108,13 +1154,13 @@ msgstr "Kineski (Taiwan, Mandarinski)"
 
 #. Translators: The mode to interact with controls in documents
 msgid "Focus mode"
-msgstr "mod fokusa"
+msgstr "Način fokusa"
 
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
-msgstr "Mod pregleda"
+msgstr "Način pregleda"
 
 #. Translators: Reported label in the elements list for an element which which has no name and value
 msgid "Unlabeled"
@@ -1281,51 +1327,51 @@ msgstr "Nema prethodne tablice"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next link"
-msgstr "premiješta na sljedeći link"
+msgstr "premiješta na sljedeću vezu"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next link"
-msgstr "nema sljedećeg linka"
+msgstr "nema sljedeće veze"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous link"
-msgstr "premiješta na prethodni link"
+msgstr "premiješta na prethodnu vezu"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
-msgstr "Nema prethodnog linka"
+msgstr "Nema prethodne veze"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "premiješta na sljedeći posjećeni link"
+msgstr "premiješta na sljedeću posjećenu vezu"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
-msgstr "nema sljedećeg posjećenog linka"
+msgstr "nema sljedeće posjećene veze"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "premiješta na prethodni posjećeni link"
+msgstr "premiješta na prethodnu posjećenu vezu"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "nema prethodnog posjećenog linka"
+msgstr "nema prethodne posjećene veze"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "premiješta na sljedeći neposjećeni link"
+msgstr "premiješta na sljedeću neposjećenu vezu"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
-msgstr "nema sljedećeg neposjećenog linka"
+msgstr "nema sljedeće neposjećene veze"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Premiješta na prethodni neposjećeni link"
+msgstr "Premiješta na prethodnu neposjećenu vezu"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "nema prethodnog neposjećenog linka"
+msgstr "nema prethodne neposjećene veze"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
@@ -1521,19 +1567,19 @@ msgstr "Nema prethodnog citata"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
-msgstr "zaobilazi blok linkova unaprijed"
+msgstr "zaobilazi blok veza unaprijed"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text after a block of links"
-msgstr "nema više teksta poslije bloka linkova"
+msgstr "nema više teksta poslije bloka veza"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips backward past a block of links"
-msgstr "zaobilazi blok linkova unatrag"
+msgstr "zaobilazi blok veza unatrag"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no more text before a block of links"
-msgstr "nema više teksta prije bloka linkova"
+msgstr "nema više teksta prije bloka veza"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
@@ -1604,7 +1650,7 @@ msgstr "Nema prethodne pogreške"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lin&ks"
-msgstr "link&ovi"
+msgstr "ve&ze"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -2022,7 +2068,7 @@ msgstr "alatni savjetnik"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
-msgstr "link"
+msgstr "veza"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 msgid "tree view"
@@ -2510,15 +2556,25 @@ msgstr "thumb kontrola"
 msgid "calendar"
 msgstr "kalendar"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "element grafa"
-
 msgid "video"
 msgstr "video"
 
 msgid "audio"
 msgstr "audio"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "element grafa"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Izbrisano"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "Umetnuto"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3315,15 +3371,15 @@ msgstr "Uključuje i isključuje izgovor kordinate ćelija u tablici"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "Izvijesti o linkovima isključeno"
+msgstr "Izvijesti o vezama isključeno"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "Izvijesti o linkovima uključeno"
+msgstr "Izvijesti o vezama uključeno"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "Uključuje i isključuje izgovor linkova"
+msgstr "Uključuje i isključuje izgovor veza"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
@@ -3812,6 +3868,14 @@ msgstr ""
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Statusna linija nije pronađena"
+
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "Nema informacija o statusnoj traci"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "Nemoguće kopirati statusnu traku u međuspremnik"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
@@ -4768,28 +4832,23 @@ msgstr "tipkovnica, za sve rasporede"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amharski"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragonski"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arapski"
+msgid "Central Kurdish"
+msgstr "Centralni Kurdski"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepalski"
+msgid "Northern Kurdish"
+msgstr "Sjeverni kurdski"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Srpski (Latinica)"
+msgid "Burmese"
+msgstr "Burmanski"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5968,7 +6027,7 @@ msgstr "s %s redaka"
 msgid "level %s"
 msgstr "razina %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "s %s elementima"
@@ -6079,17 +6138,9 @@ msgstr "pozadinski uzorak {pattern}"
 msgid "line %s"
 msgstr "redak %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "Umetnuto"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "Nije umetnuto"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "Izbrisano"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -7252,14 +7303,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "isključeno"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "nema emoji"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 serije/pretvornik protokola"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Bluetooth serijski priključak: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7280,15 +7330,6 @@ msgstr "Uključuje ili isključuje HID tipkovničku simulaciju"
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit brajični redci"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "Serijski priključak: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7857,6 +7898,7 @@ msgstr "&Instaliraj..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&Brisanje"
@@ -10884,6 +10926,25 @@ msgstr "Dvostruki prored"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 prored"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amharski"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arapski"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepalski"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Srpski (Latinica)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "Prikazuje NVDA dijaloški okvir za glasovne postavke"

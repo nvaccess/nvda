@@ -3,7 +3,9 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes.automation import IEnumVARIANT, VARIANT
 from comtypes import COMError, IServiceProvider, GUID
+from comtypes.hresult import S_OK, S_FALSE
 import ctypes
 import os
 import re
@@ -31,6 +33,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
+from locationHelper import RectLTWH
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -119,13 +122,17 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getPointFromOffset(self,offset):
+	@classmethod
+	def _getPointFromOffsetInObject(cls,obj,offset):
 		try:
-			res=self.obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
-		point=textInfos.Point(res[0]+(res[2]/2),res[1]+(res[3]/2))
+		point=textInfos.Point(*res.center)
 		return point
+
+	def _getPointFromOffset(self,offset):
+		return self._getPointFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"
@@ -902,7 +909,7 @@ the NVDAObject for IAccessible
 
 	def _get_location(self):
 		try:
-			return self.IAccessibleObject.accLocation(self.IAccessibleChildID)
+			return RectLTWH(*self.IAccessibleObject.accLocation(self.IAccessibleChildID))
 		except COMError:
 			return None
 
@@ -1208,6 +1215,51 @@ the NVDAObject for IAccessible
 
 	def _get_columnHeaderText(self):
 		return self._tableHeaderTextHelper("column")
+
+	def _get_selectionContainer(self):
+		if self.table:
+			return self.table
+		return super(IAccessible,self).selectionContainer
+
+	def _getSelectedItemsCount_accSelection(self,maxCount):
+		sel=self.IAccessibleObject.accSelection
+		if not sel:
+			raise NotImplementedError
+		# accSelection can return a child ID of a simple element, for instance in QT tree tables. 
+		# Therefore treet this as a single selection.
+		if isinstance(sel,int) and sel>0:
+			return 1
+		enumObj=sel.QueryInterface(IEnumVARIANT)
+		if not enumObj:
+			raise NotImplementedError
+		# Call the rawmethod for IEnumVARIANT::Next as COMTypes' overloaded version does not allow limiting the amount of items returned
+		numItemsFetched=ctypes.c_ulong()
+		itemsBuf=(VARIANT*(maxCount+1))()
+		res=enumObj._IEnumVARIANT__com_Next(maxCount,itemsBuf,ctypes.byref(numItemsFetched))
+		# IEnumVARIANT returns S_FALSE  if the buffer is too small, although it still writes as many as it can.
+		# For our purposes, we can treat both S_OK and S_FALSE as success.
+		if res!=S_OK and res!=S_FALSE:
+			raise COMError(res,None,None)
+		return numItemsFetched.value if numItemsFetched.value<=maxCount else sys.maxint
+
+	def getSelectedItemsCount(self,maxCount):
+		# To fetch the number of selected items, we first try MSAA's accSelection, but if that fails in any way, we fall back to using IAccessibleTable2's nSelectedCells, if we are on an IAccessible2 table.
+		# Currently Chrome does not implement accSelection, thus for Google Sheets we must use nSelectedCells when on a table.
+		try:
+			return self._getSelectedItemsCount_accSelection(maxCount)
+		except (COMError,NotImplementedError) as e:
+			log.debug("Cannot fetch selected items count using accSelection, %s"%e)
+			pass
+		if self.IAccessibleTable2Object:
+			try:
+				return self.IAccessibleTable2Object.nSelectedCells
+			except COMError as e:
+				log.debug("Error calling IAccessibleTable2::nSelectedCells, %s"%e)
+			pass
+		else:
+			log.debug("No means of getting a selection count from this IAccessible")
+		return super(IAccessible,self).getSelectedItemsCount(maxCount)
+
 
 	def _get_table(self):
 		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
@@ -1655,6 +1707,12 @@ class TrayClockWClass(IAccessible):
 	def _get_role(self):
 		return controlTypes.ROLE_CLOCK
 
+	def _get_name(self):
+		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+		if super(TrayClockWClass, self).value is None:
+			return super(TrayClockWClass, self).name
+		return None
+
 class OutlineItem(IAccessible):
 
 	def _get_value(self):
@@ -1832,6 +1890,7 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",
 	(None,oleacc.ROLE_SYSTEM_LIST):"List",

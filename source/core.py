@@ -79,8 +79,21 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
-	if not globalVars.appArgs.secure and not config.isAppX and not config.conf['update']['askedAllowUsageStats']:
-		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
+	try:
+		import updateCheck
+	except RuntimeError:
+		updateCheck=None
+	if updateCheck and not config.conf['update']['askedAllowUsageStats']:
+		# a callback to save config after the usage stats question dialog has been answered.
+		def onResult(ID):
+			import wx
+			if ID in (wx.ID_YES,wx.ID_NO):
+				try:
+					config.conf.save()
+				except:
+					pass
+		# Ask the user if usage stats can be collected.
+		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -157,7 +170,7 @@ def resetConfiguration(factoryDefaults=False):
 	inputCore.manager.loadLocaleGestureMap()
 	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
-		audioDucking.handleConfigProfileSwitch()
+		audioDucking.handlePostConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
 	
 
@@ -211,6 +224,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
+	import configobj
+	log.info("Using configobj version %s with validate version %s"%(configobj.__version__,configobj.validate.__version__))
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)
@@ -368,6 +383,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
+	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
+	# If we try to initialize this language, wx will show a warning dialog.
+	# Therefore treat this situation like wx not knowing the language at all.
+	if not locale.IsAvailable(wxLang.Language):
+		wxLang=None
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)

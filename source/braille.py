@@ -161,6 +161,10 @@ roleLabels = {
 	# Translators: Displayed in braille for an object which is a
 	# password edit.
 	controlTypes.ROLE_PASSWORDEDIT: _("pwdedt"),
+	# Translators: Displayed in braille for an object which is deleted.
+	controlTypes.ROLE_DELETED_CONTENT: _("del"),
+	# Translators: Displayed in braille for an object which is inserted.
+	controlTypes.ROLE_INSERTED_CONTENT: _("ins"),
 }
 
 positiveStateLabels = {
@@ -305,8 +309,18 @@ def NVDAObjectHasUsefulText(obj):
 		# Let the NVDAObject choose if the text should be presented
 		return obj._hasNavigableText
 
-def _getDisplayDriver(name):
-	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+def _getDisplayDriver(moduleName, caseSensitive=True):
+	try:
+		return __import__("brailleDisplayDrivers.%s" % moduleName, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+	except ImportError as initialException:
+		if caseSensitive:
+			raise initialException
+		for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
+			if name.startswith('_') or name.lower() != moduleName.lower():
+				continue
+			return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+		else:
+			raise initialException
 
 def getDisplayList(excludeNegativeChecks=True):
 	"""Gets a list of available display driver names with their descriptions.
@@ -762,8 +776,11 @@ class TextInfoRegion(Region):
 		from treeInterceptorHandler import TreeInterceptor
 		if isinstance(self.obj, TreeInterceptor):
 			return True
-		# Terminals are inherently multiline, so they don't have the multiline state.
-		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
+		# Terminals and documents are inherently multiline, so they don't have the multiline state.
+		return (
+			self.obj.role in (controlTypes.ROLE_TERMINAL,controlTypes.ROLE_DOCUMENT)
+			or controlTypes.STATE_MULTILINE in self.obj.states
+		)
 
 	def _getSelection(self):
 		"""Retrieve the selection.
@@ -786,8 +803,10 @@ class TextInfoRegion(Region):
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
-	def _getTypeformFromFormatField(self, field):
+	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
+		if not formatConfig["reportFontAttributes"]:
+			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold
 		if field.get("italic", False):
@@ -843,7 +862,7 @@ class TextInfoRegion(Region):
 				cmd = command.command
 				field = command.field
 				if cmd == "formatChange":
-					typeform = self._getTypeformFromFormatField(field)
+					typeform = self._getTypeformFromFormatField(field, formatConfig)
 					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
@@ -1550,7 +1569,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
-		config.configProfileSwitched.register(self.handleConfigProfileSwitch)
+		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
@@ -1564,7 +1583,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		config.configProfileSwitched.unregister(self.handleConfigProfileSwitch)
+		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1755,10 +1774,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
-		If a key is pressed the message will be dismissed by the next text being written to the display
+		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0:
+		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0 or text is None:
 			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
@@ -1946,7 +1965,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleReviewMove(shouldAutoTether=False)
 
-	def handleConfigProfileSwitch(self):
+	def handlePostConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
 		# Do not choose a new display if:
 		if not (
@@ -2480,18 +2499,27 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
+		# Translators: Displayed when the source driver of a braille display gesture is unknown.
+		unknownDisplayDescription = _("Unknown braille display")
 		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
 			log.error("Invalid braille gesture identifier: %s"%identifier)
-			return handler.display.description, "malformed:%s"%identifier
-		modelName = idParts.group(2)
-		key = idParts.group(3)
+			return unknownDisplayDescription, "malformed:%s"%identifier
+		source, modelName, key = idParts.groups()
+		# Optimisation: Do not try to get the braille display class if this identifier belongs to the current driver.
+		if handler.display.name.lower() == source.lower():
+			description = handler.display.description
+		else:
+			try:
+				description = _getDisplayDriver(source, caseSensitive=False).description
+			except ImportError:
+				description = unknownDisplayDescription
 		if modelName: # The identifier contains a model name
-			return handler.display.description, "{modelName}: {key}".format(
+			return description, "{modelName}: {key}".format(
 				modelName=modelName, key=key
 			)
 		else:
-			return handler.display.description, key
+			return description, key
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
 
