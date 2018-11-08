@@ -1259,14 +1259,12 @@ Elle contient les options suivantes :
 ==== Configuration du clavier ====[KeyboardSettingsLayout]
 Cette liste déroulante vous permet de choisir la configuration de clavier utilisée par NVDA. Actuellement, les deux configurations fournies avec NVDA sont : Desktop (ordinateur de bureau) et Laptop (ordinateur portable).
 
-==== Utiliser verrouillage majuscules comme touche NVDA ====[KeyboardSettingsCapsModifier]
-Quand cette case est cochée, NVDA peut utiliser la touche de "verrouillage majuscules" comme touche NVDA.
-
-==== Utiliser insert du clavier étendu comme touche NVDA ====[KeyboardSettingsExtendedInsert]
-Quand cette case est cochée, "Insert" du clavier étendu, généralement situé au-dessus des flèches, près des touches "Début" et "Fin", pourra être utilisé comme touche NVDA.
-
-==== Utiliser insert du pavé numérique comme touche NVDA ====[KeyboardSettingsNumpadInsert]
-Si cette case est cochée, la touche "Insert" du pavé numérique peut être utilisée comme touche NVDA.
+==== Choisir les Touches NVDA ====[KeyboardSettingsModifiers]
+Les cases à cocher de cette liste contrôlent quelles touches peuvent être utilisées comme [touches NVDA #TheNVDAModifierKey]. Vous pouvez choisir parmi les touches suivantes :
+- La touche verrouillage majuscule
+- La touche insertion du pavé numérique
+- La touche insertion étendue (elle se trouve généralement au-dessus des flèches, près de début et fin)
+-
 
 Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à certaines commandes NVDA.
 Par conséquent, le dialogue Paramètres affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur "OK".
