@@ -858,14 +858,14 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
 		field=newControlFieldStack[count]
-		if not inClickable:
+		if not inClickable and formatConfig['reportClickable']:
 			states=field.get('states')
 			if states and controlTypes.STATE_CLICKABLE in states:
-				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field, but not if the user turned them off.
-				if formatConfig['reportClickable']:
-					presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
-					if not presCat or presCat is field.PRESCAT_LAYOUT:
-						speechSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
+				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
+				if not presCat or presCat is field.PRESCAT_LAYOUT:
+					speechSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+					isTextBlank=False
 				inClickable=True
 		text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
@@ -910,6 +910,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	indentationDone=False
 	for command in textWithFields:
 		if isinstance(command,basestring):
+			# Text should break a run of clickables
+			inClickable=False
 			if reportIndentation and not indentationDone:
 				indentation,command=splitTextIndentation(command)
 				# Combine all indentation into one string for later processing.
@@ -929,29 +931,27 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				# Control fields always start a new chunk, even if they have no field text.
 				inTextChunk=False
 				tempTextList=[]
-				states=command.field.get('states')
-				if states and controlTypes.STATE_CLICKABLE in states:
-					if not inClickable:
+				if not inClickable and formatConfig['reportClickable']:
+					states=command.field.get('states')
+					if states and controlTypes.STATE_CLICKABLE in states:
 						# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
 						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
-						if formatConfig['reportClickable']:
-							presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
-							if not presCat or presCat is command.field.PRESCAT_LAYOUT:
-								tempTextList.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
-					inClickable=len(newControlFieldStack)+1
+						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
+						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
+							tempTextList.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+						inClickable=True
 				text=info.getControlFieldSpeech(command.field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
 				if text:
 					tempTextList.append(text)
 				fieldText=" ".join(tempTextList)
 				newControlFieldStack.append(command.field)
 			elif command.command=="controlEnd":
+				# Exiting a controlField should break a run of clickables
+				inClickable=False
 				# Control fields always start a new chunk, even if they have no field text.
 				inTextChunk=False
 				fieldText=info.getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
 				del newControlFieldStack[-1]
-				if inClickable and inClickable>len(newControlFieldStack):
-					# We just exited the inner most clickable. Allow announcing of further clickables
-					inClickable=False
 				if commonFieldCount>len(newControlFieldStack):
 					commonFieldCount=len(newControlFieldStack)
 			elif command.command=="formatChange":
