@@ -209,7 +209,14 @@ class MainFrame(wx.Frame):
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
-			updateCheck.executeUpdate()
+			updateTuple = updateCheck.getPendingUpdate()
+			newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateTuple[1])
+			from addonHandler import getAddonsWithoutKnownCompatibility
+			if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1])
+				gui.runScriptModalDialog(confirmUpdateDialog)
+			else:
+				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
 		try:
@@ -841,7 +848,14 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		elif action == 4:
 			if updateCheck:
-				updateCheck.executeUpdate()
+				updateTuple = updateCheck.getPendingUpdate()
+				newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateTuple[1])
+				from addonHandler import getAddonsWithoutKnownCompatibility
+				if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
+					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1])
+					confirmUpdateDialog.ShowModal()
+				else:
+					updateCheck.executePendingUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):

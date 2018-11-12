@@ -35,7 +35,7 @@ If you find NVDA useful and want it to continue to improve, please consider dona
 #: Compiled regular expression to match an NVDA version string.
 #: Supports year.month versions (e.g. 2018.1) and an additional suffix for bug fix releases (e.g. 2018.1.1).
 #: It also matches against strings like 2018.1dev.
-#: Resulting match objects eexpose three groups reflecting release year, release month, and optionally release minor version, respectively.
+#: Resulting match objects expose three groups reflecting release year, release month, and optionally release minor version, respectively.
 #: @type: RegexObject
 NVDA_VERSION_REGEX = re.compile(r"(\d{4,4})\.(\d)(?:\.(\d))?")
 

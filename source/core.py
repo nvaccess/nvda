@@ -28,7 +28,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-import extensionPoints
 
 import extensionPoints
 
@@ -79,8 +78,11 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
-	if not globalVars.appArgs.secure and not config.isAppX and not config.conf['update']['askedAllowUsageStats']:
-		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
+	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+		addonHandler.showUnknownCompatDialog()
+		if not config.conf['update']['askedAllowUsageStats']:
+			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
+
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
