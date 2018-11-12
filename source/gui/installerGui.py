@@ -86,13 +86,15 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 
 	def __init__(self, parent, isUpdate):
 		self.isUpdate=isUpdate
+		self.textWrapWidth = 600
 		# Translators: The title of the Install NVDA dialog.
 		wx.Dialog.__init__(self, parent, title=_("Install NVDA"))
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		import addonHandler
 		self.version = buildVersion.getCurrentVersionTuple()
-		shouldAskAboutAddons = any(addonHandler.getAddonsWithUnknownCompatibility(version=self.version))
+		addonsWithoutKnownCompat = list(addonHandler.getAddonsWithoutKnownCompatibility(self.version))
+		shouldAskAboutAddons = any(addonsWithoutKnownCompat)
 
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -109,11 +111,21 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: A message in the installer to let the user know that some addons are not compatible.
 			msg+=_(
 				"\n\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
-				"These add-ons will be disabled prior to installation. "
+				"These add-ons will be disabled after installation. "
 				"If you rely on these add-ons, please review the list to manually enable them before installation."
 			)
+			from addonHandler import AddonCompatibilityState, compatValues
+			for a in addonsWithoutKnownCompat:
+				# now that the use is warned about the compatibility and so that the user is
+				# not prompted again after installation, we set the default compatibility
+				AddonCompatibilityState.setAddonCompatibility(
+					addon=a,
+					NVDAVersion=self.version,
+					compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
+				)
+
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
-		text.Wrap(self.scaleSize(600))
+		text.Wrap(self.scaleSize(self.textWrapWidth))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA on the Windows &logon screen")
@@ -148,8 +160,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 
 		if shouldAskAboutAddons:
 			# Translators: The label of a button to launch the add-on compatibility review dialog.
-			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."), id=wx.ID_OK)
-			reviewAddonButton.SetDefault()
+			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
 		
 		bHelper.addButton(self, id=wx.ID_CANCEL)
@@ -173,39 +184,58 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		from gui import addonGui
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
-			displayManuallySetCompatibilityAddons=False,
 			NVDAVersion=self.version
 		)
 		incompatibleAddons.ShowModal()
 		incompatibleAddons.Destroy()
+
+class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
+	def __init__(self):
+		# Translators: The title of a warning dialog.
+		wx.Dialog.__init__(self, gui.mainFrame, title=_("Warning"))
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		text = wx.StaticText(
+			self,
+			# Translators: A warning presented when the user attempts to downgrade NVDA
+			# to an older version.
+			label=_(
+				"You are attempting to install an earlier version of NVDA than the version currently installed. "
+				"If you really wish to revert to an earlier version, you should first cancel this installation "
+				"and completely uninstall NVDA before installing the earlier version."
+			))
+		text.Wrap(self.scaleSize(600))
+		contentSizer.addItem(text)
+
+		buttonHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
+		okButton = buttonHelper.addButton(
+			parent=self,
+			id=wx.ID_OK,
+			# Translators: The label of a button to proceed with installation,
+			# even though this is not recommended.
+			label=_("&Proceed with installation (not recommended)")
+		)
+		cancelButton = buttonHelper.addButton(
+			parent=self,
+			id=wx.ID_CANCEL
+		)
+		contentSizer.addDialogDismissButtons(buttonHelper)
+
+		cancelButton.SetFocus()
+		mainSizer.Add(contentSizer.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		self.SetSizer(mainSizer)
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
 
 def showInstallGui():
 	gui.mainFrame.prePopup()
 	previous = installer.comparePreviousInstall()
 	if previous > 0:
 		# The existing installation is newer, which means this will be a downgrade.
-		# Translators: The title of a warning dialog.
-		d = wx.Dialog(gui.mainFrame, title=_("Warning"))
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		item = wx.StaticText(d,
-			# Translators: A warning presented when the user attempts to downgrade NVDA
-			# to an older version.
-			label=_("You are attempting to install an earlier version of NVDA than the version currently installed. "
-			"If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."))
-		mainSizer.Add(item)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		item = wx.Button(d, id=wx.ID_OK,
-			# Translators: The label of a button to proceed with installation,
-			# even though this is not recommended.
-			label=_("&Proceed with installation (not recommended)"))
-		sizer.Add(item)
-		item = wx.Button(d, id=wx.ID_CANCEL)
-		sizer.Add(item)
-		item.SetFocus()
-		mainSizer.Add(sizer)
-		d.Sizer = mainSizer
-		mainSizer.Fit(d)
-		d.CentreOnScreen()
+		d = InstallingOverNewerVersionDialog()
 		with d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				gui.mainFrame.postPopup()

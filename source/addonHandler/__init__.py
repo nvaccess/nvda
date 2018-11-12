@@ -77,11 +77,27 @@ def getRunningAddons():
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
 def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
+	""" Returns add-ons that have "UNKNOWN" compatibility state value. These are addons
+	that have no auto-deduced or manually set compatibility state.
+	"""
+	return getAddonsMatchingCompatValues([compatValues.UNKNOWN], version)
+
+def getAddonsWithoutKnownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
 	""" Returns add-ons that are untested for the specified NVDA version.
+	"""
+	withoutKnownCompatValues = [
+			compatValues.UNKNOWN,
+			compatValues.MANUALLY_SET_COMPATIBLE,
+			compatValues.MANUALLY_SET_INCOMPATIBLE
+		]
+	return getAddonsMatchingCompatValues(withoutKnownCompatValues, version)
+
+def getAddonsMatchingCompatValues(compatValues, version=addonVersionCheck.CURRENT_NVDA_VERSION):
+	""" Returns add-ons that have compatibility value that is True when anded with compatMask
 	"""
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
-			compatValues.UNKNOWN == AddonCompatibilityState.getAddonCompatibility(addon, version)
+			AddonCompatibilityState.getAddonCompatibility(addon, version) in compatValues
 		)
 	)
 
@@ -126,14 +142,19 @@ def disableAddonsIfAny():
 	"""
 	Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
-	This does not deal with blacklisted add-ons, as these are detected at refresh time.
 	Furthermore, disabling is limited to installed add-ons,
 	whereas blacklisting can also be performed for add-on bundles.
 	"""
 	global _disabledAddons
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
-	state["disabledAddons"] |= set(getAddonsWithUnknownCompatibility())
+	state["disabledAddons"] |= set(getAddonsMatchingCompatValues(
+		[
+			compatValues.UNKNOWN,
+			compatValues.MANUALLY_SET_INCOMPATIBLE,
+			compatValues.AUTO_DEDUCED_INCOMPATIBLE
+		]
+	))
 	state["disabledAddons"] -= state["pendingEnableSet"]
 	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
@@ -156,13 +177,13 @@ def initialize():
 
 def showUnknownCompatDialog():
 	from gui import addonGui, mainFrame, runScriptModalDialog
-	try:
-		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
-			parent=mainFrame,
-			displayManuallySetCompatibilityAddons=False
-		)
-	except RuntimeError:
-		log.debug("Unable to open IncompatibleAddonsDialog", exc_info=True)
+	if any(getAddonsWithUnknownCompatibility()):
+		try:
+			incompatibleAddons = addonGui.IncompatibleAddonsDialog(parent=mainFrame)
+		except RuntimeError:
+			log.error("Unable to open IncompatibleAddonsDialog", exc_info=True)
+			return
+	else:
 		return
 	unknownCompatAddons = incompatibleAddons.unknownCompatibilityAddonsList
 	def afterDialog(res):
@@ -329,8 +350,9 @@ class Addon(AddonBase):
 			getAvailableAddons(refresh=True)
 		else:
 			state['pendingRemovesSet'].add(self.name)
-			# There's no point keeping a record of this add-on being disabled now.
-			_disabledAddons.discard(self.name)
+			# There's no point keeping a record of this add-on pending being disabled now.
+			# However, if the addon is in _disabledAddons, then it needs to stay there so that
+			# the status in addonsManger continues to say "disabled"
 			state['pendingDisableSet'].discard(self.name)
 		saveState()
 
@@ -353,6 +375,10 @@ class Addon(AddonBase):
 		shutil.rmtree(tempPath,ignore_errors=True)
 		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
+		# clean up the addons state
+		log.debug("removing addon {} from _disabledAddons".format(self.name))
+		_disabledAddons.discard(self.name)
+		saveState()
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.

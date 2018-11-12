@@ -413,25 +413,26 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if addon.isRunning:
 			# Translators: The status shown for an addon when its currently running in NVDA.
 			statusList.append(_("Enabled"))
-		elif globalVars.appArgs.disableAddons or addon.isDisabled:
-			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-			statusList.append(_("Disabled"))
 		elif addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
 			statusList.append(_("Install"))
+		# in some cases an addon can be expected to be disabled after install, so we want "install" to take precedence here
+		elif globalVars.appArgs.disableAddons or addon.isDisabled:
+			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+			statusList.append(_("Disabled"))
 		if addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			statusList.append(_("Removed after restart"))
-		elif addon.isPendingDisable:
+		elif addon.isPendingDisable or (not addon.isPendingEnable and addon.isPendingInstall and addon.isDisabled):
 			# Translators: The status shown for an addon when it requires a restart to become disabled
 			statusList.append(_("Disabled after restart"))
-		elif addon.isPendingEnable:
+		elif addon.isPendingEnable or (addon.isPendingInstall and not addon.isDisabled):
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
 		if addonVersionCheck.isAddonConsideredIncompatible(addon):
 			# Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 			statusList.append(_("Incompatible"))
-		elif addonVersionCheck.isAddonConsideredCompatible(addon):
+		elif addonVersionCheck.isCompatSetManually(addon):
 			# Translators: The status shown for an addon when it's added to the whitelist.
 			statusList.append(_("Compatibility set manually"))
 		return ", ".join(statusList)
@@ -519,18 +520,18 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if url:
 			# Translators: the url part of the About Add-on information
 			message.append(_("URL: {url}").format(url=url))
-		minimumNVDAVersion=manifest['minimumNVDAVersion']
-		if minimumNVDAVersion:
-			message.append(
-				# Translators: the minimum NVDA version part of the About Add-on information
-				_("Minimum required NVDA version: {version}").format(version=minimumNVDAVersion)
-			)
-		lastTestedNVDAVersion=manifest['lastTestedNVDAVersion']
-		if lastTestedNVDAVersion:
-			message.append(
-				# Translators: the last NVDA version tested part of the About Add-on information
-				_("Last NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
-			)
+		# Translators: shown when a version is unknown in the about add-on dialog
+		unknownVersion = _("unknown")
+		minimumNVDAVersion = manifest.get('minimumNVDAVersion', default=unknownVersion)
+		message.append(
+			# Translators: the minimum NVDA version part of the About Add-on information
+			_("Minimum required NVDA version: {version}").format(version=minimumNVDAVersion)
+		)
+		lastTestedNVDAVersion = manifest.get('lastTestedNVDAVersion', unknownVersion)
+		message.append(
+			# Translators: the last NVDA version tested part of the About Add-on information
+			_("Last NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
+		)
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox("\n".join(message), title, wx.OK)
@@ -573,7 +574,6 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onIncompatAddonsShowClick(self, evt):
 		incompatibleAddons = IncompatibleAddonsDialog(
 			parent=self,
-			displayManuallySetCompatibilityAddons=True,
 			NVDAVersion=buildVersion.getCurrentVersionTuple()
 		)
 		def afterDialog(res):
@@ -625,26 +625,13 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __init__(
 			self,
 			parent,
-			displayManuallySetCompatibilityAddons,
 			NVDAVersion=CURRENT_NVDA_VERSION
 	):
 		if IncompatibleAddonsDialog._instance() is not None:
 			raise RuntimeError("Attempting to open multiple IncompatibleAddonsDialog instances")
 		IncompatibleAddonsDialog._instance = weakref.ref(self)
 
-		if displayManuallySetCompatibilityAddons:
-			self.unknownCompatibilityAddonsList = list(addonHandler.getAvailableAddons(
-				filterFunc=lambda addon: (
-						AddonCompatibilityState.getAddonCompatibility(addon, NVDAVersion) in
-						[
-							compatValues.UNKNOWN,
-							compatValues.MANUALLY_SET_INCOMPATIBLE,
-							compatValues.MANUALLY_SET_COMPATIBLE,
-						]
-				)
-			))
-		else:
-			self.unknownCompatibilityAddonsList = list(addonHandler.getAddonsWithUnknownCompatibility(NVDAVersion))
+		self.unknownCompatibilityAddonsList = list(addonHandler.getAddonsWithoutKnownCompatibility(NVDAVersion))
 		if not len(self.unknownCompatibilityAddonsList) > 0:
 			raise RuntimeError("No unknown compat addons.")
 
@@ -661,7 +648,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The title of the Incompatible Addons Dialog
 		introText = _(
 			"The compatibility of the following add-ons is not known, they have not been tested against NVDA version {}. "
-			"Please use the checkboxes to indicate add-ons that should remain available"
+			"Please use the checkboxes to indicate add-ons that should remain available.\n\n"
 			"Warning: Untested add-ons may cause instability while using NVDA. "
 			"Please contact the add-on author for further assistance."
 		).format("%s.%s.%s" % NVDAVersion)

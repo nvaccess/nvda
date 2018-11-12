@@ -177,6 +177,10 @@ def isAddonConsideredCompatible(addon, version=CURRENT_NVDA_VERSION):
 	compat = AddonCompatibilityState.getAddonCompatibility(addon, version)
 	return bool(compat & compatValues.COMPATIBLE_BIT)
 
+def isCompatSetManually(addon, version=CURRENT_NVDA_VERSION):
+	compat = AddonCompatibilityState.getAddonCompatibility(addon, version)
+	return bool(compat & compatValues.MANUALLY_SET_BIT)
+
 def isAddonCompatibilityKnown(addon, version=CURRENT_NVDA_VERSION):
 	compat = AddonCompatibilityState.getAddonCompatibility(addon, version)
 	return bool(compat & compatValues.KNOWN_MASK)
