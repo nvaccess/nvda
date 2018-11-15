@@ -1,12 +1,12 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2018 NVDA Contributors <http://www.nvaccess.org/>
+# Copyright (C) 2006-2018 NVDA Contributors <https://www.nvaccess.org/>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-10 00:10+1000\n"
-"PO-Revision-Date: 2018-08-03 16:31+0200\n"
+"POT-Creation-Date: 2018-11-02 00:10+1000\n"
+"PO-Revision-Date: 2018-10-04 16:15+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -1139,6 +1139,16 @@ msgstr "Braille Unicode"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamien intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chinois (Chine, Mandarin) intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chinois (Chine, Mandarin) abrégé"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6565,7 +6575,7 @@ msgstr "&Fermer"
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "NVDA version {version} est est prêt à être installé.\n"
+msgstr "NVDA version {version} est prêt à être installé.\n"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6676,7 +6686,7 @@ msgstr ""
 "source accessible à qui le veut. Ceci s'applique aux versions originales et "
 "modifiées du logiciel, ainsi qu'à tout travaille qui en dérive.\n"
 "Pour plus de détails, vous pouvez consulter la licence dans le menu d'aide.\n"
-"Vous pouvez également la consulter en ligne à : http://www.gnu.org/licenses/"
+"Vous pouvez également la consulter en ligne à : https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} est développé par NV Access, une organisation à but non lucratif qui "
@@ -6883,36 +6893,6 @@ msgstr "non lu"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Édition du profil {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Drapeau violet"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Drapeau orange"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Drapeau vert"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Drapeau jaune"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Drapeau bleu"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Drapeau rouge"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7896,7 +7876,7 @@ msgstr "À propos de ce &module complémentaire..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "&Aide de ce module complémentaire"
+msgstr "A&ide de ce module complémentaire"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -8695,20 +8675,10 @@ msgstr "Utiliser la fonction d'&épellation si elle est supportée"
 msgid "Keyboard"
 msgstr "Clavier"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Utiliser verrouillage majuscules comme touche NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Utiliser insert du pavé numérique comme touche NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Utiliser insert du clavier étendu comme touche NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Choisir les touches NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8875,8 +8845,8 @@ msgstr "Annoncer les &suggestions"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Annoncer les &bulles d'aide"
+msgid "Report &notifications"
+msgstr "Annoncer les &notifications"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10962,3 +10932,33 @@ msgstr "Interligne double"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
+
+#~ msgid "purple flag"
+#~ msgstr "Drapeau violet"
+
+#~ msgid "Orange flag"
+#~ msgstr "Drapeau orange"
+
+#~ msgid "Green flag"
+#~ msgstr "Drapeau vert"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Drapeau jaune"
+
+#~ msgid "Blue flag"
+#~ msgstr "Drapeau bleu"
+
+#~ msgid "Red flag"
+#~ msgstr "Drapeau rouge"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Utiliser verrouillage majuscules comme touche NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Utiliser insert du pavé numérique comme touche NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Utiliser insert du clavier étendu comme touche NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Annoncer les &bulles d'aide"

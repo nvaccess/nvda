@@ -302,14 +302,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID), accPropServices(NULL) {
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* AdobeFlashVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new AdobeFlashVBufBackend_t(docHandle,ID);
 	return backend;
-}
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-	}
-	return true;
 }
