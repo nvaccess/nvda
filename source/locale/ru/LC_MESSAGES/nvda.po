@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 00:10+1000\n"
-"PO-Revision-Date: 2018-09-28 01:37+0800\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
+"PO-Revision-Date: 2018-11-09 21:32+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -3555,9 +3555,9 @@ msgid ""
 "information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
-"Сообщает текущий объект навигатора. При двойном нажатии сообщает эту "
-"информацию по символам. Тройное нажатие копирует имя и значение объекта в "
-"буфер обмена"
+"Сообщает информацию о текущем объекте навигатора. При двойном нажатии эти "
+"данные читаются по символам. Тройное нажатие копирует имя и значение объекта "
+"в буфер обмена"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3568,8 +3568,8 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"Объявляет информацию о местоположении текста или объекта под просмотровым "
-"курсором. Двойное нажатие может предоставить дополнительные подробности."
+"Сообщает расположение текста или объекта под просмотровым курсором. Двойное "
+"нажатие может предоставить дополнительную информацию."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3863,8 +3863,8 @@ msgstr ""
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
-"Читает объект в системном фокусе. При двойном нажатии эта информация "
-"читается по символам"
+"Сообщает информацию об объекте в системном фокусе. При двойном нажатии эти "
+"данные читаются по символам"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3884,8 +3884,8 @@ msgid ""
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
-"Читает строку состояния текущего приложения и приводит к ней навигатор. При "
-"двойном нажатии читает её по символам. При тройном нажатии копирует текст "
+"Сообщает строку состояния текущего приложения и приводит к ней навигатор. "
+"При двойном нажатии читает её по символам. Тройное нажатие копирует текст "
 "строки состояния в буфер обмена"
 
 #. Translators: presented when the mouse tracking is toggled.
@@ -6903,6 +6903,18 @@ msgstr "Непрочитано"
 msgid "Editing profile {profile}"
 msgstr "Редактирование профиля {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "отвечено"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "отвечено всем"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "переслано"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "высокая важность"
@@ -7716,13 +7728,13 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions."
 msgstr ""
-"Большинство команд NVDA вводятся с удержанием клавиши-модификатора NVDA при "
-"нажатии других клавиш.\n"
-"По умолчанию, используется insert на цифровом блоке и основной insert как "
-"клавиша-модификатор NVDA.\n"
+"Большинство управляющих команд NVDA выполняются при удержании специальной "
+"клавиши-модификатора NVDA, с одновременным нажатием других клавиш.\n"
+"По умолчанию в качестве клавиши-модификатора NVDA используется основной "
+"insert и insert на цифровом блоке.\n"
 "Вы также можете настроить NVDA на использование CapsLock как клавиши-"
 "модификатора.\n"
-"Нажимайте NVDA+n в любое время для вызова меню NVDA.\n"
+"Для вызова меню NVDA нажимайте NVDA+n в любое время.\n"
 "Из этого меню вы можете настраивать NVDA, получать доступ к справке и другим "
 "функциям программы."
 
@@ -8659,6 +8671,16 @@ msgstr "&Уровень пунктуации:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Использовать язык синтезатора для чтения знаков и символов пунктуации"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Использовать базу данных Консорциума Unicode при чтении знаков и символов "
+"пунктуации"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10783,6 +10805,16 @@ msgstr "примечание: {text}. {author}, {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}. {author}, {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} от левого края страницы"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} от верхнего края страницы"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
