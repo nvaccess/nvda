@@ -1056,6 +1056,16 @@ Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
 Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symboleiden puhumiseen.
 Jos huomaat, että välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai ääntä käytettäessä, voit halutessasi poistaa tämän asetuksen käytöstä pakottaaksesi NVDA:n käyttämään yleistä kieliasetusta.
 
+==== Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita käsiteltäessä ====[SpeechSettingsCLDR]
+Kun tämä valintaruutu on valittuna, NVDA käyttääsymboleiden lisäsanastoja merkkejä ja symboleita puhuttaessa.
+Nämä sanastot sisältävät merkkien kuvauksia (erityisesti emojeille), jotka tarjoaa [Unicode-konsortio http://www.unicode.org/consortium/] osana [Common Locale Data -tietokantaa http://cldr.unicode.org/].
+Mikäli NVDA:n halutaan puhuvan emoji-merkkien kuvaukset tähän dataan perustuen, tämän valintaruudun tulisi olla valittuna.
+Jos kuitenkin käytössä on puhesyntetisaattori, joka jo valmiiksi tukee emojien puhumista, tämä asetus kannattaa ehkä poistaa käytöstä.
+
+Huom: Manuaalisesti lisätyt tai muokatut merkkikuvaukset tallennetaan osana käyttäjän asetuksia.
+Mikäli siis jonkin emojin kuvausta muutetaan, kyseiselle emojille käytetään muokattua kuvausta riippumatta siitä, onko tämä asetus käytössä vai ei.
+Symboleiden kuvauksia voi lisätä, muokata ja poistaa NVDA:n [Välimerkkien ja symboleiden puhuminen -valintaikkunassa. #SymbolPronunciation]
+
 ==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====[SpeechSettingsCapPitchChange]
 Tähän muokkauskenttään voit syöttää prosenttiluvun, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
 Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
