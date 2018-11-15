@@ -7,6 +7,10 @@
 
 == Uudet ominaisuudet ==
 - Uusia pistetaulukoita: mandariinikiina (Kiina) tasot 1 ja 2. (#5553)
+- Viestien vastattu/välitetty-tila ilmoitetaan nyt Microsoft Outlookin viestiluettelossa. (#6911)
+- NVDA voi nyt lukea emojien sekä muiden Unicode Common Locale Data -tietokantaan kuuluvien merkkien kuvaukset. (#6523)
+- Kohdistimen etäisyys sivun ylä- ja vasemmasta reunasta voidaan lukea Microsoft Wordissa painamalla NVDA+laskinnäppäimistön Del. (#1939)
+- NVDA ei enää ilmoita Google Sheetsissä jokaisen solun kohdalla "valittu" siirrettäessä kohdistusta niiden välillä pistenäyttötilan ollessa käytössä. (#8879)
 
 
 == Muutokset ==
@@ -14,13 +18,22 @@
 - NVDA-toimintonäppäimiä käyttöön ottavat tai käytöstä poistavat valintaruudut  näytetään nyt näppäimistöasetuksissa erillisten sijaan luettelona.
 - NVDA ei enää näytä tarpeetonta tietoa luettaessa kelloa ilmoitusalueelta joissakin Windows-versioissa. (#4364)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.7.0. (#8697)
+- Päivitetty eSpeak-NG muutoksella 919f3240cbb
 
 
 == Korjatut ohjelmavirheet ==
 - Viestien luokka ja lipun tila luetaan Outlook 2016:ssa/365:ssä. (#8603)
 - Kun NVDA:n kieleksi on asetettu esim. kirgiisi, mongoli tai makedonia, se ei näytä enää käynnistyessään valintaikkunaa, jossa varoitetaan, ettei käyttöjärjestelmä tue kyseistä kieltä. (#8064)
 - Hiiren siirtäminen navigointiobjektiin siirtää nyt hiiren paljon tarkemmin selaustilan sijaintiin Mozilla Firefoxissa, Google Chromessa ja Acrobat Reader DC:ssä. (#6460)
-- Vuorovaikutusta verkkosivuilla olevien yhdistelmäruutujen kanssa on paranneltu Firefoxissa, Chromessa ja Internet Explorerissa. (#8664)
+- Vuorovaikutusta verkkosivuilla olevien yhdistelmäruutujen kanssa on parannettu Firefoxissa, Chromessa ja Internet Explorerissa. (#8664)
+- Jos käytössä on Windows XP:n tai Vistan japaninkielinen versio, NVDA näyttää nyt odotetusti ilmoituksen käyttöjärjestelmävaatimuksista. (#8771)
+- Suorituskykyä parannettu Mozilla Firefoxissa selattaessa suuria sivuja, joilla on paljon dynaamisia muutoksia. (#8678)
+- Fontin määreitä ei enää näytetä pistenäytöllä, mikäli ne on poistettu käytöstä Dokumenttien muotoiluasetuksista. (#7615)
+- NVDA seuraa nyt kohdistusta asianmukaisesti Resurssienhallinnassa ja muissa UI Automation -rajapintaa käyttävissä sovelluksissa, kun jokin toinen sovellus on varattuna (esim. äänen eräajo). (#7345)
+- Esc-näppäin välitetään  nyt verkkosivujen ARIA-valikoissa oltaessa suoraan kyseiselle valikolle, eikä vuorovaikutustilaa poisteta käytöstä. (#3215)
+- NVDA ilmoittaa nyt asianmukaisesti kohdistuksen verkkosivuilla, joilla uusi kohdistus korvaa säätimen, jota ei enää ole. (#6606, #8341)
+- Kun pikanavigointinäppäimiä käytetään uudessa Gmailissa viestejä luettaessa, koko viestin sisältöä ei enää lueta sen elementin jälkeen, johon siirryttiin. (#8887)
+- Kun NVDA on päivitetty, selaimien, kuten Firefox ja google Chrome, ei pitäisi enää kaatua, ja kaikkien sillä hetkellä ladattuina olevien sivujen päivitysten pitäisi edelleen näkyä selaustilassa. (#7641) 
 
 
 == Muutokset kehittäjille ==

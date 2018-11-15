@@ -1056,6 +1056,16 @@ Esta opção aplica-se a todos os sintetizadores, e não apenas ao sintetizador 
 Activada por padrão, esta opção indica ao NVDA se deve usar o idioma da voz actual para processar a leitura de símbolos e caracteres, incluindo sinais de pontuação.
 Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determinado sintetizador ou voz, pode desactivar esta funcionalidade para forçar o NVDA a usar o idioma da interface.
 
+==== Incluir dados do Unicode Consortium (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
+Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
+Esses dicionários contém descriçãos para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode http://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
+Se quiser que o NVDA fale as descriçõess dos emojis desta base de dados, deve activar esta opção.
+Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar.
+
+Note que descrições adicionadas ou editadas manualmente são guardadas nas suas configurações.
+Por isso, se alterar a descrição dum emoji, essa descrição será sempre falada, mesmo com esta opção desactivada.
+Pode adicionar, editar ou remover descrições de símbolos no [diálogo "Pronúncia de pontuação e símbolos" do NVDA #SymbolPronunciation].
+
 ==== Alterar a Percentagem da Entoação para Letras Maiúsculas ====[SpeechSettingsCapPitchChange]
 Este campo de edição permite-lhe definir a alteração da entoação da voz, que irá ser usada para falar uma letra maiúscula.
 Este valor é uma percentagem, em que um valor negativo baixa a entoação e um valor positivo aumenta-a.

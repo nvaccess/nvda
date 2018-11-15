@@ -1052,7 +1052,17 @@ Esto permíteche escoller a cantidade de pontoación e outros símbolos que debe
 Por exemplo, cando se configura a toda, todos os símbolos diranse como palabras.
 Esta opción aplícase a todos os sintetizadores, non só ao sintetizador activo actualmente.
 
-==== Confiar na lingua da voz para procesar símbolos e caracteres ====[SpeechSettingsTrust]
+==== Incluir datos Unicode Consortium (incluindo emoji) ao procesar caracteres e símbolos ====[SpeechSettingsCLDR]
+Cando esta caixa de verificación estea activada, o NVDA incluirá os diccionarios de pronunciación de símbolos adicional cando pronuncie caracteres e símbolos.
+Estos dicionarios conteñen descripcións para símbolos (en particular emoji) que se proporcionan polo [Unicode Consortium http://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
+Se queres que o NVDA fale descripcións de caracteres emoji baseados nestes datos, deberías habilitar esta opción.
+Polo tanto, se estás a usar un sintetizador de voz que admita a fala de descripcións de emoji nativamente, deberías desactivar esto.
+
+Ten en conta que as descripcións de caracteres engadidas ou editadas manualmente gárdanse como parte das túas opcións de usuario.
+Polo tanto, se cambias a descripción dun emoji en particular, a túa descripción persoalizada falarase para ese emoji sen importar se esta opción está habilitada.
+Podes engadir, editar ou borrar descripcións de símbolos no [diálogo de pronunciación de pontoación e símbolos #SymbolPronunciation] do NVDA.
+
+==== Confiar na lingua da voz ao procesar símbolos e caracteres ====[SpeechSettingsTrust]
 Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
 Se atopas que o NVDA está lendo a pontoación nunha lingua  incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a utilizar a súa lingua global configurada no seu lugar.
 

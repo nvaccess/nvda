@@ -1058,6 +1058,16 @@ Deze optie geldt voor alle synthesizers, niet enkel de actieve synthesizer.
 Met deze optie, die standaard staat ingeschakeld, kunt u NVDA laten weten of de gebruikte stemtaal betrouwbaar moet worden geacht voor de verwerking van symbolen en tekens. 
 Als u vaststelt dat NVDA interpunctie in de verkeerde taal leest, een taal die niet overeenkomt met die van de gebruikte synthesizer of stem, dan wilt u deze optie wellicht uitschakelen waarmee u NVDA dwingt de algemene taalinstelling te gebruiken.   
 
+==== Unicode Consortium data (met inbegrip van emoji) opnemen bij het verwerken van karakters en symbolen ====[SpeechSettingsCLDR]
+Wanneer  dit selectievakje aangevinkt is, zal NVDA extra uitspraakwoordenboeken raadplegen bij het uitspreken van (letter)tekens en symbolen.
+In deze woordenboeken staan beschrijvingen van symbolenin het bijzonder emoji) die afkomstig zijn van [het Unicode Consortium http://www.unicode.org/consortium/] dat onderdeel is van zijn [algemene Locale Data Repository http://cldr.unicode.org/].
+Als u wilt dat NVDA de op basis van deze data gebaseerde beschrijving van emoji-tekens leest, moet u deze optie inschakelen.
+Als u evenwel een spraaksynthesizer gebruikt  die zelf zorgt voor het uitspreken van emoji-beschrijvingen, wilt u deze mogelijk uitschakelen.
+
+Merk op dat handmatig toegevoegde of bewerkte beschrijvingen van (letter)tekens als onderdeel van uw gebruikersinstellingen bewaard worden.
+Dit betekent dat, als u de beschrijving van een specifiek emoji verandert, uw aangepaste beschrijving voor die emoji altijd zal worden gelezen ongeacht of deze optie is ingeschakeld.
+U kunt symboolbeshrijvingen  toevoegen, bewerken of verwijderen in [het dialoogvenster Uitspraak interpunctie/symbolen  van NVDA #SymbolPronunciation].
+
 ==== Percentage toonhoogteverandering bij hoofdletters ====[SpeechSettingsCapPitchChange]
 Dit tekstvak stelt u in staat om de mate waarin de toonhoogte van de stem verandert zodra een hoofdletter wordt gelezen in te stellen.
 Deze waarde is een percentage, een negatieve waarde verlaagt de toonhoogte en een positieve waarde verhoogt de toonhoogte.
