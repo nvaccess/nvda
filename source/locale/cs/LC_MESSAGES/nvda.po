@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 19:07+1000\n"
-"PO-Revision-Date: 2018-08-08 18:32+0100\n"
+"POT-Creation-Date: 2018-09-28 00:10+1000\n"
+"PO-Revision-Date: 2018-09-27 17:25+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
-"Language-Team: CS <http://cz.nvda-community.org/>\n"
+"Language-Team: CS <https://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1127,6 +1127,16 @@ msgstr "Unicode braille"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamský plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Čínština (čínská, mandarínská) - plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Čínština (čínská, mandarínská) - zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6581,7 +6591,7 @@ msgstr ""
 "se vztahuje jak na původní, tak upravené kopie tohoto programu a také na "
 "software užívající kód převzatý z tohoto programu.\n"
 "Více podrobností najdete v licenci v nabídce nápověda.\n"
-"Kompletní licence je dostupná i na stránce: http://www.gnu.org/licenses/old-"
+"Kompletní licence je dostupná i na stránce: https://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.html\n"
 "\n"
 "Vývoj {name} zastřešuje NV Access, nezisková organizace, jejímž cílem je "
@@ -6778,36 +6788,6 @@ msgstr "nečteno"
 #. Translators: A message announcing what configuration profile is currently being edited.
 msgid "Editing profile {profile}"
 msgstr "Upravován profil {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "fialová vlajka"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Oranžová vlajka"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Zelená vlajka"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Žlutá vlajka"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Modrá vlajka"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Červená vlajka"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8532,20 +8512,10 @@ msgstr "&Hláskování řídí hlasový výstup, je-li podporováno"
 msgid "Keyboard"
 msgstr "Klávesnice"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Použít CapsLock jako NVDA klávesu"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Použít &numerický Insert jako NVDA klávesu"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Použít &Insert jako NVDA klávesu"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Vybrat NVDA klávesu"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8708,8 +8678,8 @@ msgstr "Hlásit &kontextovou nápovědu"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Hlásit obsah &bublinové nápovědy"
+msgid "Report &notifications"
+msgstr "Hlásit &oznámení"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10702,6 +10672,36 @@ msgstr "Dvojí řádkování"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "řádkování 1.5"
+
+#~ msgid "purple flag"
+#~ msgstr "fialová vlajka"
+
+#~ msgid "Orange flag"
+#~ msgstr "Oranžová vlajka"
+
+#~ msgid "Green flag"
+#~ msgstr "Zelená vlajka"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Žlutá vlajka"
+
+#~ msgid "Blue flag"
+#~ msgstr "Modrá vlajka"
+
+#~ msgid "Red flag"
+#~ msgstr "Červená vlajka"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Použít CapsLock jako NVDA klávesu"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Použít &numerický Insert jako NVDA klávesu"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Použít &Insert jako NVDA klávesu"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Hlásit obsah &bublinové nápovědy"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"

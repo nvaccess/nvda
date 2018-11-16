@@ -312,12 +312,12 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	friend class VBufStorage_buffer_t;
 
+	public:
+
 /**
  * uniquely identifies this control in its buffer.
  */
-	VBufStorage_controlFieldNodeIdentifier_t identifier;
-
-	public:
+	const VBufStorage_controlFieldNodeIdentifier_t identifier;
 
 /**
  * If true, When this node is invalidated in a backend, its parent will be invalidated instead. 
