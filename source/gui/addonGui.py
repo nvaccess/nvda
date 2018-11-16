@@ -17,7 +17,7 @@ import core
 import config
 import languageHandler
 import gui
-import guiHelper
+from . import guiHelper
 from logHandler import log
 import addonHandler
 import globalVars
