@@ -156,14 +156,19 @@ def autoAddonUpdateCheck():
 	t.start()
 
 def _showAddonUpdateUI():
+	def _showAddonUpdateUICallback(info):
+		# The only purpose of this callback is to force add-on updates window to show up at startup.
+		import gui
+		from gui.addonGui import AddonUpdatesDialog
+		gui.mainFrame.prePopup()
+		AddonUpdatesDialog(gui.mainFrame, info).Show()
+		gui.mainFrame.postPopup()
 	try:
 		info = checkForAddonUpdates()
 	except:
 		info = None
 	if info is not None:
-		import gui
-		from gui.addonGui import AddonUpdatesDialog
-		wx.CallAfter(AddonUpdatesDialog, gui.mainFrame, info)
+		wx.CallAfter(_showAddonUpdateUICallback, info)
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
