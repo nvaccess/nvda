@@ -1845,8 +1845,14 @@ Alternatively, you can configure NVDA to check for add-on updates when it starts
 When this is enabled, when NVDA starts, it will check for add-on updates and present the update dialog described above.
 After updating add-ons, be sure to restart NVDA when prompted.
 
-The manager also has a Close button to close the dialog.
-If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
+If you wish to disable update checks for one or more add-ons, select Manage add-on updates button.
+A list of checkboxes for installed add-ons will be displayed.
+Checking the checkbox for an add-on will prevent NVDA from checking for updates for the selected add-on.
+If you wish to check for updates for the add-on in the future, return to this dialog and uncheck the checkbox for the add-on.
+Select OK to save changes or Cancel to close the dialog.
+
+The add-ons manager also has a Close button to close the dialog.
+If you have installed, removed or changed the status of an add-on except for enabling or disabling update checks for add-ons, NVDA will first ask you if you wish to restart so that your changes can take effect.
 
 In the past,  it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
 Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
