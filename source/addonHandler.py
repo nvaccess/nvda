@@ -61,6 +61,7 @@ def loadState():
 			"pendingInstallsSet":set(),
 			"disabledAddons":set(),
 			"pendingDisableSet":set(),
+			"noUpdates":set(),
 		}
 
 def saveState():
@@ -129,11 +130,16 @@ def disableAddonsIfAny():
 	state["pendingEnableSet"].clear()
 
 def checkForAddonUpdates():
+	# Prepare to receive a record of add-ons with update checking turned off.
+	if "noUpdates" not in state:
+		state["noUpdates"] = set()
 	curAddons = {}
 	addonSummaries = {}
 	for addon in getAvailableAddons():
-		manifest = addon.manifest
 		name = addon.name
+		# Only check for updates for add-ons that can check for updates.
+		if name in state["noUpdates"]: continue
+		manifest = addon.manifest
 		curVersion = manifest["version"]
 		curAddons[name] = {"summary": manifest["summary"], "version": curVersion}
 		addonSummaries[name] = {"summary": manifest["summary"], "curVersion": curVersion}
