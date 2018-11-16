@@ -84,6 +84,11 @@ class AddonsDialog(wx.Dialog):
 		self.updateCheckButton.Disable()
 		self.updateCheckButton.Bind(wx.EVT_BUTTON,self.onAddonUpdateCheck)
 		entryButtonsSizer.Add(self.updateCheckButton)
+		# Translators: The label for a button in Add-ons Manager dialog to configure add-on update options.
+		self.updateSettingsButton=wx.Button(self,label=_("Ma&nage add-on update checks..."))
+		self.updateSettingsButton.Disable()
+		self.updateSettingsButton.Bind(wx.EVT_BUTTON,self.onAddonUpdateSettings)
+		entryButtonsSizer.Add(self.updateSettingsButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.onAddClick)
@@ -229,6 +234,10 @@ class AddonsDialog(wx.Dialog):
 		self._progressDialog = None
 		wx.CallAfter(AddonUpdatesDialog, self, info, auto=False)
 
+	def onAddonUpdateSettings(self,evt):
+		self.Disable()
+		AddonUpdateSettingsDialog(self).Show()
+
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
@@ -270,6 +279,7 @@ class AddonsDialog(wx.Dialog):
 			self.helpButton.Disable()
 			self.removeButton.Disable()
 			self.updateCheckButton.Disable()
+			self.updateSettingsButton.Enable()
 
 	def _shouldDisable(self, addon):
 		return not (addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable))
@@ -287,6 +297,7 @@ class AddonsDialog(wx.Dialog):
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 		if updateCheck is not None:
 			self.updateCheckButton.Enable()
+			self.updateSettingsButton.Enable()
 
 	def onClose(self,evt):
 		self.Destroy()
@@ -363,6 +374,47 @@ Description: {description}
 		dialog = AddonsDialog(gui.mainFrame)
 		dialog.installAddon(addonPath, closeAfter=closeAfter)
 		del dialog
+
+class AddonUpdateSettingsDialog(wx.Dialog):
+
+	def __init__(self,parent):
+		# Translators: The title of the add-on update settings dialog.
+		super(AddonUpdateSettingsDialog,self).__init__(parent,title=_("Add-on update settings"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		addonUpdateSettingsSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+
+		# Translators: the label for a list of checkboxes for add-ons that should not be updated.
+		noAddonUpdatesLabel = _("Do &not update add-ons:")
+		# Some add-ons come with pretty badly formatted summary text, so try catching them and exclude them from this list.
+		# #7105: this is Python 2 specific solution at the moment.
+		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel, nvdaControls.CustomCheckListBox, choices=[unicode(addon.manifest["summary"]) for addon in addonHandler.getAvailableAddons()
+			if isinstance(addon.manifest['summary'], basestring)])
+		self.noAddonUpdates.SetCheckedStrings([addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()
+			if addon.name in addonHandler.state["noUpdates"]])
+		self.noAddonUpdates.SetSelection(0)
+
+		addonUpdateSettingsSizerHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
+		mainSizer.Add(addonUpdateSettingsSizerHelper.sizer, border = gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		mainSizer.Fit(self)
+		self.Sizer = mainSizer
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.noAddonUpdates.SetFocus()
+
+	def onOk(self, evt):
+		noAddonUpdateSummaries = self.noAddonUpdates.GetCheckedStrings()
+		addonHandler.state["noUpdates"] = set([addon.name for addon in addonHandler.getAvailableAddons()
+			if unicode(addon.manifest["summary"]) in noAddonUpdateSummaries])
+		# Prepare for disasters.
+		addonHandler.saveState()
+		self.Parent.addonsList.SetFocus()
+		self.Parent.Enable()
+		self.Destroy()
+
+	def onCancel(self, evt):
+		self.Parent.Enable()
+		self.Destroy()
 
 
 class AddonUpdatesDialog(wx.Dialog):
