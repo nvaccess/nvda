@@ -36,6 +36,7 @@ class AppModule(appModuleHandler.AppModule):
 	_itemStatusMessage = None
 
 	def event_UIA_itemStatus(self, obj, nextHandler):
+		# Do not fetch cached status as doing so causes a COM error to be logged.
 		itemStatus = obj.UIAElement.currentItemStatus
 		if itemStatus != self._itemStatusMessage:
 			ui.message(": ".join([obj.name, itemStatus]))
