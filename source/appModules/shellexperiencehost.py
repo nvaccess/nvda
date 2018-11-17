@@ -9,6 +9,7 @@ Shell Experience Host is home to a number of things, including Action Center and
 
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
+import ui
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -20,3 +21,13 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(ContentGenericClient)
 			except ValueError:
 				pass
+
+	# Argh, somehow, item status property repeats when Action Center is opened more than once.
+	_itemStatusMessage = None
+
+	def event_UIA_itemStatus(self, obj, nextHandler):
+		itemStatus = obj.UIAElement.currentItemStatus
+		if itemStatus != self._itemStatusMessage:
+			ui.message(": ".join([obj.name, itemStatus]))
+			self._itemStatusMessage = itemStatus
+		nextHandler()
