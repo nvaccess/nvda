@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 10:04+1000\n"
-"PO-Revision-Date: 2018-08-23 17:13+0100\n"
+"POT-Creation-Date: 2018-10-05 00:10+1000\n"
+"PO-Revision-Date: 2018-10-06 15:09+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -1138,6 +1138,16 @@ msgstr "Unikod brajlowski"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Wietnamski stopień 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chiński (Chiny, Mandaryński) z tonami"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chiński (Chiny, Mandaryński) bez tonów"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6654,7 +6664,7 @@ msgstr ""
 "zmienionych kopii, a także każdego innego oprogramowania, które korzysta z "
 "kodu zaczerpniętego z tego programu.\n"
 "Dokładne brzmienie licencji znajdziesz online pod adresem:\n"
-"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6850,36 +6860,6 @@ msgstr "nieprzeczytane"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Edytowanie profilu {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Fioletowa flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Pomarańczowa flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Zielona flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Żółta flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Niebieska flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Czerwona flaga"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8639,20 +8619,10 @@ msgstr "Użyj korekt dla literowania (gdy wspierane)"
 msgid "Keyboard"
 msgstr "Klawiatura"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Użyj &CapsLock jako klawisza NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Użyj &numerycznego Insert jako klawisza NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Użyj &dodatkowego Insert jako klawisza NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Wybierz klawisze modyfikatora NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8815,8 +8785,8 @@ msgstr "Czytaj dymki &podpowiedzi"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Czytaj dymki po&wiadomień"
+msgid "Report &notifications"
+msgstr "Czytaj &powiadomienia"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10891,6 +10861,36 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
+
+#~ msgid "purple flag"
+#~ msgstr "Fioletowa flaga"
+
+#~ msgid "Orange flag"
+#~ msgstr "Pomarańczowa flaga"
+
+#~ msgid "Green flag"
+#~ msgstr "Zielona flaga"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Żółta flaga"
+
+#~ msgid "Blue flag"
+#~ msgstr "Niebieska flaga"
+
+#~ msgid "Red flag"
+#~ msgstr "Czerwona flaga"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Użyj &CapsLock jako klawisza NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Użyj &numerycznego Insert jako klawisza NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Użyj &dodatkowego Insert jako klawisza NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Czytaj dymki po&wiadomień"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"
