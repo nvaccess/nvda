@@ -132,6 +132,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
+	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
 
 UIAEventIdsToNVDAEventNames={
