@@ -9,9 +9,19 @@ Shell Experience Host is home to a number of things, including Action Center and
 
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
+from NVDAObjects.UIA import UIA
+import controlTypes
 import ui
 
 class AppModule(appModuleHandler.AppModule):
+
+	def event_NVDAObject_init(self, obj):
+		if isinstance(obj, UIA):
+			# #8845: Brightness button in Action Center is a button, not a toggle button.
+			# Brightness control is now a slider in build 18277.
+			if obj.UIAElement.cachedAutomationID == "Microsoft.QuickAction.Brightness":
+				obj.role = controlTypes.ROLE_BUTTON
+				obj.states.discard(controlTypes.STATE_CHECKABLE)
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj, IAccessible):
