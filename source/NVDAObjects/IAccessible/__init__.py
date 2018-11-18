@@ -497,7 +497,7 @@ the NVDAObject for IAccessible
 		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
-		elif windowClassName == "AVL_AVView":
+		elif windowClassName in ("AVL_AVView", "FoxitDocWnd"):
 			from . import adobeAcrobat
 			adobeAcrobat.findExtraOverlayClasses(self, clsList)
 		elif windowClassName == "WebViewWindowClass":

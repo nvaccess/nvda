@@ -3,60 +3,24 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.3 =
-Af væsentlige forbedringer i denne version af NVDA kan nævnes automatisk detektion af punktdisplays, understøttelse for nye Windows 10-funktioner herunder det nye emoji-panel, mange andre fejlrettelser.
+= 2018.4 =
 
-== Nye Funktioner ==
-- NVDA kan nu rapportere grammatikfejl på websider, når dette er passende angivet i Mozilla Firefox. (#8280)
-- Tilføjede understøttelse for BrailleNote QT og Apex BTs rullehjul, når BrailleNote benyttes som punktdisplay. (#6316)
-- Tilføjede scripts til rapportering af den forløbne tid af et spor, samt den aktuelle længde af sporet i Foobar2000. (#6596)
-- Annoncering af Mac-tasten "kommando" (⌘) rapporteres nu korrekt med enhver talesyntese. (#8366)
-- Tilpassede roller der benytter attributten "aria-roledescription" understøttes nu i Mozilla Firefox, Google Chrome og Internet Explorer. (#8448)
-- Ny punkttabeller: Tjekkisk 8-punkt, central kurdisk, esperanto, ungarsk, svensk 8-punkt computer braille. (#8226, #8437)
-- Understøttelse for automatisk detektion af punktdisplays i baggrunden. (#1271)
- - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille og HumanWare BrailleNote samt Brailliant BI/B displays er understøttet i øjeblikket.
- - Du kan slå denne indstilling til under NVDAs dialog til valg af punktdisplay, og vælge punktet "Automatisk" i listen over displays.
- - Se venligst dokumentation for yderligere oplysninger.
-- Understøttelse for moderne inputmetoder i Windows 10. Disse omfatter emoji-panelet og diktering (Fall Creators Update), indtastningsforslag fra hardwaretastaturer (April 2018 Update) og Cloud Clipboard Paste (October 2018 Update). (#7273)
-- Indhold markeret som et blokcitat ved brug af ARIA (role blockquote) er nu understøttet i Mozilla Firefox 63. (#8577)
+?? Nye funktioner ??
+- Nye punkttabeller: Kinesisk (Mandarin-kinesisk) niveau 1 og 2. (#5553)
 
 
 == Ændringer ==
-- Listen over tilgængelige sprog i den generelle indstillingskategori sorteres nu efter navn på de pågældende sprog i stedet for ISO 639. (#7284)
-- Tilføjede standarddefineret inputbevægelse for ALT+Skift+Tab og Windows+Tab for alle Freedom Scientific punktdisplays. (#7387)
-- Det er nu muligt at tildele andre funktioner til venstre og højre smartPad-knapper samt Thumb og eTouch på ALVA BC680 og Protocol Converter displays. (#8230)
-- For ALVA BC6 displays, tastekombinationen SP2+SP3 vil nu annoncere den aktuelle dato og tid, og SP1+SP2 emulerer Windows-tasten. (#8230)
-- Brugeren bliver nu spurgt en gang når NVDA starter, om der ønskes at der indsendes brugsstatistikker til NV Access, når der søges efter opdateringer. (#8217)
-- Hvis brugeren har erklæret sig enig i indsendelsen af brugsstatistikker til NV Access under søgningen efter opdateringer, vil NVDA nu sende navnet på den aktuelle driver der benyttes som talesyntese og til punktskrift. Dette vil hjælpe med at prioritere fremtidigt arbejde på disse drivere. (#8217)
-- Opdaterede liblouis punktoversætter til version 3.6.0. (#8365)
-- Opdaterede stien således at den peger til den korrekte tabel for russisk 8-punkt. (#8446)
-- Opdaterede eSpeak-ng til 1.49.3dev commit 910f4c2. (#8561)
+- Indstillingen "Oplys hjælpeballoner" i dialogen Objektpræsentation er blevet omdøbt til "Oplys meddelelser" for at inkludere toast-meddelelser i Windows 8 og nyere. (#5789)
+- Check boxe til at slå NVDA-funktionstasten til og fra i NVDAs tastaturindstillinger er nu i en liste, i stedet for at vise som særskilte check boxe.
+- NVDA vil ikke længere vise overflødige informationer om uret, når dette læses fra systembakken i nogle versioner af Windows. (#4364)
+- Opdaterede LibLouis punktoversætter til version 3.7.0. (#8697)
 
 
 == Fejlrettelser ==
-- Tilgængelige etiketter i Google Chrome skulle gerne rapporteres oftere i gennemsynstilstand, særligt når selve etiketten ikke vises som indhold. (#4773)
-- Notifikationer er nu understøttede i Zoom. Dette inkluderer f.eks. når lyd slås til og fra og når der bliver modtaget beskeder. (#7754)
-- Punktoutput holder ikke længere op med at følge markøren i gennemsynstilstand, når der skiftes kontekstpræsentation i punkt. (#7741)
-- ALVA BC680 punktdisplays vil ikke længere undlade at initialisere en gang imellem. (#8106)
-- Som standard vil ALVA BC6 punktdisplays ikke længere udføre emulerede systemtastaturkommandoer, når der udføres tastekombinationer der inkluderer SP2+SP3 for at udløse intern funktionalitet. (#8230)
-- Ved et tryk på SP3 på et ALVA BC6 punktdisplay, vil ALT-tasten nu blive emuleret som forventet. (#8360)
-- NVDA annoncerer ikke længere overflødige tastaturskift. (#7383, #8419)
-- Musefølgning er nu meget mere præcis i Notepad og i andre applikationer der benytter redigerbare kontrolelementer til indtastning af almindelig tekst, når du befinder dig i et dokument med mere end 65535 tegn. (#8397)
-- NVDA vil genkende flere dialoger i Windows 10 og andre moderne applikationer. (#8405)
-- I Windows October 10 2018 Update og Server 2019 og senere, vil NVDA ikke længere have problemer med at følge systemfokus når en applikation fryser eller overbelaster systemet med hændelser. (#7345, #8535)
-- Brugere får nu at vide, hvis de forsøger at læse eller kopiere indholdet af en tom statuslinje. (#7789)
-- Rettede en fejl hvor ikke-valgte check boxe ikke blev rapporteret med tale, hvis kontrollen tidligere var delvist markeret. (#6946)
-- Navnet for det burmesiske sprog er nu vist korrekt under Windows 7 i NVDAs generelle indstillingspanel. (#8544)
-- NVDA vil nu meddele notifikationer som tilgængeligheden af læservisning i Microsoft Edge, samt hvor meget af den aktuelle side er indlæst. (#8423)
-- NVDA vil nu rapportere etiketten på en list, hvis forfatteren har angivet dette. (#7652)
-- 64-bit versionen af Media Player Classic er nu understøttet. (#6066)
-- Inputbevægelser, som du manuelt tildeler et bestemt punktdisplay, vil nu vises som at være tildelt det valgte display. Tidligere blev disse vist som om, at de tilhørte det aktuelle tilkoblede display. (#8108)
-- Flere forbedringer til understøttelse af Microsoft Word, når du anvender et punktdisplay og UI Automation er slået til.
- - Lignende andre multilinje tekstfelter, vil dit display nu panorere for at vise det første tegn i dokumentet på punkt ved første celle på dit display, når positionen befinter sig ved starten af et dokument. (#8406)
- - Reducerede ordmængden af fokuspræsentation mht. punkt og tale, når et Word-dokument får fokus. (#8407)
- - Markørflytning på punkt virker nu korrekt i en list i et Word-dokument. (#7971)
- - Nyindsatte punkter og numre rapporteres nu korrekt med tale og punkt. (#7970)
-- Det er nu muligt at installere tilføjelsespakker under Windows 10 1803 og senere, når funktionenn "Brug Unicode UTF-8 for verdensomspændende sprogunderstøttelse" er slået til. (#8599)
+- Kategori- og status for flag er nu oplyst i Outlook 2016/365. (#8603)
+- Når NVDA er indstillet til sprog som kirgisisk, mongolsk eller makedonsk, vil NVDA ikke længere meddele at sproget ikke er understøttet af operativsystemet ved opstart. (#8603)
+- Flytning af musen til navigatorobjektet vil nu meget mere nøjagtigt flytte musen til positionen i gennemsynstilstand, når du benytter Mozilla Firefox, Google Chrome og Acrobat Reader DC. (#6460)
+- Interaktion med combo boxe på internettet med Firefox, Chrome og Internet Explorer er blevet forbedret. (#8664)
 
 
 == Ændringer for udviklere ==
