@@ -7,6 +7,10 @@ Quoi de Neuf dans NVDA
 
 == Nouvelles Fonctionnalités ==
 - Nouvelles tables braille : Chinois (Chine, Mandarin) intégral et abrégé. (#5553)
+- Les statuts Répondu / Transféré sont maintenant annoncés dans la liste de messages de Microsoft Outlook. (#6911)
+- NVDA est maintenant capable de lire les descriptions des emoji ainsi que d'autres caractères faisant partie du référentiel Unicode Common Locale Data. (#6523)
+- Sous Microsoft Word, la distance du curseurs aux bords haut et gauche de la page peut être annoncée en pressant NVDA+pavnumEffacement. (#1939)
+- Sous Google Sheets avec le mode braille activé, NVDA n'annonce plus 'sélectionné' pour chaque cellule quand on déplace le focus de cellule en cellule. (#8879)
 
 
 == Changements ==
@@ -14,6 +18,7 @@ Quoi de Neuf dans NVDA
 - Dans les paramètres clavier de NVDA, les cases à cocher permettant d'activer ou désactiver les touches NVDA sont maintenant affichées dans une liste plutôt que comme des cases à cocher séparées.
 - NVDA n'annoncera plus d'informations redondantes à la lecture de l'horloge de la barre des tâches système sous certaines versions de Windows. (#4364)
 - mise à jour du traducteur braille liblouis à la version  3.7.0. (#8697)
+- Mise à jour de  eSpeak-NG à la révision 919f3240cbb
 
 
 == Corrections de bogues ==
@@ -21,6 +26,14 @@ Quoi de Neuf dans NVDA
 - Quand NVDA est configuré pour des langues telles que Kirgiz, Mongol ou Macédonien, il n'affiche plus au démarrage un dialogue avertissant que la langue n'est pas supportée par le système d'exploitation. (#8064)
 - Sous Mozilla Firefox, Google Chrome et Acrobat Reader DC, amener la souris à l'objet de navigation amènera maintenant la souris à la position en mode navigation. (#6460)
 - L'interaction avec les listes déroulantes sous Firefox, Chrome et Internet Explorer a été améliorée. (#8664)
+- Sous la version Japonaise de Windows XP ou Vista, NVDA affiche maintenant l'avertissement de version d'OS requise comme prévu. (#8771)
+- Améliorations de performances sous Mozilla Firefox quand on navigue dans de grandes pages avec beaucoup de changements dynamiques. (#8678)
+- Le braille n'affiche plus les attributs de police s'ils ont été désactivés dans les paramètres de Mise en Forme des Document. (#7615)
+- NVDA n'échoue plus à suivre le focus dans l'Explorateur de Fichiers et autres applications utilisant UI Automation quand une autre application est occupée (comme traitement audio par lot). (#7345)
+- Dans les menus ARIA sur le web, la touche échap sera maintenant transmise au menu et n'interrompra plus le mode focus inconditionnellement. (#3215)
+- NVDA ne refuse plus d'annoncer le focus sur les pages web où le nouveau focus remplace un contrôle qui n'existe plus. (#6606, #8341)
+- Sous le nouveau Gmail, quand on utilise la navigation rapide à l'intérieur d'un message durant la lecture, le corps entier du message n'est plus lu après l'élément vers lequel vous venez de naviguer. (#8887)
+- Après mise à jour de NVDA, les navigateurs tels que Firefox et Google Chrome ne devraient plus se planter, et le mode navigation devrait continuer à refléter correctement les mises à jour de tout document chargé. (#7641) 
 
 
 == Changements pour les Développeurs ==
@@ -30,6 +43,7 @@ Quoi de Neuf dans NVDA
 - Si vous avez besoin de rendre accessible un widget wx qui ne l'est pas déjà, il est possible de le faire en utilisant une instance de gui.accPropServer.IAccPropServer_impl. (#7491)
  - Consultez  l'implementation de gui.nvdaControls.ListCtrlAccPropServer pour plus d'informations.
 - configobj mis à jour à la version 5.1.0dev commit 5b5de48a. (#4470)
+- L'action config.post_configProfileSwitch prend maintenant l'argument optionnel mot clé prevConf, permettant aux gestionnaires de prendre des actions basées sur les différences entre les configurations avant et après le changement de profil. (#8758)
 
 
 = 2018.3.2 =

@@ -1056,6 +1056,16 @@ Cette option s'applique à tous les synthétiseurs, pas uniquement au synthétis
 Activée par défaut, cette option indique à NVDA si la langue de la voix en cours peut être utilisée pour le traitement des symboles et caractères.
 Si vous trouvez que NVDA lit les ponctuations dans la mauvaise langue pour une voix ou un synthétiseur particulier, vous pouvez désactiver ce comportement pour forcer NVDA à utiliser ses paramètres généraux de langue à la place.
 
+==== Inclure les données du Consortium Unicode (incluant les emoji) dans le traitement des caractères et symboles ====[SpeechSettingsCLDR]
+Quand cette case est cochée, NVDA inclura des dictionnaires de prononciation de symboles additionnels à la prononciation des caractères et symboles.
+Ces dictionnaires contiennent des descriptions pour des symboles (en particulier les emoji) qui sont fournies par le [Consortium Unicode http://www.unicode.org/consortium/] comme faisant partie de leur [référentiel commun de données locales Repository http://cldr.unicode.org/].
+Si vous voulez que NVDA annonce la descriptions des caractères emoji en se basant sur ces données, vous devez activer cette option.
+Cependant, si vous utilisez un synthétiseur vocal supportant nativement ces descriptions, vous pouvez la désactiver.
+
+Notez que les descriptions de caractères ajoutées manuellement ou modifiées sont sauvegardées dans vos paramètres personnels.
+Ainsi, si vous changez la description d'un emoji particulier, votre description personnalisée sera annoncée pour cet emoji que cette option soit activée ou non.
+Vous pouvez ajouter, modifier ou supprimer des descriptions de symboles par le  dialogue [Prononciation des ponctuations et symboles #SymbolPronunciation] de NVDA.
+
 ==== Pourcentage de changement de la hauteur pour indiquer les majuscules ====[SpeechSettingsCapPitchChange]
 Ce champ d'édition vous permet d'entrer la valeur du changement de hauteur de la voix à l'annonce d'une lettre majuscule.
 Cette valeur est un pourcentage, une valeur négative réduit la hauteur, une valeur positive l'augmente.

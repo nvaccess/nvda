@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 00:10+1000\n"
-"PO-Revision-Date: 2018-09-29 14:54+0800\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
+"PO-Revision-Date: 2018-11-15 16:38+0800\n"
 "Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers < Copyright (C) "
 "2010-2018>\n"
@@ -27,7 +27,7 @@ msgstr "本地输入"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
-msgstr "数字字母输入"
+msgstr "字母数字输入"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
@@ -221,7 +221,7 @@ msgstr "列表"
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
 msgid "gra"
-msgstr "图形"
+msgstr "图像"
 
 #. Translators: Displayed in braille for an object which is a
 #. help balloon.
@@ -2064,7 +2064,7 @@ msgstr "列表项目"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 msgid "graphic"
-msgstr "图形"
+msgstr "图像"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
@@ -2285,7 +2285,7 @@ msgstr "页首"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr "图形"
+msgstr "图像"
 
 #. Translators: Identifies an input window.
 msgid "input window"
@@ -4455,7 +4455,7 @@ msgstr "退格"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "大小写锁定"
+msgstr "大写锁定"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -6589,7 +6589,7 @@ msgstr "{description} "
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 #, python-brace-format
 msgid "{number} {candidate}"
-msgstr "{candidate}"
+msgstr "{candidate} {number}"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
@@ -6754,6 +6754,18 @@ msgstr "未读"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "编辑配置 {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "已回复"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "全部回复"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "已转发"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7571,7 +7583,7 @@ msgstr "键盘配置(&K):"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "将“大小写锁定”键设为“NVDA”键(&U)"
+msgstr "将“大写锁定”键设为“NVDA”键(&U)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -8234,7 +8246,7 @@ msgstr "日志文件保存失败: %s"
 
 #. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
-msgstr "确认(&O)"
+msgstr "确定(&O)"
 
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
@@ -8287,7 +8299,7 @@ msgstr "退出 NVDA 时显示退出选项(&w)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
-msgstr "退出或启用 NVDA 时播放声音(&P)"
+msgstr "启动和退出 NVDA 时播放声音(&P)"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -8436,6 +8448,14 @@ msgstr "标点符号级别(&L)："
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "处理字符和标点时信任语音的语言(&T)"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "处理字符和符号时包括Unicode Consortium数据（和表情符号）"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "大写时音高变化的百分比(&P)"
@@ -8492,7 +8512,7 @@ msgstr "在全文朗读模式下启用快捷键导航(&R)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "若“大小写锁定”键打开，输入小写字母时发出提示音(&O)"
+msgstr "若“大写锁定”键打开，输入小写字母时发出提示音(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -10515,6 +10535,16 @@ msgstr "评论:{text}  由 {author} 在 {date} 发布"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} by {author} on {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance}距页面左端"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance}距页面顶端"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

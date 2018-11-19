@@ -8,6 +8,10 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 
 == Novas Características ==
 - Novas tabelas braille: Chinês (China, Mandarim), grau 1 e grau 2. (#5553)
+- O status Respondido / Encaminhado agora é informado em itens de correio na lista de mensagens do Microsoft Outlook. (#6911)
+- O NVDA agora pode ler descrições de emoji, bem como outros caracteres que fazem parte do Repositório de Dados de Localidade Comum Unicode. (#6523)
+- No Microsoft Word, a distância do cursor das bordas superior e esquerda da página pode ser informada pressionando NVDA+numDelete. (#1939)
+- No Planilhas Google, com o modo braille ativado, o NVDA não anuncia mais 'selecionado' em todas as células ao mover o foco entre as células. (#8879)
 
 
 == Alterações ==
@@ -15,6 +19,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Nas configurações do teclado do NVDA, as caixas de seleção para ativar ou desativar as teclas modificadoras do NVDA agora são exibidas em uma lista, e não como caixas de seleção separadas.
 - O NVDA não apresentará mais informações redundantes ao ler o relógio da bandeja do sistema ""[system tray]"" em algumas versões do Windows. (#4364)
 - Atualizado o transcritor braille liblouis para a versão 3.7.0. (#8697)
+- Atualizado o eSpeak-NG para commit 919f3240cbb
 
 
 == Correção de Falhas ==
@@ -22,6 +27,14 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Quando o NVDA está configurado para idiomas como o Quirguiz, o Mongol ou o Macedônio, ele não exibe mais uma caixa de diálogo no aviso de inicialização de que o idioma não é suportado pelo sistema operacional. (#8064)
 - Mover o mouse para o objeto de navegação agora moverá com muito mais precisão o mouse para a posição do modo de navegação no Mozilla Firefox, Google Chrome e Acrobat Reader DC. (#6460)
 - Interação com caixas de combinação na Web no Firefox, no Chrome e no Internet Explorer foi aprimorada. (#8664)
+- Se estiver executando na versão japonesa do Windows XP ou Vista, o NVDA agora exibe o alerta dos requisitos de versão do sistema operacional conforme o esperado. (#8771)
+- Aumento de desempenho no Mozilla Firefox ao navegar em páginas grandes com muitas alterações dinâmicas. (#8678)
+- O Braille não mostra mais os atributos da fonte se eles foram desabilitados nas configurações de Formatação do documento. (#7615)
+- O NVDA não falha mais em controlar o foco no Explorador de Arquivo e em outros aplicativos que usam UI Automation ""[Automação da Interface do Usuário]"" quando outro aplicativo está ocupado (como o processamento de áudio em lote). (#7345)
+- Nos menus ARIA na Web, a tecla Escape agora será passada para o menu e não desativará mais o modo de foco incondicionalmente. (#3215)
+- O NVDA não se recusa mais a informar o foco em páginas da web onde o novo foco substitui um controle que não existe mais. (#6606, #8341)
+- No novo Gmail, ao usar a navegação rápida em mensagens enquanto as lê, todo o corpo da mensagem não é mais informado depois do elemento para o qual você acabou de navegar. (#8887)
+- Depois de atualizar o NVDA, navegadores como o Firefox e o Google Chrome não devem mais travar, e o modo de navegação deve continuar a refletir corretamente as atualizações de todos os documentos atualmente carregados. (#7641)
 
 
 == Alterações Específicas para Desenvolvedores ==
@@ -31,6 +44,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Se você precisar tornar um widget wx acessível que ainda não esteja, é possível fazer isso usando uma instância de gui.accPropServer.IAccPropServer_impl. (#7491)
  - Veja a implementação do gui.nvdaControls.ListCtrlAccPropServer para mais informações.
 - Configobj atualizado para 5.1.0dev commit 5b5de48a. (#4470)
+- A ação config.post_configProfileSwitch agora recebe o argumento de palavra-chave opcional prevConf, permitindo que os manipuladores tomem ações com base nas diferenças entre a configuração antes e depois da alternação de perfil. (#8758)
 
 
 = 2018.3.2 =

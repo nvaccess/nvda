@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-02 00:10+1000\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk NVDA\n"
@@ -1142,15 +1142,13 @@ msgstr "Vietnamesisk niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Kinesisk (Taiwan, Mandarin)"
+msgstr "Kinesisk (Kina, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Kinesisk (Taiwan, Mandarin)"
+msgstr "Kinesisk (Kina, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6643,7 +6641,7 @@ msgstr "en skærmlæser til Microsoft Windows, der er gratis og open source."
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Bidragydere"
 
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6680,6 +6678,7 @@ msgstr ""
 "Den kan ligeledes findes online på: https://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.html\n"
 "\n"
+"{name} \n"
 "{name} er udviklet af NV Access, en non-profit organisation, der har til "
 "formål at hjælpe og støtte gratis og open source løsninger for  blinde og "
 "svagsynede mennesker.\n"
@@ -6882,6 +6881,18 @@ msgstr "ulæst"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Redigerer profil {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Besvaret"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "BESVAREDE ALLE"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Videresendt"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8627,6 +8638,16 @@ msgstr "&Niveau for sætningstegn og symboler:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Brug stemmens aktuelle sprog til behandling af specialtegn og symboler"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"enyt Unicode Consortium data (herunder emoji) under behandling af tegn og "
+"symboler"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Procent ændring i tonehøjde"
@@ -8652,9 +8673,8 @@ msgstr "Tastatur"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#, fuzzy
 msgid "&Select NVDA Modifier Keys"
-msgstr "&Brug Caps Lock som NVDA-tast"
+msgstr "&Vælg NVDA-funktionstaster"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8817,9 +8837,8 @@ msgstr "Oplys &værktøjstips"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report &notifications"
-msgstr "Oplys &værktøjstips"
+msgstr "Oplys &meddelelser"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10733,6 +10752,16 @@ msgstr "kommentar: {text} af {author} den {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} af {author} den {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} fra sidens venstre kant"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} fra toppen af sidens kant"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

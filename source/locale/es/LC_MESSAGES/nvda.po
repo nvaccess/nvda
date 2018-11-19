@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-26 00:10+1000\n"
-"PO-Revision-Date: 2018-10-29 10:17+0100\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
+"PO-Revision-Date: 2018-11-13 17:44+0100\n"
 "Last-Translator: José Manuel Delicado <jmdaweb@hotmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -134,7 +134,7 @@ msgstr "navegación"
 #. Translators: Reported for the search landmark, normally found on web pages.
 msgctxt "aria"
 msgid "search"
-msgstr "bússqueda"
+msgstr "búsqueda"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
 msgctxt "aria"
@@ -1199,7 +1199,7 @@ msgstr "No se admite en este documento"
 
 #. Translators: the description for the Elements List command in browse mode.
 msgid "Lists various types of elements in this document"
-msgstr "Lista varios tipos de elementos en este documento"
+msgstr "Enumera varios tipos de elementos en este documento"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
@@ -3112,13 +3112,13 @@ msgstr "Sin opciones"
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr ""
-"Incrementa la opción actualmente activa en el anillo de opciones del "
+"Aumenta la opción actualmente activa en el anillo de opciones del "
 "sintetizador"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr ""
-"Decrementa la opción actualmente activa en el anillo de opciones del "
+"Disminuye la opción actualmente activa en el anillo de opciones del "
 "sintetizador"
 
 #. Translators: Input help mode message for next synth setting command.
@@ -6035,7 +6035,7 @@ msgstr "columna %s"
 #. (example output: through row 5 column 3).
 #, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "hasta fila {row} columna {column}"
+msgstr "por fila {row} columna {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6913,6 +6913,18 @@ msgstr "no leído"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Editando perfil {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "respondido"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "TODO RESPONDIDO"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "transmitido"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8244,12 +8256,12 @@ msgstr "Instalando NVDA"
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr ""
-"Por favor espera mientras la instalación anterior de NVDA se está "
+"Por favor aguarda mientras la instalación anterior de NVDA se está "
 "actualizando."
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "Por favor espera mientras NVDA se está instalando"
+msgstr "Por favor aguarda mientras NVDA se está instalando"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -8408,7 +8420,7 @@ msgstr "Creando Copia Portable"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Por favor espera mientras se crea una copia portable de NVDA."
+msgstr "Por favor aguarda mientras se crea una copia portable de NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -8557,7 +8569,7 @@ msgstr "Copiando Opciones"
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr ""
-"Por favor espera mientras las opciones se copian en la configuración del "
+"Por favor aguarda mientras las opciones se copian en la configuración del "
 "sistema."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
@@ -8666,6 +8678,16 @@ msgstr "&Nivel de Puntuación y símbolos:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Confiar en el idioma de la voz al procesar caracteres y símbolos"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Incluir datos Unicode Consortium (incluyendo emoji) al procesar caracteres y "
+"símbolos"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Porcentaje de Cambio en el tono para Mayúsculas"
@@ -8743,7 +8765,7 @@ msgstr "Manejar teclas desde otras &aplicaciones"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "Al menos debe usarse una tecla como la tecla NVDA."
+msgstr "Al menos debe usarse una tecla como tecla NVDA."
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -9131,7 +9153,7 @@ msgstr "&Marcos"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Clickable"
-msgstr "Admite &clic"
+msgstr "&Cliqueable"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9220,7 +9242,7 @@ msgstr "Reemplazar por"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
-msgstr "caso"
+msgstr "¿Mayúsculas?"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
@@ -9309,7 +9331,7 @@ msgstr "B&raille sigue:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "Leer por &párrafo"
+msgstr "Leer por &párrafos"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
@@ -10132,12 +10154,12 @@ msgstr "no cambia desde el punto {previousIndex}, "
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "Se incrementa por {incrementValue} desde el punto {previousIndex}, "
+msgstr "Se aumenta por {incrementValue} desde el punto {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "se decrementa por {decrementValue} desde el punto {previousIndex}, "
+msgstr "se disminuye por {decrementValue} desde el punto {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -10438,12 +10460,12 @@ msgstr "degradado rectangular"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Lists various types of elements in this spreadsheet"
-msgstr "Lista varios tipos de elementos en esta hoja de cálculo"
+msgstr "Enumera varios tipos de elementos en esta hoja de cálculo"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Charts"
-msgstr "&gráfico"
+msgstr "&gráficos"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -10540,7 +10562,7 @@ msgstr "El Mensaje de Entrada es {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
-msgstr "No hay un comentario"
+msgstr "No estás en un comentario"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the comment on the current cell"
@@ -10792,6 +10814,16 @@ msgstr "comentario: {text} por {author} en {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} en {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} desde el margen izquierdo de la página"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} desde el margen superior de la página"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10846,7 +10878,7 @@ msgstr "Cursiva desactivada"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline on"
-msgstr "Subrayar activado"
+msgstr "Subrayado activado"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Underline off"
