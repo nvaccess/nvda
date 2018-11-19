@@ -313,6 +313,24 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	newPropertyValues['current']=obj.isCurrent
 	if allowedProperties.get('placeholder', False):
 		newPropertyValues['placeholder']=obj.placeholder
+	# When speaking an object due to a focus change, the 'selected' state should not be reported if only one item is selected.
+	# This is because that one item will be the focused object, and saying selected is redundant.
+	# Rather, 'unselected' will be spoken for an unselected object if 1 or more items are selected. 
+	states=newPropertyValues.get('states')
+	if states is not None and reason==controlTypes.REASON_FOCUS:
+		if (
+			controlTypes.STATE_SELECTABLE in states 
+			and controlTypes.STATE_FOCUSABLE in states
+			and controlTypes.STATE_SELECTED in states
+			and obj.selectionContainer 
+			and obj.selectionContainer.getSelectedItemsCount(2)==1
+		):
+			# We must copy the states set and  put it back in newPropertyValues otherwise mutating the original states set in-place will wrongly change the cached states.
+			# This would then cause 'selected' to be announced as a change when any other state happens to change on this object in future.
+			states=states.copy()
+			states.discard(controlTypes.STATE_SELECTED)
+			states.discard(controlTypes.STATE_SELECTABLE)
+			newPropertyValues['states']=states
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -839,9 +857,20 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				isTextBlank=False
 				_speakTextInfo_addMath(speechSequence,info,field)
 
+	# When true, we are inside a clickable field, and should therefore not announce any more new clickable fields
+	inClickable=False
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
 		field=newControlFieldStack[count]
+		if not inClickable and formatConfig['reportClickable']:
+			states=field.get('states')
+			if states and controlTypes.STATE_CLICKABLE in states:
+				# We entered the most outer clickable, so announce it, if we won't be announcing anything else interesting for this field
+				presCat=field.getPresentationCategory(newControlFieldStack[0:count],formatConfig,reason)
+				if not presCat or presCat is field.PRESCAT_LAYOUT:
+					speechSequence.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+					isTextBlank=False
+				inClickable=True
 		text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			speechSequence.append(text)
@@ -873,6 +902,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				speakTextInfoState.updateObj()
 		return
 
+	# Similar to before, but If the most inner clickable is exited, then we allow announcing clickable for the next lot of clickable fields entered.
+	inClickable=False
 	#Move through the field commands, getting speech text for all controlStarts, controlEnds and formatChange commands
 	#But also keep newControlFieldStack up to date as we will need it for the ends
 	# Add any text to a separate list, as it must be handled differently.
@@ -883,6 +914,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	indentationDone=False
 	for command in textWithFields:
 		if isinstance(command,basestring):
+			# Text should break a run of clickables
+			inClickable=False
 			if reportIndentation and not indentationDone:
 				indentation,command=splitTextIndentation(command)
 				# Combine all indentation into one string for later processing.
@@ -901,9 +934,24 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 			if  command.command=="controlStart":
 				# Control fields always start a new chunk, even if they have no field text.
 				inTextChunk=False
-				fieldText=info.getControlFieldSpeech(command.field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
+				tempTextList=[]
+				if not inClickable and formatConfig['reportClickable']:
+					states=command.field.get('states')
+					if states and controlTypes.STATE_CLICKABLE in states:
+						# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
+						# Announce it if there is nothing else interesting about the field, but not if the user turned it off. 
+						presCat=command.field.getPresentationCategory(newControlFieldStack[0:],formatConfig,reason)
+						if not presCat or presCat is command.field.PRESCAT_LAYOUT:
+							tempTextList.append(controlTypes.stateLabels[controlTypes.STATE_CLICKABLE])
+						inClickable=True
+				text=info.getControlFieldSpeech(command.field,newControlFieldStack,"start_relative",formatConfig,extraDetail,reason=reason)
+				if text:
+					tempTextList.append(text)
+				fieldText=" ".join(tempTextList)
 				newControlFieldStack.append(command.field)
 			elif command.command=="controlEnd":
+				# Exiting a controlField should break a run of clickables
+				inClickable=False
 				# Control fields always start a new chunk, even if they have no field text.
 				inTextChunk=False
 				fieldText=info.getControlFieldSpeech(newControlFieldStack[-1],newControlFieldStack[0:-1],"end_relative",formatConfig,extraDetail,reason=reason)
@@ -1225,9 +1273,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# Special cases
 	elif not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative"):
 		out = []
-		if not extraDetail and controlTypes.STATE_CLICKABLE in states: 
-			# Clickable.
-			out.append(getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE])))
 		if ariaCurrent:
 			out.append(ariaCurrentText)
 		return CHUNK_SEPARATOR.join(out)

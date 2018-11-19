@@ -663,9 +663,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
-		# The only item we report for these fields is clickable, if present.
-		if controlTypes.STATE_CLICKABLE in states:
-			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
 		if current:
 			text.append(getBrailleTextForProperties(current=current))
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
@@ -829,8 +826,12 @@ class TextInfoRegion(Region):
 		ctrlFields = []
 		typeform = louis.plain_text
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
+		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
+		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				# Text should break a run of clickables
+				inClickable=False
 				self._isFormatFieldAtStart = False
 				if not command:
 					continue
@@ -872,7 +873,20 @@ class TextInfoRegion(Region):
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
+						textList=[]
+						if not inClickable and formatConfig['reportClickable']:
+							states=field.get('states')
+							if states and controlTypes.STATE_CLICKABLE in states:
+								# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
+								# Report it if there is nothing else interesting about the field
+								field._presCat=presCat=field.getPresentationCategory(ctrlFields,formatConfig)
+								if not presCat or presCat is field.PRESCAT_LAYOUT:
+									textList.append(positiveStateLabels[controlTypes.STATE_CLICKABLE])
+								inClickable=True
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+						if text:
+							textList.append(text)
+						text=" ".join(textList)
 					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
@@ -892,6 +906,8 @@ class TextInfoRegion(Region):
 					# Map this field text to the start of the field's content.
 					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
+					# Exiting a controlField should break a run of clickables
+					inClickable=False
 					field = ctrlFields.pop()
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
