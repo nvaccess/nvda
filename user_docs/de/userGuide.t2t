@@ -1056,6 +1056,16 @@ Diese Option gilt für alle Sprachausgaben, nicht nur für die aktuell gewählte
 Mit dieser standardmäßig aktivierten Option legen Sie fest, ob beim Sprechen (benennen) von Symbolen und Sonderzeichen immer die Sprache der momentan eingestellten Stimme benutzt werden soll.
 Wenn Sie jedoch der Meinung sind, dass NVDA zum Aussprechen von Sonderzeichen die falsche Sprache benutzt, können Sie die Option deaktivieren und NVDA dazu zwingen, seine eingestellte Dialogsprache zu verwenden.
 
+==== Unicode-Konsortiumsdaten einbinden (einschließlich Emoji) bei der Verarbeitung von Zeichen und Symbolen ======[SpeechSettingsCLDR]. ====[SpeechSettingsCLDR]
+Wenn dieses Kontrollkästchen aktiviert ist, wird NVDA beim Aussprechen von Zeichen und Symbolen zusätzliche Wörterbücher für die Aussprache von Symbolen hinzufügen.
+Diese Wörterbücher enthalten Beschreibungen für Symbole (insbesondere Emoji), die vom [Unicode-Konsortium http://www.unicode.org/consortium/] als Teil ihrer [gemeinsamen Unicode-Gebietsschemata http://cldr.unicode.org/] bereitgestellt werden.
+Wenn Sie möchten, dass NVDA Beschreibungen von Emoji-Zeichen auf der Grundlage dieser Daten spricht, sollten Sie diese Option aktivieren.
+Wenn Sie jedoch einen Sprachsynthesizer verwenden, der das Sprechen von Emoji-Beschreibungen nativ unterstützt, können Sie dies deaktivieren.
+
+Beachten Sie, dass manuell hinzugefügte oder bearbeitete Charakterbeschreibungen als Teil Ihrer Benutzereinstellungen gespeichert werden.
+Wenn Sie also die Beschreibung eines bestimmten Emoji ändern, wird Ihre benutzerdefinierte Beschreibung für diesen Emoji bevorzugt, unabhängig davon, ob diese Option aktiviert ist.
+Sie können die Symbolbeschreibungen in [Aussprache von Symbolen und Satzzeichen #SymbolPronunciation] hinzufügen, bearbeiten oder entfernen.
+
 ==== Stimme bei Großbuchstaben anheben in % ====[SpeechSettingsCapPitchChange]
 Dieses Eingabefeld legt fest, wie die Stimmhöhe beim Ansagen von Großbuchstaben verändert werden soll.
 Dieser Wert wird in Prozent angegeben, wobei ein negativer Wert die Stimme senkt und ein positiver Wert die Stimme anhebt.
@@ -1611,7 +1621,7 @@ Wenn Sie also das Wort "Vogel" wie im vorherigen Beispiel durch "Frosch" ersetze
 Ein regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies erlaubt Ihnen, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen zur gleichen Zeit zutrifft 
 Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in Englisch) https://docs.python.org/library/re.html]
 
-+++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++[SymbolPronunciation]
++++ Aussprache von Symbolen und Satzzeichen +++[SymbolPronunciation]
 In diesem Dialog können Sie die Aussprache von Satz- und Sonderzeichen verändern und festlegen, ab welcher Symbolebene dieses angesagt werden soll. 
 
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.

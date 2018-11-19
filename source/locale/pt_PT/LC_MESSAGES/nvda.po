@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-02 00:10+1000\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ângelo Miguel Abrantes <ampa4374@gmail.com>\n"
 "Language-Team: NVDA portuguese team <rui.fontes@tiflotecnia.com>; "
@@ -6896,6 +6896,18 @@ msgstr "não lida"
 msgid "Editing profile {profile}"
 msgstr "A editar o perfil {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Respondida"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "Respondida a todos"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Reencaminhada"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "Importância alta"
@@ -8645,6 +8657,16 @@ msgstr "Nível de pontuação/&símbolo:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Usar o idioma da voz ao processar caracteres e símbolos"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Incluir dados do Unicode Consortium (incluindo emoji) ao processar "
+"caracteres e símbolos"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Alterar a percentagem da entoação para letras maiúsculas"
@@ -8836,7 +8858,7 @@ msgstr "Anunciar &sugestões"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report &notifications"
-msgstr "Anunciar &notificatões"
+msgstr "Anunciar &notificações"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10762,6 +10784,16 @@ msgstr "comentário: {text} por {author} em {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} em {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} da borda esquerda da página"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} da borda superior da página"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

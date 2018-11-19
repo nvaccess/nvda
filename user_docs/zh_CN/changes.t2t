@@ -6,13 +6,18 @@
 = 2018.4 =
 == 新特性 ==
 - 新盲文表： 中文中国汉语现行点字，中文中国汉语双拼点字。 (#5553)
+- NVDA现在可朗读Microsoft Outlook邮件列表中的邮件项目以及回复/转发状态。 (#6911)
+- NVDA现在能够读取表情符号以及Unicode公共区域设置数据存储库中的其他字符描述。 (#6523)
+- 在Microsoft Word中，可以通过按NVDA + numpadDelete朗读光标与页面顶部和左侧边缘的距离。 (#1939)
+- 在启用了盲文模式的Google表格中，当在单元格之间移动焦点时，NVDA不再在每个单元格上朗读“已选择”。 (#8879)
 
 
 == 修改 ==
 - “对象演示文稿”对话框中的“朗读帮助气球”已重命名为“朗读通知”，包括Windows 8及更高版本中的Toast通知朗读。 (#5789)
-- 在NVDA的键盘设置中，启用或禁用NVDA键的复选框现在显示在列表而不是单独的复选框中。
+- 在NVDA的键盘设置中，启用或禁用NVDA键的复选框现在显示在列表而不是单独的复选框。
 - 在某些版本的Windows上读取时钟系统托盘时，NVDA将不再显示冗余信息。 (#4364)
 - 将liblouis盲文翻译器更新至3.7.0。 (#8697)
+- 更新eSpeak-NG版本到919f3240cbb
 
 
 == 错误修复==
@@ -20,6 +25,14 @@
 - 当NVDA设置为吉尔吉斯，蒙古或马其顿等语言时，将不再显示启动警告对话框，因为操作系统不支持该语言。 (#8064)
 - 当鼠标移动到导航器对象时可以更准确地将鼠标移动到Mozilla Firefox，Google Chrome和Acrobat Reader DC的浏览位置。 (#6460)
 - 改进了与Firefox，Chrome和Internet Explorer浏览器上的组合框的交互效果。 (#8664)
+- - 现在如果在日语版的Windows XP或Vista上运行NVDA，会按预期显示操作系统版本要求的警告对话框。 (#8771)
+- - 现在在浏览具有大量动态更改的大页面时，Mozilla Firefox的性能会有所提高。 (#8678)
+- 现在如果在文档格式设置中禁用了盲文，则盲文不再显示字体属性。 (#7615)
+- 当另一个应用程序正在运行时（例如批处理音频），NVDA现在不再无法使用UI自动化在文件资源管理器和其他应用程序中跟踪焦点。 (#7345)
+- 在网络上的ARIA菜单中，Escape键现在将传递到菜单，而不再关闭浏览模式。 (#3215)
+- NVDA不再拒绝将重点朗读在新焦点不再存在的控件的网页上。 (#6606, #8341)
+- - 现在，在新版Gmail中，在阅读邮件时使用快速导航内容时，系统会在您刚刚导航到的元素后不再朗读整个邮件正文。 (#8887)
+- - 更新NVDA后，浏览器（如Firefox和google chrome）不应再崩溃，浏览模式应继续正确显示当前加载的文档。 (#7641) 
 
 
 == 开发者更改 ==
@@ -28,10 +41,9 @@
  - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
 - If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
  - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+- The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)
 
-
-== 开发者更改 ==
-- 更新configobj版本维5.1.0dev commit 5b5de48a。 (#4470)
 
 
 = 2018.3.2 =

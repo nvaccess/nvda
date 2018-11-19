@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 00:10+1000\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -2098,7 +2098,7 @@ msgstr "Eintrag"
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "Tab"
+msgstr "rk"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
@@ -6923,6 +6923,18 @@ msgstr "Ungelesen"
 msgid "Editing profile {profile}"
 msgstr "Profiel {profile} in Bearbeitung"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Beantwortet"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "Alle beantwortet"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Weitergeleitet"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "Hohe Priorität"
@@ -8702,6 +8714,16 @@ msgstr "Ausführ&lichkeitsstufe"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "Beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Unicode-Konsortiumsdaten einbinden (einschließlich Emoji) bei der "
+"Verarbeitung von Zeichen und Symbolen"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10833,6 +10855,16 @@ msgstr "Kommentar: {text} von {author} am {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} von {author} am {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} vom linken Seitenrand"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} vom oberen Seitenrand"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

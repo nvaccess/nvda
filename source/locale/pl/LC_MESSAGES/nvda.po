@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-05 00:10+1000\n"
-"PO-Revision-Date: 2018-10-06 15:09+0100\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
+"PO-Revision-Date: 2018-11-10 19:36+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -6861,6 +6861,18 @@ msgstr "nieprzeczytane"
 msgid "Editing profile {profile}"
 msgstr "Edytowanie profilu {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Odpowiedziano"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "Odpowiedziano wszystkim"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Przekazano dalej"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "Wysoka ważność"
@@ -8595,6 +8607,16 @@ msgstr "Poziom &interpunkcji/symboli"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "&Ufaj językowi głosu przetwarzając znaki i symbole"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Używaj &bazy danych Unicode do przetwarzania znaków i symboli (włączając w "
+"to emoji)"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10702,6 +10724,16 @@ msgstr "komentarz: {text} by {author} dnia {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} przez {author} dnia {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} od lewej krawędzi strony"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} od górnej krawędzi strony"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

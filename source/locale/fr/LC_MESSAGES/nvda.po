@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-02 00:10+1000\n"
-"PO-Revision-Date: 2018-10-04 16:15+0200\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
+"PO-Revision-Date: 2018-11-08 16:46+0100\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1796,7 +1796,7 @@ msgstr "toujours"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "seulement au-dessous du niveau de symbole"
+msgstr "seulement au-dessous du niveau du symbole"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -6894,6 +6894,18 @@ msgstr "non lu"
 msgid "Editing profile {profile}"
 msgstr "Édition du profil {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "répondu"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "Répondu à Tous"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "transféré"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "importance haute"
@@ -8651,6 +8663,16 @@ msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "Se baser sur la langue de la voix pour le &traitement des caractères et "
 "symboles"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Inclure les données du Consortium Unicode (incluant les emoji) dans le "
+"traitement des caractères et symboles"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10773,6 +10795,16 @@ msgstr "commentaire : {text} par {author} le {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description} : {text} par {author} le {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} du bord gauche de la of page"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} du haut de la page"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
