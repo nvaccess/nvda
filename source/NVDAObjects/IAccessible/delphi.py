@@ -36,6 +36,3 @@ class TRxRichEdit(IAccessible):
 
 	def _get_name(self):
 		return None
-
-class TGrid(DisplayModelDrawFocusRectProcessor, IAccessible):
-	pass

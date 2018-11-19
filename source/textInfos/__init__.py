@@ -22,10 +22,16 @@ class Field(dict):
 	def evaluateCondition(self, *dicts):
 		"""
 		A function that evaluates whether the provided condition is met for this L{Field}.
-		The arguments to this function are dicts whose keys are field attributes, and whose values are a list of possible values for the attribute.
+		The arguments to this function are dicts whose keys are field attributes, and whose values are either:
+			* A list of possible values for the attribute.
+			* a boolean value, indicating that the condition for the key matches if the key is or is not in the field with whatever value.
 		The dicts are joined with 'or', the keys in each dict are joined with 'and', and the values  for each key are joined with 'or'.
 		For example,  to create a condition that matches on a format field with a white or black foreground color, you would provide the following condition argument:
-		{'color': [colors.RGB(255, 255, 255), colors.RGB(0, 0, 0)]}
+			{'color': [colors.RGB(255, 255, 255), colors.RGB(0, 0, 0)]}
+		To create a condition that matches on a format field with whatever foreground color, you would provide the following condition argument:
+			{'color': True}
+		To create a condition that matches on a format field without a foreground color, you would provide the following condition argument:
+			{'color': False}
 		"""
 		if len(dicts) == 1 and isinstance(dicts[0], (list, set, tuple)):
 			dicts = dicts[0]
@@ -33,8 +39,13 @@ class Field(dict):
 			# Dicts are joined with or, therefore return early if a dict matches.
 			for key,values in dict.iteritems():
 				if key not in self:
-					# Go to the next dict
-					break
+					if values is False:
+						continue
+					else:
+						# Go to the next dict
+						break
+				elif values is True:
+					continue
 				if not isinstance(values, (list, set, tuple)):
 					values=[values]
 				if not self[key] in values:
@@ -42,8 +53,8 @@ class Field(dict):
 					break
 			else:
 				# This dict matches.
-				return True
-		return False
+				return dict
+		return None
 
 class FormatField(Field):
 	"""Provides information about the formatting of text; e.g. font information and hyperlinks."""

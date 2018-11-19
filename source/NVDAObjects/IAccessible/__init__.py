@@ -1907,8 +1907,6 @@ _staticMap={
 	("TRichView",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichView",
 	("TRichViewEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TTntDrawGrid.UnicodeClass",oleacc.ROLE_SYSTEM_CLIENT):"List",
-	("TGrid",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGrid",
-	("TDBGrid",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TGrid",
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_GROUPING):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",

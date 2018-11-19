@@ -755,7 +755,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
-		 speakTextInfoState=SpeakTextInfoState(info.obj)
+		speakTextInfoState=SpeakTextInfoState(info.obj)
 	else:
 		speakTextInfoState=None
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']

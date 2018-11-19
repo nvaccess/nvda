@@ -256,24 +256,44 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getSelectionOffsets(self):
 		condition = self.selectionCondition
 		if condition:
+			highlightDict = None
 			fields=self._storyFieldsAndRects[0]
 			startOffset=None
 			endOffset=None
 			curOffset=0
 			inHighlightChunk=False
 			for item in fields:
-				if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange" and item.field.evaluateCondition(*self.selectionCondition):
-					inHighlightChunk=True
-					if startOffset is None:
-						startOffset=curOffset
+				if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
+					# If we are able to evaluate text against a condition of multiple dicts,
+					# We can limit our future evaluations to the dict that matches.
+					# This makes sure that we only apply the first matching condition to the highlight searching strategy.
+					if not highlightDict:
+						evaluation = item.field.evaluateCondition(*self.selectionCondition)
+						if evaluation:
+							highlightDict = evaluation
+					else:
+						evaluation = item.field.evaluateCondition(highlightDict)
+						if not evaluation:
+							# The highlight dict does not match, but we're dealing with format changes
+							# The highlight chunk ends if we encounter another format change that contains the keys.
+							# Execute a negative evaluation.
+							evaluation = item.field.evaluateCondition(
+								{key: False for key in highlightDict.keys()}
+							)
+					if evaluation:
+						inHighlightChunk=True
+						if startOffset is None:
+							startOffset=curOffset
+					else:
+						inHighlightChunk=False
 				elif isinstance(item,basestring):
 					curOffset+=len(item)
 					if inHighlightChunk:
 						endOffset=curOffset
 				else:
 					inHighlightChunk=False
-			if startOffset is not None and endOffset is not None:
-				return (startOffset,endOffset)
+				if not inHighlightChunk and startOffset is not None and endOffset is not None:
+					return (startOffset,endOffset)
 		raise LookupError
 
 	def __init__(self, obj, position,limitRect=None):
