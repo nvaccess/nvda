@@ -10,6 +10,7 @@ import array
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
 from logHandler import log
+from six import text_type
 
 #: Constant; flag for MoveFileEx(). If a file with the destination filename already exists, it is overwritten.
 MOVEFILE_REPLACE_EXISTING = 1
@@ -29,8 +30,8 @@ def FaultTolerantFile(name):
 	This creates a temporary file, and the writes actually happen on this temp file. At the end of the 
 	`with` block, when `f` goes out of context the temporary file is closed and, this temporary file replaces "myFile.txt"
 	'''
-	if not isinstance(name, unicode):
-		raise TypeError("name must be unicode")
+	if not isinstance(name, text_type):
+		raise TypeError("name must be an unicode string")
 	dirpath, filename = os.path.split(name)
 	with NamedTemporaryFile(dir=dirpath, prefix=filename, suffix='.tmp', delete=False) as f:
 		log.debug(f.name)
@@ -44,8 +45,8 @@ def FaultTolerantFile(name):
 
 def getFileVersionInfo(name, *attributes):
 	"""Gets the specified file version info attributes from the provided file."""
-	if not isinstance(name, unicode):
-		raise TypeError("name must be unicode")
+	if not isinstance(name, text_type):
+		raise TypeError("name must be an unicode string")
 	fileVersionInfo = {}
 	# Get size needed for buffer (0 if no info)
 	size = ctypes.windll.version.GetFileVersionInfoSizeW(name, None)
