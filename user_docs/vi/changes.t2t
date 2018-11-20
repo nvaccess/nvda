@@ -4,13 +4,16 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Các cải tiến của bản phát hành này bao gồm cải thiện khả năng vận hành trong các phiên bản gần đây của Mozilla Firefox, đọc biểu tượng cảm xúc với tất cả các bộ đọc, thông báo trạng thái đã trả lời hay chuyển tiếp trong Outlook, thông báo khoảng cách của con trỏ đến lề của một trang trong Microsoft Word và sửa nhiều lỗi.
 
 == Tính năng mới ==
 - Các bản chữ nổi mới: Tiếng Trung Quốc (Đài Loan, Quan Thoại) cấp 1 và cấp 2. (#5553)
 - Trạng thái trả lời (Replied) / chuyển tiếp (Forwarded) đã được thông báo trên các thư trong danh sách thư của Microsoft Outlook. (#6911)
 - NVDA giờ đây đã đọc được mô tả cho các biểu tượng cảm xúc và cả những kí tự là một phần của kho dữ liệu Unicode Common Locale Data Repository. (#6523)
-- Trong Microsoft Word, có thể đọc thông báo khoảng cách con trỏ từ cạnh trên và cạnh trái của trang bằng cách bấm NVDA+Delete bàn phím số. (#1939)
+- Trong Microsoft Word, có thể đọc thông báo khoảng cách con trỏ từ lề trên và lề trái của trang bằng cách bấm NVDA+Delete bàn phím số. (#1939)
 - Trong Google Sheets với chế độ chữ nổi được bật, NVDA không còn thông báo 'đã chọn' ở mọi ô khi di chuyển con trỏ giữa các ô. (#8879)
+- Đã thêm hỗ trợ cho Foxit Reader và Foxit Phantom PDF (#8944)
+- Đã thêm hỗ trợ cho công cụ cơ sở dữ liệu chung DBeaver. (#8905)
 
 
 == Các thay đổi ==
@@ -34,6 +37,8 @@
 - NVDA không còn từ chối thông báo con trỏ trên các trang web mà con trỏ thay thế cho một điều khiển không còn tồn tại. (#6606, #8341)
 - Trong Gmail mới, nếu dùng các phím di chuyển nhanh trong các thư khi đọc chúng, toàn bộ phần nội dung thư không còn bị đọc lên sau thành phần mà bạn mới điều hướng đến. (#8887)
 - Sau khi cập nhật NVDA, các trình duyệt như Firefox và google Chrome sẽ không còn bị sự cố, và chế độ duyệt sẽ tiếp tục phản ánh một cách chính xác bất kì tài liệu nào đang được tải. (#7641) 
+- NVDA không còn đọc cụm từ có thể kích nhiều lần trên một dòng khi điều hướng  qua các nội dung có thể kích trong chế độ duyệt. (#7430)
+- Các thao tác trên các màn hình nổi baum Vario 40 không còn bị lỗi không thực hiện được. (#8894)
 
 
 == Các thay đổi cho nhà phát triển ==
@@ -73,7 +78,7 @@ Các cải tiến của bản phát hành này bao gồm khả năng tự nhận
 - Với các màn hình ALVA BC6, tổ hợp phím sp2+sp3 giờ đây sẽ thông báo ngày giờ hiện tại, trong khi sp1+sp2 là phím Windows. (#8230)
 - Giờ đây, người dùng được hỏi một lần khi khởi động NVDA về việc gửi thông tin thống kê sử dụng cho NV Access khi kiểm tra cập nhật NVDA. (#8217)
 - Khi kiểm tra cập nhật, nếu người dùng đồng ý gửi thông tin thống kê sử dụng cho NV Access, NVDA sẽ gửi tên driver của bộ đọc và màn hình chữ nổi hiện tại , nhằm hỗ trợ tốt hơn trong việc ưu tiên cho các cập nhật sắp tới của những driver này. (#8217)
-- Đã cập nhật liblouis braille translator lên phiên bản 3.6.0. (#8365)
+- Đã cập nhật thư viện phiên dịch chữ nổi  liblouis lên phiên bản 3.6.0. (#8365)
 - Đã cập nhật đường dẫn chính xác cho bảng chữ nổi tiếng Nga tám chấm. (#8446)
 - Đã cập nhật eSpeak-ng lên phiên bản 1.49.3dev commit 910f4c2 (#8561)
 
@@ -135,7 +140,7 @@ Một số tính năng nổi bật trong bản phát hành này bao gồm hỗ t
 == Các thay đổi ==
 
 - Cột trạng thái trong hộp thoại quản lý Add-on đã được thay đổi để xác định Add-on đang bật hay tắt thay vì thông báo đang chạy hay đã tắt. (#7929)
-- Đã cập nhật thư viện liblouis braille translator lên 3.5.0\. (#7839)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên 3.5.0\. (#7839)
 - Bảng chữ nổi Lithuanian đã được đổi tên thành Lithuanian 6 dot (6 chấm) để tránh rắc rối với bảng chữ nổi 8 chấm của ngôn ngữ này. (#7839)
 - Bảng chữ nổi tiếng Pháp, Canada cấp 1 và 2 đã được gỡ bỏ. Thay vào đó là bản chữ nổi máy tính tiếng Pháp (unified) 6 chấm và chữ nổi tiếng Pháp cấp 2 sẽ được dùng. (#7839)
 - Các nút secondary routing trên màn hình nổi Alva BC6, EuroBraille và Papenmeier giờ đây đã thông báo thông tin định dạng cho văn bản tại ô chữ nổi của nút đó. (#7106)
@@ -259,7 +264,7 @@ Lưu ý, từ phiên bản NVDA này trở đi, sẽ không còn hỗ trợ cho 
 - Khi gán cử chỉ cho màn hình Baum, bạn có thể giới hạn mô đen màn hình nổi được sử dụng, ví dụ như VarioUltra hoặc Pronto). (#7517)
 - Đã thay đổi phím tắt chuyển đến ô lọc của danh sách thành phần ở chế độ duyệt. (#7569)
 - Lệnh gỡ gán (unbound) đã được thêm cho chế độ duyệt, giúp bật tắt phần tùy chỉnh tạm thời cho bảng biểu trình bày. Có thể tìm thấy trong phân loại chế độ duyệt của cửa sổ quản lý cử chỉ. (#7634)
-- Nâng cấp trình dịch liblouis braille lêno 3.3.0. (#7565)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên 3.3.0. (#7565)
 - Đã đổi phím tắt cho nút radio chọn biểu thức thông thường trong hộp thoại từ điển. (#6782)
 - Tập tin từ điển giọng đọc đã được đặt phiên bản và chuyển qua thư mục 'speechDicts/voiceDicts.v1'. (#7592)
 - Khi chạy NVDA từ trình khởi động, NVDA sẽ không lưu các thay đổi của tập tin được đánh phiên bản như cấu hình người dùng và từ điển giọng đọc. (#7688)
@@ -331,7 +336,7 @@ Những chức năng nổi bật trong phiên bản này là cho phép nhập li
   - Thêm nhiều định nghĩa viết tắt cho các cột mốc và trạng thái của điều khiển. Xem phần viết tắt cho các cột mốc và trạng thái điều khiển trong tài liệu hướng dẫn sử dụng để biết đầy đủ danh sách các định nghĩa viết tắt này. (#7188)
 - Đã cập nhật Espeak-ng lên phiên bản 1.49.1 (#7280).
 - Đã sắp xếp các mục trong danh sách bảng đầu vào và đầu ra của hộp thoại thiết lập màn hình nổi theo an-pha-bê. (#6113)
-- Cập nhật trình chuyển dịch chữ nổi liblouis lên bản  3.2.0. (#6935)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên bản  3.2.0. (#6935)
 - Bảng mã chữ nổi cấp 1 UEBC tiếng Anh được chọn là bảng mã mặc định. (#6952)
 - Mặc định, NVDA chỉ hiển thị những phần thông tin ngữ cảnh mà nó thay đổi trên màn hình nổi mỗi khi một đối tượng có focus. (#217)
  - Trước đây, nó sẽ hiển thị tất cả thông tin ngữ cảnh cho dù bạn đã thấy thông tin ngữ cảnh đó rồi.
@@ -494,7 +499,7 @@ Các điểm chính trong phiên bản này bao gồm, cải thiện Microsoft E
 
 
 == Các thay đổi ==
-- Cập nhật trình chuyển đổi chữ nổi  liblouis lên 3.0.0. Bản này gồm nhiều cập nhật quan trọng cho Unified English Braille. (#6109, #4194, #6220, #6140)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên 3.0.0. Bản này gồm nhiều cập nhật quan trọng cho Unified English Braille. (#6109, #4194, #6220, #6140)
 - Trong trình quản lý Add-ons, nút tắt và bật đã có phím tắt lần lượt là (alt+d và alt+e). (#6388)
 - Nhiều vấn đề canh chỉnh và dấu chân trong các hộp thoại của NVDA đã được chỉnh sửa. (#6317, #5548, #6342, #6343, #6349)
 - Hộp thoại định dạng tài liệu đã được điều chỉnh để có thể cuộn nội dung. (#6348)
@@ -657,7 +662,7 @@ Các cải tiến của bản phát hành này bao gồm khả năng giảm âm 
 = Các thay đổi  =
 - Mặc định, tính năng thông báo nhấn mạnh đã được tắt. (#4920)
 - Trong hộp thoại danh sách các thành phần của Microsoft Office Excel, phím nóng để hiển thị công thức nay được đổi thành Alt+R nên sẽ khác với phím tắt ở trường bộ lọc. (5527)
-- Cập nhật liblouis braille translator lên 2.6.5. (#5574)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên 2.6.5. (#5574)
 - Từ “văn bản” sẽ không còn được đọc khi di chuyển con trỏ máy hoặc con trỏ duyệt đến các đối tượng là văn bản. (#5452)
 -
 
@@ -716,7 +721,7 @@ Các cải tiến của bản phát hành này bao gồm các cải thiện cho 
 == Các thay đổi ==
 - Tùy chọn Report Editor Revisions trong hộp thoại định dạng tài liệu của NVDA giờ đây mặc định được bật. (#4920)
 - khi di chuyển qua từng kí tự trong Microsoft Word với tùy chọn Report Editor Revisions được bật, thông tin cho track changes sẽ được thông báo ít hơn, giúp việc điều hướng trở nên hiệu quả hơn. Để có thêm thông tin, hãy dùng danh sách các thành phần. (#4920)
-- Cập nhật liblouis braille translator lên 2.6.4. (#5341)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên 2.6.4. (#5341)
 - Vài kí hiệu (các kí hiệu toán học cơ bản) đã được chuyển sang cấp độ một vài nên mặc định chúng sẽ được đọc. (# 3799)
 - nếu bộ đọc có hỗ trợ, việc đọc sẽ được ngừng nghĩ khi gặp dấu ngoặc và dấu gạch ngang  (–). (#3799)
 - Khi quét khối các đoạn văn bản, NVDA sẽ đọc nội dung của đoạn văn bản đó trước khi đọc đang chọn. (#1707)
@@ -808,7 +813,7 @@ Các cải tiến của bản phát hành này bao gồm khả năng đọc bi�
 - Trong hộp thoại định dạng tài liệu của NVDA, đã đổi phím tắt cho các tùy chọn thông báo danh sách, thông báo liên kết, thông báo số dòng và  thông báo tên phông. (#4650)
 - Trong hộp thoại thiết lập chuột của NVDA, đã gán phím tắt cho tùy chọn phát âm thanh theo tọa độ khi chuột di chuyển và âm lượng độ sáng tọa độ âm thanh. (#4916)
 - Các cải tiến đáng kể cho tính năng thông báo màu. (#4984)
-- Cập nhật liblouis braille translator lên 2.6.2. (#4777)
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên 2.6.2. (#4777)
 
 
 == Sửa lỗi ==
