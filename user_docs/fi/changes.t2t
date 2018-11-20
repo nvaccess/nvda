@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn parannukset uusimmissa Mozilla Firefoxin versioissa, emojien puhuminen kaikilla syntetisaattoreilla, vastattu/välitetty-tilan ilmoittaminen Outlookissa, Kohdistimen etäisyyden ilmoittaminen sivun reunasta Microsoft Wordissa, sekä useat ohjelmavirheiden korjaukset.
 
 == Uudet ominaisuudet ==
 - Uusia pistetaulukoita: mandariinikiina (Kiina) tasot 1 ja 2. (#5553)
@@ -11,6 +12,8 @@
 - NVDA voi nyt lukea emojien sekä muiden Unicode Common Locale Data -tietokantaan kuuluvien merkkien kuvaukset. (#6523)
 - Kohdistimen etäisyys sivun ylä- ja vasemmasta reunasta voidaan lukea Microsoft Wordissa painamalla NVDA+laskinnäppäimistön Del. (#1939)
 - NVDA ei enää ilmoita Google Sheetsissä jokaisen solun kohdalla "valittu" siirrettäessä kohdistusta niiden välillä pistenäyttötilan ollessa käytössä. (#8879)
+- Lisätty tuki Foxit Readerille ja Foxit Phantom PDF:lle. (#8944)
+- Lisätty tuki DBeaver-tietokantatyökalulle. (#8905)
 
 
 == Muutokset ==
@@ -34,6 +37,8 @@
 - NVDA ilmoittaa nyt asianmukaisesti kohdistuksen verkkosivuilla, joilla uusi kohdistus korvaa säätimen, jota ei enää ole. (#6606, #8341)
 - Kun pikanavigointinäppäimiä käytetään uudessa Gmailissa viestejä luettaessa, koko viestin sisältöä ei enää lueta sen elementin jälkeen, johon siirryttiin. (#8887)
 - Kun NVDA on päivitetty, selaimien, kuten Firefox ja google Chrome, ei pitäisi enää kaatua, ja kaikkien sillä hetkellä ladattuina olevien sivujen päivitysten pitäisi edelleen näkyä selaustilassa. (#7641) 
+- NVDA ei enää ilmoita selaustilassa "napsautettava" useita kertoja peräkkäin liikuttaessa napsautettavassa sisällössä. (#7430)
+- Baum Vario 40 -pistenäyttöjen näppäinkomentojen suorittaminen onnistuu nyt asianmukaisesti. (#8894)
 
 
 == Muutokset kehittäjille ==

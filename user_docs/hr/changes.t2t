@@ -4,9 +4,16 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Novosti u ovoj inačici uključuju poboljšanja performansi u zadnjim inačicama Mozilla firefox-a, izgovor emoji sa svim govornim jedinicama, čitanje statusa poruke (prosljeđeno/odgovoreno), u Outlook-u, čitanje udaljenosti od ruba stranice od pokazivača u Microsoft Wordu, te puno ispravaka grešaka.
 
 == Nove značajke ==
 - Nove brajične tablice: Kineski (Kina, Mandarinski) s tonovima i bez tonova. (#5553)
+- U popisu poruka, sada se izgovara status poruke odgovoren/proslijeđen. (#6911)
+- NVDA sada može čitati opise znakova poput emoji, kao i druge znakove koji su dio općeg Unicode repozitorija znakova. (#6523)
+- U Microsoft Wordu, udaljenost kursora od lijevog i gornjeg ruba stranice može se čitati uz pomoć tipkovničkog prečaca insert+delete. (#1939)
+- U Google Sheets sa uključenim brajičnim načinom, NVDA više ne izgovara 'označeno' na svakoj ćeliji prilikom pomicanja fokusa. (#8879)
+- Dodana podrška za Foxit Reader i Foxit Phantom PDF (#8944)
+- Dodana podrška za DBeaver alat za baze podataka. (#8905)
 
 
 == Izmjene ==
@@ -14,6 +21,7 @@
 - U NVDA postavkama tipkovnice, potvrdni okviri za izbor NVDA modifikacijskih tipki sada su prikazani u jednom popisu umjesto odvojenog prikaza.
 - NVDA više neće prikazivati izlišne informacije pri prikazivanju sata u nekim inačicama Windowsa. (#4364)
 - Nadograđen liblouis brajični prevoditelj na inačicu 3.7.0. (#8697)
+- Nadograđen eSpeak-NG na commit 919f3240cbb
 
 
 == Ispravke grešaka ==
@@ -21,6 +29,16 @@
 - Kada je NVDA postavljen na jezike kao što su to  Kirgizijski, Mongolski ili Makedonski, više se ne pojavljuje upozorenje o nepodržanosti jezika od strane operativnog sustava. (#8064)
 - Pomičući miš, sada će se isti pomicati točnije u poziciju načina fokusa u Mozilla Firefoxu, Google Chromeu i Acrobat Reader DC. (#6460)
 - Interakcija sa odabirnim okvirima na web stranicama u  Firefoxu, Chromeu i Internet Exploreru je poboljšana. (#8664)
+- Ako se NVDA pokreće na Japanskoj inačici Windowsa XP ili Viste, upozorenje o nekompatibilnosti sada se prikazuje kako valja. (#8771)
+- Povećanje performansi u Mozilla Firefoxu prilikom kretanja po velikim web stranicama sa puno dinamičkog sadržaja. (#8678)
+- Karakteristike fonta se više ne pokazuju na brajičnom retku,  ako su iste onemogućene u postavkama oblikovanja dokumenta. (#7615)
+- NVDA sada uspjeva pratiti fokus u upravitelju datoteka i drugim aplikacijama koje koriste UI Automation prilikom zauzetosti aplikacije (kao što je to simultana obrada zvuka). (#7345)
+- U ARIA izbornicima na webu, tipka escape će biti proslijeđena izborniku kao kontroli i neće više isključivati način fokusa. (#3215)
+- NVDA više ne odbija izvještavati o fokusu na web stranicama gdje novi fokus zamjenjuje kontrola koja ne postoji. (#6606, #8341)
+- U novom Gmailu, kada se koriste tipke brze navigacije u porukama prilikom čitanja, čitavo tijepo poruke više se ne čita poslije elementa do kojeg ste došli. (#8887)
+- Poslije nadogradnje NVDA, Preglednici poput Firefoxa i google Chromea više se ne bi trebali rušiti, i način pregleda će ponovo prikazivati osvježavanja u svakom trenutno učitanom dokumentu. (#7641) 
+- Prilikom kretanja po klikabilnom sadržaju u načinu pregleda, NVDA više ne čita "klikajući", više puta u jednom retku. (#7430)
+- Komande koje su pritisnute na baum Vario 40 brajičnim retcima sada će se normalno izvoditi. (#8894)
 
 
 == Changes for Developers ==
