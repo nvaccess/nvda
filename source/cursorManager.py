@@ -10,6 +10,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 """
 
 import wx
+import core
 import baseObject
 import documentBase
 import gui
@@ -61,7 +62,9 @@ class FindDialog(wx.Dialog):
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
-		wx.CallLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive)
+		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+		# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+		core.callLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive)
 		self.Destroy()
 
 	def onCancel(self, evt):
