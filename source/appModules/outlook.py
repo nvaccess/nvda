@@ -31,8 +31,8 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterceptor, BrowseModeWordDocumentTextInfo, WordDocumentTextInfo
 from NVDAObjects.IAccessible.MSHTML import MSHTML
-from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
-from NVDAObjects.UIA import UIA
+from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog, EditableTextWithSuggestions
+from NVDAObjects.UIA import UIA, SearchField
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -132,6 +132,11 @@ class AppModule(appModuleHandler.AppModule):
 			outlookVersion=0
 		return outlookVersion
 
+	def isGoodUIAWindow(self,hwnd):
+		if winUser.getClassName(hwnd) == "RichEdit20WPT":
+			return True
+		return False
+
 	def isBadUIAWindow(self,hwnd):
 		if winUser.getClassName(hwnd) in ("WeekViewWnd","DayViewWnd"):
 			return True
@@ -157,8 +162,12 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Currently all our custom classes are IAccessible
-		if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
-			clsList.insert(0,UIAGridRow)
+		if isinstance(obj,UIA):
+			if obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
+				clsList.insert(0,UIAGridRow)
+			# #8502: "To:" field and friends in Outlook that does return suggestions.
+			elif obj.UIAElement.cachedClassName == "RichEdit20WPT" and obj.UIAElement.cachedAutomationID in ("4099", "4100", "4103"):
+				clsList.insert(0,AutoCompleteEditableText)
 		if not isinstance(obj,IAccessible):
 			return
 		# Outlook uses dialogs for many forms such as appointment / meeting creation. In these cases, there is no sane dialog caption that can be calculated as the dialog inly contains controls.
@@ -335,14 +344,36 @@ class AddressBookEntry(IAccessible):
 		for gesture in self.__moveByEntryGestures:
 			self.bindGesture(gesture, "moveByEntry")
 
+class AutoCompleteEditableText(SearchField):
+
+	# Do not repeatedly play suggestion sound as controller for event is raised whenever names/values change.
+	controllerForCount = 0
+	topSuggestion = ""
+
+	def event_UIA_controllerFor(self):
+		obj = self.controllerFor[0]
+		print(obj.firstChild, obj.firstChild.name, obj.firstChild.UIAElement.cachedAutomationID)
+		if len(self.controllerFor) != self.controllerForCount:
+			super(AutoCompleteEditableText, self).event_UIA_controllerFor()
+			self.controllerForCount = len(self.controllerFor)
+		else:
+			if self.controllerFor:
+				topSuggestion = self.controllerFor[0].firstChild.name
+				if self.controllerForCount > 0 and topSuggestion != self.topSuggestion:
+					ui.message(topSuggestion)
+					self.topSuggestion = topSuggestion
+
 class AutoCompleteListItem(IAccessible):
 
 	def event_stateChange(self):
+		import tones
 		states=self.states
 		focus=api.getFocusObject()
 		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
 			speech.cancelSpeech()
 			ui.message(self.name)
+			
+	event_nameChange = event_stateChange
 
 class CalendarView(IAccessible):
 	"""Support for announcing time slots and appointments in Outlook Calendar.
