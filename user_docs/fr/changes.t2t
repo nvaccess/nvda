@@ -4,6 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Les points forts de cette version incluent des améliorations de performances dans les versions récentes de Mozilla Firefox, l'annonce des emojis avec tous les synthétiseurs, l'annonce des statuts répondu/transféré sous Outlook, l'annonce de la distance du curseur au bord de la page sous Microsoft Word, et beaucoup de corrections de bogues.
 
 == Nouvelles Fonctionnalités ==
 - Nouvelles tables braille : Chinois (Chine, Mandarin) intégral et abrégé. (#5553)
@@ -11,6 +12,8 @@ Quoi de Neuf dans NVDA
 - NVDA est maintenant capable de lire les descriptions des emoji ainsi que d'autres caractères faisant partie du référentiel Unicode Common Locale Data. (#6523)
 - Sous Microsoft Word, la distance du curseurs aux bords haut et gauche de la page peut être annoncée en pressant NVDA+pavnumEffacement. (#1939)
 - Sous Google Sheets avec le mode braille activé, NVDA n'annonce plus 'sélectionné' pour chaque cellule quand on déplace le focus de cellule en cellule. (#8879)
+- Ajout du support de Foxit Reader et Foxit Phantom PDF (#8944)
+- Ajout du support de l'outil pour bases de données DBeaver. (#8905)
 
 
 == Changements ==
@@ -34,6 +37,8 @@ Quoi de Neuf dans NVDA
 - NVDA ne refuse plus d'annoncer le focus sur les pages web où le nouveau focus remplace un contrôle qui n'existe plus. (#6606, #8341)
 - Sous le nouveau Gmail, quand on utilise la navigation rapide à l'intérieur d'un message durant la lecture, le corps entier du message n'est plus lu après l'élément vers lequel vous venez de naviguer. (#8887)
 - Après mise à jour de NVDA, les navigateurs tels que Firefox et Google Chrome ne devraient plus se planter, et le mode navigation devrait continuer à refléter correctement les mises à jour de tout document chargé. (#7641) 
+- NVDA n'annonce plus "cliquable" plusieurs fois dans une ligne quand on navigue dans du contenu cliquable en Mode Navigation. (#7430)
+- Les gestes effectués sur l'afficheur braille baum Vario 40 n'échoueront plus à s'exécuter. (#8894)
 
 
 == Changements pour les Développeurs ==

@@ -4,9 +4,16 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Glavne karakteristike ove verzije uključuju poboljšanja brzine u novijim verzijama programa Mozilla Firefox, izgovor Emoji znakova sa svim sintetizatorima, izgovor statusa odgovora/prosleđivanja poruke u programu Outlook, prijavljivanje pozicije kursora od ivice strane u Wordu, i puno ispravljenih grešaka.
 
 == Nove karakteristike ==
 - Nove brajeve tabele: Kineska(Kina, Mandarinski) stepen 1 i stepen 2. (#5553)
+- Status odgovora/prosleđivanja  se sada prijavljuje  za mailove u listi poruka programa  Microsoft Outlook. (#6911)
+- NVDA sada može da čita opise za Emoji znakove  kao i druge znakove koji su deo  Unicode Common Locale baze podataka. (#6523)
+- U programu Microsoft Word, udaljenost kursora od leve ivice i vrha strane se sada može prijaviti  komandom NVDA+NumeričkiTasterZaBrisanje. (#1939)
+- U aplikaciji  Google Sheets sa omogućenim brajevim režimom, NVDA više ne izgovara 'izabrano' za svaku ćeliju kada se fokus pomera između ćelija. (#8879)
+- Dodata podrška za programe Foxit Reader i  Foxit Phantom PDF (#8944)
+- Dodata podrška za DBeaver alat za baze podataka. (#8905)
 
 
 == Promene ==
@@ -14,17 +21,35 @@
 - U dijalogu podešavanja tastature, izborna polja za izbor NVDA tastera su sada u listi, i više nisu prikazana kao posebno izborno polje za svaki taster.
 - NVDA više neće prikazivati bespotrebne informacije kada se čita sat u sistemskoj traci na određenim verzijama Windowsa. (#4364)
 - Ažuriran liblouis brajev prevodilac  na verziju 3.7.0. (#8697)
-
+- Ažuriran  eSpeak-NG na verziju 919f3240cbb
 
 == Ispravljene greške ==
 - U programu Outlook 2016/365, kategorija i status zastave se prijavljuju za poruke. (#8603)
 - Kada je NVDA podešen da koristi jezike kao što su Kirgijški, Mongolski ili Makedonski, više ne prikazuje dijalog pri pokretanju koji obaveštava da operativni sistem ne podržava trenutni jezik. (#8064)
 - Pomeranje miša na navigacioni objekat će sada puno preciznije pomerati miš u režimu pretraživanja programa Mozilla Firefox, Google Chrome i Acrobat Reader DC. (#6460)
 - Interakcija sa izbornim okvirima na Webu u programima Firefox, Chrome i Internet Explorer je poboljšana. (#8664)
+- Ako je pokrenut na Japanskoj verziji Windowsa XP ili Vista, NVDA sada ispravno prikazuje upozorenje o sistemskim zahtevima. (#8771)
+- Poboljšanja u brzini u programu Mozilla Firefox u toku navigacije velikih stranica sa puno dinamičkih promena. (#8678)
+- Brajev red više ne prikazuje promene fonta ako su onemogućene u podešavanjima formatiranja dokumenta. (#7615)
+- NVDA više ne greši u praćenju fokusa  u istraživaču datoteka  i drugim aplikacijama koje koriste UI Automation kada je neka druga aplikacija zauzeta (na primer obrada više zvučnih materijala). (#7345)
+- U ARIA menijima na Webu, taster escape će biti prosleđen u meni i neće više isključivati režim fokusiranja. (#3215)
+- NVDA više ne odbija da prijavi fokus na Web stranicama kada novi fokus menja kontrolu koja više ne postoji. (#6606, #8341)
+- U novom Gmailu, kada koristite brzu navigaciju unutar poruka tokom čitanja, celokupan tekst poruke se više ne prijavljuje nakon elementa na koji ste došli. (#8887)
+- Nakon ažuriranja programa  NVDA, pretraživači kao što su Firefox i  google Chrome više neće prestajati sa radom, i režim pretraživanja bi trebalo da ispravno prati ažuriranja na svim učitanim Web stranicama. (#7641) 
+- NVDA više ne izgovara klikabilno  više puta  u toku navigacije klikabilnog sadržaja u režimu pretraživanja. (#7430)
+- Prečice na baum Vario 40 brajevim redovima  više neće imati problema sa pokretanjem. (#8894)
 
 
 == Promene za programere ==
 Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2018.3.2 =
+Ovo je manje ažuriranje koje ispravlja grešku u programu Google Chrome u toku navigacije tvitova na sajtu  www.twitter.com. (#8777)
++
++ 
+= 2018.3.1 =
+Ovo je manje ažuriranje koje ispravlja  NVDA grešku koja izaziva da  32 bitne verzije programa Mozilla Firefox prestaju sa radom. (#8759)
 
 
 = 2018.3 =

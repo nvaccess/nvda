@@ -4,12 +4,21 @@ Traduzido pela Equipa portuguesa do NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Os destaques desta versão são:
+- Melhorias na performance nas versões  recentes do Mozilla Firefox;
+- anúncio de emojis com todos os sintetizadores;
+- Anúncio do estado  respondida/Reencaminhada no Microsoft Outlook;
+- Anúncio da distância às bordas superiores e esquerda da página no Microsoft Word;
+- Muitas correcções de erros.
+
 
 == Novas Funcionalidades ==
 - Novas tabelas Braille: Chinês (China, Mandarin) grau 1 e grau 2. (#5553)
 - O NVDA agora pode ler descrições de emoji, bem como outros caracteres que fazem parte do Repositório Unicode Common Locale Data Repository. (#6523)
 - No Microsoft Word, a distância do cursor às bordas superior e esquerda da página pode ser anunciada pressionando NVDA+Delete do numérico. (#1939)
 - No Google Sheets, com o modo braille ativado, o NVDA não anuncia mais 'selecionado' em todas as células ao mover o foco entre as células. (#8879)
+- Adicionado suporte para o Foxit Reader e Foxit Phantom PDF (#8944)
+- Adicionado suporte para o DBeaver database tool. (#8905)
 
 
 == Alterações ==
@@ -33,6 +42,8 @@ Traduzido pela Equipa portuguesa do NVDA
 - O NVDA já anuncia o foco em páginas Web onde o novo foco substitui um controlo que já não existe. (#6606, #8341)
 - No novo GMail, ao usar as teclas de navegação rápida enquanto se lê mensagens, já não é anunciado todo o corpo da mensagem após o elemento para o qual se moveu. (#8887)
 - Depois de actualizar o NVDA, navegadores como o Firefox e google Chrome já não devem crachar, e o modo de navegação  deve continuar a reflectir correctamente atualizações para os documentos actualmente carregados. (#7641) 
+- O NVDA já não anuncia múltiplas vezes seguidas Clicável ao navegar por conteúdo clicável em modo de navegação. (#7430)
+- Comandos executados numa baum Vario 40 já são executados. (#8894)
 
 
 == Changes for Developers ==

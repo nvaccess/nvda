@@ -4,13 +4,16 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Zu den Highlights dieser Version gehören Leistungssteigerungen in den neuesten Versionen von Mozilla Firefox, die Ankündigung von Emojis mit allen Sprachausgaben, die Meldung des Status Beantwortet/Weitergeleitet in Microsoft Outlook, die Meldung der Entfernung des Cursors zum Rand einer Seite im Microsoft Word-Dokument und viele Fehlerbehebungen.
 
 == Neue Funktionen ==
 - Neue Braille-Tabellen: Chinesische Voll- und Kurzschrift (China, Mandarin). (#5553)
-- In der Nachrichtenansicht in Microsoft Outlook meldet NVDA nun den Status "Beantwortet" und/oder "Weitergeleitet" für jede Nachricht. (#6911)
+- In der Nachrichtenansicht in Microsoft Outlook meldet NVDA nun den Status "Beantwortet" und "Weitergeleitet" für jede Nachricht. (#6911)
 - NVDA kann jetzt Beschreibungen für Emoji und andere Zeichen vorlesen, welche Teil der gemeinsamen Unicode-Gebietsschemata sind. (#6523)
 - In Microsoft Word kann NVDA jetzt den Abstand des Cursors vom oberen und vom linken Rand der aktuellen Seite melden. Drücken Sie dafür NVDA+Entfernen. (#1939)
 - NVDA sagt nicht mehr "Ausgewählt" bei jeder Zelle während der Navigation mit den Pfeiltasten zwischen Zellen in Google Sheets, wenn Braille-Modus aktiviert wurde. (#8879)
+- Unterstützung für Foxit Reader und Foxit Phantom PDF hinzugefügt. (#8944)
+- Unterstützung für das DBeaver-Datenbankwerkzeug. (#8905)
 
 
 == Änderungen ==
@@ -19,6 +22,8 @@ Was ist neu in NVDA
 - NVDA zeigt unter einigen Windows-Versionen keine doppelten Informationen mehr an, wenn die Uhr in der Taskleiste vorgelesen wird. (#4364)
 - Liblouis Braille-Übersetzer auf Version 3.7.0 aktualisiert. (#8697)
 - eSpeak-NG wurde auf commit 919f3240cbb aktualisiert
+- NVDA meldet nicht mehr mehrfach hintereinander klickbare Inhalte, wenn Sie im Lese-Modus durch klickbare Inhalte navigieren. (#7430)
+- Gesten, die auf Baum Vario 40 Braillezeilen ausgeführt werden, werden nicht mehr ausbleiben. (#8894)
 
 
 == Fehlerbehebungen ==

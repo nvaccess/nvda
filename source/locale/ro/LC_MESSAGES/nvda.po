@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Romanian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 00:10+1000\n"
-"PO-Revision-Date: 2018-09-29 17:15+0300\n"
+"POT-Creation-Date: 2018-11-19 15:06+1000\n"
+"PO-Revision-Date: 2018-11-17 10:50+0200\n"
 "Last-Translator: Florian Ionașcu <florianionascu@hotmail.com>\n"
 "Language-Team: mihai.craciun@gmail.com, dan.punga@gmail.com, "
 "florianionascu@hotmail.com, nicusoruntila@yahoo.com\n"
@@ -6908,6 +6908,18 @@ msgstr "necitit"
 msgid "Editing profile {profile}"
 msgstr "Se editează profilul {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "răspuns"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "răspuns tuturor"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "redirecționat"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "cu importanță"
@@ -8660,6 +8672,16 @@ msgstr "&Nivel punctuație/simbol:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Bazează-te pe limba vocii când se procesează caractere și &simboluri"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Include datele Unicode Consortium (inclusiv emoji) atunci când se procesează "
+"caractere și simboluri"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10782,6 +10804,16 @@ msgstr "comentariu: {text} de către {author} în {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} de {author} în {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} de la marginea din stânga a paginii"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} de la marginea de sus a paginii"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
