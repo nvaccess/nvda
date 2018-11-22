@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 19:07+1000\n"
-"PO-Revision-Date: 2018-08-05 00:17+0800\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
+"PO-Revision-Date: 2018-11-09 21:32+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -363,11 +363,11 @@ msgstr "|рп|"
 
 #. Translators: Displayed in braille for an object which is deleted.
 msgid "del"
-msgstr ""
+msgstr "удл"
 
 #. Translators: Displayed in braille for an object which is inserted.
 msgid "ins"
-msgstr ""
+msgstr "вст"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -508,7 +508,7 @@ msgstr "Только при прокрутке назад"
 
 #. Translators: String representing automatic port selection for braille displays.
 msgid "Automatic"
-msgstr "Автоматически"
+msgstr "Определять автоматически"
 
 #. Translators: String representing the USB port selection for braille displays.
 msgid "USB"
@@ -594,7 +594,7 @@ msgstr "Брайлевский дисплей неизвестен"
 #. Translators: Name of a Bluetooth serial communications port.
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
-msgstr ""
+msgstr "Последовательный порт Bluetooth: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -1138,6 +1138,16 @@ msgstr "Брайлевский Unicode"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Вьетнамский (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Китайский (Китай, Мандарин) (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Китайский (Китай, Мандарин) (вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2062,7 +2072,7 @@ msgstr "графика"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "всплывающее системное сообщение"
+msgstr "системное уведомление"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
@@ -3545,9 +3555,9 @@ msgid ""
 "information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
-"Сообщает текущий объект навигатора. При двойном нажатии сообщает эту "
-"информацию по символам. Тройное нажатие копирует имя и значение объекта в "
-"буфер обмена"
+"Сообщает информацию о текущем объекте навигатора. При двойном нажатии эти "
+"данные читаются по символам. Тройное нажатие копирует имя и значение объекта "
+"в буфер обмена"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3558,8 +3568,8 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"Объявляет информацию о местоположении текста или объекта под просмотровым "
-"курсором. Двойное нажатие может предоставить дополнительные подробности."
+"Сообщает расположение текста или объекта под просмотровым курсором. Двойное "
+"нажатие может предоставить дополнительную информацию."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3853,8 +3863,8 @@ msgstr ""
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
-"Читает объект в системном фокусе. При двойном нажатии эта информация "
-"читается по символам"
+"Сообщает информацию об объекте в системном фокусе. При двойном нажатии эти "
+"данные читаются по символам"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3874,8 +3884,8 @@ msgid ""
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
-"Читает строку состояния текущего приложения и приводит к ней навигатор. При "
-"двойном нажатии читает её по символам. При тройном нажатии копирует текст "
+"Сообщает строку состояния текущего приложения и приводит к ней навигатор. "
+"При двойном нажатии читает её по символам. Тройное нажатие копирует текст "
 "строки состояния в буфер обмена"
 
 #. Translators: presented when the mouse tracking is toggled.
@@ -6686,7 +6696,7 @@ msgstr ""
 "а также ко всем его производным.\n"
 "Для получения дополнительной информации, пожалуйста обратитесь к лицензии в "
 "подменю \"Справка\".\n"
-"Она также может быть получена онлайн по адресу: http://www.gnu.org/licenses/"
+"Она также может быть получена онлайн по адресу: https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} разрабатывается NV Access, некоммерческой организацией, созданной для "
@@ -6893,35 +6903,17 @@ msgstr "Непрочитано"
 msgid "Editing profile {profile}"
 msgstr "Редактирование профиля {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Лиловый флажок"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "отвечено"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Оранжевый флажок"
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr "отвечено всем"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Зелёный флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Жёлтый флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Синий флажок"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Красный флажок"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "переслано"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7323,7 +7315,7 @@ msgstr "выключено"
 
 #. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
 msgid "No emoji"
-msgstr ""
+msgstr "Нет эмоджи"
 
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
@@ -7736,13 +7728,13 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions."
 msgstr ""
-"Большинство команд NVDA вводятся с удержанием клавиши-модификатора NVDA при "
-"нажатии других клавиш.\n"
-"По умолчанию, используется insert на цифровом блоке и основной insert как "
-"клавиша-модификатор NVDA.\n"
+"Большинство управляющих команд NVDA выполняются при удержании специальной "
+"клавиши-модификатора NVDA, с одновременным нажатием других клавиш.\n"
+"По умолчанию в качестве клавиши-модификатора NVDA используется основной "
+"insert и insert на цифровом блоке.\n"
 "Вы также можете настроить NVDA на использование CapsLock как клавиши-"
 "модификатора.\n"
-"Нажимайте NVDA+n в любое время для вызова меню NVDA.\n"
+"Для вызова меню NVDA нажимайте NVDA+n в любое время.\n"
 "Из этого меню вы можете настраивать NVDA, получать доступ к справке и другим "
 "функциям программы."
 
@@ -7851,18 +7843,18 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
-"Для дальнейшего улучшения программы NVDA, организации NV Access требуются "
-"статистические данные по использованию вашей копии NVDA.\n"
+"Для дальнейшего улучшения NVDA, организации NV Access требуются "
+"статистические данные по использованию вашей копии программы.\n"
 "\n"
-"Эти данные включают в себя: версию операционной системы, версию NVDA, "
+"Эти данные включают в себя версию операционной системы, версию NVDA, "
 "используемый язык, страну пребывания, а также некоторые настройки NVDA, "
 "такие как используемый синтезатор речи, брайлевский дисплей и брайлевскую "
 "таблицу вывода. Никакой речевой или брайлевский вывод никогда не будет "
-"передаваться в NV Access. Для получения списка всех собираемых данных, "
-"пожалуйста, обратитесь к руководству пользователя NVDA.\n"
+"передаваться в NV Access. Для ознакомления со списком всех собираемых "
+"данных, пожалуйста, обратитесь к руководству пользователя NVDA.\n"
 "\n"
-"Вы хотите разрешить NV Access периодически собирать эти данные для будущих "
-"улучшений в NVDA?"
+"Хотите ли вы разрешить NV Access периодически собирать эти данные для "
+"улучшения NVDA?"
 
 #. Translators: The label of a Yes button in a dialog
 msgid "&Yes"
@@ -7999,7 +7991,7 @@ msgstr "Не удалось установить дополнение из %s"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Вы уверены, что хотите удалить выбранное дополнение из NVDA?"
+msgstr "Вы уверены, что хотите удалить из NVDA выбранное дополнение?"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
@@ -8680,6 +8672,16 @@ msgstr "&Уровень пунктуации:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Использовать язык синтезатора для чтения знаков и символов пунктуации"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Использовать базу данных Консорциума Unicode при чтении знаков и символов "
+"пунктуации"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Процент смены высоты для заглавных"
@@ -8703,20 +8705,10 @@ msgstr "Использовать по&символьное чтение, есл�
 msgid "Keyboard"
 msgstr "Клавиатура"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Использовать CapsLock как клавишу-модификатор NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Использовать Insert на цифровом блоке как клавишу-модификатор NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Использовать обычный Insert как клавишу-модификатор NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "Клавиши-&модификаторы NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8881,8 +8873,8 @@ msgstr "Читать всплывающие &подсказки"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Читать &всплывающие системные сообщения"
+msgid "Report &notifications"
+msgstr "Читать системные &уведомления"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9453,7 +9445,7 @@ msgid "No speech"
 msgstr "Нет речи"
 
 msgid "word"
-msgstr "Слово"
+msgstr "слово"
 
 #. Translators: current position in a document as a percentage of the document length
 #, python-brace-format
@@ -10814,6 +10806,16 @@ msgstr "примечание: {text}. {author}, {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}. {author}, {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} от левого края страницы"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} от верхнего края страницы"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10973,21 +10975,32 @@ msgstr "Двойной междустрочный интервал"
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
 
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} - {layout}"
+#~ msgid "purple flag"
+#~ msgstr "Лиловый флажок"
 
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "Амхарский"
+#~ msgid "Orange flag"
+#~ msgstr "Оранжевый флажок"
 
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "Арабский"
+#~ msgid "Green flag"
+#~ msgstr "Зелёный флажок"
 
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "Непальский"
+#~ msgid "Yellow flag"
+#~ msgstr "Жёлтый флажок"
 
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "Сербский (Латинский)"
+#~ msgid "Blue flag"
+#~ msgstr "Синий флажок"
+
+#~ msgid "Red flag"
+#~ msgstr "Красный флажок"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Использовать CapsLock как клавишу-модификатор NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Использовать Insert на цифровом блоке как клавишу-модификатор NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Использовать обычный Insert как клавишу-модификатор NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Читать &всплывающие системные сообщения"

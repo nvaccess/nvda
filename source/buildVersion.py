@@ -43,7 +43,7 @@ def getCurrentVersionTuple():
 # Otherwise, py2exe will break.
 name="NVDA"
 version_year=2018
-version_major=3
+version_major=4
 version_minor=0
 version_build=0
 version=formatDevVersionString()

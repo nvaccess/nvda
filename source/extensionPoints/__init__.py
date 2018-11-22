@@ -12,7 +12,7 @@ or allow modification of spoken messages before they are passed to the synthesiz
 See the L{Action}, L{Filter}, L{Decider} classes.
 """
 from logHandler import log
-from util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
+from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
 
 
 class Action(HandlerRegistrar):

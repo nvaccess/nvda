@@ -78,11 +78,23 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
+	try:
+		import updateCheck
+	except RuntimeError:
+		updateCheck=None
 	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
 		addonHandler.showUnknownCompatDialog()
-		if not config.conf['update']['askedAllowUsageStats']:
-			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
-
+		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
+			# a callback to save config after the usage stats question dialog has been answered.
+			def onResult(ID):
+				import wx
+				if ID in (wx.ID_YES,wx.ID_NO):
+					try:
+						config.conf.save()
+					except:
+						pass
+			# Ask the user if usage stats can be collected.
+			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""

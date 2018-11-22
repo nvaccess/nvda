@@ -18,6 +18,29 @@ import languageHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
+	def _getPointFromOffset(self,offset):
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		# The format field starts at the first character.
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
+				# This is no format field.
+				continue
+			attrs = field.field
+			indexInParent = attrs.get("_indexInParent")
+			if indexInParent is None:
+				continue
+			try:
+				obj = self._getNVDAObjectFromOffset(offset).getChild(indexInParent)
+			except IndexError:
+				obj = None
+			if not obj:
+				continue
+			if not obj.location:
+				# Older versions of Adobe Reader have per word objects, but they don't expose a location
+				break
+			return textInfos.Point(*obj.location.center)
+		return super(AdobeAcrobat_TextInfo, self)._getPointFromOffset(offset)
+
 	def _normalizeControlField(self,attrs):
 		stdName = attrs.get("acrobat::stdname", "")
 		try:
@@ -49,6 +72,10 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 	def _normalizeFormatField(self, attrs):
 		try:
 			attrs["language"] = languageHandler.normalizeLanguage(attrs["language"])
+		except KeyError:
+			pass
+		try:
+			attrs["_indexInParent"] = int(attrs["_indexInParent"])
 		except KeyError:
 			pass
 		return attrs

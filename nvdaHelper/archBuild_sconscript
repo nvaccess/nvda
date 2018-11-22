@@ -203,39 +203,6 @@ if TARGET_ARCH=='x86_64':
 		env.AddPostAction(remoteLoaderProgram,[signExec])
 	env.Install(libInstallDir,remoteLoaderProgram)
 
-vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
-Export('vbufBaseStaticLib')
-
-adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
-if signExec:
-	env.AddPostAction(adobeAcrobatVBufBackend[0],[signExec])
-env.Install(libInstallDir,adobeAcrobatVBufBackend)
-
-adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
-if signExec:
-	env.AddPostAction(adobeFlashVBufBackend[0],[signExec])
-env.Install(libInstallDir,adobeFlashVBufBackend)
-
-lotusNotesRichTextVBufBackend=env.SConscript('vbufBackends/lotusNotesRichText/sconscript')
-if signExec:
-	env.AddPostAction(lotusNotesRichTextVBufBackend[0],[signExec])
-env.Install(libInstallDir,lotusNotesRichTextVBufBackend)
-
-geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
-if signExec:
-	env.AddPostAction(geckoVBufBackend[0],[signExec])
-env.Install(libInstallDir,geckoVBufBackend)
-
-mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
-if signExec:
-	env.AddPostAction(mshtmlVBufBackend[0],[signExec])
-env.Install(libInstallDir,mshtmlVBufBackend)
-
-webKitVBufBackend=env.SConscript('vbufBackends/webKit/sconscript')
-if signExec:
-	env.AddPostAction(webKitVBufBackend[0],[signExec])
-env.Install(libInstallDir,webKitVBufBackend)
-
 if TARGET_ARCH=='x86':
 	env.SConscript('espeak/sconscript')
 	env.SConscript('liblouis/sconscript')
