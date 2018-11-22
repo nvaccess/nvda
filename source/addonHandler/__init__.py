@@ -179,13 +179,13 @@ def showUnknownCompatDialog():
 	from gui import addonGui, mainFrame, runScriptModalDialog
 	if any(getAddonsWithUnknownCompatibility()):
 		try:
-			incompatibleAddons = addonGui.IncompatibleAddonsDialog(parent=mainFrame)
+			incompatibleAddonsDlg = addonGui.IncompatibleAddonsDialog(parent=mainFrame)
 		except RuntimeError:
 			log.error("Unable to open IncompatibleAddonsDialog", exc_info=True)
 			return
 	else:
 		return
-	unknownCompatAddons = incompatibleAddons.unknownCompatibilityAddonsList
+	unknownCompatAddons = incompatibleAddonsDlg.unknownCompatibilityAddonsList
 	def afterDialog(res):
 		# we may need to change the enabled addons / restart nvda here
 		shouldPromptRestart = False
@@ -196,7 +196,7 @@ def showUnknownCompatDialog():
 		saveState()
 		if shouldPromptRestart:
 			addonGui.promptUserForRestart()
-	runScriptModalDialog(incompatibleAddons, afterDialog)
+	runScriptModalDialog(incompatibleAddonsDlg, afterDialog)
 
 
 def terminate():
@@ -234,8 +234,8 @@ def _getAvailableAddonsFromPath(path):
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
 				elif isAddonConsideredIncompatible(a):
-					log.debugWarning("Add-on %s is blacklisted", name)
-					# #6275: The add-on refresh could have yielded blacklisted add-ons.
+					log.debugWarning("Add-on %s is considered incompatible", name)
+					# #6275: The add-on refresh could have yielded add-ons considered incompatible.
 					# Add these to the disabled add-ons
 					_disabledAddons.add(a.name)
 				yield a
@@ -352,7 +352,7 @@ class Addon(AddonBase):
 			state['pendingRemovesSet'].add(self.name)
 			# There's no point keeping a record of this add-on pending being disabled now.
 			# However, if the addon is in _disabledAddons, then it needs to stay there so that
-			# the status in addonsManger continues to say "disabled"
+			# the status in addonsManager continues to say "disabled"
 			state['pendingDisableSet'].discard(self.name)
 		saveState()
 

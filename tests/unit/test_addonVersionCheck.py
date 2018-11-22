@@ -3,7 +3,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2018 NV Access Limited
 
-"""Unit tests for the baseObject module, its classes and their derivatives."""
+"""Unit tests for the addonVersionCheck module."""
 
 import unittest
 

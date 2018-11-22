@@ -153,16 +153,19 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.copyPortableConfigCheckbox.Disable()
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-		# Translators: The label of a button to continue with the operation.
-		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
-		continueButton.SetDefault()
-		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
-
 		if shouldAskAboutAddons:
 			# Translators: The label of a button to launch the add-on compatibility review dialog.
 			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
-		
+			reviewAddonButton.SetFocus()
+
+		# Translators: The label of a button to continue with the operation.
+		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
+		if not shouldAskAboutAddons:
+			continueButton.SetDefault()
+			continueButton.SetFocus()
+		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
+
 		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)

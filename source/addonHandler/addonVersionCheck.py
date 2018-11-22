@@ -10,7 +10,6 @@ import os
 import buildVersion
 import globalVars
 from logHandler import log
-from typing import Dict
 from . import compatValues
 
 # A named tuple was being used for the version state key, however pickle is unable to save a named tuple.
@@ -73,7 +72,7 @@ class AddonCompatibilityState(object):
 			return
 		cls._persistence = statePersistence
 		state = cls._persistence.loadState()
-		cls._addonVersionState = state  # type: Dict[tuple, CompatValues]
+		cls._addonVersionState = state  # type: dict[tuple, CompatValues]
 
 	@classmethod
 	def setAddonCompatibility(
@@ -86,8 +85,8 @@ class AddonCompatibilityState(object):
 		"""Sets the compatibility for an addon. Does not save the value to file.
 		@param NVDAVersion:
 		@param addon: The addon to set compatibility for
-		@param compatibilityStateValue: Unknown allows falling back to auto deduced value
-		@return:
+		@param compatibilityStateValue: UNKNOWN allows falling back to auto deduced value. Must be either UNKNOWN,
+		MANUALLY_SET_COMPATIBLE, or MANUALLY_SET_INCOMPATIBLE
 		"""
 		cls.initialise()
 		acceptedUserSetCompatVals = [

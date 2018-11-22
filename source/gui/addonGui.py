@@ -80,7 +80,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			okButton = buttonHelper.addButton(
 				self,
 				id=wx.ID_OK,
-				# Translators: A button in the addon installation blocked dialog which
+				# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 				label=_("OK")
 			)
 			okButton.SetDefault()
@@ -89,7 +89,8 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			yesButton = buttonHelper.addButton(
 				self,
 				id=wx.ID_YES,
-				# Translators: A button in the addon installation warning dialog which
+				# Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+				#  the add-on
 				label=_("Yes")
 			)
 			yesButton.SetDefault()
@@ -100,7 +101,8 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			noButton = buttonHelper.addButton(
 				self,
 				id=wx.ID_NO,
-				# Translators: A button in the addon installation warning dialog which
+				# Translators: A button in the addon installation warning dialog which allows the user to decide not to
+				# install the add-on
 				label=_("No")
 			)
 			noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
@@ -553,15 +555,20 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			addon.enable(not shouldDisable)
 		except addonHandler.AddonError:
 			log.error("Couldn't change state for %s add-on"%addon.name, exc_info=True)
+			if shouldDisable:
+				# Translators: The message displayed when the add-on cannot be disabled.
+				message = _("Could not disable the {description} add-on.").format(
+					description=addon.manifest['summary'])
+			else:
+				# Translators: The message displayed when the add-on cannot be enabled.
+				message = _("Could not enable the {description} add-on.").format(
+					description=addon.manifest['summary'])
 			gui.messageBox(
-				# Translators: The message displayed when the state of an add-on cannot be changed.
-				_("Could not {state} the {description} add-on.").format(
-					state=_("disable") if shouldDisable else _("enable"),
-					description=addon.manifest['summary']
-				),
+				message,
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
-				wx.OK | wx.ICON_ERROR)
+				wx.OK | wx.ICON_ERROR
+			)
 			return
 
 		self.enableDisableButton.SetLabel(_("&Enable add-on") if shouldDisable else _("&Disable add-on"))
@@ -707,12 +714,12 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			compatValue = AddonCompatibilityState.getAddonCompatibility(addon, CURRENT_NVDA_VERSION)
 			shouldCheck = compatValue == compatValues.MANUALLY_SET_COMPATIBLE
 			self.addonsList.CheckItem(idx, check=shouldCheck)
-		# select the given active addon or the first addon if not given
+		# select the given active addon, the last addon (after an addon is installed), or the first addon if not given
 		curAddonsLen=len(self.unknownCompatibilityAddonsList)
-		if curAddonsLen>0:
-			if activeIndex==-1:
+		if curAddonsLen>0:  # No addons to select
+			if activeIndex==-1:  # Special value, select last addon (newly installed)
 				activeIndex=curAddonsLen-1
-			elif activeIndex<0 or activeIndex>=curAddonsLen:
+			elif activeIndex<0 or activeIndex>=curAddonsLen:  # Index invalid, select first addon.
 				activeIndex=0
 			self.addonsList.Select(activeIndex,on=1)
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)

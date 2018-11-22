@@ -446,19 +446,20 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		text.Wrap(self.scaleSize(500))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-		# Translators: The label of a button to install an NVDA update.
-		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
-		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
-		installButton.SetFocus()
 		if showAddonCompat:
 			# Translators: The label of a button to review add-ons prior to NVDA update.
 			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
+			reviewAddonsButton.SetFocus()
+		# Translators: The label of a button to install an NVDA update.
+		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
+		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
+		if not showAddonCompat:
+			installButton.SetFocus()
 		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
 			postponeButton.Bind(wx.EVT_BUTTON, self.onPostponeButton)
-
 			self.EscapeId = wx.ID_CLOSE
 		else:
 			self.EscapeId = wx.ID_OK
