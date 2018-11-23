@@ -662,12 +662,9 @@ Otherwise, the add-on will not install.
 - description: A sentence or two describing what the add-on does.
 - url: A URL where this add-on, further info and upgrades can be found.
 - docFileName: The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
-- minimumNVDAVersion: The minimum required version of NVDA for this add-on to be installed or enabled.
-- lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with.
+- minimumNVDAVersion: The minimum required version of NVDA for this add-on to be installed or enabled. (Mandatory)
+- lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with. (Mandatory)
 -
-
-The minimumNVDAVersion and lastTestedNVDAVersion keys are currently not mandatory.
-However, it is highly recommended that these keys be included as they are expected to become mandatory keys in the future.
 
 +++ An Example Manifest File +++
 ```
