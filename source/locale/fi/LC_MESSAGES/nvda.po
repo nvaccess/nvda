@@ -1,12 +1,12 @@
 # Suomenkielinen lokalisointi NVDA:lle
-# Copyright (C) 2006-2016 NVDA:n tekijät <http://www.nvda-project.org/>
+# Copyright (C) 2006-2016 NVDA:n tekijät <https://www.nvda-project.org/>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-18 14:57+1000\n"
-"PO-Revision-Date: 2018-09-18 09:59+0200\n"
+"POT-Creation-Date: 2018-11-19 15:06+1000\n"
+"PO-Revision-Date: 2018-11-15 21:20+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -6687,12 +6687,12 @@ msgstr ""
 "kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja "
 "ohjelmistokopioita ja kaikkia johdannaisia.\n"
 "Voit tarkastella lisenssiä Ohje-valikosta saadaksesi lisätietoja.\n"
-"Lisenssi on luettavissa myös verkossa osoitteessa http://www.gnu.org/"
+"Lisenssi on luettavissa myös verkossa osoitteessa: http://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name}:ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
+"{name} :ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on "
 "sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja "
-"sokeille ja heikkonäköisille henkilöille.\n"
+"sokeille ja heikkonäköisille.\n"
 "Jos pidät NVDA:ta hyödyllisenä ja haluat sen kehityksen jatkuvan, harkitse "
 "lahjoittamista NV Accessille. Voit tehdä tämän valitsemalla NVDA-valikosta "
 "Lahjoita."
@@ -6893,6 +6893,18 @@ msgstr "lukematon"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Muokataan profiilia {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "vastattu"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "vastattu kaikille"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "välitetty"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8625,6 +8637,16 @@ msgstr "Välimerkki- ja symboli&taso:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita "
+"käsiteltäessä"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10733,6 +10755,16 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} sivun vasemmasta reunasta"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} sivun yläreunasta"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10891,6 +10923,9 @@ msgstr "Kaksinkertainen riviväli"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
+
+#~ msgid "REPLIED ALL"
+#~ msgstr "VASTATTU KAIKILLE"
 
 #~ msgid "purple flag"
 #~ msgstr "Liila lippu"
