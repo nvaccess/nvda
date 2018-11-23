@@ -227,12 +227,25 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _getCharacterOffsets(self,offset):
 		# Windows Unicode is UTF-16, so a character may be two offsets for code points beyond 16 bits.
-		char = self._getTextRange(offset, offset + 1)
-		if HIGH_SURROGATE_FIRST <= char <= HIGH_SURROGATE_LAST:
-			# High (leading) surrogate; next offset is also part of this character.
+		if offset > 0:
+			chars = self._getTextRange(offset - 1, offset + 2)
+			# Slicing avoids the need to check length. If invalid, it'll be the empty string.
+			prevChar = chars[0:1]
+			curChar = chars[1:2]
+			nextChar = chars[2:3]
+		else:
+			chars = self._getTextRange(offset, offset + 2)
+			prevChar = u"" # Empty string, any subsequent comparisons will evaluate to False.
+			# Slicing avoids the need to check length. If invalid, it'll be the empty string.
+			curChar = chars[0:1]
+			nextChar = chars[1:2]
+		if HIGH_SURROGATE_FIRST <= curChar <= HIGH_SURROGATE_LAST and LOW_SURROGATE_FIRST <= nextChar <= LOW_SURROGATE_LAST:
+			# curChar is a high (leading) surrogate;
+			# nextChar is a low surrogate and also part of this character.
 			return offset, offset + 2
-		elif offset > 0 and LOW_SURROGATE_FIRST <= char <= LOW_SURROGATE_LAST:
-			# Low (trailing) surrogate; previous offset is also part of this character.
+		elif HIGH_SURROGATE_FIRST <= prevChar <= HIGH_SURROGATE_LAST and LOW_SURROGATE_FIRST <= curChar <= LOW_SURROGATE_LAST:
+			# curChar is a low (trailing) surrogate;
+			# prevChar is a high surrogate and also part of this character.
 			return offset - 1, offset + 1
 		return offset, offset + 1
 
