@@ -1052,9 +1052,19 @@ Ova vam opcija omogućuje određivanje količine interpunkcijskih znakova i drug
 Na primjer, Kad je ova opcija postavljena na način da se izgovaraju svi simboli, Svi će simboli biti izgovoreni kao riječi.
 Ova se opcija primjenjuje na sve govorne jedinice, ne samo na trenutno aktivnu.
 
-==== Vjeruj jeziku trenutnog glasa kad se procesiraju simboli i znakovi ====[SpeechSettingsTrust]
+==== Vjeruj jeziku trenutnog glasa kad se procesiraju znaci i simboli ====[SpeechSettingsTrust]
 Zadano uključena, ova opcija govori programu NVDA da se jeziku trenutno odabranog glasa može vjerovati, kada se procesiraju simboli i znakovi.
 Ako shvatite da NVDA čita interpunkciju koristeći krivi jezik za određenu govornu jedinicu ili glas, možda biste ovu opciju željeli isključiti kako biste prisilili NVDA da umjesto toga koristi glavnu jezičnu postavku.
+
+==== Koristi Unicode bazu podataka pri čitanju simbola ====[SpeechSettingsCLDR]
+Kada je ovaj potvrdni okvir uključen, NVDA će uključivati dodatne znakove i simbole pri čitanju.
+Ovi rječnici sadrže izgovor simbola (Uglavnom Emoji) koje je dostavio [Unicode Consortium http://www.unicode.org/consortium/] kao dio njihovog [repozitorija općih jezičnih podataka http://cldr.unicode.org/].
+Ako želite da NVDA čita emoji uz pomoć ovih podataka, Možete uključiti ovu opciju.
+Međutim, ako vaša govorna jedinica čita emoji, možete isključiti ovu opciju.
+
+Imajte na umu, da izmijenjeni opisi znakova se spremaju u vašu korisničku mapu.
+Dakle, ako izmijenite naziv određenog emoji,, vaš će opis biti izgovoren neovisno o tome, je li ova opcija uključena.
+Možete dodati, ukloniti ili urediti opise simbola u [dijaloškom okviru izgovaranja simbola #SymbolPronunciation].
 
 ==== Postotak visine glasa kod velikih slova ====[SpeechSettingsCapPitchChange]
 Ovo polje za uređivanje vam omogućuje promjenu vrijednosti visine koju će govorna jedinica koristiti pri izgovoru velikih slova.
