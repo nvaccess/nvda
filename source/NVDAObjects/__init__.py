@@ -48,10 +48,10 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
-	def _get_boundingRect(self):
+	def _get_boundingRects(self):
 		if self.obj.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
-		return self.obj.location
+		return [self.obj.location,]
 
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.

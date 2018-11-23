@@ -487,13 +487,21 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for chunk in super(DisplayModelTextInfo,self).getTextInChunks(unit):
 			yield chunk
 
-	def _get_boundingRect(self):
+	def _get_boundingRects(self):
 		# The base implementation for OffsetsTextInfo is conservative,
 		# However here, since bounding rectangles are always known and on screen, we can use them all.
-		rects=self._storyFieldsAndRects[1][self._startOffset:self._endOffset]
-		if not rects:
-			raise LookupError
-		return RectLTWH.fromCollection(*rects).toPhysical(self.obj.windowHandle)
+		lineEndOffsets = [
+			offset for offset in self._storyFieldsAndRects[2]
+			if self._startOffset < offset < self._endOffset
+		]
+		lineEndOffsets.append(self._endOffset)
+		startOffset = endOffset = self._startOffset
+		rects = []
+		for lineEndOffset in lineEndOffsets:
+			startOffset=endOffset
+			endOffset=lineEndOffset
+			rects.append(RectLTWH.fromCollection(*self._storyFieldsAndRects[1][startOffset:endOffset].toPhysical(self.obj.windowHandle)))
+		return rects
 
 	def _getFirstVisibleOffset(self):
 		return 0

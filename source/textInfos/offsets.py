@@ -174,9 +174,9 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
-	def _get_boundingRect(self):
+	def _get_boundingRects(self):
 		if self.isCollapsed:
-			raise LookupError("Text info is collapsed")
+			return []
 		startOffset = self._startOffset
 		try:
 			firstVisibleOffset = self._getFirstVisibleOffset()
@@ -185,15 +185,14 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		except (LookupError, NotImplementedError):
 			pass
 		getLocationFromOffset = self._getBoundingRectFromOffset
-		locations = set()
 		try:
-			locations.add(getLocationFromOffset(startOffset))
+			startLocation = getLocationFromOffset(startOffset)
 		except NotImplementedError:
 			# Getting bounding rectangles is not implemented.
 			# Therefore, we need to create a bounding rectangle with points.
 			# This, though less accurate, is acceptable for use cases within NVDA.
 			getLocationFromOffset = self._getPointFromOffset
-			locations.add(getLocationFromOffset(startOffset))
+			startLocation = getLocationFromOffset(startOffset)
 		inclusiveEndOffset = self._endOffset - 1
 		try:
 			lastVisibleOffset = self._getLastVisibleOffset()
@@ -204,35 +203,37 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		# If the inclusive end offset is greater than the start offset, we are working with a range.
 		# If not, i.e. the range only contains one character, we have only one location to deal with.
 		objLocation = self.obj.rootNVDAObject.location if isinstance(self.obj, TreeInterceptor) else self.obj.location
+		rects = [] 
 		if inclusiveEndOffset > startOffset:
-			# Getting a rectangle or point for every offset in the range is very expensive for large ranges.
-			# Therefore, we only get the points or rectangles for the start and end offsets of the lines within the range.
-			offsets = set()
 			offset = startOffset
 			while offset <= inclusiveEndOffset:
 				lineStart, lineEnd = self._getLineOffsets(offset)
-				if lineStart > startOffset:
-					offsets.add(lineStart)
+				if lineStart < startOffset:
+					lineStart = startOffset
 				# Line offsets are exclusive, so the end offset is at the start of the next line, if any.
 				inclusiveLineEnd = lineEnd - 1
-				if inclusiveLineEnd <= inclusiveEndOffset and inclusiveLineEnd > lineStart:
-					offsets.add(inclusiveLineEnd)
-				elif inclusiveLineEnd > inclusiveEndOffset:
+				if inclusiveLineEnd > inclusiveEndOffset:
 					# The end offset is in this line
-					offsets.add(inclusiveEndOffset)
-					break
-				offset = lineEnd
-			for offset in offsets:
-				try:
-					locations.add(getLocationFromOffset(offset))
-				except LookupError:
-					# The location of an offset could be off screen, ignore this.
-					pass
-		boundingRect = RectLTWH.fromCollection(*locations)
-		intersection = boundingRect.intersection(objLocation)
-		if not any(intersection):
-			raise LookupError("Bounding rectangle falls entirely out of the object's rectangle")
-		return intersection
+					inclusiveLineEnd = inclusiveEndOffset
+				rects.append(
+					RectLTWH.fromCollection(
+						startLocation if lineStart == startOffset else getLocationFromOffset(lineStart),
+						getLocationFromOffset(inclusiveLineEnd)
+					)
+				)
+				offset = inclusiveLineEnd + 1
+		else:
+			if isinstance(startLocation, textInfos.Point):
+				rects.append(RectLTWH.fromPoint(startLocation))
+			else:
+				rects.append(startLocation)
+		intersectedRects = []
+		for rect in rects:
+			intersection = rect.intersection(objLocation)
+			if not any(intersection):
+				continue
+			intersectedRects.append(intersection)
+		return intersectedRects
 
 	def _getCaretOffset(self):
 		raise NotImplementedError

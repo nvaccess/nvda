@@ -1001,7 +1001,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return textInfos.offsets.Offsets(self._rangeObj.Start,self._rangeObj.End)
 
-	def _get_boundingRect(self):
+	def _get_boundingRects(self):
 		left = ctypes.c_int()
 		top = ctypes.c_int()
 		width = ctypes.c_int()
@@ -1013,7 +1013,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		rect = RectLTWH(left.value, top.value, width.value, height.value)
 		if not any(rect):
 			raise LookupError
-		return rect
+		# It will probably be very expensive to fetch per line bounding rectangles for Word.
+		# For now, just stick to one rectangle for the whole range.
+		return [rect,]
 
 	def updateCaret(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)

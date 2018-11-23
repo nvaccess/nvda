@@ -646,14 +646,14 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			return embedded
 		return obj
 
-	def _get_boundingRect(self):
+	def _get_boundingRects(self):
 		rects = []
 		obj = self._startObj
 		ti = self._start
 		while obj:
 			if not obj.hasIrrelevantLocation:
 				try:
-					rects.append(ti.boundingRect)
+					rects.extend(ti.boundingRects)
 				except (NotImplementedError, LookupError):
 					pass
 			if obj == self._endObj:
@@ -668,6 +668,4 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# Override ti with self._end, because self._end ends at the current range's end,
 				# while the ti for self._endObj might contain text that is after the current range.
 				ti = self._end
-		if not rects:
-			raise LookupError
-		return RectLTWH.fromCollection(*rects)
+		return rects

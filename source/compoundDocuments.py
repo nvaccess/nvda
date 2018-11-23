@@ -401,18 +401,16 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		return direction - remainingMovement
 
-	def _get_boundingRect(self):
+	def _get_boundingRects(self):
 		rects = []
 		for ti in self._getTextInfos():
 			if ti.obj.hasIrrelevantLocation:
 				continue
 			try:
-				rects.append(ti.boundingRect)
+				rects.extend(ti.boundingRects)
 			except LookupError:
 				continue
-		if not rects:
-			raise LookupError
-		return RectLTWH.fromCollection(*rects)
+		return rects
 
 class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo

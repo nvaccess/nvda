@@ -654,11 +654,8 @@ class UIATextInfo(textInfos.TextInfo):
 		)
 		return rects
 
-	def _get_boundingRect(self):
-		rects = self._getBoundingRectsFromUIARange(self._rangeObj)
-		if not rects:
-			raise LookupError
-		return RectLTWH.fromCollection(*rects)
+	def _get_boundingRects(self):
+		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]

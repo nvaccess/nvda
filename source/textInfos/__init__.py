@@ -254,7 +254,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		* Support at least the L{POSITION_FIRST}, L{POSITION_LAST} and L{POSITION_ALL} positions.
 	If an implementation should support tracking with the mouse,
 	L{Points} must be supported as a position.
-	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRect} must be implemented.
+	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
 	
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
@@ -308,12 +308,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		# Translators: the current position's screen coordinates in pixels
 		return _("Positioned at {x}, {y}").format(x=curPoint.x,y=curPoint.y)
 
-	def _get_boundingRect(self):
-		"""The bounding rectangle for the visible text in this range.
-		Note that the bounding rectangle may contain other characters outside this range,
-		for example in the case where a selection starts at the end of one line and ends at the start of another.
-		Implementations should ensure that the bounding rectangle doesn't contain off screen coordinates.
-		@rtype: L{locationHelper.RectLTWH}; C{None} if there is no rectangle.
+	def _get_boundingRects(self):
+		"""Per line bounding rectangles for the visible text in this range.
+		Implementations should ensure that the bounding rectangles don't contain off screen coordinates.
+		@rtype: [L{locationHelper.RectLTWH}]
 		@raise NotImplementedError: If not supported.
 		@raise LookupError: If not available (i.e. off screen, hidden, etc.)
 		"""
@@ -446,16 +444,18 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
-		The base implementation uses L{boundingRect}.
+		The base implementation uses L{boundingRects}.
 		"""
 		if self.isCollapsed:
 			copy = self.copy()
 			# Expand the copy to character.
 			copy.expand(UNIT_CHARACTER)
-			boundingRect = copy.boundingRect
+			boundingRects = copy.boundingRects
 		else:
-			boundingRect = self.boundingRect
-		return boundingRect.topLeft
+			boundingRects = self.boundingRects
+		if not boundingRects:
+			raise LookupError
+		return boundingRects[0].topLeft
 
 	def _get_clipboardText(self):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
