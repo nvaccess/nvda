@@ -13,6 +13,7 @@ import ctypes.wintypes
 import threading
 import time
 import wx
+import louisHelper
 import louis
 import gui
 import winKernel
@@ -1571,6 +1572,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	]
 
 	def __init__(self):
+		louisHelper.initialize()
 		self.display = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
@@ -1604,6 +1606,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display.terminate()
 			self.display = None
 		_BgThread.stop(timeout=bgThreadStopTimeout)
+		louisHelper.terminate()
 
 	def getTether(self):
 		return self._tether

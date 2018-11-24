@@ -8,6 +8,7 @@
 
 import louis
 from logHandler import log
+import config
 
 LOUIS_TO_NVDA_LOG_LEVELS = {
 	louis.LOG_ALL: log.DEBUG,
@@ -18,7 +19,7 @@ LOUIS_TO_NVDA_LOG_LEVELS = {
 	louis.LOG_FATAL: log.ERROR,
 }
 
-@louis.logcallback
+@louis.LogCallback
 def louis_log(level, message):
 	if not _isDebug():
 		return
@@ -35,12 +36,15 @@ def _isDebug():
 def initialize():
 	# Register the liblouis logging callback.
 	louis.registerLogCallback(louis_log)
-	# Set the log level to debug.
-	# The NVDA logging callback will filter messages appropriately.
-	louis.setLogLevel(louis.LOG_DEBUG)
+	# Set the log level to all.
+	# The NVDA logging callback will filter messages appropriately,
+	# i.e. error messages will be logged at the error level.
+	louis.setLogLevel(louis.LOG_ALL)
 
 def terminate():
 	# Set the log level to off.
 	louis.setLogLevel(louis.LOG_OFF)
 	# Unregister the liblouis logging callback.
 	louis.registerLogCallback(None)
+	# Free liblouis resources
+	louis.liblouis.lou_free()
