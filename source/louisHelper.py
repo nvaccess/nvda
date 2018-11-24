@@ -48,3 +48,43 @@ def terminate():
 	louis.registerLogCallback(None)
 	# Free liblouis resources
 	louis.liblouis.lou_free()
+
+def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
+	"""
+	Convenience wrapper for louis.translate that:
+	* returns a list of integers instead of an string with cells;
+	* uses an alternative approach to  calculate the cursor position;
+	* distinguishes between cursor position 0 (cursor at first character) and None (no cursor at all);
+	* Works around truncation of trailing spaces from the output
+	"""
+	text = unicode(inbuf).replace('\0','')
+	braille, brailleToRawPos, rawToBraillePos, brailleCursorPos = louis.translate(
+		tableList,
+		text,
+		# liblouis mutates typeform if it is a list.
+		typeform=tuple(typeform) if isinstance(typeform, list) else typeform,
+		cursorPos=cursorPos or 0,
+		mode=mode
+	)
+	# liblouis gives us back a character string of cells, so convert it to a list of ints.
+	# For some reason, the highest bit is set, so only grab the lower 8 bits.
+	braille = [ord(cell) & 255 for cell in braille]
+	# #2466: HACK: liblouis incorrectly truncates trailing spaces from its output in some cases.
+	# Detect this and add the spaces to the end of the output.
+	if inbuf and inbuf[-1] == " ":
+		# rawToBraillePos isn't truncated, even though brailleCells is.
+		# Use this to figure out how long brailleCells should be and thus how many spaces to add.
+		correctCellsLen = rawToBraillePos[-1] + 1
+		currentCellsLen = len(braille)
+		if correctCellsLen > currentCellsLen:
+			braille.extend((0,) * (correctCellsLen - currentCellsLen))
+	if cursorPos is not None:
+		# HACK: The cursorPos returned by liblouis is notoriously buggy (#2947 among other issues).
+		# rawToBraillePos is usually accurate.
+		try:
+			brailleCursorPos = rawToBraillePos[cursorPos]
+		except IndexError:
+			pass
+	else:
+		brailleCursorPos = None
+	return braille, brailleToRawPos, rawToBraillePos, brailleCursorPos
