@@ -1,4 +1,4 @@
-﻿# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 #tests/unit/test_textInfos.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
