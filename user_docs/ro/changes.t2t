@@ -7,6 +7,10 @@ Ce este nou în NVDA
 
 == Noi Funcționalități ==
 - Noi tabele braille: chineză (China, mandarină) gradele 1 și 2. (#5553)
+- Acum, starea Răspuns sau Redirecționat este raportată atunci când cursorul este focalizat pe elemente de e-mail din lista de mesaje Microsoft Outlook. (#6911)
+- Acum, NVDA poate citi descrieri pentru emoji, precum și alte caractere care fac parte din depozitul de date locale comune Unicode. (#6523)
+- În Microsoft Word, distanța cursorului de la marginile de sus și din stânga ale paginii poate fi raportată apăsând NVDA+tasta Delete de pe blocul numeric. (#1939)
+- În Google Sheets cu modul braille activat, NVDA nu mai spune „selectat” la fiecare celulă atunci când focalizarea se deplasează între celule. (#8879)
 
 
 == Modificări ==
@@ -14,6 +18,7 @@ Ce este nou în NVDA
 - În setările tastaturii din NVDA, casetele de bifat pentru activarea sau dezactivarea tastelor modificatoare ale acestui cititor de ecran sunt afișate acum într-o listă, mai degrabă decât separat.
 - NVDA nu va mai prezenta informații redundante la citirea ceasului din zona de notificare (system tray) pe unele versiuni de windows. (#4364)
 - S-a actualizat traducătorul braille liblouis la versiunea 3.7.0. (#8697)
+- S-a actualizat eSpeak-NG la commit-ul 919f3240cbb
 
 
 == Defecte Rezolvate ==
@@ -21,6 +26,14 @@ Ce este nou în NVDA
 - Când NVDA este setat în limbi precum kirghiză, mongolă sau macedoneană, nu va mai afișa un dialog la pornire prin care să îl informeze pe utilizator că limba nu este suportată de sistemul de operare. (#8064)
 - deplasarea mausului îl va muta cu mai multă acuratețe la poziția modului de navigare din Mozilla Firefox, Google Chrome și Acrobat Reader DC. (#6460)
 - A fost îmbunătățită interacțiunea cu casetele combinate pe web în Firefox, Chrome și Internet Explorer. (#8664)
+- Dacă rulează versiunea japoneză a Windows XP sau Vista, NVDA afișează alerta de cerințe ale versiunii OS așa cum era de așteptat. (#8771)
+- Performanța crește în Mozilla Firefox la navigarea pe pagini mari cu mult conținut dinamic. (#8678)
+- Braille-ul nu mai arată atributele de font dacă au fost dezactivate din setările formatării documentului. (#7615)
+- NVDA nu mai dă rateuri la urmărirea focalizării din File Explorer și din alte aplicații care utilizează UI Automation atunci când o altă aplicație este ocupată. (cum ar fi procesul de prelucrare audio ). (#7345)
+- În meniurile ARIA din web, tasta Escape nu va mai fi trecută prin meniu și nu va mai dezactiva modul de focalizare necondiționat. (#3215)
+- NVDA nu mai rrefuză să raporteze focalizarea din paginile web unde noua focalizare înlocuiește un control care nu mai există. (#6606, #8341)
+- În noul Gmail, la utilizarea navigării rapide înăuntrul mesajelor în timpul citirii lor, corpul întreg al mesajului nu mai este raportat după elementul la care tocmai ați navigat. (#8887)
+- După actualizarea NVDA, browserele precum Firefox și Google Chrome nu vor mai trebui să dea rateuri, iar modul de navigare ar trebui să continue să reflecteze corect actualizările la orice document curent încărcat. (#7641)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -30,6 +43,7 @@ Ce este nou în NVDA
 - Dacă aveți nevoie să faceți un widget wx accesibil care să nu existe deja, puteți face astfel utilizând o instanță a gui.accPropServer.IAccPropServer_impl. (#7491)
  - Vedeți implementarea gui.nvdaControls.ListCtrlAccPropServer pentru mai multe informații.
 - S-a actualizat configobj la 5.1.0dev commit 5b5de48a. (#4470)
+- Acțiunea config.post_configProfileSwitch preia acum argumentul cuvânt cheie prevConf, permițând manipulatoarelor să ia măsuri pe baza diferențelor dintre configurație înainte și după comutarea profilului. (#8758)
 
 
 = 2018.3.2 =

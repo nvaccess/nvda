@@ -357,10 +357,10 @@ Sử dụng các phím tắt sau để duyệt qua các đối tượng:
 | Chuyển đến đối tượng đang có focus | NVDA+dấu trừ bàn phím số | NVDA+xóa lùi | không có | Chuyển đến đối tượng đang có focus và đặt con trỏ duyệt vào vị trí con trỏ nháy (nếu đối tượng có dấu nháy)|
 | Kích hoạt đối tượng hiện tại | NVDA+enter bàn phím số | NVDA+enter | Hai chạm | Kích hoạt đối tượng đang duyệt (giống như kích hoạt một đối tượng đang có focus) |
 | Chuyển focus hoặc dấu nháy hệ thống đến vị trí duyệt hiện tại | NVDA+shift+dấu trừ bàn phím số | NVDA+shift+xóa lùi | không có | Bấm một lần để chuyển focus đến đến đối tượng điều hướng; bấm nhanh hai lần để chuyển dấu nháy đến vị trí của con trỏ duyệt |
-|Thông báo vị trí con trỏ duyệt | NVDA+delete bàn phím số | NVDA+delete | không có | Thông báo vị trí của nội dung hoặc đối tượng tại con trỏ duyệt. Ví dụ theo thông tin được cung cấp như tỷ lệ phần trăm của màn hình, khoảng cách đến các mép của trang hoặc tỉ lệ theo độ phân giải màn hình. Bấm nhanh hai lần để được cung cấp  thêm thông tin nếu có. |
+| Thông báo vị trí con trỏ duyệt | NVDA+delete bàn phím số | NVDA+delete | không có | Thông báo vị trí của nội dung hoặc đối tượng tại con trỏ duyệt. Ví dụ theo thông tin được cung cấp như tỷ lệ phần trăm của màn hình, khoảng cách đến các mép của trang hoặc tỉ lệ theo độ phân giải màn hình. Bấm nhanh hai lần để được cung cấp  thêm thông tin nếu có. |
 %kc:endInclude
 
-Chú ý: Bạn cần tắt phím NumLock để sử dụng các phím số bên bàn phím số cho kiểu bàn phím desktop.
+Chú ý: Bạn cần tắt phím NumLock để sử dụng các phím bên bàn phím số cho kiểu bàn phím desktop.
 
 ++ Duyệt nội dung ++[ReviewingText]
 NVDA cho phép bạn duyệt nội dung của   [màn hình #ScreenReview], [tài liệu #DocumentReview] hoặc [đối tượng hiện tại #ObjectReview] theo từng ký tự, từng từ hoặc từng dòng.
@@ -1052,9 +1052,19 @@ Cho phép bạn chọn chế độ đọc dấu câu và ký hiệu.
 Ví dụ, nếu bạn chọn tất cả thì tất cả các dấu và ký hiệu trong văn bản sẽ được đọc.
 Tùy chọn này áp dụng cho tất cả các bộ đọc chứ không chỉ riêng cho bộ đọc hiện tại.
 
-==== Sử dụng giọng đọc của ngôn ngữ để xử lý ký hiệu và ký tự ====[SpeechSettingsTrust]
+==== Sử dụng giọng đọc của ngôn ngữ để xử lý ký tự và ký hiệu ====[SpeechSettingsTrust]
 Mặc định, tùy chọn này được bật, để chọn có thể sử dụng giọng đọc để đọc các ký tự và ký hiệu hay không.
 Nếu bạn thấy NVDA đọc dấu câu không đúng cho một ngôn ngữ với bộ đọc hoặc giọng đọc đang dùng, bạn có thể tắt tùy chọn này để NVDA dùng các thiết lập ngôn ngữ chung.
+
+==== Bao gồm dữ liệu của Unicode Consortium (cả biểu tượng cảm xúc) khi xử lý kí tự và kí hiệu ====[SpeechSettingsCLDR]
+Bật hộp kiểm này, NVDA sẽ bao gồm thêm các  từ điển phát âm kí hiệu khi phát âm kí tự và kí hiệu.
+Những từ điển này có mô tả cho các kí hiệu (đặc biệt là biểu tượng cảm xúc) được cung cấp bởi [Unicode Consortium http://www.unicode.org/consortium/] là một phần của kho dữ liệu tên [Common Locale Data Repository http://cldr.unicode.org/].
+Nếu muốn NVDA đọc mô tả kí tự của các biểu tượng cảm xúc dựa trên kho dữ liệu đó, bạn phải bật tùy chọn này.
+Tuy nhiên, nếu bạn đang dùng một bộ đọc có hỗ trợ mô tả các biểu tượng cảm xúc một cách tự nhiên, bạn có thể tắt tùy chọn này.
+
+Lưu ý rằng việc thêm hay sửa thủ công các mô tả cho kí tự sẽ được lưu lại thành một phần trong thiết lập người dùng của bạn.
+Vậy nên, nếu thay đổi mô tả của một biểu tượng cảm xúc cụ thể, tùy chỉnh mô tả của bạn sẽ được đọc cho  biểu tượng đó, bất kể tùy chọn này có bật hay không.
+Bạn có thể thêm, sửa hay xóa các mô tả kí hiệu trong [hộp thoại phát âm kí hiệu / dấu câu #SymbolPronunciation] của NVDA.
 
 ==== Phần trăm thay đổi độ cao cho chữ hoa ====[SpeechSettingsCapPitchChange]
 Tùy chọn này cho phép bạn nhập phần trăm độ cao sẽ thay đổi khi đọc các chữ cái in hoa.
@@ -1257,7 +1267,7 @@ Phân loại bàn phím  trong hộp thoại cấu hình NVDA có các tùy ch�
 Phân loại này có các tùy chọn sau:
 
 ==== Kiểu bàn phím ====[KeyboardSettingsLayout]
-bạn có thể chọn kiểu bàn phím là desktop hoặc Laptop. ưu điểm của sử dụng kiểu bàn phím desktop là có thể sử dụng các phím số bên bàn phím số để duyệt nội dung.
+Hộp xổ này cho phép bạn chọn kiểu bàn phím đẻ dùng với NVDA. Hiện tại, có hai kiểu bàn phím là Desktop và Laptop.
 
 ==== Chọn các phím bổ trợ NVDA ====[KeyboardSettingsModifiers]
 Các hộp kiểm trong danh sách này điều khiển việc có thể dùng phím nào làm [phím bổ trợ NVDA #TheNVDAModifierKey]. Chọn trong các phím sau đây:
@@ -1268,13 +1278,13 @@ Các hộp kiểm trong danh sách này điều khiển việc có thể dùng p
 
 Nếu bạn không chọn phím nào làm phím bổ trợ thì NVDA không thể sử dụng được các phím tắt.
 Trong trường hợp đó, NVDA sẽ hiển thị thông báo lỗi.
-Và bạn phải chọn ít nhất một phím làm phím bổ trợ.
+Sau khi bỏ qua bảng báo lỗi, bạn phải chọn ít nhất một phím làm phím bổ trợ.
 
 %kc:setting
 ==== Đọc ký tự khi gõ ====[KeyboardSettingsSpeakTypedCharacters]
 Phím bật/tắt: NVDA+2
 
-	Khi được chọn, NVDA sẽ đọc mỗi ký tự  sau khi bạn gõ vào từ bàn phím.
+Khi được chọn, NVDA sẽ đọc mỗi ký tự  sau khi bạn gõ vào từ bàn phím.
 
 %kc:setting
 ==== Đọc từ khi gõ ====[KeyboardSettingsSpeakTypedWords]
@@ -1865,15 +1875,15 @@ Microsoft Speech Platform cung cấp bộ đọc nhiều ngôn ngữ dựa trên
 Những giọng đọc đó có thể được sử dụng với NVDA.
 
 Để sử dụng được các giọng này, bạn cần cài hai thành phần:
-- Microsoft Speech Platform - Runtime (Version 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
  - Trang này bao gồm nhiều tập tin cho cả hai trình nhận dạng giọng nói và bộ đọc.
- Chọn tập tin có chứa dữ liệu cho ngôn ngữ của bạn
-Ví dụ tập tin  MSSpeech_TTS_en-US_ZiraPro.msi là giọng cho tiếng anh mỹ.
--
+ Chọn tập tin có chứa dữ liệu cho ngôn ngữ của bạn.
+ Ví dụ tập tin  MSSpeech_TTS_en-US_ZiraPro.msi là giọng cho tiếng anh mỹ.
+ -
 -
 
-++ Giọng Windwos OneCore ++[OneCore]
+++ Giọn Windows OneCore ++[OneCore]
 Windows 10 đi kèm với những giọng đọc mới được gọi là OneCore, hoặc còn gọi là "Mobil voices".
 Những giọng đọc mới này hỗ trợ cho khá nhiều ngôn ngữ khác nhau và có tính phản hồi nhanh hơn so với những giọng theo chuân SAPI-5.
 
@@ -2038,10 +2048,8 @@ Sau đây là danh sách các phím được gán của mẫu màn hình nổi n
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
 %kc:beginInclude
 || Tên | Phím |
-| Cuộn về trước | left, up |
-| Cuộn tới | right, down |
-| Cuộn màn hình lên | left, up, b3 |
-| Cuộn màn hình xuống | right, down, b6 |
+| Cuộn về trước | left, up, b3 |
+| Cuộn tới | right, down, b6 |
 | Chuyển về dòng trước | b4 |
 | Chuyển đến dòng kế | b5 |
 | Rút về ô chữ nổi | routing |
@@ -2141,6 +2149,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 ++ hedo MobilLine USB ++[HedoMobilLine]
 NVDA hỗ trợ mẫu hedo MobilLine USB của [hedo Reha-Technik https://www.hedo.de/].
 Trước tiên, bạn cần phải cài driver được cung cấp của nhà sản xuất.
+
 Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
@@ -2196,7 +2205,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 | Thực đơn NVDA | c1+c3+c4+c5 (command n) |
 | Phím windows+d (thu nhỏ toàn bộ ứng dụng ) | c1+c4+c5 (command d) |
  | Đọc tất cả | c1+c2+c3+c4+c5+c6 |
- %kc:endInclude
+%kc:endInclude
  
 +++ Phím gán cho Brailliant BI 14 +++ 
 %kc:beginInclude
@@ -2308,9 +2317,10 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 Hiện đã hỗ trợ các màn hình nổi sau: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-- BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Trio (USB và bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB và bluetooth)
 -
+
 Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
 Nếu BrxCom được cài, NVDA sẽ sử dụng BrxCom.
@@ -2528,6 +2538,7 @@ Vui lòng xem tài liệu hướng dẫn mô tả các phím để biết vị t
 | Bật/tắt chế độ trợ giúp nhập | space+dot2+dot3+dot6 (space+lower h) |
 
 Sau đây là các phím được gán cho BrailleNote QT khi không ở trong chế độ nhập liệu chữ nổi.
+
 || Tên | Phím |
 | Thực đơn NvDA | read+n |
 | Phím mũi tên lên | upArrow |
@@ -2596,7 +2607,7 @@ Vui lòng xem [Tài Liệu của EcoBraille ftp://ftp.once.es/pub/utt/bibliotecn
 | Bật/tắt con trỏ nổi đi theo | A |
 %kc:endInclude
 
-++ SuperBraille ++
+++ SuperBraille ++[SuperBraille]
 Màn hình chữ nổi SuperBraille được sử dụng phổ biến ở Đài Loan, có thể kết nối qua cổng USB và Serial.
 Màn hình SuperBraille không có bàn phím nhập liệu và nút cuộn. Vì vậy, các thao tác cho những chức năng tương tự đều được thực hiện với bàn phím máy tính.
 Để giải quyết vấn đề này, sau đây là 2 tổ hợp phím được định nghĩa cho chức năng cuộn của SuperBraille:
@@ -2703,7 +2714,6 @@ BRLTYY không liên quan đến việc hỗ trợ tính năng  ngầm tự nhậ
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
 Vui lòng xem [Danh sách phím tắt BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.
-
 %kc:beginInclude
 || Tên | Lệnh BRLTTY |
 | Cuộn về trước | fwinlt (về trái một cửa sổ) |
@@ -2775,4 +2785,3 @@ Sau đây là những giá trị có thể thiết lập cho khóa nói trên:
 Nếu bạn cần thêm thông tin hoặc trợ giúp liên quan đến NVDA, vui lòng xem trang web của NVDA tại NVDA_URL.
 Ở đây, bạn có thể tìm thấy thêm nhiều tài liệu khác, cũng như hỗ trợ kỹ thuật và nhiều nguồn khác từ cộng đồng NVDA.
 Trang web này cũng có những thông tin và các nguồn tài liệu liên quan đến việc phát triển NVDA.
-.
