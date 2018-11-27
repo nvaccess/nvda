@@ -8,7 +8,7 @@ Lo más destacado de esta versión incluye las mejoras en el rendimiento de las 
 
 == Nuevas Características ==
 - Nuevas tablas braille: Chino (China, Mandarín) grado 1 y grado 2. (#5553)
-- Ahora se anuncian los estados Respondido / Transmitido en elementos de correo en la lista de mensajes de Microsoft Outlook. (#6911)
+- Ahora se anuncian los estados Respondido / Reenviado en elementos de correo en la lista de mensajes de Microsoft Outlook. (#6911)
 - NVDA ahora puede leer descripciones para emoji así como otros caracteres que son parte del repositorio Unicode Common Locale Data. (#6523)
 - En Microsoft Word, la distancia del cursor desde los márgenes superior e izquierdo de la página puede anunciarse  pulsando NVDA+suprimir del teclado numérico. (#1939)
 - En Google Sheets con el modo braille habilitado, NVDA ya no anuncia 'seleccionado' en cada celda al mover el foco entre ellas. (#8879)
@@ -21,10 +21,10 @@ Lo más destacado de esta versión incluye las mejoras en el rendimiento de las 
 - EN las opciones de teclado de NVDA, las casillas de verificación para activar o desactivar las teclas modificadoras de NVDA ahora se muestran en una lista en lugar de en casillas de verificación separadas.
 - NVDA ya no presenta información redundante al leer el reloj de la bandeja del sistema en algunas versiones de Windows. (#4364)
 - Actualizado el transcriptor braille liblouis a la versión 3.7.0. (#8697)
-- Actualizado eSpeak-NG a commit 919f3240cbb
+- Actualizado eSpeak-NG a commit 919f3240cbb.
 
 
-== Corección de Errores ==
+== Corrección de Errores ==
 - En Outlook 2016 y 365, se anuncian la categoría y el estado de la marca para los mensajes. (#8603)
 - Cuando NVDA se configure para idiomas tales como Kirgyz, Mogol o Macedonio, ya no muestra un diálogo en un aviso al arrancar que el idioma no se admite por el sistema operativo. (#8064)
 - Al mover el ratón al navegador de objetos ahora será mucho más preciso mover el ratón a la posición del modo exploración en Mozilla Firefox, Google Chrome y Acrobat Reader DC. (#6460)
@@ -35,7 +35,7 @@ Lo más destacado de esta versión incluye las mejoras en el rendimiento de las 
 - NVDA ya no falla al seguir al foco en el Explorador de Archivos y otras aplicaciones que utilicen UI Automation cuando otra aplicación esté ocupada (tal como el procesamiento por lotes del audio). (#7345)
 - En los menús ARIA en la web, la tecla Escape ahora se pasará a través del menú y ya no desactivará el modo foco incondicionalmente. (#3215)
 - NVDA ya no rechaza anunciar el foco en páginas web donde el foco nuevo reemplace un control que ya no exista. (#6606, #8341)
-- En el nuevo Gmail, al utilizar la navegación rápida dentro de mensajes mientras se leen, ya no se anuncia todo el cuerpo del mensaje después del elemento al que acabas de navegar. (#8887)
+- En la interfaz nueva de Gmail, al utilizar la navegación rápida dentro de mensajes mientras se leen, ya no se anuncia todo el cuerpo del mensaje después del elemento al que acabas de navegar. (#8887)
 - Después de actualizar NVDA, navegadores tales como Firefox y google Chrome ya no deberían romperse, y el modo exploración debería seguir reflejando correctamente las actualizaciones de cualquier documento cargado actualmente. (#7641) 
 - NVDA ya no informa de que se puede hacer clic varias veces en una fila al navegar por contenido cliqueable en Modo Exploración. (#7430)
 - Los gestos realizados en pantallas braille baum Vario 40 ya no fallarán al ejecutarse. (#8894)
