@@ -682,8 +682,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.InsertColumn(3, _("Last tested NVDA version"), width=self.scaleSize(180))
 
 		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		# Translators: The continue button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 		continueID = wx.ID_OK
+		# Translators: The continue button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("Continue"), id=continueID)
 		sHelper.addDialogDismissButtons(buttonSizer)
 		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
