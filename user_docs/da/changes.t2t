@@ -4,6 +4,7 @@ Nyheder i NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Af væsentlige forbedringer i denne version af NVDA kan nævnes bedre ydeevne i nylige versioner af Mozilla Firefox, annoncering af emoji med alle talesynteser, rapportering af statusflagene besvaret/videresendt for meddelelser i Microsoft Outlook, rapportering af afstand fra markørens aktuelle position til kanten af en side i Microsoft Word, samt mange fejlrettelser.
 
 == Nye funktioner ==
 - Nye punkttabeller: Kinesisk (Mandarin-kinesisk) niveau 1 og 2. (#5553)
@@ -11,6 +12,8 @@ Nyheder i NVDA
 - NVDA kan nu læse emoji såvel som andre tegn, der er en del af Unicode Common Locale Data Repository. (#6523)
 - Markørens position fra øverste og venstre kant på den aktuelle side kan nu blive oplyst ved at trykke NVDA+NumpadDelete i Microsoft Word. (#1939)
 - NVDA vil ikke længere rapportere "Valgt" i Google Sheets, når der bevæges rundt imellem celler, hvis punkttilstand er aktiv. (#8879)
+- Tilføjet understøttelse for Foxit Reader og Foxit Phantom PDF (#8944)
+- Tilføjet understøttelse for databaseværktøjet DBeaver. (#8905)
 
 
 == Ændringer ==
@@ -34,6 +37,8 @@ Nyheder i NVDA
 - NVDA vil ikke længere være ude af stand til at rapportere fokus på websider, hvor det nye fokus erstatter en kontrol der ikke længere findes. (#6606, #8341)
 - Hele beskedindholdet vil ikke længere blive oplyst, når du benytter bogstavnavigation til at navigere til et element i den nye Gmail. (#8887)
 - Efter opdatering af NVDA, skulle browsere som Google Chrome og Firefox ikke længere gå ned, og gennemsynstilstand skulle fortsat gengive alt opdateret indhold i de aktuelt indlæste dokumenter. (#7641)
+- NVDA vil ikke længere oplyse "klikbart" flere gange lige efter hinanden, når du navigerer klikbart indhold. (#7430)
+- Kommandoer udført via Baum Vario 40 punktdisplays vil ikke længere fejle. (#8894)
 
 
 == Ændringer for udviklere ==

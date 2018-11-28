@@ -23,6 +23,7 @@ dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
+n°	(?<=\b)[nN]°
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -43,6 +44,7 @@ negative number	moins	none	norep	# - devant un nombre
 after-number %	pour cent	none	norep	# % après un nombre
 in-word '	apostrophe	# ' dans un mot
 in-word -	tiret	all	norep	# - dans un mot
+n°	numéro	none	norep	# numéro
 
 # Whitespace
 \0	nul

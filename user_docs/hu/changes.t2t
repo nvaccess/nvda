@@ -3,6 +3,52 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+Ebben a kiadásban: Tovább javul a Firefox-élmény, emodzsik bejelentése minden beszédszintetizátorral, Megválaszolt/továbbított állapot jelzése az Outlookban, a kurzor távolságának jelzése az oldal széleitől a Microsoft Wordben, és sok hibajavítás.
+
+== Újdonságok ==
+- Új braille táblák: Kínai (Kína, Mandarin) Rövidítési fokozat 1 és 2 (#5553)
+- Microsoft Outlook: Megválaszolt / továbbított állapot jelzése az üzenetlista elemeinél. (#6911)
+- Az NVDA már képes kiolvasni és felhasználni az Unicode CLDR (Common Locale Data Repository) részét képező emodzsikhoz és más karakterekhez kapcsolódó leírásokat. (#6523)
+- Microsoft Word: A kurzor távolságának jelzése az oldal tetejétől és bal oldalától a pozíció információk lekérdezésére szolgáló paranccsal, alapértelmezés szerint: NVDA+numerikus Delete. (#1939)
+- Google Táblázatok: engedélyezett braille mód esetén az NVDA már nem jelent be minden cellát "kijelölve" állapotúként, amikor rá navigálunk. (#8879)
+- Új támogatott szoftverek: Foxit Reader és Foxit Phantom PDF. (#8944)
+- Új támogatott szoftver: DBeaver database tool. (#8905)
+
+
+== Változások ==
+- Az NVDA beállítások Objektumok megjelenítése szekciójában az "Eszköztippek bemondása" opciót megváltoztatták, új neve: "Értesítések bemondása". Erre azért volt szükség, mert mostantól ezzel az opcióval szabályozható a felugró értesítések bemondása is Windows 8 és újabb verziók esetén. (#5789)
+- Az NVDA Billentyűzet beállítások párbeszédpanelén az NVDA módosítóbillentyűk kiválasztását most már egy lista segítségével lehet megtenni, és nem különálló jelölőnégyzetekkel.
+- Bizonyos Windows verziók esetén az NVDA már nem jelent be redundáns információkat a rendszeróra bemondásakor. Alapértelmezés szerint NVDA+F12 (#4364)
+- Frissült a liblouis braille fordító, új verziója: 3.7.0. (#8697)
+- Frissült az eSpeak-NG, új verziója: commit 919f3240cbb.
+
+
+== Hibajavítások ==
+- Outlook 2016/365: A kategória és jelzők állapotának jelzése az üzeneteknél. (#8603)
+- Ha az NVDA nyelvét Olyan nyelvekre állítjuk, mint  kirgiz, mongol vagy macedón, az NVDA indításakor nem jelenik meg egy párbeszédpanel, mely figyelmeztet, hogy a Windows nem támogatja az adott nyelvet. (#8064)
+- Firefox, Google Chrome és Acrobat Reader DC: az egérkurzor navigátor objektumra mozgatásakor most már pontosabb a böngészőmódú pozíció követése. (#6460)
+- Firefox, Chrome és Internet Explorer: javult a webes kombinált listamezők kezelése. (#8664)
+- Japán verziójú Windows XP és Vista használatakor az NVDA az elvártaknak megfelelően megjeleníti a nem támogatott Windows verzióra figyelmeztető párbeszédpanelét. (#8771)
+- Firefox: javult a nagy méretű, dinamikusan változó tartalmú lapok (pl. Facebook) kezelése. (#8678)
+- Braille: nem jelennek meg betűtípus paraméterek, ha az opció ki van kapcsolva a dokumentumformázás beállításainak párbeszédpanelén. (#7615)
+- Az NVDA már nem veszti el a fókusz irányítását a Fájlkezelőben és más UI Automationt használó alkalmazásokban, olyan esetben amikor más alkalmazás nagy erőkkel dolgozik (pl. kötegelt hangfeldolgozás zajlik a háttérben). (#7345)
+- ARIA menüknél a weben az ESC gomb használata már nem eredményez fókuszmódból való kilépést. (#3215)
+- Az NVDA már bejelenti az aktív elemet olyan weboldalaknál,ahol az előző aktív elem egy olyan vezérlő volt,ami időközben megszűnt. (#6606, #8341)
+- Gmail: új webes kinézet használatakor, az üzenetek olvasása közben a gyorsnavigációs billentyűk csak a kívánt elemre navigálnak, az NVDA már nem olvassa fel kéretlenül az üzenet hátralévő részét. (#8887)
+- Firefox és google Chrome: Az NVDA frissítése után a böngészést ott folytathatjuk, ahol a frisssítés megkezdése előtt abbahagytuk. (#7641) 
+- Böngészőmódban az NVDA már nem jelenti be többször egymás után a kattintható állapotot, miközben kattintható elemek közt navigálunk. (#7430)
+- baum Vario 40 braille kijelzők beviteli parancsai már az elvártaknak megfelelően működnek. (#8894)
+
+
+= 2018.3.2 =
+Ez egy hibajavító kiadás, ami megoldja a www.twitter.com oldalon fellépő navigációs problémát Google Chrome böngésző esetén. (#8777)
+
+ 
+= 2018.3.1 =
+Ez egy hibajavító kiadás, ami orvosol egy kritikus hibát a Mozilla Firefox 32 bites verziói esetén. (#8759)
+
+ 
 = 2018.3 =
 
 Főbb újdonságok: több braille-kijelző automatikus felismerése, több új windows 10-es tulajdonság, mint pl. a windows 10 hangulatjel-beviteli panelének támogatása és még sok más hibajavítás.
