@@ -32,13 +32,13 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 
-	# Argh, somehow, item status property repeats when Action Center is opened more than once.
-	_itemStatusMessage = None
+	# Somehow, item status property repeats when Action Center is opened more than once.
+	_itemStatusMessageCache = None
 
 	def event_UIA_itemStatus(self, obj, nextHandler):
 		# Do not fetch cached status as doing so causes a COM error to be logged.
 		itemStatus = obj.UIAElement.currentItemStatus
-		if itemStatus != self._itemStatusMessage:
+		if itemStatus != self._itemStatusMessageCache:
 			ui.message(": ".join([obj.name, itemStatus]))
-			self._itemStatusMessage = itemStatus
+			self._itemStatusMessageCache = itemStatus
 		nextHandler()
