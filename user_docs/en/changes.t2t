@@ -13,6 +13,7 @@ What's New in NVDA
 
 == Bug Fixes ==
 - OneCore speech synthesizer: On Windows 10 April 2018 and above, large chunks of silence are no longer inserted between speech utterances. (#8985)
+- When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
 
 
 == Changes for Developers ==
