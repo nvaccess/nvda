@@ -216,6 +216,10 @@ class SymphonyTableCell(IAccessible):
 		states=super(SymphonyTableCell,self).states
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_EDITABLE)
+		if controlTypes.STATE_SELECTED not in states and {controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTABLE}.issubset(states):
+			# #8988: Cells in Libre Office do not have the selected state when a single cell is selected (i.e. has focus).
+			# Since #8898, the negative selected state is announced for table cells with the selectable state.
+			states.add(controlTypes.STATE_SELECTED)
 		return states
 
 class SymphonyParagraph(SymphonyText):
