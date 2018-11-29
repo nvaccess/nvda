@@ -4,7 +4,7 @@ NVDA更新日志
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
-此版本的新特性包括最新版Firefox浏览器的性能改进，合成器的emojis表情的支持，Outlook的回复/转发状态的朗读，Microsoft Word页面边距的朗读，以及其他错误修复。
+此版本的新特性包括最新版Firefox浏览器的性能改进，表情符号朗读的支持，Outlook的回复/转发状态的朗读，Microsoft Word页面边距的朗读，以及其他错误修复。
 == 新特性 ==
 - 新盲文表： 中文中国汉语现行点字，中文中国汉语双拼点字。 (#5553)
 - NVDA现在可朗读Microsoft Outlook邮件列表中的邮件项目以及回复/转发状态。 (#6911)
@@ -38,6 +38,7 @@ NVDA更新日志
 - - 更新NVDA后，浏览器（如Firefox和google chrome）不应再崩溃，浏览模式应继续正确显示当前加载的文档。 (#7641) 
 - 现在在浏览模式下浏览可点击内容时，NVDA不再连续多次朗读可点击。 (#7430)
 - 修复baum Vario 40盲文点显器上的手势将不再无法执行的BUG。 (#8894)
+- 在使用Mozilla Firefox的Google幻灯片时，NVDA不再在具有焦点的每个控件上朗读所选文本。 (#8964)
 
 
 == 开发者更改 ==

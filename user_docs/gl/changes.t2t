@@ -34,11 +34,11 @@ O máis subliñable desta versión inclúe as melloras no rendemento das última
 - O braille xa non amosa atributos de fonte se se deshabilitaron nas opcións Formateado de documento. (#7615)
 - O NVDA xa non falla ao seguir ao foco no Explorador de Arquivos e outras aplicacións que usen UI Automation cando outra aplicación estea ocupada (coma o procesamento por lotes do audio). (#7345)
 - Nos menús ARIA na web, a tecla Escape agora pasarase a través do menú e xa non desactivará o modo foco incondicionalmente. (#3215)
-- O NVDA xa non rexeita anunciar o foco en páxinas web onde o foco novo reemprace un control que xa non exista. (#6606, #8341)
 - Na nova interfaz do Gmail, ao se usar a navegación rápida dentro de mensaxes mentres se len, xa non se anuncia todo o corpo da mensaxe despois do elemento ao que rematas de navegar. (#8887)
 - Despois de actualizar o NVDA, navegadores como Firefox e google Chrome xa non deberían romperse, e o modo exploración debería seguir reflectindo correctamente as actualizacións de calquera documento cargado actualmente. (#7641) 
 - O NVDA xa non informa de que se pode facer clic varias veces nunha fila ao navegar polo contido cliqueable en Modo Exploración. (#7430)
 - Os xestos realizados en pantallas braille baum Vario 40 xa non fallarán ao se executar. (#8894)
+- No Google Slides co Mozilla Firefox, o NVDA xa non anuncia o texto selecionado en cada control co foco. (#8964)
 
 
 == Cambios para Desenvolvedores ==
