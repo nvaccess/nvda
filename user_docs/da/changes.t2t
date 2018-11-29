@@ -34,11 +34,11 @@ Af væsentlige forbedringer i denne version af NVDA kan nævnes bedre ydeevne i 
 - Punktskrift viser ikke længere skrifttypeegenskaber, hvis skrifttypeattributterne er slået fra i dokumentformateringsindstillinger. (#7615)
 - NVDA vil ikke længere have problemer med at følge fokus i File Explorer og andre applikationer, der benytter UI Automation, når et andet program er optaget (f.eks. når der behandles flere lydfiler i et lydredigeringsprogram). (#7345)
 - ESC-tasten i ARIA-menuer på internettet vil ikke længere deaktivere fokustilstand ubetinget, men vil i stedet blive videresendt til menuen. (#3215)
-- NVDA vil ikke længere være ude af stand til at rapportere fokus på websider, hvor det nye fokus erstatter en kontrol der ikke længere findes. (#6606, #8341)
-- Hele beskedindholdet vil ikke længere blive oplyst, når du benytter bogstavnavigation til at navigere til et element i den nye Gmail. (#8887)
+- Hele beskedindholdet vil ikke længere blive oplyst, når du benytter bogstavnavigation til at navigere til et element i det nye Gmail interface. (#8887)
 - Efter opdatering af NVDA, skulle browsere som Google Chrome og Firefox ikke længere gå ned, og gennemsynstilstand skulle fortsat gengive alt opdateret indhold i de aktuelt indlæste dokumenter. (#7641)
 - NVDA vil ikke længere oplyse "klikbart" flere gange lige efter hinanden, når du navigerer klikbart indhold. (#7430)
 - Kommandoer udført via Baum Vario 40 punktdisplays vil ikke længere fejle. (#8894)
+- I Google Slides med Mozilla Firefox, vil NVDA ikke længere rapportere "valgt tekst" ved hvert kontrolelement, der får fokus. (#8964)
 
 
 == Ændringer for udviklere ==
