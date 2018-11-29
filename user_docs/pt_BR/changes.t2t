@@ -19,7 +19,7 @@ Os destaques desta versão incluem melhorias de desempenho em versões recentes 
 
 == Alterações ==
 - "Anunciar balões de ajuda" na caixa de diálogo "Apresentações de objetos" foi renomeado para "Anunciar notificações" para incluir anúncios de notificações do sistema no Windows 8 e versões posteriores. (#5789)
-- Nas configurações do teclado do NVDA, as caixas de seleção para ativar ou desativar as teclas modificadoras do NVDA agora são exibidas em uma lista, e não como caixas de seleção separadas.
+- Nas configurações do teclado do NVDA, as caixas de seleção para ativar ou desativar as teclas modificadoras do NVDA agora são exibidas em uma lista e não como caixas de seleção separadas.
 - O NVDA não apresentará mais informações redundantes ao ler o relógio da bandeja do sistema ""[system tray]"" em algumas versões do Windows. (#4364)
 - Atualizado o transcritor braille liblouis para a versão 3.7.0. (#8697)
 - Atualizado o eSpeak-NG para commit 919f3240cbb.
@@ -35,11 +35,11 @@ Os destaques desta versão incluem melhorias de desempenho em versões recentes 
 - O Braille não mostra mais os atributos da fonte se eles foram desabilitados nas configurações de Formatação do documento. (#7615)
 - O NVDA não falha mais em controlar o foco no Explorador de Arquivo e em outros aplicativos que usam UI Automation ""[Automação da Interface do Usuário]"" quando outro aplicativo está ocupado (como o processamento de áudio em lote). (#7345)
 - Nos menus ARIA na Web, a tecla Escape agora será passada para o menu e não desativará mais o modo de foco incondicionalmente. (#3215)
-- O NVDA não se recusa mais a informar o foco em páginas da web onde o novo foco substitui um controle que não existe mais. (#6606, #8341)
 - Na nova interface Web do Gmail, ao usar a navegação rápida em mensagens enquanto as lê, todo o corpo da mensagem não é mais informado após o elemento para o qual você acabou de navegar. (#8887)
 - Depois de atualizar o NVDA, navegadores como o Firefox e o Google Chrome não devem mais travar, e o modo de navegação deve continuar a refletir corretamente as atualizações de todos os documentos atualmente carregados. (#7641)
 - O NVDA não informa mais clicáveis várias vezes seguidas ao navegar pelo conteúdo clicável no Modo de Navegação. (#7430)
 - Comandos ""[Gestos]"" executados em linhas braille baum Vario 40 não mais deixarão de ser executados. (#8894)
+- No Apresentações Google ""[Google Slides]"" com o Mozilla Firefox, o NVDA não mais informa o texto selecionado em todos os controles com foco. (#8964)
 
 
 == Alterações Específicas para Desenvolvedores ==

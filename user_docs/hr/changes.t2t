@@ -34,11 +34,11 @@ Novosti u ovoj inačici uključuju poboljšanja performansi u zadnjim inačicama
 - Karakteristike fonta se više ne pokazuju na brajičnom retku,  ako su iste onemogućene u postavkama oblikovanja dokumenta. (#7615)
 - NVDA sada uspjeva pratiti fokus u upravitelju datoteka i drugim aplikacijama koje koriste UI Automation prilikom zauzetosti aplikacije (kao što je to simultana obrada zvuka). (#7345)
 - U ARIA izbornicima na webu, tipka escape će biti proslijeđena izborniku kao kontroli i neće više isključivati način fokusa. (#3215)
-- NVDA više ne odbija izvještavati o fokusu na web stranicama gdje novi fokus zamjenjuje kontrola koja ne postoji. (#6606, #8341)
 - U novom Gmailu, kada se koriste tipke brze navigacije u porukama prilikom čitanja, čitavo tijepo poruke više se ne čita poslije elementa do kojeg ste došli. (#8887)
 - Poslije nadogradnje NVDA, Preglednici poput Firefoxa i google Chromea više se ne bi trebali rušiti, i način pregleda će ponovo prikazivati osvježavanja u svakom trenutno učitanom dokumentu. (#7641) 
 - Prilikom kretanja po klikabilnom sadržaju u načinu pregleda, NVDA više ne čita "klikajući", više puta u jednom retku. (#7430)
 - Komande koje su pritisnute na baum Vario 40 brajičnim retcima sada će se normalno izvoditi. (#8894)
+- U Google Prezentacijama kada se koristi Mozilla Firefox, NVDA više ne izgovara označeni tekst pri pomicanju na svaku kontrolu fokusa. (#8964)
 
 
 == Changes for Developers ==

@@ -34,11 +34,11 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn para
 - Fontin määreitä ei enää näytetä pistenäytöllä, mikäli ne on poistettu käytöstä Dokumenttien muotoiluasetuksista. (#7615)
 - NVDA seuraa nyt kohdistusta asianmukaisesti Resurssienhallinnassa ja muissa UI Automation -rajapintaa käyttävissä sovelluksissa, kun jokin toinen sovellus on varattuna (esim. äänen eräajo). (#7345)
 - Esc-näppäin välitetään  nyt verkkosivujen ARIA-valikoissa oltaessa suoraan kyseiselle valikolle, eikä vuorovaikutustilaa poisteta käytöstä. (#3215)
-- NVDA ilmoittaa nyt asianmukaisesti kohdistuksen verkkosivuilla, joilla uusi kohdistus korvaa säätimen, jota ei enää ole. (#6606, #8341)
 - Kun pikanavigointinäppäimiä käytetään uudessa Gmailissa viestejä luettaessa, koko viestin sisältöä ei enää lueta sen elementin jälkeen, johon siirryttiin. (#8887)
 - Kun NVDA on päivitetty, selaimien, kuten Firefox ja google Chrome, ei pitäisi enää kaatua, ja kaikkien sillä hetkellä ladattuina olevien sivujen päivitysten pitäisi edelleen näkyä selaustilassa. (#7641) 
 - NVDA ei enää ilmoita selaustilassa "napsautettava" useita kertoja peräkkäin liikuttaessa napsautettavassa sisällössä. (#7430)
 - Baum Vario 40 -pistenäyttöjen näppäinkomentojen suorittaminen onnistuu nyt asianmukaisesti. (#8894)
+- NVDA ei enää ilmoita Google Slidesissa jokaisen aktiivisen säätimen valittua tekstiä Mozilla Firefoxia käytettäessä. (#8964)
 
 
 == Muutokset kehittäjille ==
