@@ -18,7 +18,7 @@ Highlights of this release include performance improvements in recent Mozilla Fi
 
 == Changes ==
 - "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
-- IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
+- In NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
 - NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
 - Updated liblouis braille translator to version 3.7.0. (#8697)
 - Updated eSpeak-NG to commit 919f3240cbb.
@@ -34,11 +34,11 @@ Highlights of this release include performance improvements in recent Mozilla Fi
 - Braille no longer shows font attributes  if they have been disabled in  Document Formatting settings. (#7615)
 - NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
 - In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)
-- NVDA no longer refuses to report the focus on web pages where the new focus replaces a control that no longer exists. (#6606, #8341)
 - In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)
 - After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641) 
 - NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)
 - Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)
+- In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)
 
 
 == Changes for Developers ==
