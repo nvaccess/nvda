@@ -83,8 +83,8 @@ class TestAddonVersionCheck(unittest.TestCase):
 
 	def test_addonMissingNVDASupportField(self):
 		addonNoMinNVDAVer = mockAddon(minNVDAVersion=None)
-		self.assertFalse(addonVersionCheck.hasAddonGotRequiredSupport(addonNoMinNVDAVer, CurrentNVDAVersionTuple))
-		self.assertFalse(addonVersionCheck.isAddonTested(addonNoMinNVDAVer, CurrentNVDAVersionTuple))
+		self.assertTrue(addonVersionCheck.hasAddonGotRequiredSupport(addonNoMinNVDAVer, CurrentNVDAVersionTuple))
+		self.assertTrue(addonVersionCheck.isAddonTested(addonNoMinNVDAVer, CurrentNVDAVersionTuple))
 
 	def test_addonMissingLastTestedField(self):
 		addonNoLastTested = mockAddon(lastTestedNVDAVersion=None)
