@@ -10,10 +10,10 @@ Issues may be closed if the required information is not present.
 https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-examples
 -->
 
-**Is your feature request related to a problem? Please describe.**
+### Is your feature request related to a problem? Please describe.
 
-**Describe the solution you'd like**
+### Describe the solution you'd like
 
-**Describe alternatives you've considered**
+### Describe alternatives you've considered
 
-**Additional context**
+### Additional context
