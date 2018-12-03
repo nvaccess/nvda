@@ -222,6 +222,14 @@ class SymphonyTableCell(IAccessible):
 			states.add(controlTypes.STATE_SELECTED)
 		return states
 
+class SymphonyTable(IAccessible):
+
+	def getSelectedItemsCount(self,maxCount=2):
+		# #8988: Neither accSelection nor IAccessibleTable2 is implemented on the LibreOffice tables.
+		# Returning 1 will suppress redundant selected announcements,
+		# while having the drawback of never announcing selected for selected cells.
+		return 1
+
 class SymphonyParagraph(SymphonyText):
 	"""Removes redundant information that can be retreaved in other ways."""
 	value=None
@@ -235,6 +243,8 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
 			if role==controlTypes.ROLE_TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
+			elif role==controlTypes.ROLE_TABLE:
+				clsList.insert(0, SymphonyTable)
 			elif hasattr(obj, "IAccessibleTextObject"):
 				clsList.insert(0, SymphonyText)
 			if role==controlTypes.ROLE_PARAGRAPH:
