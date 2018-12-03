@@ -3,6 +3,52 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+
+== 새로 추가된 기능 ==
+- 점자 표기법: 중국어(중국 간체) 1종 및 2종 점자 추가. (#5553)
+- Microsoft Outlook 메시지 목록 탐색시 메시지 답장 및 전달 여부가 표시되도록 함. (#6911)
+- Foxit Reader 및 Foxit Phantom PDF 지원 추가. (#8944)
+- DBeaver database tool 지원 추가. (#8905)
+
+
+== 변경된 기능 ==
+- 객체 알림 설정에 있는 "Report help balloons"를 "Report notifications"로 변경하여 윈도우 8 이상에서의 토스트 알림도 포함하도록 함(한국어 번역에서는 이전 이름 그대로 사용). (#5789)
+- 키보드 설정에서 NVDA 기능키 체크박스들을 하나의 목록으로 통합함.
+- 특정 윈도우 버전 사용시 알림 영역내 시계 정보 출력시 불필요한 정보가 출력되지 않도록 함. (#4364)
+- 리브루이 점자 변환기 3.7.0 버전 사용. (#8697)
+- eSpeak NG commit 919f3240cbb 사용.
+
+
+== 버그 수정 ==
+- Outlook 2016/365 사용시 메시지 flag 및 category가 출력되도록 함. (#8603)
+- NVDA 언어가 키르키즈스탄어, 몽골어 또는 마세도니아어로 설정된 경우 NVDA 시작시 윈도우에서의 언어 미지원 메시지가 뜨지 않도록 함. (#8064)
+- 파이어폭스, 크롬 및 Acrobat DC 사용중 마우스를 탐색 객체로 옮길시 현재 브라우즈 모드 위치로 마우스가 제대로 옮겨지도록 함. (#6460)
+- 파이어폭스, 크롬 및 Internet Explorer에서의 콤보박스 조작 정확도가 향상됨. (#8664)
+- 일본어판 윈도우 XP 또는 비스타 사용시 운영 체제 요구사항 관련 메시지가 제대로 출력되도록 함. (#8771)
+- 파이어폭스를 통한 대형 페이지(특히 자동 컨텐츠 변경이 많은 페이지) 탐색 속도가 향상됨. (#8678)
+- 점자디스플레이 사용시 문서 서식에서 해제된 서식 정보가 출력되지 않도록 함. (#7615)
+- NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
+- In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)
+- In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)
+- After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641) 
+- NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)
+- Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)
+- In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요.
+
+
+= 2018.3.2 =
+본 버전에서는 크롬을 사용하여 www.twitter.com 탐색시 발생하던 오류 문제를 수정했습니다. (#8777)
+
+
+= 2018.3.1 =
+본 버전에서는 파이어폭스 32비트 사용중 파이어폭스가 다운되던 문제를 수정하였습니다. (#8759)
+
+
 = 2018.3 =
 이번 버전의 주 기능들: 점자 디스플레이 자동 인식 및 연결, 이모지 패널과 같은 최신 윈도우 10 입력 기능 지원, 수많은 버그 수정 등입니다.
 
@@ -58,6 +104,7 @@ NVDA 변경 이력
  - 문서 내 목록을 점자로 읽을 시 라우팅 명령이 제대로 작동하지 않던 문제 수정. (#7971)
  - 새로 삽입된 bullet/항목 숫자가 음성과 점자로 제대로 출력되도록 함. (#7970)
 - 윈도우 10 1803 이상에서 "세계 언어 지원을 위해 Unicode UTF-8 사용" 기능이 선택된 경우 추가 기능을 설치할 수 없던 문제 수정. (#8599)
+- iTunes 12.9 지원 관련 여러 문제 수정. (#8744)
 
 
 == 개발자를 위한 내용 ==

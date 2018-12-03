@@ -3,6 +3,55 @@ Co nowego w NVDA.
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+Najważniejsze zmiany w tej wersji to poprawki wydajności w najnowszych wersjach Mozilla Firefox, czytanie emoji wszystkimi syntezatorami, zgłaszanie odpowiedziano/przekazano na wiadomościach Outlook, oznajmianie odległości kursora od krawędzi strony w Microsoft Word, oraz wiele poprawek błędów.
+
+== Nowości ==
+- Nowe tablice brajlowskie: chiński (Chiny, mandaryński) z tonami i bez tonów. (#5553)
+- Stan odpowiedziane/przekazane dalej, jest teraz zgłaszany na liście wiadomości w Microsoft Outlook. (#6911)
+- NVDA może odczytywać opisy i emoji oraz inne znaki będące częścią repozytorium Unicode. (#6523)
+- W Microsoft Word może być zgłaszana odległość kursora od lewej i górnej krawędzi strony po naciśnięciu NVDA+numpadDelete. (#1939)
+- W arkuszach Google z włączonym trybem brajlowskim, NVDA nie anonsuje "wybrane" na każdej komórce przy zmianie punktu uwagi. (#8879)
+- Dodana obsługa Foxit Reader i Foxit Phantom PDF (#8944)
+- Dodana obsługa DBeaver database tool. (#8905)
+
+
+== Zmiany ==
+- W ustawieniach klawiatury NVDA, pola wyboru przełączające wybór klawiszy NVDA są teraz wyświetlane na liście, a nie jako osobne pola wyboru.
+- NVDA nie będzie prezentować nadmiarowej informacji przy odczytywaniu zegara w szufladzie systemu na niektórych wersjach Windows. (#4364)
+- Translator brajlowski liblouis zaktualizowany do wersji 3.7.0. (#8697)
+- eSpeak-NG zaktualizowany do commit 919f3240cbb.
+
+
+== Poprawki błędów ==
+- W Outlook 2016/365, kategoria i stan flagi wiadomości są odczytywane. (#8603)
+- Gdy NVDA jest ustawiony na język taki jak kirgizki, mongolski albo macedoński, nie pokazuje okna przy starcie z ostrzeżeniem, że język nie jest obsługiwany przez system operacyjny. (#8064)
+- Przenoszenie wskaźnika myszy do nawigatora bardziej precyzyjnie przenosi wskaźnik do pozycji kursora trybu czytania w Mozilla Firefox, Google Chrome i Acrobat Reader DC. (#6460)
+- Poprawiona interakcja z listami rozwijanymi na stronach web w Firefox, Chrome i Internet Explorer. (#8664)
+- Po uruchomieniu NVDA na japońskiej wersji Windows XP lub Vista, wyświetlany jest alert wymagań wersji systemu operacyjnego. (#8771)
+- Poprawki wydajności Mozilla Firefox podczas nawigacji na dużych stronach z dużą ilością dynamicznych zmian. (#8678)
+- Brajl nie pokazuje atrybutów czcionki, jeśli zostały one wyłączone w  ustawieniach formatowania dokumentów NVDA. (#7615)
+- Rozwiązany problem śledzenia punktu uwagi w eksploratorze Windows i innych aplikacjach używających UI Automation, gdy inna aplikacja jest zajęta (np. konwersją audio). (#7345)
+- W menu ARIA na stronach internetowych, klawisz Escape będzie przekazywany do menu, zamiast bezwarunkowo przełączać tryb czytania. (#3215)
+- W nowym Gmail, podczas używania szybkiej nawigacji wewnątrz wiadomości przy ich czytaniu, cała treść wiadomości nie jest od teraz zgłaszana po elemencie, do którego przeniesiony został punkt uwagi. (#8887)
+- Po aktualizacji NVDA, przeglądarki takie jak Firefox i google Chrome nie powinny się zawieszać, a tryb czytania powinien nadal prawidłowo odzwierciedlać zmiany aktualnie załadowanych dokumentów. (#7641) 
+- NVDA nie zgłasza wielokrotnie "Klikalne" podczas nawigacji elementów klikalnych w trybie czytania. (#7430)
+- Zdarzenia wejścia wykonywane na linijkach brajlowskich baum Vario 40 będą od teraz prawidłowo uruchamiane. (#8894)
+- W Slajdach Google z Mozilla Firefox, NVDA nie zgłasza zaznaczonego tekstu na każdej kontrolce z punktem uwagi. (#8964)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2018.3.2 =
+Pomniejsze wydanie wprowadzające obejście zawieszania się Google Chrome przy nawigacji tweetów na stronie www.twitter.com. (#8777)
+
+ 
+= 2018.3.1 =
+Pomniejsze wydanie poprawiające krytyczny błąd w NVDA, powodujący zawieszanie się 32-bitowych wersji Mozilla Firefox. (#8759)
+ 
+
 = 2018.3 =
 Najważniejsze zmiany w tej wersji to automatyczne wykrywanie wielu linijek brajlowskich, obsługa nowych funkcji Windows 10  (w tym panel wprowadzania EMOI) i wiele poprawek błędów.
 
@@ -58,6 +107,7 @@ Najważniejsze zmiany w tej wersji to automatyczne wykrywanie wielu linijek braj
  - Przywoływanie kursora brajlowskiego działa prawidłowo  na listach dokumentu Word. (#7971)
  - Nowo wstawiane punktory lub numery w dokumencie Word są prawidłowo oznajmiane mową i brajlem. (#7970)
 - W Windows 10 1803 i nowszych, możliwa jest teraz instalacja dodatków, gdy włączone jest używanie Unicode UTF-8 dla ogólnoświatowej obsługi języków. (#8599)
+- NVDA nie powoduje, że iTunes 12.9 i nowsze stają się niemożliwe do interakcji. (#8744)
 
 
 == Zmiany dla programistów ==
