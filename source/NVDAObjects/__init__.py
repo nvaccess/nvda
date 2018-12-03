@@ -1191,5 +1191,5 @@ This code is executed if a gain focus event is received by this object.
 		Fetches the number of descendants currently selected.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
-		return 1
+		return 0
 
