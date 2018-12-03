@@ -1250,7 +1250,7 @@ the NVDAObject for IAccessible
 		except (COMError,NotImplementedError) as e:
 			log.debug("Cannot fetch selected items count using accSelection, %s"%e)
 			pass
-		if self.IAccessibleTable2Object:
+		if hasattr(self,'IAccessibleTable2Object'):
 			try:
 				return self.IAccessibleTable2Object.nSelectedCells
 			except COMError as e:
