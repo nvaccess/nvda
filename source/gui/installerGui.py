@@ -126,28 +126,45 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(self.textWrapWidth))
+		if shouldAskAboutAddons:
+			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+					self,
+					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+					# available, will be disabled after installation.
+					label=_("I understand that these untested add-ons will be disabled")
+				))
+			self.confirmationCheckbox.SetFocus()
+
+		optionsSizer = guiHelper.BoxSizerHelper(self, sizer=sHelper.addItem(wx.StaticBoxSizer(
+			wx.StaticBox(
+				self,
+				# Translators: The label for a group box containing the NVDA installation dialog options.
+				label=_("Options")
+			),
+			wx.VERTICAL
+		)))
 
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		startOnLogonText = _("Use NVDA on the Windows &logon screen")
-		self.startOnLogonCheckbox = sHelper.addItem(wx.CheckBox(self, label=startOnLogonText))
+		self.startOnLogonCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=startOnLogonText))
 		self.startOnLogonCheckbox.Value = config.getStartOnLogonScreen() if self.isUpdate else True
 		
 		shortcutIsPrevInstalled=installer.isDesktopShortcutInstalled()
 		if self.isUpdate and shortcutIsPrevInstalled:
 			# Translators: The label of a checkbox option in the Install NVDA dialog.
 			keepShortCutText = _("&Keep existing desktop shortcut")
-			self.createDesktopShortcutCheckbox = sHelper.addItem(wx.CheckBox(self, label=keepShortCutText))
+			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=keepShortCutText))
 		else:
 			# Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
 			# If the shortcut key has been changed for this locale,
 			# this change must also be reflected here.
 			createShortcutText = _("Create &desktop icon and shortcut key (control+alt+n)")
-			self.createDesktopShortcutCheckbox = sHelper.addItem(wx.CheckBox(self, label=createShortcutText))
+			self.createDesktopShortcutCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createShortcutText))
 		self.createDesktopShortcutCheckbox.Value = shortcutIsPrevInstalled if self.isUpdate else True 
 		
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
-		self.copyPortableConfigCheckbox = sHelper.addItem(wx.CheckBox(self, label=createPortableText))
+		self.copyPortableConfigCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createPortableText))
 		self.copyPortableConfigCheckbox.Value = False
 		if globalVars.appArgs.launcher:
 			self.copyPortableConfigCheckbox.Disable()
@@ -157,13 +174,18 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The label of a button to launch the add-on compatibility review dialog.
 			reviewAddonButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonButton.Bind(wx.EVT_BUTTON, self.onReviewAddons)
-			reviewAddonButton.SetFocus()
 
 		# Translators: The label of a button to continue with the operation.
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
 		if not shouldAskAboutAddons:
 			continueButton.SetDefault()
 			continueButton.SetFocus()
+		else:
+			self.confirmationCheckbox.Bind(
+				wx.EVT_CHECKBOX,
+				lambda evt: continueButton.Enable(not continueButton.Enabled)
+			)
+			continueButton.Enable(False)
 		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
 
 		bHelper.addButton(self, id=wx.ID_CANCEL)

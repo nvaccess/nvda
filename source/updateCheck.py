@@ -309,50 +309,64 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 		pendingUpdateDetails = getPendingUpdate()
 		canOfferPendingUpdate = isPendingUpdate() and pendingUpdateDetails[1] == updateInfo["version"]
 
+		text = sHelper.addItem(wx.StaticText(self))
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		if not updateInfo:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		elif canOfferPendingUpdate:
-				# Translators: A message indicating that an updated version of NVDA has been downloaded
-				# and is pending to be installed.
-				message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
+			# Translators: A message indicating that an updated version of NVDA has been downloaded
+			# and is pending to be installed.
+			message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
 
-				self.newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateInfo["version"])
-				addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(self.newNVDAVersionTuple))
-				showAddonCompat = any(addonsWithoutKnownCompat)
-				if showAddonCompat:
-					# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
-					message = message + _("\n\n"
-						"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
-						"These add-ons will be disabled after installation. "
-						"If you rely on these add-ons, please review the list to manually enable them before installation."
+			self.newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateInfo["version"])
+			addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(self.newNVDAVersionTuple))
+			showAddonCompat = any(addonsWithoutKnownCompat)
+			if showAddonCompat:
+				# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
+				message = message + _("\n\n"
+					"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+					"These add-ons will be disabled after installation. "
+					"If you rely on these add-ons, please review the list to manually enable them before installation."
+				)
+				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+					self,
+					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+					# available, will be disabled after installation.
+					label=_("I understand that these untested add-ons will be disabled")
+				))
+				confirmationCheckbox.Bind(
+					wx.EVT_CHECKBOX,
+					lambda evt: self.installPendingButton.Enable(not self.installPendingButton.Enabled)
+				)
+				# Translators: The label of a button to review add-ons prior to NVDA update.
+				reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
+				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
+				reviewAddonsButton.SetFocus()
+				for a in addonsWithoutKnownCompat:
+					# now that the use is warned about the compatibility and so that the user is
+					# not prompted again after installation, we set the default compatibility
+					AddonCompatibilityState.setAddonCompatibility(
+						addon=a,
+						NVDAVersion=self.newNVDAVersionTuple,
+						compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
 					)
-					# Translators: The label of a button to review add-ons prior to NVDA update.
-					reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
-					reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-					reviewAddonsButton.SetFocus()
-					for a in addonsWithoutKnownCompat:
-						# now that the use is warned about the compatibility and so that the user is
-						# not prompted again after installation, we set the default compatibility
-						AddonCompatibilityState.setAddonCompatibility(
-							addon=a,
-							NVDAVersion=self.newNVDAVersionTuple,
-							compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
-						)
-
+			self.installPendingButton = bHelper.addButton(
+				self,
 				# Translators: The label of a button to install a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				installPendingButton = bHelper.addButton(self, label=_("&Install NVDA {version}").format(**updateInfo))
-				installPendingButton.Bind(
-					wx.EVT_BUTTON,
-					lambda evt: self.onInstallButton(pendingUpdateDetails[0])
-				)
-				bHelper.addButton(
-					self,
-					# Translators: The label of a button to re-download a pending NVDA update.
-					label=_("Re-&download update")
-				).Bind(wx.EVT_BUTTON, self.onDownloadButton)
+				label=_("&Install NVDA {version}").format(**updateInfo)
+			)
+			self.installPendingButton.Bind(
+				wx.EVT_BUTTON,
+				lambda evt: self.onInstallButton(pendingUpdateDetails[0])
+			)
+			self.installPendingButton.Enable(not showAddonCompat)
+			bHelper.addButton(
+				self,
+				# Translators: The label of a button to re-download a pending NVDA update.
+				label=_("Re-&download update")
+			).Bind(wx.EVT_BUTTON, self.onDownloadButton)
 		else:
 			# Translators: A message indicating that an updated version of NVDA is available.
 			# {version} will be replaced with the version; e.g. 2011.3.
@@ -369,7 +383,7 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 				remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
 				remindMeButton.SetFocus()
 
-		text = sHelper.addItem(wx.StaticText(self, label=message))
+		text.SetLabel(message)
 		text.Wrap(self.scaleSize(500))
 		sHelper.addDialogDismissButtons(bHelper)
 
@@ -445,6 +459,14 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		text = sHelper.addItem(wx.StaticText(self, label=message))
 		text.Wrap(self.scaleSize(500))
 
+		if showAddonCompat:
+			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+				self,
+				# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+				# available, will be disabled after installation.
+				label=_("I understand that these untested add-ons will be disabled")
+			))
+
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if showAddonCompat:
 			# Translators: The label of a button to review add-ons prior to NVDA update.
@@ -456,6 +478,12 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
 		if not showAddonCompat:
 			installButton.SetFocus()
+		else:
+			self.confirmationCheckbox.Bind(
+				wx.EVT_CHECKBOX,
+				lambda evt: installButton.Enable(not installButton.Enabled)
+			)
+			installButton.Enable(False)
 		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
