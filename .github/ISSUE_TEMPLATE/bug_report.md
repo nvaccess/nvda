@@ -16,9 +16,8 @@ https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-exam
 
 ### Expected behavior:
 
-### System configuration:
-
-#### NVDA Installed/portable/running from source:
+### System configuration
+#### NVDA installed/portable/running from source:
 
 #### NVDA version:
 
@@ -28,8 +27,7 @@ https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-exam
 
 #### Other information about your system:
 
-### Other questions:
-
+### Other questions
 #### Does the issue still occur after restarting your PC?
 
 #### Have you tried any other versions of NVDA?
