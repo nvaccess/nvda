@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-19 00:10+1000\n"
+"POT-Creation-Date: 2018-11-23 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: Adriani <adriani.botez@gmail.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -2098,7 +2098,7 @@ msgstr "Eintrag"
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "Tab"
+msgstr "Registerkarte"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
@@ -6643,11 +6643,11 @@ msgstr ""
 "können wir alle laufenden Kosten decken.\n"
 "Ihre Spenden gehen hierbei an NV-Access, eine gemeinnützige Organisation, "
 "die NVDA weiterentwickelt.\n"
-"Vielen Dank für Ihre Unterstützung!"
+"Vielen Dank für Ihre Unterstützung."
 
 #. Translators: The title of the dialog requesting donations from users.
 msgid "Please Donate"
-msgstr "Bitte spenden Sie!"
+msgstr "Bitte spenden Sie"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
@@ -6704,24 +6704,26 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} untersteht der Gnu-Lizenz für freie Software (Version 2). Sie sind "
+"{name} untersteht der GNU-Lizenz für freie Software (Version 2). Sie sind "
 "berechtigt, diese Software nach belieben weiterzugeben und zu ändern, "
 "solange Sie die Software zusammen mit einer Kopie dieser Lizenz und den "
 "ursprünglichen Quellcode herausgeben. Dies bezieht sich sowohl auf das "
-"Original sowie auch auf modifizierte Kopieen dieser Software sowie alle "
+"Original sowie auf modifizierte Kopieen dieser Software beziehungsweise alle "
 "Weiterentwicklungen.\n"
-"Für weitere Informationen finden  Sie die Lizenz im Hilfe-menü.\n"
+"Für weitere Informationen finden Sie die Lizenz im NVDA-Menü unter \"Hilfe"
+"\".\n"
 "Des weiteren können Sie entweder die [englischsprachige https://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche "
 "https://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die "
 "englische Originalversion besitzt nach wie vor die offizielle "
 "Rechtsgültigkeit.\n"
 "\n"
-"{name} wird von NV Access entwickelt, einer gemeinnützigen Organisation, die "
-"freie und quelloffene Software für blinde und sehbehinderte entwickelt.\n"
+"{name} wird von NV Access entwickelt, einer gemeinnützigen Organisation, "
+"welche freie und quelloffene Software für blinde und sehbehinderte "
+"entwickelt.\n"
 "Falls Sie NVDA nützlich finden und dessen Entwicklung fördern wollen, können "
-"Sie dies mit einer Spende tun. Sie können dies über den Menüpunkt Spenden im "
-"Hilfe-Menü tun."
+"Sie dies mit einer Spende tun. Sie können das über den Menüpunkt \"Spenden\" "
+"im NVDA-Menü unter \"Hilfe\" vornehmen."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6855,7 +6857,7 @@ msgstr "Zeigt die neueste Nachricht an."
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
 msgid "has attachment"
-msgstr "Anhänge"
+msgstr "Anlage"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
@@ -6863,7 +6865,7 @@ msgstr "Gekennzeichnet"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
-msgstr "Anhänge"
+msgstr "Anlagen"
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 msgid "To:"
@@ -6903,11 +6905,11 @@ msgstr "Organisation:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Distribution:"
-msgstr "Vertrieb:"
+msgstr "Verteiler:"
 
 #. Translators: This is presented in outlook or live mail
 msgid "Key words:"
-msgstr "Schlüsselwörter:"
+msgstr "Schlagwörter:"
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 msgid "BCC:"
@@ -6922,6 +6924,18 @@ msgstr "Ungelesen"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Profiel {profile} in Bearbeitung"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Beantwortet"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "Alle beantwortet"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Weitergeleitet"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -6943,7 +6957,7 @@ msgstr "Empfangen: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
-msgstr "Anhänge"
+msgstr "Anlage"
 
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
@@ -7008,75 +7022,75 @@ msgstr "Gibt alle Kommentare des Kommentar-Fensters aus."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "Titel-Platzhalter"
+msgstr "Titel"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "Text-Platzhalter"
+msgstr "Text"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "Zentrierter Titel-Platzhalter"
+msgstr "Zentrierter Titel"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "Untertitel-Platzhalter"
+msgstr "Untertitel"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Vertikaler Titel-Platzhalter"
+msgstr "Vertikaler Titel"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "Vertikaler Text-Platzhalter"
+msgstr "Vertikaler Text"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "Objekt-Platzhalter"
+msgstr "Objekt"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "Diagramm-Platzhalter"
+msgstr "Diagramm"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Grafik-Platzhalter"
+msgstr "Grafik"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
-msgstr "Medieninhalt-Platzhalter"
+msgstr "Medieninhalt"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Organigramm-Platzhalter"
+msgstr "Organigramm"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "Tabellen-Platzhalter"
+msgstr "Tabelle"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "Foliennummer-Platzhalter"
+msgstr "Foliennummer"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "Überschriften-Platzhalter"
+msgstr "Überschrifte"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "Fußzeilen-Platzhalter"
+msgstr "Fußzeile"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "Datums-Platzhalter"
+msgstr "Datum"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Vertikaler Objekt-Platzhalter"
+msgstr "Vertikales Objekt"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "Bild-Platzhalter"
+msgstr "Bild"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
@@ -7261,7 +7275,7 @@ msgstr "Präsentation - abgeschlossen"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
-msgstr "Keine Fußnoten"
+msgstr "Keine Notizen"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
@@ -7666,11 +7680,11 @@ msgid "What's &new"
 msgstr "Was ist &neu in NVDA"
 
 msgid "NVDA &web site"
-msgstr "NVDA-&Homepage"
+msgstr "NVDA-Home&page"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "L&izenz"
+msgstr "Li&zenz"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
@@ -7720,7 +7734,7 @@ msgstr "Die aktuelle Konfiguration wird in NVDA.ini gespeichert..."
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
-msgstr "S&penden"
+msgstr "Sp&enden"
 
 #. Translators: The label for the menu item to run a pending update.
 msgid "Install pending &update"
@@ -8098,7 +8112,7 @@ msgstr "&Umbenennen"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "&Entfernen"
+msgstr "Ent&fernen"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
@@ -8118,7 +8132,7 @@ msgstr "(Standardkonfiguration)"
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
 msgid "editing"
-msgstr "In Bearbeitung"
+msgstr "Bearbeitung"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
@@ -8128,7 +8142,7 @@ msgstr "Manuell"
 #. Translators: Reported for a profile which is currently triggered
 #. in the Configuration Profiles dialog.
 msgid "triggered"
-msgstr "ausgelößt"
+msgstr "ausgelöst"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
@@ -8490,15 +8504,15 @@ msgstr "Fehler beim Speichern des Protokolls %s."
 
 #. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
 msgid "OK"
-msgstr "&OK"
+msgstr "OK"
 
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
-msgstr "Abbre&chen"
+msgstr "Abbrechen"
 
 #. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
 msgid "Apply"
-msgstr "Ü&bernehmen"
+msgstr "Übernehmen"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
@@ -8702,6 +8716,16 @@ msgstr "Ausführ&lichkeitsstufe"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "Beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Unicode-Konsortiumsdaten einbinden (einschließlich Emoji) bei der "
+"Verarbeitung von Zeichen und Symbolen"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -9022,7 +9046,7 @@ msgstr "Schrift&attribute"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
-msgstr "Betonung"
+msgstr "Be&tonung"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -10834,6 +10858,16 @@ msgstr "Kommentar: {text} von {author} am {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} von {author} am {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} vom linken Seitenrand"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} vom oberen Seitenrand"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10992,3 +11026,6 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "REPLIED ALL"
+#~ msgstr "Alle beantwortet"
