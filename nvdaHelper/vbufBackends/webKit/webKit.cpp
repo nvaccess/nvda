@@ -29,7 +29,7 @@ using namespace std;
 _COM_SMARTPTR_TYPEDEF(IAccessible, __uuidof(IAccessible));
 _COM_SMARTPTR_TYPEDEF(IServiceProvider, __uuidof(IServiceProvider));
 
-IAccessible2* IAccessible2FromIdentifier(int docHandle, int id) {
+static IAccessible2* IAccessible2FromIdentifier(int docHandle, int id) {
 	IAccessiblePtr acc = NULL;
 	VARIANT varChild;
 	// WebKit returns a positive value for uniqueID,
@@ -244,14 +244,7 @@ void WebKitVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 WebKitVBufBackend_t::WebKitVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* WebKitVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new WebKitVBufBackend_t(docHandle,ID);
 	return backend;
-}
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-	}
-	return true;
 }

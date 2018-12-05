@@ -59,7 +59,7 @@ class ControlField(Field):
 						break
 				else:
 					table = None
-			if table and ((not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False)):
+			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
