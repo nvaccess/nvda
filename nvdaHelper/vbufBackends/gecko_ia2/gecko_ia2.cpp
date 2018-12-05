@@ -84,7 +84,7 @@ HWND findRealMozillaWindow(HWND hwnd) {
 	return hwnd;
 }
 
-IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
+static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
 	IServiceProvider* pserv=NULL;
 	IAccessible2* pacc2=NULL;
@@ -1128,14 +1128,7 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID);
 	return backend;
-}
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-	}
-	return true;
 }
