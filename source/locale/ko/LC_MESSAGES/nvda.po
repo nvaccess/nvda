@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-17 00:10+1000\n"
-"PO-Revision-Date: 2018-08-15 14:51-0700\n"
+"POT-Creation-Date: 2018-11-20 10:57+1000\n"
+"PO-Revision-Date: 2018-11-19 17:53-0800\n"
 "Last-Translator: Dong Hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -1141,6 +1141,16 @@ msgstr "Unicode 점자"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "베트남어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "중국어 (중국) 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "중국어 (중국) 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6590,7 +6600,7 @@ msgstr "Microsoft Windows용 무료 오픈소스 스크린 리더"
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "저작권 (C) {years} NVDA Contributors"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6623,8 +6633,8 @@ msgstr ""
 "드를 공개할 수 있습니다. 이 약관은 본 소프트웨어의 원본과 수정본 및 파생된 모"
 "든 제품에 적용됩니다.\n"
 "라이센스에 대한 더 자세한 내용은 도움말 메뉴에서 볼 수 있습니다.\n"
-"또한 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html에 접속하여 확인할 "
-"수 있습니다.\n"
+"또한 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html에 접속하여 확인"
+"할 수 있습니다.\n"
 "\n"
 "{name}는 시각장애인을 위한 무료 공개 솔루션의 개발 도움 및 홍보를 지원하는 비"
 "영리단체인 NVAccess에 의해 개발되었습니다.\n"
@@ -6652,7 +6662,7 @@ msgstr ""
 "비: 화면의 {width:.1f} 퍼센트; 높이: 화면의 {height:.1f} 퍼센트"
 
 #. Translators: a message announcing a candidate's character and description.
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{description}"
 
@@ -6827,35 +6837,17 @@ msgstr "읽지 않음"
 msgid "Editing profile {profile}"
 msgstr "{profile} 프로필 편집중"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "보라색 플래그"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "답장"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "주황색 플래그"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "모두 답장"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "녹색 플래그"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "노란색 플래그"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "파란색 플래그"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "빨간색 플래그"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "전달됨"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8572,6 +8564,14 @@ msgstr "구두점/기호 출력 레벨 (&L)"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "기호 및 글자 출력 시 선택된 음성 엔진 언어 사용"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "기호 및 글자 출력 시 Unicode Consortium 데이터(이모지 포함) 사용 (&I)"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "대문자 음높이 변경율"
@@ -8595,20 +8595,10 @@ msgstr "철자 발음 지원 시 사용 (&S)"
 msgid "Keyboard"
 msgstr "키보드"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "CapsLock을 NVDA 기능키로 사용"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "키패드 Insert를 NVDA 키로 사용"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "확장 Insert를 NVDA 키로 사용"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "NVDA 기능키 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8773,8 +8763,8 @@ msgstr "도구 설명 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "도움말 풍선 알림 (&H)"
+msgid "Report &notifications"
+msgstr "도움말 풍선 알림 (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9506,14 +9496,14 @@ msgid "track change: {text}"
 msgstr ""
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
+msgstr "주석: {comment}; 저자: {author}; 날짜: {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
-msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
+msgstr "주석: {comment}; 저자: {author}; 날짜: {date}"
 
 msgid "Desktop"
 msgstr "바탕 화면"
@@ -10675,6 +10665,16 @@ msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "슬라이드 좌측으로부터 {distance:.3g} 포인트"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "슬라이드 위로부터 {distance:.3g} 포인트"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10833,6 +10833,36 @@ msgstr "두 줄 간격"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
+
+#~ msgid "purple flag"
+#~ msgstr "보라색 플래그"
+
+#~ msgid "Orange flag"
+#~ msgstr "주황색 플래그"
+
+#~ msgid "Green flag"
+#~ msgstr "녹색 플래그"
+
+#~ msgid "Yellow flag"
+#~ msgstr "노란색 플래그"
+
+#~ msgid "Blue flag"
+#~ msgstr "파란색 플래그"
+
+#~ msgid "Red flag"
+#~ msgstr "빨간색 플래그"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "CapsLock을 NVDA 기능키로 사용"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "키패드 Insert를 NVDA 키로 사용"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "확장 Insert를 NVDA 키로 사용"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "도움말 풍선 알림 (&H)"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"

@@ -14,22 +14,8 @@
 
 Import([
 	'env',
-	'vbufBaseStaticLib',
 ])
 
-lotusNotesRichTextBackendLib=env.SharedLibrary(
-	target="VBufBackend_lotusNotesRichText",
-	source=[
-		env['projectResFile'],
-		"lotusNotesRichText.cpp",
-	],
-	LIBS=[
-		vbufBaseStaticLib,
-		"user32",
-		"kernel32",
-		"oleacc",
-		"oleaut32",
-	],
-)
+lotusNotesRichTextBackendLib=env.Object("lotusNotesRichText.cpp")
 
 Return('lotusNotesRichTextBackendLib')

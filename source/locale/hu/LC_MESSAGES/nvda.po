@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 10:04+1000\n"
-"PO-Revision-Date: 2018-08-24 21:58+0100\n"
+"POT-Creation-Date: 2018-11-20 10:57+1000\n"
+"PO-Revision-Date: 2018-11-20 17:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Teszt megjegyzés
@@ -1138,6 +1138,16 @@ msgstr "Unicode braille"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnami, rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Kínai (Kína, Mandarin) rövidítési fokozat 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Kínai (Kína, Mandarin) rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6654,7 +6664,7 @@ msgstr ""
 "\n"
 "Az {name}-t a magyar NVDA honosítócsapat honosította. Ha valamilyen "
 "nyelvtani hibát észlel vagy egyéb javaslata van, akkor látogassa meg a "
-"http://www.nvda.hu weboldalt, ahol kapcsolatba léphet a honosítócsapattal.\n"
+"https://www.nvda.hu weboldalt, ahol kapcsolatba léphet a honosítócsapattal.\n"
 "Ugyancsak ezen az oldalon talál újabb nyelvcsomagokat, valamint az {name}-"
 "val kapcsolatos hasznos információkat. \n"
 "\n"
@@ -6665,7 +6675,7 @@ msgstr ""
 "vonatkozik.\n"
 "Ha többet szeretne megtudni, elolvashatja a Licensz szerződést a súgó "
 "menüben.\n"
-"Ezt a http://www.gnu.org/licenses/old-licenses/gpl-2.0.html oldalon is "
+"Ezt a https://www.gnu.org/licenses/old-licenses/gpl-2.0.html oldalon is "
 "megteheti.\n"
 "\n"
 "Az {name}-t az NV Access fejleszti, amely egy non-profit alapítvány. Céljuk "
@@ -6873,35 +6883,17 @@ msgstr "Olvasatlan"
 msgid "Editing profile {profile}"
 msgstr "{profile} profil szerkesztése"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Lila jelölő"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "megválaszolt"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Narancs jelölő"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "Mind megválaszolt"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Zöld jelölő"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Sárga jelölő"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Kék jelölő"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Piros jelölő"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Továbbított"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8635,6 +8627,14 @@ msgstr "Írás&jelszint:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "Unicode CLDR használata karakterek és szimbólumok feldolgozásakor"
+
 # sokkal pontosabb és csak kicsit hosszabb
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -8659,20 +8659,10 @@ msgstr "&Betűzés használata, ha támogatott"
 msgid "Keyboard"
 msgstr "Billentyűzet"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "A CapsLock billentyű használata NVDA gombként"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "A &numerikus insert használata NVDA gombként"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "A no&rmál Insert használata NVDA gombként"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "NVDA &módosítóbillenntyűk kiválasztása"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8835,8 +8825,8 @@ msgstr "&Eszköztippek bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "&Súgóbuborékok bemondása"
+msgid "Report &notifications"
+msgstr "&Értesítések bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10756,6 +10746,16 @@ msgstr "megjegyzés: {text}, {author} által, {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author} által {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "Az oldal bal szélétől {distance} pont"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "Az oldal tetejétől {distance} "
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10914,6 +10914,36 @@ msgstr "dupla sorköz"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5-es sorköz"
+
+#~ msgid "purple flag"
+#~ msgstr "Lila jelölő"
+
+#~ msgid "Orange flag"
+#~ msgstr "Narancs jelölő"
+
+#~ msgid "Green flag"
+#~ msgstr "Zöld jelölő"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Sárga jelölő"
+
+#~ msgid "Blue flag"
+#~ msgstr "Kék jelölő"
+
+#~ msgid "Red flag"
+#~ msgstr "Piros jelölő"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "A CapsLock billentyű használata NVDA gombként"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "A &numerikus insert használata NVDA gombként"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "A no&rmál Insert használata NVDA gombként"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "&Súgóbuborékok bemondása"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"
