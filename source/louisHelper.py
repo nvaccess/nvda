@@ -39,7 +39,7 @@ def initialize():
 	# Set the log level to all.
 	# The NVDA logging callback will filter messages appropriately,
 	# i.e. error messages will be logged at the error level.
-	louis.setLogLevel(louis.LOG_ALL)
+	louis.setLogLevel(louis.LOG_DEBUG)
 
 def terminate():
 	# Set the log level to off.
