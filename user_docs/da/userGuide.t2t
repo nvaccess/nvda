@@ -1056,6 +1056,16 @@ Denne indstilling gælder for alle talesynteser, ikke kun den, som er aktiv i ø
 Med den indstilling, som er slået til som standard, kan du vælge om du vil benytte sproget for den aktuelle stemme til udtale af tegn og symboler.
 Hvis du opdager, at NVDA læser tegn og symboler på et forkert sprog med en bestemt talesyntese eller stemme, kan du slå denne indstilling fra for at tvinge NVDA til at benytte sin globale sprogindstilling.
 
+==== Benyt Unicode Consortium data (herunder emoji) under behandling af tegn og symboler ====[SpeechSettingsCLDR]
+Når denne check box er valgt, vil NVDA benytte yderligere udtaleordbøger til udtale af symboler og tegn. 
+Disse ordbøger indeholder symboler (særligt emoji) der er angivet af [Unicode Consortium http://www.unicode.org/consortium/] som en del af deres [Common Locale Data Repository http://cldr.unicode.org/].
+Hvis du ønsker, at NVDA skal udtale beskrivelser af emoji ved brug af denne data, skal indstillingen være slået til.
+Hvis du derimod bruger en talesyntese, der har denne funktionalitet indbygget, vil det evt. være nødvendigt at slå denne funktion fra.
+
+Bemærk: Manuelt tilføjede og redigerede tegnbeskrivelser gemmes som en del af din brugerkonfiguration.
+Dette betyder, at dine tilpassede udtaler for emoji vil blive udtalt, uanset om denne indstilling er slået til.
+Du kan tilføje, redigere og fjerne symbolbeskrivelser i NVDAs [ dialog Udtale af Sætningstegn og Symboler #SymbolPronunciation].
+
 ==== Ændring af tonehøjde ved store bogstaver ====[SpeechSettingsCapPitchChange]
 I dette editfelt kan du indtaste et tal for, hvor meget tonehøjden skal ændre sig, når NVDA udtaler et stort bogstav.
 Denne værdi er en procentsats. En negativ værdi vil gøre tonehøjden lavere, og en positiv værdi vil gøre den højere.

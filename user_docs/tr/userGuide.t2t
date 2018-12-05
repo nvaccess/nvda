@@ -1052,9 +1052,19 @@ Bu, noktalama ya da başka işaretlerin ne kadarının sözcük olarak seslendir
 Örneğin, Tümü olarak ayarladığınızda işaretlerin hepsi sözcük olarak seslendirilir.
 Bu ayardan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
 
-==== İşaret ve karakterleri işlerken seçili sesin diline bak ====[SpeechSettingsTrust]
-Bu seçenek varsayılan olarak etkindir ve NVDA'ya işaret ve karakterler seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
-Eğer NVDA'nın noktalama işaretlerini herhangi bir sentezleyici ya da ses için yanlış dilde seslendirdiğini fark ederseniz, bu seçeneği NVDA global ayarlarının kullanılmasını sağlamak için kapatabilirsiniz.
+==== Karakter ve sembolleri işlerken sentezleyici ve sesin dilini dikkate al ====[SpeechSettingsTrust]
+Bu seçenek varsayılan olarak etkindir ve NVDA'ya karakter ve semboller seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
+NVDA'nın noktalama işaretlerini herhangi bir sentezleyici ya da ses için yanlış dilde seslendirdiğini fark ederseniz, bu seçeneği NVDA global ayarlarının kullanılmasını sağlamak için kapatabilirsiniz.
+
+==== Karakter ve sembooleri işlerken (emoji dahil) Unicode Konsorsiyumu verisini dahil et ====[SpeechSettingsCLDR]
+Bu onay kutusu etkinleştirildiğinde, NVDA karakter ve sembolleri tellaffuz ederken  ek  telaffuz sözlüklerini kullanır.
+Bu sözlükler çeşitli sembollerin telaffuzunu içerir  (özellikle emoji) ve [Unicode Consortium http://www.unicode.org/consortium/] tarafından [Ortak Yerel Veri Deposu http://cldr.unicode.org/] içinde sağlanırlar.
+Emojilerin bu verilere dayanılarak seslendirilmesini istiyorsanız bu onay kutusunu işaretleyin.
+Ancak, emojilerin kullandığınız sentezleyici tarafından seslendirilmesini istiyorsanız bu onay kutusunu işaretlememelisiniz.
+
+Öte yandan, elle eklediğiniz ya da düzenlediğiniz karakter tanımları kullanıcı ayarlarınızın bir bölümü olarak kaydedilir.
+Dolayısıyla, bir emojinin okunuşunu değiştirdiğinizde, bu onay kutusu işaretli olsun olmasın, emoji yaptığınız değişiklik doğrultusunda telaffuz edilecektir.
+NVDA'nın [noktalama/imla sözlüğü iletişim kutusundan #SymbolPronunciation] karakter okunuşlarını ekleyebilir, düzenleyebilir ya da silebilirsiniz.
 
 ==== Büyük Harflerde Ses Perdesi Değişim Yüzdesi ====[SpeechSettingsCapPitchChange]
 Bu yazı alanı , büyük harfler seslendirilirken ses perdesinin hangi oranda değiştirileceğini belirlemenizi sağlar.
