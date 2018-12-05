@@ -1056,7 +1056,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 默认启用，该选项告诉 NVDA 在处理字符和标点时当前语音语言是否可信。
 如果您发现 NVDA 在使用特定的合成器或声音读出某标点时使用了错误的语言，您可能希望把它关闭并强制 NVDA 使用其自身的本地设置来代替语音语言译者注：对于vocalizer和vocalizer express的语音库而言此设置无效。
 
-==== 处理字符和符号时包含Unicode Consortium数据（包括表情符号） ====[SpeechSettingsCLDR]
+==== 处理字符和符号时包含Unicode联盟提供的数据（包括表情符号） ====[SpeechSettingsCLDR]
 启用此复选框后，NVDA将在拼读字符和符号时包含其他符号发音词典。
 这些词典包含[Unicode 联盟 http://www.unicode.org/consortium/] 在 [通用本地化数据库 http://cldr.unicode.org/]中提供的一部分符号（特别是表情符号）的描述。
 如果您希望NVDA根据此数据拼读表情符号以及其他字符的描述，则应启用此选项。
