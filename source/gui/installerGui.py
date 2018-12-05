@@ -177,16 +177,14 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 
 		# Translators: The label of a button to continue with the operation.
 		continueButton = bHelper.addButton(self, label=_("&Continue"), id=wx.ID_OK)
-		if not shouldAskAboutAddons:
-			continueButton.SetDefault()
-			continueButton.SetFocus()
-		else:
+		continueButton.SetDefault()
+		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
+		if shouldAskAboutAddons:
 			self.confirmationCheckbox.Bind(
 				wx.EVT_CHECKBOX,
 				lambda evt: continueButton.Enable(not continueButton.Enabled)
 			)
 			continueButton.Enable(False)
-		continueButton.Bind(wx.EVT_BUTTON, self.onInstall)
 
 		bHelper.addButton(self, id=wx.ID_CANCEL)
 		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
