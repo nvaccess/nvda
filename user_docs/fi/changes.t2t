@@ -4,9 +4,16 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn parannukset uusimmissa Mozilla Firefoxin versioissa, emojien puhuminen kaikilla syntetisaattoreilla, vastattu/välitetty-tilan ilmoittaminen Outlookissa, Kohdistimen etäisyyden ilmoittaminen sivun reunasta Microsoft Wordissa, sekä useat ohjelmavirheiden korjaukset.
 
 == Uudet ominaisuudet ==
 - Uusia pistetaulukoita: mandariinikiina (Kiina) tasot 1 ja 2. (#5553)
+- Viestien vastattu/välitetty-tila ilmoitetaan nyt Microsoft Outlookin viestiluettelossa. (#6911)
+- NVDA voi nyt lukea emojien sekä muiden Unicode Common Locale Data -tietokantaan kuuluvien merkkien kuvaukset. (#6523)
+- Kohdistimen etäisyys sivun ylä- ja vasemmasta reunasta voidaan lukea Microsoft Wordissa painamalla NVDA+laskinnäppäimistön Del. (#1939)
+- NVDA ei enää ilmoita Google Sheetsissä jokaisen solun kohdalla "valittu" siirrettäessä kohdistusta niiden välillä pistenäyttötilan ollessa käytössä. (#8879)
+- Lisätty tuki Foxit Readerille ja Foxit Phantom PDF:lle. (#8944)
+- Lisätty tuki DBeaver-tietokantatyökalulle. (#8905)
 
 
 == Muutokset ==
@@ -14,17 +21,36 @@
 - NVDA-toimintonäppäimiä käyttöön ottavat tai käytöstä poistavat valintaruudut  näytetään nyt näppäimistöasetuksissa erillisten sijaan luettelona.
 - NVDA ei enää näytä tarpeetonta tietoa luettaessa kelloa ilmoitusalueelta joissakin Windows-versioissa. (#4364)
 - Päivitetty liblouis-pistekirjoituskääntäjä versioksi 3.7.0. (#8697)
+- Päivitetty eSpeak-NG muutoksella 919f3240cbb.
 
 
 == Korjatut ohjelmavirheet ==
 - Viestien luokka ja lipun tila luetaan Outlook 2016:ssa/365:ssä. (#8603)
 - Kun NVDA:n kieleksi on asetettu esim. kirgiisi, mongoli tai makedonia, se ei näytä enää käynnistyessään valintaikkunaa, jossa varoitetaan, ettei käyttöjärjestelmä tue kyseistä kieltä. (#8064)
 - Hiiren siirtäminen navigointiobjektiin siirtää nyt hiiren paljon tarkemmin selaustilan sijaintiin Mozilla Firefoxissa, Google Chromessa ja Acrobat Reader DC:ssä. (#6460)
-- Vuorovaikutusta verkkosivuilla olevien yhdistelmäruutujen kanssa on paranneltu Firefoxissa, Chromessa ja Internet Explorerissa. (#8664)
+- Vuorovaikutusta verkkosivuilla olevien yhdistelmäruutujen kanssa on parannettu Firefoxissa, Chromessa ja Internet Explorerissa. (#8664)
+- Jos käytössä on Windows XP:n tai Vistan japaninkielinen versio, NVDA näyttää nyt odotetusti ilmoituksen käyttöjärjestelmävaatimuksista. (#8771)
+- Suorituskykyä parannettu Mozilla Firefoxissa selattaessa suuria sivuja, joilla on paljon dynaamisia muutoksia. (#8678)
+- Fontin määreitä ei enää näytetä pistenäytöllä, mikäli ne on poistettu käytöstä Dokumenttien muotoiluasetuksista. (#7615)
+- NVDA seuraa nyt kohdistusta asianmukaisesti Resurssienhallinnassa ja muissa UI Automation -rajapintaa käyttävissä sovelluksissa, kun jokin toinen sovellus on varattuna (esim. äänen eräajo). (#7345)
+- Esc-näppäin välitetään  nyt verkkosivujen ARIA-valikoissa oltaessa suoraan kyseiselle valikolle, eikä vuorovaikutustilaa poisteta käytöstä. (#3215)
+- Kun pikanavigointinäppäimiä käytetään uudessa Gmailissa viestejä luettaessa, koko viestin sisältöä ei enää lueta sen elementin jälkeen, johon siirryttiin. (#8887)
+- Kun NVDA on päivitetty, selaimien, kuten Firefox ja google Chrome, ei pitäisi enää kaatua, ja kaikkien sillä hetkellä ladattuina olevien sivujen päivitysten pitäisi edelleen näkyä selaustilassa. (#7641) 
+- NVDA ei enää ilmoita selaustilassa "napsautettava" useita kertoja peräkkäin liikuttaessa napsautettavassa sisällössä. (#7430)
+- Baum Vario 40 -pistenäyttöjen näppäinkomentojen suorittaminen onnistuu nyt asianmukaisesti. (#8894)
+- NVDA ei enää ilmoita Google Slidesissa jokaisen aktiivisen säätimen valittua tekstiä Mozilla Firefoxia käytettäessä. (#8964)
 
 
 == Muutokset kehittäjille ==
 Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
+= 2018.3.2 =
+Tämä versio kiertää ongelman, jossa Google Chrome kaatui selatessa twiittejä osoitteessa www.twitter.com. (#8777)
+
+
+= 2018.3.1 =
+Tämä versio korjaa kriittisen ohjelmavirheen, joka aiheutti Mozilla Firefoxin 32-bittisten versioiden kaatumisen. (#8759)
 
 
 = 2018.3 =
@@ -1973,7 +1999,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Askelpalauttimen painaminen käsitellään nyt oikein kirjoitettuja sanoja luettaessa. (#306)
 - Tietyistä Resurssienhallinnan ja Windowsin käyttöliittymän tilannekohtaisista valikoista ei enää virheellisesti ilmoiteta, että ne ovat Käynnistä-valikkoja. (#257)
 - NVDA käsittelee nyt oikein Mozilla Geckon ARIA-luokat, kun muuta käyttökelpoista sisältöä ei ole saatavilla. (#156)
-- NVDA ei enää virheellisesti ota käyttöön automaattista vuorovaikutustilaa muokattaville tekstikentille, jotka päivittävätsisältöään kohdistuksen muuttuessa (esim. osoitteessa http://tigerdirect.com/). (#220)
+- NVDA ei enää virheellisesti ota käyttöön automaattista vuorovaikutustilaa muokattaville tekstikentille, jotka päivittävätsisältöään kohdistuksen muuttuessa (esim. osoitteessa https://tigerdirect.com/). (#220)
 - NVDA yrittää nyt palautua joistakin tilanteista, jotka ennen aiheuttivat sen täydellisen jumittumisen. Tällaisen tilanteen havaitseminen ja siitä palautuminen voi kestää jopa 10 sekuntia.
 - Käyttäjän näyttökieliasetusta käytetään Windowsin maa-asetuksen sijaan, kun NVDA:n kieleksi on asetettu "User default". (#353)
 - NVDA tunnistaa nyt AOL Instant Messenger 7:n säädint.
@@ -2241,7 +2267,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 == 0.5 ==
 - NVDA:ssa on nyt sisäänrakennettu eSpeak-puhesyntetisaattori, joka tukee useita kieliä ja on erittäin herkkä ja kevyt. SAPI-syntetisaattoreita voidaan edelleen käyttää, mutta eSpeakia käytetään oletusarvoisesti.
 eSpeak ei ole riippuvainen mistään erikoisohjelmistoista, joten sitä voidaan käyttää NVDA:ssa millä tahansa tietokoneella, muistitikulla jne.
-Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoitteessa http://espeak.sourceforge.net/.
+Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy osoitteessa https://espeak.sourceforge.net/.
 - Korjattu vika, joka aiheutti  väärän merkin lukemisen painettaessa Delete-näppäintä Internet Explorerin ja Outlook Expressin muokkausruuduissa.
 - Lisätty tuki useimmille Skypen muokkauskentille.
 - Näennäispuskurit ladataan vain, kun kohdistus on ikkunassa, joka tarvitsee niitä. Korjaa joitakin ongelmia Outlook Expressin esikatseluruudun ollessa käytössä.

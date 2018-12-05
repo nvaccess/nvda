@@ -65,6 +65,7 @@ wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
 wdNumberOfPagesInDocument=4
 wdHorizontalPositionRelativeToPage=5
+wdVerticalPositionRelativeToPage=6
 wdFirstCharacterLineNumber=10
 wdWithInTable=12
 wdStartOfRangeRowNumber=13
@@ -561,6 +562,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if unit==textInfos.UNIT_LINE:
 			unit=textInfos.UNIT_SENTENCE
 		return unit
+
+	def _get_locationText(self):
+		textList=[]
+		# #8994: MS Word can only give accurate distances (taking paragraph indenting into account) when directly querying the selection. 
+		r=self._rangeObj
+		s=self.obj.WinwordSelectionObject
+		if s.isEqual(r):
+			r=s
+		else:
+			return super(WordDocumentTextInfo,self).locationText
+		offset=r.information(wdHorizontalPositionRelativeToPage)
+		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
+		# Translators: a distance from the left edge of the page in Microsoft Word
+		textList.append(_("{distance} from left edge of page").format(distance=distance))
+		offset=r.information(wdVerticalPositionRelativeToPage)
+		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
+		# Translators: a distance from the left edge of the page in Microsoft Word
+		textList.append(_("{distance} from top edge of page").format(distance=distance))
+		return ", ".join(textList)
 
 	def copyToClipboard(self):
 		self._rangeObj.copy()

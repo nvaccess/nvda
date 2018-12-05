@@ -1127,9 +1127,24 @@ class GlobalCommands(ScriptableObject):
 		else:
 			try:
 				c = ord(info.text)
+			except TypeError:
+				# This might be a character taking multiple code points.
+				# If it is a 32 bit character, encode it to UTF-32 and calculate the ord manually.
+				# In Python 3, this is no longer necessary.
+				try:
+					encoded = info.text.encode("utf_32_le")
+				except UnicodeEncodeError:
+					c = None
+				else:
+					if len(encoded)==4:
+						c = sum(ord(cp)<<i*8 for i, cp in enumerate(encoded))
+					else:
+						c = None
+			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
-			except:
+			else:
+				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for report current character under review cursor command.
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
@@ -1203,7 +1218,9 @@ class GlobalCommands(ScriptableObject):
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
 			import wx
-			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
