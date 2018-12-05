@@ -1010,7 +1010,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		left = ctypes.c_int()
 		top = ctypes.c_int()
 		width = ctypes.c_int()
-		height = ctypes.c_int32()
+		height = ctypes.c_int()
 		try:
 			self.obj.WinwordWindowObject.GetPoint(ctypes.byref(left), ctypes.byref(top), ctypes.byref(width), ctypes.byref(height), self._rangeObj)
 		except COMError:

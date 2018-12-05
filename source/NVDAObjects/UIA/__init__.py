@@ -648,10 +648,9 @@ class UIATextInfo(textInfos.TextInfo):
 		rectArray = range.GetBoundingRectangles()
 		if not rectArray:
 			return rects
-		rects.extend(
-			RectLTWH.fromFloatCollection(*rectArray[i:i+4])
-			for i in xrange(0, len(rectArray), 4)
-		)
+		rectIndexes = xrange(0, len(rectArray), 4)
+		rectGen = (RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
+		rects.extend(rectGen)
 		return rects
 
 	def _get_boundingRects(self):

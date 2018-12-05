@@ -658,7 +658,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				except (NotImplementedError, LookupError):
 					pass
 			if obj == copy._endObj:
-				# We're ad the end of the range.
+				# We're at the end of the range.
 				break
 			try:
 				ti, obj = copy._findNextContent(ti)

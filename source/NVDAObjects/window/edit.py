@@ -174,7 +174,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,offset,None)
 			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
-		if -1 in (point.x, point.y):
+		# A returned coordinate can be a negative value if
+		# the specified character is not displayed in the edit control's client area. 
+		# If the specified index is greater than the index of the last character in the control,
+		# the control returns -1.
+		if point.x <0 or point.y <0:
 			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
 				(point.x, point.y))
 		point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
