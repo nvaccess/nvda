@@ -2528,7 +2528,7 @@ def getSerialPorts(filterFunc=None):
 	@type filterFunc: callable
 	"""
 	if filterFunc and not callable(filterFunc):
-		raise ValueError("The provided filterFunc is not callable")
+		raise TypeError("The provided filterFunc is not callable")
 	for info in hwPortUtils.listComPorts():
 		if filterFunc and not filterFunc(info):
 			continue
