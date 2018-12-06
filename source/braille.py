@@ -13,6 +13,7 @@ import ctypes.wintypes
 import threading
 import time
 import wx
+import louisHelper
 import louis
 import gui
 import winKernel
@@ -417,36 +418,14 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		text=unicode(self.rawText).replace('\0','')
-		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
+		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[os.path.join(brailleTables.TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],
-			text,
-			# liblouis mutates typeform if it is a list.
-			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,
-			mode=mode, cursorPos=self.cursorPos or 0)
-		# liblouis gives us back a character string of cells, so convert it to a list of ints.
-		# For some reason, the highest bit is set, so only grab the lower 8 bits.
-		self.brailleCells = [ord(cell) & 255 for cell in braille]
-		# #2466: HACK: liblouis incorrectly truncates trailing spaces from its output in some cases.
-		# Detect this and add the spaces to the end of the output.
-		if self.rawText and self.rawText[-1] == " ":
-			# rawToBraillePos isn't truncated, even though brailleCells is.
-			# Use this to figure out how long brailleCells should be and thus how many spaces to add.
-			correctCellsLen = self.rawToBraillePos[-1] + 1
-			currentCellsLen = len(self.brailleCells)
-			if correctCellsLen > currentCellsLen:
-				self.brailleCells.extend((0,) * (correctCellsLen - currentCellsLen))
-		if self.cursorPos is not None:
-			# HACK: The cursorPos returned by liblouis is notoriously buggy (#2947 among other issues).
-			# rawToBraillePos is usually accurate.
-			try:
-				brailleCursorPos = self.rawToBraillePos[self.cursorPos]
-			except IndexError:
-				pass
-		else:
-			brailleCursorPos = None
-		self.brailleCursorPos = brailleCursorPos
+			self.rawText,
+			typeform=self.rawTextTypeforms,
+			mode=mode,
+			cursorPos=self.cursorPos
+		)
 		if self.selectionStart is not None and self.selectionEnd is not None:
 			try:
 				# Mark the selection.
@@ -1571,6 +1550,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	]
 
 	def __init__(self):
+		louisHelper.initialize()
 		self.display = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
@@ -1604,6 +1584,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display.terminate()
 			self.display = None
 		_BgThread.stop(timeout=bgThreadStopTimeout)
+		louisHelper.terminate()
 
 	def getTether(self):
 		return self._tether
