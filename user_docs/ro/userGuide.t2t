@@ -1050,9 +1050,19 @@ Aceasta vă permite să alegeți nivelul de punctuație și alte simboluri care 
 De exemplu, când este pus pe „toate”, toate simbolurile vor fi pronunțate precum cuvinte.
 Această opțiune se aplică tuturor sintetizatoarelor, nu doar celui activ curent.
 
-==== Bazează-te pe limba vocii când se procesează caractere și simboluri ====SpeechSettingsTrust]
+==== Bazează-te pe limba vocii când se procesează caractere și simboluri ====[SpeechSettingsTrust]
 Activată implicit, această opțiune indică NVDA dacă limba vocii curente poate fi de încredere atunci când se procesează simboluri și caractere.
 Dacă descoperiți că NVDA citește punctuația în limba greșită pentru un anumit sintetizator sau o anumită voce, veți dori să dezactivați această opțiune pentru a forța NVDA să folosească, în schimb, configurația generală de limbă.
+
+==== Include datele Unicode Consortium (inclusiv emoji) atunci când se procesează caractere și simboluri ====[SpeechSettingsCLDR]
+Atunci când această casetă este bifată, NVDA va include dicționare adiționale de pronunțare a simbolurilor când se pronunță caractere și simboluri.
+Dicționarele conțin descrieri pentru simboluri (particular emoji) care sunt furnizate de [Unicode Consortium http://www.unicode.org/consortium/] ca parte a [depozitului lor de date locale comune http://cldr.unicode.org/].
+Dacă vreți ca NVDA să rostească descrieri ale caracterelor emoji bazate pe aceste date, trebuie să activați această opțiune.
+Totuși, dacă folosiți o sinteză vocală care are suport nativ pentru rostirea descrierilor emoji, puteți dori să opriți asta.
+
+Rețineți că descrierile caracterelor adăugate manual sau editate sunt salvate ca parte a setărilor dumneavoastră de utilizator.
+Prin urmare, dacă modificați descrierea unui emoji particular, acea descriere personalizată va fi rostită pentru acel emoji, indiferent dacă această opțiune este activată.
+Puteți adăuga, edita sau șterge descrieri de simboluri din [dialogul rostirii punctuației/simbolurilor #SymbolPronunciation].
 
 ==== Procent schimbare amplitudine la citirea majusculelor ====[SpeechSettingsCapPitchChange]
 Acest câmp editabil vă permite să tastați valoarea cu care amplitudinea vocii se va schimba când se pronunță majuscule.

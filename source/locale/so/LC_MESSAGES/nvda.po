@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-4ccb2ab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-09 00:10+1000\n"
-"PO-Revision-Date: 2018-11-15 11:04+0000\n"
+"POT-Creation-Date: 2018-11-20 10:57+1000\n"
+"PO-Revision-Date: 2018-11-22 10:38+0000\n"
 "Last-Translator: Osman H Baiia <othman82@hotmail.com>\n"
 "Language-Team: \n"
 "Language: so\n"
@@ -2670,7 +2670,7 @@ msgid "multi line"
 msgstr "khadadka badan"
 
 msgid "iconified"
-msgstr ""
+msgstr "calaamad yar"
 
 #. Translators: Presented when the current control is located off screen.
 msgid "off screen"
@@ -2871,18 +2871,23 @@ msgstr "Raadi qalad"
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
 msgstr ""
+"waxaad ka heleysaa xaraf qoraal ah oo ka soo jeeda meesha iminka taagan"
 
 #. Translators: Input help message for find next command.
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
+"helitaanka dhacdada soo socota ee xarafka hore ee qoraalka laga soo galiyay "
+"meesha iminka taagan"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
+"helitaanka dhacdadii hore ee qoraalka hore ee qoraalka laga soo galiyay "
+"meesha iminka taagan"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "No selection"
@@ -2921,15 +2926,16 @@ msgstr "u guurto tiirka miiska hore"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
-msgstr "Dami digniinta jadwalka"
+msgstr "sheeg miisska ayaa ku baxa"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables on"
-msgstr ""
+msgstr "sheeg miisska ayaa ku yaal"
 
 #. Translators: Input help mode message for include layout tables command.
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
 msgstr ""
+"Isku xidhka iyo ka-soo-baxidda miisaska looxyada ee habka indha-indheynta"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
@@ -2997,32 +3003,38 @@ msgid ""
 "Cycles through audio ducking modes which determine when NVDA lowers the "
 "volume of other sounds"
 msgstr ""
+"Wareegyo loo marayo hababka ducking audio taas oo go'aaminaya marka NVDA "
+"hoos u dhigto mugga codadka kale"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
-msgstr ""
+msgstr "caawinaad furaha ayaa ku yaal"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help off"
-msgstr ""
+msgstr "caawinaad furaha ayaa ku baxa"
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
+"Wuxuu kaa caawiyaa caawimaadda waxqabadka ama banaanka. Marka la eego, wixii "
+"talooyin ah sida foorarinta furaha kumbuyuutarka ayaa kuu sheegi doona "
+"qoraallada ku lug leh taladaas, haddii ay jirto"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr ""
+msgstr "Habka hurdada ayaa ku baxa"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr ""
+msgstr "Habka hurdada ayaa ku yaal"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
 msgstr ""
+"Xaaladda hurdada ayaa la gashaa oo dibedda loo dhigaa codsiga firfircoon."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3030,132 +3042,141 @@ msgid ""
 "twice will spell the current line. Pressing three times will spell the line "
 "using character descriptions."
 msgstr ""
+"Wuxuu soo wargelinayaa xariiqda hadda ee hoos kersiga codsiga. Guudmidda "
+"furahaan laba jeer ayaa ku dhajin doona khadka hadda. Riixidda saddex jeer "
+"ayaa ku dhejin doona xaraf adoo isticmaalaya sharaxaadda astaamaha."
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "Left click"
-msgstr ""
+msgstr "Guji bidix"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr ""
+msgstr "Ku dhufo badhanka faraha bidix hal mar marinka jiirka"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "Right click"
-msgstr ""
+msgstr "guji midig"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr ""
+msgstr "Ku dhufo badhanka faraha midig hal mar marinka jiirka"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "Left mouse button unlock"
-msgstr ""
+msgstr "badhanka jiirka bidix ayaa ku furan"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 msgid "Left mouse button lock"
-msgstr ""
+msgstr "badhanka jiirka bidix ayaa ku xiran"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
-msgstr ""
+msgstr "furo ama xiraa badhanka jiirka bidixda"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "Right mouse button unlock"
-msgstr ""
+msgstr "badhanka jiirka midig ayaa ku furan"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 msgid "Right mouse button lock"
-msgstr ""
+msgstr "badhanka jiirka midig ayaa ku xiran"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
-msgstr ""
+msgstr "furo ama xiraa badhanka jiirka midigda"
 
 #, python-format
 msgid "Selected %s"
-msgstr ""
+msgstr "la doortay %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
+"Wuxuu ku dhawaaqayaa doorashooyinka xaadirka ah ee xakamaynta iyo "
+"dukumiintiyada. Haddii aanay jirin wax xulasho ah ayaa sidaas leh."
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
+"Haddii hal mar la cadaadiyo, waxay sheegeysaa wakhtigan xaadirka ah. Haddii "
+"laba jeer la cadaadiyo, wuxuu qorayaa taariikhda hadda"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
-msgstr ""
+msgstr "goobo ma lahan"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr ""
+msgstr "Kordhi goobta xaadirka ah ee barnaamijka ku dhawaaqida ee shaqada"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr ""
+msgstr "yareeyaa goobta xaadirka ah ee barnaamijka ku dhawaaqida ee shaqada"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr ""
+msgstr "U dhaqaaq dhinaca goobta ku xigta barnaamijka dhawaaqa"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr ""
+msgstr "U dhaqaaq dhinaca goobta meeshii hore barnaamijka dhawaaqa"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr ""
+msgstr "Aqoonsiga dabeecadda qoraalka ayaa ku baxa"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr ""
+msgstr "Aqoonsiga dabeecadda qoraalka ayaa ku yaal"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr ""
+msgstr "Isku xidhka iyo ka baxa hadalka ku saabsan jilooyinka calaamadeysan"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr ""
+msgstr "ku hadal erayga qoran ayaa ku baxa"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr ""
+msgstr "ku hadal erayga qoran ayaa ku yaal"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr ""
+msgstr "Isku xidhka iyo ka baxa hadalka erayada qoran"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr ""
+msgstr "ku hadal furayaasha amarrada ayaa ku baxa"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr ""
+msgstr "ku hadal furayaasha amarrada ayaa ku yaal"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
+"Isku xidhka hadalka ah ee furayaasha qoraalka, kuwaas oo aan si gaar ah u "
+"lahayn jilayaal"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr ""
+msgstr "sheeg magaca font ayaa ku baxa"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr ""
+msgstr "sheeg magaca font ayaa ku yaal"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
-msgstr ""
+msgstr "Isku-dhafka iyo ka-warbixinta isbeddelka sheegetaanka ee magaca font"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
@@ -6712,7 +6733,7 @@ msgid "replied"
 msgstr ""
 
 #. Translators: the last action taken on an Outlook mail message
-msgid "REPLIED ALL"
+msgid "replied all"
 msgstr ""
 
 #. Translators: the last action taken on an Outlook mail message

@@ -168,7 +168,7 @@ class Logger(logging.Logger):
 		self._log(log.IO, msg, args, **kwargs)
 
 	def exception(self, msg="", exc_info=True, **kwargs):
-		"""Log an exception at an appropriate levle.
+		"""Log an exception at an appropriate level.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
