@@ -101,7 +101,7 @@ def internal_mouseEvent(msg,x,y,injected):
 	"""
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
-	if injected and (ignoreInjected or config.conf['mouse']['ignoreINjectedMouseInput']):
+	if injected and (ignoreInjected or config.conf['mouse']['ignoreInjectedMouseInput']):
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:
 		return True
@@ -115,6 +115,28 @@ def internal_mouseEvent(msg,x,y,injected):
 	except:
 		log.error("", exc_info=True)
 	return True
+
+def executeMouseEvent(flags, x, y, data=0):
+	"""
+	Mouse events generated with this rapper for L{winUser.mouse_event}
+	will be ignored by NVDA.
+	Consult https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-mouse_event
+	for detailed parameter documentation.
+	@param flags: Controls various aspects of mouse motion and button clicking.
+		The supplied value should be one or a combination of the C{winUser.MOUSEEVENTF_*} constants.
+	@type flags: int
+	@param x: The mouse's absolute position along the x-axis
+		or its amount of motion since the last mouse event was generated.
+	@type x: int
+	@param y: The mouse's absolute position along the y-axis
+		or its amount of motion since the last mouse event was generated.
+	@type y: int
+	@param data: Additional data depending on what flags are specified.
+		This defaults to 0.
+	@type data: int
+	"""
+	with ignoreInjection():
+		winUser.mouse_event(flags, x, y, data, None)
 
 def getMouseRestrictedToScreens(x, y, displays):
 	""" Ensures that the mouse position is within the area of one of the displays, relative to (0,0) 
