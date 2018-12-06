@@ -8,7 +8,10 @@
 import time
 import nvwave
 import threading
-import Queue
+try:
+	import Queue as queue # Python 2.7 import
+except ImportError:
+	import queue # Python 3 import
 from ctypes import *
 import config
 import globalVars
@@ -196,8 +199,10 @@ def _speak(text):
 	if not isSpeaking:
 		espeakDLL.espeak_ng_Cancel()
 	isSpeaking = True
-	flags = espeakCHARS_WCHAR | espeakSSML | espeakPHONEMES
 	_numBytesPushed = 0
+	# eSpeak can only process compound emojis  when using a UTF8 encoding
+	text=text.encode('utf8',errors='ignore')
+	flags = espeakCHARS_UTF8 | espeakSSML | espeakPHONEMES
 	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)
 
 def speak(text):
@@ -215,7 +220,7 @@ def stop():
 			if item[0] != _speak:
 				params.append(item)
 			bgQueue.task_done()
-	except Queue.Empty:
+	except queue.Empty:
 		# Let the exception break us out of this loop, as queue.empty() is not reliable anyway.
 		pass
 	for item in params:
@@ -318,7 +323,7 @@ def initialize(indexCallback=None):
 		outputDevice=config.conf["speech"]["outputDevice"],
 		buffered=True)
 	espeakDLL.espeak_SetSynthCallback(callback)
-	bgQueue = Queue.Queue()
+	bgQueue = queue.Queue()
 	bgThread=BgThread()
 	bgThread.start()
 	onIndexReached = indexCallback

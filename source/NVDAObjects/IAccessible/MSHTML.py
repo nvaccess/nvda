@@ -27,6 +27,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
+from locationHelper import RectLTRB
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -589,11 +590,7 @@ class MSHTML(IAccessible):
 			top=int(r.top*yFactor)
 			right=int(r.right*xFactor)
 			bottom=int(r.bottom*yFactor)
-			width=right-left
-			height=bottom-top
-			p=ctypes.wintypes.POINT(x=left,y=top)
-			ctypes.windll.user32.ClientToScreen(self.windowHandle,ctypes.byref(p))
-			return (p.x,p.y,width,height)
+			return RectLTRB(left,top,right,bottom).toScreen(self.windowHandle).toLTWH()
 		return None
 
 	def _get_TextInfo(self):
@@ -1010,6 +1007,9 @@ class MSHTML(IAccessible):
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process
 		pass
+
+	def _get_roleText(self):
+		return self.HTMLAttributes['aria-roledescription']
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.

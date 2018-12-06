@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-14 08:42+1000\n"
-"PO-Revision-Date: 2018-05-12 11:43+0530\n"
+"POT-Creation-Date: 2018-11-19 15:06+1000\n"
+"PO-Revision-Date: 2018-11-17 11:35+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Original Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "X-Generator: Poedit 1.5.7\n"
 
-# Thanks: http://www.ta.wiktionary.org/
+# Thanks: https://www.ta.wiktionary.org/
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
 msgstr "பாதுகாப்பான மேசைத்தளம்"
@@ -81,11 +81,6 @@ msgstr "தெரியாத மொழி"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "தெரியாத உள்ளீட்டு முறை"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{layout} - {language} "
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -365,6 +360,14 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "pwdedt"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "del"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "ins"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -502,6 +505,18 @@ msgstr "காட்சியமைவை எப்பொழுதும் ந�
 msgid "Only when scrolling back"
 msgstr "பின்னுருட்டும்பொழுது மட்டும்"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "தன்னியக்கம்"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "யுஎஸ்பி"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "ஊடலை"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -571,9 +586,20 @@ msgstr "குவிமையத்துடன் "
 msgid "to review"
 msgstr "சீராய்வுடன்"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "தன்னியக்கம்"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "தெரியாத பிரெயில் காட்சியமைவு"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "ஊடலைத் தொடர் நுழைவாயில்: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "தொடர் நுழைவாயில்: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -639,6 +665,11 @@ msgstr "பல்கேரிய 8 புள்ளி கணினி பிர�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "மைய குர்திஷ் படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "வெல்ஷ் படிநிலை 1"
 
@@ -646,6 +677,11 @@ msgstr "வெல்ஷ் படிநிலை 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "வெல்ஷ் படிநிலை 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "செக் 8 புள்ளி கணினி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -746,6 +782,11 @@ msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா) படிநிலை 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "எஸ்பராண்டோ படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -851,6 +892,11 @@ msgstr "ஹங்கேரிய 8 புள்ளி கணினி பிர�
 #. braille settings dialog.
 msgid "Hungarian grade 1"
 msgstr "ஹங்கேரிய படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
+msgstr "ஹங்கேரிய படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1034,6 +1080,11 @@ msgstr "சம்ஸ்கிருதம் படிநிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "ஸ்வீடிஷ் 8 புள்ளி கணினி பிரெயில்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Swedish grade 1"
 msgstr "சுவீடிஷ் படிநிலை 1"
 
@@ -1086,6 +1137,16 @@ msgstr "ஒருங்குறி பிரெயில்"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "வியட்நாமி படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "சீனம் (சீனா, மாண்டரீன்) படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "சீனம் (சீனா, மாண்டரீன்) படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2502,15 +2563,25 @@ msgstr "பெருவிரல் கட்டுப்பாடு"
 msgid "calendar"
 msgstr "நாட்காட்டி"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "விளக்கப்படக் கூறு"
-
 msgid "video"
 msgstr "காணொளி"
 
 msgid "audio"
 msgstr "ஒலிதம்"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "விளக்கப்படக் கூறு"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "அழிக்கப்பட்டது"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "செருகப்பட்டது"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3797,6 +3868,14 @@ msgstr ""
 msgid "No status line found"
 msgstr "நிலைக் கோடு காணப்படவில்லை"
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "நிலைப் பட்டைத் தகவல் ஏதுமில்லை"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "நிலைப் பட்டையின் உள்ளடக்கத்தை பிடிப்புப்பலகைக்கு படியெடுக்க இயலவில்லை"
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4372,7 +4451,7 @@ msgstr "இதரவை"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "கட்டுப்பாடு+நிலைமாற்றி+n"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -4747,28 +4826,23 @@ msgstr "விசைப்பலகை; எல்லாத் தளவமைப
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amharic"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragonese"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arabic"
+msgid "Central Kurdish"
+msgstr "மைய குர்திஷ்"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepali"
+msgid "Northern Kurdish"
+msgstr "வட குர்திஷ்"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Serbian (Latin)"
+msgid "Burmese"
+msgstr "பர்மியம்"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5954,7 +6028,7 @@ msgstr "%s கிடைவரிசைகளைக் கொண்டது"
 msgid "level %s"
 msgstr "மட்டம் %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "%s உருப்படிகளைக் கொண்டது"
@@ -6065,17 +6139,9 @@ msgstr "பின்னணி வடிவவிதம் {pattern}"
 msgid "line %s"
 msgstr "வரி %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "செருகப்பட்டது"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "செருகப்படாதது"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "அழிக்கப்பட்டது"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6685,9 +6751,17 @@ msgstr "துவக்கு"
 msgid "No track playing"
 msgstr "எத்தடமும் ஓடவில்லை"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நேரத்தில் மீதமிருந்தால், அதை அறிவிக்கும்"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் கடந்துள்ள நேரத்தை அறிவிக்கும்"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
+msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நீளத்தை அறிவிக்கும்"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6803,35 +6877,17 @@ msgstr "படிக்கப்படாதது"
 msgid "Editing profile {profile}"
 msgstr "{profile} தனியமைப்பு தொகுக்கப்படுகிறது"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "செவ்வூதாக் குறியீடு"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "மறுமொழியிடப்பட்டது"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "செம்மஞ்சள் குறியீடு"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "அனைவருக்கும் மறுமொழியிடப்பட்டது"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "பச்சைக் குறியீடு"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "மஞ்சள் குறியீடு"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "நீலக் குறியீடு"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "சிவப்புக் குறியீடு"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "முன்னனுப்பப்பட்டது"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7240,14 +7296,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "மீளியக்க நிறுத்தம்"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "முகவடி ஏதுமில்லை"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "ஆப்டிலெக் ஆல்வா 6 தொடர்/நெறிமுறை மாற்றி"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "ஊடலை தொடர் நுழைவாயில்: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7268,15 +7323,6 @@ msgstr "எச்.ஐ.டி. விசைப் பலகையின் ஒப
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit பிரெயில் காட்சியமைவுகள்"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "தொடர் நுழைவாயில்: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7444,7 +7490,7 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
-"COM பதிவுப் பிழை நீக்கியை நிறுவ இருக்கிறீர்கள். ஃபயர்ஃபாக்ஸ், இண்டர்நெட் எக்ஸ்ப்ளோரர் போன்ற பல "
+"COM பதிவுப் பிழை நீக்கியை இயக்க இருக்கிறீர்கள். ஃபயர்ஃபாக்ஸ், இண்டர்நெட் எக்ஸ்ப்ளோரர் போன்ற பல "
 "பயன்பாடுகளின் உள்ளடக்கங்களை என்விடிஏ அணுகவியலாமல் தடுக்கும் கணினியின் பொதுப் "
 "பிரச்சினைகளை நிவர்த்திச் செய்ய இக்கருவி முயற்சிக்கும். கணினியின் பதிவேட்டில் இக்கருவி "
 "மாற்றங்களைச் செய்ய வேண்டியிருப்பதால், இதற்கு நிர்வாகியின் சிறப்புரிமைத் தேவைப்படும். தாங்கள் "
@@ -7550,7 +7596,7 @@ msgstr "என்விடிஏவை நிறுவுக... (&I)"
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr "COM பதிவுப் பிழை நீக்கியை இயக்குக"
+msgstr "COM பதிவுப் பிழை நீக்கியை இயக்குக (&T)"
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7750,6 +7796,45 @@ msgstr "காத்திருப்பிலிருக்கும் இ�
 msgid "Please wait"
 msgstr "கருணைக்கூர்ந்து காத்திருக்கவும்"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr "என்விடிஏ பயன்பாட்டுத் தரவுத் திரட்டு"
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+"என்விடிஏவை மேம்படுத்த, ஓடிக்கொண்டிருக்கும் என்விடிஏவின் படிகளிலிருந்து பயன்பாட்டுத் "
+"தரவினைத் திரட்ட என்வி அக்ஸஸ் விரும்புகிறது.\n"
+"\n"
+"இயக்கமுறைமையின் பதிப்பு, என்விடிஏவின் பதிப்பு, மொழி, எந்த நாடு, போன்ற தரவுகள் இதில் "
+"உள்ளடங்கும். இது தவிர, நடப்பிலிருக்கும் ஒலிப்பான், பிரெயில் காட்சியமைவு, பிரெயில் "
+"அட்டவணை போன்ற சில குறிப்பிட்ட என்விடிஏவின் அமைவடிவத் தரவுகளும் உள்ளடங்கும். பேச்சின் "
+"உள்ளடக்கத்தையோ, பிரெயிலின் உள்ளடக்கத்தையோ ஒருபோதும் என்வி அக்ஸஸ் நிறுவனத்திற்கு அனுப்பி "
+"வைக்கப்பட மாட்டாது.  திரட்டப்படும் தரவுகளின் தற்போதைய பட்டியலையறிய, என்விடிஏவின் பயனர் "
+"வழிகாட்டியைக் காணவும்.\n"
+"\n"
+"என்விடிஏவை மேம்படுத்த, இத்தரவினை என்வி அக்ஸஸ் நிறுவனம் கால இடைவெளிகளில் திரட்ட "
+"அனுமதிக்க விரும்புகிறீர்களா?"
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr "ஆம் (&Y)"
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr "இல்லை (&N)"
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "கூட்டுக்கூறு மேலாளர்"
@@ -7800,6 +7885,7 @@ msgstr "நிறுவுக... (&I)"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "நீக்குக (&R)"
@@ -8343,7 +8429,7 @@ msgstr "சரி"
 
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
-msgstr "நீக்குக"
+msgstr "விலக்குக"
 
 #. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
 msgid "Apply"
@@ -8422,6 +8508,11 @@ msgstr "இற்றாக்கங்களுக்குத் தானா�
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr "துவக்கப்படும்பொழுது காத்திருப்பிலிருக்கும் இற்றாக்கத்தைத் தெரியப்படுத்துக (&P)"
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+"என்விடிஏவின் பயன்பாட்டுப் புள்ளிவிவரங்களை சேகரிக்க என்விடிஏ திட்டப் பணியை அனுமதிக்கவும் "
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8550,6 +8641,16 @@ msgstr "நிறுத்தற்குறிகள்/குறியெழ�
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது குரலின் மொழியை நம்புக"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது முகவடிகள் உட்பட ஒருங்குறிக் "
+"கூட்டமைப்பின் தரவுகளைச் சேர்த்துக்கொள்ளவும்"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "ஆங்கில முகப்பெழுத்து சுருதி மாற்று விழுக்காடு"
@@ -8573,20 +8674,10 @@ msgstr "எழுத்துகளாக படிக்கும் வசத�
 msgid "Keyboard"
 msgstr "விசைப்பலகை"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "முகப்பெழுத்து பூட்டு விசையை என்விடிஏ மாற்றியமைப்பி விசையாக பயன்படுத்துக"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "எண் திட்டு செருகு விசையை என்விடிஏ மாற்றியமைப்பி விசையாகப் பயன்படுத்துக"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "நீட்டிக்கப்பட்ட செருகு விசையை என்விடிஏ மாற்றியமைப்பி விசையாகப் பயன்படுத்துக"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "என்விடிஏ மாற்றியமைப்பி விசைகளைத் தெரிவுச் செய்க (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8752,8 +8843,8 @@ msgstr "கருவிக் குறிப்புகளை அறிவி�
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "உதவிக் குமிழிகளை அறிவிக்கவும் (&H)"
+msgid "Report &notifications"
+msgstr "அறிவிக்கைகளை அறிவிக்கவும் (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10679,6 +10770,16 @@ msgstr "கருத்துரை: {text}, படைப்பாளர்: {au
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "பக்கத்தின் இட விளிம்பிலிருந்து {distance}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "பக்கத்தின் மேல் விளிம்பிலிருந்து {distance}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10837,6 +10938,58 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
+
+#~ msgid "REPLIED ALL"
+#~ msgstr "அனைவருக்கும் மறுமொழியிடப்பட்டுவிட்டது"
+
+#~ msgid "purple flag"
+#~ msgstr "செவ்வூதாக் குறியீடு"
+
+#~ msgid "Orange flag"
+#~ msgstr "செம்மஞ்சள் குறியீடு"
+
+#~ msgid "Green flag"
+#~ msgstr "பச்சைக் குறியீடு"
+
+#~ msgid "Yellow flag"
+#~ msgstr "மஞ்சள் குறியீடு"
+
+#~ msgid "Blue flag"
+#~ msgstr "நீலக் குறியீடு"
+
+#~ msgid "Red flag"
+#~ msgstr "சிவப்புக் குறியீடு"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "முகப்பெழுத்து பூட்டு விசையை என்விடிஏ மாற்றியமைப்பி விசையாக பயன்படுத்துக"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "எண் திட்டு செருகு விசையை என்விடிஏ மாற்றியமைப்பி விசையாகப் பயன்படுத்துக"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "நீட்டிக்கப்பட்ட செருகு விசையை என்விடிஏ மாற்றியமைப்பி விசையாகப் பயன்படுத்துக"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "உதவிக் குமிழிகளை அறிவிக்கவும் (&H)"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{layout} - {language} "
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amharic"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arabic"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepali"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbian (Latin)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "என்விடிஏ குரல் அமைப்புகள் உரையாடலைக் காட்டும்"

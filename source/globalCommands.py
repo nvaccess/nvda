@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka
 
 import time
 import itertools
@@ -1127,9 +1127,24 @@ class GlobalCommands(ScriptableObject):
 		else:
 			try:
 				c = ord(info.text)
+			except TypeError:
+				# This might be a character taking multiple code points.
+				# If it is a 32 bit character, encode it to UTF-32 and calculate the ord manually.
+				# In Python 3, this is no longer necessary.
+				try:
+					encoded = info.text.encode("utf_32_le")
+				except UnicodeEncodeError:
+					c = None
+				else:
+					if len(encoded)==4:
+						c = sum(ord(cp)<<i*8 for i, cp in enumerate(encoded))
+					else:
+						c = None
+			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
-			except:
+			else:
+				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for report current character under review cursor command.
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
@@ -1203,7 +1218,9 @@ class GlobalCommands(ScriptableObject):
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
 			import wx
-			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
@@ -1374,13 +1391,25 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No status line found"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			ui.message(text)
+			if not text.strip():
+				# Translators: Reported when status line exist, but is empty.
+				ui.message(_("no status bar information"))
+			else:
+				ui.message(text)
 		elif scriptHandler.getLastScriptRepeatCount()==1:
-			speech.speakSpelling(text)
+			if not  text.strip():
+				# Translators: Reported when status line exist, but is empty.
+				ui.message(_("no status bar information"))
+			else:
+				speech.speakSpelling(text)
 		else:
-			if api.copyToClip(text):
-				# Translators: The message presented when the status bar is copied to the clipboard.
-				ui.message(_("%s copied to clipboard")%text)
+			if not text.strip():
+				# Translators: Reported when user attempts to copy content of the empty status line.
+				ui.message(_("unable to copy status bar content to clipboard"))
+			else:
+				if api.copyToClip(text):
+					# Translators: The message presented when the status bar is copied to the clipboard.
+					ui.message(_("%s copied to clipboard")%text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard")
 	script_reportStatusLine.category=SCRCAT_FOCUS
@@ -1728,11 +1757,7 @@ class GlobalCommands(ScriptableObject):
 			if newTetherChoice==braille.handler.TETHER_REVIEW:
 				braille.handler.handleReviewMove(shouldAutoTether=False)
 			else:
-				focus = api.getFocusObject()
-				if focus.treeInterceptor and not focus.treeInterceptor.passThrough:
-					braille.handler.handleGainFocus(focus.treeInterceptor,shouldAutoTether=False)
-				else:
-					braille.handler.handleGainFocus(focus,shouldAutoTether=False)
+				braille.handler.handleGainFocus(api.getFocusObject(),shouldAutoTether=False)
 		# Translators: Reports which position braille is tethered to
 		# (braille can be tethered automatically or to either focus or review position).
 		ui.message(_("Braille tethered %s") % labels[newIndex])
@@ -1965,12 +1990,7 @@ class GlobalCommands(ScriptableObject):
 					braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 				braille.handler.mainBuffer.updateDisplay()
 			else:
-				# We just tethered to focus from review,
-				# Handle this case as we just focused the object
-				if obj.treeInterceptor and not obj.treeInterceptor.passThrough:
-					braille.handler.handleGainFocus(obj.treeInterceptor,shouldAutoTether=False)
-				else:
-					braille.handler.handleGainFocus(obj,shouldAutoTether=False)
+				braille.handler.handleGainFocus(obj,shouldAutoTether=False)
 	# Translators: Input help mode message for a braille command.
 	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE

@@ -114,7 +114,7 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 
 //GetMessage hook callback
 LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
-	if(code<0||wParam==PM_NOREMOVE) {
+	if(code<0||!(wParam&PM_REMOVE)) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
 	MSG* pmsg=(MSG*)lParam;

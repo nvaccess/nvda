@@ -23,12 +23,15 @@ import os
 import os.path
 import glob
 from fnmatch import fnmatch
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except:
+	import winreg # python 3 import
 
 def fetchDoxygenPath():
 	try:
-		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1", 0, _winreg.KEY_READ | _winreg.KEY_WOW64_64KEY) as doxygenKey:
-			doxygenPath= '"%s"'%os.path.join(_winreg.QueryValueEx(doxygenKey, "InstallLocation")[0], "Bin", "doxygen.exe")
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1", 0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY) as doxygenKey:
+			doxygenPath= '"%s"'%os.path.join(winreg.QueryValueEx(doxygenKey, "InstallLocation")[0], "Bin", "doxygen.exe")
 	except WindowsError:
 		return 'doxygen'
 	return doxygenPath
