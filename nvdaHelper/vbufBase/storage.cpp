@@ -912,19 +912,18 @@ int VBufStorage_buffer_t::getTextLength() const {
 	return length;
 }
 
-wstring  VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, bool useMarkup) {
+bool VBufStorage_buffer_t::getTextInRange(int startOffset, int endOffset, wstring& text, bool useMarkup) {
 	if(this->rootNode==NULL) {
 		LOG_DEBUGWARNING(L"buffer is empty, returning NULL");
-		return NULL;
+		return false;
 	}
 	if(startOffset<0||startOffset>=endOffset||endOffset>this->rootNode->length) {
 		LOG_DEBUGWARNING(L"Bad offsets of "<<startOffset<<L" and "<<endOffset<<L", returning NULL");
-		return NULL;
+		return false;
 	}
-	wstring text;
 	this->rootNode->getTextInRange(startOffset,endOffset,text,useMarkup);
 	LOG_DEBUG(L"Got text between offsets "<<startOffset<<L" and "<<endOffset<<L", returning true");
-	return text;
+	return true;
 }
 
 VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribs, const std::wstring &regexp, int *startOffset, int *endOffset) {

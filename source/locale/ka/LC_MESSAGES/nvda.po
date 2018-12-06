@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
+"POT-Creation-Date: 2018-09-21 00:10+1000\n"
 "PO-Revision-Date: 2017-10-31 20:28-0700\n"
 "Last-Translator: Nikoloz\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
@@ -82,10 +82,23 @@ msgstr "უცნობი ენა"
 msgid "unknown input method"
 msgstr "შეყვანის უცნობი  მეთოდი"
 
-#. Translators: the message announcing the language and keyboard layout when it changes
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, fuzzy, python-brace-format
+msgid "spelling and grammar: {text}"
+msgstr "გრამატიკული შეცდომა "
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, fuzzy, python-brace-format
+msgid "spelling: {text}"
+msgstr "გრამატიკული შეცდომა "
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
+msgid "grammar: {text}"
+msgstr ""
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -371,6 +384,16 @@ msgstr "პანელი"
 msgid "pwdedt"
 msgstr ""
 
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "დლგ"
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "ბმულ&ები"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "უჯრა"
@@ -517,6 +540,18 @@ msgstr "ბრაილის&დისპლეი"
 msgid "Only when scrolling back"
 msgstr ""
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "ავტომატურად"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -526,14 +561,6 @@ msgstr "h%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "vlnk"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr "არა %s"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -551,17 +578,29 @@ msgstr "{number} {total}დან"
 msgid "lv %s"
 msgstr "lv %s"
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr ""
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%s"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr ""
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr ""
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr ""
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -569,9 +608,51 @@ msgstr "c%s"
 msgid "%s end"
 msgstr "%s end"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+#, fuzzy
+msgid "automatically"
 msgstr "ავტომატურად"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+#, fuzzy
+msgid "to focus"
+msgstr "არ არის ფოკუსი"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+#, fuzzy
+msgid "to review"
+msgstr "ტექსტის მიმოხილვა"
+
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "Seika braille displays"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "სერია: {portName}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "სერია: {portName}"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr ""
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr ""
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, fuzzy, python-brace-format
+msgid "{modifier} pressed"
+msgstr "დაჭერილია"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -626,6 +707,12 @@ msgstr "ბულგარული რვა წერტილიანი ბ
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "Swedish grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "უელსური საფეხური  1"
 
@@ -633,6 +720,12 @@ msgstr "უელსური საფეხური  1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "უელსური საფეხური 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "ესპანური რვაწერტილიანი ბრაილი კომპიუტერისთვის"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -738,6 +831,12 @@ msgstr "ინგლისური (ა.შ.) საფეხური 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "გერმანული საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
 msgstr "ესპანური რვაწერტილიანი ბრაილი კომპიუტერისთვის"
 
@@ -790,18 +889,9 @@ msgstr "French (unified) რვა წერტილიანი ბრაი�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+#, fuzzy
+msgid "French (unified) grade 2"
 msgstr "French (unified) საფეხური 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "ფრანგული (კანადა) საფეხური 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "ფრანგული (კანადა) საფეხური 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -840,12 +930,24 @@ msgstr "ხორვატიული რვაწერტილიანი �
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Croatian grade 1"
+msgstr "Latvian grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "უნგრული რვაწერტილიანი ბრაილი, კომპიუტერისთვის"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "უნგრული საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "უნგრული საფეხური 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -895,8 +997,14 @@ msgstr "Kashmiri grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
+msgid "Lithuanian 8 dot"
 msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Lithuanian 6 dot"
+msgstr "ფინური ექვსწერტილიანი"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -915,8 +1023,15 @@ msgstr "Manipuri grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr "Mongolian"
+#, fuzzy
+msgid "Mongolian grade 1"
+msgstr "უნგრული საფეხური 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Mongolian grade 2"
+msgstr "Norwegian grade 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1000,6 +1115,11 @@ msgstr "Punjabi grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "Russian braille for computer code"
 
@@ -1012,6 +1132,12 @@ msgstr "Russian grade 1"
 #. braille settings dialog.
 msgid "Sanskrit grade 1"
 msgstr "Sanskrit grade 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Swedish 8 dot computer braille"
+msgstr "ესპანური რვაწერტილიანი ბრაილი კომპიუტერისთვის"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1057,9 +1183,32 @@ msgstr "Turkish grade 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Ukrainian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 #, fuzzy
 msgid "Unicode braille"
 msgstr "ბრაილი არ არის"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Vietnamese grade 1"
+msgstr "ასამიური საფეხური  1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chinese (Taiwan, Mandarin)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chinese (Taiwan, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1572,14 +1721,14 @@ msgstr "არ არის წინა გამყოფი"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr "ბმულ&ები"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr "&სათაურები"
 
@@ -1597,7 +1746,7 @@ msgstr "ღილაკი"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr "&ორიენტირები"
 
@@ -1670,33 +1819,6 @@ msgstr "ქვედა"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "გადადის კონტეინერის ელემენტების ბოლოში, სიასთან ან ცხრილთან"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr "არ არის ცხრილის უჯრაში"
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr "ცხრილის საზღვარი"
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr "გადადის ცხრილის შემდეგ ხაზზე"
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr "გადადის ცხრილის წინა ხაზზე"
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr "გადადის ცხრილის შემდეგ სვეტზე"
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
-msgstr "გადადის ცხრილის წინა სვეტზე"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2147,7 +2269,7 @@ msgstr "აბზაცი"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
+#. See https://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "ციტატა"
 
@@ -2523,6 +2645,20 @@ msgstr ""
 msgid "audio"
 msgstr ""
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr ""
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "წაიშალა"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ჩასმულია"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "მიუწვდომელია"
@@ -2639,7 +2775,7 @@ msgid "dragging"
 msgstr "გადათრევა"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr "სამიზნე პუნქტი გადათრევისათვის"
 
@@ -2698,6 +2834,11 @@ msgstr "დაჭერილია"
 msgid "not checked"
 msgstr "არაა მონიშნული"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr "გადათრევა დასრულებულია"
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr ""
@@ -2723,6 +2864,14 @@ msgstr ""
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
 msgstr ""
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
+msgstr "არა %s"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2821,6 +2970,48 @@ msgstr "არ არის მონიშნული"
 msgid "Copied to clipboard"
 msgstr "კოპირებულია ბუფერში"
 
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr "არ არის ცხრილის უჯრაში"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr "ცხრილის საზღვარი"
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr "გადადის ცხრილის შემდეგ ხაზზე"
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr "გადადის ცხრილის წინა ხაზზე"
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr "გადადის ცხრილის შემდეგ სვეტზე"
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr "გადადის ცხრილის წინა სვეტზე"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables off"
+msgstr "ცხრილების კითხვა გამორთულია"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables on"
+msgstr "ცხრილების კითხვა ჩართულია"
+
+#. Translators: Input help mode message for include layout tables command.
+#, fuzzy
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "გადართავს ცხრილების წაკითხვას"
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
 msgstr "ტექსტის მიმოხილვა"
@@ -2834,10 +3025,12 @@ msgid "System caret"
 msgstr "სისტემური კურსორი"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "თაგვი"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "მეტყველება"
 
@@ -2846,6 +3039,7 @@ msgid "Configuration"
 msgstr "კონფიგურაცია"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "ბრაილი"
 
@@ -2913,7 +3107,8 @@ msgid "Sleep mode on"
 msgstr "ძილის რეჟიმი ჩართულია"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
 msgstr "აქტიური პროგრამისათვის რთავს ან თიშავს ძილის რეჟიმს "
 
 #. Translators: Input help mode message for report current line command.
@@ -3395,7 +3590,7 @@ msgstr ""
 "გადართავს შემდეგ ნახვის რეჟიმზე (მაგ: ობიექტზე, დოკუმენტზე, ან ეკრანზე) და "
 "აყენებს ნახვის რეჟიმს ობიექტის ნავიგატორთან."
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "არ არის წინა ნახვის რეჟიმი"
 
@@ -3431,9 +3626,10 @@ msgid "%s copied to clipboard"
 msgstr "%s დაკოპირებულია ბუფერში"
 
 #. Translators: Input help mode message for report current navigator object command.
+#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
-"information, and pressing three times Copies name and value of this  object "
+"information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
 "ერთხელ დაჭერით აცხადებს ნავიგატორის ობიექტს, ორჯერ დაჭერისას ასო-ასო, ხოლო "
@@ -3755,6 +3951,15 @@ msgstr ""
 msgid "No status line found"
 msgstr "ვერ მოხერხდა მდგომარეობის ხაზის მოძებნა."
 
+#. Translators: Reported when status line exist, but is empty.
+#, fuzzy
+msgid "no status bar information"
+msgstr "არ არის ინფორმაცია ადგილმდებარეობის შესახებ"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
@@ -3931,48 +4136,64 @@ msgstr ""
 "აცხადებს აქტიური დანართის შესრულებადი ფაილის სატაურს და მისთვის ჩატვირთულ "
 "მოდულს. "
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
+#. Translators: Input help mode message for go to general settings command.
+#, fuzzy
+msgid "Shows NVDA's general settings"
 msgstr "გამოიძახებს NVDA საერთო წყობის დიალოგს"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
+#. Translators: Input help mode message for go to select synthesizer command.
+#, fuzzy
+msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "გამოიძახებს NVDA მოქმედი სინთეზატორების არჩევანის დიალოგს"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "გამოიძახებს NVDA მოქმედი ხმების არჩევანის დიალოგს."
-
-#. Translators: Input help mode message for go to braille settings dialog command.
-msgid "Shows the NVDA braille settings dialog"
-msgstr "გამოაქვს nvda-ს ბრაილის პარამეტრების დიალოგი"
-
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
-msgstr "გამოიძახებს NVDA კლავიატურის აწყობის დიალოგს"
-
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
+#. Translators: Input help mode message for go to speech settings command.
+#, fuzzy
+msgid "Shows NVDA's speech settings"
 msgstr "გამოიძახებს NVDA თაგვის აწყობის დიალოგს"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
-msgid "Shows the NVDA review cursor settings dialog"
+#. Translators: Input help mode message for go to select braille display command.
+#, fuzzy
+msgid "Shows the NVDA braille display selection dialog"
+msgstr "გამოაქვს nvda-ს ბრაილის პარამეტრების დიალოგი"
+
+#. Translators: Input help mode message for go to braille settings command.
+#, fuzzy
+msgid "Shows NVDA's braille settings"
+msgstr "გამოაქვს nvda-ს ბრაილის პარამეტრების დიალოგი"
+
+#. Translators: Input help mode message for go to keyboard settings command.
+#, fuzzy
+msgid "Shows NVDA's keyboard settings"
+msgstr "გამოიძახებს NVDA კლავიატურის აწყობის დიალოგს"
+
+#. Translators: Input help mode message for go to mouse settings command.
+#, fuzzy
+msgid "Shows NVDA's mouse settings"
+msgstr "გამოიძახებს NVDA თაგვის აწყობის დიალოგს"
+
+#. Translators: Input help mode message for go to review cursor settings command.
+#, fuzzy
+msgid "Shows NVDA's review cursor settings"
 msgstr "გამოიძახებს NVDA ხილული კურსორის პარამეტრების დიალოგს"
 
-#. Translators: Input help mode message for go to input composition dialog.
-msgid "Shows the NVDA input composition settings dialog"
+#. Translators: Input help mode message for go to input composition settings command.
+#, fuzzy
+msgid "Shows NVDA's input composition settings"
 msgstr "გამოაქვს აზიური იეროგლიფების წაკითხვის პარამეტრების დიალოგი"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
+#. Translators: Input help mode message for go to object presentation settings command.
+#, fuzzy
+msgid "Shows NVDA's object presentation settings"
 msgstr "გამოიძახებს NVDA ობიექტების წარმოდგენის დიალოგს"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
+#. Translators: Input help mode message for go to browse mode settings command.
+#, fuzzy
+msgid "Shows NVDA's browse mode settings"
 msgstr "Shows the NVDA browse mode settings dialog"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
+#. Translators: Input help mode message for go to document formatting settings command.
+#, fuzzy
+msgid "Shows NVDA's document formatting settings"
 msgstr "გამოიძახებს NVDA დოკუმენტის ფორმატირების გახმოვანების დიალოგს"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
@@ -4036,18 +4257,10 @@ msgstr ""
 "რთავს nvda-ს მეტყველებაზე თვალყურის დევნების რეჟიმს, მოძრავ ფანჯარას, "
 "რომელიც იძლევა nvda-ს მიერ წარმოთქმული ტექსტის დათვალიერების საშუალებას."
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "განხილვა"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "ფოკუსი"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
-#, python-format
-msgid "Braille tethered to %s"
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
+#, fuzzy, python-format
+msgid "Braille tethered %s"
 msgstr "ბრაილი მიბმულია %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -4163,6 +4376,11 @@ msgstr "ბრაილის სტრიქონს აბრუნებს 
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "ბრაილის უჯრის ქვეს გადაადგილებს კურსორს, ან ააქტიურებს ობიექტს"
 
+#. Translators: Input help mode message for Braille report formatting command.
+#, fuzzy
+msgid "Reports formatting info for the text under this braille cell"
+msgstr "ბრაილის უჯრის ქვეს გადაადგილებს კურსორს, ან ააქტიურებს ობიექტს"
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "ბრაილის დისპლეის გადაადგილებს წინა ხაზზე"
@@ -4189,6 +4407,36 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the shift key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the control key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the alt key to emulate a keyboard shortcut with braille "
+"input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the left windows key to emulate a keyboard shortcut with "
+"braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid ""
+"Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
+"input"
 msgstr ""
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
@@ -4242,6 +4490,25 @@ msgstr "ახმოვანებს ახალ ობიექტს, თ�
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "იძახებს NVDA პარამეტრების პროფილების დიალოგს"
 
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers disabled"
+msgstr "კონფიგურაციის პროფილები"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers enabled"
+msgstr "კონფიგურაციის პროფილები"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+#, fuzzy
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains "
+"in effect until NVDA is restarted"
+msgstr ""
+"შეცდომა კონფიგურაციის პროფილის ტრიგერის შენახვისას, სავარაუდოდ ფაილის "
+"სისტემის მხოლოდ კითხვის რეჟიმის გამო."
+
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
@@ -4273,7 +4540,7 @@ msgstr "სხვადასხვა"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -4659,28 +4926,23 @@ msgstr "კლავიატურა ყველა წყობა"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amharic"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragonese"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "არაბული"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepali"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Serbian (Latin)"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5870,20 +6132,27 @@ msgstr "მოინიშნა %s"
 msgid "selection removed"
 msgstr "მონიშნული ტექსტი წაიშალა"
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr "გადათრევა დასრულებულია"
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
 msgstr "ხაზი %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, fuzzy, python-format
+msgid "through %s"
+msgstr "გახაზულია"
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "სვეტი %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "{rowCount} ხაზითა და {columnCount} სვეტით"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -5905,7 +6174,7 @@ msgstr "%s ხაზით"
 msgid "level %s"
 msgstr "%s დონე"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "%s ელემენტით"
@@ -6018,17 +6287,9 @@ msgstr "ჩუქურთმა {pattern}"
 msgid "line %s"
 msgstr "ხაზი %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ჩასმულია"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "არ არის ჩასმული"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "წაიშალა"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6077,17 +6338,17 @@ msgid "no italic"
 msgstr "არ არის კურსივი"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "ორმაგი გადახაზვა"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "გახაზულია"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "არ არის გახაზული"
 
@@ -6117,18 +6378,46 @@ msgid "align right"
 msgstr "სწორება მარჯვენა ნაპირთან"
 
 #. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "სწორება სიგანეზე"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#. See https://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "სწორება დისტრიბუციის მიხედვით"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "დათქმული სწორება"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "ვერტიკალური სწორება"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "ვერტიკალური სწორება შუაში "
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "ვერტიკალური სწორება ბოლოში"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "ვერტიკალური სწორება ძირითად ხაზზე"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "ვერტიკალური სწორება ცენტრზე"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "ვერტიკალური სწორება დისტრიბუციის მიხედვით"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "ვერტიკალური სწორება სტანდარტულად"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -6162,34 +6451,6 @@ msgstr "პირველი ხაზის გასწორება ზღ
 msgid "no first line indent"
 msgstr "არაა პირველი ხაზის გასწორება ზღვარზე"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "ვერტიკალური სწორება"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "ვერტიკალური სწორება შუაში "
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "ვერტიკალური სწორება ბოლოში"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "ვერტიკალური სწორება ძირითად ხაზზე"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "ვერტიკალური სწორება ცენტრზე"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "ვერტიკალური სწორება დისტრიბუციის მიხედვით"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "ვერტიკალური სწორება სტანდარტულად"
-
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, python-format
 msgid "line spacing %s"
@@ -6205,6 +6466,15 @@ msgstr "გრამატიკული შეცდომა "
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
+msgstr "გრამატიკული შეცდომის გარეთ"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr ""
+
+#. Translators: Reported when moving out of text containing a grammar error.
+#, fuzzy
+msgid "out of grammar error"
 msgstr "გრამატიკული შეცდომის გარეთ"
 
 #. Translators: Indicates end of a table.
@@ -6384,14 +6654,22 @@ msgid "Error checking for update."
 msgstr "შეცდომა განახლების შემოწმებისას"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "შეცდომა"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "NVDA-ს განახლება"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6404,9 +6682,16 @@ msgstr "ხელმისაწვდომია NVDA ვერსია {vers
 msgid "No update available."
 msgstr "ჯერ არ არის NVDA-ს ახალი ვერსია"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "განახლების ჩამოტვირთვა და &დაყენება"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, fuzzy, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "NVDA-ს დაყენება"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+#, fuzzy
+msgid "Re-&download update"
+msgstr "განახლების &ჩამოტვირთვა"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6421,6 +6706,26 @@ msgstr "მოგვიანებით შეხსენება"
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&დახურვა"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, fuzzy, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr "ხელმისაწვდომია NVDA ვერსია {version}."
+
+#. Translators: The label of a button to install an NVDA update.
+#, fuzzy
+msgid "&Install update"
+msgstr "განახლების დაყენება"
+
+#. Translators: The label of a button to postpone an NVDA update.
+#, fuzzy
+msgid "&Postpone update"
+msgstr "განახლების &ჩამოტვირთვა"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+#, fuzzy
+msgid "Unable to postpone update."
+msgstr "კოპირება შეუძლებელია"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6437,15 +6742,6 @@ msgstr "ჩამოტვირთვა"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "შეცდომა განახლების ჩამოტვირთვისას"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "განახლება ჩამოიტვირთა და ახლა დაყენდება."
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "განახლების დაყენება"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6508,7 +6804,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6529,7 +6825,7 @@ msgstr ""
 "მსურველტატვის. ეს ეკუტვნის ამ პროგრამული უზრუნველყოფის ორიგინალურ ვერსიას, "
 "მის შეცვლილ კოპიებს, და ასევე მის მწარმოებლებს\n"
 "დაწვრილებიტ იხილეტ ლიცენზია მენიუ \"დახმარებაში\".\n"
-"ის ასევე შეიძლება იქნეს მიღებული ონლაინ რეჟიმში: http://www.gnu.org/licenses/"
+"ის ასევე შეიძლება იქნეს მიღებული ონლაინ რეჟიმში: https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} მუშავდება NV Access, არაკომერციული ორგანიზაციის მიერ, რომელიც შეიქმნა "
@@ -6609,8 +6905,18 @@ msgstr "დაწყება"
 msgid "No track playing"
 msgstr "არ მიმდინარეობს ბილიკის დაკვრა"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
+msgstr "აცხადებს ბილიკის დაკვრის დარჩენილ დროს თუ შესაძლებელია"
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr "აცხადებს ბილიკის დაკვრის დარჩენილ დროს თუ შესაძლებელია"
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the length of the currently playing track, if any"
 msgstr "აცხადებს ბილიკის დაკვრის დარჩენილ დროს თუ შესაძლებელია"
 
 #. Translators: Describes a command.
@@ -6721,35 +7027,9 @@ msgstr "ბრმა ასლი"
 msgid "unread"
 msgstr "წაუკითხავი"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-#, fuzzy
-msgid "purple flag"
-msgstr "იისფერი"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
 msgstr ""
 
 #. Translators: for a high importance email
@@ -6782,6 +7062,11 @@ msgstr "გაგზავნილია %s"
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "აუთლუქის ლოდინი..."
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
+msgstr ""
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
 #, python-brace-format
@@ -7146,35 +7431,62 @@ msgctxt "repeat"
 msgid "off"
 msgstr "გამორთულია"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 series"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr ""
+
+#. Translators: Message when setting HID keyboard simulation failed.
+#, fuzzy
+msgid "Setting HID keyboard simulation not supported"
+msgstr "არ აქვს მათემატიკურ კონტენტთან წვდომის მხარდაჭერა"
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr ""
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
+msgstr ""
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr ""
 "Baum/HumanWare/APH/Orbit braille displaysBaum/HumanWare/APH braille displays"
 
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "სერია: {portName}"
-
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
+#, fuzzy
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
 msgstr "HumanWare Brailliant BI/B series"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
 msgstr "EcoBraille displays"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+#, fuzzy
+msgid "HID keyboard input simulation is unavailable."
+msgstr "ხელმისაწვდომია NVDA ვერსია {version}."
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+#, fuzzy
+msgid "Toggle HID keyboard simulation"
+msgstr "არ აქვს მათემატიკურ კონტენტთან წვდომის მხარდაჭერა"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7188,12 +7500,28 @@ msgstr "ეკრანის გადახვევა"
 msgid "line scroll"
 msgstr "სტრიქონის გადახვევა"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr "HandyTech braille displays"
 
-msgid "Show the Handy Tech driver configuration window."
-msgstr "აჩვენოს  Handy Tech კონფიგურაციის ფანჯარა."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr ""
+
+#. Translators: message when braille input is disabled
+#, fuzzy
+msgid "Braille input disabled"
+msgstr "ბრაილის&დისპლეი"
+
+#. Translators: description of the script to toggle braille input
+#, fuzzy
+msgid "Toggle braille input"
+msgstr "ბრაილი არ არის"
+
+#. Translators: The name of a series of braille displays.
+#, fuzzy
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -7206,11 +7534,6 @@ msgstr "ბრაილი არ არის"
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX-ის ახალი მოდელები"
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
-msgstr ""
-"გადაყავს მითითებულ ადგილას და აცხადებს ინფორმაციას ფორმატირების შესახებ."
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -7277,9 +7600,15 @@ msgstr ""
 "კონფიგურაციის შენახვა ვერ მოხერხდა, სავარაუდოდ ფაილის სისტემის მხოლოდ "
 "კითხვისთვის რეჟიმის გამო."
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr "NVDA-ს პარამეტრების დიალოგი უკვე გახსნილია. ჯერ დახურეთ ის."
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7298,92 +7627,44 @@ msgstr "დროებიტი ლექსიკონი"
 msgid "About NVDA"
 msgstr "NVDA-ს შესახებ"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "& საერთო პარამეტრები"
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to "
+"fix common system problems that stop NVDA from being able to access content "
+"in many programs including Firefox and Internet Explorer. This tool must "
+"make changes to the System registry and therefore requires administrative "
+"access. Are you sure you wish to proceed?"
+msgstr ""
 
-msgid "General settings"
-msgstr "საერთო პარამეტრები"
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "ყურადღება"
 
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&სინთეზატორი..."
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr ""
 
-msgid "Change the synthesizer to be used"
-msgstr "მიმდინარე სინთეზატორის შეცვლა"
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+#, fuzzy
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "გთხოვთ დაიცადოთ სანამ პარამეტრები კოპირდება სისტემურ კონფიგურაციაში."
 
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr ""
+
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "&Settings..."
 msgstr "&ხმის პარამეტრები "
 
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr ""
-"შეარჩიეთ ხმა, სიჩქარე, ტემბრი და ხმის სიმაღლე, რომელის გმოყენებაც გსურთ."
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "&ბრაილის პარამეტრები"
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "&კლავიატურის პარამეტრები..."
-
-msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
-msgstr ""
-"კლავიატურის წყობის, აკრეფილი სიმბოლოებისა და ბრძანების კლავიშების "
-"გახმოვანების კონფიგურაცია."
-
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "&მაუსის პარამეტრები"
-
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr "თაგვის მაჩვენებლის ფორმის ცვლილებისა და თაგვის ქვეშ ობიექტის წაკითხვა."
-
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "ხილული კურსორი"
-
-msgid "Configure how and when the review cursor moves"
-msgstr "დაარეგულირეთ როდის და როგორ მოძრაობს ხილული კურსორი"
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "შეყვანის პარამეტრები"
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
-msgstr ""
-"კონფიგურაცია nvda-ს მიერ შეყვანის კომპოზიციისა და ენის ვარიანტების შერჩევის "
-"გახმოვანებისთვის."
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "&ობიექტის წარმოდგენა..."
-
-msgid "Change reporting of objects"
-msgstr "ობიექტის წაკითხვის ცვლილება"
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "მიმოხილვის რეჟიმი"
-
-msgid "Change virtual buffers specific settings"
-msgstr "ვირტუალური ბუფერის სპეციალური პარამეტრების ცვლილება"
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "&დოკუმენტის ფორმატირება"
-
-msgid "Change settings of document properties"
-msgstr "შეცვალეთ დოკუმენტის მახასიათებლების პარამეტრები"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr ""
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "NVDA settings"
+msgstr "ხმის პარამეტრები არ არის"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7457,6 +7738,10 @@ msgstr "პორტაბელური კოპიის შექმნა.
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "NVDA-ს &დაყენება..."
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr ""
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7535,6 +7820,15 @@ msgstr "მიმდინარე კონფიგურაციის ჩ�
 msgid "Donate"
 msgstr "თანხის შეწირვა"
 
+#. Translators: The label for the menu item to run a pending update.
+#, fuzzy
+msgid "Install pending &update"
+msgstr "განახლების დაყენება"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr ""
+
 msgid "E&xit"
 msgstr "გამოსვლა"
 
@@ -7577,7 +7871,7 @@ msgstr "პარამეტრები"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "ღილაკების&წყობა "
 
@@ -7646,9 +7940,41 @@ msgstr "გადატვირთვა დამატებების გ�
 msgid "Restart with debug logging enabled"
 msgstr "გადატვირთვა დამატებების გამორთვით"
 
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Install pending update"
+msgstr "განახლების დაყენება"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "გთხოვთ დაიცადოთ"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr ""
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr ""
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -7700,6 +8026,7 @@ msgstr "&დაყენება..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&წაშლა"
@@ -7787,21 +8114,23 @@ msgstr "დაყენება"
 msgid "remove"
 msgstr "წაშლა"
 
-#. Translators: The status shown for an addon when its disabled.
-msgid "disable"
-msgstr "შეჩერება"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr ""
 
-#. Translators: The status shown for an addon when its enabled.
-msgid "enable"
-msgstr "გაშვება"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr ""
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "შეჩერებულია"
+#, fuzzy
+msgid "disabled"
+msgstr "შეჩერება"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "მუშაობს"
+#, fuzzy
+msgid "enabled"
+msgstr "გაშვება"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -7840,6 +8169,10 @@ msgstr "მისამართი: {url}"
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "ინფორმაცია დამატების შესახებ"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr ""
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -7991,11 +8324,6 @@ msgstr ""
 "ეს ტრიგერი უკვე დაკავშირებულია სხვა პროფილთან, თუ თქვენ აირჩევთ გაგრძელებას "
 "ტრიგერი მოეხსნება იმ პროფილს და დაუკავშირდება მიმდინარეს. დარწმუნებული ხართ "
 "რომ გნებავთ გაგრძელება?"
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "ყურადღება"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8234,9 +8562,32 @@ msgstr "შენახვა როგორც"
 msgid "Error saving log: %s"
 msgstr "შენახვის შეცდომა log: %s"
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
-msgstr "ზოგადი პარამეტრები"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr ""
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr ""
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr ""
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+#, fuzzy
+msgid "&Categories:"
+msgstr "კატეგორია"
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr ""
+
+#. Translators: This is the label for the general settings panel.
+#, fuzzy
+msgid "General"
+msgstr "საერთო პარამეტრები"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8294,6 +8645,15 @@ msgstr ""
 msgid "Automatically check for &updates to NVDA"
 msgstr "NVDA-ს განახლებების ავტოშემოწმება"
 
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr ""
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
@@ -8350,8 +8710,21 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "ენის პარამეტრების შეცვლა "
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
+#. Translators: A label for the synthesizer on the speech panel.
+#, fuzzy
+msgid "&Synthesizer"
+msgstr "&სინტეზატორი"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr ""
+
+#. Translators: This is the label for the synthesizer selection dialog
+#, fuzzy
+msgid "Select Synthesizer"
 msgstr "სინთეზატორი"
 
 #. Translators: This is a label for the select
@@ -8366,7 +8739,7 @@ msgstr "&სინტეზატორი"
 msgid "Output &device:"
 msgstr "&გამომავალი მოწყობილობა"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr "ხმის დაწევის რეჟიმი"
 
@@ -8380,27 +8753,28 @@ msgstr "ვერ მოხერხდა %s სინტეზატორი�
 msgid "Synthesizer Error"
 msgstr "სინტეზატორის შეცდომა "
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "ხმის პარამეტრები"
+#. Translators: This is the label for the voice settings panel.
+#, fuzzy
+msgid "Voice"
+msgstr "პერსონა"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr "ენის ავტომატური გადართვა (როცა შესაძლებელია)"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr "დიალექტის ავტომატური გადართვა (როცა შესაძლებელია)"
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "პუნქტუაციის დონე:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "სიმბოლოების დამუშავებისას სინთეზატორის ხმის ნდობა"
 
@@ -8409,82 +8783,74 @@ msgid "Capital pitch change percentage"
 msgstr "დიდი ასოების სიგნალის პროცენტული შეცვლა"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr "ამბობს\"&დიდი\" დიდი ასოების წინ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&სიგნალი დიდი ასოების წინ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr "გამოიყენოს&სიმბოლოებით წაკითხვა, თუ შესაზლებელია"
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "კლავიატურა"
+#. Translators: This is the label for the keyboard settings panel.
+#, fuzzy
+msgid "Keyboard"
+msgstr "%s კლავიატურა"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
 msgstr "ქაპსლოკის nvda-ს მოდიფიკატორად გამოყენება "
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "ციფრულ ბლოკზე ინსერტი გამოიყენოს როგორ nvda-ს მოდიფიკატორი "
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "ჩვეულებრივი ინსერტი გამოიყენოს როგორც nvda-ს მოდიფიკატორი"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr "სიმბოლოების აკრეფისას&წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr "აკრეფისას სიტყვების&წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr "აკრეფისას საუბრის შეჩერება"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr "ენტერ ღილაკზე დაჭერისას საუბრის შეჩერება"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr "სქემატური კითხვის ჩართვა, გვერდზე ყველაფრის წაკითხვის რეჟიმში "
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "კაფსლოკის რეჟიმში პატარა ასოების აკრეფისას ხმოვანი სიგნალები "
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr "ბრძანების კლავიშების წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr ""
 "ხმოვანი სიგნალის ჩართვა, &გრამატიკული შეცდომებისათვის ტექსტის აკრეფისას"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr "სხვა პროგრამებიდან კლავიშების დამუშავება"
 
@@ -8492,95 +8858,93 @@ msgstr "სხვა პროგრამებიდან კლავიშ�
 msgid "At least one key must be used as the NVDA key."
 msgstr "ერთი კლავიში მაინც უნდა დაინიშნოს nvda კლავიშად."
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "თაგვის პარამეტრები"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr "კითხულობს&თაგვის მაჩვენებლის ფორმის ცვლილებებს"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "რთავს&თაგვის გადაადგილების მეთვალყურეს"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr "&ტექსტის ზომის ერთეული"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr "კითხულობს&ობიექტის ცვლილებას თაგვის მიყვანისას"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr "თაგვის მოძრაობისას კოორდინატების აუდიო გახმოვანება"
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "სიკაშკაშის კონტროლის აუდიო კოორდინატების ხმის სიმაღლე"
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "ხილული კურსორის პარამეტრები"
+#. Translators: This is the label for the review cursor settings panel.
+#, fuzzy
+msgid "Review Cursor"
+msgstr "ხილული კურსორი"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "მიჰყვეს სისტემურ &ფოკუსს"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr "მიჰყვეს &სისტემურ კურსორს"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "მიჰყვეს &თაგვის მაჩვენებელს"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "გამარტივებული ხილვის რეჟიმი"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
+#. Translators: This is the label for the Input Composition settings panel.
+#, fuzzy
+msgid "Input Composition"
 msgstr "შეყვანის ფორმირების პარამეტრები"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr "ყველა ხელმისაწვდომი კანდიდატის გამოცხადება"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr "არჩეული ვარიანტის გამოცხადება"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr ""
 "ყოველთვის წარმოითქვას სიმბოლოს მოკლე აღწერა, როდესაც აცხადებს კანდიდატს"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr "წინასწარი ფორმირების ხაზის ცვლილებების წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr "შეყვანის ფორმირების ცვლილებების წაკითხვა"
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "ობიექტის წარმოდგენა"
 
@@ -8603,109 +8967,110 @@ msgid "Speak and beep"
 msgstr "მეტყველებაც და სიგნალებიც"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr "კარნახის&წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
-msgid "Report &help balloons"
-msgstr "წაიკითხოს&დამხმარე სისტემური შეტყობინებები"
+#. object presentation settings panel.
+#, fuzzy
+msgid "Report &notifications"
+msgstr "კარნახის&წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr "ობიექტის ცხელი ღილაკების&წაკითხვა "
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr "ობიექტის პოზიციის&წაკითხვა"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr "გამოიყენოს არა&ზუსტი ინფორმაცია ობიექტის პოზიციის შესახებ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr "ობიექტის აღწერის&წაკითხვა "
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "შესრულების ინდიკატორების&გახმოვანება "
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr "ფონის შესრულების ინდიკატორის გახმოვანება "
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr "დინამიური სემცველობის ცვლილებების&წაკითხვა"
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr ""
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "მიმოხილვის რეჟიმი"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr "&სიმბოლოების მაქსიმალური რიცხვი სტრიქონში"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr "&სტრიქონების რიცხვი გვერდზე"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr "გამოიყენოს&ეკრანის წარმოდგენა (თუ შესაძლებელია)"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr "გვერდის ჩატვირთვისთანავე ყველაფრის წინასწარ წაკითხვა "
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr "დანიშვნისათვის საჭირო ცხრილების შეტანა"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr "ფოკუსის შეცვლისას ავტომატური გადასვლა რედაქტირების რეჟიმსი"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr "კურსორის გადაადგილებისას ავტომატური გადასვლა რედაქტირების რეჟიმში"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "განხილვისა და რედაქტირების რეჟიმების ხმოვანი ინდიკაცია"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "დოკუმენტის მიმოხილვისას ყველა ბრძანების არ შემცველი ჟესტის დაბლოკვა "
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "დოკუმენტის ფორმატირება"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid ""
 "The following options control the types of document formatting reported by "
 "NVDA."
@@ -8714,72 +9079,72 @@ msgstr ""
 "ფორმატირების ტიპებს"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr "შრიფტი"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Font name"
 msgstr "&შრიფტის სახელწოდება"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font &size"
 msgstr "შრიფტის &ზომა"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Font attri&butes"
 msgstr "ფონტის ატრიბუ&ტები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "E&mphasis"
 msgstr "ხ&აზგასმულია"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr "სტ&ილი"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr "&ფერები"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Document information"
 msgstr "ინფორმაცია დოკუმენტის შესახებ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Co&mments"
 msgstr "კო&მენტარები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr "&რედაქტორის რევიზიები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Spelling e&rrors"
 msgstr "გრამატიკული შ&ეცდომები "
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr "გვერდები და ინტერვალები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr "&გვერდები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Line &numbers"
 msgstr "ხაზის &ნომრები"
 
@@ -8790,7 +9155,7 @@ msgstr "ხაზების &სწორების გამოცხად
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Off"
 msgstr "გამორთულია"
 
@@ -8807,91 +9172,101 @@ msgstr "სიგნალები"
 msgid "Both  Speech and Tones"
 msgstr "სიგნალებიც და მეტყველებაც."
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr "&პარაგრაფის სწორება:"
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
 msgstr "&ხაზებს შორის ინტერვალი"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Alignment"
 msgstr "&გათანაბრება"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Table information"
 msgstr "ინფორმაცია ცხრილის შესახებ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Tables"
 msgstr "&ცხრილები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Row/column h&eaders"
 msgstr "ხაზების/სვეტების ს&ათაურები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr "ცხრილის უჯრის კ&ოორდინატები"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Styles"
 msgstr "სტილი"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Cell borders:"
 msgstr "ცხრილის უჯრის კ&ოორდინატები"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Elements"
 msgstr "ელემენტები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr "&სიები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr "ციტა&ტა"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr "ჩარ&ჩოები"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Clickable"
 msgstr "&დაწკაპუნებადი"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "კურსორის შემდეგ ფორმატირების ცვლილების წაკითხვამ (შეიძლება გამოიწვიოს "
 "ჩამორჩენა)"
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+#, fuzzy
+msgid "Touch Interaction"
+msgstr "მათემატიკურ კონტენტთან წვდომის გამორთვა"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr ""
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr ""
 
@@ -8909,7 +9284,8 @@ msgid "Whole &word"
 msgstr "მთლიანი &სიტყვა"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+#, fuzzy
+msgid "Regular &expression"
 msgstr "&რეგულარული გამოთქმა"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -8984,9 +9360,15 @@ msgstr "&რედაქტირება"
 msgid "Add Dictionary Entry"
 msgstr "ლექსიკონში სტატიის დამატება"
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr "ბრაილის პარამეტრები "
+#. Translators: A label for the braille display on the braille panel.
+#, fuzzy
+msgid "Braille &display"
+msgstr "ბრაილის&დისპლეი"
+
+#. Translators: This is the label for the braille display selection dialog.
+#, fuzzy
+msgid "Select Braille Display"
+msgstr "EcoBraille displays"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8995,6 +9377,13 @@ msgstr "ბრაილის&დისპლეი"
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
 msgstr "&პორტი:"
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr "ვერ მოხერხდა%s დისპლეის ჩატვირთვა "
+
+msgid "Braille Display Error"
+msgstr "შეცდომა ბრაილის დისპლეიში "
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9042,8 +9431,8 @@ msgstr ""
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 #, fuzzy
-msgid "B&raille tethered to:"
-msgstr "ბრაილის მიბმა"
+msgid "Tether B&raille:"
+msgstr "ბრაილი"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9058,12 +9447,15 @@ msgstr "სიტყვების დანაწევრების თა�
 msgid "Focus context presentation:"
 msgstr "არ არის შემდეგი ანოტაცია"
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr "ვერ მოხერხდა%s დისპლეის ჩატვირთვა "
+#. Translators: This is the label for the NVDA settings dialog.
+#, fuzzy
+msgid "NVDA"
+msgstr "NVDA მუშაობის დასრულება"
 
-msgid "Braille Display Error"
-msgstr "შეცდომა ბრაილის დისპლეიში "
+#. Translators: The profile name for normal configuration
+#, fuzzy
+msgid "normal configuration"
+msgstr "(ნორმანული კონფიგურაცია)"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9222,11 +9614,841 @@ msgstr "RGB წითელი {rgb.red}, მწვანე {rgb.green}, ლუ
 msgid "%s items"
 msgstr "%s ელემენტები"
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"სათაურების დაყენება შეუძლებელია, გთხოვთ ჩართოთ სათაურების გამოცხადება "
+"დოკუმენტის ფორმატირების პარამეტრებიდან"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"ხაზი {rowNumber} სვეტი {columnNumber} დაყენდა სვეტების სათაურების საწყისად"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "ხაზი {rowNumber} სვეტი {columnNumber} სვეტების სათაურების საწყისად"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "ხაზი {rowNumber} სვეტი {columnNumber}  წაიშალა სვეტების სათაურებიდან"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"ხაზის {rowNumber} სვეტის {columnNumber}  პოვნა ვერ მოხერხდა სვეტების "
+"სათაურებში"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველ  სვეტის სათაურად ამ უჯრის "
+"ქვემოთ და მარჯვნივ მდებარე უჯრებისთვის ამ ცხრილში. . ორჯერ დაჭერისას კი "
+"გააუქმებს თქვენ მიერ გაკეთებულ არჩევანს."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"ხაზის {rowNumber} სვეტის {columnNumber} დაყენება ხაზების სათაურების საწყისად"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"ხაზი {rowNumber} სვეტი {columnNumber} უკვე დაყენებულია ხაზების სათაურების "
+"საწყისად"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "ხაზი {rowNumber} სვეტი {columnNumber}  წაიშალა ხაზების სათაურებიდან"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"ხაზის {rowNumber} სვეტის {columnNumber}  პოვნა ვერ მოხერხდა ხაზების "
+"სათაურებში"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველ  ხაზის სათაურად ამ უჯრის ქვემოთ "
+"და მარჯვნივ მდებარე უჯრებისთვის ამ ცხრილში. . ორჯერ დაჭერისას კი გააუქმებს "
+"თქვენ მიერ გაკეთებულ არჩევანს."
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "No comments"
+msgstr "არ არის კომენტარი."
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "აცხადებს სისტემური კურსორის ქვეშ არსებულ კომენტარის ტექსტს "
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "ცხრილს გარეთ"
+
 msgid "invoke"
 msgstr "გააქტიურება"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&ანოტაციები"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Errors"
+msgstr "შეცდომა"
+
+#. Translators: The label shown for an insertion change
+#, fuzzy, python-brace-format
+msgid "insertion: {text}"
+msgstr "გრამატიკული შეცდომა "
+
+#. Translators: The label shown for a deletion change
+#, fuzzy, python-brace-format
+msgid "deletion: {text}"
+msgstr "გრამატიკული შეცდომა "
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr ""
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr "შენიშვნა: {text} {author} {date}-ში"
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr "შენიშვნა: {text} {author} {date}-ში"
+
 msgid "Desktop"
 msgstr "სამუშაო დაფა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "მოცულობითი დიაგრამა ფართობებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "მოცულობითი დიაგრამა ფართობებით და დაგროვებადი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "ნორმირებული, ფართობებით და დაგროვებადი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "მოცულობითი ხაზოვანი დიაგრამა დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "მოცულობითი ხაზოვანი დიაგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "ნორმირებული მოცულობითი ხაზოვანი დიაგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "მოცულობითი ჰისტოგრამა "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "მოცულობითი ჰისტოგრამა დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "მოცულობითი ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "ნორმირებული მოცულობითი ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "მოცულობითი გრაფიკი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "მოცულობითი წრიული დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "მოცულობითი გაკვეთილი წრიული დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "ფართობითი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "ფართობითი დიაგრამა  დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "ხაზოვანი დიაგრამა დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "წრიული დიაგრამის ხაზი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "ხაზოვანი დიაგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "ნორმირებულიხაზოვანი დიაგრამა "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "ბუშტოვანი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "ბუშტოვანი დიაგრამის მოცულობითი ვერსია"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "ჰისტოგრამა დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "ნორმირებული ჰისტოგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "კონუსური დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "კონუსური დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "ნორმირებული კონუსოიდი დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "მოცულობითი კონუსური ჰისტოგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "კონუსური ჰისტოგრამა დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "კონუსისებრი ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "ნორმირებული კონუსისებრი ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "ცილინდრული დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "ცილინდრული დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "ნორმირებული ცილინდრისებრი დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "მოცულობითი ცილინდრული ჰისტოგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "ნორმირებული ცილინდრისებრი ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "რგოლოვანი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "გახლეჩილი რგოლოვანი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "სტრიქონი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "გრაფიკი მარკერებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "გრაფიკი დაგროვებით, რომელზეც გარკვეული წერტილები მარკერითაა აღნიშნული"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "ნორმირებული გრაფიკი, რომელზეც წერტილები მარკერითაა აღნიშნული"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "გრაფიკი დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "ნორმირებული გრაფიკი დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "წრიული დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "გახლეჩილი წრიული დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "მეორეული წრიული დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "პირამიდული დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "პირამიდული დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "ნორმირებული პირამიდისებრი დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "მოცულობითი პირამიდული ჰისტოგრამა "
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "პირამიდული ჰისტოგრამა დაჯგუფებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "პირამიდული ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "ნორმირებული პირამიდისებრი ჰისტოგრამა დაგროვებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "ფოთოლისებრი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "შევსებული ფოთოლისებრი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "ფოთოლისებური დიაგრამა გლუვი ხაზებით და მონაცემთა მარკერებით."
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr ""
+"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 3 მნიშვნელობით (ყველაზე "
+"მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr ""
+"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 4 მნიშვნელობით (გახსნის კურსი,"
+"ყველაზე მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr ""
+"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 4 მნიშვნელობით (მოცულობა, "
+"ყველაზე მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr ""
+"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 5 მნიშვნელობით (მოცულობა, "
+"გახსნის კურსი,ყველაზე მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "მოცულობითი ზედაპირული დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "ზედაპირული დიაგრამა (ხედი ზემოდან)"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "მავთულისებრი ზედაპირი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "მოცულობითი მავთულისებრი ზედაპირი"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "წერტილოვანი დიაგრამა"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "წერტილოვანი დიაგრამა ხაზებით&სტრიქონების რიცხვი გვერდზე"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "წერტილოვანი დიაგრამა ხაზებით, მაგრამ მონაცემთა მარკერების გარეშე"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "წერტილოვანი დიაგრამა გლუვი ხაზებით"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "წერტილოვანი დიაგრამა გლუვი ხაზებით, მაგრამ მონაცემთა მარკერების გარეშე"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "სექტორი"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "სვეტი"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "მონაცემთა წერტილი"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "ელემენტი"
+
+#. Translators: Message to be spoken to report Series Color
+#, python-brace-format
+msgid "Series color: {colorName} "
+msgstr "ხაზების ფერი {colorName} "
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr "ერთეულის ნიშნის ჩვენება"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr "ბადის ძირითადი ხაზები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr "ბადის დამხმარე ხაზები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "წრიული დიაგრამის შემცირების ზონა"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr "წრიული დიაგრამის მონაცემთა ველის ღილაკი"
+
+# An open-source (and free) Screen Reader for the Windows Operating System
+# Created by Michael Curran, with help from James Teh and others
+# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Down Bars"
+msgstr "ქვედა პანელები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Drop Lines"
+msgstr "ხაზების ჩამოყრა"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr "ზედა და ქვედა ხაზები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr "ფოთოლისებური ღერძის  ნიშნები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr "ხაზები სერიაში"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr "ზემო პანელები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr "კუთხეები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+msgid "Data Table"
+msgstr "მონაცემთა ცხრილი"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr "ფუძე"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr "არაფერი"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr "კედლები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr "მონაცემების ნიშანი"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Error Bars"
+msgstr "შეცდომების პანელი"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr "x შეცდომების პანელი"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr "y შეცდომის პანელები"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Shape"
+msgstr "მოყვანილობა"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "სქემის სათაური: {chartTitle}, ტიპი: {chartType}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "ამ დიაგრამაზე მხოლოდ ერთი განყოფილებაა"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "ამ დიაგრამაში სულ  %d  რიგია"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr "სერიის {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "რიგები არაა განსაზღვრული"
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+#, fuzzy
+msgid "Chart Elements"
+msgstr "ელემენტები"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} რიგი {seriesIndex} დან {seriesCount}"
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, fuzzy, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr "ხაზების ფერი {colorName} "
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr "არაა ცვლილებები წერტილში {previousIndex}, "
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "გაიზარდა {incrementValue}-ით წერტილში {previousIndex}, "
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "შემცირდა {decrementValue}-ით წერტილში {previousIndex}, "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr "კატეგორია {categoryAxisData}: "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr "მნიშვნელობა {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+"რაც შეადგენს სექტორს {fractionValue:.2f} პროცენტს {pointIndex}  {pointCount}-"
+"დან"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} {pointCount}-დან"
+
+#. Translators: Indicates Primary Category Axis
+#, fuzzy
+msgid "Primary Category Axis"
+msgstr "პირველი ქვედა კოლონა"
+
+#. Translators: Indicates Secondary Category Axis
+#, fuzzy
+msgid "Secondary Category Axis"
+msgstr "კატეგორია {categoryAxisData}: "
+
+#. Translators: Indicates Primary Value Axis
+#, fuzzy
+msgid "Primary Value Axis"
+msgstr "პირველი სათაური"
+
+#. Translators: Indicates Secondary Value Axis
+#, fuzzy
+msgid "Secondary Value Axis"
+msgstr "დამხმარე ღერძზე"
+
+#. Translators: Indicates Primary Series Axis
+#, fuzzy
+msgid "Primary Series Axis"
+msgstr "პირველი ქვედა კოლონა"
+
+#. Translators: Indicates Secondary Series Axis
+#, fuzzy
+msgid "Secondary Series Axis"
+msgstr "დამხმარე ღერძზე"
+
+#. Translators: the title of a chart axis
+#, fuzzy, python-brace-format
+msgid " title: {axisTitle}"
+msgstr "სქემის  სათაური {chartTitle}"
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Linear
+#, fuzzy
+msgid "Linear"
+msgstr "სტრიქონი"
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr ""
+
+#. Translators: Substitute superscript two by square for R square value
+#, fuzzy
+msgid " square "
+msgstr " ოთხკუთხედი "
+
+#. Translators: Substitute - by minus in trendline equations.
+#, fuzzy
+msgid " minus "
+msgstr "ნაცრისფერი გამოკლება "
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
+"{trendlineLabel} "
+msgstr ""
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr ""
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr "სქემის  სათაური {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+msgid "Untitled chart"
+msgstr "უსახელო დიაგრამა"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"დიაგრამის არე, სიმაღლე: {chartAreaHeight}, სიგანე: {chartAreaWidth}, "
+"ზემოდან: {chartAreaTop}, მარცხნიდან: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr "დიაგრამის ფართობი"
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"აგების ფართობის სიმაღლე შიგნით: {plotAreaInsideHeight:.0f}, სიგანე შიგნით "
+"{plotAreaInsideWidth:.0f}, ზემოდან შიგნით {plotAreaInsideTop:.0f}, "
+"მარცხნიდან შიგნით: {plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr "აგების ფართობი"
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"ლეგენდის ელემენტი რიგისთვის {seriesName} {seriesIndex} {seriesCount}-დან"
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, fuzzy, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr " {segmentType} {pointIndex} {pointCount}-დან"
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"ლეგენდის გასაღები რიგისთვის {seriesName} რიგი {seriesIndex} {seriesCount}-დან"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
@@ -9380,17 +10602,6 @@ msgstr "ფურცლები"
 #, python-brace-format
 msgid "{start} through {end}"
 msgstr "{start} -დან {end} -მდე"
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"სათაურების დაყენება შეუძლებელია, გთხოვთ ჩართოთ სათაურების გამოცხადება "
-"დოკუმენტის ფორმატირების პარამეტრებიდან"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #, python-brace-format
@@ -9609,678 +10820,6 @@ msgstr ""
 msgid "{desc} {position}"
 msgstr ""
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr "მოცულობითი დიაგრამა ფართობებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr "მოცულობითი დიაგრამა ფართობებით და დაგროვებადი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr "ნორმირებული, ფართობებით და დაგროვებადი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr "მოცულობითი ხაზოვანი დიაგრამა დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr "მოცულობითი ხაზოვანი დიაგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr "ნორმირებული მოცულობითი ხაზოვანი დიაგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Column"
-msgstr "მოცულობითი ჰისტოგრამა "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr "მოცულობითი ჰისტოგრამა დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr "მოცულობითი ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr "ნორმირებული მოცულობითი ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr "მოცულობითი გრაფიკი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr "მოცულობითი წრიული დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr "მოცულობითი გაკვეთილი წრიული დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr "ფართობითი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr "ფართობითი დიაგრამა  დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr "ხაზოვანი დიაგრამა დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr "წრიული დიაგრამის ხაზი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr "ხაზოვანი დიაგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr "ნორმირებულიხაზოვანი დიაგრამა "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr "ბუშტოვანი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr "ბუშტოვანი დიაგრამის მოცულობითი ვერსია"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr "ჰისტოგრამა დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Column"
-msgstr "ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr "ნორმირებული ჰისტოგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr "კონუსური დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr "კონუსური დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr "ნორმირებული კონუსოიდი დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr "მოცულობითი კონუსური ჰისტოგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr "კონუსური ჰისტოგრამა დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr "კონუსისებრი ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr "ნორმირებული კონუსისებრი ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr "ცილინდრული დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr "ცილინდრული დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr "ნორმირებული ცილინდრისებრი დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr "მოცულობითი ცილინდრული ჰისტოგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr "ნორმირებული ცილინდრისებრი ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr "რგოლოვანი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr "გახლეჩილი რგოლოვანი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr "სტრიქონი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr "გრაფიკი მარკერებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr "გრაფიკი დაგროვებით, რომელზეც გარკვეული წერტილები მარკერითაა აღნიშნული"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr "ნორმირებული გრაფიკი, რომელზეც წერტილები მარკერითაა აღნიშნული"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr "გრაფიკი დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr "ნორმირებული გრაფიკი დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie"
-msgstr "წრიული დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr "გახლეჩილი წრიული დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr "მეორეული წრიული დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr "პირამიდული დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr "პირამიდული დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr "ნორმირებული პირამიდისებრი დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr "მოცულობითი პირამიდული ჰისტოგრამა "
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr "პირამიდული ჰისტოგრამა დაჯგუფებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr "პირამიდული ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr "ნორმირებული პირამიდისებრი ჰისტოგრამა დაგროვებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr "ფოთოლისებრი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr "შევსებული ფოთოლისებრი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr "ფოთოლისებური დიაგრამა გლუვი ხაზებით და მონაცემთა მარკერებით."
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr ""
-"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 3 მნიშვნელობით (ყველაზე "
-"მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr ""
-"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 4 მნიშვნელობით (გახსნის კურსი,"
-"ყველაზე მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr ""
-"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 4 მნიშვნელობით (მოცულობა, "
-"ყველაზე მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr ""
-"საბირჟო დიაგრამა, გამოსახავს მონაცემთა ნაკრებს 5 მნიშვნელობით (მოცულობა, "
-"გახსნის კურსი,ყველაზე მაღალი კურსი, ყველაზე დაბალი კურსი და დახურვის კურსი)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr "მოცულობითი ზედაპირული დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr "ზედაპირული დიაგრამა (ხედი ზემოდან)"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr "მავთულისებრი ზედაპირი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr "მოცულობითი მავთულისებრი ზედაპირი"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr "წერტილოვანი დიაგრამა"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr "წერტილოვანი დიაგრამა ხაზებით&სტრიქონების რიცხვი გვერდზე"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr "წერტილოვანი დიაგრამა ხაზებით, მაგრამ მონაცემთა მარკერების გარეშე"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr "წერტილოვანი დიაგრამა გლუვი ხაზებით"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "წერტილოვანი დიაგრამა გლუვი ხაზებით, მაგრამ მონაცემთა მარკერების გარეშე"
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr "სქემის სათაური: {chartTitle}, ტიპი: {chartType}"
-
-#. Translators: Reported when there is no title for an axis in a chart.
-msgid "Not defined"
-msgstr "არაა განსაზღვრული"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr "კატეგორია"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr "მნიშვნელობა"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr "სერია"
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr "ღერძის ტიპი: {axisName} სათაურით: {axisTitle}"
-
-#. Translators: Indicates that there is 1 series in a chart.
-msgid "There is 1 series in this chart"
-msgstr "ამ დიაგრამაზე მხოლოდ ერთი განყოფილებაა"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr "ამ დიაგრამაში სულ  %d  რიგია"
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr "სერიის {number} {name}"
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr "რიგები არაა განსაზღვრული"
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr "სექტორი"
-
-#. Translators: A column in a column chart.
-msgctxt "chart"
-msgid "column"
-msgstr "სვეტი"
-
-#. Translators: A data point in a line chart.
-msgid "data point"
-msgstr "მონაცემთა წერტილი"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-msgid "item"
-msgstr "ელემენტი"
-
-#, python-brace-format
-msgid "Series color: {colorName} "
-msgstr "ხაზების ფერი {colorName} "
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr "ერთეულის ნიშნის ჩვენება"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr "ბადის ძირითადი ხაზები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr "ბადის დამხმარე ხაზები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr "წრიული დიაგრამის შემცირების ზონა"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr "წრიული დიაგრამის მონაცემთა ველის ღილაკი"
-
-# An open-source (and free) Screen Reader for the Windows Operating System
-# Created by Michael Curran, with help from James Teh and others
-# Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Down Bars"
-msgstr "ქვედა პანელები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Drop Lines"
-msgstr "ხაზების ჩამოყრა"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr "ზედა და ქვედა ხაზები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr "ფოთოლისებური ღერძის  ნიშნები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr "ხაზები სერიაში"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr "ზემო პანელები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr "კუთხეები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Table"
-msgstr "მონაცემთა ცხრილი"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr "ფუძე"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr "არაფერი"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr "კედლები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr "მონაცემების ნიშანი"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Error Bars"
-msgstr "შეცდომების პანელი"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr "x შეცდომების პანელი"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr "y შეცდომის პანელები"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Shape"
-msgstr "მოყვანილობა"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} რიგი {seriesIndex} დან {seriesCount}"
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr "არაა ცვლილებები წერტილში {previousIndex}, "
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "გაიზარდა {incrementValue}-ით წერტილში {previousIndex}, "
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "შემცირდა {decrementValue}-ით წერტილში {previousIndex}, "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}: "
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr "კატეგორია {categoryAxisData}: "
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{valueAxisTitle} {valueAxisData}"
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr "მნიშვნელობა {valueAxisData}"
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid ""
-" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
-"რაც შეადგენს სექტორს {fractionValue:.2f} პროცენტს {pointIndex}  {pointCount}-"
-"დან"
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {segmentType} {pointIndex} {pointCount}-დან"
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr "ძირითად ღერძზე"
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr "დამხმარე ღერძზე"
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr ""
-"დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup}, სათაური: {axisTitle}"
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup},"
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr "სქემის ვალიდაციის სათაური"
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "trendline"
-msgstr "ტრენდის ხაზი"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr " ოთხკუთხედი "
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr "სქემის  სათაური {chartTitle}"
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-msgid "Untitled chart"
-msgstr "უსახელო დიაგრამა"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
-"{chartAreaTop}, left: {chartAreaLeft}"
-msgstr ""
-"დიაგრამის არე, სიმაღლე: {chartAreaHeight}, სიგანე: {chartAreaWidth}, "
-"ზემოდან: {chartAreaTop}, მარცხნიდან: {chartAreaLeft}"
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr "დიაგრამის ფართობი"
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-"აგების ფართობის სიმაღლე შიგნით: {plotAreaInsideHeight:.0f}, სიგანე შიგნით "
-"{plotAreaInsideWidth:.0f}, ზემოდან შიგნით {plotAreaInsideTop:.0f}, "
-"მარცხნიდან შიგნით: {plotAreaInsideLeft:.0f}"
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr "აგების ფართობი"
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr "ლეგენდა"
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr "არაა ლეგენდა"
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-"ლეგენდის ელემენტი რიგისთვის {seriesName} {seriesIndex} {seriesCount}-დან"
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-"ლეგენდის გასაღები რიგისთვის {seriesName} რიგი {seriesIndex} {seriesCount}-დან"
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "ჩასმა"
@@ -10393,12 +10932,6 @@ msgstr "შენიშვნა: {text} {author} {date}-ში"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author}  {date}-ში"
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, fuzzy, python-brace-format
-msgid "spelling: {text}"
-msgstr "გრამატიკული შეცდომა "
-
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10434,74 +10967,6 @@ msgstr "%.1f ხაზი"
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 msgid "Table description"
 msgstr "ცხრილის აღწერა"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-"ხაზი {rowNumber} სვეტი {columnNumber} დაყენდა სვეტების სათაურების საწყისად"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "ხაზი {rowNumber} სვეტი {columnNumber} სვეტების სათაურების საწყისად"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "ხაზი {rowNumber} სვეტი {columnNumber}  წაიშალა სვეტების სათაურებიდან"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-"ხაზის {rowNumber} სვეტის {columnNumber}  პოვნა ვერ მოხერხდა სვეტების "
-"სათაურებში"
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells "
-"lower and to the right of it within this table. Pressing twice will forget "
-"the current column header for this cell."
-msgstr ""
-"ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველ  სვეტის სათაურად ამ უჯრის "
-"ქვემოთ და მარჯვნივ მდებარე უჯრებისთვის ამ ცხრილში. . ორჯერ დაჭერისას კი "
-"გააუქმებს თქვენ მიერ გაკეთებულ არჩევანს."
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"ხაზის {rowNumber} სვეტის {columnNumber} დაყენება ხაზების სათაურების საწყისად"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid ""
-"Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-"ხაზი {rowNumber} სვეტი {columnNumber} უკვე დაყენებულია ხაზების სათაურების "
-"საწყისად"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "ხაზი {rowNumber} სვეტი {columnNumber}  წაიშალა ხაზების სათაურებიდან"
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-"ხაზის {rowNumber} სვეტის {columnNumber}  პოვნა ვერ მოხერხდა ხაზების "
-"სათაურებში"
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower "
-"and to the right of it within this table. Pressing twice will forget the "
-"current row header for this cell."
-msgstr ""
-"ერთხელ დაჭერისას,  დააყენებს ამ უჯრას პირველ  ხაზის სათაურად ამ უჯრის ქვემოთ "
-"და მარჯვნივ მდებარე უჯრებისთვის ამ ცხრილში. . ორჯერ დაჭერისას კი გააუქმებს "
-"თქვენ მიერ გაკეთებულ არჩევანს."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10609,18 +11074,10 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} წერტილი"
 
 #. Translators: a measurement in Microsoft Word
-#. See http://support.microsoft.com/kb/76388 for details.
+#. See https://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} პიკი"
-
-#. Translators: a message when there is no comment to report in Microsoft Word
-msgid "No comments"
-msgstr "არ არის კომენტარი."
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr "აცხადებს სისტემური კურსორის ქვეშ არსებულ კომენტარის ტექსტს "
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
@@ -10634,26 +11091,211 @@ msgstr "ხაზებს შორის ინტერვალი ორმ
 msgid "1.5 line spacing"
 msgstr "ხაზებს შორის ინტერვალი 1.5 "
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "ცხრილს გარეთ"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Annotations"
-msgstr "&ანოტაციები"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "&Errors"
-msgstr "შეცდომა"
+#~ msgid "purple flag"
+#~ msgstr "იისფერი"
 
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "ქაპსლოკის nvda-ს მოდიფიკატორად გამოყენება "
 
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "ციფრულ ბლოკზე ინსერტი გამოიყენოს როგორ nvda-ს მოდიფიკატორი "
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "ჩვეულებრივი ინსერტი გამოიყენოს როგორც nvda-ს მოდიფიკატორი"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "წაიკითხოს&დამხმარე სისტემური შეტყობინებები"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amharic"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "არაბული"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepali"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbian (Latin)"
+
+#~ msgid "Shows the NVDA voice settings dialog"
+#~ msgstr "გამოიძახებს NVDA მოქმედი ხმების არჩევანის დიალოგს."
+
+#~ msgid "&General settings..."
+#~ msgstr "& საერთო პარამეტრები"
+
+#~ msgid "&Synthesizer..."
+#~ msgstr "&სინთეზატორი..."
+
+#~ msgid "Change the synthesizer to be used"
+#~ msgstr "მიმდინარე სინთეზატორის შეცვლა"
+
+#~ msgid "Choose the voice, rate, pitch and volume to use"
+#~ msgstr ""
+#~ "შეარჩიეთ ხმა, სიჩქარე, ტემბრი და ხმის სიმაღლე, რომელის გმოყენებაც გსურთ."
+
+#~ msgid "B&raille settings..."
+#~ msgstr "&ბრაილის პარამეტრები"
+
+#~ msgid "&Keyboard settings..."
+#~ msgstr "&კლავიატურის პარამეტრები..."
+
+#~ msgid ""
+#~ "Configure keyboard layout, speaking of typed characters, words or command "
+#~ "keys"
+#~ msgstr ""
+#~ "კლავიატურის წყობის, აკრეფილი სიმბოლოებისა და ბრძანების კლავიშების "
+#~ "გახმოვანების კონფიგურაცია."
+
+#~ msgid "&Mouse settings..."
+#~ msgstr "&მაუსის პარამეტრები"
+
+#~ msgid "Change reporting of mouse shape and object under mouse"
+#~ msgstr ""
+#~ "თაგვის მაჩვენებლის ფორმის ცვლილებისა და თაგვის ქვეშ ობიექტის წაკითხვა."
+
+#, fuzzy
+#~ msgid "&Touch interaction..."
+#~ msgstr "&ხმის ლექსიკონი......"
+
+#~ msgid "Configure how and when the review cursor moves"
+#~ msgstr "დაარეგულირეთ როდის და როგორ მოძრაობს ხილული კურსორი"
+
+#~ msgid "&Input composition settings..."
+#~ msgstr "შეყვანის პარამეტრები"
+
+#~ msgid ""
+#~ "Configure how NVDA reports input composition and candidate selection for "
+#~ "certain languages"
+#~ msgstr ""
+#~ "კონფიგურაცია nvda-ს მიერ შეყვანის კომპოზიციისა და ენის ვარიანტების "
+#~ "შერჩევის გახმოვანებისთვის."
+
+#~ msgid "&Object presentation..."
+#~ msgstr "&ობიექტის წარმოდგენა..."
+
+#~ msgid "Change reporting of objects"
+#~ msgstr "ობიექტის წაკითხვის ცვლილება"
+
+#~ msgid "&Browse mode..."
+#~ msgstr "მიმოხილვის რეჟიმი"
+
+#~ msgid "Change virtual buffers specific settings"
+#~ msgstr "ვირტუალური ბუფერის სპეციალური პარამეტრების ცვლილება"
+
+#~ msgid "Document &formatting..."
+#~ msgstr "&დოკუმენტის ფორმატირება"
+
+#~ msgid "Change settings of document properties"
+#~ msgstr "შეცვალეთ დოკუმენტის მახასიათებლების პარამეტრები"
+
+#~ msgid "General Settings"
+#~ msgstr "ზოგადი პარამეტრები"
+
+#~ msgid "Voice Settings"
+#~ msgstr "ხმის პარამეტრები"
+
+#~ msgid "Keyboard Settings"
+#~ msgstr "კლავიატურა"
+
+#~ msgid "Mouse Settings"
+#~ msgstr "თაგვის პარამეტრები"
+
+#~ msgid "Review Cursor Settings"
+#~ msgstr "ხილული კურსორის პარამეტრები"
+
+#~ msgid "Braille Settings"
+#~ msgstr "ბრაილის პარამეტრები "
+
+#~ msgid "French (Canada) grade 1"
+#~ msgstr "ფრანგული (კანადა) საფეხური 1"
+
+#~ msgid "French (Canada) grade 2"
+#~ msgstr "ფრანგული (კანადა) საფეხური 2"
+
+#~ msgid "Mongolian"
+#~ msgstr "Mongolian"
+
+#~ msgid "Download and &install update"
+#~ msgstr "განახლების ჩამოტვირთვა და &დაყენება"
+
+#~ msgid "Update downloaded. It will now be installed."
+#~ msgstr "განახლება ჩამოიტვირთა და ახლა დაყენდება."
+
+#~ msgid "Route to and report formatting"
+#~ msgstr ""
+#~ "გადაყავს მითითებულ ადგილას და აცხადებს ინფორმაციას ფორმატირების შესახებ."
+
+#~ msgid "r%s"
+#~ msgstr "r%s"
+
+#~ msgid "c%s"
+#~ msgstr "c%s"
+
+#~ msgid "suspended"
+#~ msgstr "შეჩერებულია"
+
+#~ msgid "running"
+#~ msgstr "მუშაობს"
+
+#~ msgid "ALVA BC640/680 series"
+#~ msgstr "ALVA BC640/680 series"
+
+#~ msgid "review"
+#~ msgstr "განხილვა"
+
+#~ msgid "focus"
+#~ msgstr "ფოკუსი"
+
+#, fuzzy
+#~ msgid "B&raille tethered to:"
+#~ msgstr "ბრაილის მიბმა"
+
+#~ msgid "Not defined"
+#~ msgstr "არაა განსაზღვრული"
+
+#~ msgid "Value"
+#~ msgstr "მნიშვნელობა"
+
+#~ msgid "Series"
+#~ msgstr "სერია"
+
+#~ msgid "{axisName} Axis is {axisTitle}"
+#~ msgstr "ღერძის ტიპი: {axisName} სათაურით: {axisTitle}"
+
+#~ msgid "Primary"
+#~ msgstr "ძირითად ღერძზე"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+#~ msgstr ""
+#~ "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup}, სათაური: "
+#~ "{axisTitle}"
+
+#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+#~ msgstr "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup},"
+
+#~ msgid "Chart axis title"
+#~ msgstr "სქემის ვალიდაციის სათაური"
+
+#~ msgid "trendline"
+#~ msgstr "ტრენდის ხაზი"
+
+#~ msgid "Legend"
+#~ msgstr "ლეგენდა"
+
+#~ msgid "No legend"
+#~ msgstr "არაა ლეგენდა"
+
+#~ msgid "HIMS SyncBraille"
+#~ msgstr "HIMS SyncBraille"
+
+#~ msgid "Show the Handy Tech driver configuration window."
+#~ msgstr "აჩვენოს  Handy Tech კონფიგურაციის ფანჯარა."

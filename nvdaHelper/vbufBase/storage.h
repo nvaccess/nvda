@@ -312,12 +312,12 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 	friend class VBufStorage_buffer_t;
 
+	public:
+
 /**
  * uniquely identifies this control in its buffer.
  */
-	VBufStorage_controlFieldNodeIdentifier_t identifier;
-
-	public:
+	const VBufStorage_controlFieldNodeIdentifier_t identifier;
 
 /**
  * If true, When this node is invalidated in a backend, its parent will be invalidated instead. 
@@ -639,7 +639,7 @@ class VBufStorage_buffer_t {
  * @param useMarkup if true then markup is included in the text denoting field starts and ends.
  * @return the text.
  */
-	virtual std::wstring  getTextInRange(int startOffset, int endOffset, bool useMarkup=false);
+	virtual bool getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
 
 /**
  * Expands the given offset to the start and end offsets of the containing line.

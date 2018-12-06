@@ -1,19 +1,19 @@
 # Traduction française de NVDA
-# Copyright (C) 2006-2018 NVDA Contributors <http://www.nvaccess.org/>
+# Copyright (C) 2006-2018 NVDA Contributors <https://www.nvaccess.org/>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-18 14:57+1000\n"
-"PO-Revision-Date: 2018-09-18 10:01+0200\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"POT-Creation-Date: 2018-11-23 00:10+1000\n"
+"PO-Revision-Date: 2018-11-26 15:42+0100\n"
+"Last-Translator: Bachir BENANOU <ben_bach@yahoo.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1796,7 +1796,7 @@ msgstr "toujours"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "seulement au-dessous du niveau de symbole"
+msgstr "seulement au-dessous du niveau du symbole"
 
 #. Translators: the color white (HSV saturation0%, value 100%)
 msgctxt "color hue"
@@ -6575,7 +6575,7 @@ msgstr "&Fermer"
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "NVDA version {version} est est prêt à être installé.\n"
+msgstr "NVDA version {version} est prêt à être installé.\n"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6686,7 +6686,7 @@ msgstr ""
 "source accessible à qui le veut. Ceci s'applique aux versions originales et "
 "modifiées du logiciel, ainsi qu'à tout travaille qui en dérive.\n"
 "Pour plus de détails, vous pouvez consulter la licence dans le menu d'aide.\n"
-"Vous pouvez également la consulter en ligne à : http://www.gnu.org/licenses/"
+"Vous pouvez également la consulter en ligne à : https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} est développé par NV Access, une organisation à but non lucratif qui "
@@ -6770,7 +6770,7 @@ msgstr "Pas de piste en cours"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Annoncer le temps restant de la piste en cours"
+msgstr "Annoncer le temps restant de la piste en cours, s'il y a lieu"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
 msgid "Reports the elapsed time of the currently playing track, if any"
@@ -6893,6 +6893,18 @@ msgstr "non lu"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Édition du profil {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "répondu"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "répondu à tous"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "transféré"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7876,7 +7888,7 @@ msgstr "À propos de ce &module complémentaire..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "&Aide de ce module complémentaire"
+msgstr "A&ide de ce module complémentaire"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
@@ -8651,6 +8663,16 @@ msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "Se baser sur la langue de la voix pour le &traitement des caractères et "
 "symboles"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Inclure les données du Consortium Unicode (incluant les emoji) dans le "
+"traitement des caractères et symboles"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10774,6 +10796,16 @@ msgstr "commentaire : {text} par {author} le {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description} : {text} par {author} le {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} du bord gauche de la of page"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} du haut de la page"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10932,6 +10964,9 @@ msgstr "Interligne double"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
+
+#~ msgid "REPLIED ALL"
+#~ msgstr "Répondu à Tous"
 
 #~ msgid "purple flag"
 #~ msgstr "Drapeau violet"

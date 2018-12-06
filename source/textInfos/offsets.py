@@ -11,6 +11,11 @@ import NVDAHelper
 import config
 import textInfos
 
+HIGH_SURROGATE_FIRST = u"\uD800"
+HIGH_SURROGATE_LAST = u"\uDBFF"
+LOW_SURROGATE_FIRST = u"\uDC00"
+LOW_SURROGATE_LAST = u"\uDFFF"
+
 class Offsets(object):
 	"""Represents two offsets."""
 
@@ -221,7 +226,28 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
-		return [offset,offset+1]
+		# Windows Unicode is UTF-16, so a character may be two offsets for code points beyond 16 bits.
+		if offset > 0:
+			chars = self._getTextRange(offset - 1, offset + 2)
+			# Slicing avoids the need to check length. If invalid, it'll be the empty string.
+			prevChar = chars[0:1]
+			curChar = chars[1:2]
+			nextChar = chars[2:3]
+		else:
+			chars = self._getTextRange(offset, offset + 2)
+			prevChar = u"" # Empty string, any subsequent comparisons will evaluate to False.
+			# Slicing avoids the need to check length. If invalid, it'll be the empty string.
+			curChar = chars[0:1]
+			nextChar = chars[1:2]
+		if HIGH_SURROGATE_FIRST <= curChar <= HIGH_SURROGATE_LAST and LOW_SURROGATE_FIRST <= nextChar <= LOW_SURROGATE_LAST:
+			# curChar is a high (leading) surrogate;
+			# nextChar is a low surrogate and also part of this character.
+			return offset, offset + 2
+		elif HIGH_SURROGATE_FIRST <= prevChar <= HIGH_SURROGATE_LAST and LOW_SURROGATE_FIRST <= curChar <= LOW_SURROGATE_LAST:
+			# curChar is a low (trailing) surrogate;
+			# prevChar is a high surrogate and also part of this character.
+			return offset - 1, offset + 1
+		return offset, offset + 1
 
 	def _getWordOffsets(self,offset):
 		lineStart,lineEnd=self._getLineOffsets(offset)
