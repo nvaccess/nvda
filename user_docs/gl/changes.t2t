@@ -4,9 +4,16 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+O máis subliñable desta versión inclúe as melloras no rendemento das últimas versións de Mozilla Firefox, o anunciado dos emojis con todos os sintetizadores, o anunciado das respostas e envíos en Outlook, a información da distancia do cursor ao borde dunha páxina de Microsoft Word e moitos arranxos de fallos.
 
 == Novas Características ==
 - Novas táboas braille: Chinés (China, Mandarín) grao 1 e grao 2. (#5553)
+- Agora anúncianse os estados Respostado / Reenviado en elementos de correo na listaxe de mensaxes de Microsoft Outlook. (#6911)
+- O NVDA agora pode ler descripcións para emoji así coma outros caracteres que son parte do repositorio Unicode Common Locale Data. (#6523)
+- En Microsoft Word, a distancia do cursor dende as marxes superior e esquerda da páxina poden anunciarse  premendo NVDA+suprimir do teclado numérico. (#1939)
+- En Google Sheets co modo braille habilitado, o NVDA xa non anuncia 'selecionado' en cada celda ao mover o foco entre elas. (#8879)
+- Engadido o soporte para Foxit Reader e para Foxit Phantom PDF (#8944)
+- Engadido o soporte para a utilidade de base de datos DBeaver. (#8905)
 
 
 == Cambios ==
@@ -14,6 +21,7 @@
 - Nas opcións de teclado do NVDA, as caixas de verificación para activar ou desactivar as teclas modificadoras do NVDA agora amósanse nunha listaxe en lugar de en caixas de verificación separadas.
 - O NVDA xa non presenta información redundante ao ler o reloxo da bandexa do sistema nalgunhas versións de Windows. (#4364)
 - Actualizado o transcriptor braille liblouis á versión 3.7.0. (#8697)
+- Actualizado eSpeak-NG a commit 919f3240cbb.
 
 
 == Coreción de Erros ==
@@ -21,6 +29,16 @@
 - Cando o NVDA se configure para idiomas coma Kirgyz, Mongol ou Macedonio, xa non amosa un diálogo nun aviso ao arrancar que a lingua non se admite polo sistema operativo. (#8064)
 - Ao mover o rato ao navegador de obxectos agora será moito máis preciso mover o rato á posición dol modo exploración en Mozilla Firefox, Google Chrome e Acrobat Reader DC. (#6460)
 - Mellorouse interactuar coas caixas combinadas na web en Firefox, Chrome e Internet Explorer. (#8664)
+- Se se executa na versión xaponesa de Windows XP ou Vista, o NVDA agora amosa a alerta dos requisitos da versión do Sistema Operativo segundo se esperaba. (#8771)
+- Auméntase o rendemento en Mozilla Firefox ao se navegar por páxinas longas con moitos cambios dinámicos. (#8678)
+- O braille xa non amosa atributos de fonte se se deshabilitaron nas opcións Formateado de documento. (#7615)
+- O NVDA xa non falla ao seguir ao foco no Explorador de Arquivos e outras aplicacións que usen UI Automation cando outra aplicación estea ocupada (coma o procesamento por lotes do audio). (#7345)
+- Nos menús ARIA na web, a tecla Escape agora pasarase a través do menú e xa non desactivará o modo foco incondicionalmente. (#3215)
+- Na nova interfaz do Gmail, ao se usar a navegación rápida dentro de mensaxes mentres se len, xa non se anuncia todo o corpo da mensaxe despois do elemento ao que rematas de navegar. (#8887)
+- Despois de actualizar o NVDA, navegadores como Firefox e google Chrome xa non deberían romperse, e o modo exploración debería seguir reflectindo correctamente as actualizacións de calquera documento cargado actualmente. (#7641) 
+- O NVDA xa non informa de que se pode facer clic varias veces nunha fila ao navegar polo contido cliqueable en Modo Exploración. (#7430)
+- Os xestos realizados en pantallas braille baum Vario 40 xa non fallarán ao se executar. (#8894)
+- No Google Slides co Mozilla Firefox, o NVDA xa non anuncia o texto selecionado en cada control co foco. (#8964)
 
 
 == Cambios para Desenvolvedores ==
@@ -29,6 +47,8 @@
  - AutoWidthColumnCheckListCtrl engade caixas de verificación accesibles a un AutoWidthColumnListCtrl, o que está baseado en si mesmo en wx.ListCtrl.
 - Se necesitas facer un wx widget accesible que non o é aínda, é posible facelo usando unha instancia de gui.accPropServer.IAccPropServer_impl. (#7491)
  - Consulta a implementación de gui.nvdaControls.ListCtrlAccPropServer para máis información.
+- Actualizado configobj a 5.1.0dev commit 5b5de48a. (#4470)
+- A acción config.post_configProfileSwitch agora toma o argumento opcional prevConf keyword, permitiendo aos manexadores tomar unha acción baseada en diferencias entre a configuración antes e despois do cambio de perfil. (#8758)
 
 
 = 2018.3.2 =

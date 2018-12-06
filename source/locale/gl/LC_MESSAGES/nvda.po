@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-12 00:10+1000\n"
-"PO-Revision-Date: 2018-10-12 13:23+0100\n"
+"POT-Creation-Date: 2018-11-20 10:57+1000\n"
+"PO-Revision-Date: 2018-11-21 10:49+0100\n"
 "Last-Translator: Iván Novegil <ivan.novegil.cancelas@gmail.com>\n"
 "Language-Team: Equipo de tradución ao Galego <oprisniki@gmail.com>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -614,7 +614,7 @@ msgstr "{modifier} soltado"
 #. Translators: Reported when a braille input modifier is pressed.
 #, python-brace-format
 msgid "{modifier} pressed"
-msgstr "{modifier} premedo"
+msgstr "{modifier} premido"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -2603,7 +2603,7 @@ msgstr "ocupado"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "premedo"
+msgstr "premido"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
@@ -2753,11 +2753,11 @@ msgstr "non seleccioado"
 
 #. Translators: This is presented when a button is not pressed.
 msgid "not pressed"
-msgstr "non premedo"
+msgstr "non premido"
 
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
-msgstr "non marcado"
+msgstr "sen marcar"
 
 #. Translators: This is presented when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
@@ -5957,7 +5957,7 @@ msgstr "Revisión de pantalla"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Emular premedo %s no teclado do sistema"
+msgstr "Emular premido %s no teclado do sistema"
 
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
@@ -6891,6 +6891,18 @@ msgstr "ilexible"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Editando perfil {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "respostado"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "todos respostados"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "reenviado"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8634,6 +8646,16 @@ msgstr "&Nível de pontoación/símbolos:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Confiar na lingua da voz ao procesar caracteres e símbolos"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Incluir datos Unicode Consortium (incluíndo emoji) ao se procesar caracteres "
+"e símbolos"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10749,6 +10771,16 @@ msgstr "comentario: {text} por {author} en {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} en {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} dende a marxe esquerda da páxina"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} dende a marxe superior da páxina"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10907,6 +10939,9 @@ msgstr "Espaciado de liña dobre"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de liña 1.5"
+
+#~ msgid "REPLIED ALL"
+#~ msgstr "TODO RESPOSTADO"
 
 #~ msgid "purple flag"
 #~ msgstr "Bandeira púrpura"

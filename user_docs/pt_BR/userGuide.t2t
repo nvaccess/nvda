@@ -1052,9 +1052,19 @@ Essa opção permite-lhe escolher a quantidade de pontuação e outros sinais ""
 Por exemplo, quando selecionado tudo, todos os símbolos serão falados como palavras.
 Isso é aplicado a todos os sintetizadores, não apenas ao que está atualmente em uso.
 
-==== Confiar no idioma da voz ao processar símbolos e caracteres ====[SpeechSettingsTrust]
+==== Confiar no idioma da voz ao processar caracteres e símbolos ====[SpeechSettingsTrust]
 Por padrão, esta opção diz ao NVDA se o idioma da voz atual pode ser confiável ao processar símbolos e caracteres.
 Se você achar que o NVDA está lendo a pontuação no idioma errado por um sintetizador ou voz em particular, você pode desativar isso para forçar o NVDA a usar sua configuração de idioma global em vez disso.
+
+==== Incluir dados do Consórcio Unicode (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
+Quando essa opção está ativada, o NVDA incluirá dicionários adicionais de pronúncia de símbolos ao pronunciar caracteres e símbolos.
+Esses dicionários contêm descrições de símbolos (particularmente emoji) que são fornecidos pelo [Consórcio Unicode http://www.unicode.org/consortium/] como parte de seu [Repositório de Dados de Localidade Comum http://cldr.unicode.org/].
+Se você deseja que o NVDA fale descrições de caracteres emoji com base nesses dados, ative esta opção.
+No entanto, se você estiver usando um sintetizador de fala que ofereça suporte a fala de descrições de emojis nativamente, convém desativá-lo.
+
+Observe que as descrições de caracteres adicionadas ou editadas manualmente são salvas como parte das configurações do usuário.
+Portanto, se você alterar a descrição de um emoji específico, sua descrição personalizada será pronunciada para esse emoji, independentemente de essa opção estar ativada.
+Você pode adicionar, editar ou remover descrições de símbolos no [diálogo de pronúncia de pontuação/símbolo #SymbolPronunciation] do NVDA.
 
 ==== Percentagem para Mudança de Tom em Maiúsculas ====[SpeechSettingsCapPitchChange]
 Este campo de edição permite que você digite o valor que o tom da voz irá alterar ao anunciar uma letra maiúscula.

@@ -469,6 +469,13 @@ class SpeechSymbolProcessor(object):
 					symbol=symbol.identifier, locale=self.locale))
 				del symbols[symbol.identifier]
 				try:
+					if len(symbol.identifier) == 1:
+						characters.remove(symbol.identifier)
+					else:
+						multiChars.remove(symbol.identifier)
+				except ValueError:
+					pass
+				try:
 					complexSymbolsList.remove(symbol)
 				except ValueError:
 					pass
