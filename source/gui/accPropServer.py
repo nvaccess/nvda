@@ -10,6 +10,7 @@ from logHandler import log
 from  comtypes.automation import VT_EMPTY
 from  comtypes import COMObject
 from comInterfaces.Accessibility import IAccPropServer
+import weakref
 
 class IAccPropServer_Impl(COMObject):
 	"""Base class for implementing a COM interface for AccPropServer.
@@ -27,7 +28,7 @@ class IAccPropServer_Impl(COMObject):
 			It's available on self.control.
 		@Type control: Subclass of wx.Window
 		"""
-		self.control = control
+		self.control = weakref.ref(control)
 		super(IAccPropServer_Impl, self).__init__(*args, **kwargs)
 
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):

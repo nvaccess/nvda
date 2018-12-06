@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
-#addonHandler.py
+#addonHandler/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2017 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee
+#Copyright (C) 2012-2018 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Manages add-ons
 The add-on handler provides a definition of an add-on bundle, as well as functions to install, remove, disable/enable, and update add-on bundles.
-See http://addons.nvda-project.org for more information on NVDA community add-ons.
+See https://addons.nvda-project.org for more information on NVDA community add-ons.
 See the NVDA developer guide for more info on writing add-ons.
 """
 
@@ -16,28 +16,32 @@ import os.path
 import gettext
 import glob
 import tempfile
-import cPickle
+from six.moves import cPickle
 import inspect
 import itertools
 import collections
 import pkgutil
 import shutil
-from cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 import zipfile
+from versionInfo import getNVDAVersionTupleFromString
 import urllib
 import threading
 import wx
 # #3208 todo: tentatively use JSON for exchanging add-on update data.
 import json
-
 from configobj import ConfigObj, ConfigObjError
 from configobj.validate import Validator
-
 import config
 import globalVars
 import languageHandler
 from logHandler import log
 import winKernel
+import re
+import buildVersion
+from . import addonVersionCheck
+from .addonVersionCheck import AddonCompatibilityState, isAddonConsideredIncompatible, isAddonConsideredCompatible
+from . import compatValues
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -54,12 +58,19 @@ def loadState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
 		state = cPickle.load(file(statePath, "r"))
+		if "disabledAddons" not in state:
+			state["disabledAddons"] = set()
+		if "pendingDisableSet" not in state:
+			state["pendingDisableSet"] = set()
+		if "pendingEnableSet" not in state:
+			state["pendingEnableSet"] = set()
 	except:
 		# Defaults.
 		state = {
 			"pendingRemovesSet":set(),
 			"pendingInstallsSet":set(),
 			"disabledAddons":set(),
+			"pendingEnableSet":set(),
 			"pendingDisableSet":set(),
 			"noUpdates":set(),
 		}
@@ -74,7 +85,32 @@ def saveState():
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
-	return (addon for addon in getAvailableAddons() if addon.isRunning)
+	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
+
+def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
+	""" Returns add-ons that have "UNKNOWN" compatibility state value. These are addons
+	that have no auto-deduced or manually set compatibility state.
+	"""
+	return getAddonsMatchingCompatValues([compatValues.UNKNOWN], version)
+
+def getAddonsWithoutKnownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
+	""" Returns add-ons that are untested for the specified NVDA version.
+	"""
+	withoutKnownCompatValues = [
+			compatValues.UNKNOWN,
+			compatValues.MANUALLY_SET_COMPATIBLE,
+			compatValues.MANUALLY_SET_INCOMPATIBLE
+		]
+	return getAddonsMatchingCompatValues(withoutKnownCompatValues, version)
+
+def getAddonsMatchingCompatValues(compatValues, version=addonVersionCheck.CURRENT_NVDA_VERSION):
+	""" Returns add-ons that have compatibility value that is True when anded with compatMask
+	"""
+	return getAvailableAddons(
+		filterFunc=lambda addon: (
+			AddonCompatibilityState.getAddonCompatibility(addon, version) in compatValues
+		)
+	)
 
 def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -114,16 +150,22 @@ def removeFailedDeletions():
 
 _disabledAddons = set()
 def disableAddonsIfAny():
-	"""Disables add-ons if told to do so by the user from add-ons manager"""
+	"""
+	Disables add-ons if told to do so by the user from add-ons manager.
+	This is usually executed before refreshing the list of available add-ons.
+	Furthermore, disabling is limited to installed add-ons,
+	whereas blacklisting can also be performed for add-on bundles.
+	"""
 	global _disabledAddons
-	if "disabledAddons" not in state:
-		state["disabledAddons"] = set()
-	if "pendingDisableSet" not in state:
-		state["pendingDisableSet"] = set()
-	if "pendingEnableSet" not in state:
-		state["pendingEnableSet"] = set()
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
+	state["disabledAddons"] |= set(getAddonsMatchingCompatValues(
+		[
+			compatValues.UNKNOWN,
+			compatValues.MANUALLY_SET_INCOMPATIBLE,
+			compatValues.AUTO_DEDUCED_INCOMPATIBLE
+		]
+	))
 	state["disabledAddons"] -= state["pendingEnableSet"]
 	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
@@ -182,15 +224,39 @@ def initialize():
 		log.info("Add-ons not supported when running as a Windows Store application")
 		return
 	loadState()
+	AddonCompatibilityState.initialise()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()
-	saveState()
 	getAvailableAddons(refresh=True)
+	saveState()
 	# #3208 todo: Check for add-on updates unless NVDA itself is updating right now.
 	#checkForAddonUpdates()
+
+def showUnknownCompatDialog():
+	from gui import addonGui, mainFrame, runScriptModalDialog
+	if any(getAddonsWithUnknownCompatibility()):
+		try:
+			incompatibleAddonsDlg = addonGui.IncompatibleAddonsDialog(parent=mainFrame)
+		except RuntimeError:
+			log.error("Unable to open IncompatibleAddonsDialog", exc_info=True)
+			return
+	else:
+		return
+	unknownCompatAddons = incompatibleAddonsDlg.unknownCompatibilityAddonsList
+	def afterDialog(res):
+		# we may need to change the enabled addons / restart nvda here
+		shouldPromptRestart = False
+		for addon in unknownCompatAddons:
+			if isAddonConsideredCompatible(addon):
+				addon.enable(True)
+				shouldPromptRestart = True
+		saveState()
+		if shouldPromptRestart:
+			addonGui.promptUserForRestart()
+	runScriptModalDialog(incompatibleAddonsDlg, afterDialog)
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
@@ -226,21 +292,34 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
+				elif isAddonConsideredIncompatible(a):
+					log.debugWarning("Add-on %s is considered incompatible", name)
+					# #6275: The add-on refresh could have yielded add-ons considered incompatible.
+					# Add these to the disabled add-ons
+					_disabledAddons.add(a.name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
 
 _availableAddons = collections.OrderedDict()
-def getAvailableAddons(refresh=False):
+def getAvailableAddons(refresh=False, filterFunc=None):
 	""" Gets all available addons on the system.
+	@param refresh: Whether or not to query the file system for available add-ons.
+	@type refresh: bool
+	@param filterFunc: A function that allows filtering of add-ons.
+		It takes an L{Addon} as its only argument
+		and returns a C{bool} indicating whether the add-on matches the provided filter.
+	@type filterFunc: callable
 	@rtype generator of Addon instances.
 	"""
+	if filterFunc and not callable(filterFunc):
+		raise TypeError("The provided filterFunc is not callable")
 	if refresh:
 		_availableAddons.clear()
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
-	return _availableAddons.itervalues()
+	return (addon for addon in _availableAddons.itervalues() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
@@ -264,8 +343,34 @@ def installAddonBundle(bundle):
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
 
+class AddonBase(object):
+	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
+	Subclasses should at least implement L{manifest}.
+	"""
 
-class Addon(object):
+	@property
+	def name(self):
+		return self.manifest['name']
+
+	@property
+	def version(self):
+		return self.manifest['version']
+
+	@property
+	def minimumNVDAVersion(self):
+		version = self.manifest.get('minimumNVDAVersion')
+		if not version:
+			return None
+		return getNVDAVersionTupleFromString(version)
+
+	@property
+	def lastTestedNVDAVersion(self):
+		version = self.manifest.get('lastTestedNVDAVersion')
+		if not version:
+			return None
+		return getNVDAVersionTupleFromString(version)
+
+class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
 		""" Constructs an L[Addon} from.
@@ -274,7 +379,6 @@ class Addon(object):
 		"""
 		self.path = os.path.abspath(path)
 		self._extendedPackages = set()
-		self._isLoaded = False
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
 			translatedInput = None
@@ -305,8 +409,9 @@ class Addon(object):
 			getAvailableAddons(refresh=True)
 		else:
 			state['pendingRemovesSet'].add(self.name)
-			# There's no point keeping a record of this add-on being disabled now.
-			_disabledAddons.discard(self.name)
+			# There's no point keeping a record of this add-on pending being disabled now.
+			# However, if the addon is in _disabledAddons, then it needs to stay there so that
+			# the status in addonsManager continues to say "disabled"
 			state['pendingDisableSet'].discard(self.name)
 		saveState()
 
@@ -329,10 +434,10 @@ class Addon(object):
 		shutil.rmtree(tempPath,ignore_errors=True)
 		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
-
-	@property
-	def name(self):
-		return self.manifest['name']
+		# clean up the addons state
+		log.debug("removing addon {} from _disabledAddons".format(self.name))
+		_disabledAddons.discard(self.name)
+		saveState()
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
@@ -355,6 +460,10 @@ class Addon(object):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
+			if isAddonConsideredIncompatible(self):
+				raise AddonError("Add-on in blacklist: minimum NVDA version %s, last tested version %s" % (
+					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
+				))
 			if self.name in state["pendingDisableSet"]:
 				# Undoing a pending disable.
 				state["pendingDisableSet"].discard(self.name)
@@ -364,7 +473,9 @@ class Addon(object):
 			if self.name in state["pendingEnableSet"]:
 				# Undoing a pending enable.
 				state["pendingEnableSet"].discard(self.name)
-			else:
+			# No need to disable an addon that is already disabled.
+			# This also prevents the status in the add-ons dialog from saying "disabled, pending disable"
+			elif self.name not in state["disabledAddons"]:
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		saveState()
@@ -513,7 +624,7 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
 
 
-class AddonBundle(object):
+class AddonBundle(AddonBase):
 	""" Represents the contents of an NVDA addon suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
@@ -605,6 +716,10 @@ description = string(default=None)
 author = string()
 # Version of the add-on. Should preferably in some standard format such as x.y.z
 version = string()
+# The minimum required NVDA version for this add-on to work correctly
+minimumNVDAVersion = string(default=None)
+# The last NVDA version this add-on has been tested with.
+lastTestedNVDAVersion = string(default=None)
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
 # Name of default documentation file for the add-on.
