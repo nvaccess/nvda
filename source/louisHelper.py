@@ -36,7 +36,7 @@ def _isDebug():
 def initialize():
 	# Register the liblouis logging callback.
 	louis.registerLogCallback(louis_log)
-	# Set the log level to all.
+	# Set the log level to debug.
 	# The NVDA logging callback will filter messages appropriately,
 	# i.e. error messages will be logged at the error level.
 	louis.setLogLevel(louis.LOG_DEBUG)

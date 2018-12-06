@@ -6,9 +6,11 @@ What's New in NVDA
 = 2019.1 =
 
 == New Features ==
+- New braille tables: Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435)
 
 
 == Changes ==
+- Updated liblouis braille translator to version 3.8.0. (#9013)
 
 
 == Bug Fixes ==
@@ -18,6 +20,7 @@ What's New in NVDA
 
 == Changes for Developers ==
 - NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)
+- You can now include log output from liblouis into the NVDA log by setting the louis boolean flag in the debugLogging section of the NVDA configuration. (#4554)
 
 
 = 2018.4 =
