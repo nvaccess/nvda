@@ -14,16 +14,15 @@ class ExcelCell(UIA):
 	rowHeaderText=None
 	columnHeaderText=None
 
-	def _get_states(self):
-		states=super(ExcelCell,self).states
-		states.discard(controlTypes.STATE_SELECTED)
-		return states
-
 	def _get_description(self):
 		return self.UIAElement.currentItemStatus
-		
+
 	def _get_cellCoordsText(self):
-		return super(ExcelCell,self).name
+		name=super(ExcelCell,self).name
+		# Later builds of Excel 2016 quote the letter coordinate.
+		# We don't want the quotes.
+		name=name.replace('"','')
+		return name
 
 class ExcelWorksheet(UIA):
 	role=controlTypes.ROLE_TABLE
