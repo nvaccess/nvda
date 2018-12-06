@@ -1185,6 +1185,31 @@ class UIA(Window):
 		self.UIASelectionItemPattern=self._getUIAPattern(UIAHandler.UIA_SelectionItemPatternId,UIAHandler.IUIAutomationSelectionItemPattern)
 		return self.UIASelectionItemPattern
 
+	def _get_UIASelectionPattern(self):
+		self.UIASelectionPattern=self._getUIAPattern(UIAHandler.UIA_SelectionPatternId,UIAHandler.IUIAutomationSelectionPattern)
+		return self.UIASelectionPattern
+
+	def _get_UIASelectionPattern2(self):
+		self.UIASelectionPattern2=self._getUIAPattern(UIAHandler.UIA_SelectionPattern2Id,UIAHandler.IUIAutomationSelectionPattern2)
+		return self.UIASelectionPattern2
+
+	def getSelectedItemsCount(self,maxItems=None):
+		p=self.UIASelectionPattern2
+		if p:
+			return p.currentItemCount
+		return 0
+
+	def _get_selectionContainer(self):
+		p=self.UIASelectionItemPattern
+		if not p:
+			return None
+		e=p.currentSelectionContainer
+		e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		obj=UIA(UIAElement=e)
+		if obj.UIASelectionPattern2:
+			return obj
+		return None
+
 	def _get_UIATextPattern(self):
 		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=False)
 		return self.UIATextPattern
