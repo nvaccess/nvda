@@ -180,14 +180,6 @@ class WordDocumentTextInfo(UIATextInfo):
 				docInfo=self.obj.makeTextInfo(textInfos.POSITION_ALL)
 				self.setEndPoint(docInfo,"endToEnd")
 
-	def _get_isCollapsed(self):
-		res=super(WordDocumentTextInfo,self).isCollapsed
-		if res: 
-			return True
-		# MS Word does not seem to be able to fully collapse ranges when on links and tables etc.
-		# Therefore class a range as collapsed if it has no text
-		return not bool(self.text)
-
 	def getTextWithFields(self,formatConfig=None):
 		if self.isCollapsed:
 			# #7652: We cannot fetch fields on collapsed ranges otherwise we end up with repeating controlFields in braille (such as list list list). 
