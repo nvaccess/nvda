@@ -64,6 +64,8 @@ def loadState():
 			state["pendingDisableSet"] = set()
 		if "pendingEnableSet" not in state:
 			state["pendingEnableSet"] = set()
+		if "noUpdates" not in state:
+			state["noUpdates"] = set()
 	except:
 		# Defaults.
 		state = {
