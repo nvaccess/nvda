@@ -68,6 +68,13 @@ class TextRangeStruct(ctypes.Structure):
 
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
+	def _get_encoding(self):
+		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
+		if cp==SC_CP_UTF8:
+			return "utf-8"
+		else:
+			return locale.getlocale()[1]
+
 	def _getOffsetFromPoint(self,x,y):
 		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
@@ -174,12 +181,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
-		if cp==SC_CP_UTF8:
-			encoding="utf-8"
-		else:
-			encoding=locale.getlocale()[1]
-		return buf.value.decode(encoding,errors="replace")
+		return buf.value.decode(self.encoding,errors="replace")
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)

@@ -349,10 +349,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getTextRange(self,start,end):
 		if self.obj.editAPIVersion>=2:
 			bufLen=((end-start)+1)*2
-			if self.obj.isWindowUnicode:
-				textRange=TextRangeUStruct()
-			else:
-				textRange=TextRangeAStruct()
+			# Even though this can return unicode text, we use the ansi version of the structure.
+			# Using the unicode structure isn't strictly necessary and saves us some confusion
+			textRange=TextRangeAStruct()
 			textRange.chrg.cpMin=start
 			textRange.chrg.cpMax=end
 			processHandle=self.obj.processHandle
@@ -369,7 +368,12 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
+			if (
+				# The window is unicode 
+				self.obj.isWindowUnicode
+				# Or the window reports being ANSI but the buffer seems to contain unicode
+				or (res>1 and (buf[res]!=0 or buf[res+1]!=0))
+			):
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
 				encoding=locale.getlocale()[1]
@@ -380,7 +384,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if text and controlTypes.STATE_PROTECTED in self.obj.states:
 				text=u'*'*len(text)
 		else:
-			text=self._getStoryText()[start:end]
+			text = super(EditTextInfo, self)._getTextRange(start, end)
 		return text
 
 	def _getWordOffsets(self,offset):
@@ -396,7 +400,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return offset,offset+1
 			else:
 				return super(EditTextInfo,self)._getWordOffsets(offset)
-
 
 	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:

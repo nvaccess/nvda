@@ -36,6 +36,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""
 
 	locationText=None
+	# Do not use encoded text.
+	encoding = None
 
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
