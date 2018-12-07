@@ -406,8 +406,8 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
 				# if there is selected text, then there is a value and we do not report placeholder
-				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),info.text)
+				# Translators: This is spoken to indicate what has been selected. for example 'hello world selected'
+				speakSelectionMessage(_("%s selected"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				_speakPlaceholderIfEmpty(info, obj, reason)
@@ -633,8 +633,8 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
-			# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-			speakSelectionMessage(_("selected %s"),text)
+			# Translators: This is spoken to indicate what has been selected. for example 'hello world selected '
+			speakSelectionMessage(_("%s selected "),text)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
