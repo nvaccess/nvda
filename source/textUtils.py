@@ -6,8 +6,12 @@
 
 from six import text_type
 import encodings
+import sys
 
-class DuoString(text_type):
+byteTypes = (bytes, bytearray)
+defaultStringEncoding = "utf_16_le" if sys.version_info.major == 2 else "utf_32_le"
+
+class EncodingAwareString(text_type):
 	"""
 	Magic string object that holds a string in both its decoded and encoded forms.
 	"""
@@ -18,12 +22,12 @@ class DuoString(text_type):
 		"utf_32_le": 4,
 	}
 
-	def __new__(cls, value="", encoding="utf_16_le", errors="surrogatepass"):
-		if isinstance(value, (bytes, bytearray)):
-			obj = super(DuoString, cls).__new__(cls, value, encoding, errors)
+	def __new__(cls, value, encoding, errors="replace"):
+		if isinstance(value, byteTypes):
+			obj = super(EncodingAwareString, cls).__new__(cls, value, encoding, errors)
 			obj.encoded = value
 		else:
-			obj = super(DuoString, cls).__new__(cls, value)
+			obj = super(EncodingAwareString, cls).__new__(cls, value)
 			obj.encoded = obj.encode(encoding, errors)
 		obj.encoding = encodings.normalize_encoding(encoding)
 		obj.bytesPerIndex = cls._encodingToBytes[obj.encoding]
@@ -35,23 +39,23 @@ class DuoString(text_type):
 		return text_type(self)
 
 	def __repr__(self):
-		return "{}({})".format(self.__class__.__name__, self.decoded)
+		return "{}({})".format(self.__class__.__name__, repr(self.decoded))
 
 	def __add__(self, value):
-		if isinstance(value, (bytes, bytearray)):
-			return DuoString(self.encoded + value, self.encoding, self.errors)
-		return DuoString(self.decoded + value, self.encoding, self.errors)
+		if isinstance(value, byteTypes):
+			return EncodingAwareString(self.encoded + value, self.encoding, self.errors)
+		return EncodingAwareString(self.decoded + value, self.encoding, self.errors)
 
 	def __radd__(self, value):
-		if isinstance(value, (bytes, bytearray)):
-			return DuoString(value + self.encoded, self.encoding, self.errors)
-		return DuoString(value + self.decoded, self.encoding, self.errors)
+		if isinstance(value, byteTypes):
+			return EncodingAwareString(value + self.encoded, self.encoding, self.errors)
+		return EncodingAwareString(value + self.decoded, self.encoding, self.errors)
 
 	def __len__(self):
 		return len(self.encoded) // self.bytesPerIndex
 
 	def __getitem__(self, key):
-		if self.bytesPerIndex == 1:
+		if self.bytesPerIndex == 1 and sys.version_info.major == 2:
 			newKey = key
 		elif isinstance(key, int):
 			if key >= len(self):
@@ -68,7 +72,7 @@ class DuoString(text_type):
 					stop = min(key.stop, len(self) - 1)
 				step = key.step
 				keys = range(start, stop, step)
-				return DuoString("".join(self[i] for i in keys), self.encoding, self.errors)
+				return EncodingAwareString("".join(self[i] for i in keys), self.encoding, self.errors)
 			start = key.start
 			if start is not None:
 				start *= self.bytesPerIndex
@@ -79,4 +83,19 @@ class DuoString(text_type):
 			newKey = slice(start, stop, step)
 		else:
 			return NotImplemented
-		return DuoString(self.encoded[newKey], self.encoding, self.errors)
+		return EncodingAwareString(self.encoded[newKey], self.encoding, self.errors)
+
+
+def getString(value, encoding, errors="replace"):
+	"""Creates a string that is encoding aware if necessary."""
+	encoding = encodings.normalize_encoding(encoding)
+	if encoding == defaultStringEncoding:
+		stringType = text_type
+	else:
+		stringType = EncodingAwareString
+	if isinstance(value, byteTypes):
+		return stringType(value, encoding, errors)
+	elif encoding == defaultStringEncoding:
+		return stringType(value)
+	else:
+		return EncodingAwareString(value, encoding, errors)
