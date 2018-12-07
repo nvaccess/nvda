@@ -13,6 +13,7 @@ import colors
 import XMLFormatting
 import api
 import winUser
+import mouseHandler
 import NVDAHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
@@ -554,8 +555,8 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)
 
 	def _getSelectionOffsets(self):

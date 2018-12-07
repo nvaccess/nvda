@@ -152,8 +152,8 @@ class GlobalCommands(ScriptableObject):
 	def script_leftMouseClick(self,gesture):
 		# Translators: Reported when left mouse button is clicked.
 		ui.message(_("Left click"))
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 	# Translators: Input help mode message for left mouse click command.
 	script_leftMouseClick.__doc__=_("Clicks the left mouse button once at the current mouse position")
 	script_leftMouseClick.category=SCRCAT_MOUSE
@@ -161,8 +161,8 @@ class GlobalCommands(ScriptableObject):
 	def script_rightMouseClick(self,gesture):
 		# Translators: Reported when right mouse button is clicked.
 		ui.message(_("Right click"))
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 	# Translators: Input help mode message for right mouse click command.
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
 	script_rightMouseClick.category=SCRCAT_MOUSE
@@ -171,11 +171,11 @@ class GlobalCommands(ScriptableObject):
 		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
 			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 			ui.message(_("Left mouse button unlock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		else:
 			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 			ui.message(_("Left mouse button lock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 	# Translators: Input help mode message for left mouse lock/unlock toggle command.
 	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
 	script_toggleLeftMouseButton.category=SCRCAT_MOUSE
@@ -184,11 +184,11 @@ class GlobalCommands(ScriptableObject):
 		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
 			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 			ui.message(_("Right mouse button unlock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 		else:
 			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 			ui.message(_("Right mouse button lock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
 	# Translators: Input help mode message for right mouse lock/unlock command.
 	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
 	script_toggleRightMouseButton.category=SCRCAT_MOUSE
