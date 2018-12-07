@@ -148,6 +148,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		super(IA2TextTextInfo,self).expand(unit)
 		if isMouseChunkUnit:
 			text=self._getTextRange(self._startOffset,self._endOffset)
+			if not text:
+				return
 			try:
 				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
 			except ValueError:
