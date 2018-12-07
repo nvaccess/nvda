@@ -638,7 +638,7 @@ class UpdateDownloader(object):
 			raise RuntimeError("Content too short")
 		if self.fileHash and hasher.hexdigest() != self.fileHash:
 			raise RuntimeError("Content has incorrect file hash")
-		# GetFileVersionInfo will fail as long as the file is still open.
+		# getFileVersionInfo will fail as long as the file is still open.
 		local.close()
 		fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
 		fileVersion = fileVersionInfo.get('FileVersion') or self.version
