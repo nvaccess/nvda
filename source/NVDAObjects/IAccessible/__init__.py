@@ -199,7 +199,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		try:
-			return self.obj.IAccessibleTextObject.text(start,end)
+			return self.obj.IAccessibleTextObject.text(start,end) or u""
 		except COMError:
 			return u""
 
