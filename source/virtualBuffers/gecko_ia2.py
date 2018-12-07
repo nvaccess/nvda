@@ -10,6 +10,7 @@ import controlTypes
 import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
+import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
@@ -126,29 +127,7 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		return True
 
-	def _getExpandedComboBox(self, obj):
-		"""If obj is an item in an expanded combo box, get the combo box.
-		"""
-		if not (obj.windowClassName.startswith('Mozilla') and obj.windowStyle & winUser.WS_POPUP):
-			# This is not a Mozilla popup window, so it can't be an expanded combo box.
-			return None
-		if obj.role not in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_LIST):
-			return None
-		parent = obj.parent
-		# Try a maximum of 2 ancestors, since we might be on the list item or the list.
-		for i in xrange(2):
-			obj = obj.parent
-			if not obj:
-				return None
-			if obj.role == controlTypes.ROLE_COMBOBOX:
-				return obj
-		return None
-
 	def __contains__(self,obj):
-		# if this is a Mozilla combo box popup, we want to work with the combo box.
-		combo = self._getExpandedComboBox(obj)
-		if combo:
-			obj = combo
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
@@ -184,7 +163,11 @@ class Gecko_ia2(VirtualBuffer):
 
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+		try:
+			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
+		except COMError:
+			return None
+		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),IAccessibleChildID=0)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
@@ -238,8 +221,8 @@ class Gecko_ia2(VirtualBuffer):
 			y = t + h / 2
 			oldX, oldY = winUser.getCursorPos()
 			winUser.setCursorPos(x, y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			winUser.setCursorPos(oldX, oldY)
 			break
 

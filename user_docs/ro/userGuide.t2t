@@ -22,7 +22,7 @@ Trăsăturile importante includ:
 - Sintetizator de voce încorporat care funcționează cu peste 80 de limbi
 - Pronunțarea formatării textului, unde este posibil, cum ar fi numele și dimensiunea fontului, stilul și erorile de ortografie
 - Pronunțarea automată a textului de sub cursorul mausului și identificarea audio opțională a poziției mausului
-- Suport pentru multe afișaje actualizabile Braille, incluzând introducerea de braille pentru afișajele braille care au tastatură braille
+- Suport pentru multe afișaje actualizabile Braille, incluzând abilitatea de detectare automată a multora dintre ele, precum și introducerea de braille pentru afișajele braille care au tastatură braille
 - Capacitatea de a rula exclusiv de pe un stick USB sau alte suporturi media portabile fără nevoia instalării
 - Interfață de instalare vorbită, ușor de folosit
 - Tradus în 54 de limbi
@@ -57,7 +57,7 @@ NVDA este cu drept de autor NVDA_COPYRIGHT_YEARS pentru colaboratorii NVDA.
 NVDA este acoperit de Licența GNU General Public License (Versiune 2).
 Sunteți liberi să distribuiți sau să schimbați acest program în orice mod doriți atâta timp cât distribuiți și licența alături de program și puneți codul sursă la dispoziția oricui îl dorește. 
 Acest lucru se aplică atât originalului cât și copiilor modificate ale programului, plus oricărui alt program care folosește codul extras din acest program.
-Pentru alte detalii, puteți [vedea licența online. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
+Pentru alte detalii, puteți [vedea licența online. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html] (în engleză)
 
 + Cerințe de sistem +[CerinteSistem]
 - Sisteme de operare: toate versiunile Windows 7, Windows 8, Windows 8.1 și Windows 10 pe 32 biți și 64 biți, precum și versiunile Server ale lor pornind de la Windows Server 2008 R2.
@@ -559,7 +559,7 @@ Există o tastă de comandă pentru revenirea la pagina originală care conține
 + Citirea conținutului matematic +[CitireMatematica]
  Folosind MathPlayer 4 creat de Design Science, NVDA poate citi și naviga interactiv prin conținutul matematic compatibil.
 Pentru acest lucru este nevoie ca MathPlayer 4 să fie instalat pe calculatorul dumneavoastră.
-MathPlayer este disponibil ca descărcare gratuită la: http://www.dessci.com/en/products/mathplayer/
+MathPlayer este disponibil ca descărcare gratuită la: https://www.dessci.com/en/products/mathplayer/
 
 NVDA este compatibil cu următoarele tipuri de conținut matematic:
 - MathML în Mozilla Firefox, Microsoft Internet Explorer și Google Chrome.
@@ -1050,9 +1050,19 @@ Aceasta vă permite să alegeți nivelul de punctuație și alte simboluri care 
 De exemplu, când este pus pe „toate”, toate simbolurile vor fi pronunțate precum cuvinte.
 Această opțiune se aplică tuturor sintetizatoarelor, nu doar celui activ curent.
 
-==== Bazează-te pe limba vocii când se procesează caractere și simboluri ====SpeechSettingsTrust]
+==== Bazează-te pe limba vocii când se procesează caractere și simboluri ====[SpeechSettingsTrust]
 Activată implicit, această opțiune indică NVDA dacă limba vocii curente poate fi de încredere atunci când se procesează simboluri și caractere.
 Dacă descoperiți că NVDA citește punctuația în limba greșită pentru un anumit sintetizator sau o anumită voce, veți dori să dezactivați această opțiune pentru a forța NVDA să folosească, în schimb, configurația generală de limbă.
+
+==== Include datele Unicode Consortium (inclusiv emoji) atunci când se procesează caractere și simboluri ====[SpeechSettingsCLDR]
+Atunci când această casetă este bifată, NVDA va include dicționare adiționale de pronunțare a simbolurilor când se pronunță caractere și simboluri.
+Dicționarele conțin descrieri pentru simboluri (particular emoji) care sunt furnizate de [Unicode Consortium http://www.unicode.org/consortium/] ca parte a [depozitului lor de date locale comune http://cldr.unicode.org/].
+Dacă vreți ca NVDA să rostească descrieri ale caracterelor emoji bazate pe aceste date, trebuie să activați această opțiune.
+Totuși, dacă folosiți o sinteză vocală care are suport nativ pentru rostirea descrierilor emoji, puteți dori să opriți asta.
+
+Rețineți că descrierile caracterelor adăugate manual sau editate sunt salvate ca parte a setărilor dumneavoastră de utilizator.
+Prin urmare, dacă modificați descrierea unui emoji particular, acea descriere personalizată va fi rostită pentru acel emoji, indiferent dacă această opțiune este activată.
+Puteți adăuga, edita sau șterge descrieri de simboluri din [dialogul rostirii punctuației/simbolurilor #SymbolPronunciation].
 
 ==== Procent schimbare amplitudine la citirea majusculelor ====[SpeechSettingsCapPitchChange]
 Acest câmp editabil vă permite să tastați valoarea cu care amplitudinea vocii se va schimba când se pronunță majuscule.
@@ -1232,7 +1242,7 @@ Dacă există o eroare la încărcarea driver-ului afișajului, NVDA vă va noti
 Această casetă combinată vă prezintă mai multe opțiuni, depinzând de ce drivere de afișaje braille sunt disponibile pe sistemul dumneavoastră.
 Deplasați-vă printre ele cu săgețile.
 Fără braille înseamnă că nu folosiți braille.
-Citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru mai multe informații despre acestea.
+Citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru mai multe informații despre acestea și care dintre ele suportă detectarea automată în fundal.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Această opțiune, dacă este disponibilă, vă permite să alegeți ce port sau tip de conexiune vor fi utilizate pentru a comunica cu afișajul braille pe care l-ați ales.
@@ -1251,18 +1261,16 @@ Această categorie de setări conține următoarele opțiuni:
 ==== Schemă tastatură ====[KeyboardSettingsLayout]
 Această listă de selecție vă lasă să alegeți ce tip de așezare a tastaturii ar trebui să folosească NVDA. În prezent, cele două care vin cu NVDA sunt schema pentru calculatoare de birou și schema pentru laptopuri.
 
-==== Folosește CapsLock ca tastă de modificare NVDA ====[KeyboardSettingsCapsModifier]
-Dacă este bifată această casetă, CapsLock poate fi folosită ca tastă de modificare NVDA.
+==== Selectează tastele modificatoare ale NVDA ====[KeyboardSettingsModifiers]
+Casetele de bifat din această listă controlează tastele care pot fi folosite ca [taste modificatoare NVDA #TheNVDAModifierKey]. Mai jos vă sunt prezentate tastele disponibile din care puteți alege:
+- Tasta caps lock
+- Tasta insert de pe blocul numeric
+- Tasta suplimentară de insert, găsită de obicei deasupra tastelor săgeată, lângă home și end
+-
 
-==== Folosește tasta Insert principală ca tastă de modificare NVDA ====[KeyboardSettingsExtendedInsert]
-Dacă este bifată această casetă, tasta Insert principală (aflată de obicei deasupra tastelor direcționale, lângă Home și End) poate fi folosită ca tastă de modificare NVDA.
-
-==== Folosește tasta Insert din blocul numeric ca tastă de modificare NVDA ====[KeyboardSettingsNumpadInsert]
-Dacă este bifată această casetă, tasta Insert de pe tastele numerice poate fi folosită ca tastă de modificare NVDA.
-
-Dacă nu este aleasă nicio tastă ca tastă NVDA, ar putea fi imposibil de accesat anumite comenzi NVDA.
-În consecință, dialogul de setări al NVDA va afișa un mesaj de eroare dacă toate tastele rămân deselectate când apăsați butonul OK.
-După ce revocați mesajul de eroare, va trebui să selectați cel puțin una din taste înainte de a putea apăsa OK și a închide cum trebuie fereastra de dialog. 
+Dacă nicio tastă nu este aleasă ca tastă NVDA, accesarea anumitor comenzi NVDA poate fi cu neputință.
+În consecință, dialogul NVDA va afișa un mesaj de eroare dacă toate tastele sunt neselectate la apăsarea butoanelor OK sau Se aplică.
+După închiderea mesajului de eroare, trebuie să selectați cel puțin una înainte de a putea să apăsați OK ca să închideți dialogul cum trebuie.
 
 %kc:setting
 ==== Pronunță caracterele tastate ====[KeyboardSettingsSpeakTypedCharacters]
@@ -1852,8 +1860,8 @@ Microsoft Speech Platform oferă voci pentru multe dintre limbile care sunt folo
 Aceste voci pot fi folosite și cu NVDA.
 
 Pentru a folosi aceste voci, va trebui să instalați două componente:
-- Microsoft Speech Platform - Runtime (Versiunea 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Versiunea 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Versiunea 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Versiunea 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - Această pagină include mai multe fișiere atât pentru recunoașterea vorbirii cât și pentru transformarea textului în vorbire (text-to speech sau TTS).
  Alegeți fișierele care conțin datele pentru limbile/vocile dorite.
  De exemplu, fișierul MSSpeech_TTS_en-US_ZiraPro.msi este o voce de engleză americană.
@@ -1881,16 +1889,34 @@ Acest sintetizator nu suportă [funcționalitatea de silabisire #SpeechSettingsU
 + Afișajele Braille compatibile +[AfisBrailleCompatibile]
 Această secțiune conține informații despre afișajele Braille suportate de NVDA.
 
+++ Afișaje care suportă detectarea automată în fundal ++[AutomaticDetection]
+NVDA are abilitatea de a detecta multe afișaje braille în fundal și prin USB sau bluetooth.
+Pentru ca NVDA să se comporte astfel, trebuie să selectați opțiunea „Automat” ca afișaj braille preferat din [Setările braille ale NVDA #BrailleSettings].
+Această opțiune este selectată în mod implicit.
+
+Următoarele afișaje braille suportă această funcționalitate de detectare automată.
+- Afișajele Handy Tech
+- Afișajele Baum/Humanware/APH/Orbit
+- Seriile HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Seriile Optelec ALVA 6
+- Seriile HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille
+- Afișajele Eurobraille Esys/Esytime/Iris
+-
+
 ++ Freedom Scientific gamele Focus/PAC Mate ++[FreedomScientificFocus]
-Toate afișajele Focus și PAC Mate de la [Freedom Scientific http://www.freedomscientific.com/] sunt suportate dacă sunt conectate prin USB sau bluetooth.
+Toate afișajele Focus și PAC Mate de la [Freedom Scientific https://www.freedomscientific.com/] sunt suportate dacă sunt conectate prin USB sau bluetooth.
 Veți avea nevoie ca driverele pentru afișajele Braille de la Freedom Scientific să fie instalate în sistemul dumneavoastră.
-Dacă nu le aveți deja, le puteți obține de la http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp .
+Dacă nu le aveți deja, le puteți obține de la https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp .
 Cu toate că această pagină menționează doar afișajul Focus Blue, driverele suportă toate afișajele Focus și Pacmate ale Freedom Scientific.
 Dacă sistemul dumneavoastră funcționează cu Windows pe 64 de biți iar driverele au fost deja instalate de un alt cititor de ecran, probabil tot va trebui să instalați driverele de la această legătură, deoarece fișierele cerute de NVDA probabil că nu au fost instalate de celălalt cititor de ecran.
 
 Implicit, NVDA poate detecta automat și se conecta la aceste afișaje fie prin USB fie prin bluetooth.
 Totuși, când configurați afișajul, puteți selecta explicit porturile „USB” sau „bluetooth” pentru a restricționa tipul de conexiune folosit.
-Acest lucru ar putea fi util dacă doriți să conectați afișajul de focalizare la NVDA, folosind bluetooth-ul, dar să puteți in continuare să-l incărcați folosind curent de la portul USB al calculatorului dumneavoastră.
+Acest lucru ar putea fi util dacă doriți să conectați afișajul de focalizare la NVDA, folosind bluetooth-ul, dar să puteți in continuare să-l încărcați folosind curent de la portul USB al calculatorului dumneavoastră.
+
+Aceste afișaje nu suportă încă funcționalitatea NVDA-ului  de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -1943,7 +1969,7 @@ Doar pentru Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA seria 6/convertor de protocol ++[OptelecALVA]
-Atât afișajele ALVA BC640 cât și BC680 de la [Optelec http://www.optelec.com/] sunt suportate dacă sunt conectate prin USB sau bluetooth.
+Atât afișajele ALVA BC640 cât și BC680 de la [Optelec https://www.optelec.com/] sunt suportate dacă sunt conectate prin USB sau bluetooth.
 Alternativ, puteți conecta un afișaj Optelec mai vechi, cum ar fi Braille Voyager, folosind un convertor de protocol furnizat de Optelec.
 Nu aveți nevoie de un driver specific instalat pentru a folosi aceste afișaje. 
 Doar conectați afișajul și configurați NVDA să-l folosească.
@@ -1996,7 +2022,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ Afișajele Handy Tech ++[HandyTech]
-NVDA suportă majoritatea afișajelor de la [Handy Tech http://www.handytech.de/] când sunt conectate prin USB sau bluetooth.
+NVDA suportă majoritatea afișajelor de la [Handy Tech https://www.handytech.de/] când sunt conectate prin USB sau bluetooth.
 Pentru afișajele USB mai vechi, veți avea nevoie să instalați în sistemul dv. driverele USB de la Handy Tech.
 
 Următoarele afișaje nu sunt suportate, dar pot fi utilizate prin [driver-ul universal Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] și prin suplimentul NVDA pentru el:
@@ -2030,9 +2056,11 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-Afișajul braille Lilli disponibil de la [MDV http://www.mdvbologna.it/] este suportat.
+Afișajul braille Lilli disponibil de la [MDV https://www.mdvbologna.it/] este suportat.
 Nu aveți nevoie de un driver specific instalat pentru a folosi acest afișaj.
 Doar conectați afișajul și configurați NVDA să-l folosească.
+
+Acest afișaj nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2050,7 +2078,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ Afișaje braille Baum/Humanware/APH/Orbit ++[Baum]
-Mai multe ecrane [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] și [Orbit http://www.orbitresearch.com/] sunt suportate atunci când sunt conectate prin USB, bluetooth sau port serial.
+Mai multe ecrane [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] și [Orbit https://www.orbitresearch.com/] sunt suportate atunci când sunt conectate prin USB, bluetooth sau port serial.
 Acestea includ:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2086,8 +2114,10 @@ Pentru afișaje care au joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-Dispozitivul hedo ProfiLine USB de la [hedo Reha-Technik http://www.hedo.de/] este suportat.
+Dispozitivul hedo ProfiLine USB de la [hedo Reha-Technik https://www.hedo.de/] este suportat.
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
+
+Acest afișaj nu suportă încă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2103,8 +2133,10 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-Dispozitivul hedo MobilLine USB de la [hedo Reha-Technik http://www.hedo.de/] este suportat.
+Dispozitivul hedo MobilLine USB de la [hedo Reha-Technik https://www.hedo.de/] este suportat.
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
+
+Acest afișaj nu suportă încă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2120,7 +2152,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ HumanWare Brailliant seriile BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-Afișajele Brailliant din gamele BI și B de la [HumanWare http://www.humanware.com/], incluzând BI 14, BI 32, BI 40 și B 80, sunt suportate când sunt conectate prin USB sau bluetooth.
+Afișajele Brailliant din gamele BI și B de la [HumanWare https://www.humanware.com/], incluzând BI 14, BI 32, BI 40 și B 80, sunt suportate când sunt conectate prin USB sau bluetooth.
 Dacă sunt conectate prin USB cu protocolul setat pe HumanWare, va trebui mai întâi să instalați driverele USB puse la dispoziție de producător.
 Nu sunt necesare drivere USB, dacă protocolul este setat pe OpenBraille.
 Pentru Braillenote Touch nu mai este necesară instalarea unui driver.
@@ -2172,9 +2204,9 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ HIMS gamele Braille Sense/Braille EDGE/Smart Beetle Sync Braille ++[Hims]
-NVDA suportă afișajele Braille Sense, Braille EDGE și Smart Beetle de la [Hims http://www.hims-inc.com/] când sunt conectate via USB sau bluetooth.
+NVDA suportă afișajele Braille Sense, Braille EDGE și Smart Beetle de la [Hims https://www.hims-inc.com/] când sunt conectate via USB sau bluetooth.
 Dacă sunt conectate prin USB, va trebui să instalați driverele USB de la HIMS pe sistemul dumneavoastră.
-Le puteți descărca de aici: http://www.himsintl.com/?c=2/13&uid=2319
+Le puteți descărca de aici: https://www.himsintl.com/?c=2/13&uid=2319
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2231,7 +2263,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
-NVDA suportă afișajul SyncBraille de la [Hims http://www.hims-inc.com/].
+NVDA suportă afișajul SyncBraille de la [Hims https://www.hims-inc.com/].
 Va trebui să instalați driverele USB de la HIMS pe sistemul dumneavoastră.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
@@ -2244,9 +2276,11 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 %kc:endInclude
 
 ++ Afișaje Braille Seika ++[Seika]
-Versiunile de afișaje braille Seika 3, 4 și 5 (cu 40 de celule) și Seika80 (cu 80 de celule) de la [Nippon Telesoft http://www.nippontelesoft.com/] sunt suportate.
-Puteți găsi mai multe informații despre aceste afișaje la http://www.seika-braille.com/ .
+Versiunile de afișaje braille Seika 3, 4 și 5 (cu 40 de celule) și Seika80 (cu 80 de celule) de la [Nippon Telesoft https://www.nippontelesoft.com/] sunt suportate.
+Puteți găsi mai multe informații despre aceste afișaje la https://www.seika-braille.com/ .
 Trebuie, mai întâi, să instalați driverele USB puse la dispoziție de producător.
+
+Aceste afișaje nu suportă încă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2272,6 +2306,8 @@ Următoarele afișaje braille sunt suportate:
 - BRAILLEX Trio (USB și bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live și BRAILLEX Live Plus (USB și bluetooth)
 -
+
+Aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Dacă BrxCom este instalat, NVDA va folosi BrxCom.
 BrxCom este un instrument care permite intrărilor de tastatură de la afișajul braille să funcționeze independent de cititorul de ecran.
@@ -2353,6 +2389,7 @@ Următoarele afișaje Braille sunt suportate:
 -
 
 De notat că aceste afișaje pot fi conectate doar printr-un port serial.
+Din această cauză, aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 În consecință, ar trebui să alegeți portul la care este conectat afișajul după ce ați ales acest driver în [Dialogul de selectare al afișajului braille #SelectBrailleDisplay].
 
 Unele dintre aceste dispozitive au o Bară de acces facil (Easy Access Bar - EAB) care permite o operare rapidă și intuitivă.
@@ -2430,7 +2467,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA suportă dispozitivul de luat notițe BrailleNote de la [Humanware http://www.humanware.com] când este folosit ca terminal de afișare pentru un cititor de ecran.
+NVDA suportă dispozitivul de luat notițe BrailleNote de la [Humanware https://www.humanware.com] când este folosit ca terminal de afișare pentru un cititor de ecran.
 Următoarele modele sunt suportate:
 - BrailleNote Classic (doar conexiune serială)
 - BrailleNote PK (conexiuni serială și prin bluetooth)
@@ -2522,7 +2559,7 @@ Urmează comenzi pentru joysticul de rulare:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA este compatibil cu afișajele EcoBraille de la [ONCE http://www.once.es/].
+NVDA este compatibil cu afișajele EcoBraille de la [ONCE https://www.once.es/].
 Următoarele modele sunt suportate:
 - EcoBraille 20
 - EcoBraille 40
@@ -2531,6 +2568,7 @@ Următoarele modele sunt suportate:
 -
 
 În NVDA, puteți stabili portul serial la care este conectat afișajul [Dialogul de selectare a afișajului braille #SelectBrailleDisplay].
+Aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de comenzi pentru BrailleNote și NVDA.
 Vă rugăm să consultați [documentația EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/]  pentru informații despre localizarea tastelor pe dispozitiv.
@@ -2567,7 +2605,7 @@ Datorită acestui fapt, dar și pentru a menține compatibilitatea cu alte citit
 %kc:endInclude
 
 ++ Afișajele Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-Afișajele Esys, Esytime și Iris de la [Eurobraille http://www.eurobraille.fr/] sunt suportate de NVDA.
+Afișajele Esys, Esytime și Iris de la [Eurobraille https://www.eurobraille.fr/] sunt suportate de NVDA.
 Dispozitivele Esys and Esytime-Evo sunt suportate atunci când sunt conectate prin USB sau prin bluetooth.
 Dispozitivele Esytime mai vechi suportă doar USB.
 Afișajele Iris pot fi conectate printr-un port serial.
@@ -2651,16 +2689,18 @@ Vă rugăm să citiți documentația afișajului pentru descrierile locului în 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] este un program separat care poate fi folosit pentru a suporta multe alte afișaje braille.
-Pentru a-l folosi, trebuie să instalați [BRLTTY pentru Windows http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] este un program separat care poate fi folosit pentru a suporta multe alte afișaje braille.
+Pentru a-l folosi, trebuie să instalați [BRLTTY pentru Windows https://www.brltty.com/download.html].
 Trebuie să descărcați și să instalați ultimul pachet de instalare, care ar trebui să se numească de exemplu, brltty-win-4.2-2.exe.
 Când configurați afișajul și portul pe care să-l folosească, aveți grijă să fiți foarte atent la instrucțiuni, în special dacă folosiți un afișaj USB și aveți deja instalat driverul producătorului.
 
 Pentru afișaje care au o tastatură braille, BRLTTY procesează independent intrările braille.
 În aceste condiții, configurarea NVDA cu tabelul de intrări braille este irelevantă.
 
+BRLTYY nu este implicat în funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
+
 Urmează asocierile de comenzi pentru BRLTTY și NVDA.
-Vă rugăm să consultați [lista de asocieri de taste BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] pentru informații despre cum sunt mapate comenzile BRLTTY pe controale ale afișajelor braille.
+Vă rugăm să consultați [lista de asocieri de taste BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] pentru informații despre cum sunt mapate comenzile BRLTTY pe controale ale afișajelor braille.
 %kc:beginInclude
 || Nume | Comandă BRLTTY |
 | Derulează afișajul braille înapoi | fwinlt (du-te cu o fereastră la stânga) |
@@ -2712,8 +2752,8 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --no-sr-flag  | Indicator „Nu schimba cititorul de ecran la nivel global pentru sistem” |
 | None | --install | Instalează NVDA (pornind copia nou-instalată) |
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
-| None | --create-portable | Creează o copie portabilă a NVDA-ului (pornind copia nou creată). Necesită --portable-path pentru a fi specificată |
-| None | --create-portable-silent | Creează o copie portabilă a NVDA-ului (nu pornește copia nou instalată). Necesită --portable-path pentru a fi specificată |
+| None | --create-portable | Creează o copie portabilă a NVDA-ului (pornind copia nou-creată). Necesită --portable-path pentru a fi specificată |
+| None | --create-portable-silent | Creează o copie portabilă a NVDA-ului (nu pornește copia nou-instalată). Necesită --portable-path pentru a fi specificată |
 | None | --portable-path=PORTABLEPATH | Calea în care va fi creată o copie portabilă |
 
 ++ Parametri la nivel de sistem ++[ParametriGeneraliSistem]

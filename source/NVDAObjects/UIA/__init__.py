@@ -342,8 +342,12 @@ class UIATextInfo(textInfos.TextInfo):
 		# Thus we must check getChildren before getEnclosingElement.
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
 		tempRange=tempInfo._rangeObj
-		children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
-		if children.length==1:
+		try:
+			children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
+		except COMError as e:
+			log.debugWarning("Could not get children from UIA text range, %s"%e)
+			children=None
+		if children and children.length==1:
 			child=children.getElement(0)
 		else:
 			child=getEnclosingElementWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)

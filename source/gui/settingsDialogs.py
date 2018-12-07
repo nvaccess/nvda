@@ -35,20 +35,21 @@ import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
-import guiHelper
+from . import guiHelper
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
 import inputCore
-import nvdaControls
+from . import nvdaControls
 import touchHandler
 import winVersion
 import weakref
 import time
 import keyLabels
+from dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(wx.Dialog):
+class SettingsDialog(wx.Dialog, DpiScalingHelperMixin):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -81,11 +82,13 @@ class SettingsDialog(wx.Dialog):
 		SettingsDialog._instances.add(obj)
 		return obj
 
-	def __init__(self, parent,
-	             resizeable=False,
-	             hasApplyButton=False,
-	             settingsSizerOrientation=wx.VERTICAL,
-	             multiInstanceAllowed=False):
+	def __init__(
+			self, parent,
+			resizeable=False,
+			hasApplyButton=False,
+			settingsSizerOrientation=wx.VERTICAL,
+			multiInstanceAllowed=False
+	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
@@ -104,12 +107,10 @@ class SettingsDialog(wx.Dialog):
 		if gui._isDebug():
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
-		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
-		self.hasApply = hasApplyButton
+		wx.Dialog.__init__(self, parent, title=self.title, style=windowStyle)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		self.hasApply = hasApplyButton
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
@@ -200,20 +201,11 @@ class SettingsDialog(wx.Dialog):
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
-	def scaleSize(self, size):
-		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple or a single numerical type to scale
-		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
-
-
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(wx.Panel):
+class SettingsPanel(wx.Panel, DpiScalingHelperMixin):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -239,10 +231,9 @@ class SettingsPanel(wx.Panel):
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		wx.Panel.__init__(self, parent, wx.ID_ANY)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
@@ -309,14 +300,6 @@ class SettingsPanel(wx.Panel):
 		event = _RWLayoutNeededEvent(self.GetId())
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
-
-	def scaleSize(self, size):
-		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple or a single numerical type to scale
-		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
@@ -691,6 +674,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+
 			# Translators: The label of a checkbox in general settings to toggle startup notifications
 			# for a pending NVDA update.
 			item=self.notifyForPendingUpdateCheckBox=wx.CheckBox(self,label=_("Notify for &pending update on startup"))
@@ -1120,6 +1104,13 @@ class VoiceSettingsPanel(SettingsPanel):
 		self.trustVoiceLanguageCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=trustVoiceLanguageText))
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
+		# Translators: This is the label for a checkbox in the
+		# voice settings panel (if checked, data from the unicode CLDR will be used
+		# to speak emoji descriptions).
+		includeCLDRText = _("Include Unicode Consortium data (including emoji) when processing characters and symbols")
+		self.includeCLDRCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self,label=includeCLDRText))
+		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
+
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
@@ -1204,6 +1195,11 @@ class VoiceSettingsPanel(SettingsPanel):
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
 		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
+		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
+		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
+		if currentIncludeCLDR is not newIncludeCldr:
+			# Either included or excluded CLDR data, so clear the cache.
+			characterProcessing.clearSpeechSymbols()
 		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
@@ -1376,6 +1372,12 @@ class MouseSettingsPanel(SettingsPanel):
 		self.audioDetectBrightnessCheckBox=sHelper.addItem(wx.CheckBox(self,label=audioDetectBrightnessText))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 
+		# Translators: This is the label for a checkbox in the
+		# mouse settings panel.
+		ignoreInjectedMouseInputText = _("Ignore mouse input from other &applications")
+		self.ignoreInjectedMouseInputCheckBox=sHelper.addItem(wx.CheckBox(self,label=ignoreInjectedMouseInputText))
+		self.ignoreInjectedMouseInputCheckBox.SetValue(config.conf["mouse"]["ignoreInjectedMouseInput"])
+
 	def onSave(self):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
@@ -1383,6 +1385,7 @@ class MouseSettingsPanel(SettingsPanel):
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
+		config.conf["mouse"]["ignoreInjectedMouseInput"]=self.ignoreInjectedMouseInputCheckBox.IsChecked()
 
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.

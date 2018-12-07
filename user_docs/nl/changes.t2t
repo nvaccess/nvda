@@ -3,6 +3,65 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.3 =
+
+== Nieuwe Functies ==
+- NVDA meldt nu grammaticafouten wanneer zij correct worden aangeboden op webpagina's in Mozilla Firefox en Google Chrome. (#8280)
+- Inhoud in webpagina's die is aangemerkt als ingevoegd of verwijderd, wordt nu als zodanig gemeld in Google Chrome. (#8558)
+- Ondersteuning toegevoegd voor BrailleNote QT en Apex BT's scrollwiel wanneer BrailleNote wordt gebruikt als een brailleleesregel met NVDA. (#5992, #5993)
+- Scripts toegevoegd voor het melden van verstreken en totale tijd voor  het huidige nummer in Foobar2000. (#6596)
+- Het symbool voor de Mac command-toets (⌘) wordt nu gemeld door iedere synthesizer bij het lezen van tekst. (#8366)
+- Aangepaste rollen (roles) via het aria-roledescription attribuut worden nu ondersteund in alle web browsers. (#8448)
+- Nieuwe brailletabbellen: Tsjechisch 8 punt, Centraal-Koerdisch, Esperanto, Hongaars, Zweeds 8 punt computerbraille. (#8226, #8437)
+- Ondersteuning toegevoegd voor het automatisch herkennen van brailleleesregels op de achtergrond. (#1271)
+ - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille en HumanWare BrailleNote en Brailliant BI/B leesregels worden op dit moment ondersteund.
+ - U kunt deze functie activeren door het selecteren van de optie automatisch in de lijst met leesregels in het dialoogvenster "selecteer brailleleesregel".
+ - Bekijk de documentatie voor meer details.
+- Ondersteuning toegevoegd voor moderne invoermethoden die geïntroduceerd zijn in recente versies van Windows 10. Deze omvatten het emoji-paneel (Fall Creators Update), dicteren (Fall Creators Update), hardwaretoetsenbord invoersuggesties (April 2018 Update), en het cloud klembord (October 2018 Update). (#7273)
+- Inhoud die gemarkeerd is als blokcitaat met gebruik van ARIA (role blockquote) wordt nu ondersteund in Mozilla Firefox 63. (#8577)
+
+
+== Veranderingen ==
+- De lijst met beschikbare talen in de algemene instellingen van NVDA wordt nu gesorteerd op taal in plaats van op basis van  ISO 639 codes. (#7284)
+- Standaardtoewijzingen toegevoegd voor alt shift tab en windows tab voor alle ondersteunde Freedom Scientific brailleleesregels. (#7387)
+- Voor ALVA BC680 en protocol converter leesregels is het nu mogelijk om verschillende functies toe te wijzen aan de linker en rechter smart pad-, duim- en etouch toetsen. (#8230)
+- Voor ALVA BC6 leesregels zal de toetsencombinatie sp2+sp3 de huidige datum en tijd melden, terwijl sp1+sp2 nu de Windows-toets emuleert. (#8230)
+- De gebruiker wordt bij het starten van NVDA nu eenmalig gevraagd of hij/zij ermee akkoord gaat dat NVDA gebruiksstatistieken verstuurd naar NV Access bij het automatisch controleren op updates. (#8217)
+- Wanneer er gecontroleerd wordt op updates en de gebruiker ermee akkoord is gegaan dat er gebruiksstatistieken worden verstuurd naar NV Access, zal NVDA nu de naam van de huidige synthesizer driver en brailleleesregel versturen om te helpen bij een betere prioritering van toekomstig werk aan deze drivers. (#8217)
+- Liblouis braillevertaler bijgewerkt naar versie 3.5.0. (#8365)
+- Het pad naar de juiste Russische 8 punt brailletabel is bijgewerkt. (#8446)
+- eSpeak-ng is bijgewerkt naar 1.49.3dev commit 910f4c2 (#8561)
+
+
+== Opgeloste Problemen ==
+- Toegankelijke labels voor elementen in Google Chrome worden nu directer gemeld in bladermodus wanneer het label zelf geen deel uitmaakt van de inhoud. (#4773)
+- Notificaties worden nu ondersteund in Zoom. Dit omvat notificaties voor dempen/dempen opheffen en inkomende berichten.(#7754)
+- Het wisselen van te tonen focuscontext in braille zorgt er in de bladermodus niet langer voor dat de braille-uitvoer de cursor niet volgt. (#7741)
+- ALVA BC680 brailleleesregels hebben niet langer sporadisch moeite met initialiseren. (#8106)
+- In de standaardsituatie zullen ALVA BC6 leesregels niet langer geëmuleerde systeemtoetsen uitvoeren bij het indrukken van toetsencombinaties die sp2+sp3 omvatten en gekoppeld zijn aan interne functionaliteit van de leesregel. (#8230)
+- Het indrukken van sp2 op een ALVA BC6 leesregel om de alt-toets te emuleren werkt nu daadwerkelijk zoals vermeld. (#8360)
+- NVDA meldt niet langer overbodig wijzigingen van de toetsenbordindeling. (#7383, #8419)
+- Het volgen van de muis is nu stukken accurater in Kladblok en andere invoervelden voor platte tekst wanneer er sprake is van een document met meer dan 65535 karakters. (#8397)
+- NVDA zal meer  dialoogvensters herkennen in Windows 10 en andere moderne applicaties. (#8405)
+- In de Windows 10 October 2018 Update en Windows Server 2019 en nieuwer zal NVDA niet langer moeite hebben met het volgen van de systeemfocus wanneer een applicatie vastloopt of het systeem overspoelt met gebeurtenissen. (#7345, #8535)
+- Gebruikers worden nu geïnformeerd bij een poging tot het lezen of kopiëren van een lege statusbalk. (#7789)
+- Een probleem opgelost waarbij de niet ingeschakelde staat van elementen niet door de spraak uitgesproken werd wanneer het element eerder gedeeltelijk ingeschakeld was. (#6946)
+- In de lijst met talen in de algemene instellingen van NVDA wordt de naam van de Birmese taal nu correct weergegeven onder Windows 7. (#8544)
+- In Microsoft Edge zal NVDA nu notificaties melden zoals over de beschikbaarheid van de leesweergave en de voortghang van het laden van pagina's. (#8423)
+- Bij het navigeren naar een lijst op het web meldt NVDA nu het label van de lijst wanneer de web-auteur een label heeft ingesteld. (#7652)
+- Bij het handmatig toewijzen van functies aan invoerhandelingen voor een bepaalde leesregel worden deze nu altijd weergegeven als toegewezen aan die leesregel. In het verleden werden ze altijd weergegeven alsof ze waren toegewezen aan de actieve leesregel. (#8108)
+- De 64-bit-versie van Media Player Classic wordt nu ondersteund. (#6066)
+- Diverse verbeteringen in de braille-ondersteuning in Microsoft Word met UI Automation ingeschakeld:
+ - Zoals ook bij andere invoervelden met meerdere regels het geval is, wordt bij documenten het eerste karakter van het document nu aan het begin van de leesregel weergegeven wanneer de cursor zich aan het begin van het document bevindt. (#8406)
+ - De in eerdere versies overdreven focusweergave is gereduceerd voor zowel spraak als braille wanneer een Word-document de focus krijgt. (#8407)
+ - Cursor routing in braille werkt nu correct bij gebruik in een lijst in een Word-document. (#7971)
+ - Nieuw ingevoegde opsommingstekens/nummering in een Word-document worden correct gemeld voor zowel braille als spraak. (#7970)
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2018.2.1 =
 Deze versie bevat bijgewerkte vertalingen omdat op het laatste moment een functie die problemen opleverde werd verwijderd.
 
