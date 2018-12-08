@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: https://www.nvaccess.org/
-#Copyright 2011-2017 NV Access Limited, Joseph Lee
+#Copyright 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -59,6 +59,10 @@ env.Prepend(CPPPATH=[".", louisSourceDir])
 
 # Upstream liblouis compiles without UNICODE defined.
 env['CPPDEFINES'].remove("UNICODE")
+
+# When compling liblouis with UCS-4 widechars, several signed/unsigned missmatch warnings appear.
+# Ignore these for now.
+env['CCFLAGS'].remove("/WX")
 
 liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
 	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned int"})
