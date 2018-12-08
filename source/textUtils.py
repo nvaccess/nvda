@@ -103,6 +103,11 @@ class EncodingAwareString(Sequence, text_type):
 			return self.encoded.index(sub) / self.bytesPerIndex
 		return super(EncodingAwareString, self).index(sub)
 
+	def strip(self, chars=None):
+		if isinstance(chars, byteTypes):
+			return self.__class__(self.encoded.rstrip(chars), self.encoding, self.errors)
+		return self.__class__(self.rstrip(chars), self.encoding, self.errors)
+
 	def rfind(self, sub, start=0, end=sys.maxsize):
 		if isinstance(sub, text_type):
 			sub = sub.encode(self.encoding, self.errors)
@@ -117,8 +122,19 @@ class EncodingAwareString(Sequence, text_type):
 			return self.encoded.rindex(sub) / self.bytesPerIndex
 		return super(EncodingAwareString, self).rindex(sub)
 
-def getString(value, encoding, errors="replace"):
-	"""Creates a string that is encoding aware if necessary."""
+	def rstrip(self, chars=None):
+		if isinstance(chars, byteTypes):
+			return self.__class__(self.encoded.strip(chars), self.encoding, self.errors)
+		return self.__class__(self.strip(chars), self.encoding, self.errors)
+
+def getEncodingAwareString(value, encoding, errors="replace"):
+	"""Creates a string that is encoding aware if necessary.
+	On python 2, UTF_16_le will result in an unicode object,
+	as it uses UCS-2/UTF-16 internally.
+	On python 3, UTF_32_le will result in astring object,
+	as one index corresponds to one code point.
+	Other encodings will result in a L{EncodeAwareString} object.
+	"""
 	encoding = encodings.normalize_encoding(encoding)
 	if encoding == defaultStringEncoding:
 		stringType = text_type
@@ -131,4 +147,3 @@ def getString(value, encoding, errors="replace"):
 	else:
 		return EncodingAwareString(value, encoding, errors)
 
-	
