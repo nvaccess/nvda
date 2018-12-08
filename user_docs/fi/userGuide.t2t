@@ -1436,12 +1436,12 @@ Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä 
 ==== Toista ääni automaattisten ehdotusten tullessa näkyviin ====[ObjectPresentationSuggestionSounds]
 Ottaa käyttöön tai poistaa käytöstä automaattisten ehdotusten ilmoittamisen niiden tullessa näkyviin, ja mikäli  asetus on käytössä, NVDA toistaa äänen, joka ilmaisee tämän.
 Automaattiset ehdotukset ovat luetteloita ehdotetuista kohteista, jotka perustuvat tiettyihin hakukenttiin ja asiakirjoihin syötettyyn tekstiin.
-Kun esim. kirjoitat Windows Vistan ja uudemman Käynnistä-valikon hakukenttään, Windows näyttää luettelon kirjoittamaasi tekstiin perustuvista ehdotuksista.
-Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoittaessasi ehdotusluettelon ilmestymisestä.
-Automaattisten ehdotusten luettelo sulkeutuu siirryttyäsi pois muokkauskentästä, ja NVDA voi joissakin kentissä ilmoittaa siitä.
+Kun esim. kirjoitetaan Windows Vistan ja uudempien Käynnistä-valikon hakukenttään, Windows näyttää luettelon kirjoitettuun tekstiin perustuvista ehdotuksista.
+Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoitettaessa ehdotusluettelon ilmestymisestä.
+Automaattisten ehdotusten luettelo sulkeutuu, kun on siirrytty pois muokkauskentästä, ja NVDA voi joissakin kentissä myös ilmoittaa siitä.
 
 +++ Syöttömenetelmä +++[InputCompositionSettings]
-Syöttömenetelmä-kategoriasta voit säätää, miten NVDA ilmoittaa aasialaisten kielten merkit niitä syötettäessä, esim. IME- tai Tekstipalvelu-syöttömenetelmiä käytettäessä.
+Syöttömenetelmä-kategoriasta voidaan säätää, miten NVDA ilmoittaa aasialaisten kielten merkit niitä syötettäessä, esim. IME- tai Tekstipalvelu-syöttömenetelmiä käytettäessä.
 Huomaa, että koska syöttömenetelmät poikkeavat toisistaan suuresti ominaisuuksiltaan ja tiedonvälitystavoiltaan, nämä asetukset on todennäköisesti tarpeen määrittää eri tavalla kullekin menetelmälle tehokkaimman kirjoituskokemuksen varmistamiseksi.
 
 ==== Lue kaikki ehdotukset automaattisesti ====[InputCompositionReportAllCandidates]
@@ -1455,7 +1455,7 @@ Tämä on tarpeen sellaisissa syöttömenetelmissä, joissa valintaa voidaan muu
 Huomaa, että vaikka tämä asetus ei ole käytössä, tarkastelukohdistin sijoitetaan silti valitun ehdotuksen kohdalle, mikä mahdollistaa objektinavigoinnin tai tekstintarkastelukomentojen käyttämisen kyseessä olevan tai muiden ehdotusten lukemiseen.
 
 ==== Ilmoita lyhyet merkkikuvaukset aina ehdotuksia luettaessa ====[InputCompositionCandidateIncludesShortCharacterDescription]
-Tällä asetuksella, joka on oletusarvoisesti käytössä, voit valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotusluettelon tullessa näkyviin.
+Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotusluettelon tullessa näkyviin.
 Huomaa, että asetus ei vaikuta valitun ehdotuksen lisämerkkikuvausten lukemiseen sellaisissa kielissä kuin kiina.
 Tästä saattaa olla hyötyä korean ja japanin syöttömenetelmiä käytettäessä.
 
@@ -1463,7 +1463,7 @@ Tästä saattaa olla hyötyä korean ja japanin syöttömenetelmiä käytettäes
 Joillakin syöttömenetelmillä, kuten uudella foneettisella kiinalla ja uudella ChangJiella, on lukumerkkijono (tunnetaan joskus myös esiyhdistelmän merkkijonona).
 Tällä asetuksella voidaan valita, ilmoittaako NVDA lukumerkkijonoon kirjoitettavat uudet merkit.
 Asetus on oletusarvoisesti käytössä.
-Huomaa, että jotkin vanhemmat syöttömenetelmät, kuten kiinalainen ChangJie, eivät saata käyttää lukumerkkijonoa esiyhdistelmän merkkien säilyttämiseen, vaan käyttävät niiden sijaan suoraan merkkiyhdistelmää. Katso seuraavaa asetusta merkkiyhdistelmän lukemisen määrittämiseksi.
+Huomaa, että jotkin vanhemmat syöttömenetelmät, kuten kiinalainen ChangJie, eivät ehkä käytä lukumerkkijonoa esiyhdistelmän merkkien säilyttämiseen, vaan käyttävät niiden sijaan suoraan merkkiyhdistelmää. Katso seuraavaa asetusta merkkiyhdistelmän lukemisen määrittämiseksi.
 
 ==== Lue merkkiyhdistelmän muutokset ====[InputCompositionCompositionStringChanges]
 Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymboliksi, useimmat syöttömenetelmät sijoittavat sen tilapäisesti talteen merkkiyhdistelmään muiden yhdistettyjen symboleiden kanssa ennen niiden lopullista dokumenttiin lisäämistä.
@@ -1566,9 +1566,9 @@ NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla
  
 Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja esim. WordPadissa, kun muotoilut ovat tärkeitä.
 
-==== Rivien sisennysten ilmoittaminen ====[DocumentFormattingSettingsLineIndentation]
-Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
-Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
+==== Rivien sisennysten ilmaiseminen ====[DocumentFormattingSettingsLineIndentation]
+Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmaistaan.
+Ilmaise rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 
 - ei käytössä: NVDA ei käsittele sisennyksiä.
 - puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".

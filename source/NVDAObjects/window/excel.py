@@ -24,6 +24,7 @@ import api
 from logHandler import log
 import gui
 import winUser
+import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
 from . import Window
@@ -1713,8 +1714,8 @@ class ExcelFormControl(ExcelBase):
 		(x,y)=self._getFormControlScreenCoordinates()
 		winUser.setCursorPos(x,y)
 		#perform Mouse Left-Click
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		self.invalidateCache()
 		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
 

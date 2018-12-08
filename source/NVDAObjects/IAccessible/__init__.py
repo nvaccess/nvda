@@ -149,6 +149,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		super(IA2TextTextInfo,self).expand(unit)
 		if isMouseChunkUnit:
 			text=self._getTextRange(self._startOffset,self._endOffset)
+			if not text:
+				return
 			try:
 				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
 			except ValueError:
@@ -200,7 +202,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		try:
-			return self.obj.IAccessibleTextObject.text(start,end)
+			return self.obj.IAccessibleTextObject.text(start,end) or u""
 		except COMError:
 			return u""
 
@@ -1252,7 +1254,7 @@ the NVDAObject for IAccessible
 		except (COMError,NotImplementedError) as e:
 			log.debug("Cannot fetch selected items count using accSelection, %s"%e)
 			pass
-		if self.IAccessibleTable2Object:
+		if hasattr(self,'IAccessibleTable2Object'):
 			try:
 				return self.IAccessibleTable2Object.nSelectedCells
 			except COMError as e:

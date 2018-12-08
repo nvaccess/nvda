@@ -21,6 +21,8 @@ import winInputHook
 import core
 import ui
 from math import floor
+from contextlib import contextmanager
+import threading
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -32,6 +34,7 @@ WM_RBUTTONDBLCLK=0x0206
 
 curMousePos=(0,0)
 mouseMoved=False
+ignoreInjected=False
 curMouseShape=""
 _shapeTimer=None
 scrBmpObj=None
@@ -49,6 +52,16 @@ def updateMouseShape(name):
 		# Delay reporting to avoid unnecessary/excessive verbosity.
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
+
+_ignoreInjectionLock = threading.Lock()
+@contextmanager
+def ignoreInjection():
+	"""Context manager that allows ignoring injected mouse events temporarily by using a with statement."""
+	global ignoreInjected
+	with _ignoreInjectionLock:
+		ignoreInjected=True
+		yield
+		ignoreInjected=False
 
 def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
 	""" play audio coordinates:
@@ -84,9 +97,11 @@ def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBr
 #Internal mouse event
 
 def internal_mouseEvent(msg,x,y,injected):
+	"""Event called by winInputHook when it receives a mouse event.
+	"""
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
-	if injected:
+	if injected and (ignoreInjected or config.conf['mouse']['ignoreInjectedMouseInput']):
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:
 		return True
@@ -100,6 +115,28 @@ def internal_mouseEvent(msg,x,y,injected):
 	except:
 		log.error("", exc_info=True)
 	return True
+
+def executeMouseEvent(flags, x, y, data=0):
+	"""
+	Mouse events generated with this rapper for L{winUser.mouse_event}
+	will be ignored by NVDA.
+	Consult https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-mouse_event
+	for detailed parameter documentation.
+	@param flags: Controls various aspects of mouse motion and button clicking.
+		The supplied value should be one or a combination of the C{winUser.MOUSEEVENTF_*} constants.
+	@type flags: int
+	@param x: The mouse's absolute position along the x-axis
+		or its amount of motion since the last mouse event was generated.
+	@type x: int
+	@param y: The mouse's absolute position along the y-axis
+		or its amount of motion since the last mouse event was generated.
+	@type y: int
+	@param data: Additional data depending on what flags are specified.
+		This defaults to 0.
+	@type data: int
+	"""
+	with ignoreInjection():
+		winUser.mouse_event(flags, x, y, data, None)
 
 def getMouseRestrictedToScreens(x, y, displays):
 	""" Ensures that the mouse position is within the area of one of the displays, relative to (0,0) 

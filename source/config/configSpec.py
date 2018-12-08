@@ -106,6 +106,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	audioCoordinates_minPitch = integer(default=220)
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
+	ignoreInjectedMouseInput = boolean(default=false)
 
 [speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
@@ -207,6 +208,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
+	louis = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")

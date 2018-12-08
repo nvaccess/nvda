@@ -25,6 +25,7 @@ from globalCommands import SCRCAT_SYSTEMCARET
 from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
 import IAccessibleHandler
 import winUser
+import mouseHandler
 from logHandler import log
 import ui
 import config
@@ -122,10 +123,10 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				return
 			log.debug("Double clicking")
 			winUser.setCursorPos(p.x, p.y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			return
 
 		# The user makes a selection using browse mode virtual selection.

@@ -391,6 +391,9 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
+	if globalVars.appArgs.launcher:
+		log.debugWarning("Unable to install addon into launcher.")
+		return
 	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
