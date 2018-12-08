@@ -115,6 +115,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def _toggleEnabledStateOfAffirmativeAction(self, evt):
 		self.yesButton.Enable(self.confirmedCheckbox.IsChecked())
