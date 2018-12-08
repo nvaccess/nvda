@@ -7,11 +7,15 @@
 from six import text_type
 import encodings
 import sys
+try:
+	from collections import Sequence # Python 2.7 import
+except ImportError:
+	from collections.abc import Sequence # Python 3 import
 
 byteTypes = (bytes, bytearray)
 defaultStringEncoding = "utf_16_le" if sys.version_info.major == 2 else "utf_32_le"
 
-class EncodingAwareString(text_type):
+class EncodingAwareString(Sequence, text_type):
 	"""
 	Magic string object that holds a string in both its decoded and encoded forms.
 	"""
@@ -43,13 +47,13 @@ class EncodingAwareString(text_type):
 
 	def __add__(self, value):
 		if isinstance(value, byteTypes):
-			return EncodingAwareString(self.encoded + value, self.encoding, self.errors)
-		return EncodingAwareString(self.decoded + value, self.encoding, self.errors)
+			return self.__class__(self.encoded + value, self.encoding, self.errors)
+		return self.__class__(self.decoded + value, self.encoding, self.errors)
 
 	def __radd__(self, value):
 		if isinstance(value, byteTypes):
-			return EncodingAwareString(value + self.encoded, self.encoding, self.errors)
-		return EncodingAwareString(value + self.decoded, self.encoding, self.errors)
+			return self.__class__(value + self.encoded, self.encoding, self.errors)
+		return self.__class__(value + self.decoded, self.encoding, self.errors)
 
 	def __len__(self):
 		return len(self.encoded) // self.bytesPerIndex
@@ -72,7 +76,7 @@ class EncodingAwareString(text_type):
 					stop = min(key.stop, len(self) - 1)
 				step = key.step
 				keys = range(start, stop, step)
-				return EncodingAwareString("".join(self[i] for i in keys), self.encoding, self.errors)
+				return self.__class__("".join(self[i] for i in keys), self.encoding, self.errors)
 			start = key.start
 			if start is not None:
 				start *= self.bytesPerIndex
@@ -83,8 +87,35 @@ class EncodingAwareString(text_type):
 			newKey = slice(start, stop, step)
 		else:
 			return NotImplemented
-		return EncodingAwareString(self.encoded[newKey], self.encoding, self.errors)
+		return self.__class__(self.encoded[newKey], self.encoding, self.errors)
 
+	def find(self, sub, start=0, end=sys.maxsize):
+		if isinstance(sub, text_type):
+			sub = sub.encode(self.encoding, self.errors)
+		if isinstance(sub, byteTypes):
+			return self.encoded.find(sub) / self.bytesPerIndex
+		return super(EncodingAwareString, self).find(sub)
+
+	def index(self, sub, start=0, end=sys.maxsize):
+		if isinstance(sub, text_type):
+			sub = sub.encode(self.encoding, self.errors)
+		if isinstance(sub, byteTypes):
+			return self.encoded.index(sub) / self.bytesPerIndex
+		return super(EncodingAwareString, self).index(sub)
+
+	def rfind(self, sub, start=0, end=sys.maxsize):
+		if isinstance(sub, text_type):
+			sub = sub.encode(self.encoding, self.errors)
+		if isinstance(sub, byteTypes):
+			return self.encoded.rfind(sub) / self.bytesPerIndex
+		return super(EncodingAwareString, self).rrfind(sub)
+
+	def rindex(self, sub, start=0, end=sys.maxsize):
+		if isinstance(sub, text_type):
+			sub = sub.encode(self.encoding, self.errors)
+		if isinstance(sub, byteTypes):
+			return self.encoded.rindex(sub) / self.bytesPerIndex
+		return super(EncodingAwareString, self).rindex(sub)
 
 def getString(value, encoding, errors="replace"):
 	"""Creates a string that is encoding aware if necessary."""
@@ -99,3 +130,5 @@ def getString(value, encoding, errors="replace"):
 		return stringType(value)
 	else:
 		return EncodingAwareString(value, encoding, errors)
+
+	
