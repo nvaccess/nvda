@@ -91,7 +91,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 				id=wx.ID_YES,
 				# Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 				#  the add-on
-				label=_("Yes")
+				label=_("&Yes")
 			)
 			yesButton.SetDefault()
 			yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
@@ -103,7 +103,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 				id=wx.ID_NO,
 				# Translators: A button in the addon installation warning dialog which allows the user to decide not to
 				# install the add-on
-				label=_("No")
+				label=_("&No")
 			)
 			noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
 		contentsSizer.addDialogDismissButtons(buttonHelper)
