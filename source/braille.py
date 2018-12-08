@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
+from __future__ import unicode_literals
 import sys
 import itertools
 import os
@@ -24,6 +25,7 @@ from logHandler import log
 import controlTypes
 import api
 import textInfos
+import textUtils
 import brailleDisplayDrivers
 import inputCore
 import brailleTables
@@ -367,7 +369,7 @@ class Region(object):
 
 	def __init__(self):
 		#: The original, raw text of this region.
-		self.rawText = ""
+		self.rawText = textUtils.getEncodingAwareString("", louis.conversionEncoding)
 		#: The position of the cursor in L{rawText}, C{None} if the cursor is not in this region.
 		#: @type: int
 		self.cursorPos = None
@@ -463,7 +465,7 @@ class TextRegion(Region):
 
 	def __init__(self, text):
 		super(TextRegion, self).__init__()
-		self.rawText = text
+		self.rawText += text
 
 def getBrailleTextForProperties(**propertyValues):
 	textList = []
@@ -575,7 +577,7 @@ class NVDAObjectRegion(Region):
 		@param obj: The associated NVDAObject.
 		@type obj: L{NVDAObjects.NVDAObject}
 		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
-		@type appendText: str
+		@type appendText: unicode
 		"""
 		super(NVDAObjectRegion, self).__init__()
 		self.obj = obj
@@ -610,7 +612,10 @@ class NVDAObjectRegion(Region):
 						obj.mathMl)
 				except (NotImplementedError, LookupError):
 					pass
-		self.rawText = text + self.appendText
+		self.rawText = textUtils.getEncodingAwareString(
+			text + self.appendText,
+			louis.conversionEncoding
+		)
 		super(NVDAObjectRegion, self).update()
 
 	def routeTo(self, braillePos):
@@ -792,6 +797,7 @@ class TextInfoRegion(Region):
 		return typeform
 
 	def _addFieldText(self, text, contentPos, separate=True):
+		text = textUtils.getEncodingAwareString(text, louis.conversionEncoding)
 		if separate and self.rawText:
 			# Separate this field text from the rest of the text.
 			text = TEXT_SEPARATOR + text
@@ -909,7 +915,7 @@ class TextInfoRegion(Region):
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
 		unit = self._getReadingUnit()
-		self.rawText = ""
+		self.rawText = textUtils.getEncodingAwareString("", louis.conversionEncoding)
 		self.rawTextTypeforms = []
 		self.cursorPos = None
 		# The output includes text representing fields which isn't part of the real content in the control.
