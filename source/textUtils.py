@@ -106,7 +106,7 @@ class EncodingAwareString(Sequence, text_type):
 	def strip(self, chars=None):
 		if isinstance(chars, byteTypes):
 			return self.__class__(self.encoded.rstrip(chars), self.encoding, self.errors)
-		return self.__class__(self.rstrip(chars), self.encoding, self.errors)
+		return self.__class__(self.decoded.rstrip(chars), self.encoding, self.errors)
 
 	def rfind(self, sub, start=0, end=sys.maxsize):
 		if isinstance(sub, text_type):
@@ -125,7 +125,7 @@ class EncodingAwareString(Sequence, text_type):
 	def rstrip(self, chars=None):
 		if isinstance(chars, byteTypes):
 			return self.__class__(self.encoded.strip(chars), self.encoding, self.errors)
-		return self.__class__(self.strip(chars), self.encoding, self.errors)
+		return self.__class__(self.decoded.strip(chars), self.encoding, self.errors)
 
 def getEncodingAwareString(value, encoding, errors="replace"):
 	"""Creates a string that is encoding aware if necessary.
