@@ -17,9 +17,9 @@ from logHandler import log
 import addonHandler
 import globalVars
 import buildVersion
-import guiHelper
-import nvdaControls
-from dpiScalingHelper import DpiScalingHelperMixin
+from . import guiHelper
+from . import nvdaControls
+from .dpiScalingHelper import DpiScalingHelperMixin
 
 def promptUserForRestart():
 	# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
