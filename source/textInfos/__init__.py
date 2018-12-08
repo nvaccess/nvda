@@ -496,12 +496,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		if not self.obj.isInForeground:
 			raise NotImplementedError
+		import mouseHandler
 		import winUser
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):

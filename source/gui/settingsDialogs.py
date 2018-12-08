@@ -757,15 +757,40 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 	def postSave(self):
-		if self.oldLanguage!=config.conf["general"]["language"]:
-			if gui.messageBox(
-				# Translators: The message displayed after NVDA interface language has been changed.
-				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
-				# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
-			)==wx.OK:
-				config.conf.save()
-				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+		if self.oldLanguage != config.conf["general"]["language"]:
+			LanguageRestartDialog(self).ShowModal()
+
+class LanguageRestartDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
+		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		# Translators: The message displayed after NVDA interface language has been changed.
+		sHelper.addItem(wx.StaticText(self, label=_("NVDA must be restarted for the new language to take effect.")))
+
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		restartNowButton = bHelper.addButton(self, label=_("Restart &now"))
+		restartNowButton.Bind(wx.EVT_BUTTON, self.onRestartNowButton)
+		restartNowButton.SetFocus()
+
+		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		restartLaterButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("Restart &later"))
+		restartLaterButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
+		self.EscapeId = wx.ID_CLOSE
+
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onRestartNowButton(self, evt):
+		self.Destroy()
+		config.conf.save()
+		queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 
 class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
@@ -1347,6 +1372,12 @@ class MouseSettingsPanel(SettingsPanel):
 		self.audioDetectBrightnessCheckBox=sHelper.addItem(wx.CheckBox(self,label=audioDetectBrightnessText))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 
+		# Translators: This is the label for a checkbox in the
+		# mouse settings panel.
+		ignoreInjectedMouseInputText = _("Ignore mouse input from other &applications")
+		self.ignoreInjectedMouseInputCheckBox=sHelper.addItem(wx.CheckBox(self,label=ignoreInjectedMouseInputText))
+		self.ignoreInjectedMouseInputCheckBox.SetValue(config.conf["mouse"]["ignoreInjectedMouseInput"])
+
 	def onSave(self):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
@@ -1354,6 +1385,7 @@ class MouseSettingsPanel(SettingsPanel):
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
+		config.conf["mouse"]["ignoreInjectedMouseInput"]=self.ignoreInjectedMouseInputCheckBox.IsChecked()
 
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
