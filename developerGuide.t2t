@@ -649,11 +649,12 @@ Generally, it has to be explicitly enabled even in archivers that do support it.
 ++ Manifest Files ++
 Each add-on package must contain a manifest file named manifest.ini.
 This must be a UTF-8 encoded text file.
-This manifest file contains key = value pares declaring info such as the add-on's name, version and description.
+This manifest file contains key = value pairs declaring info such as the add-on's name, version and description.
 
 +++ Available Fields +++
 Although it is highly suggested that manifests contain all fields, the fields marked as mandatory must be included.
-Otherwise, the add-on will not install.  
+Otherwise, the add-on will not install.
+
 - name: A short unique name for the add-on. This is used to differentiate add-ons internally and is not shown to the user. (Mandatory)
 - summary: The name of the add-on as shown to the user. (Mandatory)
 - version: The version of this add-on; e.g. 2.0. (Mandatory)
@@ -661,7 +662,13 @@ Otherwise, the add-on will not install.
 - description: A sentence or two describing what the add-on does.
 - url: A URL where this add-on, further info and upgrades can be found.
 - docFileName: The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
+- minimumNVDAVersion: The minimum required version of NVDA for this add-on to be installed or enabled. (Mandatory)
+- lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with. (Mandatory)
 -
+
+The lastTestedNVDAVersion field in particular is used to ensure that users can be confident about installing an add-on.
+It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
+When this is not provided, or is less than the current version of NVDA (ignoring minor point updates EG 2018.3.1) then the user will be warned not to install the add-on.
 
 +++ An Example Manifest File +++
 ```
@@ -672,6 +679,8 @@ version = 1.0
 description = An example add-on showing how to create add-ons!
 author = Michael Curran <mick@kulgan.net>
 url = http://www.nvda-project.org/wiki/Development
+minimumNVDAVersion = 2017.4
+lastTestedNVDAVersion = 2018.3
 --- end ---
 ``` 
 

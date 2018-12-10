@@ -12,6 +12,7 @@ from  comtypes import COMObject
 from comInterfaces.Accessibility import IAccPropServer
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
+import weakref
 
 class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 	"""Base class for implementing a COM interface for AccPropServer.
@@ -29,7 +30,7 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 			It's available on self.control.
 		@Type control: Subclass of wx.Window
 		"""
-		self.control = control
+		self.control = weakref.ref(control)
 		super(IAccPropServer_Impl, self).__init__(*args, **kwargs)
 
 	@abstractmethod
