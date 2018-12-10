@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 00:10+1000\n"
-"PO-Revision-Date: 2018-09-27 17:25+0100\n"
+"POT-Creation-Date: 2018-11-30 00:10+1000\n"
+"PO-Revision-Date: 2018-12-04 17:27+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <https://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -6789,6 +6789,18 @@ msgstr "nečteno"
 msgid "Editing profile {profile}"
 msgstr "Upravován profil {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "odpovězeno"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "odpovězeno všem"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "přeposláno"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "vysoká důležitost"
@@ -8488,6 +8500,14 @@ msgstr "&Úroveň interpunkce:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Zpracování znaků a symbolů se řídí podle jazyka aktuálního hlasu"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "Při zpracování znaků zahrnout data z Unicode konzorcia včetně emoji"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10521,6 +10541,14 @@ msgstr "komentář: {text} od {author} dne {date}"
 #. {text}, {author} and {date} will be replaced by the corresponding details about the revision.
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dne {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+msgid "{distance} from left edge of page"
+msgstr "{distance} od levého okraje strany"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+msgid "{distance} from top edge of page"
+msgstr "{distance} od vrchního okraje strany"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
