@@ -86,7 +86,7 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 			self.provider._language))
 
 	def getBrailleRegions(self, review=False):
-		yield braille.NVDAObjectRegion(self, appendText=" ")
+		yield braille.NVDAObjectRegion(self, appendText=u" ")
 		region = braille.Region()
 		region.focusToHardLeft = True
 		self.provider._mpBraille.SetBrailleWidth(braille.handler.displaySize)
