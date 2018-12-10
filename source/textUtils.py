@@ -219,8 +219,8 @@ def getEncodingAwareString(value, encoding, errors="replace"):
 	"""Creates a string that is encoding aware if necessary.
 	On python 2, UTF_16_le will result in an unicode object,
 	as it uses UCS-2/UTF-16 internally.
-	On python 3, UTF_32_le will result in astring object,
-	as one index corresponds to one code point.
+	On python 3, UTF_32_le will result in a str object,
+	as 1 index corresponds to 1 code point.
 	Other encodings will result in a L{EncodeAwareString} object.
 	"""
 	encoding = encodings.normalize_encoding(encoding)
