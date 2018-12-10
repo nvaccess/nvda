@@ -236,7 +236,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
 		if HIGH_SURROGATE_FIRST <= text <= HIGH_SURROGATE_LAST or LOW_SURROGATE_FIRST <= text <= LOW_SURROGATE_LAST:
