@@ -48,6 +48,11 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 		text=self._getStoryText()
 		return text[start:end]
 
+	def _get_boundingRects(self):
+		if self.obj.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return [self.obj.location,]
+
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.
 	In this case, for the purposes of NVDA, the object should be considered non-existent.
@@ -1182,6 +1187,12 @@ This code is executed if a gain focus event is received by this object.
 		else:
 			return False
 
+	def _get_hasIrrelevantLocation(self):
+		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
+		either because it is programatically hidden (STATE_INVISIBLE), off screen or the object has no location."""
+		states = self.states
+		return controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states or not self.location or not any(self.location)
+
 	def _get_selectionContainer(self):
 		""" An ancestor NVDAObject which manages the selection for this object and other descendants."""
 		return None
@@ -1192,4 +1203,3 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
-

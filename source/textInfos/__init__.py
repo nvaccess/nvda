@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -254,7 +254,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		* Support at least the L{POSITION_FIRST}, L{POSITION_LAST} and L{POSITION_ALL} positions.
 	If an implementation should support tracking with the mouse,
 	L{Points} must be supported as a position.
-	To support routing to a screen point from a given position, L{pointAtStart} must be implemented.
+	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
 	
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
@@ -301,7 +301,21 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_locationText(self):
 		"""A message that explains the location of the text position in friendly terms."""
-		return None
+		try:
+			curPoint = self.pointAtStart
+		except (NotImplementedError, LookupError):
+			return None
+		# Translators: the current position's screen coordinates in pixels
+		return _("Positioned at {x}, {y}").format(x=curPoint.x,y=curPoint.y)
+
+	def _get_boundingRects(self):
+		"""Per line bounding rectangles for the visible text in this range.
+		Implementations should ensure that the bounding rectangles don't contain off screen coordinates.
+		@rtype: [L{locationHelper.RectLTWH}]
+		@raise NotImplementedError: If not supported.
+		@raise LookupError: If not available (i.e. off screen, hidden, etc.)
+		"""
+		raise NotImplementedError
 
 	def unitIndex(self,unit):
 		"""
@@ -429,8 +443,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 		return self.obj
 
 	def _get_pointAtStart(self):
-		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
-		raise NotImplementedError
+		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
+		The base implementation uses L{boundingRects}.
+		"""
+		if self.isCollapsed:
+			copy = self.copy()
+			# Expand the copy to character.
+			copy.expand(UNIT_CHARACTER)
+			boundingRects = copy.boundingRects
+		else:
+			boundingRects = self.boundingRects
+		if not boundingRects:
+			raise LookupError
+		return boundingRects[0].topLeft
 
 	def _get_clipboardText(self):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""

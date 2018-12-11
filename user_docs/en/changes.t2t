@@ -15,6 +15,8 @@ What's New in NVDA
 - Updated liblouis braille translator to version 3.8.0. (#9013)
 - Add-on authors now can enforce a minimum required NVDA version for their add-ons. Unsupported add-ons will not load or install. (#6275)
 - Add-on authors must now specify the last version of NVDA the add-on has been tested against. Users will be warned against installing or enabling untested add-ons. (#6275)
+- The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
+- Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
 
 
 == Bug Fixes ==
@@ -30,6 +32,8 @@ What's New in NVDA
 - Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275)
  - minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.
  - lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.
+- OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)
+- Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)
 
 
 = 2018.4 =
