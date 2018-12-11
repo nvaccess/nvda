@@ -109,6 +109,7 @@ Zu den Highlights dieser Version gehören die automatische Erkennung vieler Brai
 - Bei der manuellen Zuordnung von Funktionen zu Gesten für eine bestimmte Braillezeile erscheinen diese Gesten nun immer als dieser Anzeige zugeordnet. Zuvor tauchten sie auf, als wären sie der gerade aktiven Anzeige zugeordnet. (#8108)
 - Die 64-Bit-Version von Media Player Classic wird nun unterstützt. (#6066)
 - Verschiedene Verbesserungen der Braille-Unterstützung in Microsoft Word mit aktivierter UI-Automatisierung:
+ - Wenn sie an den Anfang des Dokuments springen, wird - ähnlich wie in anderen mehrzeiligen Eingabefeldern auch - die Anzeige auf der Braillezeile linksbündig ausgerichtet. (#8406)
  - Bei der Fokussierung eines Word-Dokuments wurde die Fokussierung für die Sprachausgabe und auf der braillezeile reduziert. (#8407)
  - Das Cursor-Routing auf der Braillezeile funktioniert nun auch in einer Liste in einem Word-Dokument korrekt. (#7971)
  - Neu eingefügte Aufzählungen / Zahlen in einem Word-Dokument werden von der Sprachausgabe und auf der Braillezeile korrekt dargestellt. (#7970)
@@ -802,6 +803,7 @@ Schwerpunkte dieser Version sind u. a. Leistungsverbesserungen in Windows 10; Un
 = 2015.3 =
 Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die Möglichkeit Schnellnavigationstasten des Lesemodus zu deaktivieren (sinnvoll in bestimmten Internet-Anwendungen), Verbesserungen für den Internet Explorer sowie die Behebung von Fehlern, die beim schreiben in bestimmten Programmen zu verfälschtem Text geführt haben, wenn eine Braillezeile in Betrieb war.
 
+
 == Neue Funktionen ==
 - In Eingabefeldern in Internet Explorer und anderen MSHTML-Dokumenten werden Rechtschreibfehler korrekt erkannt. (#4174)
 - Verbesserte Erkennung von mathematischen Unicode-Sonderzeichen. (#3805)
@@ -981,6 +983,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - Diverse Versionen von Eclipse (wie z. B. die Entwicklungsumgebung für Android-Anwendungen) werden korrekt als Eclipse erkannt. (#4360, #4454)
 - Die Mausverfolgung für Internet Explorer sowie viele weitere Windows-8-Anwendungen wurde verbessert. Dies betrifft insbesondere die Verwendung höherer Bildschirmauflösungen (#3494)
 - Bei Verwendung der Mausverfolgung im Internet Explorer und anderen mshtml-Dokumenten werden nun mehr Schalter erkannt. (#4173)
+- Bei Verwendung einer Papenmeier-Braillezeile mit Brxcom funktionieren die Tasten auf der Braillezeile nun wie erwartet. (#4614)
 
 
 == Änderungen für Entwickler ==
@@ -1338,12 +1341,11 @@ Für weitere Informationen sehen Sie in der [Befehlsreferenz keyCommands.html] n
 - Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
 - Unterstützung für die Auswahl des Anschlusses bei FreedomScientific-Braillezeilen (automatisch, USB oder Bluetooth).
 - Unterstützung für Notizgeräte der Braillenote Familie von Humanware, wenn diese als Braillezeile für einen Bildschirmleser arbeiten. (#2012)
-- Unterstützung für die Auswahl der Schnittstelle, die für Braillezeilen von FreedomScientific genutzt werden soll (automatisch, USB, Bluetooth).
 - Unterstützung für ältere Papenmeier-Braillezeilen (#2679)
 - Unterstützung für die Eingabe von Computer-Braille für Braillezeilen, die eine Braille-Tastatur besitzen. (#808)
 - Neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen bzw. beim Drücken der Eingabetaste. (#698)
 - Unterstützung für zahlreiche Chrome-basierte Browser: Rockmelt, BlackHawk, Comodo Dragon und SRWare Iron. (#2236, #2813, #2814, #2815)
--
+
 
 == Änderungen ==
 - Liblouis Braille-Übersetzer auf 2.5.2 aktualisiert. (#2737)

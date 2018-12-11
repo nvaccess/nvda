@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 00:10+1000\n"
-"PO-Revision-Date: 2018-09-04 19:36+0200\n"
+"POT-Creation-Date: 2018-11-30 00:10+1000\n"
+"PO-Revision-Date: 2018-12-03 12:02+0100\n"
 "Last-Translator: Ondrej rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
@@ -1140,15 +1140,13 @@ msgstr "Vietnamčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 1"
-msgstr "Mandarínska čínština (Taiwan)"
+msgstr "Čínština (Čína, Mandarínčina) plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 2"
-msgstr "Mandarínska čínština (Taiwan)"
+msgstr "Čínština (Čína, Mandarínčina) skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2198,7 +2196,7 @@ msgstr "odsek"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See https://en.wikipedia.org/wiki/Block_quotation
+#. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "citácia"
 
@@ -4447,7 +4445,7 @@ msgstr "Ostatné"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -6181,17 +6179,17 @@ msgid "no italic"
 msgstr "Nie kurzíva"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "Dvojité prečiarknutie"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "Prečiarknuté"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "Neprečiarknuté"
 
@@ -6221,12 +6219,12 @@ msgid "align right"
 msgstr "Zarovnané vpravo"
 
 #. Translators: Reported when text is justified.
-#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See https://kohei.us/2010/01/21/distributed-text-justification/
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "rovnomerne zarovnané"
 
@@ -6644,7 +6642,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6659,20 +6657,19 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"\n"
 "Distribúcia {name} je možná pod licenciou GNU General Public License 2. "
 "Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou však je "
 "pripojiť k nemu túto licenciu a sprístupniť zdrojový kód každému, kto si to "
 "vyžiada. Týka sa to oboch pôvodných, aj upravených kópií daného software ako "
-"aj ďalších odvodených aplikácií.\n"
+"aj ďalších odvodených aplikácií.\\n\n"
 "Pre viac podrobností si v podmenu pomocník môžete detailnejšie preštudovať "
-"licenciu.\n"
+"licenciu.\\n\n"
 "Kompletná licencia je dostupná aj na stránke: https://www.gnu.org/licenses/"
-"old-licenses/gpl-2.0.html\n"
-"\n"
+"old-licenses/gpl-2.0.html\\n\n"
+"\\n\n"
 "Vývoj {name} zastrešuje NV Access, nezisková organizácia, ktorej cieľom je "
 "pomoc pri vývoji a propagácii voľne šíriteľných open-source riešení "
-"užitočných pre nevidiacich a zrakovo postihnutých.\n"
+"užitočných pre nevidiacich a zrakovo postihnutých.\\n\n"
 "Ak je NVDA užitočný aj pre Vás a chcete aby vývoj napredoval, zvášte možnosť "
 "príspevku NV Access. Prispieť môžete z podmenu pomocník."
 
@@ -6869,6 +6866,18 @@ msgstr "Neprečítané"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Upravovaný profil {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "odpovedané"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "odpovedané všetkým"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "preposlaná"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8606,6 +8615,14 @@ msgstr "Úroveň interpunkcie"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "pri spracovaní textu sa riadiť jazykom hlasového výstupu"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "Pri spracovaní špeciálnych znakov sa riadiť dátami z Unicode Konzorcia"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách"
@@ -8631,9 +8648,8 @@ msgstr "Klávesnica"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#, fuzzy
 msgid "&Select NVDA Modifier Keys"
-msgstr "Používať &Capslock ako kláves NVDA"
+msgstr "Vyberte &Kláves NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8796,9 +8812,8 @@ msgstr "Oznamovať kon&textovú nápovedu"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report &notifications"
-msgstr "Oznamovať kon&textovú nápovedu"
+msgstr "Automaticky oznamovať &Notifikácie"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10713,6 +10728,16 @@ msgstr "komentár: {text} od {author} dňa {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dňa {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} od ľavého okraja strany"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance}od horného okraja strany"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10855,7 +10880,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} bodov"
 
 #. Translators: a measurement in Microsoft Word
-#. See https://support.microsoft.com/kb/76388 for details.
+#. See http://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pica"
