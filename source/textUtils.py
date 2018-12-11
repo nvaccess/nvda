@@ -94,8 +94,10 @@ class EncodingAwareString(Sequence, text_type):
 	def __add__(self, value):
 		return EncodingAwareString(super(EncodingAwareString, self).__add__(value), self.encoding, self.errors)
 
-	def __radd__(self, value):
-		return EncodingAwareString(super(EncodingAwareString, self).__radd__(value), self.encoding, self.errors)
+	def __rad__(self, value):
+		# Python strings do not implement __radd__,
+		# however addition involving EncodingAwareStrings should always result in one.
+		return EncodingAwareString(value + self.decoded, self.encoding, self.errors)
 
 	def __mul__(self, value):
 		return EncodingAwareString(super(EncodingAwareString, self).__mul__(value), self.encoding, self.errors)
