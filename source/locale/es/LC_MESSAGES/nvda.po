@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-23 00:10+1000\n"
-"PO-Revision-Date: 2018-11-27 21:31+0100\n"
+"POT-Creation-Date: 2018-11-30 00:10+1000\n"
+"PO-Revision-Date: 2018-12-04 21:34+0100\n"
 "Last-Translator: Iván Novegil <ivan.novegil.cancelas@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -12,12 +12,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "EscritorioSeguro"
+msgstr "Escritorio Seguro"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -104,7 +104,7 @@ msgstr "gramática: {text}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Error en appModule %s"
+msgstr "Error en el módulo de aplicación %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
@@ -1187,10 +1187,9 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Activa y desactiva la navegación de una sola letra. Cuando esté activada, "
-"las teclas de una sola letra en modo Exploración saltan a varios tipos de "
-"elementos en la página. Cuando esté desactivada, estas teclas se pasan a la "
-"aplicación"
+"Activa y desactiva la navegación con una sola letra. Cuando esté activada, "
+"las teclas solas en modo Exploración saltan a varios tipos de elementos en "
+"la página. Cuando esté desactivada, estas teclas se pasan a la aplicación"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -1710,7 +1709,7 @@ msgstr "&Moverse a"
 
 #, python-format
 msgid "%s landmark"
-msgstr "%s punto de referencia"
+msgstr "punto de referencia %s"
 
 #. Translators: This is brailled to indicate a landmark (example output: lmk main).
 #, python-format
@@ -1721,7 +1720,7 @@ msgstr "pdr %s"
 #. Translators: Announces selected text. %s is replaced with the text.
 #, python-format
 msgid "selected %s"
-msgstr "seleccionado %s"
+msgstr "%s seleccionado"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -1739,7 +1738,8 @@ msgstr "No estás en un contenedor"
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr ""
-"Se mueve al comienzo de un elemento contenedor, tal como una lista o tabla"
+"Se mueve al comienzo de un elemento contenedor, tal como una lista o una "
+"tabla"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -1750,7 +1750,8 @@ msgstr "Fin"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Se mueve al final del elemento contenedor, tal como una lista o tabla"
+msgstr ""
+"Se mueve al final del elemento contenedor, tal como una lista o una tabla"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -2331,7 +2332,7 @@ msgstr "terminal"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
-msgstr "cuadro de edición multilínea"
+msgstr "edición enriquecida"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
@@ -2486,7 +2487,7 @@ msgstr "panel"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
-msgstr "cuadro de edición de contraseña"
+msgstr "edición de contraseña"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
@@ -2824,7 +2825,7 @@ msgstr "error de fichero de mapa de gestos"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "Cargando NVDA. Aguarda por Favor..."
+msgstr "Cargando NVDA. Espera por Favor..."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
@@ -2866,7 +2867,7 @@ msgid "text \"%s\" not found"
 msgstr "texto \"%s\" no encontrado"
 
 msgid "Find Error"
-msgstr "Fallo en la búsqueda"
+msgstr "Error al buscar"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
@@ -2925,11 +2926,11 @@ msgstr "se mueve a la anterior columna de la tabla"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables off"
-msgstr "tablas de diseño desactivado"
+msgstr "tablas de diseño desactivadas"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 msgid "layout tables on"
-msgstr "tablas de diseño activado"
+msgstr "tablas de diseño activadas"
 
 #. Translators: Input help mode message for include layout tables command.
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
@@ -2995,7 +2996,7 @@ msgstr "Formateado de Documentos"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr "La atenuación de audio no está soportada"
+msgstr "No se admite la atenuación de audio"
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
@@ -3018,9 +3019,9 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"Activa o desactiva la ayuda de entrada. Cuando se activa, cualquier entrada "
-"tal como la pulsación de una tecla en el teclado te dirá qué script se "
-"asocia con esa entrada, si hay alguno."
+"Activa o desactiva la ayuda de entrada. Cuando se active, con cualquier "
+"entrada tal como la pulsación de una tecla en el teclado te dirá qué script "
+"se asocia con esa entrada, si hay alguno."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -3032,7 +3033,7 @@ msgstr "Modo silencioso activado"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "Habilita o deshabilita el modo silencioso para la aplicación activa."
+msgstr "Activa o desactiva el modo silencioso para la aplicación activa."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3087,7 +3088,7 @@ msgstr "Bloquea o desbloquea el botón derecho del ratón"
 
 #, python-format
 msgid "Selected %s"
-msgstr "Seleccionado %s"
+msgstr "%s Seleccionado"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3578,7 +3579,7 @@ msgstr ""
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
-msgstr "Sin información sobre la localización"
+msgstr "Sin información sobre la posición"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -4309,7 +4310,7 @@ msgstr "Desplaza la línea braille hacia adelante"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "Lleva el cursor hacia o activa el objeto bajo la celda braille"
+msgstr "Lleva el cursor hacia el objeto bajo la celda braille o lo activa"
 
 #. Translators: Input help mode message for Braille report formatting command.
 msgid "Reports formatting info for the text under this braille cell"
@@ -7827,7 +7828,7 @@ msgstr "Instalar actualización Pendiente"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
-msgstr "Aguarda por favor"
+msgstr "Espera por favor"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
@@ -8256,12 +8257,12 @@ msgstr "Instalando NVDA"
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr ""
-"Por favor aguarda mientras la instalación anterior de NVDA se está "
+"Por favor espera mientras la instalación anterior de NVDA se está "
 "actualizando."
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "Por favor aguarda mientras NVDA se está instalando"
+msgstr "Por favor espera mientras NVDA se está instalando"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -8289,11 +8290,11 @@ msgstr ""
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "NVDA instalado satisfactoriamente. "
+msgstr "NVDA instalado correctamente. "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Se actualizó satisfactoriamente tu instalación de NVDA. "
+msgstr "Se actualizó correctamente tu instalación de NVDA. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -8420,7 +8421,7 @@ msgstr "Creando Copia Portable"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Por favor aguarda mientras se crea una copia portable de NVDA."
+msgstr "Por favor espera mientras se crea una copia portable de NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -8436,7 +8437,7 @@ msgstr "Falló al crear la copia portable: %s"
 #. %s will be replaced with the destination directory.
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Se creó satisfactoriamente una copia portable de NVDA en %s"
+msgstr "Se creó correctamente una copia portable de NVDA en %s"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -8569,7 +8570,7 @@ msgstr "Copiando Opciones"
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr ""
-"Por favor aguarda mientras las opciones se copian en la configuración del "
+"Por favor espera mientras las opciones se copian en la configuración del "
 "sistema."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
@@ -8591,7 +8592,7 @@ msgstr "Error al copiar las opciones de usuario de NVDA"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
-msgstr "Opciones de usuario de NVDA copiadas satisfactoriamente"
+msgstr "Opciones de usuario de NVDA copiadas correctamente"
 
 msgid "This change requires administrator privileges."
 msgstr "Este cambio requiere privilegios de administrador."
@@ -9108,7 +9109,7 @@ msgstr "&Tablas"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Row/column h&eaders"
-msgstr "&Encabezados de fila/columna"
+msgstr "&Encabezados de fila y columna"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9515,7 +9516,7 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"No se puede configurar encabezados. Por favor activa el anunciado de "
+"No se pueden configurar los encabezados. Por favor activa el anunciado de "
 "emcabezados de tabla en Opciones de Formato de Documento"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.

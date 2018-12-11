@@ -3,7 +3,53 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.3 =
+= 2018.4 =
+Prednosti tejto verzie zahŕňajú lepšiu podporu pre nové verzie prehliadača Mozilla Firefox, oznamovanie emotikonov cez všetky hlasové výstupy, oznamovanie stavu pri správach v aplikácii MS Outlook (odpovedané, preposlané), oznamovanie vzdialenosti kurzora v dokumentoch MS Word a viacero opráv.
+
+== Nové vlastnosti ==
+- Nové braillovské tabuľky pre Čínsky skratkopis a plnopis. (#5553)
+- V zozname správ v programe MS Outlook NVDA oznamuje, ak je správa preposlaná alebo ste na ňu už odpovedali. (#6911)
+- NVDA odteraz dokáže využívať na interpretáciu špeciálnych symbolov databázu Unicode Konzorcia. (#6523)
+- NVDA odteraz oznamuje vzdialenosť kurzora od okrajov stránky v dokumentoch MS Word. Vzdialenosť zistíte skratkou NVDA+numerický delete. (#1939)
+- NVDA viac pri pohybe v Google tabuľkách a súčasnom aktívnom braillovskom výstupe zbytočne neoznamuje "vybraté". (#8879)
+- Pridaná podpora pre aplikácie Foxit Reader a Foxit Phantom PDF. (#8944)
+- Pridaná podpora pre databázový nástroj DBeaver. (#8905)
+
+
+== Zmeny ==
+- Položka "oznamovať bublinkovú nápovedu" v nastaveniach prezentácie objektov bola premenovaná na "oznamovať notifikácie". Odteraz totiž toto nastavenie zahŕňa aj oznamovanie notifikácií v Systéme Windows 8 a novších. (#5789)
+- V nastaveniach klávesnice sú začiarkávacie polia pre výber klávesu NVDA zobrazené v zozname a nie samostatne.
+- NVDA viac neoznamuje nadbytočné informácie pri čítaní dátumu a času zo systémového panela. (#4364)
+- Prekladová tabuľka liblouis aktualizovaná na verziu 3.7.0. (#8697)
+- Hlasový výstup eSpeak-NG aktualizovaný na verziu 919f3240cbb.
+
+
+== Opravy ==
+- V aplikácii Outlook 2016/365 sú oznamované značky pre kategórie a stav správy. (#8603)
+- Ak je v NVDA nastavený jazyk Kirgyjčina, Mongolčina alebo Macedónčina, pri štarte NVDA sa viac neobjavuje varovanie, že tento jazyk nie je podporovaný operačným systémom. (#8064)
+- Presunutie myši na navigačný objekt je odteraz presnejšie v režime prehliadania v aplikáciách Mozilla Firefox, Google Chrome a Acrobat Reader DC. (#6460)
+- Vylepšená práca so zoznamovými rámikmi v prehliadačoch Firefox, Chrome a Internet Explorer. (#8664)
+- Ak NVDA spustíte na Japonskej verzii Windows XP a Vista, zobrazí sa varovanie tak, ako na ostatných systémoch. (#8771)
+- Zrýchlená navigácia po veľkých a dynamických stránkach v prehliadači Mozilla Firefox. (#8678)
+- Na braillovskom riadku sa viac nezobrazujú informácie o formátovaní, ak je oznamovanie vypnuté v nastaveniach. (#7615)
+- NVDA viac nestráca fokus v zozname súborov v prieskumníkovy (príp v okne otvoriť / uložiť ako) ak sa používa UI Automation  a súčasne je zaneprázdnená iná aplikácia (napríklad ak beží na pozadí konvertovanie audio súborov). (#7345)
+- Ak je vo webovom dokumente ARIA menu, kláves escape bude odoslaný priamo do prehliadača a nevypína režim fokusu. (#3215)
+- Vo webovom rozhraní Gmailu viac NVDA pri použití klávesnice na navigáciu nečíta stále nanovo obsah správy. (#8887)
+- Po aktualizácii NVDA odteraz správne funguje režim prehliadania v prehliadačoch, ktoré boli spustené v čase aktualizácie a takisto funguje aktualizovanie dynamického obsahu dokumentov. (#7641)
+- NVDA viac neoznamuje nadbytočne typ prvku "pri kliknutí" pri navigácii v režime prehliadania. (#7430)
+- Opravená podpora pre skratky na braillovskom riadku baum Vario 40. (#8894)
+- V Tabuľkách Google v prehliadači Firefox NVDA neoznamuje nadbytočne pri pohybe "vybraté". (#8964)
+
+
+ = 2018.3.2 =
+Táto verzia opravuje chybu, ktorá spôsobovala pád aplikácie Chrome pri navigácii po stránke www.twitter.com. (#8777)
+
+ 
+= 2018.3.1 =
+Táto verzia opravuje chybu, ktorá spôsobovala pád 32-bitovej verzie Mozilla Firefox. (#8759)
+ 
+
+ = 2018.3 =
 Prednosti tejto verzie zahŕňajú automatické pripájanie k mnohým braillovským riadkom, podporu pre nové funkcie operačného systému Windows 10 vrátane panela pre zadávanie emoji, a ďalšie opravy.
 
 == Nové vlastnosti ==

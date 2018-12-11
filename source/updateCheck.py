@@ -153,14 +153,15 @@ def getPendingUpdate():
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
 		pendingUpdateVersion=state["pendingUpdateVersion"]
+		pendingUpdateVersionTuple=state["pendingUpdateVersionTuple"]
 	except KeyError:
-		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
+		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = state["pendingUpdateVersionTuple"] = None
 		return None
 	else:
 		if pendingUpdateFile and os.path.isfile(pendingUpdateFile):
-			return (pendingUpdateFile, pendingUpdateVersion)
+			return (pendingUpdateFile, pendingUpdateVersion, pendingUpdateVersionTuple)
 		else:
-			state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
+			state["pendingUpdateFile"] = state["pendingUpdateVersion"] = state["pendingUpdateVersionTuple"] = None
 	return None
 
 def isPendingUpdate():
@@ -182,6 +183,7 @@ def _executeUpdate(destPath):
 
 	state["pendingUpdateFile"]=None
 	state["pendingUpdateVersion"]=None
+	state["pendingUpdateVersionTuple"]=None
 	saveState()
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
@@ -319,7 +321,7 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 			# and is pending to be installed.
 			message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
 
-			self.newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateInfo["version"])
+			self.newNVDAVersionTuple = pendingUpdateDetails[2]
 			addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(self.newNVDAVersionTuple))
 			showAddonCompat = any(addonsWithoutKnownCompat)
 			if showAddonCompat:
@@ -427,10 +429,11 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 
 class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 
-	def __init__(self, parent, destPath, version):
-		self.destPath=destPath
+	def __init__(self, parent, destPath, version, versionTuple):
+		self.destPath = destPath
 		self.version = version
-		self.storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
+		self.versionTuple = versionTuple
+		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
 		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
@@ -439,8 +442,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
 		message = _("NVDA version {version} is ready to be installed.\n").format(version=version)
 
-		newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(self.version)
-		addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple))
+		addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(versionTuple))
 		showAddonCompat = any(addonsWithoutKnownCompat)
 		if showAddonCompat:
 			# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
@@ -454,7 +456,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 				# not prompted again after installation, we set the default compatibility
 				AddonCompatibilityState.setAddonCompatibility(
 					addon=a,
-					NVDAVersion=newNVDAVersionTuple,
+					NVDAVersion=versionTuple,
 					compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE)
 		text = sHelper.addItem(wx.StaticText(self, label=message))
 		text.Wrap(self.scaleSize(500))
@@ -501,7 +503,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		from gui import addonGui
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
-			NVDAVersion=versionInfo.getNVDAVersionTupleFromString(self.version)
+			NVDAVersion=self.versionTuple
 		)
 		incompatibleAddons.ShowModal()
 		incompatibleAddons.Destroy()
@@ -525,6 +527,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			finalDest=self.destPath
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
+		state["pendingUpdateVersionTuple"]=self.versionTuple
 		# Postponing an update indicates that the user is likely interested in getting a reminder.
 		# Therefore, clear the dontRemindVersion.
 		state["dontRemindVersion"] = None
@@ -544,6 +547,7 @@ class UpdateDownloader(object):
 		self.updateInfo = updateInfo
 		self.urls = updateInfo["launcherUrl"].split(" ")
 		self.version = updateInfo["version"]
+		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
 
@@ -583,7 +587,7 @@ class UpdateDownloader(object):
 			try:
 				self._download(url)
 			except:
-				log.debugWarning("Error downloading %s" % url, exc_info=True)
+				log.error("Error downloading %s" % url, exc_info=True)
 			else: #Successfully downloaded or canceled
 				if not self._shouldCancel:
 					success=True
@@ -634,6 +638,11 @@ class UpdateDownloader(object):
 			raise RuntimeError("Content too short")
 		if self.fileHash and hasher.hexdigest() != self.fileHash:
 			raise RuntimeError("Content has incorrect file hash")
+		# getFileVersionInfo will fail as long as the file is still open.
+		local.close()
+		fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
+		fileVersion = fileVersionInfo.get('FileVersion') or self.version
+		self.versionTuple = versionInfo.getNVDAVersionTupleFromString(fileVersion)
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
@@ -666,7 +675,7 @@ class UpdateDownloader(object):
 
 	def _downloadSuccess(self):
 		self._stopped()
-		gui.runScriptModalDialog(UpdateAskInstallDialog(gui.mainFrame, self.destPath, self.version))
+		gui.runScriptModalDialog(UpdateAskInstallDialog(gui.mainFrame, self.destPath, self.version, self.versionTuple))
 
 class DonateRequestDialog(wx.Dialog):
 	# Translators: The message requesting donations from users.
@@ -736,13 +745,14 @@ def initialize():
 			"lastCheck": 0,
 			"dontRemindVersion": None,
 			"pendingUpdateVersion": None,
+			"pendingUpdateVersionTuple": None,
 			"pendingUpdateFile": None,
 		}
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
 	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
-		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
+		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = state["pendingUpdateVersionTuple"] = None
 	# remove all update files except the one that is currently pending (if any)
 	try:
 		for fileName in os.listdir(storeUpdatesDir):

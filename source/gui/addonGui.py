@@ -17,9 +17,9 @@ from logHandler import log
 import addonHandler
 import globalVars
 import buildVersion
-import guiHelper
-import nvdaControls
-from dpiScalingHelper import DpiScalingHelperMixin
+from . import guiHelper
+from . import nvdaControls
+from .dpiScalingHelper import DpiScalingHelperMixin
 
 def promptUserForRestart():
 	# Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
@@ -91,7 +91,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 				id=wx.ID_YES,
 				# Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 				#  the add-on
-				label=_("Yes")
+				label=_("&Yes")
 			)
 			yesButton.SetDefault()
 			yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
@@ -103,7 +103,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 				id=wx.ID_NO,
 				# Translators: A button in the addon installation warning dialog which allows the user to decide not to
 				# install the add-on
-				label=_("No")
+				label=_("&No")
 			)
 			noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
 		contentsSizer.addDialogDismissButtons(buttonHelper)
@@ -115,6 +115,7 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def _toggleEnabledStateOfAffirmativeAction(self, evt):
 		self.yesButton.Enable(self.confirmedCheckbox.IsChecked())

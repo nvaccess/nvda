@@ -90,9 +90,7 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 class WordDocumentTextInfo(UIATextInfo):
 
 	def _get_locationText(self):
-		rects=self._rangeObj.getBoundingRectangles()
-		left=rects[0]
-		top=rects[1]
+		point = self.pointAtStart
 		# UIA has no good way yet to convert coordinates into user-configured distances such as inches or centimetres.
 		# Nor can it give us specific distances from the edge of a page.
 		# Therefore for now, get the screen coordinates, and if the word object model is available, use our legacy code to get the location text.
@@ -100,7 +98,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		if not om:
 			return super(WordDocumentTextInfo,self).locationText
 		try:
-			r=om.rangeFromPoint(left,top)
+			r=om.rangeFromPoint(point.x,point.y)
 		except (COMError,NameError):
 			log.debugWarning("MS Word object model does not support rangeFromPoint")
 			return super(WordDocumentTextInfo,self).locationText
