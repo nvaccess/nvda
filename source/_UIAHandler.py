@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+from collections import namedtuple
 import config
 import api
 import appModuleHandler
@@ -64,6 +65,10 @@ badUIAWindowClassNames=[
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
 ]
+
+Version=namedtuple('Version',('major','minor','build'))
+# The minimum version of Microsoft Word where we can trust that UI Automation is complete enough to use
+minMSWordUIAVersion=Version(16,0,90000)
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
 UIADialogClassNames=[
@@ -371,19 +376,19 @@ class UIAHandler(COMObject):
 				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
 			):
-				# We can only safely check the version of known Office apps using the Word document control.
-				# Other uses for now we just need to assume the implementation is good.
+				# We can only safely check the version of known Office apps using the Word document control, as we know their versioning scheme.
+				# But if the Word Document control is used in other unknown apps we should just use UIA if it has been implemented.
 				if appModule.appName not in ('outlook','winword','excel'):
 					log.debugWarning("Unknown application using MS Word document control: %s"%appModule.appName)
 					return True
 				try:
 					versionMajor,versionMinor,versionBuild,versionPatch=[int(x) for x in appModule.productVersion.split('.')]
 				except Exception as e:
-					log.error("Error parsing versioninformation %s, %s"%(appModule.productVersion,e))
+					log.error("Error parsing version information %s, %s"%(appModule.productVersion,e))
 					return True
 				if (
-					versionMajor<16
-					or versionMajor==16 and versionMinor==0 and versionBuild<9000
+					versionMajor<minMSWordUIAVersion.major
+					or versionMajor==minMSWordUIAVersion.major and versionMinor==minMSWordUIAVersion.minor and versionBuild<minMSWordUIAVersion.build
 				):
 					return False
 		return bool(res)
