@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 import re
 import ctypes
@@ -10,6 +10,8 @@ import unicodedata
 import NVDAHelper
 import config
 import textInfos
+from locationHelper import RectLTWH
+from treeInterceptorHandler import TreeInterceptor
 
 HIGH_SURROGATE_FIRST = u"\uD800"
 HIGH_SURROGATE_LAST = u"\uDBFF"
@@ -148,12 +150,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		Retrieval of other offsets (e.g. L{_getWordOffsets}) should also be implemented if possible for greatest accuracy and efficiency.
 	
 	If a caret and/or selection should be supported, L{_getCaretOffset} and/or L{_getSelectionOffsets} should be implemented, respectively.
-	To support conversion from/to screen points (e.g. for mouse tracking), L{_getOffsetFromPoint}/L{_getPointFromOffset} should be implemented.
+	To support conversion from screen points (e.g. for mouse tracking), L{_getOffsetFromPoint} should be implemented.
+	To support conversion to screen rectangles and points (e.g. for magnification or mouse tracking), either L{_getBoundingRectFromOffset} or L{_getPointFromOffset} should be implemented.
+	Note that the base implementation of L{_getPointFromOffset} uses L{_getBoundingRectFromOffset}.
 	"""
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
 	useUniscribe=True #Use uniscribe to calculate word offsets etc
- 
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
@@ -175,6 +178,67 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			# Translators: the current position's screen coordinates in pixels
 			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
+
+	def _get_boundingRects(self):
+		if self.isCollapsed:
+			return []
+		startOffset = self._startOffset
+		try:
+			firstVisibleOffset = self._getFirstVisibleOffset()
+			if firstVisibleOffset >=0:
+				startOffset = max(startOffset, firstVisibleOffset)
+		except (LookupError, NotImplementedError):
+			pass
+		getLocationFromOffset = self._getBoundingRectFromOffset
+		try:
+			startLocation = getLocationFromOffset(startOffset)
+		except NotImplementedError:
+			# Getting bounding rectangles is not implemented.
+			# Therefore, we need to create a bounding rectangle with points.
+			# This, though less accurate, is acceptable for use cases within NVDA.
+			getLocationFromOffset = self._getPointFromOffset
+			startLocation = getLocationFromOffset(startOffset)
+		inclusiveEndOffset = self._endOffset - 1
+		try:
+			lastVisibleOffset = self._getLastVisibleOffset()
+			if lastVisibleOffset >= startOffset:
+				inclusiveEndOffset = min(inclusiveEndOffset, lastVisibleOffset)
+		except (LookupError, NotImplementedError):
+			pass
+		# If the inclusive end offset is greater than the start offset, we are working with a range.
+		# If not, i.e. the range only contains one character, we have only one location to deal with.
+		objLocation = self.obj.rootNVDAObject.location if isinstance(self.obj, TreeInterceptor) else self.obj.location
+		rects = [] 
+		if inclusiveEndOffset > startOffset:
+			offset = startOffset
+			while offset <= inclusiveEndOffset:
+				lineStart, lineEnd = self._getLineOffsets(offset)
+				if lineStart < startOffset:
+					lineStart = startOffset
+				# Line offsets are exclusive, so the end offset is at the start of the next line, if any.
+				inclusiveLineEnd = lineEnd - 1
+				if inclusiveLineEnd > inclusiveEndOffset:
+					# The end offset is in this line
+					inclusiveLineEnd = inclusiveEndOffset
+				rects.append(
+					RectLTWH.fromCollection(
+						startLocation if lineStart == startOffset else getLocationFromOffset(lineStart),
+						getLocationFromOffset(inclusiveLineEnd)
+					)
+				)
+				offset = inclusiveLineEnd + 1
+		else:
+			if isinstance(startLocation, textInfos.Point):
+				rects.append(RectLTWH.fromPoint(startLocation))
+			else:
+				rects.append(startLocation)
+		intersectedRects = []
+		for rect in rects:
+			intersection = rect.intersection(objLocation)
+			if not any(intersection):
+				continue
+			intersectedRects.append(intersection)
+		return intersectedRects
 
 	def _getCaretOffset(self):
 		raise NotImplementedError
@@ -284,8 +348,14 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getReadingChunkOffsets(self,offset):
 		return self._getLineOffsets(offset)
 
-	def _getPointFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self,offset):
 		raise NotImplementedError
+
+	def _getPointFromOffset(self,offset):
+		# Purposely do not catch LookupError or NotImplementedError raised by _getBoundingRectFromOffset.
+		rect = self._getBoundingRectFromOffset(offset)
+		# For backwards compatibility, keep using textInfos.Point instead of locationHelper.Point
+		return textInfos.Point(*rect.center)
 
 	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
@@ -356,7 +426,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return offsetsFunc(offset)
 
 	def _get_pointAtStart(self):
-		return self._getPointFromOffset(self._startOffset)
+		try:
+			return textInfos.Point(*self._getBoundingRectFromOffset(self._startOffset).topLeft)
+		except NotImplementedError:
+			return self._getPointFromOffset(self._startOffset)
 
 	def _get_isCollapsed(self):
 		if self._startOffset==self._endOffset:
@@ -523,3 +596,23 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _get_bookmark(self):
 		return Offsets(self._startOffset,self._endOffset)
+
+	def _getFirstVisibleOffset(self):
+		obj = self.obj
+		if isinstance(obj, TreeInterceptor):
+			obj = obj.rootNVDAObject
+		if obj.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return self._getOffsetFromPoint(*obj.location.topLeft)
+
+	def _getLastVisibleOffset(self):
+		obj = self.obj
+		if isinstance(obj, TreeInterceptor):
+			obj = obj.rootNVDAObject
+		if obj.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		exclusiveX, exclusiveY = obj.location.bottomRight
+		offset = self._getOffsetFromPoint(exclusiveX -1, exclusiveY -1)
+		if 0==offset<self._getStoryLength():
+			raise LookupError("Couldn't get reliable last visible offset")
+		return offset

@@ -3,6 +3,54 @@ Novità in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+Le migliorie più significative di questa versione si concentrano in un notevole aumento delle prestazioni per le versioni più recenti di Mozilla Firefox, lettura delle emoji con qualsiasi sintetizzatore, lettura dello stato "risposto-inoltrato" in outlook, annuncio della distanza del cursore fino al bordo della pagina in un documento Word, e molte altre correzioni di bug..
+
+== Novità ==
+- Nuove tabelle braille: Cinese (Cina, Mandarino) grado 1 e grado 2. (#5553)
+- In Microsoft Outlook quando ci si trova nell'elenco messaggi, ne viene annunciato lo stato (risposto - inoltrato). (#6911)
+- NVDA è ora in grado di  leggere le descrizioni delle emoji e di altri caratteri che fanno parte dell'Unicode Common Locale Data Repository. (#6523)
+- In Microsoft Word, è possibile conoscere la distanza del cursore dai bordi sinistro e superiore della pagina tramite la combinazione di tasti NVDA+Canc del tastierino numerico. (#1939)
+- In Google Fogli con la modalità braille attivata, NVDA non dirà più la parola "selezionata" ogni qualvolta ci si sposta tra le celle con le frecce. (#8879)
+- Aggiunto il supporto ai programmi Foxit Reader e Foxit Phantom PDF. (#8944)
+- Aggiunto il supporto alle utility per i database DBeaver. (#8905)
+
+
+== Cambiamenti ==
+- L'opzione "Leggi i fumetti d'aiuto" nella finestra di dialogo presentazione oggetti è stata rinominata in "annuncia notifiche"" per includere lo stile delle notifiche toast di Windows8 e Windows10. (#5789)
+- Nelle impostazioni tastiera di NVDA, le caselle di controllo per abilitare o disabilitare il tasto funzione NVDA vengono visualizzate in un elenco piuttosto che come elementi singoli separati.
+- NVDA non leggerà più informazioni ridondanti durante l'esplorazione dell'orologio nella system tray in alcune versioni di Windows. (#4364)
+- Aggiornato liblouis braille translator alla versione 3.7.0. (#8697)
+- Aggiornata Espeak-NG alla commit 919f3240cbb.
+
+
+== Bug corretti ==
+- In Outlook 2016/365, viene annunciato se un messaggio è contrassegnato o meno e la categoria di appartenenza. (#8603)
+- Se NVDA viene impostato in una lingua quale il Kirgyz, il mongolo o il macedone, non verrà più visualizzato un messaggio all'avvio che avverte l'utente che la lingua selezionata non è supportata dal sistema operativo. (#8064)
+- Lo spostamento del mouse alla posizione del navigatore ad oggetti risulterà molto più accurato, specie quando si porta il mouse al cursore in Google Chrome, Mozilla Firefox e Acrobat Reader DC. (#6460)
+ - Migliorata notevolmente l'interazione con le caselle combinate in Firefox, Chrome e Internet Explorer. (#8664)
+- Quando lo screen reader viene eseguito in versioni giapponesi di Windows Xp o Vista, NVDA visualizzerà correttamente i messaggi dei requisiti di sistema. (#8771)
+- Grosso miglioramento delle prestazioni durante la navigazione in documenti web molto complessi con cambiamenti di tipo dinamico in Mozilla Firefox. (#8678)
+- Non vengono più visualizzati gli attributi dei caratteri in Braille se essi sono stati disabilitati nelle impostazioni di formattazione documento. (#7615)
+- NVDA non avrà più problemi di gestione del focus in Esplora File ed altre applicazioni che si servono della UI Automation quando un'altra app risulta occupata. (#7345)
+- Nei menu Aria delle pagine web, il tasto Esc chiuderà il menu, invece che disattivare incondizionatamente la modalità focus.. (#3215)
+- Nella nuova interfaccia web di Gmail, mentre si utilizza la navigazione veloce tra i messaggi e li si legge, non viene più letto ogni volta tutto il corpo del messaggio quando ci si sposta tra i vari controlli. (#8887)
+- Dopo aver aggiornato NVDA, i browser Chrome e Firefox non dovrebbero più crashare, ed inoltre la modalità navigazione dovrebbe aggiornarsi correttamente anche con eventuali cambiamenti effettuati ad un documento. (#7641) 
+- NVDA non annuncerà più la parola "cliccabile" tutte le volte quando ci si trova in modalità navigazione in una riga con diversi controlli cliccabili. (#7430)
+- Risolti i problemi con le combinazioni e i gesti su display braille baum Vario 40. (#8894)
+- In Google Slides con Mozilla Firefox, NVDA non dirà più "selezionato" ogni qualvolta ci si sposta in un controllo. (#8964)
+
+
+== Cambiamenti per sviluppatori (in inglese) ==
+- gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
+ - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+- The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)
+
+
 = 2018.3 =
 Le principali migliorie che caratterizzano questa versione di N VDA si possono riassumere nel riconoscimento automatico di molti display braille, nel supporto a nuove funzioni di Windows10 come l'immissione nel pannello Emoji, e sulla risoluzione di bug e problematiche varie. 
 

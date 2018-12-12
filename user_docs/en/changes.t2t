@@ -7,17 +7,23 @@ What's New in NVDA
 
 == New Features ==
 - New braille tables: Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435)
+- Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
+ - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
 
 
 == Changes ==
 - Updated liblouis braille translator to version 3.8.0. (#9013)
 - Add-on authors now can enforce a minimum required NVDA version for their add-ons. Unsupported add-ons will not load or install. (#6275)
 - Add-on authors must now specify the last version of NVDA the add-on has been tested against. Users will be warned against installing or enabling untested add-ons. (#6275)
+- The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
+- Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
 
 
 == Bug Fixes ==
 - OneCore speech synthesizer: On Windows 10 April 2018 and above, large chunks of silence are no longer inserted between speech utterances. (#8985)
 - When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
+- Improved restart confirmation dialog after changing interface language. The text and the button labels are now more concise and less confusing. (#6416)
+- If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech on Windows 10, rather than espeak. (#9025)
 
 
 == Changes for Developers ==
@@ -26,6 +32,8 @@ What's New in NVDA
 - Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275)
  - minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.
  - lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.
+- OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)
+- Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)
 
 
 = 2018.4 =

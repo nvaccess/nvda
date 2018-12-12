@@ -47,6 +47,8 @@ def getFileVersionInfo(name, *attributes):
 	"""Gets the specified file version info attributes from the provided file."""
 	if not isinstance(name, text_type):
 		raise TypeError("name must be an unicode string")
+	if not os.path.exists(name):
+		raise RuntimeError("The file %s does not exist" % name)
 	fileVersionInfo = {}
 	# Get size needed for buffer (0 if no info)
 	size = ctypes.windll.version.GetFileVersionInfoSizeW(name, None)

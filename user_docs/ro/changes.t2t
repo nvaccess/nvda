@@ -4,6 +4,7 @@ Ce este nou în NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Caracteristicile principale ale acestei versiuni sunt performanța mai bună în versiunile noi de Firefox, raportarea de emoji cu toate sintetizatoarele, raportarea statusului „răspuns” sau „redirecționat” pentru e-mail-urile din MS Outlook, raportarea actualei distanțe a cursorului de la marginile de sus și din stânga paginii în MS Word și multe alte defecte rezolvate.
 
 == Noi Funcționalități ==
 - Noi tabele braille: chineză (China, mandarină) gradele 1 și 2. (#5553)
@@ -11,6 +12,8 @@ Ce este nou în NVDA
 - Acum, NVDA poate citi descrieri pentru emoji, precum și alte caractere care fac parte din depozitul de date locale comune Unicode. (#6523)
 - În Microsoft Word, distanța cursorului de la marginile de sus și din stânga ale paginii poate fi raportată apăsând NVDA+tasta Delete de pe blocul numeric. (#1939)
 - În Google Sheets cu modul braille activat, NVDA nu mai spune „selectat” la fiecare celulă atunci când focalizarea se deplasează între celule. (#8879)
+- Programele Foxit Reader și  Foxit Phantom PDF sunt accesibile acum și cu NVDA (#8944)
+- Instrumentul cu baze de date DBeaver este acum accesibil și cu NVDA. (#8905)
 
 
 == Modificări ==
@@ -31,9 +34,11 @@ Ce este nou în NVDA
 - Braille-ul nu mai arată atributele de font dacă au fost dezactivate din setările formatării documentului. (#7615)
 - NVDA nu mai dă rateuri la urmărirea focalizării din File Explorer și din alte aplicații care utilizează UI Automation atunci când o altă aplicație este ocupată. (cum ar fi procesul de prelucrare audio ). (#7345)
 - În meniurile ARIA din web, tasta Escape nu va mai fi trecută prin meniu și nu va mai dezactiva modul de focalizare necondiționat. (#3215)
-- NVDA nu mai rrefuză să raporteze focalizarea din paginile web unde noua focalizare înlocuiește un control care nu mai există. (#6606, #8341)
-- În noul Gmail, la utilizarea navigării rapide înăuntrul mesajelor în timpul citirii lor, corpul întreg al mesajului nu mai este raportat după elementul la care tocmai ați navigat. (#8887)
+- În noua interfața web a Gmail, la utilizarea navigării rapide înăuntrul mesajelor în timpul citirii lor, corpul întreg al mesajului nu mai este raportat după elementul la care tocmai ați navigat. (#8887)
 - După actualizarea NVDA, browserele precum Firefox și Google Chrome nu vor mai trebui să dea rateuri, iar modul de navigare ar trebui să continue să reflecteze corect actualizările la orice document curent încărcat. (#7641)
+- NVDA nu mai raportează „clicabil” de mai multe ori pe același rând când găsește conținut clicabil în modul navigare. (#7430)
+- Comenzile aplicate pe display-urile braille baum Vario 40 funcționează acum corect. (#8894)
+- în Google prezentări (slides) cu Mozilla Firefox, NVDA nu mai raportează „text selectat” la fiecare control focalizat. (#8964)
 
 
 == Modificări pentru Dezvoltatori ==
