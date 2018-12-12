@@ -333,7 +333,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
 		).ShowModal()
 
-	def installAddon(self, addonPath, closeAfter=False):
+	def installAddon(self, addonPath, closeAfter=False, freshInstall=True):
 		try:
 			try:
 				bundle = addonHandler.AddonBundle(addonPath)
@@ -359,7 +359,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 					addon=bundle,
 					compatibilityStateValue=compatValues.MANUALLY_SET_COMPATIBLE
 				)
-			elif wx.YES != self._showConfirmAddonInstallDialog(bundle):
+			# Do not show install confirmation dialog if what we're doing is just updating a compatible add-on and the updated add-on is also compatible.
+			elif freshInstall and wx.YES != self._showConfirmAddonInstallDialog(bundle):
 				return
 
 			prevAddon=None
@@ -367,8 +368,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
 					prevAddon=addon
 					break
-			if prevAddon:
-				summary=bundle.manifest["summary"]
+			summary=bundle.manifest["summary"]
+			# Skip this if an add-on is about to be updated after checking for updates.
+			if prevAddon and freshInstall:
 				curVersion=prevAddon.manifest["version"]
 				newVersion=bundle.manifest["version"]
 				if gui.messageBox(
@@ -389,11 +391,17 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 					wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 						return
 				prevAddon.requestRemove()
-			self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-			# Translators: The title of the dialog presented while an Addon is being installed.
-			_("Installing Add-on"),
-			# Translators: The message displayed while an addon is being installed.
-			_("Please wait while the add-on is being installed."))
+			if freshInstall:
+				# Translators: The title of the dialog presented while an Addon is being installed.
+				installAddonTitle = _("Installing Add-on")
+				# Translators: The message displayed while an addon is being installed.
+				installAddonMessage = _("Please wait while the add-on is being installed.")
+			else:
+				# Translators: The title of the dialog presented while an Addon is being updated.
+				installAddonTitle = _("Updating {name}").format(name = summary)
+				# Translators: The message displayed while an addon is being updated.
+				installAddonMessage = _("Please wait while the add-on is being updated.")
+			self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame, installAddonTitle, installAddonMessage)
 			try:
 				gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
 			except:
@@ -401,8 +409,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				self.refreshAddonsList()
 				self._progressDialog.done()
 				self._progressDialog = None
-				# Translators: The message displayed when an error occurs when installing an add-on package.
-				gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
+				if freshInstall:
+					# Translators: The message displayed when an error occurs when installing an add-on package.
+					installErrorMessage = _("Failed to install add-on  from %s")%addonPath
+				else:
+					# Translators: The message displayed when an error occurs when installing an add-on package.
+					installErrorMessage = _("Failed to update {name} add-on").format(name = self.addonName)
+				gui.messageBox(installErrorMessage,
 					# Translators: The title of a dialog presented when an error occurs.
 					_("Error"),
 					wx.OK | wx.ICON_ERROR)
@@ -412,7 +425,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				self._progressDialog.done()
 				self._progressDialog = None
 		finally:
-			if closeAfter:
+			if closeAfter and freshInstall:
 				# #4460: If we do this immediately, wx seems to drop the WM_QUIT sent if the user chooses to restart.
 				# This seems to have something to do with the wx.ProgressDialog.
 				# The CallLater seems to work around this.
@@ -647,7 +660,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		runScriptModalDialog(incompatibleAddons, afterDialog)
 
 	@classmethod
-	def handleRemoteAddonInstall(cls, addonPath):
+	def handleRemoteAddonInstall(cls, addonPath, freshInstall=True):
 		# Add-ons cannot be installed into a Windows store version of NVDA
 		if config.isAppX:
 			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
@@ -658,7 +671,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			return
 		closeAfter = AddonsDialog._instance() is None
 		dialog = AddonsDialog(gui.mainFrame)
-		dialog.installAddon(addonPath, closeAfter=closeAfter)
+		dialog.installAddon(addonPath, closeAfter=closeAfter, freshInstall=freshInstall)
 		del dialog
 
 
@@ -949,6 +962,8 @@ if updateCheck is not None:
 			self.fileHash = fileHash
 			self.addonsToBeUpdated = addonsToBeUpdated
 			self.auto = auto
+			# #3208: no file version checks for add-ons.
+			self.requireFileVersion=False
 
 		def start(self):
 			"""Start the download.
@@ -981,52 +996,11 @@ if updateCheck is not None:
 
 		def _downloadSuccess(self):
 			self._stopped()
+			AddonsDialog.handleRemoteAddonInstall(self.destPath, freshInstall=False)
 			try:
-				try:
-					bundle=addonHandler.AddonBundle(self.destPath.decode("mbcs"))
-				except:
-					log.error("Error opening addon bundle from %s"%self.destPath,exc_info=True)
-					# Translators: The message displayed when an error occurs when trying to update an add-on package due to package problems.
-					gui.messageBox(_("Cannot update {name} - missing file or invalid file format").format(name = self.addonName),
-						# Translators: The title of a dialog presented when an error occurs.
-						_("Error"),
-						wx.OK | wx.ICON_ERROR)
-					self.continueUpdatingAddons()
-					return
-				bundleName=bundle.manifest['name']
-				# Optimization (future): it is better to remove would-be add-ons all at once instead of doing it each time a bundle is opened.
-				for addon in addonHandler.getAvailableAddons():
-					if not addon.isPendingRemove and bundleName==addon.manifest['name']:
-						addon.requestRemove()
-						break
-				progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-				# Translators: The title of the dialog presented while an Addon is being updated.
-				_("Updating {name}").format(name = self.addonName),
-				# Translators: The message displayed while an addon is being updated.
-				_("Please wait while the add-on is being updated."))
-				try:
-					gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
-				except:
-					log.error("Error installing  addon bundle from %s"%self.destPath,exc_info=True)
-					progressDialog.done()
-					progressDialog.Hide()
-					progressDialog.Destroy()
-					# Translators: The message displayed when an error occurs when installing an add-on package.
-					gui.messageBox(_("Failed to update {name} add-on").format(name = self.addonName),
-						# Translators: The title of a dialog presented when an error occurs.
-						_("Error"),
-						wx.OK | wx.ICON_ERROR)
-					self.continueUpdatingAddons()
-					return
-				else:
-					progressDialog.done()
-					progressDialog.Hide()
-					progressDialog.Destroy()
-			finally:
-				try:
-					os.remove(self.destPath)
-				except OSError:
-					pass
+				os.remove(self.destPath)
+			except OSError:
+				pass
 			self.continueUpdatingAddons()
 
 		def continueUpdatingAddons(self):
