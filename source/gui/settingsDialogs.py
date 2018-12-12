@@ -1345,11 +1345,10 @@ class MouseSettingsPanel(SettingsPanel):
 		# mouse settings panel.
 		textUnitLabelText=_("Text &unit resolution:")
 		import textInfos
-		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
-		textUnitsChoices = [textInfos.unitLabels[x] for x in self.textUnits]
+		textUnitsChoices = [textInfos.unitLabels[x] for x in textInfos.MOUSE_TEXT_RESOLUTION_UNITS]
 		self.textUnitComboBox=sHelper.addLabeledControl(textUnitLabelText, wx.Choice, choices=textUnitsChoices)
 		try:
-			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
+			index=textInfos.MOUSE_TEXT_RESOLUTION_UNITS.index(config.conf["mouse"]["mouseTextUnit"])
 		except:
 			index=0
 		self.textUnitComboBox.SetSelection(index)
@@ -1381,7 +1380,7 @@ class MouseSettingsPanel(SettingsPanel):
 	def onSave(self):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
-		config.conf["mouse"]["mouseTextUnit"]=self.textUnits[self.textUnitComboBox.GetSelection()]
+		config.conf["mouse"]["mouseTextUnit"]=textInfos.MOUSE_TEXT_RESOLUTION_UNITS[self.textUnitComboBox.GetSelection()]
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
