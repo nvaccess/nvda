@@ -543,10 +543,12 @@ class UpdateDownloader(object):
 	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, updateInfo):
+	def __init__(self, updateInfo, requireFileVersion=True):
 		"""Constructor.
 		@param updateInfo: update information such as possible URLs, version and the SHA-1 hash of the file as a hex string.
 		@type updateInfo: dict
+		@param requireFileVersion: whether file version information is required such as when updating NVDA itself.
+		@type updateInfo: bool
 		"""
 		self.updateInfo = updateInfo
 		self.urls = updateInfo["launcherUrl"].split(" ")
@@ -554,6 +556,7 @@ class UpdateDownloader(object):
 		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+		self.requireFileVersion = requireFileVersion
 
 	def start(self):
 		"""Start the download.
@@ -644,9 +647,11 @@ class UpdateDownloader(object):
 			raise RuntimeError("Content has incorrect file hash")
 		# getFileVersionInfo will fail as long as the file is still open.
 		local.close()
-		fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
-		fileVersion = fileVersionInfo.get('FileVersion') or self.version
-		self.versionTuple = versionInfo.getNVDAVersionTupleFromString(fileVersion)
+		# File version is required if downloading updates to NVDA itself.
+		if self.requireFileVersion:
+			fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
+			fileVersion = fileVersionInfo.get('FileVersion') or self.version
+			self.versionTuple = versionInfo.getNVDAVersionTupleFromString(fileVersion)
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
