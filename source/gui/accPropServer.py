@@ -10,14 +10,16 @@ from logHandler import log
 from  comtypes.automation import VT_EMPTY
 from  comtypes import COMObject
 from comInterfaces.Accessibility import IAccPropServer
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 import weakref
 
-class IAccPropServer_Impl(COMObject):
+class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 	"""Base class for implementing a COM interface for AccPropServer.
 	Please override the _GetPropValue method, not GetPropValue.
 	GetPropValue wraps _getPropValue to catch and log exceptions (Which for some reason NVDA's logger misses when they occur in GetPropValue).
 	"""
-	
+
 	_com_interfaces_ = [
 		IAccPropServer
 	]
@@ -31,6 +33,7 @@ class IAccPropServer_Impl(COMObject):
 		self.control = weakref.ref(control)
 		super(IAccPropServer_Impl, self).__init__(*args, **kwargs)
 
+	@abstractmethod
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		"""use this method to implement GetPropValue. It  is wrapped by the callback GetPropValue to handle exceptions.
 		For instructions on implementing accPropServers, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx .

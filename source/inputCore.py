@@ -64,6 +64,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	reportInInputHelp=True
 
+	_abstract_identifiers = True
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
 		These identifiers will be normalized and looked up in order until a match is found.

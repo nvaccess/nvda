@@ -36,6 +36,7 @@ import aria
 import nvwave
 import treeInterceptorHandler
 import watchdog
+from abc import abstractmethod
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -500,6 +501,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 				break
 		return tableLayout
 
+	@abstractmethod
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
@@ -512,6 +514,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def getIdentifierFromNVDAObject(self,obj):
 		"""Retreaves the virtualBuffer field identifier from an NVDAObject.
 		@param obj: the NVDAObject to retreave the field identifier from.

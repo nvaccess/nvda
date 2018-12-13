@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
+from abc import abstractmethod
 import re
 import ctypes
 import unicodedata
@@ -252,6 +253,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _setSelectionOffsets(self,start,end):
 		raise NotImplementedError
 
+	@abstractmethod
 	def _getStoryLength(self):
 		raise NotImplementedError
 
