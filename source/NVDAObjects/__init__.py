@@ -6,7 +6,8 @@
 #See the file COPYING for more details.
 
 """Module that contains the base NVDA object type"""
-from new import instancemethod
+
+from six import with_metaclass
 import time
 import re
 import weakref
@@ -145,7 +146,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
+class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContainerObject,baseObject.ScriptableObject)):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -169,7 +170,6 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	An L{AppModule} can also choose overlay classes for an instance using the L{AppModule.chooseNVDAObjectOverlayClasses} method.
 	"""
 
-	__metaclass__=DynamicNVDAObjectType
 	cachePropertiesByDefault = True
 
 	#: The TextInfo class this object should use to provide access to text.
