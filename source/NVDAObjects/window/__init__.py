@@ -137,7 +137,10 @@ An NVDAObject for a window
 		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
-				if self.windowTextLineCount:
+				if self.windowTextLineCount and (
+					# #9042 Edit fields in Excel have always ad least 1 line of text, however we have to access them via displaymodel.
+					windowClassName != "EDTBX"
+				):
 					from .edit import UnidentifiedEdit
 					clsList.append(UnidentifiedEdit)
 				else:
