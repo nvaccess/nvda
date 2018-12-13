@@ -9,6 +9,7 @@ What's New in NVDA
 - New braille tables: Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435)
 - Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
+- Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
 
 
 == Changes ==
@@ -17,6 +18,7 @@ What's New in NVDA
 - Add-on authors must now specify the last version of NVDA the add-on has been tested against. Users will be warned against installing or enabling untested add-ons. (#6275)
 - The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
 - Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
+- When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
 
 
 == Bug Fixes ==
