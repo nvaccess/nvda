@@ -27,6 +27,15 @@ class VisionEnhancementProvider(driverHandler.Driver):
 	#: but might be later for presentational purposes.
 	supportedRoles: FrozenSet[Role] = frozenset()
 
+	@classmethod
+	def _get_guiPanelClass(cls):
+		"""Returns the class to be used in order to construct a settings panel for the provider.
+		The class constructor should take the required providerCallable keyword argument.
+		"""
+		# Import late to avoid circular import
+		from gui.settingsDialogs import VisionProviderSubPanel
+		return VisionProviderSubPanel
+
 	def reinitialize(self):
 		"""Reinitializes a vision enhancement provider, reusing the same instance.
 		This base implementation simply calls terminate and __init__ consecutively.
