@@ -30,11 +30,20 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
+CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
-	constexpr int numRelations=2;
-	HRESULT res=element->get_relationTargetsOfType(IA2_RELATION_LABELLED_BY,numRelations,&ppUnk,&nTargets);
+	// We only need to request one relation target
+	int numRelations=1;
+	// However, a bug in Chrome causes a buffer overrun if numRelations is less than the total number of targets the node has.
+	// Therefore, If this is Chrome, request all targets (by setting numRelations to 0) as this works around the bug.
+	// There is no major performance hit to fetch all targets in Chrome as Chrome is already fetching all targets either way.
+	// In Firefox there would be extra cross-proc calls.
+	if(this->toolkitName.compare(L"Chrome")==0) {
+		numRelations=0;
+	}
+	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
+	HRESULT res=element->get_relationTargetsOfType(CComBSTR(IA2_RELATION_LABELLED_BY),numRelations,&ppUnk,&nTargets);
 	if(res!=S_OK) return nullptr;
 	// Grab all the returned IUnknowns and store them as smart pointers within a smart pointer array 
 	// so that any further returns will correctly release all the objects. 
@@ -75,7 +84,7 @@ HWND findRealMozillaWindow(HWND hwnd) {
 	return hwnd;
 }
 
-IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
+static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
 	IServiceProvider* pserv=NULL;
 	IAccessible2* pacc2=NULL;
@@ -120,7 +129,7 @@ template<typename TableType> inline void fillTableCounts(VBufStorage_controlFiel
 	}
 }
 
-inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer_t* tableBuffer) {
+inline int getTableIDFromCell(IAccessibleTableCell* tableCell) {
 	IUnknown* unk = NULL;
 	if (tableCell->get_table(&unk) != S_OK || !unk)
 		return 0;
@@ -130,26 +139,8 @@ inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer
 	unk->Release();
 	if (res != S_OK || !acc)
 		return 0;
-	HWND docHwnd;
-	int id;
-	if (acc->get_windowHandle(&docHwnd) != S_OK
-			|| acc->get_uniqueID((long*)&id) != S_OK) {
-		acc->Release();
-		return 0;
-	}
-	const int docHandle = HandleToUlong(docHwnd);
-	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
-	if (!node) {
-		acc->Release();
-		return 0;
-	}
-	IAccessibleTable2* table = NULL;
-	if (acc->QueryInterface(IID_IAccessibleTable2, (void**)&table) != S_OK || !table) {
-		acc->Release();
-		return 0;
-	}
-	fillTableCounts<IAccessibleTable2>(node, acc, table);
-	table->Release();
+	int id=0;
+	acc->get_uniqueID((long*)&id);
 	acc->Release();
 	return id;
 }
@@ -274,6 +265,9 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 		iaApp->Release();
 		return;
 	}
+	if(toolkitName) {
+		this->toolkitName = std::wstring(toolkitName, SysStringLen(toolkitName));
+	}
 	BSTR toolkitVersion = NULL;
 	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
 		iaApp->Release();
@@ -305,7 +299,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-bool isLabelVisible(IAccessible2* pacc2) {
+bool GeckoVBufBackend_t::isLabelVisible(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if(!pacc2_2) return false;
 	auto targetAcc=getLabelElement(pacc2_2);
@@ -378,6 +372,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)) {
 		LOG_DEBUG(L"a node with this docHandle and ID already exists, returning NULL");
 		return NULL;
+	}
+
+	if(buffer!=this&&parentNode) {
+		// We are rendering a subtree of a temp buffer
+		auto existingNode=this->reuseExistingNodeInRender(parentNode,previousNode,docHandle,ID);
+		if(existingNode) {
+			// This child already exists on the backend, we can reuse it.
+			return buffer->addReferenceNodeToBuffer(parentNode,previousNode,existingNode);
+		}
 	}
 
 	//Add this node to the buffer
@@ -659,11 +662,42 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
+	if(pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell)!=S_OK) {
+		paccTableCell=nullptr;
+	}
+
+	if(paccTable2) {
+		// We are rendering a node that is part of a table (row group, row or cell).
+		// Set some properties to ensure that this and other nodes in the table aare correctly re-rendered if the table changes,
+		// so that the table's row and column cordinates remain accurate.
+		// setting denyReuseIfPreviousSiblingsChange ensures that if any part of the table is added or removed previous to this node,
+		// this node will not be reused (as its row / column coordinates would now be out of date).
+		LOG_DEBUG(L"Setting node's denyReuseIfPreviousSiblingsChanged to true");
+		parentNode->denyReuseIfPreviousSiblingsChanged=true;
+		if(!paccTableCell) { // just rows and row groups
+			// setting requiresParentUpdate ensures that if this node is specifically invalidated,
+			// its parent will also be invalidated.
+			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
+			// this in turn would affect the coordinates of all table cells in table rows after this row group.
+			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			if(role!=ROLE_SYSTEM_ROW) {
+				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
+				parentNode->requiresParentUpdate=true;
+			}
+			// Setting alwaysRerenderChildren ensures that if this node is rerendered, none of its children are reused.
+			// For example, if this is a table row that is rerendered (perhaps due to a previous table row being added),
+			// this row's cells can't be reused because their coordinates would now be out of date.
+			LOG_DEBUG(L"Setting node's alwaysRerenderChildren to true");
+			parentNode->alwaysRerenderChildren=true;
+		}
+	}
+
 	// For IAccessibleTable, we must always be passed the table interface by the caller.
 	// For IAccessibleTable2, we can always obtain the cell interface,
 	// which allows us to handle updates to table cells.
 	if (
-		pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell) == S_OK || // IAccessibleTable2
+		 paccTableCell || // IAccessibleTable2
 		(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
 	) {
 		if (paccTableCell) {
@@ -671,7 +705,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
 			if (!paccTable2) {
 				// This is an update; we're not rendering the entire table.
-				tableID = updateTableCounts(paccTableCell, this);
+				tableID = getTableIDFromCell(paccTableCell);
 			}
 			paccTableCell->Release();
 			paccTableCell = NULL;
@@ -751,6 +785,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if (!nameIsContent && name)
 		parentNode->addAttribute(L"name", name);
 
+	if(nameIsContent) {
+		// We may render an accessible name for this node if it has been explicitly set or it has no useful content. 
+		parentNode->alwaysRerenderDescendants=true;
+	}
+
 	if (isVisible) {
 		if ( isImgMap && name ) {
 			// This is an image map with a name. Render the name first.
@@ -779,6 +818,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					// Add the chunk to the buffer.
 					if(tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart))) {
 						previousNode=tempNode;
+						// Add the IA2Text start offset as an attribute on the node.
+						s << chunkStart;
+						previousNode->addAttribute(L"ia2TextStartOffset", s.str());
+						s.str(L"");
 						// Add text attributes.
 						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
 							previousNode->addAttribute(it->first,it->second);
@@ -1062,14 +1105,20 @@ void GeckoVBufBackend_t::renderThread_terminate() {
 void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	IAccessible2* pacc=IAccessible2FromIdentifier(docHandle,ID);
 	if(!pacc) {
-		LOG_DEBUG(L"Could not get IAccessible2, returning");
+		LOG_DEBUGWARNING(L"Could not get IAccessible2, returning");
 		return;
 	}
 	if (!oldNode) {
 		// This is the root node.
 		this->versionSpecificInit(pacc);
 	}
-	this->fillVBuf(pacc, buffer, NULL, NULL);
+	if(!this->fillVBuf(pacc, buffer, NULL, NULL)) {
+		if(oldNode) {
+			LOG_DEBUGWARNING(L"No content rendered in update");
+		} else {
+			LOG_DEBUGWARNING(L"No initial content rendered");
+		}
+	}
 	pacc->Release();
 }
 
@@ -1079,14 +1128,7 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID);
 	return backend;
-}
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-	}
-	return true;
 }

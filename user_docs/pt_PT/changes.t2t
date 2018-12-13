@@ -3,7 +3,71 @@ Traduzido pela Equipa portuguesa do NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+Os destaques desta versão são:
+- Melhorias na performance nas versões  recentes do Mozilla Firefox;
+- anúncio de emojis com todos os sintetizadores;
+- Anúncio do estado  respondida/Reencaminhada no Microsoft Outlook;
+- Anúncio da distância às bordas superiores e esquerda da página no Microsoft Word;
+- Muitas correcções de erros.
+
+== Novas Funcionalidades ==
+- Novas tabelas Braille: Chinês (China, Mandarin) grau 1 e grau 2. (#5553)
+- O NVDA agora pode ler descrições de emoji, bem como outros caracteres que fazem parte do Repositório Unicode Common Locale Data Repository. (#6523)
+- No Microsoft Word, a distância do cursor às bordas superior e esquerda da página pode ser anunciada pressionando NVDA+Delete do numérico. (#1939)
+- No Google Sheets, com o modo braille ativado, o NVDA não anuncia mais 'selecionado' em todas as células ao mover o foco entre as células. (#8879)
+- Adicionado suporte para o Foxit Reader e Foxit Phantom PDF (#8944)
+- Adicionado suporte para o DBeaver database tool. (#8905)
+
+
+== Alterações ==
+- "Anunciar balões de ajuda" no diálogo Apresentação de Objectos foi renomeado para "Anunciar notificações" para incluir o anúncio de notificações (toast) no Windows 8 e seguintes. (#5789)
+- No diálogo Teclado as caixas de verificação para activar/desactivar as teclas modificadoras do NVDA passam a estar numa lista, em vez de caixas de verificação separadas.
+- O NVDA já não anuncia informação redundante ao ler o relógio na barra de notificações em algumas versões do Windows. (#4364)
+- Actualizado o conversor Braille liblouis para a versão 3.7.0. (#8697)
+- Atualizado o eSpeak-NG para o commit 919f3240cbb.
+
+
+== Bug Fixes ==
+- No Outlook 2016/365, os sinalizadores da categoria e do estado das mensagens já são anunciadas. (#8603)
+- Quando o NVDA está configurado para idiomas como Kirgyz, Mongol ou Macedónio, já não apresenta um diálogo, no arranque, a avisar que o idioma não é suportado pelo sistema operativo. (#8064)
+- O comando para mover o rato para o objecto de navegação move, com mais precisão, o rato para a posição actual no modo de navegação no Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
+- A interacção com caixas combbinadas no Firefox, Chrome e Internet Explorer foi melhorada. (#8664)
+- Nas versões  Japonesas do Windows XP ou Vista, o NVDA já apresenta o aviso de requisitos de versão correctamente. (#8771)
+- Melhorada a performance no Mozilla Firefox ao navegar por páginas grandes com várias alterações dinâmicas. (#8678)
+- Já não é mostrado em Braille os atributos  do tipo de letra, se estiverem desactivados nas configurações de Formatação de Documentos. (#7615)
+- O NVDA já não perde o foco no Explorador de ficheiros e outras aplicaçõess usando UI Automation quando outra aplicação está ocupada como, por exemplo, como ao processar grandes lotes de áudio). (#7345)
+- Nos menus ARIA, na Web, a tecla Escape é passada para o menu e já não desativa o modo de foco incondicionalmente. (#3215)
+- O NVDA já anuncia o foco em páginas Web onde o novo foco substitui um controlo que já não existe. (#6606, #8341)
+- No novo GMail, ao usar as teclas de navegação rápida enquanto se lê mensagens, já não é anunciado todo o corpo da mensagem após o elemento para o qual se moveu. (#8887)
+- Depois de actualizar o NVDA, navegadores como o Firefox e google Chrome já não devem crachar, e o modo de navegação  deve continuar a reflectir correctamente atualizações para os documentos actualmente carregados. (#7641) 
+- O NVDA já não anuncia múltiplas vezes seguidas Clicável ao navegar por conteúdo clicável em modo de navegação. (#7430)
+- Comandos executados numa baum Vario 40 já são executados. (#8894)
+- No Google Slides com o Mozilla Firefox, o NVDA já não anuncia texto selecionado em todos os controlos em foco. (# 8964)
+
+
+== Changes for Developers ==
+- gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
+ - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+- The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)
+
+
+= 2018.3.2 =
+Apenas para corrigir um bug que provocava falhas no Google Chrome ao navegar por tweetts em www.twitter.com. (#8777)
+
+ 
+= 2018.3.1 =
+Apenas para corrigir um bug que provocava falhas na versão de 32 bit do Mozilla Firefox. (#8759)
+ 
+
 = 2018.3 =
+Os destaques desta versão são:
+- Detecção automática de várias linhas Braille;
+- Suporte para novas funcionalidades do Windows 10 tais como, o painel de introdução de Imojis do Windows 10.
 
 == Novas Funcionalidades ==
 - O NVDA passa a anunciar os erros gramaticais, quando reportados pelo Mozilla Firefox em páginas Web. (#8280)
@@ -56,7 +120,8 @@ Traduzido pela Equipa portuguesa do NVDA
  - Reduzida a verbosidade da apresentação do foco quer em voz quer em Braille, ao focar um documento do Word. (#8407)
  - As teclas routing da linha Braille já funcionam correctamente numa lista de um documento Word. (#7971)
  - As marcas e os números introduzidos num documento Word já são correctamente anunciados em voz e Braille. (#7970)
-
+- No Windows 10 1803 e seguintes, já é possível instalar extras mesmo com a funcionalidade de suporte a  Unicode UTF-8 activa. (#8599)
+ 
 
 == Alterações para Desenvolvedores ==
 - Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
@@ -1516,7 +1581,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
  - Recurso suportado tanto pelo próprio NVDA como por seus complementos. 
  - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts. 
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts. 
- - Consulte http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para mais informações. 
+ - Consulte https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para mais informações. 
 - It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details. 
 - Add-on translation support can now be used within the add-on installTasks module. (#2715) 
 
@@ -2173,7 +2238,7 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 - Backspace agora é controlado corretamente quando se fala palavras ao escrever. (#306)
 - Não se anuncia incorretamente "menu iniciar" para certos menus de contexto no Windows Explorer/Windows shell. (#257)
 - O NVDA agora processa corretamente etiquetas de ARIA no mozilla Gecko quando não há outro conteúdo útil. (#156)
-- O NVDA já não ativa incorretamente o modo de foco automaticamente para campos de texto editável que atualizam seu valor quando o foco muda; ex.: http://tigerdirect.com/. (#220)
+- O NVDA já não ativa incorretamente o modo de foco automaticamente para campos de texto editável que atualizam seu valor quando o foco muda; ex.: https://tigerdirect.com/. (#220)
 - O NVDA agora tentará recuperar-se de algumas situações que anteriormente o fariam travar completamente. Poderá levar cerca de 10 segundos para que o NVDA detecte e se recupere de tais travamentos.
 - quando o idioma do NVDA está configurado para "User default", utiliza o idioma do usuário do Windows configurado em lugar do local do Windows.
 - O NVDA agora reconhece a existência de controles em AIM 7.
@@ -2461,7 +2526,7 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 = 0.5 =
 - O NVDA ten agora um sintetizador integrado chammado eSpeak, desenvolvido por Jonathan Duddington. É muito ágil e rápido, e ten suporte para muitos idiomas diferentes. Os sintetizadores Sapi todavía podem ser usados, mas o eSpeak será utilizado por padrão.
  - O eSpeak não depende de nenhum software especial para ser instalado, pelo que pode ser utilizado com o NVDA em qualquer computador, nun dispositivo USB ou qualquer outro.
- - Para mais informações sobre o eSpeak, ou para encontrar outras versões, visite http://espeak.sourceforge.net/.
+ - Para mais informações sobre o eSpeak, ou para encontrar outras versões, visite https://espeak.sourceforge.net/.
 - Correção da falha onde era anunciado o caractere incorreto quando se pressionava Delete em painéis editáveis do Internet Explorer / Outlook Express.
 - adicionado suporte para mais campos de edição no Skype.
 - Os buffers virtuais agora só são carregados quando o foco está sobre a janela que necessita ser carregada. Isto resolve alguns problemas onde o painel anterior era ativado no Outlook Express.

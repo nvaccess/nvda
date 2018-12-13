@@ -13,6 +13,7 @@ import ctypes.wintypes
 import threading
 import time
 import wx
+import louisHelper
 import louis
 import gui
 import winKernel
@@ -417,36 +418,14 @@ class Region(object):
 		mode = louis.dotsIO
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
 			mode |= louis.compbrlAtCursor
-		text=unicode(self.rawText).replace('\0','')
-		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
+		self.brailleCells, self.brailleToRawPos, self.rawToBraillePos, self.brailleCursorPos = louisHelper.translate(
 			[os.path.join(brailleTables.TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],
-			text,
-			# liblouis mutates typeform if it is a list.
-			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,
-			mode=mode, cursorPos=self.cursorPos or 0)
-		# liblouis gives us back a character string of cells, so convert it to a list of ints.
-		# For some reason, the highest bit is set, so only grab the lower 8 bits.
-		self.brailleCells = [ord(cell) & 255 for cell in braille]
-		# #2466: HACK: liblouis incorrectly truncates trailing spaces from its output in some cases.
-		# Detect this and add the spaces to the end of the output.
-		if self.rawText and self.rawText[-1] == " ":
-			# rawToBraillePos isn't truncated, even though brailleCells is.
-			# Use this to figure out how long brailleCells should be and thus how many spaces to add.
-			correctCellsLen = self.rawToBraillePos[-1] + 1
-			currentCellsLen = len(self.brailleCells)
-			if correctCellsLen > currentCellsLen:
-				self.brailleCells.extend((0,) * (correctCellsLen - currentCellsLen))
-		if self.cursorPos is not None:
-			# HACK: The cursorPos returned by liblouis is notoriously buggy (#2947 among other issues).
-			# rawToBraillePos is usually accurate.
-			try:
-				brailleCursorPos = self.rawToBraillePos[self.cursorPos]
-			except IndexError:
-				pass
-		else:
-			brailleCursorPos = None
-		self.brailleCursorPos = brailleCursorPos
+			self.rawText,
+			typeform=self.rawTextTypeforms,
+			mode=mode,
+			cursorPos=self.cursorPos
+		)
 		if self.selectionStart is not None and self.selectionEnd is not None:
 			try:
 				# Mark the selection.
@@ -663,9 +642,6 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 
 	if presCat == field.PRESCAT_LAYOUT:
 		text = []
-		# The only item we report for these fields is clickable, if present.
-		if controlTypes.STATE_CLICKABLE in states:
-			text.append(getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE}))
 		if current:
 			text.append(getBrailleTextForProperties(current=current))
 		return TEXT_SEPARATOR.join(text) if len(text) != 0 else None
@@ -803,8 +779,10 @@ class TextInfoRegion(Region):
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
-	def _getTypeformFromFormatField(self, field):
+	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
+		if not formatConfig["reportFontAttributes"]:
+			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold
 		if field.get("italic", False):
@@ -827,8 +805,12 @@ class TextInfoRegion(Region):
 		ctrlFields = []
 		typeform = louis.plain_text
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
+		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
+		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
+				# Text should break a run of clickables
+				inClickable=False
 				self._isFormatFieldAtStart = False
 				if not command:
 					continue
@@ -860,7 +842,7 @@ class TextInfoRegion(Region):
 				cmd = command.command
 				field = command.field
 				if cmd == "formatChange":
-					typeform = self._getTypeformFromFormatField(field)
+					typeform = self._getTypeformFromFormatField(field, formatConfig)
 					text = getFormatFieldBraille(field, formatFieldAttributesCache, self._isFormatFieldAtStart, formatConfig)
 					if not text:
 						continue
@@ -870,7 +852,20 @@ class TextInfoRegion(Region):
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
+						textList=[]
+						if not inClickable and formatConfig['reportClickable']:
+							states=field.get('states')
+							if states and controlTypes.STATE_CLICKABLE in states:
+								# We have entered an outer most clickable or entered a new clickable after exiting a previous one 
+								# Report it if there is nothing else interesting about the field
+								field._presCat=presCat=field.getPresentationCategory(ctrlFields,formatConfig)
+								if not presCat or presCat is field.PRESCAT_LAYOUT:
+									textList.append(positiveStateLabels[controlTypes.STATE_CLICKABLE])
+								inClickable=True
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+						if text:
+							textList.append(text)
+						text=" ".join(textList)
 					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
@@ -890,6 +885,8 @@ class TextInfoRegion(Region):
 					# Map this field text to the start of the field's content.
 					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
+					# Exiting a controlField should break a run of clickables
+					inClickable=False
 					field = ctrlFields.pop()
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
@@ -1553,6 +1550,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	]
 
 	def __init__(self):
+		louisHelper.initialize()
 		self.display = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
@@ -1586,6 +1584,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display.terminate()
 			self.display = None
 		_BgThread.stop(timeout=bgThreadStopTimeout)
+		louisHelper.terminate()
 
 	def getTether(self):
 		return self._tether
@@ -1772,10 +1771,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Display a message to the user which times out after a configured interval.
 		The timeout will be reset if the user scrolls the display.
 		The message will be dismissed immediately if the user presses a cursor routing key.
-		If a key is pressed the message will be dismissed by the next text being written to the display
+		If a key is pressed the message will be dismissed by the next text being written to the display.
 		@postcondition: The message is displayed.
 		"""
-		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0:
+		if not self.enabled or config.conf["braille"]["messageTimeout"] == 0 or text is None:
 			return
 		if self.buffer is self.messageBuffer:
 			self.buffer.clear()
@@ -2529,7 +2528,7 @@ def getSerialPorts(filterFunc=None):
 	@type filterFunc: callable
 	"""
 	if filterFunc and not callable(filterFunc):
-		raise ValueError("The provided filterFunc is not callable")
+		raise TypeError("The provided filterFunc is not callable")
 	for info in hwPortUtils.listComPorts():
 		if filterFunc and not filterFunc(info):
 			continue

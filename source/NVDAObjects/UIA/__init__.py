@@ -311,10 +311,9 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,textInfos.Point):
-			#rangeFromPoint causes a freeze in UIA client library!
-			#p=POINT(position.x,position.y)
-			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
-			raise NotImplementedError
+			#rangeFromPoint used to cause a freeze in UIA client library!
+			p=POINT(position.x,position.y)
+			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
 		else:
@@ -342,8 +341,12 @@ class UIATextInfo(textInfos.TextInfo):
 		# Thus we must check getChildren before getEnclosingElement.
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
 		tempRange=tempInfo._rangeObj
-		children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
-		if children.length==1:
+		try:
+			children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
+		except COMError as e:
+			log.debugWarning("Could not get children from UIA text range, %s"%e)
+			children=None
+		if children and children.length==1:
 			child=children.getElement(0)
 		else:
 			child=getEnclosingElementWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
@@ -423,15 +426,13 @@ class UIATextInfo(textInfos.TextInfo):
 		"""
 		return range.getText(-1)
 
-	def _getTextWithFields_text(self,textRange,formatConfig,ignoreEmptyChunks=True,UIAFormatUnits=None):
+	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
 		@param textRange: the UI Automation text range to walk.
 		@type textRange: L{UIAHandler.IUIAutomationTextRange}
 		@param formatConfig: the types of formatting requested.
 		@ type formatConfig: a dictionary of NVDA document formatting configuration keys with values set to true for those types that should be fetched.
-		@param ignoreEmptyChunks: if true, textRanges where the text is empty will not be emitted nor the formatField directly before it. 
-		@param ignoreEmptyChunks: bool
 		@param UIAFormatUnits: the UI Automation text units (in order of resolution) that should be used to split the text so as to avoid mixed attribute values. This is None by default.
 			If the parameter is a list of 1 or more units, The range will be split by the first unit in the list, and this method will be recursively run on each subrange, with the remaining units in this list given as the value of this parameter. 
 			If this parameter is an empty list, then formatting and text is fetched for the entire range, but any mixed attribute values are ignored and no splitting occures.
@@ -452,7 +453,7 @@ class UIATextInfo(textInfos.TextInfo):
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
 			text=self._getTextFromUIARange(tempRange) or ""
-			if not ignoreEmptyChunks or text:
+			if text:
 				log.debug("Chunk has text. Fetching formatting")
 				try:
 					field=self._getFormatFieldAtRange(tempRange,formatConfig,ignoreMixedValues=len(furtherUIAFormatUnits)==0)
@@ -639,6 +640,25 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _get_text(self):
 		return self._getTextFromUIARange(self._rangeObj)
+
+	def _getBoundingRectsFromUIARange(self,range):
+		"""
+		Fetches per line bounding rectangles from the given UI Automation text range.
+		Note that if the range object doesn't cover a whole line (e.g. a character),
+		the bounding rectangle will be restricted to the range.
+		@rtype: [locationHelper.RectLTWH]
+		"""
+		rects = []
+		rectArray = range.GetBoundingRectangles()
+		if not rectArray:
+			return rects
+		rectIndexes = xrange(0, len(rectArray), 4)
+		rectGen = (RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
+		rects.extend(rectGen)
+		return rects
+
+	def _get_boundingRects(self):
+		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
@@ -1061,7 +1081,8 @@ class UIA(Window):
 		UIAHandler.UIA_IsKeyboardFocusablePropertyId,
 		UIAHandler.UIA_IsPasswordPropertyId,
 		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
-		UIAHandler.UIA_IsEnabledPropertyId
+		UIAHandler.UIA_IsEnabledPropertyId,
+		UIAHandler.UIA_IsOffscreenPropertyId,
 	}  if UIAHandler.isUIAAvailable else set()
 
 	def _get_states(self):
@@ -1086,6 +1107,12 @@ class UIA(Window):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
 			states.add(controlTypes.STATE_UNAVAILABLE)
+		try:
+			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
+		except COMError:
+			isOffScreen = False
+		if isOffScreen:
+			states.add(controlTypes.STATE_OFFSCREEN)
 		try:
 			isDataValid=self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:
@@ -1345,6 +1372,13 @@ class UIA(Window):
 			return self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId)
 		except COMError:
 			return False
+
+	def _get_hasIrrelevantLocation(self):
+		try:
+			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
+		except COMError:
+			isOffScreen = False
+		return isOffScreen or not self.location or not any(self.location)
 
 	def _get_positionInfo(self):
 		info=super(UIA,self).positionInfo or {}

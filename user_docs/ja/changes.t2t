@@ -3,6 +3,139 @@ NVDA最新情報
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+このリリースのハイライトは、 Mozilla Firefox の最近のバージョンにおける性能の改善、音声エンジンに依存せず絵文字を読み上げる機能、Outlook の返信済みや転送済みなどの報告、Microsoft Word でカーソル位置からページの端までの距離を報告する機能、その他のバグ修正です。
+
+== 新機能 ==
+- 新しい点字テーブル: 中国語点字(中国、標準中国語)1級および2級 (#5553)
+- Microsoft Outlook のメッセージリストにおいて、メール項目が返信済みや転送済みなどの状態であることを報告するようになりました。 (#6911)
+- Unicode 共通ロケールデータリポジトリに含まれる絵文字や記号について NVDA が文字の説明を読み上げるようになりました。 (#6523)
+- Microsoft Word において、NVDA+テンキーDeleteを押すと、カーソル位置からページの上の端と左の端までの距離を報告するようになりました。 (#1939)
+- Google スプレッドシートで点字サポートを有効にした場合に、NVDA でセル単位のフォーカス移動を行うときに「選択」という報告を行わないようになりました。 (#8879)
+- Foxit Reader および Foxit Phantom PDF に対応しました。 (#8944)
+- DBeaver データベースツールに対応しました。 (#8905)
+
+
+== 変更点 ==
+- オブジェクト表示カテゴリの「バルーン情報の報告」が「通知の報告」に変更されました。この設定の対象には Windows 8 以降のトースト通知が含まれます。 (#5789)
+- NVDA 設定のキーボードカテゴリにおいて、NVDA制御キーの有効・無効を変更するチェックボックスが、リストにまとめられました。
+- NVDA が Windows タスクトレイの時計を読み上げるときに不要な情報を含まないようになりました。 (#4364)
+- liblouis 点訳エンジンを 3.7.0 に更新しました。 (#8697)
+- eSpeak-NG 音声エンジンを commit 919f3240cbb に更新しました。
+
+
+== バグ修正 ==
+- Outlook 2016/365 においてメッセージのカテゴリーとフラグの状態を報告するようになりました。 (#8603)
+- NVDA の言語でキルギス語、モンゴル語、マセドニア語などが選択されている場合に、これらの言語がオペレーティングシステムでサポートされていないという警告を起動時に表示しないようになりました。 (#8064)
+- Mozilla Firefox, Google Chrome, Acrobat Reader DC などのブラウズモードで、ナビゲーターオブジェクトにマウスポインタを移動する場合の処理がより正確に行われるようになりました。(#6460)
+- Firefox, Chrome, Internet Explorer などのウェブコンテンツにおけるコンボボックスの操作が改良されました。(#8664)
+- Windows XP および Vista では実行できないことを知らせるメッセージを Windows 日本語版で正しく表示できるようになりました。 (#8771)
+- Mozilla Firefox において、多くの要素が動的に変化する大規模なページの中でのナビゲーションの性能を改善しました。 (#8678)
+- 書式とドキュメント情報の設定でフォント属性を無効にした場合に、点字ディスプレイで表示が無効になっていなかった問題を修正しました。 (#7615)
+- ファイルエクスプローラーなど UI オートメーションを使用するアプリにおいて、他のアプリが処理中（たとえばバッチ処理で音声の加工を行うなど）の場合に NVDA がフォーカス位置を正しく処理できなくなっていた問題を修正しました。 (#7345)
+- ウェブコンテンツの ARIA menus において、 Escape キーが入力されたときにキーイベントがメニューに送信されず、無条件にフォーカスモードが解除されていた問題を修正しました。 (#3215)
+- 新しい Gmail ウェブインタフェースにおいて、メッセージを読んでいる途中で1文字ナビゲーションを使うと、移動先の要素を報告した直後にメッセージの全体を報告していた問題を修正しました。 (#8887)
+- NVDA を更新した後で Firefox や Google Chrome などのブラウザがクラッシュする不具合を修正しました。またブラウザで読み込まれたドキュメントがある場合に、NVDA を更新した後で引き続きブラウズモードを使用できるようになりました。 (#7641) 
+- ブラウズモードで多数のクリック可能な要素の中を移動する場合に、クリック可能の報告を繰り返さないようになりました。 (#7430)
+- Baum Vario 40 点字ディスプレイで入力ジェスチャーの実行に失敗していた問題を修正しました。 (#8894)
+- Google スライドと Mozilla Firefox の組み合わせにおいて、 コントロール単位のフォーカス移動を行うたびに選択された要素のテキストを報告していた問題を修正しました。 (#8964)
+
+
+== 開発者向けの変更 ==
+- gui.nvdaControls は以下の2つのクラスを提供します。アクセシブルなチェックボックス付きのリストを作成できます。 (#7325)
+ - CustomCheckListBox はアクセシブルな wx.CheckListBox のサブクラスです。
+ - AutoWidthColumnCheckListCtrl は AutoWidthColumnListCtrl にアクセシブルなチェックリストを追加します。これは wx.ListCtrl の派生クラスです。
+- アクセシブルでない wx widget をアクセシブルにする場合には gui.accPropServer.IAccPropServer_impl のインスタンスを使用できます。 (#7491)
+ - 詳細は gui.nvdaControls.ListCtrlAccPropServer の実装を参照してください。
+- configobj を 5.1.0dev commit 5b5de48a に更新しました。 (#4470)
+- config.post_configProfileSwitch アクションはオプションとして prevConf キーワード引数を受け取ります。これにより、ハンドラーがアクションを実行するときに、プロファイルの切替の前後で設定がどう変化したかを確認することができます。 (#8758)
+
+
+= 2018.3.2 =
+このリリースの変更点は Google Chrome で twitter.com を閲覧する場合に起きるクラッシュに対応する修正です。 (#8777)
+
+
+= 2018.3.1 =
+このリリースの変更点は32ビット版 Mozilla Firefox のクラッシュに関する重要な不具合修正です。 (#8759)
+
+
+= 2018.3 =
+このリリースのハイライトは、点字ディスプレイの自動検出、Windows 10 絵文字パネルなどへの対応、多くのバグ修正です。
+
+== 新機能 ==
+- Mozilla Firefox および Google Chrome と適切に作成された Web ページの組み合わせで、スペルミスの報告を行うようになりました。 (#8280)
+- Google Chrome において、Webページの中で挿入や削除のマークアップを報告するようになりました。 (#8558)
+- 点字ディスプレイ BrailleNote のドライバーを使用しているときに BrailleNote QT および Apex BT のスクロールホイールが利用できるようになりました。 (#5992, #5993)
+- Foobar2000 アプリにおいて、現在のトラックの経過時間や合計時間を報告できるようにスクリプトが追加されました。 (#6596)
+- Mac コマンドキーの記号 (⌘) がすべての音声エンジンで読み上げられるようになりました。 (#8366)
+- aria-roledescription 属性によるカスタムロールがすべてのWebブラウザで利用可能になりました。 (#8448)
+- 新しい点字テーブル: チェコ語8点、中央クルド語、エスペラント、ハンガリー語、スウェーデン語8点コンピューター点字 (#8226, #8437)
+- バックグラウンド処理で自動的に点字ディプレイを検出できるようになりました。 (#1271)
+ - ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille および HumanWare BrailleNote と Brailliant BI/B ディスプレイに現在は対応しています。
+ - NVDA設定ダイアログの「点字ディスプレイ」選択ダイアログで「自動」を選ぶことでこの機能を利用できます。
+ - 詳細はユーザーガイドを参照してください。
+- Windows 10 の最近のリリースで導入されたさまざまな文字入力への対応。具体的には、絵文字パネル (Fall Creators Update)、ディクテーション (Fall Creators Update)、ハードウェアキーボード入力の予測候補 (April 2018 Update)、クラウドクリップボードの貼り付け (October 2018 Update)です。 (#7273)
+- ARIA によるブロッククォート (role blockquote) が Mozilla Firefox 63 で利用できるようになりました。 (#8577)
+
+
+== 変更点 ==
+- NVDA設定ダイアログの「一般」カテゴリーで利用可能な言語のリストが言語の名前の順に並ぶようになりました。従来は ISO 639 コードの順番に並んでいました。 (#7284)
+- Freedom Scientific の点字ディスプレイにおいて Alt+Shift+Tab および Windows+Tab のデフォルトジェスチャーを割り当てるようになりました。 (#7387)
+- ALVA BC680 およびプロトコルコンバーターによる点字ディスプレイ接続において、左右のスマートパッド、親指と etouch キーに異なるコマンドを割り当てられるようになりました。 (#8230)
+- ALVA BC6 点字ディスプレイにおいて、キーの組み合わせ sp2+sp3 は現在の日付と時刻の報告に割り当てられました。また sp1+sp2 は Windows キーのエミュレーションになりました。 (#8230)
+- NVDA 起動時に1回だけ、更新の確認で NV Access に情報を送ってもよいかどうかを質問するようになりました。 (#8217)
+- 更新の確認において、NV Access に利用統計情報を送ることを了承した場合に、NVDA は現在の音声エンジンと点字ディスプレイの種類を送るようになりました。これは今後のドライバー開発の方針を決めるために使われます。 (#8217)
+- liblouis 点訳エンジンを 3.6.0 に更新しました。 (#8365)
+- ロシア語8点点字テーブルのパスを修正しました。 (#8446)
+- eSpeak-ng を 1.49.3dev commit 910f4c2 に更新しました。 (#8561)
+
+
+== バグ修正 ==
+- Google Chrome のブラウズモードにおいて、コントロールのアクセシブルラベル(aria-label)を報告するようになりました。 (#4773)
+- Zoom アプリの通知に対応しました。例えばミュート、ミュート解除、メッセージの受信などです。 (#7754)
+- ブラウズモードで点字表示コンテクストを切り替えたときに点字ディスプレイでカーソル追跡の表示が止まる不具合を修正しました。 (#7741)
+- ALVA BC680 点字ディスプレイで初期化に失敗することがある問題を修正しました。 (#8106)
+- ALVA BC6 ディスプレイのデフォルト設定において、sp2+sp3 でシステムキーボードのエミュレーションをする内部機能の呼び出しを無効にしました。 (#8230)
+- ALVA BC6 ディスプレイの sp2 で Alt キーをエミュレートする機能が正しく動作するようになりました。 (#8360)
+- キーボード配列の切替における冗長な報告を控えるようになりました。(#7383, #8419)
+- メモ帳やプレインテキストを編集するコントロールにおいて、ドキュメントの大きさが65535文字を超える場合に、マウスの追跡が不正確になっていた問題を修正しました。 (#8397)
+- Windows 10 およびモダン UI アプリのダイアログをより適切に認識できるようになりました。 (#8405)
+- Windows 10 October 2018 Update および Server 2019 およびそれ以降において、アプリのフリーズや大量のイベントが発生した場合に、システムフォーカスを追従できなくなっていた問題を修正しました。 (#7345, #8535)
+- ステータスバーの報告やクリップボードへのコピーにおいて、内容がなかった場合の報告が行われるようになりました。 (#7789)
+- コントロールが「一部チェック」から「チェックなし」に変更されたときに音声で報告されなかった問題を修正しました。 (#6946)
+- NVDA 設定ダイアログ「一般」の言語のリストにおいて「ミャンマー語」が Windows 7 で正しく表示されるようになりました。 (#8544)
+- Microsoft Edge において、読み取りビューが利用可能な場合や、ページ読み込みのプログレスなどを報告するようになりました。 (#8423)
+- Web コンテンツでリストの中の移動において、aria-label などのラベルがある場合に報告するようになりました。 (#7652)
+- 点字ディスプレイの入力ジェスチャーへのコマンドの割り当てにおいて、特定の点字ディスプレイに割り当てたコマンドが常に表示されるようになりました。従来は、現在アクティブな点字ディスプレイに割り当てられたコマンドだけが表示されていました。 (#8108)
+- Media Player Classic の64ビット版に対応しました。 (#6066)
+- Microsoft Word で UI Automation が有効の場合の点字ディスプレイ対応などの改善:
+ - 複数行エディットフィールドの場合と同様に、ドキュメントの開始位置に移動する場合の点字ディスプレイの表示範囲が変更されました。具体的には、ドキュメントの最初の文字が点字ディスプレイの開始位置に表示されるようになりました。 (#8406)
+ - Wordドキュメントにフォーカスを移動した場合の、音声および点字ディスプレイの両方についての冗長な報告を控えるようになりました。 (#8407)
+ - Wordドキュメントのリストにおいて、点字ディスプレイのタッチカーソルに関する処理を修正しました。 (#7971)
+ - Wordドキュメントの箇条書き挿入において、音声および点字ディスプレイのビュレットや番号に関する報告を修正しました。 (#7970)
+- Windows 10 バージョン 1803 以降の「ワールドワイド言語サポートで Unicode UTF-8 を使用」が有効の場合に、アドオンのインストールで不具合が起こらないようになりました。 (#8599)
+- iTunes 12.9 以降が NVDA で操作できない不具合を修正しました。 (#8744)
+
+
+== 開発者向けの変更 ==
+- scriptHandler.script を追加しました。これは scriptable objects のスクリプトに対するデコレーターとして使えます。 (#6266)
+- NVDA のためのシステムテストフレームワークを導入しました。 (#708)
+- hwPortUtils モジュールの変更点: (#1271)
+ - listUsbDevices がディクショナリを yield します。これは hardwareID や devicePath などのデバイス情報を含みます。
+ - hardware ID に USB VID/PID を含むような COM ポートの場合に、listComPorts が yield するディクショナリに usbID が含まれます。
+- wxPython を 4.0.3 に更新しました。 (#7077)
+- NVDA のサポート対象が Windows 7 SP1 またはそれ以降になったため "minWindowsVersion" キーによって Windows のバージョンで UIA の有効・無効を判断する処理は削除されました。 (#8422)
+- config の save や reset アクションで通知を受ける処理を登録できるようになりました。導入されたアクションは config.pre_configSave, config.post_configSave, config.pre_configReset, config.post_configReset です。 (#7598)
+ - config.pre_configSave は NVDA の設定が保存される直前に呼ばれます。 config.post_configSave は保存の直後に呼ばれます。
+ - config.pre_configReset と config.post_configReset には factory defaults flag があります。設定がディスクからリロードされた場合は False で、設定をデフォルトに戻した場合は True です。
+- config.configProfileSwitch の名前を config.post_configProfileSwitch に変更しました。これは実際にプロファイルの切替を実行したあとで呼ばれることを明確にするためです。 (#7598)
+- Windows 10 October 2018 Update および Server 2019 に対応させるために UI Automation インタフェースを更新しました。(IUIAutomation6 / IUIAutomationElement9) (#8473)
+
+
+= 2018.2.1 =
+このリリースの変更点は翻訳の更新です。不具合が発生したために取り消された機能に関する翻訳が正しく更新されました。
+
+
 = 2018.2 =
 
 このリリースのハイライトは、Kindle for PC でのテーブルへの対応、HumanWare BrailleNote Touch および BI14 点字ディスプレイへの対応、OneCore および SAPI5 音声エンジンへの対応の改善、 Microsoft Outlook 対応の改善などです。
@@ -1373,7 +1506,7 @@ NVDA最新情報
  - この処理は NVDA 自身およびアドオンでサポートされます。
  - GNU gettext の中の xgettext および msgfmt が PO および MO ファイル作成に必要です。Pythonのツールはメッセージのコンテクストに対応していません。
  - xgettext において --keyword=ppgettext:1c,2 コマンドライン引数をあたえることで、メッセージのコンテキストが含まれるようになります。
- - 詳細は http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts を参照してください。
+ - 詳細は https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts を参照してください。
 - ビルトインのNVDAモジュールがサードパーティのモジュールによってオーバーライドされたときに、ビルトインのモジュールにアクセスできるようになりました。nvdaBuiltin モジュールを参照してください。
 - アドオンの翻訳サポートがアドオンの installTasks モジュールで使われるようになりました。
 
@@ -2029,7 +2162,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - Backspace is now handled correctly when speaking typed words. (#306)
 - Don't incorrectly report "Start menu" for certain context menus in Windows Explorer/the Windows shell. (#257)
 - NVDA now correctly handles ARIA labels in Mozilla Gecko when there is no other useful content. (#156)
-- NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. http://tigerdirect.com/. (#220)
+- NVDA no longer incorrectly enables focus mode automatically for editable text fields which update their value when the focus changes; e.g. https://tigerdirect.com/. (#220)
 - NVDA will now attempt to recover from some situations which would previously cause it to freeze completely. It may take up to 10 seconds for NVDA to detect and recover from such a freeze.
 - When the NVDA language is set to "User default", use the user's Windows  display language setting instead of the Windows locale setting. (#353)
 - NVDA now recognises the existence of controls in AIM 7.
@@ -2297,7 +2430,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 = 0.5 =
 - NVDA now has a built-in synthesizer called eSpeak, developed by Jonathan Duddington.It is very responsive and lite-weight, and has support for many different languages. Sapi synthesizers can still be used, but eSpeak will be used by default.
  - eSpeak does not depend on any special software to be installed, so it can be used with NVDA on any computer, on a USB thumb drive, or anywhere. 
- - For more info on eSpeak, or to find other versions, go to http://espeak.sourceforge.net/.
+ - For more info on eSpeak, or to find other versions, go to https://espeak.sourceforge.net/.
 - Fix bug where the wrong character was being announced when pressing delete in Internet Explorer / Outlook Express editable panes.
 - Added support for more edit fields in Skype.
 - VirtualBuffers only get loaded when focus is on the window that needs to be loaded. This fixes some problems when the preview pane is turned on in Outlook Express.
