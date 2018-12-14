@@ -23,6 +23,7 @@ Belangrijke functies zijn:
 - Vermeldding van tekstopmaakeigenschappen , voor zover beschikbaar, zoals naam lettertype, grootte, stijl- en spelfouten
 - Tekst onder de muis wordt automatisch voorgelezen en er kan een akoestisch signaal worden ingesteld dat de muispositie aangeeft
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
+- Ondersteuning voor veel brailleleesregels waaronder er veel zijn die automatisch herkend worden,  alsmede brailleinvoer op brailleleesregels  met een brailletoetsenbord
 - Kan via usb-stick (flash drive) of ander draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
 - In 54 talen beschikbaar
@@ -47,6 +48,7 @@ Informatie over andere door NVDA ondersteunde spraaksynthesizers is te vinden on
 ++ Brailleondersteuning ++[BrailleSupport]
 Gebruikers van Brailleleesregels kunnen met NVDA informatie in braille uitlezen.
 Brailleïnvoer, zowel onverkort als verkort braille, door middel van een brailletoetsenbord wordt ook ondersteund.
+Bovendien herkent NVDA standaard veel brailleleesregels  automatisch.
 Voor de ondersteunde leesregels, zie [Ondersteunde brailleleesregels#SupportedBrailleDisplays]
 
 NVDA ondersteunt Braillecodes in veel talen. Het betreft braillecodes voor verkort en onverkort Braille alsmede computerbraille.
@@ -57,7 +59,7 @@ NVDA is auteursrechtelijk beschermd NVDA_COPYRIGHT_YEARS NVDA contributors.
 Voor NVDA geldt de GNU General Public License (Versie 2).
 De software mag met anderen worden gedeeld of naar believen worden aangepast onder voorwaarde dat de licentie tezamen met de software wordt verspreid en de volledige broncode ter beschikking wordt gesteld aan iedereen die dat wil.
 Dit is van toepassing voor zowel originele als aangepaste kopieën van de software alsmede voor software die gebruik maakt van code uit de NVDA-software.
-Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Voor verdere bijzonderheden kan men de volledige licentie bekijken op: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +[SystemRequirements]
 - Besturingssystemen: alle 32-bit en 64-bit edities van Windows 7, Windows 8, Windows 8.1, Windows 10, alsmede alle Server-besturingssystemen vanaf Windows Server 2008 R2.
@@ -563,7 +565,7 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 + Inhoud van wiskundige aard lezen +[ReadingMath]
 Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
 Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
-MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
+MathPlayer is gratis te downloaden van: https://www.dessci.com/en/products/mathplayer/
 
 NVDA ondersteunt de volgende types wiskundige inhoud:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer en Google Chrome.
@@ -603,6 +605,7 @@ Als u over een brailleleesregel beschikt, kan NVDA informatie in braille weergev
 Als uw brailleleesregel een toetsenbord heeft van het type Perkins kunt u ook zowel verkort als onverkort braille invoeren.
 
 Raadpleegde paragraaf  [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor informatie over de ondersteunde brailleleesregels.
+In deze paragraaf vindt u ook informatie over die brailleleesregels die door NVDA automatisch als zodanig herkend worden.
 U kunt braille configureren via de [categorie Braille #BrailleSettings] in het dialoogvenster [Instellingen van NVDA #NVDASettings].
 
 ++ Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten ++[BrailleAbbreviations]
@@ -981,7 +984,6 @@ De volgende informatie wordt altijd verstuurd
 - Versie besturingssysteem
 - Of het besturingssysteem 64- of 32-bit is
 
-
 ==== NVDA toestaan dat gebruiksstatistieken worden verzameld ten behoeve van het NVDA-project ====[GeneralSettingsGatherUsageStats]
 Als dit wordt toegestaan zal NV Access de informatie van update checks gebruiken om het aantal NVDA-gebruikers vast te stellen met inbegrip van specifieke demografische gegevens zoals besturingssysteem en land van oorsprong.
 Merk op dat uw IP-adres nooit wordt bewaard, al wordt het wel gebruikt tijdens de update-check om uw land te bepalen.
@@ -1055,6 +1057,16 @@ Deze optie geldt voor alle synthesizers, niet enkel de actieve synthesizer.
 ==== Vertrouw taal van stem bij het verwerken van karakters en symbolen ====[SpeechSettingsTrust]
 Met deze optie, die standaard staat ingeschakeld, kunt u NVDA laten weten of de gebruikte stemtaal betrouwbaar moet worden geacht voor de verwerking van symbolen en tekens. 
 Als u vaststelt dat NVDA interpunctie in de verkeerde taal leest, een taal die niet overeenkomt met die van de gebruikte synthesizer of stem, dan wilt u deze optie wellicht uitschakelen waarmee u NVDA dwingt de algemene taalinstelling te gebruiken.   
+
+==== Unicode Consortium data (met inbegrip van emoji) opnemen bij het verwerken van karakters en symbolen ====[SpeechSettingsCLDR]
+Wanneer  dit selectievakje aangevinkt is, zal NVDA extra uitspraakwoordenboeken raadplegen bij het uitspreken van (letter)tekens en symbolen.
+In deze woordenboeken staan beschrijvingen van symbolenin het bijzonder emoji) die afkomstig zijn van [het Unicode Consortium http://www.unicode.org/consortium/] dat onderdeel is van zijn [algemene Locale Data Repository http://cldr.unicode.org/].
+Als u wilt dat NVDA de op basis van deze data gebaseerde beschrijving van emoji-tekens leest, moet u deze optie inschakelen.
+Als u evenwel een spraaksynthesizer gebruikt  die zelf zorgt voor het uitspreken van emoji-beschrijvingen, wilt u deze mogelijk uitschakelen.
+
+Merk op dat handmatig toegevoegde of bewerkte beschrijvingen van (letter)tekens als onderdeel van uw gebruikersinstellingen bewaard worden.
+Dit betekent dat, als u de beschrijving van een specifiek emoji verandert, uw aangepaste beschrijving voor die emoji altijd zal worden gelezen ongeacht of deze optie is ingeschakeld.
+U kunt symboolbeshrijvingen  toevoegen, bewerken of verwijderen in [het dialoogvenster Uitspraak interpunctie/symbolen  van NVDA #SymbolPronunciation].
 
 ==== Percentage toonhoogteverandering bij hoofdletters ====[SpeechSettingsCapPitchChange]
 Dit tekstvak stelt u in staat om de mate waarin de toonhoogte van de stem verandert zodra een hoofdletter wordt gelezen in te stellen.
@@ -1231,9 +1243,12 @@ Als er een fout optreedt bij het laden van de leesregel-driver zal NVDA dit meld
 Afhankelijk van de beschikbare leesregelstuurprogramma's op uw systeem biedt deze vervolgkeuzelijst u een aantal opties.
 Met de pijltjestoetsen gaat u door de verschillende opties.
 
+Met de optie automatisch zoekt NVDA op de achtergrond naar veel ondersteunde leesregels.
+Wanneer deze optie ingeschakeld is, en u een ondersteunde leesregel aansluit via USB of bluetooth, brengt NVDA automatisch een verbinding met deze leesregel tot stand.
+
 'Geen braille' wil zeggen dat u geen gebruik maakt van braille.
 
-Raadpleeg de rubriek [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor meer informatie over ondersteunde leesregels.
+Raadpleeg de rubriek [Ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor meer informatie over ondersteunde leesregels en welke hiervan automatische herkenning op de achtergrond ondersteunen.
 
 ==== Poort ====[SelectBrailleDisplayPort]
 Indien beschikbaar kunt u met deze optie kiezen welke poort of welk type verbinding er gebruikt wordt om te communiceren met de leesregel die u hebt geselecteerd.
@@ -1254,14 +1269,12 @@ In deze categorie treft u de volgende keuzemogelijkheden aan:
 ==== Toetsenbordindeling ====[KeyboardSettingsLayout]
 Dit is een vervolgkeuzelijst waarin u het type toetsenbordindeling kiest dat u wilt gebruiken. Momenteel zijn er in NVDA twee types beschikbaar: desktop en laptop. 
 
-==== CapsLock als NVDA-toets gebruiken ====[KeyboardSettingsCapsModifier]
-Als dit selectievakje wordt ingeschakeld, is CapsLock als NVDA-toets ingesteld. 
+==== NVDA-programmatoetsen selecteren ====[KeyboardSettingsModifiers]
+Met de selectievakjes in deze lijst bepaalt u welke toetsen als [NVDA-programmatoetsen kunnen worden gebruikt #TheNVDAModifierKey]. U hebt de keuze uit de volgende  toetsen :
+- De caps lock-toets
+- De insert-toets op het numerieke toetsenblok
+- De uitgebreide insert-toets die meestal boven de pijltjestoetsen zit vlakbij home en end)
 
-==== Uitgebreide Insertt-toets als NVDA-toets gebruiken ====[KeyboardSettingsExtendedInsert]
-Door dit selectievakje in te schakelen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
-
-==== Numerieke Insert-toets als NVDA-toets gebruiken ====[KeyboardSettingsNumpadInsert]
-Door het selectievakje in te schakelen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
 
 Als er geen toets als NVDA-toets wordt gekozen, zijn bepaalde 
 commando's mogelijk niet beschikbaar.
@@ -1398,6 +1411,9 @@ Als informatie van objectpositie weergeven is ingeschakeld, kan deze optie ervoo
 
 Als deze optie is ingeschakeld, zal positie-informatie voor meer objecten (zoals menu's en werkbalken) beschikbaar zijn, maar deze informatie  is mogelijk niet geheel nauwkeurig.
 
+==== Geluid voor objectcoördinaten afspelen ====[ObjectPresentationObjectCoordinates]
+Wanneeer het selectievakje aangevinkt is, krijgt u een piepsignaal te horen waarmee de plaats van het huidige object op het scherm wordt aangegeven. Dit is handig als u gebruik maakt van aanraakgebaren  om naar volgende en vorige objecten te gaan.
+
 ==== Objectbeschrijvingen melden ====[ObjectPresentationReportDescriptions]
 Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extra informatie hoeft te horen. 
 
@@ -1432,7 +1448,7 @@ Voor bepaalde invoervelden zoals zoekvakken in verrschillende Windows 10 apps, k
 De lijst met suggesties sluit zich wanneer u uit het invoerveld gaat. Voor sommige invoervelden kan NVDA hiervan melding maken.   
 
 +++ Invoersamenstelling +++[InputCompositionSettings]
-Met behulp van deze categorie instellingen  kunt u regelen hoe NVDA de karakters van  Aziatische talen weergeeft, wanneer u deze invoert. Dit geldt voor invoermethodes zoals IME en Text Service.
+Via  de categorie instellingen  Invoersamenstelling kunt u regelen hoe NVDA de karakters van  Aziatische talen weergeeft, wanneer u deze invoert. Dit geldt voor invoermethodes zoals IME en Text Service.
 N.B. Aangezien er grote verschillen bestaan tussen de invoermethodes wat betreft mogelijkheden en de wijze van informatieoverdracht, zal het wellicht nodig zijn de instellingen aan te passen aan de gebruikte invoermethode. Hierdoor wordt typen aangenamer en gemakkelijker.
 
 ==== Automatisch alle beschikbare kandidaten melden ====[InputCompositionReportAllCandidates]
@@ -1865,8 +1881,8 @@ Het Microsoft Speech Platform biedt stemmen voor veel talen die normaalgesproken
 Deze stemmen kunnen ook met NVDA gebruikt worden.
 
 Om van deze stemmen gebruik te maken dient u 2 componenten te installeren:
-- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: https://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): https://www.microsoft.com/download/en/details.aspx?id=21924
  - Deze Webpagina bevat veel bestanden voor spraakin- en uitvoer.
  Kies het tekst-naar-sprraakbestand voor de gewenste taal / stem.
  Voorbeeld: Het bestand MSSpeech_TTS_en-US_ZiraPro.msi is een amerikaans-engelse stem.
@@ -1887,23 +1903,41 @@ We hopen dat dit gaat gebeuren bij een volgende update van Windows.
 ++ AudioLogic TTS 3 ++[AudioLogic]
 Dit is een commerciële spraaksynthesizer die speciaal ontwikkeld is voor het Italiaans.
 U moet de synthesizer op uw pc installeren als u deze voor NVDA wilt gebruiken.
-Meer informatie vindt u op http://www.audiologic.it/, de website van Audiologic.
+Meer informatie vindt u op https://www.audiologic.it/, de website van Audiologic.
 
 Deze synthesizer heeft geen ondersteuning voor [spellingsfunctionaliteit #SpeechSettingsUseSpelling].
 
 + Ondersteunde Brailleleesregels +[SupportedBrailleDisplays]
 In deze rubriek treft u informatie aan over de brailleleesregels die door NVDA worden ondersteund.
 
+++ Leesregels die automatische herkenning op de achtergrond ondersteunen  ++[AutomaticDetection]
+Zowel via USB als bluetooth kan NVDA veel brailleleesregels  op de achtergrond automatisch detecteren. 
+U kunt dit zo instellen door in de dialoog [Braille-instellingen van NVDA #BrailleSettings] de optie Automatisch te selecteren als de brailleleesregel van uw voorkeur.
+Deze optie staat standaard ingeschakeld.
+
+De volgende leesregels ondersteunen automatische herkenning:
+- Handy Tech leesregels
+- Baum/Humanware/APH/Orbit braille leesregels
+- HumanWare Brailliant BI/B serie
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 serie
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
+- Eurobraille Esys/Esytime/Iris leesregels
+-
+
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
-Alle Focus en PAC Mate leesregels van [Freedom Scientific http://www.freedomscientific.com/] worden ondersteund.
+Alle Focus en PAC Mate leesregels van [Freedom Scientific https://www.freedomscientific.com/] worden ondersteund.
 De drivers voor de brailleleesregels van Freedom Scientific moeten op uw computer worden geïnstalleerd.
-Zonodig kunt u de drivers downloaden van http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Zonodig kunt u de drivers downloaden van https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Hoewel op deze pagina alleen de Focus 40 Blueleesregel  wordt genoemd, ondersteunen deze drivers alleFocus en Packmate  leesregels van Freedom Scientific.
 Wanneer u met een 64-bit versie van Windows werkt, en de drivers door een ander schermleesprogramma reeds geïnstalleerd werden, is het waarschijnlijk toch nodig de drivers van bovenstaande link te installeren omdat de bestanden die NVDA nodig heeft, zeer waarschijnlijk niet door de andere schermlezer zijn geïnstalleerd. 
 
 De standaardinstelling is dat NVDA automatisch deze leesregels detecteert en via USB of bluetooth een verbinding tot stand brengt.
 U kunt evenwel bij het configureren van de leesregel expliciet kiezen voor een "USB-" of "Bluetooth-poort"  waarmee het te gebruiken verbindingstype wordt beperkt.
 Dit kan handig zijn als u de Focus leesregel met NVDA wilt verbinden via bluetooth en hem tegelijkertijd  wilt opladen via de usb-aansluiting op uw computer.
+
+Deze leesregels hebben nog geen ondersteuning voor automatische herkenning in NVDA.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
@@ -1958,7 +1992,7 @@ Voor de nieuwere Focusmodellen die uitgerust zijn met "rocker bar" toetsen (Focu
 %kc:endInclude
 ++ Optelec ALVA 6 serie/protocol converter ++[OptelecALVA]
 
-Zowel de ALVA BC640 als de BC680 leesregel van [Optelec http://www.optelec.com/] worden ondersteund.
+Zowel de ALVA BC640 als de BC680 leesregel van [Optelec https://www.optelec.com/] worden ondersteund.
 U kunt een oudere Optelec-leesregel, zoals een Braille Voyager,  desgewenst koppelen door gebruik  te maken van een  'protocol converter' (protocolomvormer)  van Optelec.
 U hoeft geen specifieke drivers te installeren om deze leesregels te gebruiken.
 Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van deze leesregels.
@@ -1974,11 +2008,11 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
 %kc:beginInclude
 || Naam | Toets |
-| Brailleregel achteruit scrollen | t1 of etouch1 |
+| Brailleregel achteruit scrollen | t1, etouch1 |
 | Brailleregel naar voorafgaande regel brengen | t2 |
 | Naar huidige focus verplaatsen | t3 |
 | Brailleregel naar volgende regel brengen | t4 |
-| Brailleregel vooruit scrollen | t5 of etouch3 |
+| Brailleregel vooruit scrollen | t5, etouch3 |
 | Naar braillecel gaan| Routing |
 | tekstopmaakg onder braillecel melden | secondaire routing |
 | HID-toetsenbordsimulatie in- of uitschakelen | t1+spEnter |
@@ -1988,30 +2022,29 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 | Titel weergeven | etouch2 |
 | Statusbalk weergeven | etouch4 |
 | Shift+Tabtoets | Sp1 |
-| Alt-Toets | Sp2 |
+| Alt-toets | Sp2, alt |
 | Escape-toets | Sp3 |
 | Tab-toets | Sp4 |
 | Pijltoets omhoog | SpUp |
 | Pijltoets omlaag | SpDown |
 | Pijltoets naar links | SpLinks |
 | Pijltoets naar rechts | SpRechts |
-| Enter-toets | SpEnter, enter |
-| Datum/tijd weergeven | sp1+sp2 |
+| Enter-toets | spEnter, enter |
+| Datum/tijd weergeven | sp2+sp3 |
 | NVDA-Menü | Sp1+Sp3 |
 | Windows-Toets+D (alle toepassingenn minimaliseren) | Sp1+Sp4 |
 | windows toets+b(focus op systeemvak) | sp3+sp4 |
-| Windows-Toets | Sp2+Sp3, Windows |
+| Windows-Toets | Sp1+Sp2, Windows |
 | Alt+Tabtoets | Sp2+Sp4 |
 | control+home-toets  | t3+spOmhoog |
 | control+end-toets | t3+spOmlaag |
 | home-toets | t3+spLinks |
-| end-toets | t3+spRechts |
-| alt-toets | alt |
+| end-toets | t3+spRechts | 
 | control-toets | control |
 %kc:endInclude
 
 ++ Handy Tech Leesregels ++[HandyTech]
-NVDA ondersteunt de meeste  via usb-gekoppelde of blutooth-verbonden dan wel op de sereële poort aangesloten leesregels van [Handy Tech http://www.handytech.de/].
+NVDA ondersteunt de meeste  via usb-gekoppelde of blutooth-verbonden dan wel op de sereële poort aangesloten leesregels van [Handy Tech https://www.handytech.de/].
 Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd. -Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
 De volgende leesregels worden niet zonder meer ondersteund, maar ze kunnen wel gebruikt worden met behulp van het [universele stuurprogramma van [Handy Tech dat te vinden is op https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] en een NVDA add-on:
@@ -2045,9 +2078,11 @@ Bij gebruik van de Handy Tech leesregels met NVDA zijn de volgende toetscombinat
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-De Lilli brailleleesregel die verkrijgbaar is op [MDV http://www.mdvbologna.it/] wordt ondersteund.
+De Lilli brailleleesregel die verkrijgbaar is op [MDV https://www.mdvbologna.it/] wordt ondersteund.
 U hoeft geen specifieke drivers te installeren om deze leesregel te gebruiken.
 Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van deze leesregel.
+
+Deze leesregel heeft geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
@@ -2065,7 +2100,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Brailleleesregels van Baum/HumanWare/APH/Orbit ++[Baum]
-Verscheidene brailleleesregels van [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] en van  [Orbit http://www.orbitresearch.com/]worden ondersteund, voor zover deze  via usb of Bluetooth dan wel serieel verbonden worden.
+Verscheidene brailleleesregels van [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] en van  [Orbit https://www.orbitresearch.com/]worden ondersteund, voor zover deze  via usb of Bluetooth dan wel serieel verbonden worden.
 Hiertoe behoren:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2101,8 +2136,10 @@ Voor leesregels die een Joystick hebben, geldt:
 %kc:endInclude
 
 ++ Hedo Profiline usb ++[HedoProfiline]
-De Profiline usb leesregels van [hedo Reha-Technik  http://www.hedo.de/] worden ondersteund.
+De Profiline usb leesregels van [hedo Reha-Technik  https://www.hedo.de/] worden ondersteund.
 U moet eerst  de usb-driver van de fabrikant installeren.
+
+Deze leesregel heeft geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
@@ -2118,8 +2155,10 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Hedo MobilLine USB ++[HedoMobilLine]
-De MobilLine usb leesregels van [hedo Reha-Technik  http://www.hedo.de/] worden ondersteund.
+De MobilLine usb leesregels van [hedo Reha-Technik  https://www.hedo.de/] worden ondersteund.
 U moet eerst  de usb-driver van de fabrikant installeren.
+
+Deze leesregel heeft nog geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
@@ -2135,7 +2174,7 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Serie / BrailleNote Touch ++[HumanWareBrailliant]
-De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.com/]], waaronder  de BI 14, BI 32, BI 40 en B 80,, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
+De brailleleesregels uit de serie BI en B van  [HumanWare https://www.humanware.com/]], waaronder  de BI 14, BI 32, BI 40 en B 80,, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
 Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
 USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
@@ -2187,9 +2226,9 @@ Bij gebruik van de Brailliant BI/B en de BrailleNote touch  met NVDA zijn de vol
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serie ++[Hims]
-NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE, Smart Beetle en Sync Braille van [Hims http://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
+NVDA ondersteunt de leesregelmodellen Braille Sense, Braille EDGE, Smart Beetle en Sync Braille van [Hims https://www.hims-inc.com/] die via USB of bluetooth kunnen worden aangesloten. 
 Als u voor de USB-aansluiting kiest, moet u wel eerst de USB-drivers van HIMS op uw Systeem installeren. 
-U kunt deze downloaden van: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip.
+U kunt deze downloaden van: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -2259,9 +2298,11 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 %kc:endInclude
 
 ++ Seika Brailleleesregels ++[Seika]
-De modellen Seika Version 3, 4 en 5 (40 cellen) en de Seika80 (80 cellen) van [Nippon Telesoft http://www.nippontelesoft.com/] worden ondersteund.
-Meer informatie over deze leesregels vindt u op [http://www.seika-braille.com/ ] . 
+De modellen Seika Version 3, 4 en 5 (40 cellen) en de Seika80 (80 cellen) van [Nippon Telesoft https://www.nippontelesoft.com/] worden ondersteund.
+Meer informatie over deze leesregels vindt u op [https://www.seika-braille.com/ ] . 
 U moet eerst  de usb-driver van de fabrikant installeren voordat u de leesregel op de computer aansluit.
+
+Deze leesregel heeft nog geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Informatie over de plaats van de toetsen vindt u in de documentatie bij deze leesregel.)
@@ -2287,6 +2328,8 @@ De volgende brailleleesregels worden ondersteund:
 - BRAILLEX Trio (USB en Bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
+
+Deze leesregel heeft geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 Als BrxCom is geïnstalleerd, zal NVDA BrxCom gebruiken.
 BrxCom is een hulpprogramma waarmee invoer met de toetsen van de leesregel mogelijk is zonder tussenkomst van een schermlezer.
@@ -2370,7 +2413,8 @@ De volgende brailleleesregels worden ondersteund:
 -
 
 Merk op dat deze leesregels alleen via een seriële poort kunnen worden aangesloten.
-U dient daarom de poort waarop de leesregel is aangeslotente selecteren nadat u deze driver hebt gekozen in het dialoogvenster [Brailleleesregel Selecteren #SelectBrailleDisplay]. 
+Dientengevolge hebben deze leesregels geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+U moet  de poort waarop de leesregel is aangesloten selecteren nadat u deze driver hebt gekozen in het dialoogvenster [Brailleleesregel Selecteren #SelectBrailleDisplay]. 
 
 Sommige leesregels hebben een gebruiksvriendelijke navigatiebalk (EAB = Easy Access Bar, waarmee intuïtief en snel gewerkt kan worden.
 De navigatiebalk kan in vier richtingen bewogen worden waarbij er als regel twee schakelpunten per richting zijn.
@@ -2444,7 +2488,7 @@ BRAILLEX 2D Scherm:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA ondersteunt de BrailleNote notitieapparaten van [Humanware http://www.humanware.com] wanneer deze gebruikt worden als leesregel voor een schermlezer.
+NVDA ondersteunt de BrailleNote notitieapparaten van [Humanware https://www.humanware.com] wanneer deze gebruikt worden als leesregel voor een schermlezer.
 De volgende modellen worden ondersteund:
 - BrailleNote Classic (uitsluitend seriële verbinding)
 - BrailleNote PK (Seriële en bluetooth verbinding)
@@ -2511,13 +2555,13 @@ Voor de BrailleNote QT zijn de volgende commando's van toepassing als deze niet 
 | Home-toets | functie+Pijllinks |
 | End-toets | functie+Pijlrechts |
 | Control+home-toetsen | lezen+t |
-+| Control+end-toetsen | lezen+b |
+| Control+end-toetsen | lezen+b |
 | Enter-toets | enter |
 | Backspace-toets | backspace |
 | Tab-toets | tab |
 | Shift+tab-toetsen | shift+tab |
 | Windows-toets | lezen+w |
-+| Alt-toets | lezen+m |
+| Alt-toets | lezen+m |
 | Invoerhulp Aan/Uit | lezen+1 |
 
 Met het scrollwieltje kunnen de volgende commando's worden uitgevoerd:
@@ -2533,7 +2577,7 @@ Met het scrollwieltje kunnen de volgende commando's worden uitgevoerd:
  %kc:endInclude
  
 ++ EcoBraille ++[EcoBraille]
-NVDA biedt ondersteuning voor EcoBraille-leesregels  van [ONCE http://www.once.es/].
+NVDA biedt ondersteuning voor EcoBraille-leesregels  van [ONCE https://www.once.es/].
 De volgende modellen worden ondersteund:
 - EcoBraille 20
 - EcoBraille 40
@@ -2542,6 +2586,8 @@ De volgende modellen worden ondersteund:
 -
 
 In NVDA kunt u  in het dialoogvenster [Brailleleesregel Selecteren #SelectBrailleDisplay] de seriële poort instellen waarmee de leesregel wordt verbonden
+
+Deze leesregels hebben geen ondersteuning  voor de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing: 
 (Raadpleeg de [EcoBraille documentatie ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] waar beschreven wordt waar de toetsen zich bevinden.)
@@ -2578,7 +2624,7 @@ Om deze reden en om compatibiliteit met andere schermlezers in Taiwan te bewerks
 %kc:endInclude
 
 ++ De Eurobraille-leesregels Esys/Esytime/Iris ++[Eurobraille]
-De leesregels Esys, Esytime en Iris van  [Eurobraille http://www.eurobraille.fr/] worden door NVDA onderstweund.
+De leesregels Esys, Esytime en Iris van  [Eurobraille https://www.eurobraille.fr/] worden door NVDA onderstweund.
 Voor de Esys en de Esytime-Evo wordt in ondersteuning voorzien via een USB-aansluiting of een bluetooth-verbinding.
 Oudere Esytime-apparaten  ondersteunen alleenUSB.
 Iris-leesregels  kunnen alleen via een seriële poort worden aangesloten.
@@ -2662,17 +2708,19 @@ Hieronder volgen de toetscommando's voor deze leesregels met NVDA. Raadpleeg de 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] is een opzichzelfstaand programma dat kan dienen ter ondersteuning van veel meer brailleleesregels.
-Om hiervan gebruik te kunnen maken moet u [BRLTTY voor Windows installeren http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] is een opzichzelfstaand programma dat kan dienen ter ondersteuning van veel meer brailleleesregels.
+Om hiervan gebruik te kunnen maken moet u [BRLTTY voor Windows installeren https://www.brltty.com/download.html].
 U moet de nieuwste versie van het programma (bij voorbeeld, met als naam brltty-win-4.2-2.exe) downloaden en installeren.
 Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u ervoor zorgen de instructies nauwkeurig op te volgen, vooral bij gebruik van een USB-leesregel waarvoor de drivers van de fabrikant reeds zijn geïnstalleerd.
 
 Het  Brltty-programma zorgt zelf voor de verwerking van brailleïnvoer van leesregels die over een brailletoetsenbord beschikken.
 Het is dan ook niet relevant dat een invoertabel in NVDA wordt ingesteld.
 
+DBRLTYY blijft buiten de op de achtergrond uitgevoerde automatische leesregelherkenning van NVDA.
+
 De volgende brltty-commando's worden in NVDA ondersteund.
 Voor informatie over toetsenbordtabellen kunt u de  [BRLTTY-Documentatie op 
-http://mielke.cc/brltty/doc/KeyTables/] raadplegen.
+https://mielke.cc/brltty/doc/KeyTables/] raadplegen.
 
 %kc:beginInclude
 || Naam | BRLTTY-commando |

@@ -15,21 +15,21 @@ NVDA 非視覺桌面存取應用程式(Nonvisual Desktop Access)，是一款免�
 NVDA是由[NV Access https://www.nvaccess.org/] 所開發，並包含來自NVDA社群參與者的許多貢獻和回饋。
 
 ++ 特色 ++[GeneralFeatures]
-NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式。
+NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式，
 
 主要特色包括:
-- 支援多種熱門應用程式，包括網頁瀏覽器、郵件軟體、線上聊天軟體及Office套裝軟體。
+- 支援多種熱門應用程式，如網頁瀏覽器、郵件軟體、線上聊天軟體及Office套裝軟體等。
 - 內建的語音合成器支援超過80種語言。
 - 報讀文字格式。例如字型名稱、大小、樣式、拼字錯誤等。
-- 自動讀出鼠標所指的文字，並可透過聲音提示鼠標所在位置。
-- 支援多種點顯器，包括有點字輸入鍵盤的點顯器。
+- 自動讀出鼠標所指的文字，並可透過音調高低提示鼠標所在位置。
+- 支援多種點顯器，包括那些可被自動偵測到，或具有點字輸入鍵盤的點顯器。
 - NVDA可以不需安裝就直接在USB隨身碟或其它可攜式儲存媒體上執行。
 - 提供簡單易用的語音提示功能。
 - 已翻譯成54種語言。
 - 支援新版的Windows作業系統，包含32及64位元的版本。
 - 可於Windows登入畫面及其他安全畫面運作。
-- 當使用觸控手勢時，報讀控制項和文字。
-- 支援常見的無障礙介面，例如Microsoft Active Accessibility, Java Access Bridge, IAccessible2 及 Windows7以後版本才有的UI Automation。
+- 當使用觸控手勢時，可報讀控制項和文字。
+- 支援常見的無障礙介面，例如Microsoft Active Accessibility, Java Access Bridge, IAccessible2 及 Windows7以後版本才有的使用者介面自動化。
 - 支援 Windows 命令提示字元和其它類似的文字介面應用程式 (console application)。
 -
 
@@ -45,31 +45,32 @@ NVDA內嵌有語音引擎  [eSpeak NG https://github.com/espeak-ng/espeak-ng], a
 有關其它NVDA支援的語音合成器的資訊請參見 [支援的語音合成器 #SupportedSpeechSynths] 這個章節。
 
 ++ 點字支援 ++[BrailleSupport]
-對於擁有點顯器（以下簡稱點顯器）的使用者，NVDA 可將資訊以點字形式輸出到點顯器上。
+對於擁有點字顯示器（以下簡稱點顯器）的使用者，NVDA 可將資訊以點字形式輸出到點顯器上。
 點顯器支援一級和二級點字碼輸入。
+且NVDA在預設情況下，可以自動偵測到許多的點顯器。
 關於支援的點顯器資訊，請參見[支援的點顯器 #SupportedBrailleDisplays] 這個章節。
 
-NVDA 提供多語系，通常含括一級與二級點字碼、以及電腦點字。
+NVDA 提供多語系點字碼，通常含括一級、二級與電腦點字。
 
 ++ 授權與著作權 ++[LicenseAndCopyright]
-NVDA 著作權2006-2015 是歸屬於所有參與的開發者。
+NVDA 著作權2006-2018 是歸屬於所有參與的開發者。
 
 NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 只要將此公開授權辦法隨附於軟體，您可以自由地以任何形式分享或改變此軟體，並將所有的原始碼提供給需要的人，
 這個規則適用於原始發佈的軟體或任何以此軟體修改之後發佈的軟體，以及所有採用此軟體內的程式碼所產生的軟體。
-更詳細的內容，請上網 [查看完整版授權辦法 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。 
+更詳細的內容，請上網 [查看完整版授權辦法 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。 
 
 + 系統需求 +[SystemRequirements]
-- 作業系統:32及64位元微軟Windows 7、Windows 8、Windows 8.1及Window 10，和Windows Server 2008 R2以上所有的伺服器作業系統。
+- 作業系統:32或64位元的微軟Windows 7、Windows 8、Windows 8.1及Window 10，及Windows Server 2008 R2以上所有的伺服器作業系統。
  - 使用Windows 7，NVDA需要SP 1以上的等級。
  - 使用Windows Server 2008 R2，NVDA需要SP 1以上的等級。
 - RAM 記憶體:需要 256MB 以上
-- CPU 速度:1.0Ghz或以上
+- CPU 速度:1.0Ghz以上
 - 約需要90 MB 的儲存空間
 -
 
 + 取得並設定NVDA +[GettingAndSettingUpNVDA]
-如果您尚未取得 NVDA，請至此下載 [www.nvda-project.org http://www.nvda-project.org/]。
+如果您尚未取得 NVDA，請至此下載 [www.nvda-project.org https://www.nvda-project.org/]。
 
 在下載區可找到最新版的NVDA程式。
 
@@ -156,7 +157,7 @@ NVDA安裝版可提供額外功能，例如:登入後自動執行、可報讀Win
 （請參見以下章節以進一步了解其操作方式。）
 對話框也包含一個下拉方塊及三個核取方塊。
 下拉方塊可以讓您選擇鍵盤配置。
-第一個是設定capslock為NVDA鍵。
+第一個是設定capsLock為NVDA鍵。
 第二個是「NVDA會自動啟動當您登入Windows後並且使用NVDA安裝版」，
 第三個是「每當NVDA啟動時顯示此對話框」。
 
@@ -559,7 +560,7 @@ NVDA 也提供一個利用音調的高低來提示鼠標所指位置在螢幕上
 + 報讀數學內容 +[ReadingMath]
 利用 Design Science 開發的數學播放軟體 (MathPlayer 4)，NVDA 可以在含有數學內容的文件中，與之互動式瀏覽，並將其讀出，
 這需要在此台電腦已安裝了數學公式播放軟體 4的狀況下方有效。 
-該軟體可以從以下的網址免費下載: http://www.dessci.com/en/products/mathplayer/
+該軟體可以從以下的網址免費下載: https://www.dessci.com/en/products/mathplayer/
 
 NVDA 支援以下數學格式的內容:
 - Mozilla Firefox 、微軟 IE 及 Google Chrome 上的數學標記語言。
@@ -600,6 +601,7 @@ NVDA 支援以下數學格式的內容:
 如果您的點顯器是屬於柏金斯型態的鍵盤，您也可以使用壓縮或沒壓縮的點字輸入。
 
 請參閱 [支援的點顯器 #SupportedBrailleDisplays] 這章節的內容。
+此章節也說明了哪些點顯器能夠支援 NVDA 背景自動偵測的功能。
 您也可以利用[NVDA設定 #NVDASettings] 對話框的 [點字類別 #BrailleSettings] 類別來設定個別需求。
 
 ++ 控制型態、狀態與地標之縮寫 ++[BrailleAbbreviations]
@@ -737,19 +739,19 @@ NVDA 對某些應用程式提供了一些特有的功能，以便讓執行這些
 
 +++ 欄及列標題的自動報讀 +++[WordAutomaticColumnAndRowHeaderReading]
 當在微軟 Word表格內各個儲存格間移動導航時，NVDA 可自動讀出其欄標題或列標題。
-要達成此項功能，首先需要將 [NVDA設定 #NVDASettings] 對話框中「文件格式」設定內的「讀出表格的列及欄標題』的核取方壞勾選，
-接著是要讓 NVDA知道表格中那一列或那一欄有標題。
-然後將游標移到表格內的第一欄或第一列後，即可利用以下的指令讀取儲存格的內容:
+要啟動此項功能，首先需將 [NVDA設定 #NVDASettings] 對話框中「文件格式」設定內的「讀出表格的列及欄標題』的核取方壞勾選，
+接著是要讓 NVDA知道表格中的那一列或那一欄要設為標題。
+其操作方式是將游標移到表格內的該欄或該列，然後利用以下的指令設定:
 %kc:beginInclude
 || 名稱 | 快速鍵 | 說明 | 
-| 設定欄標題 | NVDA+shift+c | 按一下，告訴 NVDA 此為含有標題的第一列，並將此列的各儲存格設為欄標題，當在這列以下的各欄之間左右移動，會自動讀出標題名稱。連續按兩下，即清除對此列的設定。 |
-| 設定列標題 | NVDA+shift+r | 按一下，告訴 NVDA 此為含有標題的第一欄，並將此欄的各儲存格設為列標題，當在某一欄上下移動，會自動讀出列標題名稱。連續按兩下，即清除此欄的設定。 |
+| 設定欄標題 | NVDA+shift+c | 按一下，告訴 NVDA 此為標題開頭第一列，並將此列設為欄標題，當在這列以下的各欄之間左右移動時，會自動讀出標題名稱。連續按兩下，即清除對此列的設定。 |
+| 設定列標題 | NVDA+shift+r | 按一下，告訴 NVDA 此為標題開頭第一欄，並將此欄設為列標題，當在其右的各欄上下移動時，會自動讀出列標題名稱。連續按兩下，即清除此欄的設定。 |
 %kc:endInclude 
-這些設定將以可與之相匹配的其它螢幕報讀軟體如 JAWS，的格式儲存下來，作為標籤，
-也就是，爾後使用者若使用其它螢幕報讀軟體開啟該檔案，其表格內的欄或列標題就可被自動設定了。
+這些設定是以可與其它螢幕報讀軟體如 JAWS相匹配的格式儲存，
+也就是說，若使用者以其它螢幕報讀軟體開啟該檔案，其表格內所設定的欄或列標題仍可適用。
 
 +++  在微軟 Word 的瀏覽模式 +++[BrowseModeInMicrosoftWord]
-NVDA 也可讓您在微軟 Word 上使用類似於在網頁上瀏覽模式的特有功能，如快速導航及，呼叫出「元件清單」等。
+NVDA 也可讓您在微軟 Word 上使用瀏覽模式，此類似於在網頁上的操作方式，如單鍵導航及開啟「元件清單」等特殊的功能。
 %kc:beginInclude
 要在微軟 Word 上，切換瀏覽模式的開與關，按 NVDA+ 空白鍵。
 %kc:endInclude 
@@ -770,14 +772,14 @@ NVDA 也可讓您在微軟 Word 上使用類似於在網頁上瀏覽模式的特
 ++ 微軟 Excel ++[MicrosoftExcel]
 
 +++ 欄及列標題的自動報讀 +++[ExcelAutomaticColumnAndRowHeaderReading]
-當在微軟 Excel 試算表內各儲存格之間移動導航時，NVDA 可自動報讀其欄標題或列標題。
+當在微軟 Excel 工作表內的儲存格之間導航時，NVDA 可自動報讀其欄標題或列標題。
 要達成此項功能，首先需要將 [NVDA設定 #NVDASettings] 對話框中「文件格式」設定內的「讀出表格的列及欄標題』的核取方壞勾選，
-接著是要讓 NVDA知道表格中那一列或那一欄有標題。
-將游標移到試算表內的該欄或該列後，即可利用以下的指令聽取儲存格的內容及標題名稱:
+接著是要讓 NVDA知道表格中那一列或那一欄設為標題。
+其操作方式是將游標移到工作表內的該欄或該列，然後利用以下的指令設定標題:
 %kc:beginInclude
 || 名稱 | 快速鍵 | 說明 | 
-| 設定欄標題 | NVDA+shift+c | 按一下，告訴 NVDA 此為各列中含有標題的列，並將此設為欄標題，當在這列以下的各欄之間左右移動，會自動讀出標題名稱。連續按兩下，即清除此設定。 |
-| 設定列標題 | NVDA+shift+r | 按一下，告訴 NVDA 此為各欄中含有標題的欄，並將此設為列標題，當在這欄右側的各列之間的儲存格上下移動，會自動讀出標題名稱。連續按兩下，即清除此設定。 |
+| 設定欄標題 | NVDA+shift+c | 按一下，告訴 NVDA 此為標題開頭第一列，並將此列設為欄標題，當在這列以下的各欄之間左右移動時，會自動讀出欄標題名稱。連續按兩下，即清除此設定。 |
+| 設定列標題 | NVDA+shift+r | 按一下，告訴 NVDA 此為標題開頭第一欄，並將此欄設為列標題，當在這欄右側的各列之間的儲存格上下移動時，會自動讀出列標題名稱。連續按兩下，即清除此設定。 |
 %kc:endInclude
 這些設定將以能與其它螢幕報讀軟體如 JAWS相匹配的格式儲存，，以供作成標籤，
 也就是，爾後使用者若使用其它螢幕報讀軟體開啟該檔案，其表格內的欄或列標題就可自動設定了。
@@ -973,7 +975,7 @@ NVDA 將套用您目前電腦系統所使用的語言。
 ==== 自動檢查NVDA的更新 ====[GeneralSettingsCheckForUpdates]
 當勾選此核取方塊，NVDA會自動檢查更新版本並通知。
 您也可透過手動來做版本更新檢查，請在NVDA功能表中的「說明」選擇「檢查更新。」
-當手動或自動檢查更新時，NVDA需要將一些訊息發送到更新服務器以便為你的系統接收正確的更新。
+當手動或自動檢查更新時，NVDA需要將一些訊息發送到更新服務器以便為您的系統接收正確的更新。
 以下資訊每次都會發送: 
 - 當前NVDA版本
 - 作業系統版本
@@ -982,7 +984,7 @@ NVDA 將套用您目前電腦系統所使用的語言。
 
 ==== 允許NVDA專案收集NVDA使用情況統計 ====[GeneralSettingsGatherUsageStats]
 如果啟用此功能，NV Access 將使用更新檢查中的資訊來追蹤 NVDA 用戶的數量，包括特定的人口統計，如作業系統和國家。
-請注意，雖然你的 IP 地址將用於在更新檢查時得到你的國家，但IP地址永遠不會被保留。
+請注意，雖然您的 IP 地址將用於在更新檢查時得到您的國家，但IP地址永遠不會被保留。
 除了更新所需檢查的強制性資訊之外，還會發送以下額外資訊:
 - NVDA介面語言
 - 此NVDA是可攜式版或安裝版
@@ -1050,9 +1052,19 @@ ESpeak NG 的變聲聽起來像似原來的語音，僅是發音方式有些微�
 例如，當讀出等級設為「全部」，則所有的符號遇到時，即以它所對應的文字將其報讀出來。
 這個設定的調整，適用於所有的語音合成器，而非僅針對目前作用中的語音。
 
-==== 處理字詞及符號報讀，信任使用的語音語言 ====[SpeechSettingsTrust]
+==== 處理字詞及符號報讀時，信任使用的語音語言 ====[SpeechSettingsTrust]
 此項預設是開啟，告訴 NVDA在處理字詞與符號時，信任所使用的語音合成語言。
 如果您發現 NVDA在報讀某些符號不正確或使用錯誤的語音時，您可以將此項功能關閉，改用預設的語音。 
+
+==== 加入 Unicode Consortium 的資料 (含表情符號) 來處理字詞及符號報讀 ====[SpeechSettingsCLDR]
+當勾選此選項後，NVDA 會加入額外的符號讀音對照表來報讀字詞及符號。
+這些符號讀音對照表是 [Unicode Consortium http://www.unicode.org/consortium/] 的 [Common Locale Data Repository http://cldr.unicode.org/] (CLDR) 資料當中特殊符號（尤其表情符號）的描述。
+如果您想讓 NVDA 使用這個符號讀音對照表來描述表情符號，請將此核取方塊勾選。
+不過，若您使用的語音合成器本身已支援報讀表情符號，則可以將此核取方塊取消勾選。
+
+請注意，手動新增或編輯過的標點符號、特殊符號讀音是屬於使用者自訂的內容。
+因此若您修改了某個特定符號的唸法，無論是否有勾選此核取方塊，都會優先以您所自訂的讀音方式來報讀。
+您可以在 NVDA 的 [標點符號/特殊符號讀音對話框 #SymbolPronunciation] 中新增、編輯或刪除特殊符號的報讀方式。
 
 ==== 大寫字母音調改變百分比 ====[SpeechSettingsCapPitchChange]
 您可在此編輯方塊中輸入大寫字母音調的改變量。
@@ -1117,11 +1129,11 @@ Key: NVDA+shift+d
 %kc:endInclude
 
 +++ 點字 +++[BrailleSettings]
-NVDA設定對話框中「點字」類別選項可以讓你改變多方面的點字輸入和輸出。
+NVDA設定對話框中「點字」類別選項可以讓您改變多方面的點字輸入和輸出。
 這類別包含下列選項:
 
 ==== 變更點顯器 ====[BrailleSettingsChange]
-NVDA設定對話框中「點字」類別的「變更...」按鈕，會開啟[選擇點顯器 #SelectBrailleDisplay]對話框，可以允許你選擇要使用的點顯器。
+NVDA設定對話框中「點字」類別的「變更...」按鈕，會開啟[選擇點顯器 #SelectBrailleDisplay]對話框，可以允許您選擇要使用的點顯器。
 這個對話框會在「NVDA設定」對話框的上面打開。
 確認或取消「選擇點顯器」對話框中的設定，將返回到「NVDA設定」對話框。
  
@@ -1206,7 +1218,7 @@ NVDA會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸�
 當設定選擇「將變更的內文填入點顯器」，NVDA會盡可能將最多的資訊在點顯器上顯示，但僅對那些有變更的內文顯示。
 以前面所舉的為例，當變更的焦點移到清單時，NVDA會在點顯器上顯示該清單項目，
 而如果點顯器還有足夠的空間，NVDA會嘗試將該項目顯示成僅是清單中的一部份。
-在得知自己仍然停在該清單中，你開始使用方向鍵在清單內移動，
+在得知自己仍然停在該清單中，您開始使用方向鍵在清單內移動，
 對於那些您所聚焦的剩餘清單項目，NVDA只會在點顯器上顯示清單項目。
 為了讓您得以再讀到內文（例如:您在清單中，而清單是對話框的一部份），則您須要往前捲動您的點顯器。
 
@@ -1223,17 +1235,20 @@ NVDA會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸�
 若想在任何地方都可以切換「焦點內文的呈現」，請利用「輸入手勢」的對話框指定。來客製化手勢 [輸入手勢 #Input Gestures dialog]。
 
 +++ 選擇點顯器 (NVDA+Ctrl+a) +++[SelectBrailleDisplay]
-「選擇點顯器」對話框可以從NVDA設定對話框中「點字」類別的「變更...」按鈕來開啟，允許你選擇NVDA應該使用何種點顯器來顯示點字。
-當你選擇了點顯器，按「確認」按鈕，NVDA將載入選定的點顯器。
+「選擇點顯器」對話框可以從NVDA設定對話框中「點字」類別的「變更...」按鈕來開啟，允許您選擇NVDA應該使用何種點顯器來顯示點字。
+當您選擇了點顯器，按「確認」按鈕，NVDA將載入選定的點顯器。
 假如載入顯示驅動程式時有錯誤發生，NVDA 將會顯示錯誤訊息，並繼續使用先前的點顯器（如果有）。
 
 ==== 點顯器 ====[SelectBrailleDisplayDisplay]
 這個下拉選單，按照系統中所存在的點顯器驅動程式的不同，會出現相對應的選項。
 可利用移動方向鍵來選取。
 
+「自動」選項可以讓NVDA在背景中自動搜尋許多支援的點顯器。
+當勾選此選項後，您可以使用USB或藍牙來連接支援的點顯器，NVDA會自動偵測並連接該裝置。
+
 「不用點顯器」表示不使用任何點顯器。
 
-若要得到更多關於可支援的點顯器的資訊，請參見 [支援的點顯器 #SupportedBrailleDisplays]。
+若要得到更多相關資訊，以了解可支援的點顯器、以及哪些點顯器可支援背景自動偵測功能等，請參見 [支援的點顯器 #SupportedBrailleDisplays]。
 
 ==== 連接埠 ====[SelectBrailleDisplayPort]
 當此選項可使用時，您可選擇連接埠或連接形式來與您所選的點顯器溝通。
@@ -1254,14 +1269,12 @@ NVDA會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸�
 ==== 鍵盤配置 ====[KeyboardSettingsLayout]
 此下拉選單用以選擇搭配使用哪一種鍵盤配置，包括兩種，桌上型電腦及筆記型電腦。
 
-==== 將 Caps Lock 鍵設為 NVDA 鍵 ====[KeyboardSettingsCapsModifier]
-若勾選此核取方塊，則使用 CapsLock 鍵為 NVDA 組合鍵。
-
-==== 將主鍵盤的 Insert 鍵設為 NVDA 鍵 ====[KeyboardSettingsExtendedInsert]
-若勾選此核取方塊，則「Insert鍵」可作為 NVDA 組合鍵。
- 
-==== 將數字鍵盤的 Insert 鍵設為 NVDA 鍵 ====[KeyboardSettingsNumpadInsert]
-若勾選此核取方塊，則「數字鍵盤 Insert 鍵」可作為 NVDA 組合鍵。
+==== 選擇 NVDA 鍵 ====[KeyboardSettingsModifiers]
+此清單中的核取方塊用來決定哪些按鍵可以做為 [NVDA 鍵 #TheNVDAModifierKey]。可以設定的按鍵有以下幾個：
+- CapsLock 鍵
+- 數字鍵盤的 Insert 鍵 (數字鍵盤 0)
+- 主鍵盤的 Insert 鍵 (通常位於方向鍵的上方， Home 及 End 鍵附近)
+-
 
 若前述三個核取方塊均沒有勾選，則有些NVDA的指令鍵將無法執行，
 故在按「確認」或「套用」按鈕時，NVDA設定對話框會跳出一個錯誤訊息，
@@ -1405,14 +1418,14 @@ NVDA會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸�
 
 包括以下各選項:
 - 關閉:不讀出任何資訊。
-- 讀出進度百分比:每當進度列有改變時會報讀出百分比。
-- 發出嗶嗶聲:隨進度完成的狀況而逐漸提高音調。
-- 讀出進度百分比及發出嗶嗶聲:每當進度列有改變時就報讀出來及發出嗶嗶聲。
+- 讀出進度百分比:每當進度列有改變時，報讀數值。
+- 發出嗶嗶聲:音調隨完成的進度而發出遞增的音調。
+- 讀出進度百分比及發出嗶嗶聲:每當進度列有改變時就報讀數值，並發出嗶嗶聲。
 -
 
 ==== 讀出背景進度列 ====[ObjectPresentationReportBackgroundProgressBars]
-若勾選此對話框，儘管此進度列並沒有處於作用中的前景視窗，也會讀出其進度的變化。
-在設定此情況下，如果將顯示有進度列的視窗最小化或切換到另一個視窗，以便繼續作別的工作，則NVDA 仍會持續監控這個進度列，以便讓使用者掌握該項工作的進度。
+若勾選此對話框，雖然此進度列並沒有處於作用中的前景視窗，也會讀出其進度的變化。
+在此狀況下，如果將顯示有進度列的視窗縮到最小或切換到另一個視窗繼續作別的工作，則NVDA 仍會持續監控此進度列，以讓使用者掌握該項工作的進度。
 
 %kc:setting
 ==== 讀出動態內容 ====[ObjectPresentationReportDynamicContent]
@@ -1421,14 +1434,14 @@ NVDA會依照所選定的轉譯表項目，將您在柏金斯點字鍵盤上輸�
 切換是否讀出某些特定物件中產生的新內容，例如即時通訊軟體的訊息；或在命令提示字元視窗(或稱為DOS視窗)，讀出新輸入指令後所顯示的內容。
 
 ==== 自動顯示時播放音效 ====[ObjectPresentationSuggestionSounds]
-切換是否顯示自動建議清單，若「勾選」，NVDA 會撥放音效。 
+切換是否提示自動建議清單，若「勾選」，NVDA 會撥放音效來提示。 
 當輸入文字時，自動建議的清單會列在文件或編輯欄中。
 例如，在視窗 Vista 或以上的作業系統，當您在開始功能表的「搜尋方塊」中輸入文字，系統會依所輸入的字而顯示相關的建議清單。
 有些編輯欄（例如，win10 上的一些不同的 APP 的搜尋欄），NVDA當您輸入文字時，NVDA會朗讀與輸入文字相關的建議清單。
 一旦離開編輯欄時，此自動建議清單會關閉，而有些編輯欄的設計可讓 NVDA 通知您此狀況已發生了。
 
 +++ 輸入法組字 +++[InputCompositionSettings]
-「輸入法組字」類別的設定允許你針對各種不同的亞洲文字，調整 NVDA 的報讀方式，如 IME 或 Text Service input methods。
+「輸入法組字」類別的設定允許您針對各種不同的亞洲文字，調整 NVDA 的報讀方式，如 IME 或 Text Service input methods。
 附註:由於對不同輸入法採行的設定，其對應報讀出來的訊息有很大的差異，充分瞭解以下各個控制選項的功能，並適當的為所使用的輸入法選擇合適的設定，以符合個人最有效率的輸入方式是必要的。
 
 ====  讀出所有顯示的候選字 ====[InputCompositionReportAllCandidates]
@@ -1565,7 +1578,7 @@ NVDA 會偵測到編輯游標／檢閱游標所在位置的格式，在某些情
 -
  
 +++ Windows 10 光學字元辨識設定 +++[Win10OcrSettings]
-此類別的設定可以允許你對[Windows 10 OCR #Win10Ocr]進行設定。
+此類別的設定可以允許您對[Windows 10 OCR #Win10Ocr]進行設定。
 此類別包含以下選項:
 
 ==== 辨識語言 ====[Win10OcrSettingsRecognitionLanguage]
@@ -1862,8 +1875,8 @@ SAPI 5 是微軟語音合成器的標準版本。
  NVDA也能使用這些語音。
 
 若要使用這些語音，您需要安裝兩個元件，包括:
-- Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Server Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Server Runtime (Version 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Server Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - 此頁面包含了許多用來產生語音辨識功能及文字轉語音(text-to-speech,TTS)的檔案。
  請依照所需的語言或語音，選擇對應的TTS檔案。
  例如，MSSpeech_TTS_en-US_ZiraPro.msi，這個檔案是一個美式英文的語音引擎。
@@ -1884,23 +1897,41 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 ++ Audiologic Tts3 ++[Audiologic]
 這是一個專供義大利語的商務用語音合成器。
 您必須要先安裝它，才可以在 NVDA 上使用。
-若要了解更詳細的資訊，請瀏覽 Audiologic 網站 [www.audiologic.it http://www.audiologic.it] 。
+若要了解更詳細的資訊，請瀏覽 Audiologic 網站 [www.audiologic.it https://www.audiologic.it] 。
 
 此合成器並不支援 [拼字功能 #SpeechSettingsUseSpelling] 。
 
 + 支援的點顯器 +[SupportedBrailleDisplays]
 這一節的內容包含 NVDA 支援的點顯器的資訊。
 
+++ 支援背景自動偵測功能的點顯器之相關資訊 ++[AutomaticDetection]
+無論是使用USB或藍牙連接，NVDA均能夠在背景自動偵測到許多點顯器。
+要設定此選項，請在NVDA的[點字設定對話框 #BrailleSettings]]中的點顯器選擇「自動」。
+此項預設是開啟。
+
+以下這些點顯器支援背景自動偵測的功能。
+- Handy Tech 點顯器
+- Baum/Humanware/APH/Orbit 點顯器
+- HumanWare Brailliant BI/B 系列
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 系列
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille 系列
+- Eurobraille Esys/Esytime/Iris 點顯器
+-
+
 ++ Freedom Scientific Focus/PAC Mate 系列 ++[FreedomScientificFocus]
- 所有 [Freedom Scientific http://www.freedomscientific.com/] 的 Focus 與 PAC Mate 系列的點顯器  均可被 NVDA 支援。
+所有 [Freedom Scientific https://www.freedomscientific.com/] 的 Focus 與 PAC Mate 系列的點顯器  均可被 NVDA 支援。
 您需要在您的系統中安裝 Freedom Scientific 點顯器的驅動程式。
-如果您尚沒有這些驅動程式，您可以在以下的連結下載取得:http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+如果您尚沒有這些驅動程式，您可以在以下的連結下載取得:https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 雖然在此網頁中只提到 Focus 40 Blue 點顯器，但驅動程式支援所有的 Freedom Scientific 系列的點顯器。
 若您使用的是64位元 Windows系統，且已經由另一個螢幕報讀軟體安裝了此驅動程式，您仍然可能需要安裝前述連結的驅動程式，因為其他報讀軟體可能沒有安裝 NVDA 所需的全部檔案。
 
 預設狀況下，NVDA 會自動偵測並用USB或藍芽與顯示器作連接。
 然而，您可透過設定來明確地選擇所要使用的連接類型。
 若您希望用藍芽與顯示器作連接，則仍可透過 USB 來提供充電。
+
+這些點顯器尚未支援NVDA背景自動偵測的功能。
 
 以下是這個點顯器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。
@@ -1953,7 +1984,7 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 %kc:endInclude
 
 ++ Optelec ALVA 6 系列/協議轉換器 ++[OptelecALVA]
-[Optelec http://www.optelec.com/] 的 ALVA BC640 與 BC680 兩種點顯器都可被 NVDA 支援。
+[Optelec https://www.optelec.com/] 的 ALVA BC640 與 BC680 兩種點顯器都可被 NVDA 支援。
 或者可以使用Optelec提供的協議轉換器連接接舊的Optelec點顯器，例如Braille Voyager。
 使用這些顯示器並不需要安裝任何特定的驅動程式，
 只要插上顯示器然後設定 NVDA 即可使用。
@@ -1969,11 +2000,11 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 這些按鍵的實際位置，請參閱顯示器的說明文件。
 %kc:beginInclude
 || 名稱 | 按鍵 |
-| Scroll braille display back | t1 or etouch1 |
+| Scroll braille display back | t1, etouch1 |
 | Move braille display to previous line | t2 |
 | Move to current focus | t3 |
 | Move braille display to next line | t4 |
-| Scroll braille display forward | t5 or etouch3 |
+| Scroll braille display forward | t5, etouch3 |
 | Route to braille cell | routing |
 | Report text formatting under braille cell | secondary routing |
 | Toggle HID keyboard simulation | t1+spEnter |
@@ -1983,30 +2014,29 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 | Report title | etouch2 |
 | Report status bar | etouch4 |
 | shift+tab key | sp1 |
-| alt key | sp2 |
+| alt key | sp2, alt |
 | escape key | sp3 |
 | tab key | sp4 |
 | upArrow key | spUp |
 | downArrow key | spDown |
 | leftArrow key | spLeft |
 | rightArrow key | spRight |
-| enter key | spEnter, enter|
-| Report date/time | sp1+sp2 |
+| enter key | spEnter, enter |
+| Report date/time | sP2+sp3 |
 | NVDA Menu | sp1+sp3 |
 | windows+d key (minimize all applications) | sp1+sp4 |
 | windows+b key (focus system tray) | sp3+sp4 |
-| windows key | sp2+sp3, windows |
+| windows key | sp1+sp2, windows |
 | alt+tab key | sp2+sp4 |
 | control+home key | t3+spUp |
 | control+end key | t3+spDown |
 | home key | t3+spLeft |
 | end key | t3+spRight |
-| alt key | alt |
 | control key | control |
 %kc:endInclude
 
 ++ Handy Tech 顯示器 ++[HandyTech]
-當透過 USB、序列埠或藍芽連接時，NVDA 支援大部分的 [Handy Tech http://www.handytech.de/] 顯示器。
+當透過 USB、序列埠或藍芽連接時，NVDA 支援大部分的 [Handy Tech https://www.handytech.de/] 顯示器。
 在某些舊型的 USB 顯示器，您將需要安裝 Handy Tech 的 USB 驅動程式在您的系統上。
 
 以下的顯示器不支援開箱即用，不過可以通過 [Handy Tech 的通用驅動程式 https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] 被使用，以及NVDA的附加元件:
@@ -2040,9 +2070,11 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-由[MDV http://www.mdvbologna.it/]取得的 Lilli 點顯器可被 NVDA 支援。
+由[MDV https://www.mdvbologna.it/]取得的 Lilli 點顯器可被 NVDA 支援。
 使用這個顯示器不需要安裝特定的驅動程式。
 只要插上顯示器，並設定 NVDA 後，即可使用。
+
+此點顯器並不支援NVDA背景自動偵測的功能。
 
 下列為此顯示器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。
@@ -2060,7 +2092,7 @@ Windows 10 含有新的語音，一般稱之為「OneCore」或「mobile」語�
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit 點顯器 ++[Baum]
-當透過 USB、藍芽或 serial 連接時，一些 [Baum http://www.baum.de/cms/en/]、[HumanWare http://www.humanware.com/]、[APH http://www.aph.org/] 以及 [Orbit http://www.orbitresearch.com/] 顯示器可以被支援。
+當透過 USB、藍芽或 serial 連接時，一些 [Baum https://www.baum.de/cms/en/]、[HumanWare https://www.humanware.com/]、[APH https://www.aph.org/] 以及 [Orbit https://www.orbitresearch.com/] 顯示器可以被支援。
 這些包括:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2096,8 +2128,10 @@ Orbit Reader 20 的 USB serial 模式目前僅能在 Windows 10作業系統下�
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點顯器The hedo ProfiLine USB.
+NVDA可以支援由 [hedo Reha-Technik https://www.hedo.de/] 出品的點顯器The hedo ProfiLine USB.
 您必須先安裝廠商所提供的 USB驅動程式。
+
+此點顯器尚未支援NVDA背景自動偵測的功能。
 
 下列為此顯示器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。.
@@ -2113,8 +2147,10 @@ NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點顯器Th
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點顯器The hedo MobilLine USB.
+NVDA可以支援由 [hedo Reha-Technik https://www.hedo.de/] 出品的點顯器The hedo MobilLine USB.
 您必須先安裝廠商所提供的 USB驅動程式。
+
+此點顯器尚未支援NVDA背景自動偵測的功能。
 
 下列為此顯示器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。
@@ -2130,7 +2166,7 @@ NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點顯器Th
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B 系列 / BrailleNote Touch  ++[HumanWareBrailliant]
-當透過USB或藍牙連接時，NVDA 可以支援 [HumanWare http://www.humanware.com/] 公司的 The Brailliant BI 及 B系列點顯器，包括 BI 14, BI 32, BI 40及B 80等。
+當透過USB或藍牙連接時，NVDA 可以支援 [HumanWare https://www.humanware.com/] 公司的 The Brailliant BI 及 B系列點顯器，包括 BI 14, BI 32, BI 40及B 80等。
 如果以協定透過 USB 連接到 HumanWare 點顯器，您應先使用廠商所提供的驅動程式。 
 如果連接協定的設定是對點顯器開啟，則 USB 驅動程式並非必要。
 
@@ -2182,9 +2218,9 @@ NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點顯器Th
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille 點顯器系列 ++[Hims]
-NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart Beetle 和 Sync Braille，顯示在 [Hims http://www.hims-inc.com/]
+NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart Beetle 和 Sync Braille，顯示在 [Hims https://www.hims-inc.com/]
 如果是透過 USB連接，您需要安裝由 HIMS 所提供的驅動程式安裝在您的電腦系統上。 
-您可以從此連結下載: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+您可以從此連結下載: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 以下是與 NVDA 相關按鍵的說明，
 請參考此設備的相關參考文件，以瞭解各按鍵的位置。
@@ -2254,10 +2290,13 @@ NVDA 透過 USB 或藍芽連結時，支援 Braille Sense、Braille EDGE、Smart
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays 從[Nippon Telesoft http://www.nippontelesoft.com/] 有被支援。
+The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays 從[Nippon Telesoft https://www.nippontelesoft.com/] 有被支援。
 
-您可以得到更多相關顯示器資訊從 http://www.seika-braille.com/
+您可以得到更多相關顯示器資訊從 https://www.seika-braille.com/
 您需要請供應商提供USB驅動程式並安裝到您的系統。
+
+這些點顯器尚未支援NVDA背景自動偵測的功能。
+
 下列為此顯示器在NVDA的按鍵配置。
 這些按鍵的實際位置，請參閱顯示器的說明文件。
 %kc:beginInclude
@@ -2283,9 +2322,10 @@ The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays 
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
+這些點顯器並不支援NVDA背景自動偵測的功能。
+
 若已安裝了 BrxCom，NVDA就會使用BrxCom。
 BrxCom 能允許直接從點顯器上執行鍵盤輸入，而獨立於螢幕報讀軟體之外運作的一種工具。
-Papenmeier 開發的新版 BrxCom 將於近期推出，該款設備可與 NVDA 相容。
 Trio and BRAILLEX Live此款產品是可以採鍵盤輸入的。
 
 多數的裝置有一個容易存取列 (eab)，以方便直覺式的快速操作，
@@ -2363,7 +2403,8 @@ Trio 模組有額外的四個案件，位在點字鍵盤的前面。
 -
 
 附註:這些點顯器只能連結串列埠。
-因此在[選擇點顯器 #SelectBrailleDisplay]對話框中選擇此驅動程序後，你必須選擇點顯器所連接的連接埠。
+因此這些點顯器並不支援NVDA背景自動偵測的功能。
+在[選擇點顯器 #SelectBrailleDisplay]對話框中選擇此驅動程序後，您必須選擇點顯器所連接的連接埠。
 
 若有安裝 BrxCom，NVDA就會使用BrxCom。
 BrxCom是一種工具，讓您可使用點字輸入並從報讀軟體獨立出來。
@@ -2440,7 +2481,7 @@ BRAILLEX 2D 顯示器:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanware.com]。
+NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware https://www.humanware.com]。
 下列為支援的型號: 
 - BrailleNote Classic (serial connection only)
 - BrailleNote PK (Serial and bluetooth connections)
@@ -2461,9 +2502,9 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 設定連接埠。
 當您連接至USB或藍芽，可視可使用的裝置將連接埠設定到「自動」、「USB」或「藍芽」。
 
-在連結BrailleNote Apex的USB客戶端介面之前，你必須安裝HumanWare提供的驅動程式。
+在連結BrailleNote Apex的USB客戶端介面之前，您必須安裝HumanWare提供的驅動程式。
 
-在 BrailleNote Apex BT 上，你可以使用一和四點之間的滾輪來獲得各種 NVDA 命令。
+在 BrailleNote Apex BT 上，您可以使用一和四點之間的滾輪來獲得各種 NVDA 命令。
 輪子由四個方向的點、中心一個d可點擊的按鈕、和一個可順時針或逆時針旋轉的輪子組成。
 
 以下為 BrailleNote 在 NVDA 的按鍵配置。
@@ -2532,7 +2573,7 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 %kc:endInclude
 
 ++ EcoBraille 點顯器 ++[EcoBraille]
-NVDA支援EcoBraille點顯器，請參閱[ONCE http://www.once.es/].
+NVDA支援EcoBraille點顯器，請參閱[ONCE https://www.once.es/].
 支援的機型種類如下表所示:
 - EcoBraille 20
 - EcoBraille 40
@@ -2541,6 +2582,7 @@ NVDA支援EcoBraille點顯器，請參閱[ONCE http://www.once.es/].
 -
 
 您可以在 NVDA 的[選擇點顯器 #SelectBrailleDisplay]對話框上依所使用連接埠的點顯器型號來設定。
+這些點顯器並不支援NVDA背景自動偵測的功能。
 
 以下的按鍵是 EcoBraille 點顯器上的按鍵指令。
 請參見 [EcoBraille 文件說明ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] 以瞭解這些按鍵的位置。 
@@ -2577,7 +2619,7 @@ NVDA支援EcoBraille點顯器，請參閱[ONCE http://www.once.es/].
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris 點顯器 ++[Eurobraille]
-The Esys, Esytime and Iris displays from [Eurobraille http://www.eurobraille.fr/] are supported by NVDA.
+The Esys, Esytime and Iris displays from [Eurobraille https://www.eurobraille.fr/] are supported by NVDA.
 Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
 Older Esytime devices only support USB.
 Iris displays can only be connected via a serial port.
@@ -2661,16 +2703,17 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] 是一個可以用來支援許多點顯器的應用程式。
-使用時，必須安裝BRLTTY視窗版本 （[BRLTTY for Windows http://www.brltty.com/download.html]）。
+[BRLTTY https://www.brltty.com/] 是一個可以用來支援許多點顯器的應用程式。
+使用時，必須安裝BRLTTY視窗版本 （[BRLTTY for Windows https://www.brltty.com/download.html]）。
 您必須下載並安裝最新版本，舉例來說，它的名稱可能是brltty-win-4.2-2.exe。
 當設定顯示器以及連接埠時，請仔細閱讀安裝說明，尤其當您已經在使用 USB 顯示器並安裝了製造商提供的驅動程式時。
 
 針對附有點字鍵盤的顯示器，目前 BRLTTY 可自行處理點字輸入。
 因此，NVDA 的點字輸入轉譯表設定就與其無關聯了。
+BRLTTY 並不支援NVDA背景自動偵側的功能。
 
 下列為 BRLTTY 指令在NVDA的配置狀況。
-請參見 [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] 以進一步瞭解其控制點顯器的對應方式。
+請參見 [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] 以進一步瞭解其控制點顯器的對應方式。
 %kc:beginInclude
 || 名稱 | BRLTTY 指令 |
 | Scroll braille display back | fwinlt (go left one window) |

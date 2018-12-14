@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-22 00:10+1000\n"
+"POT-Creation-Date: 2018-11-09 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: \n"
@@ -84,11 +84,6 @@ msgstr "Onbekende taal"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "onbekende invoermethode"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -368,6 +363,14 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "wwinv"
 
+#. Translators: Displayed in braille for an object which is deleted.
+msgid "del"
+msgstr "verwdrd"
+
+#. Translators: Displayed in braille for an object which is inserted.
+msgid "ins"
+msgstr "ingvgd"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "sel"
@@ -505,6 +508,18 @@ msgstr "Leesregel altijd vullen"
 msgid "Only when scrolling back"
 msgstr "Alleen bij terugscrollen"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatisch"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr "USB"
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr "Bluetooth"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -574,9 +589,20 @@ msgstr "aan focus"
 msgid "to review"
 msgstr "aan leescursor"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatisch"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+msgid "Unknown braille display"
+msgstr "Onbekende brailleleesregel"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Bluetooth serieel: {port} ({deviceName})"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "Serieel: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -642,6 +668,11 @@ msgstr "Bulgaars 8 punt computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Central Kurdish grade 1"
+msgstr "Centraal Koerdisch graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Wels graad 1"
 
@@ -649,6 +680,11 @@ msgstr "Wels graad 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Wels graad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Czech 8 dot computer braille"
+msgstr "Tsjechisch 8 punt computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -663,22 +699,22 @@ msgstr "Deens 8 punt computerbraille"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 1"
-msgstr "Deens 6 punts graad 1"
+msgstr "Deens 6 punt graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 1"
-msgstr "Deens 8 punts graad 1"
+msgstr "Deens 8 punt graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 2"
-msgstr "Deens 6 punts graad 2"
+msgstr "Deens 6 punt graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 2"
-msgstr "Deens 8 punts graad 2"
+msgstr "Deens 8 punt graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -752,6 +788,11 @@ msgstr "Engels (V.S.) graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Esperanto grade 1"
+msgstr "Esperanto graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
 msgstr "Spaans 8 punt computerbraille"
 
@@ -783,7 +824,7 @@ msgstr "Perzisch graad 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 6 dot"
-msgstr "Fins 6 punts"
+msgstr "Fins 6 punt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -854,6 +895,11 @@ msgstr "Hongaars 8 punt computerbraille"
 #. braille settings dialog.
 msgid "Hungarian grade 1"
 msgstr "Hongaars graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Hungarian grade 2"
+msgstr "Hongaars graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1037,6 +1083,11 @@ msgstr "Sanskriet graad 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Swedish 8 dot computer braille"
+msgstr "Zweeds 8 punts computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Swedish grade 1"
 msgstr "Zweets graad 1"
 
@@ -1089,6 +1140,16 @@ msgstr "Unicode braille"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Viëtnamees graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chinees (China, Mandarijn) graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chinees (China, Mandarijn) graad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2507,15 +2568,25 @@ msgstr "duimtoets"
 msgid "calendar"
 msgstr "agenda"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "grafiekelement"
-
 msgid "video"
 msgstr "video"
 
 msgid "audio"
 msgstr "audio"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "grafiekelement"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Verwijderd"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ingevoegd"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3808,6 +3879,14 @@ msgstr ""
 msgid "No status line found"
 msgstr "Geen statusregel gevonden"
 
+#. Translators: Reported when status line exist, but is empty.
+msgid "no status bar information"
+msgstr "Geen informatie van statusbalk"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr "Kon inhoud van statusbalk niet kopiëren naar klembord"
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4767,28 +4846,23 @@ msgstr "Toetsenbord, alle indelingen"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amharisch"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragonees"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arabisch"
+msgid "Central Kurdish"
+msgstr "Centraal Koerdisch"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepalees"
+msgid "Northern Kurdish"
+msgstr "Noordelijk Koerdisch"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Servisch (Latijn)"
+msgid "Burmese"
+msgstr "Birmaans"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5968,7 +6042,7 @@ msgstr "met %s rijen"
 msgid "level %s"
 msgstr "niveau %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "met %s items"
@@ -6079,17 +6153,9 @@ msgstr "Achtergrondpatroon {pattern}"
 msgid "line %s"
 msgstr "regel %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "ingevoegd"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "niet ingevoegd"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "Verwijderd"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6613,21 +6679,21 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are "
-"free to share or change this software in any way you like as long as it is "
-"accompanied by the license and you make all source code available to anyone "
-"who wants it. This applies to both original and modified copies of this "
-"software, plus any derivative works.\n"
-"For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"Op {name} is de GNU General Public License (Versie 2) van toepassing. U bent "
+"vrij om deze software te delen of veranderen op welke manier u wilt, zolang "
+"deze vergezeld wordt door de licentie en u de broncode beschikbaar stelt "
+"voor iedereen die daarom vraagt. Dit is van toepassing op zowel originele "
+"als gemodificeerde kopieën van deze software, alsmede ieder afgeleid werk.\n"
+"Voor meer details kunt u de licentie raadplegen vanuit het menu Help.\n"
+"Deze kan ook online geraadpleegd worden op: https://www.gnu.org/licenses/old-"
+"licenses/gpl-2.0.html\n"
 "\n"
-"{name} is ontwikkeld door NV Access, een vrijwilligersorganisatie met als "
-"missie gratis en open source oplossingen voor blinden en slechtzienden te "
-"ontwikkelen en te promoten.\n"
-"Als u NVDA nuttig vindt en wilt dat het blijvend wordt verbeterd, denk er "
-"dan aub aan om een gift over te maken aan NV Access. Dit kunt u doen door in "
-"het NVDA menu te kiezen voor Doneer."
+"{name} is ontwikkeld door NV Access, een organisatie zonder winstoogmerk met "
+"als missie gratis en open source oplossingen voor blinden en slechtzienden "
+"te ontwikkelen en promoten.\n"
+"Als u NVDA nuttig vindt en wilt dat het blijvend wordt verbeterd, overweg "
+"dan alstublieft om een gift over te maken aan NV Access. Dit kunt u doen "
+"door in het NVDA menu te kiezen voor Doneer."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6831,35 +6897,17 @@ msgstr "ongelezen"
 msgid "Editing profile {profile}"
 msgstr "Bewerkt profiel {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Paarse flag"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "beantwoord"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Oranje vlag"
+#. Translators: the last action taken on an Outlook mail message
+msgid "REPLIED ALL"
+msgstr ""
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Groene vlag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Gele vlag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Blauwe vlag"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Rode vlag"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "doorgestuurd"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7256,14 +7304,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "uit"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr "Geen emoji"
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 serie/protocol converter"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Bluetooth serieel: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7284,15 +7331,6 @@ msgstr "Schakelt HID-toetsenbordsimulatie in of uit"
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH/Orbit brailleleesregels"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "Serieel: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7862,6 +7900,7 @@ msgstr "&Installeren..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&Verwijderen"
@@ -8621,7 +8660,17 @@ msgstr "Interpunctie-/symbool&niveau:"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
-msgstr "Vertrouw taal van stem bij het verwerken van karakters en symbolen"
+msgstr "Vertrouw taal van stem bij verwerken van karakters en symbolen"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Gebruik Unicode Consortium gegevens (inclusief emoji) bij verwerken van "
+"karakters en symbolen"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -8630,7 +8679,7 @@ msgstr "Percentage toonhoogteverandering bij hoofdletters"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Say &cap before capitals"
-msgstr "Het woord \"Hoofdletter\" uitspreken bij lezen van &hoofdletters"
+msgstr "Het woord \"Hoofdletter\" uitspreken voor &hoofdletters"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -8646,20 +8695,10 @@ msgstr "&Spellingfunctionaliteit gebruiken (wanneer ondersteund)"
 msgid "Keyboard"
 msgstr "Toetsenbord"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "CapsLock als NVDA-toets gebruiken"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Nummerieke insert-toets als NVDA-toets gebruiken"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Uitgebreide Insert-toets als NVDA-toets gebruiken"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Selecteer NVDA-toetsen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8747,7 +8786,7 @@ msgstr "Leescursor"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
 msgid "Follow system &focus"
-msgstr "Ssysteem&focus volgen"
+msgstr "Systeem&focus volgen"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8822,8 +8861,8 @@ msgstr "Flits&berichten melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "&Helpballonnen melden"
+msgid "Report &notifications"
+msgstr "&Notificaties melden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10737,6 +10776,16 @@ msgstr "opmerking: {text} door {author} op {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} van linkerrand van pagina"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} van bovenrand van pagina"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10895,6 +10944,55 @@ msgstr "Dubbele regelafstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 regelafstand"
+
+#~ msgid "purple flag"
+#~ msgstr "Paarse flag"
+
+#~ msgid "Orange flag"
+#~ msgstr "Oranje vlag"
+
+#~ msgid "Green flag"
+#~ msgstr "Groene vlag"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Gele vlag"
+
+#~ msgid "Blue flag"
+#~ msgstr "Blauwe vlag"
+
+#~ msgid "Red flag"
+#~ msgstr "Rode vlag"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "CapsLock als NVDA-toets gebruiken"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Nummerieke insert-toets als NVDA-toets gebruiken"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Uitgebreide Insert-toets als NVDA-toets gebruiken"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "&Helpballonnen melden"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amharisch"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arabisch"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepalees"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Servisch (Latijn)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "Toont het dialoogvenster met de steminstellingen van NVDA"

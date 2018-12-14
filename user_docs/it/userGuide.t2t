@@ -25,7 +25,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
-- Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente
+- Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente, e il riconoscimento automatico di un gran numero di modelli di barre.
 - Tradotto in 54 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
@@ -47,6 +47,7 @@ Per informazioni sul funzionamento di altre Sintesi Vocali con NVDA si veda la s
 ++ Supporto Braille ++[BrailleSupport]
 NVDA è in grado di gestire moltissimi Display Braille, permettendo agli utenti che ne possiedono uno di usufruire anche di questa tecnologia.
 è anche possibile immettere il testo direttamente dalla riga braille purché munita di tastiera, sfruttando la modalità classica o quella a braille contratto, diffuso soprattutto in Stati Uniti e Inghilterra.
+Inoltre, da impostazioni predefinite NVDA è in grado di riconoscere la presenza di un gran numero di display braille.
 Per il funzionamento di barre Braille con NVDA fare riferimento alla sezione [Display Braille supportati #SupportedBrailleDisplays].
 
 NVDA inoltre supporta moltissimi tipi di tabelle braille, permettendo quindi un utilizzo del Braille nella lingua scelta dall'utente. Molte lingue sono fornite di tabelle grado 1 e grado 2, Braille contratto o Computer Braille.
@@ -57,7 +58,7 @@ NVDA  copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 NVDA è coperto dalla licenza GNU versione 2. 
 Siete liberi di condividere e modificare questo programma come volete, a patto che voi distribuiate la licenza assieme al software e rendiate disponibile il sorgente a chiunque ne faccia richiesta. 
 Questo si applica a copie originali e modificate del software ed a qualsiasi programma che utilizzi codice proveniente da questo software.
-Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Per maggiori informazioni è possibile [Leggere l'intera licenza. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisiti di sistema +[SystemRequirements]
 - Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows 7, Windows8, Windows8.1, Windows10 e tutte le edizioni Server a partire da Windows Server 2008 r2.
@@ -71,7 +72,7 @@ Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu
 + Scaricare e configurare NVDA +[GettingAndSettingUpNVDA]
 Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito originale all'indirizzo [www.nvaccess.org NVDA_URL].
 
-Accedere alla sezione download e si troverà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: http://www.nvda.it]
+Accedere alla sezione download e si troverà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: https://www.nvda.it]
 
 Una volta che si esegue il file appena scaricato, verrà lanciata una copia temporanea di NVDA.
 In seguito verrà richiesto se installare NVDA sul disco fisso, se creare una versione portable, oppure continuare ad utilizzare la copia in esecuzione dello screen reader.
@@ -559,7 +560,7 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 + Lettura della matematica +[ReadingMath]
 NVDA è in grado di leggere ed interagire con la matematica nei contenuti che fanno uso del software MathPlayer4, prodotto da Design Science.
 Ciò richiede che MathPlayer4 sia installato sul computer.
-MathPlayer può essere scaricato gratuitamente dal seguente sito web: http://www.dessci.com/en/products/mathplayer/
+MathPlayer può essere scaricato gratuitamente dal seguente sito web: https://www.dessci.com/en/products/mathplayer/
 
 NVDA supporta la matematica nei seguenti formati:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
@@ -600,6 +601,7 @@ Se si possiede un Display Braille, NVDA sarà in grado di mostrare le informazio
 Nel caso inoltre la barra braille sia dotata di tastiera perkins, è anche possibile servirsi della stessa per immettere il testo, sia in modalità standard che contratta (utile in Stati Uniti e Regno Unito).
 
 Si prega di fare riferimento alla sezione [display braille supportati #SupportedBrailleDisplays] per ulteriori informazioni.
+Inoltre questa sezione contiene informazioni sui modelli di Display Braille che supportano la rilevazione automatica in background da parte dello screen reader.
 è possibile modificare i parametri braille andando alla [categoria Braille #BrailleSettings] della finestra [Impostazioni NVDA #NVDASettings].
 
 ++ Tipo di controlli, stato e abbreviazioni per i punti di riferimento ++[BrailleAbbreviations]
@@ -818,7 +820,7 @@ Per spostarsi in una cella protetta, passare alla modalità navigazione premendo
 
 +++ Campi +++[ExcelFormFields]
 Le cartelle di lavoro di Excel possono includere i campi.
-è possibile accedervi  attraverso l'elenco elementi oppure premendo i tasti di navigazione rapida per lettera f o shift+f.
+è possibile accedervi attraverso l'elenco elementi oppure premendo i tasti di navigazione rapida per lettera f o shift+f.
 Una volta raggiunto un campo in modalità navigazione, premere invio o la barra spaziatrice per attivarlo o per interagire con esso in modalità focus.
 Per ulteriori informazioni sulla modalità di navigazione e i caratteri singoli, si veda la [sezione modalità navigazione #BrowseMode].
 
@@ -832,9 +834,11 @@ Per ulteriori informazioni sulla modalità di navigazione e i caratteri singoli,
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
 | Annuncia tempo rimanente | control+shift+r | Annuncia il tempo restante della traccia attualmente in esecuzione, se ve n'è una. |
+| Annuncia tempo trascorso | control+shift+e | Annuncia il tempo trascorso della traccia attualmente in esecuzione, se ve n'è una. |
+| Annuncia lunghezza traccia | control+shift+t | Annuncia la lunghezza della traccia attualmente in esecuzione, se ve n'è una. |
 %kc:endInclude
 
-Nota: Questo tasto caldo funziona soltanto se la barra di stato di Foobar ha il formato predefinito.
+Nota: Questi tasti caldi funzionano soltanto se la barra di stato di Foobar ha il formato predefinito.
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -971,10 +975,29 @@ Questa opzione è disponibile soltanto nelle versioni Installer.
 ==== Controlla automaticamente la presenza di aggiornamenti di NVDA ====[GeneralSettingsCheckForUpdates]
 Se attivata, NVDA controllerà automaticamente la presenza di nuove versioni e notificherà l'utente della loro disponibilità.
 è anche possibile controllare manualmente, selezionando la voce controllo presenza aggiornamenti, situata all'interno del menu aiuto.
+A prescindere dal metodo scelto per controllare la presenza di aggiornamenti, è necessario che NVDA invii al server alcune informazioni in modo da ricevere l'aggiornamento corretto per il proprio sistema.
+Verranno sempre inviate le seguenti informazioni:
+- Versione di NVDA
+- Versione del sistema operativo in uso
+- Se il sistema operativo è a 64 o a 32 bit
+
+
+==== Consenti al progetto NVDA di raccogliere statistiche sull'utilizzo dello screen reader ====
+Se questa funzione è attivata, la Nv Access utilizzerà le informazioni provenienti dal server che gestisce gli aggiornamenti per raccogliere alcune informazioni di carattere demografico sugli utenti di NVDA, ossia sistema operativo e nazione d'origine.
+Si noti comunque che sebbene venga utilizzato l'indirizzo IP per calcolare lo stato di provenienza dell'utente, tale indirizzo IP non verrà mai salvato sui server.
+Oltre alle informazioni obbligatorie usate per controllare gli aggiornamenti, saranno inviati anche i seguenti dati:
+- Lingua dell'interfaccia di NVDA
+- Se la copia attualmente in uso è installer o portable
+- Nome della sintesi vocale in uso (compreso il nome del driver del componente aggiuntivo e la sua provenienza)
+- Nome del Display braille in uso (compreso il nome del driver del componente aggiuntivo e la sua provenienza)
+- Tabella di lettura corrente (solo se si usa il braille)
+
+
+Queste informazioni risultano di grandissimo aiuto a Nv Access per dare priorità a rami specifici di sviluppo di NVDA
 
 ==== Notifica aggiornamenti in sospeso all'avvio ====[GeneralSettingsNotifyPendingUpdates]
 Se la funzione è attivata, NVDA avviserà l'utente nel caso vi sia un aggiornamento in sospeso all'avvio, dando la possibilità di effettuare l'installazione.
-è anche possibile installare l'aggiornamento in sospeso manualmente dalla finestra di uscita di NVDA (se attivata), dal menu di NVDA, o quando si esegue un nuovo controllo dal menu aiuto..
+è anche possibile installare l'aggiornamento in sospeso manualmente dalla finestra di uscita di NVDA (se attivata), dal menu di NVDA, o quando si esegue un nuovo controllo dal menu aiuto.
 
 +++ Impostazioni voce (NVDA+control+v) +++[SpeechSettings]
 La categoria voce nella finestra impostazioni di NVDA contiene  opzioni che permettono di modificare il sintetizzatore da utilizzare nonché le caratteristiche delle varie voci come tono, velocità, etc.
@@ -1031,6 +1054,16 @@ Questa impostazione viene applicata a tutti i sintetizzatori, non soltanto a que
 ==== Considera attendibile la lingua della voce  corrente nel processare caratteri e simboli ====[VoiceSettingsTrust]
 Da impostazioni predefinite, questa funzione risulta attiva e consente di stabilire se NVDA debba ritenere affidabile la lingua della voce corrente nel processare simboli e caratteri.
 Se per qualche motivo ci si accorge che NVDA sta leggendo  la punteggiatura con un sintetizzatore o voce particolare in una lingua sbagliata, si consiglia di disattivare questa opzione, per forzare NVDA ad utilizzare le impostazioni globali per quella lingua.
+
+==== Includi dati del consorzio Unicode (comprese le emoji) nel processare caratteri e simboli ====[SpeechSettingsCLDR]
+Quando questa casella di controllo è attiva, NVDA si servirà di ulteriori dizionari per pronunciare caratteri e simboli.
+Tali dizionari contengono le descrizioni per molti simboli (in particolare le emoji) che sono fornite dal [Consorzio Unicode http://www.unicode.org/consortium/] come parte del [Common Locale Data Repository http://cldr.unicode.org/].
+Se si desidera che NVDA sia in grado di leggere le descrizioni di simboli ed emoji fornite da questo servizio, è necessario attivare la casella di controllo.
+In ogni caso, si consiglia di disattivare questa opzione nella circostanza in cui si disponga di una sintesi vocale in grado di leggere le emoji nativamente.
+
+Si noti che le descrizioni dei caratteri aggiunte manualmente vengono salvate nella propria configurazione utente.
+Perciò, se si modifica la descrizione di un'emoji, essa verrà letta a prescindere dal fatto che l'opzione sia attiva o meno.
+è possibile aggiungere, rimuovere o modificare le descrizioni dei simboli nella finestra [Pronuncia punteggiatura/simboli #SymbolPronunciation].
 
 ==== Percentuale di cambio tono  per lettere maiuscole ====[VoiceSettingsCapPitchChange]
 Questo campo editazione permette di digitare un numero che sarà equivalente alla variazione di altezza (pitch) effettuato dalla sintesi vocale in presenza di lettere maiuscole.
@@ -1210,9 +1243,12 @@ Se si verifica un errore durante il caricamento della barra braille, NVDA avvise
 Si tratta di una casella combinata formata da svariati elementi, a seconda dei driver installati sul proprio sistema. 
 Spostarsi con le frecce verticali per selezionarne uno.
 
+L'opzione "automatico" consente a NVDA di cercare in background la presenza di un gran numero di modelli di Display Braille, ad ogni modo non tutti supportano ancora la rilevazione automaticadella barra braille, quindi nel caso non venisse trovata la propria barra braille, selezionarla manualmente.
+Quando questa opzione viene selezionata e si collega un modello supportato di display braille tramite USB o Bluetooth, NVDA si connetterà automaticamente con quel display.
+
 Nessun display  braille significa che non si sta utilizzando il Braille.
 
-Si veda la sezione [Display Braille supportati #SupportedBrailleDisplays] per maggiori informazioni sui modelli disponibili.
+Si veda la sezione [Display Braille supportati #SupportedBrailleDisplays] per maggiori informazioni sui modelli disponibili e su quali è possibile servirsi della rilevazione automatica.
 
 ==== Porta ====[SelectBrailleDisplayPort]
 Questa opzione, se disponibile, permette di scegliere la porta, oppure il tipo di connessione da utilizzare per comunicare con il display braille selezionato.
@@ -1222,7 +1258,7 @@ Per impostazioni predefinite, NVDA supporta il riconoscimento automatico della p
 Comunque, per alcuni display braille, sarà anche possibile stabilire manualmente la porta da utilizzare.
 Le opzioni più comuni sono "automatica" per far sì che NVDA stabilisca da solo la porta esatta da utilizzare, "USB", "bluetooth", e seriale, se il display braille supporta questo tipo di comunicazione.
 
-Quest'ultima opzione non sarà disponibile se il display braille supporta soltanto il riconoscimento delle porte automatico.
+Quest'ultima opzione non sarà disponibile se il display braille supporta soltanto il riconoscimento automatico delle porte.
 
 Si consiglia di consultare la documentazione presente nella sezione [Display braille supportati #SupportedBrailleDisplays] per avere maggiori informazioni sulle porte e le connessioni disponibili per il display braille che si sta utilizzando.
 
@@ -1233,14 +1269,11 @@ Questa categoria Contiene le seguenti opzioni:
 ==== Layout tastiera ====[KeyboardSettingsLayout]
 Questa casella combinata permette di selezionare quale layout di tastiera NVDA debba utilizzare. Al momento è possibile scegliere tra desktop e laptop, ossia tra tastiere per pc fissi e portatili.
 
-==== Utilizza BloccaMaiuscole come tasto funzione per NVDA ====[KeyboardSettingsCapsModifier]
-Se questa casella di controllo viene attivata, il tasto blocca maiuscole agirà come tasto funzione di NVDA.
-
-==== Utilizza Insert della tastiera estesa come tasto funzione di NVDA ====[KeyboardSettingsExtendedInsert]
-Se questa casella di controllo viene attivata, il tasto insert, generalmente situato vicino ai tasti home/fine/pagina su/pagina giù, agirà come tasto funzione di NVDA.
-
-==== Utilizza insert del tastierino numerico come tasto funzione di NVDA ====[KeyboardSettingsNumpadInsert]
-Se questa casella di controllo viene attivata, il tasto insert del tastierino numerico agirà come tasto funzione di NVDA.
+==== Seleziona il tasto funzione NVDA ====[KeyboardSettingsModifiers]
+Le caselle di controllo presenti in questo elenco consentono di stabilire quali tasti debbano essere usati come [Tasti funzione di NVDA #TheNVDAModifierKey]. è possibile scegliere tra le seguenti possibilità:
+- Il tasto blocca maiuscole
+- Il tasto insert del tastierino numerico
+- Il tasto insert della tastiera estesa (in genere situato nel gruppo di sei tasti vicino a inizio e fine)
 
 Se non viene selezionato alcun tasto che agisca come tasto NVDA, potrebbe risultare impossibile accedere ad alcuni comandi dello screen reader.
 Pertanto, verrà visualizzato un messaggio d'errore nell'eventualità tutti i tasti siano deselezionati.
@@ -1841,8 +1874,8 @@ La piattaforma Microsoft Speech fornisce supporto per diverse lingue, e generalm
 Queste voci possono essere utilizzate anche con NVDA.
 
 Per usare queste voci, è necessaria l'installazione di due componenti:
-- Microsoft Speech Platform - Runtime (Versione 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Versione 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Versione 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Versione 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - Questa pagina contiene diversi file sia per il riconoscimento vocale sia per la sintesi vocale stessa.
  Selezionare i file che si desiderano, a seconda del TTS e della lingua che si vuole utilizzare.
  Ad esempio, il file MSSpeech_TTS_en-US_ZiraPro.msi è una voce inglese Stati Uniti.
@@ -1870,16 +1903,34 @@ Questo sintetizzatore non supporta [funzionalità [spelling #SpeechSettingsUseSp
 + Display braille supportati +[SupportedBrailleDisplays]
 Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 
+++ Display che supportano la rilevazione automatica in background ++[AutomaticDetection]
+NVDA è in grado di rilevare automaticamente un gran numero di Display Braille, sia via bluetooth che tramite USB.
+Questa funzionalità la si attiva selezionando la voce "automatico" dalla [Finestra Impostazioni Braille #BrailleSettings].
+L'opzione è già selezionata per impostazioni predefinite.
+
+Segue l'elenco di tutti i display braille che supportano il rilevamento automatico:
+- Display Handy Tech
+- Display Baum/Humanware/APH/Orbit
+- Brailliant Humanware serie BI/B
+- BrailleNote di Humanware
+- SuperBraille
+- Alva serie 6 di Optelec
+- modelli Braille Sense/Braille EDGE/Smart Beetle/Sync della Hims.
+- Display Esys/Esytime/Iris di Eurobraille
+-
+
 ++ Freedom Scientific Serie Focus/PAC Mate ++[FreedomScientificFocus]
-Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific http://www.freedomscientific.com/], sia USB che Bluetooth.
+Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific https://www.freedomscientific.com/], sia USB che Bluetooth.
 per un corretto funzionamento è necessario avere installati nel proprio sistema i driver per display Braille Freedom Scientific.
-Nel caso non si sia in possesso di tali driver, è possibile scaricarli dall'indirizzo http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Nel caso non si sia in possesso di tali driver, è possibile scaricarli dall'indirizzo https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Sebbene nella pagina sia nominata solo la barra Focus Blue, il driver funzionerà per tutti i modelli Freedom.
 Da notare che se nel proprio sistema si sta utilizzando una versione di Windows a 64 bit e i driver sono già stati installati da un altro screen reader, è probabile che sia necessario installare comunque il pacchetto, in quanto difficilmente quello screen reader avrà installato tutti i file utilizzati da NVDA.
 
 Per impostazioni predefinite, NVDA è in grado di individuare e connettersi automaticamente a questi display via USB o Bluetooth.
 Comunque, sarà anche possibile selezionare la sola connessione USB o Bluetooth, per restringere il tipo di connessioni da utilizzare.
 Questo potrebbe essere utile ad esempio se si vuole usare la Focus con NVDA via Bluetooth, ma si desidera caricare la batteria tramite la connessione USB.
+
+Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
 
 Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
@@ -1932,7 +1983,7 @@ Solo per Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA serie 6/protocol converter ++[OptelecALVA]
-Sono supportati sia i modelli BC640 che BC680 prodotti dalla [Optelec http://www.optelec.com/] sia con connessione usb che bluetooth.
+Sono supportati sia i modelli BC640 che BC680 prodotti dalla [Optelec https://www.optelec.com/] sia con connessione usb che bluetooth.
 In alternativa , è possibile connettere un display  Optelec più vecchio, ad esempio il Braille Voyager, servendosi di un convertitore di protocolli prodotto dalla stessa Optelec.
 Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo.
 Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
@@ -1970,11 +2021,11 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Freccia sinistra | spLeft |
 | Freccia destra | spRight |
 | Tasto invio | spEnter, Enter |
-| leggere data/ora | sp1+sp2 |
+| leggere data/ora | sp2+sp3 |
 | Menu NVDA  | sp1+sp3 |
 | Tasto windows+d  (ridurre ad icona tutte le applicazioni) | sp1+sp4 |
 | tasto windows+b (focus sul system tray) | sp3+sp4 |
-| Tasto windows | sp2+sp3, Windows |
+| Tasto windows | sp1+sp2, Windows |
 | Tasto alt+tab | sp2+sp4 |
 | tasto control+home | t3+spUp |
 | tasto control+end | t3+spDown |
@@ -1985,7 +2036,7 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 %kc:endInclude
 
 ++ Modelli Handy Tech ++[HandyTech]
-NVDA supporta gran parte dei modelli di barre braille prodotte dalla [Handy Tech http://www.handytech.de/], siaUSB, seriali che Bluetooth. 
+NVDA supporta gran parte dei modelli di barre braille prodotte dalla [Handy Tech https://www.handytech.de/], siaUSB, seriali che Bluetooth. 
 Per alcuni modelli vecchi USB bisogna installare i driver USB fatti dalla Handy Tech.
 
 I seguenti display braille non sono supportati in maniera nativa, ma possono essere comunque usati installando il [driver universale Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] e il componente aggiuntivo:
@@ -2019,9 +2070,11 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-NVDA supporta la barra Braille Lilli prodotta dalla [MDV http://www.mdvbologna.it/]. 
+NVDA supporta la barra Braille Lilli prodotta dalla [MDV https://www.mdvbologna.it/]. 
 Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo. 
 Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
+
+Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
 
 Seguono i tasti che sono stati assegnati con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -2039,7 +2092,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
 
 ++ Display Braille Baum/Humanware/APH/Orbit Reader ++[Baum]
-Molti Display Braille della [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] e [Orbit http://www.orbitresearch.com/] sono supportati sia tramite USB, Bluetooth o porta seriale.
+Molti Display Braille della [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] e [Orbit https://www.orbitresearch.com/] sono supportati sia tramite USB, Bluetooth o porta seriale.
 Essi includono:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2075,8 +2128,10 @@ Per i modelli che possiedono un Joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-Il modello hedo ProfiLine USB prodotto dalla [hedo Reha-Technik  http://www.hedo.de/] è pienamente supportato.
+Il modello hedo ProfiLine USB prodotto dalla [hedo Reha-Technik  https://www.hedo.de/] è pienamente supportato.
 E' necessario prima installare i driver USB forniti dal costruttore.
+
+Questo modello non supportano ancora la funzione di rilevazione automatica in background.
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -2092,8 +2147,10 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-La Barra Braille hedo MobilLine USB prodotta dalla hedo Reha-Technik http://www.hedo.de/] è pienamente supportata.
+La Barra Braille hedo MobilLine USB prodotta dalla hedo Reha-Technik https://www.hedo.de/] è pienamente supportata.
 E' prima necessario installare i driver USB forniti dal produttore.
+
+Questo modello non supportano ancora la funzione di rilevazione automatica in background.
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -2109,7 +2166,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
  
 ++ HumanWare Brailliant BI/B Series / BrailleNote Touch ++[HumanWareBrailliant]
-Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare http://www.humanware.com/], comprese BI 14, BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
+Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare https://www.humanware.com/], comprese BI 14, BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
 In caso di connessione tramite USB con protocollo impostato su Humanware, è necessario prima installare i driver sviluppati dal produttore.
 Non è richiesto alcun driver USB invece nel caso in cui il protocollo sia impostato su OpenBraille.
 
@@ -2161,9 +2218,9 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
 
 ++ HIMS serie Braille Sense/Braille EDGE/Smart Beetle/Sync Braille ++[Hims]
-NVDA supporta i modelli Braille Sense, Braille EDGE,  SmartBeetle e SyncBraille prodotti dalla [Hims http://www.hims-inc.com/] quando connessi tramite USB o bluetooth.
+NVDA supporta i modelli Braille Sense, Braille EDGE,  SmartBeetle e SyncBraille prodotti dalla [Hims https://www.hims-inc.com/] quando connessi tramite USB o bluetooth.
 In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
-Si possono scaricare da qui all'indirizzo: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Si possono scaricare da qui all'indirizzo: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -2233,9 +2290,11 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 %kc:endInclude
 
 ++ Display Braille Seika ++[Seika]
-NVDA supporta i modelli Seika 3, 4 e 5 a 40 caratteri e Seika80 a 80 caratteri, prodotti dalla [Nippon Telesoft http://www.nippontelesoft.com/].
-Si possono ottenere maggiori informazioni e scaricare i driver per queste barre braille visitando la pagina http://en.seika-braille.com/down/index.html/.
+NVDA supporta i modelli Seika 3, 4 e 5 a 40 caratteri e Seika80 a 80 caratteri, prodotti dalla [Nippon Telesoft https://www.nippontelesoft.com/].
+Si possono ottenere maggiori informazioni e scaricare i driver per queste barre braille visitando la pagina https://en.seika-braille.com/down/index.html/.
 è prima necessario installare i driver USB forniti in dotazione.
+
+Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
 Consultare la documentazione della barra braille per informazioni sulla posizione dei tasti.
@@ -2261,6 +2320,8 @@ Sono supportati i seguenti display braille:
 - BRAILLEX Trio (USB e bluetooth)
 - BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus (USB e bluetooth)
 -
+
+Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
 
 Se BrxCom è installato, NVDA lo utilizzerà.
 BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
@@ -2342,7 +2403,8 @@ Sono supportati i seguenti display braille:
 -
 
 Si noti che questi display braille si possono connettere solo tramite porta seriale.
-Inoltre, è anche necessario selezionare la porta esatta alla quale la barra braille è connessa, dopo aver scelto il driver dalla finestra [Selezione Display Braille #SelectBrailleDisplay]. 
+Per questo motivo, questi modelli non supportano la funzione di rilevazione automatica in background.
+è quindi necessario selezionare la porta esatta alla quale la barra braille è connessa, dopo aver scelto il driver dalla finestra [Selezione Display Braille #SelectBrailleDisplay]. 
 
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
@@ -2419,7 +2481,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA supporta la famiglia di barre Braillenote della [Humanware http://www.humanware.com] quando configurati per operare come terminali per screen reader.
+NVDA supporta la famiglia di barre Braillenote della [Humanware https://www.humanware.com] quando configurati per operare come terminali per screen reader.
 Sono supportati i seguenti modelli:
 - BrailleNote Classic (solo connessione seriale)
 - BrailleNote PK (Connessione seriale e bluetooth )
@@ -2511,7 +2573,7 @@ Di seguito i comandi assegnati alla rotella di scorrimento:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA supporta i Display Braille EcoBraille prodotti da [ONCE http://www.once.es/].
+NVDA supporta i Display Braille EcoBraille prodotti da [ONCE https://www.once.es/].
 Sono supportati i seguenti modelli:
 - EcoBraille 20
 - EcoBraille 40
@@ -2520,6 +2582,7 @@ Sono supportati i seguenti modelli:
 -
 
 In NVDA, è possibile impostare la porta seriale a cui il display braille è collegato nella finestra di dialogo [Selezione Display Braille #SelectBrailleDisplay]. 
+Questi modelli non supportano la funzione di rilevazione automatica in background.
 
 Di seguito sono riportati i tasti assegnati per il display EcoBraille.
 Si prega di consultare la [documentazione EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] per una descrizione sulla posizione dei tasti.
@@ -2556,7 +2619,7 @@ A causa di ciò, e per mantenere una buona compatibilità con altri screen reade
 %kc:endInclude
 
 ++ Display Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-I display Esys, Esytime e Iris prodotti da [Eurobraille http://www.eurobraille.fr/] sono supportati da NVDA.
+I display Esys, Esytime e Iris prodotti da [Eurobraille https://www.eurobraille.fr/] sono supportati da NVDA.
 I dispositivi Esys e Esytime-Evo sono supportati quando connessi via USB o bluetooth.
 I dispositivi Esytime più vecchi invece sono gestiti solo tramite USB.
 Le barre Iris infine possono essere connesse soltanto tramite porta seriale.
@@ -2640,16 +2703,17 @@ Consultare la documentazione della barra braille per informazioni sulla posizion
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
-Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://www.brltty.com/download.htm].
+[BRLTTY https://www.brltty.com] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
+Per poterlo utilizzare, è necessario installare [BRLTTY per Windows https://www.brltty.com/download.htm].
 Si deve scaricare ed installare l'ultimo pacchetto Installer, che è chiamato, ad esempio, brltty-win-4.2-2.exe. 
 Quando si configura la Barra Braille e la porta da utilizzare, si prega di fare attenzione alle istruzioni presentate a schermo, specialmente in caso si possieda un modello USB e sono già installati nel sistema i Driver prodotti dalla casa madre.
 
 Per i display che possiedono già una tastiera braille, Brltty gestisce autonomamente la procedura di immissione e traduzione del testo dal braille.
 Pertanto, le impostazioni tabella braille di immissione non sono rilevanti.
 
+BRLTTY non è coinvolto nelle funzioni di rilevamento automatico display braille di NVDA.
 Seguono i tasti che sono stati assegnati con NVDA a Brltty.
-Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyBindings/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
+Si legga la [tabella dei tasti di Brltty https://mielke.cc/brltty/doc/KeyBindings/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
 %kc:beginInclude
 || Nome | comando BRLTTY  |
 | Scorre Display Braille indietro | fwinlt (go left one window) |

@@ -22,7 +22,7 @@ Ses points forts sont :
 - Un synthétiseur intégré prenant en charge plus de 80 langues ;
 - L'annonce, quand c'est possible, d'informations de formatage du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe ;
 - L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris ;
-- La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
+- La prise en charge de nombreux afficheurs braille, incluant la capacité de détecter automatiquement beaucoup d'entre eux ainsi que la saisie pour les afficheurs disposant d'un clavier braille ;
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
 - Un installateur parlant facile à utiliser ;
 - Une traduction dans 54 langues ;
@@ -47,6 +47,7 @@ Pour des informations concernant les autres synthétiseurs de parole pris en cha
 ++ Support du Braille ++[BrailleSupport]
 Pour les utilisateurs possédant un terminal braille, NVDA peut afficher ses informations en braille.
 La saisie braille en intégral ou abrégé via un clavier braille est également supportée.
+De plus, NVDA détectera automatiquement beaucoup de terminaux braille par défaut.
 Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille.
 
 NVDA propose de nombreux codes braille couvrant un grand ensemble de langues. Dans bien des cas, le braille intégral et abrégé sont disponibles. Pour les utilisateurs francophones, le braille français unifié est disponible en intégral et abrégé.
@@ -57,7 +58,7 @@ NVDA est Copyright (C) NVDA_COPYRIGHT_YEARS NVDA contributors.
 NVDA est couvert par la licence GNU General Public License (Version 2). 
 Vous avez le droit de distribuer ou modifier ce logiciel comme il vous plaît pourvu que vous distribuiez la licence avec le logiciel, et rendiez disponible l'intégralité du code source pour toute personne qui le veut. 
 Ceci s'applique aussi bien à la version originale qu'aux copies modifiées de ce logiciel, et aussi à tout travail dérivé.
-Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html].
+Pour plus de détails, vous pouvez [lire l'intégralité de la licence https://www.gnu.org/licenses/gpl.html].
 
 + Configuration Système Requise +[SystemRequirements]
 - Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
@@ -559,7 +560,7 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 + Lecture de Contenu Mathématique +[ReadingMath]
 En utilisant MathPlayer 4 de Design Science, NVDA peut lire et naviguer interactivement dans le contenu mathématique supporté.
 Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
-MathPlayer est disponible en téléchargement gratuit sur : http://www.dessci.com/en/products/mathplayer/
+MathPlayer est disponible en téléchargement gratuit sur : https://www.dessci.com/en/products/mathplayer/
 
 NVDA supporte les types de contenu mathématiques suivants :
 - MathML sous Mozilla Firefox, Microsoft Internet Explorer et Google Chrome.
@@ -600,6 +601,7 @@ Si vous possédez un afficheur braille, NVDA peut afficher des informations en b
 Si votre terminal braille possède un clavier de type Perkins, vous pouvez également saisir du texte en intégral ou abrégé.
 
 Veuillez consulter la section [Terminaux Braille Pris en Charge #SupportedBrailleDisplays] pour des informations concernant les terminaux braille pris en charge.
+Cette section contient également des informations sur les terminaux qui supportent la détection automatique de terminaux braille en arrière-plan.
 Vous pouvez configurer le braille dans la catégorie [Braille #BrailleSettings] du dialogue [Paramètres #NVDASettings].
 
 ++ Abréviations des Types, États des Contrôles et Repères en Braille ++[BrailleAbbreviations]
@@ -1054,6 +1056,16 @@ Cette option s'applique à tous les synthétiseurs, pas uniquement au synthétis
 Activée par défaut, cette option indique à NVDA si la langue de la voix en cours peut être utilisée pour le traitement des symboles et caractères.
 Si vous trouvez que NVDA lit les ponctuations dans la mauvaise langue pour une voix ou un synthétiseur particulier, vous pouvez désactiver ce comportement pour forcer NVDA à utiliser ses paramètres généraux de langue à la place.
 
+==== Inclure les données du Consortium Unicode (incluant les emoji) dans le traitement des caractères et symboles ====[SpeechSettingsCLDR]
+Quand cette case est cochée, NVDA inclura des dictionnaires de prononciation de symboles additionnels à la prononciation des caractères et symboles.
+Ces dictionnaires contiennent des descriptions pour des symboles (en particulier les emoji) qui sont fournies par le [Consortium Unicode http://www.unicode.org/consortium/] comme faisant partie de leur [référentiel commun de données locales Repository http://cldr.unicode.org/].
+Si vous voulez que NVDA annonce la descriptions des caractères emoji en se basant sur ces données, vous devez activer cette option.
+Cependant, si vous utilisez un synthétiseur vocal supportant nativement ces descriptions, vous pouvez la désactiver.
+
+Notez que les descriptions de caractères ajoutées manuellement ou modifiées sont sauvegardées dans vos paramètres personnels.
+Ainsi, si vous changez la description d'un emoji particulier, votre description personnalisée sera annoncée pour cet emoji que cette option soit activée ou non.
+Vous pouvez ajouter, modifier ou supprimer des descriptions de symboles par le  dialogue [Prononciation des ponctuations et symboles #SymbolPronunciation] de NVDA.
+
 ==== Pourcentage de changement de la hauteur pour indiquer les majuscules ====[SpeechSettingsCapPitchChange]
 Ce champ d'édition vous permet d'entrer la valeur du changement de hauteur de la voix à l'annonce d'une lettre majuscule.
 Cette valeur est un pourcentage, une valeur négative réduit la hauteur, une valeur positive l'augmente.
@@ -1231,9 +1243,12 @@ S'il y a une erreur au chargement du pilote de l'afficheur, NVDA vous avertira p
 Cette liste déroulante vous présente plusieurs options en fonction des pilotes d'afficheurs brailles présents sur votre système.
 Déplacez-vous entre les options en utilisant les flèches.
 
+L'option automatique permet à NVDA de rechercher beaucoup de terminaux braille en arrière-plan.
+Quand cette fonctionnalité est activée et que vous connectez un terminal braille supporté via USB ou Bluetooth, NVDA se connectera automatiquement à ce terminal.
+
 Pas de braille signifie que vous n'utilisez pas le braille.
 
-Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille.
+Reportez-vous à la section [Terminaux braille pris en charge #SupportedbrailleDisplays] pour les informations concernant les terminaux braille et ceux qui supportent la détection automatique en arrière-plan.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Cette option, si disponible, vous permet de choisir quel port ou type de connexion sera utilisé pour communiquer avec l'afficheur braille sélectionné.
@@ -1254,14 +1269,12 @@ Elle contient les options suivantes :
 ==== Configuration du clavier ====[KeyboardSettingsLayout]
 Cette liste déroulante vous permet de choisir la configuration de clavier utilisée par NVDA. Actuellement, les deux configurations fournies avec NVDA sont : Desktop (ordinateur de bureau) et Laptop (ordinateur portable).
 
-==== Utiliser verrouillage majuscules comme touche NVDA ====[KeyboardSettingsCapsModifier]
-Quand cette case est cochée, NVDA peut utiliser la touche de "verrouillage majuscules" comme touche NVDA.
-
-==== Utiliser insert du clavier étendu comme touche NVDA ====[KeyboardSettingsExtendedInsert]
-Quand cette case est cochée, "Insert" du clavier étendu, généralement situé au-dessus des flèches, près des touches "Début" et "Fin", pourra être utilisé comme touche NVDA.
-
-==== Utiliser insert du pavé numérique comme touche NVDA ====[KeyboardSettingsNumpadInsert]
-Si cette case est cochée, la touche "Insert" du pavé numérique peut être utilisée comme touche NVDA.
+==== Choisir les Touches NVDA ====[KeyboardSettingsModifiers]
+Les cases à cocher de cette liste contrôlent quelles touches peuvent être utilisées comme [touches NVDA #TheNVDAModifierKey]. Vous pouvez choisir parmi les touches suivantes :
+- La touche verrouillage majuscule
+- La touche insertion du pavé numérique
+- La touche insertion étendue (elle se trouve généralement au-dessus des flèches, près de début et fin)
+-
 
 Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à certaines commandes NVDA.
 Par conséquent, le dialogue Paramètres affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur "OK".
@@ -1833,7 +1846,7 @@ Cet élément, quand on l'active, recharge les modules d'applications et les mod
 
 + Synthétiseurs de Parole Pris en Charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
-Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices https://www.nvda-project.org/wiki/ExtraVoices].
+Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [https://www.nvda-project.org/wiki/ExtraVoices https://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak NG ++[eSpeakNG]
 Le synthétiseur [eSpeak nG https://github.com/espeak-ng/espeak-ng] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
@@ -1862,8 +1875,8 @@ La plate-forme Microsoft Speech fournit des voix pour beaucoup de langues, norma
 Ces voix peuvent également être utilisées avec NVDA.
 
 Pour utiliser ces voix, vous devrez installer deux composants :
-- Microsoft Speech Platform - Runtime (Version 11) x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Version 11) x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - Cette page contient beaucoup de fichiers tant pour la reconnaissance de parole que pour la synthèse vocale.
  Choisissez les fichiers contenant la synthèse vocale pour la langue désirée.
  Par exemple, le fichier MSSpeech_TTS_fr-FR_Hortense.msi est une voix francophone française.
@@ -1891,16 +1904,34 @@ Ce synthétiseur ne supporte pas la [fonction d'épellation #SpeechSettingsUseSp
 + Terminaux Braille Pris en Charge +[SupportedbrailleDisplays]
 Cette section contient des informations sur les terminaux braille pris en charge par NVDA.
 
+++ Terminaux supportant la détection automatique en arrière-plan ++[AutomaticDetection]
+NVDA a la possibilité de détecter beaucoup de terminaux braille automatiquement en arrière-plan, via USB ou Bluetooth.
+Ce comportement est activé en sélectionnant l'option Automatique comme terminal braille préféré dans le [dialogue Paramètres Braille #BrailleSettings].
+Cette option est sélectionnée par défaut.
+
+Les terminaux suivants supportent cette fonctionnalité de détection automatique.
+- Terminaux Handy Tech
+- Terminaux braille Baum/Humanware/APH/Orbit
+- Séries HumanWare Brailliant BI/B
+- HumanWare BrailleNote
+- SuperBraille
+- Séries Optelec ALVA 6
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series
+- Terminaux Eurobraille Esys/Esytime/Iris
+-
+
 ++ Les Terminaux Focus et PAC Mate de chez Freedom Scientific ++[FreedomScientificFocus]
-Tous les terminaux Focus et PAC Mate de chez [Freedom Scientific http://www.freedomscientific.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
+Tous les terminaux Focus et PAC Mate de chez [Freedom Scientific https://www.freedomscientific.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
 Vous devrez installer les pilotes de terminaux braille de Freedom Scientific sur votre système.
-Si vous ne les avez pas déjà, vous pourrez les obtenir sur http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Si vous ne les avez pas déjà, vous pourrez les obtenir sur https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Bien que cette page ne mentionne que le terminal Focus 40 Blue, le pilote supporte tous les terminaux de Freedom Scientific.
 Si votre système est sous Windows 64 bits et que les pilotes ont déjà été installés par une autre revue d'écran, vous devrez probablement installer quand-même les pilotes car les fichiers nécessaires pour NVDA n'auront probablement pas été installés par l'autre revue d'écran.
 
 Par défaut, NVDA peut automatiquement détecter et se connecter à ces afficheurs via USB ou Bluetooth.
 Lorsque vous configurerez l'afficheur, vous pourrez sélectionner explicitement "USB" ou "Bluetooth" pour restreindre le type de connexion qui sera utilisée.
 Cela peut être utile si vous voulez connecter l'afficheur Focus à NVDA via le Bluetooth tout en le chargeant en utilisant l'USB.
+
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1953,7 +1984,7 @@ Pour le Focus 80 seulement :
 %kc:endInclude
 
 ++ Séries Optelec ALVA 6/Convertisseur de Protocole ++[OptelecALVA]
-Les terminaux BC640 et BC680 de chez [Optelec http://www.optelec.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
+Les terminaux BC640 et BC680 de chez [Optelec https://www.optelec.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
 Par ailleurs, vous pouvez connecter un terminal Optelec plus ancien, tel qu'un Braille Voyager, en utilisant un convertisseur de protocole fourni par Optelec.
 Vous n'avez besoin d'aucun pilote particulier pour utiliser ces terminaux.
 Il suffit de brancher le terminal et de configurer NVDA pour l'utiliser.
@@ -1969,11 +2000,11 @@ Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
 %kc:beginInclude
 || Nom | Touche |
-| Défilement arrière de l'affichage braille | t1 ou etouch1 |
+| Défilement arrière de l'affichage braille | t1, etouch1 |
 | Amener l'affichage braille à la ligne précédente | t2 |
 | Aller au focus courant | t3 |
 | Amener l'affichage braille à la ligne suivante | t4 |
-| Défilement avant de l'affichage braille | t5 ou etouch3 |
+| Défilement avant de l'affichage braille | t5, etouch3 |
 | Aller à la cellule braille | routage |
 | Annoncer la mise en forme du texte sous la cellule braille | routage secondaire |
 | Activer/désactiver la simulation de clavier HID | t1+spEnter |
@@ -1983,7 +2014,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Annonce du titre | etouch2 |
 | Annonce de la barre d'état | etouch4 |
 | Touche maj+tab | sp1 |
-| Touche alt | sp2 |
+| Touche alt | sp2, alt |
 | Touche échap | sp3 |
 | Touche tab | sp4 |
 | Flèche haut | spUp |
@@ -1991,22 +2022,21 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Flèche gauche | spLeft |
 | Flèche droite | spRight |
 | Entrer | spEnter, enter |
-| date et heure | sp1+sp2 |
+| date et heure | sp2+sp3 |
 | Menu NVDA | sp1+sp3 |
 | Touche Windows+d (Minimiser toutes les applications) | sp1+sp4 |
 | Touche Windows+b (focus sur la zone de notification) | sp3+sp4 |
-| Touche Windows | sp2+sp3, windows |
+| Touche Windows | sp1+sp2, windows |
 | Touche alt+tab | sp2+sp4 |
 | Touche contrôle+début | t3+spUp |
 | Touche contrôle+fin | t3+spDown |
-| Touche home | t3+spLeft |
+| Touche début | t3+spLeft |
 | Touche fin | t3+spRight |
-| touche alt | alt |
 | touche contrôle | control |
 %kc:endInclude
 
 ++ Les Terminaux Handy Tech ++[HandyTech]
-NVDA prend en charge la plupart des terminaux de chez [Handy Tech http://www.handytech.de/] quand ils sont connectés en USB, par port série ou en Bluetooth.
+NVDA prend en charge la plupart des terminaux de chez [Handy Tech https://www.handytech.de/] quand ils sont connectés en USB, par port série ou en Bluetooth.
 Pour les terminaux USB les plus anciens, vous devrez installer le pilote USB Handy Tech sur votre système.
 
 Les terminaux suivants ne sont pas nativement supportés, mais peuvent être utilisé via [le pilote universel Handy Tech https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] et le module complémentaire NVDA :
@@ -2040,9 +2070,11 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ Le Terminal MDV Lilli ++[MDVLilli]
-Le terminal braille Lilli distribué par [MDV http://www.mdvbologna.it/] est supporté.
+Le terminal braille Lilli distribué par [MDV https://www.mdvbologna.it/] est supporté.
 Vous n'avez besoin d'aucun pilote particulier pour utiliser ce terminal.
 Il suffit de brancher le terminal et de configurer NVDA pour l'utiliser.
+
+Ce terminal ne supporte pas la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ce terminal avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2060,7 +2092,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ Les Terminaux Baum/Humanware/APH/Orbit ++[Baum]
-Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] et [Orbit http://www.orbitresearch.com/] sont pris en charge quand ils sont connectés via USB, Bluetooth ou série.
+Plusieurs terminaux [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] et [Orbit https://www.orbitresearch.com/] sont pris en charge quand ils sont connectés via USB, Bluetooth ou série.
 Les terminaux suivants sont pris en charge :
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2096,8 +2128,10 @@ Pour les terminaux possédant un joystick:
 %kc:endInclude
 
 ++ Hedo ProfiLine USB ++[HedoProfiLine]
-Le terminal Hedo ProfiLine USB de [Hedo Reha-Technik http://www.hedo.de/] est supporté.
+Le terminal Hedo ProfiLine USB de [Hedo Reha-Technik https://www.hedo.de/] est supporté.
 Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
+
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2113,8 +2147,10 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ Hedo MobilLine USB ++[HedoMobilLine]
-Le terminal Hedo MobilLine USB de [Hedo Reha-Technik http://www.hedo.de/] est supporté.
+Le terminal Hedo MobilLine USB de [Hedo Reha-Technik https://www.hedo.de/] est supporté.
 Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
+
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2130,7 +2166,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ HumanWare Séries Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-Les terminaux des séries Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 14, BI 32, BI 40 et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
+Les terminaux des séries Brailliant BI & B de [HumanWare https://www.humanware.com/], incluant le BI 14, BI 32, BI 40 et B 80 sont supportés quand ils sont connectés via USB ou Bluetooth.
 S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
 Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
 
@@ -2182,9 +2218,9 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
-NVDA supporte les afficheurs braille Braille Sense, Braille EDGE, Smart Beetle et Sync Braille de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou Bluetooth. 
+NVDA supporte les afficheurs braille Braille Sense, Braille EDGE, Smart Beetle et Sync Braille de [Hims https://www.hims-inc.com/] quand ils sont connectés via USB ou Bluetooth. 
 Si vous connectez votre afficheur braille par USB, vous devrez installer les pilotes USB de HIMS sur votre système.
-Vous pouvez les télécharger ici: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Vous pouvez les télécharger ici: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2254,9 +2290,11 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ Seika Braille Displays ++[Seika]
-Les afficheurs braille Seika Version 3, 4 et 5 (40 caractères) et Seika80 (80 caractères) de [Nippon Telesoft http://www.nippontelesoft.com/] sont pris en charge.
-Vous pouvez trouver plus d'informations sur ces afficheurs sur le site http://www.seika-braille.com/.
+Les afficheurs braille Seika Version 3, 4 et 5 (40 caractères) et Seika80 (80 caractères) de [Nippon Telesoft https://www.nippontelesoft.com/] sont pris en charge.
+Vous pouvez trouver plus d'informations sur ces afficheurs sur le site https://www.seika-braille.com/.
 Vous devez d'abord installer les pilotes USB fournis par le fabricant.
+
+Ce terminal ne supporte pas encore la détection automatique en arrière-plan.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -2283,9 +2321,10 @@ Les afficheurs braille suivant sont supportés :
 - BRAILLEX Live 20, BRAILLEX Live et BRAILLEX Live Plus (USB et Bluetooth)
 -
 
+Ces terminaux ne supporte pas la détection automatique en arrière-plan.
+
 Si BrxCom est installé, NVDA utilisera BrxCom.
 BrxCom est un outil qui permet d'utiliser le clavier braille indépendamment d'un lecteur d'écran.
-Une nouvelle version de BrxCom compatible avec NVDA sera bientôt mise à disposition par Papenmeier.
 La saisie au clavier est possible avec les modèles Trio et BRAILLEX Live.
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
@@ -2363,6 +2402,7 @@ Les afficheurs braille suivants sont supportés :
 -
 
 Notez que ces afficheurs ne peuvent être connectés qu'en port série.
+De ce fait, ils ne supportent pas la détection automatique en arrière-plan.
 Vous devez donc sélectionner le port série où l'afficheur est connecté après avoir sélectionné le pilote dans le dialogue [Choisir l'Afficheur Braille #SelectBrailleDisplay].
 
 Certains de ces périphériques ont une barre d'accès facile (EAB) qui permet une opération rapide et intuitive.
@@ -2440,7 +2480,7 @@ brailleX 2D Screen:
 %kc:endInclude
 
 ++ BrailleNote de HumanWare ++[HumanWareBrailleNote]
-NVDA supporte les bloc-notes BrailleNote de [HumanWare http://www.humanware.com] lorsque ceux-ci agissent comme afficheurs braille pour un lecteur d'écran.
+NVDA supporte les bloc-notes BrailleNote de [HumanWare https://www.humanware.com] lorsque ceux-ci agissent comme afficheurs braille pour un lecteur d'écran.
 Les modèles suivants sont supportés :
 - BrailleNote Classic (connexion série seulement)
 - BrailleNote PK (connexion Série et Bluetooth)
@@ -2532,7 +2572,7 @@ Voici les commandes assignées à la roue de défilement :
 %kc:endInclude
  
 ++ EcoBraille ++[EcoBraille]
-NVDA supporte Les afficheurs EcoBraille de [ONCE http://www.once.es/].
+NVDA supporte Les afficheurs EcoBraille de [ONCE https://www.once.es/].
 Les modèles suivants sont supportés :
 - EcoBraille 20
 - EcoBraille 40
@@ -2541,6 +2581,7 @@ Les modèles suivants sont supportés :
 -
 
 Sous NVDA, vous pouvez définir le port série auquel l'afficheur est connecté dans le dialogue [Choisir l'Afficheur Braille #SelectBrailleDisplay].
+Ces terminaux ne supporte pas la détection automatique en arrière-plan.
 
 Voici les assignations de touche pour les afficheurs EcoBraille.
 Veuillez consulter [la documentation EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] pour connaître la position de ces touches.
@@ -2577,7 +2618,7 @@ Pour cette raison, et pour maintenir la compatibilité avec d'autres revues d'é
 %kc:endInclude
 
 ++ Terminaux Eurobraille Esys/Esytime/Iris ++[Eurobraille]
-Les terminaux Esys, Esytime et Iris de chez [Eurobraille http://www.eurobraille.fr/] sont supportés par NVDA.
+Les terminaux Esys, Esytime et Iris de chez [Eurobraille https://www.eurobraille.fr/] sont supportés par NVDA.
 Les terminaux Esys et Esytime-Evo sont supportés quand ils sont connectés via USB ou bluetooth.
 Les terminaux Esytime plus anciens ne supportent que l'USB.
 Les terminaux Iris ne peuvent être connectés que via un port série.
@@ -2661,16 +2702,18 @@ Veuillez consulter la documentation du terminal pour connaître la position de c
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
-Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
+Pour l'utiliser, il vous faut installer [BRLTTY pour Windows https://www.brltty.com/download.html].
 Vous devez télécharger et installer la version la plus récente avec installateur qui s'appellera, par exemple, brltty-win-4.2-2.exe.
 Quand vous configurerez le terminal et le port à utiliser, portez une attention particulière aux instructions, en particulier si vous utilisez un terminal USB et que le pilote du constructeur est déjà installé.
 
 Pour les afficheurs disposant d'un clavier braille, BRLTTY gèrent la saisie du braille.
 L'option table d'entrée n'est donc pas applicable.
 
+BRLTTY n'est pas concerné par la détection automatique en arrière-plan.
+
 Voici les assignations de commandes BRLTTY pour NVDA.
-Veuillez consulter la [documentation assignation des touches de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
+Veuillez consulter la [documentation assignation des touches de BRLTTY https://mielke.cc/brltty/doc/KeyTables/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
 %kc:beginInclude
 || Nom | commande BRLTTY |
 | Défilement arrière de l'affichage braille | fwinlt (se déplacer à gauche d'une fenêtre) |

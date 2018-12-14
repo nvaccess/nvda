@@ -74,12 +74,20 @@ globalVars.startTime=time.time()
 # Check OS version requirements
 import winVersion
 if not winVersion.isSupportedOS():
-	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
+	winUser.MessageBox(0, ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
 def decodeMbcs(string):
 	"""Decode a multi-byte character set string"""
 	return string.decode("mbcs")
+
+def stringToBool(string):
+	"""Wrapper for configobj.validate.is_boolean to raise the proper exception for wrong values."""
+	from configobj.validate import is_boolean, ValidateError
+	try:
+		return is_boolean(string)
+	except ValidateError as e:
+		raise argparse.ArgumentTypeError(e.message)
 
 #Process option arguments
 parser=NoConsoleOptionParser()
@@ -102,6 +110,8 @@ installGroup.add_argument('--create-portable',action="store_true",dest='createPo
 installGroup.add_argument('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
 parser.add_argument('--portable-path',dest='portablePath',default=None,type=decodeMbcs,help="The path where a portable copy will be created")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
+parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
+	help="When installing, enable NVDA's start on the logon screen")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
 # the downgraded copy won't be started in non-secure mode on secure desktops.
@@ -171,10 +181,13 @@ if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 
 isSecureDesktop = desktopName == "Winlogon"
 if isSecureDesktop:
-	import _winreg
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
-		if not _winreg.QueryValueEx(k, u"serviceDebug")[0]:
+		import _winreg as winreg # Python 2.7 import
+	except ImportError:
+		import winreg # Python 3 import
+	try:
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
 			globalVars.appArgs.secure = True
 	except WindowsError:
 		globalVars.appArgs.secure = True

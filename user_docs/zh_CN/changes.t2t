@@ -1,35 +1,137 @@
-最近更新
+NVDA更新日志
 
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+此版本的新特性包括最新版Firefox浏览器的性能改进，表情符号朗读的支持，Outlook的回复/转发状态的朗读，Microsoft Word页面边距的朗读，以及其他错误修复。
+== 新特性 ==
+- 新盲文表： 中文中国汉语现行点字，中文中国汉语双拼点字。 (#5553)
+- NVDA现在可朗读Microsoft Outlook邮件列表中的邮件项目以及回复/转发状态。 (#6911)
+- NVDA现在能够读取表情符号以及Unicode公共区域设置数据存储库中的其他字符描述。 (#6523)
+- 在Microsoft Word中，可以通过按NVDA + numpadDelete朗读光标与页面顶部和左侧边缘的距离。 (#1939)
+- 在启用了盲文模式的Google表格中，当在单元格之间移动焦点时，NVDA不再在每个单元格上朗读“已选择”。 (#8879)
+- 添加对福昕阅读器和福昕风腾PDF套件的支持 (#8944)
+- 添加对DBeaver数据库管理工具的支持。 (#8905)
+
+
+== 修改 ==
+- “对象演示文稿”对话框中的“朗读帮助气球”已重命名为“朗读通知”，包括Windows 8及更高版本中的Toast通知朗读。 (#5789)
+- 在NVDA的键盘设置中，启用或禁用NVDA键的复选框现在显示在列表而不是单独的复选框。
+- 在某些版本的Windows上读取时钟系统托盘时，NVDA将不再显示冗余信息。 (#4364)
+- 将liblouis盲文翻译器更新至3.7.0。 (#8697)
+- 更新eSpeak-NG版本到919f3240cbb
+
+
+== 错误修复==
+- 在Outlook 2016/365中，将朗读邮件的类别和标志状态。 (#8603)
+- 当NVDA设置为吉尔吉斯，蒙古或马其顿等语言时，将不再显示启动警告对话框，因为操作系统不支持该语言。 (#8064)
+- 当鼠标移动到导航器对象时可以更准确地将鼠标移动到Mozilla Firefox，Google Chrome和Acrobat Reader DC的浏览位置。 (#6460)
+- 改进了与Firefox，Chrome和Internet Explorer浏览器上的组合框的交互效果。 (#8664)
+- 在日文版的Windows XP或Vista上运行NVDA时，会按预期提示操作系统版本要求。 (#8771)
+- 提升了使用火狐浏览器浏览具有大量动态内容变更的大页面时的性能。 (#8678)
+- 现在如果在文档格式设置中禁用了盲文，则盲文不再显示字体属性。 (#7615)
+- 当另一个应用程序正在运行时（例如批处理音频），NVDA现在不再无法使用UI自动化在文件资源管理器和其他应用程序中跟踪焦点。 (#7345)
+- 在网络上的ARIA菜单中，Escape键现在将传递到菜单，而不再关闭浏览模式。 (#3215)
+- NVDA不再拒绝将重点朗读在新焦点不再存在的控件的网页上。 (#6606, #8341)
+- 现在，在新版Gmail网页界面中，在阅读邮件时使用快速导航内容时，系统会在您刚刚导航到的元素后不再朗读整个邮件正文。 (#8887)
+- - 更新NVDA后，浏览器（如Firefox和google chrome）不应再崩溃，浏览模式应继续正确显示当前加载的文档。 (#7641) 
+- 现在在浏览模式下浏览可点击内容时，NVDA不再连续多次朗读可点击。 (#7430)
+- 修复baum Vario 40盲文点显器上的手势将不再无法执行的BUG。 (#8894)
+- 在使用Mozilla Firefox的Google幻灯片时，NVDA不再在具有焦点的每个控件上朗读所选文本。 (#8964)
+
+
+== 开发者更改 ==
+- gui.nvdaControls now contains two classes to create accessible lists with check boxes. (#7325)
+ - CustomCheckListBox is an accessible subclass of wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl adds accessible check boxes to an AutoWidthColumnListCtrl, which itself is based on wx.ListCtrl.
+- If you need to make a wx widget accessible which isn't already, it is possible to do so by using an instance of gui.accPropServer.IAccPropServer_impl. (#7491)
+ - See the implementation of gui.nvdaControls.ListCtrlAccPropServer for more info.
+- Updated configobj to 5.1.0dev commit 5b5de48a. (#4470)
+- The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)
+
+
+
+= 2018.3.2 =
+这又是一个临时修复版，主要修复了www.twitter.com使用Google Chrome浏览推文闪退的BUG。 (#8777)
+
+
+= 2018.3.1 =
+这是NVDA的一个临时修复版，主要修复了32位版本的Mozilla Firefox崩溃的BUG。 (#8759)
+
+
 = 2018.3 =
+此版本的新特姓包括支持许多盲文点显器的自动检测，支持新的Windows 10 表情符号输入面板，以及其他错误修复。
 
 == 新特性 ==
-- 当Mozilla Firefox中的网页适当暴露时，NVDA将报告语法错误。 (#8280)
-- 当BrailleNote用作带NVDA的盲文显示器时，增加了对BrailleNote QT和Apex BT的滚轮的支持。 (#6316)
+- 当Mozilla Firefox和Google Chrome中的网页提供语法检查信息时，NVDA将朗读语法错误。 (#8280)
+- 现在标记为在网页中插入或删除的内容在Google Chrome中朗读。 (#8558)
+- NVDA内用BrailleNote做盲文显示器时，增加了对BrailleNote QT和Apex BT滚轮的支持。 (#6316)- (#5992, #5993)
 - 在Foobar2000中添加了用于报告当前曲目的已用时间和总时间的脚本。 (#6596)
-- 使用任何合成器读取文本时，现在会宣布Mac命令键符号（⌘）。 (#8366)
-- Firefox，Chrome和Internet Explorer现在支持通过aria-roledescription属性定制的角色。
-- 新的盲文表：瑞典8点电脑盲文。 (#8227)
-- NVDA现在可以选择播放音调来表示物体在屏幕上的位置，同时在具有对象导航的控件之间进行导航。 (#6078)
-  - 相关选项可以在NVDA的对象浏览设置中找到。
+- 使用任何合成器读取文本时，现在会朗读Mac Command键。 (#8366)
+- 现在，所有Web浏览器都支持通过aria-roledescription属性的自定义标签。 (#8448)
+- 新的盲文表: 捷克语8点电脑点字, 中库尔德语一级点字, 世界语一级点字, 匈牙利语一级点字, 匈牙利语八点电脑点字. (#8227)- (#8226, #8437)
+- 新增后台自动检测盲文显示器功能。 (#1271)
+ - 目前支持ALVA，Baum / HumanWare / APH / Orbit，Eurobraille，Handy Tech，Hims，SuperBraille和HumanWare BrailleNote和Brailliant BI / B盲文点显器。
+ - 您可以通过NVDA设置的盲文选项中的盲文显示列表选择自动选项来启用此功能。
+ - 有关其他详细信息，请参阅用户指南。
+- 现在，Mozilla Firefox 63支持使用ARIA标签块引用的内容。 (#8577)
+- 添加了最近Windows 10版本中新引入的各种现代输入功能支持。包括表情符号面板（Fall Creators Update），听写（Fall Creators Update），硬件键盘输入建议（2018年4月更新）和云剪贴板粘贴（2018年10月更新）。 (#7273)
 
 
 == 修改 ==
 - “NVDA常规设置”对话框中可用语言的列表现在将根据语言名称进行排序而不是ISO 639代码。 (#7284)
 - 为所有支持的Freedom Scientific盲文显示器添加alt shift标签和windows标签的默认手势。 (#7387)
-- 现在，用户在自动检查更新或重新安装NVDA后会提示是否向NV Access发送NVDA使用数据，NVDA启动时会询问用户一次。 (#8217)
+- 对于ALVA BC680和协议转换器的点显器，现在可以为左右智能平板，拇指和etouch键分配不同的功能。 (#8230)
+- 对于ALVA BC6点显器，键组合sp2 + sp3现在将公布当前日期和时间，而sp1 + sp2模拟Windows键。 (#8230)
+- 如果用户在自动检查更新时想向NV Access发送NVDA使用情况统计数据，则会在NVDA启动时询问用户一次。 (#8217)
 - 当重装或检查更新时，如果用户同意向NV Access发送使用统计数据，NVDA现在将发送当前使用的合成器驱动程序和盲文显示器的名称，以帮助更好地确定这些驱动程序的未来开发顺序。 (#8217)
 - 更新liblouis盲文翻译器版本到3.6.0。 (#8365)
+- 更新正确的俄罗斯八点盲文表的路径。 (#8446)
+- 更新eSpeak-ng1.49.3开发板 commit 910f4c2 (#8561)
 
 
 == 错误修复 ==
 - 当标签没有以内容本身的形式出现时，浏览模式下可以更容易地报告Google Chrome浏览器中控件的可访问标签。 (#4773)
+- Zoom现在支持通知。例如，包括静音/取消静音状态和传入消息。(#7754)
+- 在浏览模式下，切换盲文上下文显示不再导致盲文输出停止跟随。 (#7741)
+- 修复ALVA BC680盲文点显器不再间歇性地无法初始化的BUG。 (#8106)
+- 默认情况下，当按下涉及sp2 + sp3的键组合以触发内部功能时，ALVA BC6显示将不再执行模拟系统键盘键。 (#8230)
+- 按ALVA BC6显示屏上的sp2以模拟alt键现在可以像宣传的那样工作。 (#8360)
+- NVDA不再朗读冗余键盘布局更改。 (#7383, #8419)
+- 现在，在包含超过65535个字符的文档中，鼠标跟踪在记事本和其他纯文本编辑控件中更加准确。 (#8397)
+- NVDA将识别Windows 10和其他现代应用程序中的更多对话框。 (#8405)
+- 修复在Windows 10 10月2018更新和服务器2019及更高版本上，当应用程序冻结或充斥事件时，NVDA不再无法跟踪系统焦点。 (#7345, #8535)
+- 现在，用户在尝试读取或复制空状态栏时会收到通知。 (#7789)
+- 修复了如果控件先前已被检查过半，则在语音中未报告控件上的“未检查”状态的情况的bug。 (#6946)
+- 修复在NVDA的常规设置中的语言列表中，在Windows 7上正确显示缅甸语的语言名称。 (#8544)
+- 在Microsoft Edge中，NVDA将朗读通知，例如读取视图可用性和页面加载进度。 (#8423)
+- 修复与其他多行文本字段类似，当以盲文定位在文档的开头时，现在平移显示，使得文档的第一个字符位于显示的开头。 (#8406)
+- 当导航到Web上的列表时，如果Web作者提供了标签，NVDA现在将朗读其标签。 (#7652)
+- 当手动将功能分配给特定盲文点显器的手势时，这些手势现在总是显示为分配给该显示器。以前，它们显示为被分配到当前活动的点显器。 (#8108)
+- 支持64位版本的Media Player Classic。 (#6066)
+- 启用了UI自动化的Microsoft Word中对盲文支持的一些改进：
+ - 与其他多行文本字段类似，当以盲文定位在文档的开头时，现在平移显示，使得文档的第一个字符位于显示的开头。 (#8406)
+ - 在聚焦Word文档时，减少语音和盲文中过于冗长的焦点显示。 (#8407)
+ - 盲文中的光标路由现在可以在Word文档的列表中正常工作。 (#7971)
+ - 在Word文档中新插入的项目符号/数字可以在语音和盲文中正确朗读。 (#7970)
+- 在Windows 10 1803及更高版本中，如果启用了“使用Unicode UTF-8支持全球语言”功能，则现在可以安装插件。 (#8599)
+- 修复NVDA将不再使iTunes 12.9和更新版本完全无法与之交互的BUG。 (#8744)
 
 
 == 开发者更改 ==
 - Added scriptHandler.script, which can function as a decorator for scripts on scriptable objects. (#6266)
+- A system test framework has been introduced for NVDA. (#708)
+- Some changes have been made to the hwPortUtils module: (#1271)
+ - listUsbDevices now yields dictionaries with device information including hardwareID and devicePath.
+ - Dictionaries yielded by listComPorts now also contain a usbID entry for COM ports with USB VID/PID information in their hardware ID.
+- Updated wxPython to 4.0.3. (#7077)
+- As NVDA now only supports Windows 7 SP1 and later, the key "minWindowsVersion" used to check if UIA should be enabled for a particular release of Windows has been removed. (#8422)
+- You can now register to be notified about configuration saves/reset actions via new config.pre_configSave, config.post_configSave, config.pre_configReset, and config.post_configReset actions. (#7598)
+ - config.pre_configSave is used to be notified when NVDA's configuration is about to be saved, and config.post_configSave is called after configuration has been saved.
+ - config.pre_configReset and config.post_configReset includes a factory defaults flag to specify if settings are reloaded from disk (false) or reset to defaults (true).
+- config.configProfileSwitch has been renamed to config.post_configProfileSwitch to reflect the fact that this action is called after profile switch takes place. (#7598)
+- UI Automation interfaces updated to Windows 10 October 2018 Update and Server 2019 (IUIAutomation6 / IUIAutomationElement9). (#8473)
 
 
 = 2018.2 =
@@ -1389,7 +1491,7 @@
  - This is supported for both NVDA itself and add-ons.
  - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts.
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
- - See http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
+ - See https://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
 - It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details.
 - Add-on translation support can now be used within the add-on installTasks module. (#2715)
 
@@ -2046,7 +2148,7 @@ Notable features of this release include greatly simplified object navigation; v
 - 当朗读出输入的单词时，退格现在可以正确处理。 (#306)
 - 请勿在Windows资源管理器/ Windows外壳程序中错误地报告某些上下文菜单的“开始菜单”。 (#257)
 - 当没有其他有用的内容时，NVDA现在可以正确处理Mozilla Gecko中的ARIA标签。 (#156)
-- NVDA不再不正确地启用对焦模式，以便在焦点更改时更新其值的可编辑文本字段;例如http://tigerdirect.com/。 (#220)
+- NVDA不再不正确地启用对焦模式，以便在焦点更改时更新其值的可编辑文本字段;例如https://tigerdirect.com/。 (#220)
 - NVDA现在将尝试从某些以前会导致其完全冻结的情况中恢复。 NVDA可能需要长达10秒才能检测并从这种冻结中恢复。
 - 将NVDA语言设置为“用户默认”时，请使用用户的Windows显示语言设置，而不是Windows语言环境设置。 (#353)
 - NVDA现在认识到AIM 7中存在控制措施。
@@ -2314,7 +2416,7 @@ Notable features of this release include greatly simplified object navigation; v
 = 0.5 =
 - NVDA现在有一个名为eSpeak的内置合成器，由Jonathan Duddington开发。它非常灵敏和轻便，并且支持许多不同的语言。 Sapi合成器仍然可以使用，但默认情况下会使用eSpeak。
  - eSpeak不依赖于任何特殊软件的安装，因此可以在任何计算机上，USB拇指驱动器上或任何地方与NVDA配合使用。 
- - 有关eSpeak的更多信息，或者查找其他版本，请访问http://espeak.sourceforge.net/。
+ - 有关eSpeak的更多信息，或者查找其他版本，请访问https://espeak.sourceforge.net/。
 - 修复在Internet Explorer / Outlook Express可编辑窗格中按删除时发布错误字符的错误。
 - 增加了对Skype中更多编辑字段的支持。
 - 当焦点位于需要加载的窗口上时，VirtualBuffers只会被加载。这解决了Outlook Express中预览窗格打开时出现的一些问题。
