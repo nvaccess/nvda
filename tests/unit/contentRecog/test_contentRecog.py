@@ -10,6 +10,7 @@
 import unittest
 import contentRecog
 import textInfos
+from locationHelper import RectLTWH
 
 class TestRecogImageInfo(unittest.TestCase):
 
@@ -19,6 +20,8 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.recogHeight, 2000)
 		self.assertEqual(info.convertXToScreen(100), 100)
 		self.assertEqual(info.convertYToScreen(200), 200)
+		self.assertEqual(info.convertWidthToScreen(100), 100)
+		self.assertEqual(info.convertHeightToScreen(200), 200)
 
 	def test_withOffsetNoResize(self):
 		info = contentRecog.RecogImageInfo(10, 20, 1000, 2000, 1)
@@ -26,6 +29,8 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.recogHeight, 2000)
 		self.assertEqual(info.convertXToScreen(100), 110)
 		self.assertEqual(info.convertYToScreen(200), 220)
+		self.assertEqual(info.convertWidthToScreen(100), 100)
+		self.assertEqual(info.convertHeightToScreen(200), 200)
 
 	def test_noOffsetWithResize(self):
 		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 2)
@@ -33,6 +38,8 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.recogHeight, 4000)
 		self.assertEqual(info.convertXToScreen(200), 100)
 		self.assertEqual(info.convertYToScreen(400), 200)
+		self.assertEqual(info.convertWidthToScreen(200), 100)
+		self.assertEqual(info.convertHeightToScreen(400), 200)
 
 	def test_withOffsetWithResize(self):
 		info = contentRecog.RecogImageInfo(10, 20, 1000, 2000, 2)
@@ -40,6 +47,8 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.recogHeight, 4000)
 		self.assertEqual(info.convertXToScreen(200), 110)
 		self.assertEqual(info.convertYToScreen(400), 220)
+		self.assertEqual(info.convertWidthToScreen(200), 100)
+		self.assertEqual(info.convertHeightToScreen(400), 200)
 
 class FakeNVDAObject(object):
 	pass
@@ -63,15 +72,15 @@ class TestLinesWordsResult(unittest.TestCase):
 	WORD1_OFFSETS = (0, 6)
 	WORD1_SECOND = 1
 	WORD1_LAST = 5
-	WORD1_POINT = (100, 200)
+	WORD1_RECT = RectLTWH(100, 200, 10, 20)
 	WORD2_START = 6
 	WORD2_OFFSETS = (6, 12)
-	WORD2_POINT = (110, 200)
+	WORD2_RECT = RectLTWH(110, 200, 10, 20)
 	WORD3_OFFSETS = (12, 18)
 	WORD3_START = 12
-	WORD3_POINT = (100, 220)
+	WORD3_RECT = RectLTWH(100, 220, 10, 20)
 	WORD4_OFFSETS = (18, 24)
-	WORD4_POINT = (110, 220)
+	WORD4_RECT = RectLTWH(110, 220, 10, 20)
 	LINE1_OFFSETS = (0, 12)
 	LINE1_SECOND = 1
 	LINE1_LAST = 11
@@ -134,29 +143,29 @@ class TestLinesWordsResult(unittest.TestCase):
 		actual = self.textInfo._getLineOffsets(self.BOTTOM)
 		self.assertEqual(actual, self.LINE2_OFFSETS)
 
-	def test_pointFromOffsetAtTop(self):
-		actual = self.textInfo._getPointFromOffset(self.TOP)
-		self.assertEqual((actual.x, actual.y), self.WORD1_POINT)
+	def test_boundingRectFromOffsetAtTop(self):
+		actual = self.textInfo._getBoundingRectFromOffset(self.TOP)
+		self.assertEqual(actual, self.WORD1_RECT)
 
-	def test_pointFromOffsetAtWord1SecondChar(self):
-		actual = self.textInfo._getPointFromOffset(self.WORD1_SECOND)
-		self.assertEqual((actual.x, actual.y), self.WORD1_POINT)
+	def test_boundingRectFromOffsetAtWord1SecondChar(self):
+		actual = self.textInfo._getBoundingRectFromOffset(self.WORD1_SECOND)
+		self.assertEqual(actual, self.WORD1_RECT)
 
-	def test_pointFromOffsetAtWord1LastChar(self):
-		actual = self.textInfo._getPointFromOffset(self.WORD1_LAST)
-		self.assertEqual((actual.x, actual.y), self.WORD1_POINT)
+	def test_boundingRectFromOffsetAtWord1LastChar(self):
+		actual = self.textInfo._getBoundingRectFromOffset(self.WORD1_LAST)
+		self.assertEqual(actual, self.WORD1_RECT)
 
-	def test_pointFromOffsetAtWord2Start(self):
-		actual = self.textInfo._getPointFromOffset(self.WORD2_START)
-		self.assertEqual((actual.x, actual.y), self.WORD2_POINT)
+	def test_boundingRectFromOffsetAtWord2Start(self):
+		actual = self.textInfo._getBoundingRectFromOffset(self.WORD2_START)
+		self.assertEqual(actual, self.WORD2_RECT)
 
-	def test_pointFromOffsetAtLine2Start(self):
-		actual = self.textInfo._getPointFromOffset(self.LINE2_START)
-		self.assertEqual((actual.x, actual.y), self.WORD3_POINT)
+	def test_boundingRectFromOffsetAtLine2Start(self):
+		actual = self.textInfo._getBoundingRectFromOffset(self.LINE2_START)
+		self.assertEqual(actual, self.WORD3_RECT)
 
-	def test_pointFromOffsetAtBottom(self):
-		actual = self.textInfo._getPointFromOffset(self.BOTTOM)
-		self.assertEqual((actual.x, actual.y), self.WORD4_POINT)
+	def test_boundingRectFromOffsetAtBottom(self):
+		actual = self.textInfo._getBoundingRectFromOffset(self.BOTTOM)
+		self.assertEqual(actual, self.WORD4_RECT)
 
 	def test_copyTextInfo(self):
 		copy = self.textInfo.copy()
