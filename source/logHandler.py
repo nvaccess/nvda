@@ -115,7 +115,6 @@ class Logger(logging.Logger):
 	# Our custom levels.
 	IO = 12
 	DEBUGWARNING = 15
-	# #8516: disable logging completely.
 	OFF = 100
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
@@ -322,7 +321,7 @@ def initialize(shouldDoRemoteLogging=False):
 		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
 		# Input: kb(desktop):v
 		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
-		if globalVars.appArgs.secure or globalVars.appArgs.noLogging:
+		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
 			# Don't log in secure mode.
 			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
@@ -363,7 +362,8 @@ def setLogLevelFromConfig():
 	levelName=config.conf["general"]["loggingLevel"]
 	level = levelNames.get(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
-	if not level or log.INFO < level < log.OFF:
+	# Setting a log level to something other than options found in the GUI is unsupported.
+	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
