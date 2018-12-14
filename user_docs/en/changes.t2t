@@ -26,6 +26,7 @@ What's New in NVDA
 - When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
 - Improved restart confirmation dialog after changing interface language. The text and the button labels are now more concise and less confusing. (#6416)
 - If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech on Windows 10, rather than espeak. (#9025)
+- Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
 
 
 == Changes for Developers ==
