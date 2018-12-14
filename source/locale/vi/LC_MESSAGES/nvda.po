@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-02 00:10+1000\n"
-"PO-Revision-Date: 2018-12-09 22:22+0700\n"
+"POT-Creation-Date: 2018-12-10 10:30+1000\n"
+"PO-Revision-Date: 2018-12-10 09:34+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -6834,6 +6834,18 @@ msgstr "chưa đọc"
 msgid "Editing profile {profile}"
 msgstr "Đang sửa hồ sơ {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "đã trả lời"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "đã trả lời tất cả"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "đã chuyển tiếp"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "quan trọng"
@@ -8547,6 +8559,16 @@ msgstr "&Mức độ thông báo dấu câu và ký hiệu:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Sử dụng giọng đọc của ngôn ngữ để xử lý ký hiệu và ký tự"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Tích hợp dữ liệu của Unicode Consortium (bao gồm biểu tượng cảm xúc) khi xử "
+"lý kí hiệu và kí tự"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10646,6 +10668,16 @@ msgstr "nhận xét: {text} bởi {author} vào {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} bởi {author} vào {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} từ lề trái của trang"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} từ lề trên của trang"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
