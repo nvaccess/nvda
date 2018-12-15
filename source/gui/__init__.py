@@ -214,10 +214,10 @@ class MainFrame(wx.Frame):
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
 			updateTuple = updateCheck.getPendingUpdate()
-			newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateTuple[1])
+			newNVDAVersionTuple = updateTuple[2]
 			from addonHandler import getAddonsWithoutKnownCompatibility
 			if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
-				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1])
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
 				gui.runScriptModalDialog(confirmUpdateDialog)
 			else:
 				updateCheck.executePendingUpdate()
