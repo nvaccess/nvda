@@ -102,9 +102,9 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		import addonHandler
-		self.version = buildVersion.getCurrentVersionTuple()
-		addonsWithoutKnownCompat = list(addonHandler.getAddonsWithoutKnownCompatibility(self.version))
-		shouldAskAboutAddons = any(addonsWithoutKnownCompat)
+		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
+			# the defaults from the installer are ok. We are testing against the running version.
+		))
 
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -124,15 +124,6 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 				"These add-ons will be disabled after installation. "
 				"If you rely on these add-ons, please review the list to manually enable them before installation."
 			)
-			from addonHandler import AddonCompatibilityState, compatValues
-			for a in addonsWithoutKnownCompat:
-				# now that the use is warned about the compatibility and so that the user is
-				# not prompted again after installation, we set the default compatibility
-				AddonCompatibilityState.setAddonCompatibility(
-					addon=a,
-					NVDAVersion=self.version,
-					compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
-				)
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(self.textWrapWidth))
@@ -220,7 +211,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		from gui import addonGui
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
-			NVDAVersion=self.version
+			# the defaults from the installer are fine. We are testing against the running version.
 		)
 		incompatibleAddons.ShowModal()
 		incompatibleAddons.Destroy()

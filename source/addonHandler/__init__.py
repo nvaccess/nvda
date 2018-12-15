@@ -31,8 +31,7 @@ import re
 import buildVersion
 import addonAPIVersion
 from . import addonVersionCheck
-from .addonVersionCheck import AddonCompatibilityState, isAddonConsideredIncompatible, isAddonConsideredCompatible
-from . import compatValues
+from .addonVersionCheck import isAddonCompatible
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -77,30 +76,19 @@ def getRunningAddons():
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
-def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
-	""" Returns add-ons that have "UNKNOWN" compatibility state value. These are addons
-	that have no auto-deduced or manually set compatibility state.
-	"""
-	return getAddonsMatchingCompatValues([compatValues.UNKNOWN], version)
-
-def getAddonsWithoutKnownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
-	""" Returns add-ons that are untested for the specified NVDA version.
-	"""
-	withoutKnownCompatValues = [
-			compatValues.UNKNOWN,
-			compatValues.MANUALLY_SET_COMPATIBLE,
-			compatValues.MANUALLY_SET_INCOMPATIBLE
-		]
-	return getAddonsMatchingCompatValues(withoutKnownCompatValues, version)
-
-def getAddonsMatchingCompatValues(compatValues, version=addonVersionCheck.CURRENT_NVDA_VERSION):
-	""" Returns add-ons that have compatibility value that is True when anded with compatMask
+def getIncompatibleAddons(
+		currentAPIVersion=addonAPIVersion.CURRENT,
+		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO):
+	""" Returns a generator of the add-ons that are not compatible.
 	"""
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
-			AddonCompatibilityState.getAddonCompatibility(addon, version) in compatValues
+			not addonVersionCheck.isAddonCompatible(
+				addon,
+				currentAPIVersion=currentAPIVersion,
+				backwardsCompatToVersion=backCompatToAPIVersion
 		)
-	)
+	))
 
 def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -149,13 +137,7 @@ def disableAddonsIfAny():
 	global _disabledAddons
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
-	state["disabledAddons"] |= set(getAddonsMatchingCompatValues(
-		[
-			compatValues.UNKNOWN,
-			compatValues.MANUALLY_SET_INCOMPATIBLE,
-			compatValues.AUTO_DEDUCED_INCOMPATIBLE
-		]
-	))
+	state["disabledAddons"] |= set(getIncompatibleAddons())
 	state["disabledAddons"] -= state["pendingEnableSet"]
 	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
@@ -167,7 +149,6 @@ def initialize():
 		log.info("Add-ons not supported when running as a Windows Store application")
 		return
 	loadState()
-	AddonCompatibilityState.initialise()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
@@ -178,26 +159,20 @@ def initialize():
 
 def showUnknownCompatDialog():
 	from gui import addonGui, mainFrame, runScriptModalDialog
-	if any(getAddonsWithUnknownCompatibility()):
+	if any(getIncompatibleAddons(
+			# the defaults are fine, this is being triggered for the running version.
+	)):
 		try:
-			incompatibleAddonsDlg = addonGui.IncompatibleAddonsDialog(parent=mainFrame)
+			incompatibleAddonsDlg = addonGui.IncompatibleAddonsDialog(
+				parent=mainFrame,
+				# the defaults are fine, this is being triggered for the running version.
+			)
 		except RuntimeError:
 			log.error("Unable to open IncompatibleAddonsDialog", exc_info=True)
 			return
 	else:
 		return
-	unknownCompatAddons = incompatibleAddonsDlg.unknownCompatibilityAddonsList
-	def afterDialog(res):
-		# we may need to change the enabled addons / restart nvda here
-		shouldPromptRestart = False
-		for addon in unknownCompatAddons:
-			if isAddonConsideredCompatible(addon):
-				addon.enable(True)
-				shouldPromptRestart = True
-		saveState()
-		if shouldPromptRestart:
-			addonGui.promptUserForRestart()
-	runScriptModalDialog(incompatibleAddonsDlg, afterDialog)
+	runScriptModalDialog(incompatibleAddonsDlg)
 
 
 def terminate():
@@ -234,7 +209,7 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", name)
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif isAddonConsideredIncompatible(a):
+				elif not isAddonCompatible(a):
 					log.debugWarning("Add-on %s is considered incompatible", name)
 					# #6275: The add-on refresh could have yielded add-ons considered incompatible.
 					# Add these to the disabled add-ons
@@ -402,10 +377,18 @@ class Addon(AddonBase):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			if isAddonConsideredIncompatible(self):
-				raise AddonError("Add-on in blacklist: minimum NVDA version %s, last tested version %s" % (
-					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
-				))
+			if not isAddonCompatible(self):
+				import addonAPIVersion
+				raise AddonError(
+					"Add-on is not compatible:"
+					" minimum NVDA version {}, last tested version {},"
+					" NVDA current {}, NVDA backwards compatible to {}".format(
+						self.manifest['minimumNVDAVersion'],
+						self.manifest['lastTestedNVDAVersion'],
+						addonAPIVersion.CURRENT,
+						addonAPIVersion.BACK_COMPAT_TO
+					)
+				)
 			if self.name in state["pendingDisableSet"]:
 				# Undoing a pending disable.
 				state["pendingDisableSet"].discard(self.name)
