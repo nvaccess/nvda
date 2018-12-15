@@ -8,7 +8,6 @@
 import unittest
 
 import addonAPIVersion
-import versionInfo
 from addonHandler import AddonBase
 from addonHandler import addonVersionCheck
 from addonHandler import compatValues

@@ -18,7 +18,7 @@ import pkgutil
 import shutil
 from six.moves import cStringIO as StringIO
 import zipfile
-from versionInfo import getNVDAVersionTupleFromString
+from addonAPIVersion import getAPIVersionTupleFromString
 from configobj import ConfigObj, ConfigObjError
 from configobj.validate import Validator
 
@@ -29,6 +29,7 @@ from logHandler import log
 import winKernel
 import re
 import buildVersion
+import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import AddonCompatibilityState, isAddonConsideredIncompatible, isAddonConsideredCompatible
 from . import compatValues
@@ -301,15 +302,15 @@ class AddonBase(object):
 	def minimumNVDAVersion(self):
 		version = self.manifest.get('minimumNVDAVersion')
 		if not version:
-			return None
-		return getNVDAVersionTupleFromString(version)
+			return 0, 0, 0
+		return getAPIVersionTupleFromString(version)
 
 	@property
 	def lastTestedNVDAVersion(self):
 		version = self.manifest.get('lastTestedNVDAVersion')
 		if not version:
-			return None
-		return getNVDAVersionTupleFromString(version)
+			return 0, 0, 0
+		return getAPIVersionTupleFromString(version)
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
@@ -657,10 +658,14 @@ description = string(default=None)
 author = string()
 # Version of the add-on. Should preferably in some standard format such as x.y.z
 version = string()
-# The minimum required NVDA version for this add-on to work correctly
-minimumNVDAVersion = string(default=None)
+# The minimum required NVDA version for this add-on to work correctly.
+# Must have 3 integers separated by dots.
+# Must be less than or equal to lastTestedNVDAVersion
+minimumNVDAVersion = string(default="0.0.0")
 # The last NVDA version this add-on has been tested with.
-lastTestedNVDAVersion = string(default=None)
+# Must have 3 integers separated by dots.
+# Must be greater than or equal to minimumNVDAVersion
+lastTestedNVDAVersion = string(default="0.0.0")
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
 # Name of default documentation file for the add-on.

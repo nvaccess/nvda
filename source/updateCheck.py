@@ -17,6 +17,7 @@ elif config.isAppX:
 import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
+import addonAPIVersion
 
 import winVersion
 import os
@@ -642,7 +643,7 @@ class UpdateDownloader(object):
 		local.close()
 		fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
 		fileVersion = fileVersionInfo.get('FileVersion') or self.version
-		self.versionTuple = versionInfo.getNVDAVersionTupleFromString(fileVersion)
+		self.versionTuple = addonAPIVersion.getAPIVersionTupleFromString(fileVersion)
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):

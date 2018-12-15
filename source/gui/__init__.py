@@ -20,6 +20,7 @@ import ui
 from logHandler import log
 import config
 import versionInfo
+import addonAPIVersion
 import speech
 import queueHandler
 import core

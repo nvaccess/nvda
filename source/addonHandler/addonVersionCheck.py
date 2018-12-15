@@ -11,6 +11,7 @@ import buildVersion
 import globalVars
 from logHandler import log
 from . import compatValues
+import addonAPIVersion
 
 # A named tuple was being used for the version state key, however pickle is unable to save a named tuple.
 # https://stackoverflow.com/questions/4677012/python-cant-pickle-type-x-attribute-lookup-failed
