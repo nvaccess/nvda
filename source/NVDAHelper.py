@@ -114,6 +114,16 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	queueHandler.queueFunction(queueHandler.eventQueue,appModuleHandler.update,pid,helperLocalBindingHandle=bindingHandle,inprocRegistrationHandle=registrationHandle)
 	return 0
 
+@WINFUNCTYPE(c_long,c_wchar_p,c_wchar_p)
+def nvdaControllerInternal_reportLiveRegion(text, level):
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
+	import queueHandler
+	import speech
+	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
 def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, bottom):
 	import displayModel
@@ -475,6 +485,7 @@ def initialize():
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
 		("nvdaControllerInternal_requestRegistration",nvdaControllerInternal_requestRegistration),
+		("nvdaControllerInternal_reportLiveRegion",nvdaControllerInternal_reportLiveRegion),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
