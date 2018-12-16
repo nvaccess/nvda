@@ -95,7 +95,7 @@ interface NvdaControllerInternal {
 	error_status_t __stdcall installAddonPackageFromPath([in, string] const wchar_t* addonPath);
 
 /**
-nvdaControllerInternal_reportLiveRegion * Notifies NVDA that a focus rect has been drawn in the given window.
+ * Notifies NVDA that a focus rect has been drawn in the given window.
  */
 	error_status_t __stdcall drawFocusRectNotify([in] const long hwnd, [in] const long left, [in] const long top, [in] const long right, [in] const long bottom);   
 };
