@@ -7,7 +7,6 @@
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
 
 import sys
-sys.maxunicode = 65535
 import os
 
 if getattr(sys, "frozen", None):
