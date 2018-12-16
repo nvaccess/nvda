@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2018 NV Access Limited, Google LLC
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <atlcomcli.h>
 #include <ia2.h>
-#include "nvdaController.h"
+#include "nvdaControllerInternal.h"
 #include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
 
