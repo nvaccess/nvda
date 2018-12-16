@@ -411,7 +411,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions,allowText);
 	}
 	pacc2->Release();
-	if(gotText&&!textBuf.empty()) nvdaControllerInternal_speakLiveRegion(textBuf.c_str(),level.c_str());
+	if(gotText&&!textBuf.empty()) nvdaControllerInternal_reportLiveRegion(textBuf.c_str(),level.c_str());
 }
 
 void ia2LiveRegions_inProcess_initialize() {

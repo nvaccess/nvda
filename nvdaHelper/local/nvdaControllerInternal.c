@@ -19,9 +19,9 @@ error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_
 	return _nvdaControllerInternal_requestRegistration(uuidString);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_speakLiveRegion)(const wchar_t*, const wchar_t*);
-error_status_t __stdcall nvdaControllerInternal_speakLiveRegion(const wchar_t* text, const wchar_t* level) {
-	return _nvdaControllerInternal_speakLiveRegion(text, level);
+error_status_t(__stdcall *_nvdaControllerInternal_reportLiveRegion)(const wchar_t*, const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* text, const wchar_t* level) {
+	return _nvdaControllerInternal_reportLiveRegion(text, level);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_inputLangChangeNotify)(const long, const unsigned long, const wchar_t*);
