@@ -308,6 +308,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		pacc2->Release();
 		return;
 	}
+	wstring level=i->second;
 	i=attribsMap.find(L"container-busy");
 	bool busy=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
 	if(busy) {
@@ -410,7 +411,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions,allowText);
 	}
 	pacc2->Release();
-	if(gotText&&!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
+	if(gotText&&!textBuf.empty()) nvdaControllerInternal_speakLiveRegion(textBuf.c_str(),level.c_str());
 }
 
 void ia2LiveRegions_inProcess_initialize() {
