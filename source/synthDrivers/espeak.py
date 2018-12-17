@@ -8,7 +8,6 @@
 import os
 from collections import OrderedDict
 from . import _espeak
-import Queue
 import threading
 import languageHandler
 from synthDriverHandler import SynthDriver,VoiceInfo,BooleanSynthSetting
@@ -42,7 +41,7 @@ class SynthDriver(SynthDriver):
 		_espeak.setVoiceByLanguage(lang)
 		self._language=lang
 		self._variantDict=_espeak.getVariantDict()
-		self.variant="max"
+		self.variant=u"max"
 		self.rate=30
 		self.pitch=40
 		self.inflection=75
@@ -192,11 +191,11 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
-			l=v.languages[1:]
+			l=v.languages.decode("mbcs")[1:]
 			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
 			name=v.name.decode("UTF-8")
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
-			identifier=os.path.basename(v.identifier).lower()
+			identifier=os.path.basename(v.identifier.decode("mbcs")).lower()
 			voices[identifier]=VoiceInfo(identifier,name,l)
 		return voices
 
@@ -207,7 +206,7 @@ class SynthDriver(SynthDriver):
 		if not curVoice:
 			return ""
 		# #5783: For backwards compatibility, voice identifies should always be lowercase
-		return curVoice.identifier.split('+')[0].lower()
+		return curVoice.identifier.decode("mbcs").split('+')[0].lower()
 
 	def _set_voice(self, identifier):
 		if not identifier:
@@ -234,7 +233,7 @@ class SynthDriver(SynthDriver):
 		return self._variant
 
 	def _set_variant(self,val):
-		self._variant = val if val in self._variantDict else "max"
+		self._variant = val if val in self._variantDict else u"max"
 		_espeak.setVoiceAndVariant(variant=self._variant)
 
 	def _getAvailableVariants(self):

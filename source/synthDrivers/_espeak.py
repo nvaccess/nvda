@@ -240,7 +240,7 @@ def setVoiceByName(name):
 	_execWhenDone(espeakDLL.espeak_SetVoiceByName,name)
 
 def _setVoiceAndVariant(voice=None, variant=None):
-	res = getCurrentVoice().identifier.split("+")
+	res = getCurrentVoice().identifier.decode("mbcs").split("+")
 	if not voice:
 		voice = res[0]
 	if not variant:
@@ -249,12 +249,12 @@ def _setVoiceAndVariant(voice=None, variant=None):
 		else:
 			variant = "none"
 	if variant == "none":
-		espeakDLL.espeak_SetVoiceByName(voice)
+		espeakDLL.espeak_SetVoiceByName(voice.encode("mbcs"))
 	else:
 		try:
-			espeakDLL.espeak_SetVoiceByName("%s+%s" % (voice, variant))
+			espeakDLL.espeak_SetVoiceByName(b"%s+%s" % (voice.encode("mbcs"), variant.encode("mbcs")))
 		except:
-			espeakDLL.espeak_SetVoiceByName(voice)
+			espeakDLL.espeak_SetVoiceByName(voice.encode("mbcs"))
 
 def setVoiceAndVariant(voice=None, variant=None):
 	_execWhenDone(_setVoiceAndVariant, voice=voice, variant=variant)
@@ -262,11 +262,11 @@ def setVoiceAndVariant(voice=None, variant=None):
 def _setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
-	v.languages=lang
+	v.languages=lang.encode("mbcs")
 	try:
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 	except:
-		v.languages="en"
+		v.languages=b"en"
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 
 def setVoiceByLanguage(lang):
@@ -290,7 +290,7 @@ def initialize():
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,
-		os.path.abspath("synthDrivers"),0)
+		os.path.abspath("synthDrivers").encode("mbcs"),0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])
