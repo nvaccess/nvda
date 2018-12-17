@@ -1,6 +1,6 @@
 #appModules/vipmud.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011 Willem Venter and Rynhardt Kruger
+#Copyright (C) 2011-2018 NV Access Limited, Willem Venter and Rynhardt Kruger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -8,6 +8,7 @@ from NVDAObjects.window import edit
 import ui
 import appModuleHandler
 import controlTypes
+from six.moves import xrange
 
 """
 App module for VIP Mud

@@ -33,6 +33,7 @@ from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterc
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
+fro msix.moves import xrange
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
