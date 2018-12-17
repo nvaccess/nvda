@@ -17,6 +17,7 @@ import ui
 from baseObject import ScriptableObject
 import time
 import datetime
+from six.moves import xrange
 
 ALVA_RELEASE_MASK = 0x80
 ALVA_2ND_CR_MASK = 0x80

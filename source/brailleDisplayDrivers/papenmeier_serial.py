@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager
+#Copyright (C) 2012-2018 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager
 #Author: Tobias Platen (nvda@lists.thm.de)
 #minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 #used braille port selection code from braillenote driver
@@ -20,6 +20,7 @@ import globalCommands
 import scriptHandler
 import struct
 import serial
+from six.moves import xrange
 
 #Control Flow
 STX = 0x02 #Start of Text

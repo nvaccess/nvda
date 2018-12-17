@@ -2,13 +2,14 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
+#Copyright (C) 2008-2018 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
 
 from logHandler import log
 from ctypes import *
 import inputCore
 import wx
 import braille
+from six.moves import xrange
 
 try:
 	lilliDll=windll.LoadLibrary("brailleDisplayDrivers\\lilli.dll")

@@ -20,6 +20,7 @@ import threading
 from globalCommands import SCRCAT_BRAILLE
 import ui
 import time
+from six.moves import xrange
 
 BAUD_RATE = 9600
 
