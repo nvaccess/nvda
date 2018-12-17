@@ -202,7 +202,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		except NotImplementedError:
 			rects = None
 		if rects:
-			index = 0 if self.obj.isTextSelectionAnchoredAtStart else -1
+			index = 0 if textInfo.obj.isTextSelectionAnchoredAtStart else -1
 			rect = rects[index].toLTRB()
 		else:
 			rect = RectLTRB.fromPoint(textInfo.pointAtStart)
