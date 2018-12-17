@@ -27,7 +27,11 @@ try:
 	import pickle
 except ImportError:
 	import cPickle as pickle
-import urllib
+try:
+	from urllib import urlopen, urlencode
+except:
+	from urllib.request import urlopen
+	from urllib.parse import urlencode
 import tempfile
 import hashlib
 import ctypes.wintypes
@@ -123,16 +127,16 @@ def checkForUpdate(auto=False):
 			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
+	url = "%s?%s" % (CHECK_URL, urlencode(params))
 	try:
-		res = urllib.urlopen(url)
+		res = urlopen(url)
 	except IOError as e:
 		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
-			res = urllib.urlopen(url)
+			res = urlopen(url)
 		else:
 			raise
 	if res.code != 200:
@@ -608,7 +612,7 @@ class UpdateDownloader(object):
 		self._guiExec(self._downloadSuccess)
 
 	def _download(self, url):
-		remote = urllib.urlopen(url)
+		remote = urlopen(url, timeout=120)
 		if remote.code != 200:
 			raise RuntimeError("Download failed with code %d" % remote.code)
 		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
@@ -802,7 +806,7 @@ def _updateWindowsRootCertificates():
 	crypt = ctypes.windll.crypt32
 	# Get the server certificate.
 	sslCont = ssl._create_unverified_context()
-	u = urllib.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
+	u = urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
 	cert = u.fp._sock.getpeercert(True)
 	u.close()
 	# Convert to a form usable by Windows.

@@ -49,7 +49,7 @@ import winVersion
 import weakref
 import time
 import keyLabels
-from dpiScalingHelper import DpiScalingHelperMixin
+from .dpiScalingHelper import DpiScalingHelperMixin
 
 class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
 	"""A settings dialog.
