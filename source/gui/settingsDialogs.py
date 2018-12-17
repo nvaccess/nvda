@@ -596,6 +596,8 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	LOG_LEVELS = (
+		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+		(log.OFF, _("disabled")),
 		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 		(log.INFO, _("info")),
 		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
