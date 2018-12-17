@@ -439,7 +439,7 @@ class Addon(AddonBase):
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
-		return extension_path.encode("mbcs")
+		return extension_path #.encode("mbcs")
 
 	def loadModule(self, name):
 		""" loads a python module from the addon directory
@@ -524,7 +524,7 @@ def getCodeAddon(obj=None, frameDist=1):
 	if obj is None:
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)
-	dir= unicode(os.path.abspath(os.path.dirname(fileName)), "mbcs")
+	dir= os.path.abspath(os.path.dirname(fileName))
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
 	for p in _getDefaultAddonPaths():
@@ -573,7 +573,7 @@ class AddonBundle(AddonBase):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
-		self._path = bundlePath if isinstance(bundlePath, unicode) else unicode(bundlePath, "mbcs")
+		self._path = bundlePath
 		# Read manifest:
 		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:

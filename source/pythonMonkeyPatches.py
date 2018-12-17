@@ -9,8 +9,8 @@
 # Override this to use the temp path as returned by Windows.
 import ctypes
 import tempfile
-tempPath = ctypes.create_string_buffer(260)
-if ctypes.windll.kernel32.GetTempPathA(260, tempPath) > 0:
+tempPath = ctypes.create_unicode_buffer(260)
+if ctypes.windll.kernel32.GetTempPathW(260, tempPath) > 0:
 	# Strip trailing backslash which is always included.
 	tempfile.tempdir = tempPath.value[:-1]
 
