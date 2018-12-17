@@ -36,6 +36,7 @@ import aria
 import nvwave
 import treeInterceptorHandler
 import watchdog
+from abc import abstractmethod
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -170,12 +171,11 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		NVDAHelper.localLib.VBuf_getFieldNodeOffsets(self.obj.VBufHandle, node, ctypes.byref(start), ctypes.byref(end))
 		return start.value, end.value
 
-	def _getPointFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
-		if not o.location:
-			raise LookupError
-		left, top, width, height = o.location
-		return textInfos.Point(left + width / 2, top + height / 2)
+		if o.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return o.location
 
 	def _getNVDAObjectFromOffset(self,offset):
 		try:
@@ -501,6 +501,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 				break
 		return tableLayout
 
+	@abstractmethod
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
@@ -513,6 +514,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def getIdentifierFromNVDAObject(self,obj):
 		"""Retreaves the virtualBuffer field identifier from an NVDAObject.
 		@param obj: the NVDAObject to retreave the field identifier from.

@@ -18,7 +18,7 @@ import languageHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
-	def _getPointFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self,offset):
 		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
@@ -38,8 +38,8 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			if not obj.location:
 				# Older versions of Adobe Reader have per word objects, but they don't expose a location
 				break
-			return textInfos.Point(*obj.location.center)
-		return super(AdobeAcrobat_TextInfo, self)._getPointFromOffset(offset)
+			return obj.location
+		return super(AdobeAcrobat_TextInfo, self)._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		stdName = attrs.get("acrobat::stdname", "")

@@ -115,7 +115,8 @@ Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] fo
 
 +++ Start at Windows Logon +++[StartAtWindowsLogon]
 This option allows you to choose whether or not NVDA should automatically start while on the Windows Logon screen, before you have entered a password.
-This also includes UAC control and other secure screens.
+This also includes User Account Control and other secure screens.
+This option is enabled by default for fresh installations.
 
 +++ Create Desktop Shortcut (ctrl+alt+n) +++[CreateDesktopShortcut]
 This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
@@ -2793,6 +2794,7 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
+| None | --enable-start-on-logon=True|False | When installing, enable NVDA's [start on the logon screen #StartAtWindowsLogon] |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |

@@ -34,6 +34,8 @@ import inputCore
 import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
 REASON_QUICKNAV = "quickNav"
 
@@ -91,7 +93,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(object):
+class QuickNavItem(with_metaclass(ABCMeta, object)):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -108,6 +110,7 @@ class QuickNavItem(object):
 		self.itemType=itemType
 		self.document=document
 
+	@abstractmethod
 	def isChild(self,parent):
 		"""
 		Is this item a child of the given parent?
@@ -119,6 +122,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def report(self,readUnit=None):
 		"""
 		Reports the contents of this item.
@@ -127,6 +131,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def moveTo(self):
 		"""
 		Moves the browse mode caret or focus to this item.

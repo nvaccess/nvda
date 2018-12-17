@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 00:10+1000\n"
+"POT-Creation-Date: 2018-11-30 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Chorche Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -6900,6 +6900,18 @@ msgstr "no leyiu"
 msgid "Editing profile {profile}"
 msgstr "Se ye editando lo perfil {profile}"
 
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "respondiu"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "respondiu a totz"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "reninviau"
+
 #. Translators: for a high importance email
 msgid "high importance"
 msgstr "importancia alta"
@@ -8648,6 +8660,16 @@ msgstr "&Libel de puntuación y simbolos:"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Confidar en  l'idioma d'a voz en procesar caracters y simbolos"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Incluir datos de l'Unicode Consortium (incluindo emoticons) en procesar los "
+"caracters y los simbolos"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10769,6 +10791,16 @@ msgstr "comentario: {text} por {author} a {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} el {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} dende lo canto cucho d'a pachina"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} dende lo canto superior d'a pachina"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
