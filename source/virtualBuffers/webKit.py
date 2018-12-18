@@ -1,6 +1,6 @@
 #virtualBuffers/webKit.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2016 NV Access Limited
+#Copyright (C) 2011-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -15,6 +15,7 @@ import oleacc
 from logHandler import log
 import textInfos
 import NVDAHelper
+from six.moves import xrange
 
 class WebKit_TextInfo(VirtualBufferTextInfo):
 

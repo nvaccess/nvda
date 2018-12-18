@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V., Mozilla Corporation
+#Copyright (C) 2008-2018 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -20,6 +20,7 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
+from six.moves import xrange
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 

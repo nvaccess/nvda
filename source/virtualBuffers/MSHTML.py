@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2009-2018 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 import eventHandler
@@ -21,6 +21,7 @@ import api
 import aria
 import config
 import watchdog
+from six.moves import xrange
 
 FORMATSTATE_INSERTED=1
 FORMATSTATE_DELETED=2
