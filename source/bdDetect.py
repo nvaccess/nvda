@@ -172,8 +172,9 @@ class Detector(object):
 		self._stopEvent = threading.Event()
 		self._queuedScanLock = threading.Lock()
 		self._scanQueued = False
-		self._detectUsb = False
-		self._detectBluetooth = False
+		self._detectUsb = usb
+		self._detectBluetooth = bluetooth
+		self._limitToDevices = limitToDevices
 		self._runningApcLock = threading.Lock()
 		# Perform initial scan.
 		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
