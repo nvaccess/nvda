@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2018 NV Access Limited, Peter Vágner
 
 import time
 import threading
@@ -37,6 +37,7 @@ import nvwave
 import treeInterceptorHandler
 import watchdog
 from abc import abstractmethod
+from six.moves import xrange
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 NV Access Limited
+#Copyright (C) 2010-2018 NV Access Limited
 
 from comtypes import COMError
 from . import VirtualBuffer, VirtualBufferTextInfo
@@ -14,6 +14,7 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
+from six.moves import xrange
 
 class AdobeFlash_TextInfo(VirtualBufferTextInfo):
 

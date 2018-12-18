@@ -18,6 +18,7 @@ from baseObject import AutoPropertyObject
 import weakref
 import time
 import bdDetect
+from six.moves import xrange
 
 BAUD_RATE = 115200
 PARITY = serial.PARITY_NONE

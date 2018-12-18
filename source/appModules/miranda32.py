@@ -1,6 +1,6 @@
 #appModules/miranda32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -21,6 +21,7 @@ import mouseHandler
 import oleacc
 from keyboardHandler import KeyboardInputGesture
 import watchdog
+from six.moves import xrange
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST

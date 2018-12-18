@@ -13,6 +13,7 @@ import globalVars
 from logHandler import log
 import watchdog
 import core
+from six.moves import xrange
 
 eventQueue=Queue()
 eventQueue.__name__="eventQueue"

@@ -1,6 +1,6 @@
-#appModules/winword.py
+#NVDAObjects/window/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -41,6 +41,7 @@ from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 from textInfos import Point
+from six.moves import xrange
 
 #Word constants
 

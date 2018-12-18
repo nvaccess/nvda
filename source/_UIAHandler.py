@@ -23,6 +23,7 @@ import winUser
 import eventHandler
 from logHandler import log
 import UIAUtils
+from six.moves import xrange
 
 from comtypes.gen.UIAutomationClient import *
 

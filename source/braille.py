@@ -35,6 +35,7 @@ import extensionPoints
 import hwPortUtils
 import bdDetect
 import winUser
+from six.moves import xrange
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a

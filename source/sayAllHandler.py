@@ -1,6 +1,6 @@
 #sayAllHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -14,6 +14,7 @@ import api
 import tones
 import time
 import controlTypes
+from six.moves import xrange
 
 CURSOR_CARET=0
 CURSOR_REVIEW=1

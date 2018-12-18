@@ -15,6 +15,7 @@ import speech
 import textInfos
 import api
 import config
+from six.moves import xrange
 
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100

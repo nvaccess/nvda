@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """High-level functions to speak information.
 """ 
@@ -27,6 +27,7 @@ import queueHandler
 import speechDictHandler
 import characterProcessing
 import languageHandler
+from six.moves import xrange
 
 speechMode_off=0
 speechMode_beeps=1

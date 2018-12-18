@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 from ctypes import *
 from ctypes.wintypes import RECT
@@ -21,6 +21,7 @@ import watchdog
 from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
+from six.moves import xrange
 
 def wcharToInt(c):
 	i=ord(c)

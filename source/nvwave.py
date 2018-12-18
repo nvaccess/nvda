@@ -1,6 +1,6 @@
 #nvwave.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Aleksey Sadovoy
+#Copyright (C) 2007-2018 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import winKernel
 import wave
 import config
 from logHandler import log
+from six.moves import xrange
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",

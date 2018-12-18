@@ -1,13 +1,14 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Babbage B.V., Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Module that contains the base NVDA object type"""
 
 from six import with_metaclass
+from six.moves import xrange
 import time
 import re
 import weakref

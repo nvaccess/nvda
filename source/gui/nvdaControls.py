@@ -11,6 +11,7 @@ import oleacc
 import winUser
 import comtypes
 from ctypes import c_int
+from six.moves import xrange
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""

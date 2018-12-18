@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 NV Access Limited
+#Copyright (C) 2016-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -29,6 +29,7 @@ import mouseHandler
 from logHandler import log
 import ui
 import config
+from six.moves import xrange
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 	ELEMENT_TYPES = (

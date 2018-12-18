@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -23,6 +23,7 @@ import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
 from locationHelper import RectLTRB
+from six.moves import xrange
 
 #Window messages
 LVM_FIRST=0x1000

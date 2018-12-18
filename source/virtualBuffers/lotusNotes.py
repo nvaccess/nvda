@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2012 NV Access Limited
+#Copyright (C) 2010-2018 NV Access Limited
 
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
@@ -14,6 +14,7 @@ import oleacc
 from logHandler import log
 import textInfos
 from virtualBuffers import VirtualBufferTextInfo
+from six.moves import xrange
 
 class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 

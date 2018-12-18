@@ -8,6 +8,7 @@ import wx
 import gui
 import config
 from logHandler import log
+from six.moves import xrange
 
 class SpeechViewerFrame(wx.Dialog):
 

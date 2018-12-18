@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2012-2018 NV Access Limited, Babbage B.V.
 
 import time
 import serial
@@ -12,6 +12,7 @@ from logHandler import log
 import brailleInput
 import bdDetect
 import hwIo
+from six.moves import xrange
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200

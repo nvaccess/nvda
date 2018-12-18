@@ -1,6 +1,6 @@
-#braille.py
+#NVDAObjects/IAccessible/adobeAcrobat.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2014 NV Access Limited
+#Copyright (C) 2008-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -14,6 +14,7 @@ from NVDAObjects.behaviors import EditableText
 from comtypes import GUID, COMError, IServiceProvider
 from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement
 from logHandler import log
+from six.moves import xrange
 
 SID_AccID = GUID("{449D454B-1F46-497e-B2B6-3357AED9912B}")
 SID_GetPDDomNode = GUID("{C0A1D5E9-1142-4cf3-B607-82FC3B96A4DF}")

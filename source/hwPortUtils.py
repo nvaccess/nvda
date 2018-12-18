@@ -17,6 +17,7 @@ import winKernel
 from winKernel import SYSTEMTIME
 import config
 from logHandler import log
+from six.moves import xrange
 
 def ValidHandle(value):
 	if value == 0:

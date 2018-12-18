@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -20,6 +20,7 @@ import UIAHandler
 from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
 from UIAUtils import *
 from . import UIA, UIATextInfo
+from six.moves import xrange
 
 def splitUIAElementAttribs(attribsString):
 	"""Split an UIA Element attributes string into a dict of attribute keys and values.

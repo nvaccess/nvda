@@ -10,6 +10,7 @@ import textInfos.offsets
 from logHandler import log
 from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
+from six.moves import xrange
 
 JABRolesToNVDARoles={
 	"alert":controlTypes.ROLE_DIALOG,

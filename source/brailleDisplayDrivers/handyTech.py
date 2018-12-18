@@ -24,6 +24,7 @@ from logHandler import log
 import bdDetect
 import time
 import datetime
+from six.moves import xrange
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD

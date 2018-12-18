@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2017 NV Access Limited, Rui Batista, Babbage B.V.
+#Copyright (C) 2012-2018 NV Access Limited, Rui Batista, Babbage B.V.
 
 import os.path
 import time
@@ -19,6 +19,7 @@ import keyboardHandler
 import api
 from baseObject import AutoPropertyObject
 import keyLabels
+from six.moves import xrange
 
 """Framework for handling braille input from the user.
 All braille input is represented by a {BrailleInputGesture}.

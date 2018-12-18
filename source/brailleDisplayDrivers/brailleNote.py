@@ -18,6 +18,7 @@ import inputCore
 from logHandler import log
 import hwIo
 import bdDetect
+from six.moves import xrange
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1

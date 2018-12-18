@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModules/skype.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2015 Peter Vágner, NV Access Limited
+#Copyright (C) 2007-2018 Peter Vágner, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -21,6 +21,7 @@ import config
 import NVDAObjects.behaviors
 import api
 from logHandler import log
+from six.moves import xrange
 
 # Translators: The name of the NVDA command category for Skype specific commands.
 SCRCAT_SKYPE = _("Skype")

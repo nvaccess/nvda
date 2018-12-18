@@ -35,6 +35,7 @@ import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+from six.moves import xrange
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
