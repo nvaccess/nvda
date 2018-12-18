@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited
+#Copyright (C) 2008-2018 NV Access Limited
 
 import watchdog
 
@@ -26,6 +26,7 @@ import api
 import gui
 from logHandler import log
 import braille
+from six.moves import xrange
 
 class HelpCommand(object):
 	"""
