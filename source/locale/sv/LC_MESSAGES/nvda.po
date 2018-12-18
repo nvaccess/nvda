@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-20 00:10+1000\n"
+"POT-Creation-Date: 2018-09-21 00:10+1000\n"
 "PO-Revision-Date: 2018-07-22 17:38+0200\n"
 "Last-Translator: Niklas Johansson <sleeping.pillow@gmail.com>\n"
 "Language-Team: sv\n"
@@ -85,11 +85,6 @@ msgstr "okänt språk"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "okänd inmatningsmetod"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -377,6 +372,16 @@ msgstr "pnl"
 msgid "pwdedt"
 msgstr "lsord"
 
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "Län&kar"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "mrk"
@@ -517,6 +522,18 @@ msgstr "Allt"
 msgid "Only when scrolling back"
 msgstr "Längst till vänster"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatisk"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -587,9 +604,21 @@ msgstr "Till fokus"
 msgid "to review"
 msgstr "till granskning"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatisk"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "Seika braille displays"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Seriellport: {portName}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "Seriellport: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -655,6 +684,12 @@ msgstr "Bulgariska, 8-punkters datorpunktskrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "Svenska grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Walesiska grad 1"
 
@@ -662,6 +697,12 @@ msgstr "Walesiska grad 1"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Walesiska grad 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "Spanska 8-punkters datorpunktskrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -767,6 +808,12 @@ msgstr "Engelska (USA) grad 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "Tyska grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
 msgstr "Spanska 8-punkters datorpunktskrift"
 
@@ -869,6 +916,12 @@ msgstr "Ungerska 8-punkters datorpunktskrift"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "Ungerska grad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "Ungerska grad 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -1112,6 +1165,18 @@ msgstr "Unicode-punktskrift"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vitnamesiska 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Kinesiska (Taiwan, mandarin)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Kinesiska (Taiwan, mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2176,7 +2241,7 @@ msgstr "stycke"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
+#. See https://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "blockcitat"
 
@@ -2557,15 +2622,27 @@ msgstr "tumkontroll"
 msgid "calendar"
 msgstr "kalender"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "diagramelement"
-
 msgid "video"
 msgstr "video"
 
 msgid "audio"
 msgstr "ljud"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "diagramelement"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "radera"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "infogning"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3912,6 +3989,15 @@ msgstr "Läser nuvarande applikations statusrad och flyttar navigatorn till den"
 msgid "No status line found"
 msgstr "Ingen statusrad hittades"
 
+#. Translators: Reported when status line exist, but is empty.
+#, fuzzy
+msgid "no status bar information"
+msgstr "Ingen placeringsinformation"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
@@ -4517,7 +4603,7 @@ msgstr "Diverse"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -4924,28 +5010,23 @@ msgstr "tangentbord, alla layouts"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amhariska"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Aragonska"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arabiska"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepali"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Serbiska (Latin)"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 #, fuzzy
@@ -6168,7 +6249,7 @@ msgstr "med %s rader"
 msgid "level %s"
 msgstr "nivå %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "med %s objekt"
@@ -6281,20 +6362,10 @@ msgstr "bakgrundsmönster {pattern}"
 msgid "line %s"
 msgstr "rad %s"
 
-#. Translators: Reported when text is marked as having been inserted
-#, fuzzy
-msgid "inserted"
-msgstr "infogning"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 #, fuzzy
 msgid "not inserted"
 msgstr "inte markerat"
-
-#. Translators: Reported when text is marked as having been deleted
-#, fuzzy
-msgid "deleted"
-msgstr "radera"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 #, fuzzy
@@ -6347,18 +6418,18 @@ msgid "no italic"
 msgstr "ingen kursivering"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 #, fuzzy
 msgid "double strikethrough"
 msgstr "ingen genomstrykning"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "genomstruken"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "ingen genomstrykning"
 
@@ -6388,12 +6459,12 @@ msgid "align right"
 msgstr "högerjusterad"
 
 #. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "justerad"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#. See https://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "distribuerad justering"
 
@@ -6838,7 +6909,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6859,7 +6930,7 @@ msgstr ""
 "här gäller både originalet och modifierade exemplar av denna mjukvara, samt  "
 "eventuella härledda verk.\n"
 "För vidare information kan du se licensen i Hjälp-menyn.\n"
-"Den kan också ses på nätet: http://www.gnu.org/licenses/old-licenses/gpl-2.0."
+"Den kan också ses på nätet: https://www.gnu.org/licenses/old-licenses/gpl-2.0."
 "html\n"
 "\n"
 "{name} utvecklas av NV Access, en icke-vinstdrivande organisation förbunden "
@@ -7066,37 +7137,6 @@ msgstr "oläst"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Redigeringsprofil {profile}"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-#, fuzzy
-msgid "purple flag"
-msgstr "lila"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Orange flagga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Grön flagga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Gul flagga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Blå flagga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Röd flagga"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7520,14 +7560,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "av"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr ""
-
-#. Translators: Name of a bluetooth serial communications port.
-#, fuzzy, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Seriellport: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7549,15 +7588,6 @@ msgstr ""
 #, fuzzy
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum/HumanWare/APH punktskriftsdisplayer"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "Seriellport: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -8135,6 +8165,7 @@ msgstr "&Installera..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&Radera"
@@ -8914,20 +8945,11 @@ msgstr "Använd &stavningsfunktionalitet om möjligt"
 msgid "Keyboard"
 msgstr "%s tangentbord"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
 msgstr "Använd skiftlås som NVDA-tangent"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Använd numerisk insert som NVDA-tangent"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Använd insert som NVDA-tangent"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -9095,8 +9117,9 @@ msgstr "Läs verk&tygstips"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Läs &hjälpballonger"
+#, fuzzy
+msgid "Report &notifications"
+msgstr "Läs verk&tygstips"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -11239,7 +11262,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} punkter"
 
 #. Translators: a measurement in Microsoft Word
-#. See http://support.microsoft.com/kb/76388 for details.
+#. See https://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
@@ -11255,6 +11278,56 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
+
+#, fuzzy
+#~ msgid "purple flag"
+#~ msgstr "lila"
+
+#~ msgid "Orange flag"
+#~ msgstr "Orange flagga"
+
+#~ msgid "Green flag"
+#~ msgstr "Grön flagga"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Gul flagga"
+
+#~ msgid "Blue flag"
+#~ msgstr "Blå flagga"
+
+#~ msgid "Red flag"
+#~ msgstr "Röd flagga"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Använd skiftlås som NVDA-tangent"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Använd numerisk insert som NVDA-tangent"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Använd insert som NVDA-tangent"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Läs &hjälpballonger"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amhariska"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arabiska"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepali"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbiska (Latin)"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "Visar NVDA:s dialogruta för röstinställningar"

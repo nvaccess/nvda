@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-31 00:10+1000\n"
-"PO-Revision-Date: 2018-09-03 08:28+0200\n"
+"POT-Creation-Date: 2018-11-30 00:10+1000\n"
+"PO-Revision-Date: 2018-12-06 13:34+0200\n"
 "Last-Translator: shmuel naaman <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Shmuel Naaman <shmuel_naaman@yahoo.com>, Shmuel Retbi Adi "
 "Kushnir\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.2\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1140,6 +1140,16 @@ msgstr "ברייל יוניקוד"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "ויאטנמית שיטת ברייל 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "סינית (טאיוון, מנדרין) רמה 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "סינית (טאיוון, מנדרין) רמה 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6549,25 +6559,22 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"Version: {version}\n"
-"URL: {url}\n"
+"גרסה: {version}\n"
+"כתובת אתר: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are "
-"free to share or change this software in any way you like as long as it is "
-"accompanied by the license and you make all source code available to anyone "
-"who wants it. This applies to both original and modified copies of this "
-"software, plus any derivative works.\n"
-"For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"{name} מכוסה ברישיון הציבורי הכללי של GNU (גרסה 2). אתה חופשי לשתף או לשנות "
+"את התוכנה בכל דרך שתרצה, כל עוד היא מלווה את הרישיון ואתה עושה את כל קוד "
+"המקור זמין לכל מי שרוצה את זה. הדבר חל על עותקים מקוריים ומשנים של תוכנה זו, "
+"וכן על כל עבודות נגזרות.\n"
+"לקבלת פרטים נוספים, באפשרותך להציג את הרישיון מתפריט העזרה.\n"
+"ניתן גם לצפות באינטרנט בכתובת: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to "
-"helping and promoting free and open source solutions for blind and vision "
-"impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA "
-"menu."
+"{name} פותח על ידי NV Access, ארגון ללא כוונת רווח המחוייב לסייע ולקדם "
+"פתרונות קוד פתוח ופתוח לאנשים עיוורים ולקויי ראייה.\n"
+"אם אתה מוצא את NVDA שימושית ורוצה שהיא תמשיך להשתפר, שקול לתרום ל- NV "
+"Access. תוכל לעשות זאת על ידי בחירה באפשרות 'תרום' מתפריט NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6763,35 +6770,17 @@ msgstr "לא נקרא"
 msgid "Editing profile {profile}"
 msgstr "עורך פרופיל {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "דגל סגול"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "השב"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "דגל כתום"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "השב להכל"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "דגל ירוק"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "דגל צהוב"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "דגל כחול"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "דגל אדום"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "העבר"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8489,6 +8478,14 @@ msgstr "&רמת הקראת סימני פיסוק וסמלים:"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "הסתמך על מנוע הדיבור בעת הקראת תווים וסמלים"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "כלול נתוני קונסורציום של Unicode (כולל אמוג'י) בעת עיבוד תווים וסמלים"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "שינוי גובה הדיבור באחוזים בעת הקראת רישיות"
@@ -8512,20 +8509,10 @@ msgstr "השתמש ב&איות אם מנוע הדיבור תומך באפשרו�
 msgid "Keyboard"
 msgstr "מקלדת"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "השתמש בCaps Lock כמקש NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "השתמש במקש Insert בכרית המספרים כמקש NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "השתמש במקש Insert במקלדת הרגילה כמקש NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&בחר מקש עובר קיצורי מקשים עבור NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8688,8 +8675,8 @@ msgstr "הקראת &תיאור כלי"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "הקראת &בלוני עזרה"
+msgid "Report &notifications"
+msgstr "דווח & על התראות"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10585,6 +10572,16 @@ msgstr "הערה: {text} מאת {author} בתאריך {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} מאת {author} בתאריך {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} מהגבול השמאלי של העמוד"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} מהגבול העליון של העמוד"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10743,6 +10740,36 @@ msgstr "מרווח של שתי שורות"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "מרווח שורה וחצי"
+
+#~ msgid "purple flag"
+#~ msgstr "דגל סגול"
+
+#~ msgid "Orange flag"
+#~ msgstr "דגל כתום"
+
+#~ msgid "Green flag"
+#~ msgstr "דגל ירוק"
+
+#~ msgid "Yellow flag"
+#~ msgstr "דגל צהוב"
+
+#~ msgid "Blue flag"
+#~ msgstr "דגל כחול"
+
+#~ msgid "Red flag"
+#~ msgstr "דגל אדום"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "השתמש בCaps Lock כמקש NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "השתמש במקש Insert בכרית המספרים כמקש NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "השתמש במקש Insert במקלדת הרגילה כמקש NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "הקראת &בלוני עזרה"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"

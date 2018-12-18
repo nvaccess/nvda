@@ -1,12 +1,12 @@
 # Srpska lokalizacija za NVDA.
-# Copyright (C) 2006-2009 NVDA contributors <http://www.nvda-project.org>
+# Copyright (C) 2006-2009 NVDA contributors <https://www.nvda-project.org>
 # Michael Curran <mick@kulgan.net> 2010
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-18 14:57+1000\n"
+"POT-Creation-Date: 2018-11-19 15:06+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -6671,7 +6671,7 @@ msgstr ""
 "važi i za originalne i izmenjene kopije ovog softvera, uključujući i bilo "
 "kakav drugi softver baziran na ovom.\n"
 "Za više detalja, pročitajte tekst licence iz menija Pomoć.\n"
-"Može se pregledati i onlajn na: http://www.gnu.org/licenses/old-licenses/"
+"Može se pregledati i onlajn na: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} je razvila NV Access, neprofitna organizacija posvećena pomaganju i "
@@ -6878,6 +6878,18 @@ msgstr "nepročitano"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Uređivanje profila {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Odgovoreno"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "Odgovoreno svima"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Prosleđeno"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8618,6 +8630,16 @@ msgstr "&Nivo izgovora znakova interpunkcije/simbola"
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Koristi jezik glasa za obradu znakova i simbola"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Koristi bazu podataka Unicode Consortium (koja sadrži opise emoji znakova) "
+"kada se obrađuju znakovi i simboli"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -10724,6 +10746,16 @@ msgstr "komentar: {text} napisao {author} na dan {date}"
 #, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} napisao {author} na dan {date}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} od leve ivice strane"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} od vrha strane"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

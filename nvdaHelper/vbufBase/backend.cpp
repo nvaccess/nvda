@@ -257,6 +257,10 @@ VBufBackend_t::~VBufBackend_t() {
 
 VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID) {
 	LOG_DEBUG(L"Try to reuse node with docHandle "<<docHandle<<L", and ID "<<ID);
+	if(!parent) {
+		LOG_DEBUG(L"Cannot reuse a node at the root");
+		return nullptr;
+	}
 	if(parent->alwaysRerenderDescendants||parent->alwaysRerenderChildren) {
 		LOG_DEBUG(L"Won't  find a node to reuse as parent says always rerender children");
 		return nullptr;
@@ -270,6 +274,18 @@ VBufStorage_controlFieldNode_t* VBufBackend_t::reuseExistingNodeInRender(VBufSto
 	// Ensure the node allows us to reuse it
 	if(!existingNode->allowReuseInAncestorUpdate) {
 		LOG_DEBUG(L"Existing node refuses to be reused");
+		return nullptr;
+	}
+	// We only allow reusing nodes that share the same parent. 
+	// I.e. we don't allow reusing a node that existed in an entirely different part of the tree. 
+	// If we did, this could possibly cause corruption in the virtualBuffer as a node might move between two unrelated updates.
+	auto existingParent=existingNode->getParent();
+	if(!existingParent) {
+		LOG_DEBUG(L"existing node has no parent. Not reusing.");
+		return nullptr;
+	}
+	if(existingParent->identifier!=parent->identifier) {
+		LOG_DEBUG(L"Cannot reuse a node moved from within another parent.");
 		return nullptr;
 	}
 	if(existingNode->denyReuseIfPreviousSiblingsChanged) {

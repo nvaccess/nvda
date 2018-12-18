@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-24 10:04+1000\n"
-"PO-Revision-Date: 2018-08-23 17:13+0100\n"
+"POT-Creation-Date: 2018-11-19 15:06+1000\n"
+"PO-Revision-Date: 2018-11-19 10:44+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -1138,6 +1138,16 @@ msgstr "Unikod brajlowski"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Wietnamski stopień 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chiński (Chiny, Mandaryński) z tonami"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chiński (Chiny, Mandaryński) bez tonów"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6654,7 +6664,7 @@ msgstr ""
 "zmienionych kopii, a także każdego innego oprogramowania, które korzysta z "
 "kodu zaczerpniętego z tego programu.\n"
 "Dokładne brzmienie licencji znajdziesz online pod adresem:\n"
-"http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6851,35 +6861,17 @@ msgstr "nieprzeczytane"
 msgid "Editing profile {profile}"
 msgstr "Edytowanie profilu {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "Fioletowa flaga"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "Odpowiedziano"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Pomarańczowa flaga"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "odpowiedziano wszystkim"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Zielona flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Żółta flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Niebieska flaga"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Czerwona flaga"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "Przekazano dalej"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8616,6 +8608,16 @@ msgstr "Poziom &interpunkcji/symboli"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "&Ufaj językowi głosu przetwarzając znaki i symbole"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Używaj &bazy danych Unicode do przetwarzania znaków i symboli (włączając w "
+"to emoji)"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "&Stopień zmiany wysokości dla wielkich liter w procentach"
@@ -8639,20 +8641,10 @@ msgstr "Użyj korekt dla literowania (gdy wspierane)"
 msgid "Keyboard"
 msgstr "Klawiatura"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Użyj &CapsLock jako klawisza NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Użyj &numerycznego Insert jako klawisza NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Użyj &dodatkowego Insert jako klawisza NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Wybierz klawisze modyfikatora NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8815,8 +8807,8 @@ msgstr "Czytaj dymki &podpowiedzi"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Czytaj dymki po&wiadomień"
+msgid "Report &notifications"
+msgstr "Czytaj &powiadomienia"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10733,6 +10725,16 @@ msgstr "komentarz: {text} by {author} dnia {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} przez {author} dnia {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} od lewej krawędzi strony"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} od górnej krawędzi strony"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10891,6 +10893,39 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
+
+#~ msgid "REPLIED ALL"
+#~ msgstr "Odpowiedziano wszystkim"
+
+#~ msgid "purple flag"
+#~ msgstr "Fioletowa flaga"
+
+#~ msgid "Orange flag"
+#~ msgstr "Pomarańczowa flaga"
+
+#~ msgid "Green flag"
+#~ msgstr "Zielona flaga"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Żółta flaga"
+
+#~ msgid "Blue flag"
+#~ msgstr "Niebieska flaga"
+
+#~ msgid "Red flag"
+#~ msgstr "Czerwona flaga"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "Użyj &CapsLock jako klawisza NVDA"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Użyj &numerycznego Insert jako klawisza NVDA"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Użyj &dodatkowego Insert jako klawisza NVDA"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "Czytaj dymki po&wiadomień"
 
 #~ msgid "{language} - {layout}"
 #~ msgstr "{language} - {layout}"
