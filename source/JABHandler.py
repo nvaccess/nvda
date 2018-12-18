@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #javaAccessBridgeHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+#Copyright (C) 2007-2018 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -22,6 +22,7 @@ import eventHandler
 import controlTypes
 import NVDAObjects.JAB
 import core
+from six.moves import xrange
 
 #Some utility functions to help with function defines
 
