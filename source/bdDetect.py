@@ -269,7 +269,7 @@ class Detector(object):
 
 	def handleWindowMessage(self, msg=None, wParam=None):
 		if msg == WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:
-			self.rescan(limitToDevices=self._limitToDevices)
+			self.rescan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def pollBluetoothDevices(self):
 		"""Poll bluetooth devices that might be in range.
@@ -280,7 +280,7 @@ class Detector(object):
 		with self._btDevsLock:
 			if not self._btDevs:
 				return
-		self._startBgScan(bluetooth=True, limitToDevices=self._limitToDevices)
+		self._startBgScan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def terminate(self):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
