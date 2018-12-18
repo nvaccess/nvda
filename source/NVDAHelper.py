@@ -284,7 +284,7 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 		if msg:
 			textList.append(msg)
 	else:
-		for x in range(32):
+		for x in xrange(32):
 			x=2**x
 			msgs=inputConversionModeMessages.get(x)
 			if not msgs: continue

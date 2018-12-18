@@ -436,7 +436,7 @@ class Region(object):
 					self.brailleSelectionEnd = len(self.brailleCells)
 				else:
 					self.brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
-				for pos in range(self.brailleSelectionStart, self.brailleSelectionEnd):
+				for pos in xrange(self.brailleSelectionStart, self.brailleSelectionEnd):
 					self.brailleCells[pos] |= SELECTION_SHAPE
 			except IndexError:
 				pass
@@ -1117,7 +1117,7 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		api.setReviewPosition(info)
 
 def rindex(seq, item, start, end):
-	for index in range(end - 1, start - 1, -1):
+	for index in xrange(end - 1, start - 1, -1):
 		if seq[index] == item:
 			return index
 	raise ValueError("%r is not in sequence" % item)
@@ -1273,7 +1273,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Search from 1 cell before in case startPos is just after a space.
 			startPos = self.brailleCells.index(0, startPos - 1, endPos)
 			# Skip past spaces.
-			for startPos in range(startPos, endPos):
+			for startPos in xrange(startPos, endPos):
 				if self.brailleCells[startPos] != 0:
 					break
 		except ValueError:
@@ -1533,7 +1533,7 @@ def formatCellsForLog(cells):
 	# List comprehensions without function calls are faster than loops.
 	# For str.join, list comprehensions are faster than generator comprehensions.
 	return TEXT_SEPARATOR.join([
-		"".join([str(dot + 1) for dot in range(8) if cell & (1 << dot)])
+		"".join([str(dot + 1) for dot in xrange(8) if cell & (1 << dot)])
 		if cell else "-"
 		for cell in cells])
 

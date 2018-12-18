@@ -589,7 +589,7 @@ class ConfigManager(object):
 			self.saveProfileTriggers()
 		# Check if this profile was active.
 		delProfile = None
-		for index in range(len(self.profiles) - 1, -1, -1):
+		for index in xrange(len(self.profiles) - 1, -1, -1):
 			profile = self.profiles[index]
 			if profile.name == name:
 				# Deactivate it.

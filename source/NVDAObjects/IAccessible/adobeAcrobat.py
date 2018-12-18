@@ -119,7 +119,7 @@ class AcrobatNode(IAccessible):
 		if val:
 			yield val
 		else:
-			for childNum in range(node.GetChildCount()):
+			for childNum in xrange(node.GetChildCount()):
 				try:
 					subNode = node.GetChild(childNum).QueryInterface(IPDDomElement)
 				except COMError:
@@ -130,7 +130,7 @@ class AcrobatNode(IAccessible):
 
 	def _get_mathMl(self):
 		# There could be other stuff before the math element. Ug.
-		for childNum in range(self.pdDomNode.GetChildCount()):
+		for childNum in xrange(self.pdDomNode.GetChildCount()):
 			try:
 				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
 			except COMError:

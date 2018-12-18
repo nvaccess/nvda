@@ -482,7 +482,7 @@ class WinWordCollectionQuicknavIterator(object):
 		items=self.collectionFromRange(self.rangeObj)
 		itemCount=items.count
 		isFirst=True
-		for index in range(1,itemCount+1):
+		for index in xrange(1,itemCount+1):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
@@ -514,7 +514,7 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
+			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
 		return t == FIELD_TYPE_HYPERLINK
 
 
@@ -617,7 +617,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return
 		tempRange.expand(wdParagraph)
 		fields=tempRange.fields
-		for field in (fields.item(i) for i in range(1, fields.count+1)):
+		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
 			if field.type != FIELD_TYPE_REF:
 				continue
 			fResult = field.result
@@ -632,7 +632,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
+			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue
 			bookmarkKey = fieldText[1] # we want the _Ref12345 part
@@ -1217,7 +1217,7 @@ class WordDocument(Window):
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
 		rows=table.rows
 		numHeaderRows=0
-		for rowIndex in range(rows.count): 
+		for rowIndex in xrange(rows.count): 
 			try:
 				row=rows.item(rowIndex+1)
 			except COMError:
@@ -1323,7 +1323,7 @@ class WordDocument(Window):
 		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
+				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
 					tempColumnNumber=columnNumber
 					while tempColumnNumber>=1:
 						try:
@@ -1334,7 +1334,7 @@ class WordDocument(Window):
 						break
 					textList.append(headerCell.range.text)
 			else:
-				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
+				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
 					tempRowNumber=rowNumber
 					while tempRowNumber>=1:
 						try:

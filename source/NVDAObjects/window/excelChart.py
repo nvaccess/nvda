@@ -484,7 +484,7 @@ class ExcelChart(excel.ExcelBase):
 				# Translators: Indicates the number of series in a chart where there are multiple series.
 				seriesValueString = _( "There are total %d series in this chart" ) %(count)
 
-			for i in range(1, count+1):
+			for i in xrange(1, count+1):
 				# Translators: Specifies the number and name of a series when listing series in a chart.
 				seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.excelChartObject.SeriesCollection(i).Name)
 			text = seriesValueString	

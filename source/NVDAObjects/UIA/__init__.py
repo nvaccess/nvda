@@ -574,7 +574,7 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildIndex=childCount-1
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
-			for index in range(childCount):
+			for index in xrange(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
@@ -1237,7 +1237,7 @@ class UIA(Window):
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
 			return children
-		for index in range(cachedChildren.length):
+		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			windowHandle=self.windowHandle
 			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
@@ -1261,7 +1261,7 @@ class UIA(Window):
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		textList=[]
-		for i in range(val.length):
+		for i in xrange(val.length):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
@@ -1289,7 +1289,7 @@ class UIA(Window):
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		textList=[]
-		for i in range(val.length):
+		for i in xrange(val.length):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
@@ -1416,7 +1416,7 @@ class UIA(Window):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		objList=[]
-		for index in range(a.length):
+		for index in xrange(a.length):
 			e=a.getElement(index)
 			e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			obj=UIA(UIAElement=e)

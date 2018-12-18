@@ -267,7 +267,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		if not text:
 			return ""
 		commandList=XMLFormatting.XMLTextParser().parse(text)
-		for index in range(len(commandList)):
+		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
 				field=commandList[index].field
 				if isinstance(field,textInfos.ControlField):

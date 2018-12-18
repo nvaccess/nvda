@@ -86,7 +86,7 @@ def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
 				isDown=bool((lParam>>11)&1)
 				#Right's up and down are rversed, but NVDA does not want this
 				if isRight: isDown=not isDown
-				for unit in range(numUnits):
+				for unit in xrange(numUnits):
 					gesture=WizWheelGesture(isDown,isRight)
 					try:
 						inputCore.manager.executeGesture(gesture)
@@ -285,8 +285,8 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 	def __init__(self,keyBits, extendedKeyBits):
 		super(KeyGesture,self).__init__()
-		keys=[self.keyLabels[num] for num in range(24) if (keyBits>>num)&1]
-		extendedKeys=[self.extendedKeyLabels[num] for num in range(4) if (extendedKeyBits>>num)&1]
+		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1]
+		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num)&1]
 		self.id="+".join(keys+extendedKeys)
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
 		if not extendedKeyBits and not keyBits & ~(0xff | (1 << 0xf)):

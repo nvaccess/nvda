@@ -332,7 +332,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			self.untranslatedCursorPos = 0
 			# This might leave us with some untranslated braille.
 			# For example, in English grade 1, erasing the number 1 leaves us with a number sign.
-			for prevIndex in range(index - 1, -1, -1):
+			for prevIndex in xrange(index - 1, -1, -1):
 				if  prevIndex in self.cellsWithText:
 					# This cell produced text, so stop.
 					break
@@ -427,7 +427,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 def formatDotNumbers(dots):
 	out = []
-	for dot in range(8):
+	for dot in xrange(8):
 		if dots & (1 << dot):
 			out.append(str(dot + 1))
 	return " ".join(out)
@@ -451,7 +451,7 @@ class BrailleInputGesture(inputCore.InputGesture):
 	space = False
 
 	def _makeDotsId(self):
-		items = ["dot%d" % (i+1) for i in range(8) if self.dots & (1 << i)]
+		items = ["dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i)]
 		if self.space:
 			items.append("space")
 		return "bk:" + "+".join(items)

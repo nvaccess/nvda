@@ -78,7 +78,7 @@ class Dialog(NVDAObject):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		for index in range(childCount):
+		for index in xrange(childCount):
 			child=children[index]
 			childStates=child.states
 			childRole=child.role
@@ -314,7 +314,7 @@ class LiveText(NVDAObject):
 				textLen = len(text)
 				prevTextLen = len(prevText)
 				# Find the first character that differs between the two lines.
-				for pos in range(min(textLen, prevTextLen)):
+				for pos in xrange(min(textLen, prevTextLen)):
 					if text[pos] != prevText[pos]:
 						start = pos
 						break
@@ -327,7 +327,7 @@ class LiveText(NVDAObject):
 					# The lines are different lengths, so assume the rest of the line changed.
 					end = textLen
 				else:
-					for pos in range(textLen - 1, start - 1, -1):
+					for pos in xrange(textLen - 1, start - 1, -1):
 						if text[pos] != prevText[pos]:
 							end = pos + 1
 							break
@@ -545,7 +545,7 @@ class RowWithoutCellObjects(NVDAObject):
 		return self._makeCell(1)
 
 	def _get_children(self):
-		return [self._makeCell(column) for column in range(1, self.childCount + 1)]
+		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
 
 	def getChild(self, index):
 		return self._makeCell(index + 1)
