@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Joseph Lee
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -28,6 +28,7 @@ import api
 import ui
 import braille
 import nvwave
+from six.moves import xrange
 
 class ProgressBar(NVDAObject):
 

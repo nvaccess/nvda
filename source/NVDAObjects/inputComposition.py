@@ -7,6 +7,7 @@ import config
 from NVDAObjects.window import Window
 from .behaviors import EditableTextWithAutoSelectDetection, CandidateItem as CandidateItemBehavior 
 from textInfos.offsets import OffsetsTextInfo
+from six.moves import xrange
 
 def calculateInsertedChars(oldComp,newComp):
 	oldLen=len(oldComp)
