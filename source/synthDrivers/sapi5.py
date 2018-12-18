@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -25,6 +25,7 @@ from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
 from logHandler import log
+from six.moves import xrange
 
 # SPAudioState enumeration
 SPAS_CLOSED=0
