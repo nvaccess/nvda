@@ -1,7 +1,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2016 NV Access Limited
+#Copyright (C) 2016-2018 NV Access Limited
 
 from comtypes import COMError
 from collections import defaultdict
@@ -18,6 +18,7 @@ from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation,
 from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+from six.moves import xrange
 
 """Support for Microsoft Word via UI Automation."""
 

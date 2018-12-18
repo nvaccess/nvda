@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -7,6 +7,7 @@ import operator
 from comtypes import COMError
 import ctypes
 import UIAHandler
+from six.moves import xrange
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""

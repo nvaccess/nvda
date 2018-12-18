@@ -33,6 +33,7 @@ import braille
 import time
 from locationHelper import RectLTWH
 import ui
+from six.moves import xrange
 
 class UIATextInfo(textInfos.TextInfo):
 
