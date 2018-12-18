@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2017 NV Access Limited
+#Copyright (C) 2015-2018 NV Access Limited
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
@@ -19,6 +19,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 from locationHelper import RectLTWH
+from six.moves import xrange
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 
