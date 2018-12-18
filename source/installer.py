@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -25,6 +25,7 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
+from six.moves import xrange
 
 _wsh=None
 def _getWSH():

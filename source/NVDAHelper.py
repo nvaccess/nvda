@@ -26,6 +26,7 @@ import globalVars
 from logHandler import log
 import time
 import globalVars
+from six.moves import xrange
 
 versionedLibPath='lib'
 versionedLib64Path='lib64'

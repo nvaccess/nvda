@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """Keyboard support"""
 
@@ -29,6 +29,7 @@ import tones
 import core
 from contextlib import contextmanager
 import threading
+from six.moves import xrange
 
 ignoreInjected=False
 

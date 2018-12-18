@@ -23,6 +23,7 @@ import ui
 from math import floor
 from contextlib import contextmanager
 import threading
+from six.moves import xrange
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
