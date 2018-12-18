@@ -1670,8 +1670,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			if isFallback and self._detectionEnabled:
-				# As this is the fallback display, which is noBraille,
+				# As this is the fallback display, which is usually noBraille,
 				# we can keep the current display when enabling detection.
+				# Note that in this case, L{_detectionEnabled} is set by L{handleDisplayUnavailable}
 				self.__enableDetection(keepCurrentDisplay=True)
 			elif not detected:
 				config.conf["braille"]["display"] = name
