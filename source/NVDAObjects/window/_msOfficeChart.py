@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/window/_msOfficeChartConstants.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014-2017 NV Access Limited, NVDA India
+#Copyright (C) 2014-2018 NV Access Limited, NVDA India
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -16,6 +16,7 @@ import colors
 import inputCore
 import re
 from logHandler import log
+from six.moves import xrange
 
 #This file contains chart constants common to Chart Object for Microsoft Office.
 

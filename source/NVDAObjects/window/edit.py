@@ -32,6 +32,7 @@ from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 import watchdog
+from six.moves import xrange
 
 selOffsetsAtLastCaretEvent=None
 
