@@ -37,6 +37,7 @@ import winKernel
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
+from six.moves import xrange
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
