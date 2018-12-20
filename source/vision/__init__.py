@@ -567,11 +567,7 @@ class VisionHandler(AutoPropertyObject):
 		if not self.enabled:
 			return
 		if obj is api.getFocusObject():
-			context = CONTEXT_FOCUS
-			if self.magnifier and context in self.magnifier.enabledTrackingContexts:
-				self.magnifier.trackToObject(obj, context=context)
-			if self.highlighter and context in self.highlighter.enabledHighlightContexts:
-				self.highlighter.updateContextRect(context, obj=obj)
+			self.handleGainFocus(obj)
 		elif obj is api.getNavigatorObject():
 			self.handleReviewMove(context=CONTEXT_NAVIGATOR)
 
