@@ -498,7 +498,7 @@ class VisionHandler(AutoPropertyObject):
 				try:
 					self.terminateProviderForRole(role)
 				except:
-					log.error("Couldn't terminate provider for role %s" % role)
+					log.error("Couldn't terminate provider for role %s" % role, exc_info=True)
 				if not temporary:
 					config.conf['vision'][role] = None
 			return True
