@@ -13,6 +13,7 @@ import config
 import textInfos
 from locationHelper import RectLTWH
 from treeInterceptorHandler import TreeInterceptor
+import api
 
 HIGH_SURROGATE_FIRST = u"\uD800"
 HIGH_SURROGATE_LAST = u"\uDBFF"
@@ -208,7 +209,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			pass
 		# If the inclusive end offset is greater than the start offset, we are working with a range.
 		# If not, i.e. the range only contains one character, we have only one location to deal with.
-		objLocation = self.obj.rootNVDAObject.location if isinstance(self.obj, TreeInterceptor) else self.obj.location
+		obj = self.obj.rootNVDAObject if isinstance(self.obj, TreeInterceptor) else self.obj
+		objLocation = obj.location or api.getForegroundObject().location
+		if not objLocation:
+			raise LookupError
 		rects = [] 
 		if inclusiveEndOffset > startOffset:
 			offset = startOffset
