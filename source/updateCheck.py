@@ -149,8 +149,8 @@ def checkForUpdate(auto=False):
 def _setStateToNone(_state):
 	_state["pendingUpdateFile"] = None
 	_state["pendingUpdateVersion"] = None
-	_state["pengindUpdateAPIVersion"] = None
-	_state["pendingUpdateBackCompatToAPIVersion"] = None
+	_state["pendingUpdateAPIVersion"] = (0,0,0)
+	_state["pendingUpdateBackCompatToAPIVersion"] = (0,0,0)
 
 
 def getPendingUpdate():
@@ -160,19 +160,15 @@ def getPendingUpdate():
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
 		pendingUpdateVersion=state["pendingUpdateVersion"]
-		pengindUpdateAPIVersion=addonAPIVersion.getAPIVersionTupleFromString(
-			state["pengindUpdateAPIVersion"]
-		)
-		pendingUpdateBackCompatToAPIVersion=addonAPIVersion.getAPIVersionTupleFromString(
-			state["pendingUpdateBackCompatToAPIVersion"]
-		)
+		pendingUpdateAPIVersion=state["pendingUpdateAPIVersion"] or (0,0,0)
+		pendingUpdateBackCompatToAPIVersion=state["pendingUpdateBackCompatToAPIVersion"] or (0,0,0)
 	except KeyError:
 		_setStateToNone(state)
 		return None
 	else:
 		if pendingUpdateFile and os.path.isfile(pendingUpdateFile):
 			return (
-				pendingUpdateFile, pendingUpdateVersion, pengindUpdateAPIVersion, pendingUpdateBackCompatToAPIVersion
+				pendingUpdateFile, pendingUpdateVersion, pendingUpdateAPIVersion, pendingUpdateBackCompatToAPIVersion
 			)
 		else:
 			_setStateToNone(state)
@@ -534,7 +530,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			finalDest=self.destPath
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
-		state["pengindUpdateAPIVersion"]=self.apiVersion
+		state["pendingUpdateAPIVersion"]=self.apiVersion
 		state["pendingUpdateBackCompatToAPIVersion"]=self.backCompatTo
 		# Postponing an update indicates that the user is likely interested in getting a reminder.
 		# Therefore, clear the dontRemindVersion.
@@ -556,8 +552,8 @@ class UpdateDownloader(object):
 		self.updateInfo = updateInfo
 		self.urls = updateInfo["launcherUrl"].split(" ")
 		self.version = updateInfo["version"]
-		self.apiVersion = getAPIVersionTupleFromString(updateInfo["addonAPIVersion"])
-		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo["backCompatToAPIVersion"])
+		self.apiVersion = getAPIVersionTupleFromString(updateInfo["apiVersion"])
+		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo["apiCompatTo"])
 		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
@@ -651,9 +647,6 @@ class UpdateDownloader(object):
 			raise RuntimeError("Content has incorrect file hash")
 		# getFileVersionInfo will fail as long as the file is still open.
 		local.close()
-		fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
-		fileVersion = fileVersionInfo.get('FileVersion') or self.version
-		self.versionTuple = addonAPIVersion.getAPIVersionTupleFromString(fileVersion)
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
@@ -762,7 +755,7 @@ def initialize():
 			"lastCheck": 0,
 			"dontRemindVersion": None,
 			"pendingUpdateVersion": None,
-			"pengindUpdateAPIVersion": None,
+			"pendingUpdateAPIVersion": None,
 			"pendingUpdateBackCompatToAPIVersion": None,
 			"pendingUpdateFile": None,
 		}

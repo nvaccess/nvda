@@ -640,7 +640,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		entriesLabel=_("Untested add-ons")
 		self.addonsList = sHelper.addLabeledControl(
 			entriesLabel,
-			nvdaControls.AutoWidthColumnCheckListCtrl,
+			nvdaControls.AutoWidthColumnListCtrl,
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL,
 			size=self.scaleSize((maxControlWidth, 350))
 		)

@@ -25,7 +25,7 @@ EG: (x, y, z): Large changes to speech.py
 #: Resulting match objects expose three groups reflecting release year, release month, and release minor version,
 # respectively.
 #: @type: RegexObject
-ADDON_API_VERSION_REGEX = re.compile(r"^(\d{4})\.(\d)\.(\d)$")
+ADDON_API_VERSION_REGEX = re.compile(r"^(0|\d{4})\.(\d)\.(\d)$")
 
 def getAPIVersionTupleFromString(version):
 	"""Converts a string containing an NVDA version to a tuple of the form (versionYear, versionMajor, versionMinor)"""

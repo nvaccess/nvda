@@ -120,9 +120,10 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		if shouldAskAboutAddons:
 			# Translators: A message in the installer to let the user know that some addons are not compatible.
 			msg+=_(
-				"\n\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
-				"These add-ons will be disabled after installation. "
-				"If you rely on these add-ons, please review the list to manually enable them before installation."
+				"\n\n"
+				"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+				"These add-ons will be disabled after installation. If you rely on these add-ons, "
+				"please review the list to decide whether to continue with the installation"
 			)
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))

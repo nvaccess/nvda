@@ -206,7 +206,16 @@ def _getAvailableAddonsFromPath(path):
 			try:
 				a = Addon(addon_path)
 				name = a.manifest['name']
-				log.debug("Found add-on %s", name)
+				log.debug(
+					"Found add-on {name} - {a.version}."
+					" Requires API: {a.minimumNVDAVersion}."
+					" Last-tested API: {a.lastTestedNVDAVersion}".format(
+						name=name,
+						a=a
+					))
+				if a.manifest.errors is not None:
+					_report_manifest_errors(a.manifest)
+					raise AddonError("Manifest file has errors.")
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
 				elif not isAddonCompatible(a):
@@ -275,17 +284,11 @@ class AddonBase(object):
 
 	@property
 	def minimumNVDAVersion(self):
-		version = self.manifest.get('minimumNVDAVersion')
-		if not version:
-			return 0, 0, 0
-		return getAPIVersionTupleFromString(version)
+		return self.manifest.get('minimumNVDAVersion')
 
 	@property
 	def lastTestedNVDAVersion(self):
-		version = self.manifest.get('lastTestedNVDAVersion')
-		if not version:
-			return 0, 0, 0
-		return getAPIVersionTupleFromString(version)
+		return self.manifest.get('lastTestedNVDAVersion')
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
@@ -609,7 +612,7 @@ def createAddonBundleFromPath(path, destDir=None):
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
-		raise AddonError("Manifest file as errors.")
+		raise AddonError("Manifest file has errors.")
 	bundleFilename = "%s-%s.%s" % (manifest['name'], manifest['version'], BUNDLE_EXTENSION)
 	bundleDestination = os.path.join(destDir, bundleFilename)
 	with zipfile.ZipFile(bundleDestination, 'w') as z:
@@ -633,26 +636,37 @@ class AddonManifest(ConfigObj):
 # NVDA Add-on Manifest configuration specification
 # Add-on unique name
 name = string()
+
 # short  summary (label) of the add-on to show to users.
 summary = string()
+
 # Long description with further information and instructions
 description = string(default=None)
+
 # Name of the author or entity that created the add-on
 author = string()
+
 # Version of the add-on. Should preferably in some standard format such as x.y.z
 version = string()
+
 # The minimum required NVDA version for this add-on to work correctly.
-# Must have 3 integers separated by dots.
-# Must be less than or equal to lastTestedNVDAVersion
-minimumNVDAVersion = string(default="0.0.0")
-# The last NVDA version this add-on has been tested with.
-# Must have 3 integers separated by dots.
+# Should be less than or equal to lastTestedNVDAVersion
+minimumNVDAVersion = apiVersion(default="0.0.0")
+
 # Must be greater than or equal to minimumNVDAVersion
-lastTestedNVDAVersion = string(default="0.0.0")
+lastTestedNVDAVersion = apiVersion(default="0.0.0")
+
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
+
 # Name of default documentation file for the add-on.
 docFileName = string(default=None)
+
+# NOTE: apiVersion:
+# Eg: 2019.1.0 or 0.0.0
+# Must have 3 integers separated by dots.
+# The first integer must be a Year (4 characters)
+# "0.0.0" is also valid
 
 """))
 
@@ -664,8 +678,8 @@ docFileName = string(default=None)
 		@type translatedInput: file-like object
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
-		self._errors = []
-		val = Validator()
+		self._errors = None
+		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
@@ -680,3 +694,13 @@ docFileName = string(default=None)
 	@property
 	def errors(self):
 		return self._errors
+
+def validate_apiVersionString(value):
+	from configobj.validate import ValidateError
+	if not isinstance(value, basestring):
+		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
+	try:
+		tuple = addonAPIVersion.getAPIVersionTupleFromString(value)
+		return tuple
+	except ValueError as e:
+		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
