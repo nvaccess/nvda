@@ -6,11 +6,16 @@
 
 import appModuleHandler
 from NVDAObjects.window import DisplayModelEditableText
+from NVDAObjects.window.edit import UnidentifiedEdit
 
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
-		# #9042 Edit fields in Excel have to be accessed via displayModel.
+		# #9042: Edit fields in Excel have to be accessed via displayModel.
 		if windowClass == "EDTBX":
+			try:
+				clsList.remove(UnidentifiedEdit)
+			except ValueError:
+				pass
 			clsList.insert(0, DisplayModelEditableText)
