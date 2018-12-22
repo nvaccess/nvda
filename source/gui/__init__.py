@@ -214,10 +214,10 @@ class MainFrame(wx.Frame):
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
 			updateTuple = updateCheck.getPendingUpdate()
-			newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateTuple[1])
+			newNVDAVersionTuple = updateTuple[2]
 			from addonHandler import getAddonsWithoutKnownCompatibility
 			if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
-				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1])
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
 				gui.runScriptModalDialog(confirmUpdateDialog)
 			else:
 				updateCheck.executePendingUpdate()
@@ -476,10 +476,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to view NVDA Contributors list document.
 			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
-		# Translators: The label for the menu item to open NVDA Welcome Dialog.
-		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
-		menu_help.AppendSeparator()
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+			menu_help.AppendSeparator()
 		if updateCheck:
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
 			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
@@ -861,10 +861,10 @@ class ExitDialog(wx.Dialog):
 		elif action == 4:
 			if updateCheck:
 				updateTuple = updateCheck.getPendingUpdate()
-				newNVDAVersionTuple = versionInfo.getNVDAVersionTupleFromString(updateTuple[1])
+				newNVDAVersionTuple = updateTuple[2]
 				from addonHandler import getAddonsWithoutKnownCompatibility
 				if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
-					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1])
+					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
 					confirmUpdateDialog.ShowModal()
 				else:
 					updateCheck.executePendingUpdate()

@@ -1,6 +1,6 @@
 #logHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2016 NV Access Limited, Rui Batista
+#Copyright (C) 2007-2018 NV Access Limited, Rui Batista, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ import sys
 import warnings
 from encodings import utf_8
 import logging
+# #7105: Python 3 split the following into two dictionaries.
 from logging import _levelNames as levelNames
 import inspect
 import winsound
@@ -114,6 +115,7 @@ class Logger(logging.Logger):
 	# Our custom levels.
 	IO = 12
 	DEBUGWARNING = 15
+	OFF = 100
 
 	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
 		if not extra:
@@ -313,16 +315,18 @@ def initialize(shouldDoRemoteLogging=False):
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
+	logging.addLevelName(Logger.OFF, "OFF")
 	if not shouldDoRemoteLogging:
 		# This produces log entries such as the following:
 		# IO - inputCore.InputManager.executeGesture (09:17:40.724):
 		# Input: kb(desktop):v
 		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s.%(msecs)03d):\n%(message)s", "%H:%M:%S")
-		if globalVars.appArgs.secure:
+		if (globalVars.appArgs.secure or globalVars.appArgs.noLogging) and (not globalVars.appArgs.debugLogging and globalVars.appArgs.logLevel == 0):
 			# Don't log in secure mode.
+			# #8516: also if logging is completely turned off.
 			logHandler = logging.NullHandler()
 			# There's no point in logging anything at all, since it'll go nowhere.
-			log.setLevel(100)
+			log.setLevel(Logger.OFF)
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
@@ -350,14 +354,16 @@ def initialize(shouldDoRemoteLogging=False):
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure:
+	if globalVars.appArgs.debugLogging or globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure or globalVars.appArgs.noLogging:
 		# Log level was overridden on the command line or we're running in secure mode,
 		# so don't set it.
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
 	level = levelNames.get(levelName)
-	if not level or level > log.INFO:
+	# The lone exception to level higher than INFO is "OFF" (100).
+	# Setting a log level to something other than options found in the GUI is unsupported.
+	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
