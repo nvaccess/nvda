@@ -35,6 +35,13 @@ class AppModule(appModuleHandler.AppModule):
 		# Sometimes clipboard candidates list gets selected, so ask NvDA to descend one more level.
 		if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList":
 			obj = obj.firstChild
+		# In build 18262, emoji panel may open to People group and skin tone modifier or the list housing them gets selected.
+		elif obj.UIAElement.cachedAutomationID == "SkinTonePanelModifier_ListView":
+			obj = obj.next
+		elif obj.parent.UIAElement.cachedAutomationID == "SkinTonePanelModifier_ListView":
+			# But this will point to nothing if emoji search results are not people.
+			if obj.parent.next is not None: obj = obj.parent.next
+			else: obj = obj.parent.parent.firstChild
 		candidate = obj
 		if obj and obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent and isinstance(obj.parent, UIA) and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
