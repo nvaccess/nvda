@@ -36,9 +36,7 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList":
 			obj = obj.firstChild
 		candidate = obj
-		# Sometimes, due to bad tree traversal, something other than the selected item sees this event.
-		parent = obj.parent
-		if obj.UIAElement.cachedClassName == "ListViewItem" and isinstance(parent, UIA) and parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
+		if obj and obj.UIAElement.cachedClassName == "ListViewItem" and obj.parent and isinstance(obj.parent, UIA) and obj.parent.UIAElement.cachedAutomationID != "TEMPLATE_PART_ClipboardItemsList":
 			# The difference between emoji panel and suggestions list is absence of categories/emoji separation.
 			# Turns out automation ID for the container is different, observed in build 17666 when opening clipboard copy history.
 			candidate = obj.parent.previous
@@ -98,8 +96,8 @@ class AppModule(appModuleHandler.AppModule):
 	_emojiPanelJustOpened = False
 
 	def event_nameChange(self, obj, nextHandler):
-		# #49: reported by a user: on some systems, touch keyboard keys keeps firing name change event.
-		# Argh, in build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
+		# On some systems, touch keyboard keys keeps firing name change event.
+		# In build 17704, whenever skin tones are selected, name change is fired by emoji entries (GridViewItem).
 		if ((obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
 		or (obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList")
 		# And no, emoji entries should not be announced here.
@@ -108,7 +106,11 @@ class AppModule(appModuleHandler.AppModule):
 		# The word "blank" is kept announced, so suppress this on build 17666 and later.
 		if winVersion.winVersion.build > 17134:
 			# In build 17672 and later, return immediatley when element selected event on clipboard item was fired just prior to this.
-			if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
+			# In some cases, parent will be None, as seen when emoji panel is closed in build 18267.
+			try:
+				if obj.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemIndex" or obj.parent.UIAElement.cachedAutomationID == "TEMPLATE_PART_ClipboardItemsList": return
+			except AttributeError:
+				return
 			if not self._emojiPanelJustOpened or obj.UIAElement.cachedAutomationID != "TEMPLATE_PART_ExpressionGroupedFullView": speech.cancelSpeech()
 			self._emojiPanelJustOpened = False
 		# Don't forget to add "Microsoft Candidate UI" as something that should be suppressed.
