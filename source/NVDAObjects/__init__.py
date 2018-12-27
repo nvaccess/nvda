@@ -112,7 +112,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			newCls=self._dynamicClassCache.get(bases,None)
 			if not newCls:
 				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
-				newCls=type(name,bases,{})
+				newCls=type(name,bases,{"__module__": __name__})
 				self._dynamicClassCache[bases]=newCls
 
 		oldMro=frozenset(obj.__class__.__mro__)
