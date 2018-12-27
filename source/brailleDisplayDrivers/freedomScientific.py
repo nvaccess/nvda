@@ -1,15 +1,15 @@
 # -*- coding: UTF-8 -*-
-			#brailleDisplayDrivers/freedomScientific.py
+#brailleDisplayDrivers/freedomScientific.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2018 NV Access Limited, Bram Duvigneau
+#Copyright (C) 2008-2018 NV Access Limited, Bram Duvigneau, Leonard de Ruijter
 
 """
 Braille display driver for Freedom Scientific braille displays.
 """
 
-from six import BytesIO
+from six import BytesIO, int2byte
 import itertools
 import braille
 import inputCore
@@ -37,18 +37,18 @@ MODELS = {
 }
 
 # Packet types
-FS_PKT_QUERY = "\x00"
-FS_PKT_ACK = "\x01"
-FS_PKT_NAK = "\x02"
-FS_PKT_KEY = "\x03"
-FS_PKT_BUTTON = "\x04"
-FS_PKT_WHEEL = "\x05"
-FS_PKT_HVADJ = "\x08"
-FS_PKT_BEEP = "\x09"
-FS_PKT_CONFIG = "\x0F"
-FS_PKT_INFO = "\x80"
-FS_PKT_WRITE = "\x81"
-FS_PKT_EXT_KEY = "\x82"
+FS_PKT_QUERY = b"\x00"
+FS_PKT_ACK = b"\x01"
+FS_PKT_NAK = b"\x02"
+FS_PKT_KEY = b"\x03"
+FS_PKT_BUTTON = b"\x04"
+FS_PKT_WHEEL = b"\x05"
+FS_PKT_HVADJ = b"\x08"
+FS_PKT_BEEP = b"\x09"
+FS_PKT_CONFIG = b"\x0F"
+FS_PKT_INFO = b"\x80"
+FS_PKT_WRITE = b"\x81"
+FS_PKT_EXT_KEY = b"\x82"
 
 def _makeTranslationTable(dotsTable):
 	"""Create a translation table for braille dot combinations
@@ -177,7 +177,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendPacket(self, packetType, arg1="\x00", arg2="\x00", arg3="\x00", data=""):
+	def _sendPacket(self, packetType, arg1=b"\x00", arg2=b"\x00", arg3=b"\x00", data=b""):
 		"""Send a packet to the display
 
 		@param packetType: Type of packet (first byte), use one of the FS_PKT constants
@@ -193,14 +193,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"""
 		def handleArg(arg):
 			if type(arg) == int:
-				return chr(arg)
+				return int2byte(arg)
 			return arg
 		arg1 = handleArg(arg1)
 		arg2 = handleArg(arg2)
 		arg3 = handleArg(arg3)
 		packet = [packetType, arg1, arg2, arg3, data]
 		if data:
-			packet.append(chr(self._calculateChecksum("".join(packet))))
+			packet.append(int2byte(self._calculateChecksum("".join(packet))))
 		self._dev.write("".join(packet))
 
 	def _onReceive(self, data):
@@ -223,7 +223,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			calculatedChecksum = self._calculateChecksum(packetType + arg1 + arg2 + arg3 + payload)
 			assert calculatedChecksum == checksum, "Checksum mismatch, expected %s but got %s" % (checksum, payload[-1])
 		else:
-			payload = ""
+			payload = b""
 
 		self._handlePacket(packetType, arg1, arg2, arg3, payload)
 
@@ -356,8 +356,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.translationTable:
 			cells = _translate(cells, FOCUS_1_DOTS_TABLE)
 		if not self._awaitingAck:
-			cells = "".join([chr(x) for x in cells])
-			self._sendPacket(FS_PKT_WRITE, chr(self.numCells), 0, 0, cells)
+			cells = b"".join([int2byte(x) for x in cells])
+			self._sendPacket(FS_PKT_WRITE, int2byte(self.numCells), 0, 0, cells)
 			self._pendingCells = []
 		else:
 			self._pendingCells = cells
