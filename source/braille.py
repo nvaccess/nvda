@@ -1687,7 +1687,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				# We should handle this more gracefully, since this is no reason
 				# to stop a display from loading successfully.
 				log.debugWarning("Error in initial display after display load", exc_info=True)
-			if detected and and 'bluetoothName' in detected.deviceInfo:
+			if detected and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
 		except:
