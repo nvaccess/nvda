@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2017.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 00:10+1000\n"
-"PO-Revision-Date: 2018-05-26 18:10+0100\n"
+"POT-Creation-Date: 2018-12-21 00:10+1000\n"
+"PO-Revision-Date: 2018-12-22 14:17+0000\n"
 "Last-Translator: Ronan McGuirk <ronan.mcguirk@gmail.com>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -373,9 +373,8 @@ msgid "del"
 msgstr "dlg"
 
 #. Translators: Displayed in braille for an object which is inserted.
-#, fuzzy
 msgid "ins"
-msgstr "Nas&canna"
+msgstr "ion"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -520,11 +519,11 @@ msgstr "Uathoibríoch"
 
 #. Translators: String representing the USB port selection for braille displays.
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 #. Translators: String representing the Bluetooth port selection for braille displays.
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2210,7 +2209,7 @@ msgstr "alt"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See https://en.wikipedia.org/wiki/Block_quotation
+#. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "athfhriotal eangaithe"
 
@@ -2937,14 +2936,12 @@ msgid "moves to the previous table column"
 msgstr "téigh go dtí an colún roimhe seo sa tábla"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables off"
-msgstr "Ná tabhair tuairisc ar táblaí"
+msgstr "Ná tabhair tuairisc ar tháblaí le haghaidh leagain amach"
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
-#, fuzzy
 msgid "layout tables on"
-msgstr "Tabhair tuairisc ar táblaí"
+msgstr "Tabhair tuairisc ar tháblaí le haghaidh leagain amach"
 
 #. Translators: Input help mode message for include layout tables command.
 #, fuzzy
@@ -3895,13 +3892,12 @@ msgid "No status line found"
 msgstr "Líne stádais gan aimsiú"
 
 #. Translators: Reported when status line exist, but is empty.
-#, fuzzy
 msgid "no status bar information"
-msgstr "Gan faisnéis súiomh"
+msgstr "Níl aon fhaisnéis sa bharra stádais"
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "unable to copy status bar content to clipboard"
-msgstr ""
+msgstr "Ní féidir an barra stádais a chóipeáil go dtí an ghearrthaisce."
 
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
@@ -4480,7 +4476,7 @@ msgstr "Ilcheanálach"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -6232,17 +6228,17 @@ msgid "no italic"
 msgstr "gan iodálach"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "Líne tríd dúbalta"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "líne tríd"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "gan líne tríd"
 
@@ -6272,12 +6268,12 @@ msgid "align right"
 msgstr "ailínithe ar dheis"
 
 #. Translators: Reported when text is justified.
-#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "ailíniú comhfhadaithe"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See https://kohei.us/2010/01/21/distributed-text-justification/
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "ailíniúchán dáilte"
 
@@ -6679,7 +6675,7 @@ msgstr "Léitheoir scáileáin saor oscailte le haghaidh Windows"
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} Rannpháirtithe NVDA"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6692,7 +6688,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6923,6 +6919,21 @@ msgstr "gan léamh"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Próifíl Eagarthóireachta {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied"
+msgstr "athchuir"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "athchuir"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "ar aghaidh"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7831,7 +7842,7 @@ msgstr "Fan nóiméad"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
-msgstr ""
+msgstr "Bailiú sonraí ar úsáid NVDA"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
@@ -8531,7 +8542,7 @@ msgstr "Cuir in iúl go bhfuil nuashonrú ag feitheamh agus NVDA ag tosú"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr ""
+msgstr "Lig don thionscadal NVDA staitisticí ar úsáid NVDA  a bhailiú "
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8655,6 +8666,17 @@ msgstr "&Leibhéal poncaíochta/siombailí:"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
+msgstr ""
+"        Bí muiníneach as teanga an ghuth nuair a phróiseáiletar "
+"carachtairagus siombailí"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
 msgstr ""
 "        Bí muiníneach as teanga an ghuth nuair a phróiseáiletar "
 "carachtairagus siombailí"
@@ -10190,16 +10212,15 @@ msgid "Secondary Series Axis"
 msgstr "ais na sraithe tánaistí"
 
 #. Translators: the title of a chart axis
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid " title: {axisTitle}"
-msgstr "Teideal an chárta  {chartTitle}"
+msgstr "Teideal: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
 msgstr ""
 
 #. Translators: Indicates that trendline type is Linear
-#, fuzzy
 msgid "Linear"
 msgstr "líne"
 
@@ -10220,14 +10241,12 @@ msgid "Power"
 msgstr ""
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
-msgstr "cearnaithe "
+msgstr "cearnóg "
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "comhartha lúide (uimhircheap)"
+msgstr "#comhartha lúide (uimhircheap)"
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
@@ -10773,6 +10792,16 @@ msgstr "nóta tráchta: {text} le {author} ar {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {description}:  {text} le {author} ar {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance:.3g} pointí ó imeall chlé."
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance:.3g} pointí ó barr."
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10915,7 +10944,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pointe"
 
 #. Translators: a measurement in Microsoft Word
-#. See https://support.microsoft.com/kb/76388 for details.
+#. See http://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
