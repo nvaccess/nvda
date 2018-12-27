@@ -264,8 +264,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			key = ord(arg1)
 			isPress = (ord(arg2) & 0X01) != 0
 			keyGroup = ord(arg3)
-			isTopRow = (self._model.lower().startswith("focus") and keyGroup == -1) or \
-				(self._model.lower().startswith("pm display") and keyGroup == 1)
+			isTopRow = keyGroup == 1
 			if isPress:
 				# Ignore keypresses
 				return
