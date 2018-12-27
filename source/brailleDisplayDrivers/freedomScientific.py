@@ -50,8 +50,6 @@ FS_PKT_INFO = b"\x80"
 FS_PKT_WRITE = b"\x81"
 FS_PKT_EXT_KEY = b"\x82"
 
-TOP_ROUTING_KEY_GROUP = 1
-
 def _makeTranslationTable(dotsTable):
 	"""Create a translation table for braille dot combinations
 
@@ -265,8 +263,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		elif packetType == FS_PKT_BUTTON:
 			key = ord(arg1)
 			isPress = (ord(arg2) & 0X01) != 0
-			keyGroup = ord(arg3)
-			isTopRow = keyGroup == TOP_ROUTING_KEY_GROUP
+			isTopRow = bool(ord(arg3))
 			if isPress:
 				# Ignore keypresses
 				return
