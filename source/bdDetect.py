@@ -172,8 +172,9 @@ class Detector(object):
 		self._stopEvent = threading.Event()
 		self._queuedScanLock = threading.Lock()
 		self._scanQueued = False
-		self._detectUsb = False
-		self._detectBluetooth = False
+		self._detectUsb = usb
+		self._detectBluetooth = bluetooth
+		self._limitToDevices = limitToDevices
 		self._runningApcLock = threading.Lock()
 		# Perform initial scan.
 		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
@@ -268,15 +269,18 @@ class Detector(object):
 
 	def handleWindowMessage(self, msg=None, wParam=None):
 		if msg == WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:
-			self.rescan()
+			self.rescan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def pollBluetoothDevices(self):
 		"""Poll bluetooth devices that might be in range.
 		This does not cancel the current scan."""
+		if not self._detectBluetooth:
+			# Do not poll bluetooth devices at all when bluetooth is disabled.
+			return
 		with self._btDevsLock:
 			if not self._btDevs:
 				return
-		self._startBgScan(bluetooth=True)
+		self._startBgScan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def terminate(self):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)

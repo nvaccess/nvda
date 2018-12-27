@@ -1669,8 +1669,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.display = newDisplay
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
-			if isFallback:
-				self._resumeDetection()
+			if isFallback and self._detectionEnabled:
+				# As this is the fallback display, which is usually noBraille,
+				# we can keep the current display when enabling detection.
+				# Note that in this case, L{_detectionEnabled} is set by L{handleDisplayUnavailable}
+				self.__enableDetection(keepCurrentDisplay=True)
 			elif not detected:
 				config.conf["braille"]["display"] = name
 			else: # detected:
@@ -1684,7 +1687,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				# We should handle this more gracefully, since this is no reason
 				# to stop a display from loading successfully.
 				log.debugWarning("Error in initial display after display load", exc_info=True)
-			if detected and detected.type in (bdDetect.KEY_SERIAL, bdDetect.KEY_HID,) and 'bluetoothName' in detected.deviceInfo:
+			if detected and and 'bluetoothName' in detected.deviceInfo:
 				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
 		except:
@@ -1996,6 +1999,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _enableDetection(self, usb=True, bluetooth=True, keepCurrentDisplay=False, limitToDevices=None):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
+		This should also be executed when auto detection should be resumed due to loss of display connectivity.
 		"""
 		if self._detectionEnabled and self._detector:
 			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
@@ -2015,14 +2019,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector.terminate()
 			self._detector = None
 		self._detectionEnabled = False
-
-	def _resumeDetection(self):
-		"""Resumes automatic detection of braille displays.
-		This is executed when auto detection should be resumed due to loss of display connectivity.
-		"""
-		if not self._detectionEnabled or self._detector:
-			return
-		self._detector = bdDetect.Detector()
 
 class _BgThread:
 	"""A singleton background thread used for background writes and raw braille display I/O.
