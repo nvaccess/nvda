@@ -937,17 +937,16 @@ class AggregatedSection(object):
 		Adapted from L{configobj.Section.dict}.
 		"""
 		newdict = {}
-		for entry in self:
-			this_entry = self[entry]
-			if isinstance(this_entry, AggregatedSection):
-				this_entry = this_entry.dict()
-			elif isinstance(this_entry, list):
+		for key, value in self.iteritems():
+			if isinstance(value, AggregatedSection):
+				value = value.dict()
+			elif isinstance(value, list):
 				# create a copy rather than a reference
-				this_entry = list(this_entry)
-			elif isinstance(this_entry, tuple):
+				value = list(value)
+			elif isinstance(value, tuple):
 				# create a copy rather than a reference
-				this_entry = tuple(this_entry)
-			newdict[entry] = this_entry
+				value = tuple(value)
+			newdict[key] = value
 		return newdict
 
 	def __setitem__(self, key, val):

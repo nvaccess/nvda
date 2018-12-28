@@ -10,6 +10,7 @@ import winsound
 import time
 import weakref
 import wx
+import core
 from logHandler import log
 import documentBase
 import review
@@ -33,6 +34,8 @@ import inputCore
 import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
 REASON_QUICKNAV = "quickNav"
 
@@ -90,7 +93,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(object):
+class QuickNavItem(with_metaclass(ABCMeta, object)):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -107,6 +110,7 @@ class QuickNavItem(object):
 		self.itemType=itemType
 		self.document=document
 
+	@abstractmethod
 	def isChild(self,parent):
 		"""
 		Is this item a child of the given parent?
@@ -118,6 +122,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def report(self,readUnit=None):
 		"""
 		Reports the contents of this item.
@@ -126,6 +131,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def moveTo(self):
 		"""
 		Moves the browse mode caret or focus to this item.
@@ -273,6 +279,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_LISTITEM,
 		controlTypes.ROLE_RADIOBUTTON,
 		controlTypes.ROLE_TAB,
+		controlTypes.ROLE_MENUITEM,
+		controlTypes.ROLE_RADIOMENUITEM,
+		controlTypes.ROLE_CHECKMENUITEM,
+		})
+
+	IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES = frozenset({
 		controlTypes.ROLE_MENUITEM,
 		controlTypes.ROLE_RADIOMENUITEM,
 		controlTypes.ROLE_CHECKMENUITEM,
@@ -471,6 +483,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
+			return gesture.send()
+		# #3215 ARIA menus should get the Escape key unconditionally so they can handle it without invoking browse mode first
+		obj = api.getFocusObject()
+		if obj and obj.role in self.IGNORE_DISABLE_PASS_THROUGH_WHEN_FOCUSED_ROLES:
 			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
@@ -1042,7 +1058,9 @@ class ElementsListDialog(wx.Dialog):
 				speech.cancelSpeech()
 				item.moveTo()
 				item.report()
-			wx.CallLater(100, move)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(100, move)
 
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 

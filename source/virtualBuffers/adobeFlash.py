@@ -9,6 +9,7 @@ from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
+import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
@@ -128,6 +129,6 @@ class AdobeFlash(VirtualBuffer):
 		y=l[1]+(l[3]/2) 
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)

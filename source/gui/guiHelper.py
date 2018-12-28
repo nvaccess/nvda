@@ -44,6 +44,7 @@ class myDialog(class wx.Dialog):
 """
 import wx
 from wx.lib import scrolledpanel
+from abc import ABCMeta
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -300,4 +301,8 @@ class BoxSizerHelper(object):
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
+
+class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
+	"""Meta class to be used for wx subclasses with abstract methods."""
+	pass
 

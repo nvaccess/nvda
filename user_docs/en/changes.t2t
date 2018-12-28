@@ -3,19 +3,63 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+
+== New Features ==
+- New braille tables: Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435)
+- Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
+ - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
+- Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
+- It is possible to turn off NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
+
+
+== Changes ==
+- Updated liblouis braille translator to version 3.8.0. (#9013)
+- Add-on authors now can enforce a minimum required NVDA version for their add-ons. Unsupported add-ons will not load or install. (#6275)
+- Add-on authors must now specify the last version of NVDA the add-on has been tested against. Users will be warned against installing or enabling untested add-ons. (#6275)
+- The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
+- Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
+- When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
+
+
+== Bug Fixes ==
+- OneCore speech synthesizer: On Windows 10 April 2018 and above, large chunks of silence are no longer inserted between speech utterances. (#8985)
+- When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
+- Improved restart confirmation dialog after changing interface language. The text and the button labels are now more concise and less confusing. (#6416)
+- If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech on Windows 10, rather than espeak. (#9025)
+- Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
+
+
+== Changes for Developers ==
+- NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)
+- You can now include log output from liblouis into the NVDA log by setting the louis boolean flag in the debugLogging section of the NVDA configuration. (#4554)
+- Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275)
+ - minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.
+ - lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.
+- OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)
+- Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)
+- Properties and methods within classes can now be marked as abstract in NVDA. These classes will raise an error if instantiated. (#8294, #8652, #8658)
+
+
 = 2018.4 =
+Highlights of this release include performance improvements in recent Mozilla Firefox versions, announcement of emojis with all synthesizers, reporting of replied/forwarded status in Outlook, reporting the distance of the cursor to the edge of a Microsoft Word page, and many bug fixes.
 
 == New Features ==
 - New braille tables: Chinese (China, Mandarin) grade 1 and grade 2. (#5553)
 - Replied / Forwarded status is now reported on mail items in the Microsoft Outlook message list. (#6911)
 - NVDA is now able to read descriptions for emoji as well as other characters that are part of the Unicode Common Locale Data Repository. (#6523)
+- In Microsoft Word, the cursor's distance from the top and left edges of the page can be reported by pressing NVDA+numpadDelete. (#1939)
+- In Google Sheets with braille mode enabled, NVDA no longer announces 'selected' on every cell when moving focus between cells. (#8879)
+- Added support for Foxit Reader and Foxit Phantom PDF. (#8944)
+- Added support for the DBeaver database tool. (#8905)
 
 
 == Changes ==
 - "Report help balloons" in the Object Presentations dialog has been renamed to "Report notifications" to include reporting of toast notifications in Windows 8 and later. (#5789)
-- IN NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
+- In NVDA's keyboard settings, the checkboxes to enable or disable NVDA modifier keys are now displayed in a list rather than as separate checkboxes.
 - NVDA will no longer present redundant information when reading clock system tray on some versions of Windows. (#4364)
 - Updated liblouis braille translator to version 3.7.0. (#8697)
+- Updated eSpeak-NG to commit 919f3240cbb.
 
 
 == Bug Fixes ==
@@ -23,8 +67,16 @@ What's New in NVDA
 - When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
 - Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
 - Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
-- If running on the Japanese version of Windows XP or Vista, NVDA now displays the alert of OS version requirements as expected. (#8771)
-- Performance increases in Mozilla Firefox when navigating large pages with lots of dynamic changes. (#8678)
+- If running on the Japanese version of Windows XP or Vista, NVDA now displays OS version requirements message as expected. (#8771)
+- Performance improvements when navigating large pages with lots of dynamic changes in Mozilla Firefox. (#8678)
+- Braille no longer shows font attributes  if they have been disabled in  Document Formatting settings. (#7615)
+- NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
+- In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)
+- In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)
+- After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641) 
+- NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)
+- Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)
+- In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)
 
 
 == Changes for Developers ==
@@ -37,6 +89,10 @@ What's New in NVDA
 - The config.post_configProfileSwitch action now takes the optional prevConf keyword argument, allowing handlers to take action based on differences between configuration before and after the profile switch. (#8758)
 
 
+= 2018.3.2 =
+This is a minor release to work around a crash in Google Chrome when navigating tweetts on www.twitter.com. (#8777)
+
+ 
 = 2018.3.1 =
 This is a minor release to fix a critical bug in NVDA which caused 32 bit versions of Mozilla Firefox to crash. (#8759)
  
