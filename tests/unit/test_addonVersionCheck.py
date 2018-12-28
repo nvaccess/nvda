@@ -7,6 +7,7 @@
 
 import unittest
 
+import addonAPIVersion
 import versionInfo
 from addonHandler import AddonBase
 from addonHandler import addonVersionCheck
@@ -342,3 +343,55 @@ class TestAddonCompatibilityState(unittest.TestCase):
 		)
 		compat = self.mockStateSaver.getSavedState(notTestedAddon)
 		self.assertCompatValuesMatch(compat, compatValues.MANUALLY_SET_INCOMPATIBLE)
+
+
+class TestGetAPIVersionTupleFromString(unittest.TestCase):
+
+	def test_getAPIVersionTupleFromString_succeeds(self):
+		"""Tests trying to get the API version tuple from an API version string with one matching group
+		results in an error being raised
+		"""
+		self.assertEqual((2019, 1, 0), addonAPIVersion.getAPIVersionTupleFromString("2019.1.0"))
+
+
+	def test_getAPIVersionTupleFromString_noGroupsMatch_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with no matching groups
+		results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "not valid")
+
+	def test_getAPIVersionTupleFromString_twoYearDigits_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with not enough (2) digits
+		in the year part results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "19.1.0")
+
+	def test_getAPIVersionTupleFromString_threeYearDigits_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with not enough (3) digits
+		in the year part results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "019.1.0")
+
+	def test_getAPIVersionTupleFromString_oneMatch_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with one matching group
+		results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "2019.")
+
+	def test_getAPIVersionTupleFromString_twoMatch_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with two matching groups
+		results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "2019.1")
+
+	def test_getAPIVersionTupleFromString_devAppended_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with three matching groups
+		and some extra appended results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "2019.1.0dev")
+
+	def test_getAPIVersionTupleFromString_devPrepended_raises(self):
+		"""Tests trying to get the API version tuple from an API version string with three matching groups
+		and some extra prepended results in an error being raised
+		"""
+		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "dev2019.1.0")
