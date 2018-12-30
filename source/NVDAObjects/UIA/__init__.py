@@ -802,7 +802,10 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
-		elif UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId:
+		# Some combo boxes and looping selectors do not expose value pattern.
+		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
+		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
+		or (UIAControlType==UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
