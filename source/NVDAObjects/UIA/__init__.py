@@ -30,7 +30,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
-import time
 from locationHelper import RectLTWH
 import ui
 
@@ -774,7 +773,7 @@ class UIA(Window):
 		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
 			clsList.append(Toast_win10)
 		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
-			import edge
+			from . import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
 			elif (self.UIATextPattern and
@@ -789,7 +788,7 @@ class UIA(Window):
 				clsList.append(edge.EdgeNode)
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
 				# PDFs
-				import edge
+				from . import edge
 				clsList.append(edge.EdgeHTMLRoot)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
