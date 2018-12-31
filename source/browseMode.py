@@ -481,6 +481,36 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
+	def maybeSyncFocus(self):
+		if  config.conf["virtualBuffers"]["FocusFollowsBrowse"]:
+			return
+		try:
+			obj = self._lastFocusableObject
+		except AttributeError:
+			return
+		if obj and obj!=self.rootNVDAObject and obj!= api.getFocusObject() and self._shouldSetFocusToObj(obj):
+			obj.setFocus()
+
+	def maybeSyncFocusAndPassThrough(self, gesture=None): 		
+		self.maybeSyncFocus()
+		if gesture:
+			gesture.send()
+
+	def script_openInBackground(self,gesture):
+		self.maybeSyncFocusAndPassThrough(gesture)
+	# Translators: the description for the openInBackground script on browseMode documents.
+	script_openInBackground.__doc__ = _("Opens current link in background or performs default Control+Enter action")
+
+	def script_downloadLink(self,gesture):
+		self.maybeSyncFocusAndPassThrough(gesture)
+	# Translators: the description for the downloadLink script on browseMode documents.
+	script_downloadLink.__doc__ = _("Downloads current link or performs default Alt+Enter action")
+
+	def script_contextMenu(self,gesture):
+		self.maybeSyncFocusAndPassThrough(gesture)
+	# Translators: the description for the contextMenu script on browseMode documents.
+	script_contextMenu.__doc__ = _("Shows context menu or performs default Applications key action")
+
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
 			return gesture.send()
@@ -498,6 +528,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:enter": "activatePosition",
 		"kb:numpadEnter": "activatePosition",
 		"kb:space": "activatePosition",
+		"kb:Control+enter": "openInBackground",
+		"kb:Alt+enter": "downloadLink",
+		"kb:Applications": "contextMenu",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
 	}
@@ -1224,6 +1257,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
+			self._lastFocusableObject = None
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
@@ -1235,9 +1269,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				return
 			if obj==self.rootNVDAObject:
 				return
-			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-				focusObj.setFocus()
-			obj.scrollIntoView()
+			followBrowseModeFocus= config.conf["virtualBuffers"]["FocusFollowsBrowse"]
+			if followBrowseModeFocus:
+				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+					focusObj.setFocus()
+				obj.scrollIntoView()
+			else:
+				self._lastFocusableObject = focusObj
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
@@ -1292,6 +1330,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
+		self.maybeSyncFocus() 
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
