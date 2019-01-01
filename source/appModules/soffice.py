@@ -220,6 +220,9 @@ class SymphonyTableCell(IAccessible):
 			# #8988: Cells in Libre Office do not have the selected state when a single cell is selected (i.e. has focus).
 			# Since #8898, the negative selected state is announced for table cells with the selectable state.
 			states.add(controlTypes.STATE_SELECTED)
+		if 'Formula' in self.IA2Attributes and self.IA2Attributes['Formula']:
+			# #860: Recent versions of Calc expose has formula state via IAccessible 2.
+			states.add(controlTypes.STATE_HASFORMULA)
 		return states
 
 class SymphonyTable(IAccessible):
