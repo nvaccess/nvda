@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2019 NV Access Limited, Bill Dengler
 
 from comtypes import COMError
 import IAccessibleHandler
