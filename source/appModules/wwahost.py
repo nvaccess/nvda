@@ -16,6 +16,22 @@ from NVDAObjects.IAccessible.MSHTML import Body
 import appModuleHandler
 import controlTypes
 import winUser
+import winKernel
+
+def getAppNameFromHost(processId):
+	# Some apps that come with Windows 8 and 8.1 are hosted by wwahost.exe.
+	# App modules for these are named after the hosted app name.
+	processHandle = winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processId)
+	length = ctypes.c_uint()
+	buf = winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), None)
+	appModel = ctypes.create_unicode_buffer(buf)
+	winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), appModel)
+	winKernel.closeHandle(processHandle)
+	# Sometimes app model might be empty, so raise errors and fall back to wwahost.
+	if not appModel.value:
+		raise LookupError
+	# Convert this into lowercase to make the file name consistent with other NVDA app modules.
+	return appModel.value.split("!")[-1].lower()
 
 class AppModule(appModuleHandler.AppModule):
 
