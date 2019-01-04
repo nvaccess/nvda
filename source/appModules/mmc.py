@@ -8,6 +8,7 @@ import appModuleHandler
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
+import api
 
 
 class MMCTable(IAccessible):
@@ -18,13 +19,15 @@ class MMCTable(IAccessible):
 				return child
 		return None
 
+class MMCTableCell(IAccessible):
+	def event_selection(self):
+		if self.parent.hasFocus and api.getFocusObject() != self:
+			eventHandler.executeEvent("gainFocus", self)
+
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_TABLE and obj.windowClassName == "AfxWnd42u":
-			clsList.insert(0, MMCTable)
-
-	def event_selection(self, obj, nextHandler):
-		parent = obj.parent
-		if isinstance(parent, MMCTable) and parent.hasFocus:
-			eventHandler.executeEvent("gainFocus", obj)
-		nextHandler()
+		if obj.windowClassName == "AfxWnd42u":
+			if obj.role == controlTypes.ROLE_TABLE:
+				clsList.insert(0, MMCTable)
+			elif obj.role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER):
+				clsList.insert(0, MMCTableCell)
