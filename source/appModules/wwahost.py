@@ -6,7 +6,7 @@
 """App module host for Windows 8.x and 10 web apps hosted by wwahost.exe.
 In Windows 8, apps written in Javascript are executed inside WWAHost, including some WinRT apps.
 In Windows 10, progressive web apps (PWA) and friends are hosted inside this process.
-App modules wishing to support apps hosted inside this process must import contents of this app module.
+App modules wishing to support apps hosted inside this process must subclass the AppModule class.
 """
 
 from comtypes import COMError
@@ -30,6 +30,8 @@ def getAppNameFromHost(processId):
 	# Sometimes app model might be empty, so raise errors and fall back to wwahost.
 	if not appModel.value:
 		raise LookupError
+	# App model is shown as familyName!appName, and importing files with the exclamation point in the middle of the name isn't supported.
+	# Therefore return only the app name portion.
 	# Convert this into lowercase to make the file name consistent with other NVDA app modules.
 	return appModel.value.split("!")[-1].lower()
 
