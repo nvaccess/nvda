@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 00:10+1000\n"
+"POT-Creation-Date: 2018-09-21 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Adriani Botez <adriani.botez@gmail.com>\n"
 "Language-Team: \n"
@@ -84,11 +84,6 @@ msgstr "Unbekannte Sprache"
 #. Translators: The label for an unknown input method when switching input methods.
 msgid "unknown input method"
 msgstr "Unbekannte Eingabemethode"
-
-#. Translators: the message announcing the language and keyboard layout when it changes
-#, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
 
 #. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
@@ -368,6 +363,16 @@ msgstr "strg"
 msgid "pwdedt"
 msgstr "kwef"
 
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "dlg"
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "Lin&ks"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "(x)"
@@ -505,6 +510,18 @@ msgstr "Immer die komplette Display-Zeile füllen"
 msgid "Only when scrolling back"
 msgstr "Nur beim Zurückscrollen"
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "Automatisch"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -574,9 +591,21 @@ msgstr "an Fokus"
 msgid "to review"
 msgstr "an NVDA-Cursor"
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
-msgstr "Automatisch"
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "Seika-Braillezeilen"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "Bluetooth-Anschluss: {portName}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, python-brace-format
+msgid "Serial: {portName}"
+msgstr "seriell: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -642,6 +671,12 @@ msgstr "Bulgarisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "Schwedische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "Walisische Vollschrift"
 
@@ -649,6 +684,12 @@ msgstr "Walisische Vollschrift"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "Walisische Kurzschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "Spanisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -749,6 +790,12 @@ msgstr "Englische Vollschrift (USA)"
 #. braille settings dialog.
 msgid "English (U.S.) grade 2"
 msgstr "Englische Kurzschrift (USA)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "Deutsche Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -853,6 +900,12 @@ msgstr "Ungarisches 8-Punkt-Computerbraille"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "Ungarische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "Ungarische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
@@ -1037,6 +1090,12 @@ msgstr "Indische Vollschrift (Sanskrit)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Swedish 8 dot computer braille"
+msgstr "Spanisches 8-Punkt-Computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Swedish grade 1"
 msgstr "Schwedische Vollschrift"
 
@@ -1089,6 +1148,18 @@ msgstr "Unicode-Braille"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamesischee Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Chinesisch (Taiwan, Mandarin)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Chinesisch (Taiwan, Mandarin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2142,7 +2213,7 @@ msgstr "Absatz"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See http://en.wikipedia.org/wiki/Block_quotation
+#. See https://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "Zitatblock"
 
@@ -2514,15 +2585,25 @@ msgstr "Miniaturansicht"
 msgid "calendar"
 msgstr "Kalender"
 
-#. Translators: Identifies a chart element.
-msgid "chart element"
-msgstr "Diagramm-Element"
-
 msgid "video"
 msgstr "Video"
 
 msgid "audio"
 msgstr "Audio"
+
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr "Diagramm-Element"
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "gelöscht"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "eingefügt"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -3820,6 +3901,15 @@ msgstr ""
 msgid "No status line found"
 msgstr "Keine Statuszeile gefunden."
 
+#. Translators: Reported when status line exist, but is empty.
+#, fuzzy
+msgid "no status bar information"
+msgstr "Keine Standortinformationen"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "Reads the current application status bar and moves the navigator to it. If "
@@ -4401,7 +4491,7 @@ msgstr "Verschiedenes"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -4786,28 +4876,23 @@ msgstr "alle Tastaturschemata"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr "Amharisch"
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "Argonesisch"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "Arabisch"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "Nepalesisch"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "Serbisch"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5990,7 +6075,7 @@ msgstr "mit %s Zeilen."
 msgid "level %s"
 msgstr "Ebene %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "mit %s Einträgen"
@@ -6101,17 +6186,9 @@ msgstr "Hintergrundmuster {pattern}"
 msgid "line %s"
 msgstr "Zeile %s"
 
-#. Translators: Reported when text is marked as having been inserted
-msgid "inserted"
-msgstr "eingefügt"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
 msgstr "nicht eingefügt"
-
-#. Translators: Reported when text is marked as having been deleted
-msgid "deleted"
-msgstr "gelöscht"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6160,17 +6237,17 @@ msgid "no italic"
 msgstr "nicht kursiv"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "doppelt durchgestrichen"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "durchgestrichen"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See http://en.wikipedia.org/wiki/Strikethrough
+#. See https://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "nicht durchgestrichen"
 
@@ -6200,12 +6277,12 @@ msgid "align right"
 msgstr "rechtsbündig"
 
 #. Translators: Reported when text is justified.
-#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "Blocksatz"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#. See https://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "Ausrichtung Sperrdruck"
 
@@ -6626,7 +6703,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6648,9 +6725,9 @@ msgstr ""
 "Original sowie auch auf modifizierte Kopieen dieser Software sowie alle "
 "Weiterentwicklungen.\n"
 "Für weitere Informationen finden  Sie die Lizenz im Hilfe-menü.\n"
-"Des weiteren können Sie entweder die [englischsprachige http://www.gnu.org/"
+"Des weiteren können Sie entweder die [englischsprachige https://www.gnu.org/"
 "licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche "
-"http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die "
+"https://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die "
 "englische Originalversion besitzt nach wie vor die offizielle "
 "Rechtsgültigkeit.\n"
 "\n"
@@ -6731,8 +6808,22 @@ msgstr "Start"
 msgid "No track playing"
 msgstr "Es wird gerade kein Titel wiedergegeben."
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
+msgstr ""
+"Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, falls einer "
+"abgespielt wird."
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr ""
+"Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, falls einer "
+"abgespielt wird."
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+#, fuzzy
+msgid "Reports the length of the currently playing track, if any"
 msgstr ""
 "Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, falls einer "
 "abgespielt wird."
@@ -6849,36 +6940,6 @@ msgstr "Ungelesen"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr "Profiel {profile} in bearbeitung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "lilane Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Orangefarbene Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Grüne Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Gelbe Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Blaue Kennzeichnung"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Rote Kennzeichnung"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7288,14 +7349,13 @@ msgctxt "repeat"
 msgid "off"
 msgstr "Wiederholen Aus"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
 msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6-Serien/Protokoll-Konverter"
-
-#. Translators: Name of a bluetooth serial communications port.
-#, python-brace-format
-msgid "Bluetooth serial: {portName}"
-msgstr "Bluetooth-Anschluss: {portName}"
 
 #. Translators: Message when setting HID keyboard simulation failed.
 msgid "Setting HID keyboard simulation not supported"
@@ -7316,15 +7376,6 @@ msgstr "Schaltet die HID-Tastatur-Simulation um."
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr "Baum / HumanWare / APH  / Orbit Braillezeilen"
-
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, python-brace-format
-msgid "Serial: {portName}"
-msgstr "seriell: {portName}"
 
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
@@ -7812,6 +7863,33 @@ msgstr "Ausstehende Aktualisierung installieren"
 msgid "Please wait"
 msgstr "Bitte warten"
 
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage "
+"data from running copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of "
+"origin, plus certain NVDA configuration such as current synthesizer, braille "
+"display and braille table. No spoken or braille content will be ever sent to "
+"NV Access.  Please refer to the User Guide for a current list of all data "
+"collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to "
+"improve NVDA?"
+msgstr ""
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr ""
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr ""
+
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Erweiterungen verwalten"
@@ -7862,6 +7940,7 @@ msgstr "&Installieren..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "Ent&fernen"
@@ -8499,6 +8578,10 @@ msgstr "Automatisch nach &Aktualisierungen suchen"
 msgid "Notify for &pending update on startup"
 msgstr "Beim Start von NVDA &ausstehende Aktualisierungen melden"
 
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
@@ -8648,20 +8731,11 @@ msgstr "&Rechtschreibfunktion verwenden (falls verfügbar)"
 msgid "Keyboard"
 msgstr "Tastatur"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
 msgstr "&Dauergrossschreibtaste als NVDA-Taste verwenden"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Einfügetaste des &Nummernblocks als NVDA-Taste verwenden"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Einfüge-Taste der &erweiterten Tastatur als NVDA-Taste verwenden"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8827,8 +8901,9 @@ msgstr "&Minihilfen (Tooltipps) ausgeben"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "&Hilfesprechblasen ausgeben"
+#, fuzzy
+msgid "Report &notifications"
+msgstr "&Minihilfen (Tooltipps) ausgeben"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10908,7 +10983,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} Punkte"
 
 #. Translators: a measurement in Microsoft Word
-#. See http://support.microsoft.com/kb/76388 for details.
+#. See https://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} Pixel"
@@ -10924,6 +10999,55 @@ msgstr "Doppelter Zeilenabstand"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 Zeilenabstand"
+
+#~ msgid "purple flag"
+#~ msgstr "lilane Kennzeichnung"
+
+#~ msgid "Orange flag"
+#~ msgstr "Orangefarbene Kennzeichnung"
+
+#~ msgid "Green flag"
+#~ msgstr "Grüne Kennzeichnung"
+
+#~ msgid "Yellow flag"
+#~ msgstr "Gelbe Kennzeichnung"
+
+#~ msgid "Blue flag"
+#~ msgstr "Blaue Kennzeichnung"
+
+#~ msgid "Red flag"
+#~ msgstr "Rote Kennzeichnung"
+
+#~ msgid "Use CapsLock as an NVDA modifier key"
+#~ msgstr "&Dauergrossschreibtaste als NVDA-Taste verwenden"
+
+#~ msgid "Use numpad Insert as an NVDA modifier key"
+#~ msgstr "Einfügetaste des &Nummernblocks als NVDA-Taste verwenden"
+
+#~ msgid "Use extended Insert as an NVDA modifier key"
+#~ msgstr "Einfüge-Taste der &erweiterten Tastatur als NVDA-Taste verwenden"
+
+#~ msgid "Report &help balloons"
+#~ msgstr "&Hilfesprechblasen ausgeben"
+
+#~ msgid "{language} - {layout}"
+#~ msgstr "{language} - {layout}"
+
+#~ msgctxt "languageName"
+#~ msgid "Amharic"
+#~ msgstr "Amharisch"
+
+#~ msgctxt "languageName"
+#~ msgid "Arabic"
+#~ msgstr "Arabisch"
+
+#~ msgctxt "languageName"
+#~ msgid "Nepali"
+#~ msgstr "Nepalesisch"
+
+#~ msgctxt "languageName"
+#~ msgid "Serbian (Latin)"
+#~ msgstr "Serbisch"
 
 #~ msgid "Shows the NVDA voice settings dialog"
 #~ msgstr "Zeigt die Stimmeneinstellungen von NVDA an."

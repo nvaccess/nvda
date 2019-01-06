@@ -59,6 +59,9 @@ class Ia2Web(IAccessible):
 		# This is necessary for other code that calculates how selection of cells should be spoken.
 		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
 			states.add(controlTypes.STATE_FOCUSABLE)
+		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
+		if self.IA2Attributes.get('goog-editable')=="false":
+			states.discard(controlTypes.STATE_EDITABLE)
 		return states
 
 class Document(Ia2Web):

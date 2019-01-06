@@ -7,9 +7,10 @@
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
 import unittest
-from baseObject import ScriptableObject
+from baseObject import AutoPropertyObject, ScriptableObject
 from objectProvider import PlaceholderNVDAObject
 from scriptHandler import script
+from abc import abstractmethod
 
 class NVDAObjectWithDecoratedScript(PlaceholderNVDAObject):
 	"""An object with a decorated script."""
@@ -109,3 +110,63 @@ class TestScriptableObject(unittest.TestCase):
 		obj = DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary()
 		for key in ("a", "b", "c", "d", "g", "h"):
 			self.assertIn("kb:%s" % key, obj._gestureMap)
+
+class AutoPropertyObjectWithAbstractProperty(AutoPropertyObject):
+
+	_abstract_x = True
+	def _get_x(self):
+		return True
+
+	def _set_x(self, value):
+		self._attribute = value
+
+class SubclassedAutoPropertyObjectWithAbstractProperty(AutoPropertyObjectWithAbstractProperty):
+	pass
+
+class SubclassedAutoPropertyObjectWithImplementedProperty(AutoPropertyObjectWithAbstractProperty):
+
+	def _get_x(self):
+		return True
+
+class SubclassedAutoPropertyObjectWithOverriddenClassProperty(AutoPropertyObjectWithAbstractProperty):
+	x = True
+
+class TestAbstractAutoPropertyObjects(unittest.TestCase):
+	"""A test that verifies whether abstract properties are properly identified as such.
+	It also makes sure that abstract properties can be overridden on subclasses.
+	"""
+
+	def test_abstractProperty(self):
+		self.assertRaisesRegexp(TypeError,
+			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty "
+			"with abstract methods x",
+			AutoPropertyObjectWithAbstractProperty
+		)
+
+	def test_subclassedAbstractProperty(self):
+		self.assertRaisesRegexp(TypeError,
+			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
+			"with abstract methods x",
+			SubclassedAutoPropertyObjectWithAbstractProperty
+		)
+
+	def test_implementedProperty(self):
+		self.assertTrue(SubclassedAutoPropertyObjectWithImplementedProperty().x)
+
+	def test_overriddenClassProperty(self):
+		self.assertTrue(SubclassedAutoPropertyObjectWithOverriddenClassProperty().x)
+
+class AutoPropertyObjectWithClassProperty(AutoPropertyObject):
+
+	@classmethod
+	def _get_x(self):
+		return True
+
+class TestAutoClassProperties(unittest.TestCase):
+	"""A test that verifies whether automatic class properties work as expected.
+	"""
+
+	def test_classProperty(self):
+		cls = AutoPropertyObjectWithClassProperty
+		self.assertIsInstance(cls.x, bool)
+		self.assertIsInstance(cls().x, bool)
