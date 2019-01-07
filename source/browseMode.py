@@ -477,18 +477,29 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
-		self._activatePosition()
+		self.maybeSyncFocus(postFocusFunc=self._activatePosition)
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
-	def maybeSyncFocus(self):
+	def maybeSyncFocus(self, postFocusFunc=None):
 		if  config.conf["virtualBuffers"]["FocusFollowsBrowse"]:
+			if postFocusFunc is not None:
+				postFocusFunc()
 			return
 		try:
 			obj = self._lastFocusableObject
 		except AttributeError:
 			return
-		if obj and obj!=self.rootNVDAObject and obj!= api.getFocusObject() and self._shouldSetFocusToObj(obj):
+		if not obj:
+			return
+		if obj== api.getFocusObject():
+			if postFocusFunc is not None:
+				postFocusFunc()
+			return
+		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj):
+			if self.postFocusFunc is not None:
+				log.error("postFocusFunc has not been called asynchronously")
+			self.postFocusFunc = postFocusFunc
 			obj.setFocus()
 
 	def maybeSyncFocusAndPassThrough(self, gesture=None): 		
@@ -1158,6 +1169,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastCaretPosition = None
 		#: True if the last caret move was due to a focus change.
 		self._lastCaretMoveWasFocus = False
+		self.postFocusFunc  = None
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
@@ -1513,6 +1525,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				postFocusFunc = self.postFocusFunc
+				self.postFocusFunc = None
+				if postFocusFunc is not None: 
+					queueHandler.queueFunction(queueHandler.eventQueue, postFocusFunc)
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
