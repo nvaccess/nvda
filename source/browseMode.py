@@ -431,6 +431,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		setattr(cls, funcName, script)
 		cls.__gestures["kb:shift+%s" % key] = scriptName
 
+	@classmethod
+	def addPassThrough(cls, gesture):
+		cls.__gestures[gesture] = "passThrough"
+
 	def script_elementsList(self,gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
@@ -507,20 +511,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if gesture:
 			gesture.send()
 
-	def script_openInBackground(self,gesture):
+	def script_passThrough(self,gesture):
 		self.maybeSyncFocusAndPassThrough(gesture)
-	# Translators: the description for the openInBackground script on browseMode documents.
-	script_openInBackground.__doc__ = _("Opens current link in background or performs default Control+Enter action")
-
-	def script_downloadLink(self,gesture):
-		self.maybeSyncFocusAndPassThrough(gesture)
-	# Translators: the description for the downloadLink script on browseMode documents.
-	script_downloadLink.__doc__ = _("Downloads current link or performs default Alt+Enter action")
-
-	def script_contextMenu(self,gesture):
-		self.maybeSyncFocusAndPassThrough(gesture)
-	# Translators: the description for the contextMenu script on browseMode documents.
-	script_contextMenu.__doc__ = _("Shows context menu or performs default Applications key action")
+	# Translators: the description for the passThrough script on browseMode documents.
+	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -539,9 +533,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:enter": "activatePosition",
 		"kb:numpadEnter": "activatePosition",
 		"kb:space": "activatePosition",
-		"kb:Control+enter": "openInBackground",
-		"kb:Alt+enter": "downloadLink",
-		"kb:Applications": "contextMenu",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
 	}
@@ -808,6 +799,13 @@ qn("error", key="w",
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous error"))
 del qn
+
+PT = BrowseModeTreeInterceptor.addPassThrough
+PT("kb:Control+enter")
+PT("kb:Alt+enter")
+PT("kb:Applications")
+del PT
+
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
