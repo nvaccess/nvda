@@ -157,23 +157,6 @@ def initialize():
 	getAvailableAddons(refresh=True)
 	saveState()
 
-def showUnknownCompatDialog():
-	from gui import addonGui, mainFrame, runScriptModalDialog
-	if any(getIncompatibleAddons(
-			# the defaults are fine, this is being triggered for the running version.
-	)):
-		try:
-			incompatibleAddonsDlg = addonGui.IncompatibleAddonsDialog(
-				parent=mainFrame,
-				# the defaults are fine, this is being triggered for the running version.
-			)
-		except RuntimeError:
-			log.error("Unable to open IncompatibleAddonsDialog", exc_info=True)
-			return
-	else:
-		return
-	runScriptModalDialog(incompatibleAddonsDlg)
-
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
