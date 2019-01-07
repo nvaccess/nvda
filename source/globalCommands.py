@@ -1535,14 +1535,14 @@ class GlobalCommands(ScriptableObject):
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_toggleBrowseMovesFocus(self,gesture):
-		if config.conf["virtualBuffers"]["FocusFollowsBrowse"]:
+		if config.conf["virtualBuffers"]["focusFollowsBrowse"]:
 			# Translators: presented when toggled.
 			state = _("Browse mode moves system focus off")
-			config.conf["virtualBuffers"]["FocusFollowsBrowse"]=False
+			config.conf["virtualBuffers"]["focusFollowsBrowse"]=False
 		else:
 			# Translators: presented when toggled.
 			state = _("Browse mode moves system focus on")
-			config.conf["virtualBuffers"]["FocusFollowsBrowse"]=True
+			config.conf["virtualBuffers"]["focusFollowsBrowse"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle browse moves focus command.
 	script_toggleBrowseMovesFocus.__doc__=_("Toggles on and off the movement of the system focus due to browse mode commands") 

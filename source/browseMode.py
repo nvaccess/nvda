@@ -482,7 +482,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
 	def maybeSyncFocus(self, postFocusFunc=None):
-		if  config.conf["virtualBuffers"]["FocusFollowsBrowse"]:
+		if  config.conf["virtualBuffers"]["focusFollowsBrowse"]:
 			if postFocusFunc is not None:
 				postFocusFunc()
 			return
@@ -1281,7 +1281,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				return
 			if obj==self.rootNVDAObject:
 				return
-			followBrowseModeFocus= config.conf["virtualBuffers"]["FocusFollowsBrowse"]
+			followBrowseModeFocus= config.conf["virtualBuffers"]["focusFollowsBrowse"]
 			if followBrowseModeFocus:
 				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
 					focusObj.setFocus()
