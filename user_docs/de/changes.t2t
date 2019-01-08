@@ -24,19 +24,19 @@ Zu den Highlights dieser Version gehören Leistungssteigerungen in den neuesten 
 - eSpeak-NG wurde auf commit 919f3240cbb aktualisiert
 - NVDA meldet nicht mehr mehrfach hintereinander "Anklickbar", wenn Sie im Lese-Modus durch klickbare Inhalte navigieren. (#7430)
 - Gesten, die auf Baum Vario 40 Braillezeilen ausgeführt werden, funktionieren nun korrekt. (#8894)
+- NVDA meldet nicht mehr "Text ausgewählt" bei jedem fokussierten Objekt in Google-Präsentationen mit Mozilla Firefox. (#8964)
 
 
 == Fehlerbehebungen ==
 - In Microsoft Outlook 2016/365 werden der Kategorie- und Kennzeichenstatus für Nachrichten gemeldet. (#8603)
 - Wenn NVDA auf Sprachen wie Kirgyz, Mongolisch oder Mazedonisch eingestellt ist, wird beim Start kein Dialog mehr angezeigt, der davor warnt, dass die Sprache vom Betriebssystem nicht unterstützt wird. (#8064)
-- Wenn Sie die Maus mit Hilfe der Tastatur auf das Navigatorobjekt bewegen, wird die Maus nun viel genauer auf die Position im Fokusmodus in Mozilla Firefox, Google Chrome und Acrobat Reader DC bewegt. (#6460)
+- Wenn Sie die Maus mit Hilfe der Tastatur auf das Navigatorobjekt bewegen, wird die Maus nun viel genauer auf die Position im Fokus- und Lesemodus in Mozilla Firefox, Google Chrome und Acrobat Reader DC bewegt. (#6460)
 - Der Umgang mit Kombinationsfeldern im Web in Firefox, Chrome und Internet Explorer wurde verbessert. (#8664)
 - Die Warnmeldung über die erforderliche Windows-Version wird nunauch auf Windows XP und Vista mit japanischer Anzeigesprache richtig angezeigt. (#8771)
 - Verbesserung der Leistung in Mozilla Firefox auf komplexen Webseiten mit verschiedenen dynamischen Inhalten. (#8678)
 - Format-Atribute (Überschrift, Link etc.) werden in Braille nicht mehr angezeigt, wenn die entsprechenden Einträge in den Einstellungen für Dokumentformatierung deaktiviert wurden. (#7615)
 - Im Windows-Explorer und anderen Anwendungen bei Verwendung von UI-Automation wird der Fokus zuverlässig von NVDA verfolgt, wenn eine andere Anwendung lädt (z.B. während der Batch-Ausführung bei der Audio-bearbeitung). (#7345)
 - In ARIA-Menüs im Web wird die Escape-Taste nun an das menü weitergereicht, so dass das Fokus-Modus  nicht mehr unterbrochen wird. (#3215)
-- Der Fokus wird auf Webseiten jetzt auch dann gemeldet, wenn ein neuer Fokus einen Element ersetzt, welches nicht mehr existiert. (#6606, #8341)
 - Während der Navigation mit den Schnellnavigationstasten in Nachrichten im neuen Gmail, liest NVDA nun nicht mehr den ganzen Text der Nachricht vor, sobald man ein entsprechendes Element fokusiert. (#8887)
 - Browser wie Mozilla Firefox und Google Chrome dürften nicht mehr abstürzen, nachdem NVDA aktualisiert wurde. Das Lesemodus müsste nun weiterhin Aktualisierungen in aktuell geladenen Dokumenten richtig reflektieren. (#7641) 
 
@@ -109,6 +109,7 @@ Zu den Highlights dieser Version gehören die automatische Erkennung vieler Brai
 - Bei der manuellen Zuordnung von Funktionen zu Gesten für eine bestimmte Braillezeile erscheinen diese Gesten nun immer als dieser Anzeige zugeordnet. Zuvor tauchten sie auf, als wären sie der gerade aktiven Anzeige zugeordnet. (#8108)
 - Die 64-Bit-Version von Media Player Classic wird nun unterstützt. (#6066)
 - Verschiedene Verbesserungen der Braille-Unterstützung in Microsoft Word mit aktivierter UI-Automatisierung:
+ - Wenn sie an den Anfang des Dokuments springen, wird - ähnlich wie in anderen mehrzeiligen Eingabefeldern auch - die Anzeige auf der Braillezeile linksbündig ausgerichtet. (#8406)
  - Bei der Fokussierung eines Word-Dokuments wurde die Fokussierung für die Sprachausgabe und auf der braillezeile reduziert. (#8407)
  - Das Cursor-Routing auf der Braillezeile funktioniert nun auch in einer Liste in einem Word-Dokument korrekt. (#7971)
  - Neu eingefügte Aufzählungen / Zahlen in einem Word-Dokument werden von der Sprachausgabe und auf der Braillezeile korrekt dargestellt. (#7970)
@@ -802,6 +803,7 @@ Schwerpunkte dieser Version sind u. a. Leistungsverbesserungen in Windows 10; Un
 = 2015.3 =
 Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die Möglichkeit Schnellnavigationstasten des Lesemodus zu deaktivieren (sinnvoll in bestimmten Internet-Anwendungen), Verbesserungen für den Internet Explorer sowie die Behebung von Fehlern, die beim schreiben in bestimmten Programmen zu verfälschtem Text geführt haben, wenn eine Braillezeile in Betrieb war.
 
+
 == Neue Funktionen ==
 - In Eingabefeldern in Internet Explorer und anderen MSHTML-Dokumenten werden Rechtschreibfehler korrekt erkannt. (#4174)
 - Verbesserte Erkennung von mathematischen Unicode-Sonderzeichen. (#3805)
@@ -981,6 +983,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - Diverse Versionen von Eclipse (wie z. B. die Entwicklungsumgebung für Android-Anwendungen) werden korrekt als Eclipse erkannt. (#4360, #4454)
 - Die Mausverfolgung für Internet Explorer sowie viele weitere Windows-8-Anwendungen wurde verbessert. Dies betrifft insbesondere die Verwendung höherer Bildschirmauflösungen (#3494)
 - Bei Verwendung der Mausverfolgung im Internet Explorer und anderen mshtml-Dokumenten werden nun mehr Schalter erkannt. (#4173)
+- Bei Verwendung einer Papenmeier-Braillezeile mit Brxcom funktionieren die Tasten auf der Braillezeile nun wie erwartet. (#4614)
 
 
 == Änderungen für Entwickler ==
@@ -1338,12 +1341,11 @@ Für weitere Informationen sehen Sie in der [Befehlsreferenz keyCommands.html] n
 - Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
 - Unterstützung für die Auswahl des Anschlusses bei FreedomScientific-Braillezeilen (automatisch, USB oder Bluetooth).
 - Unterstützung für Notizgeräte der Braillenote Familie von Humanware, wenn diese als Braillezeile für einen Bildschirmleser arbeiten. (#2012)
-- Unterstützung für die Auswahl der Schnittstelle, die für Braillezeilen von FreedomScientific genutzt werden soll (automatisch, USB, Bluetooth).
 - Unterstützung für ältere Papenmeier-Braillezeilen (#2679)
 - Unterstützung für die Eingabe von Computer-Braille für Braillezeilen, die eine Braille-Tastatur besitzen. (#808)
 - Neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen bzw. beim Drücken der Eingabetaste. (#698)
 - Unterstützung für zahlreiche Chrome-basierte Browser: Rockmelt, BlackHawk, Comodo Dragon und SRWare Iron. (#2236, #2813, #2814, #2815)
--
+
 
 == Änderungen ==
 - Liblouis Braille-Übersetzer auf 2.5.2 aktualisiert. (#2737)
@@ -1459,7 +1461,7 @@ Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetod
 - Vor der Ausführung des NVDA-Installationspakets wird nun dessen Integrität geprüft. (#2475)
 - Wenn das Herunterladen der temporären Kopie von NVDA während einer Update fehlschlägt, wird die temporäre Kopie entfernt. (#2477)
 - Wird NVDA mit Administratorrechten ausgeführt, kommt es beim Kopieren der Benutzerkonfiguration zur Systemkonfiguration nun nicht mehr zu Abstürzen. (#2485)
-- Im Startbildschirm von Windows 8 werden die Kacheln nun weniger ausführlich dargestellt (der Name der Kachel wird nicht mehr doppelt ausgegeben, der Status "nicht ausgewählt" wird nicht mehr ausgegeben). Desweiteren werden Statusinformationen als Beschreibung ausgegeben (wie z. B. die aktuelle Temperatur in der Wetter-App).
+- Im Startbildschirm von Windows 8 werden die Kacheln nun weniger ausführlich dargestellt (der Name der Kachel wird nicht mehr doppelt ausgegeben, der Status "nicht ausgewählt" wird nicht mehr ausgegeben). Des Weiteren werden Statusinformationen als Beschreibung ausgegeben (wie z. B. die aktuelle Temperatur in der Wetter-App).
 - In Microsoft Outlook und anderen eingabefeldern, die als geschützt gekennzeichnet sind, werden die Kennwörter nun nicht mehr im Klartext ausgegeben. (#2021)
 - Im Adobe Reader wirken sich Änderungen an formularfeldern nun auch im Lesemodus korrekt aus. (#2529)
 - Verbesserungen an der Unterstützung für die Rechtschreibprüfung in Microsoft Word. Dies betrifft z. B. eine bessere Ausgabe von Rechtschreibfehlern und die Benutzung der Rechtschreibprüfung bei der Verwendung einer installierten Version von NVDA unter Windows Vista und neuer.

@@ -7,7 +7,7 @@
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
-
+import addonHandler
 import globalVars
 import config
 if globalVars.appArgs.secure:
@@ -35,11 +35,14 @@ import speech
 import braille
 import gui
 from gui import guiHelper
-from addonHandler import getCodeAddon, AddonError
+from addonHandler import getCodeAddon, AddonError, getAddonsWithUnknownCompatibility, getAddonsWithoutKnownCompatibility
+from addonHandler.addonVersionCheck import AddonCompatibilityState, compatValues
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
+import fileUtils
+from gui.dpiScalingHelper import DpiScalingHelperMixin
 
 #: The URL to use for update checks.
 CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
@@ -144,19 +147,21 @@ def checkForUpdate(auto=False):
 	return info
 
 def getPendingUpdate():
-	"""Returns the path to the pending update, if any. Returns C{None} otherwise.
-	@rtype: str
+	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise.
+	@rtype: tuple
 	"""
 	try:
 		pendingUpdateFile=state["pendingUpdateFile"]
+		pendingUpdateVersion=state["pendingUpdateVersion"]
+		pendingUpdateVersionTuple=state["pendingUpdateVersionTuple"]
 	except KeyError:
-		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
+		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = state["pendingUpdateVersionTuple"] = None
 		return None
 	else:
 		if pendingUpdateFile and os.path.isfile(pendingUpdateFile):
-			return pendingUpdateFile
+			return (pendingUpdateFile, pendingUpdateVersion, pendingUpdateVersionTuple)
 		else:
-			state["pendingUpdateFile"] = None
+			state["pendingUpdateFile"] = state["pendingUpdateVersion"] = state["pendingUpdateVersionTuple"] = None
 	return None
 
 def isPendingUpdate():
@@ -165,13 +170,20 @@ def isPendingUpdate():
 	"""
 	return bool(getPendingUpdate())
 
-def executeUpdate(destPath=None):
-	if not destPath:
-		destPath=getPendingUpdate()
+def executePendingUpdate():
+	updateTuple = getPendingUpdate()
+	if not updateTuple:
+		return
+	else:
+		_executeUpdate(updateTuple[0])
+
+def _executeUpdate(destPath):
 	if not destPath:
 		return
+
 	state["pendingUpdateFile"]=None
 	state["pendingUpdateVersion"]=None
+	state["pendingUpdateVersionTuple"]=None
 	saveState()
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
@@ -285,50 +297,97 @@ class AutoUpdateChecker(UpdateChecker):
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
-class UpdateResultDialog(wx.Dialog):
+class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 
 	def __init__(self, parent, updateInfo, auto):
 		# Translators: The title of the dialog informing the user about an NVDA update.
-		super(UpdateResultDialog, self).__init__(parent, title=_("NVDA Update"))
+		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
 		self.updateInfo = updateInfo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		if updateInfo:
-			self.isInstalled = config.isInstalledCopy()
-			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
-				# Translators: A message indicating that an updated version of NVDA has been downloaded
-				# and is pending to be installed.
-				message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
-			else:
-				# Translators: A message indicating that an updated version of NVDA is available.
-				# {version} will be replaced with the version; e.g. 2011.3.
-				message = _("NVDA version {version} is available.").format(**updateInfo)
-		else:
+		pendingUpdateDetails = getPendingUpdate()
+		canOfferPendingUpdate = isPendingUpdate() and pendingUpdateDetails[1] == updateInfo["version"]
+
+		text = sHelper.addItem(wx.StaticText(self))
+		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		if not updateInfo:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
-		sHelper.addItem(wx.StaticText(self, label=message))
+		elif canOfferPendingUpdate:
+			# Translators: A message indicating that an updated version of NVDA has been downloaded
+			# and is pending to be installed.
+			message = _("NVDA version {version} has been downloaded and is pending installation.").format(**updateInfo)
 
-		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
-		if updateInfo:
-			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
+			self.newNVDAVersionTuple = pendingUpdateDetails[2]
+			addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(self.newNVDAVersionTuple))
+			showAddonCompat = any(addonsWithoutKnownCompat)
+			if showAddonCompat:
+				# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
+				message = message + _("\n\n"
+					"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+					"These add-ons will be disabled after installation. "
+					"If you rely on these add-ons, please review the list to manually enable them before installation."
+				)
+				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+					self,
+					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+					# available, will be disabled after installation.
+					label=_("I understand that these untested add-ons will be disabled")
+				))
+				confirmationCheckbox.Bind(
+					wx.EVT_CHECKBOX,
+					lambda evt: self.installPendingButton.Enable(not self.installPendingButton.Enabled)
+				)
+				# Translators: The label of a button to review add-ons prior to NVDA update.
+				reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
+				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
+				reviewAddonsButton.SetFocus()
+				for a in addonsWithoutKnownCompat:
+					# now that the use is warned about the compatibility and so that the user is
+					# not prompted again after installation, we set the default compatibility
+					AddonCompatibilityState.setAddonCompatibility(
+						addon=a,
+						NVDAVersion=self.newNVDAVersionTuple,
+						compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
+					)
+			self.installPendingButton = bHelper.addButton(
+				self,
 				# Translators: The label of a button to install a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				installPendingButton = bHelper.addButton(self, label=_("&Install NVDA {version}").format(**updateInfo))
-				installPendingButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
+				label=_("&Install NVDA {version}").format(**updateInfo)
+			)
+			self.installPendingButton.Bind(
+				wx.EVT_BUTTON,
+				lambda evt: self.onInstallButton(pendingUpdateDetails[0])
+			)
+			self.installPendingButton.Enable(not showAddonCompat)
+			bHelper.addButton(
+				self,
 				# Translators: The label of a button to re-download a pending NVDA update.
-				label = _("Re-&download update")
-			else:
+				label=_("Re-&download update")
+			).Bind(wx.EVT_BUTTON, self.onDownloadButton)
+		else:
+			# Translators: A message indicating that an updated version of NVDA is available.
+			# {version} will be replaced with the version; e.g. 2011.3.
+			message = _("NVDA version {version} is available.").format(**updateInfo)
+			bHelper.addButton(
+				self,
 				# Translators: The label of a button to download an NVDA update.
-				label = _("&Download update")
-			downloadButton = bHelper.addButton(self, label=label)
-			downloadButton.Bind(wx.EVT_BUTTON, self.onDownloadButton)
-
-			if auto and (not isPendingUpdate() or state["pendingUpdateVersion"] != updateInfo["version"]):
+				label=_("&Download update")
+			).Bind(wx.EVT_BUTTON, self.onDownloadButton)
+			if auto:  # this prompt was triggered by auto update checker
+				# the user might not want to wait for a download right now, so give the option to be reminded later.
 				# Translators: The label of a button to remind the user later about performing some action.
 				remindMeButton = bHelper.addButton(self, label=_("Remind me &later"))
 				remindMeButton.Bind(wx.EVT_BUTTON, self.onLaterButton)
 				remindMeButton.SetFocus()
+
+		text.SetLabel(message)
+		text.Wrap(self.scaleSize(500))
+		sHelper.addDialogDismissButtons(bHelper)
 
 		# Translators: The label of a button to close a dialog.
 		closeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Close"))
@@ -342,8 +401,8 @@ class UpdateResultDialog(wx.Dialog):
 		self.CentreOnScreen()
 		self.Show()
 
-	def onInstallButton(self, evt):
-		executeUpdate()
+	def onInstallButton(self, destPath):
+		_executeUpdate(destPath)
 		self.Destroy()
 
 	def onDownloadButton(self, evt):
@@ -359,30 +418,78 @@ class UpdateResultDialog(wx.Dialog):
 		saveState()
 		self.Close()
 
-class UpdateAskInstallDialog(wx.Dialog):
+	def onReviewAddonsButton(self, evt):
+		from gui import addonGui
+		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
+			parent=self,
+			NVDAVersion=self.newNVDAVersionTuple
+		)
+		incompatibleAddons.ShowModal()
+		incompatibleAddons.Destroy()
 
-	def __init__(self, parent, destPath, version):
-		self.destPath=destPath
+class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
+
+	def __init__(self, parent, destPath, version, versionTuple):
+		self.destPath = destPath
 		self.version = version
-		storeUpdatesDirWritable=os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
+		self.versionTuple = versionTuple
+		self.storeUpdatesDirWritable = os.path.isdir(storeUpdatesDir) and os.access(storeUpdatesDir, os.W_OK)
 		# Translators: The title of the dialog asking the user to Install an NVDA update.
-		super(UpdateAskInstallDialog, self).__init__(parent, title=_("NVDA Update"))
+		wx.Dialog.__init__(self, parent, title=_("NVDA Update"))
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		
 		# Translators: A message indicating that an updated version of NVDA is ready to be installed.
-		sHelper.addItem(wx.StaticText(self, label=_("NVDA version {version} is ready to be installed.\n").format(version=version)))
+		message = _("NVDA version {version} is ready to be installed.\n").format(version=version)
+
+		addonsWithoutKnownCompat = list(getAddonsWithoutKnownCompatibility(versionTuple))
+		showAddonCompat = any(addonsWithoutKnownCompat)
+		if showAddonCompat:
+			# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
+			message = message + _(
+				"\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+				"These add-ons will be disabled after installation. "
+				"If you rely on these add-ons, please review the list to manually enable them before installation."
+			)
+			for a in addonsWithoutKnownCompat:
+				# now that the use is warned about the compatibility and so that the user is
+				# not prompted again after installation, we set the default compatibility
+				AddonCompatibilityState.setAddonCompatibility(
+					addon=a,
+					NVDAVersion=versionTuple,
+					compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE)
+		text = sHelper.addItem(wx.StaticText(self, label=message))
+		text.Wrap(self.scaleSize(500))
+
+		if showAddonCompat:
+			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
+				self,
+				# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+				# available, will be disabled after installation.
+				label=_("I understand that these untested add-ons will be disabled")
+			))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		if showAddonCompat:
+			# Translators: The label of a button to review add-ons prior to NVDA update.
+			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
+			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
+			reviewAddonsButton.SetFocus()
 		# Translators: The label of a button to install an NVDA update.
 		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
 		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
-		installButton.SetFocus()
-		if storeUpdatesDirWritable:
+		if not showAddonCompat:
+			installButton.SetFocus()
+		else:
+			self.confirmationCheckbox.Bind(
+				wx.EVT_CHECKBOX,
+				lambda evt: installButton.Enable(not installButton.Enabled)
+			)
+			installButton.Enable(False)
+		if self.storeUpdatesDirWritable:
 			# Translators: The label of a button to postpone an NVDA update.
 			postponeButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("&Postpone update"))
 			postponeButton.Bind(wx.EVT_BUTTON, self.onPostponeButton)
-
 			self.EscapeId = wx.ID_CLOSE
 		else:
 			self.EscapeId = wx.ID_OK
@@ -392,8 +499,17 @@ class UpdateAskInstallDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
+	def onReviewAddonsButton(self, evt):
+		from gui import addonGui
+		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
+			parent=self,
+			NVDAVersion=self.versionTuple
+		)
+		incompatibleAddons.ShowModal()
+		incompatibleAddons.Destroy()
+
 	def onInstallButton(self, evt):
-		executeUpdate(self.destPath)
+		_executeUpdate(self.destPath)
 		self.EndModal(wx.ID_OK)
 
 	def onPostponeButton(self, evt):
@@ -401,6 +517,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 		try:
 			os.renames(self.destPath, finalDest)
 		except:
+			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
 			gui.messageBox(
 				# Translators: The message when a downloaded update file could not be preserved.
 				_("Unable to postpone update."),
@@ -410,6 +527,7 @@ class UpdateAskInstallDialog(wx.Dialog):
 			finalDest=self.destPath
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
+		state["pendingUpdateVersionTuple"]=self.versionTuple
 		# Postponing an update indicates that the user is likely interested in getting a reminder.
 		# Therefore, clear the dontRemindVersion.
 		state["dontRemindVersion"] = None
@@ -429,6 +547,7 @@ class UpdateDownloader(object):
 		self.updateInfo = updateInfo
 		self.urls = updateInfo["launcherUrl"].split(" ")
 		self.version = updateInfo["version"]
+		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
 
@@ -468,7 +587,7 @@ class UpdateDownloader(object):
 			try:
 				self._download(url)
 			except:
-				log.debugWarning("Error downloading %s" % url, exc_info=True)
+				log.error("Error downloading %s" % url, exc_info=True)
 			else: #Successfully downloaded or canceled
 				if not self._shouldCancel:
 					success=True
@@ -519,6 +638,11 @@ class UpdateDownloader(object):
 			raise RuntimeError("Content too short")
 		if self.fileHash and hasher.hexdigest() != self.fileHash:
 			raise RuntimeError("Content has incorrect file hash")
+		# getFileVersionInfo will fail as long as the file is still open.
+		local.close()
+		fileVersionInfo = fileUtils.getFileVersionInfo(self.destPath.decode("mbcs"), "FileVersion")
+		fileVersion = fileVersionInfo.get('FileVersion') or self.version
+		self.versionTuple = versionInfo.getNVDAVersionTupleFromString(fileVersion)
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
@@ -551,7 +675,7 @@ class UpdateDownloader(object):
 
 	def _downloadSuccess(self):
 		self._stopped()
-		gui.runScriptModalDialog(UpdateAskInstallDialog(gui.mainFrame, self.destPath, self.version))
+		gui.runScriptModalDialog(UpdateAskInstallDialog(gui.mainFrame, self.destPath, self.version, self.versionTuple))
 
 class DonateRequestDialog(wx.Dialog):
 	# Translators: The message requesting donations from users.
@@ -621,13 +745,14 @@ def initialize():
 			"lastCheck": 0,
 			"dontRemindVersion": None,
 			"pendingUpdateVersion": None,
+			"pendingUpdateVersionTuple": None,
 			"pendingUpdateFile": None,
 		}
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
 	if "pendingUpdateVersion" not in state or state["pendingUpdateVersion"] == versionInfo.version:
-		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
+		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = state["pendingUpdateVersionTuple"] = None
 	# remove all update files except the one that is currently pending (if any)
 	try:
 		for fileName in os.listdir(storeUpdatesDir):

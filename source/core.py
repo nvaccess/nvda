@@ -28,7 +28,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-import extensionPoints
 
 import extensionPoints
 
@@ -83,17 +82,19 @@ def doStartupDialogs():
 		import updateCheck
 	except RuntimeError:
 		updateCheck=None
-	if updateCheck and not config.conf['update']['askedAllowUsageStats']:
-		# a callback to save config after the usage stats question dialog has been answered.
-		def onResult(ID):
-			import wx
-			if ID in (wx.ID_YES,wx.ID_NO):
-				try:
-					config.conf.save()
-				except:
-					pass
-		# Ask the user if usage stats can be collected.
-		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
+	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+		addonHandler.showUnknownCompatDialog()
+		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
+			# a callback to save config after the usage stats question dialog has been answered.
+			def onResult(ID):
+				import wx
+				if ID in (wx.ID_YES,wx.ID_NO):
+					try:
+						config.conf.save()
+					except:
+						pass
+			# Ask the user if usage stats can be collected.
+			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""

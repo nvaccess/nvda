@@ -64,7 +64,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
-* [liblouis](http://www.liblouis.org/), version 3.7.0
+* [liblouis](http://www.liblouis.org/), version 3.8.0, commit 90a808bf
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 34.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest

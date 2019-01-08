@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-57432f4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 00:10+1000\n"
-"PO-Revision-Date: 2018-09-02 11:58+0100\n"
+"POT-Creation-Date: 2018-11-30 00:10+1000\n"
+"PO-Revision-Date: 2018-12-03 23:02+0100\n"
 "Last-Translator: Zvonimir Stanečić <zvonimirek222@webczatnet.pl>\n"
 "Language-Team: мк <LL@li.org>\n"
 "Language: mk\n"
@@ -17,11 +17,11 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "заштитена работна површина"
+msgstr "Заштитена работна површина"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
-msgstr "вообичаен внес"
+msgstr "Вроден внес"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
@@ -1141,15 +1141,13 @@ msgstr "Виетнамски прв степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 1"
-msgstr "кинески (Тајван) мандарински"
+msgstr "кинески (Кина) мандарински I степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#, fuzzy
 msgid "Chinese (China, Mandarin) grade 2"
-msgstr "кинески (Тајван) мандарински"
+msgstr "кинески (Кина) мандарински II степен"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2200,7 +2198,7 @@ msgstr "пасус"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See https://en.wikipedia.org/wiki/Block_quotation
+#. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "цитат"
 
@@ -3574,14 +3572,13 @@ msgid "%s copied to clipboard"
 msgstr "%s е копирано на клипбордот"
 
 #. Translators: Input help mode message for report current navigator object command.
-#, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this "
 "information, and pressing three times Copies name and value of this object "
 "to the clipboard"
 msgstr ""
-"го соопштува моменталниот навигаторски објект. Доколку се претисне двапати "
-"ја изговара буква по буква оваа информација, а ако се претисне трипати ги "
+"го соопштува моменталниот навигаторски објект. Доколку се притисне двапати "
+"ја изговара буква по буква оваа информација, а ако се притисне трипати ги "
 "копира името и вредноста на тој објект, зачувувајќи ги на клипбордот."
 
 #. Translators: message when there is no location information for the review cursor
@@ -3911,6 +3908,7 @@ msgstr "нема информација за статусната трака"
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "unable to copy status bar content to clipboard"
 msgstr ""
+"Не е во можност да ја копира содржината што се наоѓа на статусната лента."
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
@@ -4096,65 +4094,54 @@ msgstr ""
 "вчитаниот апликациски модул"
 
 #. Translators: Input help mode message for go to general settings command.
-#, fuzzy
 msgid "Shows NVDA's general settings"
-msgstr "го прикажува нвда диалогот за општите нагодувања"
+msgstr "го прикажува нвда-диалогот со општите нагодувања"
 
 #. Translators: Input help mode message for go to select synthesizer command.
-#, fuzzy
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr "го прикажува нвда диалогот за синтетизаторот"
+msgstr "го прикажува нвда-диалогот за одбирање на синтетизатор."
 
 #. Translators: Input help mode message for go to speech settings command.
-#, fuzzy
 msgid "Shows NVDA's speech settings"
-msgstr "го прикажува нвда диалогот за нагодувањата на глувчето"
+msgstr "го прикажува нвда-диалогот за нагодувањата за изговорот."
 
 #. Translators: Input help mode message for go to select braille display command.
-#, fuzzy
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "го прикажува нвда диалогот за брајовите нагодувања "
+msgstr "го прикажува нвда-диалогот за одбирање на брајовиот дисплеј."
 
 #. Translators: Input help mode message for go to braille settings command.
-#, fuzzy
 msgid "Shows NVDA's braille settings"
-msgstr "го прикажува нвда диалогот за брајовите нагодувања "
+msgstr "го прикажува нвда-диалогот за брајовите нагодувања "
 
 #. Translators: Input help mode message for go to keyboard settings command.
-#, fuzzy
 msgid "Shows NVDA's keyboard settings"
-msgstr "го прикажува нвда диалогот за тастатурните нагодувања"
+msgstr "го прикажува нвда-диалогот за тастатурните нагодувања"
 
 #. Translators: Input help mode message for go to mouse settings command.
-#, fuzzy
 msgid "Shows NVDA's mouse settings"
-msgstr "го прикажува нвда диалогот за нагодувањата на глувчето"
+msgstr "го прикажува нвда-диалогот за нагодувањата на глувчето"
 
 #. Translators: Input help mode message for go to review cursor settings command.
-#, fuzzy
 msgid "Shows NVDA's review cursor settings"
-msgstr "го прикажува нвда диалогот за нагодувањата на курсорот за преглед"
+msgstr "го прикажува нвда-диалогот за нагодувањата на курсорот за преглед"
 
 #. Translators: Input help mode message for go to input composition settings command.
-#, fuzzy
 msgid "Shows NVDA's input composition settings"
-msgstr "го прикажува нвда диалогот за нагодувањата на внесените комбинации"
+msgstr "го прикажува нвда-диалогот за нагодувањата на внесените комбинации"
 
 #. Translators: Input help mode message for go to object presentation settings command.
-#, fuzzy
 msgid "Shows NVDA's object presentation settings"
-msgstr "го прикажува нвда диалогот за нагодувањата при прикажување на објекти"
+msgstr ""
+"го прикажува нвда-диалогот за нагодувањата при прикажувањето на објекти"
 
 #. Translators: Input help mode message for go to browse mode settings command.
-#, fuzzy
 msgid "Shows NVDA's browse mode settings"
-msgstr "го прикажува нвда диалогот за нагодувањата за пребарување"
+msgstr "го прикажува нвда-диалогот за нагодувањата за пребарување"
 
 #. Translators: Input help mode message for go to document formatting settings command.
-#, fuzzy
 msgid "Shows NVDA's document formatting settings"
 msgstr ""
-"го прикажува нвда дијалогот за нагодувањата при обликување на документите"
+"го прикажува нвда-дијалогот за нагодувањата при оформување на документите"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
@@ -4341,9 +4328,8 @@ msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "го носи курсорот до или го активира објектот под оваа келија"
 
 #. Translators: Input help mode message for Braille report formatting command.
-#, fuzzy
 msgid "Reports formatting info for the text under this braille cell"
-msgstr "го носи курсорот до или го активира објектот под оваа келија"
+msgstr "Го носи курсорот до или го активира објектот под оваа келија"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -4380,30 +4366,40 @@ msgid ""
 "Virtually toggles the shift key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"Виртуелно го притиска копчето шифт за да емулира тастатурна кратенка со "
+"брајовиот внес."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the control key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
+"Виртуелно го притиска копчето контрол за да емулира тастатурна кратенка со "
+"брајовиот внес."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the alt key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"Виртуелно го притиска копчето алт за да емулира тастатурна кратенка со "
+"брајовиот внес."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the left windows key to emulate a keyboard shortcut with "
 "braille input"
 msgstr ""
+"Виртуелно го притиска левото виндовс копче за да емулира тастатурна кратенка "
+"со брајовиот внес."
 
 #. Translators: Input help mode message for a braille command.
 msgid ""
 "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille "
 "input"
 msgstr ""
+"Виртуелно го притиска копчето нвда за да емулира тастатурна кратенка со "
+"брајовиот внес."
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4460,23 +4456,20 @@ msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "го прикажува нвда дијалогот за конфигурирање на профили"
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers disabled"
-msgstr "профили за конфигурација"
+msgstr "Активаторите на конфигурираните профили се неактивни."
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
-#, fuzzy
 msgid "Configuration profile triggers enabled"
-msgstr "профили за конфигурација"
+msgstr "Активаторите на конфигурираните профили се активни."
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
-#, fuzzy
 msgid ""
 "Toggles disabling of all configuration profile triggers. Disabling remains "
 "in effect until NVDA is restarted"
 msgstr ""
-"грешка при сочувување на конфигурирањето на активаторите за профилот. "
-"Веројатно доаѓа од систем од кој што може само да се користи"
+"Го предизвикува исклучувањето на сите активатори во конфигурираните профили. "
+"Ова исклучување трае се дури НВДА не се рестартира."
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4510,7 +4503,7 @@ msgstr "Разно"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+ф5"
 
@@ -6053,9 +6046,9 @@ msgstr "ред %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#, fuzzy, python-format
+#, python-format
 msgid "through %s"
-msgstr "подвлечено"
+msgstr " до %s"
 
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
@@ -6064,9 +6057,9 @@ msgstr "колона %s"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "through row {row} column {column}"
-msgstr "со {rowCount} редици и {columnCount} колони"
+msgstr " до ред {row} колона {column}"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, python-brace-format
@@ -6250,17 +6243,17 @@ msgid "no italic"
 msgstr "не е курзивно"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "двојно подвлечено"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "подвлечено"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "не е подвлечено"
 
@@ -6290,12 +6283,12 @@ msgid "align right"
 msgstr "порамнето е на десно"
 
 #. Translators: Reported when text is justified.
-#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "порамнето е од обете страни"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See https://kohei.us/2010/01/21/distributed-text-justification/
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "порамнето е од обете страни"
 
@@ -6580,7 +6573,7 @@ msgstr "надградба на НВДА"
 #. and is pending to be installed.
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
-msgstr ""
+msgstr "НВДА version {version} е веќе презедена и сега чека да е инсталирана."
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6594,14 +6587,13 @@ msgstr "Нема достапни ажурирања"
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "&Install NVDA {version}"
-msgstr "Инсталирање на НВДА"
+msgstr "&Инсталирај ја НВДА {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
-#, fuzzy
 msgid "Re-&download update"
-msgstr "&Преземи го ажурирањето"
+msgstr "&Преземи го ажурирањето одново"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6618,24 +6610,21 @@ msgid "&Close"
 msgstr "&Затвори"
 
 #. Translators: A message indicating that an updated version of NVDA is ready to be installed.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
-msgstr "Новата верзија {version} веќе е достапна за НВДА."
+msgstr "Новата верзија {version} веќе е достапна за инсталирање.\n"
 
 #. Translators: The label of a button to install an NVDA update.
-#, fuzzy
 msgid "&Install update"
-msgstr "инсталирај го ажурирањето"
+msgstr "&Инсталирај го ажурирањето"
 
 #. Translators: The label of a button to postpone an NVDA update.
-#, fuzzy
 msgid "&Postpone update"
-msgstr "&Преземи го ажурирањето"
+msgstr "&Одложи го ажурирањето"
 
 #. Translators: The message when a downloaded update file could not be preserved.
-#, fuzzy
 msgid "Unable to postpone update."
-msgstr "неможе да се копира"
+msgstr "нема можност да се одложи ажурирањето."
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6714,7 +6703,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6729,22 +6718,21 @@ msgstr ""
 "УРЛ: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} покриено е од  GNU General Public License (Version 2). Можеш да го "
-"споделуваш или да вршиш измени во овој софтвер на кој било начин и да "
-"посакаш, се додека е придружен со лиценцата и се додека и ти го правиш "
-"достапен секој сорс код за секому што ќе го посака. Ова се однесува на обете "
-"оригинална или изменета копија од овој софтвер, како и секоја работа што би "
-"произлегла од овој софтвер.\n"
-"За повеќе детали, можеш да ја погледнеш лиценцата од менито за помош.\n"
-"Таа може да биде погледната и онлајн на:https://www.gnu.org/licenses/old-"
+"{name} е заштитено со ГЈЛ генерална јавна лиценца (Version 2). Можете "
+"слободно да го споделувате или менувате овој софтвер во секој поглед се "
+"додека тоа е придружено со лиценца и го направите истиот да биде достапен "
+"секому кој ќе го посака тоа. Ова се однесува на сите оригинални или "
+"модификувани копии од овој софтвер, како и секое нешто кое би произлегло од "
+"овој код.\n"
+"За повеќе детали, погледнете ја лиценцата во менито помош.\n"
+"Истата може да се најде и онлајн на: http://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.html\n"
 "\n"
-"{name} Развиено е од непрофитната организација НВ Аксес, посветено е за "
-"помагање и промовирање на слободните и опен сорс решенија за лицата со "
-"оштетен вид.\n"
-"Доколку НВДА ти изгледа корисно, и сакаш да продолжи да се подобрува, те "
-"молиме имај во предвид да направиш една мала донација до НВ Аксес. Можеш да "
-"го направиш ова одбирајќи Донирај од НВДА менито"
+"{name} е развиен од НВ аксес, непрофитна организација создадена за да помага "
+"во изнаоѓање и промовирање на опен-сорс решенија за лицата со оштетен вид.\n"
+"Доколку мислите дека НВДА е корисна и сакате да продолжи да се подобрува, ве "
+"молиме направете донација на НВ аксес. Тоа можете да го направите со кликање "
+"на донирај во НВДА-менито."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6824,18 +6812,16 @@ msgstr ""
 "воопшто свири"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the elapsed time of the currently playing track, if any"
 msgstr ""
 "го соопштува преостанатото време од траката што свири во моментот, доколку "
-"воопшто свири"
+"воопшто има трака која свири во тој момент."
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the length of the currently playing track, if any"
 msgstr ""
 "го соопштува преостанатото време од траката што свири во моментот, доколку "
-"воопшто свири"
+"воопшто има трака којашто свири во тој момент."
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6948,7 +6934,19 @@ msgstr "непрочитана"
 #. Translators: A message announcing what configuration profile is currently being edited.
 #, python-brace-format
 msgid "Editing profile {profile}"
-msgstr ""
+msgstr "Се уредува профилот {profile}"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "реплицирано"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "реплицирано е до сите"
+
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "препратено"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7354,9 +7352,8 @@ msgid "Optelec ALVA 6 series/protocol converter"
 msgstr "Optelec ALVA 6 серии/protocol converter"
 
 #. Translators: Message when setting HID keyboard simulation failed.
-#, fuzzy
 msgid "Setting HID keyboard simulation not supported"
-msgstr "нема поддршка за математичка интеракција"
+msgstr "Нагодувањето на тастатурно симулирање на ХИД не е поддржано"
 
 #. Translators: Message when HID keyboard simulation is enabled.
 msgid "HID keyboard simulation enabled"
@@ -7391,14 +7388,12 @@ msgid "Eurobraille Esys/Esytime/Iris displays"
 msgstr "Eurobraille Esys/Esytime/Iris Брајови редови"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
-#, fuzzy
 msgid "HID keyboard input simulation is unavailable."
-msgstr "Новата верзија {version} веќе е достапна за НВДА."
+msgstr "Тастатурното симулирање за ХИД е недостапно"
 
 #. Translators: Description of the script that toggles HID keyboard simulation.
-#, fuzzy
 msgid "Toggle HID keyboard simulation"
-msgstr "нема поддршка за математичка интеракција"
+msgstr "Го вклучува тастатурното симулирање на ХИД."
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7518,6 +7513,8 @@ msgstr ""
 #. (example: when trying to open touch interaction settings on an unsupported system).
 msgid "The settings panel you tried to open is unavailable on this system."
 msgstr ""
+"Панелот со нагодувања којшто се обидовте да го отворите е недостапен на овој "
+"систем."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7544,6 +7541,12 @@ msgid ""
 "make changes to the System registry and therefore requires administrative "
 "access. Are you sure you wish to proceed?"
 msgstr ""
+"Вие сте пред отворање на алатката ЦОМ фиксирач на регистрација. Оваа алатка "
+"ќе се обиде да ги реши најчестите системски проблеми кои предизвикуваат НВДА "
+"да не може да им пристапи на содржините од повеќе програми, вклучувајќи ги "
+"овде, Фаерфокс и интернет експлорер. Оваа алатка мора да направи промени во "
+"системските регистри, па затоа ѝ е потребно администраторско одобрение. "
+"Значи, дали сте сигурни дека сакате да продолжите понатаму со ова?"
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
@@ -7554,28 +7557,25 @@ msgstr "Предупредување"
 #. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
 #. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
 msgid "COM Registration Fixing Tool"
-msgstr ""
+msgstr "ЦОМ алатка за фиксирање на регистрирањето"
 
 #. Translators: The message displayed while NVDA is running the COM Registration fixing tool
-#, fuzzy
 msgid "Please wait while NVDA tries to fix your system's COM registrations."
 msgstr ""
-"те молиме да почекаш додека нагодувањата се копираат во системската "
-"конфигурација"
+"Ве молиме почекајте дури НВДА се обидува да ги поправи ЦОМ-регистрациите во "
+"вашиот систем."
 
 #. Translators: The message displayed when the COM Registration Fixing tool completes.
 msgid "COM Registration Fixing tool complete"
-msgstr ""
+msgstr "ЦОМ алатката за фиксирање на регистрирањето заврши со работа. "
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "&Settings..."
-msgstr "&гласовни нагодувања..."
+msgstr "&Нагодувања..."
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
-#, fuzzy
 msgid "NVDA settings"
-msgstr "нема нагодувања"
+msgstr "НВДА-нагодувања"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7652,7 +7652,7 @@ msgstr "&Инсталирај го НВДА..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
-msgstr ""
+msgstr "стартувај ја алатката за фиксирање на регистрирањето"
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7732,13 +7732,12 @@ msgid "Donate"
 msgstr "донирај"
 
 #. Translators: The label for the menu item to run a pending update.
-#, fuzzy
 msgid "Install pending &update"
-msgstr "инсталирај го ажурирањето"
+msgstr "Инсталирај го одложеното &ажурирање"
 
 #. Translators: The description for the menu item to run a pending update.
 msgid "Execute a previously downloaded NVDA update"
-msgstr ""
+msgstr "Отвори го претходно презеденото НВДА ажурирање"
 
 msgid "E&xit"
 msgstr "&Излези"
@@ -7847,9 +7846,8 @@ msgid "Restart with debug logging enabled"
 msgstr "рестартирај го со вклучен debug logging"
 
 #. Translators: An option in the combo box to choose exit action.
-#, fuzzy
 msgid "Install pending update"
-msgstr "инсталирај го ажурирањето"
+msgstr "инсталирај го одложеното ажурирање"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -7857,7 +7855,7 @@ msgstr "те молиме почекај"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 msgid "NVDA  Usage Data Collection"
-msgstr ""
+msgstr "Собирач на податоците за начинот на користење на НВДА"
 
 #. Translators: A message asking the user if they want to allow usage stats gathering
 msgid ""
@@ -7873,14 +7871,26 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
+"Со цел подобрување на НВДА во иднина, НВ аксес посакува да собира податоци "
+"од начинот на којшто се користат активните копии на НВДА.\n"
+"\n"
+"Овие податоци ги вклучуваат: верзијата на оперативниот систем, верзијата на "
+"НВДА, јазик, земја во којашто се користи, плус некои нагодувања во НВДА, "
+"како моменталната синтеза, брајов ред и брајови табели. Никогаш нема да се "
+"преземаат содржините коишто се изговорени или прикажани на брајово. Ве "
+"молиме погледнете го корисничкото упатство за целосната листана податоци што "
+"се презема со ова.\n"
+"\n"
+"Му дозволуваш ли на НВ аксес повремено да ги зема овие податоци со цел да го "
+"унапреди НВДА?"
 
 #. Translators: The label of a Yes button in a dialog
 msgid "&Yes"
-msgstr ""
+msgstr "&да"
 
 #. Translators: The label of a No button in a dialog
 msgid "&No"
-msgstr ""
+msgstr "&не"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -8027,21 +8037,19 @@ msgstr "избришан"
 
 #. Translators: The status shown for an addon when it requires a restart to become disabled
 msgid "Disabled after restart"
-msgstr ""
+msgstr "Ќе биде неактивен по рестартирање"
 
 #. Translators: The status shown for an addon when it requires a restart to become enabled
 msgid "Enabled after restart"
-msgstr ""
+msgstr "ќе биде активен по рестартирање"
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-#, fuzzy
 msgid "disabled"
-msgstr "исклучен"
+msgstr "Исклучен"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#, fuzzy
 msgid "enabled"
-msgstr "вклучен"
+msgstr "Вклучен"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
@@ -8497,9 +8505,8 @@ msgid "Apply"
 msgstr "Примени"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
-#, fuzzy
 msgid "&Categories:"
-msgstr "Категорија"
+msgstr "&Категории:"
 
 #. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
 #, python-format
@@ -8507,9 +8514,8 @@ msgid "%s Settings Category"
 msgstr " категорија на параметри %s"
 
 #. Translators: This is the label for the general settings panel.
-#, fuzzy
 msgid "General"
-msgstr "генерални нагодувања"
+msgstr "Општи нагодувања"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8570,10 +8576,11 @@ msgstr "автоматски проверувај дали има  &нови а�
 #. for a pending NVDA update.
 msgid "Notify for &pending update on startup"
 msgstr ""
+"Извести ме при вклучување доколку има &ажурирање кое чека да биде презедено"
 
 #. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
 msgid "Allow the NVDA project to gather NVDA usage statistics"
-msgstr ""
+msgstr "Овозможи му на проектот НВДА да зема статистика на користење за НВДА"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -8638,9 +8645,8 @@ msgid "Language Configuration Change"
 msgstr "промена во конфигурацијата на јазикот"
 
 #. Translators: A label for the synthesizer on the speech panel.
-#, fuzzy
 msgid "&Synthesizer"
-msgstr "&синтетизатор:"
+msgstr "&синтетизатор"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
@@ -8650,9 +8656,8 @@ msgid "C&hange..."
 msgstr "&Промени..."
 
 #. Translators: This is the label for the synthesizer selection dialog
-#, fuzzy
 msgid "Select Synthesizer"
-msgstr "синтетизатор"
+msgstr "Одберете синтетизатор"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
@@ -8681,9 +8686,8 @@ msgid "Synthesizer Error"
 msgstr "грешка во синтетизаторот"
 
 #. Translators: This is the label for the voice settings panel.
-#, fuzzy
 msgid "Voice"
-msgstr "глас"
+msgstr "гласовни нагодувања"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -8706,6 +8710,16 @@ msgid "Trust voice's language when processing characters and symbols"
 msgstr ""
 "верувај им на јазиците од гласовите кога ќе процесуираш знаци и симболи"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Вклучи ги податоците од уникоуд (вклучувајќи ги и емотиконите) кога ќе "
+"процесираш карактери и симболи"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "процентуална разлика во висината на гласот при изговор на големи букви"
@@ -8726,15 +8740,13 @@ msgid "Use &spelling functionality if supported"
 msgstr "изговарај &буква по буква доколку тоа е можно"
 
 #. Translators: This is the label for the keyboard settings panel.
-#, fuzzy
 msgid "Keyboard"
-msgstr "%s распоред на тастатура"
+msgstr "тастатурни нагодувања"
 
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
-#, fuzzy
 msgid "&Select NVDA Modifier Keys"
-msgstr "&Користи го капслок како помошно нвда копче"
+msgstr "&Одбери ги копчињата коишто ќе функционираат како НВДА помошно копче"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8820,9 +8832,8 @@ msgstr ""
 "&светлината ја контролира гласноста при титкањето на аудио-координатите"
 
 #. Translators: This is the label for the review cursor settings panel.
-#, fuzzy
 msgid "Review Cursor"
-msgstr "&курсор за преглед..."
+msgstr "Курсор за преглед"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings panel.
@@ -8845,9 +8856,8 @@ msgid "Simple review mode"
 msgstr "едноставен мод за преглед"
 
 #. Translators: This is the label for the Input Composition settings panel.
-#, fuzzy
 msgid "Input Composition"
-msgstr "нагодувања за внес на композиции"
+msgstr "Нагодувања за внес на композиции"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings panel.
@@ -8903,9 +8913,8 @@ msgstr "соопштувај го &појаснувањето за алатка�
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-#, fuzzy
 msgid "Report &notifications"
-msgstr "соопштувај го &појаснувањето за алатката"
+msgstr "Соопштувај &известувања"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -9287,14 +9296,12 @@ msgid "Add Dictionary Entry"
 msgstr "додади речничка лема"
 
 #. Translators: A label for the braille display on the braille panel.
-#, fuzzy
 msgid "Braille &display"
-msgstr "Брајов &дисплеј:"
+msgstr "Брајов &дисплеј"
 
 #. Translators: This is the label for the braille display selection dialog.
-#, fuzzy
 msgid "Select Braille Display"
-msgstr "Брајовите дисплеи EcoБраилле"
+msgstr "одберете брајов дисплеј"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -9352,9 +9359,8 @@ msgid "Show &messages indefinitely"
 msgstr "вечно прикажувај ги &пораките"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#, fuzzy
 msgid "Tether B&raille:"
-msgstr "SuperBraille"
+msgstr "Префрли го кур&сорот"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9369,14 +9375,12 @@ msgid "Focus context presentation:"
 msgstr "&Презентација на фокусот во одреден контекст:"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#, fuzzy
 msgid "NVDA"
-msgstr "Излез од НВДА"
+msgstr "НВДА"
 
 #. Translators: The profile name for normal configuration
-#, fuzzy
 msgid "normal configuration"
-msgstr "(нормална конфигурација)"
+msgstr "нормална конфигурација"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9652,14 +9656,14 @@ msgid "&Errors"
 msgstr "&Грешки"
 
 #. Translators: The label shown for an insertion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "insertion: {text}"
-msgstr "правописно: {text}"
+msgstr "Внесено: {text}"
 
 #. Translators: The label shown for a deletion change
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "deletion: {text}"
-msgstr "правописно: {text}"
+msgstr "Избришано: {text}"
 
 #. Translators: The general label shown for track changes
 #, python-brace-format
@@ -9667,14 +9671,14 @@ msgid "track change: {text}"
 msgstr "следена измена: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Comment: {comment} by {author} on {date}"
-msgstr "comment: {text} од {author} на {date}"
+msgstr "Коментар: {comment} од {author} на {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{comment} by {author} on {date}"
-msgstr "comment: {text} од {author} на {date}"
+msgstr "{comment} од {author} на {date}"
 
 msgid "Desktop"
 msgstr "работна површина"
@@ -10844,6 +10848,16 @@ msgstr "comment: {text} од {author} на {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} од {author} на {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} од левиот раб на страницата"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} од горниот раб на страницата"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10986,7 +11000,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} точки"
 
 #. Translators: a measurement in Microsoft Word
-#. See https://support.microsoft.com/kb/76388 for details.
+#. See http://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} пики"
