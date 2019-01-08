@@ -11,6 +11,7 @@ What's New in NVDA
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
 - Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
 - It is possible to turn off NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
+- The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
 
 
 == Changes ==
@@ -28,6 +29,7 @@ What's New in NVDA
 - Improved restart confirmation dialog after changing interface language. The text and the button labels are now more concise and less confusing. (#6416)
 - If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech on Windows 10, rather than espeak. (#9025)
 - Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
+- When tabbing or using quick navigation in browse mode, legends on tab panels are now reported more consistently. (#709)
 
 
 == Changes for Developers ==
