@@ -13,6 +13,25 @@ from NVDAObjects.UIA import UIA
 import controlTypes
 import ui
 
+class ActionCenterToggleButton(UIA):
+
+	# Somehow, item status property repeats when Action Center is opened more than once.
+	_itemStatusMessageCache = None
+
+	def _get_value(self):
+		return self.UIAElement.currentItemStatus
+
+	def event_UIA_itemStatus(self):
+		self.event_valueChange()
+
+	def event_valueChange(self):
+		# Do not repeat item status multiple times.
+		currentItemStatus = self.value
+		if currentItemStatus and currentItemStatus != self._itemStatusMessageCache:
+			ui.message(currentItemStatus)
+			self._itemStatusMessageCache = currentItemStatus
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
@@ -31,14 +50,5 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(ContentGenericClient)
 			except ValueError:
 				pass
-
-	# Somehow, item status property repeats when Action Center is opened more than once.
-	_itemStatusMessageCache = None
-
-	def event_UIA_itemStatus(self, obj, nextHandler):
-		# Do not fetch cached status as doing so causes a COM error to be logged.
-		itemStatus = obj.UIAElement.currentItemStatus
-		if itemStatus != self._itemStatusMessageCache:
-			ui.message(": ".join([obj.name, itemStatus]))
-			self._itemStatusMessageCache = itemStatus
-		nextHandler()
+		elif isinstance(obj, UIA) and obj.role == controlTypes.ROLE_TOGGLEBUTTON and obj.UIAElement.cachedClassName == "ToggleButton":
+			clsList.insert(0, ActionCenterToggleButton)
