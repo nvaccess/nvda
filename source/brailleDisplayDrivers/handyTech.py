@@ -204,12 +204,6 @@ class OldProtocolMixin(object):
 
 class AtcMixin(object):
 	"""Support for displays with Active Tactile Control (ATC)"""
-	supportedSettings=(
-		# Translators: Name of the ATC (active tactile control) setting in braille settings.
-		# Active tactile control should be left untranslated.
-		#BooleanDriverSetting("atc",_("Enable &Active Tactile Control")),
-	)
-
 
 	def postInit(self):
 		super(AtcMixin, self).postInit()
