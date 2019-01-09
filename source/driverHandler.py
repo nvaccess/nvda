@@ -139,14 +139,14 @@ class DriverSetting(AutoPropertyObject):
 	configSpec="string(default=None)"
 
 	def __init__(self,name, displayNameWithAccelerator,
-		availableInSynthSettingsRing=False, displayName=None, useConfig=True):
+		availableInSettingsRing=False, displayName=None, useConfig=True):
 		"""
 		@param name: internal name of the setting
 		@type name: str
 		@param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
 		@type displayNameWithAccelerator: str
-		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
-		@type availableInSynthSettingsRing: bool
+		@param availableInSettingsRing: Will this option be available in a settings ring?
+		@type availableInSettingsRing: bool
 		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
 		@type displayName: str
 		@param useConfig: Whether the value of this option is loaded from and saved to NVDA's configuration.
@@ -159,7 +159,7 @@ class DriverSetting(AutoPropertyObject):
 			# Strip accelerator from displayNameWithAccelerator.
 			displayName=displayNameWithAccelerator.replace("&","")
 		self.displayName=displayName
-		self.availableInSynthSettingsRing=availableInSynthSettingsRing
+		self.availableInSettingsRing=availableInSettingsRing
 		self.useConfig = useConfig
 
 class NumericDriverSetting(DriverSetting):
@@ -169,7 +169,7 @@ class NumericDriverSetting(DriverSetting):
 		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
 			defaultVal=self.defaultVal,minVal=self.minVal,maxVal=self.maxVal)
 
-	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
+	def __init__(self, name, displayNameWithAccelerator, availableInSettingsRing=False,
 		defaultVal=50, minVal=0, maxVal=100, minStep=1, normalStep=5, largeStep=10,
 		displayName=None, useConfig=True):
 		"""
@@ -187,7 +187,7 @@ class NumericDriverSetting(DriverSetting):
 		@type largeStep: int
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSynthSettingsRing=availableInSynthSettingsRing,
+		super(NumericDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
 			displayName=displayName, useConfig=useConfig)
 		self.minVal=minVal
 		self.defaultVal=max(defaultVal,self.minVal)
@@ -200,13 +200,13 @@ class BooleanDriverSetting(DriverSetting):
 	"""Represents a boolean driver setting such as rate boost or automatic time sync.
 	"""
 
-	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
+	def __init__(self, name, displayNameWithAccelerator, availableInSettingsRing=False,
 		displayName=None, defaultVal=False, useConfig=True):
 		"""
 		@param defaultVal: Specifies the default value for a boolean driver setting.
 		@type defaultVal: bool
 		"""
-		super(BooleanDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSynthSettingsRing=availableInSynthSettingsRing,
+		super(BooleanDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
 			displayName=displayName, useConfig=useConfig)
 		self.defaultVal=defaultVal
 

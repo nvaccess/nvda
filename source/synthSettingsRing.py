@@ -132,7 +132,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		prevName=self.settings[self._current].setting.name if self._current is not None and hasattr(self,'settings') else None
 		list = []
 		for s in synth.supportedSettings:
-			if not s.availableInSynthSettingsRing: continue
+			if not s.availableInSettingsRing: continue
 			if prevName==s.name: #restore the last setting
 				self._current=len(list)
 			if isinstance(s,driverHandler.NumericDriverSetting):
