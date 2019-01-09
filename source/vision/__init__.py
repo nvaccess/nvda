@@ -550,7 +550,7 @@ class VisionHandler(AutoPropertyObject):
 			return False
 
 	def _get_initializedProviders(self):
-		return tuple(
+		return set(
 			provider for provider in (self.magnifier, self.highlighter, self.colorEnhancer)
 			if provider
 		)
