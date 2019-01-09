@@ -51,13 +51,18 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
 
+	protected:
+
 /**
  * the list of control field nodes that should be re-rendered the next time the backend is updated.
- * the list is in the order the invalidations were requested.
+ * the list is in an order such that any parent is before any child. 
  */
-	VBufStorage_controlFieldNodeList_t invalidSubtreeList;
+	VBufStorage_controlFieldNodeList_t pendingInvalidSubtreesList;
 
-	protected:
+/**
+ * The list of invalid subtrees currently being re-rendered by update.
+  */
+	VBufStorage_controlFieldNodeList_t workingInvalidSubtreesList;
 
 /**
  * The set of currently running backends
@@ -161,11 +166,28 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  */
 	LockableObject lock;
 
+/**
+ * Fetches an existing node from this backend, so that it can be added to a temporary buffer as a reference node during a partial render.
+ * This method should only be called from within a backend's render method.
+ * If the node exists but it is currently marked for re-rendering,
+ * The node is unmarked for re-rendering, but not returned. 
+ * this allows the current render in progress (that called this method) to go ahead and re-render that node itself like it had never existed.
+  */
+	VBufStorage_controlFieldNode_t* reuseExistingNodeInRender(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID) ;
+
 };
 
 /**
  * a function signature for the VBufBackend_create factory function all backend libraries must implement to create a backend.
  */
 typedef VBufBackend_t*(*VBufBackend_create_proc)(int,int);
+
+// The backend creation functions
+VBufBackend_t* AdobeAcrobatVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* AdobeFlashVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* lotusNotesRichTextVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* MshtmlVBufBackend_t_createInstance(int docHandle, int ID);
+VBufBackend_t* WebKitVBufBackend_t_createInstance(int docHandle, int ID);
 
 #endif

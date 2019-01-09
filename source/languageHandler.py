@@ -83,6 +83,8 @@ def getLanguageDescription(language):
 			"kmr":pgettext("languageName","Northern Kurdish"),
 			# Translators: The name of a language supported by NVDA.
 			"my":pgettext("languageName","Burmese"),
+			# Translators: The name of a language supported by NVDA.
+			"so":pgettext("languageName","Somali"),
 		}.get(language,None)
 	return desc
 
