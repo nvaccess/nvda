@@ -353,10 +353,10 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 					wx.EVT_CHECKBOX,
 					lambda evt: self.installPendingButton.Enable(not self.installPendingButton.Enabled)
 				)
+				confirmationCheckbox.SetFocus()
 				# Translators: The label of a button to review add-ons prior to NVDA update.
 				reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 				reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-				reviewAddonsButton.SetFocus()
 			self.installPendingButton = bHelper.addButton(
 				self,
 				# Translators: The label of a button to install a pending NVDA update.
@@ -475,13 +475,13 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The label of a button to review add-ons prior to NVDA update.
 			reviewAddonsButton = bHelper.addButton(self, label=_("&Review add-ons..."))
 			reviewAddonsButton.Bind(wx.EVT_BUTTON, self.onReviewAddonsButton)
-			reviewAddonsButton.SetFocus()
 		# Translators: The label of a button to install an NVDA update.
 		installButton = bHelper.addButton(self, wx.ID_OK, label=_("&Install update"))
 		installButton.Bind(wx.EVT_BUTTON, self.onInstallButton)
 		if not showAddonCompat:
 			installButton.SetFocus()
 		else:
+			self.confirmationCheckbox.SetFocus()
 			self.confirmationCheckbox.Bind(
 				wx.EVT_CHECKBOX,
 				lambda evt: installButton.Enable(not installButton.Enabled)
