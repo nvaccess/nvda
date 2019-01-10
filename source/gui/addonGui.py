@@ -202,7 +202,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addButton = generalActions.addButton(self, label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON, self.onAddClick)
 		# Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
-		self.incompatAddonsButton = generalActions.addButton(self, label=_("&Manage incompatible add-ons..."))
+		self.incompatAddonsButton = generalActions.addButton(self, label=_("&View incompatible add-ons..."))
 		self.incompatAddonsButton.Bind(wx.EVT_BUTTON, self.onIncompatAddonsShowClick)
 
 		mainSizer.Add(
@@ -589,8 +589,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 
 
 class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
-	"""A dialog that allows one to blacklist or whitelist add-ons that are incompatible
-	with a current or new version of NVDA."""
+	"""A dialog that lists incompatible addons, and why they are not compatible"""
 	@classmethod
 	def _instance(cls):
 		""" type: () -> IncompatibleAddonsDialog
