@@ -99,7 +99,7 @@ class _EventExecuter(object):
 		try:
 			return func(*args, **self.kwargs)
 		except TypeError:
-			log.warning("Could not execute function {func} defined in {module} module due to unsupported kwargs: {kwargs}".format(
+			log.warning("Could not execute function {func} defined in {module} module; kwargs: {kwargs}".format(
 				func=func.__name__,
 				module=func.__module__ or "unknown",
 				kwargs=self.kwargs
