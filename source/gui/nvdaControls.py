@@ -10,7 +10,6 @@ from gui import accPropServer
 import oleacc
 import winUser
 import comtypes
-from ctypes import c_int
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -121,7 +120,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
 		accPropServices.SetHwndPropServer(
-			hwnd=self.Handle,
+			hwnd=self.GetHandle(),
 			idObject=winUser.OBJID_CLIENT,
 			idChild=0,
 			paProps=CHECK_LIST_PROPS,
@@ -134,6 +133,9 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		# Register an additional event handler to call sendCheckListBoxEvent for mouse clicks if appropriate.
 		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
+		# clean up of the accPropServices needs to happen when the control is destroyed. The Destroy method is not called
+		# by the wx framework, but we can register to receive the event. https://github.com/wxWidgets/Phoenix/issues/630
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, source=self)
 
 	def GetCheckedItems(self):
 		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
@@ -187,14 +189,17 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.Int = index
 		self.ProcessEvent(evt)
 
-	def Destroy(self):
+	def _onDestroy(self, evt):
+		evt.Skip() #  Allow other handlers to process this event.
+		self._cleanup()
+
+	def _cleanup(self):
 		from IAccessibleHandler import accPropServices
 		accPropServices.ClearHwndProps(
-			hwnd=self.Handle,
+			hwnd=self.GetHandle(),
 			idObject=winUser.OBJID_CLIENT,
 			idChild=0,
 			paProps=CHECK_LIST_PROPS,
 			cProps=len(CHECK_LIST_PROPS)
 		)
-		AutoWidthColumnListCtrl.Destroy(self)
 

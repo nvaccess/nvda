@@ -721,8 +721,3 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		evt.Skip()
 		self.EndModal(wx.OK)
 		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
-
-	def Destroy(self):
-		super(IncompatibleAddonsDialog, self).Destroy()
-		# for some reason we have to manually call Destroy on addonList, wx does not do this for us.
-		self.addonsList.Destroy()
