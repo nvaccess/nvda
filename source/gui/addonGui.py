@@ -41,8 +41,8 @@ def promptUserForRestart():
 
 class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __init__(self, parent, title, message,
-			errorDialog=False,
-			showAddonInfoFunction=None
+			showAddonInfoFunction,
+			errorDialog=False
 	):
 		wx.Dialog.__init__(self, parent, title=title)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
@@ -59,14 +59,13 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		contentsSizer.addItem(text)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		if showAddonInfoFunction:
-			addonInfoButton = buttonHelper.addButton(
-				self,
-				# Translators: A button in the addon installation warning / blocked dialog which shows
-				# more information about the addon
-				label=_("&About add-on...")
-			)
-			addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: showAddonInfoFunction())
+		addonInfoButton = buttonHelper.addButton(
+			self,
+			# Translators: A button in the addon installation warning / blocked dialog which shows
+			# more information about the addon
+			label=_("&About add-on...")
+		)
+		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: showAddonInfoFunction())
 		if errorDialog:
 			okButton = buttonHelper.addButton(
 				self,
