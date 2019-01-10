@@ -435,7 +435,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.curAddons.append(addon)
 			anyAddonIncompatible = (
 				anyAddonIncompatible  # once we find one incompatible addon we don't need to continue
-				or addonVersionCheck.isAddonCompatible(
+				or not addonVersionCheck.isAddonCompatible(
 					addon,
 					currentAPIVersion=addonAPIVersion.CURRENT,
 					backwardsCompatToVersion=addonAPIVersion.BACK_COMPAT_TO
