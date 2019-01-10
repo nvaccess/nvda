@@ -106,6 +106,46 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 
+def _getAPIVersionString(versionTuple=None):
+	# Translators: shown when a version is unknown in the about add-on dialog
+	default = _("unknown")
+	if not versionTuple:
+		return default
+	try:
+		year, month, minor = versionTuple
+		return "{year}.{month}.{minor}".format(year=year, month=month, minor=minor)
+	except:
+		log.debug("Error formatting versionTuple: {}".format(repr(versionTuple)), exc_info=True)
+		return default
+
+def _showAddonInfo(addon):
+	manifest = addon.manifest
+	# Translators: message shown in the Addon Information dialog.
+	message=[_(
+		"{summary} ({name})\n"
+		"Version: {version}\n"
+		"Author: {author}\n"
+		"Description: {description}\n"
+	).format(**manifest)]
+	url=manifest.get('url')
+	if url:
+		# Translators: the url part of the About Add-on information
+		message.append(_("URL: {url}").format(url=url))
+	minimumNVDAVersion = _getAPIVersionString(addon.minimumNVDAVersion)
+	message.append(
+		# Translators: the minimum NVDA version part of the About Add-on information
+		_("Minimum required NVDA version: {}").format(minimumNVDAVersion)
+	)
+	lastTestedNVDAVersion = _getAPIVersionString(addon.lastTestedNVDAVersion)
+	message.append(
+		# Translators: the last NVDA version tested part of the About Add-on information
+		_("Last NVDA version tested: {}").format(lastTestedNVDAVersion)
+	)
+	# Translators: title for the Addon Information dialog
+	title=_("Add-on Information")
+	gui.messageBox("\n".join(message), title, wx.OK)
+
+
 class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	@classmethod
 	def _instance(cls):
@@ -267,7 +307,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			title=_("Add-on not compatible"),
 			message=incompatibleMessage,
 			errorDialog=True,
-			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
+			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 		).ShowModal()
 
 	def _showAddonUntestedDialog(self, bundle):
@@ -286,7 +326,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			title=_("Warning: Untested Add-on Installation"),
 			message=confirmInstallMessage,
 			errorDialog=True,
-			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
+			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 		).ShowModal()
 
 	def _showConfirmAddonInstallDialog(self, bundle):
@@ -302,7 +342,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: Title for message asking if the user really wishes to install an Addon.
 			title=_("Add-on Installation"),
 			message=confirmInstallMessage,
-			showAddonInfoFunction=lambda: self._showAddonInfo(bundle.manifest)
+			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 		).ShowModal()
 
 	def installAddon(self, addonPath, closeAfter=False):
@@ -493,36 +533,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onAbout(self,evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
-		manifest=self.curAddons[index].manifest
-		self._showAddonInfo(manifest)
-
-	def _showAddonInfo(self, manifest):
-		# Translators: message shown in the Addon Information dialog.
-		message=[_(
-			"{summary} ({name})\n"
-			"Version: {version}\n"
-			"Author: {author}\n"
-			"Description: {description}\n"
-		).format(**manifest)]
-		url=manifest.get('url')
-		if url:
-			# Translators: the url part of the About Add-on information
-			message.append(_("URL: {url}").format(url=url))
-		# Translators: shown when a version is unknown in the about add-on dialog
-		unknownVersion = _("unknown")
-		minimumNVDAVersion = manifest.get('minimumNVDAVersion', default=unknownVersion)
-		message.append(
-			# Translators: the minimum NVDA version part of the About Add-on information
-			_("Minimum required NVDA version: {version}").format(version=minimumNVDAVersion)
-		)
-		lastTestedNVDAVersion = manifest.get('lastTestedNVDAVersion', unknownVersion)
-		message.append(
-			# Translators: the last NVDA version tested part of the About Add-on information
-			_("Last NVDA version tested: {version}").format(version=lastTestedNVDAVersion)
-		)
-		# Translators: title for the Addon Information dialog
-		title=_("Add-on Information")
-		gui.messageBox("\n".join(message), title, wx.OK)
+		addon=self.curAddons[index]
+		_showAddonInfo(addon)
 
 	def onHelp(self, evt):
 		index = self.addonsList.GetFirstSelected()
@@ -657,6 +669,9 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.addonsList.InsertColumn(3, _("Incompatible reason"), width=self.scaleSize(180))
 
 		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
+		self.aboutButton = buttonSizer.addButton(self, label=_("&About add-on..."))
+		self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -705,6 +720,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				addon.version,
 				self._getIncompatReason(addon)
 			))
+			self.curAddons.append(addon)  # onAbout depends on being able to recall the current addon based on selected index
 		# select the given active addon, the last addon (after an addon is installed), or the first addon if not given
 		curAddonsLen=len(self.unknownCompatibilityAddonsList)
 		if curAddonsLen>0:  # No addons to select
@@ -714,6 +730,12 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				activeIndex=0
 			self.addonsList.Select(activeIndex,on=1)
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+
+	def onAbout(self,evt):
+		index=self.addonsList.GetFirstSelected()
+		if index<0: return
+		addon=self.curAddons[index]
+		_showAddonInfo(addon)
 
 	def onClose(self, evt):
 		evt.Skip()
