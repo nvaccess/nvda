@@ -554,6 +554,9 @@ class AddonBundle(AddonBase):
 				except KeyError:
 					pass
 			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME), translatedInput=translatedInput)
+			if self.manifest.errors is not None:
+				_report_manifest_errors(self.manifest)
+				raise AddonError("Manifest file has errors.")
 
 	def extract(self, addonPath):
 		""" Extracts the bundle content to the specified path.
@@ -666,6 +669,11 @@ docFileName = string(default=None)
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
+		elif True != self._validateApiVersionRange():
+			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
+				self.get("minimumNVDAVersion"),
+				self.get("lastTestedNVDAVersion")
+			)
 		self._translatedConfig = None
 		if translatedInput is not None:
 			self._translatedConfig = ConfigObj(translatedInput, encoding='utf-8', default_encoding='utf-8')
@@ -677,6 +685,11 @@ docFileName = string(default=None)
 	@property
 	def errors(self):
 		return self._errors
+
+	def _validateApiVersionRange(self):
+		lastTested = self.get("lastTestedNVDAVersion")
+		minRequiredVersion = self.get("minimumNVDAVersion")
+		return minRequiredVersion <= lastTested
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
