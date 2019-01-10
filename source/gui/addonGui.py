@@ -642,8 +642,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		AddonSelectionIntroLabel=wx.StaticText(self, label=introText)
 		AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
 		sHelper.addItem(AddonSelectionIntroLabel)
-		# Translators: the label for the addons list in the addon selection dialog.
-		entriesLabel=_("Untested add-ons")
+		# Translators: the label for the addons list in the incompatible addons dialog.
+		entriesLabel=_("Incompatible add-ons")
 		self.addonsList = sHelper.addLabeledControl(
 			entriesLabel,
 			nvdaControls.AutoWidthColumnListCtrl,
