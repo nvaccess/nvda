@@ -633,6 +633,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			backCompatToAPIVersion=APIBackwardsCompatToVersion
 		))
 		if not len(self.unknownCompatibilityAddonsList) > 0:
+			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
 
 		# Translators: The title of the Incompatible Addons Dialog
@@ -671,6 +672,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 		self.aboutButton = buttonSizer.addButton(self, label=_("&About add-on..."))
+		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("Close"), id=wx.ID_CLOSE)
@@ -711,7 +713,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				)
 			)
 
-	def refreshAddonsList(self,activeIndex=0):
+	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		for idx, addon in enumerate(self.unknownCompatibilityAddonsList):
@@ -721,15 +723,10 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				self._getIncompatReason(addon)
 			))
 			self.curAddons.append(addon)  # onAbout depends on being able to recall the current addon based on selected index
-		# select the given active addon, the last addon (after an addon is installed), or the first addon if not given
-		curAddonsLen=len(self.unknownCompatibilityAddonsList)
-		if curAddonsLen>0:  # No addons to select
-			if activeIndex==-1:  # Special value, select last addon (newly installed)
-				activeIndex=curAddonsLen-1
-			elif activeIndex<0 or activeIndex>=curAddonsLen:  # Index invalid, select first addon.
-				activeIndex=0
-			self.addonsList.Select(activeIndex,on=1)
-			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+		activeIndex=0
+		self.addonsList.Select(activeIndex, on=1)
+		self.addonsList.SetItemState(activeIndex, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
+		self.aboutButton.Enable(True)
 
 	def onAbout(self,evt):
 		index=self.addonsList.GetFirstSelected()
