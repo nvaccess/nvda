@@ -215,7 +215,6 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			# the defaults from the installer are fine. We are testing against the running version.
 		)
 		incompatibleAddons.ShowModal()
-		incompatibleAddons.Destroy()
 
 class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __init__(self):

@@ -430,7 +430,6 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
 		incompatibleAddons.ShowModal()
-		incompatibleAddons.Destroy()
 
 class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 
@@ -509,7 +508,6 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			APIBackwardsCompatToVersion=self.backCompatTo
 		)
 		incompatibleAddons.ShowModal()
-		incompatibleAddons.Destroy()
 
 	def onInstallButton(self, evt):
 		_executeUpdate(self.destPath)

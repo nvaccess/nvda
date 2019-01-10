@@ -110,7 +110,10 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	@classmethod
 	def _instance(cls):
-		# type: () -> AddonsDialog
+		""" type: () -> AddonsDialog
+		return None until this is replaced with a weakref.ref object. Then the instance is retrieved
+		with by treating that object as a callable.
+		"""
 		return None
 
 	def __new__(cls, *args, **kwargs):
@@ -590,7 +593,10 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	with a current or new version of NVDA."""
 	@classmethod
 	def _instance(cls):
-		# type: () -> IncompatibleAddonsDialog
+		""" type: () -> IncompatibleAddonsDialog
+		return None until this is replaced with a weakref.ref object. Then the instance is retrieved
+		with by treating that object as a callable.
+		"""
 		return None
 
 	def __new__(cls, *args, **kwargs):
@@ -655,6 +661,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		buttonSizer = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 		button = buttonSizer.addButton(self, label=_("Close"), id=wx.ID_CLOSE)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sHelper.addDialogDismissButtons(buttonSizer)
 		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
 		mainSizer.Fit(self)
@@ -711,7 +718,9 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
 
 	def onClose(self, evt):
+		evt.Skip()
 		self.EndModal(wx.OK)
+		self.DestroyLater()  # ensure that the _instance weakref is destroyed.
 
 	def Destroy(self):
 		super(IncompatibleAddonsDialog, self).Destroy()
