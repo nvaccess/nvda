@@ -107,10 +107,10 @@ There are also a few options in this dialog which are explained below.
 Once the installation has completed, a message will appear telling you that it was successful.
 Pressing OK at this point will restart the newly installed copy of NVDA.
 
-+++ Untested add-ons warning +++[InstallWithUntestedAddons]
-If you have add-ons already installed there may also be a warning that untested add-ons will be disabled.
++++ Incompatible add-ons warning +++[InstallWithIncompatibleAddons]
+If you have add-ons already installed there may also be a warning that incompatible add-ons will be disabled.
 Before you're able to press the Continue button you will have to use a checkbox to confirm that you understand that these add-ons will be disabled.
-There will also be a button present to review the untested add-ons that will be disabled, and prevent them from being disabled.
+There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section #incompatibleAddonsManager] for more help on this button.
 
 +++ Start at Windows Logon +++[StartAtWindowsLogon]
@@ -1851,27 +1851,29 @@ Just like when you install or remove add-ons, you need to restart NVDA in order 
 The manager also has a Close button to close the dialog.
 If you have installed, removed or changed the status of an add-on, NVDA will first ask you if you wish to restart so that your changes can take effect.
 
-Some older add-ons may not have been tested with the version of NVDA that you have, in this case the add-on may be considered incompatible.
-Attempting to install an untested add-on will result in an additional warning requiring confirmation.
-To manage these add-ons, and override the compatibility (not recommended) you can use the "manage incompatible add-ons button" to launch the incompatible add-ons manager.
+Some older add-ons may no longer be compatible with the version of NVDA that you have.
+When using an older version of NVDA, some new add-ons may not be compatible either.
+Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
+To inspect these incompatible add-ons, you can use the "view incompatible add-ons" button to launch the incompatible add-ons manager.
 
-In the past,  it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
-Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
-It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
+In the past, it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
+Although this version of NVDA  may still load them, they will not be shown in the Add-on Manager.
+It is best to remove these files from your configuration and install the appropriate add-on if one is available.
 
 To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ++ Incompatible Add-ons Manager ++[incompatibleAddonsManager]
-The Incompatible Add-ons Manager, which can be accessed via the "manage incompatible add-ons" buttons in the Add-on manager, allows you to override the incompatibility of untested add-ons.
-Add-ons are considered incompatible when they have not been tested with the version of NVDA that you are using.
-Enabling untested add-ons may cause NVDA to be unstable.
+The Incompatible Add-ons Manager, which can be accessed via the "view incompatible add-ons" buttons in the Add-on manager, allows you to inspect any incompatible add-ons, and the reason they are considered incompatible.
+Add-ons are considered incompatible when they have not been updated to work with significant changes to NVDA, or when they rely on a feature not available in the version of NVDA you are using.
 The Incompatible add-ons manager has a short message to explain its purpose as well as the version of NVDA.
-The untested add-ons are presented in a list with the following four columns:
-+ Available, a checkbox which reflects whether the add-on can be enabled via the Add-on Manager
+The incompatible add-ons are presented in a list with the following columns:
 + Package, the name of the add-on
 + Version, the version of the add-on
-+ Last tested NVDA Version, the version of NVDA that the add-on was last tested against
++ Incompatible reason, an explanation of why the addon is considered incompatible
 +
+
+The Incompatible add-ons manager also has an "About add-on..." button.
+This opens will let you know the full details of the add-on, which is helpful when contacting the add-on author.
 
 
 ++ Python Console ++[PythonConsole]
