@@ -54,13 +54,25 @@ _lastDuckedTime=0
 def _setDuckingState(switch):
 	global _lastDuckedTime
 	with _duckingRefCountLock:
-		import gui
-		ATWindow=gui.mainFrame.GetHandle()
-		if switch:
-			oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
-			_lastDuckedTime=time.time()
-		else:
-			oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
+		try:
+			import gui
+			ATWindow=gui.mainFrame.GetHandle()
+			if switch:
+				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
+				_lastDuckedTime=time.time()
+			else:
+				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
+		except WindowsError as e:
+			# ERROR_ACCESS_DENIED is 0x5
+			# https://docs.microsoft.com/en-us/windows/desktop/debug/system-error-codes--0-499-
+			ERROR_ACCESS_DENIED = 0x80070005
+			errorCode = e.winerror & 0xFFFFFFFF  # we only care about the first 8 hex values.
+			if errorCode != ERROR_ACCESS_DENIED:
+				log.debugWarning(
+					"Unable to set ducking state. Error number: {:#010X}".format(errorCode),
+					exc_info=True
+				)
+				raise e
 
 def _ensureDucked():
 	global _duckingRefCount
