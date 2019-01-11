@@ -196,9 +196,6 @@ def _getAvailableAddonsFromPath(path):
 						name=name,
 						a=a
 					))
-				if a.manifest.errors is not None:
-					_report_manifest_errors(a.manifest)
-					raise AddonError("Manifest file has errors.")
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
 				elif not isAddonCompatible(a):
