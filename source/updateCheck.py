@@ -339,7 +339,7 @@ class UpdateResultDialog(wx.Dialog, DpiScalingHelperMixin):
 				# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
 				message = message + _(
 					"\n\n"
-					"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+					"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 					"These add-ons will be disabled after installation. If you rely on these add-ons, "
 					"please review the list to decide whether to continue with the installation"
 				)
@@ -455,7 +455,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: A message indicating that some add-ons will be disabled unless reviewed before installation.
 			message = message + _(
 				"\n"
-				"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 				"These add-ons will be disabled after installation. If you rely on these add-ons, "
 				"please review the list to decide whether to continue with the installation"
 			)
@@ -467,7 +467,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 				self,
 				# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 				# available, will be disabled after installation.
-				label=_("I understand that these untested add-ons will be disabled")
+				label=_("I understand that these incompatible add-ons will be disabled")
 			))
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))

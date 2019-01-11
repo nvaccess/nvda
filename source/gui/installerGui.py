@@ -121,7 +121,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: A message in the installer to let the user know that some addons are not compatible.
 			msg+=_(
 				"\n\n"
-				"However, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
+				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 				"These add-ons will be disabled after installation. If you rely on these add-ons, "
 				"please review the list to decide whether to continue with the installation"
 			)
@@ -133,7 +133,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 					self,
 					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 					# available, will be disabled after installation.
-					label=_("I understand that these untested add-ons will be disabled")
+					label=_("I understand that these incompatible add-ons will be disabled")
 				))
 			self.confirmationCheckbox.SetFocus()
 
