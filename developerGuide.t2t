@@ -231,15 +231,11 @@ As with other examples in this guide, remember to delete the created app module 
 
 ++ App modules for hosted apps ++
 Some executables host various apps inside.
-These include javaw.exe for running various java programs and wwahost.exe for web apps in Windows 8 and later.
+These include javaw.exe for running various java programs and wwahost.exe for some apps in Windows 8 and later.
 
 If an app runs inside a host executable, the name of the app module must be the name as defined by the host executable, which can be found through AppModule.appName property.
 For example, an app module for a java app named "test" hosted inside javaw.exe must be named test.py.
-For apps hosted inside wwahost, not only the app module name must be the name of the loaded app, but the app module must subclass the app module class found in wwahost.
-
-Note that wwahost.exe hosts web applications or apps behaving as such.
-You should create an app module for apps hosted inside it if you believe the hosted app is not a true web application.
-This is the case for built-in apps such as Mail and Calendar in Windows 8 and 8.1.
+For apps hosted inside wwahost, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in wwahost.
 
 ++ Example 2: an app module for an app hosted by wwahost.exe ++
 The following example is same as Notepad app module above except this is for an app hosted by wwahost.exe.
