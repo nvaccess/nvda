@@ -3,7 +3,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012-2019 NV Access Limited, Joseph Lee
 
-"""App module host for Windows 8.x and 10 web apps hosted by wwahost.exe.
+"""App module host for Windows 8.x and 10 apps hosted by wwahost.exe.
 In Windows 8, apps written in Javascript are executed inside WWAHost, including some WinRT apps.
 In Windows 10, progressive web apps (PWA) and friends are hosted inside this process.
 App modules wishing to support apps hosted inside this process must subclass the AppModule class.
@@ -23,8 +23,8 @@ def getAppNameFromHost(processId):
 	# App modules for these are named after the hosted app name.
 	processHandle = winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processId)
 	length = ctypes.c_uint()
-	buf = winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), None)
-	appModel = ctypes.create_unicode_buffer(buf)
+	winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), None)
+	appModel = ctypes.create_unicode_buffer(length.value)
 	winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), appModel)
 	winKernel.closeHandle(processHandle)
 	# Sometimes app model might be empty, so raise errors and fall back to wwahost.
@@ -56,8 +56,8 @@ class AppModule(appModuleHandler.AppModule):
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
 		length = ctypes.c_uint()
-		buf = winKernel.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
-		packageFullName = ctypes.create_unicode_buffer(buf)
+		winKernel.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
+		packageFullName = ctypes.create_unicode_buffer(length.value)
 		winKernel.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), packageFullName)
 		packageInfo = packageFullName.value.split("_")
 		# Product name is of the form publisher.name.
