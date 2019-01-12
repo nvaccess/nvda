@@ -215,6 +215,11 @@ class MSCandUIWindow(IAccessible):
 
 class ModernCandidateUICandidateItem(BaseCandidateItem):
 
+	def _get_parent(self):
+		# Candidate list in Microsoft Quick cannot be obtained in IAccessible _get_parent. Use _get_parent in NVDAObject.window
+		parent=super(IAccessible,self).parent
+		return parent
+
 	def _get_candidateCharacters(self):
 		return super(BaseCandidateItem,self).name
 
@@ -246,8 +251,9 @@ class ModernCandidateUICandidateItem(BaseCandidateItem):
 def findExtraOverlayClasses(obj,clsList):
 	windowClassName=obj.windowClassName
 	role=obj.IAccessibleRole
-	if windowClassName=="Microsoft.IME.CandidateWindow.View" and obj.role==controlTypes.ROLE_BUTTON:
-		clsList.append(ModernCandidateUICandidateItem)
+	if windowClassName=="Microsoft.IME.CandidateWindow.View":
+		if obj.role==controlTypes.ROLE_BUTTON or obj.role==controlTypes.ROLE_LISTITEM:
+			clsList.append(ModernCandidateUICandidateItem)
 	elif windowClassName=="MSCandUIWindow_Candidate":
 		if role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(MSCandUIWindow)
