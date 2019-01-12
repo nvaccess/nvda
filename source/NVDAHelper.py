@@ -194,13 +194,15 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
 	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	if selectionStart==-1:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
 		return 0
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-	else:
+		# Eliminate first InputComposition events from Microsoft Pinyin to avoid double reading
+	elif not isinstance(focus,ModernCandidateUICandidateItem):
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 

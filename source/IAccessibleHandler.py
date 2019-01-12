@@ -784,13 +784,22 @@ def processDestroyWinEvent(window,objectID,childID):
 	# so can't use generic focus correction. (#2695)
 	focus=api.getFocusObject()
 	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
-	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and not eventHandler.isPendingEvents("gainFocus"):
-		#Window handle of ModernCandidateUI destory event is not the same as host application.CiceroUIWndFrame won't work Use MSCTFIME Composition
+	from NVDAObjects.inputComposition import InputComposition
+	if isinstance(focus,BaseCandidateItem):
+		# Window handle of ModernCandidateUI destroy event is not the same as host application.
+		# CiceroUIWndFrame sometimes won't be fired when typing too fast.
+		# Use MSCTFIME Composition instead.
 		windowClassName=winUser.getClassName(window)
-		if window==focus.windowHandle or windowClassName == "MSCTFIME Composition":
+		if windowClassName == "MSCTFIME Composition":
 			obj=focus.container
 			if obj:
-				eventHandler.queueEvent("gainFocus",obj)
+				if isinstance(obj,InputComposition):
+					obj=obj.parent
+				import speech
+				oldSpeechMode=speech.speechMode
+				speech.speechMode=speech.speechMode_off
+				eventHandler.executeEvent("gainFocus",obj.parent)
+				speech.speechMode=oldSpeechMode
 
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
