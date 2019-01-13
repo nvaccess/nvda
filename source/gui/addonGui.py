@@ -311,7 +311,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		).ShowModal()
 
 	def _showAddonUntestedDialog(self, bundle):
-		# Translators: A message asking the user to confirm they understand the risks of installing an untested addon
+		# Translators: A message informing the user that this addon can not be installed because it is not compatible.
 		confirmInstallMessage = _(
 			"Installation of {summary} {version} has been blocked."
 			" An updated version of this add-on is required,"
@@ -322,8 +322,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		)
 		return ConfirmAddonInstallDialog(
 			parent=self,
-			# Translators: Title for message asking if the user really wishes to install an Addon.
-			title=_("Warning: Untested Add-on Installation"),
+			# Translators: The title of a dialog presented when an error occurs.
+			title=_("Add-on not compatible"),
 			message=confirmInstallMessage,
 			errorDialog=True,
 			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
