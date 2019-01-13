@@ -496,15 +496,23 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			return
 		if not obj:
 			return
-		if obj== api.getFocusObject():
+		synchronousCall =True
+		setFocusCall = False 
+		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
+			setFocusCall = True
+			synchronousCall = False
+		if synchronousCall:
+			if setFocusCall:
+				obj.setFocus()
 			if postFocusFunc is not None:
 				postFocusFunc()
-			return
-		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj):
+		else:
 			if self.postFocusFunc is not None:
 				log.error("postFocusFunc has not been called asynchronously")
 			self.postFocusFunc = postFocusFunc
-			obj.setFocus()
+			if setFocusCall:
+				obj.setFocus()
+
 
 	def maybeSyncFocusAndPassThrough(self, gesture=None): 		
 		self.maybeSyncFocus()
