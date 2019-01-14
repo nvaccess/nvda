@@ -21,8 +21,8 @@ EG: (x, y, z): Large changes to speech.py
 """
 
 #: Compiled regular expression to match an addon API version string.
-#: Supports year.month.minor versions (e.g. 2018.1.1).
-#: Resulting match objects expose three groups reflecting release year, release month, and release minor version,
+#: Supports year.major.minor versions (e.g. 2018.1.1).
+#: Resulting match objects expose three groups reflecting release year, release major, and release minor version,
 # respectively.
 #: @type: RegexObject
 ADDON_API_VERSION_REGEX = re.compile(r"^(0|\d{4})\.(\d)\.(\d)$")

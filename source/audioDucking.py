@@ -63,6 +63,9 @@ def _setDuckingState(switch):
 			else:
 				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_ducking_AUDIO_ACTIVE|ANRUS_ducking_AUDIO_ACTIVE_NODUCK,ANRUS_ducking_AUDIO_ACTIVE_NODUCK)
 		except WindowsError as e:
+			# When the NVDA build is not signed, audio ducking fails with access denied.
+			# A developer built launcher is unlikely to be signed. Catching this error stops developers from looking into
+			# "expected" errors.
 			# ERROR_ACCESS_DENIED is 0x5
 			# https://docs.microsoft.com/en-us/windows/desktop/debug/system-error-codes--0-499-
 			ERROR_ACCESS_DENIED = 0x80070005

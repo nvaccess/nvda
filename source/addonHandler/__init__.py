@@ -8,18 +8,16 @@
 import sys
 import os.path
 import gettext
-import glob
 import tempfile
-from six.moves import cPickle
 import inspect
 import itertools
 import collections
 import pkgutil
 import shutil
-from six.moves import cStringIO as StringIO
+from six.moves import cStringIO as StringIO, cPickle
+from six import string_types
 import zipfile
-from addonAPIVersion import getAPIVersionTupleFromString
-from configobj import ConfigObj, ConfigObjError
+from configobj import ConfigObj
 from configobj.validate import Validator
 
 import config
@@ -27,8 +25,6 @@ import globalVars
 import languageHandler
 from logHandler import log
 import winKernel
-import re
-import buildVersion
 import addonAPIVersion
 from . import addonVersionCheck
 from .addonVersionCheck import isAddonCompatible
@@ -690,7 +686,7 @@ docFileName = string(default=None)
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
-	if not isinstance(value, basestring):
+	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:
 		tuple = addonAPIVersion.getAPIVersionTupleFromString(value)

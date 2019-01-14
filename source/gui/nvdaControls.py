@@ -134,7 +134,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		# Register an additional event handler to call sendCheckListBoxEvent for mouse clicks if appropriate.
 		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
 		# clean up of the accPropServices needs to happen when the control is destroyed. The Destroy method is not called
-		# by the wx framework, but we can register to receive the event. https://github.com/wxWidgets/Phoenix/issues/630
+		# by the wx framework, but we can register to receive the event. wxWidgets/Phoenix/#630
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, source=self)
 
 	def GetCheckedItems(self):

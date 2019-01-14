@@ -112,8 +112,8 @@ def _getAPIVersionString(versionTuple=None):
 	if not versionTuple:
 		return default
 	try:
-		year, month, minor = versionTuple
-		return "{year}.{month}.{minor}".format(year=year, month=month, minor=minor)
+		year, major, minor = versionTuple
+		return "{year}.{major}.{minor}".format(year=year, major=major, minor=minor)
 	except:
 		log.debug("Error formatting versionTuple: {}".format(repr(versionTuple)), exc_info=True)
 		return default
@@ -696,17 +696,19 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			currentAPIVersion=self._APIVersion
 		):
 			# Translators: A message to explain the reason an addon is not compatible. The place holders will be replaced
-			# with Year.Month.Minor. EG 2019.1.0
-			return "An updated version of NVDA is required. NVDA version {}.{}.{} or later".format(
-				*addon.minimumNVDAVersion
-			)
+			# with Year.Major.Minor. EG 2019.1.0
+			return _(
+				"An updated version of NVDA is required."
+				"NVDA version {}.{}.{} or later".format(
+					*addon.minimumNVDAVersion
+				))
 		elif not addonVersionCheck.isAddonTested(
 			addon,
 			backwardsCompatToVersion=self._APIBackwardsCompatToVersion
 		):
 			# Translators: A message to explain the reason an addon is not compatible. The place holders will be replaced
-			# with Year.Month.Minor. EG 2019.1.0
-			return (
+			# with Year.Major.Minor. EG 2019.1.0
+			return _(
 				"An updated version of this add-on is required."
 				"The minimum supported API version is now {}.{}.{}".format(
 					*self._APIBackwardsCompatToVersion
