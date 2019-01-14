@@ -10,6 +10,7 @@ import controlTypes
 import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
+import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
@@ -22,7 +23,7 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def _getPointFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self,offset):
 		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
@@ -39,8 +40,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			obj = self._getNVDAObjectFromOffset(offset)
 			if not hasattr(obj, "IAccessibleTextObject"):
 				raise LookupError("Object doesn't have an IAccessibleTextObject")
-			return IA2TextTextInfo._getPointFromOffsetInObject(obj, relOffset)
-		return super(Gecko_ia2_TextInfo, self)._getPointFromOffset(offset)
+			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
+		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
@@ -220,8 +221,8 @@ class Gecko_ia2(VirtualBuffer):
 			y = t + h / 2
 			oldX, oldY = winUser.getCursorPos()
 			winUser.setCursorPos(x, y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			winUser.setCursorPos(oldX, oldY)
 			break
 

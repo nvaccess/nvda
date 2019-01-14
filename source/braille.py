@@ -1676,7 +1676,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else: # detected:
 				self._disableDetection()
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
-			self.initialDisplay()
+			try:
+				self.initialDisplay()
+			except:
+				# #8877: initialDisplay might fail because NVDA tries to focus
+				# an object for which property fetching raises an exception.
+				# We should handle this more gracefully, since this is no reason
+				# to stop a display from loading successfully.
+				log.debugWarning("Error in initial display after display load", exc_info=True)
 			return True
 		except:
 			# For auto display detection, logging an error for every failure is too obnoxious.
@@ -2528,7 +2535,7 @@ def getSerialPorts(filterFunc=None):
 	@type filterFunc: callable
 	"""
 	if filterFunc and not callable(filterFunc):
-		raise ValueError("The provided filterFunc is not callable")
+		raise TypeError("The provided filterFunc is not callable")
 	for info in hwPortUtils.listComPorts():
 		if filterFunc and not filterFunc(info):
 			continue
