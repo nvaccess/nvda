@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -134,6 +134,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
+	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
 
 UIAEventIdsToNVDAEventNames={
