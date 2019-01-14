@@ -752,11 +752,8 @@ def initialize():
 		state = {
 			"lastCheck": 0,
 			"dontRemindVersion": None,
-			"pendingUpdateVersion": None,
-			"pendingUpdateAPIVersion": None,
-			"pendingUpdateBackCompatToAPIVersion": None,
-			"pendingUpdateFile": None,
 		}
+		_setStateToNone(state)
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.
