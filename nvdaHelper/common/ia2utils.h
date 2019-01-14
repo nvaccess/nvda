@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2017 NV Access Limited, Mozilla Corporation
+Copyright 2007-2019 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -15,8 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef _VBUF_IA2UTILS_H
 #define _VBUF_IA2UTILS_H
 
-#include <comdef.h>
-#include <comip.h>
+#include <atlcomcli.h>
 #include <string>
 #include <map>
 #include <memory>
@@ -33,11 +32,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 void IA2AttribsToMap(const std::wstring &attribsString, std::map<std::wstring, std::wstring> &attribsMap);
 
-_COM_SMARTPTR_TYPEDEF(IAccessible2, IID_IAccessible2);
-_COM_SMARTPTR_TYPEDEF(IAccessibleHypertext, IID_IAccessibleHypertext);
-_COM_SMARTPTR_TYPEDEF(IAccessibleHypertext2, IID_IAccessibleHypertext2);
-_COM_SMARTPTR_TYPEDEF(IAccessibleHyperlink, IID_IAccessibleHyperlink);
-
 /**
  * Base class to support retrieving hyperlinks (embedded objects) from
  * IAccessibleHypertext or IAccessibleHypertext2.
@@ -50,38 +44,38 @@ class HyperlinkGetter {
 
 	/** Get the next hyperlink.
 	 */
-	virtual IAccessibleHyperlinkPtr next();
+	virtual CComPtr<IAccessibleHyperlink> next();
 
 	protected:
 	long index = 0;
-	virtual IAccessibleHyperlinkPtr get(const unsigned long index) = 0;
+	virtual CComPtr<IAccessibleHyperlink> get(const unsigned long index) = 0;
 };
 
 /** Supports retrieval of hyperlinks from IAccessibleHypertext.
  */
 class HtHyperlinkGetter: public HyperlinkGetter {
 	public:
-	HtHyperlinkGetter(IAccessibleHypertextPtr hypertext);
+	HtHyperlinkGetter(CComPtr<IAccessibleHypertext> hypertext);
 
 	protected:
-	virtual IAccessibleHyperlinkPtr get(const unsigned long index) override;
+	virtual CComPtr<IAccessibleHyperlink> get(const unsigned long index) override;
 
 	private:
-	IAccessibleHypertextPtr hypertext;
+	CComPtr<IAccessibleHypertext> hypertext;
 };
 
 /** Supports retrieval of hyperlinks from IAccessibleHypertext2.
  */
 class Ht2HyperlinkGetter: public HyperlinkGetter {
 	public:
-	Ht2HyperlinkGetter(IAccessibleHypertext2Ptr hypertext);
+	Ht2HyperlinkGetter(CComPtr<IAccessibleHypertext2> hypertext);
 	virtual ~Ht2HyperlinkGetter();
 
 	protected:
-	virtual IAccessibleHyperlinkPtr get(const unsigned long index) override;
+	virtual CComPtr<IAccessibleHyperlink> get(const unsigned long index) override;
 
 	private:
-	IAccessibleHypertext2Ptr hypertext;
+	CComPtr<IAccessibleHypertext2> hypertext;
 	IAccessibleHyperlink** rawLinks = nullptr;
 	long count;
 	void maybeFetch();

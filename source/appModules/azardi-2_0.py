@@ -8,6 +8,7 @@
 import appModuleHandler
 import controlTypes
 import winUser
+import mouseHandler
 import api
 from NVDAObjects.IAccessible.mozilla import Document
 from NVDAObjects.IAccessible.sysTreeView32 import TreeViewItem
@@ -22,16 +23,16 @@ class AzardiTreeViewItem(TreeViewItem):
 	def script_enter(self, gesture):
 		api.moveMouseToNVDAObject(self)
 		api.setMouseObject(self)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 
 	def script_contextMenu(self, gesture):
 		api.moveMouseToNVDAObject(self)
 		api.setMouseObject(self)
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 
 	__gestures = {
 		"kb:enter": "enter",
