@@ -68,7 +68,7 @@ badUIAWindowClassNames=[
 
 Version=namedtuple('Version',('major','minor','build'))
 # The minimum version of Microsoft Word where we can trust that UI Automation is complete enough to use
-minMSWordUIAVersion=Version(16,0,90000)
+minMSWordUIAVersion=Version(16,0,9000)
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
 UIADialogClassNames=[
