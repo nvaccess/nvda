@@ -11,9 +11,6 @@ import addonAPIVersion
 from addonHandler import AddonBase
 from addonHandler import addonVersionCheck
 
-def versionString(version):
-	return "{}.{}.{}".format(*version)
-
 latestVersionTuple = (2018, 2, 0)
 nextVersionTuple = (2018, 3, 0)
 previousVersionTuple = (2018, 1, 0)
@@ -144,3 +141,30 @@ class TestGetAPIVersionTupleFromString(unittest.TestCase):
 		and some extra prepended results in an error being raised
 		"""
 		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "dev2019.1.0")
+
+
+class TestFormatAsString(unittest.TestCase):
+
+	def test_formatAsString_full(self):
+		res = addonAPIVersion.formatAsString((2019, 1, 1))
+		self.assertEqual("2019.1.1", res)
+
+	def test_formatAsString_missingMinor(self):
+		res = addonAPIVersion.formatAsString((2019, 1, 0))
+		self.assertEqual("2019.1", res)
+
+	def test_formatAsString_zeros(self):
+		res = addonAPIVersion.formatAsString((0, 0, 0))
+		self.assertEqual("0.0", res)
+
+	def test_formatAsString_none(self):
+		res = addonAPIVersion.formatAsString(None)
+		self.assertEqual("unknown", res)
+
+	def test_formatAsString_tupleTooSmall(self):
+		res = addonAPIVersion.formatAsString((2019, 1))
+		self.assertEqual("unknown", res)
+
+	def test_formatAsString_tupleTooLong(self):
+		res = addonAPIVersion.formatAsString((2019, 1, 1, 1))
+		self.assertEqual("unknown", res)

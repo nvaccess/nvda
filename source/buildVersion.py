@@ -34,7 +34,12 @@ def _updateVersionFromVCS():
 
 
 def formatDevVersionString():
-	return "%s.%s.%sdev"%(version_year,version_major,version_minor)
+	return "{y}.{M}.{m}dev".format(y=version_year, M=version_major, m=version_minor)
+
+def formatVersionString(withBuildPart = False):
+	if withBuildPart:
+		return "{y}.{M}.{m}.{b}".format(y=version_year, M=version_major, m=version_minor, b=version_build)
+	return "{y}.{M}.{m}".format(y=version_year, M=version_major, m=version_minor)
 
 def getCurrentVersionTuple():
 	return version_year, version_major, version_minor

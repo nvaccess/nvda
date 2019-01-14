@@ -105,19 +105,6 @@ class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.SetSizer(mainSizer)
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
-
-def _getAPIVersionString(versionTuple=None):
-	# Translators: shown when a version is unknown in the about add-on dialog
-	default = _("unknown")
-	if not versionTuple:
-		return default
-	try:
-		year, major, minor = versionTuple
-		return "{year}.{major}.{minor}".format(year=year, major=major, minor=minor)
-	except:
-		log.debug("Error formatting versionTuple: {}".format(repr(versionTuple)), exc_info=True)
-		return default
-
 def _showAddonInfo(addon):
 	manifest = addon.manifest
 	# Translators: message shown in the Addon Information dialog.
@@ -131,12 +118,12 @@ def _showAddonInfo(addon):
 	if url:
 		# Translators: the url part of the About Add-on information
 		message.append(_("URL: {url}").format(url=url))
-	minimumNVDAVersion = _getAPIVersionString(addon.minimumNVDAVersion)
+	minimumNVDAVersion = addonAPIVersion.formatAsString(addon.minimumNVDAVersion)
 	message.append(
 		# Translators: the minimum NVDA version part of the About Add-on information
 		_("Minimum required NVDA version: {}").format(minimumNVDAVersion)
 	)
-	lastTestedNVDAVersion = _getAPIVersionString(addon.lastTestedNVDAVersion)
+	lastTestedNVDAVersion = addonAPIVersion.formatAsString(addon.lastTestedNVDAVersion)
 	message.append(
 		# Translators: the last NVDA version tested part of the About Add-on information
 		_("Last NVDA version tested: {}").format(lastTestedNVDAVersion)
@@ -293,13 +280,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		).format(
 			summary=bundle.manifest['summary'],
 			version=bundle.manifest['version'],
-			minimumNVDAVersion="{}.{}.{}".format(*bundle.minimumNVDAVersion),
-			NVDAVersion="%d.%d.%d (%s)" % (
-				buildVersion.version_year,
-				buildVersion.version_major,
-				buildVersion.version_minor,
-				buildVersion.version
-			)
+			minimumNVDAVersion=addonAPIVersion.formatAsString(bundle.minimumNVDAVersion),
+			NVDAVersion=buildVersion.formatVersionString()
 		)
 		ConfirmAddonInstallDialog(
 			parent=self,
@@ -317,7 +299,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			" An updated version of this add-on is required,"
 			" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
 		).format(
-			backCompatToAPIVersion="{}.{}.{}".format(*addonAPIVersion.BACK_COMPAT_TO),
+			backCompatToAPIVersion=addonAPIVersion.formatAsString(addonAPIVersion.BACK_COMPAT_TO),
 			**bundle.manifest
 		)
 		return ConfirmAddonInstallDialog(
@@ -649,7 +631,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			"The following add-ons are incompatible with NVDA version {}."
 			" These add-ons can not be enabled."
 			" Please contact the add-on author for further assistance."
-		).format("%s.%s.%s" % APIVersion)
+		).format(buildVersion.formatVersionString())
 		AddonSelectionIntroLabel=wx.StaticText(self, label=introText)
 		AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
 		sHelper.addItem(AddonSelectionIntroLabel)
@@ -699,9 +681,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# with Year.Major.Minor. EG 2019.1.0
 			return _(
 				"An updated version of NVDA is required."
-				"NVDA version {}.{}.{} or later".format(
-					*addon.minimumNVDAVersion
-				))
+				"NVDA version {} or later".format(addonAPIVersion.formatAsString(addon.minimumNVDAVersion))
+			)
 		elif not addonVersionCheck.isAddonTested(
 			addon,
 			backwardsCompatToVersion=self._APIBackwardsCompatToVersion
@@ -710,8 +691,8 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# with Year.Major.Minor. EG 2019.1.0
 			return _(
 				"An updated version of this add-on is required."
-				"The minimum supported API version is now {}.{}.{}".format(
-					*self._APIBackwardsCompatToVersion
+				"The minimum supported API version is now {}".format(
+					addonAPIVersion.formatAsString(self._APIBackwardsCompatToVersion)
 				)
 			)
 
