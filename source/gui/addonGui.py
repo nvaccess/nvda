@@ -39,71 +39,72 @@ def promptUserForRestart():
 		core.restart()
 
 
-class ConfirmAddonInstallDialog(wx.Dialog, DpiScalingHelperMixin):
-	def __init__(self, parent, title, message,
-			showAddonInfoFunction,
-			errorDialog=False
-	):
-		wx.Dialog.__init__(self, parent, title=title)
-		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
+	def __init__(self, parent, title, message, showAddonInfoFunction):
+		super(ConfirmAddonInstallDialog, self).__init__(
+			parent,
+			title,
+			message,
+			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_WARNING
+		)
+		self._showAddonInfoFunction = showAddonInfoFunction
 
-		iconID = wx.ART_WARNING if not errorDialog else wx.ART_ERROR
-		icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
-		self.SetIcon(icon)
-
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-
-		text = wx.StaticText(self, label=message)
-		text.Wrap(self.scaleSize(self.GetSize().Width))
-		contentsSizer.addItem(text)
-
-		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+	def _addButtons(self, buttonHelper):
 		addonInfoButton = buttonHelper.addButton(
 			self,
 			# Translators: A button in the addon installation warning / blocked dialog which shows
 			# more information about the addon
 			label=_("&About add-on...")
 		)
-		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: showAddonInfoFunction())
-		if errorDialog:
-			okButton = buttonHelper.addButton(
-				self,
-				id=wx.ID_OK,
-				# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
-				label=_("OK")
-			)
-			okButton.SetDefault()
-			okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-		else:
-			yesButton = buttonHelper.addButton(
-				self,
-				id=wx.ID_YES,
-				# Translators: A button in the addon installation warning dialog which allows the user to agree to installing
-				#  the add-on
-				label=_("&Yes")
-			)
-			yesButton.SetDefault()
-			yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
-			self.yesButton = yesButton
-			noButton = buttonHelper.addButton(
-				self,
-				id=wx.ID_NO,
-				# Translators: A button in the addon installation warning dialog which allows the user to decide not to
-				# install the add-on
-				label=_("&No")
-			)
-			noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
-		contentsSizer.addDialogDismissButtons(buttonHelper)
-
-		mainSizer.Add(
-			contentsSizer.sizer,
-			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL
+		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonInfoFunction())
+		yesButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_YES,
+			# Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+			#  the add-on
+			label=_("&Yes")
 		)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		yesButton.SetDefault()
+		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
+		self.yesButton = yesButton
+		noButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_NO,
+			# Translators: A button in the addon installation warning dialog which allows the user to decide not to
+			# install the add-on
+			label=_("&No")
+		)
+		noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
+
+
+class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
+	def __init__(self, parent, title, message, showAddonInfoFunction):
+		super(ErrorAddonInstallDialog, self).__init__(
+			parent,
+			title,
+			message,
+			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_ERROR
+		)
+		self._showAddonInfoFunction = showAddonInfoFunction
+
+	def _addButtons(self, buttonHelper):
+		addonInfoButton = buttonHelper.addButton(
+			self,
+			# Translators: A button in the addon installation warning / blocked dialog which shows
+			# more information about the addon
+			label=_("&About add-on...")
+		)
+		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonInfoFunction())
+
+		okButton = buttonHelper.addButton(
+			self,
+			id=wx.ID_OK,
+			# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+			label=_("OK")
+		)
+		okButton.SetDefault()
+		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+
 
 def _showAddonInfo(addon):
 	manifest = addon.manifest
@@ -283,12 +284,11 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			minimumNVDAVersion=addonAPIVersion.formatAsString(bundle.minimumNVDAVersion),
 			NVDAVersion=buildVersion.formatVersionString()
 		)
-		ConfirmAddonInstallDialog(
+		ErrorAddonInstallDialog(
 			parent=self,
 			# Translators: The title of a dialog presented when an error occurs.
 			title=_("Add-on not compatible"),
 			message=incompatibleMessage,
-			errorDialog=True,
 			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 		).ShowModal()
 
@@ -302,12 +302,11 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			backCompatToAPIVersion=addonAPIVersion.formatAsString(addonAPIVersion.BACK_COMPAT_TO),
 			**bundle.manifest
 		)
-		return ConfirmAddonInstallDialog(
+		return ErrorAddonInstallDialog(
 			parent=self,
 			# Translators: The title of a dialog presented when an error occurs.
 			title=_("Add-on not compatible"),
 			message=confirmInstallMessage,
-			errorDialog=True,
 			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
 		).ShowModal()
 
