@@ -39,6 +39,9 @@ DELETEDIR_SUFFIX=".delete"
 
 state={}
 
+# addons that are blocked from running because they are incompabtible
+_blockedAddons=set()
+
 def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
@@ -127,13 +130,10 @@ def disableAddonsIfAny():
 	"""
 	Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
-	Furthermore, disabling is limited to installed add-ons,
-	whereas blacklisting can also be performed for add-on bundles.
 	"""
 	global _disabledAddons
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
-	state["disabledAddons"] |= set(getIncompatibleAddons())
 	state["disabledAddons"] -= state["pendingEnableSet"]
 	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
@@ -194,11 +194,9 @@ def _getAvailableAddonsFromPath(path):
 					))
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif not isAddonCompatible(a):
+				if not isAddonCompatible(a):
 					log.debugWarning("Add-on %s is considered incompatible", name)
-					# #6275: The add-on refresh could have yielded add-ons considered incompatible.
-					# Add these to the disabled add-ons
-					_disabledAddons.add(a.name)
+					_blockedAddons.add(a.name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -330,19 +328,27 @@ class Addon(AddonBase):
 		shutil.rmtree(tempPath,ignore_errors=True)
 		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
-		# clean up the addons state
-		log.debug("removing addon {} from _disabledAddons".format(self.name))
+		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
+		# disabled / blocked.
+		log.debug("removing addon {} from _disabledAddons/_blockedAddons".format(self.name))
 		_disabledAddons.discard(self.name)
+		_blockedAddons.discard(self.name)
 		saveState()
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
+		This allows the addon to run.
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
-		# #3090: Don't even think about adding a disabled add-on to package path.
-		if self.isDisabled:
+		# #3090: Don't add disabled add-on to package path. It should not be able to run.
+		# By returning here the addon does not "run"/"become enabled"
+		if not isAddonCompatible(self):
+			# this marks the addon as "blocked"
+			_blockedAddons.add(self.name)
+		if self.isDisabled or self.isBlocked:
 			return
+
 		extension_path = os.path.join(self.path, package.__name__)
 		if not os.path.isdir(extension_path):
 			# This addon does not have extension points for this package
@@ -386,11 +392,15 @@ class Addon(AddonBase):
 
 	@property
 	def isRunning(self):
-		return not (self.isPendingInstall or self.isDisabled)
+		return not (self.isPendingInstall or self.isDisabled or self.isBlocked)
 
 	@property
 	def isDisabled(self):
 		return self.name in _disabledAddons
+
+	@property
+	def isBlocked(self):
+		return self.name in _blockedAddons
 
 	@property
 	def isPendingEnable(self):

@@ -418,7 +418,14 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
 
-	def getAddonStatus(self,addon):
+	def getAddonStatus(self, addon):
+		if addon.isBlocked:
+			# Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
+			incompatibleStatus =_("Incompatible")
+			# When the addon is incompatible, it can not be enabled/disabled. Its state no longer matters.
+			# So, return early.
+			return incompatibleStatus
+
 		statusList = []
 		if addon.isRunning:
 			# Translators: The status shown for an addon when its currently running in NVDA.
@@ -439,9 +446,6 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		elif addon.isPendingEnable or (addon.isPendingInstall and not addon.isDisabled):
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
-		if not addonVersionCheck.isAddonCompatible(addon):
-			# Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
-			statusList.append(_("Incompatible"))
 		return ", ".join(statusList)
 
 	def refreshAddonsList(self,activeIndex=0):
