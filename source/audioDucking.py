@@ -70,9 +70,12 @@ def _setDuckingState(switch):
 			# https://docs.microsoft.com/en-us/windows/desktop/debug/system-error-codes--0-499-
 			ERROR_ACCESS_DENIED = 0x80070005
 			errorCode = e.winerror & 0xFFFFFFFF  # we only care about the first 8 hex values.
-			if errorCode != ERROR_ACCESS_DENIED:
-				log.debugWarning(
-					"Unable to set ducking state. Error number: {:#010X}".format(errorCode),
+			if errorCode == ERROR_ACCESS_DENIED:
+				log.warning("Unable to set ducking state: ERROR_ACCESS_DENIED.")
+			else:
+				# we want developers to hear the "error sound", and to halt, so still raise the exception.
+				log.error(
+					"Unknown error when setting ducking state:  Error number: {:#010X}".format(errorCode),
 					exc_info=True
 				)
 				raise e
