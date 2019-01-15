@@ -570,11 +570,18 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildIndex=childCount-1
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
+			rootElementControlType=rootElement.cachedControlType
 			for index in xrange(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
+				if rootElementControlType==UIAHandler.UIA_DataItemControlTypeId:
+					# #9090: MS Word has a rare bug where  a child of a table cell's UIA textRange can be its containing page.
+					# At very least stop the infinite recursion.
+					childAutomationID=childElement.cachedAutomationId or ""
+					if childAutomationID.startswith('UIA_AutomationId_Word_Page_'):
+						continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				try:
