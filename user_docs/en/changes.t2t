@@ -34,6 +34,9 @@ What's New in NVDA
 - In Windows 10's Action Center, NVDA will announce status messages when toggling quick actions such as brightness and focus assist. (#8954)
 - In action Center in Windows 10 October 2018 Update and earlier, NVDA will recognize brightness quick action control as a button instead of a toggle button. (#8845)
 - NVDA will again track cursor and announce deleted characters in the Microsoft Excel  go to and find edit fields. (#9042)
+- Significant speed improvements when navigating documents in Microsoft Word and Outlook 2016 build 9000 or higher, due to NVDA's UI Automation support for Microsoft Word now being used by default for these builds. (#7409)
+- NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.
+- NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)
 
 
 == Changes for Developers ==
