@@ -112,6 +112,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	width = integer()
 	height = integer()
 	displays = string_list()
+	fontPointSize = integer()
+	fontFamily = integer()
+	fontStyle = integer()
+	fontWeight = integer()
+	fontFaceName = string()
 
 #Keyboard settings
 [keyboard]
