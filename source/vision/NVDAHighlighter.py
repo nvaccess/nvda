@@ -102,10 +102,7 @@ class NVDAHighlighter(Highlighter):
 				rect = rect.expandOrShrink(contextStyle.margin).toClient(window.Handle).toLogical(window.Handle)
 			except RuntimeError:
 				pass
-			if context == CONTEXT_CARET:
-				dc.DrawLine(rect.right, rect.top, rect.right, rect.bottom)
-			else:
-				dc.DrawRectangle(*rect.toLTWH())
+			dc.DrawRectangle(*rect.toLTWH())
 
 class HighlightWindow(wx.Frame):
 	transparency = 0xff
