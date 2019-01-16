@@ -22,17 +22,18 @@
 	<Dependencies>
 		<TargetDeviceFamily 
 			Name="Windows.Desktop" 
-			MinVersion="10.0.15063.0" 
-			MaxVersionTested="10.0.18362.0" 
+			MinVersion="10.0.18980.0" 
+			MaxVersionTested="10.0.18980.0" 
 		/>
 	</Dependencies>
 	<Capabilities>
 		<rescap:Capability Name="runFullTrust"/>
+		<rescap:Capability Name="uiAccess"/>
 	</Capabilities>
 	<Applications>
 		<Application 
 			Id="mainExecutable" 
-			Executable="nvda_noUIAccess.exe" 
+			Executable="nvda_UIAccess.exe" 
 			EntryPoint="Windows.FullTrustApplication"
 		>
 			<uap:VisualElements 
