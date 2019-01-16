@@ -7,6 +7,9 @@
 import wx
 import gui
 import config
+import sys
+import win32api
+import win32gui
 from logHandler import log
 
 class SpeechViewerFrame(wx.Dialog):
@@ -24,9 +27,25 @@ class SpeechViewerFrame(wx.Dialog):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.Bind(wx.EVT_WINDOW_DESTROY, self.onDestroy)
 		sizer = wx.BoxSizer(wx.VERTICAL)
-		self.textCtrl = wx.TextCtrl(self, -1,style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
+
+		self.lineCount = 0
+		self.textCtrl = wx.TextCtrl(self, -1, style=wx.TE_RICH2|wx.TE_READONLY|wx.TE_MULTILINE)
+		try:
+			fontPointSize = config.conf["speechViewer"]["fontPointSize"]
+			fontFamily = config.conf["speechViewer"]["fontFamily"]
+			fontStyle = config.conf["speechViewer"]["fontStyle"]
+			fontWeight = config.conf["speechViewer"]["fontWeight"]
+			fontFaceName = config.conf["speechViewer"]["fontFaceName"]
+			font = wx.Font(fontPointSize, fontFamily, fontStyle, fontWeight, False, fontFaceName)
+			self.textCtrl.SetFont(font)
+		except:
+			pass
 		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
+
 		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
+		self.selectFontButton = wx.Button(self,wx.ID_ANY,label=_("Select &Font..."))
+		self.selectFontButton.Bind(wx.EVT_BUTTON, self.onSelectFont)
+		sizer.Add(self.selectFontButton, border=5, flag=wx.ALL)
 		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.ID_ANY,label=_("&Show Speech Viewer on Startup"))
 		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
 		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
@@ -43,6 +62,26 @@ class SpeechViewerFrame(wx.Dialog):
 			self.Destroy()
 			return
 		evt.Veto()
+
+	def onSelectFont(self, evt):
+		initialFontData = wx.FontData()
+		initialFontData.EnableEffects(False)
+		initialFontData.SetInitialFont(_guiFrame.textCtrl.GetFont())
+		dlg = wx.FontDialog(self, initialFontData)
+		if dlg.ShowModal() == wx.ID_OK:
+			chosenFontData = dlg.GetFontData()
+			chosenFont = chosenFontData.GetChosenFont()
+			config.conf["speechViewer"]["fontPointSize"] = chosenFont.GetPointSize()
+			config.conf["speechViewer"]["fontFamily"] = chosenFont.GetFamily()
+			config.conf["speechViewer"]["fontStyle"] = chosenFont.GetStyle()
+			config.conf["speechViewer"]["fontWeight"] = chosenFont.GetWeight()
+			config.conf["speechViewer"]["fontFaceName"] = chosenFont.GetFaceName()
+
+			_guiFrame.textCtrl.SetFont(chosenFont)
+
+		# Don't destroy the dialog until you get everything you need from the dialog!
+		dlg.Destroy()
+		return
 
 	def onShouldShowOnStartupChanged(self, evt):
 		config.conf["speechViewer"]["showSpeechViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
@@ -96,7 +135,26 @@ def appendText(text):
 	#Otherwise it would be impossible to select text, or even just read it (as a blind person).
 	if _guiFrame.FindFocus()==_guiFrame.textCtrl:
 		return
-	_guiFrame.textCtrl.AppendText(text + "\n")
+
+	#If the mouse is over the Speech Viewer window, don't append the text.  (the text
+	#is still spoken, it just isn't appended into the Speech Viewer window)
+	hwndUnderMouse = win32gui.WindowFromPoint(win32api.GetCursorPos())
+	if hwndUnderMouse == _guiFrame.GetHandle():
+		return
+	#Also need to check if the mouse is in one of the child controls.
+	if hwndUnderMouse == _guiFrame.textCtrl.GetHandle():
+		return
+	
+	if hwndUnderMouse == _guiFrame.selectFontButton.GetHandle():
+		return
+
+	if hwndUnderMouse == _guiFrame.shouldShowOnStartupCheckBox.GetHandle():
+		return
+	#Could also use win32gui.EnumChildWindows() (but it's only two controls)
+	
+	# Now increment the counter and append the text.
+	_guiFrame.lineCount += 1
+	_guiFrame.textCtrl.AppendText(str(_guiFrame.lineCount) + ": " + text + "\n")
 
 def _cleanup():
 	global isActive
