@@ -680,24 +680,18 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			addon,
 			currentAPIVersion=self._APIVersion
 		):
-			# Translators: A message to explain the reason an addon is not compatible. The place holders will be replaced
-			# with Year.Major.Minor. EG 2019.1.0
-			return _(
-				"An updated version of NVDA is required."
-				"NVDA version {} or later".format(addonAPIVersion.formatAsString(addon.minimumNVDAVersion))
-			)
+			# Translators: The reason an add-on is not compatible. A more recent version of NVDA is
+			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1.0).
+			return _("An apdated version of NVDA is required. NVDA version {} or later."
+			).format(addonAPIVersion.formatAsString(addon.minimumNVDAVersion))
 		elif not addonVersionCheck.isAddonTested(
 			addon,
 			backwardsCompatToVersion=self._APIBackwardsCompatToVersion
 		):
-			# Translators: A message to explain the reason an addon is not compatible. The place holders will be replaced
-			# with Year.Major.Minor. EG 2019.1.0
-			return _(
-				"An updated version of this add-on is required."
-				"The minimum supported API version is now {}".format(
-					addonAPIVersion.formatAsString(self._APIBackwardsCompatToVersion)
-				)
-			)
+			# Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
+			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1.0).
+			return _("An updated version of this add-on is required. The minimum supported API version is now {}"
+			).format(addonAPIVersion.formatAsString(self._APIBackwardsCompatToVersion))
 
 	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()
