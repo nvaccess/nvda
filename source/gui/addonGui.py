@@ -66,7 +66,7 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 		)
 		yesButton.SetDefault()
 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
-		self.yesButton = yesButton
+
 		noButton = buttonHelper.addButton(
 			self,
 			id=wx.ID_NO,
@@ -681,7 +681,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			currentAPIVersion=self._APIVersion
 		):
 			# Translators: The reason an add-on is not compatible. A more recent version of NVDA is
-			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1.0).
+			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 			return _("An apdated version of NVDA is required. NVDA version {} or later."
 			).format(addonAPIVersion.formatAsString(addon.minimumNVDAVersion))
 		elif not addonVersionCheck.isAddonTested(
@@ -689,7 +689,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			backwardsCompatToVersion=self._APIBackwardsCompatToVersion
 		):
 			# Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
-			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1.0).
+			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 			return _("An updated version of this add-on is required. The minimum supported API version is now {}"
 			).format(addonAPIVersion.formatAsString(self._APIBackwardsCompatToVersion))
 

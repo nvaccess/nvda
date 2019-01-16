@@ -39,7 +39,7 @@ DELETEDIR_SUFFIX=".delete"
 
 state={}
 
-# addons that are blocked from running because they are incompabtible
+# addons that are blocked from running because they are incompatible
 _blockedAddons=set()
 
 def loadState():

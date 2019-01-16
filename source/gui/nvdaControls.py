@@ -205,7 +205,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 			cProps=len(CHECK_LIST_PROPS)
 		)
 
-class DPIScalledDialog(wx.Dialog, DpiScalingHelperMixin):
+class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 	"""Automatically calls constructors in the right order, passing on arguments, and providing scaling features.
 	Until wxWidgets/wxWidgets#334 is resolved, and we have updated to that build of wx.
 	"""
@@ -220,18 +220,24 @@ class DPIScalledDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 
-class MessageDialog(DPIScalledDialog):
+class MessageDialog(DPIScaledDialog):
+	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
+	buttons and behaviour.
+	"""
 
-	DIALOG_TYPE_ERROR = 1
+	# Dialog types currently supported
+	DIALOG_TYPE_STANDARD = 1
 	DIALOG_TYPE_WARNING = 2
-	DIALOG_TYPE_STANDARD = 3
+	DIALOG_TYPE_ERROR = 3
 
 	_DIALOG_TYPE_ICON_ID_MAP = {
+		# DIALOG_TYPE_STANDARD is not in the map, since we wish to use the default icon provided by wx
 		DIALOG_TYPE_ERROR: wx.ART_ERROR,
 		DIALOG_TYPE_WARNING: wx.ART_WARNING,
 	}
 
 	_DIALOG_TYPE_SOUND_ID_MAP = {
+		# DIALOG_TYPE_STANDARD is not in the map, since there should be no sound for a standard dialog.
 		DIALOG_TYPE_ERROR: winsound.MB_ICONHAND,
 		DIALOG_TYPE_WARNING: winsound.MB_ICONASTERISK,
 	}
@@ -239,14 +245,6 @@ class MessageDialog(DPIScalledDialog):
 	def _addButtons(self, buttonHelper):
 		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality.
 		"""
-		cancel = buttonHelper.addButton(
-			self,
-			id=wx.ID_CANCEL,
-			# Translators: A cancel button on a message dialog.
-			label=_("Cancel")
-		)
-		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
-
 		ok = buttonHelper.addButton(
 			self,
 			id=wx.ID_OK,
@@ -255,6 +253,14 @@ class MessageDialog(DPIScalledDialog):
 		)
 		ok.SetDefault()
 		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+
+		cancel = buttonHelper.addButton(
+			self,
+			id=wx.ID_CANCEL,
+			# Translators: A cancel button on a message dialog.
+			label=_("Cancel")
+		)
+		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
 	def _setIcon(self, type):
 		try:
@@ -277,7 +283,7 @@ class MessageDialog(DPIScalledDialog):
 		winsound.MessageBeep(self._soundID)
 
 	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
-		DPIScalledDialog.__init__(self, parent, title=title)
+		DPIScaledDialog.__init__(self, parent, title=title)
 
 		self._setIcon(dialogType)
 		self._setSound(dialogType)
