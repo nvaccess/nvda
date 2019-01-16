@@ -1,6 +1,6 @@
 #extensionPoints.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
+#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -88,8 +88,8 @@ class ActionContainer(MutableMapping):
 		return key in self._actions
 
 	def __setitem__(self, key, val):
-		if not isinstance(key, basestring):
-			raise TypeError("Keys in an ActionContainer should be of type basestring")
+		if not isinstance(key, str):
+			raise TypeError("Keys in an ActionContainer should be of type str")
 		if not isinstance(val, Action):
 			raise TypeError("You can only add items of type Action to an ActionContainer")
 		self._actions[key] = val
