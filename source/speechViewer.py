@@ -42,10 +42,11 @@ class SpeechViewerFrame(wx.Dialog):
 			pass
 		sizer.Add(self.textCtrl, proportion=1, flag=wx.EXPAND)
 
-		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
-		self.selectFontButton = wx.Button(self,wx.ID_ANY,label=_("Select &Font..."))
+		# Translators: The label for the Select Font button, which displays the Font Picker dialog box when clicked.
+		self.selectFontButton = wx.Button(self, wx.ID_ANY, label=_("Select &Font..."))
 		self.selectFontButton.Bind(wx.EVT_BUTTON, self.onSelectFont)
 		sizer.Add(self.selectFontButton, border=5, flag=wx.ALL)
+		# Translators: The label for a setting in the speech viewer that controls whether the speech viewer is shown at startup or not.
 		self.shouldShowOnStartupCheckBox = wx.CheckBox(self,wx.ID_ANY,label=_("&Show Speech Viewer on Startup"))
 		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
 		self.shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self.onShouldShowOnStartupChanged)
