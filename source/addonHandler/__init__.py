@@ -337,15 +337,12 @@ class Addon(AddonBase):
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
-		This allows the addon to run.
+		This allows the addon to "run" / be available via `globalPluginHandler.runningPlugins`.
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
-		# #3090: Don't add disabled add-on to package path. It should not be able to run.
-		# By returning here the addon does not "run"/"become enabled"
-		if not isAddonCompatible(self):
-			# this marks the addon as "blocked"
-			_blockedAddons.add(self.name)
+		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
+		# By returning here the addon does not "run"/ become active / registered.
 		if self.isDisabled or self.isBlocked:
 			return
 
