@@ -800,4 +800,4 @@ def  logTimeSinceInput():
 		or not manager or not manager._lastInputTime
 	):
 		return
-	log.io("Time since input: %.3f sec" % (time.time() - manager._lastInputTime))
+	log.io("%.3f sec since input" % (time.time() - manager._lastInputTime))
