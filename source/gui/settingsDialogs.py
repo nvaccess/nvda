@@ -2561,7 +2561,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbolsText = _("&Symbols")
 		self.symbolsList = sHelper.addLabeledControl(
 			symbolsText,
-			nvdaControls.AutoWidthColumnListCtrl,autoSizeColumnIndex=1,
+			nvdaControls.AutoWidthColumnListCtrl,
+			autoSizeColumnIndex=1,
+			itemTextCallable=self.getItemTextForList,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
 		)
 
@@ -2662,9 +2664,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# We don't get a new focus event with the new index.
 		self.symbolsList.sendListItemFocusedEvent(index)
 
-	def getItemTextForList(self, list, item, column):
-		if list is not self.symbolsList:
-			raise RuntimeError("Method called by unknown list control")
+	def getItemTextForList(self, item, column):
 		symbol = self.filteredSymbols[item]
 		if column == 0:
 			return symbol.displayName

@@ -11,29 +11,50 @@ import oleacc
 import winUser
 import comtypes
 from ctypes import c_int
+try:
+	# Python 3 import
+	from collections.abc import Callable
+except ImportError:
+	# Python 2 import
+	from collections import Callable
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
 	A list control that allows you to specify a column to resize to take up the remaining width of a wx.ListCtrl.
-	It also changes L{OnGetItemText} to call L{Parent.getItemTextForList} when it is implemented,
+	It also changes L{OnGetItemText} to call an optionally provided callable,
 	and adds a l{sendListItemFocusedEvent} method.
 	"""
 
-	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumnIndex="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
+	def __init__(
+		self,
+		parent,
+		id=wx.ID_ANY,
+		autoSizeColumnIndex="LAST",
+		itemTextCallable=None,
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=0
+	):
 		""" initialiser
 			Takes the same parameter as a wx.ListCtrl with the following additions:
-			autoSizeColumnIndex - defaults to "LAST" which results in the last column being resized. Pass the index of 
-			the column to be resized.
+			@param autoSizeColumnIndex: defaults to "LAST" which results in the last column being resized.
+				Pass the index of the column to be resized.
+			@type autoSizeColumnIndex: int
+			@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
+				It should accept the same parameters as L{OnGetItemText},
+			@type itemTextCallable: L{callable}
 		"""
-		wx.ListCtrl.__init__(self, parent, id, pos, size, style)
+		if itemTextCallable is not None and not isinstance(itemTextCallable, Callable):
+			raise TypeError("itemTextCallable should be None or a callable")
+		self._itemTextCallable = itemTextCallable
+		wx.ListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.ListCtrlAutoWidthMixin.__init__(self)
 		self.setResizeColumn(autoSizeColumnIndex)
 
 	def OnGetItemText(self, item, column):
-		try:
-			return self.Parent.getItemTextForList(self, item, column)
-		except AttributeError:
+		if self._itemTextCallable is None:
 			return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
+		return self._itemTextCallable(item, column)
 
 	def sendListItemFocusedEvent(self, index):
 		evt = wx.ListEvent(wx.wxEVT_LIST_ITEM_FOCUSED, self.Id)
