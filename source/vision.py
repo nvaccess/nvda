@@ -1,4 +1,4 @@
-#vision/__init__.py
+#vision.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -10,11 +10,13 @@ Three roles (types) of vision enhancement providers are supported:
 	* Highlighter: to highlight important areas of the screen (e.g. the focus, mouse or review position).
 	* ColorEnhancer: to change the color presentation of the whole screen or a part of it.
 A vision enhancement provider can implement either one or more of the above assistant functions.
-Plugins can register their own implementation for any or all of these
-using L{registerProviderCls}.
+Add-ons can provide their own implementation for any or all of these
+using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
 
 import config
+import visionEnhancementProviders
+import pkgutil
 from baseObject import AutoPropertyObject
 from abc import abstractmethod
 import api
@@ -55,9 +57,6 @@ CONTEXT_MOUSE = "mouse"
 ROLE_MAGNIFIER = "magnifier"
 ROLE_HIGHLIGHTER = "highlighter"
 ROLE_COLORENHANCER = "colorEnhancer"
-
-#: The registered vision enhancement providers
-_visionEnhancementProviders = set()
 
 class VisionEnhancementProvider(AutoPropertyObject):
 	"""A basic, abstract class for vision enhancement providers.
@@ -421,6 +420,36 @@ ROLE_DESCRIPTIONS = {
 	ROLE_COLORENHANCER: _("Color enhancer"),
 }
 
+def initialize():
+	global handler
+	config.addConfigDirsToPythonPackagePath(visionEnhancementProviders)
+	handler = VisionHandler()
+
+def pumpAll():
+	"""Runs tasks at the end of each core cycle."""
+	# Note that a pending review update has to be executed before a pending caret update.
+	handler.handlePendingReviewUpdate()
+	handler.handlePendingCaretUpdate()
+
+def _getProvider(moduleName, caseSensitive=True):
+	"""Returns a registered provider class with the specified moduleName."""
+	try:
+		return __import__("visionEnhancementProviders.%s" % moduleName, globals(), locals(), ("visionEnhancementProviders",)).VisionEnhancementProvider
+	except ImportError as initialException:
+		if caseSensitive:
+			raise initialException
+		for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
+			if name.startswith('_') or name.lower() != moduleName.lower():
+				continue
+			return __import__("visionEnhancementProviders.%s" % name, globals(), locals(), ("visionEnhancementProviders",)).VisionEnhancementProvider
+		else:
+			raise initialException
+
+def terminate():
+	global handler
+	handler.terminate()
+	handler = None
+
 def getProviderList(excludeNegativeChecks=True):
 	"""Gets a list of available vision enhancement names with their descriptions as well as supported and conflicting roles.
 	@param excludeNegativeChecks: excludes all providers for which the check method returns C{False}.
@@ -429,11 +458,22 @@ def getProviderList(excludeNegativeChecks=True):
 	@rtype: [(str,unicode,[ROLE_*],[ROLE_*])]
 	"""
 	providerList = []
-	for provider in _visionEnhancementProviders:
-		if not excludeNegativeChecks or provider.check():
-			providerList.append((provider.name, provider.description, list(provider.supportedRoles), list(provider.conflictingRoles)))
-		else:
-			log.debugWarning("Vision enhancement provider %s reports as unavailable, excluding" % provider.name)
+	for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
+		if name.startswith('_'):
+			continue
+		try:
+			provider = _getProvider(name)
+		except:
+			log.error("Error while importing vision enhancement provider %s" % name,
+				exc_info=True)
+			continue
+		try:
+			if not excludeNegativeChecks or provider.check():
+				providerList.append((provider.name, provider.description, list(provider.supportedRoles), list(provider.conflictingRoles)))
+			else:
+				log.debugWarning("Vision enhancement provider %s reports as unavailable, excluding" % provider.name)
+		except:
+			log.error("", exc_info=True)
 	providerList.sort(key=lambda d : d[1].lower())
 	return providerList
 
@@ -502,7 +542,7 @@ class VisionHandler(AutoPropertyObject):
 				if not temporary:
 					config.conf['vision'][role] = None
 			return True
-		providerCls = getProviderCls(name)
+		providerCls = _getProvider(name)
 		if not roles:
 			roles = providerCls.supportedRoles
 		else:
@@ -654,44 +694,3 @@ class VisionHandler(AutoPropertyObject):
 			# No active providers or focus/review hasn't yet been initialised.
 			return
 		self.handleGainFocus(api.getFocusObject())
-
-def initialize():
-	# Register build in providers
-	from NVDAHighlighter import NVDAHighlighter
-	registerProviderCls(NVDAHighlighter)
-	global handler
-	handler = VisionHandler()
-
-def pumpAll():
-	"""Runs tasks at the end of each core cycle."""
-	# Note that a pending review update has to be executed before a pending caret update.
-	handler.handlePendingReviewUpdate()
-	handler.handlePendingCaretUpdate()
-
-def registerProviderCls(providerCls):
-	"""Register a vision enhancement provider class.
-	@param providerCls: The provider to register.
-	@type providerCls: subclass of L{VisionEnhancementProvider}
-	"""
-	global _visionEnhancementProviders
-	_visionEnhancementProviders.add(providerCls)
-
-def unregisterProviderCls(providerCls):
-	"""Unregister a vision enhancement provider class.
-	@param providerCls: The provider to unregister.
-	@type providerCls: subclass of L{VisionEnhancementProvider}
-	"""
-	global _visionEnhancementProviders
-	_visionEnhancementProviders.remove(providerCls)
-
-def getProviderCls(name):
-	"""Returns a registered provider class with the specified name."""
-	try:
-		return next(providerCls for providerCls in _visionEnhancementProviders if providerCls.name == name)
-	except StopIteration:
-		raise ValueError("Vision enhancement provider %s not registered" % name)
-
-def terminate():
-	global handler
-	handler.terminate()
-	handler = None

@@ -1,4 +1,4 @@
-#vision/NVDAHighlighter.py
+#visionEnhancementProviders/NVDAHighlighter.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -6,7 +6,7 @@
 
 """Default highlighter based on wx."""
 
-from . import Highlighter, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_CARET
+from vision import Highlighter, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_CARET
 import wx
 import gui
 import api
@@ -26,7 +26,7 @@ CONTEXT_FOCUS_NAVIGATOR = "focusNavigatorOverlap"
 class ContextStyle(namedtuple("ContextStyle", ("color", "width", "style", "margin"))):
 	pass
 
-class NVDAHighlighter(Highlighter):
+class VisionEnhancementProvider(Highlighter):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
