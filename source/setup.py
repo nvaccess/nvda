@@ -203,7 +203,15 @@ setup(
 		"bundle_files": 3,
 		"excludes": ["Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
-		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
+		"packages": [
+			"NVDAObjects",
+			"virtualBuffers",
+			"appModules",
+			"comInterfaces",
+			"brailleDisplayDrivers",
+			"synthDrivers",
+			"visionEnhancementProviders",
+		],
 		"includes": [
 			"nvdaBuiltin",
 			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.

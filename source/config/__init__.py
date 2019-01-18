@@ -149,7 +149,14 @@ def initConfigPath(configPath=None):
 		os.makedirs(configPath)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
-		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+		subdirs.extend([
+			"addons",
+			"appModules",
+			"brailleDisplayDrivers",
+			"synthDrivers",
+			"globalPlugins",
+			"visionEnhancementProviders",
+		])
 	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
