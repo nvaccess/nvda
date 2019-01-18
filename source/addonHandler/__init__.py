@@ -337,7 +337,12 @@ class Addon(AddonBase):
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
-		This allows the addon to "run" / be available via `globalPluginHandler.runningPlugins`.
+		This allows the addon to "run" / be available because the package is able to search its path,
+		looking for particular modules. This is used by the following:
+		- `globalPlugins`
+		- `appModules`
+		- `synthDrivers`
+		- `brailleDisplayDrivers`
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
