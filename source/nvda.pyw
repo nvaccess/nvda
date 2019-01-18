@@ -96,12 +96,13 @@ quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=Fal
 quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_argument('-f','--log-file',dest='logFileName',type=decodeMbcs,help="The file where log messages should be written to")
-parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10,20,30,40,50],help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning")
+parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=decodeMbcs,help="The path where all settings for NVDA are stored")
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
-parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given.")
+parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given, as well as no logging option.")
+parser.add_argument('--no-logging',action="store_true",dest='noLogging',default=False,help="Disable logging completely for this run. This setting can be overwritten with other log level (--loglevel, -l) switch or if debug logging is specified.")
 parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
 installGroup = parser.add_mutually_exclusive_group()
 installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
@@ -199,12 +200,17 @@ if isSecureDesktop:
 #import pychecker.checker
 
 #Initial logging and logging code
+# #8516: because config manager isn't ready yet, we must let start and exit messages be logged unless disabled via --no-logging switch.
+# However, do log things if debug logging or log level other than 0 (not set) is requested from command line switches.
 
 logLevel=globalVars.appArgs.logLevel
-if logLevel<=0:
-	logLevel=log.INFO
-if globalVars.appArgs.debugLogging:
-	logLevel=log.DEBUG
+if globalVars.appArgs.noLogging and (not globalVars.appArgs.debugLogging and logLevel == 0):
+	logLevel = log.OFF
+else:
+	if logLevel<=0:
+		logLevel=log.INFO
+	if globalVars.appArgs.debugLogging:
+		logLevel=log.DEBUG
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 if logLevel is log.DEBUG:
