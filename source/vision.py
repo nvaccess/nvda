@@ -431,7 +431,7 @@ def pumpAll():
 	handler.handlePendingReviewUpdate()
 	handler.handlePendingCaretUpdate()
 
-def _getProvider(moduleName, caseSensitive=True):
+def getProvider(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
 		return __import__("visionEnhancementProviders.%s" % moduleName, globals(), locals(), ("visionEnhancementProviders",)).VisionEnhancementProvider
@@ -462,7 +462,7 @@ def getProviderList(excludeNegativeChecks=True):
 		if name.startswith('_'):
 			continue
 		try:
-			provider = _getProvider(name)
+			provider = getProvider(name)
 		except:
 			log.error("Error while importing vision enhancement provider %s" % name,
 				exc_info=True)
@@ -542,7 +542,7 @@ class VisionHandler(AutoPropertyObject):
 				if not temporary:
 					config.conf['vision'][role] = None
 			return True
-		providerCls = _getProvider(name)
+		providerCls = getProvider(name)
 		if not roles:
 			roles = providerCls.supportedRoles
 		else:
