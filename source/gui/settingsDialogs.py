@@ -2541,6 +2541,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			nvdaControls.AutoWidthColumnListCtrl,autoSizeColumnIndex=1,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
 		)
+
 		# Translators: The label for a column in symbols list used to identify a symbol.
 		self.symbolsList.InsertColumn(0, _("Symbol"))
 		self.symbolsList.InsertColumn(1, _("Replacement"))
@@ -2747,6 +2748,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 	def onFilterEditTextChange(self, evt):
 		self.filter(self.filterEdit.Value)
+		count = self.symbolsList.GetCountPerPage()
+		first = self.symbolsList.GetTopItem()
+		self.symbolsList.RefreshItems(first, first+count)
 		evt.Skip()
 
 class InputGesturesDialog(SettingsDialog):
