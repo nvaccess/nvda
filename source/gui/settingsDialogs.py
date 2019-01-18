@@ -5,6 +5,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from abc import abstractmethod
+from six import with_metaclass
 import glob
 import os
 import copy
@@ -47,8 +49,9 @@ import winVersion
 import weakref
 import time
 import keyLabels
+from dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(wx.Dialog):
+class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -81,11 +84,13 @@ class SettingsDialog(wx.Dialog):
 		SettingsDialog._instances.add(obj)
 		return obj
 
-	def __init__(self, parent,
-	             resizeable=False,
-	             hasApplyButton=False,
-	             settingsSizerOrientation=wx.VERTICAL,
-	             multiInstanceAllowed=False):
+	def __init__(
+			self, parent,
+			resizeable=False,
+			hasApplyButton=False,
+			settingsSizerOrientation=wx.VERTICAL,
+			multiInstanceAllowed=False
+	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
 		@type parent: wx.Window
@@ -104,12 +109,10 @@ class SettingsDialog(wx.Dialog):
 		if gui._isDebug():
 			startTime = time.time()
 		windowStyle = wx.DEFAULT_DIALOG_STYLE | (wx.RESIZE_BORDER if resizeable else 0)
-		super(SettingsDialog, self).__init__(parent, title=self.title, style=windowStyle)
-		self.hasApply = hasApplyButton
+		wx.Dialog.__init__(self, parent, title=self.title, style=windowStyle)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		self.hasApply = hasApplyButton
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(settingsSizerOrientation)
@@ -160,6 +163,7 @@ class SettingsDialog(wx.Dialog):
 		else:
 			evt.Skip()
 
+	@abstractmethod
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
 		Subclasses must override this method.
@@ -200,20 +204,11 @@ class SettingsDialog(wx.Dialog):
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
-	def scaleSize(self, size):
-		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple or a single numerical type to scale
-		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
-
-
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(wx.Panel):
+class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHelperMixin)):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -239,10 +234,9 @@ class SettingsPanel(wx.Panel):
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		super(SettingsPanel, self).__init__(parent, wx.ID_ANY)
-		# the wx.Window must be constructed before we can get the handle.
-		import windowUtils
-		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
+		wx.Panel.__init__(self, parent, wx.ID_ANY)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
@@ -252,6 +246,7 @@ class SettingsPanel(wx.Panel):
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
+	@abstractmethod
 	def makeSettings(self, sizer):
 		"""Populate the panel with settings controls.
 		Subclasses must override this method.
@@ -273,6 +268,7 @@ class SettingsPanel(wx.Panel):
 		"""
 		self.Hide()
 
+	@abstractmethod
 	def onSave(self):
 		"""Take action in response to the parent's dialog OK or apply button being pressed.
 		Sub-classes should override this method.
@@ -309,14 +305,6 @@ class SettingsPanel(wx.Panel):
 		event = _RWLayoutNeededEvent(self.GetId())
 		event.SetEventObject(self)
 		self.GetEventHandler().ProcessEvent(event)
-
-	def scaleSize(self, size):
-		"""Helper method to scale a size using the logical DPI
-		@param size: The size (x,y) as a tuple or a single numerical type to scale
-		@returns: The scaled size, returned as the same type"""
-		if isinstance(size, tuple):
-			return (self.scaleFactor * size[0], self.scaleFactor * size[1])
-		return self.scaleFactor * size
 
 class MultiCategorySettingsDialog(SettingsDialog):
 	"""A settings dialog with multiple settings categories.
@@ -608,6 +596,8 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	LOG_LEVELS = (
+		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+		(log.OFF, _("disabled")),
 		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 		(log.INFO, _("info")),
 		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
@@ -691,6 +681,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+
 			# Translators: The label of a checkbox in general settings to toggle startup notifications
 			# for a pending NVDA update.
 			item=self.notifyForPendingUpdateCheckBox=wx.CheckBox(self,label=_("Notify for &pending update on startup"))
@@ -773,15 +764,40 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.initialize()
 
 	def postSave(self):
-		if self.oldLanguage!=config.conf["general"]["language"]:
-			if gui.messageBox(
-				# Translators: The message displayed after NVDA interface language has been changed.
-				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
-				# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
-			)==wx.OK:
-				config.conf.save()
-				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+		if self.oldLanguage != config.conf["general"]["language"]:
+			LanguageRestartDialog(self).ShowModal()
+
+class LanguageRestartDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
+		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		# Translators: The message displayed after NVDA interface language has been changed.
+		sHelper.addItem(wx.StaticText(self, label=_("NVDA must be restarted for the new language to take effect.")))
+
+		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
+		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		restartNowButton = bHelper.addButton(self, label=_("Restart &now"))
+		restartNowButton.Bind(wx.EVT_BUTTON, self.onRestartNowButton)
+		restartNowButton.SetFocus()
+
+		# Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+		restartLaterButton = bHelper.addButton(self, wx.ID_CLOSE, label=_("Restart &later"))
+		restartLaterButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
+		self.EscapeId = wx.ID_CLOSE
+
+		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+		self.CentreOnScreen()
+
+	def onRestartNowButton(self, evt):
+		self.Destroy()
+		config.conf.save()
+		queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 
 class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
@@ -1363,6 +1379,12 @@ class MouseSettingsPanel(SettingsPanel):
 		self.audioDetectBrightnessCheckBox=sHelper.addItem(wx.CheckBox(self,label=audioDetectBrightnessText))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 
+		# Translators: This is the label for a checkbox in the
+		# mouse settings panel.
+		ignoreInjectedMouseInputText = _("Ignore mouse input from other &applications")
+		self.ignoreInjectedMouseInputCheckBox=sHelper.addItem(wx.CheckBox(self,label=ignoreInjectedMouseInputText))
+		self.ignoreInjectedMouseInputCheckBox.SetValue(config.conf["mouse"]["ignoreInjectedMouseInput"])
+
 	def onSave(self):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
 		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
@@ -1370,6 +1392,7 @@ class MouseSettingsPanel(SettingsPanel):
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinates_detectBrightness"]=self.audioDetectBrightnessCheckBox.IsChecked()
+		config.conf["mouse"]["ignoreInjectedMouseInput"]=self.ignoreInjectedMouseInputCheckBox.IsChecked()
 
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.

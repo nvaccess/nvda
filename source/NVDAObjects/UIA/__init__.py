@@ -30,7 +30,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
-import time
 from locationHelper import RectLTWH
 import ui
 
@@ -311,10 +310,9 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,textInfos.Point):
-			#rangeFromPoint causes a freeze in UIA client library!
-			#p=POINT(position.x,position.y)
-			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
-			raise NotImplementedError
+			#rangeFromPoint used to cause a freeze in UIA client library!
+			p=POINT(position.x,position.y)
+			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
 		else:
@@ -342,8 +340,12 @@ class UIATextInfo(textInfos.TextInfo):
 		# Thus we must check getChildren before getEnclosingElement.
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
 		tempRange=tempInfo._rangeObj
-		children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
-		if children.length==1:
+		try:
+			children=getChildrenWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
+		except COMError as e:
+			log.debugWarning("Could not get children from UIA text range, %s"%e)
+			children=None
+		if children and children.length==1:
 			child=children.getElement(0)
 		else:
 			child=getEnclosingElementWithCacheFromUIATextRange(tempRange,UIAHandler.handler.baseCacheRequest)
@@ -568,11 +570,18 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildIndex=childCount-1
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
+			rootElementControlType=rootElement.cachedControlType
 			for index in xrange(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
+				if rootElementControlType==UIAHandler.UIA_DataItemControlTypeId:
+					# #9090: MS Word has a rare bug where  a child of a table cell's UIA textRange can be its containing page.
+					# At very least stop the infinite recursion.
+					childAutomationID=childElement.cachedAutomationId or ""
+					if childAutomationID.startswith('UIA_AutomationId_Word_Page_'):
+						continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				try:
@@ -637,6 +646,25 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _get_text(self):
 		return self._getTextFromUIARange(self._rangeObj)
+
+	def _getBoundingRectsFromUIARange(self,range):
+		"""
+		Fetches per line bounding rectangles from the given UI Automation text range.
+		Note that if the range object doesn't cover a whole line (e.g. a character),
+		the bounding rectangle will be restricted to the range.
+		@rtype: [locationHelper.RectLTWH]
+		"""
+		rects = []
+		rectArray = range.GetBoundingRectangles()
+		if not rectArray:
+			return rects
+		rectIndexes = xrange(0, len(rectArray), 4)
+		rectGen = (RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
+		rects.extend(rectGen)
+		return rects
+
+	def _get_boundingRects(self):
+		return self._getBoundingRectsFromUIARange(self._rangeObj)
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
@@ -740,6 +768,8 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif UIAClassName=="NetUIDropdownAnchor":
+			clsList.append(NetUIDropdownAnchor)
 		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
@@ -752,7 +782,7 @@ class UIA(Window):
 		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
 			clsList.append(Toast_win10)
 		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
-			import edge
+			from . import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
 			elif (self.UIATextPattern and
@@ -767,7 +797,7 @@ class UIA(Window):
 				clsList.append(edge.EdgeNode)
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
 				# PDFs
-				import edge
+				from . import edge
 				clsList.append(edge.EdgeHTMLRoot)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
@@ -781,7 +811,10 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
-		elif UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId:
+		# Some combo boxes and looping selectors do not expose value pattern.
+		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
+		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
+		or (UIAControlType==UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
@@ -1059,7 +1092,8 @@ class UIA(Window):
 		UIAHandler.UIA_IsKeyboardFocusablePropertyId,
 		UIAHandler.UIA_IsPasswordPropertyId,
 		UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId,
-		UIAHandler.UIA_IsEnabledPropertyId
+		UIAHandler.UIA_IsEnabledPropertyId,
+		UIAHandler.UIA_IsOffscreenPropertyId,
 	}  if UIAHandler.isUIAAvailable else set()
 
 	def _get_states(self):
@@ -1084,6 +1118,12 @@ class UIA(Window):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
 		if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsEnabledPropertyId,True):
 			states.add(controlTypes.STATE_UNAVAILABLE)
+		try:
+			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
+		except COMError:
+			isOffScreen = False
+		if isOffScreen:
+			states.add(controlTypes.STATE_OFFSCREEN)
 		try:
 			isDataValid=self._getUIACacheablePropertyValue(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:
@@ -1344,6 +1384,13 @@ class UIA(Window):
 		except COMError:
 			return False
 
+	def _get_hasIrrelevantLocation(self):
+		try:
+			isOffScreen = self._getUIACacheablePropertyValue(UIAHandler.UIA_IsOffscreenPropertyId)
+		except COMError:
+			isOffScreen = False
+		return isOffScreen or not self.location or not any(self.location)
+
 	def _get_positionInfo(self):
 		info=super(UIA,self).positionInfo or {}
 		itemIndex=0
@@ -1602,3 +1649,14 @@ class SuggestionListItem(UIA):
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
+
+# NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
+class NetUIDropdownAnchor(UIA):
+
+	def _get_name(self):
+		name=super(NetUIDropdownAnchor,self).name
+		# In MS Office 2010, these combo boxes had no name.
+		# However, the name can be found as the direct previous sibling label element. 
+		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
+			name=self.previous.name
+		return name

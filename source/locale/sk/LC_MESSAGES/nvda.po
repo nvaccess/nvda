@@ -3,16 +3,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-31 00:10+1000\n"
-"PO-Revision-Date: 2018-09-04 19:36+0200\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:58-0800\n"
 "Last-Translator: Ondrej rosík <ondrej.rosik@gmail.com>\n"
-"Language-Team: sk <http://nvda.venik.org>\n"
+"Language-Team: sk <https://nvda.venik.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1137,6 +1137,16 @@ msgstr "Tabuľka unicode"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vietnamčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Čínština (Čína, Mandarínčina) plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Čínština (Čína, Mandarínčina) skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6647,20 +6657,19 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"\n"
 "Distribúcia {name} je možná pod licenciou GNU General Public License 2. "
 "Tento produkt môžete voľne šíriť a meniť rôznym spôsobom, podmienkou však je "
 "pripojiť k nemu túto licenciu a sprístupniť zdrojový kód každému, kto si to "
 "vyžiada. Týka sa to oboch pôvodných, aj upravených kópií daného software ako "
-"aj ďalších odvodených aplikácií.\n"
+"aj ďalších odvodených aplikácií.\\n\n"
 "Pre viac podrobností si v podmenu pomocník môžete detailnejšie preštudovať "
-"licenciu.\n"
-"Kompletná licencia je dostupná aj na stránke: http://www.gnu.org/licenses/"
-"old-licenses/gpl-2.0.html\n"
-"\n"
+"licenciu.\\n\n"
+"Kompletná licencia je dostupná aj na stránke: https://www.gnu.org/licenses/"
+"old-licenses/gpl-2.0.html\\n\n"
+"\\n\n"
 "Vývoj {name} zastrešuje NV Access, nezisková organizácia, ktorej cieľom je "
 "pomoc pri vývoji a propagácii voľne šíriteľných open-source riešení "
-"užitočných pre nevidiacich a zrakovo postihnutých.\n"
+"užitočných pre nevidiacich a zrakovo postihnutých.\\n\n"
 "Ak je NVDA užitočný aj pre Vás a chcete aby vývoj napredoval, zvášte možnosť "
 "príspevku NV Access. Prispieť môžete z podmenu pomocník."
 
@@ -6858,35 +6867,17 @@ msgstr "Neprečítané"
 msgid "Editing profile {profile}"
 msgstr "Upravovaný profil {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "purpurový príznak"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "odpovedané"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Oranžový príznak"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "odpovedané všetkým"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Zelený príznak"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Žltý príznak"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Modrý príznak"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Červený príznak"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "preposlaná"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8624,6 +8615,14 @@ msgstr "Úroveň interpunkcie"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "pri spracovaní textu sa riadiť jazykom hlasového výstupu"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr "Pri spracovaní špeciálnych znakov sa riadiť dátami z Unicode Konzorcia"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách"
@@ -8647,20 +8646,10 @@ msgstr "&Hláskovanie riadi hlasový výstup (ak je podporované)"
 msgid "Keyboard"
 msgstr "Klávesnica"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Používať &Capslock ako kláves NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Používať &numerický Insert ako kláves NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Používať &Insert ako kláves NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "Vyberte &Kláves NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8823,8 +8812,8 @@ msgstr "Oznamovať kon&textovú nápovedu"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Oznamovať &bublinkovú nápovedu"
+msgid "Report &notifications"
+msgstr "Automaticky oznamovať &Notifikácie"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10739,6 +10728,16 @@ msgstr "komentár: {text} od {author} dňa {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} dňa {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} od ľavého okraja strany"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance}od horného okraja strany"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10897,198 +10896,3 @@ msgstr "dvojité riadkovanie"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 riadka"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} - {layout}"
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "Amharčina"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "Arabčina"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "Nepálčina"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "Srbčina (latinka)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "Zobrazí dialóg Nastavenia hlasu."
-
-#~ msgid "&General settings..."
-#~ msgstr "Všeobecné &nastavenia..."
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&Hlasový výstup..."
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "Používaný hlasový výstup"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "Nastaví hlas, jeho tempo výšku a hlasitosť."
-
-#~ msgid "B&raille settings..."
-#~ msgstr "Nastavenia &braillu..."
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "Nastavenia &klávesnice..."
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "Nastavuje rozloženie klávesov, čítanie znakov, slov alebo klávesových "
-#~ "príkazov."
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "Nastavenia &myši..."
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr ""
-#~ "Nastavuje oznamovanie zmeny tvaru kurzora myši a objektov pod kurzorom "
-#~ "myši"
-
-#~ msgid "&Touch interaction..."
-#~ msgstr "&DoTyková obrazovka..."
-
-#~ msgid "Change how NVDA interacts with the touchscreen"
-#~ msgstr "Určiť, ako sa NVDA bude správať pri používaní dotykovej obrazovky"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr ""
-#~ "Nastavuje kedy a ako sa aktualizuje prezerací kurzor navigačného objektu"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "Nastavenia &vstupu..."
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre "
-#~ "niektoré jazyky"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "Prezentácia &objektov..."
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "Mení oznamovanie objektov."
-
-#~ msgid "&Browse mode..."
-#~ msgstr "Režim p&rehliadania..."
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "Zmení nastavenia špecifické pre režim prehliadania."
-
-#~ msgid "Document &formatting..."
-#~ msgstr "Nastavenia čítania &textu..."
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "Zmení oznamovanie vlastností dokumentu."
-
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "rozpoznávanie textu &OCR..."
-
-#~ msgid "General Settings"
-#~ msgstr "Všeobecné Nastavenia"
-
-#~ msgid "Voice Settings"
-#~ msgstr "Nastavenia Hlasu"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Nastavenie klávesnice"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Nastavenia Myši"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "Nastavenia Prezeracieho Kurzora"
-
-#~ msgid "Braille Settings"
-#~ msgstr "Nastavenia braillu"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "Kanadská francúzština plnopis"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "Kanadská francúzština skratkopis"
-
-#~ msgid "Mongolian"
-#~ msgstr "Mongolská prekladová tabuľka"
-
-#~ msgid "Download and &install update"
-#~ msgstr "Stiahnuť a nainštalovať &aktualizácie"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "Aktualizácia je stiahnutá a bude nainštalovaná."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "Prejde na pozíciu a oznámi informácie o formátovaní"
-
-#~ msgid "r%s"
-#~ msgstr "r%s"
-
-#~ msgid "c%s"
-#~ msgstr "s%s"
-
-#~ msgid "suspended"
-#~ msgstr "zakázaný"
-
-#~ msgid "running"
-#~ msgstr "Spustený"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "ALVA BC640/680"
-
-#~ msgid "review"
-#~ msgstr "prezeracím kurzorom"
-
-#~ msgid "focus"
-#~ msgstr "systémovým kurzorom"
-
-#~ msgid "B&raille tethered to:"
-#~ msgstr "Braillovský kurzor &zviazaný s:"
-
-#~ msgid "Not defined"
-#~ msgstr "Nie je definované"
-
-#~ msgid "Value"
-#~ msgstr "Hodnota"
-
-#~ msgid "Series"
-#~ msgstr "Rad"
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "{axisName} os je {axisTitle}"
-
-#~ msgid "Primary"
-#~ msgstr "Primárna"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr "Os grafu, typ: {axisType}, skupina: {axisGroup}, názov: {axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "Os grafu, typ: {axisType}, skupina: {axisGroup}"
-
-#~ msgid "Chart axis title"
-#~ msgstr "Názov osy grafu"
-
-#~ msgid "trendline"
-#~ msgstr "trendová spojnica"
-
-#~ msgid "Legend"
-#~ msgstr "Legenda"
-
-#~ msgid "No legend"
-#~ msgstr "Neobsahuje legendu"
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "HIMS SyncBraille"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "Zobrazí konfiguráciu ovládača zariadení Handy Tech"

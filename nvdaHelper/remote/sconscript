@@ -20,6 +20,16 @@ Import([
 
 winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
 
+vbufBackendLibs=[
+	env.SConscript('../vbufBase/sconscript'),
+	env.SConscript('../vbufBackends/adobeAcrobat/sconscript'),
+	env.SConscript('../vbufBackends/adobeFlash/sconscript'),
+	env.SConscript('../vbufBackends/lotusNotesRichText/sconscript'),
+	env.SConscript('../vbufBackends/gecko_ia2/sconscript'),
+	env.SConscript('../vbufBackends/mshtml/sconscript'),
+	env.SConscript('../vbufBackends/webKit/sconscript'),
+]
+
 controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
@@ -105,6 +115,7 @@ remoteLib=env.SharedLibrary(
 		displayModelRPCServerSource,
 		nvdaInProcUtilsRPCServerSource,
 		"nvdaHelperRemote.def",
+		vbufBackendLibs,
 	],
 	LIBS=[
 		"user32",

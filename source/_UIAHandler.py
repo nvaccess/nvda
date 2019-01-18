@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+from collections import namedtuple
 import config
 import api
 import appModuleHandler
@@ -61,7 +62,13 @@ badUIAWindowClassNames=[
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
 	# It does not implement caret/selection, and probably has no new text events.
 	"ConsoleWindowClass",
+	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
+	"FoxitDocWnd",
 ]
+
+Version=namedtuple('Version',('major','minor','build'))
+# The minimum version of Microsoft Word where we can trust that UI Automation is complete enough to use
+minMSWordUIAVersion=Version(16,0,9000)
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
 UIADialogClassNames=[
@@ -132,6 +139,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
+	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
 
 UIAEventIdsToNVDAEventNames={
@@ -183,6 +191,25 @@ class UIAHandler(COMObject):
 				isUIA8=True
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
+			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
+			pfm=self.clientObject.proxyFactoryMapping
+			for index in xrange(pfm.count):
+				e=pfm.getEntry(index)
+				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
+					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
+					try:
+						oldWinEvents=e.getWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID)
+					except IndexError:
+						# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
+						oldWinEvents=None
+					if oldWinEvents:
+						# As winEvents were mapped, replace them with an empty list
+						e.setWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID,[])
+						# Changes to an enty are not automatically picked up.
+						# Therefore remove the entry and re-insert it.
+						pfm.removeEntry(index)
+						pfm.insertEntry(index,e)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
 				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
@@ -332,12 +359,6 @@ class UIAHandler(COMObject):
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
-		if windowClass=="NetUIHWND":
-			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
-			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
-			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
-			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
-				return False
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
@@ -345,9 +366,32 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# the window does support UIA natively, but
-			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
-			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
-				return False
+			# MS Word documents now have a very usable UI Automation implementation. However,
+			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
+			# Therefore refuse to use UIA for builds earlier than this, if we can inject in-process.
+			if (
+				# An MS Word document window 
+				windowClass=="_WwG" 
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and appModule.helperLocalBindingHandle 
+				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
+				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
+				# We can only safely check the version of known Office apps using the Word document control, as we know their versioning scheme.
+				# But if the Word Document control is used in other unknown apps we should just use UIA if it has been implemented.
+				if appModule.appName not in ('outlook','winword','excel'):
+					log.debugWarning("Unknown application using MS Word document control: %s"%appModule.appName)
+					return True
+				try:
+					versionMajor,versionMinor,versionBuild,versionPatch=[int(x) for x in appModule.productVersion.split('.')]
+				except Exception as e:
+					log.error("Error parsing version information %s, %s"%(appModule.productVersion,e))
+					return True
+				if (
+					versionMajor<minMSWordUIAVersion.major
+					or versionMajor==minMSWordUIAVersion.major and versionMinor==minMSWordUIAVersion.minor and versionBuild<minMSWordUIAVersion.build
+				):
+					return False
 		return bool(res)
 
 	def isUIAWindow(self,hwnd):
