@@ -17,6 +17,8 @@ try:
 except ImportError:
 	# Python 2 import
 	from collections import Callable
+from extensionPoints.util import getWeakrefForCallable
+
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -44,17 +46,23 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 				It should accept the same parameters as L{OnGetItemText},
 			@type itemTextCallable: L{callable}
 		"""
-		if itemTextCallable is not None and not isinstance(itemTextCallable, Callable):
-			raise TypeError("itemTextCallable should be None or a callable")
-		self._itemTextCallable = itemTextCallable
+		if itemTextCallable is not None:
+			if not isinstance(itemTextCallable, Callable):
+				raise TypeError("itemTextCallable should be None or a callable")
+			# We need to store a weak reference to the callable.
+			# If we don't and the callable is a bound instance method of a wx Window,
+			# we might create a circular reference.
+			self._itemTextCallable = getWeakrefForCallable(itemTextCallable)
+		else:
+			self._itemTextCallable = None
 		wx.ListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.ListCtrlAutoWidthMixin.__init__(self)
 		self.setResizeColumn(autoSizeColumnIndex)
 
 	def OnGetItemText(self, item, column):
-		if self._itemTextCallable is None:
+		if self._itemTextCallable is None or self._itemTextCallable() is None:
 			return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
-		return self._itemTextCallable(item, column)
+		return self._itemTextCallable()(item, column)
 
 	def sendListItemFocusedEvent(self, index):
 		evt = wx.ListEvent(wx.wxEVT_LIST_ITEM_FOCUSED, self.Id)
