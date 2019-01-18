@@ -45,7 +45,7 @@ class VisionEnhancementProvider(Highlighter):
 		super(Highlighter, self).__init__(*roles)
 
 	def initializeHighlighter(self):
-		super(NVDAHighlighter, self).initializeHighlighter()
+		super(VisionEnhancementProvider, self).initializeHighlighter()
 		self.window = HighlightWindow(self)
 		self._refreshTimer = gui.NonReEntrantTimer(self.refresh)
 		self._refreshTimer.Start(self._refreshInterval)
@@ -57,10 +57,10 @@ class VisionEnhancementProvider(Highlighter):
 		if self.window:
 			self.window.Destroy()
 			self.window = None
-		super(NVDAHighlighter, self).terminateHighlighter()
+		super(VisionEnhancementProvider, self).terminateHighlighter()
 
 	def updateContextRect(self, context, rect=None, obj=None):
-		super(NVDAHighlighter, self).updateContextRect(context, rect, obj)
+		super(VisionEnhancementProvider, self).updateContextRect(context, rect, obj)
 		# Though a refresh happens once per core cycle,
 		# force a refresh for a change to avoid delays.
 		self.refresh()
