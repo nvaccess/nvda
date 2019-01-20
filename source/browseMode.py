@@ -1275,7 +1275,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
-			self._lastFocusableObject = None
+			self._lastFocusableObject = info.focusableNVDAObjectAtStart
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
