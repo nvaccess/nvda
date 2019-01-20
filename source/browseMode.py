@@ -1285,14 +1285,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-			if obj==self.rootNVDAObject:
-				return
 			followBrowseModeFocus= config.conf["virtualBuffers"]["focusFollowsBrowse"]
 			if followBrowseModeFocus:
+				if obj==self.rootNVDAObject:
+					return
 				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
 					focusObj.setFocus()
 			else:
 				self._lastFocusableObject = focusObj
+				if obj==self.rootNVDAObject:
+					return
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
