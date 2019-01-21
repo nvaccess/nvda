@@ -2769,11 +2769,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)
 
-	def onFilterEditTextChange(self, evt):
-		self.filter(self.filterEdit.Value)
+	def _refreshVisibleItems(self):
 		count = self.symbolsList.GetCountPerPage()
 		first = self.symbolsList.GetTopItem()
 		self.symbolsList.RefreshItems(first, first+count)
+
+	def onFilterEditTextChange(self, evt):
+		self.filter(self.filterEdit.Value)
+		self._refreshVisibleItems()
 		evt.Skip()
 
 class InputGesturesDialog(SettingsDialog):
