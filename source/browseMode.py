@@ -503,18 +503,16 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			synchronousCall = False
 		if obj.hasFocus:
 			synchronousCall = True
-		if synchronousCall:
-			if setFocusCall:
-				obj.setFocus()
-			if postFocusFunc is not None:
-				postFocusFunc()
-		else:
+
+		if not synchronousCall:
 			if self.postFocusFunc is not None:
 				log.error("postFocusFunc has not been called asynchronously")
 			self.postFocusFunc = postFocusFunc
-			if setFocusCall:
-				obj.setFocus()
-
+		if setFocusCall:
+			obj.setFocus()
+		if synchronousCall:
+			if postFocusFunc is not None:
+				postFocusFunc()
 
 	def maybeSyncFocusAndPassThrough(self, gesture=None): 		
 		self.maybeSyncFocus()
