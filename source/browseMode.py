@@ -515,7 +515,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			uid = getObjectID(obj)
 			if uid in self.postFocusFuncDict:
 				log.error("postFocusFunc has not been called asynchronously")
-			self.postFocusFuncDict[uid] = postFocusFunc
+			if postFocusFunc is not None:
+				self.postFocusFuncDict[uid] = postFocusFunc
 		if setFocusCall:
 			obj.setFocus()
 		if synchronousCall:
