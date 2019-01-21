@@ -501,6 +501,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
 			setFocusCall = True
 			synchronousCall = False
+		if obj.hasFocus:
+			synchronousCall = True
 		if synchronousCall:
 			if setFocusCall:
 				obj.setFocus()
