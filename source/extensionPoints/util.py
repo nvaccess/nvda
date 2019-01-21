@@ -1,6 +1,6 @@
 #util.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017-2019 NV Access Limited, Leonard de Ruijter
+#Copyright (C) 2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -27,14 +27,11 @@ class BoundMethodWeakref(object):
 	To get the actual method, you call an instance as you would a weakref.ref.
 	"""
 
-	def __init__(self, target, onDelete=None):
-		if onDelete is not None:
-			def onRefDelete(weak):
-				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
-				"""
-				onDelete(self)
-		else:
-			onRefDelete = None
+	def __init__(self, target, onDelete):
+		def onRefDelete(weak):
+			"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
+			"""
+			onDelete(self)
 		inst = target.__self__
 		func = target.__func__
 		self.weakInst = weakref.ref(inst, onRefDelete)
@@ -48,20 +45,6 @@ class BoundMethodWeakref(object):
 		assert func, "inst is alive but func is dead"
 		# Get an instancemethod by binding func to inst.
 		return func.__get__(inst)
-
-def getWeakrefForCallable(callable, onDelete=None):
-	"""Returns a weakref for the given callable.
-	It returns a L{BoundMethodweakref for bound methods.
-	The value of onDelete is passed through when creating the weakref.
-	"""
-	if hasattr(callable, "__self__"):
-		if not callable.__self__:
-			raise TypeError("Unbound instance methods are not supported.")
-		weak = BoundMethodWeakref(callable, onDelete)
-	else:
-		weak = AnnotatableWeakref(callable, onDelete)
-	return weak
-
 
 def _getHandlerKey(handler):
 	"""Get a key which identifies a handler function.
@@ -99,7 +82,12 @@ class HandlerRegistrar(object):
 		However, the callable must be kept alive by your code otherwise it will be de-registered. This is due to the use
 		of weak references. This is especially relevant when using lambdas.
 		"""
-		weak = getWeakrefForCallable(handler, self.unregister)
+		if hasattr(handler, "__self__"):
+			if not handler.__self__:
+				raise TypeError("Registering unbound instance methods not supported.")
+			weak = BoundMethodWeakref(handler, self.unregister)
+		else:
+			weak = AnnotatableWeakref(handler, self.unregister)
 		key = _getHandlerKey(handler)
 		# Store the key on the weakref so we can remove the handler when it dies.
 		weak.handlerKey = key
