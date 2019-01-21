@@ -570,11 +570,18 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildIndex=childCount-1
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
+			rootElementControlType=rootElement.cachedControlType
 			for index in xrange(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
+				if rootElementControlType==UIAHandler.UIA_DataItemControlTypeId:
+					# #9090: MS Word has a rare bug where  a child of a table cell's UIA textRange can be its containing page.
+					# At very least stop the infinite recursion.
+					childAutomationID=childElement.cachedAutomationId or ""
+					if childAutomationID.startswith('UIA_AutomationId_Word_Page_'):
+						continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				try:
@@ -761,6 +768,8 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif UIAClassName=="NetUIDropdownAnchor":
+			clsList.append(NetUIDropdownAnchor)
 		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
@@ -1640,3 +1649,14 @@ class SuggestionListItem(UIA):
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
+
+# NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
+class NetUIDropdownAnchor(UIA):
+
+	def _get_name(self):
+		name=super(NetUIDropdownAnchor,self).name
+		# In MS Office 2010, these combo boxes had no name.
+		# However, the name can be found as the direct previous sibling label element. 
+		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
+			name=self.previous.name
+		return name

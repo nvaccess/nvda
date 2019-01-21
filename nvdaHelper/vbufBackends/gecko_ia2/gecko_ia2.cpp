@@ -854,8 +854,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					chunkStart=i+1;
 					// In Gecko, hyperlinks correspond to embedded object chars,
 					// so there's no need to call IAHyperlink::hyperlinkIndex.
-					IAccessibleHyperlinkPtr link = move(linkGetter->next());
-					IAccessible2Ptr childPacc = link;
+					CComPtr<IAccessibleHyperlink> link = linkGetter->next();
+					CComQIPtr<IAccessible2> childPacc = link;
 					if(!childPacc) {
 						continue;
 					}
