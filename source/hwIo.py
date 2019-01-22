@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2018 NV Access Limited, Babbage B.V.
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -20,6 +20,7 @@ import winKernel
 import braille
 from logHandler import log
 import config
+import time
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(None, DWORD, DWORD, serial.win32.LPOVERLAPPED)
 
@@ -51,7 +52,7 @@ class IoBase(object):
 		self._writeSize = writeSize
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
-		self._recvEvt = threading.Event()
+		self._recvEvt = winKernel.createEvent()
 		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
 		self._writeOl = OVERLAPPED()
 		# Do the initial read.
@@ -72,12 +73,20 @@ class IoBase(object):
 			C{False} if not.
 		@rtype: bool
 		"""
-		if not self._recvEvt.wait(timeout):
-			if _isDebug():
-				log.debug("Wait timed out")
-			return False
-		self._recvEvt.clear()
-		return True
+		timeout= int(timeout*1000)
+		while True:
+			curTime = time.time()
+			res = winKernel.waitForSingleObjectEx(self._recvEvt, timeout, True)
+			if res==winKernel.WAIT_OBJECT_0:
+				return True
+			elif res==winKernel.WAIT_TIMEOUT:
+				if _isDebug():
+					log.debug("Wait timed out")
+				return False
+			elif res==winKernel.WAIT_IO_COMPLETION:
+				if _isDebug():
+					log.debug("Waiting interrupted by completed i/o")
+				timeout -= int((time.time()-curTime)*1000)
 
 	def write(self, data):
 		if _isDebug():
@@ -101,6 +110,7 @@ class IoBase(object):
 			ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
 			ctypes.windll.kernel32.CancelIoEx(self._writeFile, byref(self._readOl))
+		winKernel.closeHandle(self._recvEvt)
 
 	def __del__(self):
 		try:
@@ -123,7 +133,7 @@ class IoBase(object):
 		elif error != 0:
 			raise ctypes.WinError(error)
 		self._notifyReceive(self._readBuf[:bytes])
-		self._recvEvt.set()
+		winKernel.kernel32.SetEvent(self._recvEvt)
 		self._asyncRead()
 
 	def _notifyReceive(self, data):

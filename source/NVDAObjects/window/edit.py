@@ -174,26 +174,49 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,offset,None)
 			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
-		(left,top,width,height)=self.obj.location
-		point.x=point.x+left
-		point.y=point.y+top
+		# A returned coordinate can be a negative value if
+		# the specified character is not displayed in the edit control's client area. 
+		# If the specified index is greater than the index of the last character in the control,
+		# the control returns -1.
+		if point.x <0 or point.y <0:
+			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
+				(point.x, point.y))
+		point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
 		return point
 
 
 	def _getOffsetFromPoint(self,x,y):
-		(left,top,width,height)=self.obj.location
+		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		if self.obj.editAPIVersion>=1:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
-				p=PointLStruct(x-left,y-top)
+				p=PointLStruct(x,y)
 				winKernel.writeProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
 				offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,internalP)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
 		else:
-			p=(x-left)+((y-top)<<16)
-			offset=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)&0xffff
+			p=x+(y<<16)
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_CHARFROMPOS,0,p)
+			offset=winUser.LOWORD(res)
+			lineNum=winUser.HIWORD(res)
+			if offset==0xFFFF and lineNum==0xFFFF:
+				raise LookupError("Point outside client area")
+			if self._getStoryLength() > 0xFFFF:
+				# Returned offsets are 16 bits, therefore for large documents, we need to make sure that the correct offset is returned.
+				# We can calculate this by using the start offset of the line with the retrieved line number.
+				lineStart=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_LINEINDEX,lineNum,0)
+				# Get the last 16 bits of the line number
+				lineStart16=lineStart&0xFFFF
+				if lineStart16 > offset:
+					# There are cases where the last 16 bits of the line start are greather than the 16 bits offset.
+					# For example, this happens when the line start offset is 65534 (0xFFFE)
+					# and the offset we need ought to be 65537 (0x10001), which is a 17 bits number
+					# In that case, add 0x10000 to the offset, which will make the eventual formula return the correct offset,
+					# unless a line has more than 65535 characters, in which case we can't get a reliable offset.
+					offset+=0x10000
+				offset = (offset - lineStart16) + lineStart
 		return offset
 
 	def _getCharFormat(self,offset):

@@ -22,14 +22,14 @@ NVDAの主な特徴は以下の通りです。
 - 80以上の言語に対応した音声エンジンを同梱
 - 利用可能な場合、フォント名、サイズ、スタイル及びスペルミスといった書式とドキュメント情報を報告可能
 - マウスカーソル位置のテキスト自動読み上げと、音によりマウスカーソルの位置を報告できるオプション
-- 数多くの点字ディスプレイのサポートと、点字ディスプレイに点字入力キーがある場合の点字入力
+- 数多くの点字ディスプレイのサポートと、点字ディスプレイに点字入力キーがある場合の点字入力、接続された点字ディスプレイの自動検出
 - インストールなしでUSBメモリーや他の携帯型メディアから実行が可能
 - 簡単に利用できるトーキングインストーラー
 - 54ヶ国語への翻訳
 - 32ビット版および64ビット版の最新のWindowsへの対応
 - Windowsのログオン及びその他のセキュアスクリーンでの動作
 - タッチジェスチャーでコントロールやテキストを報告
-- Microsoft Active Accessibility、Java Access Bridge、IAccessible2及びUI Automationといった一般的なアクセシビリティインターフェースのサポート (UI AutomationはWindows 7及びそれ以降でのみサポートされています)
+- Microsoft Active Accessibility、Java Access Bridge、IAccessible2及びUI Automationといった一般的なアクセシビリティインターフェースのサポート
 - Windowsのコマンドプロンプトやコンソールアプリのサポート
 -
 
@@ -47,6 +47,7 @@ NVDAでサポートしているその他の音声エンジンについては[サ
 ++ 点字ディスプレイサポート ++[BrailleSupport]
 点字ディスプレイがあれば、NVDAは情報を点字で出力することができます。
 点字ディスプレイからの1級点字および2級点字の文字入力にも対応しています。
+多くの機種について、NVDAは点字ディスプレイの接続を自動的に検出します。
 詳細は[サポートされている点字ディスプレイ #SupportedBrailleDisplays]を参照してください。
 
 NVDAでは、多くの言語の点字コードをサポートしており、その多くは、略字、標準点字及びコンピューター点字にも対応しています。
@@ -57,7 +58,7 @@ NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 NVDAはGNU 一般公衆利用許諾契約書 (Version 2) によって保護されています。
 この内容に同意いただき、必要としている方にソースコードを提供していただける場合、本ソフトウェアの配布や改良は自由に行うことができます。
 この規定は、オリジナルのソフトウェアと改良版を含むソフトウェアのコピー、さらにその派生物にも適用されます。
-本ライセンスについての詳細は、[オンライン http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]で確認してください。
+本ライセンスについての詳細は、[オンライン https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]で確認してください。
 
 + システム要件 +[SystemRequirements]
 - オペレーティングシステム: 32ビット版と64ビット版の Windows 7, Windows 8, Windows 8.1, Windows 10 および Windows Server 2008 R2 以降のサーバー用オペレーティングシステム
@@ -559,7 +560,7 @@ Gmail, Twitter, Facebook などのWebアプリでは、アルファベットの�
 + 数式の読み上げ +[ReadingMath]
 Design Science の MathPlayer 4 を使うと NVDA で数式の読み上げと対話的なナビゲーションが可能です。
 この機能を使うためにはコンピューターに MathPlayer 4 をインストールしてください。
-MathPlayer は以下から無料でダウンロードできます: http://www.dessci.com/en/products/mathplayer/
+MathPlayer は以下から無料でダウンロードできます: https://www.dessci.com/en/products/mathplayer/
 
 NVDA は次の種類の数式コンテンツに対応します:
 - Mozilla Firefox, Microsoft Internet Explorer および Google Chrome における MathML
@@ -600,6 +601,7 @@ NVDA は情報を点字ディスプレイに表示することができます。
 点字ディスプレイにパーキンス式キーボードが備わっている場合は、1級点字または2級点字による入力もできます。
 
 [対応している点字ディスプレイ #SupportedBrailleDisplays] も参照してください。
+このセクションでは、それぞれの機種が NVDA の自動検出に対応しているかどうかも説明しています。
 点字ディスプレイの設定については [NVDA設定ダイアログ #NVDASettings] → [点字カテゴリ #BrailleSettings]を参照してください。
 
 ++ コントロールの種類、状態、ランドマークの表記 ++[BrailleAbbreviations]
@@ -737,7 +739,7 @@ NVDAは、特定のタスクを簡単に実行するために、あるいは、�
 
 +++ 行や列の見出しの自動読み上げ +++[WordAutomaticColumnAndRowHeaderReading]
 Microsoft Word でテーブルの中を移動する場合に、NVDA は行や列の見出しを必要に応じて自動的に報告することができます。
-この機能を使うためには、まず[NVDA設定ダイアログ #NVDASettings] → 書式とドキュメント情報カテゴリで「テーブルの行列見出しの報告」にチェックをします。
+この機能を使うためには、まず[NVDA設定ダイアログ #NVDASettings] → 書式とドキュメント情報カテゴリ「テーブル情報」で「テーブル」および「行と列の見出し」にチェックをします。
 次に、テーブルのどの行または列が見出しなのかを NVDA に指示します。
 見出しを含む行または列の最初のセルに移動して、以下のコマンドを実行してください:
 %kc:beginInclude
@@ -771,7 +773,7 @@ Microsoft Word で要素リストを開くにはブラウズモードに切り�
 
 +++ 行や列の見出しの自動読み上げ +++[ExcelAutomaticColumnAndRowHeaderReading]
 Excel ワークシートの中の移動中に、行や列の見出しを必要に応じて自動的に報告させることができます。
-この機能を使うためには、まず[NVDA設定ダイアログ #NVDASettings] → 書式とドキュメント情報カテゴリで「テーブルの行列見出しの報告」にチェックをします。
+この機能を使うためには、まず[NVDA設定ダイアログ #NVDASettings] → 書式とドキュメント情報カテゴリ「テーブル情報」で「テーブル」および「行と列の見出し」にチェックをします。
 次に、どの行または列が見出しなのかを NVDA に指示します。
 見出しを含む行または列の最初のセルに移動して、以下のコマンドを実行してください:
 %kc:beginInclude
@@ -832,9 +834,11 @@ Excel のワークシートにはフォームフィールドが含まれる場�
 %kc:beginInclude
 || 名称 | キー | 説明 |
 | 残り時間の報告 | Ctrl+Shift+R | 現在再生中のトラックがある場合、その残り時間を報告します。 |
+| 経過時間の報告 | Ctrl+Shift+E | 現在再生中のトラックがある場合、その経過時間を報告します。 |
+| 合計再生時間の報告 | Ctrl+Shift+T | 現在再生中のトラックがある場合、その合計再生時間を報告します。 |
 %kc:endInclude
 
-注意：「残り時間の報告」ショートカットはステータス行の書式が既定の設定の場合のみ有効です。
+注意：これらのショートカットはステータス行の書式が既定の設定の場合のみ有効です。
 
 ++ Miranda IM ++[MirandaIM]
 %kc:beginInclude
@@ -911,7 +915,6 @@ NVDAメニューの設定サブメニューからダイアログを開くこと�
 ダイアログを閉じなくても「適用」ボタンを押すことで変更が確定する場合もあります。
 いくつかの設定は、ショートカットキーを用いて変更することもできます。ショートカットキーの操作は以下のそれぞれの項目で説明します。
 
-
 ++ NVDA設定ダイアログ ++[NVDASettings]
 %kc:settingsSection: || 名称 | デスクトップ用キー | ラップトップ用キー | 説明 |
 NVDA設定ダイアログではいろいろな設定を変更できます。
@@ -972,6 +975,25 @@ OKボタンを押すとNVDAが再起動します。
 ==== NVDAの更新を自動的に確認 ====[GeneralSettingsCheckForUpdates]
 このチェックボックスをチェックすると、NVDAは新しいバージョンが入手できるかどうかを自動的に確認し、それを通知します。
 NVDAメニュー「ヘルプ」の「更新を確認」を使って手動で更新を確認することもできます。
+更新を確認するときには、NVDA は利用できる更新を正しく判断するために、ある決められた情報を更新サーバーに送る必要があります。
+以下は必ず更新サーバーに送信される情報です: 
+- 現在の NVDA のバージョン
+- オペレーティングシステムのバージョン
+- オペレーティングシステムの64ビットまたは32ビットの種別
+
+
+==== NVDA 使用状況統計の収集 ====[GeneralSettingsGatherUsageStats]
+このチェックボックスをチェックすると、更新チェックを通じて NVDA の使用状況を NV Access に送信します。そして、例えばオペレーティングシステムやユーザーの国によってNVDAのユーザー数を比較するなど、詳しい統計を行います。
+IP アドレスは更新チェック時にユーザーの国を判断するために使われますが、この情報は保存されません。
+必ず更新サーバーに送信される前述の情報に加えて、このチェックボックスをチェックすると、以下の情報が送信されます:
+- NVDA のインタフェース言語
+- NVDA のポータブル版またはインストール環境の種別
+- 使用中の音声合成エンジンの名前（および、そのドライバーを提供しているアドオンの名前）
+- 使用中の点字ディスプレイドライバーの名前（および、そのドライバーを提供しているアドオンの名前）
+- 点字を使用している場合には、使用中の点字出力テーブルの名前
+
+
+この情報は、NV Access が将来の NVDA 開発における課題の優先順位を決めるために役立ちます。
 
 ==== 保留中のNVDAの更新を起動時に通知 ====[GeneralSettingsNotifyPendingUpdates]
 このチェックボックスをチェックすると、NVDA を起動したときに保留中の更新があれば実行するかどうか確認します。
@@ -1033,6 +1055,16 @@ eSpeak NG では音声は言語の違いに対応し、声色は声の違いに�
 ==== 記号と文字の説明に音声の言語を使用 ====[SpeechSettingsTrust]
 初期状態では、句読点/記号読み辞書と文字説明辞書を、音声エンジンの現在の言語に合わせて切り替えます。
 特定の音声エンジンや話者を使っていて、記号読み上げ辞書が不適切に切り替わってしまう場合などには、このオプションを無効にすれば、一般設定で指定された言語で記号と文字の説明が行われます。
+
+==== 記号と絵文字の説明に Unicode コンソーシアムのデータを使用 ====[SpeechSettingsCLDR]
+このチェックボックスをチェックすると、NVDAは文字や記号の読み上げに使うデータを拡張します。
+追加されるのは [共通ロケールデータリポジトリ http://cldr.unicode.org/] として [Unicode コンソーシアム http://www.unicode.org/consortium/] が提供する辞書です。この辞書は絵文字などの記号の説明を多く含んでいます。
+NVDA にこのデータに基づく絵文字の読み上げをさせたい場合は、このオプションをチェックします。
+音声エンジンに絵文字の説明を読み上げる機能が備わっている場合には、このオプションをチェックなしにしたほうがよいかも知れません。
+
+句読点と記号の読み上げ辞書にユーザーが追加した文字説明は、NVDAのユーザー設定に保存されます。
+つまり、このオプションの選択に関わらず、ユーザーがある絵文字に文字説明を追加した場合は、その文字説明が使用されます。
+記号の説明の追加、修正、削除などはNVDAの[句読点/記号読み辞書ダイアログ #SymbolPronunciation]で行うことができます。
 
 ==== 大文字のピッチ変更率 ====[SpeechSettingsCapPitchChange]
 このエディットフィールドでは大文字を読み上げる際の高さの変化率を指定します。
@@ -1211,9 +1243,12 @@ NVDA設定ダイアログを開かないでこの設定を切り替えたい場�
 このコンボボックスにはシステムで利用可能な点字ディスプレイドライバーが表示されます。
 項目を移動するには矢印キーを押します。
 
+「自動」は接続された点字ディスプレイを自動的に探す機能です。
+「自動」が選択されていて、USB または Bluetooth で接続された点字ディスプレイが検出されたときには、NVDA は自動的にその点字ディスプレイに接続します。
+
 点字なしは、点字ディスプレイを使用しないことを意味します。
 
-サポートされている点字ディスプレイの一覧は、[サポートされている点字ディスプレイ #SupportedBrailleDisplays]セクションを参照してください。
+サポートされている点字ディスプレイの一覧と、各機種の自動検出への対応状況については、[サポートされている点字ディスプレイ #SupportedBrailleDisplays]セクションを参照してください。
 
 ==== ポート ====[SelectBrailleDisplayPort]
 このオプションが有効のとき、選択された点字ディスプレイとの通信を行うポートや接続方法を選ぶことができます。
@@ -1234,14 +1269,12 @@ NVDA設定ダイアログのキーボードカテゴリでは、NVDAでのキー
 ==== キーボード配列 ====[KeyboardSettingsLayout]
 このコンボボックスでは、NVDAでどのキーボード配列を使用するかを選ぶことができます。現在、NVDAにあるのはデスクトップ配列とラップトップ配列です。
 
-==== 英語キーボードのCapsLockキーをNVDA制御キーとして使用 ====[KeyboardSettingsCapsModifier]
-チェックされている場合、CapsLockキーがNVDA制御キーとして動作します。ただし日本語キーボードではCapsLockキーをNVDA制御キーとして使用できません。
-
-==== InsertキーをNVDA制御キーとして使用 ====[KeyboardSettingsExtendedInsert]
-チェックされている場合、Insertキー (通常は矢印キーの上のHomeキーやEndキーの近くにあります) をNVDA制御キーとして使用することができます。
-
-==== テンキーのInsertキーをNVDA制御キーとして使用 ====[KeyboardSettingsNumpadInsert]
-チェックされている場合、テンキー上のInsertキーをNVDA制御キーとして使用することができます。
+==== NVDA制御キーの選択 ====[KeyboardSettingsModifiers]
+このリストコントロールにはチェックボックスがあり、どのキーを [NVDA制御キー #TheNVDAModifierKey] として使用するかを選択できます。以下のキーから選択できます:
+- CapsLock キー（日本語キーボードでは使用できません）
+- テンキー Insert キー（NumLock がオフの場合の数字0のキー）
+- メイン Insert キー（矢印キーの上の Home キーや End キーの近くにあります）
+-
 
 NVDA制御キーがどのキーにも割り当てられていないと、NVDAの機能を呼び出すことができなくなります。
 そこで、どのキーもNVDA制御キーに選択されないまま、NVDA設定ダイアログで OK または適用ボタンを押すと、エラーメッセージを表示します。
@@ -1842,8 +1875,8 @@ Microsoft Speech Platformでは、通常はサーバーベースの読み上げ�
 これらの音声はNVDAでも使用できます。
 
 これらの音声を使用するには、ふたつのコンポーネントをインストールしてください。
-- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Version 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - このページには、多くの音声認識及び音声合成のためのファイルが含まれています。
 目的の言語/音声のデータを含んでいるファイルを選択してください。
 例えば、MSSpeech_TTS_en-US_ZiraPro.msiというファイルはアメリカ英語の音声です。
@@ -1871,16 +1904,34 @@ Windows 10 では OneCore あるいは「モバイル」という名前の新し
 + サポートされている点字ディスプレイ +[SupportedBrailleDisplays]
 この章では、NVDAでサポートされている点字ディスプレイについて述べます。
 
-++ Freedom Scientific社製Focus/PAC Mateシリーズ ++[FreedomScientificFocus]
-すべてのUSBまたはbluetooth接続された[Freedom Scientific http://www.freedomscientific.com/]社製のFocus及びPAC Mateディスプレイをサポートしています。
+++ 自動検出に対応している点字ディスプレイ ++[AutomaticDetection]
+NVDA は USB または Bluetooth で接続された点字ディスプレイを自動検出して接続することができます。
+この機能は NVDA 設定ダイアログの [点字カテゴリ #BrailleSettings] で「点字ディスプレイの選択」を「自動」にすることで有効になります。
+このオプションは初期状態で選択されています。
+
+NVDAが自動検出できる点字ディスプレイは以下の通りです。
+- Handy Tech 点字ディスプレイ
+- Baum/Humanware/APH/Orbit 点字ディスプレイ
+- HumanWare Brailliant BI/Bシリーズ
+- HumanWare BrailleNote
+- SuperBraille
+- Optelec ALVA 6 シリーズ
+- HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ
+- Eurobraille Esys/Esytime/Iris 点字ディスプレイ
+-
+
+++ Freedom Scientific Focus/PAC Mateシリーズ ++[FreedomScientificFocus]
+すべてのUSBまたはbluetooth接続された [Freedom Scientific https://www.freedomscientific.com/] Focus および PAC Mate 点字ディスプレイをサポートしています。
 使用するには、Freedom Scientific社製の点字ディスプレイ用ドライバーが必要です。
-お持ちでない場合は、 http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
-このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific社製の Focus/PAC Mate ディスプレイをサポートしています。
+お持ちでない場合は、 https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
+このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific Focus/PAC Mate 点字ディスプレイをサポートしています。
 64ビット版Windowsが実行されていて、ドライバーがすでに他のスクリーンリーダーによってインストールされている場合であっても、他のスクリーンリーダーがNVDAに必要なファイルをインストールしていない可能性もあるため、このリンク先にあるドライバーをインストールする必要があるかもしれません。
 
 NVDAの初期設定では、NVDA はUSBまたはBluetoothによる接続を自動選択します。
 しかし点字設定で "USB" または "Bluetooth" を選ぶことで、接続方法を限定することができます。
 例えばBluetoothで Focus ディスプレイと通信しながら、充電のために USB ポートをつなぎたいときに役立ちます。
+
+これらの機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、これらのディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -1912,6 +1963,8 @@ NVDAの初期設定では、NVDA はUSBまたはBluetoothによる接続を自�
 | Control+End キー | スペース+4の点+5の点+6の点 |
 | Alt キー | スペース+1の点+3の点+4の点 |
 | Alt+Tab キー | スペース+2の点+3の点+4の点+5の点 |
+| Alt+Shift+Tab キー | スペース+1の点+2の点+5の点+6の点 |
+| Windows+Tab キー | スペース+2の点+3の点+4の点 |
 | Escape キー | スペース+1の点+5の点 |
 | Windows キー | スペース+2の点+4の点+5の点+6の点 |
 | スペースキー | スペース |
@@ -1931,7 +1984,7 @@ Focus 80 のみ:
 %kc:endInclude
 
 ++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
-USBまたはbluetooth接続された[Optelec http://www.optelec.com/]社製のALVA BC640及びBC680ディスプレイの両方をサポートします。
+USBまたはbluetooth接続された[Optelec https://www.optelec.com/]社製のALVA BC640及びBC680ディスプレイの両方をサポートします。
 Braille Voyager などの旧式ディスプレイを、 Optelec 社のプロトコルコンバーター経由で接続することもできます。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
@@ -1947,11 +2000,11 @@ ALVA Bluetooth ユーティリティーでペアリングした Bluetooth 接続
 各キーの位置については、ディスプレイの説明書を参照してください。
 %kc:beginInclude
 || 名称 | キー |
-| 点字表示を前にスクロール | t1 または etouch1 |
+| 点字表示を前にスクロール | t1, etouch1 |
 | 点字表示を前の行に移動 | t2 |
 | 点字表示をフォーカスに移動 | t3 |
 | 点字表示を次の行に移動 | t4 |
-| 点字表示を次にスクロール | t5 または etouch3 |
+| 点字表示を次にスクロール | t5, etouch3 |
 | 点字セルに移動 | タッチカーソル |
 | 点字セルの位置のテキストの書式の報告 | 第2タッチカーソル |
 | HID キーボードシミュレーションの切り替え | t1+spEnter |
@@ -1961,7 +2014,7 @@ ALVA Bluetooth ユーティリティーでペアリングした Bluetooth 接続
 | タイトルの報告 | etouch2 |
 | ステータスバーの報告 | etouch4 |
 | Shift+Tabキー | sp1 |
-| Altキー | sp2 |
+| Altキー | sp2, alt |
 | Escキー | sp3 |
 | Tabキー | sp4 |
 | 上矢印キー | spUp |
@@ -1969,22 +2022,21 @@ ALVA Bluetooth ユーティリティーでペアリングした Bluetooth 接続
 | 左矢印キー | spLeft |
 | 右矢印キー | spRight |
 | Enterキー | spEnter, enter |
-| 日付と時刻の報告 | sp1+sp2 |
+| 日付と時刻の報告 | sp2+sp3 |
 | NVDAメニュー | sp1+sp3 |
 | Windows+Dキー (すべてのアプリを最小化) | sp1+sp4 |
 | Windows+Bキー (システムトレイにフォーカスを移動) | sp3+sp4 |
-| Windowsキー | sp2+Sp3, windows |
+| Windowsキー | sp1+sp2, windows |
 | Alt+Tabキー | sp2+sp4 |
 | Ctrl+Homeキー | t3+spUp |
 | Ctrl+Endキー | t3+spDown |
 | Homeキー | t3+spLeft |
 | Endキー | t3+spRight |
-| Alt キー | alt |
 | Ctrl キー | control |
 %kc:endInclude
 
-++ Handy Tech社製ディスプレイ ++[HandyTech]
-USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech http://www.handytech.de/]社製ディスプレイをサポートしています。
+++ Handy Tech 点字ディスプレイ ++[HandyTech]
+USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech https://www.handytech.de/] 点字ディスプレイをサポートしています。
 古いUSB接続のディスプレイを使用する場合は、Handy Tech社からUSBドライバーを入手してインストールする必要があります。
 
 以下の機種は NVDA が直接サポートしていませんが、[Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] と NVDA アドオンを使うことで使用できます:
@@ -1992,7 +2044,7 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 - Bookworm
 - Modular ディスプレイでファームウェアのバージョンが 1.13 またはそれ以下の場合。ファームウェアはバージョンアップされる場合があります。
 -
-以下は Handy Tech 社製ディスプレイの NVDA用キー割り当てです。
+以下は Handy Tech 点字ディスプレイの NVDA用キー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
 %kc:beginInclude
 || 名称 | キー |
@@ -2018,9 +2070,11 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-[MDV http://www.mdvbologna.it/]社製のLilliディスプレイをサポートしています。
+[MDV https://www.mdvbologna.it/]社製のLilliディスプレイをサポートしています。
 これらのディスプレイを使用するために、特別なドライバーは必要ありません。
 ディスプレイを接続して、NVDAでそれが使用できるように設定するだけです。
+
+この機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、これらのディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -2038,7 +2092,7 @@ USB、シリアルポート、Bluetoothで接続できる多くの[Handy Tech ht
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit 点字ディスプレイ ++[Baum]
-USB, Bluetooth またはシリアルポートで接続される[Baum http://www.baum.de/cms/en/]、[HumanWare http://www.humanware.com/]、[APH http://www.aph.org/]および[Orbit http://www.orbitresearch.com/]の点字ディスプレイをサポートしています。
+USB, Bluetooth またはシリアルポートで接続される[Baum https://www.baum.de/cms/en/]、[HumanWare https://www.humanware.com/]、[APH https://www.aph.org/]および[Orbit https://www.orbitresearch.com/]の点字ディスプレイをサポートしています。
 サポートしているディスプレイには以下のものが含まれます。
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2074,8 +2128,10 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-[hedo Reha-Technik http://www.hedo.de/]製のhedo ProfiLine USBに対応しました。
+[hedo Reha-Technik https://www.hedo.de/]製のhedo ProfiLine USBに対応しました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
+
+この機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、このディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -2091,8 +2147,10 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-[hedo Reha-Technik http://www.hedo.de/]製のhedo MobilLine USBがサポートされました。
+[hedo Reha-Technik https://www.hedo.de/]製のhedo MobilLine USBがサポートされました。
 最初に、製造元から提供されているUSBドライバーをインストールする必要があります。
+
+この機種では点字ディスプレイの自動検出は利用できません。
 
 以下は、このディスプレイ上で使用できるNVDA用のキー割り当てです。
 各キーの位置については、ディスプレイの説明書を参照してください。
@@ -2108,7 +2166,7 @@ USB HID モードはその他の環境でも利用できます。
 %kc:endInclude
 
 ++ HumanWare製Brailliant BI/Bシリーズ / BrailleNote Touch ++[HumanWareBrailliant]
-USBまたはBluetooth接続された[HumanWare http://www.humanware.com/]製の BI 14, BI 32, BI 40 および B 80 を含むBrailliant BI および B シリーズのディスプレイに対応しています。
+USBまたはBluetooth接続された[HumanWare https://www.humanware.com/]製の BI 14, BI 32, BI 40 および B 80 を含むBrailliant BI および B シリーズのディスプレイに対応しています。
 USB接続で HumanWare プロトコルを使用する場合は、事前に製造元から提供されたUSBドライバーをインストールする必要があります。
 プロトコルとして OpenBraille を使用する場合は USB ドライバーは不要です。
 
@@ -2160,9 +2218,9 @@ BrailleNote Touch にも対応しています。ドライバーをインスト�
 %kc:endInclude
 
 ++ HIMS製 Braille Sense/Braille EDGE/Smart Beetle/Sync Braille シリーズ ++[Hims]
-[HIMS http://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle および Sync Braille ディスプレイを USB または Bluetooth で接続すれば NVDA で利用できます。
+[HIMS https://www.hims-inc.com/] 社の Braille Sense, Braille EDGE, Smart Beetle および Sync Braille ディスプレイを USB または Bluetooth で接続すれば NVDA で利用できます。
 USB 接続のときは HIMS 社が提供する USB ドライバーをインストールしておく必要があります。
-USB ドライバーのダウンロード: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+USB ドライバーのダウンロード: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 NVDA で利用するときのキー割り当ては以下のとおりです。
 キーの場所の説明は点字ディスプレイのマニュアルをお読みください。
@@ -2232,9 +2290,11 @@ NVDA で利用するときのキー割り当ては以下のとおりです。
 %kc:endInclude
 
 ++ 清華 点字ディスプレイ ++[Seika]
-[日本テレソフト http://www.nippontelesoft.com/] 社の 清華バージョン3, 4 および 5 (40セル) および 清華80 (80セル) 点字ディスプレイをサポートしています。
-これらのディスプレイの情報は http://www.seika-braille.com/ を参照してください。
+[日本テレソフト https://www.nippontelesoft.com/] 社の 清華バージョン3, 4 および 5 (40セル) および 清華80 (80セル) 点字ディスプレイをサポートしています。
+これらのディスプレイの情報は https://www.seika-braille.com/ を参照してください。
 製造者が提供する USB ドライバーをインストールしておく必要があります。
+
+これらの機種では点字ディスプレイの自動検出は利用できません。
 
 NVDA で利用するときのキー割り当ては以下のとおりです。
 キーの場所の説明は点字ディスプレイのマニュアルをお読みください。
@@ -2261,9 +2321,10 @@ NVDA で利用するときのキー割り当ては以下のとおりです。
 - BRAILLEX Live 20, BRAILLEX Live および BRAILLEX Live Plus (USB およびBluetooth)
 -
 
+これらの機種では点字ディスプレイの自動検出は利用できません。
+
 BrxCom がインストールされていれば NVDA は BrxCom を使います。
 BrxCom は点字ディスプレイからキーボード入力を可能にするツールで、スクリーンリーダーに依存せず動作します。
-NVDAに対応した新しいバージョンの BrxCom は Papenmeier からリリースされる予定です。
 キーボード入力は Trio および BRAILLEX Live で利用可能です。
 
 多くの機種に Easy Access Bar (EAB) があり、直感的ですばやい操作ができます。
@@ -2341,7 +2402,8 @@ Trio モデルでは点字キーボードの前面に4つのキーがありま�
 -
 
 これらのディスプレイの接続方法はシリアルポートだけです。
-したがって、NVDA設定ダイアログの点字カテゴリでこのドライバを選んでから、ディスプレイが接続されているポートを選択する必要があります。
+したがって、この機種では点字ディスプレイの自動検出は利用できません。
+[点字ディスプレイの選択ダイアログ #SelectBrailleDisplay]でこのドライバーを選んでから、ディスプレイが接続されているポートを選択する必要があります。
 
 一部の機種には、直感的かつ高速な動作を可能にするイージーアクセスバー（EAB）が備わっています。
 EABは4方向に移動させることができ、一般的に各方向に2つのスイッチがあります。
@@ -2418,7 +2480,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA は [Humanware http://www.humanware.com] の BrailleNote ノートテイカーに対応しており、スクリーンリーダーのための点字ディスプレイ端末として使うことができます。
+NVDA は [Humanware https://www.humanware.com] の BrailleNote ノートテイカーに対応しており、スクリーンリーダーのための点字ディスプレイ端末として使うことができます。
 次の機種に対応しています:
 - BrailleNote Classic (シリアル接続のみ)
 - BrailleNote PK (シリアル接続およびBluetooth接続)
@@ -2428,6 +2490,11 @@ NVDA は [Humanware http://www.humanware.com] の BrailleNote ノートテイカ
 
 BrailleNote Touch については [Brailliant BI シリーズ / BrailleNote Touch #HumanWareBrailliant] を参照してください。
 
+BrailleNote PK を除いて、点字 (BT) および QWERTY (QT) の両方のキーボードに対応しています。
+BrailleNote QT の PC キーボードエミュレーションには対応していません。
+QT キーボードから点字のドットを入力することもできます。
+詳細は BrailleNote マニュアルガイドの点字ターミナルのセクションを参照してください。
+
 お使いの機種が複数の接続方法で使える場合は、 BrailleNote を NVDA で使うために、点字ディスプレイ装置の設定でポートを選ぶ必要があります。
 詳細は BrailleNote の説明書をお読みください。
 NVDA設定ダイアログの点字カテゴリでポート選択が必要になる場合もあります。
@@ -2435,6 +2502,9 @@ USBまたはBluetoothで接続する場合は、"自動選択"、"USB"、"Blueto
 シリアルポート（またはUSBシリアルコンバーター）を使う場合、あるいは、これらの選択肢が表示されない場合は、ハードウェアのポート一覧から、適切なポートを選んでください。
 
 BrailleNote Apex を USB 接続するためには、あらかじめ HumanWare が提供するドライバーをインストールしてください。
+
+BrailleNote Apex BT では、1の点と4の点の間にあるスクロールホイールにさまざまな NVDA のコマンドを割り当てて使うことができます。
+このスクロールホイールには、4方向のボタン、中央のボタン、そして時計回りまたは反時計回りに回転するホイールがあります。
 
 以下は NVDA における BrailleNote のコマンド割り当てです。
 キーの場所については BrailleNote の説明書をお読みください。
@@ -2446,6 +2516,7 @@ BrailleNote Apex を USB 接続するためには、あらかじめ HumanWare �
 | 点字表示を前の行に移動 | previous |
 | 点字表示を次の行に移動 | next |
 | 点字セルに移動 | タッチカーソル |
+| NVDA メニュー | スペース+1の点+3の点+4の点+5の点 (スペース+n) |
 | タッチカーソルの切替 | previous+next |
 | 上矢印キー | スペース+1の点 |
 | 下矢印キー | スペース+4の点 |
@@ -2465,10 +2536,43 @@ BrailleNote Apex を USB 接続するためには、あらかじめ HumanWare �
 | Windows キー | スペース+2の点+4の点+5の点+6の点 (スペース+w) |
 | Alt キー | スペース+1の点+3の点+4の点 (スペース+m) |
 | 入力ヘルプの切替 | スペース+2の点+3の点+6の点 (スペース+小文字h) |
+
+以下は点字入力モードでない場合の BrailleNote QT のコマンド割り当てです。
+
+|| 名称 | キー |
+| NVDA メニュー | read+n |
+| 上矢印キー | 上矢印 |
+| 下矢印キー | 下矢印 |
+| 左矢印キー | 左矢印 |
+| 右矢印キー | 右矢印 |
+| Page Up キー | ファンクション+上矢印 |
+| Page Down キー | ファンクション+下矢印 |
+| Home キー | ファンクション+左矢印 |
+| End キー | ファンクション+右矢印 |
+| Ctrl+Home キー | read+t |
+| Ctrl+End キー | read+b |
+| Enter キー | enter |
+| Backspace キー | backspace |
+| Tab キー | tab |
+| Shift+Tab キー | shift+tab |
+| Windows キー | read+w |
+| Alt キー | read+m |
+| 入力ヘルプの切替 | read+1 |
+
+以下はスクロールホイールに割り当てられたコマンドです:
+
+|| 名称 | キー |
+| 上矢印キー | 上矢印 |
+| 下矢印キー | 下矢印 |
+| 左矢印キー | 左矢印 |
+| 右矢印キー | 右矢印 |
+| Enter キー | 中央ボタン |
+| Tab キー | ホイール時計回り |
+| Shift+Tab キー | ホイール反時計回り |
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA は [ONCE http://www.once.es/] の EcoBraille ディスプレイに対応しています。
+NVDA は [ONCE https://www.once.es/] の EcoBraille ディスプレイに対応しています。
 次の機種に対応しています:
 - EcoBraille 20
 - EcoBraille 40
@@ -2476,7 +2580,8 @@ NVDA は [ONCE http://www.once.es/] の EcoBraille ディスプレイに対応�
 - EcoBraille Plus
 -
 
-NVDA設定ダイアログの点字カテゴリで、点字ディスプレイが接続されているポートを指定できます。
+[点字ディスプレイの選択ダイアログ #SelectBrailleDisplay] で、点字ディスプレイが接続されているポートを指定できます。
+これらの機種では点字ディスプレイの自動検出は利用できません。
 
 以下は EcoBraille ディスプレイのコマンド割り当てです。
 これらのキーの場所の詳細は [EcoBraille ドキュメント ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] を参照してください。
@@ -2513,7 +2618,7 @@ SuperBraille には物理的なキーやスクロールボタンがないため�
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris ディスプレイ ++[Eurobraille]
-NVDA は [Eurobraille http://www.eurobraille.fr/] の Esys, Esytime および Iris ディスプレイに対応しています。
+NVDA は [Eurobraille https://www.eurobraille.fr/] の Esys, Esytime および Iris ディスプレイに対応しています。
 Esys および Esytime-Evo デバイスは USB または Bluetooth での接続に対応します。
 旧モデルの Esytime デバイスは USB 接続のみに対応します。
 Iris ディスプレイはシリアルポートでの接続にのに対応します。
@@ -2597,16 +2702,18 @@ Iris および Esys ディスプレイは点字キーボードとテンキーを
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/]を使うとNVDAをより多くの点字ディスプレイに対応させることができます。
-使用するには、[BRLTTY for Windows http://www.brltty.com/download.html]をインストールする必要があります。
+[BRLTTY https://www.brltty.com/]を使うとNVDAをより多くの点字ディスプレイに対応させることができます。
+使用するには、[BRLTTY for Windows https://www.brltty.com/download.html]をインストールする必要があります。
 最新のパッケージ、例えばbrltty-win-4.2-2.exeのような名前のものをダウンロードしてインストールしてください。
 ディスプレイで使用するポートの設定を行う際、特にUSB接続のディスプレイを使用し製造元のドライバーをインストールしている場合、説明を注意深く確認してください。
 
 点字入力キーを備えている機器を使う場合は、BRLTTY 自身が文字入力の処理を行います。
 NVDAの点字入力テーブル設定は有効ではありません。
 
+BRLTTY では点字ディスプレイの自動検出は利用できません。
+
 以下はNVDA用に割り当てられたBRLTTYのコマンドです。
-BRLTTY用のコマンドが、ディスプレイのコントロールにどのように割り当てられているかに関しては、[BRLTTY key tables documentation http://www.brltty.com/doc/KeyBindings/]を確認してください。
+BRLTTY用のコマンドが、ディスプレイのコントロールにどのように割り当てられているかに関しては、[BRLTTY key tables documentation https://www.brltty.com/doc/KeyBindings/]を確認してください。
 %kc:beginInclude
 || 名称 | BRLTTYコマンド |
 | 点字表示を前にスクロール | fwinlt (左に1画面進む) |

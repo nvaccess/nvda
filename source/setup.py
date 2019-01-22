@@ -204,10 +204,17 @@ setup(
 		"excludes": ["Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
-		# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
-		# Also, the service executable used win32api, which some add-ons use for various purposes.
-		# Explicitly include them so we don't break some add-ons.
-		"includes": ["nvdaBuiltin", "bisect", "win32api"],
+		"includes": [
+			"nvdaBuiltin",
+			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
+			"bisect",
+			# Also, the previous service executable used win32api, which some add-ons use for various purposes.
+			"win32api",
+			# #8628: include an import module for validate, which older add-ons import directly.
+			# Since configobj 5.1.0, validate is a part of the configobj package
+			# and should be imported as configobj.validate instead
+			"validate",
+		],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
