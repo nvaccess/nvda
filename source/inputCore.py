@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2010-2019 NV Access Limited, Babbage B.V.
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -575,6 +575,12 @@ class _AllGestureMappingsRetriever(object):
 		if isinstance(braille.handler.display, baseObject.ScriptableObject):
 			self.addObj(braille.handler.display)
 
+		# Vision enhancement providers
+		import vision
+		for provider in vision.handler.initializedProviders:
+			if isinstance(provider, baseObject.ScriptableObject):
+				self.addObj(provider)
+
 		# Global plugins.
 		import globalPluginHandler
 		for plugin in globalPluginHandler.runningPlugins:
@@ -584,12 +590,6 @@ class _AllGestureMappingsRetriever(object):
 		app = obj.appModule
 		if app:
 			self.addObj(app)
-
-		# Vision enhancement providers
-		import vision
-		for provider in vision.handler.initializedProviders:
-			if isinstance(provider, baseObject.ScriptableObject):
-				self.addObj(provider)
 
 		# Tree interceptor.
 		ti = obj.treeInterceptor

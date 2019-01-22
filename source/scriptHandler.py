@@ -1,6 +1,6 @@
 #scriptHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2007-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -85,6 +85,13 @@ def findScript(gesture):
 		if func:
 			return func
 
+	# Vision enhancement provider level
+	for provider in vision.handler.initializedProviders:
+		if isinstance(provider, baseObject.ScriptableObject):
+			func = _getObjScript(provider, gesture, globalMapScripts)
+			if func:
+				return func
+
 	# Global plugin level.
 	for plugin in globalPluginHandler.runningPlugins:
 		func = _getObjScript(plugin, gesture, globalMapScripts)
@@ -116,13 +123,6 @@ def findScript(gesture):
 		func = _getObjScript(obj, gesture, globalMapScripts)
 		if func and getattr(func, 'canPropagate', False):
 			return func
-
-	# Vision enhancement provider level
-	for provider in vision.handler.initializedProviders:
-		if isinstance(provider, baseObject.ScriptableObject):
-			func = _getObjScript(provider, gesture, globalMapScripts)
-			if func:
-				return func
 
 	# Global commands.
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
