@@ -132,8 +132,6 @@ def openProcess(*args):
 def closeHandle(*args):
 	return kernel32.CloseHandle(*args)
 
-#added by Rui Batista to use on Say_battery_status script 
-#copied from platform sdk documentation (with required changes to work in python) 
 class SYSTEM_POWER_STATUS(ctypes.Structure):
 	_fields_ = [("ACLineStatus", ctypes.c_byte), ("BatteryFlag", ctypes.c_byte), ("BatteryLifePercent", ctypes.c_byte), ("Reserved1", ctypes.c_byte), ("BatteryLifeTime", ctypes.wintypes.DWORD), ("BatteryFullLiveTime", ctypes.wintypes.DWORD)]
 
@@ -397,3 +395,15 @@ def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
 	# If MoveFileExW fails, Windows will raise appropriate errors.
 	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
 		raise ctypes.WinError()
+
+# Thread execution states
+ES_CONTINUOUS = 0x80000000
+ES_DISPLAY_REQUIRED = 0x2
+ES_SYSTEM_REQUIRED = 0x1
+
+kernel32.SetThreadExecutionState.restype = ctypes.wintypes.DWORD
+def SetThreadExecutionState(esFlags):
+	res = kernel32.SetThreadExecutionState(esFlags)
+	if not res:
+		raise WinError()
+	return res
