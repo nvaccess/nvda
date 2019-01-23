@@ -1537,11 +1537,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleBrowseMovesFocus(self,gesture):
 		if config.conf["virtualBuffers"]["focusFollowsBrowse"]:
 			# Translators: presented when toggled.
-			state = _("Browse mode moves system focus off")
+			state = _("Fast browse mode")
 			config.conf["virtualBuffers"]["focusFollowsBrowse"]=False
 		else:
 			# Translators: presented when toggled.
-			state = _("Browse mode moves system focus on")
+			state = _("Legacy browse mode")
 			config.conf["virtualBuffers"]["focusFollowsBrowse"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle browse moves focus command.
