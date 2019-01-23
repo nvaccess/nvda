@@ -76,7 +76,6 @@ RENAMED_TABLES = {
 	"mn-MN.utb":"mn-MN-g1.utb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
-	"no-no.ctb":"no-no-8dot.utb",
 	"no-no-comp8.ctb":"no-no-8dot.utb",
 	"ru-compbrl.ctb":"ru.ctb",
 	"sk-sk-g1.utb":"sk-g1.ctb",
