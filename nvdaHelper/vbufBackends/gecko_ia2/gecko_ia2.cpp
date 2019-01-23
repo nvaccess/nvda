@@ -332,6 +332,62 @@ bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
 }
 
+/**
+ * Get the selected item or the first item if no item is selected.
+ */
+CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
+	IAccessible2* container, const map<wstring, wstring>& attribs
+) {
+	if (this->toolkitName.compare(L"Chrome") == 0) {
+		const auto attribsIt = attribs.find(L"tag");
+		if (attribsIt != attribs.end() &&
+				attribsIt->second.compare(L"select") == 0) {
+			// In a <select size>1>, Chrome reports that list items are focusable,
+			// but programmatically focusing them does nothing. Therefore, we don't
+			// want to render this in Chrome because a user wouldn't be able to focus
+			// these list boxes in browse mode if we did.
+			return nullptr;
+		}
+	}
+
+	CComVariant selection;
+	HRESULT hr = container->get_accSelection(&selection);
+	if (FAILED(hr)) {
+		LOG_DEBUGWARNING(L"accSelection failed with " << hr);
+		return nullptr;
+	}
+
+	if (selection.vt == VT_DISPATCH) {
+		// Single selected item, so just return it.
+		return CComQIPtr<IAccessible2>(selection.pdispVal);
+	}
+
+	if (selection.vt == VT_UNKNOWN) {
+		// One or more selected items in an IEnumVARIANT.
+		auto enumVar = CComQIPtr<IEnumVARIANT>(selection.punkVal);
+		if (!enumVar) {
+			return nullptr;
+		}
+		// We only care about the first selected item.
+		CComVariant items[1];
+		if (FAILED(enumVar->Next(1, items, nullptr))) {
+			return nullptr;
+		}
+		if (items[0].vt != VT_DISPATCH) {
+			return nullptr;
+		}
+		return CComQIPtr<IAccessible2>(items[0].pdispVal);
+	}
+
+	// No selection, so return the first child.
+	CComPtr<IDispatch> child;
+	if (SUCCEEDED(container->get_accChild(CComVariant(1), &child))) {
+		return CComQIPtr<IAccessible2>(child);
+	}
+
+	return nullptr;
+}
+
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
 const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
 
@@ -618,17 +674,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether to render children, including text content.
 	// Note that we may still render the name, value, etc. even if we don't render children.
 	bool renderChildren = true;
+	// Whether this is a selection container for which only the selected item should be rendered;
+	// currently, list boxes and trees.
+	bool renderSelectedItemOnly = false;
 	if (isAriaHidden) {
 		// aria-hidden
 		isVisible = false;
 	} else {
 		// If a node has children, it's visible.
 		isVisible = width > 0 && height > 0 || childCount > 0;
+		if ((role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+			|| role == ROLE_SYSTEM_OUTLINE
+		) {
+			renderSelectedItemOnly = true;
+		}
 		if (IA2TextIsUnneededSpace
 			|| role == ROLE_SYSTEM_COMBOBOX
-			|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+			|| renderSelectedItemOnly
 			|| isEmbeddedApp
-			|| role == ROLE_SYSTEM_OUTLINE
 			|| role == ROLE_SYSTEM_EQUATION
 			|| (nameIsContent && nameIsExplicit)
 		) {
@@ -899,6 +962,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			}
 			free(varChildren);
 
+		} else if (renderSelectedItemOnly) {
+			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
+			if (item) {
+				if (tempNode = this->fillVBuf(item, buffer, parentNode, previousNode,
+					paccTable, paccTable2, tableID, presentationalRowNumber,
+					ignoreInteractiveUnlabelledGraphics)
+				) {
+					previousNode=tempNode;
+					// The container itself might not always fire selection events.
+					// Therefore, we rely on a stateChange event on the item (since
+					// these fire for both selection and unselection) and have the item
+					// re-render its parent.
+					static_cast<VBufStorage_controlFieldNode_t*>(tempNode)->requiresParentUpdate = true;
+				} else {
+					LOG_DEBUG(L"Error in calling fillVBuf");
+				}
+			}
+
 		} else {
 			// There were no children to render.
 			if(role==ROLE_SYSTEM_GRAPHIC) {
@@ -1037,6 +1118,9 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_DESCRIPTIONCHANGE:
 		case EVENT_OBJECT_STATECHANGE:
+		case EVENT_OBJECT_SELECTIONADD:
+		case EVENT_OBJECT_SELECTIONREMOVE:
+		case EVENT_OBJECT_SELECTIONWITHIN:
 		case IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:
 		break;
 		default:

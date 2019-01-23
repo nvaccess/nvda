@@ -12,6 +12,9 @@ What's New in NVDA
 - Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
 - It is possible to turn off NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
 - The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
+- In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
+ - This works in Firefox 66 and later.
+ - This does not work for certain list boxes (HTML select controls) in Chrome.
 
 
 == Changes ==
@@ -40,6 +43,7 @@ What's New in NVDA
 - NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)
 - The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)
 - Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)
+- In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)
 
 
 == Changes for Developers ==
