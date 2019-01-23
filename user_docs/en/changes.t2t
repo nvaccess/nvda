@@ -38,6 +38,8 @@ What's New in NVDA
 - Significant speed improvements when navigating documents in Microsoft Word and Outlook 2016 build 9000 or higher, due to NVDA's UI Automation support for Microsoft Word now being used by default for these builds. (#7409)
 - NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.
 - NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)
+- The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)
+- Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)
 
 
 == Changes for Developers ==
@@ -49,6 +51,7 @@ What's New in NVDA
 - OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)
 - Added a boundingRect property to TextInfo objects to retrieve the bounding rectangle of a range of text. (#8371)
 - Properties and methods within classes can now be marked as abstract in NVDA. These classes will raise an error if instantiated. (#8294, #8652, #8658)
+- NVDA can log the time since input when text is spoken, which helps in measuring perceived responsiveness. This can be enabled by setting the timeSinceInput setting to True in the debugLog section of the NVDA configuration. (#9167)
 
 
 = 2018.4.1 =

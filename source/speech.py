@@ -240,6 +240,8 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 				synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 			count = len(char)
 			index=count+1
+			import inputCore
+			inputCore.logTimeSinceInput()
 			log.io("Speaking character %r"%char)
 			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
 			if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
@@ -553,6 +555,8 @@ def speak(speechSequence,symbolLevel=None):
 		# After normalisation, the sequence is empty.
 		# There's nothing to speak.
 		return
+	import inputCore
+	inputCore.logTimeSinceInput()
 	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
