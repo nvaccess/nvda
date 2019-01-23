@@ -166,6 +166,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList:
+			# Overlay class for Outlook message viewer when UI Automation for MS Word is enabled.
 			clsList.insert(0,OutlookUIAWordDocument)
 		if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
 			clsList.insert(0,UIAGridRow)
@@ -630,6 +631,7 @@ class OutlookWordDocument(WordDocument):
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
 
 class OutlookUIAWordDocument(UIAWordDocument):
+	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
 
 	def _get_isReadonlyViewer(self):
 		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
