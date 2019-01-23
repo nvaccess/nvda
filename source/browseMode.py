@@ -819,6 +819,8 @@ del qn
 
 PT = BrowseModeTreeInterceptor.addPassThrough
 PT("kb:Control+enter")
+PT("kb:Shift+enter")
+PT("kb:Control+Shift+enter")
 PT("kb:Alt+enter")
 PT("kb:Applications")
 del PT
