@@ -30,7 +30,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
-import time
 from locationHelper import RectLTWH
 import ui
 
@@ -135,7 +134,7 @@ class UIATextInfo(textInfos.TextInfo):
 		formatField=textInfos.FormatField()
 		if not isinstance(textRange,UIAHandler.IUIAutomationTextRange):
 			raise ValueError("%s is not a text range"%textRange)
-		fetchAnnotationTypes=False
+		fetchAnnotationTypes=formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]
 		try:
 			textRange=textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 		except (COMError,AttributeError):
@@ -162,8 +161,7 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_StyleNameAttributeId)
 			if formatConfig["reportHeadings"]:
 				IDs.add(UIAHandler.UIA_StyleIdAttributeId)
-			if formatConfig["reportSpellingErrors"] or formatConfig["reportComments"] or formatConfig["reportRevisions"]:
-				fetchAnnotationTypes=True
+			if fetchAnnotationTypes:
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher=BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
@@ -571,11 +569,18 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildIndex=childCount-1
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
+			rootElementControlType=rootElement.cachedControlType
 			for index in xrange(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
 					continue
+				if rootElementControlType==UIAHandler.UIA_DataItemControlTypeId:
+					# #9090: MS Word has a rare bug where  a child of a table cell's UIA textRange can be its containing page.
+					# At very least stop the infinite recursion.
+					childAutomationID=childElement.cachedAutomationId or ""
+					if childAutomationID.startswith('UIA_AutomationId_Word_Page_'):
+						continue
 				if log.isEnabledFor(log.DEBUG):
 					log.debug("Fetched child %s (%s)"%(index,childElement.currentLocalizedControlType))
 				try:
@@ -762,6 +767,8 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif UIAClassName=="NetUIDropdownAnchor":
+			clsList.append(NetUIDropdownAnchor)
 		elif self.TextInfo==UIATextInfo and (UIAClassName=='_WwG' or self.windowClassName=='_WwG' or self.UIAElement.cachedAutomationID.startswith('UIA_AutomationId_Word_Content')):
 			from .wordDocument import WordDocument, WordDocumentNode
 			if self.role==controlTypes.ROLE_DOCUMENT:
@@ -774,7 +781,7 @@ class UIA(Window):
 		elif self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and "ToastView" in self.UIAElement.cachedAutomationId: # Windows 10
 			clsList.append(Toast_win10)
 		elif self.UIAElement.cachedFrameworkID in ("InternetExplorer","MicrosoftEdge"):
-			import edge
+			from . import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
 			elif (self.UIATextPattern and
@@ -789,7 +796,7 @@ class UIA(Window):
 				clsList.append(edge.EdgeNode)
 		elif self.role==controlTypes.ROLE_DOCUMENT and self.UIAElement.cachedAutomationId=="Microsoft.Windows.PDF.DocumentView":
 				# PDFs
-				import edge
+				from . import edge
 				clsList.append(edge.EdgeHTMLRoot)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
@@ -803,7 +810,10 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
-		elif UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId:
+		# Some combo boxes and looping selectors do not expose value pattern.
+		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
+		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
+		or (UIAControlType==UIAHandler.UIA_ListControlTypeId and "LoopingSelector" in UIAClassName)):
 			try:
 				if not self._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
 					clsList.append(ComboBoxWithoutValuePattern)
@@ -1638,3 +1648,14 @@ class SuggestionListItem(UIA):
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, positionInfo=self.positionInfo))
+
+# NetUIDropdownAnchor comboBoxes (such as in the MS Office Options dialog)
+class NetUIDropdownAnchor(UIA):
+
+	def _get_name(self):
+		name=super(NetUIDropdownAnchor,self).name
+		# In MS Office 2010, these combo boxes had no name.
+		# However, the name can be found as the direct previous sibling label element. 
+		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
+			name=self.previous.name
+		return name
