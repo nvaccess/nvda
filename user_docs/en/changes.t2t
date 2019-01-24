@@ -44,6 +44,7 @@ What's New in NVDA
 - The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)
 - Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)
 - In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)
+- Browse mode is now correctly turned on by default when reading messages in Outlook 2016/365 if using NVDA's experimental UI Automation support for Word Documents. (#9188)
 
 
 == Changes for Developers ==
