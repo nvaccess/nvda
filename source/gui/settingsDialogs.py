@@ -1928,6 +1928,67 @@ class UwpOcrPanel(SettingsPanel):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 
+class AdvancedPanel(SettingsPanel):
+	# Translators: This is the label for the Advanced settings panel.
+	title = _("Advanced")
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
+		# Translators: This is a label appearing on the Advanced settings panel.
+		panelText =_("Warning! The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA  developers.")
+		sHelper.addItem(wx.StaticText(self, label=panelText))
+
+		# Translators: This is the label for a group of  Advanced options in the 
+		#  Advanced settings panel
+		groupText = _("Microsoft UI Automation")
+		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		sHelper.addItem(UIAGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
+
+		# Translators: This is the label for a group of  Advanced options in the 
+		#  Advanced settings panel
+		groupText = _("Editable Text")
+		editableTextGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		sHelper.addItem(editableTextGroup)
+
+		# Translators: This is the label for a numeric control in the
+		#  Advanced settings panel.
+		label = _("Caret movement timeout (in ms)")
+		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(label,nvdaControls.SelectOnFocusSpinCtrl,
+			min=0, max=2000, 
+			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
+		)
+
+		# Translators: This is the label for a group of  Advanced options in the 
+		#  Advanced settings panel
+		groupText = _("Debug logging categories")
+		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		sHelper.addItem(debugLogGroup)
+
+		self.debugLogCheckboxes={}
+		for key in (
+			"hwIo",
+			"audioDucking",
+			"gui",
+			"louis",
+			"timeSinceInput",
+		):
+			checkbox=debugLogGroup.addItem(wx.CheckBox(self, label=key))
+			checkbox.SetValue(config.conf["debugLog"][key])
+			self.debugLogCheckboxes[key]=checkbox
+
+	def onSave(self):
+		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		for k,v in self.debugLogCheckboxes.iteritems():
+			config.conf['debugLog'][k]=v.IsChecked()
+
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
@@ -2481,6 +2542,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
+	# And finally the Advanced panel which should always be last.
+	categoryClasses.append(AdvancedPanel)
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
