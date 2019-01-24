@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -437,7 +437,8 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
 	//are we writing a transparent background?
-	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
+	BOOL transparentBackground=!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT);
+	if(tm.tmCharSet!=SYMBOL_CHARSET&&transparentBackground) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
@@ -498,7 +499,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.italic=logFont.lfItalic?true:false;
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
-		formatInfo.backgroundColor=GetBkColor(hdc);
+		formatInfo.backgroundColor=GetBkColor(hdc)|(transparentBackground<<24);
 		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
