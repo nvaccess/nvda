@@ -7,8 +7,8 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
-! sentence ending	(?<=[^\s])\s?\!{1,3}(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s])\s?\?{1,3}(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’)\s]|$)
 ... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’)\s]|$)
 … sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’)\s]|$)
 # Phrase endings.
@@ -16,6 +16,7 @@ complexSymbols:
 : phrase ending	(?<=[^\s:])\s?:(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
+thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
@@ -38,6 +39,7 @@ symbols:
 : phrase ending	deux points	# : fin de phrase
 
 decimal point		# virgule décimale
+thousands separator		# point des mille
 dates .	 	all	always	# point de date
 dates /	 	all	always	# barre oblique de date
 negative number	moins	none	norep	# - devant un nombre
