@@ -1,6 +1,6 @@
 #colors.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,6 +18,8 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 		"""factory method to create an RGB from a COLORREF ctypes instance"""
 		if isinstance(c,COLORREF):
 			c=c.value
+		if (c>>24)&0xff:
+			return cls(-1,-1,-1)
 		return cls(c&0xff,(c>>8)&0xff,(c>>16)&0xff)
 
 	_re_RGBFunctionString=re.compile(r'rgb\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)',re.I)
@@ -83,6 +85,11 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 		foundName=RGBToNamesCache.get(self,None)
 		if foundName:
 			return foundName
+		# If one of the RGB values is negative, return unknown
+		if self.red < 0 or self.green < 0 or self.blue < 0:
+			# Translators: an unknown color.
+			RGBToNamesCache[self] = unknownColor = _("unknown")
+			return unknownColor
 		# convert to hsv (hue, saturation, value)
 		h,s,v=colorsys.rgb_to_hsv(self.red/255.0,self.green/255.0,self.blue/255.0)
 		sv=s*v
