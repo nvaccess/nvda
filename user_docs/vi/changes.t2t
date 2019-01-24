@@ -3,6 +3,10 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4.1 =
+ Bản phát hành này sửa lỗi làm cho NVDA bị treo lúc khởi động, nếu cài đặt ngôn ngữ giao diện người dùng là tiếng Aragon. (#9089)
+
+
 = 2018.4 =
 Các cải tiến của bản phát hành này bao gồm cải thiện khả năng vận hành trong các phiên bản gần đây của Mozilla Firefox, đọc biểu tượng cảm xúc với tất cả các bộ đọc, thông báo trạng thái đã trả lời hay chuyển tiếp trong Outlook, thông báo khoảng cách của con trỏ đến lề của một trang trong Microsoft Word và sửa nhiều lỗi.
 
@@ -1148,6 +1152,76 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 - NVDA không còn bị lỗi không chuyển được sang chế độ duyệt màn hình khi con trỏ duyệt đối tượng không đứng chính xác ở vị trí màn hình. Trường hợp này, con trỏ duyệt sẽ được đặt ở trên cùng của màn hình. (#3454)
 - Sửa lỗi driver màn hình nổi của Freedom Scientific khi chọn cổng kết nối là USB trong vài trường hợp. (#3509, #3662)
 - Sửa lỗi không nhận được phím trên các màn hình chữ nổi của Freedom Scientific  trong vài trường hợp. (#3401, #3662)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+= 2013.2 =
+
+== Các tính năng mới ==
+- Hỗ trợ Chromium Embedded Framework, là một điều khiển trình duyệt web được dùng trong vài ứng dụng. (#3108)
+- Biến thể mới cho giọng đọc eSpeak: Iven3.
+- Trong Skype, các nội dung chat mới được đọc tự động khi đứng tại cuộc trò chuyện. (#2298)
+- Hỗ trợ cho Tween, bao gồm đọc tên các tab và giảm độ chi tiết khi đọc tweet.
+- Giờ bạn có thể vô hiệu hóa việc hiển thị thông điệp của NVDA trên màn hình chữ nổi bằng cách thiết lập thời gian cho thông điệp thành 0 trong hộp thoại cài đặt chữ nổi. (#2482)
+- Trong Trình Quản Lý Add-on, giờ đã có nút xem và tải các add-on để mở trang web Add-on của NVDA, nơi bạn có thể tìm và tải các add-on. (#3209)
+- Trong hộp thoại chào mừng của NVDA luôn hiển thị ở lần khởi động NVDA đầu tiên, bạn có thể thiết lập để NVDA tự khởi động sau khi đăng nhập vào Windows. (#2234)
+- Chế độ ngủ được bật tự động khi dùng Dolphin Cicero. (#2055)
+- Phiên bản Windows x64 của Miranda IM/Miranda NG giờ đã được hỗ trợ. (#3296)
+- Các gợi ý tìm kiếm trong  Start Screen của Windows 8.1 đã được đọc tự động. (#3322)
+- Hỗ trợ duyệt và chỉnh sửa các bảng tính trong Microsoft Excel 2013. (#3360)
+- Các màn hình nổi Focus 14 Blue và Focus 80 Blue của Freedom Scientific, luôn cả Focus 40 Blue trong vài cấu hình nhất định mà trước đây không được hỗ trợ, giờ đã được hỗ trợ khi kết nối qua Bluetooth. (#3307)
+- Các gợi ý tự động hoàn tất giờ đã được đọc trong Outlook 2010. (#2816)
+- Các bản dịch chữ nổi mới: tiếng Anh (Anh) chữ nổi máy tính, Hàn quốc cấp 2, chữ nổi máy tính tiếng Nga.
+- Ngôn ngữ mới: Farsi. (#1427)
+
+
+== Các thay đổi ==
+- trên một màn hình cảm ứng, thực hiện thao tác vuốt một ngón qua trái hay phải khi trong chế độ đối tượng giờ đây sẽ di chuyển lùi hay tới tất cả các đối tượng chứ không chỉ di chuyển trong đối tượng chứa. Vuốt hai ngón tay qua trái hay phải để thực hiện hành động nguyên thủy của việc di chuyển đến đối tượng trước hay kế trong đối tượng chứa hiện tại.
+- Hộp kiểm Thông báo kiểu bảng trong hộp thoại cài đặt chế độ duyệt giờ đã được đổi tên thành Bao gồm kiểu bảng để thể hiện rằng việc di chuyển nhanh cũng không định vị chúng nếu không đánh dấu chọn hộp kiểm này. (#3140)
+- Flat review đã được thay thế với chế độ duyệt đối tượng, duyệt tài liệu và duyệt màn hình. (#2996)
+ - Duyệt đối tượng chỉ xem nội dung ở đối tượng điều hướng, duyệt tài liệu xem tất cả nội dung trong tài liệu ở chế độ duyệt (nếu có) và duyệt màn hình xem nội dung màn hình của ứng dụng hiện tại.
+ - Những lệnh di chuyển trước đây của flat review giờ đây sẽ chuyển giữa các chế độ duyệt mới này.
+ - Đối tượng điều hướng sẽ tự đi theo con trỏ duyệt như vẫn còn đối tượng sâu nhất tại vị trí của con trỏ duyệt khi ở trong chế độ duyệt tài liệu hoặc duyệt màn hình.
+ - Sau khi chuyển sang chế độ duyệt màn hình, NVDA sẽ ở chế độ này cho đến khi bạn chủ động chuyển về chế độ duyệt tài liệu hay duyệt đối tượng.
+ - Khi trong chế độ duyệt tài liệu hay duyệt đối tượng, NVDA có thể tự chuyển giữa hai chế độ này, tùy thuộc vào việc bạn có đang di chuyển trong tài liệu ở chế độ duyệt hay không.
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 2.5.3. (#3371)
+
+
+== Sửa lỗi ==
+- Việc kích hoạt một đối tượng sẽ thông báo hoạt động trước khi thực hiện hoạt động đó, thay vì thông báo sau (ví dụ: mở rộng khi đang mở rộng thay vì thu hẹp). (#2982)
+- Đọc và thông báo con trỏ chính xác hơn trong nhiều trường nhập liệu của những phiên bản Skype gần đây như trường tìm kiếm và trò chuyện. (#1601, #3036)
+- Trong danh sách trò chuyện gần đây của Skype, số sự kiện mới đã được đọc cho mỗi cuộc trò chuyện nếu có. (#1446)
+- Cải thiện khả năng theo dõi và thứ tự đọc con trỏ cho việc đọc văn bản từ phải sang trái trên màn hình; ví dụ: chỉnh sửa văn bản tiếng Ả rập với Microsoft Excel. (#1601) 
+- Di chuyển nhanh tới các nút và biểu mẫu sẽ xác định các liên kết được đánh dấu là nút cho mục tiêu tiếp cận trong Internet Explorer. (#2750)
+- Ở chế độ duyệt, nội dung trong cây thư mục không còn bị trích xuất như đại diện phẳng không hữu dụng. Bạn có thể bấm enter tại một cây thư mục để tương tác với nó ở chế độ focus. (#3023)
+- Bấm alt+mũi tên xuống hay alt+mũi tên lên để mở rộng một hộp xổ khi ở chế độ focus không còn tình trạng chuyển sang chế độ duyệt. (#2340)
+- Trong Internet Explorer 10, các ô trong bảng không còn kích hoạt chế độ focus, trừ khi chúng được nhà phát triển web làm cho có focus. (#3248)
+- NVDA không còn bị lỗi không khởi động được  khi thời gian hệ thống là sớm hơn thời gian của lần cập nhật cuối cùng. (#3260)
+- Nếu có thanh tiến trình hiển thị trên màn hình chữ nổi, màn hình chữ nổi sẽ được cập nhật khi thanh tiến trình có thay đổi. (#3258)
+- Ở chế độ duyệt trong các ứng dụng của Mozilla, các chú thích cho bảng không còn bị trích xuất hai lần. Thêm nữa, tóm tắt cũng được hiển thị khi có chú thích. (#3196)
+- Khi thay đổi ngôn ngữ đầu vào trong Windows 8, NVDA giờ đây đã đọc ngôn ngữ chính xác thay vì là ngôn ngữ trước đó.
+- NVDA giờ đây đã thông báo các chế độ thay đổi của IME conversion trong Windows 8.
+- NVDA không còn các thông báo rác trên Desktop khi dùng phương thức nhập là Google tiếng Nhật hay Atok IME. (#3234)
+- Trong Windows 7 và cao hơn, NVDA không còn thông báo một cách bất hợp lý rằng nhận dạng giọng nói hay nhập liệu cảm ứng là một thay đổi ngôn ngữ bàn phím.
+- NVDA không còn đọc kí tự đặc biệt (0x7f) khi bấm control+xóa lùi trong vài trình soạn thảo với chế độ đọc kí tự khi gõ được bật. (#3315)
+- eSpeak không còn thay đổi cao độ, âm lượng, v...v.... ngoài ý muốn khi NVDA đọc các nội dung có chứa một số kí tự điều khiển nhất định hay XML. (#3334) (hồi quy của #437)
+- Trong các ứng dụng Java, các thay đổi của nhãn hay giá trị của điều khiển có focus giờ đã được tự đọc, và được phản ánh khi truy vấn điều khiển sau đó. (#3119)
+- Trong các điều khiển của Scintilla, dòng giờ đây đã được đọc chính xác khi bật word wrap. (#885)
+- Trong các ứng dụng của Mozilla, tên các thành phần trong danh sách có thuộc tính chỉ đọc giờ đây đã được thông báo chính xác; ví dụ: khi duyệt các tweet ở chế độ focus trên twitter.com. (#3327)
+- Nội dung các hộp thoại xác nhận trong Microsoft Office 2013 giờ đây đã được tự đọc khi chúng xuất hiện. 
+- Cải thiện khả năng vận hành khi duyệt qua một số bảng nhất định trong Microsoft Word. (#3326)
+- Các lệnh duyệt bảng của NVDA (control+alt+mũi tên) hoạt động tốt hơn trong một số bảng nhất định của Microsoft Word mà một ô bao gồm nhiều dòng.
+- Nếu đang mở hộp thoại Quản lý các Add-on, việc mở lại nó (từ trình đơn công cụ hoặc mở một tập tin add-on), không còn bị lỗi hoặc không thể đóng hộp thoại Quản lý các Add-on. (#3351)
+- NVDA không còn bị treo trong một số hộp thoại nhất định khi dùng Office 2010 IME tiếng Nhật hay tiếng Trung Quốc. (#3064)
+- Nhiều khoảng trắng không còn bị gom lại thành một trên các màn hình chữ nổi. (#1366)
+- Các công cụ Zend Eclipse PHP giờ đây đã hoạt động giống như Eclipse. (#3353)
+- Trong Internet Explorer, lại không cần phải bấm tab để tương tác với một đối tượng nhún. (như nội dung Flash) sau khi bấm enter tại đó. (#3364)
+- Khi soạn thảo nội dung trong Microsoft PowerPoint, dòng cuối cùng không còn bị đọc như dòng phía trên nếu nó là dòng trắng. (#3403)
+- Trong Microsoft PowerPoint, các đối tượng không còn thỉnh thoảng bị đọc hai lần khi bạn chọn hay chỉnh sửa chúng. (#3394)
+- NVDA không còn làm cho Adobe Reader bị lỗi hay treo với một vài mẫu tài liệu PDF bị định dạng sai quy cách, có các dòng nằm ngoài bảng biểu. (#3399)
+- NVDA giờ đã nhận dạng chính xác slide kế tiếp với focus khi xóa một slide trong Microsoft PowerPoint ở chế độ xem thumbnails. (#3415)
 
 
 == Các thay đổi cho nhà phát triển ==
