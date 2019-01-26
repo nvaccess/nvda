@@ -595,12 +595,14 @@ Consultați documentația MathPlayer despre comenzile de navigare pentru informa
 
 Când doriți să vă reîntoarceți la document, pur și simplu apăsați tasta „escape”.
 
-+ Braille +[Braille]
+++ Braille ++[BrailleSupport]
 Dacă dețineți un afișaj braille, NVDA poate afișa informația în braille.
 Dacă afișajul dumneavoastră braille are o tastatură stil Perkins, puteți, de asemenea, să introduceți braille abreviat și neabreviat.
+NVDA recunoaște automat multe afișaje braile.
+NVDA pune la dispoziție multe coduri braille pentru diferite limbi străine inclizând braille abreviat, neabrevial și computer braille.
 
-Vă rugăm să citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru informații despre acestea. 
-Puteți configura braille-ul folosind [Categoria setărilor braille #SetariBraille], aflată în [Setările NVDA #NVDASettings].
+Vă rugăm să citiți secțiunea [Afișaje braille suportate #SupportedBrailleDisplays] pentru informații despre acestea. De asemenea in aceeași secțiune puteți găsi informații despre compatibilitatea afișajului braille cu funcționalitatea de recunoaștere automată a afișajelor braille în NVDA.
+Puteți configura afișajul braille în [categoria braille #BrailleSettings] din dialogul [setări #NVDASettings].
 
 ++ Abrevieri pentru tipuri de controale, stări și repere ++[BrailleAbbreviations]
 Pentru a încăpea cât mai multe informații pe un afișaj braille, au fost definite următoarele abrevieri pentru a indica tipul de controale, stările, precum și reperele.
@@ -1241,8 +1243,12 @@ Dacă există o eroare la încărcarea driver-ului afișajului, NVDA vă va noti
 ==== Afișaj braille ====[SelectBrailleDisplayDisplay]
 Această casetă combinată vă prezintă mai multe opțiuni, depinzând de ce drivere de afișaje braille sunt disponibile pe sistemul dumneavoastră.
 Deplasați-vă printre ele cu săgețile.
+Opțiunea „automat” caută orice afișaj braille suportat care este conectat și îl activează în fundal.
+Dacă alegeți această opțiune și conectați un afișaj braille suportat prin Bluetooth sau USB, NVDA se va conecta automat cu acel afișaj.
+
 Fără braille înseamnă că nu folosiți braille.
-Citiți secțiunea [Afișaje braille suportate #AfisBrailleCompatibile] pentru mai multe informații despre acestea și care dintre ele suportă detectarea automată în fundal.
+
+Citiți secțiunea [Afișaje braille suportate #SupportedBrailleDisplays] pentru mai multe informații despre acestea și care dintre ele suportă detectarea automată în fundal.
 
 ==== Port ====[SelectBrailleDisplayPort]
 Această opțiune, dacă este disponibilă, vă permite să alegeți ce port sau tip de conexiune vor fi utilizate pentru a comunica cu afișajul braille pe care l-ați ales.
@@ -1253,7 +1259,7 @@ Opțiunile comune sunt "Automat" (care indică NVDA să utilizeze procedura impl
 
 Această opțiune nu va fi disponibilă dacă afișajul dvs. braille acceptă numai detectarea automată a porturilor.
 
-Ați putea consulta documentație pentru afișajul dumneavoastră braille în secțiunea [afișaje braille suportate #SupportedBrailleDisplays]
+Ați putea consulta documentația pentru afișajul dumneavoastră braille în secțiunea [afișaje braille suportate #SupportedBrailleDisplays]
 
 +++ Tastatură (NVDA+control+k) +++[KeyboardSettings]
 Această categorie de setări conține următoarele opțiuni:
@@ -1886,7 +1892,7 @@ Pentru mai multe informații, vă rugăm vizitați site-ul Audiologic la www.aud
 
 Acest sintetizator nu suportă [funcționalitatea de silabisire #SpeechSettingsUseSpelling].
 
-+ Afișajele Braille compatibile +[AfisBrailleCompatibile]
++ Afișajele Braille compatibile +[SupportedBrailleDisplays]
 Această secțiune conține informații despre afișajele Braille suportate de NVDA.
 
 ++ Afișaje care suportă detectarea automată în fundal ++[AutomaticDetection]
@@ -1985,11 +1991,11 @@ Urmează asocierile de taste pentru acest afișaj și NVDA.
 Vă rugăm să consultați Documentația afișajului pentru informații despre localizarea tastelor pe dispozitiv.
 %kc:beginInclude
 || Nume | Tastă |
-| Derulează afișajul braille înapoi | t1 sau etouch1 |
+| Derulează afișajul braille înapoi | t1, etouch1 |
 | Mută afișajul braille la rândul anterior | t2 |
 | Mută la focalizarea curentă | t3 |
 | Mută afișajul braille la rândul următor | t4 |
-| Derulează afișajul braille înainte | t5 sau etouch3 |
+| Derulează afișajul braille înainte | t5, etouch3 |
 | Mută la celula braille | routing |
 | Raportează formatul textului de sub celula braille | routing secundară |
 | Comută simularea HID a tastaturii | t1+spEnter |
@@ -1999,7 +2005,7 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | Raportează titlu | etouch2 |
 | Raportează bara de stare | etouch4 |
 | tasta shift+tab | sp1 |
-| tasta alt | sp2 |
+| tasta alt | sp2, alt|
 | tasta escape | sp3 |
 | tasta tab | sp4 |
 | tasta săgeată sus | spUp |
@@ -2007,17 +2013,16 @@ Vă rugăm să consultați Documentația afișajului pentru informații despre l
 | tasta săgeată stânga | spLeft |
 | tasta săgeată dreapta | spRight |
 | tasta enter | spEnter, enter|
-| Raportează data/timp | sp1+sp2 |
+| Raportează data/timp | sp2+sp3 |
 | Meniu NVDA | sp1+sp3 |
 | tasta windows+d (minimizează toate aplicațiile) | sp1+sp4 |
 | tasta windows+b (focalizează pe zona de notificare a sistemului) | sp3+sp4 |
-| tasta windows | sp2+sp3, windows |
+| tasta windows | sp1+sp2, windows |
 | tasta alt+tab | sp2+sp4 |
 | tasta control+home | t3+spUp |
 | tasta control+end | t3+spDown |
 | tasta home | t3+spLeft |
 | tasta end | t3+spRight |
-| tasta alt | alt |
 | tasta control | control |
 %kc:endInclude
 
@@ -2567,7 +2572,7 @@ Următoarele modele sunt suportate:
 - EcoBraille Plus
 -
 
-În NVDA, puteți stabili portul serial la care este conectat afișajul [Dialogul de selectare a afișajului braille #SelectBrailleDisplay].
+În NVDA, puteți stabili portul serial la care este conectat afișajul din [Dialogul de selectare a afișajului braille #SelectBrailleDisplay].
 Aceste afișaje nu suportă funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
 
 Urmează asocierile de comenzi pentru BrailleNote și NVDA.
@@ -2698,7 +2703,7 @@ Pentru afișaje care au o tastatură braille, BRLTTY procesează independent int
 În aceste condiții, configurarea NVDA cu tabelul de intrări braille este irelevantă.
 
 BRLTYY nu este implicat în funcționalitatea NVDA-ului de detectare automată în fundal a afișajelor braille.
-
+
 Urmează asocierile de comenzi pentru BRLTTY și NVDA.
 Vă rugăm să consultați [lista de asocieri de taste BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] pentru informații despre cum sunt mapate comenzile BRLTTY pe controale ale afișajelor braille.
 %kc:beginInclude

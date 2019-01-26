@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <oleacc.h>
 #include <oleidl.h>
+#include <atlcomcli.h>
 #include <mshtml.h>
 #include <set>
 #include <string>
@@ -401,8 +402,11 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
 
+// #8976: the string in the following macro  must be passed to the COM method as a BSTR 
+// otherwise the COM marshaller will try and read the BSTR length and hit either inaccessible memory or get back junk. 
+// This is seen in optimized builds of NVDA when accessing some CHM files in hh.exe.
 #define macro_addHTMLAttributeToMap(attribName,allowEmpty,attribsObj,attribsMap,tempVar,tempAttrObj) {\
-	attribsObj->getNamedItem(attribName,&tempAttrObj);\
+	attribsObj->getNamedItem(CComBSTR(attribName),&tempAttrObj);\
 	if(tempAttrObj) {\
 		VariantInit(&tempVar);\
 		tempAttrObj->get_nodeValue(&tempVar);\

@@ -1056,6 +1056,16 @@ Nastavenie interpunkcie ovplyvňuje prejav NVDA pre všetky hlasové výstupy.
 táto možnosť je predvolene začiarknutá a hovorí NVDA, že pri spracovaní textu sa má riadiť jazykom konkrétneho hlasu.
 Ak vám NVDA pri použití konkrétneho hlasu alebo hlasového výstupu nesprávne číta interpunkciu, odčiarknite túto možnosť, aby boli uprednostnené globálne nastavenia NVDA.
 
+==== Pri spracovaní špeciálnych znakov sa riadiť dátami z Unicode Konzorcia ====[SpeechSettingsCLDR]
+Ak začiarknete túto možnosť, NVDA bude na spracovanie symbolov využívať dodatočné slovníky.
+Tieto slovníky obsahujú popisy pre interpunkciu a emotikony od [Unicode Konzorcia http://www.unicode.org/consortium/], ktoré sú súčasťou [Spoločnej jazykovej databázy http://cldr.unicode.org/].
+Ak chcete, aby NVDA pri spracovaní špeciálnych symbolov používalo tento slovník, začiarknite túto možnosť.
+Ak používate hlasový výstup, ktorý už podporuje popisovanie emotikonov, mali by ste tieto dodatočné slovníky vypnúť.
+
+Nezabudnite, že ak upravíte výslovnosť špeciálnych symbolov, úpravy sa uložia do vašich nastavení NVDA.
+Ak upravíte popis pre konkrétny emotikon, tento popis bude použitý aj v prípade, ak je zapnutá podpora pre slovníky Unicode konzorcia.
+Výslovnosť špeciálnych symbolov môžete upravovať v dialógu [Výslovnosť interpunkčných a špeciálnych symbolov #SymbolPronunciation].
+
 ==== Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách ====[speechSettingsCapPitchChange]
 Do tohto editačného poľa je možné napísať hodnotu v percentách, ako sa zmení výška hlasu pri čítaní veľkých písmen.
 Záporné čísla znižujú a kladné čísla zvyšujú výšku hlasu.
@@ -1259,14 +1269,12 @@ Obsahuje nasledujúce voľby:
 ==== Rozloženie klávesnice ====[KeyboardSettingsLayout]
 Tento zoznamový rámik nám umožňuje vybrať, aký typ klávesnice chceme používať. Či pôjde o verziu pre desktop/stolné PC, alebo laptop/pre prenosné počítače/notebooky.
 
-==== Používať Capslock ako kláves NVDA ====[KeyboardSettingsCapsModifier]
-Ak je toto políčko začiarknuté, NVDA bude tento kláves využívať ako svoj modifikačný kláves, v kombinácii s ktorým sa zadávajú takmer všetky klávesové príkazy NVDA.
-
-==== Používať insert ako kláves NVDA ====[KeyboardSettingsExtendedInsert]
-Ak je toto políčko začiarknuté, rozšírený insert Taktiež môže byť využitý ako NVDA kláves. Nájdete ho v blízkosti kláves home, End a kurzorových šípok.
-
-==== Používať numerický insert ako kláves NVDA ====[KeyboardSettingsNumpadInsert]
-Ak je toto políčko začiarknuté, numerický Insert môže byť použitý ako NVDA kláves.
+==== Vybrať kláves NVDA ====[KeyboardSettingsModifiers]
+Začiarkávacie políčka v tomto zozname určujú, ktoré klávesy sa budú používať ako [kláves NVDA #TheNVDAModifierKey]. Dostupné sú tieto možnosti:
+- Capslock
+- Numerický insert
+- Insert (zvyčajne sa nachádza pod šípkami, vedľa klávesov home a end)
+-
 
 Ak nevyberiete žiadny kláves ako kláves NVDA, je ťažké vykonávať väčšinu príkazov NVDA.
 preto ak zatvoríte dialóg tlačidlom OK a nevybrali ste žiadny kláves NVDA, zobrazí sa chybové hlásenie.

@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2007-2017 NV Access Limited, Mozilla Corporation
+Copyright 2007-2019 NV Access Limited, Mozilla Corporation
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -48,17 +48,17 @@ void IA2AttribsToMap(const wstring &attribsString, map<wstring, wstring> &attrib
 		attribsMap[key] = str;
 }
 
-IAccessibleHyperlinkPtr HyperlinkGetter::next() {
+CComPtr<IAccessibleHyperlink> HyperlinkGetter::next() {
 	return this->get(this->index++);
 }
 
-HtHyperlinkGetter::HtHyperlinkGetter(IAccessibleHypertextPtr hypertext)
+HtHyperlinkGetter::HtHyperlinkGetter(CComPtr<IAccessibleHypertext> hypertext)
 	: hypertext(hypertext)
 {
 }
 
-IAccessibleHyperlinkPtr HtHyperlinkGetter::get(const unsigned long index) {
-	IAccessibleHyperlinkPtr link;
+CComPtr<IAccessibleHyperlink> HtHyperlinkGetter::get(const unsigned long index) {
+	CComPtr<IAccessibleHyperlink> link;
 	// hyperlink will fail or return null if the index is too big. The caller
 	// is probably only calling us when it encounters an embedded object
 	// character anyway.
@@ -70,7 +70,7 @@ IAccessibleHyperlinkPtr HtHyperlinkGetter::get(const unsigned long index) {
 	return link;
 }
 
-Ht2HyperlinkGetter::Ht2HyperlinkGetter(IAccessibleHypertext2Ptr hypertext)
+Ht2HyperlinkGetter::Ht2HyperlinkGetter(CComPtr<IAccessibleHypertext2> hypertext)
 	: hypertext(hypertext), count(-1)
 {
 	// count -1 means hyperlinks haven't been fetched yet.
@@ -91,13 +91,15 @@ void Ht2HyperlinkGetter::maybeFetch() {
 	}
 }
 
-IAccessibleHyperlinkPtr Ht2HyperlinkGetter::get(const unsigned long index) {
+CComPtr<IAccessibleHyperlink> Ht2HyperlinkGetter::get(const unsigned long index) {
 	this->maybeFetch();
 	if ((long)index >= this->count) {
 		return nullptr;
 	}
 	// Ensure we don't AddRef this pointer.
-	return IAccessibleHyperlinkPtr(this->rawLinks[index], false);
+	CComPtr<IAccessibleHyperlink> link;
+	link.Attach(this->rawLinks[index]);
+	return link;
 }
 
 Ht2HyperlinkGetter::~Ht2HyperlinkGetter() {
@@ -109,14 +111,14 @@ Ht2HyperlinkGetter::~Ht2HyperlinkGetter() {
 // We use a unique_ptr so we can have a polymorphic, optional return.
 unique_ptr<HyperlinkGetter> makeHyperlinkGetter(IAccessible2* acc) {
 	// Try IAccessibleHypertext2 first.
-	IAccessibleHypertext2Ptr ht2 = acc;
+	CComQIPtr<IAccessibleHypertext2> ht2 = acc;
 	if (ht2) {
-		return make_unique<Ht2HyperlinkGetter>(move(ht2));
+		return make_unique<Ht2HyperlinkGetter>(ht2);
 	}
 	// Fall back to IAccessibleHypertext.
-	IAccessibleHypertextPtr ht = acc;
+	CComQIPtr<IAccessibleHypertext> ht = acc;
 	if (ht) {
-		return make_unique<HtHyperlinkGetter>(move(ht));
+		return make_unique<HtHyperlinkGetter>(ht);
 	}
 	// Neither interface is supported.
 	return nullptr;

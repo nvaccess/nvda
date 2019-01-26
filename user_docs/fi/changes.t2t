@@ -10,7 +10,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn para
 - Uusia pistetaulukoita: mandariinikiina (Kiina) tasot 1 ja 2. (#5553)
 - Viestien vastattu/välitetty-tila ilmoitetaan nyt Microsoft Outlookin viestiluettelossa. (#6911)
 - NVDA voi nyt lukea emojien sekä muiden Unicode Common Locale Data -tietokantaan kuuluvien merkkien kuvaukset. (#6523)
-- Kohdistimen etäisyys sivun ylä- ja vasemmasta reunasta voidaan lukea Microsoft Wordissa painamalla NVDA+laskinnäppäimistön Del. (#1939)
+- Kohdistimen etäisyys sivun ylä- ja vasemmasta reunasta voidaan lukea Microsoft Wordissa painamalla NVDA+Numeronäppäimistön Del. (#1939)
 - NVDA ei enää ilmoita Google Sheetsissä jokaisen solun kohdalla "valittu" siirrettäessä kohdistusta niiden välillä pistenäyttötilan ollessa käytössä. (#8879)
 - Lisätty tuki Foxit Readerille ja Foxit Phantom PDF:lle. (#8944)
 - Lisätty tuki DBeaver-tietokantatyökalulle. (#8905)
@@ -157,8 +157,8 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat tuki taulukoille Kindl
 - NVDA ei enää virheellisesti puhu windows 10:n kirjautumisen PIN-koodin viimeistä merkkiä koneen lukitusta avattaessa. (#7908)
 - Valintaruutujen ja -painikkeiden selitteitä ei enää puhuta kahdesti Chromessa ja Firefoxissa selaustilassa Sarkaimella siirryttäessä tai pikaselauskomentoja käytettäessä. (#7960)
 - Aria-current-attribuutti, jonka arvo on false, ilmoitetaan nyt asianmukaisesti falsena truen asemesta. (#7892)
-- Windows OneCore -puheäänten lataaminen ei enää epäonnistu, jos käytettävä puheääni on poistettu. (#7553)
-- Windows OneCore -puheäänten vaihtaminen on nyt paljon nopeampaa. (#7999)
+- Windows OneCore -äänien lataaminen ei enää epäonnistu, jos käytössä oleva ääni on poistettu. (#7553)
+- Windows OneCore -äänien vaihtaminen on nyt paljon nopeampaa. (#7999)
 - Korjattu väärin muotoiltu pistekirjoituksen tulostus useista pistetaulukoista, mukaan lukien isojen kirjainten merkit tanskalaisessa 8 pisteen lyhennekirjoituksessa. (#7526, #7693)
 - NVDA voi nyt puhua Microsoft Wordissa useammantyyppisiä luettelomerkkejä. (#6778)
 - Lue muotoilutiedot -komennon painaminen ei enää siirrä virheellisesti tarkastelukohtaa, ja näin ollen useasti painaminen ei myöskään anna enää eri tuloksia. (#7869)
@@ -588,7 +588,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat mahdollisuus kirjoitus
 
 
 == Muutokset ==
-- NVDA käsittelee selaustilassa ja muokattavissa tekstikentissä laskinnäppäimistön Enteriä samalla tavoin kuin tavallista Enter-näppäintä. (#5385)
+- NVDA käsittelee selaustilassa ja muokattavissa tekstikentissä numeronäppäimistön Enteriä samalla tavoin kuin tavallista Enter-näppäintä. (#5385)
 - NVDA:n puhesyntetisaattoriksi on vaihdettu eSpeak NG. (#5651)
 - NVDA ei jätä enää Microsoft Excelissä huomiotta solun sarakeotsikkoa, kun solun ja otsikon välissä on tyhjä rivi. (#5396)
 - Koordinaatit puhutaan Microsoft Excelissä ennen otsikoita epäselvyyksien välttämiseksi otsikoiden ja sisällön välillä. (#5396)

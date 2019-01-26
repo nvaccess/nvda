@@ -125,7 +125,7 @@ Hvis du ønsker, at oprette en flytbar kopi af NVDA direkte fra den hentede fil,
 Hvis du allerede har lukket denne dialog, eller hvis du kører en installeret kopi af NVDA, skal du vælge menupunktet Opret Flytbar Kopi under Værktøjer i NVDA-menuen.
 
 Dialogen der vises lader dig vælge hvor du vil oprette den flytbare kopi.
-det kan være en mappe på din harddisk, et USB-drev eller andet bærbart medie.
+Det kan være en mappe på din harddisk, et USB-drev eller andet bærbart medie.
 Der er også mulighed for at kopiere den aktuelle brugerkonfiguration fra den bruger, som er logget ind. Disse indstillinger vil blive anvendt når du benytter den flytbare kopi.
  Denne indstilling er kun tilgængelig når du opretter en flytbar kopi fra en installeret kopi, og ikke hvis du opretter en flytbar kopi fra den hentede fil.
 Trykker du Fortsæt vil den flytbare kopi blive oprettet.
@@ -210,12 +210,12 @@ Svirp din finger hurtigt over skærmen.
 
 Der er fire mulige svirpebevægelser du kan benytte, afhængige af retningen: Svirp til venstre, svirp til højre, svirp op og svirp ned.
 
-Ligesom tryk kan du benytte flere fingre for at udføre deforskellige bevægelser.
+Ligesom tryk kan du benytte flere fingre for at udføre de forskellige bevægelser.
 Derfor er bevægelser som svirp op med to fingre og svirp til venstre med fire fingre mulige bevægelser.
 
 +++ Berøringstilstande +++[TouchModes]
 Eftersom der er mange flere NVDA-kommandoer tilgængelige end der er mulige bevægelser, har NVDA implementeret forskellige tilstande der gør det muligt for dig, at benytte dig af forskellige undergrupper af kommandoer.
-De to tilstande er teksttilstand og objekttilstand 
+De to tilstande er teksttilstand og objekttilstand.
 Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter berøringsbevægelsen.
 For eksempel, svirp op (teksttilstand) betyder at kommandoen vil blive udført hvis du svirper op, men kun hvis teksttilstand er aktiv.
 Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af hvilken tilstand NVDA befinder sig i.
@@ -224,14 +224,14 @@ Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af 
 For at skifte berøringstilstand, udfør et tryk med tre fingre.
 %kc:endInclude
 
-+++ Touch-tastatur +++[TouchKeyboard]
-Touch-tastaturet benyttes til at indtaste tekst og udføre kommandoer ved brug af en touchskærm.
-Når fokus befinder sig på et editfelt, kan du dobbelttrykke ikonet for touch-tastaturet i bunden af skærmen for at vise tastaturet.
++++Berøringstastatur +++[TouchKeyboard]
+Berøringstastaturet benyttes til at indtaste tekst og udføre kommandoer ved brug af en touchskærm.
+Når fokus befinder sig på et editfelt, kan du dobbelttrykke ikonet for berøringstastaturet i bunden af skærmen for at vise tastaturet.
 For tablets som Microsoft Surface Pro vil tastaturet altid være tilgængeligt, når disse tablets ikke er forbundet til en dock.
-For at afvise touch-tastaturet, kan du dobbelttrykke ikonet for touch-tastaturet igen eller bevæge dig væk fra editfeltet.
+For at afvise berøringstastaturet, kan du dobbelttrykke ikonet for berøringstastaturet igen eller bevæge dig væk fra editfeltet.
 
-Når touch-tastaturet vises på skærmen, kan du flytte en finger henover tasterne på tastaturet. Tastaturet befinder sig typisk i bunden af skærmen. Bevæg dig dernæst mellem tasterne med en finger. 
-Når du finder den ønskede tast, skal du dobbelttrykke med en finger eller løfte din finger, afhængigt af dine indstillinger i [indstillingskategorien  touch-interaktion #TouchInteraction].
+Når berøringstastaturet vises på skærmen, kan du flytte en finger henover tasterne på tastaturet. Tastaturet befinder sig typisk i bunden af skærmen. Bevæg dig dernæst mellem tasterne med en finger. 
+Når du finder den ønskede tast, skal du dobbelttrykke med en finger eller løfte din finger, afhængigt af dine indstillinger i [indstillingskategorien  Berøringsinteraktion #TouchInteraction].
 
 ++ Tastaturhjælp ++[InputHelpMode]
 Mange vigtige kommandoer er nævnt i resten af denne brugervejledning, men en nem måde at udforske alle de forskellige tastekommandoer er ved at starte tastaturhjælpen.
@@ -1355,9 +1355,9 @@ Denne indstillingskategori vil kun være tilgængelig på computere, der kører 
 Denne kategori indeholder følgende indstillinger:
 
 ==== Berøringsindtastning ====[TouchTypingMode]
-Denne check box lader dig vælge den metode du ønsker at bruge, når du benytter touch-tastaturet.
+Denne check box lader dig vælge den metode du ønsker at bruge, når du benytter berøringstastaturet.
 Hvis denne check box er valgt, kan du indtaste bogstaver blot ved at løfte din finger fra den pågældende tast på tastaturet.
-Hvis denne indstilling ikke er valgt, skal du dobbelttrykke med en finger på hver bogstav, du vil skrive.
+Hvis denne indstilling ikke er valgt, skal du dobbelttrykke med en finger på hvert bogstav, du vil skrive.
 
 +++ Læsemarkør +++[ReviewCursorSettings]
 Denne kategori benyttes til at konfigurere adfærden for læsemarkøren.
