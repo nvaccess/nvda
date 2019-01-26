@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+Энэ удаагийн шинэчлэлийн онцлогууд нь Mozilla Firefox хөтөч програмтай ажиллах үзүүлэлтүүдийг сайжруулсан, бүхий л яригч хоолойнууд нь emoji тэмдэгтүүд унших болон microsoft outlook програмын хариу бичсэн зэрэг статусыг уншидаг болсоноос гадна олон алдаануудыг зассан.
 
 == Шинэ онцлогууд ==
 - Шинэ брайль бичгүүд: Хятад (Хятад, Мандурин) grade 1 болон grade 2. (#5553)
@@ -24,23 +25,22 @@
 
 
 == засварчилсан алдаанууд ==
-- In Outlook 2016/365, the category and flag status are reported for messages. (#8603)
-- When NVDA is set to languages such as Kirgyz, Mongolian or Macedonian, it no longer shows a dialog on start-up warning that the language is not supported by the Operating System. (#8064)
-- Moving the mouse to the navigator object will now much more accurately move the mouse to the browse mode position in Mozilla Firefox, Google Chrome and Acrobat Reader DC. (#6460)
-- Interacting with combo boxes on the web in Firefox, Chrome and Internet Explorer has been improved. (#8664)
--- If running on the Japanese version of Windows XP or Vista, NVDA now displays the alert of OS version requirements as expected. (#8771)
--- Performance increases in Mozilla Firefox when navigating large pages with lots of dynamic changes. (#8678)
-+- If running on the Japanese version of Windows XP or Vista, NVDA now displays OS version requirements message as expected. (#8771)
-+- Performance improvements when navigating large pages with lots of dynamic changes in Mozilla Firefox. (#8678)
-- Braille no longer shows font attributes  if they have been disabled in  Document Formatting settings. (#7615)
-- NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
-- In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)
-- NVDA no longer refuses to report the focus on web pages where the new focus replaces a control that no longer exists. (#6606, #8341)
--- In the new Gmail, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)
-+- In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)
-- After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641) 
-- NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)
-- Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)
+- Outlook 2016/365-д категорууд болон тугны төлөвийг мессежээр мэдээлдэг. (#8603)
+- NVDA нь Киргиз, Монгол эсвэл Македон хэл дээр тохируулсан тохиолдолд үйлдлийн системээр дэмжигдээгүй гэсэн анхааруулах алдааг  харуулахаа больсон. (#8064)
+- Navigator объект руу хулганыг шилжүүлэх нь одоо Мозилла Firefox, Google Chrome болон Acrobat Reader DC дээр хулганы зөөвөрлөх байрлалыг илүү үнэн зөв шилжүүлэх болно.(#6460)
+- Firefox, google chrome болон internet explorer дээр combow сонголтын хайрцагтай хүртээмжтэй байдлаар ажиллуулахын тулд сайжруулалт хийгдсэн. (#8664)
++- Хэрэв Windows XP эсвэл Vista-ийн Япон хувилбар дээр ажиллаж байгаа бол NVDA нь OS хувилбарт тавигдах шаардлагыг харуулна.(#8771)
++- Mozilla Firefox-ийн гүйцэтгэлийн сайжруулалтууд нь маш олон тооны динамик өөрчлөлтүүдтэй том хуудсыг удирдах үед нэмэгддэг.(#8678)
+- Баримтын формат тохиргоо дээр хаагдсан бол брайл үсгийн шинж чанарыг харуулахаа больсон. (#7615)
+- NVDA нь өөр апп үед UI Автоматжуулалтыг ашиглан Файл Explorer болон бусад аппликешн дээр төвлөрөл алдахаа больсон.(#7345)
+- Вэб дээр ARIA цэснүүдээс Escape түлхүүрийг одоо цэс рүү дамжуулж, фокус горимыг нөхцөлгүйгээр болзолтгүйгээр унтраах болно.(#3215)
+- NVDA нь шинэ фокус нь байхгүй болсон хяналтыг орлож байгаа вэб хуудсан дээр анхаарлаа хандуулахаа больсон байна.(#6606, #8341)
+-- Шинэ Gmail-д мессеж дотроо мессеж дотрох мультимедиа уншилт хийхдээ мессежний бүх бие нь таны уншиж байсан элементийн дараа дахин мэдээлэгддэггүй.(#8887)
++- Шинэ Gmail веб интерфэйс дээр мессеж дотроо мессеж дотроо мессежийг уншихдаа мессежийг бүхэлд нь нүүлгэн шилжүүлсэн элементийнхээ дараа мэдээлэхээ больсон.(#8887)
+- NVDA-г шинэчилсний дараа Firefox болон google Chrome зэрэг хөтөчүүд алдаа зааж зогсохоо болиод одоо байгаа уншигдсан документуудын шинэчлэлийг зөвөөр үргэлжлүүлэх ёстой.(#7641) 
+- NVDA Browse Mode-т clickable контентыг навигаци хийх үед дахин давхар уншихаа больсон. (#7430)
+- baum Vario 40 брайль дэлгэцүүд дээр хийгдэх командууд нь алдаа заахаа больсон. (#8894)
+- Mozilla Firefox-тэй Google Слайд контент уншиж байхад NVDA нь төвлөрөл болгоны сонгосон текстээ уншиж байхаа больсон.(#8964)
 
 
 == Хөгжүүлэгчдэд зориулсан өөрчлөлтүүд ==

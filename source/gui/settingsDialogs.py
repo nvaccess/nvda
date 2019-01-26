@@ -5,6 +5,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from abc import abstractmethod
+from six import with_metaclass
 import glob
 import os
 import copy
@@ -49,7 +51,7 @@ import time
 import keyLabels
 from dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(wx.Dialog, DpiScalingHelperMixin):
+class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -161,6 +163,7 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin):
 		else:
 			evt.Skip()
 
+	@abstractmethod
 	def makeSettings(self, sizer):
 		"""Populate the dialog with settings controls.
 		Subclasses must override this method.
@@ -205,7 +208,7 @@ class SettingsDialog(wx.Dialog, DpiScalingHelperMixin):
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(wx.Panel, DpiScalingHelperMixin):
+class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHelperMixin)):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -243,6 +246,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin):
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds"%(self.__class__.__name__, time.time() - startTime))
 
+	@abstractmethod
 	def makeSettings(self, sizer):
 		"""Populate the panel with settings controls.
 		Subclasses must override this method.
@@ -264,6 +268,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin):
 		"""
 		self.Hide()
 
+	@abstractmethod
 	def onSave(self):
 		"""Take action in response to the parent's dialog OK or apply button being pressed.
 		Sub-classes should override this method.
@@ -591,6 +596,8 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	LOG_LEVELS = (
+		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+		(log.OFF, _("disabled")),
 		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 		(log.INFO, _("info")),
 		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).

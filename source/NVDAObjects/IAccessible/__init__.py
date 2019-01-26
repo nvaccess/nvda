@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited 
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -118,21 +118,34 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
-			return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			offset = self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			# IA2 specifies that a result of -1 indicates that
+			# the point is invalid or there is no character under the point.
+			# Note that Chromium does not follow the spec and returns 0 for invalid or no character points.
+			# As 0 is a valid offset, there's nothing we could do other than just returning it.
+			if offset == -1:
+				raise LookupError("Invalid point or no character under point")
+			return offset
 		else:
-			raise NotImplementedError
+			raise LookupError
 
 	@classmethod
-	def _getPointFromOffsetInObject(cls,obj,offset):
+	def _getBoundingRectFromOffsetInObject(cls,obj,offset):
 		try:
 			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
-		point=textInfos.Point(*res.center)
-		return point
+		if not any(res[2:]):
+			# Gecko tends to return (0,0,0,0) rectangles sometimes, for example in empty text fields.
+			# Chromium could return rectangles that are positioned at the upper left corner of the object,
+			# and they have a width and height of 0.
+			# Other IA2 implementations, such as the one in LibreOffice,
+			# tend to return the caret rectangle in this case, which is ok.
+			raise LookupError
+		return res
 
-	def _getPointFromOffset(self,offset):
-		return self._getPointFromOffsetInObject(self.obj, offset)
+	def _getBoundingRectFromOffset(self,offset):
+		return self._getBoundingRectFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"
