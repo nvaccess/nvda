@@ -227,7 +227,7 @@ def findExtraOverlayClasses(obj, clsList):
 			newParent = parent.parent
 			parent.parent = newParent
 			parent = newParent
-		if hasattr(parent, "IAccessibleTableObject"):
+		if hasattr(parent, "IAccessibleTableObject") or hasattr(parent, "IAccessibleTable2Object"):
 			clsList.append(RowWithFakeNavigation)
 
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:

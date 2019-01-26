@@ -262,6 +262,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		controlTypes.ROLE_COMBOBOX,
 		controlTypes.ROLE_EDITABLETEXT,
 		controlTypes.ROLE_LIST,
+		controlTypes.ROLE_LISTITEM,
 		controlTypes.ROLE_SLIDER,
 		controlTypes.ROLE_TABCONTROL,
 		controlTypes.ROLE_MENUBAR,
