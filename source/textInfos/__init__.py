@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -10,6 +10,7 @@ In order to access text content for a widget, a L{TextInfo} implementation is re
 A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
 """
 
+from abc import abstractmethod
 import weakref
 import re
 import baseObject
@@ -254,13 +255,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		* Support at least the L{POSITION_FIRST}, L{POSITION_LAST} and L{POSITION_ALL} positions.
 	If an implementation should support tracking with the mouse,
 	L{Points} must be supported as a position.
-	To support routing to a screen point from a given position, L{pointAtStart} must be implemented.
+	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
 	
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""
- 
+
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
@@ -280,6 +281,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	_abstract_text = True
 	def _get_text(self):
 		"""The text with in this range.
 		Subclasses must implement this.
@@ -301,7 +303,21 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def _get_locationText(self):
 		"""A message that explains the location of the text position in friendly terms."""
-		return None
+		try:
+			curPoint = self.pointAtStart
+		except (NotImplementedError, LookupError):
+			return None
+		# Translators: the current position's screen coordinates in pixels
+		return _("Positioned at {x}, {y}").format(x=curPoint.x,y=curPoint.y)
+
+	def _get_boundingRects(self):
+		"""Per line bounding rectangles for the visible text in this range.
+		Implementations should ensure that the bounding rectangles don't contain off screen coordinates.
+		@rtype: [L{locationHelper.RectLTWH}]
+		@raise NotImplementedError: If not supported.
+		@raise LookupError: If not available (i.e. off screen, hidden, etc.)
+		"""
+		raise NotImplementedError
 
 	def unitIndex(self,unit):
 		"""
@@ -314,13 +330,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def unitCount(self,unit):
 		"""
-@param unit: a unit constant
-@type unit: string
-@returns: the number of units of this type in the object
-@rtype: int
-"""
+		@param unit: a unit constant
+		@type unit: string
+		@returns: the number of units of this type in the object
+		@rtype: int
+		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def compareEndPoints(self,other,which):
 		""" compares one end of this range to one end of another range.
 		Subclasses must implement this.
@@ -344,6 +361,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.compareEndPoints(other,"startToStart") == 0 or (self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0)
 
+	@abstractmethod
 	def setEndPoint(self,other,which):
 		"""Sets one end of this range to one end of another range.
 		Subclasses must implement this.
@@ -360,11 +378,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.compareEndPoints(self,"startToEnd")==0
 
+	@abstractmethod
 	def expand(self,unit):
 		"""Expands the start and end of this text info object to a given unit
-@param unit: a unit constant
-@type unit: string
-"""
+		@param unit: a unit constant
+		@type unit: string
+		"""
 		raise NotImplementedError
 
 	def collapse(self, end=False):
@@ -374,9 +393,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def copy(self):
 		"""duplicates this text info object so that changes can be made to either one with out afecting the other 
-"""
+		"""
 		raise NotImplementedError
 
 	def updateCaret(self):
@@ -387,9 +407,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Moves the selection (usually the system caret) to the position of this text info object"""
 		raise NotImplementedError
 
+	_abstract_bookmark = True
 	def _get_bookmark(self):
 		raise NotImplementedError
 
+	@abstractmethod
 	def move(self,unit,direction,endPoint=None):
 		"""Moves one or both of the endpoints of this object by the given unit and direction.
 		@param unit: the unit to move by; one of the UNIT_* constants.
@@ -400,20 +422,20 @@ class TextInfo(baseObject.AutoPropertyObject):
 			negative indicates backward movement, positive indicates forward movement,
 			0 means no movement.
 		@rtype: int
-"""
+		"""
 		raise NotImplementedError
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		"""Locates the given text and positions this TextInfo object at the start.
-@param text: the text to search for
-@type text: string
-@param caceSensitive: true if case sensitivity search should be used, False if not
-@type caseSensitive: bool
-@param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
-@type reverse: bool
-@returns: True if text is found, false otherwise
-@rtype: bool
-""" 
+		@param text: the text to search for
+		@type text: string
+		@param caceSensitive: true if case sensitivity search should be used, False if not
+		@type caseSensitive: bool
+		@param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
+		@type reverse: bool
+		@returns: True if text is found, false otherwise
+		@rtype: bool
+		""" 
 		raise NotImplementedError
 
 	def _get_NVDAObjectAtStart(self):
@@ -429,8 +451,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 		return self.obj
 
 	def _get_pointAtStart(self):
-		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
-		raise NotImplementedError
+		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
+		The base implementation uses L{boundingRects}.
+		"""
+		if self.isCollapsed:
+			copy = self.copy()
+			# Expand the copy to character.
+			copy.expand(UNIT_CHARACTER)
+			boundingRects = copy.boundingRects
+		else:
+			boundingRects = self.boundingRects
+		if not boundingRects:
+			raise LookupError
+		return boundingRects[0].topLeft
 
 	def _get_clipboardText(self):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
@@ -496,12 +529,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		if not self.obj.isInForeground:
 			raise NotImplementedError
+		import mouseHandler
 		import winUser
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):

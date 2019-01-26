@@ -32,6 +32,13 @@ def _updateVersionFromVCS():
 	except:
 		pass
 
+
+def formatDevVersionString():
+	return "%s.%s.%sdev"%(version_year,version_major,version_minor)
+
+def getCurrentVersionTuple():
+	return version_year, version_major, version_minor
+
 # ticket:3763#comment:19: name must be str, not unicode.
 # Otherwise, py2exe will break.
 name="NVDA"
@@ -39,7 +46,7 @@ version_year=2019
 version_major=1
 version_minor=0
 version_build=0
-version="%s.%s.%sdev"%(version_year,version_major,version_minor)
+version=formatDevVersionString()
 publisher="unknown"
 updateVersionType=None
 try:

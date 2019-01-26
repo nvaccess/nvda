@@ -3,6 +3,62 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2018.4 =
+Lo mas resinyable d'ista versión inclui las milloras en o rendimiento d'as zaguers versions d'o Mozilla Firefox, l'anunciau d'emoticonos con totz los sintetizadors, l'anunciau d'as respuestas y ninvios en l'Outlook, la información d'a distancia d'o cursor a lo canto d'una pachina d'o Microsoft Word y muitas correccions de fallos.
+
+== Nuevas Caracteristicas ==
+- Nuevas tablas braille: Chino (China, Mandarín) grau 1 y grau 2. (#5553)
+- Agora s'anuncia los estaus respondiu y reninviau en elementos de correu en a lista de mensaches d'o Microsoft Outlook. (#6911)
+- Lo NVDA agora puet leyer descripcions pa emoticonos asinas como atros caracters que fan parti d'o repositorio Unicode Common Locale Data. (#6523)
+- En o Microsoft Word, la distancia d'o cursor dende los cantos superior y cucho d'a pachina puet anunciar-se  pretando NVDA+suprimir d'o teclau numerico. (#1939)
+- En as fuellas de Google con o modo de braille enchegau lo NVDA ya no anuncia 'trigau' en cada celda en mover lo foco entre ellas. (#8879)
+- S'ha anyadiu lo suporte pa Foxit Reader y pa Foxit Phantom PDF (#8944)
+- S'ha anyadiu lo suporte pa la utilidat de base de datos DBeaver. (#8905)
+
+
+== Cambios ==
+- "Anunciar los globos d'aduya" en o dialogo de presentación d'obchectos s'ha renombrau como "Anunciar las notificacions" pa incluir l'anunciau d'as notificacions d'o sistema en o Windows 8 y posteriors. (#5789)
+- EN AS opcions d'o teclau d'o NVDA las caixetas de verificación pa enchegar u desenchegar las teclas modificaderas d'o NVDA agora s'amuestran en una lista en cuenta d'en caixetas de verificación deseparadas.
+- Lo NVDA ya no presienta información redundant en leyer lo reloch d'a servilla d'o sistema en qualques versions d'o Windows. (#4364)
+- S'ha esviellau lo transcriptor braille liblouis t'a versión 3.7.0. (#8697)
+- S'ha esviellau lo eSpeak-NG t'a confirmación 919f3240cbb.
+
+
+== Corrección d'Errors ==
+- En l'Outlook 2016 y 365, s'anuncia la categoría y lo estau d'a marca pa los mensaches. (#8603)
+- Quan lo NVDA se configura pa idiomas tals como Kirgyz, Mongol u Macedonio, ya no amuestra un dialogo en un aviso en rancar que l'idioma no s'admite por lo sistema operativo. (#8064)
+- En mover lo churi t'o navegador d'obchectos agora será muito mas preciso mover lo churi t'a posición d'o modo de navegación en o Mozilla Firefox, lo Google Chrome y l'Acrobat Reader DC. (#6460)
+- S'ha amillorau l'interactuar con os quadros combinaus en a web en o Firefox, lo Chrome y l'Internet Explorer. (#8664)
+- Si s'executa en a versión chaponesa d'o Windows XP u Vista, lo NVDA agora amuestra l'alerta d'os requisitos d'a versión d'o Sistema Operativo seguntes s'asperaba. (#8771)
+- S'aumenta lo rendimiento en o Mozilla Firefox en navegar por pachinas grans con muitos cambios dinamicos. (#8678)
+- Lo braille ya no amuestra atributos de fuent si se desenchegoron en as  opcions de formatiau de documentos. (#7615)
+- Lo NVDA ya no falla en seguir a lo foco en o Explorador de Fichers y atras aplicacions que fagan servir l'UI Automation quan unatra aplicación siga ocupada (tal como lo procesamiento por lotes de l'audio). (#7345)
+- En os menús ARIA en a web, la tecla d'escape agora se pasará a traviés d'o menú y ya no desenchegará lo modo de foco incondicionalment. (#3215)
+- En a interficie nueva d'o Gmail, en emplegar la navegación rapeda adintro de mensaches mientras se leye, ya no s'anuncia tot lo cuerpo d'o mensache dimpués de l'elemento t'o que acabas de navegar. (#8887)
+- Dimpués d'esviellar lo NVDA los navegadors tals como lo Firefox y lo google Chrome ya no habrían de trencar-sen, y lo modo de navegación habría de seguir reflectando correctament las actualizacions de qualsiquier documento cargau actualment. (#7641) 
+- Lo NVDA ya no informa que se puet fer clic quantas veces en una ringlera en navegar por conteniu clicable en o Modo de navegación. (#7430)
+- Los cenyos realizaus en las linias braille baum Vario 40 ya no fallarán en executar-sen. (#8894)
+- En o Google Slides con o Mozilla Firefox, lo NVDA ya no anuncia lo texto trigau en cada control con o foco. (#8964)
+
+
+== Cambios pa los Desembolicadors ==
+- gui.nvdaControls agora contiene dos clases pa creyar listas accesibles con caixetas de verificación. (#7325)
+ - CustomCheckListBox ye una sub-clase accesible de wx.CheckListBox.
+ - AutoWidthColumnCheckListCtrl anyade caixetas de verificación accesibles a un AutoWidthColumnListCtrl, lo qual ye basau en si mísmo en wx.ListCtrl.
+- Si te fa falta fer un wx widget accesible que no'n ye encara, ye posible fer-lo fendo servir una instancia de gui.accPropServer.IAccPropServer_impl. (#7491)
+ - Mira-te la implementación de gui.nvdaControls.ListCtrlAccPropServer pa mas información.
+- S'ha esviellau lo configobj ta 5.1.0dev confirmación 5b5de48a. (#4470)
+- L'acción config.post_configProfileSwitch agora prene l'argumento opcional prevConf keyword, permitindo a los maniadors prener una acción basada en diferencias entre la configuración dinantes y dimpués d'o cambio de perfil. (#8758)
+
+
+= 2018.3.2 =
+Ista ye una versión menor pa privar una penchada en o Google Chrome en navegar por tuits en www.twitter.com. (#8777)
+
+
+= 2018.3.1 =
+Ista ye una versión menor pa correchir una error critica en o NVDA que feba que las versions de 32 bits d'o Mozilla Firefox se penchasen. (#8759)
+
+
 = 2018.3 =
 Lo resinyable d'ista versión inclui la detección automatica de muitas linias Braille, l'admisión pa qualques caracteristicas nuevas d'o Windows 10 incluindo lo panel de dentrada d'emojis de Windows 10, y muitas atras correccions d'errors.
 

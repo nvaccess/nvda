@@ -213,7 +213,14 @@ class MainFrame(wx.Frame):
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
-			updateCheck.executeUpdate()
+			updateTuple = updateCheck.getPendingUpdate()
+			newNVDAVersionTuple = updateTuple[2]
+			from addonHandler import getAddonsWithoutKnownCompatibility
+			if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
+				gui.runScriptModalDialog(confirmUpdateDialog)
+			else:
+				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
 		try:
@@ -469,10 +476,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to view NVDA Contributors list document.
 			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
-		# Translators: The label for the menu item to open NVDA Welcome Dialog.
-		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
-		menu_help.AppendSeparator()
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+			menu_help.AppendSeparator()
 		if updateCheck:
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
 			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
@@ -634,7 +641,15 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
-		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
+
+		optionsSizer = wx.StaticBoxSizer(
+			wx.StaticBox(
+				self,
+				# Translators: The label for a group box containing the NVDA welcome dialog options.
+				label=_("Options")
+			),
+			wx.VERTICAL
+		)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -845,7 +860,14 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		elif action == 4:
 			if updateCheck:
-				updateCheck.executeUpdate()
+				updateTuple = updateCheck.getPendingUpdate()
+				newNVDAVersionTuple = updateTuple[2]
+				from addonHandler import getAddonsWithoutKnownCompatibility
+				if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
+					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
+					confirmUpdateDialog.ShowModal()
+				else:
+					updateCheck.executePendingUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):

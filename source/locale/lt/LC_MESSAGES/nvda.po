@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 00:10+1000\n"
-"PO-Revision-Date: 2017-10-31 20:48-0700\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:54-0800\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "Language: lt\n"
@@ -2218,7 +2218,7 @@ msgstr "pastraipa"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See https://en.wikipedia.org/wiki/Block_quotation
+#. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "citata"
 
@@ -4487,7 +4487,7 @@ msgstr "Įvairios"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -6263,17 +6263,17 @@ msgid "no italic"
 msgstr "ne kursyvas"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "dukart perbrauktas"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "perbrauktas"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "neperbrauktas"
 
@@ -6303,12 +6303,12 @@ msgid "align right"
 msgstr "dešininė lygiuotė"
 
 #. Translators: Reported when text is justified.
-#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "abipusė lygiuotė"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See https://kohei.us/2010/01/21/distributed-text-justification/
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "paskirstytoji lygiuotė"
 
@@ -6716,7 +6716,7 @@ msgstr ""
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "© {years} „NVDA“ bendraautoriai"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6729,7 +6729,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6960,6 +6960,21 @@ msgstr "neskaitytas"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr ""
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied"
+msgstr "pakeistas turinys"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "pakeistas turinys"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "pirmyn"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8711,6 +8726,16 @@ msgstr "Tariami skyrybos ženklai ir &simboliai:"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
+msgstr ""
+"Pasitikėti automatiniu parinkto balso skyrybos ženklų ir kitų simbolių tarimu"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
 msgstr ""
 "Pasitikėti automatiniu parinkto balso skyrybos ženklų ir kitų simbolių tarimu"
 
@@ -10862,6 +10887,16 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 "{revisionType} {description}: „{text}“, autorius „{author}“, data – {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance:.3g} punktai nuo skaidrės kairiojo krašto"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance:.3g} punktai nuo skaidrės viršutinio krašto"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -11004,7 +11039,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pt"
 
 #. Translators: a measurement in Microsoft Word
-#. See https://support.microsoft.com/kb/76388 for details.
+#. See http://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pc"
@@ -11020,226 +11055,3 @@ msgstr "Dviejų eilučių intervalas"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Pusantros eilutės intervalas"
-
-#, fuzzy
-#~ msgid "purple flag"
-#~ msgstr "violetinė"
-
-#~ msgid "Orange flag"
-#~ msgstr "Oranžinė vėliava"
-
-#~ msgid "Green flag"
-#~ msgstr "Žalia vėliava"
-
-#~ msgid "Yellow flag"
-#~ msgstr "Geltona vėliava"
-
-#~ msgid "Blue flag"
-#~ msgstr "Mėlyna vėliava"
-
-#~ msgid "Red flag"
-#~ msgstr "Raudona vėliava"
-
-#~ msgid "Use CapsLock as an NVDA modifier key"
-#~ msgstr "Naudoti Didžiųjų raidžių klavišą kaip „NVDA“ klavišą"
-
-#~ msgid "Use numpad Insert as an NVDA modifier key"
-#~ msgstr "Naudoti skaitmenų srities klavišą „Įterpti“ kaip klavišą „NVDA“"
-
-#~ msgid "Use extended Insert as an NVDA modifier key"
-#~ msgstr "Naudoti pagrindinį klavišą „Įterpti“ kaip klavišą „NVDA“"
-
-#~ msgid "Report &help balloons"
-#~ msgstr "Skaityti pagalbinius &debesėlius"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} – {layout}"
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "amharų"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "arabų"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "nepaliečių"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "serbų (lotyniški rašmenys)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "Atveria „NVDA“ balso parametrų langą"
-
-#~ msgid "&General settings..."
-#~ msgstr "B&endrieji parametrai…"
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&Šnekos sintezė…"
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "Keisti naudojamą šnekos sintezatorių"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "Keisti balsą, šnekos greitį, aukštį ir garsį"
-
-#~ msgid "B&raille settings..."
-#~ msgstr "B&railio eilutės parametrai…"
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "&Klaviatūros parametrai…"
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "Keisti klaviatūros išdėstymo ir įvedamų simbolių, žodžių bei komandinių "
-#~ "klavišų tarimo parametrus"
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "&Pelės parametrai…"
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr ""
-#~ "Keisti informavimo apie pelės žymeklio išvaizdos pasikeitimus ir po juo "
-#~ "esančius objektus parametrus"
-
-#, fuzzy
-#~ msgid "&Touch interaction..."
-#~ msgstr "&Balso žodynas…"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "Parinkti, kada ir kaip perkeliamas peržiūros žymeklis"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "&Įvesties komponavimo parametrai…"
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "Konfigūruoti, kaip „NVDA“ informuos apie komponuojamus simbolius kai "
-#~ "kuriose kalbose"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "&Objektų pristatymas…"
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "Konfigūruoti objektų pristatymo parametrus"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "&Naršymo veiksena…"
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "Keisti virtualių buferių parametrus"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "&Dokumentų formatavimas…"
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "Keisti informavimo apie dokumentų savybes parametrus"
-
-#, fuzzy
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "„Windows 10 OCR“..."
-
-#~ msgid "General Settings"
-#~ msgstr "Bendrieji parametrai"
-
-#~ msgid "Voice Settings"
-#~ msgstr "Balso parametrai"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Klaviatūros parametrai"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Pelės parametrai"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "Peržiūros žymeklio parametrai"
-
-#~ msgid "Braille Settings"
-#~ msgstr "Brailio eilutės parametrai"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "Prancūzų (Kanada) 1-ojo lygio"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "Prancūzų (Kanada) 2-ojo lygio"
-
-#~ msgid "Mongolian"
-#~ msgstr "Mongolų"
-
-#~ msgid "Download and &install update"
-#~ msgstr "Parsiųsti ir į&diegti naujinimą"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "Naujinimas parsiųstas. Dabar jis bus įdiegtas."
-
-#~ msgid "r%s"
-#~ msgstr "eil%s"
-
-#~ msgid "c%s"
-#~ msgstr "c%s"
-
-#~ msgid "suspended"
-#~ msgstr "suspenduotas"
-
-#~ msgid "running"
-#~ msgstr "vykdomas"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "„ALVA BC640/680“ serijos"
-
-#~ msgid "review"
-#~ msgstr "peržiūros žymekliu"
-
-#~ msgid "focus"
-#~ msgstr "židiniu"
-
-#~ msgid "B&raille tethered to:"
-#~ msgstr "B&railio eilutė susieta su:"
-
-#~ msgid "Not defined"
-#~ msgstr "Neapibrėžta"
-
-#~ msgid "Value"
-#~ msgstr "Reikšmės"
-
-#~ msgid "Series"
-#~ msgstr "Sekos"
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "{axisName} ašis yra „{axisTitle}“"
-
-#~ msgid "Primary"
-#~ msgstr "Pirminė"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr ""
-#~ "Diagramos ašis, tipas – {axisType}, grupė – {axisGroup}, pavadinimas – "
-#~ "{axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "Diagramos ašis, tipas – {axisType}, grupė – {axisGroup}"
-
-#~ msgid "Chart axis title"
-#~ msgstr "Diagramos ašies pavadinimas"
-
-#~ msgid "trendline"
-#~ msgstr "Krypties linija"
-
-#~ msgid "Legend"
-#~ msgstr "Legenda"
-
-#~ msgid "No legend"
-#~ msgstr "Legendos nėra"
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "„HIMS SyncBraille“"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "Atverti „Handy Tech“ tvarkyklės parametrų langą."

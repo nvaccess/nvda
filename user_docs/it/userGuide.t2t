@@ -1055,6 +1055,16 @@ Questa impostazione viene applicata a tutti i sintetizzatori, non soltanto a que
 Da impostazioni predefinite, questa funzione risulta attiva e consente di stabilire se NVDA debba ritenere affidabile la lingua della voce corrente nel processare simboli e caratteri.
 Se per qualche motivo ci si accorge che NVDA sta leggendo  la punteggiatura con un sintetizzatore o voce particolare in una lingua sbagliata, si consiglia di disattivare questa opzione, per forzare NVDA ad utilizzare le impostazioni globali per quella lingua.
 
+==== Includi dati del consorzio Unicode (comprese le emoji) nel processare caratteri e simboli ====[SpeechSettingsCLDR]
+Quando questa casella di controllo è attiva, NVDA si servirà di ulteriori dizionari per pronunciare caratteri e simboli.
+Tali dizionari contengono le descrizioni per molti simboli (in particolare le emoji) che sono fornite dal [Consorzio Unicode http://www.unicode.org/consortium/] come parte del [Common Locale Data Repository http://cldr.unicode.org/].
+Se si desidera che NVDA sia in grado di leggere le descrizioni di simboli ed emoji fornite da questo servizio, è necessario attivare la casella di controllo.
+In ogni caso, si consiglia di disattivare questa opzione nella circostanza in cui si disponga di una sintesi vocale in grado di leggere le emoji nativamente.
+
+Si noti che le descrizioni dei caratteri aggiunte manualmente vengono salvate nella propria configurazione utente.
+Perciò, se si modifica la descrizione di un'emoji, essa verrà letta a prescindere dal fatto che l'opzione sia attiva o meno.
+è possibile aggiungere, rimuovere o modificare le descrizioni dei simboli nella finestra [Pronuncia punteggiatura/simboli #SymbolPronunciation].
+
 ==== Percentuale di cambio tono  per lettere maiuscole ====[VoiceSettingsCapPitchChange]
 Questo campo editazione permette di digitare un numero che sarà equivalente alla variazione di altezza (pitch) effettuato dalla sintesi vocale in presenza di lettere maiuscole.
 Questo valore lavora in percentuale, perciò un valore negativo abbasserà il pitch, mentre uno positivo lo alzerà.
@@ -1259,14 +1269,11 @@ Questa categoria Contiene le seguenti opzioni:
 ==== Layout tastiera ====[KeyboardSettingsLayout]
 Questa casella combinata permette di selezionare quale layout di tastiera NVDA debba utilizzare. Al momento è possibile scegliere tra desktop e laptop, ossia tra tastiere per pc fissi e portatili.
 
-==== Utilizza BloccaMaiuscole come tasto funzione per NVDA ====[KeyboardSettingsCapsModifier]
-Se questa casella di controllo viene attivata, il tasto blocca maiuscole agirà come tasto funzione di NVDA.
-
-==== Utilizza Insert della tastiera estesa come tasto funzione di NVDA ====[KeyboardSettingsExtendedInsert]
-Se questa casella di controllo viene attivata, il tasto insert, generalmente situato vicino ai tasti home/fine/pagina su/pagina giù, agirà come tasto funzione di NVDA.
-
-==== Utilizza insert del tastierino numerico come tasto funzione di NVDA ====[KeyboardSettingsNumpadInsert]
-Se questa casella di controllo viene attivata, il tasto insert del tastierino numerico agirà come tasto funzione di NVDA.
+==== Seleziona il tasto funzione NVDA ====[KeyboardSettingsModifiers]
+Le caselle di controllo presenti in questo elenco consentono di stabilire quali tasti debbano essere usati come [Tasti funzione di NVDA #TheNVDAModifierKey]. è possibile scegliere tra le seguenti possibilità:
+- Il tasto blocca maiuscole
+- Il tasto insert del tastierino numerico
+- Il tasto insert della tastiera estesa (in genere situato nel gruppo di sei tasti vicino a inizio e fine)
 
 Se non viene selezionato alcun tasto che agisca come tasto NVDA, potrebbe risultare impossibile accedere ad alcuni comandi dello screen reader.
 Pertanto, verrà visualizzato un messaggio d'errore nell'eventualità tutti i tasti siano deselezionati.
