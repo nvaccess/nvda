@@ -13,6 +13,7 @@ from comtypes import COMError
 import time
 import appModuleHandler
 import controlTypes
+import winVersion
 import winUser
 import api
 import speech
@@ -293,4 +294,17 @@ class AppModule(appModuleHandler.AppModule):
 			# #6671: Never allow WorkerW thread to send gain focus event, as it causes 'pane" to be announced when minimizing windows or moving to desktop.
 			return
 
+		nextHandler()
+
+	def isGoodUIAWindow(self,hwnd):
+		# #9204: In build 18305 and later, it is the shell that raises window open event for emoji panel.
+		if winVersion.winVersion.build > 17763 and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
+			return True
+		return False
+
+	def event_UIA_window_windowOpen(self, obj, nextHandler):
+		# Send UIA window open event to input app window.
+		inputPanelWindow = obj.firstChild
+		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow" and inputPanelWindow and inputPanelWindow.appModule.appName == "windowsinternal_composableshell_experiences_textinput_inputapp":
+			inputPanelWindow.appModule.event_UIA_window_windowOpen(inputPanelWindow, nextHandler)
 		nextHandler()
