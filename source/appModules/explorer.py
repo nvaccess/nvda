@@ -5,7 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-"""App module for Windows Explorer (aka Windows shell).
+"""App module for Windows Explorer (aka Windows shell and renamed to File Explorer in Windows 8).
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
