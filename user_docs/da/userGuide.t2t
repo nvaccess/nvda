@@ -278,8 +278,8 @@ Hvert program og selve operativsystemet består af mange objekter.
 Et objekt er et enkelt emne såsom et stykke tekst, en knap, check box, skyder, liste eller redigerbart tekstfelt (editfelt).
 
 ++ Navigering med systemfokus ++[SystemFocus]
-Systemfokus, også bare kendt som fokus, er [det objekt eller element#Objects] der modtager de tastetryk, du laver på tastaturet.
-For eksempel, hvis du skriver i et redigerbart teksfelt har tekstfeltet fokus.
+Systemfokus, også bare kendt som fokus, er [det objekt #Objects] der modtager de tastetryk, du laver på tastaturet.
+For eksempel, hvis du skriver i et redigerbart tekstfelt har tekstfeltet fokus.
 
 Den mest almindelige måde at navigere rundt med NVDA i Windows er simpelthen ved at bevæge sig rundt med de almindelige Windows-tastatur kommandoer, såsom at trykke på Tab og Skift+TAB for at flytte frem og tilbage mellem kontrolelementerne, trykke ALT for at komme til menulinjen og derefter bruge pilene til at navigere i menuer, og bruge ALT + TAB for at flytte mellem kørende programmer.
 Mens du gør dette, vil NVDA give dig oplysninger om det objekt, som har fokus såsom dets navn, type, værdi, tilstand, beskrivelse, tastaturgenvej og oplysninger om placering.
@@ -326,7 +326,7 @@ I disse situationer kan du bruge objektbaseret navigation.
 
 Objektbaseret navigation lader dig bevæge dig mellem og skaffe information om de individuelle [objekter #Objects].
 Når du flytter til et objekt, vil NVDA rapportere det på samme måde, som det sker med systemfokus.
-Du kan også benytte den såkaldte skærmlæsetilstand eller [læsetilstand #ScreenReview] til at læse al tekst, præcis som den vises på skærmen.
+Du kan også benytte den såkaldte [skærmlæsetilstand #ScreenReview] til at læse al tekst, præcis som den vises på skærmen.
 
 I stedet for at skulle flytte frem og tilbage mellem hvert enkelt objekt i systemet, er objekterne grupperet i et hierarki.
 Dette betyder, at nogle objekter kan indeholde andre objekter, ogat du skal åbne objekterne for at få adgang til objekter inde i dem.
@@ -337,7 +337,7 @@ Derefter kan du bevæge dig forbi listen, hvis du ønsker, at udforske andre obj
 På samme måde er der kontroller (fx. knapper) inde i en værktøjslinje. Så du skal gå ind i værktøjslinjen for at komme til kontrollerne i værktøjslinjen.
 
 Det objekt, du er i gang med at gennemse, kaldes for navigatorobjektet.
-Når du navigerer til et objekt, kan du gennemse det ved at benytte [ kommandoerne til gennemsyn af tekst #ReviewingText] når du befinder dig i [læsetilstand #ObjectReview].
+Når du navigerer til et objekt, kan du gennemse det ved at benytte [ kommandoerne til gennemsyn af tekst #ReviewingText] når du befinder dig i [objektlæsetilstand #ObjectReview].
 Som standard, flytter navigator objektet sammen med System fokus, men denne adfærd kan slås til og fra.
 
 Bemærk, at punkt følger [fokus #SystemFocus] og [systemmarkør #SystemCaret], samt objektnavigation og læsemarkøren som standardindstilling.
