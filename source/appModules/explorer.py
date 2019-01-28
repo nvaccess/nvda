@@ -308,3 +308,5 @@ class AppModule(appModuleHandler.AppModule):
 			inputPanelWindow = obj.firstChild
 			if inputPanelWindow and inputPanelWindow.appModule.appName == "windowsinternal_composableshell_experiences_textinput_inputapp":
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
+				return
+		nextHandler()
