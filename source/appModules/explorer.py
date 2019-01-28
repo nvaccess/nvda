@@ -304,7 +304,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
 		# Send UIA window open event to input app window.
-		inputPanelWindow = obj.firstChild
-		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow" and inputPanelWindow and inputPanelWindow.appModule.appName == "windowsinternal_composableshell_experiences_textinput_inputapp":
-			inputPanelWindow.appModule.event_UIA_window_windowOpen(inputPanelWindow, nextHandler)
-		nextHandler()
+		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow":
+			inputPanelWindow = obj.firstChild
+			if inputPanelWindow and inputPanelWindow.appModule.appName == "windowsinternal_composableshell_experiences_textinput_inputapp":
+				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
