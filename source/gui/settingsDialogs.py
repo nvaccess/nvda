@@ -1967,27 +1967,29 @@ class AdvancedPanel(SettingsPanel):
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
-		groupText = _("Debug logging categories")
+		groupText = _("Debug logging")
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
 		sHelper.addItem(debugLogGroup)
 
-		self.debugLogCheckboxes={}
-		for key in (
+		self.logCategories=[
 			"hwIo",
 			"audioDucking",
 			"gui",
 			"louis",
 			"timeSinceInput",
-		):
-			checkbox=debugLogGroup.addItem(wx.CheckBox(self, label=key))
-			checkbox.SetValue(config.conf["debugLog"][key])
-			self.debugLogCheckboxes[key]=checkbox
+		]
+		# Translators: This is the label for a list in the 
+		#  Advanced settings panel
+		logCategoriesLabel=_("Enabled logging categories")
+		self.logCategoriesList=debugLogGroup.addLabeledControl(logCategoriesLabel, nvdaControls.CustomCheckListBox, choices=self.logCategories)
+		self.logCategoriesList.CheckedItems=[index for index,x in enumerate(self.logCategories) if config.conf['debugLog'][x]]
+		self.logCategoriesList.Select(0)
 
 	def onSave(self):
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
-		for k,v in self.debugLogCheckboxes.iteritems():
-			config.conf['debugLog'][k]=v.IsChecked()
+		for index,key in enumerate(self.logCategories):
+			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
 
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
