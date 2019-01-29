@@ -877,6 +877,14 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	}
 	xmlStream <<L"text-column-count=\"" << count << "\" ";
 
+	// Optimization: If there is only one column, then we can only be in that column.
+	if(count<=1) {
+		if(count==1) {
+			xmlStream <<L"text-column-number=\"" << 1 << "\" ";
+		}
+		return;
+	}
+
 	// 2. Get the start position (IN POINTS) of the range. This is relative to the start
 	// of the document.
 	auto rangeStart = getStartOfRangeDistanceFromEdgeOfDocument(pDispatchRange);
@@ -945,7 +953,8 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	}
 	xmlStream <<L"text-column-number=\"" << columnNumber << "\" ";
 
-	// Finally, double check that we calculated the full width of the document
+	/*
+	The following commented out code to the end of this function can be used to double check that we calculated the full width of the document
 	float pageWidth = -1.0f;
 	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_PAGEWIDTH,
 		VT_R4, &pageWidth);
@@ -966,6 +975,7 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 			<< " that some column numbers reported were incorrect."
 			<< " pageWidth: " << pageWidth << " colStartPos: " << colStartPos);
 	}
+	*/
 }
 
 UINT wm_winword_getTextInRange=0;
@@ -983,12 +993,19 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-		//Get the current selection
-		IDispatchPtr pDispatchSelection=NULL;
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	//Get the current selection
+	IDispatchPtr pDispatchSelection=NULL;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
+	//Disable screen updating as we will be moving the selection temporarily
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Make a copy of the selection as an independent range
 	IDispatchPtr pDispatchRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK||!pDispatchRange) {
@@ -1215,6 +1232,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	for(;neededClosingControlTagCount>0;--neededClosingControlTagCount) {
 		XMLStream<<L"</control>";
 	}
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 	args->text=SysAllocString(XMLStream.str().c_str());
 }
 
