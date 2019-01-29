@@ -23,19 +23,37 @@ from collections import namedtuple
 #: Context for overlapping focus and navigator objects
 CONTEXT_FOCUS_NAVIGATOR = "focusNavigatorOverlap"
 
-class ContextStyle(namedtuple("ContextStyle", ("color", "width", "style", "margin"))):
-	pass
+class HighlightStyle(
+	namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
+):
+	"""Represents the style of a highlight for a particular context.
+	@ivar color: THe color to use for the style
+	@type color: L{wx.Color}
+	@ivar width: The width of the lines to be drawn, in pixels.
+		A higher width reduces the inner dimentions of the rectangle.
+		Therefore, if you need to increase the outer dimentions of the rectangle, you need to increase the margin as well.
+	@type width: int
+	@ivar style: The style of the lines to be drawn;
+		One of the C{wx.PENSTYLE_*} constants.
+	@type style: int
+	@ivar margin: The number of pixels between the highlight's rectangle
+		and the rectangle of the object to be highlighted.
+		A higher margin increases both the inner and outer dimentions of the highlight's rectangle.
+		This value may also be negative.
+	@type margin: int
+	"""
+	__slots__ = ()
 
 class VisionEnhancementProvider(Highlighter):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
 	supportedHighlightContexts = (CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_CARET)
-	_contextStyles = {
-		CONTEXT_FOCUS: ContextStyle(wx.Colour(0x03, 0x36, 0xff, 0xff), 5, wx.PENSTYLE_SHORT_DASH, 5),
-		CONTEXT_NAVIGATOR: ContextStyle(wx.Colour(0xff, 0x02, 0x66, 0xff), 5, wx.PENSTYLE_SOLID, 5),
-		CONTEXT_FOCUS_NAVIGATOR: ContextStyle(wx.Colour(0x03, 0x36, 0xff, 0xff), 5, wx.PENSTYLE_SOLID, 5),
-		CONTEXT_CARET: ContextStyle(wx.Colour(0xff, 0xde, 0x03, 0xff), 2, wx.PENSTYLE_SOLID, 0),
+	_ContextStyles = {
+		CONTEXT_FOCUS: HighlightStyle(wx.Colour(0x03, 0x36, 0xff, 0xff), 5, wx.PENSTYLE_SHORT_DASH, 5),
+		CONTEXT_NAVIGATOR: HighlightStyle(wx.Colour(0xff, 0x02, 0x66, 0xff), 5, wx.PENSTYLE_SOLID, 5),
+		CONTEXT_FOCUS_NAVIGATOR: HighlightStyle(wx.Colour(0x03, 0x36, 0xff, 0xff), 5, wx.PENSTYLE_SOLID, 5),
+		CONTEXT_CARET: HighlightStyle(wx.Colour(0xff, 0xde, 0x03, 0xff), 2, wx.PENSTYLE_SOLID, 0),
 	}
 	_refreshInterval = 100
 
@@ -96,10 +114,10 @@ class VisionEnhancementProvider(Highlighter):
 				context = CONTEXT_FOCUS_NAVIGATOR
 			contextRects[context] = rect
 		for context, rect in contextRects.items():
-			contextStyle = self._contextStyles[context]
-			dc.Pen = wx.ThePenList.FindOrCreatePen(contextStyle.color, contextStyle.width, contextStyle.style)
+			HighlightStyle = self._ContextStyles[context]
+			dc.Pen = wx.ThePenList.FindOrCreatePen(HighlightStyle.color, HighlightStyle.width, HighlightStyle.style)
 			try:
-				rect = rect.expandOrShrink(contextStyle.margin).toClient(window.Handle).toLogical(window.Handle)
+				rect = rect.expandOrShrink(HighlightStyle.margin).toClient(window.Handle).toLogical(window.Handle)
 			except RuntimeError:
 				pass
 			dc.DrawRectangle(*rect.toLTWH())
