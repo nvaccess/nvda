@@ -397,7 +397,7 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
-	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
+	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
 class RemoteLoader64(object):

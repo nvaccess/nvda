@@ -270,141 +270,10 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if fd.ShowModal() != wx.ID_OK:
 			return
 		addonPath = fd.GetPath()
-		self.installAddon(addonPath)
-
-	def _showAddonRequiresNVDAUpdateDialog(self, bundle):
-		# Translators: The message displayed when installing an add-on package is prohibited, because it requires
-		# a later version of NVDA than is currently installed.
-		incompatibleMessage = _(
-			"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
-			"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
-		).format(
-			summary=bundle.manifest['summary'],
-			version=bundle.manifest['version'],
-			minimumNVDAVersion=addonAPIVersion.formatAsString(bundle.minimumNVDAVersion),
-			NVDAVersion=buildVersion.formatVersionString()
-		)
-		ErrorAddonInstallDialog(
-			parent=self,
-			# Translators: The title of a dialog presented when an error occurs.
-			title=_("Add-on not compatible"),
-			message=incompatibleMessage,
-			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
-		).ShowModal()
-
-	def _showAddonUntestedDialog(self, bundle):
-		# Translators: A message informing the user that this addon can not be installed because it is not compatible.
-		confirmInstallMessage = _(
-			"Installation of {summary} {version} has been blocked."
-			" An updated version of this add-on is required,"
-			" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
-		).format(
-			backCompatToAPIVersion=addonAPIVersion.formatAsString(addonAPIVersion.BACK_COMPAT_TO),
-			**bundle.manifest
-		)
-		return ErrorAddonInstallDialog(
-			parent=self,
-			# Translators: The title of a dialog presented when an error occurs.
-			title=_("Add-on not compatible"),
-			message=confirmInstallMessage,
-			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
-		).ShowModal()
-
-	def _showConfirmAddonInstallDialog(self, bundle):
-		# Translators: A message asking the user if they really wish to install an addon.
-		confirmInstallMessage = _(
-			"Are you sure you want to install this add-on?\n"
-			"Only install add-ons from trusted sources.\n"
-			"Addon: {summary} {version}"
-		).format(**bundle.manifest)
-
-		return ConfirmAddonInstallDialog(
-			parent=self,
-			# Translators: Title for message asking if the user really wishes to install an Addon.
-			title=_("Add-on Installation"),
-			message=confirmInstallMessage,
-			showAddonInfoFunction=lambda: _showAddonInfo(bundle)
-		).ShowModal()
-
-	def installAddon(self, addonPath, closeAfter=False):
-		try:
-			try:
-				bundle = addonHandler.AddonBundle(addonPath)
-			except:
-				log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
-				gui.messageBox(
-					# Translators: The message displayed when an error occurs when opening an add-on package for adding.
-					_("Failed to open add-on package file at %s - missing file or invalid file format") % addonPath,
-					# Translators: The title of a dialog presented when an error occurs.
-					_("Error"),
-					wx.OK | wx.ICON_ERROR
-				)
-				return
-
-			if not addonVersionCheck.hasAddonGotRequiredSupport(bundle):
-				self._showAddonRequiresNVDAUpdateDialog(bundle)
-				return
-			elif not addonVersionCheck.isAddonTested(bundle):
-				self._showAddonUntestedDialog(bundle)
-				return
-			elif wx.YES != self._showConfirmAddonInstallDialog(bundle):
-				return
-
-			prevAddon=None
-			for addon in self.curAddons:
-				if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
-					prevAddon=addon
-					break
-			if prevAddon:
-				summary=bundle.manifest["summary"]
-				curVersion=prevAddon.manifest["version"]
-				newVersion=bundle.manifest["version"]
-				if gui.messageBox(
-					# Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
-					_("You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?").format(
-						summary=summary,
-						newVersion=newVersion
-					)
-					if curVersion==newVersion else
-					# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-					_("A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?").format(
-						summary=summary,
-						curVersion=curVersion,
-						newVersion=newVersion
-					),
-					# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
-					_("Add-on Installation"),
-					wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
-						return
-				prevAddon.requestRemove()
-			progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-			# Translators: The title of the dialog presented while an Addon is being installed.
-			_("Installing Add-on"),
-			# Translators: The message displayed while an addon is being installed.
-			_("Please wait while the add-on is being installed."))
-			try:
-				gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
-			except:
-				log.error("Error installing  addon bundle from %s"%addonPath,exc_info=True)
-				self.refreshAddonsList()
-				progressDialog.done()
-				del progressDialog
-				# Translators: The message displayed when an error occurs when installing an add-on package.
-				gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
-					# Translators: The title of a dialog presented when an error occurs.
-					_("Error"),
-					wx.OK | wx.ICON_ERROR)
-				return
-			else:
-				self.refreshAddonsList(activeIndex=-1)
-				progressDialog.done()
-				del progressDialog
-		finally:
-			if closeAfter:
-				# #4460: If we do this immediately, wx seems to drop the WM_QUIT sent if the user chooses to restart.
-				# This seems to have something to do with the wx.ProgressDialog.
-				# The CallLater seems to work around this.
-				wx.CallLater(1, self.Close)
+		if installAddon(self, addonPath):
+			self.refreshAddonsList(activeIndex=-1)
+		else:
+			self.refreshAddonsList()
 
 	def onRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
@@ -567,22 +436,177 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# the defaults from the addon GUI are fine. We are testing against the running version.
 		).ShowModal()
 
-	@classmethod
-	def handleRemoteAddonInstall(cls, addonPath):
-		# Add-ons cannot be installed into a Windows store version of NVDA
-		if config.isAppX:
-			gui.messageBox(
-				# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-				_("Add-ons cannot be installed in the Windows Store version of NVDA"),
-				# Translators: The title of a dialog presented when an error occurs.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR)
-			return
-		closeAfter = AddonsDialog._instance() is None
-		dialog = AddonsDialog(gui.mainFrame)
-		dialog.installAddon(addonPath, closeAfter=closeAfter)
-		del dialog
+def installAddon(parentWindow, addonPath):
+	""" Installs the addon at path. Any error messages / warnings are presented to the user via a GUI message box.
+	If attempting to install an addon that is pending removal, it will no longer be pending removal.
+	:return True on success or False on failure.
+	"""
+	try:
+		bundle = addonHandler.AddonBundle(addonPath)
+	except:
+		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
+		gui.messageBox(
+			# Translators: The message displayed when an error occurs when opening an add-on package for adding.
+			_("Failed to open add-on package file at %s - missing file or invalid file format") % addonPath,
+			# Translators: The title of a dialog presented when an error occurs.
+			_("Error"),
+			wx.OK | wx.ICON_ERROR
+		)
+		return False  # Exit early, can't install an invalid bundle
 
+	if not addonVersionCheck.hasAddonGotRequiredSupport(bundle):
+		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
+		return False  # Exit early, addon does not have required support
+	elif not addonVersionCheck.isAddonTested(bundle):
+		_showAddonUntestedDialog(parentWindow, bundle)
+		return False  # Exit early, addon is not up to date with the latest API version.
+	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
+		return False  # Exit early, User changed their mind about installation.
+
+	prevAddon = None
+	for addon in addonHandler.getAvailableAddons():
+		if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
+			prevAddon=addon
+			break
+	if prevAddon:
+		summary=bundle.manifest["summary"]
+		curVersion=prevAddon.manifest["version"]
+		newVersion=bundle.manifest["version"]
+
+		# Translators: A title for the dialog asking if the user wishes to update a previously installed
+		# add-on with this one.
+		messageBoxTitle = _("Add-on Installation")
+
+		# Translators: A message asking if the user wishes to update an add-on with the same version
+		# currently installed according to the version number.
+		overwriteExistingAddonInstallationMessage = _(
+			"You are about to install version {newVersion} of {summary}, which appears to be already installed. "
+			"Would you still like to update?"
+		).format(summary=summary, newVersion=newVersion)
+
+		# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+		updateAddonInstallationMessage = _(
+			"A version of this add-on is already installed. "
+			"Would you like to update {summary} version {curVersion} to version {newVersion}?"
+		).format(summary=summary, curVersion=curVersion, newVersion=newVersion)
+
+		if gui.messageBox(
+			overwriteExistingAddonInstallationMessage if curVersion == newVersion else updateAddonInstallationMessage,
+			messageBoxTitle,
+			wx.YES|wx.NO|wx.ICON_WARNING
+		) != wx.YES:
+				return False
+		prevAddon.requestRemove()
+
+	from contextlib import contextmanager
+
+	@contextmanager
+	def doneAndDestroy(window):
+		try:
+			yield window
+		except:
+			# pass on any exceptions
+			raise
+		finally:
+			# but ensure that done and Destroy are called.
+			window.done()
+			window.Destroy()
+
+	#  use a progress dialog so users know that something is happening.
+	progressDialog = gui.IndeterminateProgressDialog(
+		parentWindow,
+		# Translators: The title of the dialog presented while an Addon is being installed.
+		_("Installing Add-on"),
+		# Translators: The message displayed while an addon is being installed.
+		_("Please wait while the add-on is being installed.")
+	)
+
+	try:
+		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
+		with doneAndDestroy(progressDialog):
+			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
+			return True
+	except:
+		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)
+		gui.messageBox(
+			# Translators: The message displayed when an error occurs when installing an add-on package.
+			_("Failed to install add-on from %s") % addonPath,
+			# Translators: The title of a dialog presented when an error occurs.
+			_("Error"),
+			wx.OK | wx.ICON_ERROR
+		)
+	return False
+
+
+def handleRemoteAddonInstall(addonPath):
+	# Add-ons cannot be installed into a Windows store version of NVDA
+	if config.isAppX:
+		gui.messageBox(
+			# Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+			_("Add-ons cannot be installed in the Windows Store version of NVDA"),
+			# Translators: The title of a dialog presented when an error occurs.
+			_("Error"),
+			wx.OK | wx.ICON_ERROR)
+		return
+	gui.mainFrame.prePopup()
+	installAddon(gui.mainFrame, addonPath)
+	gui.mainFrame.postPopup()
+
+
+def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
+	# Translators: The message displayed when installing an add-on package is prohibited, because it requires
+	# a later version of NVDA than is currently installed.
+	incompatibleMessage = _(
+		"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
+		"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}"
+	).format(
+		summary=bundle.manifest['summary'],
+		version=bundle.manifest['version'],
+		minimumNVDAVersion=addonAPIVersion.formatAsString(bundle.minimumNVDAVersion),
+		NVDAVersion=buildVersion.formatVersionString()
+	)
+	ErrorAddonInstallDialog(
+		parent=parent,
+		# Translators: The title of a dialog presented when an error occurs.
+		title=_("Add-on not compatible"),
+		message=incompatibleMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+	).ShowModal()
+
+
+def _showAddonUntestedDialog(parent, bundle):
+	# Translators: A message informing the user that this addon can not be installed because it is not compatible.
+	confirmInstallMessage = _(
+		"Installation of {summary} {version} has been blocked."
+		" An updated version of this add-on is required,"
+		" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
+	).format(
+		backCompatToAPIVersion=addonAPIVersion.formatAsString(addonAPIVersion.BACK_COMPAT_TO),
+		**bundle.manifest
+	)
+	return ErrorAddonInstallDialog(
+		parent=parent,
+		# Translators: The title of a dialog presented when an error occurs.
+		title=_("Add-on not compatible"),
+		message=confirmInstallMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+	).ShowModal()
+
+def _showConfirmAddonInstallDialog(parent, bundle):
+	# Translators: A message asking the user if they really wish to install an addon.
+	confirmInstallMessage = _(
+		"Are you sure you want to install this add-on?\n"
+		"Only install add-ons from trusted sources.\n"
+		"Addon: {summary} {version}"
+	).format(**bundle.manifest)
+
+	return ConfirmAddonInstallDialog(
+		parent=parent,
+		# Translators: Title for message asking if the user really wishes to install an Addon.
+		title=_("Add-on Installation"),
+		message=confirmInstallMessage,
+		showAddonInfoFunction=lambda: _showAddonInfo(bundle)
+	).ShowModal()
 
 class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""
