@@ -53,7 +53,7 @@ class VisionEnhancementProvider(Highlighter):
 		CONTEXT_FOCUS: HighlightStyle(wx.Colour(0x03, 0x36, 0xff, 0xff), 5, wx.PENSTYLE_SHORT_DASH, 5),
 		CONTEXT_NAVIGATOR: HighlightStyle(wx.Colour(0xff, 0x02, 0x66, 0xff), 5, wx.PENSTYLE_SOLID, 5),
 		CONTEXT_FOCUS_NAVIGATOR: HighlightStyle(wx.Colour(0x03, 0x36, 0xff, 0xff), 5, wx.PENSTYLE_SOLID, 5),
-		CONTEXT_CARET: HighlightStyle(wx.Colour(0xff, 0xde, 0x03, 0xff), 2, wx.PENSTYLE_SOLID, 0),
+		CONTEXT_CARET: HighlightStyle(wx.Colour(0xff, 0xde, 0x03, 0xff), 2, wx.PENSTYLE_SOLID, 2),
 	}
 	_refreshInterval = 100
 
