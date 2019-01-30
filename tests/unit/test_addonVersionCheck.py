@@ -146,25 +146,25 @@ class TestGetAPIVersionTupleFromString(unittest.TestCase):
 class TestFormatAsString(unittest.TestCase):
 
 	def test_formatAsString_full(self):
-		res = addonAPIVersion.formatAsString((2019, 1, 1))
+		res = addonAPIVersion.formatForGUI((2019, 1, 1))
 		self.assertEqual("2019.1.1", res)
 
 	def test_formatAsString_missingMinor(self):
-		res = addonAPIVersion.formatAsString((2019, 1, 0))
+		res = addonAPIVersion.formatForGUI((2019, 1, 0))
 		self.assertEqual("2019.1", res)
 
 	def test_formatAsString_zeros(self):
-		res = addonAPIVersion.formatAsString((0, 0, 0))
+		res = addonAPIVersion.formatForGUI((0, 0, 0))
 		self.assertEqual("0.0", res)
 
 	def test_formatAsString_none(self):
-		res = addonAPIVersion.formatAsString(None)
+		res = addonAPIVersion.formatForGUI(None)
 		self.assertEqual("unknown", res)
 
 	def test_formatAsString_tupleTooSmall(self):
-		res = addonAPIVersion.formatAsString((2019, 1))
+		res = addonAPIVersion.formatForGUI((2019, 1))
 		self.assertEqual("unknown", res)
 
 	def test_formatAsString_tupleTooLong(self):
-		res = addonAPIVersion.formatAsString((2019, 1, 1, 1))
+		res = addonAPIVersion.formatForGUI((2019, 1, 1, 1))
 		self.assertEqual("unknown", res)

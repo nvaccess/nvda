@@ -119,12 +119,12 @@ def _showAddonInfo(addon):
 	if url:
 		# Translators: the url part of the About Add-on information
 		message.append(_("URL: {url}").format(url=url))
-	minimumNVDAVersion = addonAPIVersion.formatAsString(addon.minimumNVDAVersion)
+	minimumNVDAVersion = addonAPIVersion.formatForGUI(addon.minimumNVDAVersion)
 	message.append(
 		# Translators: the minimum NVDA version part of the About Add-on information
 		_("Minimum required NVDA version: {}").format(minimumNVDAVersion)
 	)
-	lastTestedNVDAVersion = addonAPIVersion.formatAsString(addon.lastTestedNVDAVersion)
+	lastTestedNVDAVersion = addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion)
 	message.append(
 		# Translators: the last NVDA version tested part of the About Add-on information
 		_("Last NVDA version tested: {}").format(lastTestedNVDAVersion)
@@ -562,8 +562,8 @@ def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
 	).format(
 		summary=bundle.manifest['summary'],
 		version=bundle.manifest['version'],
-		minimumNVDAVersion=addonAPIVersion.formatAsString(bundle.minimumNVDAVersion),
-		NVDAVersion=buildVersion.formatVersionString()
+		minimumNVDAVersion=addonAPIVersion.formatForGUI(bundle.minimumNVDAVersion),
+		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
 	)
 	ErrorAddonInstallDialog(
 		parent=parent,
@@ -581,7 +581,7 @@ def _showAddonUntestedDialog(parent, bundle):
 		" An updated version of this add-on is required,"
 		" the minimum add-on API supported by this version of NVDA is {backCompatToAPIVersion}"
 	).format(
-		backCompatToAPIVersion=addonAPIVersion.formatAsString(addonAPIVersion.BACK_COMPAT_TO),
+		backCompatToAPIVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
 		**bundle.manifest
 	)
 	return ErrorAddonInstallDialog(
@@ -658,7 +658,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			"The following add-ons are incompatible with NVDA version {}."
 			" These add-ons can not be enabled."
 			" Please contact the add-on author for further assistance."
-		).format(buildVersion.formatVersionString())
+		).format(addonAPIVersion.formatForGUI(self._APIVersion))
 		AddonSelectionIntroLabel=wx.StaticText(self, label=introText)
 		AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
 		sHelper.addItem(AddonSelectionIntroLabel)
@@ -707,7 +707,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The reason an add-on is not compatible. A more recent version of NVDA is
 			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 			return _("An apdated version of NVDA is required. NVDA version {} or later."
-			).format(addonAPIVersion.formatAsString(addon.minimumNVDAVersion))
+			).format(addonAPIVersion.formatForGUI(addon.minimumNVDAVersion))
 		elif not addonVersionCheck.isAddonTested(
 			addon,
 			backwardsCompatToVersion=self._APIBackwardsCompatToVersion
@@ -715,7 +715,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
 			# an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
 			return _("An updated version of this add-on is required. The minimum supported API version is now {}"
-			).format(addonAPIVersion.formatAsString(self._APIBackwardsCompatToVersion))
+			).format(addonAPIVersion.formatForGUI(self._APIBackwardsCompatToVersion))
 
 	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()

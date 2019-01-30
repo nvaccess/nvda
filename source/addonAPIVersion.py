@@ -37,22 +37,23 @@ def getAPIVersionTupleFromString(version):
 	return tuple(int(i) if i is not None else 0 for i in match.groups())
 
 
-def formatAsString(versionTuple):
-	"""Converts an API version tuple as a string for displaying in the GUI
+def formatForGUI(versionTuple):
+	"""Converts a version tuple to a string for displaying in the GUI
 	Examples:
 	- (2018, 1, 1) becomes "2018.1.1"
 	- (2018, 1, 0) becomes "2018.1"
 	- (0, 0, 0) becomes "0.0"
 	"""
-	# Translators: shown when an addon API version string is unknown
-	default = _("unknown")
-	if not versionTuple:
-		return default
 	try:
 		year, major, minor = versionTuple
-		if minor is 0:
-			return "{y}.{M}".format(y=year, M=major)
-		return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
-	except:
-		log.debug("Error formatting versionTuple: {}".format(repr(versionTuple)), exc_info=True)
+		return buildVersion.formatVersionForGUI(year, major, minor)
+	except (
+			ValueError,  # Too few/many values to unpack
+			TypeError  # versionTuple is None or some other incorrect type
+	):
+		# This path should never be hit. But the appearance of "unknown" in the GUI is a better outcome
+		# than an exception and unusable dialog.
+		# Translators: shown when an addon API version string is unknown
+		default = _("unknown")
+		log.error("Unable to format versionTuple: {}".format(repr(versionTuple)), exc_info=True)
 		return default
