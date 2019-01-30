@@ -458,7 +458,7 @@ def installAddon(parentWindow, addonPath):
 		_showAddonRequiresNVDAUpdateDialog(parentWindow, bundle)
 		return False  # Exit early, addon does not have required support
 	elif not addonVersionCheck.isAddonTested(bundle):
-		_showAddonUntestedDialog(parentWindow, bundle)
+		_showAddonTooOldDialog(parentWindow, bundle)
 		return False  # Exit early, addon is not up to date with the latest API version.
 	elif wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
 		return False  # Exit early, User changed their mind about installation.
@@ -574,7 +574,7 @@ def _showAddonRequiresNVDAUpdateDialog(parent, bundle):
 	).ShowModal()
 
 
-def _showAddonUntestedDialog(parent, bundle):
+def _showAddonTooOldDialog(parent, bundle):
 	# Translators: A message informing the user that this addon can not be installed because it is not compatible.
 	confirmInstallMessage = _(
 		"Installation of {summary} {version} has been blocked."
