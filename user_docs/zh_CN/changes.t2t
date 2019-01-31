@@ -135,7 +135,7 @@ This is a minor release to fix a critical bug in NVDA which caused 32 bit versio
 - For ALVA BC6 displays, the key combination sp2+sp3 will now announce the current date and time, whereas sp1+sp2 emulates the Windows key. (#8230)
 - 如果用户在自动检查更新时想向NV Access发送NVDA使用情况统计数据，则会在NVDA启动时询问用户一次。 (#8217)
 - The user is asked once when NVDA starts if they are happy sending usage statistics to NV Access when checking for NVDA updates. (#8217)
-- 当重装或检查更新时，如果用户同意向NV Access发送使用统计数据，NVDA现在将发送当前使用的合成器驱动程序和盲文显示器的名称，以帮助更好地确定这些驱动程序的未来开发顺序。 (#8217)
+- 当重装或检查更新时，如果用户同意向NV Access发送使用统计数据，NVDA现在将发送当前使用的语音合成器和盲文点显器的名称，以帮助更好地确定这些驱动程序的未来开发顺序。 (#8217)
 - When checking for updates, if the user has agreed to allow sending usage statistics to NV Access, NVDA will now send the name of the current synth driver and braille display in use, to aide in better prioritization for future work on these drivers. (#8217)
 - 更新liblouis盲文翻译器版本至3.6.0。 (#8365)
 - Updated liblouis braille translator to version 3.6.0. (#8365)
@@ -176,7 +176,7 @@ This is a minor release to fix a critical bug in NVDA which caused 32 bit versio
 - In Microsoft Edge, NVDA will announce notifications such as reading view availability and page load progress. (#8423)
 - 当浏览到Web上的列表时，如果Web作者提供了标签，NVDA现在将朗读其标签。 (#7652)
 - When navigating into a list on the web, NVDA will now report its label if the web author has provided one. (#7652)
-- 当手动将功能分配给特定盲文点显器的手势时，这些手势现在总是显示为分配给该显示器。以前，它们显示为被分配到当前活动的点显器。 (#8108)
+- 当手动将功能分配给特定盲文点显器的手势时，这些手势现在总是显示为分配给该点显器。以前，它们显示为被分配到当前活动的点显器。 (#8108)
 - When manually assigning functions to gestures for a particular braille display, these gestures now always show up as being assigned to that display. Previously, they showed up as if they were assigned to the currently active display. (#8108)
 - 支持64位版本的Media Player Classic。 (#6066)
 - The 64-bit version of Media Player Classic is now supported. (#6066)
@@ -382,7 +382,7 @@ This is a special release of NVDA which addresses   a bug in the Onecore Windows
 - A slight performance improvement when rendering large amounts of content in Mozilla Firefox 58 and later. (#7719)
 - 在Microsoft Outlook中，阅读包含表格的电子邮件不会再导致报错。 (#6827)
 - In Microsoft Outlook, reading emails containing tables no longer causes errors. (#6827)
-- 如果一个或多个涉及的手势是特定于模型的，则盲文显示器手势模拟系统键盘键修改器现在也可以与其他仿真系统键盘键组合。 (#7783)
+- 如果一个或多个涉及的手势是特定于模型的，则盲文点显器手势模拟系统键盘键修改器现在也可以与其他仿真系统键盘键组合。 (#7783)
 - Braille display gestures that emulate system keyboard key modifiers can now also be combined with other emulated system keyboard keys if one or more of the involved gestures are model specific. (#7783)
 - 在Mozilla Firefox中，浏览模式现在可以在由LastPass和bitwarden等扩展创建的弹出窗口中正常工作。 (#7809)
 - In Mozilla Firefox, browse mode now works correctly in pop-ups created by extensions such as LastPass and bitwarden. (#7809)
@@ -417,61 +417,101 @@ This is a special release of NVDA which addresses   a bug in the Onecore Windows
 
 
 = 2017.4 =
-Highlights of this release include many  fixes and enhancements to web support including browse mode for web dialogs by default, better reporting of field group labels in browse mode, support for new Windows 10 technologies such as Windows Defender Application Guard and Windows 10 on ARM64, and automatic reporting of screen orientation and battery status.
-Please note that this version of NVDA no longer supports Windows XP or Windows Vista. The minimum requirement for NVDA is now windows 7 with Service Pack 1.
+此版本的新特性包括许多Web支持的修复和功能增强，包括在Web对话框中的浏览模式支持，更好地朗读表单区元素标签，支持Windows Defender Application Guard和Windows 10 ARM x64等新的Windows 10技术，且可自动朗读屏幕方向和电池状态。
+请注意，此版本的NVDA不再支持Windows XP或Windows Vista。现在，NVDA的最低系统要求是Windows 7 Service Pack 1。
 
-
-== New Features ==
+== 新特性 ==
+- 在浏览模式下，可以使用容器跳转快捷键（或shift +，）来在路标的开始点和结束点之间跳转。（＃5482）
 - In browse mode, it is now possible to skip past/to the start of landmarks using the skip to end/beginning of container commands (comma/shift+comma). (#5482)
+- 在Firefox，Chrome和Internet Explorer中，编辑框和表单区的快速导航键现在包含可编辑的富文本容器（如contentEditable）。（＃5534）
 - In Firefox, Chrome and Internet Explorer, quick navigation to edit fields and form fields now includes editable rich text content (I.e. contentEditable). (#5534)
+- 在Web浏览器中，元素列表现在可以列出表单区和按钮（＃588）
 - In web browsers, the Elements List can now list form fields and buttons. (#588)
+- 初步支持运行在arm64架构的windows10。（＃7508）
 - Initial support for Windows 10 on ARM64. (#7508)
+- 通过math accessible，支持在Kindo电子书中提供的数学内容的阅读和可交互式浏览。（＃7536）
 - Early support for reading and interactive navigation of mathematical content for Kindle books with accessible math. (#7536)
+- 增加了对Azardi电子书阅读器的支持。（＃5848）
 - Added support for Azardi e-book reader. (#5848)
+- 插件更新时朗读插件版本信息。（＃5324）
 - Version information for add-ons is now reported when being updated. (#5324)
+- 增加了新的命令行参数来创建NVDA的便携副本。（＃6329）
 - Added new command line parameters to create a portable copy of NVDA. (#6329)
+- 支持嵌入到Windows Defender Application Guard的Microsoft Edge浏览器（＃7600）
 - Support for Microsoft Edge running within Windows Defender Application Guard in Windows 10 Fall Creators Update. (#7600)
+- 如果在笔记本电脑或平板电脑上运行的时候，NVDA现在将提示充电器何时连接/断开连接，以及屏幕方向是否改变。（＃4574，＃4612）
 - If running on a laptop or tablet, NVDA will now report when a charger is connected/disconnected, and when the screen orientation changes. (#4574, #4612)
+- 新的语言：马其顿语。
 - New language: Macedonian.
+- 新盲文表：克罗地亚语1级点字，越南语1级点字（＃7518，＃7565）
 - New braille translation tables: Croatian grade 1, Vietnamese grade 1. (#7518, #7565)
+- 增加了对Handy Tech的Actilino盲文点显器的支持。（＃7590）
 - Support for the Actilino braille display from Handy Tech has been added. (#7590)
+- 支持Handy Tech盲文点显器的盲文输入。（＃7590）
 - Braille input for Handy Tech braille displays is now supported. (#7590)
 
 
-== Changes ==
+== 修改 ==
+- NVDA支持的最低操作系统现在是Windows 7 Service Pack 1或Windows Server 2008 R2 Service Pack 1。（＃7546）
 - The minimum supported Operating System for NVDA is now Windows 7 Service Pack 1, or Windows Server 2008 R2 Service Pack 1. (#7546)
+- Firefox和Chrome浏览器中的Web对话框现在自动使用浏览模式，除非对话框嵌入到了Web应用程序里（＃4493）
 - Web dialogs in Firefox and Chrome web browsers now automatically use browse Mode, unless inside of a web application. (#4493)
+- 在浏览模式下，使用快速导航命令进行切换和移动时不再提示跳出容器（如列表和表格等），从而使导航更高效。（＃2591）
 - In browse mode, tabbing and moving with quick navigation commands no longer announces jumping out of containers such as lists and tables, which makes navigating more efficient. (#2591)
+- 在Firefox和Chrome的浏览模式下，通过快速导航或Tab键切换时，表单区域组的名称将被读出。（＃3321）
 - In Browse mode for Firefox and Chrome, the name of form field groups are now announced when moving into them with quick navigation or when tabbing. (#3321)
+- 在浏览模式下，嵌入式对象（o和shift + o）的快速导航命令现在包括音频和视频元素以及具有咏叹调角色应用程序和对话框的元素（＃7239）
 - In browse mode, the quick navigation command for embedded objects (o and shift+o) now includes audio and video elements as well as elements with the aria roles application and dialog. (#7239)
+- Espeak-ng已经更新到1.49.2，解决了一些生成发布版本时产生的问题。（＃7385，＃7583）
 - Espeak-ng has been updated to 1.49.2, resolving some issues with producing release builds. (#7385, #7583)
+- 连按三次“读取状态栏”命令，其内容将被复制到剪贴板。（＃1785）
 - On the third activation of the 'read status bar' command, its contents is copied to the clipboard. (#1785)
+- 将手势分配给Baum点显器按键时，可以将其限制为正在使用的·点显器型号（例如VarioUltra或Pronto）（＃7517）
 - When assigning gestures to keys on a Baum display, you can limit them to the model of the braille display in use (e.g. VarioUltra or Pronto). (#7517)
+- 浏览模式中，元素列表中过滤器编辑框的热键已经从alt + f变成了alt + e。（＃7569）
 - The hotkey for the filter field in the elements list in browse mode has changed from alt+f to alt+e. (#7569)
+- 为浏览模式添加了一个未绑定的命令，以实时切换包含的布局表格。（＃7634）
 - An unbound command has been added for browse mode to toggle the inclusion of layout tables on the fly. You can find this command in the Browse mode category of the Input Gestures dialog. (#7634)
+- 升级liblouis盲文翻译至3.3.0。（＃7565）
 - Upgraded liblouis braille translator to 3.3.0. (#7565)
+- “字典”对话框中正则表达式单选按钮的热键已经从alt + r变成了alt + e。（＃6782）
 - The hotkey for the regular expression radio button in the dictionary dialog has changed from alt+r to alt+e. (#6782)
+- 语音词典文件现在已经过版本控制，并已被移到“speechDicts / voiceDicts.v1”目录。（＃7592）
 - Voice dictionary files are now versioned and have been moved to the 'speechDicts/voiceDicts.v1' directory. (#7592)
+- 当使用启动器运行NVDA时，不再保存版本文件的配置修改（如用户配置，语音词典）。（＃7688）
 - Versioned files (user configuration, voice dictionaries) modifications are no longer saved when NVDA is run from the launcher. (#7688)
+- Handy Tech生产的Braillino，Bookworm和Modular（带旧固件）盲文点显器不再支持开箱即用。  - 请安装  Handy Tech通用驱动器和NVDA插件来使用这些点显器。（＃7590） 
 - The Braillino, Bookworm and Modular (with old firmware) braille displays from Handy Tech are no longer supported out of the box. Install the Handy Tech Universal Driver and NVDA add-on to use these displays. (#7590)
 
 
-== Bug Fixes ==
+== 错误修复 ==
+- 现在，在Microsoft Word等应用程序中以盲文显示链接。 (#6780)
 - Links are now indicated in braille in applications such as Microsoft Word. (#6780)
+- 现在在Firefox或Chrome浏览器中打开许多标签时，NVDA不再明显变慢。 (#3138)
 - NVDA no longer becomes noticeably slower when many tabs are open in either Firefox or Chrome web browsers. (#3138)
+- MDV Lilli盲文点显器的光标路由现在不再错误地将盲文单元移动到它应该的位置之前。 (#7469)
 - Cursor routing for the MDV Lilli Braille display no longer incorrectly moves one braille cell ahead of where it should be. (#7469)
+- 在Internet Explorer和其他MSHTML文档中，现在支持HTML5 required属性以指示表单字段的状态。 (#7321)
 - In Internet Explorer and other MSHTML documents, the HTML5 required attribute is now supported to indicate the required state of a form field. (#7321)
+- 在左对齐的写字板文档中输入阿拉伯文字时，现在会更新盲文显示。 (#511)
 - Braille displays are now updated when typing Arabic characters in a left-aligned WordPad document. (#511)
+- 当标签本身不显示为内容时，Mozilla Firefox中控件的无障碍标签现在更容易在浏览模式下朗读。 (#4773)
 - Accessible labels for controls in Mozilla Firefox are now more readily reported in browse mode when the label does not appear as content itself. (#4773)
+- 在Windows 10 Creaters Update上，NVDA可以在重新启动NVDA后再次访问Firefox。 (#7269)
 - On windows 10 Creaters Update, NVDA can again access Firefox after a restart of NVDA. (#7269)
+# 当使用Mozilla Firefox重新启动NVDA时，浏览模式将再次可用，但您需要使用alt + tab切换一下窗口才可操作。 (#5758)
 - When restarting NVDA with Mozilla Firefox in focus, browse mode will again be available, though you may need to alt+tab away and back again. (#5758)
+- 现在可以在安装了Mozilla Firefox的系统上浏览Google Chrome中的数学内容。 (#7308)
 - It is now possible to access math content in Google Chrome on a system with out Mozilla Firefox installed. (#7308)
+- 现在在重新启动之前安装NVDA后，操作系统和其他应用程序应当更加稳定，与以前的NVDA版本的安装相比。 （＃7563）
 - The Operating System and other applications should be more stable directly after installing NVDA before rebooting, as compaired with installs of previous NVDA versions. (#7563)
+- 使用OCR识别命令（例如NVDA + r）时，如果导航器对象消失，NVDA现在会朗读错误消息而不是其他内容。 （＃7567）
 - When using a content recognition command (e.g. NVDA+r), NVDA now reports an error message instead of nothing if the navigator object has disappeared. (#7567)
+# 对于包含左保险杠的Freedom Scientific盲文点显器，已经修复了向后滚动功能。 (#7713)
 - Backward scrolling functionality has been fixed for Freedom Scientific braille displays containing a left bumper bar. (#7713)
 
 
-== Changes for Developers ==
+== 开发者修改 ==
 - "scons tests" now checks that translatable strings have translator comments. You can also run this alone with "scons checkPot". (#7492)
 - There is now a new extensionPoints module which provides a generic framework to enable code extensibility at specific points in the code. This allows interested parties to register to be notified when some action occurs (extensionPoints.Action), to modify a specific kind of data (extensionPoints.Filter) or to participate in deciding whether something will be done (extensionPoints.Decider). (#3393)
 - You can now register to be notified about configuration profile switches via the config.configProfileSwitched Action. (#3393)
@@ -483,80 +523,142 @@ Please note that this version of NVDA no longer supports Windows XP or Windows V
 
 
 = 2017.3 =
-Highlights of this release include input of contracted braille, support for new Windows OneCore voices available on Windows 10, in-built support for Windows 10 OCR, and many significant improvements regarding Braille and the web.
+此版本的新特性包括缩写盲文输入支持，Windows 10上可用的新Windows OneCore语音支持，Windows 10 内置 OCR支持，以及盲文和网络的许多重大改进。
 
-== New Features ==
+== 新特性 ==
+- 添加了盲文设置“无限期显示消息”。 (#6669)
 - A Braille setting has been added to "show messages indefinitely". (#6669)
+- 在Microsoft Outlook消息列表中，NVDA现在会读出消息是否已经标记。 (#)6374)
 - In Microsoft Outlook message lists, NVDA now reports if a message is flagged. (#6374)
+- 在Microsoft PowerPoint中，当编辑幻灯片时，现在会报告形状的确切类型（例如三角形，圆形，视频或光标），而不仅提示“形状”。 (#7111)
 - In Microsoft PowerPoint, the exact type of a shape is now reported when editing a slide (such as triangle, circle, video or arrow), rather than just "shape". (#7111)
+- Google Chrome 现已支持以MathML格式提供的数学内容。 (#7184)
 - Mathematical content (provided as MathML) is now supported in Google Chrome. (#7184)
+- NVDA现在可以使用Windows 10中包含的新的Windows OneCore语音（也称为Microsoft Mobile语音）。您可以通过在NVDA的“合成器”对话框中选择Windows OneCore语音来使用这些声音。 (#6159)
 - NVDA can now speak using the new Windows OneCore voices (also known as Microsoft Mobile voices) included in Windows 10. You access these by selecting Windows OneCore voices in NVDA's Synthesizer dialog. (#6159)
+- NVDA用户配置文件现在可以存储在用户的本地应用程序数据文件夹中。这是通过注册表中的设置启用的。有关详细信息，请参阅“用户指南”中的“系统参数”。 (#6812)
 - NVDA user configuration files can now be stored in the user's local application data folder. This is enabled via a setting in the registry. See "System Wide Parameters" in the User Guide for more details. (#6812)
+- 在网络浏览器中，NVDA现在可朗读字段的占位符值（其实就是，现在支持aria-placeholder）。 (#7004)
 - In web browsers, NVDA now reports placeholder values for fields (specifically, aria-placeholder is now supported). (#7004)
+- 在Microsoft Word的浏览模式下，现在可以使用快速导航按键（w和shift + w）导航到拼写错误。 (#6942)
 - In Browse mode for Microsoft Word, it is now possible to navigate to spelling  errors using quick navigation (w and shift+w). (#6942)
+- 添加对Microsoft Outlook约会对话框中的“日期”选择器控件的支持。 (#7217)
 - Added support for the Date picker control found in Microsoft Outlook Appointment dialogs. (#7217)
+- 自动显示的建议现在在Windows 10 Mail to / cc编辑框和Windows 10设置搜索编辑框中都可自动读出。 (#6241)
 - The currently selected suggestion is now reported in Windows 10 Mail to/cc fields and the Windows 10 Settings search field. (#6241)
+- 当Windows 10中的某些搜索编辑框中显示了建议时，使用声音提示（例如，启动屏幕，设置搜索，Windows 10邮件到/ cc编辑框）。 (#6241)
 - A sound is now playd to indicate the  appearance of suggestions in certain search fields in Windows 10 (E.g. start screen, settings search, Windows 10 mail to/cc fields). (#6241)
+- NVDA现在可以自动在Skype for Business Desktop中朗读通知，例如当有人与您开始对话时。 (#7281)
 - NVDA now automatically reports notifications in Skype for Business Desktop, such as when someone starts a conversation with you. (#7281)
+-  NVDA现在在Skype for Business对话中自动朗读传入的聊天消息。 (#7286)
 - NVDA now automatically reports incoming chat messages while in a Skype for Business conversation. (#7286)
+- NVDA现在可自动朗读Microsoft Edge的通知，例如下载开始时的通知。 (#7281)
 - NVDA now automatically reports notifications in Microsoft Edge, such as when a download starts. (#7281)
+- 您可以使用盲文键盘在盲文点显器上输入简写和未简写盲文。有关详细信息，请参阅用户指南的盲文输入部分。 (#2439)
 - You can now type in both contracted and uncontracted braille on a braille display with a braille keyboard. See the Braille Input section of the User Guide for details. (#2439)
+- 您现在可以通过在 点字设置里选择 Unicode 盲文表，然后使用点显器上的点字键盘的方式输入Unicode 字符。 (#6449)
 - You can now enter Unicode braille characters from the braille keyboard on a braille display by selecting Unicode braille as the input table in Braille Settings. (#6449)
+- 新增在台湾使用的超点盲文点显器的支持。 (#7352)
 - Added support for the SuperBraille braille display used in Taiwan. (#7352)
+- 新盲文翻译表：丹麦8点电脑点字，立陶宛语盲文点字，波斯语8点电脑点字，波斯语一级点字，斯洛维尼亚语8点电脑点字。 (#6188,#6550,#6773,#7367)
 - New braille translation tables: Danish 8 dot computer braille, Lithuanian, Persian 8 dot computer braille, Persian grade 1, Slovenian 8 dot computer braille. (#6188, #6550, #6773, #7367)
+- 改进英文（美国）8点电脑盲文点字，包括支持着重号，欧元符号和重音字母。 (#6836)
 - Improved English (U.S.) 8 dot computer braille table, including support for bullets, the euro sign and accented letters. (#6836)
+- NVDA现在可以使用Windows 10中包含的OCR功能来识别图像文本或无法访问的应用程序。 (#7361)
 - NVDA can now use the OCR functionality included in Windows 10 to recognize the text of images or inaccessible applications. (#7361)
+ - 可以从NVDA首选项中的新Windows 10 OCR对话框中设置该语言。
  - The language can be set from the new Windows 10 OCR dialog in NVDA Preferences.
+ - 要识别当前导航对象的内容，请按NVDA + r。
  - To recognize the content of the current navigator object, press NVDA+r.
+ - 有关详细信息，请参阅“用户指南”的“内容识别”部分。
  - See the Content Recognition section of the User Guide for further details.
+- 您现在可以选择在盲文设置对话框中使用新的“焦点上下文呈现”设置对象获得焦点时盲文点显器上显示的上下文信息。 (#217)
 - You can now choose what context information is shown on a braille display when an object gets focus using the new "Focus context presentation" setting in the Braille Settings dialog. (#217)
+ - 例如，“上下文更改时填充显示”和“仅当回滚时”选项可以使列表和菜单浏览更加高效，因为这些项目不会持续更改其在点显器上的位置。
  - For example, the "Fill display for context changes" and "Only when scrolling back" options can make working with lists and menus more efficient, since the items won't continually change their position on the display.
+ - 有关详细信息和示例，请参阅“用户指南”中“焦点上下文呈现”设置的一节。
  - See the section on the "Focus context presentation" setting in the User Guide for further details and examples.
+- 在Firefox和Chrome中，NVDA现在支持复杂的动态网格，例如只有一些内容可能被加载或显示的电子表格（具体来说，在ARIA 1.1中引入的aria-rowcount，aria-colcount，aria-rowindex和aria-colindex属性）。 (#7410)
 - In Firefox and Chrome, NVDA now supports complex dynamic grids such as spreadsheets where only some of the content might be loaded or displayed (specifically, the aria-rowcount, aria-colcount, aria-rowindex and aria-colindex attributes introduced in ARIA 1.1). (#7410)
 
 
-== Changes ==
+== 修改 ==
+- 添加未绑定的命令“重新启动 NVDA”,可以根据需要使用。您可以在“输入手势”对话框的“杂项”类别中找到它。 （＃6396）
 - An unbound command has been added to restart NVDA on demand. You can find it in the Miscelaneous category of the Input Gestures dialog. (#6396)
+- 现在可以从NVDA欢迎对话框中设置键盘布局。 (#6863)
 - The keyboard layout can now be set from the NVDA Welcome dialog. (#6863)
+- 更多的控件类型和状态已被缩写为盲文，地标也被缩写。请参阅“用户指南”中的“盲文”下的“控件类型，状态和地标缩写”，以获取完整列表。 (#7188,#3975)
 - Many more control types and states have been abbreviated for braille. Landmarks have also been abbreviated. Please see "Control Type, State and Landmark Abbreviations" under Braille in the User Guide for a complete list. (#7188, #3975)
+- 将eSpeak NG更新为1.49.1。 (#7280)
 - Updated eSpeak NG to 1.49.1. (#7280)
+- 盲文设置对话框中的输出表和输入表现在按字母顺序排列。 (#6113)
 - The output and input table lists in the Braille Settings dialog are now sorted alphabetically. (#6113)
+- liblouis盲文翻译器更新到3.2.0。 (#6935)
 - Updated liblouis braille translator to 3.2.0. (#6935)
+- 默认盲文表现在是统一英语盲文代码一级点字(#6952)
 - The default braille table is now Unified English Braille Code grade 1. (#6952)
+- 默认情况下，NVDA现在只会在点显器显示对象获得焦点后更新了的上下文部分。 (#217)
 - By default, NVDA now only shows the parts of the context information that have changed on a braille display when an object gets focus. (#217)
+- 以前，它总是显示尽可能多的上下文信息，无论您以前是否看过相同的上下文信息。
  - Previously, it always showed as much context information as possible, regardless of whether you have seen the same context information before.
+ - 您可以通过将“盲文设置”对话框中的新“焦点上下文呈现”设置更改为“始终填充显示”来恢复旧的行为。
  - You can revert to the old behaviour by changing the new "Focus context presentation" setting in the Braille Settings dialog to "Always fill display".
+- 当盲文光标被捆绑到焦点或者浏览光标时，光标可以被配置为不同的形状 (#7112)
 - When using Braille, the cursor can be configured to be a different shape when tethered to focus or review. (#7122)
+- NVDA徽标已更新。更新的NVDA标志是一个白色的风格化的字母NVDA混搭，带有紫色背景。这将确保它在任何颜色背景上可见，并使用NV Access徽标中的紫色。 (#7446)
 - The NVDA logo has been updated. The updated NVDA logo is a stylised blend of the letters NVDA in white, on a solid purple background. This ensures it will be visible on any colour background, and uses the purple from the NV Access logo. (#7446)
 
 
-== Bug Fixes ==
+== 错误修复 ==
+- 在Chrome中，可编辑的 div 元素在浏览模式下不再将其标签朗读为其值。 (#＃7153)
 - Editable div elements in Chrome no longer have their label reported as their value while in browse mode. (#7153)
+- 在浏览模式下，在空的Microsoft Word文档按下 行尾键 不再导致运行时错误。 (#7009)
 - Pressing end while in browse mode for an empty Microsoft Word document no longer causes a runtime error. (#7009)
+- Microsoft Edge的浏览模式已经正确支持，其中文档已被赋予文档的特定ARIA角色。 (#6998)
 - Browse mode is now correctly   supported in Microsoft Edge where a document has been given a specific ARIA role of document. (#6998)
+- 在浏览模式下，即使系统焦点位于行的最后一个字符，您仍然可以使用shift + end来选择或取消选择该行的末尾。 (#7157)
 - In browse mode, you can now select or unselect to the end of the line using shift+end even when the caret is on the last character of the line. (#7157)
+- 如果对话框包含进度条，则进度条更改时，对话框文本现在将以盲文更新。例如，现在可以在NVDA的“下载更新”对话框中读取剩余时间。 (#6862)
 - If a dialog contains a progress bar, the dialog text is now updated in braille when the progress bar changes. This means, for example, that the remaining time can now be read in NVDA's "Downloading Update" dialog. (#6862)
+- NVDA现在将朗读某些Windows 10组合框的选择更改，例如“设置”中的“自动播放”。 (#6337)
 - NVDA will now announce selection changes for certain Windows 10 combo boxes such as AutoPlay in Settings. (#6337).
+- 在Microsoft Outlook中进入会议/约会创建对话框时，不再朗读无意义的信息。 (#7216)
 - Pointless information is no longer announced when entering Meeting / Appointment creation dialogs in Microsoft Outlook. (#7216)
+- 仅当进度条输出被配置为包含提示音时，才会为不确定的进度条对话框（如更新检查器）发出提示音。 (#6759)
 - Beeps for indeterminate progress bar dialogs such as the update checker only when progress bar output is configured to include beeps. (#6759)
+- 在Microsoft Excel 2003和2007中，在工作表周围浏览时，会再次读出单元格。 (#7243)
 - In Microsoft Excel 2003 and 2007, cells are again reported when arrowing around a worksheet. (#7243)
+- 在Windows 10创建者更新和更高版本中，在Windows 10 Mail中阅读电子邮件时，浏览模式将再次自动启用。 (#7289)
 - In Windows 10 Creators Update and later, browse mode is again automatically enabled when reading emails in Windows 10 Mail. (#7289)
+- 在带有盲文键盘的大多数盲文点显器上，点7现在将擦除最后输入的盲文单元格或字符，点8按下回车键。 (#6054)
 - On most braille displays with a braille keyboard, dot 7 now erases the last entered braille cell or character, and dot 8 presses the enter key. (#6054)
+- 在可编辑文本中，当移动输入焦点时（例如使用光标键或退格键），NVDA的语音反馈在许多情况下更加准确，特别是在Chrome和终端应用程序中。 (#6424)
 - In editable text, when moving the caret (e.g. with the cursor keys or backspace), NVDA's spoken feedback is now more accurate in many cases, particularly in Chrome and terminal applications. (#6424)
+- 现在可以读取Microsoft Outlook 2016中签名编辑器的内容。 (#7253)
 - The content of the Signature Editor in Microsoft Outlook 2016 can now be read. (#7253)
+- 在Java Swing应用程序中，NVDA不再有时导致应用程序在浏览表时崩溃。 (#6992)
 - In Java Swing applications, NVDA no longer sometimes causes the application to crash when navigating tables. (#6992)
+- 在Windows 10创作者更新中，NVDA将不再多次宣布弹出通知。 (#7128)
 - In Windows 10 Creators Update, NVDA will no longer announce toast notifications multiple times. (#7128)
+- 在Windows 10的开始菜单中，按回车见结束搜索并关闭开始菜单后，NVDA将不再朗读搜索文本。 (#7370)
 - In The start menu in Windows 10, pressing Enter to close the start menu after a search no longer causes NVDA to announce search text. (#7370)
+- 快速导航到Microsoft Edge中的标题现在明显更快。 (#7343)
 - Performing quick navigation to headings in Microsoft Edge is now significantly faster. (#7343)
+- 在Microsoft Edge中，浏览模式不再跳过某些网页的大部分，例如Wordpress 2015主题。 (#7143)
 - In Microsoft Edge, navigating in browse mode no longer skips large parts of certain web pages such as the Wordpress 2015 theme. (#7143)
+- 在Microsoft Edge中，地标正确地以不同于英语的语言本地化。 (#7328)
 - In Microsoft Edge, landmarks are correctly localized in languages other than English. (#7328)
+- 当选择文本超出显示宽度时，盲文现在正确地跟随选择。例如，如果您使用shift + downArrow选择多行，则盲文现在将显示您选择的最后一行。 (#5770)
 - Braille now correctly follows the selection when selecting text beyond the width of the display. For example, if you select multiple lines with shift+downArrow, braille now shows the last line you selected. (#5770)
+- 在Firefox中，在twitter.com上打开tweet的详细信息时，NVDA不再胡乱地朗读“区域”。 (#5741)
 - In Firefox, NVDA no longer spuriously reports "section" several times when opening details for a tweet on twitter.com. (#5741)
+- 表格导航命令不再适用于浏览模式中的布局表格，除非已启用布局表格的读取。 (#7382)
 - Table navigation commands are no longer available for layout tables in Browse Mode unless reporting of layout tables is enabled. (#7382)
+- 在Firefox和Chrome中，浏览模式表格导航命令现在跳过隐藏的表格单元格。 (#6652,#5655)
 - In Firefox and Chrome, Browse Mode table navigation commands now skip over hidden table cells. (#6652, #5655)
 
 
-== Changes for Developers ==
+== 开发者修改 ==
 - Timestamps in the log now include milliseconds. (#7163)
 - NVDA must now be built with Visual Studio Community 2015. Visual Studio Express is no longer supported. (#7110)
  - The Windows 10 Tools and SDK are now also required, which can be enabled when installing Visual Studio.
@@ -566,46 +668,74 @@ Highlights of this release include input of contracted braille, support for new 
 
 
 = 2017.2 =
-Highlights of this release include full support for audio ducking in the Windows 10 Creators Update; fixes for several selection issues in browse mode, including problems with select all; significant improvements in Microsoft Edge support; and improvements on the web such as indication of elements marked as current (using aria-current).
+此版本的新特性包括在Windows 10创作者更新中完全支持音频闪避;修复浏览模式下的几个选择问题，包括全选的问题;Microsoft Edge支持的重大改进;和web支持上的改进，例如标记为当前（使用aria-current）的元素的提示。
 
-== New Features ==
+== 新特性 ==
+- 现在可以使用NVDA + f在Microsoft Excel中朗读单元格边框信息。 (#3044)
 - Cell border information can now be reported in Microsoft Excel by using NVDA+f. (#3044)
+- 在网络浏览器中，NVDA现在可提示元素何时被标记为当前（其实就是使用aria-current属性）。 (#6358)
 - In web browsers, NVDA now indicates when an element has been marked as current (specifically, using the aria-current attribute). (#6358)
+- 支持 Microsoft Edge 的自动语言切换。 (#6852)
 - Automatic language switching is now supported in Microsoft Edge. (#6852)
+- 增加了对Windows 10 Enterprise LTSB（长期服务分支）和服务器版的 Windows 计算器的支持。 (#6914)
 - Added support for Windows Calculator on Windows 10 Enterprise LTSB (Long-Term Servicing Branch) and Server. (#6914)
+- 当快速按下读取当前行的命令三次时，将使用字符描述信息拼读该行。 (#6893)
 - Performing the read current line command three times quickly spells the line with character descriptions. (#6893)
+- 新语言：缅甸语
 - New language: Burmese.
+- Unicode 编码的 向上和向下光标以及小部分符号现在可正确的朗读。 (#3805)
 - Unicode up and down arrows and fraction symbols are now spoken appropriately. (#3805)
 
 
-== Changes ==
+== 修改 ==
+- 当使用简易浏览模式浏览应用程序中的 UI Automation 内容时，更多的无关对象被忽略了，使导航变得更加容易。 (#6948, #6950)
 - When navigating with simple review  in applications using UI Automation, more extraneous objects are now ignored, making navigation easier. (#6948, #6950)
 
 
-== Bug Fixes ==
+== 错误修复 ==
+- 在浏览模式下，现在可以激活网页菜单项。 (#6735)
 - Web page menu items can now be activated while in browse mode. (#6735)
+- 在配置文件“确认删除”对话框处于活动状态时，按下“esc”键现在将关闭该对话框。 (#6851)
 - Pressing escape while the configuration profile "Confirm Deletion" dialog is active now dismisses the dialog. (#6851)
+- 修复Mozilla Firefox和其他启用了多进程功能的其他Gecko应用程序中的一些崩溃。 (#6885)
 - Fixed some crashes in Mozilla Firefox and other Gecko applications where the multi-process feature is enabled. (#6885)
+- 当文字绘制在透明背景下，使用屏幕浏览时背景颜色的颜色读取变得更加准确了。 (#6467)
 - Reporting of background color in screen review is now more accurate when  text was drawn with a transparent background. (#6467)
+- 改进了对Internet Explorer 11网页上提供的控件说明的支持（具体来说，支持iframe中使用的 aria-describedby 属性，并提供多个ID）。 (#5784)
 - Improved support for control descriptions provided on web pages in Internet Explorer 11 (specifically, support for aria-describedby within iframes and when multiple IDs are provided). (#5784)
+- 在 Windows 10 创作者更新中，NVDA 的音频闪避再次与以前的 Windows 版本拥有相同的支持（即包括“发出声音及语音时闪避”、“总是闪避”和“不闪避”几个模式）。 (#6933)
 - In the Windows 10 Creators Update, NVDA's audio ducking again works as in previous Windows releases; i.e. Duck with speech and sounds, always duck and no ducking are all available. (#6933)
+- NVDA 将不会因为当前的UIA 元素没有指定快捷键而造成浏览或朗读失败。(#6779)
 - NVDA will no longer fail to navigate to or report certain (UIA) controls where a keyboard shortcut is not defined. (#6779)
+- 两个连续空格将不会被添加到当前(UIA) 控件的快捷键描述中去。(#6790)
 - Two empty spaces are no longer added in keyboard shortcut information for certain (UIA) controls. (#6790)
+- HIMS 点显器上的某些键组合（例如space + dot4）不再间歇性地操作失败。 (#3157)
 - Certain combinations of keys on HIMS displays (e.g. space+dot4) no longer fail intermittently. (#3157)
+- 解决了在使用英语以外的某些语言的系统上打开串行端口时某些情况下产生的连接盲文点显器失败的问题。 (#6845)
 - Fixed an issue when opening a serial port on systems using certain languages other than English which caused connecting to braille displays to fail in some cases. (#6845)
+- 减少Windows关闭时配置文件损坏的可能性。在更换实际的配置文件之前，配置文件将被写入到临时文件中去。 (#3165)
 - Reduced the chance of the configuration file being corrupted when Windows shuts down. Configuration files are now written to a temporary file before replacing the actual configuration file. (#3165)
+- 当快速按下读取当前行命令两次来拼写行内容时，将可使用正确的语言进行字符拼读。 (#6726)
 - When performing the read current line command twice quickly to spell the line, the appropriate language is now used for the spelled characters. (#6726)
+- 在Windows 10 创作者更新中，Microsoft Edge中的行浏览速度提高了三倍 (#6994)
 - Navigating by line in Microsoft Edge is now up to three times faster in the Windows 10 Creators Update. (#6994)
+- 在windows 10 创作者更新中，聚焦到 Microsoft Edge 浏览器的文档时，NVDA 将不再提示“Web运行时分组”。 (#6948)
 - NVDA no longer announces "Web Runtime grouping" when focusing Microsoft Edge documents in the Windows 10 Creators Update. (#6948)
+- 支持所有现有版本的 SecureCRT。 (#6302)
 - All existing versions of SecureCRT are now supported. (#6302)
+- Adobe Acrobat Reader 不再在读取某些 PDF 文档（特别是那些包含空的ActualText属性的文档）时崩溃。 (#7021, #7034)
 - Adobe Acrobat Reader no longer crashes in certain PDF documents (specifically, those containing empty ActualText attributes). (#7021, #7034)
+- 在 Microsoft Edge 中使用浏览模式时，可交互式表格(标有ARIA grids属性的表格)在使用 t 和 shift+t跳转时不会再被忽略。 (#6977)
 - In browse mode in Microsoft Edge, interactive tables (ARIA grids) are no longer skipped when navigating to tables with t and shift+t. (#6977)
+- 在浏览模式中，使用 shift+home键选择到行首时，原本处于系统焦点后面的内容现在将可正常的取消选中。 (#5746)
 - In browse mode, pressing shift+home after selecting forward now unselects to the beginning of the line as expected. (#5746)
+- 在浏览模式中， 当系统焦点不再文本开头时，修复无法使用全选(control+a) 命令进行全选的问题。 (#6909)
 - In browse mode, select all (control+a) no longer fails to select all text if the caret is not at the start of the text. (#6909)
+- 修复其他在浏览模式下进行选择的罕见问题。 (#7131)
 - Fixed some other rare selection problems in browse mode. (#7131)
 
 
-== Changes for Developers ==
+== 开发者修改 ==
 - Commandline arguments are now processed with Python's argparse module, rather than optparse. This allows certain options such as -r and -q to be handled exclusively. (#6865)
 - core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
 - The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
@@ -625,46 +755,72 @@ Highlights of this release include full support for audio ducking in the Windows
 
 
 = 2017.1 =
-Highlights of this release include reporting of sections and text columns in Microsoft Word; Support for reading, navigating and annotating books in Kindle for PC; and improved support for Microsoft Edge.
+此版本的新特性包括支持朗读Microsoft Word中的章节和文本列;支持在Kindle上阅读，导航和注释电子书;并改进了Microsoft Edge浏览器。
 
-== New Features ==
+== 新特性 ==
+- 在Microsoft Word中，现在可以朗读页码。可以从文档格式对话框中的“报告页码”复选框启用或关闭。 (#5946)
 - In Microsoft Word, the types of section breaks and section numbers can now be reported. This is enabled with the "Report page numbers" option in the Document Formatting dialog. (#5946)
+- 在Microsoft Word中，现在可以朗读文本列。这是通过文档格式对话框中的“朗读页码”选项启用的。 (#5946)
 - In Microsoft Word, text columns can now be reported. This is enabled with the "Report page numbers" option in the document formatting dialog. (#5946)
+- 写字板现在支持自动语言切换。 (#6555)
 - Automatic language switching is now supported in WordPad. (#6555)
+- Microsoft Edge中的浏览模式现在支持NVDA find命令（NVDA + control + f）。 (#6580)
 - The NVDA find command (NVDA+control+f) is now supported in browse mode in Microsoft Edge. (#6580)
+- Microsoft Edge现在支持浏览模式（b和shift + b）中的按钮快速浏览。 (#6577)
 - Quick navigation for buttons in browse mode (b and shift+b) is now supported in Microsoft Edge. (#6577)
+- 在Microsoft Excel中复制工作表时，现在会记住列和行的标题。 (#6628)
 - When copying a sheet in Microsoft Excel, column and row headers are remembered. (#6628)
+- 支持在Kindle1.19版本阅读和浏览书籍，包括访问链接，脚注，图形，突出显示文本和用户注释。有关详细信息，请参阅NVDA用户指南的Kindle for PC部分。 (#6247, #6638)
 - Support for reading and navigating books in Kindle for PC version 1.19, including access to links, footnotes, graphics, highlighted text and user notes. Please see the Kindle for PC section of the NVDA User Guide for further information. (#6247, #6638)
+- Microsoft Edge当前支持浏览模式表导航。 (#6594)
 - Browse mode table navigation is now supported in Microsoft Edge. (#6594)
+- 当前Microsoft Excel可以朗读工作表的名称和单元格位置，快捷键（台式机：NVDA + numpadDelete，笔记本：NVDA +delete）。 (#6613)
 - In Microsoft Excel, the report review cursor location command (desktop: NVDA+numpadDelete, laptop: NVDA+delete) now reports the name of the worksheet and the cell location. (#6613)
+- 增加了一个退出对话框的选项，可以选择用调试级别记录重新启动NVDA。 (#6689)
 - Added an option to the exit dialog to restart with debug level logging. (#6689)
 
 
-== Changes ==
+== 修改 ==
+- 最小盲文光标闪烁率现在为200毫秒。如果此前设置得较低，则会增加到200毫秒。 (#6470)
 - The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
+- 盲文设置对话框中添加了一个复选框，以允许启用/禁用盲文光标闪烁。以前使用零数值来控制这一功能。 (#6470)
 - A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+- 更新eSpeak NG到（commit e095f008，2017年1月10日）。 (#6717)
 - Updated eSpeak NG (commit e095f008, 10 January 2017). (#6717)
 - Due to changes In the Windows 10 Creators Update, the "Always duck" mode is no longer available in NVDA's Audio ducking settings. It is still available on older windows 10 releases. (#6684)
 - Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
 
 
-== Bug Fixes ==
+== 错误修复 ==
+- 修正在浏览模式下按段落移动大文档时Microsoft Word中的冻结。 (#6368)
 - Fixed freeze in Microsoft Word when moving by paragraph through a large document while in browse mode. (#6368)
+- Microsoft Word中已从Microsoft Excel中复制的表格不再被布置为布局表格，因此不再被忽略。 (#5927)
 - Tables in Microsoft Word that have been copied from Microsoft Excel are no longer treeted as layout tables and therefore are no longer ignored. (#5927)
+- 当试图在受保护的视图中输入Microsoft Excel时，NVDA现在发出声音而不是朗读没有输入的字符。 (#6570)
 - When trying to type in Microsoft Excel while in protected view, NVDA now makes a sound rather than speaking characters that were not actually typed. (#6570)
+- 在Microsoft Excel中按退出不再错误地切换到浏览模式，除非用户先前已使用NVDA +空格显式切换到浏览模式，然后在通过表单字段上按Enter键进入焦点模式。 (#6569)
 - Pressing escape in Microsoft Excel no longer incorrectly switches to browse mode, unless the user has previously switched to browse mode explicitly with NVDA+space and then entered focus mode by pressing enter on a form field. (#6569) 
+- NVDA不再冻结在整个行或列合并的Microsoft Excel电子表格中。 (#6216)
 - NVDA no longer freezes in Microsoft Excel spreadsheets where an entire row or column is merged. (#6216)
+- 现在朗读Microsoft Excel单元格中的裁剪/溢出文本应该更加准确。 (#6472)
 - Reporting of cropped/overflowed text in Microsoft Excel cells should now be more accurate. (#6472)
+- NVDA现在朗读复选框是否是只读。 (#6563)
 - NVDA now reports when a check box is read-only. (#6563)
+- 由于没有可用的音频设备，NVDA启动程序在不能播放标志声音时将不再显示警告对话框。 (#6289)
 - The NVDA launcher will no longer show a warning dialog when it can't play the logo sound due to no audio device being available. (#6289)
+- Microsoft Excel功能区中不可用的控件现在按照这种方式朗读。 (#6430)
 - Controls in the Microsoft Excel Ribbon that are unavailable are now reported as such. (#6430)
+- NVDA将在最小化窗口时不再公布“窗格”。 (#6671)
 - NVDA will no longer announce "pane" when minimizing windows. (#6671)
+- 输入的字符现在可以在Windows 10创建者更新中的通用Windows平台（UWP）应用程序（包括Microsoft Edge）中被读出。 (#6017)
 - Typed characters are now spoken in Universal Windows Platform (UWP) apps (including Microsoft Edge) in the Windows 10 Creators Update. (#6017)
+- 鼠标跟踪现在适用于多台显示器的计算机上的所有屏幕。 (#6598)
 - Mouse tracking now works across all screens on computers with multiple monitors. (#6598)
+- 在关注滑块控件时，NVDA在退出Windows Media Player后不再无法使用。 (#5467)
 - NVDA no longer becomes unusable after exiting Windows Media Player while focused on a slider control. (#5467)
 
 
-== Changes for Developers ==
+== 开发者修改 ==
 - Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
 
 
