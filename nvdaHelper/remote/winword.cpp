@@ -288,25 +288,6 @@ int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagr
 	return 1;
 }
 
-int getRevisionType(IDispatch* pDispatchOrigRange) {
-	IDispatchPtr pDispatchRange=NULL;
-	//If range is not duplicated here, revisions collection represents revisions at the start of the range when it was first created
-	if(_com_dispatch_raw_propget(pDispatchOrigRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange)!=S_OK||!pDispatchRange) {
-		return 0;
-	}
-	IDispatchPtr pDispatchRevisions=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions)!=S_OK||!pDispatchRevisions) {
-		return 0;
-	}
-	IDispatchPtr pDispatchRevision=NULL;
-	if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",1)!=S_OK||!pDispatchRevision) {
-		return 0;
-	}
-	long revisionType=0;
-	_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType);
-	return revisionType;
-}
-
 IDispatchPtr CreateExpandedDuplicate(IDispatch* pDispatchRange, const int expandTo) {
 	IDispatchPtr pDispatchRangeDup = nullptr;
 	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
@@ -349,6 +330,39 @@ bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>&
 		commentVector.push_back(make_pair(start,end));
 	}
 	return !commentVector.empty();
+}
+
+  bool collectRevisionOffsets(IDispatchPtr pDispatchRange, vector<tuple<long,long,long>>& revisionsVector) {
+	IDispatchPtr pDispatchRevisions=NULL;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions)!=S_OK||!pDispatchRevisions) {
+		return false;
+	}
+	long iVal=0;
+	_com_dispatch_raw_propget(pDispatchRevisions,wdDISPID_REVISIONS_COUNT,VT_I4,&iVal);
+	for(int i=1;i<=iVal;++i) {
+		IDispatchPtr pDispatchRevision=NULL;
+		if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",i)!=S_OK||!pDispatchRevision) {
+			continue;
+		}
+		long revisionType=0;
+		if(_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType)!=S_OK) {
+			continue;
+		}
+		IDispatchPtr pDispatchRevisionScope=NULL;
+		if(_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_RANGE,VT_DISPATCH,&pDispatchRevisionScope)!=S_OK||!pDispatchRevisionScope) {
+			continue;
+		}
+		long start=0;
+		if(_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_START,VT_I4,&start)!=S_OK) {
+			continue;
+		}
+		long end=0;
+		if(_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_END,VT_I4,&end)!=S_OK) {
+			continue;
+		}
+		revisionsVector.push_back({start,end,revisionType});
+	}
+	return !revisionsVector.empty();
 }
 
 bool fetchTableInfo(IDispatch* pDispatchTable, bool includeLayoutTables, int* rowCount, int* columnCount, int* nestingLevel) {
@@ -545,10 +559,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				SysFreeString(listString);
 			}
 		}
-	}
-	if(formatConfig&formatConfig_reportRevisions) {
-		long revisionType=getRevisionType(pDispatchRange);
-		formatAttribsStream<<L"wdRevisionType=\""<<revisionType<<L"\" ";
 	}
 	if(formatConfig&formatConfig_reportStyle) {
 		IDispatchPtr pDispatchStyle=NULL;
@@ -1065,6 +1075,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if(formatConfig&formatConfig_reportComments) {
 		collectCommentOffsets(pDispatchParagraphRange,commentVector);
 	}
+	vector<tuple<long,long,long>> revisionsVector;
+	if(formatConfig&formatConfig_reportRevisions) {
+		collectRevisionOffsets(pDispatchParagraphRange,revisionsVector);
+	}
 	if(initialFormatConfig&formatConfig_reportHeadings) {
 		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
 	}
@@ -1204,6 +1218,15 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			for(vector<pair<long,long>>::iterator i=commentVector.begin();i!=commentVector.end();++i) {
 				if(!(chunkStartOffset>=i->second||chunkEndOffset<=i->first)) {
 					XMLStream<<L" comment=\""<<(i->second)<<L"\" ";
+					break;
+				}
+			}
+			for(auto& i: revisionsVector) {
+				long revStart=get<0>(i);
+				long revEnd=get<1>(i);
+				long revType=get<2>(i);
+				if(!(chunkStartOffset>=revEnd||chunkEndOffset<=revStart)) {
+					XMLStream<<L"wdRevisionType=\""<<revType<<L"\" ";
 					break;
 				}
 			}
