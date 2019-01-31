@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -276,7 +276,7 @@ CHAR_RTL_MARK = u'\u200F'
 class ListItemWithoutColumnSupport(IAccessible):
 
 	def initOverlayClass(self):
-		if self.appModule.is64BitProcess:
+		if winKernel.is64BitProcess(self.processHandle):
 			self.LVITEM = LVITEM64
 			self.LVCOLUMN = LVCOLUMN64
 		else:

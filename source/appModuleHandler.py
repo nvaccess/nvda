@@ -408,28 +408,13 @@ class AppModule(baseObject.ScriptableObject):
 		"""Whether the underlying process is a 64 bit process.
 		@rtype: bool
 		"""
-		if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
-			# This is 32 bit Windows.
-			self.is64BitProcess = False
-			return False
 		try:
-			# We need IsWow64Process2 to detect WOW64 on ARM64.
-			processMachine = ctypes.wintypes.USHORT()
-			if ctypes.windll.kernel32.IsWow64Process2(self.processHandle,
-					ctypes.byref(processMachine), None) == 0:
-				self.is64BitProcess = False
-				return False
-			# IMAGE_FILE_MACHINE_UNKNOWN if not a WOW64 process.
-			self.is64BitProcess = processMachine.value == winKernel.IMAGE_FILE_MACHINE_UNKNOWN
-		except AttributeError:
-			# IsWow64Process2 is only supported on Windows 10 version 1511 and later.
-			# Fall back to IsWow64Process.
-			res = ctypes.wintypes.BOOL()
-			if ctypes.windll.kernel32.IsWow64Process(self.processHandle, ctypes.byref(res)) == 0:
-				self.is64BitProcess = False
-				return False
-			self.is64BitProcess = not res
-		return self.is64BitProcess
+			res = winKernel.is64BitProcess(self.processHandle)
+		except WindowsError:
+			log.debugWarning("Getting process architecture failed", exc_info=True)
+			res = False
+		self.is64BitProcess = res
+		return res
 
 	def isGoodUIAWindow(self,hwnd):
 		"""

@@ -8,6 +8,7 @@ import ctypes
 import ctypes.wintypes
 from ctypes import *
 from ctypes.wintypes import *
+import os
 
 kernel32=ctypes.windll.kernel32
 advapi32 = windll.advapi32
@@ -329,3 +330,30 @@ def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desi
 
 PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
 THREAD_SET_CONTEXT = 16
+
+ERROR_INVALID_HANDLE = 0x6
+def is64BitProcess(processHandle):
+	"""Convenience wrapper around theIsWow64Process functions,
+	which returns whether the process of the given process handle is a 64 bit process.
+	@rtype: bool
+	"""
+	if os.environ.get("PROCESSOR_ARCHITEW6432") not in ("AMD64","ARM64"):
+		# This is 32 bit Windows.
+		return False
+	if processHandle == 0:
+		raise WinError(ERROR_INVALID_HANDLE)
+	try:
+		# We need IsWow64Process2 to detect WOW64 on ARM64.
+		processMachine = USHORT()
+		if kernel32.IsWow64Process2(processHandle,
+				byref(processMachine), None) == 0:
+			raise WinError()
+		# IMAGE_FILE_MACHINE_UNKNOWN if not a WOW64 process.
+		return processMachine.value == IMAGE_FILE_MACHINE_UNKNOWN
+	except AttributeError:
+		# IsWow64Process2 is only supported on Windows 10 version 1511 and later.
+		# Fall back to IsWow64Process.
+		res = BOOL()
+		if kernel32.IsWow64Process(self.processHandle, ctypes.byref(res)) == 0:
+			raise WinError()
+		return not res
