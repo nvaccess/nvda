@@ -145,7 +145,7 @@ def handleInputCompositionEnd(result):
 	import speech
 	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
-	from NVDAObjects.behaviors import CandidateItem
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	focus=api.getFocusObject()
 	result=result.lstrip(u'\u3000 ')
 	curInputComposition=None
@@ -159,6 +159,18 @@ def handleInputCompositionEnd(result):
 		#Candidate list is still up
 		curInputComposition=focus.parent
 		focus.parent=focus.parent.parent
+	# Correct focus for ModernCandidateUICandidateItem
+	#
+	if isinstance(focus ,ModernCandidateUICandidateItem):
+		obj=focus.container
+		if obj:
+			if isinstance(obj,InputComposition):
+				obj=obj.parent
+			import speech
+			oldSpeechMode=speech.speechMode
+			speech.speechMode=speech.speechMode_off
+			eventHandler.executeEvent("gainFocus",obj.parent)
+			speech.speechMode=oldSpeechMode
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
@@ -201,7 +213,7 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-		# Eliminate first InputComposition events from Microsoft Pinyin to avoid double reading
+	# Eliminate InputCompositionStart events from Microsoft Pinyin to avoid reading composition string instead of candidates
 	elif not isinstance(focus,ModernCandidateUICandidateItem):
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
