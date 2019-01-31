@@ -509,19 +509,17 @@ class AppModule(baseObject.ScriptableObject):
 		else:
 			# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
 			# If running releases between 7 and 10 Version 1507 (build 10240), just assume this is an x64 (AMD64) app.
-			if winVersion.winVersion.build < 10586:
-				self.appArchitecture = "AMD64"
-			else:
-				size = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-				appArch = ctypes.create_unicode_buffer(size.value)
-				# No need to worry about host's architecture, as this can be queried through environment variables.
-				winKernel.kernel32.IsWow64Process2(self.processHandle, appArch, None)
-				# If a native app is running (such as x64 app on x64 machines), app architecture value is empty.
-				if not appArch.value:
+			try:
+				# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
+				processMachine = ctypes.wintypes.USHORT()
+				ctypes.windll.kernel32.IsWow64Process2(self.processHandle, ctypes.byref(processMachine), None)
+				if not processMachine.value:
 					self.appArchitecture = os.environ.get("PROCESSOR_ARCHITEW6432")
 				else:
 					# The only time AMD64 (0x8664) will be returned is if dealing with an x64 app on ARM64 machines.
 					self.appArchitecture = "AMD64"
+			except AttributeError:
+				self.appArchitecture = "AMD64"
 		return self.appArchitecture
 
 	def isGoodUIAWindow(self,hwnd):
