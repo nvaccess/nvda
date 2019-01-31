@@ -662,8 +662,16 @@ Otherwise, the add-on will not install.
 - description: A sentence or two describing what the add-on does.
 - url: A URL where this add-on, further info and upgrades can be found.
 - docFileName: The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
-- minimumNVDAVersion: The minimum required version of NVDA for this add-on to be installed or enabled. (Mandatory)
-- lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with. (Mandatory)
+- minimumNVDAVersion: The minimum required version of NVDA for this add-on to be installed or enabled.
+  - e.g "2019.1.0"
+  - Must be a three part version string I.E. Year.Minor.Minor. Two part version strings ("2019.1") will not pass validation.
+  - Defaults to "0.0.0"
+  - Must be less than or equal to `lastTestedNVDAVersion`
+- lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with.
+  - e.g "2019.1.0"
+  - Must be a three part version string I.E. Year.Minor.Minor. Two part version strings ("2019.1") will not pass validation.
+  - Defaults to "0.0.0"
+  - Must be greater than or equal to `minimumNVDAVersion`
 -
 
 The lastTestedNVDAVersion field in particular is used to ensure that users can be confident about installing an add-on.
@@ -679,8 +687,8 @@ version = 1.0
 description = An example add-on showing how to create add-ons!
 author = Michael Curran <mick@kulgan.net>
 url = http://www.nvda-project.org/wiki/Development
-minimumNVDAVersion = 2017.4
-lastTestedNVDAVersion = 2018.3
+minimumNVDAVersion = 2018.1.0
+lastTestedNVDAVersion = 2019.1.0
 --- end ---
 ``` 
 
