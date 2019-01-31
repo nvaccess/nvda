@@ -156,21 +156,22 @@ def handleInputCompositionEnd(result):
 		eventHandler.executeEvent("gainFocus",focus.parent)
 		speech.speechMode=oldSpeechMode
 	elif isinstance(focus.parent,InputComposition):
-		#Candidate list is still up
-		curInputComposition=focus.parent
-		focus.parent=focus.parent.parent
-	# Correct focus for ModernCandidateUICandidateItem
-	#
-	if isinstance(focus ,ModernCandidateUICandidateItem):
-		obj=focus.container
-		if obj:
-			if isinstance(obj,InputComposition):
-				obj=obj.parent
-			import speech
-			oldSpeechMode=speech.speechMode
-			speech.speechMode=speech.speechMode_off
-			eventHandler.executeEvent("gainFocus",obj.parent)
-			speech.speechMode=oldSpeechMode
+		# Correct focus for ModernCandidateUICandidateItem
+		if isinstance(focus ,ModernCandidateUICandidateItem):
+			obj=focus.container
+			curInputComposition = obj
+			if obj:
+				if isinstance(obj,InputComposition):
+					obj=obj.parent
+				oldSpeechMode=speech.speechMode
+				speech.speechMode=speech.speechMode_off
+				eventHandler.executeEvent("gainFocus",obj.parent)
+				speech.speechMode=oldSpeechMode
+		else:
+			#Candidate list is still up
+			curInputComposition=focus.parent
+			focus.parent=focus.parent.parent
+
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
