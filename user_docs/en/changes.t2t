@@ -57,7 +57,7 @@ What's New in NVDA
 == Changes for Developers ==
 - NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)
 - You can now include log output from liblouis into the NVDA log by setting the louis boolean flag in the debugLogging section of the NVDA configuration. (#4554)
-- Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275)
+- Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275, #9055)
  - minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.
  - lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.
 - OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)

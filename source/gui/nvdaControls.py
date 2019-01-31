@@ -7,10 +7,11 @@
 import wx
 from wx.lib.mixins import listctrl as listmix
 from gui import accPropServer
+from gui.dpiScalingHelper import DpiScalingHelperMixin
 import oleacc
 import winUser
 import comtypes
-from ctypes import c_int
+import winsound
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -121,7 +122,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
 		accPropServices.SetHwndPropServer(
-			hwnd=self.Handle,
+			hwnd=self.GetHandle(),
 			idObject=winUser.OBJID_CLIENT,
 			idChild=0,
 			paProps=CHECK_LIST_PROPS,
@@ -134,6 +135,9 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		# Register an additional event handler to call sendCheckListBoxEvent for mouse clicks if appropriate.
 		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
+		# clean up of the accPropServices needs to happen when the control is destroyed. The Destroy method is not called
+		# by the wx framework, but we can register to receive the event. wxWidgets/Phoenix/#630
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, source=self)
 
 	def GetCheckedItems(self):
 		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
@@ -187,14 +191,129 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.Int = index
 		self.ProcessEvent(evt)
 
-	def Destroy(self):
+	def _onDestroy(self, evt):
+		evt.Skip() #  Allow other handlers to process this event.
+		self._cleanup()
+
+	def _cleanup(self):
 		from IAccessibleHandler import accPropServices
 		accPropServices.ClearHwndProps(
-			hwnd=self.Handle,
+			hwnd=self.GetHandle(),
 			idObject=winUser.OBJID_CLIENT,
 			idChild=0,
 			paProps=CHECK_LIST_PROPS,
 			cProps=len(CHECK_LIST_PROPS)
 		)
-		AutoWidthColumnListCtrl.Destroy(self)
 
+class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
+	"""Automatically calls constructors in the right order, passing on arguments, and providing scaling features.
+	Until wxWidgets/wxWidgets#334 is resolved, and we have updated to that build of wx.
+	"""
+	def __init__(self, *args, **kwargs):
+		"""Called in place of wx.Dialog __init__ arguments are forwarded on.
+		Expected args (from wx docs):
+		parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE, name=wx.DialogNameStr
+		where:
+		wx.DEFAULT_DIALOG_STYLE = (wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX)
+		"""
+		wx.Dialog.__init__(self, *args, **kwargs)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
+
+class MessageDialog(DPIScaledDialog):
+	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
+	buttons and behaviour.
+	"""
+
+	# Dialog types currently supported
+	DIALOG_TYPE_STANDARD = 1
+	DIALOG_TYPE_WARNING = 2
+	DIALOG_TYPE_ERROR = 3
+
+	_DIALOG_TYPE_ICON_ID_MAP = {
+		# DIALOG_TYPE_STANDARD is not in the map, since we wish to use the default icon provided by wx
+		DIALOG_TYPE_ERROR: wx.ART_ERROR,
+		DIALOG_TYPE_WARNING: wx.ART_WARNING,
+	}
+
+	_DIALOG_TYPE_SOUND_ID_MAP = {
+		# DIALOG_TYPE_STANDARD is not in the map, since there should be no sound for a standard dialog.
+		DIALOG_TYPE_ERROR: winsound.MB_ICONHAND,
+		DIALOG_TYPE_WARNING: winsound.MB_ICONASTERISK,
+	}
+
+	def _addButtons(self, buttonHelper):
+		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality.
+		"""
+		ok = buttonHelper.addButton(
+			self,
+			id=wx.ID_OK,
+			# Translators: An ok button on a message dialog.
+			label=_("OK")
+		)
+		ok.SetDefault()
+		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+
+		cancel = buttonHelper.addButton(
+			self,
+			id=wx.ID_CANCEL,
+			# Translators: A cancel button on a message dialog.
+			label=_("Cancel")
+		)
+		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+
+	def _setIcon(self, type):
+		try:
+			iconID = self._DIALOG_TYPE_ICON_ID_MAP[type]
+		except KeyError:
+			# type not found, use default icon.
+			return
+		icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
+		self.SetIcon(icon)
+
+	def _setSound(self, type):
+		try:
+			self._soundID = self._DIALOG_TYPE_SOUND_ID_MAP[type]
+		except KeyError:
+			# type not found, no sound.
+			self._soundID = None
+			return
+
+	def _playSound(self):
+		winsound.MessageBeep(self._soundID)
+
+	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
+		DPIScaledDialog.__init__(self, parent, title=title)
+
+		self._setIcon(dialogType)
+		self._setSound(dialogType)
+		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		from . import guiHelper
+		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
+
+		text = wx.StaticText(self, label=message)
+		text.Wrap(self.scaleSize(self.GetSize().Width))
+		contentsSizer.addItem(text)
+
+		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		self._addButtons(buttonHelper)
+		contentsSizer.addDialogDismissButtons(buttonHelper)
+
+		mainSizer.Add(
+			contentsSizer.sizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL
+		)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.CentreOnScreen()
+
+	def _onShowEvt(self, evt):
+		"""
+		:type evt: wx.ShowEvent
+		"""
+		if evt.IsShown():
+			self._playSound()
+		evt.Skip()
