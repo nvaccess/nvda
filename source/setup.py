@@ -221,6 +221,7 @@ setup(
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("lib/%s"%version, glob("lib/*.dll")),
 		("lib64/%s"%version, glob("lib64/*.dll") + glob("lib64/*.exe")),
+		("libArm64/%s"%version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*")),
