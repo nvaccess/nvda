@@ -10,6 +10,7 @@ import time
 from ctypes import *
 from ctypes.wintypes import *
 from win32con import WM_QUIT, HC_ACTION, WH_KEYBOARD_LL, LLKHF_UP, LLKHF_EXTENDED, LLKHF_INJECTED, WH_MOUSE_LL, LLMHF_INJECTED
+import watchdog
 
 class KBDLLHOOKSTRUCT(Structure):
 	_fields_=[
@@ -35,7 +36,7 @@ mouseCallback=None
 
 @WINFUNCTYPE(c_long,c_int,WPARAM,LPARAM)
 def keyboardHook(code,wParam,lParam):
-	if code!=HC_ACTION:
+	if watchdog.isAttemptingRecovery or code!=HC_ACTION:
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	kbd=KBDLLHOOKSTRUCT.from_address(lParam)
 	if keyUpCallback and kbd.flags&LLKHF_UP:
@@ -48,7 +49,7 @@ def keyboardHook(code,wParam,lParam):
 
 @WINFUNCTYPE(c_long,c_int,WPARAM,LPARAM)
 def mouseHook(code,wParam,lParam):
-	if code!=HC_ACTION:
+	if watchdog.isAttemptingRecovery or code!=HC_ACTION:
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	msll=MSLLHOOKSTRUCT.from_address(lParam)
 	if mouseCallback:
