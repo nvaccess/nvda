@@ -783,13 +783,14 @@ def processDestroyWinEvent(window,objectID,childID):
 	#When their window is destroyed we must correct focus to its parent - which could be a composition string
 	# so can't use generic focus correction. (#2695)
 	focus=api.getFocusObject()
-	if objectID==0 and childID==0 and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
-		from NVDAObjects.IAccessible.mscandui import BaseCandidateItem,ModernCandidateUICandidateItem
-		if not isinstance(focus,ModernCandidateUICandidateItem):
-			if isinstance(focus,BaseCandidateItem):
-				obj=focus.container
-				if obj:
-					eventHandler.queueEvent("gainFocus",obj)
+	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and not eventHandler.isPendingEvents("gainFocus"):
+		#Window handle of ModernCandidateUI destory event is not the same as host application.CiceroUIWndFrame won't work Use MSCTFIME Composition
+		windowClassName=winUser.getClassName(window)
+		if window==focus.windowHandle or windowClassName == "MSCTFIME Composition":
+			obj=focus.container
+			if obj:
+				eventHandler.queueEvent("gainFocus",obj)
 
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
