@@ -45,6 +45,15 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
+
+	#: An array with the GUIDs of the properties that an AccPropServer should override for list controls with checkboxes.
+	#: The role is supposed to be checkbox, rather than list item.
+	#: The state should be overridden to include the checkable state as well as the checked state if the item is checked.
+	properties = (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE])
+
+	def __init__(self, control):
+		super(ListCtrlAccPropServer, self).__init__(control, annotateChildren=True)
+
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		empty = (comtypes.automation.VT_EMPTY, 0)
 		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
@@ -70,11 +79,6 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
 			return states, 1
 
-#: An array with the GUIDs of the properties that an AccPropServer should override for list controls with checkboxes.
-#: The role is supposed to be checkbox, rather than list item.
-#: The state should be overridden to include the checkable state as well as the checked state if the item is checked.
-CHECK_LIST_PROPS = (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE])
-
 class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
@@ -84,15 +88,6 @@ class CustomCheckListBox(wx.CheckListBox):
 		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(
-			hwnd=self.Handle,
-			idObject=winUser.OBJID_CLIENT,
-			idChild=0,
-			paProps=CHECK_LIST_PROPS,
-			cProps=len(CHECK_LIST_PROPS),
-			pServer=server,
-			AnnoScope=1
-		)
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
@@ -117,27 +112,13 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	):
 		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
-		# Import late to prevent circular import.
-		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(
-			hwnd=self.GetHandle(),
-			idObject=winUser.OBJID_CLIENT,
-			idChild=0,
-			paProps=CHECK_LIST_PROPS,
-			cProps=len(CHECK_LIST_PROPS),
-			pServer=server,
-			AnnoScope=1
-		)
 		# Register our hook to check/uncheck items with space.
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		# Register an additional event handler to call sendCheckListBoxEvent for mouse clicks if appropriate.
 		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
-		# clean up of the accPropServices needs to happen when the control is destroyed. The Destroy method is not called
-		# by the wx framework, but we can register to receive the event. wxWidgets/Phoenix/#630
-		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroy, source=self)
 
 	def GetCheckedItems(self):
 		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
@@ -190,20 +171,6 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
-
-	def _onDestroy(self, evt):
-		evt.Skip() #  Allow other handlers to process this event.
-		self._cleanup()
-
-	def _cleanup(self):
-		from IAccessibleHandler import accPropServices
-		accPropServices.ClearHwndProps(
-			hwnd=self.GetHandle(),
-			idObject=winUser.OBJID_CLIENT,
-			idChild=0,
-			paProps=CHECK_LIST_PROPS,
-			cProps=len(CHECK_LIST_PROPS)
-		)
 
 class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 	"""Automatically calls constructors in the right order, passing on arguments, and providing scaling features.
