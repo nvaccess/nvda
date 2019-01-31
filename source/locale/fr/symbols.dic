@@ -6,14 +6,14 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	((?<=[^\s.])\.(?=[\"'”’);\s]|$)|(?<=[^\s.]\s)\.(?=[\"'”’);\s]|$))
-! sentence ending	((?<=[^\s!])\!(?=[\"'”’);\s]|$)|(?<=[^\s!]\s)\!(?=[\"'”’);\s]|$))
-? sentence ending	((?<=[^\s?])\?(?=[\"'”’);\s]|$)|(?<=[^\s?]\s)\?(?=[\"'”’);\s]|$))
-... sentence ending	((?<=[^\s.])\.\.\.(?=[\"'”’);\s]|$)|(?<=[^\s.]\s)\.\.\.(?=[\"'”’);\s]|$))
-… sentence ending	((?<=[^\s…])\…(?=[\"'”’);\s]|$)|(?<=[^\s…]\s)\…(?=[\"'”’);\s]|$))
+. sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	((?<=[^\s;]);(?=[\"'”’);\s]|$)|(?<=[^\s;]\s);(?=[\"'”’);\s]|$))
-: phrase ending	((?<=[^\s:]):(?=[\"'”’);\s]|$)|(?<=[^\s:]\s):(?=[\"'”’);\s]|$))
+; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
+: phrase ending	(?<=[^\s:])\s?:(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -22,7 +22,7 @@ negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
-after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
+after-number %	(?<=\d)(\s?\%)(?=\W|$)
 n°	(?<=\b)[nN]°
 
 symbols:

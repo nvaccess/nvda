@@ -386,8 +386,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
-	# Therefore treat this situation like wx not knowing the language at all.
-	if not locale.IsAvailable(wxLang.Language):
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
 		wxLang=None
 	if wxLang:
 		try:

@@ -1010,14 +1010,14 @@ Ensimmäinen Puhe-asetuskategorian vaihtoehto on Muuta...-painike. Tämä painik
 Tämä valintaikkuna avautuu Asetukset-valintaikkunan päälle.
 Valitse syntetisaattori -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin Asetukset-valintaikkunaan.
 
-==== Puheääni ====[SpeechSettingsVoice]
-Puheääni-vaihtoehto on yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin äänistä.
+==== Ääni ====[SpeechSettingsVoice]
+Ääni-vaihtoehto on yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin äänistä.
 Voit selata vaihtoehtoja nuolinäppäimillä.
 Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuoli oikealle ja Nuoli alas siirtävät alas.
 
 ==== Muunnelma ====[SpeechSettingsVariant]
 Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
-Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa äänille hieman eri määreitä.
+Muunnelmat ovat ikään kuin puheääniä, koska jokainen antaa äänille hieman eri määreitä.
 Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
 
 ==== Nopeus ====[SpeechSettingsRate]
@@ -1592,7 +1592,7 @@ Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita,
 Puhesanastoja on kolmea eri tyyppiä.
 Ne ovat:
 - Oletus: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin.
-- Puheäänikohtainen: sanasto, jonka säännöt vaikuttavat käytössä olevan syntetisaattorin puheääneen.
+- Äänikohtainen: sanasto, jonka säännöt vaikuttavat käytössä olevan syntetisaattorin ääneen.
 - Tilapäinen: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin, mutta vain nykyisessä istunnossa. Säännöt ovat tilapäisiä ja ne menetetään, jos NVDA käynnistetään uudelleen.
 -
 
@@ -1853,7 +1853,7 @@ Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on ma
 NVDA käyttää oletusarvoisesti tätä syntetisaattoria.
 Tämä on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
-Jokainen eSpeak NG:n mukana tuleva puheääni puhuu eri kieltä.
+Jokainen eSpeak NG:n mukana tuleva ääni puhuu eri kieltä.
 Tuettuja kieliä on yli 43.
 
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
@@ -1867,24 +1867,24 @@ Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puhe
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++[SAPI5]
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
-Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -puheääni.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo, johon pääsee [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
+Monia tätä standardia noudattavia puhesyntetisaattoreita on mahdollista ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -ääni.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien äänien luettelo, johon pääsee [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI 5 -syntetisaattoreiden äänet.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
-Microsoft Speech Platform tarjoaa useille kielille puheääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
-Näitä puheääniä voidaan käyttää myös NVDA:lla.
+Microsoft Speech Platform tarjoaa useille kielille ääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
+Näitä ääniä voidaan käyttää myös NVDA:lla.
                                                           
-Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
+Niiden käyttämiseksi on asennettava seuraavat kaksi osaa:
 - Microsoft Speech Platform - Runtime (versio 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime Languages (versio 11): https://www.microsoft.com/download/en/details.aspx?id=27224
- - Tällä sivulla on useita tiedostoja sekä puheentunnistusta että tekstistä puheeksi -käyttöä varten.
- Valitse haluttujen puheäänten/kielten tekstistä puheeksi -datan sisältävät tiedostot.
+ - Tällä sivulla on useita tiedostoja sekä puheentunnistusta että teksti puheeksi -käyttöä varten.
+ Valitse haluttujen äänien/kielien teksti puheeksi -datan sisältävät tiedostot.
  Esimerkiksi tiedosto MSSpeech_TTS_en-US_ZiraPro.msi on amerikanenglantia puhuva ääni.
  -
 -
 
 ++ Windows OneCore ++[OneCore]
-Windows 10 sisältää uusia puheääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Windows 10 sisältää uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
 Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
 
 Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
@@ -1892,7 +1892,7 @@ Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tä
 Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
 Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
 Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
-Toivon mukaan ne korjataan tulevassa Windows-päivityksessä.
+Toivon mukaan ne korjataan joskus julkaistavassa Windows-päivityksessä.
 
 ++ Audiologic TTS 3 ++[Audiologic]
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.
