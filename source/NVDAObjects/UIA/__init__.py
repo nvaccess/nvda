@@ -765,7 +765,10 @@ class UIA(Window):
 	def findOverlayClasses(self,clsList):
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
-		if UIAClassName=="WpfTextView":
+		if UIAClassName=="NetUITWMenuItem" and UIAControlType==UIAHandler.UIA_MenuItemControlTypeId and not self.name and not self.previous:
+			# Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself.
+			clsList.append(PlaceholderNetUITWMenuItem)
+		elif UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
 		elif UIAClassName=="NetUIDropdownAnchor":
 			clsList.append(NetUIDropdownAnchor)
@@ -1659,3 +1662,18 @@ class NetUIDropdownAnchor(UIA):
 		if not name and self.previous and self.previous.role==controlTypes.ROLE_STATICTEXT:
 			name=self.previous.name
 		return name
+
+class PlaceholderNetUITWMenuItem(UIA):
+	""" Bounces focus from a netUI dead placeholder menu item when no item is selected up to the menu itself."""
+
+	shouldAllowUIAFocusEvent=True
+
+	def _get_focusRedirect(self):
+		# Locate the containing menu and focus that instead.
+		parent=self.parent
+		for count in xrange(4):
+			if not parent:
+				return
+			if parent.role==controlTypes.ROLE_POPUPMENU:
+				return parent
+			parent=parent.parent
