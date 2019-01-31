@@ -105,15 +105,24 @@ if 'analyze' in debug:
 env.Append(CXXFLAGS=['/EHsc'])
 
 env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
+if TARGET_ARCH == "arm64":
+	subsystem = "/subsystem:windows,6.02"
+else:
+	subsystem = "/subsystem:windows,6.01"
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
 		'/WX',
-		'/subsystem:windows,6.01',
+		subsystem,
 	]
 )
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
-env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
+if TARGET_ARCH == 'x86_64':
+	env.Append(MIDLFLAGS='/x64')
+elif TARGET_ARCH == 'arm64':
+	env.Append(MIDLFLAGS='/arm64')
+else:
+	env.Append(MIDLFLAGS='/win32')
 
 if not release: 
 	env.Append(CCFLAGS=['/Od'])
@@ -185,11 +194,12 @@ if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
 
-minHookLib=env.SConscript('minHook/sconscript')
-Export('minHookLib')
-if signExec:
-	env.AddPostAction(minHookLib[0],[signExec])
-env.Install(libInstallDir,minHookLib)
+if TARGET_ARCH != 'arm64':
+	minHookLib=env.SConscript('minHook/sconscript')
+	Export('minHookLib')
+	if signExec:
+		env.AddPostAction(minHookLib[0],[signExec])
+	env.Install(libInstallDir,minHookLib)
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
@@ -197,7 +207,7 @@ if signExec:
 	env.AddPostAction(remoteLib[0],[signExec])
 env.Install(libInstallDir,remoteLib)
 
-if TARGET_ARCH=='x86_64':
+if TARGET_ARCH in ('x86_64', 'arm64'):
 	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
 	if signExec:
 		env.AddPostAction(remoteLoaderProgram,[signExec])
