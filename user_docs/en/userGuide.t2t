@@ -1603,6 +1603,26 @@ This category contains the following options:
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 
++++ Advanced Settings +++
+Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
+Only make changes to these settings if you are sure you know what you are doing or if you have been specifically instructed to by an NVDA developer.
+
+==== Use UI automation to access Microsoft Word document controls when available ====
+When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
+This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
+ For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
+However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
+We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+
+==== Caret move timeout (in MS) ====
+This option allows you to configure the number of mili seconds NVDA will wait for the caret (insertion point) to move in editable text controls.
+If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
+
+==== Debug logging categories ====
+The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
+Logging these messages can resort in decreased performance and large log files.
+Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
+
 ++ miscellaneous Settings ++[MiscSettings]
 Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
 
