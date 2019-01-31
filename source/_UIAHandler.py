@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+from collections import namedtuple
 import config
 import api
 import appModuleHandler
@@ -134,6 +135,7 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
+	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
 
 UIAEventIdsToNVDAEventNames={
@@ -353,12 +355,6 @@ class UIAHandler(COMObject):
 		# There are certain window classes that just had bad UIA implementations
 		if windowClass in badUIAWindowClassNames:
 			return False
-		if windowClass=="NetUIHWND":
-			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
-			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
-			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
-			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
-				return False
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
@@ -366,8 +362,18 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# the window does support UIA natively, but
-			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
-			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
+			# MS Word documents now have a fairly usable UI Automation implementation. However,
+			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
+			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
+			if (
+				# An MS Word document window 
+				windowClass=="_WwG" 
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and appModule.helperLocalBindingHandle 
+				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
+				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
 				return False
 		return bool(res)
 

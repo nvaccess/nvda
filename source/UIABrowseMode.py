@@ -155,7 +155,7 @@ def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	while not stop:
 		tempInfo=curPosition.copy()
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
-		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId)
+		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=True)
 		if (UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9):
 			foundLevel=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 			wantedLevel=int(itemType[7:]) if len(itemType)>7 else None

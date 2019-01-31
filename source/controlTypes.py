@@ -698,8 +698,8 @@ def processPositiveStates(role, states, reason, positiveStates=None):
 		positiveStates.discard(STATE_READONLY)
 	if role == ROLE_CHECKBOX:
 		positiveStates.discard(STATE_PRESSED)
-	if role == ROLE_MENUITEM:
-		# The user doesn't usually care if a menu item is expanded or collapsed.
+	if role == ROLE_MENUITEM and STATE_HASPOPUP in positiveStates:
+		# The user doesn't usually care if a submenu is expanded or collapsed.
 		positiveStates.discard(STATE_COLLAPSED)
 		positiveStates.discard(STATE_EXPANDED)
 	if STATE_FOCUSABLE not in states:
