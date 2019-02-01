@@ -54,7 +54,11 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 			pServer=self,
 			AnnoScope=ANNO_CONTAINER if annotateChildren else ANNO_THIS
 		)
-		# clean up of the accPropServices needs to happen when the control is destroyed.
+		# clean up of accPropServices needs to happen when the control is destroyed. We can't rely on 
+		# pythons `__del__` method to be called, and the wx framework does not call Destroy on child controls,
+		# automatically. Instead we can bind to the "window destroy" event for the control to do necessary 
+		# cleanup (wxWidgets/Phoenix/#630). Not performing this cleanup results in a reference to the parent
+		# window, keeping it from being deleted correctly. This can cause a freeze on exit of NVDA.
 		control.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyControl, source=control)
 
 	@abstractmethod
