@@ -789,7 +789,6 @@ def processDestroyWinEvent(window,objectID,childID):
 		if obj:
 			eventHandler.queueEvent("gainFocus",obj)
 
-
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
 	@postcondition: Focus will be directed to the menu if appropriate.
