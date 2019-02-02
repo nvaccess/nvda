@@ -1932,12 +1932,35 @@ class AdvancedPanel(SettingsPanel):
 	# Translators: This is the label for the Advanced settings panel.
 	title = _("Advanced")
 
+	def wrapText(self, evt):
+		width = evt.GetSize().Width
+		self.windowText.Wrap(width)
+		evt.Skip()
+
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		warningText = wx.StaticText(
+			self,
+			# Translators: A heading for the advanced settings panel. This is larger and in bold lettering.
+			label=_("Warning!")
+		)
+		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
+		sHelper.addItem(warningText)
 
-		# Translators: This is a label appearing on the Advanced settings panel.
-		panelText =_("Warning! The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA  developers.")
-		sHelper.addItem(wx.StaticText(self, label=panelText))
+		self.windowText = wx.StaticText(
+			self,
+			# Translators: This is a label appearing on the Advanced settings panel.
+			label=_(
+				"The following settings are for advanced users. "
+				"Changing them may cause NVDA to function incorrectly. "
+				"Please only change these if you know what you are doing or have been specifically instructed "
+				"by NVDA  developers."
+		))
+		# Since this is quite long text, we want to rap the text. However the size of the dialog is not yet set
+		# so instead we bind the to size event. This allows us to wrap the text in response to the width for the
+		# control being set.
+		self.windowText.Bind(wx.EVT_SIZE, self.wrapText)
+		sHelper.addItem(self.windowText)
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
