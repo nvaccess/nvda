@@ -66,6 +66,7 @@ class TextRangeStruct(ctypes.Structure):
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
+		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
