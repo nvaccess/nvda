@@ -90,8 +90,6 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
-	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
@@ -126,8 +124,6 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Restore the old selection direction
 	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
-	//Reenable screen updating
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
 BOOL generateFormFieldXML(IDispatch* pDispatchRange, IDispatchPtr pDispatchRangeExpandedToParagraph, wostringstream& XMLStream, int& chunkEnd) {
@@ -1014,8 +1010,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
-	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Make a copy of the selection as an independent range
 	IDispatchPtr pDispatchRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK||!pDispatchRange) {
@@ -1255,7 +1249,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	for(;neededClosingControlTagCount>0;--neededClosingControlTagCount) {
 		XMLStream<<L"</control>";
 	}
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 	args->text=SysAllocString(XMLStream.str().c_str());
 }
 
@@ -1291,8 +1284,6 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
-	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 // Move the selection by 1 line
@@ -1304,7 +1295,6 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 	//Restore the old selection direction
 	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
 	//Reenable screen updating
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {

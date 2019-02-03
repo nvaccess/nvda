@@ -343,6 +343,30 @@ mapPUAToUnicode = {
 	u'\uF0FC' : u'\u2714', # Wingdings
 }
 
+class ScreenUpdatingDisabler(object):
+
+	""" Disables MS Word screen updating while this object is alive."""
+
+	appObject=None
+
+	def __init__(self,appObject):
+		"""
+		@ param appObject: the MS Word application object.
+		@type appObject: comtypes IDispatch object.
+		"""
+		try:
+			appObject.screenUpdating=False
+		except COMError as e:
+			log.debugWarning("application.screenUpdating=False failed: %s"%e)
+			return
+		log.debug("Disabled screen updating")
+		self.appObject=appObject
+
+	def __del__(self):
+		if self.appObject:
+			self.appObject.screenUpdating=True
+			log.debug("Enabled screen updating")
+
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self,nodeType,document,textInfo,level):
@@ -649,6 +673,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
+		# Ensure screen updating is disabled from here to the end of this core cycle
+		self.obj.screenUpdatingDisabler
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		if res!=0 or lineStart.value==lineEnd.value or lineStart.value==-1 or lineEnd.value==-1: 
 			log.debugWarning("winword_expandToLine failed")
@@ -708,6 +734,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
 		if self.obj.ignorePageNumbers:
 			formatConfigFlags&=~formatConfigFlagsMap['reportPage']
+		# Ensure screen updating is disabled from here to the end of this core cycle
+		self.obj.screenUpdatingDisabler
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -975,6 +1003,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		oldOffset=self._rangeObj.end if endPoint=="end" else self._rangeObj.start
 		newOffset=ctypes.c_long()
 		# Try moving by line making use of the selection temporarily
+		# Ensure screen updating is disabled from here to the end of this core cycle
+		self.obj.screenUpdatingDisabler
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_moveByLine(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,oldOffset,1 if direction<0 else 0,ctypes.byref(newOffset))
 		if res==0:
 			res=direction
@@ -1149,6 +1179,13 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 	}
 
 class WordDocument(Window):
+
+	def _get_screenUpdatingDisabler(self):
+		"""
+		Creates a new ScreenUpdatingDisabler object, thereby disabling MS Word's creen updating until the given object is deleted.
+		As this property is cached until the end of the current core cycle, screen updating will remain disabled from the first time this is fetched, until the end of the core cycle. 
+		"""
+		return ScreenUpdatingDisabler(self.WinwordApplicationObject)
 
 	def winwordColorToNVDAColor(self,val):
 		if val>=0:
