@@ -10,12 +10,15 @@ What's New in NVDA
 - Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
 - Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
-- It is possible to turn off NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
+- It is possible to turn NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
 - The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
 - In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
  - This works in Firefox 66 and later.
  - This does not work for certain list boxes (HTML select controls) in Chrome.
 - Added the Afrikaans braille table. (#9186)
+- Early support for apps such as Mozilla Firefox on computers with ARM64 (e.g. Qualcom Snapdragon) processors. (#9216)
+- A new Advanced Settings category has been added to NVDA's Settings dialog, including an option to try out NVDA's new support for Microsoft Word via the Microsoft UI Automation API. (#9200)
+- Added support for the graphical view in Windows Disk Management. (#1486)
 
 
 == Changes ==
@@ -40,7 +43,6 @@ What's New in NVDA
 - In action Center in Windows 10 October 2018 Update and earlier, NVDA will recognize brightness quick action control as a button instead of a toggle button. (#8845)
 - NVDA will again track cursor and announce deleted characters in the Microsoft Excel  go to and find edit fields. (#9042)
 - Fixed a rare browse mode crash in Firefox. (#9152)
-- Significant speed improvements when navigating documents in Microsoft Word and Outlook 2016 build 9000 or higher, due to NVDA's UI Automation support for Microsoft Word now being used by default for these builds. (#7409)
 - NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.
 - NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)
 - The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)
@@ -48,12 +50,14 @@ What's New in NVDA
 - In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)
 - Browse mode is now correctly turned on by default when reading messages in Outlook 2016/365 if using NVDA's experimental UI Automation support for Word Documents. (#9188)
 - NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)
+- In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9112)
+- In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9112)
 
 
 == Changes for Developers ==
 - NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)
 - You can now include log output from liblouis into the NVDA log by setting the louis boolean flag in the debugLogging section of the NVDA configuration. (#4554)
-- Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275)
+- Add-on authors are now able to provide NVDA version compatibility information in add-on manifests. (#6275, #9055)
  - minimumNVDAVersion: The minimum required version of NVDA for an add-on to work properly.
  - lastTestedNVDAVersion: The last version of NVDA an add-on has been tested with.
 - OffsetsTextInfo objects can now implement the _getBoundingRectFromOffset method to allow retrieval of bounding rectangles per characters instead of points. (#8572)

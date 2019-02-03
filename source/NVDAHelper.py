@@ -1,6 +1,6 @@
 #NVDAHelper.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2018 NV Access Limited, Peter Vagner, Davy Kager
+#Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -28,7 +28,10 @@ import time
 import globalVars
 
 versionedLibPath='lib'
-versionedLib64Path='lib64'
+if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
+	versionedLib64Path = 'libArm64'
+else:
+	versionedLib64Path = 'lib64'
 if getattr(sys,'frozen',None):
 	# Not running from source. Libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
@@ -397,7 +400,7 @@ def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
 	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
-	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
+	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
 class RemoteLoader64(object):
@@ -496,7 +499,7 @@ def initialize():
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
+	if os.environ.get('PROCESSOR_ARCHITEW6432') in ('AMD64', 'ARM64'):
 		_remoteLoader64=RemoteLoader64()
 
 def terminate():
