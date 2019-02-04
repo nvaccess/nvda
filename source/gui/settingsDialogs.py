@@ -1962,6 +1962,12 @@ class AdvancedPanel(SettingsPanel):
 		self.windowText.Bind(wx.EVT_SIZE, self.wrapText)
 		sHelper.addItem(self.windowText)
 
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("I understand that these settings are for advanced users.")
+		self.enableControls=sHelper.addItem(wx.CheckBox(self, label=label))
+		self.enableControls.Bind(wx.EVT_CHECKBOX, lambda evt: self.setEnabledState(evt.IsChecked()))
+
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
 		groupText = _("Microsoft UI Automation")
@@ -2007,6 +2013,12 @@ class AdvancedPanel(SettingsPanel):
 		self.logCategoriesList=debugLogGroup.addLabeledControl(logCategoriesLabel, nvdaControls.CustomCheckListBox, choices=self.logCategories)
 		self.logCategoriesList.CheckedItems=[index for index,x in enumerate(self.logCategories) if config.conf['debugLog'][x]]
 		self.logCategoriesList.Select(0)
+		self.setEnabledState(self.enableControls.IsChecked())
+
+	def setEnabledState(self, shouldEnableControl):
+		for c in self.GetChildren():
+			if not isinstance(c, wx.StaticText) and c is not self.enableControls:
+				c.Enable(shouldEnableControl)
 
 	def onSave(self):
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
