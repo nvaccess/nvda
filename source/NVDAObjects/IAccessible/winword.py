@@ -343,7 +343,7 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		# Therefore, only speak the first line of the cell.
 		newInfo.collapse()
 		newInfo.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_PARAGRAPH)
+		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
