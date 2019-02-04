@@ -326,7 +326,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
-	if not conf['development']['enableScratchpadDir']:
+	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
 		return
 	if not subdir:
 		subdir = module.__name__
