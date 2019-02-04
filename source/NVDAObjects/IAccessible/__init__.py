@@ -168,7 +168,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			except ValueError:
 				pass
 			try:
-				self._endOffset=text.index(u'\ufffc',oldEnd-self._startOffset)
+				self._endOffset=text.index(u'\ufffc', oldStart)
 			except ValueError:
 				pass
 
