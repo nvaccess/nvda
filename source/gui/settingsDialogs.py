@@ -1956,7 +1956,7 @@ class AdvancedPanel(SettingsPanel):
 				"Please only change these if you know what you are doing or have been specifically instructed "
 				"by NVDA  developers."
 		))
-		# Since this is quite long text, we want to rap the text. However the size of the dialog is not yet set
+		# Since this is quite long text, we want to wrap the text. However the size of the dialog is not yet set
 		# so instead we bind the to size event. This allows us to wrap the text in response to the width for the
 		# control being set.
 		self.windowText.Bind(wx.EVT_SIZE, self.wrapText)
