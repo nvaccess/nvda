@@ -234,7 +234,7 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 		"""
 		if gui._isDebug():
 			startTime = time.time()
-		wx.Panel.__init__(self, parent, wx.NewIdRef())
+		wx.Panel.__init__(self, parent, wx.ID_ANY)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
@@ -1937,36 +1937,30 @@ class AdvancedPanel(SettingsPanel):
 		self.windowText.Wrap(width)
 		evt.Skip()
 
-	def onPanelGivenFocus(self, evt):
-		self.SetLabel(self.description)
-		evt.Skip()
-
 	def makeSettings(self, settingsSizer):
-		global NvdaSettingsWithLongDescriptionPanelIds
-		NvdaSettingsWithLongDescriptionPanelIds.append(self.GetId())
-		self.Bind(wx.EVT_CHILD_FOCUS, self.onPanelGivenFocus)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
-		# Translators: A heading for the advanced settings panel. This is larger and in bold lettering.
-		warning = _("Warning!")
-		warningText = wx.StaticText(self, label=warning)
+		warningText = wx.StaticText(
+			self,
+			# Translators: A heading for the advanced settings panel. This is larger and in bold lettering.
+			label=_("Warning!")
+		)
 		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
 		sHelper.addItem(warningText)
 
-		# Translators: This is a label appearing on the Advanced settings panel.
-		windowText = _(
-			"The following settings are for advanced users. "
-			"Changing them may cause NVDA to function incorrectly. "
-			"Please only change these if you know what you are doing or have been specifically instructed "
-			"by NVDA  developers."
-		)
-		self.windowText = wx.StaticText(self, label=windowText)
+		self.windowText = wx.StaticText(
+			self,
+			# Translators: This is a label appearing on the Advanced settings panel.
+			label=_(
+				"The following settings are for advanced users. "
+				"Changing them may cause NVDA to function incorrectly. "
+				"Please only change these if you know what you are doing or have been specifically instructed "
+				"by NVDA  developers."
+		))
 		# Since this is quite long text, we want to rap the text. However the size of the dialog is not yet set
 		# so instead we bind the to size event. This allows us to wrap the text in response to the width for the
 		# control being set.
 		self.windowText.Bind(wx.EVT_SIZE, self.wrapText)
 		sHelper.addItem(self.windowText)
-		self.description = warning+" "+windowText
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
@@ -2549,11 +2543,6 @@ class BrailleSettingsSubPanel(SettingsPanel):
 and returned to None when the dialog is destroyed. This can be used by an AppModule for NVDA to identify and announce
 changes in name for the panel when categories are changed"""
 NvdaSettingsCategoryPanelId = None
-
-""" The Id's of any panels that want name change events to be announced. This can be used by an AppModule for NVDA
-to identify and announce changes in name for the panel."""
-NvdaSettingsWithLongDescriptionPanelIds = []
-
 """ The name of the config profile currently being edited, if any.
 This is set when the currently edited configuration profile is determined and returned to None when the dialog is destroyed.
 This can be used by an AppModule for NVDA to identify and announce
@@ -2608,9 +2597,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile, NvdaSettingsWithLongDescriptionPanelIds
+		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsCategoryPanelId = None
-		NvdaSettingsWithLongDescriptionPanelIds = []
 		NvdaSettingsDialogActiveConfigProfile = None
 		super(NVDASettingsDialog, self).Destroy()
 

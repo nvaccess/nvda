@@ -71,13 +71,10 @@ class AppModule(appModuleHandler.AppModule):
 
 	def isNvdaSettingsCategoryPanel(self, obj):
 		controlId = obj.windowControlID
-		from gui.settingsDialogs import NvdaSettingsCategoryPanelId, NvdaSettingsWithLongDescriptionPanelIds
-
+		from gui.settingsDialogs import NvdaSettingsCategoryPanelId
 		if not isinstance(obj, IAccessible):
 			return False
-		panelIds=[NvdaSettingsCategoryPanelId, ]
-		panelIds.extend(NvdaSettingsWithLongDescriptionPanelIds)
-		if controlId in panelIds:
+		if controlId == NvdaSettingsCategoryPanelId:
 			return True
 		return False
 
