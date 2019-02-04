@@ -45,7 +45,7 @@ opSys.directory_should_exist(tempDir)
 nvdaProfileWorkingDir = _pJoin(tempDir, "nvdaProfile")
 nvdaLogFilePath = _pJoin(nvdaProfileWorkingDir, 'nvda.log')
 systemTestSpyAddonName = "systemTestSpy"
-testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "globalPlugins")
+testSpyPackageDest = _pJoin(nvdaProfileWorkingDir, "scratchpad", "globalPlugins")
 outDir = builtIn.get_variable_value("${OUTPUT DIR}")
 testOutputNvdaLogsDir = _pJoin(outDir, "nvdaTestRunLogs")
 
