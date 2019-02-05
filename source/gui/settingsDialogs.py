@@ -1929,49 +1929,62 @@ class UwpOcrPanel(SettingsPanel):
 		config.conf["uwpOcr"]["language"] = lang
 
 class AdvancedPanel(SettingsPanel):
+	enableControlsCheckBox = None  # type: wx.CheckBox
+	dontDisableControls = []
 	# Translators: This is the label for the Advanced settings panel.
 	title = _("Advanced")
 
-	def wrapText(self, evt):
-		width = evt.GetSize().Width
-		self.windowText.Wrap(width)
-		evt.Skip()
-
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		warningText = wx.StaticText(
+
+		# Translators: This is the label to warn users about the Advanced options in the
+		# Advanced settings panel
+		warningHeader = _("Warning!")
+		warningGroup = guiHelper.BoxSizerHelper(
 			self,
-			# Translators: A heading for the advanced settings panel. This is larger and in bold lettering.
-			label=_("Warning!")
+			sizer=wx.StaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
 		)
+		sHelper.addItem(warningGroup)
+		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
+		self.warningBox = warningBox
+
+		self.dontDisableControls.append(warningBox)
+
+		# Translators: This is the label to warn users about the Advanced options in the
+		# Advanced settings panel
+		warningHeader = _("Warning!")
+		warningText = wx.StaticText(warningBox, label=warningHeader)
 		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
 		sHelper.addItem(warningText)
+		self.dontDisableControls.append(warningText)
 
-		self.windowText = wx.StaticText(
-			self,
-			# Translators: This is a label appearing on the Advanced settings panel.
-			label=_(
-				"The following settings are for advanced users. "
-				"Changing them may cause NVDA to function incorrectly. "
-				"Please only change these if you know what you are doing or have been specifically instructed "
-				"by NVDA  developers."
-		))
-		# Since this is quite long text, we want to wrap the text. However the size of the dialog is not yet set
-		# so instead we bind the to size event. This allows us to wrap the text in response to the width for the
-		# control being set.
-		self.windowText.Bind(wx.EVT_SIZE, self.wrapText)
-		sHelper.addItem(self.windowText)
+		# Translators: This is a label appearing on the Advanced settings panel.
+		warningExplanation = _(
+			"The following settings are for advanced users. "
+			"Changing them may cause NVDA to function incorrectly. "
+			"Please only change these if you know what you are doing or "
+			"have been specifically instructed by NVDA developers."
+		)
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("I understand that these settings are for advanced users.")
-		self.enableControls=sHelper.addItem(wx.CheckBox(self, label=label))
-		self.enableControls.Bind(wx.EVT_CHECKBOX, lambda evt: self.setEnabledState(evt.IsChecked()))
+		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=warningExplanation))
+		self.dontDisableControls.append(self.windowText)
+		self.windowText.Wrap(680)
+
+		# Translators: This is the label for a checkbox in the Advanced settings panel.
+		enableAdvancedControlslabel = _(
+			"I understand that changing these settings may cause NVDA to function incorrectly."
+		)
+		self.enableControlsCheckBox=warningGroup.addItem(wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel))
+		self.dontDisableControls.append(self.enableControlsCheckBox)
+		self.enableControlsCheckBox.Bind(wx.EVT_CHECKBOX, lambda evt: self.setEnabledState(evt.IsChecked()))
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
-		groupText = _("Microsoft UI Automation")
-		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		label = _("Microsoft UI Automation")
+		UIAGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=label), wx.VERTICAL)
+		)
 		sHelper.addItem(UIAGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -1982,8 +1995,11 @@ class AdvancedPanel(SettingsPanel):
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
-		groupText = _("Editable Text")
-		editableTextGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		label = _("Editable Text")
+		editableTextGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=label), wx.VERTICAL)
+		)
 		sHelper.addItem(editableTextGroup)
 
 		# Translators: This is the label for a numeric control in the
@@ -1996,8 +2012,11 @@ class AdvancedPanel(SettingsPanel):
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
-		groupText = _("Debug logging")
-		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		label = _("Debug logging")
+		debugLogGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=label), wx.VERTICAL)
+		)
 		sHelper.addItem(debugLogGroup)
 
 		self.logCategories=[
@@ -2013,12 +2032,15 @@ class AdvancedPanel(SettingsPanel):
 		self.logCategoriesList=debugLogGroup.addLabeledControl(logCategoriesLabel, nvdaControls.CustomCheckListBox, choices=self.logCategories)
 		self.logCategoriesList.CheckedItems=[index for index,x in enumerate(self.logCategories) if config.conf['debugLog'][x]]
 		self.logCategoriesList.Select(0)
-		self.setEnabledState(self.enableControls.IsChecked())
+		self.setEnabledState(self.enableControlsCheckBox.IsChecked())
 
-	def setEnabledState(self, shouldEnableControl):
-		for c in self.GetChildren():
-			if not isinstance(c, wx.StaticText) and c is not self.enableControls:
+	def setEnabledState(self, shouldEnableControl, root=None):
+		root = root or self
+		for c in root.GetChildren():
+			if c not in self.dontDisableControls:
 				c.Enable(shouldEnableControl)
+				self.setEnabledState(shouldEnableControl, c)
+
 
 	def onSave(self):
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
