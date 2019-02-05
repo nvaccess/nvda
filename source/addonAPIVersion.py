@@ -5,6 +5,7 @@
 
 import buildVersion
 import re
+from logHandler import log
 
 """
 This module contains add-on API version information for this build of NVDA. This file provides information on
@@ -21,11 +22,12 @@ EG: (x, y, z): Large changes to speech.py
 """
 
 #: Compiled regular expression to match an addon API version string.
-#: Supports year.month.minor versions (e.g. 2018.1.1).
-#: Resulting match objects expose three groups reflecting release year, release month, and release minor version,
+#: Supports year.major.minor versions (e.g. 2018.1.1).
+#: Resulting match objects expose three groups reflecting release year, release major, and release minor version,
 # respectively.
 #: @type: RegexObject
-ADDON_API_VERSION_REGEX = re.compile(r"^(\d{4})\.(\d)\.(\d)$")
+ADDON_API_VERSION_REGEX = re.compile(r"^(0|\d{4})\.(\d)\.(\d)$")
+
 
 def getAPIVersionTupleFromString(version):
 	"""Converts a string containing an NVDA version to a tuple of the form (versionYear, versionMajor, versionMinor)"""
@@ -33,3 +35,25 @@ def getAPIVersionTupleFromString(version):
 	if not match:
 		raise ValueError(version)
 	return tuple(int(i) if i is not None else 0 for i in match.groups())
+
+
+def formatForGUI(versionTuple):
+	"""Converts a version tuple to a string for displaying in the GUI
+	Examples:
+	- (2018, 1, 1) becomes "2018.1.1"
+	- (2018, 1, 0) becomes "2018.1"
+	- (0, 0, 0) becomes "0.0"
+	"""
+	try:
+		year, major, minor = versionTuple
+		return buildVersion.formatVersionForGUI(year, major, minor)
+	except (
+			ValueError,  # Too few/many values to unpack
+			TypeError  # versionTuple is None or some other incorrect type
+	):
+		# This path should never be hit. But the appearance of "unknown" in the GUI is a better outcome
+		# than an exception and unusable dialog.
+		# Translators: shown when an addon API version string is unknown
+		default = _("unknown")
+		log.error("Unable to format versionTuple: {}".format(repr(versionTuple)), exc_info=True)
+		return default
