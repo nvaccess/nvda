@@ -7,7 +7,6 @@
 
 from abc import abstractmethod
 from six import with_metaclass
-import glob
 import os
 import copy
 import re
@@ -29,7 +28,6 @@ from logHandler import log
 import nvwave
 import audioDucking
 import speechDictHandler
-import appModuleHandler
 import queueHandler
 import braille
 import brailleTables
@@ -353,6 +351,9 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			hasApplyButton=True,
 			settingsSizerOrientation=wx.HORIZONTAL
 		)
+
+		# Register object with COM to fix accessibility bugs in wx.
+		#self.server = nvdaControls.DescribedPanelAccPropServer(self, "dialog acc name", "dialog reef")
 
 		# setting the size must be done after the parent is constructed.
 		self.SetMinSize(self.scaleSize(self.MIN_SIZE))
@@ -1977,6 +1978,9 @@ class AdvancedPanel(SettingsPanel):
 		self.enableControlsCheckBox=warningGroup.addItem(wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel))
 		self.dontDisableControls.append(self.enableControlsCheckBox)
 		self.enableControlsCheckBox.Bind(wx.EVT_CHECKBOX, lambda evt: self.setEnabledState(evt.IsChecked()))
+
+		# Register object with COM to fix accessibility bugs in wx.
+		self.server = nvdaControls.DescribedPanelAccPropServer(self, "advanced panel name", "advanced panel desc")
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
