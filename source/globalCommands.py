@@ -1462,6 +1462,15 @@ class GlobalCommands(ScriptableObject):
 		speech.speakMessage(text)
 		log.info(text)
 
+	def script_startWxInspectorTool(self, gesture):
+		import wx.lib.inspection
+		wx.lib.inspection.InspectionTool().Show()
+	script_startWxInspectorTool.__doc__ = _(
+		# Translators: GUI development tool, to get information about the components used the NVDA GUI
+		"Opens the WX GUI inspection tool."
+	)
+	script_startWxInspectorTool.category = SCRCAT_TOOLS
+
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
 		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
@@ -2373,6 +2382,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f1": "navigatorObject_devInfo",
 		"kb:NVDA+control+f1": "reportAppModuleInfo",
 		"kb:NVDA+control+z": "activatePythonConsole",
+		"kb:NVDA+control+w": "startWxInspectorTool",
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
