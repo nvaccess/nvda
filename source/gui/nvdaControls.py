@@ -42,6 +42,32 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		self.SetSelection(0, numChars)
 		evt.Skip()
 
+class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
+
+	def __init__(self, control, propertyAnnotations):
+		"""
+
+		:type propertyAnnotations: dict
+		"""
+		super(AccPropertyOverride, self).__init__(
+			control,
+			annotateProperties=list(propertyAnnotations.keys()),
+			annotateChildren=False
+		)
+		self.propertyAnnotations = propertyAnnotations
+
+	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
+		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
+		if control is None:
+			return self.NO_RETURN_VALUE
+
+		try:
+			val = self.propertyAnnotations[idProp]
+			return val, self.HAS_PROP
+		except KeyError:
+			pass
+
+		return self.NO_RETURN_VALUE
 
 class DescribedPanelAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for panel descriptions."""
@@ -69,6 +95,8 @@ class DescribedPanelAccPropServer(accPropServer.IAccPropServer_Impl):
 			return oleacc.ROLE_SYSTEM_PROPERTYPAGE, self.HAS_PROP  # should be property page in MSAA
 
 		if idProp == oleacc.PROPID_ACC_NAME:
+			from logHandler import log
+			log.debug("getting propID_ACC_NAME")
 			return self.acc_name, self.HAS_PROP
 
 		if idProp == oleacc.PROPID_ACC_DESCRIPTION:

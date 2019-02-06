@@ -224,6 +224,7 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 	"""
 
 	title=""
+	panelDescription=""
 
 	def __init__(self, parent):
 		"""
@@ -234,6 +235,15 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 			startTime = time.time()
 		wx.Panel.__init__(self, parent, wx.ID_ANY)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
+
+		import oleacc
+		self.server = nvdaControls.AccPropertyOverride(
+			self,
+			propertyAnnotations={
+				oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE, # change the role from pane to property page
+				oleacc.PROPID_ACC_DESCRIPTION: self.panelDescription,  # set a description
+			}
+		)
 
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -352,9 +362,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			settingsSizerOrientation=wx.HORIZONTAL
 		)
 
-		# Register object with COM to fix accessibility bugs in wx.
-		#self.server = nvdaControls.DescribedPanelAccPropServer(self, "dialog acc name", "dialog reef")
-
 		# setting the size must be done after the parent is constructed.
 		self.SetMinSize(self.scaleSize(self.MIN_SIZE))
 		self.SetSize(self.scaleSize(self.INITIAL_SIZE))
@@ -370,6 +377,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	MIN_SIZE = (470, 240) # Min height required to show the OK, Cancel, Apply buttons
 
 	def makeSettings(self, settingsSizer):
+		import oleacc
+		self.server = nvdaControls.AccPropertyOverride(
+			self,
+			propertyAnnotations={
+				oleacc.PROPID_ACC_DESCRIPTION: " ",  # set a description
+			}
+		)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for the list of categories in a multi category settings dialog.
@@ -546,10 +560,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
 		self.container.Layout()
 		self.container.SetupScrolling()
-		# Set the label for the container, this is exposed via the Name property on an NVDAObject.
-		# For one or another reason, doing this before SetupScrolling causes this to be ignored by NVDA in some cases.
-		# Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-		self.container.SetLabel(_("%s Settings Category")%newCat.title)
 		self.container.Thaw()
 
 	def onCategoryChange(self, evt):
@@ -1639,12 +1649,13 @@ class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
 	title = _("Document Formatting")
 
+	# Translators: This is a label appearing on the document formatting settings panel.
+	panelDescription = _("The following options control the types of document formatting reported by NVDA.")
+
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is a label appearing on the document formatting settings panel.
-		panelText =_("The following options control the types of document formatting reported by NVDA.")
-		sHelper.addItem(wx.StaticText(self, label=panelText))
+		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
@@ -1935,12 +1946,23 @@ class AdvancedPanel(SettingsPanel):
 	# Translators: This is the label for the Advanced settings panel.
 	title = _("Advanced")
 
+	# Translators: This is the label to warn users about the Advanced options in the
+	# Advanced settings panel
+	warningHeader = _("Warning!")
+
+	# Translators: This is a label appearing on the Advanced settings panel.
+	warningExplanation = _(
+		"The following settings are for advanced users. "
+		"Changing them may cause NVDA to function incorrectly. "
+		"Please only change these if you know what you are doing or "
+		"have been specifically instructed by NVDA developers."
+	)
+
+	panelDescription = "{}\n{}".format(warningHeader, warningExplanation)
+
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is the label to warn users about the Advanced options in the
-		# Advanced settings panel
-		warningHeader = _("Warning!")
 		warningGroup = guiHelper.BoxSizerHelper(
 			self,
 			sizer=wx.StaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
@@ -1951,23 +1973,12 @@ class AdvancedPanel(SettingsPanel):
 
 		self.dontDisableControls.append(warningBox)
 
-		# Translators: This is the label to warn users about the Advanced options in the
-		# Advanced settings panel
-		warningHeader = _("Warning!")
-		warningText = wx.StaticText(warningBox, label=warningHeader)
+		warningText = wx.StaticText(warningBox, label=self.warningHeader)
 		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
-		sHelper.addItem(warningText)
+		warningGroup.addItem(warningText)
 		self.dontDisableControls.append(warningText)
 
-		# Translators: This is a label appearing on the Advanced settings panel.
-		warningExplanation = _(
-			"The following settings are for advanced users. "
-			"Changing them may cause NVDA to function incorrectly. "
-			"Please only change these if you know what you are doing or "
-			"have been specifically instructed by NVDA developers."
-		)
-
-		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=warningExplanation))
+		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
 		self.dontDisableControls.append(self.windowText)
 		self.windowText.Wrap(680)
 
@@ -1975,12 +1986,12 @@ class AdvancedPanel(SettingsPanel):
 		enableAdvancedControlslabel = _(
 			"I understand that changing these settings may cause NVDA to function incorrectly."
 		)
-		self.enableControlsCheckBox=warningGroup.addItem(wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel))
+		self.enableControlsCheckBox = warningGroup.addItem(
+			wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel)
+		)
+		self.enableControlsCheckBox.SetFont(self.enableControlsCheckBox.GetFont().Bold())
 		self.dontDisableControls.append(self.enableControlsCheckBox)
 		self.enableControlsCheckBox.Bind(wx.EVT_CHECKBOX, lambda evt: self.setEnabledState(evt.IsChecked()))
-
-		# Register object with COM to fix accessibility bugs in wx.
-		self.server = nvdaControls.DescribedPanelAccPropServer(self, "advanced panel name", "advanced panel desc")
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
