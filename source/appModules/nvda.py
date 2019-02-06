@@ -36,12 +36,6 @@ class NvdaSettingsCategoryPanel(IAccessible):
 	# This ought to be a class property.
 	oldProfile = None
 
-	def event_nameChange(self):
-		if self in api.getFocusAncestors():
-			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
-		braille.handler.handleUpdate(self)
-		self.handlePossibleProfileSwitch()
-
 	@classmethod
 	def handlePossibleProfileSwitch(cls):
 		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
@@ -92,7 +86,7 @@ class AppModule(appModuleHandler.AppModule):
 	# Silence invisible unknowns for stateChange as well.
 	event_stateChange = event_gainFocus
 
-	def event_foreground         (self, obj, nextHandler):
+	def event_foreground(self, obj, nextHandler):
 		if not gui.shouldConfigProfileTriggersBeSuspended():
 			config.conf.resumeProfileTriggers()
 		else:

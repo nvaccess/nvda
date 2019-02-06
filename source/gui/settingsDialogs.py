@@ -236,6 +236,7 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 		wx.Panel.__init__(self, parent, wx.ID_ANY)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
+		self.SetLabel("{} Settings".format(self.title))
 		import oleacc
 		self.server = nvdaControls.AccPropertyOverride(
 			self,
@@ -2599,7 +2600,7 @@ changes in the name of the edited configuration profile when categories are chan
 NvdaSettingsDialogActiveConfigProfile = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
-	title = _("NVDA")
+	title = _("NVDA Settings")
 	categoryClasses=[
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -2633,9 +2634,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self.SetTitle(self._getDialogTitle())
 
 	def _getDialogTitle(self):
-		return u"{dialogTitle}: {panelTitle} ({configProfile})".format(
+		return u"{dialogTitle}: ({configProfile})".format(
 			dialogTitle=self.title,
-			panelTitle=self.currentCategory.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
 		)
 
