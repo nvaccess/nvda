@@ -1227,78 +1227,10 @@ class ExcelCell(ExcelBase):
 			return
 		super(ExcelCell,self).event_typedCharacter(ch)
 
-	def getCellTextWidth(self):
-		#handle to Device Context
-		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
-		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
-		ctypes.windll.user32.ReleaseDC(self.windowHandle, hDC)
-		#Compatible Bitmap for current Device Context
-		hBMP = ctypes.windll.gdi32.CreateCompatibleBitmap(tempDC, 1, 1)
-		#handle to the bitmap object
-		hOldBMP = ctypes.windll.gdi32.SelectObject(tempDC, hBMP)
-		#Pass Device Context and LOGPIXELSX, the horizontal resolution in pixels per unit inch
-		dpi = ctypes.windll.gdi32.GetDeviceCaps(tempDC, LOGPIXELSX)
-		#Fetching Font Size and Weight information
-		iFontSize = self.excelCellObject.Font.Size
-		iFontSize = 11 if iFontSize is None else int(iFontSize)
-		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
-		iFontWeight = 700 if self.excelCellObject.Font.Bold else 400
-		#Fetching Font Name and style information
-		sFontName = self.excelCellObject.Font.Name
-		sFontItalic = self.excelCellObject.Font.Italic
-		sFontUnderline = True if self.excelCellObject.Font.Underline else False
-		sFontStrikeThrough = self.excelCellObject.Font.Strikethrough
-		#If FontSize is <0: The font mapper transforms this value into device units
-		#and matches its absolute value against the character height of the available fonts.
-		iFontHeight = iFontSize * -1
-		#If Font Width is 0, the font mapper chooses a closest match value.
-		iFontWidth = 0
-		iEscapement = 0
-		iOrientation = 0
-		#Default CharSet based on System Locale is chosen
-		iCharSet = 0
-		#Default font mapper behavior
-		iOutputPrecision = 0
-		#Default clipping behavior
-		iClipPrecision = 0
-		#Default Quality
-		iOutputQuality = 0
-		#Default Pitch and default font family
-		iPitchAndFamily = 0
-		#Create a font object with the correct size, weight and style
-		hFont = ctypes.windll.gdi32.CreateFontW(iFontHeight, iFontWidth, iEscapement, iOrientation, iFontWeight, sFontItalic, sFontUnderline, sFontStrikeThrough, iCharSet, iOutputPrecision, iClipPrecision, iOutputQuality, iPitchAndFamily, sFontName)
-		#Load the font into the device context, storing the original font object
-		hOldFont = ctypes.windll.gdi32.SelectObject(tempDC, hFont)
-		sText = self.excelCellObject.Text
-		textLength = len(sText)
-		class structText(ctypes.Structure):
-			_fields_ = [("width", ctypes.c_int), ("height",ctypes.c_int)]
-		StructText = structText()
-		getTextExtentPoint = ctypes.windll.gdi32.GetTextExtentPoint32W
-		getTextExtentPoint.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_int, ctypes.POINTER(structText)]
-		getTextExtentPoint.restype = ctypes.c_int
-		sText = unicode(sText)
-		#Get the text dimensions
-		ctypes.windll.gdi32.GetTextExtentPoint32W(tempDC, sText, textLength,ctypes.byref(StructText))
-		#Restore the old Font Object
-		ctypes.windll.gdi32.SelectObject(tempDC, hOldFont)
-		#Delete the font object we created
-		ctypes.windll.gdi32.DeleteObject(hFont)
-		#Restore the old Bitmap Object
-		ctypes.windll.gdi32.SelectObject(tempDC, hOldBMP)
-		#Delete the temporary BitMap Object
-		ctypes.windll.gdi32.DeleteObject(hBMP)
-		#Release & Delete the device context
-		ctypes.windll.gdi32.DeleteDC(tempDC)
-		#Retrieve the text width
-		textWidth = StructText.width
-		return textWidth
-
 	def _get__overlapInfo(self):
 		textWidth=ctypes.c_long()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellTextWidth(self.appModule.helperLocalBindingHandle,self.windowThreadID,self.excelCellObject._comobj,ctypes.byref(textWidth))
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellTextWidth(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(textWidth))
 		textWidth=textWidth.value
-		print textWidth
 		if self.excelCellObject.WrapText or self.excelCellObject.ShrinkToFit:
 			return None
 		isMerged = self.excelWindowObject.Selection.MergeCells
