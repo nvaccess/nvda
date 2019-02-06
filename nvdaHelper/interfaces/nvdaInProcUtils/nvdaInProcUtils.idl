@@ -68,4 +68,6 @@ interface NvdaInProcUtils {
  */
  	error_status_t outlook_getMAPIProp(const long threadID, [in] IUnknown* mapiObject, const unsigned long mapiPropTag, [out] VARIANT* val);
 
+	error_status_t excel_getCellTextWidth([in] const long threadID, [in] IDispatch* cell, [out] long* width);
+
 }

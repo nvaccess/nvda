@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import ctypes
 from comtypes import COMError
 import comtypes.automation
 import wx
@@ -12,6 +13,7 @@ import winsound
 import re
 import uuid
 import collections
+import NVDAHelper
 import oleacc
 import ui
 import speech
@@ -1293,7 +1295,10 @@ class ExcelCell(ExcelBase):
 		return textWidth
 
 	def _get__overlapInfo(self):
-		textWidth = self.getCellTextWidth()
+		textWidth=ctypes.c_long()
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellTextWidth(self.appModule.helperLocalBindingHandle,self.windowThreadID,self.excelCellObject._comobj,ctypes.byref(textWidth))
+		textWidth=textWidth.value
+		print textWidth
 		if self.excelCellObject.WrapText or self.excelCellObject.ShrinkToFit:
 			return None
 		isMerged = self.excelWindowObject.Selection.MergeCells
