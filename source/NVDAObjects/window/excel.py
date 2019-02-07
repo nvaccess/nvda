@@ -821,12 +821,6 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
-		# #4409: cell.currentRegion fails if the worksheet is protected.
-		try:
-			cellRegion=cell.excelCellObject.currentRegion
-		except COMError:
-			log.debugWarning("Possibly protected sheet")
-			return None
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
