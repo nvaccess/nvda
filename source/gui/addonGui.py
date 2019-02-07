@@ -707,7 +707,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		):
 			# Translators: The reason an add-on is not compatible. A more recent version of NVDA is
 			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-			return _("An apdated version of NVDA is required. NVDA version {} or later."
+			return _("An updated version of NVDA is required. NVDA version {} or later."
 			).format(addonAPIVersion.formatForGUI(addon.minimumNVDAVersion))
 		elif not addonVersionCheck.isAddonTested(
 			addon,
