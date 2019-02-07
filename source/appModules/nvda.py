@@ -31,7 +31,7 @@ class NvdaDialog(IAccessible):
 			return self.presType_content
 		return presType
 
-class NvdaSettingsCategoryPanel(IAccessible):
+class AppModule(appModuleHandler.AppModule):
 	# The configuration profile that has been previously edited.
 	# This ought to be a class property.
 	oldProfile = None
@@ -44,10 +44,8 @@ class NvdaSettingsCategoryPanel(IAccessible):
 			speech.speakMessage(_("Editing profile {profile}").format(profile=newProfile))
 		cls.oldProfile = newProfile
 
-class AppModule(appModuleHandler.AppModule):
-
 	def event_appModule_loseFocus(self):
-		NvdaSettingsCategoryPanel.oldProfile = None
+		self.oldProfile = None
 
 	def isNvdaMenu(self, obj):
 		global nvdaMenuIaIdentity
@@ -60,15 +58,6 @@ class AppModule(appModuleHandler.AppModule):
 		# nvdaMenuIaIdentity is True, so the next menu we encounter is the NVDA menu.
 		if obj.role == controlTypes.ROLE_POPUPMENU:
 			nvdaMenuIaIdentity = obj.IAccessibleIdentity
-			return True
-		return False
-
-	def isNvdaSettingsCategoryPanel(self, obj):
-		controlId = obj.windowControlID
-		from gui.settingsDialogs import NvdaSettingsCategoryPanelId
-		if not isinstance(obj, IAccessible):
-			return False
-		if controlId == NvdaSettingsCategoryPanelId:
 			return True
 		return False
 
@@ -90,11 +79,13 @@ class AppModule(appModuleHandler.AppModule):
 		if not gui.shouldConfigProfileTriggersBeSuspended():
 			config.conf.resumeProfileTriggers()
 		else:
-			NvdaSettingsCategoryPanel.handlePossibleProfileSwitch()
+			self.handlePossibleProfileSwitch()
+		nextHandler()
+
+	def event_nameChange(self, obj, nextHandler):
+		self.handlePossibleProfileSwitch()
 		nextHandler()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
 			clsList.insert(0, NvdaDialog)
-		if self.isNvdaSettingsCategoryPanel(obj):
-			clsList.insert(0, NvdaSettingsCategoryPanel)
