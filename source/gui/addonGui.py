@@ -549,7 +549,8 @@ def handleRemoteAddonInstall(addonPath):
 			wx.OK | wx.ICON_ERROR)
 		return
 	gui.mainFrame.prePopup()
-	installAddon(gui.mainFrame, addonPath)
+	if installAddon(gui.mainFrame, addonPath):
+		promptUserForRestart()
 	gui.mainFrame.postPopup()
 
 
