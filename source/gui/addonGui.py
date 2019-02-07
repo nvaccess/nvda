@@ -685,7 +685,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-		button = buttonSizer.addButton(self, label=_("Close"), id=wx.ID_CLOSE)
+		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sHelper.addDialogDismissButtons(buttonSizer)
 		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
