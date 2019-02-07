@@ -319,6 +319,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
+	dialogDescription=""
 	categoryClasses=[]
 
 	class CategoryUnavailableError(RuntimeError): pass
@@ -372,7 +373,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.server = nvdaControls.AccPropertyOverride(
 			self,
 			propertyAnnotations={
-				oleacc.PROPID_ACC_DESCRIPTION: " ",  # set a description
+				oleacc.PROPID_ACC_DESCRIPTION: lambda: self.dialogDescription,  # set a description
 			}
 		)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2620,7 +2621,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self.SetTitle(self._getDialogTitle())
 
 	def _getDialogTitle(self):
-		return u"{dialogTitle}: ({configProfile})".format(
+		self.dialogDescription = NvdaSettingsDialogActiveConfigProfile
+		return u"{dialogTitle}: {configProfile}".format(
 			dialogTitle=self.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
 		)

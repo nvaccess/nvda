@@ -63,6 +63,8 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 
 		try:
 			val = self.propertyAnnotations[idProp]
+			if callable(val):
+				val = val()
 			return val, self.HAS_PROP
 		except KeyError:
 			pass
