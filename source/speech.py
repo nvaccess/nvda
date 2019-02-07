@@ -769,8 +769,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if extraDetail:
 		formatConfig['extraDetail']=True
 	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
-	# For performance reasons, when navigating by paragraph, spelling errors and editor revisions will not be announced.
-	if unit is textInfos.UNIT_PARAGRAPH and reason is controlTypes.REASON_CARET:
+	# For performance reasons, when navigating by paragraph or table cell, spelling errors and editor revisions will not be announced.
+	if unit in (textInfos.UNIT_PARAGRAPH,textInfos.UNIT_CELL) and reason is controlTypes.REASON_CARET:
 		formatConfig['reportSpellingErrors']=False
 		formatConfig['reportEditorRevisions']=False
 
