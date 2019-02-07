@@ -6,7 +6,8 @@
 #See the file COPYING for more details.
 
 """Module that contains the base NVDA object type"""
-from new import instancemethod
+
+from six import with_metaclass
 import time
 import re
 import weakref
@@ -47,6 +48,11 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getTextRange(self,start,end):
 		text=self._getStoryText()
 		return text[start:end]
+
+	def _get_boundingRects(self):
+		if self.obj.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return [self.obj.location,]
 
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.
@@ -106,7 +112,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			newCls=self._dynamicClassCache.get(bases,None)
 			if not newCls:
 				name="Dynamic_%s"%"".join([x.__name__ for x in clsList])
-				newCls=type(name,bases,{})
+				newCls=type(name,bases,{"__module__": __name__})
 				self._dynamicClassCache[bases]=newCls
 
 		oldMro=frozenset(obj.__class__.__mro__)
@@ -140,7 +146,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
+class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContainerObject,baseObject.ScriptableObject)):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -164,7 +170,6 @@ class NVDAObject(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	An L{AppModule} can also choose overlay classes for an instance using the L{AppModule.chooseNVDAObjectOverlayClasses} method.
 	"""
 
-	__metaclass__=DynamicNVDAObjectType
 	cachePropertiesByDefault = True
 
 	#: The TextInfo class this object should use to provide access to text.
@@ -1182,6 +1187,12 @@ This code is executed if a gain focus event is received by this object.
 		else:
 			return False
 
+	def _get_hasIrrelevantLocation(self):
+		"""Returns whether the location of this object is irrelevant for mouse or magnification tracking or highlighting,
+		either because it is programatically hidden (STATE_INVISIBLE), off screen or the object has no location."""
+		states = self.states
+		return controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states or not self.location or not any(self.location)
+
 	def _get_selectionContainer(self):
 		""" An ancestor NVDAObject which manages the selection for this object and other descendants."""
 		return None
@@ -1192,4 +1203,3 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
-
