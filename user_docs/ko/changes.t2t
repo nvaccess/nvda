@@ -4,10 +4,14 @@ NVDA 변경 이력
 %!includeconf: ../changes.t2tconf
 
 = 2018.4 =
+이번 버전의 주 기능들: 최신 파이어폭스 버전에서의 탐색 속도 향상; 모든 음성 엔진에서의 이모지 출력 기능; Outlook 사용 시 답장/전달 여부 확인; Microsoft Word에서의 페이지 좌측 상단으로부터의 커서 위치 확인 및 수많은 버그 수정 등입니다.
 
 == 새로 추가된 기능 ==
 - 점자 표기법: 중국어(중국 간체) 1종 및 2종 점자 추가. (#5553)
-- Microsoft Outlook 메시지 목록 탐색시 메시지 답장 및 전달 여부가 표시되도록 함. (#6911)
+- Microsoft Outlook 메시지 목록 탐색 시 메시지 답장 및 전달 여부가 표시되도록 함. (#6911)
+- Unicode Common Locale Data Repository(CLDR)에 등록된 글자(특히 이모지와 특정 글자)에 대한 풀이 출력 기능 추가. (#6523)
+- Microsoft Word 사용시 NVDA+numpadDelete를 눌러 페이지 상단 좌측으로부터의 커서 위치를 확인할 수 있음. (#1939)
+- Google 스프레드시트에서 점자 모드 사용 시 포커스를 각 셀로 옮길때마다 "선택됨"이 출력되지 않도록 함. (#8879)
 - Foxit Reader 및 Foxit Phantom PDF 지원 추가. (#8944)
 - DBeaver database tool 지원 추가. (#8905)
 
@@ -15,26 +19,26 @@ NVDA 변경 이력
 == 변경된 기능 ==
 - 객체 알림 설정에 있는 "Report help balloons"를 "Report notifications"로 변경하여 윈도우 8 이상에서의 토스트 알림도 포함하도록 함(한국어 번역에서는 이전 이름 그대로 사용). (#5789)
 - 키보드 설정에서 NVDA 기능키 체크박스들을 하나의 목록으로 통합함.
-- 특정 윈도우 버전 사용시 알림 영역내 시계 정보 출력시 불필요한 정보가 출력되지 않도록 함. (#4364)
+- 특정 윈도우 버전 사용 시 알림 영역 내 시계 정보 출력 시 불필요한 정보가 출력되지 않도록 함. (#4364)
 - 리브루이 점자 변환기 3.7.0 버전 사용. (#8697)
 - eSpeak NG commit 919f3240cbb 사용.
 
 
 == 버그 수정 ==
-- Outlook 2016/365 사용시 메시지 flag 및 category가 출력되도록 함. (#8603)
-- NVDA 언어가 키르키즈스탄어, 몽골어 또는 마세도니아어로 설정된 경우 NVDA 시작시 윈도우에서의 언어 미지원 메시지가 뜨지 않도록 함. (#8064)
-- 파이어폭스, 크롬 및 Acrobat DC 사용중 마우스를 탐색 객체로 옮길시 현재 브라우즈 모드 위치로 마우스가 제대로 옮겨지도록 함. (#6460)
+- Outlook 2016/365 사용 시 메시지 flag 및 category가 출력되도록 함. (#8603)
+- NVDA 언어가 키르키즈스탄어, 몽골어 또는 마세도니아어로 설정된 경우 NVDA 시작 시 윈도우에서의 언어 미지원 메시지가 뜨지 않도록 함. (#8064)
+- 파이어폭스, 크롬 및 Acrobat DC 사용 중 마우스를 탐색 객체로 옮길 시 현재 브라우즈 모드 위치로 마우스가 제대로 옮겨지도록 함. (#6460)
 - 파이어폭스, 크롬 및 Internet Explorer에서의 콤보박스 조작 정확도가 향상됨. (#8664)
-- 일본어판 윈도우 XP 또는 비스타 사용시 운영 체제 요구사항 관련 메시지가 제대로 출력되도록 함. (#8771)
+- 일본어판 윈도우 XP 또는 비스타 사용 시 운영 체제 요구사항 관련 메시지가 제대로 출력되도록 함. (#8771)
 - 파이어폭스를 통한 대형 페이지(특히 자동 컨텐츠 변경이 많은 페이지) 탐색 속도가 향상됨. (#8678)
-- 점자디스플레이 사용시 문서 서식에서 해제된 서식 정보가 출력되지 않도록 함. (#7615)
-- NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
-- In ARIA menus on the web, the Escape key will now be passed through to the menu and no longer turn off focus mode unconditionally. (#3215)
-- In the new Gmail web interface, when using quick navigation inside messages while reading them, the entire body of the message is no longer reported after the element to which you just navigated. (#8887)
-- After updating NVDA, Browsers such as Firefox and google Chrome should no longer crash, and browse mode should continue to correctly reflect updates to any currently loaded documents. (#7641) 
-- NVDA no longer reports clickable multiple times in a row when navigating clickable content in Browse Mode. (#7430)
-- Gestures performed on baum Vario 40 braille displays will no longer fail to execute. (#8894)
-- In Google Slides with Mozilla Firefox, NVDA no longer reports selected text on every control with focus. (#8964)
+- 점자 디스플레이 사용 시 문서 서식에서 해제된 서식 정보가 출력되지 않도록 함. (#7615)
+- UI Automation 사용 시 여러 앱이 특정 작업(특히 여러개의 오디오 파일을 변환할 때) 도중 파일 탐색기와 같은 앱에서 포커스 추적이 다운되던 문제 수정. (#7345)
+- 웹 브라우저에서 ARIA 메뉴에서 Escape 키를 누를 때 메뉴가 키를 인식하도록 함(이전에는 무조건 포커스 모드를 빠져나갔음). (#3215)
+- 최신 업데이트된 Gmail 웹 인터페이스 사용 시 메시지 내용을 읽던 중 한 글자 명령을 사용 시 포커스된 요소를 출력한 후 메시지 내용이 반복되어 출력되던 문제 수정. (#8887)
+- NVDA 업데이트 후 파이어폭스나 크롬이 다운되거나 현재 탐색중인 페이지의 컨텐츠 변경 내용이 제대로 출력되지 않던 문제 수정. (#7641) 
+- 브라우즈 모드 사용 시 클릭 가능한 요소를 만났을 때 클릭 가능 상태가 여러번 출력되던 문제 수정. (#7430)
+- baum Vario 40 점자 디스플레이 사용 시 점자 입력 명령이 실행되지 않던 문제 수정. (#8894)
+- 파이어폭스에서 Google 프레젠테이션 사용 시 포커스를 옮길 때마다 선택된 내용이 불필요하게 출력되던 문제 수정. (#8964)
 
 
 == 개발자를 위한 내용 ==

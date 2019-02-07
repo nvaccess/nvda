@@ -42,10 +42,13 @@ The following dependencies need to be installed on your system:
 		On the Workloads tab, in the Windows group:
 			* Universal Windows Platform Development
 			* Desktop development with C++
-		* Then in the Summary list, under Desktop for C++, Optional grouping, ensure the following is selected:
+		* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
 			* VC++ 2017 v141 toolset (x86,x64)
 			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
 			* Visual C++ ATL for x86 and x64
+		* In the Installation details section, under Individual components, ensure the following are selected:
+			* Visual C++ compilers and libraries for ARM64
+			* Visual C++ ATL for ARM64
 
 
 ### Git Submodules
@@ -64,7 +67,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
-* [liblouis](http://www.liblouis.org/), version 3.7.0
+* [liblouis](http://www.liblouis.org/), version 3.8.0, commit 90a808bf
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 34.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
@@ -72,7 +75,7 @@ For reference, the following dependencies are included in Git submodules:
 * Adobe FlashAccessibility interface typelib
 * [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 3.0.0, commit 6a72c4de
+* [SCons](http://www.scons.org/), version 3.0.4
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
