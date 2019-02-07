@@ -71,11 +71,6 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
-		LOG_DEBUGWARNING(L"window.application failed");
-		return;
-	}
 	IDispatchPtr pDispatchSelection=NULL;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
@@ -1005,11 +1000,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
-		LOG_DEBUGWARNING(L"window.application failed");
-		return;
-	}
 	//Get the current selection
 	IDispatchPtr pDispatchSelection=NULL;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
@@ -1269,11 +1259,6 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 	IDispatchPtr pDispatchWindow=NULL;
 	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK||!pDispatchWindow) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
-		return;
-	}
-	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
-		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
 	IDispatchPtr pDispatchSelection=NULL;
