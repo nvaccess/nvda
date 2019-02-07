@@ -58,6 +58,35 @@ constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatCo
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
 constexpr wchar_t COLUMN_BREAK_VALUE = L'\x0e';
 
+// A class that disables MS Word screen updating while it is alive. 
+class ScreenUpdatingDisabler {
+	private:
+	IDispatchPtr pDispatchApplication {nullptr};
+
+	public:
+	ScreenUpdatingDisabler(IDispatch* arg_pDispatchApplication) {
+		if(!arg_pDispatchApplication) {
+			LOG_ERROR(L"Null application given");
+			return;
+		}
+		HRESULT res=_com_dispatch_raw_propput(arg_pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+		if(res!=S_OK) {
+			LOG_ERROR(L"application.screenUpdating false failed with code "<<res);
+			return;
+		}
+		pDispatchApplication=arg_pDispatchApplication;
+	}
+
+	~ScreenUpdatingDisabler() {
+		if(!pDispatchApplication) return;
+		HRESULT res=_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+		if(res!=S_OK) {
+			LOG_ERROR(L"application.screenUpdating true failed with code "<<res);
+		}
+	}
+
+};
+
 UINT wm_winword_expandToLine=0;
 typedef struct {
 	int offset;
@@ -71,6 +100,13 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	// Disable screen updating until the end of this scope
+	ScreenUpdatingDisabler sud{pDispatchApplication};
 	IDispatchPtr pDispatchSelection=NULL;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
@@ -1000,6 +1036,13 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	// Disable screen updating until the end of this scope
+	ScreenUpdatingDisabler sud{pDispatchApplication};
 	//Get the current selection
 	IDispatchPtr pDispatchSelection=NULL;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
@@ -1261,6 +1304,13 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	// Disable screen updating until the end of this scope
+	ScreenUpdatingDisabler sud{pDispatchApplication};
 	IDispatchPtr pDispatchSelection=NULL;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
