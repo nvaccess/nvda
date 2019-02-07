@@ -155,7 +155,7 @@ def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	while not stop:
 		tempInfo=curPosition.copy()
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
-		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId)
+		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=True)
 		if (UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9):
 			foundLevel=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 			wantedLevel=int(itemType[7:]) if len(itemType)>7 else None
@@ -425,6 +425,18 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 	def __contains__(self,obj):
 		if not isinstance(obj,UIA):
 			return False
+		# Ensure that this object is a descendant of the document or is the document itself. 
+		runtimeID=VARIANT()
+		self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID)
+		UIAWalker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+		try:
+			docUIAElement=UIAWalker.normalizeElement(obj.UIAElement)
+		except COMError:
+			docUIAElement=None
+		if not docUIAElement:
+			return False
+		# Ensure that this object also can be reached by the document's text pattern.
 		try:
 			self.rootNVDAObject.makeTextInfo(obj)
 		except LookupError:

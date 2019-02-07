@@ -4,4 +4,4 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012 NV Access Limited
 
-from digitaleditions import *
+from .digitaleditions import *

@@ -99,7 +99,7 @@ class _EventExecuter(object):
 		try:
 			return func(*args, **self.kwargs)
 		except TypeError:
-			log.warning("Could not execute function {func} defined in {module} module due to unsupported kwargs: {kwargs}".format(
+			log.warning("Could not execute function {func} defined in {module} module; kwargs: {kwargs}".format(
 				func=func.__name__,
 				module=func.__module__ or "unknown",
 				kwargs=self.kwargs
@@ -143,6 +143,9 @@ def executeEvent(eventName,obj,**kwargs):
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
+		# Allow NVDAObjects to redirect focus events to another object of their choosing.
+		if eventName=="gainFocus" and obj.focusRedirect:
+			obj=obj.focusRedirect
 		sleepMode=obj.sleepMode
 		if eventName=="gainFocus" and not doPreGainFocus(obj,sleepMode=sleepMode):
 			return
@@ -273,7 +276,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			return True
 
 	fg = winUser.getForegroundWindow()
-	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
+	fgClassName=winUser.getClassName(fg)
+	if wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered","Net UI Tool Window"):
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
 		# when a tab is expanded, the window we get from the focus object is incorrect.
 		# This window isn't beneath the foreground window,

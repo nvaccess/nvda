@@ -24,6 +24,7 @@ import api
 from logHandler import log
 import gui
 import winUser
+import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
 from . import Window
@@ -199,7 +200,7 @@ backgroundPatternLabels={
 		xlPatternRectangularGradient:_("rectangular gradient"),
 	}
 
-from excelCellBorder import getCellBorderStyleDescription
+from .excelCellBorder import getCellBorderStyleDescription
 
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
@@ -857,8 +858,6 @@ class ExcelWorksheet(ExcelBase):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
-		for gesture in self.__changeSelectionGestures:
-			self.bindGesture(gesture, "changeSelection")
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
@@ -878,32 +877,7 @@ class ExcelWorksheet(ExcelBase):
 			states.add(controlTypes.STATE_PROTECTED)
 		return states
 
-	def script_changeSelection(self,gesture):
-		oldSelection=api.getFocusObject()
-		gesture.send()
-		import eventHandler
-		import time
-		newSelection=None
-		curTime=startTime=time.time()
-		while (curTime-startTime)<=0.15:
-			if scriptHandler.isScriptWaiting():
-				# Prevent lag if keys are pressed rapidly
-				return
-			if eventHandler.isPendingEvents('gainFocus'):
-				return
-			newSelection=self._getSelection()
-			if newSelection and newSelection!=oldSelection:
-				break
-			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.015)
-			curTime=time.time()
-		if newSelection:
-			if oldSelection.parent==newSelection.parent:
-				newSelection.parent=oldSelection.parent
-			eventHandler.executeEvent('gainFocus',newSelection)
-	script_changeSelection.canPropagate=True
-
-	__changeSelectionGestures = (
+	@scriptHandler.script(gestures=(
 		"kb:tab",
 		"kb:shift+tab",
 		"kb:enter",
@@ -948,7 +922,30 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+a",
 		"kb:control+v",
 		"kb:shift+f11",
-	)
+	), canPropagate=True)
+	def script_changeSelection(self,gesture):
+		oldSelection=api.getFocusObject()
+		gesture.send()
+		import eventHandler
+		import time
+		newSelection=None
+		curTime=startTime=time.time()
+		while (curTime-startTime)<=0.15:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			if eventHandler.isPendingEvents('gainFocus'):
+				return
+			newSelection=self._getSelection()
+			if newSelection and newSelection!=oldSelection:
+				break
+			api.processPendingEvents(processEventQueue=False)
+			time.sleep(0.015)
+			curTime=time.time()
+		if newSelection:
+			if oldSelection.parent==newSelection.parent:
+				newSelection.parent=oldSelection.parent
+			eventHandler.executeEvent('gainFocus',newSelection)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -1407,7 +1404,7 @@ class ExcelCell(ExcelBase):
 			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
 			# Translators: Title of a dialog edit an Excel comment 
 			_("Comment"),
-			defaultValue=commentObj.text() if commentObj else u"",
+			value=commentObj.text() if commentObj else u"",
 			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
 		def callback(result):
 			if result == wx.ID_OK:
@@ -1717,8 +1714,8 @@ class ExcelFormControl(ExcelBase):
 		(x,y)=self._getFormControlScreenCoordinates()
 		winUser.setCursorPos(x,y)
 		#perform Mouse Left-Click
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		self.invalidateCache()
 		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
 

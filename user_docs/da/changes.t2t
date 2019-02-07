@@ -3,39 +3,42 @@ Nyheder i NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.2 =
+= 2018.4 =
+Af væsentlige forbedringer i denne version af NVDA kan nævnes bedre ydeevne i nylige versioner af Mozilla Firefox, annoncering af emoji med alle talesynteser, rapportering af statusflagene besvaret/videresendt for meddelelser i Microsoft Outlook, rapportering af afstand fra markørens aktuelle position til kanten af en side i Microsoft Word, samt mange fejlrettelser.
 
-== Nye Funktioner ==
-- NVDA rapporterer nu hvor mange kolonner og rækker en tabel omfatter med tale og punkt. (#2642)
-- Kommandoer til tabelnavigation kan nu benyttes i Google Docs (med braille-tilstand slået til). (#7946)
-- Det er muligt at navigere rundt i tabeller i Kindle for PC. (#7977)
-- Understøtter BrailleNote touch og Brailliant BI 14 punktdisplays via både USB og bluetooth. (#6524)
-- NVDA kan nu annoncere notifikationer fra apps som Lommeregner og Windows Store. (#8045)
-- Nye punkttabeller: Litauisk ottepunkt, ukrainsk, mongolsk Niveau 2. (#7839)
-- Tilføjede et script, der kan rapportere tekstformatering under den aktuelle punktcelle. (#7106)
-- Det er nu muligt at udskyde installationen af NVDA til et mere bekvemt tidspunkt. (#4263)
- 
- 
+== Nye funktioner ==
+- Nye punkttabeller: Kinesisk (Mandarin-kinesisk) niveau 1 og 2. (#5553)
+- Status for besvarede/videresendte meddelelser rapporteres nu i meddelelseslisten i Microsoft Outlook. (#6911)
+- NVDA kan nu læse emoji såvel som andre tegn, der er en del af Unicode Common Locale Data Repository. (#6523)
+- Markørens position fra øverste og venstre kant på den aktuelle side kan nu blive oplyst ved at trykke NVDA+NumpadDelete i Microsoft Word. (#1939)
+- NVDA vil ikke længere rapportere "Valgt" i Google Sheets, når der bevæges rundt imellem celler, hvis punkttilstand er aktiv. (#8879)
+- Tilføjet understøttelse for Foxit Reader og Foxit Phantom PDF (#8944)
+- Tilføjet understøttelse for databaseværktøjet DBeaver. (#8905)
+
+
 == Ændringer ==
-- Statuskolonnen i dialogen for styring af tilføjelsespakker vil nu indikere om pakken er aktiveret eller deaktiveret, hvor den før viste om pakken var i gang eller stoppet. (#7929)
-- Opdaterede liblouis Braille Translator til 3.5.0. (#7839)
-- Den litauiske punktoversættelsestabel er blevet omdøbt til litauisk sekspunkt for at undgå forvirring, da vi nu har en tabel til litauisk ottepunkt. (#7839)
-- Det fransk (Canada) niveau 1 og niveau 2 punkttabeller er blevet erstattet med Fransk (Unified) og Fransk (Niveau 2). (#7839)
-- De sekundære markørsammenføringsknapper på Alva BC6, EuroBraille og Papenmeier punktdisplays
- rapporterer nu tekstformateringen under den aktuelle punktcelle. (#7106)
+- Indstillingen "Oplys hjælpeballoner" i dialogen Objektpræsentation er blevet omdøbt til "Oplys meddelelser" for at inkludere toast-meddelelser i Windows 8 og nyere. (#5789)
+- Check boxe til at slå NVDA-funktionstasten til og fra i NVDAs tastaturindstillinger er nu i en liste, i stedet for at vise som særskilte check boxe.
+- NVDA vil ikke længere vise overflødige informationer om uret, når dette læses fra systembakken i nogle versioner af Windows. (#4364)
+- Opdaterede LibLouis punktoversætter til version 3.7.0. (#8697)
+- Opdaterede eSpeak-NG til commit 919f3240cbb
 
- 
- == Fejlrettelser ==
-- NVDA har ikke længere problemer med at læse kontroller, når du befinder dig i indstillingerne du skal benytte for at logge ind på din Microsoft-konto, hvis du har indtastet en email-adresse. (#7997)
-- NVDA vil ikke længere fejle ved oplæsning af en side, når du bevæger dig til den forrige side i Microsoft Edge. (#7997)
-- NVDA vil ikke længere ukorrekt meddele det endelige tegn, når du logger på ved brug af en PIN-kode i Windows 10. (#7908)
-- Mærker på tjekbokse og radioknapper i Chrome og Firefox annonceres ikke længere to gange, når der bruges bogstavnavigation eller tab-tasten benyttes. (#7960)
-- Håndter aria-current med en værdi false som false i stedet for true (#7892).
-- Talesyntesen for stemmerne Windows OneCore vil ikke længere være ude af stand til at indlæse, hvis en konfigureret stemme tilhørende den pågældende syntese er blevet fjernet. (#7999)
-- Det er nu hurtigere at skifte imellem stemmer, når Windows OneCore benyttes. (#7999)
-- Rettede ukorrekt punktoutput for flere punkttabeller, herunder store bogstaver i ottepunkt forkortet dansk punkt. (#7526, #7693)
-- NVDA kan nu rapportere flere typer af punkter i Microsoft Word. (#6778)
-- Udførelse af scriptet til rapportering af tekstformatering vil ikke længere have uventede resultater og flytte læsepositionen. (#7869)
+
+== Fejlrettelser ==
+- Kategori- og status for flag er nu oplyst i Outlook 2016/365. (#8603)
+- Når NVDA er indstillet til sprog som kirgisisk, mongolsk eller makedonsk, vil NVDA ikke længere meddele at sproget ikke er understøttet af operativsystemet ved opstart. (#8603)
+- Flytning af musen til navigatorobjektet vil nu meget mere nøjagtigt flytte musen til positionen i gennemsynstilstand, når du benytter Mozilla Firefox, Google Chrome og Acrobat Reader DC. (#6460)
+- Interaktion med combo boxe på internettet med Firefox, Chrome og Internet Explorer er blevet forbedret. (#8664)
+- Hvis NVDA køres på en japansk version af Windows XP og Vista, vil beskeden om krævet operativsystem blive vist som forventet. (#8771)
+- Forbedring af ydeevne, når der navigeres rundt på store sider med mange dynamiske ændringer i Mozilla Firefox. (#8678)
+- Punktskrift viser ikke længere skrifttypeegenskaber, hvis skrifttypeattributterne er slået fra i dokumentformateringsindstillinger. (#7615)
+- NVDA vil ikke længere have problemer med at følge fokus i File Explorer og andre applikationer, der benytter UI Automation, når et andet program er optaget (f.eks. når der behandles flere lydfiler i et lydredigeringsprogram). (#7345)
+- ESC-tasten i ARIA-menuer på internettet vil ikke længere deaktivere fokustilstand ubetinget, men vil i stedet blive videresendt til menuen. (#3215)
+- Hele beskedindholdet vil ikke længere blive oplyst, når du benytter bogstavnavigation til at navigere til et element i det nye Gmail interface. (#8887)
+- Efter opdatering af NVDA, skulle browsere som Google Chrome og Firefox ikke længere gå ned, og gennemsynstilstand skulle fortsat gengive alt opdateret indhold i de aktuelt indlæste dokumenter. (#7641)
+- NVDA vil ikke længere oplyse "klikbart" flere gange lige efter hinanden, når du navigerer klikbart indhold. (#7430)
+- Kommandoer udført via Baum Vario 40 punktdisplays vil ikke længere fejle. (#8894)
+- I Google Slides med Mozilla Firefox, vil NVDA ikke længere rapportere "valgt tekst" ved hvert kontrolelement, der får fokus. (#8964)
 
 
 == Ændringer for udviklere ==

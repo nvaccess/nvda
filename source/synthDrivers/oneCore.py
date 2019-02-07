@@ -11,7 +11,10 @@ import os
 import sys
 from collections import OrderedDict
 import ctypes
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import wave
 import cStringIO
 from synthDriverHandler import SynthDriver, VoiceInfo
@@ -272,15 +275,15 @@ class SynthDriver(SynthDriver):
 		@rtype: boolean
 		"""
 		IDParts = ID.split('\\')
-		rootKey = getattr(_winreg, IDParts[0])
+		rootKey = getattr(winreg, IDParts[0])
 		subkey = "\\".join(IDParts[1:])
 		try:
-			hkey = _winreg.OpenKey(rootKey, subkey)
+			hkey = winreg.OpenKey(rootKey, subkey)
 		except WindowsError as e:
 			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
 			return False
 		try:
-			langDataPath = _winreg.QueryValueEx(hkey, 'langDataPath')
+			langDataPath = winreg.QueryValueEx(hkey, 'langDataPath')
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
@@ -291,7 +294,7 @@ class SynthDriver(SynthDriver):
 			log.debugWarning("Missing language data file: %s" % langDataPath[0])
 			return False
 		try:
-			voicePath = _winreg.QueryValueEx(hkey, 'voicePath')
+			voicePath = winreg.QueryValueEx(hkey, 'voicePath')
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
