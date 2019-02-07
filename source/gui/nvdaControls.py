@@ -69,44 +69,6 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 
 		return self.NO_RETURN_VALUE
 
-class DescribedPanelAccPropServer(accPropServer.IAccPropServer_Impl):
-	"""AccPropServer for panel descriptions."""
-
-	def __init__(self, control, name, description):
-		super(DescribedPanelAccPropServer, self).__init__(
-			control,
-			annotateProperties=[
-				oleacc.PROPID_ACC_ROLE,  # change the role from pane to property page
-				oleacc.PROPID_ACC_DESCRIPTION,  # set a description
-				oleacc.PROPID_ACC_NAME,
-				oleacc.PROPID_ACC_STATE,
-			],
-			annotateChildren=False
-		)
-		self.acc_description = description
-		self.acc_name = name
-
-	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
-		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
-		if control is None:
-			return self.NO_RETURN_VALUE
-
-		if idProp == oleacc.PROPID_ACC_ROLE:
-			return oleacc.ROLE_SYSTEM_PROPERTYPAGE, self.HAS_PROP  # should be property page in MSAA
-
-		if idProp == oleacc.PROPID_ACC_NAME:
-			from logHandler import log
-			log.debug("getting propID_ACC_NAME")
-			return self.acc_name, self.HAS_PROP
-
-		if idProp == oleacc.PROPID_ACC_DESCRIPTION:
-			return self.acc_description, self.HAS_PROP
-
-		if idProp == oleacc.PROPID_ACC_STATE:
-			return oleacc.STATE_SYSTEM_FOCUSED | oleacc.STATE_SYSTEM_FOCUSABLE, self.HAS_PROP
-
-		return self.NO_RETURN_VALUE
-
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
 
