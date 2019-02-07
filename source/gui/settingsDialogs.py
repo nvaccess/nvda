@@ -236,16 +236,6 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 		wx.Panel.__init__(self, parent, wx.ID_ANY)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
-		self.SetLabel("{} Settings".format(self.title))
-		import oleacc
-		self.server = nvdaControls.AccPropertyOverride(
-			self,
-			propertyAnnotations={
-				oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE, # change the role from pane to property page
-				oleacc.PROPID_ACC_DESCRIPTION: self.panelDescription,  # set a description
-			}
-		)
-
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
@@ -485,6 +475,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
+			panel.SetLabel("{} Settings".format(panel.title))
+			import oleacc
+			panel.server = nvdaControls.AccPropertyOverride(
+				panel,
+				propertyAnnotations={
+					oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE,  # change the role from pane to property page
+					oleacc.PROPID_ACC_DESCRIPTION: panel.panelDescription,  # set a description
+				}
+			)
 		return panel
 
 	def postInit(self):
