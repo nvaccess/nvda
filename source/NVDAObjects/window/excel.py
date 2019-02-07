@@ -1019,7 +1019,42 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 	def _get_locationText(self):
 		return self.obj.getCellPosition()
 
+class ExcelCellInfo(object):
+	def __init__(self):
+		self.text=comtypes.BSTR()
+		self.address=comtypes.BSTR()
+		self.inputTitle=comtypes.BSTR()
+		self.inputMessage=comtypes.BSTR()
+		self.states=ctypes.c_longlong()
+		self.rowNumber=ctypes.c_long()
+		self.rowSpan=ctypes.c_long()
+		self.columnNumber=ctypes.c_long()
+		self.columnSpan=ctypes.c_long()
+		self.outlineLevel=ctypes.c_long()
+
+
 class ExcelCell(ExcelBase):
+
+	def _get_excelCellInfo(self):
+		ci=ExcelCellInfo()
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfo(
+			self.appModule.helperLocalBindingHandle,
+			self.windowHandle,
+			self.excelCellObject._comobj,
+			ctypes.byref(ci.text),
+			ctypes.byref(ci.address),
+			ctypes.byref(ci.inputTitle),
+			ctypes.byref(ci.inputMessage),
+			ctypes.byref(ci.states),
+			ctypes.byref(ci.rowNumber),
+			ctypes.byref(ci.rowSpan),
+			ctypes.byref(ci.columnNumber),
+			ctypes.byref(ci.columnSpan),
+			ctypes.byref(ci.outlineLevel),
+		)
+		#message="\n".join("%s:%s"%(x,y) for x,y in ci.__dict__.iteritems() if not x.startswith('_'))
+		#log.info("excelCellInfo:\n%s"%message)
+		return ci
 
 	def doAction(self):
 		pass
@@ -1139,21 +1174,22 @@ class ExcelCell(ExcelBase):
 		return thisAddr==otherAddr
 
 	def _get_cellCoordsText(self):
-		return self.getCellAddress(self.excelCellObject)
-
-	def _get__rowAndColumnNumber(self):
-		rc=self.excelCellObject.address(True,True,xlRC,False)
-		return [int(x) if x else 1 for x in re_absRC.match(rc).groups()]
+		return self.excelCellInfo.address.value
 
 	def _get_rowNumber(self):
-		return self._rowAndColumnNumber[0]
+		return self.excelCellInfo.rowNumber.value
 
-	rowSpan=1
+
+	def _get_rowSpan(self):
+		return self.excelCellInfo.rowSpan.value
+
 
 	def _get_columnNumber(self):
-		return self._rowAndColumnNumber[1]
+		return self.excelCellInfo.columnNumber.value
 
-	colSpan=1
+	def _get_colSpan(self):
+		return self.excelCellInfo.columnSpan.value
+
 
 	def getCellPosition(self):
 		rowAndColumn = self.cellCoordsText
@@ -1168,12 +1204,12 @@ class ExcelCell(ExcelBase):
 		return ID
 
 	def _get_name(self):
-		return self.excelCellObject.Text
+		return self.excelCellInfo.text.value
 
 	def _get_states(self):
 		states=super(ExcelCell,self).states
-		stateBits=ctypes.c_longlong()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellStates(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(stateBits))
+		cellInfo=self.excelCellInfo
+		stateBits=cellInfo.states
 		for k,v in vars(controlTypes).iteritems():
 			if k.startswith('STATE_') and stateBits.value&v:
 				states.add(v)
@@ -1187,51 +1223,6 @@ class ExcelCell(ExcelBase):
 			winsound.PlaySound("Default",winsound.SND_ALIAS|winsound.SND_NOWAIT|winsound.SND_ASYNC)
 			return
 		super(ExcelCell,self).event_typedCharacter(ch)
-
-	def _get__overlapInfo(self):
-		textWidth=ctypes.c_long()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellTextWidth(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(textWidth))
-		textWidth=textWidth.value
-		if self.excelCellObject.WrapText or self.excelCellObject.ShrinkToFit:
-			return None
-		isMerged = self.excelWindowObject.Selection.MergeCells
-		try:
-			adjacentCell = self.excelCellObject.Offset(0,1)
-		except COMError:
-			# #5041: This cell is at the right edge.
-			# For our purposes, treat this as if there is an empty cell to the right.
-			isAdjacentCellEmpty = True
-		else:
-			isAdjacentCellEmpty = not adjacentCell.Text
-		info = {}
-		if isMerged:
-			columns=self.excelCellObject.mergeArea.columns
-			columnCount=columns.count
-			firstColumn=columns.item(1)
-			lastColumn=columns.item(columnCount)
-			firstColumnLeft=firstColumn.left
-			lastColumnLeft=lastColumn.left
-			lastColumnWidth=lastColumn.width
-			cellLeft=firstColumnLeft
-			cellRight=lastColumnLeft+lastColumnWidth
-		else:
-			cellLeft=self.excelCellObject.left
-			cellRight=cellLeft+self.excelCellObject.width
-		pointsToPixels=self.excelCellObject.Application.ActiveWindow.PointsToScreenPixelsX
-		cellLeft=pointsToPixels(cellLeft)
-		cellRight=pointsToPixels(cellRight)
-		cellWidth=(cellRight-cellLeft)
-		if textWidth <= cellWidth:
-			info = None
-		else:
-			if isAdjacentCellEmpty:
-				info['obscuringRightBy']= textWidth - cellWidth
-				info['obscuredFromRightBy'] = 0
-			else:
-				info['obscuredFromRightBy']= textWidth - cellWidth
-				info['obscuringRightBy'] = 0
-		self._overlapInfo = info
-		return self._overlapInfo
 
 	def _get_parent(self):
 		worksheet=self.excelCellObject.Worksheet
@@ -1255,14 +1246,8 @@ class ExcelCell(ExcelBase):
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
 	def _get_description(self):
-		try:
-			inputMessageTitle=self.excelCellObject.validation.inputTitle
-		except (COMError,NameError,AttributeError):
-			inputMessageTitle=None
-		try:
-			inputMessage=self.excelCellObject.validation.inputMessage
-		except (COMError,NameError,AttributeError):
-			inputMessage=None
+		inputTitle=self.excelCellInfo.inputTitle.value
+		inputMessage=self.excelCellInfo.inputMessage.value
 		if inputMessage and inputMessageTitle:
 			return _("Input Message is {title}: {message}").format( title = inputMessageTitle , message = inputMessage)
 		elif inputMessage:
@@ -1271,17 +1256,7 @@ class ExcelCell(ExcelBase):
 			return None
 
 	def _get_positionInfo(self):
-		try:
-			level=int(self.excelCellObject.rows[1].outlineLevel)-1
-		except COMError:
-			level=None
-		if level==0:
-			try:
-				level=int(self.excelCellObject.columns[1].outlineLevel)-1
-			except COMError:
-				level=None
-		if level==0:
-			level=None
+		level=self.excelCellInfo.outlineLevel.value-1 or None
 		return {'level':level}
 
 	def script_reportComment(self,gesture):
