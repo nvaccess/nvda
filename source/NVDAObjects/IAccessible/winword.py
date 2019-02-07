@@ -339,8 +339,6 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
-		# In some cases, a cell can be quite large, and therefore fetching all content for it may take a very long time.
-		# Therefore, only speak the first line of the cell.
 		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_CELL)
 		newInfo.collapse()
 		newInfo.updateCaret()
