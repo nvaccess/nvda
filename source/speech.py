@@ -765,14 +765,14 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
 	extraDetail=unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD)
 	if not formatConfig:
-		formatConfig=config.conf["documentFormatting"].copy()
+		formatConfig=config.conf["documentFormatting"]
+	formatConfig=formatConfig.copy()
 	if extraDetail:
 		formatConfig['extraDetail']=True
 	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
-	# For performance reasons, when navigating by paragraph or table cell, spelling errors and editor revisions will not be announced.
+	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH,textInfos.UNIT_CELL) and reason is controlTypes.REASON_CARET:
 		formatConfig['reportSpellingErrors']=False
-		formatConfig['reportEditorRevisions']=False
 
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
