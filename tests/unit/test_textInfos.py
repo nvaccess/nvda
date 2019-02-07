@@ -6,7 +6,6 @@
 #Copyright (C) 2018 NV Access Limited, Babbage B.V.
 
 """Unit tests for the textInfos module, its submodules and classes."""
-"""
 
 import unittest
 from .textProvider import BasicTextProvider
