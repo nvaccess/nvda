@@ -1121,11 +1121,7 @@ class ExcelCell(ExcelBase):
 		return self.excelCellObject
 
 	def _get_role(self):
-		try:
-			linkCount=self.excelCellObject.hyperlinks.count
-		except (COMError,NameError,AttributeError):
-			linkCount=None
-		if linkCount:
+		if controlTypes.STATE_LINKED in self.states:
 			return controlTypes.ROLE_LINK
 		return controlTypes.ROLE_TABLECELL
 
@@ -1174,48 +1170,13 @@ class ExcelCell(ExcelBase):
 	def _get_name(self):
 		return self.excelCellObject.Text
 
-	def _getCurSummaryRowState(self):
-		try:
-			row=self.excelCellObject.rows[1]
-			if row.summary:
-				return controlTypes.STATE_EXPANDED if row.showDetail else controlTypes.STATE_COLLAPSED
-		except COMError:
-			pass
-
-	def _getCurSummaryColumnState(self):
-		try:
-			col=self.excelCellObject.columns[1]
-			if col.summary:
-				return controlTypes.STATE_EXPANDED if col.showDetail else controlTypes.STATE_COLLAPSED
-		except COMError:
-			pass
-
 	def _get_states(self):
 		states=super(ExcelCell,self).states
-		summaryCellState=self._getCurSummaryRowState() or self._getCurSummaryColumnState()
-		if summaryCellState:
-			states.add(summaryCellState)
-		if self.excelCellObject.HasFormula:
-			states.add(controlTypes.STATE_HASFORMULA)
-		try:
-			validationType=self.excelCellObject.validation.type
-		except (COMError,NameError,AttributeError):
-			validationType=None
-		if validationType==3:
-			states.add(controlTypes.STATE_HASPOPUP)
-		try:
-			comment=self.excelCellObject.comment
-		except (COMError,NameError,AttributeError):
-			comment=None
-		if comment:
-			states.add(controlTypes.STATE_HASCOMMENT)
-		if self._overlapInfo is not None:
-			if self._overlapInfo['obscuredFromRightBy'] > 0:
-				states.add(controlTypes.STATE_CROPPED)
-			if self._overlapInfo['obscuringRightBy'] > 0:
-				states.add(controlTypes.STATE_OVERFLOWING)
-		if self.excelWindowObject.ActiveSheet.ProtectContents and (not self.excelCellObject.Locked):
-			states.add(controlTypes.STATE_UNLOCKED)
+		stateBits=ctypes.c_longlong()
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellStates(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(stateBits))
+		for k,v in vars(controlTypes).iteritems():
+			if k.startswith('STATE_') and stateBits.value&v:
+				states.add(v)
 		return states
 
 	def event_typedCharacter(self,ch):
