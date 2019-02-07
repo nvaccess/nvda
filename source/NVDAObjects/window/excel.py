@@ -633,7 +633,6 @@ class ExcelBase(Window):
 			isMerged=selection.mergeCells
 		except (COMError,NameError):
 			isMerged=False
-
 		try:
 			numCells=selection.count
 		except (COMError,NameError):
@@ -641,12 +640,10 @@ class ExcelBase(Window):
 
 		isChartActive = True if self.excelWindowObject.ActiveChart else False
 		obj=None
-		if isMerged:
-			obj=ExcelMergedCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
-		elif numCells>1:
+		if not isMerged and numCells>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		elif numCells==1:
-			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		elif numCells>=1:
+			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
 			import _msOfficeChart
@@ -1165,24 +1162,23 @@ class ExcelCell(ExcelBase):
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):
 			return False
-		thisAddr=self.getCellAddress(self.excelCellObject,True)
-		try:
-			otherAddr=self.getCellAddress(other.excelCellObject,True)
-		except COMError:
-			#When cutting and pasting the old selection can become broken
-			return False
+		thisAddr=self.excelCellObject.address(False,False,1,True)
+		otherAddr=other.excelCellObject.address(False,False,1,True)
 		return thisAddr==otherAddr
 
 	def _get_cellCoordsText(self):
-		return self.excelCellInfo.address.value
+		rawAddress=self.excelCellInfo.address.value
+		coords=rawAddress.split('!')[-1].split(':')
+		if len(coords)==2:
+			return "%s through %s"%(coords[0],coords[1])
+		else:
+			return coords[0]
 
 	def _get_rowNumber(self):
 		return self.excelCellInfo.rowNumber.value
 
-
 	def _get_rowSpan(self):
 		return self.excelCellInfo.rowSpan.value
-
 
 	def _get_columnNumber(self):
 		return self.excelCellInfo.columnNumber.value
@@ -1198,10 +1194,8 @@ class ExcelCell(ExcelBase):
 		return _(u"Sheet {0}, {1}").format(sheet, rowAndColumn)
 
 	def _get_tableID(self):
-		address=self.excelCellObject.address(1,1,0,1)
-		ID="".join(address.split('!')[:-1])
-		ID="%s %s"%(ID,self.windowHandle)
-		return ID
+		rawAddress=self.excelCellInfo.address.value
+		return u"!".join(rawAddress.split('!')[:-1])
 
 	def _get_name(self):
 		return self.excelCellInfo.text.value
@@ -1248,8 +1242,8 @@ class ExcelCell(ExcelBase):
 	def _get_description(self):
 		inputTitle=self.excelCellInfo.inputTitle.value
 		inputMessage=self.excelCellInfo.inputMessage.value
-		if inputMessage and inputMessageTitle:
-			return _("Input Message is {title}: {message}").format( title = inputMessageTitle , message = inputMessage)
+		if inputMessage and inputTitle:
+			return _("Input Message is {title}: {message}").format( title = inputTitle , message = inputMessage)
 		elif inputMessage:
 			return _("Input Message is {message}").format( message = inputMessage)
 		else:

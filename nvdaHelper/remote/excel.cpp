@@ -369,10 +369,6 @@ error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const u
 		if(res!=S_OK) {
 			LOG_DEBUGWARNING(L"range.text failed with code "<<res);
 		}
-		res=_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,address,L"\x000b\x000b",false,false);
-		if(res!=S_OK) {
-			LOG_DEBUGWARNING(L"range.address failed with code "<<res);
-		}
 		CComPtr<IDispatch> pDispatchValidation=nullptr;
 		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_VALIDATION,VT_DISPATCH,&pDispatchValidation);
 		if(res!=S_OK) {
@@ -388,6 +384,7 @@ error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const u
 		CComPtr<IDispatch> pDispatchMergeArea=nullptr;
 		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_MERGEAREA,VT_DISPATCH,&pDispatchMergeArea);
 		if(pDispatchMergeArea) {
+			_com_dispatch_raw_method(pDispatchMergeArea,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
 			CComPtr<IDispatch> pDispatchRows=nullptr;
 			_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_ROWS,VT_DISPATCH,&pDispatchRows);
 			if(pDispatchRows) {
@@ -398,6 +395,8 @@ error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const u
 			if(pDispatchColumns) {
 				_com_dispatch_raw_propget(pDispatchColumns,XLDISPID_COLUMNS_COUNT,VT_I4,columnSpan);
 			}
+		} else { // no merge area
+			_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
 		}
 		CComPtr<IDispatch> pDispatchRow=nullptr;
 		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIREROW,VT_DISPATCH,&pDispatchRow);
