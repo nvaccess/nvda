@@ -1010,41 +1010,27 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 	def _get_locationText(self):
 		return self.obj.getCellPosition()
 
-class ExcelCellInfo(object):
-	def __init__(self):
-		self.text=comtypes.BSTR()
-		self.address=comtypes.BSTR()
-		self.inputTitle=comtypes.BSTR()
-		self.inputMessage=comtypes.BSTR()
-		self.states=ctypes.c_longlong()
-		self.rowNumber=ctypes.c_long()
-		self.rowSpan=ctypes.c_long()
-		self.columnNumber=ctypes.c_long()
-		self.columnSpan=ctypes.c_long()
-		self.outlineLevel=ctypes.c_long()
-
+class ExcelCellInfo(ctypes.Structure):
+		_fields_=[
+			('text',comtypes.BSTR),
+			('address',comtypes.BSTR),
+			('formula',comtypes.BSTR),
+			('inputTitle',comtypes.BSTR),
+			('inputMessage',comtypes.BSTR),
+			('states',ctypes.c_longlong),
+			('comments',comtypes.BSTR),
+			('rowNumber',ctypes.c_long),
+			('rowSpan',ctypes.c_long),
+			('columnNumber',ctypes.c_long),
+			('columnSpan',ctypes.c_long),
+			('outlineLevel',ctypes.c_long),
+		]
 
 class ExcelCell(ExcelBase):
 
 	def _get_excelCellInfo(self):
 		ci=ExcelCellInfo()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfo(
-			self.appModule.helperLocalBindingHandle,
-			self.windowHandle,
-			self.excelCellObject._comobj,
-			ctypes.byref(ci.text),
-			ctypes.byref(ci.address),
-			ctypes.byref(ci.inputTitle),
-			ctypes.byref(ci.inputMessage),
-			ctypes.byref(ci.states),
-			ctypes.byref(ci.rowNumber),
-			ctypes.byref(ci.rowSpan),
-			ctypes.byref(ci.columnNumber),
-			ctypes.byref(ci.columnSpan),
-			ctypes.byref(ci.outlineLevel),
-		)
-		#message="\n".join("%s:%s"%(x,y) for x,y in ci.__dict__.iteritems() if not x.startswith('_'))
-		#log.info("excelCellInfo:\n%s"%message)
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfo(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(ci))
 		return ci
 
 	def doAction(self):
@@ -1161,7 +1147,7 @@ class ExcelCell(ExcelBase):
 		return thisAddr==otherAddr
 
 	def _get_cellCoordsText(self):
-		rawAddress=self.excelCellInfo.address.value
+		rawAddress=self.excelCellInfo.address
 		coords=rawAddress.split('!')[-1].split(':')
 		if len(coords)==2:
 			return "%s through %s"%(coords[0],coords[1])
@@ -1169,16 +1155,16 @@ class ExcelCell(ExcelBase):
 			return coords[0]
 
 	def _get_rowNumber(self):
-		return self.excelCellInfo.rowNumber.value
+		return self.excelCellInfo.rowNumber
 
 	def _get_rowSpan(self):
-		return self.excelCellInfo.rowSpan.value
+		return self.excelCellInfo.rowSpan
 
 	def _get_columnNumber(self):
-		return self.excelCellInfo.columnNumber.value
+		return self.excelCellInfo.columnNumber
 
 	def _get_colSpan(self):
-		return self.excelCellInfo.columnSpan.value
+		return self.excelCellInfo.columnSpan
 
 
 	def getCellPosition(self):
@@ -1188,18 +1174,18 @@ class ExcelCell(ExcelBase):
 		return _(u"Sheet {0}, {1}").format(sheet, rowAndColumn)
 
 	def _get_tableID(self):
-		rawAddress=self.excelCellInfo.address.value
+		rawAddress=self.excelCellInfo.address
 		return u"!".join(rawAddress.split('!')[:-1])
 
 	def _get_name(self):
-		return self.excelCellInfo.text.value
+		return self.excelCellInfo.text
 
 	def _get_states(self):
 		states=super(ExcelCell,self).states
 		cellInfo=self.excelCellInfo
 		stateBits=cellInfo.states
 		for k,v in vars(controlTypes).iteritems():
-			if k.startswith('STATE_') and stateBits.value&v:
+			if k.startswith('STATE_') and stateBits&v:
 				states.add(v)
 		return states
 
@@ -1234,8 +1220,8 @@ class ExcelCell(ExcelBase):
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
 	def _get_description(self):
-		inputTitle=self.excelCellInfo.inputTitle.value
-		inputMessage=self.excelCellInfo.inputMessage.value
+		inputTitle=self.excelCellInfo.inputTitle
+		inputMessage=self.excelCellInfo.inputMessage
 		if inputMessage and inputTitle:
 			return _("Input Message is {title}: {message}").format( title = inputTitle , message = inputMessage)
 		elif inputMessage:
@@ -1244,7 +1230,7 @@ class ExcelCell(ExcelBase):
 			return None
 
 	def _get_positionInfo(self):
-		level=self.excelCellInfo.outlineLevel.value-1 or None
+		level=max(self.excelCellInfo.outlineLevel-1,0) or None
 		return {'level':level}
 
 	def script_reportComment(self,gesture):

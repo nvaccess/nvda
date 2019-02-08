@@ -337,18 +337,8 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 	return states;
 }
 
-error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const unsigned long windowHandle, IDispatch* arg_pDispatchRange, BSTR* text, BSTR* address, BSTR* inputTitle, BSTR* inputMessage, __int64* states, long* rowNumber, long* rowSpan, long* columnNumber, long* columnSpan, long* outlineLevel) {
+error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const unsigned long windowHandle, IDispatch* arg_pDispatchRange, EXCEL_CELLINFO* cellInfo) {
 	// DEFAULTS
-	*text=nullptr;
-	*address=nullptr;
-	*inputTitle=nullptr;
-	*inputMessage=nullptr;
-	*states=0;
-	*rowNumber=0;
-	*rowSpan=1;
-	*columnNumber=0;
-	*columnSpan=1;
-	*outlineLevel=1;
 	HWND hwnd=static_cast<HWND>(UlongToHandle(windowHandle));
 	long threadID=GetWindowThreadProcessId(hwnd,nullptr);
 	nvCOMUtils::InterfaceMarshaller im;
@@ -365,7 +355,7 @@ error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const u
 			LOG_ERROR(L"Failed to unmarshal range object into Excel GUI thread");
 			return;
 		}
-		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_TEXT,VT_BSTR,text);
+		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_TEXT,VT_BSTR,&cellInfo->text);
 		if(res!=S_OK) {
 			LOG_DEBUGWARNING(L"range.text failed with code "<<res);
 		}
@@ -375,39 +365,39 @@ error_status_t nvdaInProcUtils_excel_getCellInfo(handle_t bindingHandle, const u
 			LOG_DEBUGWARNING(L"range.validation failed with code "<<res);
 		}
 		if(pDispatchValidation) {
-			_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTTITLE,VT_BSTR,inputTitle);
-			_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTMESSAGE,VT_BSTR,inputMessage);
+			_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTTITLE,VT_BSTR,&cellInfo->inputTitle);
+			_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTMESSAGE,VT_BSTR,&cellInfo->inputMessage);
 		}
-		*states=getCellStates(hwnd,pDispatchRange);
-		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ROW,VT_I4,rowNumber);
-		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_COLUMN,VT_I4,columnNumber);
+		cellInfo->states=getCellStates(hwnd,pDispatchRange);
+		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ROW,VT_I4,&cellInfo->rowNumber);
+		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_COLUMN,VT_I4,&cellInfo->columnNumber);
 		CComPtr<IDispatch> pDispatchMergeArea=nullptr;
 		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_MERGEAREA,VT_DISPATCH,&pDispatchMergeArea);
 		if(pDispatchMergeArea) {
-			_com_dispatch_raw_method(pDispatchMergeArea,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
+			_com_dispatch_raw_method(pDispatchMergeArea,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
 			CComPtr<IDispatch> pDispatchRows=nullptr;
 			_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_ROWS,VT_DISPATCH,&pDispatchRows);
 			if(pDispatchRows) {
-				_com_dispatch_raw_propget(pDispatchRows,XLDISPID_ROWS_COUNT,VT_I4,rowSpan);
+				_com_dispatch_raw_propget(pDispatchRows,XLDISPID_ROWS_COUNT,VT_I4,&cellInfo->rowSpan);
 			}
 			CComPtr<IDispatch> pDispatchColumns=nullptr;
 			_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_COLUMNS,VT_DISPATCH,&pDispatchColumns);
 			if(pDispatchColumns) {
-				_com_dispatch_raw_propget(pDispatchColumns,XLDISPID_COLUMNS_COUNT,VT_I4,columnSpan);
+				_com_dispatch_raw_propget(pDispatchColumns,XLDISPID_COLUMNS_COUNT,VT_I4,&cellInfo->columnSpan);
 			}
 		} else { // no merge area
-			_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
+			_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
 		}
 		CComPtr<IDispatch> pDispatchRow=nullptr;
 		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIREROW,VT_DISPATCH,&pDispatchRow);
 		if(pDispatchRow) {
-			_com_dispatch_raw_propget(pDispatchRow,XLDISPID_ROW_OUTLINELEVEL,VT_I4,outlineLevel);
+			_com_dispatch_raw_propget(pDispatchRow,XLDISPID_ROW_OUTLINELEVEL,VT_I4,&cellInfo->outlineLevel);
 		}
-		if(*outlineLevel==0) {
+		if(cellInfo->outlineLevel==0) {
 			CComPtr<IDispatch> pDispatchColumn=nullptr;
 			_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIRECOLUMN,VT_DISPATCH,&pDispatchColumn);
 			if(pDispatchColumn) {
-				_com_dispatch_raw_propget(pDispatchColumn,XLDISPID_COLUMN_OUTLINELEVEL,VT_I4,outlineLevel);
+				_com_dispatch_raw_propget(pDispatchColumn,XLDISPID_COLUMN_OUTLINELEVEL,VT_I4,&cellInfo->outlineLevel);
 			}
 		}
 	});
