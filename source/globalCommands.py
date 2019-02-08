@@ -2382,7 +2382,6 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f1": "navigatorObject_devInfo",
 		"kb:NVDA+control+f1": "reportAppModuleInfo",
 		"kb:NVDA+control+z": "activatePythonConsole",
-		"kb:NVDA+control+w": "startWxInspectorTool",
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
 		"kb:NVDA+alt+m": "interactWithMath",
