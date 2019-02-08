@@ -1014,11 +1014,9 @@ class ExcelCellInfo(ctypes.Structure):
 		_fields_=[
 			('text',comtypes.BSTR),
 			('address',comtypes.BSTR),
-			('formula',comtypes.BSTR),
 			('inputTitle',comtypes.BSTR),
 			('inputMessage',comtypes.BSTR),
 			('states',ctypes.c_longlong),
-			('comments',comtypes.BSTR),
 			('rowNumber',ctypes.c_long),
 			('rowSpan',ctypes.c_long),
 			('columnNumber',ctypes.c_long),
@@ -1029,6 +1027,8 @@ class ExcelCellInfo(ctypes.Structure):
 class ExcelCell(ExcelBase):
 
 	def _get_excelCellInfo(self):
+		if not self.appModule.helperLocalBindingHandle:
+			return None
 		ci=ExcelCellInfo()
 		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfo(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(ci))
 		return ci
@@ -1147,7 +1147,10 @@ class ExcelCell(ExcelBase):
 		return thisAddr==otherAddr
 
 	def _get_cellCoordsText(self):
-		rawAddress=self.excelCellInfo.address
+		if self.excelCellInfo:
+			rawAddress=self.excelCellInfo.address
+		else:
+			rawAddress=self.excelCellObject.address(False,False,1,False)
 		coords=rawAddress.split('!')[-1].split(':')
 		if len(coords)==2:
 			return "%s through %s"%(coords[0],coords[1])
@@ -1155,17 +1158,24 @@ class ExcelCell(ExcelBase):
 			return coords[0]
 
 	def _get_rowNumber(self):
+		if not self.excelCellInfo:
+			return None
 		return self.excelCellInfo.rowNumber
 
 	def _get_rowSpan(self):
+		if not self.excelCellInfo:
+			return None
 		return self.excelCellInfo.rowSpan
 
 	def _get_columnNumber(self):
+		if not self.excelCellInfo:
+			return None
 		return self.excelCellInfo.columnNumber
 
 	def _get_colSpan(self):
+		if not self.excelCellInfo:
+			return None
 		return self.excelCellInfo.columnSpan
-
 
 	def getCellPosition(self):
 		rowAndColumn = self.cellCoordsText
@@ -1174,15 +1184,21 @@ class ExcelCell(ExcelBase):
 		return _(u"Sheet {0}, {1}").format(sheet, rowAndColumn)
 
 	def _get_tableID(self):
+		if not self.excelCellInfo:
+			return None
 		rawAddress=self.excelCellInfo.address
 		return u"!".join(rawAddress.split('!')[:-1])
 
 	def _get_name(self):
+		if not self.excelCellInfo:
+			return self.excelCellObject.text
 		return self.excelCellInfo.text
 
 	def _get_states(self):
 		states=super(ExcelCell,self).states
 		cellInfo=self.excelCellInfo
+		if not cellInfo:
+			return states
 		stateBits=cellInfo.states
 		for k,v in vars(controlTypes).iteritems():
 			if k.startswith('STATE_') and stateBits&v:
@@ -1220,6 +1236,8 @@ class ExcelCell(ExcelBase):
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
 	def _get_description(self):
+		if not self.excelCellInfo:
+			return None
 		inputTitle=self.excelCellInfo.inputTitle
 		inputMessage=self.excelCellInfo.inputMessage
 		if inputMessage and inputTitle:
@@ -1230,6 +1248,8 @@ class ExcelCell(ExcelBase):
 			return None
 
 	def _get_positionInfo(self):
+		if not self.excelCellInfo:
+			return None
 		level=max(self.excelCellInfo.outlineLevel-1,0) or None
 		return {'level':level}
 
