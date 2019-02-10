@@ -541,9 +541,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		if nodeType=="chart":
 			return ChartExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		elif nodeType=="comment":
-			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+			return CommentExcelCellInfoQuicknavIterator( nodeType , self.rootNVDAObject, direction , None ).iterate()
 		elif nodeType=="formula":
-			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+			return FormulaExcelCellInfoQuicknavIterator( nodeType , self.rootNVDAObject, direction , None ).iterate()
 		elif nodeType=="sheet":
 			return SheetsExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		elif nodeType=="formField":
@@ -1010,6 +1010,16 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 	def _get_locationText(self):
 		return self.obj.getCellPosition()
 
+NVCELLINFOFLAG_ADDRESS=0x1
+NVCELLINFOFLAG_TEXT=0x2
+NVCELLINFOFLAG_INPUTMESSAGE=0x4
+NVCELLINFOFLAG_STATES=0x8
+NVCELLINFOFLAG_COORDS=0x10
+NVCELLINFOFLAG_OUTLINELEVEL=0x20
+NVCELLINFOFLAG_COMMENTS=0x40
+NVCELLINFOFLAG_FORMULA=0x80
+NVCELLINFOFLAG_ALL=0xffff
+
 class ExcelCellInfo(ctypes.Structure):
 		_fields_=[
 			('text',comtypes.BSTR),
@@ -1022,7 +1032,107 @@ class ExcelCellInfo(ctypes.Structure):
 			('columnNumber',ctypes.c_long),
 			('columnSpan',ctypes.c_long),
 			('outlineLevel',ctypes.c_long),
+			('comments',comtypes.BSTR),
+			('formula',comtypes.BSTR),
 		]
+
+class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
+
+	def __init__( self , parentIterator, cellInfo):
+		self.excelCellInfo = cellInfo
+		self.parentIterator=parentIterator
+		super( ExcelCellInfoQuickNavItem ,self).__init__( parentIterator.itemType , parentIterator.document )
+
+	def activate(self):
+		pass
+
+	def isChild(self,parent):
+		return False
+
+	def report(self,readUnit=None):
+		pass
+
+	def __lt__(self,other):
+		return (self.excelCellInfo.rowNumber,self.excelCellInfo.columnNumber)<(other.excelCellInfo.rowNumber,other.excelCellInfo.columnNumber)
+
+	def moveTo(self):
+		cell=self.parentIterator.document.excelWorksheetObject.cells(self.excelCellInfo.rowNumber,self.excelCellInfo.columnNumber)
+		cell.Activate()
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
+	@property
+	def isAfterSelection(self):
+		activeCell=self.parentIterator.selectedCellInfo
+		return (self.excelCellInfo.rowNumber,self.excelCellInfo.columnNumber)>(activeCell.rowNumber,activeCell.columnNumber)
+
+	@property
+	def label(self):
+		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.text)
+
+class CommentExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
+
+	@property
+	def label(self):
+		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.comments)
+
+class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
+
+	@property
+	def label(self):
+		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.formula)
+
+class ExcelCellInfoQuicknavIterator(object):
+	QuickNavItem=None
+	cellInfoFlags=NVCELLINFOFLAG_ADDRESS+NVCELLINFOFLAG_COORDS
+
+	def __init__(self, itemType , document , direction , includeCurrent):
+		"""
+		See L{QuickNavItemIterator} for itemType, document and direction definitions.
+		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		"""
+		self.document=document
+		self.itemType=itemType
+		self.direction=direction if direction else "next"
+		self.includeCurrent=includeCurrent
+		self.selectedCellInfo=self.document._getSelection().excelCellInfo
+
+	def collectionFromWorksheet(self,worksheetObject):
+		raise NotImplementedError
+
+	def filter(self,item):
+		return True
+
+	def iterate(self):
+		worksheet=self.document.excelWorksheetObject
+		try:
+			collectionObject=self.collectionFromWorksheet(worksheet)
+		except COMError:
+			return
+		if not collectionObject:
+			return
+		count=collectionObject.count
+		cellInfos=(ExcelCellInfo*count)()
+		numCellsFetched=ctypes.c_long()
+		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,collectionObject._comobj,self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
+		for index in xrange(numCellsFetched.value):
+			ci=cellInfos[index]
+			if not ci.address or not self.filter(ci):
+				continue
+			yield self.QuickNavItemClass(self,ci)
+
+class CommentExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
+	QuickNavItemClass=CommentExcelCellInfoQuickNavItem
+	cellInfoFlags=ExcelCellInfoQuicknavIterator.cellInfoFlags+NVCELLINFOFLAG_COMMENTS
+
+	def collectionFromWorksheet(self,worksheetObject):
+		return worksheetObject.usedRange.SpecialCells( xlCellTypeComments)
+
+class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
+	QuickNavItemClass=FormulaExcelCellInfoQuickNavItem
+	cellInfoFlags=ExcelCellInfoQuicknavIterator.cellInfoFlags+NVCELLINFOFLAG_FORMULA
+
+	def collectionFromWorksheet(self,worksheetObject):
+		return worksheetObject.usedRange.SpecialCells( xlCellTypeFormulas)
 
 class ExcelCell(ExcelBase):
 
@@ -1030,7 +1140,10 @@ class ExcelCell(ExcelBase):
 		if not self.appModule.helperLocalBindingHandle:
 			return None
 		ci=ExcelCellInfo()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfo(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,ctypes.byref(ci))
+		numCellsFetched=ctypes.c_long()
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
+		if res!=0 or numCellsFetched.value==0:
+			return None
 		return ci
 
 	def doAction(self):

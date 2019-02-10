@@ -40,6 +40,8 @@ typedef struct {
 	long columnNumber;
 	long columnSpan;
 	long outlineLevel;
+	BSTR comments;
+	BSTR formula;
 } EXCEL_CELLINFO;
 
 /**
@@ -81,6 +83,6 @@ interface NvdaInProcUtils {
  */
  	error_status_t outlook_getMAPIProp(const long threadID, [in] IUnknown* mapiObject, const unsigned long mapiPropTag, [out] VARIANT* val);
 
-	error_status_t excel_getCellInfo([in] const unsigned long windowHandle,[in] IDispatch* cell,[out] EXCEL_CELLINFO* cellInfo);
+	error_status_t excel_getCellInfos([in] const unsigned long windowHandle,[in] IDispatch* rangeObj, [in] long cellInfoFlags, [in] long cellCount, [out,size_is(cellCount)] EXCEL_CELLINFO* cellInfos, [out] long* numCellsFetched);
 
 }
