@@ -83,7 +83,6 @@ def doStartupDialogs():
 	except RuntimeError:
 		updateCheck=None
 	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
-		addonHandler.showUnknownCompatDialog()
 		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):

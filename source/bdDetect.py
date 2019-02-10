@@ -475,6 +475,7 @@ addUsbDevices("handyTech", KEY_SERIAL, {
 # Newer Handy Tech displays have a native HID processor
 addUsbDevices("handyTech", KEY_HID, {
 	"VID_1FE4&PID_0054", # Active Braille
+	"VID_1FE4&PID_0055", # Connect Braille
 	"VID_1FE4&PID_0081", # Basic Braille 16
 	"VID_1FE4&PID_0082", # Basic Braille 20
 	"VID_1FE4&PID_0083", # Basic Braille 32
@@ -483,6 +484,7 @@ addUsbDevices("handyTech", KEY_HID, {
 	"VID_1FE4&PID_0086", # Basic Braille 64
 	"VID_1FE4&PID_0087", # Basic Braille 80
 	"VID_1FE4&PID_008B", # Basic Braille 160
+	"VID_1FE4&PID_008C", # Basic Braille 84
 	"VID_1FE4&PID_0061", # Actilino
 	"VID_1FE4&PID_0064", # Active Star 40
 })
