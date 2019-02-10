@@ -1099,9 +1099,6 @@ class ExcelCellInfoQuicknavIterator(object):
 	def collectionFromWorksheet(self,worksheetObject):
 		raise NotImplementedError
 
-	def filter(self,item):
-		return True
-
 	def iterate(self):
 		worksheet=self.document.excelWorksheetObject
 		try:
@@ -1116,8 +1113,9 @@ class ExcelCellInfoQuicknavIterator(object):
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,collectionObject._comobj,self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
 		for index in xrange(numCellsFetched.value):
 			ci=cellInfos[index]
-			if not ci.address or not self.filter(ci):
-				continue
+			if not ci.address:
+				log.debugWarning("cellInfo at index %s has no address"%index)
+				break
 			yield self.QuickNavItemClass(self,ci)
 
 class CommentExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
