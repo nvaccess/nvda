@@ -214,6 +214,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
+
+[development]
+	enableScratchpadDir = boolean(default=false)
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification

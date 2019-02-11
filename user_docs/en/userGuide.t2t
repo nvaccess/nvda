@@ -1607,6 +1607,17 @@ This combo box allows you to choose the language to be used for text recognition
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
 Only make changes to these settings if you are sure you know what you are doing or if you have been specifically instructed to by an NVDA developer.
 
+==== Enable loading custom code from Developer Scratchpad Directory ====
+When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
+This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers and synthDrivers, from a special developer scratchpad directory in your NVDA user configuration directory.
+Previously NVDA would load custom code directly from the user configuration directory, with no way of disabling this.
+This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
+If you wish to distribute custom code to others, you should package it as an NVDA add-on.
+
+==== Open Developer Scratchpad Directory ====
+This button opens the directory where you can place custom code while developing it.
+This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
+ 
 ==== Use UI automation to access Microsoft Word document controls when available ====
 When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
 This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
@@ -1875,10 +1886,6 @@ Some older add-ons may no longer be compatible with the version of NVDA that you
 When using an older version of NVDA, some new add-ons may not be compatible either.
 Attempting to install an incompatible add-on will result in an error explaining why the add-on is considered incompatible.
 To inspect these incompatible add-ons, you can use the "view incompatible add-ons" button to launch the incompatible add-ons manager.
-
-In the past, it was possible to extend NVDA's functionality by copying individual plugins and drivers into your NVDA user Configuration directory.
-Although this version of NVDA  may still load them, they will not be shown in the Add-on Manager.
-It is best to remove these files from your configuration and install the appropriate add-on if one is available.
 
 To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 

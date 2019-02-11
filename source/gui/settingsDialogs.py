@@ -1941,6 +1941,25 @@ class AdvancedPanel(SettingsPanel):
 
 		# Translators: This is the label for a group of  Advanced options in the 
 		#  Advanced settings panel
+		groupText = _("NVDA Development")
+		devGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		sHelper.addItem(devGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Enable loading custom code from Developer Scratchpad directory")
+		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
+		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
+		self.scratchpadCheckBox.Bind(wx.EVT_CHECKBOX,self.onToggleScratchpadCheckBox)
+
+		# Translators: the label for a button in the Advanced settings category
+		label=_("Open developer scratchpad directory")
+		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
+		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
+
+		# Translators: This is the label for a group of  Advanced options in the 
+		#  Advanced settings panel
 		groupText = _("Microsoft UI Automation")
 		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
 		sHelper.addItem(UIAGroup)
@@ -1985,7 +2004,15 @@ class AdvancedPanel(SettingsPanel):
 		self.logCategoriesList.CheckedItems=[index for index,x in enumerate(self.logCategories) if config.conf['debugLog'][x]]
 		self.logCategoriesList.Select(0)
 
+	def onToggleScratchpadCheckBox(self,evt):
+		self.openScratchpadButton.Enable(evt.IsChecked())
+
+	def onOpenScratchpadDir(self,evt):
+		path=config.getScratchpadDir(ensureExists=True)
+		os.startfile(path)
+
 	def onSave(self):
+		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
@@ -2545,7 +2572,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	if winVersion.isUwpOcrAvailable():
 		categoryClasses.append(UwpOcrPanel)
 	# And finally the Advanced panel which should always be last.
-	categoryClasses.append(AdvancedPanel)
+	if not globalVars.appArgs.secure:
+		categoryClasses.append(AdvancedPanel)
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly

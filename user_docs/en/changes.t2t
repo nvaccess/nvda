@@ -19,6 +19,7 @@ What's New in NVDA
 - Early support for apps such as Mozilla Firefox on computers with ARM64 (e.g. Qualcom Snapdragon) processors. (#9216)
 - A new Advanced Settings category has been added to NVDA's Settings dialog, including an option to try out NVDA's new support for Microsoft Word via the Microsoft UI Automation API. (#9200)
 - Added support for the graphical view in Windows Disk Management. (#1486)
+- Added support for Handy Tech Connect Braille and Basic Braille 84. (#9249)
 
 
 == Changes ==
@@ -29,6 +30,9 @@ What's New in NVDA
 - Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
 - When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
 - Updated the path to the Norwegian braille table to reflect the standard from the year 2015. (#9170)
+- When navigating by paragraph (control+arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and calculating spelling errors in some applications can be very costly. (#9217)
+- NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)
+ - For developers who need to test code as it is being developed,  enable NVDA's developer scratchpad directory in the Advanced category of NVDA settings, and place your code in the 'scratchpad' directory found in the NVDA user configuration directory when this option is enabled.
 
 
 == Bug Fixes ==
@@ -53,6 +57,7 @@ What's New in NVDA
 - In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9112)
 - In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9112)
 - NVDA no longer freezes in the mainwindow of Virtualbox 5.2 and above. (#9202)
+- Responsiveness in Microsoft Word when navigating by line, paragraph or table cell may be significantly improved in some documents. A reminder that for best performance, set Microsoft Word to Draft view with alt+w,e after opening a document. (#9217) 
 
 
 == Changes for Developers ==
