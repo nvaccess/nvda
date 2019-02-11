@@ -100,14 +100,14 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
+	IDispatchPtr pDispatchApplication=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
 	// Disable screen updating until the end of this scope
 	ScreenUpdatingDisabler sud{pDispatchApplication};
-	IDispatchPtr pDispatchSelection=NULL;
+	IDispatchPtr pDispatchSelection=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
@@ -359,37 +359,43 @@ bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>&
 	return !commentVector.empty();
 }
 
-  bool collectRevisionOffsets(IDispatchPtr pDispatchRange, vector<tuple<long,long,long>>& revisionsVector) {
-	IDispatchPtr pDispatchRevisions=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions)!=S_OK||!pDispatchRevisions) {
+bool collectRevisionOffsets(IDispatchPtr pDispatchRange, vector<tuple<long,long,long>>& revisionsVector) {
+	IDispatchPtr pDispatchRevisions=nullptr;
+	HRESULT res=_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions);
+	if(res!=S_OK||!pDispatchRevisions) {
 		LOG_DEBUGWARNING(L"range.revisions failed");
 		return false;
 	}
 	long iVal=0;
 	_com_dispatch_raw_propget(pDispatchRevisions,wdDISPID_REVISIONS_COUNT,VT_I4,&iVal);
 	for(int i=1;i<=iVal;++i) {
-		IDispatchPtr pDispatchRevision=NULL;
-		if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",i)!=S_OK||!pDispatchRevision) {
+		IDispatchPtr pDispatchRevision=nullptr;
+		res=_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",i);
+		if(res!=S_OK||!pDispatchRevision) {
 			LOG_DEBUGWARNING(L"revisions.item "<<i<<L" failed");
 			continue;
 		}
 		long revisionType=0;
-		if(_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType)!=S_OK) {
+		res=_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType);
+		if(res!=S_OK) {
 			LOG_DEBUGWARNING(L"revision.type failed");
 			continue;
 		}
-		IDispatchPtr pDispatchRevisionScope=NULL;
-		if(_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_RANGE,VT_DISPATCH,&pDispatchRevisionScope)!=S_OK||!pDispatchRevisionScope) {
+		IDispatchPtr pDispatchRevisionScope=nullptr;
+		_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_RANGE,VT_DISPATCH,&pDispatchRevisionScope);
+		if(res!=S_OK||!pDispatchRevisionScope) {
 			LOG_DEBUGWARNING(L"revision.range failed");
 			continue;
 		}
 		long start=0;
-		if(_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_START,VT_I4,&start)!=S_OK) {
+		res=_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_START,VT_I4,&start);
+		if(res!=S_OK) {
 			LOG_DEBUGWARNING(L"range.start failed");
 			continue;
 		}
 		long end=0;
-		if(_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_END,VT_I4,&end)!=S_OK) {
+		res=_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_END,VT_I4,&end);
+		if(res!=S_OK) {
 			LOG_DEBUGWARNING(L"range.end failed");
 			continue;
 		}
@@ -1036,7 +1042,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
+	IDispatchPtr pDispatchApplication=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
@@ -1044,7 +1050,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	// Disable screen updating until the end of this scope
 	ScreenUpdatingDisabler sud{pDispatchApplication};
 	//Get the current selection
-	IDispatchPtr pDispatchSelection=NULL;
+	IDispatchPtr pDispatchSelection=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
@@ -1304,14 +1310,14 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
+	IDispatchPtr pDispatchApplication=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
 	// Disable screen updating until the end of this scope
 	ScreenUpdatingDisabler sud{pDispatchApplication};
-	IDispatchPtr pDispatchSelection=NULL;
+	IDispatchPtr pDispatchSelection=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
