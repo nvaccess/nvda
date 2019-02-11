@@ -30,8 +30,9 @@ What's New in NVDA
 - Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
 - When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
 - Updated the path to the Norwegian braille table to reflect the standard from the year 2015. (#9170)
-
-
+- When navigating by paragraph (control+arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and calculating spelling errors in some applications can be very costly. (#9217)
+ 
+ 
 == Bug Fixes ==
 - OneCore speech synthesizer: On Windows 10 April 2018 and above, large chunks of silence are no longer inserted between speech utterances. (#8985)
 - When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
@@ -54,6 +55,7 @@ What's New in NVDA
 - In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9112)
 - In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9112)
 - NVDA no longer freezes in the mainwindow of Virtualbox 5.2 and above. (#9202)
+- Responsiveness in Microsoft Word when navigating by line, paragraph or table cell may be significantly improved in some documents. A reminder that for best performance, set Microsoft Word to Draft view with alt+w,e after opening a document. (#9217) 
 
 
 == Changes for Developers ==
