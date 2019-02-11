@@ -19,6 +19,7 @@ What's New in NVDA
 - Early support for apps such as Mozilla Firefox on computers with ARM64 (e.g. Qualcom Snapdragon) processors. (#9216)
 - A new Advanced Settings category has been added to NVDA's Settings dialog, including an option to try out NVDA's new support for Microsoft Word via the Microsoft UI Automation API. (#9200)
 - Added support for the graphical view in Windows Disk Management. (#1486)
+- Added support for Handy Tech Connect Braille and Basic Braille 84. (#9249)
 
 
 == Changes ==
@@ -52,6 +53,7 @@ What's New in NVDA
 - NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)
 - In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9112)
 - In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9112)
+- NVDA no longer freezes in the mainwindow of Virtualbox 5.2 and above. (#9202)
 
 
 == Changes for Developers ==
