@@ -1,5 +1,5 @@
 You have arrived at a default issue template (bug report).
-It is preferrable to [choose the type of issue](https://github.com/nvaccess/nvda/issues/new/choose) to submit.
+It is preferable to [choose the type of issue](https://github.com/nvaccess/nvda/issues/new/choose) to submit.
 Hint: Swap to the preview tab to be able to click the links.
 Direct links to the templates:
 - [Bug report](https://github.com/nvaccess/nvda/issues/new?template=bug_report.md)
