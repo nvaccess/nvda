@@ -60,15 +60,16 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBufRemote_",
 )
 
-displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
-	target="./displayModelRemote",
-	source=[
-		"../interfaces/displayModel/displayModel.idl",
-		"../interfaces/displayModel/displayModel.acf",
-	],
-	MSRPCStubs_noClient=True,
-	MSRPCStubs_prefix="displayModelRemote_",
-)
+if env["TARGET_ARCH"] != 'arm64':
+	displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
+		target="./displayModelRemote",
+		source=[
+			"../interfaces/displayModel/displayModel.idl",
+			"../interfaces/displayModel/displayModel.acf",
+		],
+		MSRPCStubs_noClient=True,
+		MSRPCStubs_prefix="displayModelRemote_",
+	)
 
 nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
 	target="./nvdaInProcUtils",
@@ -82,55 +83,61 @@ nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
 
 ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
 
-remoteLib=env.SharedLibrary(
-	target="nvdaHelperRemote",
-	source=[
-		env['projectResFile'],
-		"injection.cpp",
-		"log.cpp",
-		"inProcess.cpp",
-		"apiHook.cpp",
-		"inputLangChange.cpp",
-		"typedCharacter.cpp",
-		"ime.cpp",
-		"tsf.cpp",
-		"COMProxyRegistration.cpp",
-		"ia2Support.cpp",
-		"ia2LiveRegions.cpp",
-		ia2utilsObj,
-		env.Object('_ia2_i',ia2RPCStubs[3]),
-		"rpcSrv.cpp",
-		"vbufRemote.cpp",
-		vbufRPCServerSource,
-		winIPCUtilsObj,
-		controllerRPCClientSource,
-		controllerInternalRPCClientSource,
-		"sysListView32.cpp",
-		"winword.cpp",
-		"WinWord/Fields.cpp",
-		"outlook.cpp",
+source = [
+	env['projectResFile'],
+	"injection.cpp",
+	"log.cpp",
+	"inProcess.cpp",
+	"apiHook.cpp",
+	"inputLangChange.cpp",
+	"typedCharacter.cpp",
+	"ime.cpp",
+	"tsf.cpp",
+	"COMProxyRegistration.cpp",
+	"ia2Support.cpp",
+	"ia2LiveRegions.cpp",
+	ia2utilsObj,
+	env.Object('_ia2_i',ia2RPCStubs[3]),
+	"rpcSrv.cpp",
+	"vbufRemote.cpp",
+	vbufRPCServerSource,
+	winIPCUtilsObj,
+	controllerRPCClientSource,
+	controllerInternalRPCClientSource,
+	"sysListView32.cpp",
+	"winword.cpp",
+	"WinWord/Fields.cpp",
+	"outlook.cpp",
+	nvdaInProcUtilsRPCServerSource,
+	"nvdaHelperRemote.def",
+	vbufBackendLibs,
+]
+libs = [
+	"user32",
+	"ole32",
+	"rpcrt4",
+	"shlwapi",
+	"oleaut32",
+	"oleacc",
+	"usp10",
+	"imm32",
+	"advapi32",
+	"version",
+	"DbgHelp",
+]
+# MinHook doesn't support ARM64, which means we can't support displayModel on ARM64.
+if env["TARGET_ARCH"] != 'arm64':
+	source.extend((
 		"gdiHooks.cpp",
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
-		nvdaInProcUtilsRPCServerSource,
-		"nvdaHelperRemote.def",
-		vbufBackendLibs,
-	],
-	LIBS=[
-		"user32",
-		"gdi32",
-		"ole32",
-		"rpcrt4",
-		"shlwapi",
-		"oleaut32",
-		"oleacc",
-		"usp10",
-		"imm32",
-		"advapi32",
-		"version",
-		"DbgHelp",
-	],
+	))
+	libs.append("gdi32")
+remoteLib=env.SharedLibrary(
+	target="nvdaHelperRemote",
+	source=source,
+	LIBS=libs,
 )
 
 Return('remoteLib')
