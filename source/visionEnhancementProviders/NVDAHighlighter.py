@@ -15,7 +15,7 @@ import winUser
 from logHandler import log
 from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
 import cursorManager
-from locationHelper import RectLTRB
+from locationHelper import RectLTRB, RectLTWH
 import config
 from collections import namedtuple
 
@@ -116,8 +116,16 @@ class VisionEnhancementProvider(Highlighter):
 		for context, rect in contextRects.items():
 			HighlightStyle = self._ContextStyles[context]
 			dc.Pen = wx.ThePenList.FindOrCreatePen(HighlightStyle.color, HighlightStyle.width, HighlightStyle.style)
+			# Before calculating logical coordinates,
+			# make sure the rectangle falls within the highlighter window
+			rect = rect.intersection(window.location)
 			try:
-				rect = rect.expandOrShrink(HighlightStyle.margin).toClient(window.Handle).toLogical(window.Handle)
+				rect = rect.toLogical(window.Handle)
+			except RuntimeError:
+				log.debugWarning("", exc_info=True)
+			rect = rect.toClient(window.Handle)
+			try:
+				rect = rect.expandOrShrink(HighlightStyle.margin)
 			except RuntimeError:
 				pass
 			dc.DrawRectangle(*rect.toLTWH())
@@ -132,6 +140,7 @@ class HighlightWindow(wx.Frame):
 		# Hack: Windows has a "feature" that will stop desktop shortcut hotkeys from working when a window is full screen.
 		# Removing one line of pixels from the bottom of the screen will fix this.
 		self.Size = (screenWidth, screenHeight -1)
+		self.location = RectLTWH(minPos.x, minPos.y, screenWidth, screenHeight)
 
 	def __init__(self, highlighter):
 		super(HighlightWindow, self).__init__(gui.mainFrame, style=wx.NO_BORDER | wx.STAY_ON_TOP | wx.FULL_REPAINT_ON_RESIZE | wx.FRAME_NO_TASKBAR)
