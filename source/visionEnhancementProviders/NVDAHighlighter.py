@@ -90,7 +90,7 @@ class VisionEnhancementProvider(Highlighter):
 
 	def onPaint(self, event):
 		window= event.GetEventObject()
-		dc = wx.PaintDC(window)
+		dc = wx.AutoBufferedPaintDC(window)
 		dc.Background = wx.TRANSPARENT_BRUSH
 		# Note: Not sure whether this clearing is strictly necessary here.
 		dc.Clear()
