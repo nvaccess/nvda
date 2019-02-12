@@ -1084,7 +1084,7 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.formula)
 
 class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
-	cellInfoFlags=NVCELLINFOFLAG_ADDRESS+NVCELLINFOFLAG_COORDS
+	cellInfoFlags=NVCELLINFOFLAG_ADDRESS|NVCELLINFOFLAG_COORDS
 
 	@abc.abstractproperty
 	def QuickNavItemClass(self):
@@ -1128,14 +1128,14 @@ class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
 
 class CommentExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 	QuickNavItemClass=CommentExcelCellInfoQuickNavItem
-	cellInfoFlags=ExcelCellInfoQuicknavIterator.cellInfoFlags+NVCELLINFOFLAG_COMMENTS
+	cellInfoFlags=ExcelCellInfoQuicknavIterator.cellInfoFlags|NVCELLINFOFLAG_COMMENTS
 
 	def collectionFromWorksheet(self,worksheetObject):
 		return worksheetObject.usedRange.SpecialCells( xlCellTypeComments)
 
 class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 	QuickNavItemClass=FormulaExcelCellInfoQuickNavItem
-	cellInfoFlags=ExcelCellInfoQuicknavIterator.cellInfoFlags+NVCELLINFOFLAG_FORMULA
+	cellInfoFlags=ExcelCellInfoQuicknavIterator.cellInfoFlags|NVCELLINFOFLAG_FORMULA
 
 	def collectionFromWorksheet(self,worksheetObject):
 		return worksheetObject.usedRange.SpecialCells( xlCellTypeFormulas)
@@ -1261,8 +1261,19 @@ class ExcelCell(ExcelBase):
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):
 			return False
-		thisAddr=self.excelCellObject.address(False,False,1,True)
-		otherAddr=other.excelCellObject.address(False,False,1,True)
+		# call range.address directly here as object equality checks may be done quite frequently and otherwise would not require all of cellInfo
+		addressArgs=(
+			False, # relative row 
+			False, # relative column
+			xlA1, # 'a1' format
+			True # include book / sheet name
+		)
+		try:
+			thisAddr=self.excelCellObject.address(*addressArgs)
+			otherAddr=other.excelCellObject.address(*addressArgs)
+		except COMError:
+			#When cutting and pasting the old selection can become broken
+			return False
 		return thisAddr==otherAddr
 
 	def _get_cellCoordsText(self):
