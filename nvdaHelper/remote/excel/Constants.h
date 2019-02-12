@@ -13,6 +13,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #pragma once
 
+// from XLDvType enumeration 
+const long xlValidateList=3;
+
 // Excel IDispatch IDs
 const long XLDISPID_RANGE_FORMULA=261;
 const long XLDISPID_RANGE_ITEM=170;
@@ -82,3 +85,6 @@ const __int64 NVSTATE_HASCOMMENT=0x2000000000;
 const __int64 NVSTATE_CROPPED=0x8000000000;
 const __int64 NVSTATE_OVERFLOWING=0x10000000000;
 const __int64 NVSTATE_UNLOCKED=0x20000000000;
+
+// an HRESULT error code randomly given by Excel such as for validation.type when there is no validation on the cell
+const HRESULT XLGeneralError=0x800a03ec;

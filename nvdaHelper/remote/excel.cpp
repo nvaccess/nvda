@@ -173,10 +173,12 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 	if(pDispatchValidation) {
 		long validationType=0;
 		res=_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_TYPE,VT_I4,&validationType);
-		if(FAILED(res)) {
-			//LOG_DEBUGWARNING(L"validation.type failed with code "<<res);
+		// validation.type seems to always fail with XLGeneralError if no validation is set on the cell
+		// Therefore only log a debug warning if the error is not that.
+		if(FAILED(res)&&res!=XLGeneralError) {
+				LOG_DEBUGWARNING(L"validation.type failed with code "<<res);
 		}
-		if(validationType==3) {
+		if(validationType==xlValidateList) {
 			states|=NVSTATE_HASPOPUP;
 		}
 	}
