@@ -374,6 +374,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self,
 			propertyAnnotations={
 				oleacc.PROPID_ACC_DESCRIPTION: lambda: self.dialogDescription,  # set a description
+				oleacc.PROPID_ACC_NAME: lambda: self.title,
 			}
 		)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -476,7 +477,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
-			panel.SetLabel("{} Settings".format(panel.title))
+			panel.SetLabel(panel.title)
 			import oleacc
 			panel.server = nvdaControls.AccPropertyOverride(
 				panel,
