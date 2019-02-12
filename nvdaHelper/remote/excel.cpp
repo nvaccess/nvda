@@ -24,36 +24,68 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {
 	CComBSTR sText;
-	_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_TEXT,VT_BSTR,&sText);
+	// Fetch the text for this cell and work out its length in characters.
+	HRESULT res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_TEXT,VT_BSTR,&sText);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"range.text failed with code "<<res);
+		return 0;
+	}
 	long textLength=sText?sText.Length():0;
 	if(textLength==0) {
 		return 0;
 	}
+	// Fetch font size and weight information 
 	CComPtr<IDispatch> pDispatchFont=nullptr;
-	_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont);
-	if(!pDispatchFont) {
-		LOG_ERROR(L"range.font failed");
+	res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"range.font failed with code "<<res);
 		return 0;
 	}
 	double fontSize=11.0;
-	_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_SIZE,VT_R8,&fontSize);
+	res=_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_SIZE,VT_R8,&fontSize);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"font.size failed with code"<<res);
+		return 0;
+	}
 	long iFontHeight=static_cast<long>(fontSize)*-1;
 	BOOL bold=false;
-	_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_BOLD,VT_BOOL,&bold);
+	res=_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_BOLD,VT_BOOL,&bold);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"font.bold failed with code"<<res);
+		return 0;
+	}
 	long iFontWeight=bold?700:400;
 	BOOL sFontItalic=false;
-	_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_ITALIC,VT_BOOL,&sFontItalic);
+	res=_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_ITALIC,VT_BOOL,&sFontItalic);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"font.italic failed with code"<<res);
+		return 0;
+	}
 	long sFontUnderline=0;
-	_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_UNDERLINE,VT_I4,&sFontUnderline);
+	res=_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_UNDERLINE,VT_I4,&sFontUnderline);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"font.underline failed with code"<<res);
+		return 0;
+	}
 	BOOL sFontStrikeThrough=false;
-	_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_STRIKETHROUGH,VT_BOOL,&sFontStrikeThrough);
+	res=_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_STRIKETHROUGH,VT_BOOL,&sFontStrikeThrough);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"font.strikethrough failed with code"<<res);
+		return 0;
+	}
 	CComBSTR sFontName;
-	_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_NAME,VT_BSTR,&sFontName);
+	res=_com_dispatch_raw_propget(pDispatchFont,XLDISPID_FONT_NAME,VT_BSTR,&sFontName);
+	if(FAILED(res)) {
+		LOG_DEBUGWARNING(L"font.name failed with code"<<res);
+		return 0;
+	}
+	// Create a memory device context compatible with the spreadsheet window
 	HDC windowDC=GetDC(hwnd);
 	HDC tempDC=CreateCompatibleDC(windowDC);
 	ReleaseDC(hwnd,windowDC);
 	HBITMAP hBmp=CreateCompatibleBitmap(tempDC,1,1);
 	HGDIOBJ hOldBmp=SelectObject(tempDC,hBmp);
+	// Create a GDI font object with all the font attributes fetched from Excel and load it into the device context. 
 	long dpi = GetDeviceCaps(tempDC, LOGPIXELSX);
 	long iFontWidth=0;
 	long iEscapement=0;
@@ -65,8 +97,10 @@ long getCellTextWidth(HWND hwnd, IDispatch* pDispatchRange) {
 	long iPitchAndFamily=0;
 	HFONT hFont=CreateFontW(iFontHeight, iFontWidth, iEscapement, iOrientation, iFontWeight, sFontItalic, sFontUnderline, sFontStrikeThrough, iCharSet, iOutputPrecision, iClipPrecision, iOutputQuality, iPitchAndFamily, sFontName);
 	HGDIOBJ hOldFont=SelectObject(tempDC, hFont);
+	// have GDI calculate the size of the text in pixels, using the loaded font.
 	SIZE sizl={0};
 	GetTextExtentPoint32W(tempDC, sText, textLength,&sizl);
+	// Clean up all the temporary GDI objects
 	SelectObject(tempDC, hOldFont);
 	DeleteObject(hFont);
 	SelectObject(tempDC, hOldBmp);
@@ -95,7 +129,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 			if(FAILED(res)) {
 				LOG_DEBUGWARNING(L"row.showDetail failed with code "<<res);
 			}
-			states+=(showDetail?NVSTATE_EXPANDED:NVSTATE_COLLAPSED);
+			states|=(showDetail?NVSTATE_EXPANDED:NVSTATE_COLLAPSED);
 		}
 	}
 	// If this row was neither collapsed or expanded, then try the same for columns instead. 
@@ -117,7 +151,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 				if(FAILED(res)) {
 					LOG_DEBUGWARNING(L"column.showDetail failed with code "<<res);
 				}
-				states+=(showDetail?NVSTATE_EXPANDED:NVSTATE_COLLAPSED);
+				states|=(showDetail?NVSTATE_EXPANDED:NVSTATE_COLLAPSED);
 			}
 		}
 	}
@@ -128,7 +162,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 		LOG_DEBUGWARNING(L"range.hasFormula failed with code "<<res);
 	}
 	if(hasFormula) {
-		states+=NVSTATE_HASFORMULA;
+		states|=NVSTATE_HASFORMULA;
 	}
 	// Expose whether this cell has a dropdown menu for choosing valid values
 	CComPtr<IDispatch> pDispatchValidation=nullptr;
@@ -143,7 +177,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 			//LOG_DEBUGWARNING(L"validation.type failed with code "<<res);
 		}
 		if(validationType==3) {
-			states+=NVSTATE_HASPOPUP;
+			states|=NVSTATE_HASPOPUP;
 		}
 	}
 	// Expose whether this cell has comments
@@ -153,7 +187,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 		LOG_DEBUGWARNING(L"range.comment failed with code "<<res);
 	}
 	if(pDispatchComment) {
-		states+=NVSTATE_HASCOMMENT;
+		states|=NVSTATE_HASCOMMENT;
 	}
 	// Expose whether this cell is unlocked for editing
 	BOOL locked=false;
@@ -174,7 +208,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 				LOG_DEBUGWARNING(L"worksheet.protectcontents failed with code "<<res);
 			}
 			if(protectContents) {
-				states+=NVSTATE_UNLOCKED;
+				states|=NVSTATE_UNLOCKED;
 			}
 		}
 	}
@@ -191,7 +225,7 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 			LOG_DEBUGWARNING(L"hyperlinks.count failed with code "<<res);
 		}
 		if(count>0) {
-			states+=NVSTATE_LINKED;
+			states|=NVSTATE_LINKED;
 		}
 	}
 	// Expose whether this cell's content flows outside the cell, 
@@ -268,11 +302,11 @@ __int64 getCellStates(HWND hwnd, IDispatch* pDispatchRange) {
 							LOG_DEBUGWARNING(L"range.text failed with code "<<res);
 						}
 						if(text&&text.Length()>0) {
-							states+=NVSTATE_CROPPED;
+							states|=NVSTATE_CROPPED;
 						}
 					}
 					if(!(states&NVSTATE_CROPPED)) {
-						states+=NVSTATE_OVERFLOWING;
+						states|=NVSTATE_OVERFLOWING;
 					}
 				}
 			}
