@@ -351,8 +351,16 @@ HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EX
 			LOG_DEBUGWARNING(L"range.validation failed with code "<<res);
 		}
 		if(pDispatchValidation) {
-			_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTTITLE,VT_BSTR,&cellInfo->inputTitle);
-			_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTMESSAGE,VT_BSTR,&cellInfo->inputMessage);
+			res=_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTTITLE,VT_BSTR,&cellInfo->inputTitle);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"validation.inputTitle failed with code "<<res);
+			}
+			res=_com_dispatch_raw_propget(pDispatchValidation,XLDISPID_VALIDATION_INPUTMESSAGE,VT_BSTR,&cellInfo->inputMessage);
+			// validation.type seems to always fail with XLGeneralError if no validation is set on the cell
+			// Therefore only log a debug warning if the error is not that.
+			if(FAILED(res)&&res!=XLGeneralError) {
+				LOG_DEBUGWARNING(L"validation.inputMessage failed with code "<<res);
+			}
 		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_STATES) {
@@ -360,43 +368,82 @@ HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EX
 	}
 	CComPtr<IDispatch> pDispatchMergeArea=nullptr;
 	if(cellInfoFlags&NVCELLINFOFLAG_COORDS||cellInfoFlags&NVCELLINFOFLAG_OUTLINELEVEL) {
-		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_MERGEAREA,VT_DISPATCH,&pDispatchMergeArea);
+		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_MERGEAREA,VT_DISPATCH,&pDispatchMergeArea);
+		if(FAILED(res)) {
+			LOG_DEBUGWARNING(L"range.mergeArea failed with code "<<res);
+		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_COORDS) {
-		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ROW,VT_I4,&cellInfo->rowNumber);
-		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_COLUMN,VT_I4,&cellInfo->columnNumber);
+		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ROW,VT_I4,&cellInfo->rowNumber);
+		if(FAILED(res)) {
+			LOG_DEBUGWARNING(L"range.row failed with code "<<res);
+		}
+		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_COLUMN,VT_I4,&cellInfo->columnNumber);
+		if(FAILED(res)) {
+			LOG_DEBUGWARNING(L"range.column failed with code "<<res);
+		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_ADDRESS) {
 		if(pDispatchMergeArea) {
-			_com_dispatch_raw_method(pDispatchMergeArea,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
+			res=_com_dispatch_raw_method(pDispatchMergeArea,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"range.address failed with code "<<res);
+			}
 		} else {
-			_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
+			res=_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"range.address failed with code "<<res);
+			}
 		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_COORDS&&pDispatchMergeArea) {
-		_com_dispatch_raw_method(pDispatchMergeArea,XLDISPID_RANGE_ADDRESS,DISPATCH_PROPERTYGET,VT_BSTR,&cellInfo->address,L"\x000b\x000b\x0003\x000b",false,false,1,true);
 		CComPtr<IDispatch> pDispatchRows=nullptr;
-		_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_ROWS,VT_DISPATCH,&pDispatchRows);
+		res=_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_ROWS,VT_DISPATCH,&pDispatchRows);
+		if(FAILED(res)) {
+			LOG_DEBUGWARNING(L"range.rows failed with code "<<res);
+		}
 		if(pDispatchRows) {
-			_com_dispatch_raw_propget(pDispatchRows,XLDISPID_ROWS_COUNT,VT_I4,&cellInfo->rowSpan);
+			res=_com_dispatch_raw_propget(pDispatchRows,XLDISPID_ROWS_COUNT,VT_I4,&cellInfo->rowSpan);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"rows.count failed with code "<<res);
+			}
 		}
 		CComPtr<IDispatch> pDispatchColumns=nullptr;
-		_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_COLUMNS,VT_DISPATCH,&pDispatchColumns);
+		res=_com_dispatch_raw_propget(pDispatchMergeArea,XLDISPID_RANGE_COLUMNS,VT_DISPATCH,&pDispatchColumns);
+		if(FAILED(res)) {
+			LOG_DEBUGWARNING(L"range.columns failed with code "<<res);
+		}
 		if(pDispatchColumns) {
-			_com_dispatch_raw_propget(pDispatchColumns,XLDISPID_COLUMNS_COUNT,VT_I4,&cellInfo->columnSpan);
+			res=_com_dispatch_raw_propget(pDispatchColumns,XLDISPID_COLUMNS_COUNT,VT_I4,&cellInfo->columnSpan);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"columns.count failed with code "<<res);
+			}
 		}
 	}
 	if(cellInfoFlags&NVCELLINFOFLAG_OUTLINELEVEL) {
 		CComPtr<IDispatch> pDispatchRow=nullptr;
-		_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIREROW,VT_DISPATCH,&pDispatchRow);
-		if(pDispatchRow) {
-			_com_dispatch_raw_propget(pDispatchRow,XLDISPID_ROW_OUTLINELEVEL,VT_I4,&cellInfo->outlineLevel);
+		res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIREROW,VT_DISPATCH,&pDispatchRow);
+		if(FAILED(res)) {
+			LOG_DEBUGWARNING(L"range.entireRow failed with code "<<res);
 		}
+		if(pDispatchRow) {
+			res=_com_dispatch_raw_propget(pDispatchRow,XLDISPID_ROW_OUTLINELEVEL,VT_I4,&cellInfo->outlineLevel);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"row.outlineLevel failed with code "<<res);
+			}
+		}
+		// If we could not get an outline level for the row, we will try the column instead
 		if(cellInfo->outlineLevel==0) {
 			CComPtr<IDispatch> pDispatchColumn=nullptr;
-			_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIRECOLUMN,VT_DISPATCH,&pDispatchColumn);
+			res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE_ENTIRECOLUMN,VT_DISPATCH,&pDispatchColumn);
+			if(FAILED(res)) {
+				LOG_DEBUGWARNING(L"range.entireColumn failed with code "<<res);
+			}
 			if(pDispatchColumn) {
-				_com_dispatch_raw_propget(pDispatchColumn,XLDISPID_COLUMN_OUTLINELEVEL,VT_I4,&cellInfo->outlineLevel);
+				res=_com_dispatch_raw_propget(pDispatchColumn,XLDISPID_COLUMN_OUTLINELEVEL,VT_I4,&cellInfo->outlineLevel);
+				if(FAILED(res)) {
+					LOG_DEBUGWARNING(L"column.outlineLevel failed with code "<<res);
+				}
 			}
 		}
 	}
