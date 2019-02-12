@@ -67,7 +67,12 @@ def logicalToPhysicalPoint(window, x, y):
 	@rtype: tuple of (int, int)
 	"""
 	point = ctypes.wintypes.POINT(x, y)
-	_logicalToPhysicalPoint(window, ctypes.byref(point))
+	if not _logicalToPhysicalPoint(window, ctypes.byref(point)):
+		raise RuntimeError(
+			"Couldn't convert point(x=%d,y=%d) from logical "
+			"to physical coordinates for window %d"
+			% (x, y, window)
+		)
 	return point.x, point.y
 
 def physicalToLogicalPoint(window, x, y):
@@ -82,7 +87,12 @@ def physicalToLogicalPoint(window, x, y):
 	@rtype: tuple of (int, int)
 	"""
 	point = ctypes.wintypes.POINT(x, y)
-	_physicalToLogicalPoint(window, ctypes.byref(point))
+	if not _physicalToLogicalPoint(window, ctypes.byref(point)):
+		raise RuntimeError(
+			"Couldn't convert point(x=%d,y=%d) from physical "
+			"to logical coordinates for window %d"
+			% (x, y, window)
+		)
 	return point.x, point.y
 
 DEFAULT_DPI_LEVEL = 96.0
