@@ -250,15 +250,21 @@ class _RectMixin:
 		return RECT(self.left,self.top,self.right,self.bottom)
 
 	def toLogical(self, hwnd):
-		left,top=self.topLeft.toLogical(hwnd)
-		right,bottom=self.bottomRight.toLogical(hwnd)
+		try:
+			left,top=self.topLeft.toLogical(hwnd)
+			right,bottom=self.bottomRight.toLogical(hwnd)
+		except RuntimeError:
+			raise RuntimeError("Couldn't convert %s to logical coordinates" % str(self))
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left,top,right-left,bottom-top)
 		return RectLTRB(left,top,right,bottom)
 
 	def toPhysical(self, hwnd):
-		left,top=self.topLeft.toPhysical(hwnd)
-		right,bottom=self.bottomRight.toPhysical(hwnd)
+		try:
+			left,top=self.topLeft.toPhysical(hwnd)
+			right,bottom=self.bottomRight.toPhysical(hwnd)
+		except RuntimeError:
+			raise RuntimeError("Couldn't convert %s to physical coordinates" % str(self))
 		if isinstance(self, RectLTWH):
 			return RectLTWH(left,top,right-left,bottom-top)
 		return RectLTRB(left,top,right,bottom)
