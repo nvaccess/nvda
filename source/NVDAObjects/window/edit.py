@@ -181,7 +181,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if point.x <0 or point.y <0:
 			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
 				(point.x, point.y))
-		point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
+		try:
+			point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
+		except WindowsError:
+			log.DebugWarning("Couldn't convert point at offset %d to screen coordinates" % offset, exc_info=True)
 		return point
 
 
