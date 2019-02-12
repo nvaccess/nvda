@@ -167,6 +167,14 @@ Both App Modules and Global Plugins share a common look and feel.
 They are both Python source files (with a .py extension), they both define a special class containing all events, scripts and bindings, and they both may define custom classes to access controls, text content and complex documents.
 However, they do differ in some ways.
 
+Custom appModules and globalPlugins can be packaged into NVDA add-ons. 
+This allows easy distribution, and provides a safe way for the user to install and uninstall the custom code.
+Please refer to the Add-ons section later on in this document.
+
+In order to test the code while developing, you can place it in a special 'scratchpad' directory in your NVDA user configuration directory.
+You will also need to configure NVDA to enable loading of custom code from the Developer Scratchpad Directory, by enabling this in the Advanced category of NVDA's Settings dialog.
+The Advanced category also contains a button to easily open the Developer Scratchpad directory if enabled.
+
 The following few sections will talk separately about App Modules and Global Plugins.
 After this point, discussion is again more general.
 
@@ -174,9 +182,8 @@ After this point, discussion is again more general.
 App Module files have a .py extension, and are named the same as the main executable of the application for which you wish them to be used.
 For example, an App Module for notepad would be called notepad.py, as notepad's main executable is called notepad.exe.
 
-App Module files must be placed in the appModules subdirectory of the user's NVDA user configuration directory.
-For more information on where to find the user configuration directory, please see the NVDA user guide.
-
+App Module files must be placed in the appModules subdirectory of an add-on, or of the scratchpad directory of the NVDA user configuration directory.
+  
 App Modules must define a class called AppModule, which inherits from appModuleHandler.AppModule.
 This class can then define event and script methods, gesture bindings and other code.
 This will all be covered in depth later.
@@ -231,8 +238,7 @@ As with other examples in this guide, remember to delete the created app module 
 ++ Basics of a Global Plugin ++
 Global Plugin files have a .py extension, and should have a short unique name which identifies what they do.
 
-Global Plugin files must be placed in the globalPlugins subdirectory of the user's NVDA user configuration directory.
-For more information on where to find the user configuration directory, please see the NVDA user guide.
+Global plugin  files must be placed in the globalPlugins subdirectory of an add-on, or of the scratchpad directory of the NVDA user configuration directory.
 
 Global Plugins must define a class called GlobalPlugin, which inherits from globalPluginHandler.GlobalPlugin.
 This class can then define event and script methods, gesture bindings and other code.

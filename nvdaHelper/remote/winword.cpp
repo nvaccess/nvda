@@ -58,6 +58,35 @@ constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatCo
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
 constexpr wchar_t COLUMN_BREAK_VALUE = L'\x0e';
 
+// A class that disables MS Word screen updating while it is alive. 
+class ScreenUpdatingDisabler {
+	private:
+	IDispatchPtr pDispatchApplication {nullptr};
+
+	public:
+	ScreenUpdatingDisabler(IDispatch* arg_pDispatchApplication) {
+		if(!arg_pDispatchApplication) {
+			LOG_ERROR(L"Null application given");
+			return;
+		}
+		HRESULT res=_com_dispatch_raw_propput(arg_pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+		if(res!=S_OK) {
+			LOG_ERROR(L"application.screenUpdating false failed with code "<<res);
+			return;
+		}
+		pDispatchApplication=arg_pDispatchApplication;
+	}
+
+	~ScreenUpdatingDisabler() {
+		if(!pDispatchApplication) return;
+		HRESULT res=_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+		if(res!=S_OK) {
+			LOG_ERROR(L"application.screenUpdating true failed with code "<<res);
+		}
+	}
+
+};
+
 UINT wm_winword_expandToLine=0;
 typedef struct {
 	int offset;
@@ -71,12 +100,14 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
+	IDispatchPtr pDispatchApplication=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
-	IDispatchPtr pDispatchSelection=NULL;
+	// Disable screen updating until the end of this scope
+	ScreenUpdatingDisabler sud{pDispatchApplication};
+	IDispatchPtr pDispatchSelection=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
@@ -90,8 +121,6 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
-	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
@@ -126,8 +155,6 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Restore the old selection direction
 	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
-	//Reenable screen updating
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
 BOOL generateFormFieldXML(IDispatch* pDispatchRange, IDispatchPtr pDispatchRangeExpandedToParagraph, wostringstream& XMLStream, int& chunkEnd) {
@@ -288,25 +315,6 @@ int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagr
 	return 1;
 }
 
-int getRevisionType(IDispatch* pDispatchOrigRange) {
-	IDispatchPtr pDispatchRange=NULL;
-	//If range is not duplicated here, revisions collection represents revisions at the start of the range when it was first created
-	if(_com_dispatch_raw_propget(pDispatchOrigRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange)!=S_OK||!pDispatchRange) {
-		return 0;
-	}
-	IDispatchPtr pDispatchRevisions=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions)!=S_OK||!pDispatchRevisions) {
-		return 0;
-	}
-	IDispatchPtr pDispatchRevision=NULL;
-	if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",1)!=S_OK||!pDispatchRevision) {
-		return 0;
-	}
-	long revisionType=0;
-	_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType);
-	return revisionType;
-}
-
 IDispatchPtr CreateExpandedDuplicate(IDispatch* pDispatchRange, const int expandTo) {
 	IDispatchPtr pDispatchRangeDup = nullptr;
 	auto res = _com_dispatch_raw_propget( pDispatchRange, wdDISPID_RANGE_DUPLICATE, VT_DISPATCH, &pDispatchRangeDup);
@@ -349,6 +357,51 @@ bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>&
 		commentVector.push_back(make_pair(start,end));
 	}
 	return !commentVector.empty();
+}
+
+bool collectRevisionOffsets(IDispatchPtr pDispatchRange, vector<tuple<long,long,long>>& revisionsVector) {
+	IDispatchPtr pDispatchRevisions=nullptr;
+	HRESULT res=_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions);
+	if(res!=S_OK||!pDispatchRevisions) {
+		LOG_DEBUGWARNING(L"range.revisions failed");
+		return false;
+	}
+	long iVal=0;
+	_com_dispatch_raw_propget(pDispatchRevisions,wdDISPID_REVISIONS_COUNT,VT_I4,&iVal);
+	for(int i=1;i<=iVal;++i) {
+		IDispatchPtr pDispatchRevision=nullptr;
+		res=_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",i);
+		if(res!=S_OK||!pDispatchRevision) {
+			LOG_DEBUGWARNING(L"revisions.item "<<i<<L" failed");
+			continue;
+		}
+		long revisionType=0;
+		res=_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType);
+		if(res!=S_OK) {
+			LOG_DEBUGWARNING(L"revision.type failed");
+			continue;
+		}
+		IDispatchPtr pDispatchRevisionScope=nullptr;
+		_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_RANGE,VT_DISPATCH,&pDispatchRevisionScope);
+		if(res!=S_OK||!pDispatchRevisionScope) {
+			LOG_DEBUGWARNING(L"revision.range failed");
+			continue;
+		}
+		long start=0;
+		res=_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_START,VT_I4,&start);
+		if(res!=S_OK) {
+			LOG_DEBUGWARNING(L"range.start failed");
+			continue;
+		}
+		long end=0;
+		res=_com_dispatch_raw_propget(pDispatchRevisionScope,wdDISPID_RANGE_END,VT_I4,&end);
+		if(res!=S_OK) {
+			LOG_DEBUGWARNING(L"range.end failed");
+			continue;
+		}
+		revisionsVector.push_back({start,end,revisionType});
+	}
+	return !revisionsVector.empty();
 }
 
 bool fetchTableInfo(IDispatch* pDispatchTable, bool includeLayoutTables, int* rowCount, int* columnCount, int* nestingLevel) {
@@ -545,10 +598,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				SysFreeString(listString);
 			}
 		}
-	}
-	if(formatConfig&formatConfig_reportRevisions) {
-		long revisionType=getRevisionType(pDispatchRange);
-		formatAttribsStream<<L"wdRevisionType=\""<<revisionType<<L"\" ";
 	}
 	if(formatConfig&formatConfig_reportStyle) {
 		IDispatchPtr pDispatchStyle=NULL;
@@ -877,6 +926,14 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	}
 	xmlStream <<L"text-column-count=\"" << count << "\" ";
 
+	// Optimization: If there is only one column, then we can only be in that column.
+	if(count<=1) {
+		if(count==1) {
+			xmlStream <<L"text-column-number=\"" << 1 << "\" ";
+		}
+		return;
+	}
+
 	// 2. Get the start position (IN POINTS) of the range. This is relative to the start
 	// of the document.
 	auto rangeStart = getStartOfRangeDistanceFromEdgeOfDocument(pDispatchRange);
@@ -945,7 +1002,8 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 	}
 	xmlStream <<L"text-column-number=\"" << columnNumber << "\" ";
 
-	// Finally, double check that we calculated the full width of the document
+	/*
+	The following commented out code to the end of this function can be used to double check that we calculated the full width of the document
 	float pageWidth = -1.0f;
 	res = _com_dispatch_raw_propget( pDispatchPageSetup, wdDISPID_PAGESETUP_PAGEWIDTH,
 		VT_R4, &pageWidth);
@@ -966,6 +1024,7 @@ void detectAndGenerateColumnFormatXML(IDispatchPtr pDispatchRange, wostringstrea
 			<< " that some column numbers reported were incorrect."
 			<< " pageWidth: " << pageWidth << " colStartPos: " << colStartPos);
 	}
+	*/
 }
 
 UINT wm_winword_getTextInRange=0;
@@ -983,8 +1042,15 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-		//Get the current selection
-		IDispatchPtr pDispatchSelection=NULL;
+	IDispatchPtr pDispatchApplication=nullptr;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	// Disable screen updating until the end of this scope
+	ScreenUpdatingDisabler sud{pDispatchApplication};
+	//Get the current selection
+	IDispatchPtr pDispatchSelection=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
@@ -1047,6 +1113,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	vector<pair<long,long> > commentVector;
 	if(formatConfig&formatConfig_reportComments) {
 		collectCommentOffsets(pDispatchParagraphRange,commentVector);
+	}
+	vector<tuple<long,long,long>> revisionsVector;
+	if(formatConfig&formatConfig_reportRevisions) {
+		collectRevisionOffsets(pDispatchParagraphRange,revisionsVector);
 	}
 	if(initialFormatConfig&formatConfig_reportHeadings) {
 		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
@@ -1190,6 +1260,15 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 					break;
 				}
 			}
+			for(auto& i: revisionsVector) {
+				long revStart=get<0>(i);
+				long revEnd=get<1>(i);
+				long revType=get<2>(i);
+				if(!(chunkStartOffset>=revEnd||chunkEndOffset<=revStart)) {
+					XMLStream<<L"wdRevisionType=\""<<revType<<L"\" ";
+					break;
+				}
+			}
 			XMLStream<<L">";
 			if(firstLoop) {
 				formatConfig&=(~formatConfig_reportLists);
@@ -1231,12 +1310,14 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	IDispatchPtr pDispatchApplication=NULL;
+	IDispatchPtr pDispatchApplication=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
-	IDispatchPtr pDispatchSelection=NULL;
+	// Disable screen updating until the end of this scope
+	ScreenUpdatingDisabler sud{pDispatchApplication};
+	IDispatchPtr pDispatchSelection=nullptr;
 	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
@@ -1250,8 +1331,6 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
-	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 // Move the selection by 1 line
@@ -1263,7 +1342,6 @@ void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
 	//Restore the old selection direction
 	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
 	//Reenable screen updating
-	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {

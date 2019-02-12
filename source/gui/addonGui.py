@@ -549,7 +549,8 @@ def handleRemoteAddonInstall(addonPath):
 			wx.OK | wx.ICON_ERROR)
 		return
 	gui.mainFrame.prePopup()
-	installAddon(gui.mainFrame, addonPath)
+	if installAddon(gui.mainFrame, addonPath):
+		promptUserForRestart()
 	gui.mainFrame.postPopup()
 
 
@@ -684,7 +685,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON, self.onAbout)
 		# Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-		button = buttonSizer.addButton(self, label=_("Close"), id=wx.ID_CLOSE)
+		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sHelper.addDialogDismissButtons(buttonSizer)
 		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
@@ -706,7 +707,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		):
 			# Translators: The reason an add-on is not compatible. A more recent version of NVDA is
 			# required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
-			return _("An apdated version of NVDA is required. NVDA version {} or later."
+			return _("An updated version of NVDA is required. NVDA version {} or later."
 			).format(addonAPIVersion.formatForGUI(addon.minimumNVDAVersion))
 		elif not addonVersionCheck.isAddonTested(
 			addon,
