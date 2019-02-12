@@ -4,6 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import abc
+from six import with_metaclass
 import ctypes
 from comtypes import COMError
 import comtypes.automation
@@ -1081,9 +1083,13 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	def label(self):
 		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.formula)
 
-class ExcelCellInfoQuicknavIterator(object):
-	QuickNavItem=None
+class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
 	cellInfoFlags=NVCELLINFOFLAG_ADDRESS+NVCELLINFOFLAG_COORDS
+
+	@abc.abstractproperty
+	def QuickNavItemClass(self):
+		""" The particular L{ExcelCellInfoQuicknavItem} subclass for objects that  should be emitted from the L{iterate} method."""
+		pass
 
 	def __init__(self, itemType , document , direction , includeCurrent):
 		"""
@@ -1096,8 +1102,10 @@ class ExcelCellInfoQuicknavIterator(object):
 		self.includeCurrent=includeCurrent
 		self.selectedCellInfo=self.document._getSelection().excelCellInfo
 
+	@abc.abstractmethod
 	def collectionFromWorksheet(self,worksheetObject):
-		raise NotImplementedError
+		""" An Excel range object covering all the cells that should be emitted by the L{iterate} method."""
+		pass
 
 	def iterate(self):
 		worksheet=self.document.excelWorksheetObject
