@@ -184,12 +184,15 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		try:
 			point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
 		except WindowsError:
-			log.DebugWarning("Couldn't convert point at offset %d to screen coordinates" % offset, exc_info=True)
+			log.debugWarning("Couldn't convert point at offset %d to screen coordinates" % offset, exc_info=True)
 		return point
 
 
 	def _getOffsetFromPoint(self,x,y):
-		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
+		try:
+			x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
+		except WindowsError as e:
+			raise LookupError("Couldn't convert point to client coordinates: %s" % e.strerror)
 		if self.obj.editAPIVersion>=1:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)

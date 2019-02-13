@@ -204,10 +204,13 @@ An NVDAObject for a window
 	def redraw(self):
 		"""Redraw the display for this object.
 		"""
-		left, top, width, height = self.location
-		left, top = winUser.ScreenToClient(self.windowHandle, left, top)
+		location = self.location
+		try:
+			location = location.toClient(self.windowHandle)
+		except WindowsError as e:
+			log.debugWarning("Couldn't convert location to client coordinates: %s" % e.strerror)
 		winUser.RedrawWindow(self.windowHandle,
-			winUser.RECT(left, top, left + width, top + height), None,
+			location.toRECT(), None,
 			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
 
 	def _get_windowText(self):
