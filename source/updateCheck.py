@@ -283,7 +283,8 @@ class AutoUpdateChecker(UpdateChecker):
 			# The maximum time till the next check is CHECK_INTERVAL.
 			secsTillNext = CHECK_INTERVAL - int(min(secsSinceLast, CHECK_INTERVAL))
 			# #3208: unless NVDA Core needs to check for an update right now, give add-ons a chance to check for updates.
-			if secsTillNext > 0 and config.conf["update"]["addonUpdateAtStartup"]:
+			# But not when running as a Windows Store application.
+			if not config.isAppX and secsTillNext > 0 and config.conf["update"]["addonUpdateAtStartup"]:
 				wx.CallAfter(addonHandler.autoAddonUpdateCheck)
 		self._checkTimer.Start(secsTillNext * 1000, True)
 
