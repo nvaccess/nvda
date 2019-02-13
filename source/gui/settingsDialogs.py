@@ -2545,7 +2545,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
 		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
-		super(SpeechSymbolsDialog, self).__init__(parent)
+		super(SpeechSymbolsDialog, self).__init__(
+			parent,
+			resizeable=True,
+		)
 
 	def makeSettings(self, settingsSizer):
 		self.filteredSymbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
@@ -2554,7 +2557,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label of a text field to search for symbols in the speech symbols dialog.
 		filterText = pgettext("speechSymbols", "&Filter by:")
-		self.filterEdit = sHelper.addLabeledControl(filterText, wx.TextCtrl)
+		labeledFilterBy = guiHelper.LabeledTextCtrl(
+			parent=self,
+			labelText=filterText,
+			expandTextCtrlWidth=True,
+			size=self.scaleSize((310, -1)),
+		)
+		sHelper.addItem(labeledFilterBy.sizer, flag=wx.EXPAND)
+		self.filterEdit = labeledFilterBy.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 
 		# Translators: The label for symbols list in symbol pronunciation dialog.
@@ -2562,13 +2572,13 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList = sHelper.addLabeledControl(
 			symbolsText,
 			nvdaControls.AutoWidthColumnListCtrl,
-			autoSizeColumnIndex=1,
+			autoSizeColumnIndex=2,  # The replacement column is likely to need the most space
 			itemTextCallable=self.getItemTextForList,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
 		)
 
 		# Translators: The label for a column in symbols list used to identify a symbol.
-		self.symbolsList.InsertColumn(0, _("Symbol"))
+		self.symbolsList.InsertColumn(0, _("Symbol"), width=self.scaleSize(150))
 		self.symbolsList.InsertColumn(1, _("Replacement"))
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 		self.symbolsList.InsertColumn(2, _("Level"))
@@ -2579,7 +2589,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
-		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=changeSymbolText), wx.VERTICAL)))
+		changeSymbolHelper = sHelper.addItem(guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(
+				parent=self,
+				label=changeSymbolText,
+				orient=wx.VERTICAL,
+			)
+		))
 
 		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
@@ -2594,7 +2611,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		self.replacementEdit = changeSymbolHelper.addLabeledControl(replacementText, wx.TextCtrl)
+		labeledReplacementEdit = guiHelper.LabeledTextCtrl(
+			parent=self,
+			labelText=replacementText,
+			expandTextCtrlWidth=True,
+			size=self.scaleSize((300, -1)),
+		)
+		changeSymbolHelper.addItem(labeledReplacementEdit.sizer, flag=wx.EXPAND)
+		self.replacementEdit = labeledReplacementEdit.control
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
@@ -2626,6 +2650,12 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter()
 
 	def postInit(self):
+		size = self.GetBestSize()
+		self.SetSizeHints(
+			minW=size.GetWidth(),
+			minH=size.GetHeight(),
+			maxH=size.GetHeight(),
+		)
 		self.symbolsList.SetFocus()
 
 	def filter(self, filterText=''):

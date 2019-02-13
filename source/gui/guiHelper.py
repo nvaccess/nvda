@@ -152,12 +152,19 @@ class LabeledControlHelper(object):
 			@param labelText: The text to associate with a wx control.
 			@type labelText: string
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+			@type wxCtrlClass: class
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
 		self._label = wx.StaticText(parent, label=labelText)
 		self._ctrl = wxCtrlClass(parent, **kwargs)
-		self._sizer = associateElements(self._label, self._ctrl)
+		self._sizer = self._wrapInSizer(
+			wxLabel=self._label,
+			wxCtrl=self._ctrl,
+		)
+
+	def _wrapInSizer(self, wxLabel, wxCtrl):
+		return associateElements(wxLabel, wxCtrl)
 
 	@property
 	def control(self):
@@ -166,6 +173,21 @@ class LabeledControlHelper(object):
 	@property
 	def sizer(self):
 		return self._sizer
+
+class LabeledTextCtrl(LabeledControlHelper):
+	def __init__(self, parent, labelText, expandTextCtrlWidth=False, **textCtrlKwargs):
+		self.expandWidth = expandTextCtrlWidth
+		LabeledControlHelper.__init__(self, parent, labelText, wx.TextCtrl, **textCtrlKwargs)
+
+	def _wrapInSizer(self, wxLabel, wxCtrl):
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer.Add(wxLabel, flag=wx.ALIGN_CENTER_VERTICAL)
+		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+		if(not self.expandWidth):
+			sizer.Add(wxCtrl)
+		else:
+			sizer.Add(wxCtrl, proportion=1)
+		return sizer
 
 class PathSelectionHelper(object):
 	"""
