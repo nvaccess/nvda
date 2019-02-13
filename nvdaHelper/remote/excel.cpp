@@ -472,7 +472,8 @@ error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const 
 			*numCellsFetched=1;
 		} else for(long i=0;i<cellCount;++i) {
 			CComPtr<IDispatch> pDispatchCell=nullptr;
-			res=_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ITEM,DISPATCH_PROPERTYGET,VT_DISPATCH,&pDispatchCell,L"\x0003",i);
+			// range.count is 1-based, so add 1 to the index given to the call
+			res=_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ITEM,DISPATCH_PROPERTYGET,VT_DISPATCH,&pDispatchCell,L"\x0003",i+1);
 			if(FAILED(res)) {
 				LOG_DEBUGWARNING(L"range.item "<<i<<L" failed with code "<<res);
 				break;
