@@ -478,12 +478,17 @@ class MSHTML(IAccessible):
 			
 		elif isinstance(relation,tuple):
 			windowHandle=kwargs.get('windowHandle')
-			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
-			ctypes.windll.user32.ScreenToClient(windowHandle,ctypes.byref(p))
+			x=relation[0]
+			y=relation[1]
+			try:
+				x,y=winUser.screenToClient(windowHandle,x,y)
+			except WindowsError:
+				log.debugWarning("Error converting point to client coordinates", exc_info=True)
+				return False
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(p.x/xFactor,p.y/yFactor)
+				HTMLNode=HTMLNode.document.elementFromPoint(x/xFactor,y/yFactor)
 			except:
 				HTMLNode=None
 			if not HTMLNode:
