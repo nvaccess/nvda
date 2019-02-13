@@ -287,7 +287,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		try:
 			right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
 		except RuntimeError:
-			log.debugWarning("physicalToLogicalPoint failed for top left", exc_info=True)
+			log.debugWarning("physicalToLogicalPoint failed for bottom right", exc_info=True)
 		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
 		if not text:
 			return [],[],[]
