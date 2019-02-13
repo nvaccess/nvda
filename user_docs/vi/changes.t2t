@@ -1113,6 +1113,46 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 == Các thay đổi cho nhà phát triển ==
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
 
+= 2013.3 =
+
+== các tính năng mới ==
+- Các biểu mẫu giờ đây đã được đọc trong các tài liệu  của Microsoft word. (#2295)
+- NVDA giờ đây đã có thể thông báo các thông tin bản sửa biên tập trong Microsoft Word khi bật Track Changes. Lưu ý là phải bật thông báo Các bản sửa biên tập trong hộp thoại cài đặt định dạng tài liệu của NVDA (mặc định không được bật). (#1670)
+- Danh sách thả xuống trong Microsoft Excel 2003 đến 2010 đã được thông báo khi mở và di chuyển trong tập tin. (#3382)
+- Tùy chọn mới: 'cho phép thay đổi vị trí trong khi đọc tất cả' trong hộp thoại cài đặt bàn phím cho phép di chuyển qua một tài liệu với các phím di chuyển nhanh trong chế độ duyệt, và các lệnh di chuyển theo dòng hay đoạn khi vẫn đang trong chế độ đọc tất cả. Mặc định, tính năng này không được bật. (#2766) 
+- Giờ đây, đã có hộp thoại quản lý các cử chỉ cho phép tùy chỉnh  các thao tác một cách dễ dàng hơn (như các phím trên bàn phím) cho những lệnh của NVDA. (#1532)
+- Giờ bạn có thể thực hiện các cài đặt khác nhau cho các tình huống khác nhau thông qua hồ sơ cấu hình. Các hồ sơ có thể được kích hoạt thủ công hoặc tự động (ví dụ: kích hoạt cho một ứng dụng cụ thể). (#87, #667, #1913)
+- Trong Microsoft Excel, các ô là liên kết đã được thông báo là liên kết. (#3042)
+- Trong Microsoft Excel, bình luận có sẵn trên một ô giờ đây đã được thông báo đến người dùng. (#2921)
+
+
+== sửa lỗi ==
+- Zend Studio giờ đã hoạt động như Eclipse. (#3420)
+- trạng thái các thay đổi của một số hộp kiểm nhất định trong hộp thoại message rules của Microsoft Outlook 2010 đã được tự đọc. (#3063)
+- NVDA giờ đây sẽ đọc trạng thái pinned cho các điều khiển pinned như các tab trong Mozilla Firefox. (#3372)
+- giờ đã có thể gán kịch bản cho các thao tác bàn phím có các phím Alt và Windows như phím bổ trợ. Trước đây, nếu làm điều đó thì khi thực hiện kịch bản sẽ làm cho Start Menu hay thanh trình đơn bị kích hoạt. (#3472)
+- Chọn văn bản trong tài liệu ở chế độ duyệt (ví dụ: dùng control+shift+end) không còn làm cho kiểu bàn phím bị chuyển đổi trên các hệ thống đã cài đặt nhiều kiểu bàn phím. (#3472)
+- Internet Explorer không còn bị lỗi hay trở nên vô dụng khi đóng NVDA. (#3397)
+- Việc dịch chuyển và các sự kiện khác trên vài máy tính mới không còn bị coi là đã bấm các phím ngoài ý muốn. Trước đây, nó sẽ làm ngưng bộ đọc và đôi khi thực hiện các lệnh của NVDA. (#3468)
+- NVDA giờ đã hoạt động như ý muốn trong Poedit 1.5.7. Người dùng các phiên bản cũ hơn sẽ phải cập nhật. (#3485)
+- NVDA giờ đây có thể đọc các tài liệu ở dạng xem bảo vệ trong Microsoft Word 2010,  không còn làm cho Microsoft Word bị lỗi. (#1686)
+- Nếu dùng một dòng lệnh không xác định khi chạy gói NVDA distribution, không còn sinh ra một vòng lặp vô tận các hộp thoại thông điệp báo lỗi. (#3463)
+- NVDA không còn bị lỗi khi đọc văn bản thay thế cho các ảnh và đối tượng trong Microsoft Word nếu chúng có các dấu nháy kép hay các kí tự không phải tiêu chuẩn. (#3579)
+- Số thành phần của một số danh sách nằm ngang trong chế độ duyệt giờ đã hoạt động chính xác. Trước đó nó có thể nhận đôi các thành phần. (#2151)
+- Khi bấm control+a trong một bảng tính của Microsoft Excel, các vùng chọn đã cập nhật sẽ được thông báo. (#3043)
+- NVDA giờ đây đã có thể đọc chính xác các tài liệu XHTML trong Microsoft Internet Explorer và các điều khiển MSHTML khác. (#3542)
+- Hộp thoại cài đặt bàn phím: nếu không có phím nào được chọn làm phím bổ trợ NVDA, sẽ thông báo lỗi đến người dùng khi đóng hộp thoại. Phải chọn tối thiểu một phím làm phím bổ trợ. (#2871)
+- Trong Microsoft Excel, NVDA giờ sẽ thông báo các ô đã trộn khác với thông báo nhiều ô đã được chọn. (#3567)
+- Con trỏ trong chế độ duyệt không còn bị đặt sai vị trí khi rời khỏi một hộp thoại hay ứng dụng bên trong tài liệu. (#3145)
+- Sửa lỗi làm cho driver các màn hình nổi của HumanWare Brailliant dòng BI/B không được hiển thị như một tùy chọn trong hộp thoại cài đặt chữ nổi trên vài hệ thống, ngay khi chúng được kết nối qua cổng USB.
+- NVDA không còn bị lỗi không chuyển được sang chế độ duyệt màn hình khi con trỏ duyệt đối tượng không đứng chính xác ở vị trí màn hình. Trường hợp này, con trỏ duyệt sẽ được đặt ở trên cùng của màn hình. (#3454)
+- Sửa lỗi driver màn hình nổi của Freedom Scientific khi chọn cổng kết nối là USB trong vài trường hợp. (#3509, #3662)
+- Sửa lỗi không nhận được phím trên các màn hình chữ nổi của Freedom Scientific  trong vài trường hợp. (#3401, #3662)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
 
 = Các phiên bản cũ =
 Các thay đổi và tính năng mới của các phiên bản cũ hiện không được dịch sang tiếng Việt. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.

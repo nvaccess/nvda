@@ -2,8 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 
+from abc import abstractmethod
 import re
 import ctypes
 import unicodedata
@@ -12,6 +13,8 @@ import config
 import textInfos
 from locationHelper import RectLTWH
 from treeInterceptorHandler import TreeInterceptor
+import api
+from six.moves import range
 
 HIGH_SURROGATE_FIRST = u"\uD800"
 HIGH_SURROGATE_LAST = u"\uDBFF"
@@ -207,7 +210,14 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			pass
 		# If the inclusive end offset is greater than the start offset, we are working with a range.
 		# If not, i.e. the range only contains one character, we have only one location to deal with.
-		objLocation = self.obj.rootNVDAObject.location if isinstance(self.obj, TreeInterceptor) else self.obj.location
+		obj = self.obj.rootNVDAObject if isinstance(self.obj, TreeInterceptor) else self.obj
+		for i in range(100):
+			objLocation = obj.location
+			if objLocation:
+				break
+			obj = obj.parent
+		if not objLocation:
+			raise LookupError
 		rects = [] 
 		if inclusiveEndOffset > startOffset:
 			offset = startOffset
@@ -252,6 +262,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _setSelectionOffsets(self,start,end):
 		raise NotImplementedError
 
+	@abstractmethod
 	def _getStoryLength(self):
 		raise NotImplementedError
 

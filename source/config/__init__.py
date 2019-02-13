@@ -137,6 +137,18 @@ def getSystemConfigPath():
 			pass
 	return None
 
+def getScratchpadDir(ensureExists=False):
+	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
+	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	if ensureExists:
+		if not os.path.isdir(path):
+			os.makedirs(path)
+		for subdir in ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers'):
+			subpath=os.path.join(path,subdir)
+			if not os.path.isdir(subpath):
+				os.makedirs(subpath)
+	return path
+
 def initConfigPath(configPath=None):
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
@@ -149,7 +161,7 @@ def initConfigPath(configPath=None):
 		os.makedirs(configPath)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
-		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+		subdirs.append("addons")
 	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
@@ -295,6 +307,7 @@ def getConfigDirs(subpath=None):
 	@return: The configuration directories in the order in which they should be searched.
 	@rtype: list of str
 	"""
+	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
 	return [os.path.join(dir, subpath) if subpath else dir
 		for dir in (globalVars.appArgs.configPath,)
 	]
@@ -309,16 +322,22 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""
 	if isAppX or globalVars.appArgs.disableAddons:
 		return
-	if not subdir:
-		subdir = module.__name__
-	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
-	dirs.extend(module.__path__ )
-	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
+	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
+		return
+	if not subdir:
+		subdir = module.__name__
+	fullPath=os.path.join(getScratchpadDir(),subdir)
+	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	fullPath=fullPath.encode("mbcs")
+	# Insert this path at the beginning  of the module's search paths.
+	# The module's search paths may not be a mutable  list, so replace it with a new one 
+	pathList=[fullPath]
+	pathList.extend(module.__path__)
+	module.__path__=pathList
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
