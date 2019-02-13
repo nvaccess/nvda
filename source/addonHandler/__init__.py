@@ -23,7 +23,6 @@ import shutil
 from six.moves import cStringIO as StringIO, cPickle
 from six import string_types
 import zipfile
-from versionInfo import getNVDAVersionTupleFromString
 import urllib
 import threading
 import wx
