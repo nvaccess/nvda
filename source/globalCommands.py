@@ -1541,7 +1541,7 @@ class GlobalCommands(ScriptableObject):
 			config.conf["virtualBuffers"]["focusFollowsBrowse"]=False
 		else:
 			# Translators: presented when toggled.
-			state = _("Legacy browse mode")
+			state = _("Traditional browse mode")
 			config.conf["virtualBuffers"]["focusFollowsBrowse"]=True
 		ui.message(state)
 	# Translators: Input help mode message for toggle browse moves focus command.
