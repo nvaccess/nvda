@@ -319,7 +319,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
-	dialogDescription=""
+	accTitle = ""
+	accDescription=""
 	categoryClasses=[]
 
 	class CategoryUnavailableError(RuntimeError): pass
@@ -368,15 +369,17 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	INITIAL_SIZE = (800, 480)
 	MIN_SIZE = (470, 240) # Min height required to show the OK, Cancel, Apply buttons
 
-	def makeSettings(self, settingsSizer):
+	def _startAccPropServer(self):
 		import oleacc
 		self.server = nvdaControls.AccPropertyOverride(
 			self,
 			propertyAnnotations={
-				oleacc.PROPID_ACC_DESCRIPTION: lambda: self.dialogDescription,  # set a description
-				oleacc.PROPID_ACC_NAME: lambda: self.title,
+				oleacc.PROPID_ACC_DESCRIPTION: lambda: self.accDescription,  # set a description
+				#oleacc.PROPID_ACC_NAME: lambda: self.accTitle,
 			}
 		)
+
+	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for the list of categories in a multi category settings dialog.
@@ -499,6 +502,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# when postInit is called without a setPostInitFocus ie because onApply was called
 			# then set the focus to the listCtrl. This is a good starting point for a "fresh state"
 			self.catListCtrl.SetFocus()
+		self.SetLabel("NVDA Settings")
+		self._startAccPropServer()
 
 
 	def onCharHook(self,evt):
@@ -554,6 +559,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.Layout()
 		self.container.SetupScrolling()
 		self.container.Thaw()
+		self.SetLabel("NVDA Settings")
 
 	def onCategoryChange(self, evt):
 		currentCat = self.currentCategory
@@ -2615,7 +2621,7 @@ changes in the name of the edited configuration profile when categories are chan
 NvdaSettingsDialogActiveConfigProfile = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
-	title = _("NVDA Settings")
+	accTitle = title = _("NVDA Settings")
 	categoryClasses=[
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -2650,7 +2656,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self.SetTitle(self._getDialogTitle())
 
 	def _getDialogTitle(self):
-		self.dialogDescription = NvdaSettingsDialogActiveConfigProfile
+		self.accDescription = NvdaSettingsDialogActiveConfigProfile
 		return u"{dialogTitle}: {configProfile}".format(
 			dialogTitle=self.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
