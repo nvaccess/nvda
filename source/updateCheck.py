@@ -546,12 +546,10 @@ class UpdateDownloader(object):
 	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, updateInfo, requireFileVersion=True):
+	def __init__(self, updateInfo):
 		"""Constructor.
 		@param updateInfo: update information such as possible URLs, version and the SHA-1 hash of the file as a hex string.
 		@type updateInfo: dict
-		@param requireFileVersion: whether file version information is required such as when updating NVDA itself.
-		@type updateInfo: bool
 		"""
 		from addonAPIVersion import getAPIVersionTupleFromString
 		self.updateInfo = updateInfo
@@ -562,7 +560,6 @@ class UpdateDownloader(object):
 		self.versionTuple = None
 		self.fileHash = updateInfo.get("launcherHash")
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
-		self.requireFileVersion = requireFileVersion
 
 	def start(self):
 		"""Start the download.

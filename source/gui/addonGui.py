@@ -965,8 +965,6 @@ if updateCheck is not None:
 			self.fileHash = fileHash
 			self.addonsToBeUpdated = addonsToBeUpdated
 			self.auto = auto
-			# #3208: no file version checks for add-ons.
-			self.requireFileVersion=False
 
 		def start(self):
 			"""Start the download.
