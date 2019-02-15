@@ -83,7 +83,6 @@ def doStartupDialogs():
 	except RuntimeError:
 		updateCheck=None
 	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
-		addonHandler.showUnknownCompatDialog()
 		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
@@ -207,6 +206,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if config.conf['development']['enableScratchpadDir']:
+		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")

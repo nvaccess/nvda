@@ -927,12 +927,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		newEndOffset = self._rangeObj.end
-		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
-		# a case where you called move end then collapse until the size of the range is no longer being reduced.
-		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
-		if end and newEndOffset < oldEndOffset :
-			raise RuntimeError
+		if end:
+			newEndOffset = self._rangeObj.end
+			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+			# a case where you called move end then collapse until the size of the range is no longer being reduced.
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			if newEndOffset < oldEndOffset :
+				raise RuntimeError
 
 	def copy(self):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
