@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 const long xlValidateList=3;
 
 // Excel IDispatch IDs
+const long XLDISPID_RANGE__NEWENUM=-4;
 const long XLDISPID_RANGE_FORMULA=261;
 const long XLDISPID_RANGE_ITEM=170;
 const long XLDISPID_RANGE_ROW=257;

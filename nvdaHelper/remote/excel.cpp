@@ -470,16 +470,30 @@ error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const 
 		if(cellCount==1) {
 			getCellInfo(hwnd,pDispatchRange,cellInfoFlags, cellInfos);
 			*numCellsFetched=1;
-		} else for(long i=0;i<cellCount;++i) {
-			CComPtr<IDispatch> pDispatchCell=nullptr;
-			// range.count is 1-based, so add 1 to the index given to the call
-			res=_com_dispatch_raw_method(pDispatchRange,XLDISPID_RANGE_ITEM,DISPATCH_PROPERTYGET,VT_DISPATCH,&pDispatchCell,L"\x0003",i+1);
-			if(FAILED(res)) {
-				LOG_DEBUGWARNING(L"range.item "<<i<<L" failed with code "<<res);
-				break;
+		} else {
+			CComPtr<IEnumVARIANT> pEnumVariant=nullptr;
+			res=_com_dispatch_raw_propget(pDispatchRange,XLDISPID_RANGE__NEWENUM,VT_UNKNOWN,&pEnumVariant);
+			if(FAILED(res)||!pEnumVariant) {
+				LOG_DEBUGWARNING(L"range._newenum failed with code "<<res);
+				pEnumVariant=nullptr;
 			}
-			getCellInfo(hwnd,pDispatchCell,cellInfoFlags,cellInfos+i);
-			*numCellsFetched=i+1;
+			if(pEnumVariant) {
+				for(long i=0;i<cellCount;++i) {
+					CComVariant v;
+					ULONG fetched=0;
+					res=pEnumVariant->Next(1,&v,&fetched);
+					if(FAILED(res)||fetched<1) {
+						LOG_DEBUGWARNING(L"IEnumVARIANT::Next "<<i<<L" failed with code "<<res<<L" fetched "<<fetched);
+						break;
+					}
+					if(v.vt!=VT_DISPATCH||!v.pdispVal) {
+						LOG_DEBUGWARNING(L"IEnumVariant::Next "<<i<<L" did not give back an IDispatch");
+						break;
+					}
+					getCellInfo(hwnd,v.pdispVal,cellInfoFlags,cellInfos+i);
+					*numCellsFetched=i+1;
+				}
+			}
 		}
 	});
 	return RPC_S_OK;
