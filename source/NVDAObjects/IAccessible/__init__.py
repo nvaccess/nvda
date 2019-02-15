@@ -1740,7 +1740,7 @@ class TrayClockWClass(IAccessible):
 
 	def _get_value(self):
 		clockValue = super(TrayClockWClass, self).value
-		if not clockValue is None:
+		if clockValue is not None:
 			clockValue = clockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return clockValue
 
