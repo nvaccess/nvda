@@ -375,7 +375,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			self,
 			propertyAnnotations={
 				oleacc.PROPID_ACC_DESCRIPTION: lambda: self.accDescription,  # set a description
-				#oleacc.PROPID_ACC_NAME: lambda: self.accTitle,
+				oleacc.PROPID_ACC_NAME: lambda: self.accTitle,
 			}
 		)
 
