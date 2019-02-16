@@ -82,6 +82,11 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		SettingsDialog._instances.add(obj)
 		return obj
 
+	def _removeOpenDlg(self):
+		log.debug("{}".format(repr(self)))
+		if self in SettingsDialog._instances:
+			SettingsDialog._instances.remove(self)
+
 	def __init__(
 			self, parent,
 			resizeable=False,
@@ -141,6 +146,10 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
 		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
+		# Garbage collection normally handles removing the settings instance, however this may not happen immediately
+		# after a window is closed, or may be blocked by a circular reference. So instead, remove when the window is
+		# destroyed.
+		self.Bind(wx.EVT_WINDOW_DESTROY, lambda evt: self._removeOpenDlg)
 
 		self.postInit()
 		self.CentreOnScreen()

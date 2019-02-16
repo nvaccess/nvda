@@ -111,7 +111,7 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 			return self.NO_RETURN_VALUE
 
 	def _onDestroyControl(self, evt):
-		evt.Skip() # Allow other handlers to process this event.
+		evt.Skip()  # Allow other handlers to process this event.
 		self._cleanup()
 
 	def _cleanup(self):

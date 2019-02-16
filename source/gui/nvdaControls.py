@@ -46,7 +46,7 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 
 	def __init__(self, control, propertyAnnotations):
 		"""
-
+		A simple class for overriding specific values on a control
 		:type propertyAnnotations: dict
 		"""
 		super(AccPropertyOverride, self).__init__(
@@ -58,7 +58,7 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
-		if control is None:
+		if control is None or not self.propertyAnnotations:
 			return self.NO_RETURN_VALUE
 
 		try:
@@ -70,6 +70,12 @@ class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
 			pass
 
 		return self.NO_RETURN_VALUE
+
+	def _cleanup(self):
+		# could contain references (via lambda) of our owner, set it to None to avoid a circular reference which
+		# would block destruction.
+		self.propertyAnnotations = None
+		super(AccPropertyOverride, self)._cleanup()
 
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
