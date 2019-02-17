@@ -1184,6 +1184,25 @@ class GlobalCommands(ScriptableObject):
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
 
+	def script_review_currentSymbol(self,gesture):
+		info=api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		text = info.text
+		try:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
+		except LookupError:
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
+		expandedSymbol = characterProcessing.processSpeechSymbol(symbolProcessor.locale, text)
+		if expandedSymbol != text:
+			# Translators: title for expanded symbol dialog.
+			ui.browseableMessage("%s\n%s" % (text, expandedSymbol), _("Expanded symbol %s" % languageHandler.getLanguageDescription(symbolProcessor.locale)))
+		else:
+			# Explicitly tether here
+			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
+	script_review_currentSymbol.__doc__=_("Shows the text used to speak the symbol where the review cursor is positioned. This information will be presented in browse mode")
+	script_review_currentSymbol.category=SCRCAT_TEXTREVIEW
+
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
 		speech.speechMode=speech.speechMode_talk
