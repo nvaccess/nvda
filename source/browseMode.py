@@ -252,7 +252,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 def getObjectID(obj):
 	try:
-		return obj.uniqueID
+		return obj.IA2UniqueID
 	except AttributeError:
 		# Unique ID is just another layer of defense. If we cannot obtain one accurately, we can use role ID instead.
 		return obj.role
