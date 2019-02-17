@@ -252,9 +252,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 def getObjectID(obj):
 	try:
-		return obj.IA2UniqueID
+		return obj.uniqueID
 	except AttributeError:
-		# What unique ID should we use for UIA objects?
+		# Unique ID is just another layer of defense. If we cannot obtain one accurately, we can use role ID instead.
 		return obj.role
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
