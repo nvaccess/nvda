@@ -438,10 +438,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		setattr(cls, funcName, script)
 		cls.__gestures["kb:shift+%s" % key] = scriptName
 
-	@classmethod
-	def addPassThrough(cls, gesture):
-		cls.__gestures[gesture] = "passThrough"
-
 	def script_elementsList(self,gesture):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
@@ -821,15 +817,6 @@ qn("error", key="w",
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous error"))
 del qn
-
-PT = BrowseModeTreeInterceptor.addPassThrough
-PT("kb:Control+enter")
-PT("kb:Shift+enter")
-PT("kb:Control+Shift+enter")
-PT("kb:Alt+enter")
-PT("kb:Applications")
-del PT
-
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
