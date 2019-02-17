@@ -552,6 +552,11 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
+		"kb:Control+enter": "passThrough",
+		"kb:Shift+enter": "passThrough",
+		"kb:Control+Shift+enter": "passThrough",
+		"kb:Alt+enter": "passThrough",
+		"kb:Applications": "passThrough",
 	}
 
 # Add quick navigation scripts.
