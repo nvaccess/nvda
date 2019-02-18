@@ -538,9 +538,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
 		"kb:Control+enter": "passThrough",
+		"kb:Control+numpadEnter": "passThrough",
 		"kb:Shift+enter": "passThrough",
+		"kb:Shift+numpadEnter": "passThrough",
 		"kb:Control+Shift+enter": "passThrough",
+		"kb:Control+Shift+numpadEnter": "passThrough",
 		"kb:Alt+enter": "passThrough",
+		"kb:Alt+numpadEnter": "passThrough",
 		"kb:Applications": "passThrough",
 	}
 
