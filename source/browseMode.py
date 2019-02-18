@@ -521,8 +521,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def script_passThrough(self,gesture):
 		self.maybeSyncFocus()
-		if gesture:
-			gesture.send()
+		gesture.send()
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
