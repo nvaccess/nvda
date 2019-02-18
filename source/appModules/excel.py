@@ -14,6 +14,7 @@ import appModuleHandler
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.window.edit import UnidentifiedEdit
 from NVDAObjects.window import Window
+from NVDAObjects.window.excel import ExcelCell
 
 class Excel6(Window):
 	"""
@@ -24,7 +25,7 @@ class Excel6(Window):
 	def _get_focusRedirect(self):
 		if self.role==controlTypes.ROLE_UNKNOWN:
 			# The control is inaccessible, try several times to find the CellEdit UIA element with focus and use that instead.
-			for count in xrange(5):
+			for count in xrange(10):
 				if count>=1:
 					api.processPendingEvents(processEventQueue=False)
 					if eventHandler.isPendingEvents("gainFocus"):
@@ -33,7 +34,13 @@ class Excel6(Window):
 				e=UIAHandler.handler.lastFocusedUIAElement
 				if e and e.cachedAutomationID=="CellEdit":
 					obj=UIA(UIAElement=e)
-					obj.parent=api.getFocusObject()
+					oldFocus=api.getFocusObject()
+					if isinstance(oldFocus,ExcelCell):
+						# Set the edit control's parent as the cell that previously had focus. I.e. the cell being edited.
+						# otherwise a whole bunch of UIA focus ancestors for the edit control will be reported.
+						obj.parent=oldFocus
+					# Cache this for as long as this object exists.
+					self.focusRedirect=obj
 					return obj
 
 class AppModule(appModuleHandler.AppModule):
