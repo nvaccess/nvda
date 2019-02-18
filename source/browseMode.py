@@ -501,7 +501,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			synchronousCall = True
 
 		if not synchronousCall:
-			uid = obj._get_uniqueID()
+			uid = obj.uniqueID
 			if uid in self.postFocusFuncDict:
 				log.error("postFocusFunc has not been called asynchronously")
 			if postFocusFunc is not None:
@@ -1531,7 +1531,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
-				uid = obj._get_uniqueID()
+				uid = obj.uniqueID
 				try:
 					queueHandler.queueFunction(queueHandler.eventQueue, self.postFocusFuncDict.pop(uid))
 				except KeyError:
