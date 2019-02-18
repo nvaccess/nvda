@@ -519,13 +519,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			if postFocusFunc is not None:
 				postFocusFunc()
 
-	def maybeSyncFocusAndPassThrough(self, gesture=None): 		
+	def script_passThrough(self,gesture):
 		self.maybeSyncFocus()
 		if gesture:
 			gesture.send()
-
-	def script_passThrough(self,gesture):
-		self.maybeSyncFocusAndPassThrough(gesture)
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
