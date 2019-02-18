@@ -627,7 +627,6 @@ the NVDAObject for IAccessible
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
-		self.uniqueID = (self.windowHandle, self.IA2UniqueID)
 
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
@@ -646,6 +645,14 @@ the NVDAObject for IAccessible
 			pass
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
+
+	def _get_uniqueID(self):
+		if self.IA2UniqueID:
+			return (self.windowHandle, self.IA2UniqueID)
+		elif self.IAccessibleIdentity:
+			return self.IAccessibleIdentity
+		else:
+			return (self.windowHandle, hash(self.IAccessibleObject))
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""

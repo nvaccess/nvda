@@ -902,13 +902,15 @@ class UIA(Window):
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
-		self.uniqueID =         self.UIAElement.getRuntimeId()
 
 		self.initialUIACachedPropertyIDs=initialUIACachedPropertyIDs
 		if initialUIACachedPropertyIDs:
 			elementCache=self._coreCycleUIAPropertyCacheElementCache
 			for ID in initialUIACachedPropertyIDs:
 				elementCache[ID]=self.UIAElement
+
+	def _get_uniqueID(self):
+		return         self.UIAElement.getRuntimeId()
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
