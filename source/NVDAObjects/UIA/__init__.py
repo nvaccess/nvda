@@ -902,6 +902,7 @@ class UIA(Window):
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
+		self.uniqueID =         self.UIAElement.getRuntimeId()
 
 		self.initialUIACachedPropertyIDs=initialUIACachedPropertyIDs
 		if initialUIACachedPropertyIDs:

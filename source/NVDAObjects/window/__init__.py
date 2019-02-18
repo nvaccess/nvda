@@ -168,6 +168,7 @@ An NVDAObject for a window
 			raise ValueError("invalid or not specified window handle")
 		self.windowHandle=windowHandle
 		super(Window,self).__init__()
+		self.uniqueID = self.windowHandle
 
 	def _isEqual(self,other):
 		return super(Window,self)._isEqual(other) and other.windowHandle==self.windowHandle
