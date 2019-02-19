@@ -1188,19 +1188,27 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		text = info.text
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
+					curLanguage=field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
 		try:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(curLanguage)
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		expandedSymbol = characterProcessing.processSpeechSymbol(symbolProcessor.locale, text)
-		if expandedSymbol != text:
-			# Translators: title for expanded symbol dialog.
-			ui.browseableMessage("%s\n%s" % (text, expandedSymbol), _("Expanded symbol %s" % languageHandler.getLanguageDescription(symbolProcessor.locale)))
-		else:
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
 			# Explicitly tether here
 			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-	script_review_currentSymbol.__doc__=_("Shows the text used to speak the symbol where the review cursor is positioned. This information will be presented in browse mode")
+		elif expandedSymbol != text:
+			# Translators: title for expanded symbol dialog.
+			ui.browseableMessage("%s\n%s" % (text, expandedSymbol), _("Expanded symbol %s" % languageHandler.getLanguageDescription(symbolProcessor.locale)))
+	script_review_currentSymbol.__doc__=_("Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode")
 	script_review_currentSymbol.category=SCRCAT_TEXTREVIEW
 
 	def script_speechMode(self,gesture):
