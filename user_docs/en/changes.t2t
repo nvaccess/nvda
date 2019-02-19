@@ -20,6 +20,10 @@ What's New in NVDA
 - A new Advanced Settings category has been added to NVDA's Settings dialog, including an option to try out NVDA's new support for Microsoft Word via the Microsoft UI Automation API. (#9200)
 - Added support for the graphical view in Windows Disk Management. (#1486)
 - Added support for Handy Tech Connect Braille and Basic Braille 84. (#9249)
+- Added an experimental option to the Browse Mode Settings panel that allows you to stop  the system focus from following the browse mode cursor. (#2039) Although this may not be suitable to turn off for  all websites, this may fix: 
+ - Rubber band effect: NVDA sporadically undoes the last browse mode keystroke by jumping to the previous location.
+ - Edit boxes steal system focus when arrowing down through them on some websites.
+ - Browse mode keystrokes are slow to respond.
 
 
 == Changes ==
