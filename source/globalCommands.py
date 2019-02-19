@@ -1543,6 +1543,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
+	def script_toggleBrowseMovesFocus(self,gesture):
+		if config.conf["virtualBuffers"]["focusFollowsBrowse"]:
+			# Translators: presented when toggled.
+			state = _("Focus follows browse mode off")
+			config.conf["virtualBuffers"]["focusFollowsBrowse"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Focus follows browse mode on")
+			config.conf["virtualBuffers"]["focusFollowsBrowse"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle browse moves focus command.
+	script_toggleBrowseMovesFocus.__doc__=_("Toggles on and off the movement of the system focus due to browse mode commands") 
+	script_toggleBrowseMovesFocus.category=SCRCAT_FOCUS 
+
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
 		UNKNOWN_BATTERY_STATUS = 0xFF
@@ -2360,6 +2374,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleBrowseMovesFocus",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
