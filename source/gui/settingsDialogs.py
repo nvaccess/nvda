@@ -1948,9 +1948,118 @@ class UwpOcrPanel(SettingsPanel):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 
+class AdvancedPanelControls(wx.Panel):
+	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
+	be more easily managed.
+	"""
+	def __init__(self, parent):
+		super(AdvancedPanelControls, self).__init__(parent)
+
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self.SetSizer(sHelper.sizer)
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		groupText = _("NVDA Development")
+		devGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(devGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Enable loading custom code from Developer Scratchpad directory")
+		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
+		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
+		self.scratchpadCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
+		)
+
+		# Translators: the label for a button in the Advanced settings category
+		label=_("Open developer scratchpad directory")
+		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
+		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Microsoft UI Automation")
+		UIAGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(UIAGroup)
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use UI Automation to access Microsoft &Word document controls when available")
+		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Editable Text")
+		editableTextGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(editableTextGroup)
+
+		# Translators: This is the label for a numeric control in the
+		#  Advanced settings panel.
+		label = _("Caret movement timeout (in ms)")
+		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(
+			label,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=0,
+			max=2000,
+			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
+		)
+
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
+		label = _("Debug logging")
+		debugLogGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(debugLogGroup)
+
+		self.logCategories=[
+			"hwIo",
+			"audioDucking",
+			"gui",
+			"louis",
+			"timeSinceInput",
+		]
+		# Translators: This is the label for a list in the
+		#  Advanced settings panel
+		logCategoriesLabel=_("Enabled logging categories")
+		self.logCategoriesList=debugLogGroup.addLabeledControl(
+			logCategoriesLabel,
+			nvdaControls.CustomCheckListBox,
+			choices=self.logCategories
+		)
+		self.logCategoriesList.CheckedItems = [
+			index for index, x in enumerate(self.logCategories) if config.conf['debugLog'][x]
+		]
+		self.logCategoriesList.Select(0)
+		self.Layout()
+
+	def onOpenScratchpadDir(self,evt):
+		path=config.getScratchpadDir(ensureExists=True)
+		os.startfile(path)
+
+	def onSave(self):
+		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
+		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
+		for index,key in enumerate(self.logCategories):
+			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+
 class AdvancedPanel(SettingsPanel):
 	enableControlsCheckBox = None  # type: wx.CheckBox
-	dontDisableControls = []
 	# Translators: This is the label for the Advanced settings panel.
 	title = _("Advanced")
 
@@ -1969,134 +2078,45 @@ class AdvancedPanel(SettingsPanel):
 	panelDescription = "{}\n{}".format(warningHeader, warningExplanation)
 
 	def makeSettings(self, settingsSizer):
+		"""
+		:type settingsSizer: wx.BoxSizer
+		"""
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
 		warningGroup = guiHelper.BoxSizerHelper(
 			self,
 			sizer=wx.StaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
 		)
 		sHelper.addItem(warningGroup)
 		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
-		self.warningBox = warningBox
-
-		self.dontDisableControls.append(warningBox)
 
 		warningText = wx.StaticText(warningBox, label=self.warningHeader)
 		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
 		warningGroup.addItem(warningText)
-		self.dontDisableControls.append(warningText)
 
 		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
-		self.dontDisableControls.append(self.windowText)
-		self.windowText.Wrap(680)
+		self.windowText.Wrap(self.scaleSize(544))
 
 		# Translators: This is the label for a checkbox in the Advanced settings panel.
 		enableAdvancedControlslabel = _(
 			"I understand that changing these settings may cause NVDA to function incorrectly."
 		)
 		self.enableControlsCheckBox = warningGroup.addItem(
-			wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel)
+			wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel, id=wx.NewIdRef())
 		)
-		self.enableControlsCheckBox.SetFont(self.enableControlsCheckBox.GetFont().Bold())
-		self.dontDisableControls.append(self.enableControlsCheckBox)
-		self.enableControlsCheckBox.Bind(wx.EVT_CHECKBOX, lambda evt: self.setEnabledState(evt.IsChecked()))
+		boldedFont = self.enableControlsCheckBox.GetFont().Bold()
+		self.enableControlsCheckBox.SetFont(boldedFont)
+		self.advancedControls = AdvancedPanelControls(self)
+		sHelper.addItem(self.advancedControls)
 
-		# Translators: This is the label for a group of  Advanced options in the 
-		#  Advanced settings panel
-		groupText = _("NVDA Development")
-		devGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
-		sHelper.addItem(devGroup)
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Enable loading custom code from Developer Scratchpad directory")
-		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
-		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
-		self.scratchpadCheckBox.Bind(wx.EVT_CHECKBOX,self.onToggleScratchpadCheckBox)
-
-		# Translators: the label for a button in the Advanced settings category
-		label=_("Open developer scratchpad directory")
-		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
-		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
-		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
-
-		# Translators: This is the label for a group of  Advanced options in the 
-		#  Advanced settings panel
-		label = _("Microsoft UI Automation")
-		UIAGroup = guiHelper.BoxSizerHelper(
-			self,
-			sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=label), wx.VERTICAL)
+		self.enableControlsCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			lambda evt: self.advancedControls.Enable(evt.IsChecked())
 		)
-		sHelper.addItem(UIAGroup)
-
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access Microsoft &Word document controls when available")
-		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
-
-		# Translators: This is the label for a group of  Advanced options in the 
-		#  Advanced settings panel
-		label = _("Editable Text")
-		editableTextGroup = guiHelper.BoxSizerHelper(
-			self,
-			sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=label), wx.VERTICAL)
-		)
-		sHelper.addItem(editableTextGroup)
-
-		# Translators: This is the label for a numeric control in the
-		#  Advanced settings panel.
-		label = _("Caret movement timeout (in ms)")
-		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(label,nvdaControls.SelectOnFocusSpinCtrl,
-			min=0, max=2000, 
-			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
-		)
-
-		# Translators: This is the label for a group of  Advanced options in the 
-		#  Advanced settings panel
-		label = _("Debug logging")
-		debugLogGroup = guiHelper.BoxSizerHelper(
-			self,
-			sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=label), wx.VERTICAL)
-		)
-		sHelper.addItem(debugLogGroup)
-
-		self.logCategories=[
-			"hwIo",
-			"audioDucking",
-			"gui",
-			"louis",
-			"timeSinceInput",
-		]
-		# Translators: This is the label for a list in the 
-		#  Advanced settings panel
-		logCategoriesLabel=_("Enabled logging categories")
-		self.logCategoriesList=debugLogGroup.addLabeledControl(logCategoriesLabel, nvdaControls.CustomCheckListBox, choices=self.logCategories)
-		self.logCategoriesList.CheckedItems=[index for index,x in enumerate(self.logCategories) if config.conf['debugLog'][x]]
-		self.logCategoriesList.Select(0)
-		self.setEnabledState(self.enableControlsCheckBox.IsChecked())
-
-	def setEnabledState(self, shouldEnableControl, root=None):
-		root = root or self
-		for c in root.GetChildren():
-			if c not in self.dontDisableControls:
-				c.Enable(shouldEnableControl)
-				self.setEnabledState(shouldEnableControl, c)
-
-
-	def onToggleScratchpadCheckBox(self,evt):
-		self.openScratchpadButton.Enable(evt.IsChecked())
-
-	def onOpenScratchpadDir(self,evt):
-		path=config.getScratchpadDir(ensureExists=True)
-		os.startfile(path)
+		self.advancedControls.Enable(self.enableControlsCheckBox.IsChecked())
 
 	def onSave(self):
-		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
-		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
-		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
-		for index,key in enumerate(self.logCategories):
-			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+		if self.enableControlsCheckBox.IsChecked():
+			self.advancedControls.onSave()
 
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
