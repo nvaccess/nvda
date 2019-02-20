@@ -1603,33 +1603,41 @@ This category contains the following options:
 ==== Recognition language ====[Win10OcrSettingsRecognitionLanguage]
 This combo box allows you to choose the language to be used for text recognition.
 
-+++ Advanced Settings +++
++++ Advanced Settings +++[AdvancedSettings]
 Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
 Only make changes to these settings if you are sure you know what you are doing or if you have been specifically instructed to by an NVDA developer.
 
-==== Enable loading custom code from Developer Scratchpad Directory ====
+==== Making changes to advanced settings ====[AdvancedSettingsMakingChanges]
+In order to make changes to the advanced settings, the controls must be enabled by confirming, with the checkbox, that you understand the risks of modifying these settings
+
+==== Restoring the default settings ====[AdvancedSettingsRestoringDefaults]
+The button restores the default values for the settings, even if the confirmation checkbox is not ticked.
+After changing settings you may wish to revert to the default values.
+This may also be the case if you are unsure if the settings have been changed.
+
+==== Enable loading custom code from Developer Scratchpad Directory ====[AdvancedSettingsEnableScratchpad]
 When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
 This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers and synthDrivers, from a special developer scratchpad directory in your NVDA user configuration directory.
 Previously NVDA would load custom code directly from the user configuration directory, with no way of disabling this.
 This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
 If you wish to distribute custom code to others, you should package it as an NVDA add-on.
 
-==== Open Developer Scratchpad Directory ====
+==== Open Developer Scratchpad Directory ====[AdvancedSettingsOpenScratchpadDir]
 This button opens the directory where you can place custom code while developing it.
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
  
-==== Use UI automation to access Microsoft Word document controls when available ====
+==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
 When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
 This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
  For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
-==== Caret move timeout (in MS) ====
-This option allows you to configure the number of mili seconds NVDA will wait for the caret (insertion point) to move in editable text controls.
+==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
+This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
 
-==== Debug logging categories ====
+==== Debug logging categories ====[AdvancedSettingsDebugLoggingCategories]
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
 Logging these messages can resort in decreased performance and large log files.
 Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
