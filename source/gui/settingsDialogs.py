@@ -511,8 +511,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# when postInit is called without a setPostInitFocus ie because onApply was called
 			# then set the focus to the listCtrl. This is a good starting point for a "fresh state"
 			self.catListCtrl.SetFocus()
-		self.SetLabel("NVDA Settings")
 		self._startAccPropServer()
+		self.SetLabel(self.accTitle)
 
 
 	def onCharHook(self,evt):
@@ -568,7 +568,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		self.container.Layout()
 		self.container.SetupScrolling()
 		self.container.Thaw()
-		self.SetLabel("NVDA Settings")
 
 	def onCategoryChange(self, evt):
 		currentCat = self.currentCategory
@@ -2723,6 +2722,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
 		self.SetTitle(self._getDialogTitle())
+		self.SetLabel(self.accTitle)
 
 	def _getDialogTitle(self):
 		self.accDescription = NvdaSettingsDialogActiveConfigProfile
