@@ -166,7 +166,7 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& a
 			if (foundAttrib != this->parent->attributes.end()) {
 				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
 				if(outLen<foundAttrib->second.length()) {
-					LOG_DEBUGWARNING(L"Truncated "<<(*attribName));
+					LOG_DEBUGWARNING(L"Truncated attribute "<<(*attribName));
 				}
 			}
 			regexpInput << L";";
@@ -175,7 +175,7 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& a
 			if (foundAttrib != attributes.end()) {
 				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
 				if(outLen<foundAttrib->second.length()) {
-					LOG_DEBUGWARNING(L"Truncated "<<(*attribName));
+					LOG_DEBUGWARNING(L"Truncated attribute "<<(*attribName));
 				}
 			}
 			regexpInput << L";";
