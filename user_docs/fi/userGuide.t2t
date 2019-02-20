@@ -98,8 +98,8 @@ Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai 
 -
 
 ++ Asentaminen ++[InstallingNVDA]
-Jos asennat suoraan ladatusta paketista, paina Asenna NVDA -painiketta.
-Mikäli olet jo sulkenut tämän valintaikkunan tai haluat asentaa massamuistiversiosta, valitse Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alavalikosta.
+Mikäli asennat suoraan ladatusta paketista, paina Asenna NVDA -painiketta.
+Jos olet jo sulkenut tämän valintaikkunan tai haluat asentaa massamuistiversiosta, valitse Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikon Työkalut-alavalikosta.
 
 Näkyviin tulevassa valintaikkunassa pyydetään vahvistus NVDA:n asentamiselle ja kerrotaan myös, päivitetäänkö aiempi versio.
 Asennus käynnistyy painamalla Jatka-painiketta.
@@ -1010,14 +1010,14 @@ Ensimmäinen Puhe-asetuskategorian vaihtoehto on Muuta...-painike. Tämä painik
 Tämä valintaikkuna avautuu Asetukset-valintaikkunan päälle.
 Valitse syntetisaattori -valintaikkunassa muutettujen asetusten tallentaminen tai hylkääminen palauttaa takaisin Asetukset-valintaikkunaan.
 
-==== Puheääni ====[SpeechSettingsVoice]
-Puheääni-vaihtoehto on yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin äänistä.
+==== Ääni ====[SpeechSettingsVoice]
+Ääni-vaihtoehto on yhdistelmäruutu, jossa on luettelo kaikista käytössä olevan syntetisaattorin äänistä.
 Voit selata vaihtoehtoja nuolinäppäimillä.
 Nuoli vasemmalle ja Nuoli ylös siirtävät ylöspäin luettelossa, kun taas Nuoli oikealle ja Nuoli alas siirtävät alas.
 
 ==== Muunnelma ====[SpeechSettingsVariant]
 Jos käytät NVDA:n mukana tulevaa eSpeak NG -puhesyntetisaattoria, tästä yhdistelmäruudusta voit valita käytettävän muunnelman.
-Muunnelmat ovat ikään kuin puheääniä, koska jokainen niistä antaa äänille hieman eri määreitä.
+Muunnelmat ovat ikään kuin puheääniä, koska jokainen antaa äänille hieman eri määreitä.
 Jotkin muunnelmat kuulostavat mieheltä, jotkin naiselta, ja jotkin jopa kuin sammakolta.
 
 ==== Nopeus ====[SpeechSettingsRate]
@@ -1272,7 +1272,7 @@ Tästä yhdistelmäruudusta voit valita, mitä näppäimistöasettelua NVDA käy
 ==== Valitse NVDA-toiminto-näppäimet ====[KeyboardSettingsModifiers]
 Tämän luettelon valintaruuduilla on mahdollista määrittää, mitä näppäimiä voidaan käyttää [NVDA-toimintonäppäiminä. #TheNVDAModifierKey] Valittavissa ovat seuraavat näppäimet:
 - Caps lock
-- laskinnäppäimistön Insert
+- numeronäppäimistön Insert
 - laajennettu Insert (löytyy tavallisesti nuolinäppäinten yläpuolelta, Home- ja End-näppäinten läheltä)
 -
  
@@ -1436,12 +1436,12 @@ Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä 
 ==== Toista ääni automaattisten ehdotusten tullessa näkyviin ====[ObjectPresentationSuggestionSounds]
 Ottaa käyttöön tai poistaa käytöstä automaattisten ehdotusten ilmoittamisen niiden tullessa näkyviin, ja mikäli  asetus on käytössä, NVDA toistaa äänen, joka ilmaisee tämän.
 Automaattiset ehdotukset ovat luetteloita ehdotetuista kohteista, jotka perustuvat tiettyihin hakukenttiin ja asiakirjoihin syötettyyn tekstiin.
-Kun esim. kirjoitat Windows Vistan ja uudemman Käynnistä-valikon hakukenttään, Windows näyttää luettelon kirjoittamaasi tekstiin perustuvista ehdotuksista.
-Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoittaessasi ehdotusluettelon ilmestymisestä.
-Automaattisten ehdotusten luettelo sulkeutuu siirryttyäsi pois muokkauskentästä, ja NVDA voi joissakin kentissä ilmoittaa siitä.
+Kun esim. kirjoitetaan Windows Vistan ja uudempien Käynnistä-valikon hakukenttään, Windows näyttää luettelon kirjoitettuun tekstiin perustuvista ehdotuksista.
+Joissakin muokkauskentissä, kuten  useissa Windows 10:n sovellusten hakukentissä, NVDA voi ilmoittaa kirjoitettaessa ehdotusluettelon ilmestymisestä.
+Automaattisten ehdotusten luettelo sulkeutuu, kun on siirrytty pois muokkauskentästä, ja NVDA voi joissakin kentissä myös ilmoittaa siitä.
 
 +++ Syöttömenetelmä +++[InputCompositionSettings]
-Syöttömenetelmä-kategoriasta voit säätää, miten NVDA ilmoittaa aasialaisten kielten merkit niitä syötettäessä, esim. IME- tai Tekstipalvelu-syöttömenetelmiä käytettäessä.
+Syöttömenetelmä-kategoriasta voidaan säätää, miten NVDA ilmoittaa aasialaisten kielten merkit niitä syötettäessä, esim. IME- tai Tekstipalvelu-syöttömenetelmiä käytettäessä.
 Huomaa, että koska syöttömenetelmät poikkeavat toisistaan suuresti ominaisuuksiltaan ja tiedonvälitystavoiltaan, nämä asetukset on todennäköisesti tarpeen määrittää eri tavalla kullekin menetelmälle tehokkaimman kirjoituskokemuksen varmistamiseksi.
 
 ==== Lue kaikki ehdotukset automaattisesti ====[InputCompositionReportAllCandidates]
@@ -1455,7 +1455,7 @@ Tämä on tarpeen sellaisissa syöttömenetelmissä, joissa valintaa voidaan muu
 Huomaa, että vaikka tämä asetus ei ole käytössä, tarkastelukohdistin sijoitetaan silti valitun ehdotuksen kohdalle, mikä mahdollistaa objektinavigoinnin tai tekstintarkastelukomentojen käyttämisen kyseessä olevan tai muiden ehdotusten lukemiseen.
 
 ==== Ilmoita lyhyet merkkikuvaukset aina ehdotuksia luettaessa ====[InputCompositionCandidateIncludesShortCharacterDescription]
-Tällä asetuksella, joka on oletusarvoisesti käytössä, voit valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotusluettelon tullessa näkyviin.
+Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotusluettelon tullessa näkyviin.
 Huomaa, että asetus ei vaikuta valitun ehdotuksen lisämerkkikuvausten lukemiseen sellaisissa kielissä kuin kiina.
 Tästä saattaa olla hyötyä korean ja japanin syöttömenetelmiä käytettäessä.
 
@@ -1463,7 +1463,7 @@ Tästä saattaa olla hyötyä korean ja japanin syöttömenetelmiä käytettäes
 Joillakin syöttömenetelmillä, kuten uudella foneettisella kiinalla ja uudella ChangJiella, on lukumerkkijono (tunnetaan joskus myös esiyhdistelmän merkkijonona).
 Tällä asetuksella voidaan valita, ilmoittaako NVDA lukumerkkijonoon kirjoitettavat uudet merkit.
 Asetus on oletusarvoisesti käytössä.
-Huomaa, että jotkin vanhemmat syöttömenetelmät, kuten kiinalainen ChangJie, eivät saata käyttää lukumerkkijonoa esiyhdistelmän merkkien säilyttämiseen, vaan käyttävät niiden sijaan suoraan merkkiyhdistelmää. Katso seuraavaa asetusta merkkiyhdistelmän lukemisen määrittämiseksi.
+Huomaa, että jotkin vanhemmat syöttömenetelmät, kuten kiinalainen ChangJie, eivät ehkä käytä lukumerkkijonoa esiyhdistelmän merkkien säilyttämiseen, vaan käyttävät niiden sijaan suoraan merkkiyhdistelmää. Katso seuraavaa asetusta merkkiyhdistelmän lukemisen määrittämiseksi.
 
 ==== Lue merkkiyhdistelmän muutokset ====[InputCompositionCompositionStringChanges]
 Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymboliksi, useimmat syöttömenetelmät sijoittavat sen tilapäisesti talteen merkkiyhdistelmään muiden yhdistettyjen symboleiden kanssa ennen niiden lopullista dokumenttiin lisäämistä.
@@ -1566,9 +1566,9 @@ NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla
  
 Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja esim. WordPadissa, kun muotoilut ovat tärkeitä.
 
-==== Rivien sisennysten ilmoittaminen ====[DocumentFormattingSettingsLineIndentation]
-Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmoitetaan.
-Ilmoita rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
+==== Rivien sisennysten ilmaiseminen ====[DocumentFormattingSettingsLineIndentation]
+Tällä asetuksella voit määrittää, miten rivien alussa olevat sisennykset ilmaistaan.
+Ilmaise rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 
 - ei käytössä: NVDA ei käsittele sisennyksiä.
 - puheella: Jos tämä on valittuna, NVDA sanoo sisennysten määrän muuttuessa jotain sellaista kuin "12 väli" tai "neljä sarkain".
@@ -1592,7 +1592,7 @@ Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita,
 Puhesanastoja on kolmea eri tyyppiä.
 Ne ovat:
 - Oletus: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin.
-- Puheäänikohtainen: sanasto, jonka säännöt vaikuttavat käytössä olevan syntetisaattorin puheääneen.
+- Äänikohtainen: sanasto, jonka säännöt vaikuttavat käytössä olevan syntetisaattorin ääneen.
 - Tilapäinen: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin, mutta vain nykyisessä istunnossa. Säännöt ovat tilapäisiä ja ne menetetään, jos NVDA käynnistetään uudelleen.
 -
 
@@ -1853,7 +1853,7 @@ Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on ma
 NVDA käyttää oletusarvoisesti tätä syntetisaattoria.
 Tämä on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
-Jokainen eSpeak NG:n mukana tuleva puheääni puhuu eri kieltä.
+Jokainen eSpeak NG:n mukana tuleva ääni puhuu eri kieltä.
 Tuettuja kieliä on yli 43.
 
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
@@ -1867,24 +1867,24 @@ Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puhe
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++[SAPI5]
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
-Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -puheääni.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten luettelo, johon pääsee [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
+Monia tätä standardia noudattavia puhesyntetisaattoreita on mahdollista ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -ääni.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien äänien luettelo, johon pääsee [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategoriasta #SpeechSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing], sisältää kaikkien asennettujen SAPI 5 -syntetisaattoreiden äänet.
 
 ++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
-Microsoft Speech Platform tarjoaa useille kielille puheääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
-Näitä puheääniä voidaan käyttää myös NVDA:lla.
+Microsoft Speech Platform tarjoaa useille kielille ääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
+Näitä ääniä voidaan käyttää myös NVDA:lla.
                                                           
-Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
+Niiden käyttämiseksi on asennettava seuraavat kaksi osaa:
 - Microsoft Speech Platform - Runtime (versio 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime Languages (versio 11): https://www.microsoft.com/download/en/details.aspx?id=27224
- - Tällä sivulla on useita tiedostoja sekä puheentunnistusta että tekstistä puheeksi -käyttöä varten.
- Valitse haluttujen puheäänten/kielten tekstistä puheeksi -datan sisältävät tiedostot.
+ - Tällä sivulla on useita tiedostoja sekä puheentunnistusta että teksti puheeksi -käyttöä varten.
+ Valitse haluttujen äänien/kielien teksti puheeksi -datan sisältävät tiedostot.
  Esimerkiksi tiedosto MSSpeech_TTS_en-US_ZiraPro.msi on amerikanenglantia puhuva ääni.
  -
 -
 
 ++ Windows OneCore ++[OneCore]
-Windows 10 sisältää uusia puheääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
+Windows 10 sisältää uusia ääniä, jotka tunnetaan OneCore- tai matkapuhelinääninä.
 Ääniä on saatavilla useille kielille, ja ne reagoivat nopeammin kuin Microsoftin Speech API 5 -rajapinnan kautta käytettävät.
 
 Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tästä https://support.microsoft.com/fi-fi/help/22797/windows-10-narrator-tts-voices/] Microsoftin artikkelista.
@@ -1892,7 +1892,7 @@ Katso luettelo saatavilla olevista äänistä ja ohjeet niiden asentamiseen [tä
 Huomaa, että Lukijan (Narratorin) suuremmat puhenopeudet eivät ole tällä hetkellä käytettävissä NVDA:n kanssa.
 Lisäksi Windowsin asetuksista valitsemasi puheen nopeus vaikuttaa NVDA:ssa asetettuun puhenopeuteen.
 Näitä ongelmia ei voi ratkaista ilman Windowsiin tehtäviä muutoksia.
-Toivon mukaan ne korjataan tulevassa Windows-päivityksessä.
+Toivon mukaan ne korjataan joskus julkaistavassa Windows-päivityksessä.
 
 ++ Audiologic TTS 3 ++[Audiologic]
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.
@@ -2613,8 +2613,8 @@ Koska laitteessa ei ole fyysisiä kirjoitus- tai vieritysnäppäimiä, kaikki ko
 Tämän vuoksi, ja jotta säilytetään yhteensopivuus muiden taiwanilaisten ruudunlukuohjelmien kanssa, pistenäytön vierittämistä varten on käytettävissä kaksi komentoa:
 %kc:beginInclude
 || Nimi | Näppäin |
-| Vieritä taaksepäin | Laskinnäppäimistön miinus |
-| Vieritä eteenpäin | Laskinnäppäimistön plus | 
+| Vieritä taaksepäin | Numeronäppäimistön miinus |
+| Vieritä eteenpäin | Numeronäppäimistön plus | 
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris ++[Eurobraille]

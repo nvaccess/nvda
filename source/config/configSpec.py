@@ -101,6 +101,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	audioCoordinates_minPitch = integer(default=220)
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
+	ignoreInjectedMouseInput = boolean(default=false)
 
 [speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
@@ -137,6 +138,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
+	focusFollowsBrowse = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)
@@ -202,6 +204,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
 	gui = boolean(default=false)
+	louis = boolean(default=false)
+	timeSinceInput = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
@@ -211,6 +215,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
+
+[development]
+	enableScratchpadDir = boolean(default=false)
 """).format(latestSchemaVersion=latestSchemaVersion)
 
 #: The configuration specification

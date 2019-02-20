@@ -1052,9 +1052,19 @@ To vam omogoča izbiro vrednosti naglaševanja in izgovorjave drugih simbolov, k
 Ko je vrednost v tem spustnem meniju nastavljena na vse, potem se bodo vsi simboli brali z besedami.
 Ta možnost vpliva na vse sinteze in ne samo na tisto, ki je trenutno v uporabi.
 
-==== Zaupaj jeziku osebe med obdelovanjem simbolov in znakov ====[SpeechSettingsTrust]
+==== Zaupaj jeziku osebe med obdelovanjem in znakov simbolov ====[SpeechSettingsTrust]
 Ta možnost, ki je privzeto vključena, pove NVDA, naj se pri obdelovanju znakov in simbolov zanaša na jezik osebe (slovar govorne sinteze preglasi slovar vgrajen v NVDA).
 Če ugotovite, da NVDA napačno izgovarja posamezno ločilo v nekem jeziku ob nastavitvi glasu ali govorne sinteze v celoti, potem lahko to možnost izključite, da NVDA vsilite uporabo globalnih jezikovnih nastavitev.
+
+==== Vključi podatke konzorcija Unicode (vključno z emojii) ko se obdeluje znake in simbole ====[SpeechSettingsCLDR]
+Ko bo ta izbirnik omogočen, bo NVDA vključila dodatne slovarje za izgovorjavo simbolov, ko bo izgovarjala znake in simbole.
+Ti slovarji vsebujejo opise simbolov (predvsem emojiev), ki jih je oskrbel [Unicode konzorcij http://www.unicode.org/consortium/] kot del njihove ga [Enotnega Lokalnega Podatkovnega Repozitorija http://cldr.unicode.org/].
+Če želite, da bo NVDA izgovarjala opise znakov za emojie, ki bazirajo na teh podatkih, morate to možnost omogočiti.
+Vendar, če uporabljate govorno sintezo, ki že samapodpira izgovorjavo opise emojiev, boste morda želeli to izključiti.
+
+Pomnite, da so ročno dodani ali urejeni opisi znakov shranjeni kot del vaših osebnih nastavitev.
+Torej, če boste spremenili opis določenega emojia, se bo vaš opis po meri tega emojia izgovoril neglede na to ali je ta možnost izbrana.
+Vi lahko dodajate, urejate ali odstranite opise simbolov v NVDA [pogovornem oknu izgovorjave ločil/simbolov #SymbolPronunciation].
 
 ==== Sprememba višine glasu ob velikih črkah v odstotkih ====[SpeechSettingsCapPitchChange]
 To vnosno polje omogoča vnos vrednosti razlike v tonu glasu, za katero se bo glas zvišal, ko bo sinteza izgovarjala veliko črko.
