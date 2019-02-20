@@ -31,7 +31,7 @@ class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity, searchEntries):
+	def __init__(self, parent, cursorManager, caseSensitivity, searchEntries):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
@@ -112,7 +112,6 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	# Translators: the script category for browse mode
 	scriptCategory=SCRCAT_BROWSEMODE
 
-	_lastFindText=""
 	_lastCaseSensitivity=False
 	_searchEntries = []
 
@@ -185,11 +184,10 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
-		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, self._searchEntries)
+		d = FindDialog(gui.mainFrame, self, self._lastCaseSensitivity, self._searchEntries)
 		gui.mainFrame.prePopup()
 		d.Show()
 		gui.mainFrame.postPopup()
@@ -197,18 +195,18 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
 	def script_findNext(self,gesture):
-		if not self._lastFindText:
+		if not self._searchEntries:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText, caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._searchEntries[0], caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
 	def script_findPrevious(self,gesture):
-		if not self._lastFindText:
+		if not self._searchEntries:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText,reverse=True, caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._searchEntries[0],reverse=True, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
