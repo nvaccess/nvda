@@ -2143,7 +2143,7 @@ class AdvancedPanel(SettingsPanel):
 		restoreDefaultsButton.Bind(wx.EVT_BUTTON, lambda evt: self.advancedControls.restoreToDefaults())
 
 		self.advancedControls = AdvancedPanelControls(self)
-		sHelper.addItem(self.advancedControls)
+		sHelper.sizer.Add(self.advancedControls, flag=wx.EXPAND)
 
 		self.enableControlsCheckBox.Bind(
 			wx.EVT_CHECKBOX,
