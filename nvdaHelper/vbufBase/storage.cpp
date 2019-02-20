@@ -125,7 +125,8 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, 
 // @param out the stream to which the escaped attribute string should be written
 // @param text The attribute string to be escaped
 // @param maxLength the maximum length of the attribute string that should be copied. If maxLength is 0 or not specified, the entire string is copied.
-inline void outputEscapedAttribute(wostringstream& out, const wstring& text, size_t maxLength=0) {
+// @return the number of characters written to the output stream (before expantion / filtering). This number can be used to see if the string was truncated at all.
+inline size_t outputEscapedAttribute(wostringstream& out, const wstring& text, size_t maxLength=0) {
 	size_t count=0;
 	for (wstring::const_iterator it = text.begin(); it != text.end(); ++it) {
 		switch (*it) {
@@ -136,13 +137,14 @@ inline void outputEscapedAttribute(wostringstream& out, const wstring& text, siz
 			default:
 			out << *it;
 		}
+		count++;
 		if(maxLength>0) {
-			count++;
 			if(count==maxLength) {
 				break;
 			}
 		}
 	}
+	return count;
 }
 
 bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp) {
@@ -162,13 +164,19 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& a
 		if(this->parent&&attribName->find(parentPrefix)==0) {
 			VBufStorage_attributeMap_t::const_iterator foundAttrib = this->parent->attributes.find(attribName->substr(parentPrefix.length()));
 			if (foundAttrib != this->parent->attributes.end()) {
-				outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				if(outLen<foundAttrib->second.length()) {
+					LOG_DEBUGWARNING(L"Truncated "<<(*attribName));
+				}
 			}
 			regexpInput << L";";
 		} else { // not a parent attribute
 			VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
 			if (foundAttrib != attributes.end()) {
-				outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				if(outLen<foundAttrib->second.length()) {
+					LOG_DEBUGWARNING(L"Truncated "<<(*attribName));
+				}
 			}
 			regexpInput << L";";
 		}
