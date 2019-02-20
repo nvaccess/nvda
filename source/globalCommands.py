@@ -1195,11 +1195,7 @@ class GlobalCommands(ScriptableObject):
 					curLanguage=field.field.get('language')
 		if curLanguage is None:
 			curLanguage = speech.getCurrentLanguage()
-		try:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(curLanguage)
-		except LookupError:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
-		expandedSymbol = characterProcessing.processSpeechSymbol(symbolProcessor.locale, text)
+		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
 		repeats=scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			# Explicitly tether here
@@ -1207,7 +1203,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		elif expandedSymbol != text:
 			# Translators: title for expanded symbol dialog.
-			ui.browseableMessage("%s\n%s" % (text, expandedSymbol), _("Expanded symbol %s" % languageHandler.getLanguageDescription(symbolProcessor.locale)))
+			ui.browseableMessage("%s\n%s" % (text, expandedSymbol), _("Expanded symbol %s" % languageHandler.getLanguageDescription(curLanguage)))
 	script_review_currentSymbol.__doc__=_("Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode")
 	script_review_currentSymbol.category=SCRCAT_TEXTREVIEW
 
