@@ -1954,6 +1954,7 @@ class AdvancedPanelControls(wx.Panel):
 	"""
 	def __init__(self, parent):
 		super(AdvancedPanelControls, self).__init__(parent)
+		self._defaultsRestored = False
 
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		self.SetSizer(sHelper.sizer)
@@ -1971,6 +1972,7 @@ class AdvancedPanelControls(wx.Panel):
 		label = _("Enable loading custom code from Developer Scratchpad directory")
 		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
 		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
+		self.scratchpadCheckBox.defaultValue = self._getDefaultValue(["development", "enableScratchpadDir"])
 		self.scratchpadCheckBox.Bind(
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
@@ -1979,8 +1981,8 @@ class AdvancedPanelControls(wx.Panel):
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
-		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
+		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -1996,6 +1998,7 @@ class AdvancedPanelControls(wx.Panel):
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
+		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2016,6 +2019,7 @@ class AdvancedPanelControls(wx.Panel):
 			max=2000,
 			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
 		)
+		self.caretMoveTimeoutSpinControl.defaultValue = self._getDefaultValue(["editableText", "caretMoveTimeoutMs"])
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
@@ -2045,13 +2049,39 @@ class AdvancedPanelControls(wx.Panel):
 			index for index, x in enumerate(self.logCategories) if config.conf['debugLog'][x]
 		]
 		self.logCategoriesList.Select(0)
+		self.logCategoriesList.defaultCheckedItems = [
+				index for index, x in enumerate(self.logCategories) if bool(
+					self._getDefaultValue(['debugLog', x])
+			)
+		]
 		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
+	def _getDefaultValue(self, configPath):
+		return config.conf.getConfigValidation(configPath).default
+
+	def haveConfigDefaultsBeenRestored(self):
+		return (
+			self._defaultsRestored and
+			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
+			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
+			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
+			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
+			True  # reduce noise in diff when the list is extended.
+		)
+
+	def restoreToDefaults(self):
+		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
+		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self._defaultsRestored = True
+
 	def onSave(self):
+		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
@@ -2105,6 +2135,13 @@ class AdvancedPanel(SettingsPanel):
 		)
 		boldedFont = self.enableControlsCheckBox.GetFont().Bold()
 		self.enableControlsCheckBox.SetFont(boldedFont)
+
+		restoreDefaultsButton = warningGroup.addItem(
+			# Translators: This is the label for a button in the Advanced settings panel
+			wx.Button(self, label=_("Restore defaults"))
+		)
+		restoreDefaultsButton.Bind(wx.EVT_BUTTON, lambda evt: self.advancedControls.restoreToDefaults())
+
 		self.advancedControls = AdvancedPanelControls(self)
 		sHelper.addItem(self.advancedControls)
 
@@ -2115,7 +2152,10 @@ class AdvancedPanel(SettingsPanel):
 		self.advancedControls.Enable(self.enableControlsCheckBox.IsChecked())
 
 	def onSave(self):
-		if self.enableControlsCheckBox.IsChecked():
+		if (
+			self.enableControlsCheckBox.IsChecked() or
+			self.advancedControls.haveConfigDefaultsBeenRestored()
+		):
 			self.advancedControls.onSave()
 
 class DictionaryEntryDialog(wx.Dialog):
