@@ -21,13 +21,13 @@ To learn more about NVDA or download a copy, visit the main [NV Access](http://w
 ## Getting the Source Code
 The NVDA project uses the [Git](http://www.git-scm.com/) version control system for its source code and documentation.
 
-The NVDA Git repository is located at https://github.com/nvaccess/nvda.git. You can clone it with the following command, which will place files in a directory named nvda:
+The NVDA Git repository is located at https://github.com/nvaccess/nvda.git. You can clone it with the following command, which will place files in a directory named `nvda`:
 
 ```
 git clone --recursive https://github.com/nvaccess/nvda.git
 ```
 
-The --recursive option is needed to retrieve various Git submodules we use.
+The `--recursive` option is needed to retrieve various Git submodules we use.
 
 ## Dependencies
 The NVDA source depends on several other packages to run correctly.
@@ -37,20 +37,23 @@ The following dependencies need to be installed on your system:
 
 * [Python](http://www.python.org/), version 2.7.15, 32 bit
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
-	* Download from https://www.visualstudio.com/downloads/
+	* Download from https://visualstudio.microsoft.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
 		On the Workloads tab, in the Windows group:
 			* Universal Windows Platform Development
 			* Desktop development with C++
-		* Then in the Summary list, under Desktop for C++, Optional grouping, ensure the following is selected:
+		* Then in the Installation details section, under Desktop for C++, Optional grouping, ensure the following are selected:
 			* VC++ 2017 v141 toolset (x86,x64)
 			* Windows 10 SDK (10.0.17134.0) for Desktop C++ x86 and x64
 			* Visual C++ ATL for x86 and x64
+		* In the Installation details section, under Individual components, ensure the following are selected:
+			* Visual C++ compilers and libraries for ARM64
+			* Visual C++ ATL for ARM64
 
 
 ### Git Submodules
 Most of the dependencies are contained in Git submodules.
-If you didn't pass the --recursive option to git clone, you will need to run `git submodule update --init`.
+If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
 
@@ -64,7 +67,7 @@ For reference, the following dependencies are included in Git submodules:
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
-* [liblouis](http://www.liblouis.org/), version 3.7.0
+* [liblouis](http://www.liblouis.org/), version 3.8.0, commit 90a808bf
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 34.0
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
@@ -72,7 +75,7 @@ For reference, the following dependencies are included in Git submodules:
 * Adobe FlashAccessibility interface typelib
 * [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 3.0.0, commit 6a72c4de
+* [SCons](http://www.scons.org/), version 3.0.4
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
@@ -99,7 +102,7 @@ scons source
 ```
 
 You should do this again whenever the version of comtypes changes or language files are added or changed.
-Note that if you want to access user documentation from the help menu while running the source version, you will also need to add user_docs to the commandline like so:
+Note that if you want to access user documentation from the help menu while running the source version, you will also need to add `user_docs` to the command line like so:
 
 ```
 scons source user_docs
@@ -109,7 +112,7 @@ While simply testing or committing changes, it may be faster usually just doing 
 
 ### Compiling NVDAHelper with Debugging Options
 Among other things, preparing the source tree builds the NVDAHelper libraries.  
-If trying to debug nvdaHelper, You can control various  debugging options  with the `nvdaHelperDebugFlags` command line variable. It takes one or more of the following flags:
+If trying to debug nvdaHelper, you can control various debugging options with the `nvdaHelperDebugFlags` command line variable. It takes one or more of the following flags:
 
 * debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
 * RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
@@ -150,7 +153,7 @@ scons dist
 
 The build will be created in the dist directory.
 
-To create a launcher  archive (one executable allowing for installation or portable dist generation), type:
+To create a launcher archive (one executable allowing for installation or portable dist generation), type:
 
 ```
 scons launcher
@@ -164,7 +167,7 @@ To generate developer documentation, type:
 scons devDocs
 ```
 
-The developer docs will be placed in the devDocs folder in the output directory.
+The developer docs will be placed in the `devDocs` folder in the output directory.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
@@ -172,7 +175,7 @@ To generate developer documentation for nvdaHelper (not included in the devDocs 
 scons devDocs_nvdaHelper
 ```
 
-The documentation will be placed in the devDocs\nvdaHelper folder in the output directory.
+The documentation will be placed in the `devDocs\nvdaHelper` folder in the output directory.
 
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 
@@ -188,7 +191,7 @@ To generate a gettext translation template (for translators), type:
 scons pot
 ```
 
-Optionally, the build can  be customised by providing variables on the command line:
+Optionally, the build can be customised by providing variables on the command line:
 
 * version: The version of this build.
 * release: Whether this is a release version.
@@ -201,7 +204,7 @@ Optionally, the build can  be customised by providing variables on the command l
 * outputDir: The directory where the final built archives and such will be placed.
 * targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 
-For example, to build a launcher  with a specific version, you might type:
+For example, to build a launcher with a specific version, you might type:
 
 ```
 scons launcher version=test1

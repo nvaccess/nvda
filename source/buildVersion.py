@@ -32,14 +32,43 @@ def _updateVersionFromVCS():
 	except:
 		pass
 
+
+def _formatDevVersionString():
+	return "{y}.{M}.{m}dev".format(y=version_year, M=version_major, m=version_minor)
+
+
+def formatBuildVersionString():
+	"""Formats a full version string, from the values in the buildVersion module.
+	Examples:
+	- "2019.1.0.123"
+	"""
+	return "{y}.{M}.{m}.{b}".format(y=version_year, M=version_major, m=version_minor, b=version_build)
+
+
+def formatVersionForGUI(year, major, minor):
+	"""Converts three version numbers to a string for displaying in the GUI.
+	Examples:
+	- (2018, 1, 1) becomes "2018.1.1"
+	- (2018, 1, 0) becomes "2018.1"
+	- (0, 0, 0) becomes "0.0"
+	"""
+	if None in (year, major, minor):
+		raise ValueError(
+			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor)
+		)
+	if minor is 0:
+		return "{y}.{M}".format(y=year, M=major)
+	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
+
+
 # ticket:3763#comment:19: name must be str, not unicode.
 # Otherwise, py2exe will break.
 name="NVDA"
-version_year=2018
-version_major=4
+version_year=2019
+version_major=1
 version_minor=0
 version_build=0
-version="%s.%s.%sdev"%(version_year,version_major,version_minor)
+version=_formatDevVersionString()
 publisher="unknown"
 updateVersionType=None
 try:
