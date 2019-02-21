@@ -694,6 +694,23 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 				return item.field
 		raise LookupError
 
+	def _isNVDAObjectInApplication_noWalk(self, obj):
+		inApp = super(VirtualBuffer, self)._isNVDAObjectInApplication_noWalk(obj)
+		if inApp is not None:
+			return inApp
+		# If the object is in the buffer, it's definitely not in an application.
+		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		node = VBufRemote_nodeHandle_t()
+		if not self.VBufHandle:
+			return None
+		try:
+			NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.VBufHandle, docHandle, objId,ctypes.byref(node))
+		except WindowsError:
+			return None
+		if node:
+			return False
+		return None
+
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",
 		"kb:NVDA+v": "toggleScreenLayout",
