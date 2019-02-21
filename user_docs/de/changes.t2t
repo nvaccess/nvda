@@ -3,6 +3,82 @@ Was ist neu in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+
+== Neue Funktionen ==
+- Neue Braille-Tabellen: Arabisches 8-Punkt computer braille, Arabisch grade 2, Spanisch grade 2. (#4435)
+- Den Maus-Einstellungen von NVDA wurde eine Option hinzugefügt, womit  NVDA  nun auch die Maus erkennen kann, selbst wenn diese von einer anderen Anwendung gesteuert wird. (#8452) 
+ - Dies ermöglicht  die Mausverfolgung in NVDA, wenn ein System durch Teamviewer oder ähnliche Software ferngesteuert wird.
+- Der Befehlszeilenparameter `--disable-start-on-logon` wurde hinzugefügt, um stille Installationen von NVDA zu ermöglichen, bei welchen NVDA danach  standardmäßig nicht auf dem Anmeldebildschirm ausgeführt wird. (#8574)
+- Es ist nun möglich die Protokollierungsfunktionen von NVDA komplett auszuschalten, indem Sie im Bereich Allgemeine Einstellungen die Protokollierungsstufe auf "deaktiviert" setzen. (#8516)
+- Formeln in LibreOffice und Apache OpenOffice Tabellenkalkulationen werden nun gemeldet. (#860)
+- In Mozilla Firefox und Google Chrome meldet der Lesemodus nun das ausgewählte Element in Listenfeldern und Baumansichten.
+ - Dies funktioniert ab Firefox 66 und höher.
+ - Dies funktioniert noch nicht für bestimmte Listenfelder (HTML Select Controls) in Chrome.
+- Die afrikaanische Braille-Tabelle wurde hinzugefügt. (#9186)
+- Basisunterstützung von Apps wie Mozilla Firefox auf Computern mit ARM64-Prozessoren (z.B. Qualcom Snapdragon). (#9216)
+- Eine neue Kategorie "Erweiterte Einstellungen" wurde dem NVDA-Einstellungsdialog hinzugefügt, welche u.a.  eine Option enthält, um die neue Unterstützung für Microsoft Word durch NVDA über die Microsoft UI Automation API testen zu können. (#9200)
+- Unterstützung für die grafische Ansicht in der Windows Datenträgerverwaltung wurde hinzugefügt. (#1486)
+- Die Braillezeilen Handy Tech Connect Braille und Basic Braille 84 werden nun unterstützt. (#9249)
+- Es wurde eine experimentelle Option in der Einstellungskathegorie "Lesemodus" hinzugefügt, mit der Sie verhindern können, dass der System-Fokus dem virtuellen Cursor im lesemodus folgt. (#2039) Obwohl dies nicht für alle Websites geeignet ist, kann diese Option möglicherweise folgende Probleme beheben: 
+ - Gummibandeffekt: NVDA setzt sporadisch den letzten Tastendruck im Lesemodus zurück, indem es zur vorherigen Position springt.
+ - Eingabefelder blockieren manchmal den System-Fokus, wenn man durch sie mit Pfeiltaste nach unten auf einigen Websites navigiert.
+ - NVDA reagiert langsam auf Tastenanschläge im Lesemodus.
+
+
+== Änderungen ==
+- Liblouis braille-Übersetzer wurde auf Version 3.8.0 aktualisiert. (#9013)
+- Autoren von Erweiterungen können nun eine mindest erforderliche NVDA-Version für ihre Erweiterungen durchsetzen. Nicht kompatible Erweiterungen werden deaktiviert oder werden nicht installiert. (#6275)
+- Autoren von Erweiterungen müssen nun die letzte Version von NVDA angeben, mit der die Erweiterung getestet wurde. Die Anwender werden vor der Installation oder Aktivierung ungetesteter Erweiterungen gewarnt. (#6275)
+- Der Befehl zum Bewegen der Maus zum Navigator-Objekt (NVDA-Cursor) funktioniert nun sowohl in Microsoft Word als auch für UIA-Steuerungen, insbesondere in Microsoft Edge. (#7916, #8371)
+- Das Melden des Textes unter dem Maus-Cursor wurde in Microsoft Edge und anderen UIA-Anwendungen verbessert. (#8370)
+- Wenn NVDA mit dem Befehlszeilenparameter `--portable-path` gestartet wird, wird der angegebene Pfad beim Erstellen einer portablen Version aus dem Menü automatisch ausgefüllt. (#8623)
+- Der Pfad  zur  norwegischen Braille-Table wurde geändert, um dem Standard aus dem Jahr 2015 zu entsprechen. (#9170)
+- Bei der Navigation nach Absatz (STRG+Pfeiltasten) oder nach Tabellenzelle (STRG+Alt+Pfeiltasten) werden Rechtschreibfehler nicht mehr gemeldet, auch wenn dies in den Einstellungen aktiviert ist. Absätze und Tabellenzellen können recht groß sein und große Textmengen enthalten. Die Berechnung von Rechtschreibfehlern in einigen Anwendungen kann sehr kostspielig sein und die Performance stark beeinträchtigen. (#9217)
+- NVDA lädt nicht mehr automatisch benutzerdefinierte Anwendungsmodulle, globalPlugins sowie Braille- und Synth-Treiber aus dem NVDA-Benutzer-Konfigurationsverzeichnis. Dieser Code sollte stattdessen als Erweiterung mit korrekten Versionsinformationen verpackt werden, um sicherzustellen, dass inkompatibler Code nicht mit aktuellen Versionen von NVDA ausgeführt wird. (#9238)
+ - Für Entwickler, die Code während der Entwicklung testen müssen, aktivieren Sie das Entwickler-Scratchpad-Verzeichnis von NVDA in der Kategorie Erweiterte Einstellungen in den NVDA-Einstellungen und legen Sie Ihren Code in das Verzeichnis 'scratchpad' im NVDA-Benutzerkonfigurationsverzeichnis ab, nachdem  diese Option aktiviert wurde.
+
+
+== Fehlerbehebungen ==
+- OneCore-Sprachausgabe: Ab Windows 10. April 2018 werden große Pausen nicht mehr zwischen Sprachäußerungen eingefügt. (#8985)
+- Wenn Sie sich in Klartext-Steuerelementen (z. B. Notepad) oder im Lesemodus bewegen, werden 32-Bit-Emoji-Zeichen, die aus zwei UTF-16-Codepunkten (z. B. ðŸ¤¦) bestehen, nun korrekt gelesen. (#8782)
+- Der Bestätigungsdialog für den Neustart nach dem Ändern der Sprache der Benutzeroberfläche wurde verbessert. Der Text und die Beschriftungen der Schaltflächen sind nun prägnanter und weniger verwirrend. (#6416)
+- Wenn eine Sprachausgabe eines Drittanbieters nicht geladen werden kann, greift NVDA unter Windows 10 auf die Windows OneCore-Sprachausgabe zurück und nicht mehr auf espeak. (#9025)
+- Der Eintrag für den Willkommensdialog im NVDA-Menü wird  in geschützten Bidlschirmen nicht mehr angezeigt. (#8520)
+- Beim Tabben oder bei der Schnellnavigation im Lesemodus werden Legenden der Registerkarten nun einheitlicher dargestellt. (#709)
+- NVDA meldet nun Auswahländerungen für bestimmte Zeitpicker, z. B. in der Windows 10 App Wecker und Uhr. (#5231)
+- Im Aktionscenter von Windows 10 sagt NVDA Statusmeldungen an, wenn Sie zwischen schnellen Aktionen wie Helligkeit und Fokusunterstützung umschalten. (#8954)
+- Im Aktionscenter in Windows 10 Oktober 2018 Update und früher erkennt NVDA das Steuerelement für die Helligkeit als Schaltfläche anstelle einer Umschalttaste. (#8845)
+- NVDA verfolgt nun den Cursor wieder und meldet wieder gelöschte Zeichen im Suchdialog, im Dialog "Gehe zu" und in anderen Dialogfeldern in Microsoft Excel. (#9042)
+- Ein seltener Absturz im Lesemodus in Firefox wurde behoben. (#9152)
+- NVDA meldet nun wieder den Fokus für  einige Steuerelemente im Menüband von Microsoft Office 2016, wenn das Menüband reduziert wird.
+- NVDA meldet den vorgeschlagenen Kontakt wieder automatisch, wenn Adressen in neuen Nachrichten in Outlook 2016 eingegeben werden. (#8502)
+- Die letzten paar Cursor-Routing-Tasten auf der 80er Eurobraille-Braillezeile verschieben  den Cursor nicht mehr zum  Anfang oder kurz nach dem Beginn der Zeile auf dem Brailledisplay. (#9160)
+- Die Tabellennavigation in der Thread-Ansicht in Mozilla Thunderbird wurde verbessert. (#8396)
+- In Mozilla Firefox und Google Chrome funktioniert das Umschalten in den Fokus-Modus jetzt korrekt für bestimmte Ausklapplisten / Kombinationsfelder und Baumansichten, welche selbst nicht fokussierbar sind aber ihre Elemente schon. (#3573, #9157) 
+- Der Lesemodus ist nun standardmäßig richtigerweise eingeschaltet, wenn Nachrichten in Outlook 2016 / 365 gelesen werden, sofern die experimentelle UI-Automation in NVDA für Word-Dokumente aktiviert ist. (#9188) 
+- Ein Problem wurde behoben, bei welchem NVDA abstürzte und wo  der einzige Ausweg darin bestandt, die komplette Windows-Sitzung ab- und wieder anzumelden. (#6291)
+- In Windows 10. Oktober 2018 Update und später, beim Öffnen des Cloud-Zwischenablage-Verlaufs mit leerer Zwischenablage, wird NVDA den Status der Zwischenablage melden. (#9112)
+- In Windows 10. Oktober 2018 Update und später, bei der Suche nach Emojis im Emoji-Fenster, meldet NVDA die Suchergebnisse. (#9112)
+- NVDA stürzt  nicht mehr im Hauptfenster von Virtualbox 5.2 und höher ab. (#9202)
+- Die Reaktionsfähigkeit in Microsoft Word bei der Navigation durch Zeilen, Absätze oder Tabellenzellen konnte deutlich verbessert werden. Zur Erinnerung: Um die beste Leistung zu erzielen, stellen Sie Microsoft Word nach dem Öffnen eines Dokuments mit Alt+W auf Entwurfsansicht ein. (#9217) 
+- In Mozilla Firefox und Google Chrome werden leere Warnungen nicht mehr gemeldet. (#5657)
+- Deutliche Leistungssteigerungen bei der Navigation durch Zellen in Microsoft Excel, insbesondere wenn die Kalkulationstabelle Kommentare und / oder Ausklapplisten zur Validierung enthält. (#7348)
+- Die Bearbeitung in Zellen in MS Excel 2016/365 funktioniert nun wieder. Das  Editieren in Zelle in den Optionen von Microsoft Excel kann wieder aktiviert werden, um in Excel 2016 / 365 auf die Steuerung der Zellenbearbeitung mit NVDA zuzugreifen. (#8146).
+ 
+
+== Änderungen für Entwickler ==
+- NVDA kann nun mit allen Editionen von Microsoft Visual Studio 2017 (nicht nur mit der Community-Version) kompiliert werden. (#8939)
+- Sie können nun Protokollausgaben von Liblouis in das NVDA-Protokoll aufnehmen, indem Sie das boolesche Flag "louis" im Abschnitt "debugprotokollierung" in den erweiterten Einstellungen von NVDA aktivieren. (#4554)
+- Autoren von Erweiterungen können nun Informationen zur Kompatibilität mit NVDA-Versionen im Manifest der Erweiterungen bereitstellen. (#6275, #9055)
+ - minimumNVDAVersion: Die minimale erforderliche Version von NVDA, damit eine Erweiterung ordnungsgemäß funktioniert. 
+ - lastTestedNVDAVersion: Die zuletzt getestete Version von NVDA, mit der einer Erweiterung getestet wurde.
+- Die "OffsetsTextInfo"-Objekte können nun die Methode _getBoundingRectFromOffset implementieren, um das Abrufen von begrenzten Rechtecken pro Zeichen anstelle von Punkten zu ermöglichen. (#8572)
+- Den TextInfo-Objekten wurde eine Eigenschaft boundingRect hinzugefügt, um das umschließende Rechteck eines Textbereichs abzurufen. (#8371)
+- Eigenschaften und Methoden innerhalb von Klassen können nun in NVDA als abstrakt gekennzeichnet werden. Diese Klassen lösen einen Fehler aus, wenn sie instanziiert werden. (#8294, #8652, #8658)
+- NVDA kann die Zeit seit der Eingabe protokollieren, wenn Text gesprochen wird, was bei der Messung der wahrgenommenen Reaktionsfähigkeit hilft. Dies kann durch Aktivieren  der Einstellung "timeSinceInput" im Abschnitt "Debugprotokollierung" in den erweiterten Einstellungen von NVDA aktiviert werden. (#9167)
+
+
 = 2018.4.1 =
 Diese Version behebt einen Absturz beim Start, wenn die Sprache der Benutzeroberfläche von NVDA auf Aragonesisch eingestellt ist. (#9089)
 
@@ -26,7 +102,7 @@ Zu den Highlights dieser Version gehören Leistungssteigerungen in den neuesten 
 - NVDA zeigt unter einigen Windows-Versionen keine doppelten Informationen mehr an, wenn die Uhr in der Taskleiste vorgelesen wird. (#4364)
 - Liblouis Braille-Übersetzer auf Version 3.7.0 aktualisiert. (#8697)
 - eSpeak-NG wurde auf commit 919f3240cbb aktualisiert
-- NVDA meldet nicht mehr mehrfach hintereinander "Anklickbar", wenn Sie im Lese-Modus durch klickbare Inhalte navigieren. (#7430)
+- NVDA meldet nicht mehr mehrfach hintereinander "Anklickbar", wenn Sie im Lesemodus durch klickbare Inhalte navigieren. (#7430)
 - Gesten, die auf Baum Vario 40 Braillezeilen ausgeführt werden, funktionieren nun korrekt. (#8894)
 - NVDA meldet nicht mehr "Text ausgewählt" bei jedem fokussierten Objekt in Google-Präsentationen mit Mozilla Firefox. (#8964)
 
@@ -579,7 +655,7 @@ Schwerpunkte dieser Version sind u. a. eine Möglichkeit zum Deaktivieren einzel
 == Neue Funktionen ==
 - Der Lesemodus kann nun verwendet werden, um in Microsoft Edge PDF-Dokumente zu lesen, sofern Sie das Windows 10 Anniversary Update installiert haben. (#5740)
 - In Microsoft Word wird durchgestrichener und doppelt durchgestrichener Text erkannt. (#5800)
-- In Microsoft Word wird der Titel einer Tabelle korrekt erkannt. Wenn außerdem eine Beschreibung vorhanden ist, kann diese im Lese-Modus mit dem Befehl Ausführliche Beschreibung öffnen (NVDA+D) angezeigt werden. (#5943)
+- In Microsoft Word wird der Titel einer Tabelle korrekt erkannt. Wenn außerdem eine Beschreibung vorhanden ist, kann diese im Lesemodus mit dem Befehl Ausführliche Beschreibung öffnen (NVDA+D) angezeigt werden. (#5943)
 - In Microsoft Word wird die Position im Dokument korrekt ausgegeben, wenn Sie mittels Alt+Umschalt+Pfeil auf und Alt+Umschalt+Pfeil ab Absätze im Dokument verschieben. (#5945)
 - In Microsoft Word werden jetzt Zeilenabstände erkannt. Die ansage von Zeilenabständen kann in den Einstellungen für Dokumentformatierungen eingestellt werden. Außerdem werden die Zeilenabstände angesagt, wenn Sie den Zeilenabstand mit den Tastenkombinationen von Word ändern oder wenn Sie sich beim Navigieren im Dokument in einen Abschnitt mit einem anderen Zeilenabstand bewegen. (#2961)
 - Im Internet Explorer werden strukturierende HTML5-Elemente erkannt. (#5591)
@@ -867,7 +943,7 @@ Schwerpunkte dieser Version sind: Diagramme können in Microsoft Excel gelesen w
 
 == Änderungen ==
 - In den Einstellungen zu Dokumentformatierungen wurden die Tastenkürzel für die Ausgaben von Listen, Links, Zeilennummern und Schriftartennamen geändert. (#4650)
-- In den Mauseinstellungen von NVDA wurden Tastenkürzel für Audiokoordinaten bei Mausbewegungen wiedergeben sowie Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren hinzugefügt. (#4916)
+- In den Maus-Einstellungen von NVDA wurden Tastenkürzel für Audiokoordinaten bei Mausbewegungen wiedergeben sowie Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren hinzugefügt. (#4916)
 - Die Ausgabe von Farbnamen wurde verbessert. (#4984)
 - Die Brailleübersetzung Liblouis wurde auf Version 2.6.2 aktualisiert. (#4777)
 
@@ -1773,7 +1849,7 @@ Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserun
 - Wenn die aussprache von Satzzeichen deaktiviert ist, kommt es nun nicht mehr zu falsch ausgesprochenen Satzzeichen bei der Verwendung einiger Sprachausgaben (#332)
 - Wenn Sie einen Sprachsynthesizer verwenden, der keine Stimmeneinstellungen unterstützt (so z. B. audiologic tts3), kommt es nun nicht mehr zu Problemen beim Laden der Konfiguration. (#1347)
 - Das Skype-Menü Extras wird nun richtig gelesen. (#648)
-- Wenn Sie unter Windows Vista oder unter windows 7 mit aktiviertem Aero in den Mauseinstellungen das Kontrollkästchen "Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren" aktiviert haben, sollte es nun nicht mehr zu Problemen kommen. (#1183)
+- Wenn Sie unter Windows Vista oder unter windows 7 mit aktiviertem Aero in den Maus-Einstellungen das Kontrollkästchen "Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren" aktiviert haben, sollte es nun nicht mehr zu Problemen kommen. (#1183)
 - Bei Verwendung des Laptop-Tastaturschemas arbeitet die Tastenkombination NVDA+Entf jetzt wie dokumentiert und gibt die Größe und Position des aktuellen Navigator-Objekts zurück. (#1498)
 - NVDA verarbeitet nun das "aria-selected"-Attribut korrekt.
 - Wenn vom Lesemodus in den Fokusmodus gewechselt wird und sich der Fokus auf einem Formularfeld befindet, wird dieses im richtigen Kontext angezeigt. Wenn Sie sich z. B. auf einem Listeneintrag befinden, wird zuerst der name der Liste angezeigt. (#1491)
@@ -2128,7 +2204,7 @@ die wichtigsten Neuerungen dieser version sind u. a. die Unterstützung von 64-b
 - Die Unterstützung in Dokumenten für Internet Explorer und Adobe Reader wurde komplett erneuert. Diese Unterstützung wurde mit der Unterstützung für Mozilla Gecko vereinheitlicht. Auf diese weise werden Leistungsmerkmale wie die schnelle Verarbeitung des Dokuments, Schnellnavigation, die Linkliste, das Markieren von Text, automatischer Fokusmodus und Braille-Unterstützung in solchen Dokumenten verfügbar.
 - Verbesserte Unterstützung für das Steuerelement zur Datumsauswahl im Dialog Datum/Uhrzeit unter Windows Vista.
 - Verbesserte Unterstützung für das moderne Startmenü von Windows xp und Windows Vista. Speziell im Untermenü "alle Programme2 wird nun ach die Baumebene mi angegeben.
-- Die Menge an Text, die beim Bewegen der Maus angegeben werden soll, kann in den Mauseinstellungen konfiguriert werden. Hier kann zwischen Zeichen, Wort, Zeile oder Absatz ausgewählt werden.
+- Die Menge an Text, die beim Bewegen der Maus angegeben werden soll, kann in den Maus-Einstellungen konfiguriert werden. Hier kann zwischen Zeichen, Wort, Zeile oder Absatz ausgewählt werden.
 - In Microsoft Word werden Rechtschreibfehler korrekt erkannt.
 - Unterstützung der Rechtschreibprüfung in Microsoft Word 2007. In früheren Versionen von Microsoft Word wird sie ebenfalls teilweise unterstützt.
 - Bessere Unterstützung von Windows Live Mail. Klartext-Nachrichten können gelesen sowie text- und HTML-Nachrichten verfasst werden.
