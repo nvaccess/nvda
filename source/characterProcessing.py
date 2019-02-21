@@ -1,6 +1,6 @@
 #characterProcessing.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2010-2018 NV Access Limited, World Light Information Limited, Hong Kong Blind Union, Babbage B.V.
+#Copyright (C) 2010-2019 NV Access Limited, World Light Information Limited, Hong Kong Blind Union, Babbage B.V., Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -666,6 +666,35 @@ def clearSpeechSymbols():
 	"""
 	SpeechSymbolProcessor.localeSymbols.invalidateAllData()
 	_localeSpeechSymbolProcessors.invalidateAllData()
+
+
+# Types of number processing
+NNR_PROC_FULL = 0
+NR_PROC_SINGLE = 1
+NR_PROC_DOUBLE = 2
+NR_PROC_TRIPPLE = 3
+
+# regexp for parsing numbers:
+NR_PROC_REGEX = {
+	#NNR_PROC_FULL: None,
+	NR_PROC_SINGLE: re.compile(r"(\d)(?=\d+(\D|\b))", re.UNICODE),
+	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?=(\d{2})+(\D|\b))", re.UNICODE),
+	NR_PROC_TRIPPLE: re.compile(r"(\d{1,3})(?=(\d{3})+(\D|\b))", re.UNICODE),
+}
+
+def processNumbers(Locale, nrProcType, text):
+	"""Processes text for number pronunciation according to the provided type for the providd locale.
+	@param locale: The locale of the text.
+	@type locale: str
+	@param nrProcType: The type of number processing.
+	@type nrProcType: one of the C{NR_PROC_*} constants
+	@param text: The text to process.
+	@type text: str
+	"""
+	regex = NR_PROC_REGEX.get(nrProcType)
+	if not regex:
+		return text
+	return regex.sub(r"\1  ", text)
 
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:
