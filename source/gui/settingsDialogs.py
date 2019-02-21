@@ -1008,6 +1008,18 @@ class VoiceSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
 	title = _("Voice")
 
+	#Choices for numbers combo box in Voice settings.
+	DIGIT_CHOICES = [
+		# Translators: Choice in a combo box for speaking full numbers.
+		_("Full numbers"),
+		# Translators: Choice in a combo box for speaking numbers as digits.
+		_("Digits"),
+		# Translators: Choice in a combo box for speaking numbers as double digits.
+		_("Double digits"),
+		# Translators: Choice in a combo box for speaking numbers as triple digits.
+		_("Triple digits"),
+	]
+
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
 		slider.SetLineSize(setting.minStep)
@@ -1137,6 +1149,11 @@ class VoiceSettingsPanel(SettingsPanel):
 		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 
+		# Translators: Label for a combo box for setting how nvda speaks numbers.
+		digitsText = _("Speak &numbers as")
+		self.digitsCombo = settingsSizerHelper.addLabeledControl(digitsText, wx.Choice, choices=self.DIGIT_CHOICES)
+		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
+
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
 		useSpellingFunctionalityText = _("Use &spelling functionality if supported")
@@ -1210,6 +1227,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
+		config.conf["speech"]["readNumbersAs"]=self.digitsCombo.GetSelection()
 		config.conf["speech"][synth.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 
 class KeyboardSettingsPanel(SettingsPanel):
