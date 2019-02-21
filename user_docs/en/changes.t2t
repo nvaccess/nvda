@@ -65,7 +65,8 @@ What's New in NVDA
 - In Mozilla Firefox and Google Chrome, empty alerts are no longer reported. (#5657)
 - Significant performance improvements when navigating cells in Microsoft Excel, particularly when the spreadsheet contains comments and or validation dropdown lists. (#7348)
 - It should be no longer necessary to turn off in-cell editing in Microsoft Excel's options to access the cell edit control with NVDA in Excel 2016/365. (#8146).
- 
+- Fixed a freeze in Firefox sometimes seen when quick navigating by landmarks, if the extendedAria add-on is in use. (#8980)
+
 
 == Changes for Developers ==
 - NVDA can now  be built with all editions of Microsoft Visual Studio 2017 (not just the Community edition). (#8939)
