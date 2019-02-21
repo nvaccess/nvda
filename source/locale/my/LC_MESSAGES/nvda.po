@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-d9b0092\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-17 00:10+1000\n"
-"PO-Revision-Date: 2018-08-19 10:44+0630\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:56-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: my\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 1.8.9\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1140,6 +1140,18 @@ msgstr "ယူနီကုတ်ဘရေးလ်"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "ဗီယက်နန် ဂရိတ် ၁"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "တရုတ်(ထိုင်ဝမ်၊မန်ဒရင်း)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "တရုတ်(ထိုင်ဝမ်၊မန်ဒရင်း)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4219,7 +4231,7 @@ msgstr "အထွေထွေ"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "ကွန်ထရိုး + အောတားလ် + အန်န် ခလုတ်တွဲ"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -6403,7 +6415,7 @@ msgstr "မိုက်ကရိုဆော့ဖ်ဝင်းဒိုးအ
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "မူပိုင်ခွင့် {years} NVDA ပါဝင်ဖြည့်ဆည်းပေးသူများ"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6430,7 +6442,7 @@ msgstr ""
 "ဤစည်းကမ်းချက်သည်ဤဆော့ဖ်ဝဲ၏မူရင်းနှင့်ပြုပြင်ထားသည့်ကော်ပီများနှစ်မျိုးစလုံးအပြင်\n"
 "၎င်းမှဆင်းသက်လာသည့်လက်ရာထည်များအပေါ်ပါသက်ရောက်သည်။ထပ်မံ၍အသေးစိတ်သိချင်လျှင်\n"
 "လိုင်စင်ကို အကူအညီမီနူးမှကြည့်နိုင်သည်။အွန်လိုင်းတွင်လည်း\n"
-"http://www.gnu.org/license/old-licenses/gpl-2.0.html တွင်ကြည့်နိုင်သည်။\n"
+"https://www.gnu.org/license/old-licenses/gpl-2.0.html တွင်ကြည့်နိုင်သည်။\n"
 "{name} သည် မျက်မမြင်များနှင့်အမြင်အာရုံချို့တဲ့သူများအတွက် အခမဲ့ရပြီး open source ဖြေရှင်းချက်များ\n"
 "ကူညီပေးခြင်းနှင့်အားပေးမြှင့်တင်ခြင်းတွင်အားစိုက်ဆောင်ရွက်နေသည့်အကျိုးအမြတ်မယူသောအဖွဲ့အစည်း\n"
 "ဖြစ်သည့် NV Access ကဖော်ထုတ်ခြင်းဖြစ်သည်။\n"
@@ -6634,35 +6646,20 @@ msgstr "မဖတ်ရသေး"
 msgid "Editing profile {profile}"
 msgstr "Profile အားပြင်ဆင်ခြင်း {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "ခရမ်းရောင် အလံ"
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied"
+msgstr "အစားထိုး"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "လိမ္မော်ရောင် အလံ"
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "အစားထိုး"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "အစိမ်းရောင် အလံ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "အဝါရောင် အလံ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "အပြာရောင် အလံ"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "အနီရောင် အလံ"
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "ရှေ့သို့"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8361,6 +8358,13 @@ msgstr "ပုဒ်ဖြတ်ပုဒ်ရပ်/သင်္ကေတအ�
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "အက္ခရာများနှင့်သင်္ကေတများကိုင်တွယ်စီမံရာတွင်စကားသံ၏ဘာသာစကားကိုယုံကြည်ရ"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid "Include Unicode Consortium data (including emoji) when processing characters and symbols"
+msgstr "အက္ခရာများနှင့်သင်္ကေတများကိုင်တွယ်စီမံရာတွင်စကားသံ၏ဘာသာစကားကိုယုံကြည်ရ"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "စာလုံးကြီးအသံအနိမ့်အမြင့်ပြောင်းလဲမှုရာခိုင်နှုန်း"
@@ -8384,20 +8388,11 @@ msgstr "အထောက်အပံ့ပေးထားလျှင်စာလ
 msgid "Keyboard"
 msgstr "ကီးဘုတ်"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "စာလုံးအကြီးခလုတ်ကို NVDA အပြောင်းခလုတ်အဖြစ်သုံးရန်"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "NVDA အပြောင်းခလုတ်အဖြစ် နမ်းပက်ဒ်ကြားထိုးထည့်သွင်း အင်းဆတ်ခလုတ်ကိုသုံးရန်"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "NVDA အပြောင်းခလုတ်အဖြစ် တိုးချဲ့ကြားထိုးထည့်သွင်း အင်းဆတ်ခလုတ်ကိုသုံးရန်"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
+msgstr "&စာလုံးအကြီးခလုတ်ကို NVDA အပြောင်းခလုတ်အဖြစ်သုံးရန်"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8560,8 +8555,9 @@ msgstr "ကိရိယာအညွှန်းအကြောင်းပြန
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "အကူအညီစကားပြောဘောင်ကွက်အကြောင်းပြန်ရန်"
+#, fuzzy
+msgid "Report &notifications"
+msgstr "ကိရိယာအညွှန်းအကြောင်းပြန်ရန်"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10434,6 +10430,16 @@ msgstr "မှတ်ချက် : {text} {date} တွင် {author} ထံမ
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}{description} : {text} {date} တွင် {author} ထံမှ"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "ဆလိုက်အနားစွန်းဘယ်ဘက်မှ {distance:.3g} ပွိုင့်အကွာတွင်ရှိသည်"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "ဆလိုက်အနားစွန်းအပေါ်ဘက်မှ {distance:.3g} ပွိုင့်အကွာတွင်ရှိသည်"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10592,188 +10598,3 @@ msgstr "လိုင်းအစိတ်အကျဲတန်ဖိုး ၂ �
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "လိုင်းအစိတ်အကျဲတန်ဖိုး ၁.၅ ဆ"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} - {layout}"
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "အမ်ဟဲရစ်"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "အာရဗီ"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr ""
-#~ "\t\n"
-#~ "နီပေါ"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "ဆားဗီးယား(လက်တင်)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "NVDA စကားသံချိန်ညှိမှုစကားပြောကွက်ကိုပြရန်"
-
-#~ msgid "&General settings..."
-#~ msgstr "အထွေထွေချိန်ညှိမှုများ"
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "ဆင်သဆိုက်ဇာ"
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "အသုံးပြုမည့်ဆင်သဆိုက်ဇာပြောင်းလဲရန်"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "အသုံးပြုမည့် စကားသံ၊နှုန်း၊အသံအနိမ့်အမြင့် နှင့်အသံအတိုးအကျယ်ရွေးရန်"
-
-#~ msgid "B&raille settings..."
-#~ msgstr "ဘရေးချိန်ညှိမှုများ"
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "ကီးဘုတ်ချိန်ညှိမှုများ"
-
-#~ msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-#~ msgstr "ကီးဘုတ် ခလုတ်အစီအစဉ်ချထားပုံ စနစ်၊ စာရိုက်သွင်းသည့် အက္ခရာများ၊စကားလုံးများသို့မဟုတ် အမိန့်ပေးခလုတ်များပြောရန်"
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "မောက်စ်ချိန်ညှိမှုများ"
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr "မောက်စ်ပုံသဏ္ဌာန် နှင့် မောက်စ်အောက်ရှိ ဝတ္ထု အကြောင်းပြန်ခြင်းအပြောင်းအလဲ"
-
-#, fuzzy
-#~ msgid "&Touch interaction..."
-#~ msgstr "အသံအဘိဓာန်"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "ခြုံငုံကြည့်ရှုမှုအညွှန်းမြားမည်သည့်အခါမည်သို့ရွှေ့မည်ကိုစီစဉ်ချမှတ်ရန်"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "အသွင်းပေါင်းစပ်ဖွဲ့စည်းမှုချိန်ညှိမှုများ"
-
-#~ msgid "Configure how NVDA reports input composition and candidate selection for certain languages"
-#~ msgstr "အချို့သောဘာသာစကားများအတွက် အသွင်းပေါင်းစပ်ဖွဲ့စည်းမှုနှင့် ဖြစ်နိုင်ခြေရွေးချယ်ခြင်းကို NVDA မှအကြောင်းပြန်မှုကိုစီစဉ်ချမှတ်ရန်"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "ဝတ္ထုကိုယ်စားပြုတင်ပြပုံ"
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "ဝတ္ထုအကြောင်းပြောခြင်းများပြောင်းလဲရန်"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "လှည့်လည်ကြည့်ရှုသည့်နည်းလမ်းပုံစံ"
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "အတုယောင်ကြားခံသီးသန့်ချိန်ညှိမှုများပြောင်းလဲရန်"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "မှတ်တမ်းဖိုင်ပုံပန်းသွင်ပြင်ချမှတ်ခြင်း"
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "မှတ်တမ်းဖိုင်ကြန်အင်လက္ခဏာများချိန်ညှိမှုများပြောင်းလဲရန်"
-
-#, fuzzy
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "Windows 10 ၏ OCR"
-
-#~ msgid "General Settings"
-#~ msgstr "အထွေထွေချိန်ညှိမှုများ"
-
-#~ msgid "Voice Settings"
-#~ msgstr "စကားသံချိန်ညှိမှုများ"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "ကီးဘုတ်ချိန်ညှိမှုများ"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "မောက်စ်ချိန်ညှိမှုများ"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "ခြုံငုံကြည့်ရှုမှုအညွှန်းမြားချိန်ညှိမှုများ"
-
-#~ msgid "Braille Settings"
-#~ msgstr "ဘရေးချိန်ညှိမှုများ"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "ပြင်သစ်(ကနေဒါ) ဂရိတ် ၁"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "ပြင်သစ်(ကနေဒါ) ဂရိတ် ၂"
-
-#~ msgid "Mongolian"
-#~ msgstr "မွန်ဂိုလီးယား"
-
-#~ msgid "Download and &install update"
-#~ msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုဒေါင်းလုဒ်ချပြီးထည့်သွင်းတပ်ဆင်ရန်"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "နောက်ဆုံးရအဆင့်မြှင့်တင်မှုကဒေါင်းလုဒ်ချပြီး။၎င်းကိုယခုထည့်သွင်းတပ်ဆင်တော့မည်"
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "လမ်းကြောင်းရှာပြီးပုံပန်းသွင်ပြင်ချထားပုံကိုအကြောင်းပြန်ရန်"
-
-#~ msgid "r%s"
-#~ msgstr "ဇယားကွက်အတန်း %s"
-
-#~ msgid "c%s"
-#~ msgstr "ဇယားကွက်အတိုင် %s"
-
-#~ msgid "suspended"
-#~ msgstr "ဆိုင်းငံ့ထားသည်"
-
-#~ msgid "running"
-#~ msgstr "လည်ပတ်နေသည်"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "ALVA BC640/680 စီးရီး"
-
-#~ msgid "review"
-#~ msgstr "ခြုံငုံကြည့်ရှုမှု"
-
-#~ msgid "focus"
-#~ msgstr "စနစ်အသက်ဝင်ရာ"
-
-#~ msgid "B&raille tethered to:"
-#~ msgstr "ဘရေးကိုချိတ်ဆက်ထားရာ :"
-
-#~ msgid "Not defined"
-#~ msgstr "သတ်မှတ်မထား"
-
-#~ msgid "Value"
-#~ msgstr "တန်ဖိုး"
-
-#~ msgid "Series"
-#~ msgstr "စီးရီးအတွဲ"
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "{axisName} ဝင်ရိုးသည် {axisTitle} ဖြစ်သည်"
-
-#~ msgid "Primary"
-#~ msgstr "ပင်မဝင်ရိုးအုပ်စု"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr "ပုံပြစာရင်းကားချပ်ဝင်ရိုး ၊ အမျိုးအစား : {axisType}၊ အုပ်စု : {axisGroup} ၊ အမည် : {axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "ပုံပြစာရင်းကားချပ်ဝင်ရိုး ၊ အမျိုးအစား : {axisType}၊ အုပ်စု : {axisGroup}"
-
-#~ msgid "Chart axis title"
-#~ msgstr "ပုံပြစာရင်းကားချပ်ဝင်ရိုးအမည်"
-
-#~ msgid "trendline"
-#~ msgstr "အလားအလာပြမျဉ်းလိုင်း"
-
-#~ msgid "Legend"
-#~ msgstr "ရှင်းလင်းချက်အညွန်း"
-
-#~ msgid "No legend"
-#~ msgstr "ရှင်းလင်းချက်အညွှန်းမရှိပါ"
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "HIMS SyncBraille"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "Handy Tech driver စီစဉ်ချထားပုံစနစ် ဝင်းဒိုးကိုပြပါ"

@@ -17,41 +17,31 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <oleacc.h>
 #include <oleidl.h>
+#include <atlcomcli.h>
 #include <mshtml.h>
 #include <set>
 #include <string>
 #include <sstream>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
+#include <remote/dllmain.h>
 #include <common/log.h>
 #include "node.h"
 #include "mshtml.h"
 
 using namespace std;
 
-HINSTANCE backendLibHandle=NULL;
-UINT WM_HTML_GETOBJECT;
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-		backendLibHandle=hModule;
-		WM_HTML_GETOBJECT=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
-	}
-	return TRUE;
-}
-
 void incBackendLibRefCount() {
 	HMODULE h=NULL;
-	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)backendLibHandle,&h);
+	BOOL res=GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&h);
 	nhAssert(res); //Result of upping backend lib ref count
-	LOG_DEBUG(L"Increased backend lib ref count");
+	LOG_DEBUG(L"Increased  remote lib ref count");
 }
 
 void decBackendLibRefCount() {
-	BOOL res=FreeLibrary(backendLibHandle);
+	BOOL res=FreeLibrary(dllHandle);
 	nhAssert(res); //Result of freeing backend lib
-	LOG_DEBUG(L"Decreased backend lib ref count");
+	LOG_DEBUG(L"Decreased remote lib ref count");
 }
 
 VBufStorage_controlFieldNode_t* MshtmlVBufBackend_t::getDeepestControlFieldNodeForHTMLElement(IHTMLElement* pHTMLElement) {
@@ -412,8 +402,11 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if (pHTMLCurrentStyle) pHTMLCurrentStyle->Release();
 }
 
+// #8976: the string in the following macro  must be passed to the COM method as a BSTR 
+// otherwise the COM marshaller will try and read the BSTR length and hit either inaccessible memory or get back junk. 
+// This is seen in optimized builds of NVDA when accessing some CHM files in hh.exe.
 #define macro_addHTMLAttributeToMap(attribName,allowEmpty,attribsObj,attribsMap,tempVar,tempAttrObj) {\
-	attribsObj->getNamedItem(attribName,&tempAttrObj);\
+	attribsObj->getNamedItem(CComBSTR(attribName),&tempAttrObj);\
 	if(tempAttrObj) {\
 		VariantInit(&tempVar);\
 		tempAttrObj->get_nodeValue(&tempVar);\
@@ -470,6 +463,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"onmousedown",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"onmouseup",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"required",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"class",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	//ARIA properties:
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-roledescription",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -916,7 +910,8 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	//All inner parts of a table (rows, cells etc) if they are changed must re-render the entire table.
 	//This must be done even for nodes with display:none.
 	if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TR")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"TD")==0)) {
-		parentNode->updateAncestor=tableInfo->tableNode;
+		parentNode->requiresParentUpdate=true;
+		parentNode->allowReuseInAncestorUpdate=false;
 	}
 
 	//We do not want to render any content for dontRender nodes
@@ -1243,6 +1238,8 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 				previousNode=buffer->addTextFieldNode(parentNode,NULL,contentString);
 				fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 			}
+			// If any descendant is invalidated, this may change whether this node has no useful content.
+			parentNode->alwaysRerenderDescendants=true;
 		}
 	}
 
@@ -1313,10 +1310,15 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	return parentNode;
 }
 
+UINT getHTMLWindowMessage() {
+	static UINT wm=RegisterWindowMessage(L"WM_HTML_GETOBJECT");
+	return wm;
+}
+
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	LOG_DEBUG(L"Getting document from window "<<docHandle);
-	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),WM_HTML_GETOBJECT,0,0);
+	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),getHTMLWindowMessage(),0,0);
 	if(res==0) {
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
@@ -1366,7 +1368,7 @@ MshtmlVBufBackend_t::~MshtmlVBufBackend_t() {
 	LOG_DEBUG(L"Mshtml backend destructor");
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* MshtmlVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new MshtmlVBufBackend_t(docHandle,ID);
 	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;

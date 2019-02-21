@@ -152,8 +152,8 @@ class GlobalCommands(ScriptableObject):
 	def script_leftMouseClick(self,gesture):
 		# Translators: Reported when left mouse button is clicked.
 		ui.message(_("Left click"))
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 	# Translators: Input help mode message for left mouse click command.
 	script_leftMouseClick.__doc__=_("Clicks the left mouse button once at the current mouse position")
 	script_leftMouseClick.category=SCRCAT_MOUSE
@@ -161,8 +161,8 @@ class GlobalCommands(ScriptableObject):
 	def script_rightMouseClick(self,gesture):
 		# Translators: Reported when right mouse button is clicked.
 		ui.message(_("Right click"))
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 	# Translators: Input help mode message for right mouse click command.
 	script_rightMouseClick.__doc__=_("Clicks the right mouse button once at the current mouse position")
 	script_rightMouseClick.category=SCRCAT_MOUSE
@@ -171,11 +171,11 @@ class GlobalCommands(ScriptableObject):
 		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
 			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 			ui.message(_("Left mouse button unlock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		else:
 			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 			ui.message(_("Left mouse button lock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 	# Translators: Input help mode message for left mouse lock/unlock toggle command.
 	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
 	script_toggleLeftMouseButton.category=SCRCAT_MOUSE
@@ -184,11 +184,11 @@ class GlobalCommands(ScriptableObject):
 		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
 			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 			ui.message(_("Right mouse button unlock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP,0,0)
 		else:
 			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 			ui.message(_("Right mouse button lock"))
-			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN,0,0)
 	# Translators: Input help mode message for right mouse lock/unlock command.
 	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
 	script_toggleRightMouseButton.category=SCRCAT_MOUSE
@@ -1127,9 +1127,24 @@ class GlobalCommands(ScriptableObject):
 		else:
 			try:
 				c = ord(info.text)
+			except TypeError:
+				# This might be a character taking multiple code points.
+				# If it is a 32 bit character, encode it to UTF-32 and calculate the ord manually.
+				# In Python 3, this is no longer necessary.
+				try:
+					encoded = info.text.encode("utf_32_le")
+				except UnicodeEncodeError:
+					c = None
+				else:
+					if len(encoded)==4:
+						c = sum(ord(cp)<<i*8 for i, cp in enumerate(encoded))
+					else:
+						c = None
+			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
-			except:
+			else:
+				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for report current character under review cursor command.
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
@@ -1203,7 +1218,9 @@ class GlobalCommands(ScriptableObject):
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
 			import wx
-			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
+			# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+			core.callLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
@@ -1445,6 +1462,15 @@ class GlobalCommands(ScriptableObject):
 		speech.speakMessage(text)
 		log.info(text)
 
+	def script_startWxInspectionTool(self, gesture):
+		import wx.lib.inspection
+		wx.lib.inspection.InspectionTool().Show()
+	script_startWxInspectionTool.__doc__ = _(
+		# Translators: GUI development tool, to get information about the components used in the NVDA GUI
+		"Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
+	)
+	script_startWxInspectionTool.category = SCRCAT_TOOLS
+
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
 		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
@@ -1516,6 +1542,20 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle focus moves navigator object command.
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
+
+	def script_toggleBrowseMovesFocus(self,gesture):
+		if config.conf["virtualBuffers"]["focusFollowsBrowse"]:
+			# Translators: presented when toggled.
+			state = _("Focus follows browse mode off")
+			config.conf["virtualBuffers"]["focusFollowsBrowse"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Focus follows browse mode on")
+			config.conf["virtualBuffers"]["focusFollowsBrowse"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle browse moves focus command.
+	script_toggleBrowseMovesFocus.__doc__=_("Toggles on and off the movement of the system focus due to browse mode commands") 
+	script_toggleBrowseMovesFocus.category=SCRCAT_FOCUS 
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
@@ -2334,6 +2374,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleBrowseMovesFocus",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring

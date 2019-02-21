@@ -137,6 +137,18 @@ def getSystemConfigPath():
 			pass
 	return None
 
+def getScratchpadDir(ensureExists=False):
+	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
+	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	if ensureExists:
+		if not os.path.isdir(path):
+			os.makedirs(path)
+		for subdir in ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers'):
+			subpath=os.path.join(path,subdir)
+			if not os.path.isdir(subpath):
+				os.makedirs(subpath)
+	return path
+
 def initConfigPath(configPath=None):
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
@@ -149,7 +161,7 @@ def initConfigPath(configPath=None):
 		os.makedirs(configPath)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
-		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+		subdirs.append("addons")
 	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
@@ -295,6 +307,7 @@ def getConfigDirs(subpath=None):
 	@return: The configuration directories in the order in which they should be searched.
 	@rtype: list of str
 	"""
+	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
 	return [os.path.join(dir, subpath) if subpath else dir
 		for dir in (globalVars.appArgs.configPath,)
 	]
@@ -309,16 +322,22 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""
 	if isAppX or globalVars.appArgs.disableAddons:
 		return
-	if not subdir:
-		subdir = module.__name__
-	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
-	dirs.extend(module.__path__ )
-	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
+	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
+		return
+	if not subdir:
+		subdir = module.__name__
+	fullPath=os.path.join(getScratchpadDir(),subdir)
+	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	fullPath=fullPath.encode("mbcs")
+	# Insert this path at the beginning  of the module's search paths.
+	# The module's search paths may not be a mutable  list, so replace it with a new one 
+	pathList=[fullPath]
+	pathList.extend(module.__path__)
+	module.__path__=pathList
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
@@ -332,7 +351,12 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+	BASE_ONLY_SECTIONS = {
+	"general", 
+	"update", 
+	"upgrade",
+	"development",
+}
 
 	def __init__(self):
 		self.spec = confspec
@@ -364,13 +388,14 @@ class ConfigManager(object):
 		if not self._shouldHandleProfileSwitch:
 			self._pendingHandleProfileSwitch = True
 			return
-		init = self.rootSection is None
+		currentRootSection = self.rootSection
+		init = currentRootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		post_configProfileSwitch.notify()
+		post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -439,6 +464,9 @@ class ConfigManager(object):
 
 	def __setitem__(self, key, val):
 		self.rootSection[key] = val
+
+	def dict(self):
+		return self.rootSection.dict()
 
 	def listProfiles(self):
 		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
@@ -900,13 +928,13 @@ class AggregatedSection(object):
 		self._cache[key] = val
 		return val
 
-	def iteritems(self):
+	def __iter__(self):
 		keys = set()
 		# Start with the cached items.
 		for key, val in self._cache.iteritems():
 			keys.add(key)
 			if val is not KeyError:
-				yield key, val
+				yield key
 		# Walk through the profiles and spec looking for items not yet cached.
 		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
 			if not profile:
@@ -915,15 +943,35 @@ class AggregatedSection(object):
 				if key in keys:
 					continue
 				keys.add(key)
-				# Use __getitem__ so caching, AggregatedSections, etc. are handled.
-				try:
-					yield key, self[key]
-				except KeyError:
-					# This could happen if the item is in the spec but there's no default.
-					pass
+				yield key
+
+	def iteritems(self):
+		for key in self:
+			try:
+				yield (key, self[key])
+			except KeyError:
+				# This could happen if the item is in the spec but there's no default.
+				pass
 
 	def copy(self):
 		return dict(self.iteritems())
+
+	def dict(self):
+		"""Return a deepcopy of self as a dictionary.
+		Adapted from L{configobj.Section.dict}.
+		"""
+		newdict = {}
+		for key, value in self.iteritems():
+			if isinstance(value, AggregatedSection):
+				value = value.dict()
+			elif isinstance(value, list):
+				# create a copy rather than a reference
+				value = list(value)
+			elif isinstance(value, tuple):
+				# create a copy rather than a reference
+				value = tuple(value)
+			newdict[key] = value
+		return newdict
 
 	def __setitem__(self, key, val):
 		spec = self._spec.get(key) if self.spec else None

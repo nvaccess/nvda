@@ -28,7 +28,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-import extensionPoints
 
 import extensionPoints
 
@@ -79,8 +78,22 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
-	if not globalVars.appArgs.secure and not config.isAppX and not config.conf['update']['askedAllowUsageStats']:
-		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None))
+	try:
+		import updateCheck
+	except RuntimeError:
+		updateCheck=None
+	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
+			# a callback to save config after the usage stats question dialog has been answered.
+			def onResult(ID):
+				import wx
+				if ID in (wx.ID_YES,wx.ID_NO):
+					try:
+						config.conf.save()
+					except:
+						pass
+			# Ask the user if usage stats can be collected.
+			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -193,6 +206,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if config.conf['development']['enableScratchpadDir']:
+		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
@@ -372,8 +387,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
-	# Therefore treat this situation like wx not knowing the language at all.
-	if not locale.IsAvailable(wxLang.Language):
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
 		wxLang=None
 	if wxLang:
 		try:
