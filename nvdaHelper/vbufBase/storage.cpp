@@ -125,7 +125,7 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, 
 // @param out the stream to which the escaped attribute string should be written
 // @param text The attribute string to be escaped
 // @param maxLength the maximum length of the attribute string that should be copied. If maxLength is 0 or not specified, the entire string is copied.
-// @return the number of characters written to the output stream (before expantion / filtering). This number can be used to see if the string was truncated at all.
+// @return the number of characters written to the output stream (before expansion / filtering). This number can be used to see if the string was truncated at all.
 inline size_t outputEscapedAttribute(wostringstream& out, const wstring& text, size_t maxLength=0) {
 	size_t count=0;
 	for (wstring::const_iterator it = text.begin(); it != text.end(); ++it) {
