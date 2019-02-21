@@ -1007,7 +1007,6 @@ class VoiceSettingsSlider(wx.Slider):
 class VoiceSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
 	title = _("Voice")
->>>>>>> origin/master
 
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
