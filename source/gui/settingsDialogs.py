@@ -1136,13 +1136,11 @@ class VoiceSettingsPanel(SettingsPanel):
 		beepForCapsText =_("&Beep for capitals")
 		self.beepForCapsCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = beepForCapsText))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
-		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
-		
+
 		# Translators: this is a Label for a checkbox for setting how nvda speaks numbers.
 		digitsLabel = _("Speak &numbers as individual digits")
 		self.speakDigitsCheckbox = settingsSizerHelper.addItem(wx.CheckBox(self, label = digitsLabel))
 		self.speakDigitsCheckbox.Value = config.conf["speech"]["readNumbersAsDigits"]
-		settingsSizer.Add(self.speakDigitsCheckbox,border=10,flag=wx.BOTTOM)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.
