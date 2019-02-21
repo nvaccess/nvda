@@ -9,6 +9,7 @@ import api
 import ui
 import speech
 import winUser
+import mouseHandler
 from . import IAccessible
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
@@ -91,9 +92,9 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 				y=l[1]
 				oldX,oldY=winUser.getCursorPos()
 				winUser.setCursorPos(x,y)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 				time.sleep(0.2)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 				winUser.setCursorPos(oldX,oldY)
 				return
 		raise NotImplementedError
@@ -160,7 +161,7 @@ class MSCandUI21(IAccessible):
 				reportSelectedCandidate(item)
 				return
 			elif config.conf["reviewCursor"]["followFocus"]:
-				api.setNavigatorObject(candidateList)
+				api.setNavigatorObject(candidateList, isFocus=True)
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)

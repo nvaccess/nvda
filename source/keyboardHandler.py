@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V.
 
 """Keyboard support"""
 
@@ -27,12 +27,15 @@ import winInputHook
 import inputCore
 import tones
 import core
+from contextlib import contextmanager
+import threading
 
 ignoreInjected=False
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
 VK_WIN = "windows"
+VK_NVDA = "NVDA"
 
 #: Keys which have been trapped by NVDA and should not be passed to the OS.
 trappedKeys=set()
@@ -59,6 +62,16 @@ stickyNVDAModifier = None
 #: Whether the sticky NVDA modifier is locked.
 stickyNVDAModifierLocked = False
 
+_ignoreInjectionLock = threading.Lock()
+@contextmanager
+def ignoreInjection():
+	"""Context manager that allows ignoring injected keys temporarily by using a with statement."""
+	global ignoreInjected
+	with _ignoreInjectionLock:
+		ignoreInjected=True
+		yield
+		ignoreInjected=False
+
 def passNextKeyThrough():
 	global passKeyThroughCount
 	if passKeyThroughCount==-1:
@@ -73,6 +86,18 @@ def isNVDAModifierKey(vkCode,extended):
 		return True
 	else:
 		return False
+
+SUPPORTED_NVDA_MODIFIER_KEYS = ("capslock", "numpadinsert", "insert")
+
+def getNVDAModifierKeys():
+	keys=[]
+	if config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["insert"])
+	if config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["numpadinsert"])
+	if config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]:
+		keys.append(vkCodes.byName["capslock"])
+	return keys
 
 def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
@@ -466,7 +491,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def send(self):
-		global ignoreInjected
 		keys = []
 		for vk, ext in self.generalizedModifiers:
 			if vk == VK_WIN:
@@ -480,8 +504,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			keys.append((vk, 0, ext))
 		keys.append((self.vkCode, self.scanCode, self.isExtended))
 
-		try:
-			ignoreInjected=True
+		with ignoreInjection():
 			if winUser.getKeyState(self.vkCode) & 32768:
 				# This key is already down, so send a key up for it first.
 				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
@@ -494,10 +517,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				winUser.keybd_event(vk, scan, ext + 2, 0)
 
 			if not queueHandler.isPendingItems(queueHandler.eventQueue):
+				# We want to guarantee that by the time that 
+				# this function returns,the keyboard input generated
+				# has been injected and NVDA has received and processed it.
 				time.sleep(0.01)
 				wx.Yield()
-		finally:
-			ignoreInjected=False
 
 	@classmethod
 	def fromName(cls, name):
@@ -516,6 +540,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 				ext = False
+			elif keyName.lower() == VK_NVDA.lower():
+				vk, ext = getNVDAModifierKeys()[0]
 			elif len(keyName) == 1:
 				ext = False
 				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
@@ -608,10 +634,6 @@ def injectRawKeyboardInput(isPress, code, isExtended):
 			flags |= 2
 		if isExtended:
 			flags |= 1
-		global ignoreInjected
-		ignoreInjected = True
-		try:
+		with ignoreInjection():
 			winUser.keybd_event(vkCode, code, flags, None)
 			wx.Yield()
-		finally:
-			ignoreInjected = False

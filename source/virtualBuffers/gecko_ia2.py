@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -10,6 +10,7 @@ import controlTypes
 import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
+import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
@@ -18,9 +19,29 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
-from NVDAObjects.IAccessible import normalizeIA2TextFormatField
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
+
+	def _getBoundingRectFromOffset(self,offset):
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		# The format field starts at the first character.
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
+				# This is no format field.
+				continue
+			attrs = field.field
+			ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+			if ia2TextStartOffset is None:
+				# No ia2TextStartOffset specified, most likely a format field that doesn't originate from IA2Text.
+				continue
+			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
+			relOffset = offset - formatFieldStart + ia2TextStartOffset
+			obj = self._getNVDAObjectFromOffset(offset)
+			if not hasattr(obj, "IAccessibleTextObject"):
+				raise LookupError("Object doesn't have an IAccessibleTextObject")
+			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
+		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
@@ -29,7 +50,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				attrs[attr]=int(attrVal)
 
 		current = attrs.get("IAccessible2::attribute_current")
-		if current is not None:
+		if current not in (None, 'false'):
 			attrs['current']= current
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
@@ -61,6 +82,9 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_SORTED_DESCENDING)
 		elif sorted=="other":
 			states.add(controlTypes.STATE_SORTED)
+		roleText=attrs.get("IAccessible2::attribute_roledescription")
+		if roleText:
+			attrs['roleText']=roleText
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
@@ -81,7 +105,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
 		normalizeIA2TextFormatField(attrs)
-		return attrs
+		ia2TextStartOffset = attrs.get("ia2TextStartOffset")
+		if ia2TextStartOffset is not None:
+			assert ia2TextStartOffset.isdigit(), "ia2TextStartOffset isn't a digit, %r" % ia2TextStartOffset
+			attrs["ia2TextStartOffset"] = int(ia2TextStartOffset)
+		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
 
 class Gecko_ia2(VirtualBuffer):
 
@@ -100,17 +128,13 @@ class Gecko_ia2(VirtualBuffer):
 		return True
 
 	def __contains__(self,obj):
-		#Special code to handle Mozilla combobox lists
-		if obj.windowClassName.startswith('Mozilla') and winUser.getWindowStyle(obj.windowHandle)&winUser.WS_POPUP:
-			parent=obj.parent
-			while parent and parent.windowHandle==obj.windowHandle:
-				parent=parent.parent
-			if parent:
-				obj=parent.parent
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
 			ID=obj.IA2UniqueID
+			if not ID:
+				# Dead object.
+				return False
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 			except COMError:
@@ -126,6 +150,13 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		if not winUser.isWindow(root.windowHandle):
 			return False
+		if not root.isInForeground:
+			# #7818: Subsequent checks make COM calls.
+			# The chances of a buffer dying while the window is in the background are
+			# low, so don't make COM calls in this case; just treat it as alive.
+			# This prevents freezes on every focus change if the browser process
+			# stops responding; e.g. it froze, crashed or is being debugged.
+			return True
 		try:
 			isDefunct=bool(root.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_DEFUNCT)
 		except COMError:
@@ -135,7 +166,11 @@ class Gecko_ia2(VirtualBuffer):
 
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+		try:
+			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
+		except COMError:
+			return None
+		return NVDAObjects.IAccessible.IAccessible(windowHandle=docHandle,IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),IAccessibleChildID=0)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
@@ -189,8 +224,8 @@ class Gecko_ia2(VirtualBuffer):
 			y = t + h / 2
 			oldX, oldY = winUser.getCursorPos()
 			winUser.setCursorPos(x, y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			winUser.setCursorPos(oldX, oldY)
 			break
 
@@ -200,6 +235,8 @@ class Gecko_ia2(VirtualBuffer):
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType.startswith('heading') and nodeType[7:].isdigit():
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING],"IAccessible2::attribute_level":[nodeType[7:]]}
+		elif nodeType == "annotation":
+			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_CONTENT_DELETION,IAccessibleHandler.IA2_ROLE_CONTENT_INSERTION]}
 		elif nodeType=="heading":
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING]}
 		elif nodeType=="table":
@@ -242,7 +279,12 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="blockQuote":
-			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])}
+			attrs=[
+				# Search for a tag of blockquote for older implementations before the blockquote IAccessible2 role existed.
+				{"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])},
+				# Also support the new blockquote IAccessible2 role
+				{"IAccessible::role":[IAccessibleHandler.IA2_ROLE_BLOCK_QUOTE]},
+			]
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
@@ -283,7 +325,10 @@ class Gecko_ia2(VirtualBuffer):
 		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
-			cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			try:
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			except AttributeError:
+				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			if cell.IA2Attributes.get('hidden'):
 				raise LookupError("Found hidden cell") 

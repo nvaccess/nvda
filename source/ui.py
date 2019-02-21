@@ -1,6 +1,6 @@
 #ui.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2016 NV Access Limited, Dinesh Kaushal, Davy Kager
+#Copyright (C) 2008-2017 NV Access Limited, Dinesh Kaushal, Davy Kager, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -32,7 +32,7 @@ HTMLDLG_MODELESS = 0x0040
 HTMLDLG_PRINT_TEMPLATE = 0x0080 
 HTMLDLG_VERIFY = 0x0100 
 
-def browseableMessage(message,title=None , isHtml=False):
+def browseableMessage(message,title=None,isHtml=False):
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
 	@param message: The message in either html or text.
@@ -42,7 +42,7 @@ def browseableMessage(message,title=None , isHtml=False):
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
-	htmlFileName  = os.path.realpath( 'message.html' )
+	htmlFileName  = os.path.realpath( u'message.html' )
 	if not os.path.isfile(htmlFileName ): 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
@@ -68,10 +68,10 @@ def message(text):
 
 def reviewMessage(text):
 	"""Present a message from review or object navigation to the user.
-	The message will always be presented in speech, and also in braille if it is tethered to review.
+	The message will always be presented in speech, and also in braille if it is tethered to review or when auto tethering is on.
 	@param text: The text of the message.
 	@type text: str
 	"""
 	speech.speakMessage(text)
-	if braille.handler.tether == braille.handler.TETHER_REVIEW:
+	if braille.handler.shouldAutoTether or braille.handler.getTether() == braille.handler.TETHER_REVIEW:
 		braille.handler.message(text)

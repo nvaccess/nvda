@@ -90,7 +90,7 @@ class AppModule(appModuleHandler.AppModule):
 			# Move the review cursor so others can't access its previous position.
 			self._oldReviewPos = api.getReviewPosition()
 			self._oldReviewObj = self._oldReviewPos.obj
-			api.setNavigatorObject(eventHandler.lastQueuedFocusObject)
+			api.setNavigatorObject(eventHandler.lastQueuedFocusObject, isFocus=True)
 
 	def event_appModule_loseFocus(self):
 		if not config.conf["reviewCursor"]["followFocus"]:

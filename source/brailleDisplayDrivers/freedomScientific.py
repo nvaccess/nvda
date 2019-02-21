@@ -229,7 +229,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	gestureMap=inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands" : {
 			"braille_routeTo":("br(freedomScientific):routing",),
-			"braille_scrollBack" : ("br(freedomScientific):leftAdvanceBar", "br(freedomScientific]:leftBumperBarUp","br(freedomScientific):rightBumperBarUp",),
+			"braille_scrollBack" : ("br(freedomScientific):leftAdvanceBar", "br(freedomScientific):leftBumperBarUp","br(freedomScientific):rightBumperBarUp",),
 			"braille_scrollForward" : ("br(freedomScientific):rightAdvanceBar","br(freedomScientific):leftBumperBarDown","br(freedomScientific):rightBumperBarDown",),
 			"braille_previousLine" : ("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
 			"braille_nextLine" : ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),
@@ -247,6 +247,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			"kb:control+end" : ("br(freedomScientific):dot4+dot5+dot6+brailleSpaceBar",),
 			"kb:alt" : ("br(freedomScientific):dot1+dot3+dot4+brailleSpaceBar",),
 			"kb:alt+tab" : ("br(freedomScientific):dot2+dot3+dot4+dot5+brailleSpaceBar",),
+			"kb:alt+shift+tab" : ("br(freedomScientific):dot1+dot2+dot5+dot6+brailleSpaceBar",),
+			"kb:windows+tab" : ("br(freedomScientific):dot2+dot3+dot4+brailleSpaceBar",),
 			"kb:escape" : ("br(freedomScientific):dot1+dot5+brailleSpaceBar",),
 			"kb:windows" : ("br(freedomScientific):dot2+dot4+dot5+dot6+brailleSpaceBar",),
 			"kb:windows+d" : ("br(freedomScientific):dot1+dot2+dot3+dot4+dot5+dot6+brailleSpaceBar",),

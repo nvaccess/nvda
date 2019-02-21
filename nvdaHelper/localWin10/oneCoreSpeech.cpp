@@ -30,10 +30,17 @@ using namespace Windows::Storage::Streams;
 using namespace Microsoft::WRL;
 using namespace Windows::Media;
 using namespace Windows::Foundation::Collections;
+using Windows::Foundation::Metadata::ApiInformation;
 
 OcSpeech* __stdcall ocSpeech_initialize() {
 	auto instance = new OcSpeech;
 	instance->synth = ref new SpeechSynthesizer();
+	// By default, OneCore speech appends a  large annoying chunk of silence at the end of every utterance.
+	// Newer versions of OneCore speech allow disabling this feature, so turn it off where possible.
+	if (ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6, 0)) {
+		auto options = instance->synth->Options;
+		options->AppendedSilence = SpeechAppendedSilence::Min;
+	}
 	return instance;
 }
 
@@ -97,6 +104,8 @@ BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance) {
 	for (unsigned int i = 0; i < instance->synth->AllVoices->Size; ++i) {
 		VoiceInformation^ info = instance->synth->AllVoices->GetAt(i);
 		voices += info->Id->Data();
+		voices += L":";
+		voices += info->Language->Data();
 		voices += L":";
 		voices += info->DisplayName->Data();
 		if (i != instance->synth->AllVoices->Size - 1) {

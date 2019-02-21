@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V.
-#Copyright (C) 2006-2016 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Babbage B.V.
+#Copyright (C) 2006-2018 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner, Derek Riemer, Babbage B.V., Zahari Yurukov
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -30,10 +29,27 @@ import globalVars
 from logHandler import log
 import addonHandler
 
+import extensionPoints
+
+# inform those who want to know that NVDA has finished starting up.
+postNvdaStartup = extensionPoints.Action()
+
 PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
 mainThreadId = thread.get_ident()
+
+#: Notifies when a window message has been received by NVDA.
+#: This allows components to perform an action when several system events occur,
+#: such as power, screen orientation and hardware changes.
+#: Handlers are called with three arguments.
+#: @param msg: The window message.
+#: @type msg: int
+#: @param wParam: Additional message information.
+#: @type wParam: int
+#: @param lParam: Additional message information.
+#: @type lParam: int
+post_windowMessageReceipt = extensionPoints.Action()
 
 _pump = None
 _isPumpPending = False
@@ -62,6 +78,22 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
+	try:
+		import updateCheck
+	except RuntimeError:
+		updateCheck=None
+	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
+			# a callback to save config after the usage stats question dialog has been answered.
+			def onResult(ID):
+				import wx
+				if ID in (wx.ID_YES,wx.ID_NO):
+					try:
+						config.conf.save()
+					except:
+						pass
+			# Ask the user if usage stats can be collected.
+			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -138,7 +170,7 @@ def resetConfiguration(factoryDefaults=False):
 	inputCore.manager.loadLocaleGestureMap()
 	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
-		audioDucking.handleConfigProfileSwitch()
+		audioDucking.handlePostConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
 	
 
@@ -163,11 +195,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	log.debug("Core starting")
 
-	try:
-		# Windows >= Vista
-		ctypes.windll.user32.SetProcessDPIAware()
-	except AttributeError:
-		pass
+	ctypes.windll.user32.SetProcessDPIAware()
 
 	import config
 	if not globalVars.appArgs.configPath:
@@ -178,6 +206,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if config.conf['development']['enableScratchpadDir']:
+		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
@@ -196,6 +226,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
+	import configobj
+	log.info("Using configobj version %s with validate version %s"%(configobj.__version__,configobj.validate.__version__))
 	# Set a reasonable timeout for any socket connections NVDA makes.
 	import socket
 	socket.setdefaulttimeout(10)
@@ -220,14 +252,22 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
+	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
+	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
+	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
 	log.info("Using wx version %s"%wx.version())
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
 			log.debugWarning(message,codepath="WX Widgets",stack_info=True)
 	app = App(redirect=False)
-	# We do support QueryEndSession events, but we don't want to do anything for them.
-	app.Bind(wx.EVT_QUERY_END_SESSION, lambda evt: None)
+	# We support queryEndSession events, but in general don't do anything for them.
+	# However, when running as a Windows Store application, we do want to request to be restarted for updates
+	def onQueryEndSession(evt):
+		if config.isAppX:
+			# Automatically restart NVDA on Windows Store update
+			ctypes.windll.kernel32.RegisterApplicationRestart(None,0)
+	app.Bind(wx.EVT_QUERY_END_SESSION, onQueryEndSession)
 	def onEndSession(evt):
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
@@ -283,6 +323,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			self.handlePowerStatusChange()
 
 		def windowProc(self, hwnd, msg, wParam, lParam):
+			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
 			elif msg == self.WM_DISPLAYCHANGE:
@@ -344,6 +385,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
+	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
+	# If we try to initialize this language, wx will show a warning dialog.
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
+		wxLang=None
 	if wxLang:
 		try:
 			locale.Init(wxLang.Language)
@@ -401,11 +449,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
-		import wx
 		import gui.installerGui
 		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
 			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
@@ -430,9 +476,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# Doing this here is a bit ugly, but we don't want these modules imported
 	# at module level, including wx.
 	log.debug("Initializing core pump")
-	class CorePump(wx.Timer):
+	class CorePump(gui.NonReEntrantTimer):
 		"Checks the queues and executes functions."
-		def Notify(self):
+		def run(self):
 			global _isPumpPending
 			_isPumpPending = False
 			watchdog.alive()
@@ -449,9 +495,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
 			if _isPumpPending and not _pump.IsRunning():
-				# #3803: A pump was requested, but the timer was ignored by a modal loop
-				# because timers aren't re-entrant.
-				# Therefore, schedule another pump.
+				# #3803: Another pump was requested during this pump execution.
+				# As our pump is not re-entrant, schedule another pump.
 				_pump.Start(PUMP_MAX_DELAY, True)
 	global _pump
 	_pump = CorePump()
@@ -468,6 +513,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
 	log.info("NVDA initialized")
+	postNvdaStartup.notify()
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()

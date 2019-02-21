@@ -1,6 +1,6 @@
 #NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import eventHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, LiveText
 import watchdog
+from locationHelper import RectLTWH
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -124,20 +125,23 @@ An NVDAObject for a window
 			from .akelEdit import AkelEdit as newCls
 		elif windowClassName=="ConsoleWindowClass":
 			from .winConsole import WinConsole as newCls
-		elif windowClassName=="_WwG":
-			from .winword import WordDocument as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:
 			clsList.append(newCls)
 
-		#If none of the chosen classes seem to support text editing
-		#But there is a caret currently in the window
-		#Then use the displayModelEditableText class to emulate text editing capabilities
+		# If none of the chosen classes seem to support text editing
+		# but there is a caret currently in the window,
+		# check whether this window exposes its content without using the display model.
+		# If not, use the displayModelEditableText class to emulate text editing capabilities
 		if not any(issubclass(cls,EditableText) for cls in clsList):
 			gi=winUser.getGUIThreadInfo(self.windowThreadID)
 			if gi.hwndCaret==self.windowHandle and gi.flags&winUser.GUI_CARETBLINKING:
-				clsList.append(DisplayModelEditableText)
+				if self.windowTextLineCount:
+					from .edit import UnidentifiedEdit
+					clsList.append(UnidentifiedEdit)
+				else:
+					clsList.append(DisplayModelEditableText)
 
 		clsList.append(Window)
 		super(Window,self).findOverlayClasses(clsList)
@@ -165,6 +169,9 @@ An NVDAObject for a window
 		self.windowHandle=windowHandle
 		super(Window,self).__init__()
 
+	def _get_uniqueID(self):
+		return self.windowHandle
+
 	def _isEqual(self,other):
 		return super(Window,self)._isEqual(other) and other.windowHandle==self.windowHandle
 
@@ -189,7 +196,7 @@ An NVDAObject for a window
 	def _get_location(self):
 		r=ctypes.wintypes.RECT()
 		ctypes.windll.user32.GetWindowRect(self.windowHandle,ctypes.byref(r))
-		return (r.left,r.top,r.right-r.left,r.bottom-r.top)
+		return RectLTWH.fromCompatibleType(r)
 
 	def _get_displayText(self):
 		"""The text at this object's location according to the display model for this object's window."""
@@ -211,6 +218,9 @@ An NVDAObject for a window
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
 		watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value
+
+	def _get_windowTextLineCount(self):
+		return watchdog.cancellableSendMessage(self.windowHandle,winUser.EM_GETLINECOUNT,0,0)
 
 	def _get_processID(self):
 		if hasattr(self,"_processIDThreadID"):
