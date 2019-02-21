@@ -3,6 +3,21 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+
+== Tính năng mới ==
+- Các bản chữ nổi mới: chữ nổi máy tính 8 chấm Ả Rập, Ả rập cấp 2, Tây ban nha cấp 2. (#4435)
+- Thêm một tùy chọn vào cài đặt chuột của NVDA để quản lý các tình huống mà chuột được điều khiển bởi một ứng dụng khác. (#8452) 
+ - Điều này sẽ cho phép NVDA theo dõi chuột khi hệ thống được điều khiển từ xa bằng TeamViewer hay các phần mềm điều khiển từ xa khác.
+- Đã thêm tham số `--disable-start-on-logon` vào dòng lệnh nhằm cho phép cài NVDA ở chế độ silent mà mặc định không chạy ở màn hình khởi động. (#8574)
+- Có thể tắt tính năng log của NVDA bằng cách thiết lập mức độ log là "tắt" trong bản cài đặt chung. (#8516)
+- Trình bày các công thức của các bẳng tính trong LibreOffice và Apache OpenOffice giờ đây đã được đọc. (#860)
+- Trong Mozilla Firefox và Google Chrome, chế độ duyệt  giờ đây đã đọc thành phần được chọn trong các hộp danh sách và cây thư mục.
+ - Tính năng này hoạt động trong Firefox 66 trở lên.
+ - không hoạt động trong một số hộp danh sách nhất định (HTML select controls) trong Chrome.
+  - Đã thêm bảng chữ nổi tiếng Nam Phi. (#9186)
+
+
 = 2018.4.1 =
  Bản phát hành này sửa lỗi làm cho NVDA bị treo lúc khởi động, nếu cài đặt ngôn ngữ giao diện người dùng là tiếng Aragon. (#9089)
 
