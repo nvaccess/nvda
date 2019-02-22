@@ -553,35 +553,49 @@ class SpeechSymbolProcessor(object):
 			else:
 				return suffix
 
-	@Getter
-	def _decimalRegex(self):
-		symbol = self.complexSymbols.get('decimal point')
-		if not symbol:
-			return None
-		self._decimalRegex = re.compile(symbol.pattern, re.UNICODE)
-		return self._decimalRegex
-
-	@Getter
-	def _thousandsRegex(self):
-		symbol = self.complexSymbols.get('thousands separator')
-		if not symbol:
-			return None
-		self._thousandsRegex = re.compile(symbol.pattern, re.UNICODE)
-		return self._thousandsRegex
-
 	def processText(self, text, level):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
+
+	@Getter
+	def _decimalRegex(self):
+		symbol = self.computedSymbols.get('decimal point')
+		if not symbol:
+			return None
+		regex = re.compile(symbol.pattern, re.UNICODE)
+		if regex.groups != 1:
+			log.error("Decimal point pattern {pattern} for {locale} has {groups} groups, should be 1".format(
+				pattern=symbol.pattern,
+				locale=self.locale,
+				groups=regex.groups
+			))
+			return None
+		self._decimalRegex = regex
+		return self._decimalRegex
+
+	@Getter
+	def _thousandsRegex(self):
+		symbol = self.computedSymbols.get('thousands separator')
+		if not symbol:
+			return None
+		regex = re.compile(symbol.pattern, re.UNICODE)
+		self._thousandsRegex = regex
+		return self._thousandsRegex
+
 	def processNumbers(self, nrProcType, text):
 		regex = NR_PROC_REGEX.get(nrProcType)
 		if not regex:
+			# Return the text untouched
 			return text
-		# Strip thousands separators from the text.
-		text = u"".join(self._thousandsRegex.split(text))
 		if nrProcType != NR_PROC_SINGLE:
-			pass
-		return regex.sub(r"\1  ", text)
+			text = self._thousandsRegex.sub("", text)
+		splitText = self._decimalRegex.split(text)
+		text = u"".join(
+			regex.sub(r"\1  ", chunk) if chunk.isdigit() else chunk
+			for chunk in splitText
+		)
+		return text
 
 	def updateSymbol(self, newSymbol):
 		"""Update information for a symbol if it has changed.
