@@ -577,6 +577,8 @@ class SpeechSymbolProcessor(object):
 		regex = NR_PROC_REGEX.get(nrProcType)
 		if not regex:
 			return text
+		# Strip thousands separators from the text.
+		text = u"".join(self._thousandsRegex.split(text))
 		if nrProcType != NR_PROC_SINGLE:
 			pass
 		return regex.sub(r"\1  ", text)
