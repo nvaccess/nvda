@@ -12,6 +12,7 @@ import re
 from logHandler import log
 import globalVars
 import config
+from baseObject import Getter
 
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
@@ -552,6 +553,22 @@ class SpeechSymbolProcessor(object):
 			else:
 				return suffix
 
+	@Getter
+	def _decimalRegex(self):
+		symbol = self.complexSymbols.get('decimal point')
+		if not symbol:
+			return None
+		self._decimalRegex = re.compile(symbol.pattern, re.UNICODE)
+		return self._decimalRegex
+
+	@Getter
+	def _thousandsRegex(self):
+		symbol = self.complexSymbols.get('thousands separator')
+		if not symbol:
+			return None
+		self._thousandsRegex = re.compile(symbol.pattern, re.UNICODE)
+		return self._thousandsRegex
+
 	def processText(self, text, level):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
@@ -560,6 +577,8 @@ class SpeechSymbolProcessor(object):
 		regex = NR_PROC_REGEX.get(nrProcType)
 		if not regex:
 			return text
+		if nrProcType != NR_PROC_SINGLE:
+			pass
 		return regex.sub(r"\1  ", text)
 
 	def updateSymbol(self, newSymbol):
@@ -688,7 +707,7 @@ NR_PROC_REGEX = {
 	NR_PROC_TRIPPLE: re.compile(r"(\d{1,3})(?=(\d{3})+(\D|\b))", re.UNICODE),
 }
 
-def processNumbers(Locale, nrProcType, text):
+def processNumbers(locale, nrProcType, text):
 	"""Processes text for number pronunciation according to the provided type for the providd locale.
 	@param locale: The locale of the text.
 	@type locale: str
