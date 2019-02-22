@@ -51,6 +51,7 @@ from NVDAObjects.window import DisplayModelEditableText
 
 import appModuleHandler
 import UIAHandler
+import winUser
 
 
 #
@@ -152,7 +153,8 @@ class AppModule(appModuleHandler.AppModule):
 
 		if vs_version[0] >= 15 and vs_version[1] >= 3:
 			#: #9311: Sometimes object explorer objects are recognized as IAccessible2 objects
-			return True
+			if winUser.getClassName(hwnd) in ("LiteTreeView32", "RICHEDIT50W"):
+				return True
 
 		return UIAHandler.handler.isUIAWindow(hwnd)
 
