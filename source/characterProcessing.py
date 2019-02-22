@@ -556,6 +556,12 @@ class SpeechSymbolProcessor(object):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
+	def processNumbers(self, nrProcType, text):
+		regex = NR_PROC_REGEX.get(nrProcType)
+		if not regex:
+			return text
+		return regex.sub(r"\1  ", text)
+
 	def updateSymbol(self, newSymbol):
 		"""Update information for a symbol if it has changed.
 		If there is a change, the changed information will be added to the user's symbol data.
@@ -691,10 +697,13 @@ def processNumbers(Locale, nrProcType, text):
 	@param text: The text to process.
 	@type text: str
 	"""
-	regex = NR_PROC_REGEX.get(nrProcType)
-	if not regex:
-		return text
-	return regex.sub(r"\1  ", text)
+	try:
+		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
+	except LookupError:
+		if not locale.startswith("en_"):
+			return processSpeechSymbols("en", text, level)
+		raise
+	return ss.processNumbers(nrProcType, text)
 
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:
