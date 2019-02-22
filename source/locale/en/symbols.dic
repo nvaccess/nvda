@@ -16,6 +16,7 @@ complexSymbols:
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
+thousands separator	(?<=\d)\,(?=\d{3})
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -29,6 +30,7 @@ symbols:
 decimal point		none	always
 in-word '	tick	all	norep
 negative number	minus	none	norep
+thousands separator	comma	all	norep
 
 # Whitespace
 \0	blank	char	# null
