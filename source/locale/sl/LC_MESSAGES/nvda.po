@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-17 00:10+1000\n"
-"PO-Revision-Date: 2018-08-15 14:06+0100\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:58-0800\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,1285,1351,-1\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
@@ -1142,6 +1142,16 @@ msgstr "Unicode brajica"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "Vijetnamska razvrstitev 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "Kitajska (Kitajska, Mandarinska) razvrstitev 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "Kitajska (Kitajska, Mandarinska) razvrstitev 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6706,20 +6716,22 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} je zaščitena z GNU Splošno Javno Licenco (Različica 2). Vi lahko "
-"delite in spreminjate ta program na vse načine vse dotlej, dokler bo zraven "
-"priložena ta licenca in bo izvorna koda na voljo vsakomur, ki jo bo želel. "
-"To vključuje tako izvirne kot spremenjene kopije tega programa in tudi vse "
-"izpeljanke.\n"
-"Več podrobnosti je na voljo v meniju Pomoč v Licenci (Angleščina).\n"
-"Licenco si lahko pogledate tudi na: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"{name} je zaščitena z GNU General Public License  (Splošno javno licenco) "
+"(Različica 2). Ta program lahko delite ali spreminjate na kakršenkoli način, "
+"ki ga želite uporabiti, tako dolgo, dokler boste zraven priložili licenco in "
+"bo izvorna koda na voljo komurkoli, ki jo bo želel. To velja tako za pristno "
+"kot za spremenjene kopije tega programa, kakor tudi morebitne izpeljane "
+"izdelke.\n"
+"Za več podrobnosti si lahko ogledate licenco v meniju Pomoči.\n"
+"Lahko si jo ogledate tudi na spletu: http://www.gnu.org/licenses/old-"
+"licenses/gpl-2.0.html\n"
 "\n"
-"{name} razvija NV Access, neprofitna organizacija, ki je zavezana promociji "
-"in pomoči pri prostih in odprtokodnih rešitvah za slepe in slabovidne.\n"
-"Če menite, da je NVDA uporabna in želite, da se njen razvoj nadaljuje, "
-"premislite o donaciji NV Access. To lahko storite s pritiskom Prispevaj v "
-"meniju NVDA."
+"{name} razvija NV Access, neprofitna organizacija, ki je zavezana pomagati "
+"in promovirati pri prostih in odprtokodnih rešitvah za slepe in ljudi z "
+"motnjami vida.\n"
+"Če se vam zdi NVDA uporabna in želite, da se bo izdelek še izboljševal, "
+"prosimo, razmislite o donaciji NV Access. To lahko storite z izbiro "
+"Prispevaj v meniju NVDA."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -6917,35 +6929,17 @@ msgstr "neprebrano"
 msgid "Editing profile {profile}"
 msgstr "Urejanje profila {profile}"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "vijolična zastavica"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "odgovorjeno"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "Oranžna zastavica"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "odgovorjeno vsem"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "Zelena zastavica"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "Rumena zastavica"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "Modra zastavica"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "Rdeča zastavica"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "posredovano"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8709,6 +8703,16 @@ msgstr "&Nivo naglaševanja/simbolov"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "Zaupaj jeziku osebe med obdelovanjem simbolov in znakov"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
+msgstr ""
+"Vključi podatke konzorcija Unicode (vključno z emojii), ko se obdeluje znake "
+"in simbole"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "Sprememba višine glasu pri velikih črkah v odstotkih"
@@ -8732,20 +8736,10 @@ msgstr "Uporabljaj funkcijo &črkovanja, če je podprta."
 msgid "Keyboard"
 msgstr "Tipkovnica"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Uporabljaj CapsLock kot prikrojevalno tipko NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Uporabljaj številski Insert kot prikrojevalno tipko NVDA"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Uporabljaj glavni Insert kot prikrojevalno tipko NVDA"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "&Določi NVDA Prikrojevalne Tipke"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8909,8 +8903,8 @@ msgstr "Sporočaj &zaslonske namige"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "Sporočaj oblačke po&moči"
+msgid "Report &notifications"
+msgstr "Sporočaj &obvestila"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10855,6 +10849,16 @@ msgstr "komentar: {text} od {author} na {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} od {author} na {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance} od levega roba strani"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance} od gornjega roba strani"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -11014,139 +11018,3 @@ msgstr "Dvojni razmik med vrsticami"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1,5 razmik med vrsticami"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} - {layout}"
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "Amhariščina"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "Arabščina"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "Nepalščina"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "Srbščina (Latinica)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "Pokaže NVDA pogovorno okno nastavitev glasu"
-
-#~ msgid "&General settings..."
-#~ msgstr "Splošne &nastavitve..."
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&Sinteza..."
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "Zamenjate sintezo v uporabi"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr ""
-#~ "Izbirate glas, hitrost, višino in glasnost, ki jih želite uporabljati."
-
-#~ msgid "B&raille settings..."
-#~ msgstr "Nastavitve &Braja..."
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "Nastavitve &tipkovnice..."
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "Nastavite razporeditev tipkovnice, izgovorjavo natipkanih znakov, besed, "
-#~ "ali ukazov s tipkovnice"
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "Nastavitve &miške..."
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr "Spreminite način poročanja o obliki miške in o predmetu pod njo"
-
-#~ msgid "&Touch interaction..."
-#~ msgstr "&Interakcija z dotikom"
-
-#~ msgid "Change how NVDA interacts with the touchscreen"
-#~ msgstr "Spreminjate obnašanje NVDA ob interakciji z zaslonom na dotik"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "Nastavite kako in kdaj se premika pregledna utripalka"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "Nastavitve za vnos &večznakovnih znakov..."
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "Določite, kako NVDA poroča o vhodni skladnji in o izbiri kandidata za "
-#~ "različne jezike"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "&Predstavitev predmeta..."
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "Spreminite poročanje o predmetih"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "Brs&kalniško delovanje..."
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "Spreminite posebne nastavitve navideznega predpomnilnika"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "Oblikovanje &dokumenta..."
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "Spreminite nastavitve lastnosti dokumenta"
-
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "&Windows 10 OCR..."
-
-#~ msgid "General Settings"
-#~ msgstr "Splošne nastavitve"
-
-#~ msgid "Voice Settings"
-#~ msgstr "Nastavitve glasu"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Nastavitve tipkovnice"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Nastavitve Miške"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "Nastavitve pregledne utripalke"
-
-#~ msgid "Braille Settings"
-#~ msgstr "Nastavitve Braja"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "Francoska (Kanada) razvrstitev 1"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "Francoska (Kanada) razvrstitev 2"
-
-#~ msgid "Mongolian"
-#~ msgstr "Mongolska"
-
-#~ msgid "Download and &install update"
-#~ msgstr "Prenesi in &namesti posodobitev"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "Posodobitev se je prenesla. Le-ta se bo sedaj namestila."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "Postavi se na in sporoča oblikovanje"
-
-#~ msgid "r%s"
-#~ msgstr "v%s"
-
-#~ msgid "c%s"
-#~ msgstr "s%s"

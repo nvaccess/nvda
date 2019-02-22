@@ -30,10 +30,18 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-CComPtr<IAccessible2> getLabelElement(IAccessible2_2* element) {
+CComPtr<IAccessible2> GeckoVBufBackend_t::getLabelElement(IAccessible2_2* element) {
 	IUnknown** ppUnk=nullptr;
 	long nTargets=0;
-	constexpr int numRelations=2;
+	// We only need to request one relation target
+	int numRelations=1;
+	// However, a bug in Chrome causes a buffer overrun if numRelations is less than the total number of targets the node has.
+	// Therefore, If this is Chrome, request all targets (by setting numRelations to 0) as this works around the bug.
+	// There is no major performance hit to fetch all targets in Chrome as Chrome is already fetching all targets either way.
+	// In Firefox there would be extra cross-proc calls.
+	if(this->toolkitName.compare(L"Chrome")==0) {
+		numRelations=0;
+	}
 	// the relation type string *must* be passed correctly as a BSTR otherwise we can see crashes in 32 bit Firefox.
 	HRESULT res=element->get_relationTargetsOfType(CComBSTR(IA2_RELATION_LABELLED_BY),numRelations,&ppUnk,&nTargets);
 	if(res!=S_OK) return nullptr;
@@ -76,7 +84,7 @@ HWND findRealMozillaWindow(HWND hwnd) {
 	return hwnd;
 }
 
-IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
+static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
 	IServiceProvider* pserv=NULL;
 	IAccessible2* pacc2=NULL;
@@ -257,6 +265,9 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 		iaApp->Release();
 		return;
 	}
+	if(toolkitName) {
+		this->toolkitName = std::wstring(toolkitName, SysStringLen(toolkitName));
+	}
 	BSTR toolkitVersion = NULL;
 	if (iaApp->get_toolkitVersion(&toolkitVersion) != S_OK) {
 		iaApp->Release();
@@ -288,7 +299,7 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-bool isLabelVisible(IAccessible2* pacc2) {
+bool GeckoVBufBackend_t::isLabelVisible(IAccessible2* pacc2) {
 	CComQIPtr<IAccessible2_2> pacc2_2=pacc2;
 	if(!pacc2_2) return false;
 	auto targetAcc=getLabelElement(pacc2_2);
@@ -319,6 +330,62 @@ long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
 bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
+}
+
+/**
+ * Get the selected item or the first item if no item is selected.
+ */
+CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
+	IAccessible2* container, const map<wstring, wstring>& attribs
+) {
+	if (this->toolkitName.compare(L"Chrome") == 0) {
+		const auto attribsIt = attribs.find(L"tag");
+		if (attribsIt != attribs.end() &&
+				attribsIt->second.compare(L"select") == 0) {
+			// In a <select size>1>, Chrome reports that list items are focusable,
+			// but programmatically focusing them does nothing. Therefore, we don't
+			// want to render this in Chrome because a user wouldn't be able to focus
+			// these list boxes in browse mode if we did.
+			return nullptr;
+		}
+	}
+
+	CComVariant selection;
+	HRESULT hr = container->get_accSelection(&selection);
+	if (FAILED(hr)) {
+		LOG_DEBUGWARNING(L"accSelection failed with " << hr);
+		return nullptr;
+	}
+
+	if (selection.vt == VT_DISPATCH) {
+		// Single selected item, so just return it.
+		return CComQIPtr<IAccessible2>(selection.pdispVal);
+	}
+
+	if (selection.vt == VT_UNKNOWN) {
+		// One or more selected items in an IEnumVARIANT.
+		auto enumVar = CComQIPtr<IEnumVARIANT>(selection.punkVal);
+		if (!enumVar) {
+			return nullptr;
+		}
+		// We only care about the first selected item.
+		CComVariant items[1];
+		if (FAILED(enumVar->Next(1, items, nullptr))) {
+			return nullptr;
+		}
+		if (items[0].vt != VT_DISPATCH) {
+			return nullptr;
+		}
+		return CComQIPtr<IAccessible2>(items[0].pdispVal);
+	}
+
+	// No selection, so return the first child.
+	CComPtr<IDispatch> child;
+	if (SUCCEEDED(container->get_accChild(CComVariant(1), &child))) {
+		return CComQIPtr<IAccessible2>(child);
+	}
+
+	return nullptr;
 }
 
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
@@ -607,17 +674,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether to render children, including text content.
 	// Note that we may still render the name, value, etc. even if we don't render children.
 	bool renderChildren = true;
+	// Whether this is a selection container for which only the selected item should be rendered;
+	// currently, list boxes and trees.
+	bool renderSelectedItemOnly = false;
 	if (isAriaHidden) {
 		// aria-hidden
 		isVisible = false;
 	} else {
 		// If a node has children, it's visible.
 		isVisible = width > 0 && height > 0 || childCount > 0;
+		if ((role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+			|| role == ROLE_SYSTEM_OUTLINE
+		) {
+			renderSelectedItemOnly = true;
+		}
 		if (IA2TextIsUnneededSpace
 			|| role == ROLE_SYSTEM_COMBOBOX
-			|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+			|| renderSelectedItemOnly
 			|| isEmbeddedApp
-			|| role == ROLE_SYSTEM_OUTLINE
 			|| role == ROLE_SYSTEM_EQUATION
 			|| (nameIsContent && nameIsExplicit)
 		) {
@@ -669,8 +743,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
 			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
-			LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
-			parentNode->requiresParentUpdate=true;
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			if(role!=ROLE_SYSTEM_ROW) {
+				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
+				parentNode->requiresParentUpdate=true;
+			}
 			// Setting alwaysRerenderChildren ensures that if this node is rerendered, none of its children are reused.
 			// For example, if this is a table row that is rerendered (perhaps due to a previous table row being added),
 			// this row's cells can't be reused because their coordinates would now be out of date.
@@ -840,8 +917,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					chunkStart=i+1;
 					// In Gecko, hyperlinks correspond to embedded object chars,
 					// so there's no need to call IAHyperlink::hyperlinkIndex.
-					IAccessibleHyperlinkPtr link = move(linkGetter->next());
-					IAccessible2Ptr childPacc = link;
+					CComPtr<IAccessibleHyperlink> link = linkGetter->next();
+					CComQIPtr<IAccessible2> childPacc = link;
 					if(!childPacc) {
 						continue;
 					}
@@ -884,6 +961,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				VariantClear(&(varChildren[i]));
 			}
 			free(varChildren);
+
+		} else if (renderSelectedItemOnly) {
+			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
+			if (item) {
+				if (tempNode = this->fillVBuf(item, buffer, parentNode, previousNode,
+					paccTable, paccTable2, tableID, presentationalRowNumber,
+					ignoreInteractiveUnlabelledGraphics)
+				) {
+					previousNode=tempNode;
+					// The container itself might not always fire selection events.
+					// Therefore, we rely on a stateChange event on the item (since
+					// these fire for both selection and unselection) and have the item
+					// re-render its parent.
+					static_cast<VBufStorage_controlFieldNode_t*>(tempNode)->requiresParentUpdate = true;
+				} else {
+					LOG_DEBUG(L"Error in calling fillVBuf");
+				}
+			}
 
 		} else {
 			// There were no children to render.
@@ -1023,6 +1118,9 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_DESCRIPTIONCHANGE:
 		case EVENT_OBJECT_STATECHANGE:
+		case EVENT_OBJECT_SELECTIONADD:
+		case EVENT_OBJECT_SELECTIONREMOVE:
+		case EVENT_OBJECT_SELECTIONWITHIN:
 		case IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:
 		break;
 		default:
@@ -1114,14 +1212,7 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 }
 
-extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
+VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {
 	VBufBackend_t* backend=new GeckoVBufBackend_t(docHandle,ID);
 	return backend;
-}
-
-BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
-	if(reason==DLL_PROCESS_ATTACH) {
-		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
-	}
-	return true;
 }

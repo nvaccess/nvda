@@ -21,6 +21,8 @@ import core
 import ui
 from math import floor
 import screenExplorer
+from contextlib import contextmanager
+import threading
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -32,6 +34,7 @@ WM_RBUTTONDBLCLK=0x0206
 
 curMousePos=(0,0)
 mouseMoved=False
+ignoreInjected=False
 curMouseShape=""
 _shapeTimer=None
 scrBmpObj=None
@@ -50,12 +53,55 @@ def updateMouseShape(name):
 		_shapeTimer.Stop()
 		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
 
+_ignoreInjectionLock = threading.Lock()
+@contextmanager
+def ignoreInjection():
+	"""Context manager that allows ignoring injected mouse events temporarily by using a with statement."""
+	global ignoreInjected
+	with _ignoreInjectionLock:
+		ignoreInjected=True
+		yield
+		ignoreInjected=False
+
+def playAudioCoordinates(x, y, screenWidth, screenHeight, screenMinPos, detectBrightness=True,blurFactor=0):
+	""" play audio coordinates:
+	- left to right adjusting the volume between left and right speakers
+	- top to bottom adjusts the pitch of the sound
+	- brightness adjusts the volume of the sound
+	Coordinates (x, y) are absolute, and can be negative.
+	"""
+
+	# make relative to (0,0) and positive
+	x = x - screenMinPos.x
+	y = y - screenMinPos.y
+
+	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
+	maxPitch=config.conf['mouse']['audioCoordinates_maxPitch']
+	curPitch=minPitch+((maxPitch-minPitch)*((screenHeight-y)/float(screenHeight)))
+	if detectBrightness:
+		startX=min(max(x-blurFactor,0),screenWidth)+screenMinPos.x
+		startY=min(max(y-blurFactor,0),screenHeight)+screenMinPos.y
+		width=min(blurFactor+1,screenWidth)
+		height=min(blurFactor+1,screenHeight)
+		grey=screenBitmap.rgbPixelBrightness(scrBmpObj.captureImage( startX, startY, width, height)[0][0])
+		brightness=grey/255.0
+		minBrightness=config.conf['mouse']['audioCoordinates_minVolume']
+		maxBrightness=config.conf['mouse']['audioCoordinates_maxVolume']
+		brightness=(brightness*(maxBrightness-minBrightness))+minBrightness
+	else:
+		brightness=config.conf['mouse']['audioCoordinates_maxVolume']
+	leftVolume=int((85*((screenWidth-float(x))/screenWidth))*brightness)
+	rightVolume=int((85*(float(x)/screenWidth))*brightness)
+	tones.beep(curPitch,40,left=leftVolume,right=rightVolume)
+
 #Internal mouse event
 
 def internal_mouseEvent(msg,x,y,injected):
+	"""Event called by winInputHook when it receives a mouse event.
+	"""
 	global mouseMoved, curMousePos, lastMouseEventTime
 	lastMouseEventTime=time.time()
-	if injected:
+	if injected and (ignoreInjected or config.conf['mouse']['ignoreInjectedMouseInput']):
 		return True
 	if not config.conf['mouse']['enableMouseTracking']:
 		return True
@@ -69,6 +115,28 @@ def internal_mouseEvent(msg,x,y,injected):
 	except:
 		log.error("", exc_info=True)
 	return True
+
+def executeMouseEvent(flags, x, y, data=0):
+	"""
+	Mouse events generated with this rapper for L{winUser.mouse_event}
+	will be ignored by NVDA.
+	Consult https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-mouse_event
+	for detailed parameter documentation.
+	@param flags: Controls various aspects of mouse motion and button clicking.
+		The supplied value should be one or a combination of the C{winUser.MOUSEEVENTF_*} constants.
+	@type flags: int
+	@param x: The mouse's absolute position along the x-axis
+		or its amount of motion since the last mouse event was generated.
+	@type x: int
+	@param y: The mouse's absolute position along the y-axis
+		or its amount of motion since the last mouse event was generated.
+	@type y: int
+	@param data: Additional data depending on what flags are specified.
+		This defaults to 0.
+	@type data: int
+	"""
+	with ignoreInjection():
+		winUser.mouse_event(flags, x, y, data, None)
 
 def getMouseRestrictedToScreens(x, y, displays):
 	""" Ensures that the mouse position is within the area of one of the displays, relative to (0,0) 

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-10663,552b45f\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-14 00:10+1000\n"
-"PO-Revision-Date: 2018-09-13 09:19-0700\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:54-0800\n"
 "Last-Translator: siddalingeshwar ingalagi <ingalagisiddu@gmail.com>\n"
 "Language-Team: Kannada <ingalagisiddu@gmail.com>\n"
 "Language: kn\n"
@@ -1204,6 +1204,18 @@ msgstr "ಬ್ರೈಲ್ ಇಲ್ಲ"
 #, fuzzy
 msgid "Vietnamese grade 1"
 msgstr "ಅಸ್ಸಾಮೀಸ್ "
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "ಚೀನೀ (ತೈವಾನ್, ಮ್ಯಾಂಡರಿನ್)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "ಚೀನೀ (ತೈವಾನ್, ಮ್ಯಾಂಡರಿನ್)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6778,7 +6790,7 @@ msgstr "ಮೈಕ್ರೋಸಾಫ್ಟ್ ವಿಂಡೋಸ್ಗೆ ಇದ�
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "ಹಕ್ಕುಸ್ವಾಮ್ಯ (c) {years} ಎನ್ವೀಡೀಯೇಯ ದಾನಿಗಳು"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6807,7 +6819,7 @@ msgstr ""
 "ಬೇಕಾದರು ಇದರ ಆಕರಸಂಕೇತವನ್ನು ಕೊಡಬಹುದು. ಈ ನಿಯಮವು ಮೂಲ ಮತ್ತು ತಿದ್ದುಪಡಿಗೊಳಿಸಿದ ತಂತ್ರಾಂಶಕ್ಕೆ "
 "ಅನ್ವಯಿಸುತ್ತದೆ ಮತ್ತು ಉತ್ಪಾದನೆ ಕೆಲಸಗಳಿಗೂ ಕೂಡ.\n"
 "ನಿಮಗೆ ಹೆಚ್ಚು ಮಾಹಿತಿ ಬೇಕಿದ್ದರೆ, ನೀವು ಸಹಾಯ ಪರಿವಿಡಿಯಿಂದ ಪರವಾನಗಿಯನ್ನು ನೋಡಬಹುದು.\n"
-"ನೀವು ಇದನ್ನು  ಮಿಂಬಲೆಯಾದ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html ನಲ್ಲಿಯೂ ಕೂಡ "
+"ನೀವು ಇದನ್ನು  ಮಿಂಬಲೆಯಾದ https://www.gnu.org/licenses/old-licenses/gpl-2.0.html ನಲ್ಲಿಯೂ ಕೂಡ "
 "ನೋಡಬಹುದು\n"
 "\n"
 "{name} ಯು ಎನ್ವೀ ಯಾಕ್ಸೆಸಿಂದ ಅಭಿವ್ಋದ್ಧಿಗೊಳಿಸಲಾಗುತ್ತಿದೆ. ಒಂದು ಲಾಭವಿಲ್ಲದ ಸಂಘಟನೆ ಅದು ಅಂಧರಿಗೆ ಉಚಿತ "
@@ -7011,36 +7023,20 @@ msgstr "ಓದಿಲ್ಲದ"
 msgid "Editing profile {profile}"
 msgstr ""
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+#. Translators: the last action taken on an Outlook mail message
 #, fuzzy
-msgid "purple flag"
-msgstr "ನೇರಳೆ"
+msgid "replied"
+msgstr "ಮರಳಿಸು"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr ""
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "ಮರಳಿಸು"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr ""
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "ಮುಂದುವರಿಸಿ"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8757,6 +8753,14 @@ msgstr "ಲಾಂಚನ/ಚಿನ್ಹೆಯ &ಮಟ್ಟ"
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "ಅಕ್ಷರಗಳು ಮತ್ತು ಚಿನ್ಹೆಗಳನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಧ್ವನಿಯ ಭಾಷೆಯನ್ನು ನಂಬಿ"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters and symbols"
+msgstr "ಅಕ್ಷರಗಳು ಮತ್ತು ಚಿನ್ಹೆಗಳನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಧ್ವನಿಯ ಭಾಷೆಯನ್ನು ನಂಬಿ"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "ದೊಡ್ಡಕ್ಷರ ಮಟ್ಟ ಬದಲಾವಣೆ ಶೆಕಡವಾರು"
@@ -8781,20 +8785,11 @@ msgstr "ಬೆಂಬಲಿಸಿದರೆ & ಪದಗಳ ುಚ್ಛರಿಸ�
 msgid "Keyboard"
 msgstr "%s ಕೀಲಿಮಣೆ"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
 msgstr "ಕ್ಯಾಪ್ಸ್ಲಾಕ್ ಕೀಯನ್ನು ಎನ್ವೀಡೀಯೇಯ ಕೀಯಂತೆ ಉಪಯೋಗಿಸಿ"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "ನಮ್ಪ್ಯಾಡ್ ಇನ್ಸರ್ಟ್ ಕೀಯನ್ನು ಎನ್ವೀಡೀಯೇಯ ಕೀಯಂತೆ ಉಪಯೋಗಿಸಿ"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "ವಿಸ್ತರಿಸಿದ ಕೀಯನ್ನು ಎನ್ವೀಡೀಯೇಯ ಕೀಯಂತೆ ಉಪಯೋಗಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8959,8 +8954,9 @@ msgstr "&ಟೂಲ್ಟಿಪ್ಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "&ಸಹಾಯ ಬಲೂನ್ಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+#, fuzzy
+msgid "Report &notifications"
+msgstr "&ಟೂಲ್ಟಿಪ್ಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10928,6 +10924,16 @@ msgstr "ಪ್ರತಿಕ್ರಿಯೆ {text} {author} ರವರಿಂದ {da
 #, fuzzy, python-brace-format
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text} {author} ರವರಿಂದ {date} ರಂದು"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "ಜಾರುವಿಕೆಯ  ಎಡ ತುದಿಯಲ್ಲಿ {distance:.3g} ಅಂಶಗಳು "
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance:.3g} ಜಾರುವಿಕೆಯ ಸಂಪೂರ್ಣ ಮೇಲ್ ತುದಿಯಲ್ಲಿನ ಅಂಶಗಳು"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"

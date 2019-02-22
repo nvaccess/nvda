@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-14 00:10+1000\n"
-"PO-Revision-Date: 2018-09-15 03:05-0700\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:58-0800\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Original Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "X-Generator: Poedit 1.8.9\n"
 
-# Thanks: http://www.ta.wiktionary.org/
+# Thanks: https://www.ta.wiktionary.org/
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
 msgstr "பாதுகாப்பான மேசைத்தளம்"
@@ -1137,6 +1137,16 @@ msgstr "ஒருங்குறி பிரெயில்"
 #. braille settings dialog.
 msgid "Vietnamese grade 1"
 msgstr "வியட்நாமி படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "சீனம் (சீனா, மாண்டரீன்) படிநிலை 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "சீனம் (சீனா, மாண்டரீன்) படிநிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6747,35 +6757,17 @@ msgstr "படிக்கப்படாதது"
 msgid "Editing profile {profile}"
 msgstr "{profile} தனியமைப்பு தொகுக்கப்படுகிறது"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "purple flag"
-msgstr "செவ்வூதாக் குறியீடு"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied"
+msgstr "மறுமொழியிடப்பட்டது"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr "செம்மஞ்சள் குறியீடு"
+#. Translators: the last action taken on an Outlook mail message
+msgid "replied all"
+msgstr "அனைவருக்கும் மறுமொழியிடப்பட்டது"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr "பச்சைக் குறியீடு"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr "மஞ்சள் குறியீடு"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr "நீலக் குறியீடு"
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr "சிவப்புக் குறியீடு"
+#. Translators: the last action taken on an Outlook mail message
+msgid "forwarded"
+msgstr "முன்னனுப்பப்பட்டது"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -7688,7 +7680,7 @@ msgstr "ஆம் (&Y)"
 
 #. Translators: The label of a No button in a dialog
 msgid "&No"
-msgstr "இல்லை (‍&N)"
+msgstr "இல்லை (&N)"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -8458,6 +8450,14 @@ msgstr "நிறுத்தற்குறிகள்/குறியெழ�
 msgid "Trust voice's language when processing characters and symbols"
 msgstr "வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது குரலின் மொழியை நம்புக"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid "Include Unicode Consortium data (including emoji) when processing characters and symbols"
+msgstr ""
+"வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது முகவடிகள் உட்பட ஒருங்குறிக் கூட்டமைப்பின் தரவுகளைச் "
+"சேர்த்துக்கொள்ளவும்"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "ஆங்கில முகப்பெழுத்து சுருதி மாற்று விழுக்காடு"
@@ -8481,20 +8481,10 @@ msgstr "எழுத்துகளாக படிக்கும் வசத�
 msgid "Keyboard"
 msgstr "விசைப்பலகை"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use CapsLock as an NVDA modifier key"
-msgstr "முகப்பெழுத்து பூட்டு விசையை என்விடிஏ மாற்றியமைப்பி விசையாக பயன்படுத்துக"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "எண் திட்டு செருகு விசையை என்விடிஏ மாற்றியமைப்பி விசையாகப் பயன்படுத்துக"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings panel.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "நீட்டிக்கப்பட்ட செருகு விசையை என்விடிஏ மாற்றியமைப்பி விசையாகப் பயன்படுத்துக"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+msgid "&Select NVDA Modifier Keys"
+msgstr "என்விடிஏ மாற்றியமைப்பி விசைகளைத் தெரிவுச் செய்க (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8657,8 +8647,8 @@ msgstr "கருவிக் குறிப்புகளை அறிவி�
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
-msgid "Report &help balloons"
-msgstr "உதவிக் குமிழிகளை அறிவிக்கவும் (&H)"
+msgid "Report &notifications"
+msgstr "அறிவிக்கைகளை அறிவிக்கவும் (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -10557,6 +10547,16 @@ msgstr "கருத்துரை: {text}, படைப்பாளர்: {au
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "பக்கத்தின் இட விளிம்பிலிருந்து {distance}"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "பக்கத்தின் மேல் விளிம்பிலிருந்து {distance}"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -10715,192 +10715,3 @@ msgstr "இரட்டை வரி இடைவெளி"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ஒன்றரை வரி இடைவெளி"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{layout} - {language} "
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "Amharic"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "Arabic"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "Nepali"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "Serbian (Latin)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "என்விடிஏ குரல் அமைப்புகள் உரையாடலைக் காட்டும்"
-
-#~ msgid "&General settings..."
-#~ msgstr "பொது அமைப்புகள்... (&G)"
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "ஒலிப்பான்... (&S)"
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "பயன்படுத்தப்பட வேண்டிய ஒலிப்பானை மாற்றுக"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "பயன்படுத்தப்பட வேண்டிய குரல், விகிதம், சுருதி, ஒலியளவு ஆகியவைகளைத் தேர்ந்தெடுக்கவும்"
-
-#~ msgid "B&raille settings..."
-#~ msgstr "பிரெயில் அமைப்புகள்... (&R)"
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "விசைப்பலகை அமைப்புகள்... (&K)"
-
-#~ msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-#~ msgstr ""
-#~ "விசைப்பலகைத் தளவமைப்பினை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, சொற்களையோ கட்டுப்பாடு "
-#~ "விசைகளையோ பேசுக"
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "சொடுக்கி அமைப்புகள்... (&M)"
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr "சொடுக்கிக் குறிமுள்ளின் உருவ மாற்றத்தையும், சொடுக்கியின் கீழிருக்கும் பொருளையும் அறிவிக்கும்"
-
-#~ msgid "&Touch interaction..."
-#~ msgstr "தொடு அளவளாவல் (&T)"
-
-#~ msgid "Change how NVDA interacts with the touchscreen"
-#~ msgstr "தொடுதிரையுடன் என்விடிஏ எவ்வாறு அளவளாவுகிறது என்பதை மாற்றியமைக்கவும்"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "சீராய்வுச் சுட்டி எப்படி, எப்பொழுது நகர வேண்டுமென்று அமைவடிவமாக்குக"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "உள்ளீடு இயற்றல் அமைப்புகள்... (&I)"
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for certain languages"
-#~ msgstr ""
-#~ "சில மொழிகளுக்கான உள்ளீடு இயற்றலையும், தேர்வெழுத்தின் தெரிவினையும் என்ழிடிஏ எவ்வாறு அறிவிக்கிறது என்பதை "
-#~ "அமைவடிவமாக்குக"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "பொருளளிக்கை... (&O)"
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "பொருட்களின் அறிவித்தலை மாற்றுக"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "உலாவும் நிலை... (&B)"
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "உலாவும் நிலைக்கான தனிப்பட்ட அமைப்புகளை மாற்றுக"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "ஆவண வடிவூட்டம்... (&F)"
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "ஆவண பண்புகளின் அமைப்புகளை மாற்றுக"
-
-#~ msgid "&Windows 10 OCR..."
-#~ msgstr "விண்டோஸ் 10 எழுத்துணரி... (&W)"
-
-#~ msgid "General Settings"
-#~ msgstr "பொது அமைப்புகள்"
-
-#~ msgid "Voice Settings"
-#~ msgstr "குரல் அமைப்புகள்"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "விசைப்பலகை அமைப்புகள்"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "சொடுக்கி அமைப்புகள்"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "சீராய்வுச் சுட்டி அமைப்புகள்"
-
-#~ msgid "Braille Settings"
-#~ msgstr "பிரெயில் அமைப்புகள்"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "பிரெஞ்சு (கனடா) படிநிலை 1"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "பிரெஞ்சு (கனடா) படிநிலை 2"
-
-#~ msgid "Mongolian"
-#~ msgstr "மங்கோலியன்"
-
-#~ msgid "Download and &install update"
-#~ msgstr "தரவிறக்கி நிறுவுக (&I)"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "இற்றாக்கம் தரவிறக்கமாகிவிட்டது. இப்பொழுது அது நிறுவப்படும்."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "வழியிட்டு அமைவடிவத் தகவலை அறிவிக்கவும்"
-
-#~ msgid "r%s"
-#~ msgstr "கி%s"
-
-#~ msgid "c%s"
-#~ msgstr "செ%s"
-
-#~ msgid "suspended"
-#~ msgstr "இடைநிறுத்தப்பட்டுள்ளது"
-
-#~ msgid "running"
-#~ msgstr "ஓடிக் கொண்டிருக்கிறது"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "ஆல்வா BC640/680 தொடர்"
-
-#~ msgid "review"
-#~ msgstr "சீராய்வு"
-
-#~ msgid "focus"
-#~ msgstr "குவிமையம்"
-
-#~ msgid "B&raille tethered to:"
-#~ msgstr "பிரெயில் இதனுடன் கட்டப்பட்டுள்ளது (&R)"
-
-#~ msgid "Not defined"
-#~ msgstr "வரையறுக்கப்படாதது"
-
-#~ msgid "Value"
-#~ msgstr "மதிப்பு: "
-
-#~ msgid "Series"
-#~ msgstr "தொடர்: "
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "{axisName} அச்சின் தலைப்பு {axisTitle}"
-
-#~ msgid "Primary"
-#~ msgstr "முதன்மை "
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}, தலைப்பு: {axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "விளக்கப்பட அச்சு, வகை: {axisType}, குழு: {axisGroup}"
-
-#~ msgid "Chart axis title"
-#~ msgstr "விளக்கப்பட அச்சின் தலைப்பு"
-
-#~ msgid "trendline"
-#~ msgstr "போக்கு வரிசை"
-
-#~ msgid "Legend"
-#~ msgstr "குறிவிளக்கி"
-
-#~ msgid "No legend"
-#~ msgstr "குறிவிளக்கி ஏதுமில்லை"
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "Handy Tech இயக்கி அமைவடிவ சாளரத்தைக் காட்டுக"
