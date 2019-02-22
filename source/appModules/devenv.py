@@ -50,6 +50,7 @@ from NVDAObjects.window import Window
 from NVDAObjects.window import DisplayModelEditableText
 
 import appModuleHandler
+import UIAHandler
 
 
 #
@@ -145,6 +146,15 @@ class AppModule(appModuleHandler.AppModule):
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
 
+	def isGoodUIAWindow(self, hwnd):
+		vs_version = [int(x)
+			for x in self.productVersion.split(".")]
+
+		if vs_version[0] >= 15 and vs_version[1] >= 3:
+			#: #9311: Sometimes object explorer objects are recognized as IAccessible2 objects
+			return True
+
+		return UIAHandler.handler.isUIAWindow(hwnd)
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
