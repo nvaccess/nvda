@@ -15,7 +15,7 @@ import api
 import sayAllHandler
 import eventHandler
 import keyboardHandler
-
+from scriptHandler import script
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
@@ -37,6 +37,9 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		except:
 			pass
 
+	@script(
+		gestures = ["kb:enter", "kb:escape"]
+	)
 	def script_closeAutocompleter(self, gesture):
 		gesture.send()
 		
@@ -45,6 +48,11 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 			self.event_suggestionsClosed()
 			self.appModule.selectedItem = None
 
+	@script(
+		# Translators: Input help mode message for the 'read documentation script
+		description = _("Tries to read documentation for the selected autocompletion item."),
+		gesture = "kb:nvda+d"
+	)
 	def script_readDocumentation(self, gesture):
 		# If there aren't any suggestion selected, there is no way to find quick documentation
 		if not self.appModule.selectedItem:
@@ -67,6 +75,9 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 			# Translators: When the help popup cannot be found for the selected autocompletion item
 			ui.message(_("Cann't find the documentation window."))
 
+	@script(
+		gesture="kb:tab"
+	)
 	def script_completeInstruction(self, gesture):
 		"""
 		Performs a standard autocompletion with the `TAB` key.
@@ -79,17 +90,6 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		# If not, we send the 'tab' key as is
 		gesture.send()
-
-	# Translators: Input help mode message for the 'read documentation script
-	script_readDocumentation.__doc__ = _("Tries to read documentation for the selected autocompletion item.")
-
-	__gestures = {
-		"kb:NVDA+d": "readDocumentation",
-		"kb:enter": "closeAutocompleter",
-		"KB:tab": "completeInstruction",
-		"kb:escape": "closeAutocompleter",
-	}
-
 
 class AutocompletionListItem(IAccessible):
 
@@ -114,7 +114,6 @@ class AutocompletionListItem(IAccessible):
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, position=self.positionInfo))
 
 class AppModule(appModuleHandler.AppModule):
-
 	LIST_VIEW_CLASS = "SysListView32"
 
 	# Item and name
