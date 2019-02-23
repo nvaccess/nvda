@@ -12,7 +12,6 @@ import re
 from logHandler import log
 import globalVars
 import config
-from baseObject import Getter
 
 class LocaleDataMap(object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
@@ -519,6 +518,9 @@ class SpeechSymbolProcessor(object):
 			log.error("Invalid complex symbol regular expression in locale %s: %s" % (locale, e))
 			raise LookupError
 
+		# Save a compiled version of the thousands separator regex on the processor.
+		self._thousandsRegex = re.compile(self.computedSymbols['thousands separator'].pattern, re.UNICODE)
+
 	def _regexpRepl(self, m):
 		group = m.lastgroup
 
@@ -557,32 +559,6 @@ class SpeechSymbolProcessor(object):
 		self._level = level
 		return self._regexp.sub(self._regexpRepl, text)
 
-
-	@Getter
-	def _decimalRegex(self):
-		symbol = self.computedSymbols.get('decimal point')
-		if not symbol:
-			return None
-		regex = re.compile(symbol.pattern, re.UNICODE)
-		if regex.groups != 1:
-			log.error("Decimal point pattern {pattern} for {locale} has {groups} groups, should be 1".format(
-				pattern=symbol.pattern,
-				locale=self.locale,
-				groups=regex.groups
-			))
-			return None
-		self._decimalRegex = regex
-		return self._decimalRegex
-
-	@Getter
-	def _thousandsRegex(self):
-		symbol = self.computedSymbols.get('thousands separator')
-		if not symbol:
-			return None
-		regex = re.compile(symbol.pattern, re.UNICODE)
-		self._thousandsRegex = regex
-		return self._thousandsRegex
-
 	def processNumbers(self, nrProcType, text):
 		regex = NR_PROC_REGEX.get(nrProcType)
 		if not regex:
@@ -593,13 +569,7 @@ class SpeechSymbolProcessor(object):
 		# the thousands separator is still reflected in the output:
 		# E.g. 1,234 will be read as 1  2  34.
 		text = self._thousandsRegex.sub("  ", text)
-		#splitText = self._decimalRegex.split(text)
-		#text = u"".join(
-		#	regex.sub(r"\1  ", chunk) if chunk.isdigit() else chunk
-		#	for chunk in splitText
-		#)
-		text = regex.sub(r"\1  ", text)
-		return text
+		return regex.sub(r"\1  ", text)
 
 	def updateSymbol(self, newSymbol):
 		"""Update information for a symbol if it has changed.

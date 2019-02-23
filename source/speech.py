@@ -77,8 +77,8 @@ RE_CONVERT_WHITESPACE = re.compile("[\0\r\n]")
 
 def processText(locale,text,symbolLevel):
 	text = speechDictHandler.processText(text)
-	text = characterProcessing.processNumbers(locale, config.conf['speech']['readNumbersAs'], text)
 	text = characterProcessing.processSpeechSymbols(locale, text, symbolLevel)
+	text = characterProcessing.processNumbers(locale, config.conf['speech']['readNumbersAs'], text)
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
 
