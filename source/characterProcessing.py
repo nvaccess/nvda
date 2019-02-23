@@ -371,6 +371,7 @@ _noSymbolLocalesCache = set()
 def _getSpeechSymbolsForLocale(locale):
 	if locale in _noSymbolLocalesCache:
 		raise LookupError
+	windows = _getWindowsSpeechSymbolsForLocale(locale)
 	builtin = SpeechSymbols(locale)
 	if config.conf['speech']['includeCLDR']:
 		# Try to load CLDR data when processing is on.
@@ -395,7 +396,10 @@ def _getSpeechSymbolsForLocale(locale):
 	except IOError:
 		# An empty user SpeechSymbols is okay.
 		pass
-	return builtin, user
+	return windows, builtin, user
+
+def _getWindowsSpeechSymbolsForLocale(locale):
+	return SpeechSymbols(locale)
 
 class SpeechSymbolProcessor(object):
 	"""
@@ -415,18 +419,19 @@ class SpeechSymbolProcessor(object):
 
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
-		builtin, user = self.localeSymbols.fetchLocaleData(locale,fallback=False)
-		self.builtinSources = [builtin]
+		windows, builtin, user = self.localeSymbols.fetchLocaleData(locale,fallback=False)
+		self.builtinSources = [windows, builtin]
 		self.userSymbols = user
 		sources.append(user)
 		sources.append(builtin)
+		sources.append(windows)
 
 		# Always use English as a base.
 		if locale != "en":
-			# Only the builtin data.
-			enBaseSymbols = self.localeSymbols.fetchLocaleData("en")[0]
-			sources.append(enBaseSymbols)
-			self.builtinSources.append(enBaseSymbols)
+			# Only the builtin and Windows data.
+			enBaseSymbols = self.localeSymbols.fetchLocaleData("en")[:2]
+			sources.extend(enBaseSymbols)
+			self.builtinSources.extend(enBaseSymbols)
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
