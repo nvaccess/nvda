@@ -400,7 +400,17 @@ def _getSpeechSymbolsForLocale(locale):
 	return windows, builtin, user
 
 def _getWindowsSpeechSymbolsForLocale(locale):
-	return SpeechSymbols(locale)
+	symbols = SpeechSymbols(locale)
+	try:
+		# Create thousands separator regex.
+		symbols.complexSymbols['thousands separator'] = _buildNumerGroupRegex(
+			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_STHOUSAND),
+			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SGROUPING)
+		)
+	except:
+		log.error("Error while creating windows symbols dictionary for locale %s" % locale, exc_info=True)
+		return None
+	return symbols
 
 class SpeechSymbolProcessor(object):
 	"""
@@ -421,18 +431,24 @@ class SpeechSymbolProcessor(object):
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
 		windows, builtin, user = self.localeSymbols.fetchLocaleData(locale,fallback=False)
-		self.builtinSources = [windows, builtin]
+		self.builtinSources = [builtin]
 		self.userSymbols = user
 		sources.append(user)
 		sources.append(builtin)
-		sources.append(windows)
+		if windows:
+			self.builtinSources.append(windows)
+			sources.append(windows)
 
 		# Always use English as a base.
 		if locale != "en":
 			# Only the builtin and Windows data.
-			enBaseSymbols = self.localeSymbols.fetchLocaleData("en")[:2]
-			sources.extend(enBaseSymbols)
-			self.builtinSources.extend(enBaseSymbols)
+			enBaseWindows, enBaseBuiltin = self.localeSymbols.fetchLocaleData("en")[:2]
+			sources.append(enBaseBuiltin)
+			self.builtinSources.append(enBaseBuiltin)
+			if not enBaseWindows:
+				log.error("No Windows symbols dictionary for English")
+			sources.append(enBaseWindows)
+			self.builtinSources.append(enBaseWindows)
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
@@ -740,6 +756,24 @@ def processNumbers(locale, nrProcType, text):
 			return processSpeechSymbols("en", text, level)
 		raise
 	return ss.processNumbers(nrProcType, text)
+
+def _buildNumerGroupRegex(separators, grouping):
+	"""
+	Builds a regular expression for number grouping separation (i.e. the thousands separator).
+	@param separators: The group separator character(s)
+	@type separators: str
+	@param grouping: Sizes for each group of digits to the left of a decimal.
+		See https://docs.microsoft.com/en-gb/windows/desktop/Intl/locale-sgrouping
+		for more information about the expected pattern
+	@type grouping: str
+	"""
+	groupNumbers = [int(i) for i in grouping.split(";")]
+	hasRepeater = groupNumbers[-1] == 0
+	if hasRepeater:
+		groupNumbers.pop()
+	lookbehind = ur"(?<=\d)"
+	lookahead = ur"(?=\d{%d,%d})" % (min(groupNumbers), max(groupNumbers))
+	return ur"{}[{}]{}".format(lookbehind, re.escape(separators), lookahead)
 
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:

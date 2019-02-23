@@ -20,6 +20,10 @@ from logHandler import log
 LOCALE_SLANGUAGE=0x2
 LOCALE_SDECIMAL = 0xe
 LOCALE_STHOUSAND = 0xf
+LOCALE_SGROUPING = 0x10
+LOCALE_IDIGITS = 0x11
+LOCALE_ILZERO = 0x12
+LOCALE_INEGNUMBER = 0x1010
 LOCALE_SLANGDISPLAYNAME=0x6f
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
@@ -61,7 +65,7 @@ def windowsLCIDToLocaleName(lcid):
 	if lang:
 		return normalizeLanguage(lang)
 
-def getLanguageParameter(param, language):
+def getLanguageParameter(language, param):
 	"""Fetches the given parameter for the given language."""
 	LCID=localeNameToWindowsLCID(language)
 	if LCID is LCID_NONE:
@@ -78,12 +82,12 @@ def getLanguageDescription(language):
 	desc = None
 	if '_' not in language:
 		try:
-			desc = getLanguageParameter(LOCALE_SLANGDISPLAYNAME,language)
+			desc = getLanguageParameter(language, LOCALE_SLANGDISPLAYNAME)
 		except (RuntimeError, WindowsError):
 			pass
 	if not desc:
 		try:
-			desc = getLanguageParameter(LOCALE_SLANGUAGE,language)
+			desc = getLanguageParameter(language, LOCALE_SLANGUAGE)
 		except (RuntimeError, WindowsError):
 			pass
 	if not desc:
