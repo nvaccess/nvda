@@ -14,9 +14,12 @@ import sys
 import ctypes
 import locale
 import gettext
+from logHandler import log
 
 #a few Windows locale constants
 LOCALE_SLANGUAGE=0x2
+LOCALE_SDECIMAL = 0xe
+LOCALE_STHOUSAND = 0xf
 LOCALE_SLANGDISPLAYNAME=0x6f
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
@@ -28,7 +31,7 @@ LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
 curLang="en"
 
 def localeNameToWindowsLCID(localeName):
-	"""Retreave the Windows locale identifier (LCID) for the given locale name
+	"""Retrieve the Windows locale identifier (LCID) for the given locale name
 	@param localeName: a string of 2letterLanguage_2letterCountry or just language (2letterLanguage or 3letterLanguage)
 	@type localeName: string
 	@returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
@@ -58,20 +61,31 @@ def windowsLCIDToLocaleName(lcid):
 	if lang:
 		return normalizeLanguage(lang)
 
+def getLanguageParameter(param, language):
+	"""Fetches the given parameter for the given language."""
+	LCID=localeNameToWindowsLCID(language)
+	if LCID is LCID_NONE:
+		raise RuntimeError("Unknown language %s" % language)
+	buf=ctypes.create_unicode_buffer(1024)
+	res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,param,buf,len(buf))
+	if not res:
+		raise ctypes.WinError()
+	return buf.value
+
 def getLanguageDescription(language):
 	"""Finds out the description (localized full name) of a given local name"""
-	desc=None
-	LCID=localeNameToWindowsLCID(language)
-	if LCID is not LCID_NONE:
-		buf=ctypes.create_unicode_buffer(1024)
-		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
-		if '_' not in language:
-			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGDISPLAYNAME,buf,1024)
-		else:
-			res=0
-		if res==0:
-			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
-		desc=buf.value
+	#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
+	desc = None
+	if '_' not in language:
+		try:
+			desc = getLanguageParameter(LOCALE_SLANGDISPLAYNAME,language)
+		except (RuntimeError, WindowsError):
+			pass
+	if not desc:
+		try:
+			desc = getLanguageParameter(LOCALE_SLANGUAGE,language)
+		except (RuntimeError, WindowsError):
+			pass
 	if not desc:
 		#Some hard-coded descriptions where we know the language fails on various configurations.
 		desc={
