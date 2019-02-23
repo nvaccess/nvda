@@ -588,8 +588,11 @@ class SpeechSymbolProcessor(object):
 		if not regex:
 			# Return the text untouched
 			return text
-		#if nrProcType != NR_PROC_SINGLE:
-		#	text = self._thousandsRegex.sub("", text)
+		# Replace the thousands separator by double space.
+		# This ensures that, if double digits is selected,
+		# the thousands separator is still reflected in the output:
+		# E.g. 1,234 will be read as 1  2  34.
+		text = self._thousandsRegex.sub("  ", text)
 		#splitText = self._decimalRegex.split(text)
 		#text = u"".join(
 		#	regex.sub(r"\1  ", chunk) if chunk.isdigit() else chunk
@@ -726,13 +729,13 @@ NR_PROC_REGEX = {
 
 NR_PROC_LABELS = (
 	# Translators: Choice in a combo box for speaking full numbers.
-	_("Full numbers"),
+	_("full numbers"),
 	# Translators: Choice in a combo box for speaking numbers as digits.
-	_("Digits"),
+	_("single digits"),
 	# Translators: Choice in a combo box for speaking numbers as double digits.
-	_("Double digits"),
+	_("double digits"),
 	# Translators: Choice in a combo box for speaking numbers as triple digits.
-	_("Triple digits"),
+	_("triple digits"),
 )
 
 def processNumbers(locale, nrProcType, text):
