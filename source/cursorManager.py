@@ -80,8 +80,8 @@ class FindDialog(wx.Dialog):
 				searchEntries.insert(0, currentSearchTerm)
 				return
 		# not yet listed. Save it.
-		if(len(searchEntries) == 20):
-			searchEntries.pop()
+		if len(searchEntries) >= 20:
+			del searchEntries[19:]
 		searchEntries.insert(0, currentSearchTerm)
 	
 	def onOk(self, evt):
