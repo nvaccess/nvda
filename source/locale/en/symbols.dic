@@ -16,7 +16,6 @@ complexSymbols:
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
-thousands separator	(?<=\d)\,(?=\d{3})
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]

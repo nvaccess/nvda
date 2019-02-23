@@ -163,9 +163,18 @@ SPEECH_SYMBOL_PRESERVE_LABELS = {
 SPEECH_SYMBOL_PRESERVES = (SYMPRES_NEVER, SYMPRES_ALWAYS, SYMPRES_NOREP)
 
 class SpeechSymbol(object):
-	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
+	__slots__ = (
+		"locale",
+		"identifier",
+		"pattern",
+		"replacement",
+		"level",
+		"preserve",
+		"displayName",
+	)
 
-	def __init__(self, identifier, pattern=None, replacement=None, level=None, preserve=None, displayName=None):
+	def __init__(self, locale, identifier, pattern=None, replacement=None, level=None, preserve=None, displayName=None):
+		self.locale = locale
 		self.identifier = identifier
 		self.pattern = pattern
 		self.replacement = replacement
@@ -187,9 +196,10 @@ class SpeechSymbols(object):
 	This is all handled by L{SpeechSymbolProcessor}.
 	"""
 
-	def __init__(self):
+	def __init__(self, locale):
 		"""Constructor.
 		"""
+		self.locale = locale
 		self.complexSymbols = collections.OrderedDict()
 		self.symbols = collections.OrderedDict()
 		self.fileName = None
@@ -294,7 +304,7 @@ class SpeechSymbols(object):
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
-		self.symbols[identifier] = SpeechSymbol(identifier, None, replacement, level, preserve, displayName)
+		self.symbols[identifier] = SpeechSymbol(self.locale, identifier, None, replacement, level, preserve, displayName)
 
 	def save(self, fileName=None):
 		"""Save symbol information to a file.
@@ -361,7 +371,7 @@ _noSymbolLocalesCache = set()
 def _getSpeechSymbolsForLocale(locale):
 	if locale in _noSymbolLocalesCache:
 		raise LookupError
-	builtin = SpeechSymbols()
+	builtin = SpeechSymbols(locale)
 	if config.conf['speech']['includeCLDR']:
 		# Try to load CLDR data when processing is on.
 		# Load the data before loading other symbols,
@@ -376,7 +386,7 @@ def _getSpeechSymbolsForLocale(locale):
 	except IOError:
 		_noSymbolLocalesCache.add(locale)
 		raise LookupError("No symbol information for locale %s" % locale)
-	user = SpeechSymbols()
+	user = SpeechSymbols(locale)
 	try:
 		# Don't allow users to specify complex symbols
 		# because an error will cause the whole processor to fail.
@@ -431,9 +441,9 @@ class SpeechSymbolProcessor(object):
 		for source in sources:
 			for identifier, pattern in source.complexSymbols.iteritems():
 				if identifier in symbols:
-					# Already defined.
+					# Already defined
 					continue
-				symbol = SpeechSymbol(identifier, pattern)
+				symbol = SpeechSymbol(source.locale, identifier, pattern)
 				symbols[identifier] = symbol
 				complexSymbolsList.append(symbol)
 
@@ -446,7 +456,7 @@ class SpeechSymbolProcessor(object):
 				except KeyError:
 					# This is a new simple symbol.
 					# (All complex symbols have already been added.)
-					symbol = symbols[identifier] = SpeechSymbol(identifier)
+					symbol = symbols[identifier] = SpeechSymbol(source.locale, identifier)
 					if len(identifier) == 1:
 						characters.append(identifier)
 					else:
