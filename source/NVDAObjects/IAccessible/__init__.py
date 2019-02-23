@@ -649,6 +649,14 @@ the NVDAObject for IAccessible
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 
+	def _get_uniqueID(self):
+		if self.IA2UniqueID:
+			return (self.windowHandle, self.IA2UniqueID)
+		elif self.IAccessibleIdentity:
+			return self.IAccessibleIdentity
+		else:
+			return (self.windowHandle, hash(self.IAccessibleObject))
+
 	def isDuplicateIAccessibleEvent(self,obj):
 		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""
 		#MSAA child elements do not have unique winEvent params as a childID could be reused if an element was deleted etc
@@ -1414,6 +1422,9 @@ the NVDAObject for IAccessible
 	def event_alert(self):
 		if self.role != controlTypes.ROLE_ALERT:
 			# Ignore alert events on objects that aren't alerts.
+			return
+		if not self.name and not self.description and self.childCount == 0:
+			# Don't report if there's no content.
 			return
 		# If the focus is within the alert object, don't report anything for it.
 		if eventHandler.isPendingEvents("gainFocus"):

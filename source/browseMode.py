@@ -478,9 +478,46 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
-		self._activatePosition()
+		self.maybeSyncFocus(postFocusFunc=self._activatePosition)
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
+
+	def maybeSyncFocus(self, postFocusFunc=None):
+		if  config.conf["virtualBuffers"]["focusFollowsBrowse"]:
+			if postFocusFunc is not None:
+				postFocusFunc()
+			return
+		try:
+			obj = self._lastFocusableObject
+		except AttributeError:
+			return
+		if not obj:
+			return
+		synchronousCall =True
+		setFocusCall = False 
+		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
+			setFocusCall = True
+			synchronousCall = False
+		if obj.hasFocus:
+			synchronousCall = True
+
+		if not synchronousCall:
+			uid = obj.uniqueID
+			if uid in self.postFocusFuncDict:
+				log.error("postFocusFunc has not been called asynchronously")
+			if postFocusFunc is not None:
+				self.postFocusFuncDict[uid] = postFocusFunc
+		if setFocusCall:
+			obj.setFocus()
+		if synchronousCall:
+			if postFocusFunc is not None:
+				postFocusFunc()
+
+	def script_passThrough(self,gesture):
+		self.maybeSyncFocus()
+		gesture.send()
+	# Translators: the description for the passThrough script on browseMode documents.
+	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -501,6 +538,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
+		"kb:Control+enter": "passThrough",
+		"kb:Control+numpadEnter": "passThrough",
+		"kb:Shift+enter": "passThrough",
+		"kb:Shift+numpadEnter": "passThrough",
+		"kb:Control+Shift+enter": "passThrough",
+		"kb:Control+Shift+numpadEnter": "passThrough",
+		"kb:Alt+enter": "passThrough",
+		"kb:Alt+numpadEnter": "passThrough",
+		"kb:Applications": "passThrough",
 	}
 
 # Add quick navigation scripts.
@@ -1126,6 +1172,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastCaretPosition = None
 		#: True if the last caret move was due to a focus change.
 		self._lastCaretMoveWasFocus = False
+		self.postFocusFuncDict = {}
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
@@ -1134,6 +1181,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			except AttributeError:
 				# The app module died.
 				pass
+		if len(self.postFocusFuncDict) > 0:
+			log.error("Some asynchronous gainFocus events in this treeInterceptor weren't handled.")
 
 	def _get_currentNVDAObject(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
@@ -1225,6 +1274,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
+			self._lastFocusableObject = info.focusableNVDAObjectAtStart
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
@@ -1234,10 +1284,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-			if obj==self.rootNVDAObject:
-				return
-			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-				focusObj.setFocus()
+			followBrowseModeFocus= config.conf["virtualBuffers"]["focusFollowsBrowse"]
+			if followBrowseModeFocus:
+				if obj==self.rootNVDAObject:
+					return
+				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+					focusObj.setFocus()
+			else:
+				self._lastFocusableObject = focusObj
+				if obj==self.rootNVDAObject:
+					return
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
@@ -1293,6 +1349,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
+		self.maybeSyncFocus() 
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
@@ -1475,6 +1532,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				uid = obj.uniqueID
+				try:
+					queueHandler.queueFunction(queueHandler.eventQueue, self.postFocusFuncDict.pop(uid))
+				except KeyError:
+					pass
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
@@ -1518,6 +1580,26 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		return False
 
+	def _isNVDAObjectInApplication_noWalk(self, obj):
+		"""Determine whether a given object is within an application without walking ancestors.
+		The base implementation simply checks whether the object has an application role.
+		Subclasses can override this if they can provide a definite answer without needing to walk.
+		For example, for virtual buffers, if the object is in the buffer,
+		it definitely isn't in an application.
+		L{_isNVDAObjectInApplication} calls this and walks to the next ancestor if C{None} is returned.
+		@return: C{True} if definitely in an application,
+			C{False} if definitely not in an application,
+			C{None} if this can't be determined without walking ancestors.
+		"""
+		if (
+			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
+			obj.role in self.APPLICATION_ROLES 
+			# Anything inside a combo box should be treated as being outside a browseMode document.
+			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+		):
+			return True
+		return None
+
 	def _isNVDAObjectInApplication(self, obj):
 		"""Determine whether a given object is within an application.
 		The object is considered to be within an application if it or one of its ancestors has an application role.
@@ -1548,13 +1630,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We found a cached result.
 				return doResult(inApp)
 			objs.append(obj)
-			if (
-				# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
-				obj.role in self.APPLICATION_ROLES 
-				# Anything inside a combo box should be treated as being outside a browseMode document.
-				or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
-			):
-				return doResult(True)
+			inApp = self._isNVDAObjectInApplication_noWalk(obj)
+			if inApp is not None:
+				return doResult(inApp)
+			# We must walk ancestors.
 			# Cache container.
 			container = obj.container
 			obj.container = container

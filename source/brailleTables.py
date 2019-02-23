@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Joseph Lee
+#Copyright (C) 2008-2019 NV Access Limited, Joseph Lee
 
 """Manages information about available braille translation tables.
 """
@@ -76,7 +76,8 @@ RENAMED_TABLES = {
 	"mn-MN.utb":"mn-MN-g1.utb",
 	"nl-BE-g1.ctb":"nl-BE-g0.utb",
 	"nl-NL-g1.ctb":"nl-NL-g0.utb",
-	"no-no.ctb":"no-no-comp8.ctb",
+	"no-no.ctb":"no-no-8dot.utb",
+	"no-no-comp8.ctb":"no-no-8dot.utb",
 	"ru-compbrl.ctb":"ru.ctb",
 	"sk-sk-g1.utb":"sk-g1.ctb",
 	"UEBC-g1.ctb":"en-ueb-g1.ctb",
@@ -84,6 +85,9 @@ RENAMED_TABLES = {
 }
 
 # Add builtin tables.
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("afr-za-g1.ctb", _("Afrikaans grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ar-ar-comp8.utb", _("Arabic 8 dot computer braille"))
@@ -305,7 +309,7 @@ addTable("nl-BE-g0.utb", _("Dutch (Belgium)"))
 addTable("nl-NL-g0.utb", _("Dutch (Netherlands)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("no-no-comp8.ctb", _("Norwegian 8 dot computer braille"))
+addTable("no-no-8dot.utb", _("Norwegian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("No-No-g0.utb", _("Norwegian grade 0"))

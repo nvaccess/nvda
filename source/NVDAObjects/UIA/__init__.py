@@ -761,7 +761,11 @@ class UIA(Window):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
-		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		try:
+			cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		except COMError:
+			log.debugWarning("IUIAutomationElement.buildUpdatedCache failed given IDs of %s"%IDs)
+			return
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
@@ -924,6 +928,9 @@ class UIA(Window):
 			elementCache=self._coreCycleUIAPropertyCacheElementCache
 			for ID in initialUIACachedPropertyIDs:
 				elementCache[ID]=self.UIAElement
+
+	def _get_uniqueID(self):
+		return         self.UIAElement.getRuntimeId()
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):

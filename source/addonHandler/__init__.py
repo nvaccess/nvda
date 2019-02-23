@@ -8,18 +8,16 @@
 import sys
 import os.path
 import gettext
-import glob
 import tempfile
-from six.moves import cPickle
 import inspect
 import itertools
 import collections
 import pkgutil
 import shutil
-from six.moves import cStringIO as StringIO
+from six.moves import cStringIO as StringIO, cPickle
+from six import string_types
 import zipfile
-from versionInfo import getNVDAVersionTupleFromString
-from configobj import ConfigObj, ConfigObjError
+from configobj import ConfigObj
 from configobj.validate import Validator
 
 import config
@@ -27,11 +25,9 @@ import globalVars
 import languageHandler
 from logHandler import log
 import winKernel
-import re
-import buildVersion
+import addonAPIVersion
 from . import addonVersionCheck
-from .addonVersionCheck import AddonCompatibilityState, isAddonConsideredIncompatible, isAddonConsideredCompatible
-from . import compatValues
+from .addonVersionCheck import isAddonCompatible
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -42,6 +38,9 @@ ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
 
 state={}
+
+# addons that are blocked from running because they are incompatible
+_blockedAddons=set()
 
 def loadState():
 	global state
@@ -76,30 +75,19 @@ def getRunningAddons():
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
-def getAddonsWithUnknownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
-	""" Returns add-ons that have "UNKNOWN" compatibility state value. These are addons
-	that have no auto-deduced or manually set compatibility state.
-	"""
-	return getAddonsMatchingCompatValues([compatValues.UNKNOWN], version)
-
-def getAddonsWithoutKnownCompatibility(version=addonVersionCheck.CURRENT_NVDA_VERSION):
-	""" Returns add-ons that are untested for the specified NVDA version.
-	"""
-	withoutKnownCompatValues = [
-			compatValues.UNKNOWN,
-			compatValues.MANUALLY_SET_COMPATIBLE,
-			compatValues.MANUALLY_SET_INCOMPATIBLE
-		]
-	return getAddonsMatchingCompatValues(withoutKnownCompatValues, version)
-
-def getAddonsMatchingCompatValues(compatValues, version=addonVersionCheck.CURRENT_NVDA_VERSION):
-	""" Returns add-ons that have compatibility value that is True when anded with compatMask
+def getIncompatibleAddons(
+		currentAPIVersion=addonAPIVersion.CURRENT,
+		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO):
+	""" Returns a generator of the add-ons that are not compatible.
 	"""
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
-			AddonCompatibilityState.getAddonCompatibility(addon, version) in compatValues
+			not addonVersionCheck.isAddonCompatible(
+				addon,
+				currentAPIVersion=currentAPIVersion,
+				backwardsCompatToVersion=backCompatToAPIVersion
 		)
-	)
+	))
 
 def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -142,19 +130,10 @@ def disableAddonsIfAny():
 	"""
 	Disables add-ons if told to do so by the user from add-ons manager.
 	This is usually executed before refreshing the list of available add-ons.
-	Furthermore, disabling is limited to installed add-ons,
-	whereas blacklisting can also be performed for add-on bundles.
 	"""
 	global _disabledAddons
 	# Pull in and enable add-ons that should be disabled and enabled, respectively.
 	state["disabledAddons"] |= state["pendingDisableSet"]
-	state["disabledAddons"] |= set(getAddonsMatchingCompatValues(
-		[
-			compatValues.UNKNOWN,
-			compatValues.MANUALLY_SET_INCOMPATIBLE,
-			compatValues.AUTO_DEDUCED_INCOMPATIBLE
-		]
-	))
 	state["disabledAddons"] -= state["pendingEnableSet"]
 	_disabledAddons = state["disabledAddons"]
 	state["pendingDisableSet"].clear()
@@ -166,7 +145,6 @@ def initialize():
 		log.info("Add-ons not supported when running as a Windows Store application")
 		return
 	loadState()
-	AddonCompatibilityState.initialise()
 	removeFailedDeletions()
 	completePendingAddonRemoves()
 	completePendingAddonInstalls()
@@ -174,29 +152,6 @@ def initialize():
 	disableAddonsIfAny()
 	getAvailableAddons(refresh=True)
 	saveState()
-
-def showUnknownCompatDialog():
-	from gui import addonGui, mainFrame, runScriptModalDialog
-	if any(getAddonsWithUnknownCompatibility()):
-		try:
-			incompatibleAddonsDlg = addonGui.IncompatibleAddonsDialog(parent=mainFrame)
-		except RuntimeError:
-			log.error("Unable to open IncompatibleAddonsDialog", exc_info=True)
-			return
-	else:
-		return
-	unknownCompatAddons = incompatibleAddonsDlg.unknownCompatibilityAddonsList
-	def afterDialog(res):
-		# we may need to change the enabled addons / restart nvda here
-		shouldPromptRestart = False
-		for addon in unknownCompatAddons:
-			if isAddonConsideredCompatible(addon):
-				addon.enable(True)
-				shouldPromptRestart = True
-		saveState()
-		if shouldPromptRestart:
-			addonGui.promptUserForRestart()
-	runScriptModalDialog(incompatibleAddonsDlg, afterDialog)
 
 
 def terminate():
@@ -230,14 +185,18 @@ def _getAvailableAddonsFromPath(path):
 			try:
 				a = Addon(addon_path)
 				name = a.manifest['name']
-				log.debug("Found add-on %s", name)
+				log.debug(
+					"Found add-on {name} - {a.version}."
+					" Requires API: {a.minimumNVDAVersion}."
+					" Last-tested API: {a.lastTestedNVDAVersion}".format(
+						name=name,
+						a=a
+					))
 				if a.isDisabled:
 					log.debug("Disabling add-on %s", name)
-				elif isAddonConsideredIncompatible(a):
+				if not isAddonCompatible(a):
 					log.debugWarning("Add-on %s is considered incompatible", name)
-					# #6275: The add-on refresh could have yielded add-ons considered incompatible.
-					# Add these to the disabled add-ons
-					_disabledAddons.add(a.name)
+					_blockedAddons.add(a.name)
 				yield a
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
@@ -299,17 +258,11 @@ class AddonBase(object):
 
 	@property
 	def minimumNVDAVersion(self):
-		version = self.manifest.get('minimumNVDAVersion')
-		if not version:
-			return None
-		return getNVDAVersionTupleFromString(version)
+		return self.manifest.get('minimumNVDAVersion')
 
 	@property
 	def lastTestedNVDAVersion(self):
-		version = self.manifest.get('lastTestedNVDAVersion')
-		if not version:
-			return None
-		return getNVDAVersionTupleFromString(version)
+		return self.manifest.get('lastTestedNVDAVersion')
 
 class Addon(AddonBase):
 	""" Represents an Add-on available on the file system."""
@@ -375,19 +328,29 @@ class Addon(AddonBase):
 		shutil.rmtree(tempPath,ignore_errors=True)
 		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
-		# clean up the addons state
-		log.debug("removing addon {} from _disabledAddons".format(self.name))
+		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
+		# disabled / blocked.
+		log.debug("removing addon {} from _disabledAddons/_blockedAddons".format(self.name))
 		_disabledAddons.discard(self.name)
+		_blockedAddons.discard(self.name)
 		saveState()
 
 	def addToPackagePath(self, package):
 		""" Adds this L{Addon} extensions to the specific package path if those exist.
+		This allows the addon to "run" / be available because the package is able to search its path,
+		looking for particular modules. This is used by the following:
+		- `globalPlugins`
+		- `appModules`
+		- `synthDrivers`
+		- `brailleDisplayDrivers`
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
-		# #3090: Don't even think about adding a disabled add-on to package path.
-		if self.isDisabled:
+		# #3090: Ensure that we don't add disabled / blocked add-ons to package path.
+		# By returning here the addon does not "run"/ become active / registered.
+		if self.isDisabled or self.isBlocked:
 			return
+
 		extension_path = os.path.join(self.path, package.__name__)
 		if not os.path.isdir(extension_path):
 			# This addon does not have extension points for this package
@@ -401,10 +364,18 @@ class Addon(AddonBase):
 	def enable(self, shouldEnable):
 		"""Sets this add-on to be disabled or enabled when NVDA restarts."""
 		if shouldEnable:
-			if isAddonConsideredIncompatible(self):
-				raise AddonError("Add-on in blacklist: minimum NVDA version %s, last tested version %s" % (
-					self.manifest['minimumNVDAVersion'], self.manifest['lastTestedNVDAVersion']
-				))
+			if not isAddonCompatible(self):
+				import addonAPIVersion
+				raise AddonError(
+					"Add-on is not compatible:"
+					" minimum NVDA version {}, last tested version {},"
+					" NVDA current {}, NVDA backwards compatible to {}".format(
+						self.manifest['minimumNVDAVersion'],
+						self.manifest['lastTestedNVDAVersion'],
+						addonAPIVersion.CURRENT,
+						addonAPIVersion.BACK_COMPAT_TO
+					)
+				)
 			if self.name in state["pendingDisableSet"]:
 				# Undoing a pending disable.
 				state["pendingDisableSet"].discard(self.name)
@@ -423,11 +394,15 @@ class Addon(AddonBase):
 
 	@property
 	def isRunning(self):
-		return not (self.isPendingInstall or self.isDisabled)
+		return not (self.isPendingInstall or self.isDisabled or self.isBlocked)
 
 	@property
 	def isDisabled(self):
 		return self.name in _disabledAddons
+
+	@property
+	def isBlocked(self):
+		return self.name in _blockedAddons
 
 	@property
 	def isPendingEnable(self):
@@ -584,6 +559,9 @@ class AddonBundle(AddonBase):
 				except KeyError:
 					pass
 			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME), translatedInput=translatedInput)
+			if self.manifest.errors is not None:
+				_report_manifest_errors(self.manifest)
+				raise AddonError("Manifest file has errors.")
 
 	def extract(self, addonPath):
 		""" Extracts the bundle content to the specified path.
@@ -625,7 +603,7 @@ def createAddonBundleFromPath(path, destDir=None):
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
-		raise AddonError("Manifest file as errors.")
+		raise AddonError("Manifest file has errors.")
 	bundleFilename = "%s-%s.%s" % (manifest['name'], manifest['version'], BUNDLE_EXTENSION)
 	bundleDestination = os.path.join(destDir, bundleFilename)
 	with zipfile.ZipFile(bundleDestination, 'w') as z:
@@ -649,22 +627,37 @@ class AddonManifest(ConfigObj):
 # NVDA Add-on Manifest configuration specification
 # Add-on unique name
 name = string()
+
 # short  summary (label) of the add-on to show to users.
 summary = string()
+
 # Long description with further information and instructions
 description = string(default=None)
+
 # Name of the author or entity that created the add-on
 author = string()
+
 # Version of the add-on. Should preferably in some standard format such as x.y.z
 version = string()
-# The minimum required NVDA version for this add-on to work correctly
-minimumNVDAVersion = string(default=None)
-# The last NVDA version this add-on has been tested with.
-lastTestedNVDAVersion = string(default=None)
+
+# The minimum required NVDA version for this add-on to work correctly.
+# Should be less than or equal to lastTestedNVDAVersion
+minimumNVDAVersion = apiVersion(default="0.0.0")
+
+# Must be greater than or equal to minimumNVDAVersion
+lastTestedNVDAVersion = apiVersion(default="0.0.0")
+
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
+
 # Name of default documentation file for the add-on.
 docFileName = string(default=None)
+
+# NOTE: apiVersion:
+# Eg: 2019.1.0 or 0.0.0
+# Must have 3 integers separated by dots.
+# The first integer must be a Year (4 characters)
+# "0.0.0" is also valid
 
 """))
 
@@ -676,11 +669,16 @@ docFileName = string(default=None)
 		@type translatedInput: file-like object
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
-		self._errors = []
-		val = Validator()
+		self._errors = None
+		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
+		elif True != self._validateApiVersionRange():
+			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
+				self.get("minimumNVDAVersion"),
+				self.get("lastTestedNVDAVersion")
+			)
 		self._translatedConfig = None
 		if translatedInput is not None:
 			self._translatedConfig = ConfigObj(translatedInput, encoding='utf-8', default_encoding='utf-8')
@@ -692,3 +690,18 @@ docFileName = string(default=None)
 	@property
 	def errors(self):
 		return self._errors
+
+	def _validateApiVersionRange(self):
+		lastTested = self.get("lastTestedNVDAVersion")
+		minRequiredVersion = self.get("minimumNVDAVersion")
+		return minRequiredVersion <= lastTested
+
+def validate_apiVersionString(value):
+	from configobj.validate import ValidateError
+	if not isinstance(value, string_types):
+		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
+	try:
+		tuple = addonAPIVersion.getAPIVersionTupleFromString(value)
+		return tuple
+	except ValueError as e:
+		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))

@@ -502,7 +502,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for lineEndOffset in lineEndOffsets:
 			startOffset=endOffset
 			endOffset=lineEndOffset
-			rects.append(RectLTWH.fromCollection(*self._storyFieldsAndRects[1][startOffset:endOffset].toPhysical(self.obj.windowHandle)))
+			rects.append(RectLTWH.fromCollection(*self._storyFieldsAndRects[1][startOffset:endOffset]).toPhysical(self.obj.windowHandle))
 		return rects
 
 	def _getFirstVisibleOffset(self):

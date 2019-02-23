@@ -42,6 +42,8 @@ WAIT_IO_COMPLETION = 0x000000c0
 WAIT_OBJECT_0 = 0x00000000
 WAIT_TIMEOUT = 0x00000102
 WAIT_FAILED = 0xffffffff
+# Image file machine constants
+IMAGE_FILE_MACHINE_UNKNOWN = 0
 
 def GetStdHandle(handleID):
 	h=kernel32.GetStdHandle(handleID)
