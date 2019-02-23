@@ -687,6 +687,19 @@ class GlobalCommands(ScriptableObject):
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
 
+	def script_cycleSpeechReadNumbersAs(self, gesture):
+		labels = characterProcessing.NR_PROC_LABELS
+		index = config.conf["speech"]["readNumbersAs"]
+		newIndex = (index+1) % len(labels)
+		config.conf["speech"]["readNumbersAs"] = newIndex
+		# Translators: Reported when the user cycles through the available ways
+		# numbers can be spoken by NVDA.
+		# %s will be replaced by full numbers, single digits, Double digits, or Triple digits.
+		ui.message(_("Read numbers as %s") % labels[newIndex])
+	# Translators: Input help mode message for cycle speech read numbers as command.
+	script_cycleSpeechReadNumbersAs.__doc__=_("Cycles through the different ways NVDA can speak numbers")
+	script_cycleSpeechReadNumbersAs.category=SCRCAT_SPEECH
+
 	def script_moveMouseToNavigatorObject(self,gesture):
 		try:
 			p=api.getReviewPosition().pointAtStart
@@ -2368,6 +2381,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",
 		"kb:NVDA+p": "cycleSpeechSymbolLevel",
+		"kb:NVDA+d": "cycleSpeechReadNumbersAs",
 		"kb:NVDA+s": "speechMode",
 		"kb:NVDA+m": "toggleMouseTracking",
 		"kb:NVDA+u": "toggleProgressBarOutput",

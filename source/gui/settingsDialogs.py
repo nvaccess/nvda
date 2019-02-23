@@ -1008,18 +1008,6 @@ class VoiceSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
 	title = _("Voice")
 
-	#Choices for numbers combo box in Voice settings.
-	DIGIT_CHOICES = [
-		# Translators: Choice in a combo box for speaking full numbers.
-		_("Full numbers"),
-		# Translators: Choice in a combo box for speaking numbers as digits.
-		_("Digits"),
-		# Translators: Choice in a combo box for speaking numbers as double digits.
-		_("Double digits"),
-		# Translators: Choice in a combo box for speaking numbers as triple digits.
-		_("Triple digits"),
-	]
-
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
 		slider.SetLineSize(setting.minStep)
@@ -1151,8 +1139,11 @@ class VoiceSettingsPanel(SettingsPanel):
 
 		# Translators: Label for a combo box for setting how nvda speaks numbers.
 		digitsText = _("Speak &numbers as")
-		self.digitsCombo = settingsSizerHelper.addLabeledControl(digitsText, wx.Choice, choices=self.DIGIT_CHOICES)
-		self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
+		self.digitsCombo = settingsSizerHelper.addLabeledControl(digitsText, wx.Choice, choices=characterProcessing.NR_PROC_LABELS)
+		try:
+			self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
+		except:
+			log.debugWarning("Could not set read numbers list to current selection",exc_info=True)
 
 		# Translators: This is the label for a checkbox in the
 		# voice settings panel.

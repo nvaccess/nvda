@@ -588,13 +588,14 @@ class SpeechSymbolProcessor(object):
 		if not regex:
 			# Return the text untouched
 			return text
-		if nrProcType != NR_PROC_SINGLE:
-			text = self._thousandsRegex.sub("", text)
-		splitText = self._decimalRegex.split(text)
-		text = u"".join(
-			regex.sub(r"\1  ", chunk) if chunk.isdigit() else chunk
-			for chunk in splitText
-		)
+		#if nrProcType != NR_PROC_SINGLE:
+		#	text = self._thousandsRegex.sub("", text)
+		#splitText = self._decimalRegex.split(text)
+		#text = u"".join(
+		#	regex.sub(r"\1  ", chunk) if chunk.isdigit() else chunk
+		#	for chunk in splitText
+		#)
+		text = regex.sub(r"\1  ", text)
 		return text
 
 	def updateSymbol(self, newSymbol):
@@ -713,15 +714,26 @@ def clearSpeechSymbols():
 NNR_PROC_FULL = 0
 NR_PROC_SINGLE = 1
 NR_PROC_DOUBLE = 2
-NR_PROC_TRIPPLE = 3
+NR_PROC_TRIPLE = 3
 
 # regexp for parsing numbers:
 NR_PROC_REGEX = {
 	#NNR_PROC_FULL: None,
 	NR_PROC_SINGLE: re.compile(r"(\d)(?=\d+(\D|\b))", re.UNICODE),
 	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?=(\d{2})+(\D|\b))", re.UNICODE),
-	NR_PROC_TRIPPLE: re.compile(r"(\d{1,3})(?=(\d{3})+(\D|\b))", re.UNICODE),
+	NR_PROC_TRIPLE: re.compile(r"(\d{1,3})(?=(\d{3})+(\D|\b))", re.UNICODE),
 }
+
+NR_PROC_LABELS = (
+	# Translators: Choice in a combo box for speaking full numbers.
+	_("Full numbers"),
+	# Translators: Choice in a combo box for speaking numbers as digits.
+	_("Digits"),
+	# Translators: Choice in a combo box for speaking numbers as double digits.
+	_("Double digits"),
+	# Translators: Choice in a combo box for speaking numbers as triple digits.
+	_("Triple digits"),
+)
 
 def processNumbers(locale, nrProcType, text):
 	"""Processes text for number pronunciation according to the provided type for the providd locale.
