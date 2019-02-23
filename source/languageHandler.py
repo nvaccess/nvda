@@ -17,14 +17,22 @@ import gettext
 from logHandler import log
 
 #a few Windows locale constants
-LOCALE_SLANGUAGE=0x2
+
+LOCALE_SLOCALIZEDDISPLAYNAME = LOCALE_SLANGUAGE = 0x2
+# Decimal separator, eg "." for 1,234.00
 LOCALE_SDECIMAL = 0xe
+# Thousand separator, eg "," for 1,234.00
 LOCALE_STHOUSAND = 0xf
+# Digit grouping, eg "3;0" for 1,000,000
 LOCALE_SGROUPING = 0x10
+# Number of fractional digits eg 2 for 1.00
 LOCALE_IDIGITS = 0x11
-LOCALE_ILZERO = 0x12
+# Negative sign, eg "-"
+LOCALE_SNEGATIVESIGN = 0x51
+# Negative number mode, 0-4, see https://docs.microsoft.com/en-us/windows/desktop/intl/locale-ineg-constants
 LOCALE_INEGNUMBER = 0x1010
-LOCALE_SLANGDISPLAYNAME=0x6f
+# Language Display Name for a language, eg "German" in UI language
+LOCALE_SLOCALIZEDLANGUAGENAME = LOCALE_SLANGDISPLAYNAME = 0x6f
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
@@ -82,7 +90,7 @@ def getLanguageDescription(language):
 	desc = None
 	if '_' not in language:
 		try:
-			desc = getLanguageParameter(language, LOCALE_SLANGDISPLAYNAME)
+			desc = getLanguageParameter(language, LOCALE_SLOCALIZEDDISPLAYNAME)
 		except (RuntimeError, WindowsError):
 			pass
 	if not desc:

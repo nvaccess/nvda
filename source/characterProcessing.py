@@ -407,6 +407,10 @@ def _getWindowsSpeechSymbolsForLocale(locale):
 			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_STHOUSAND),
 			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SGROUPING)
 		)
+		negativeSign = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SNEGATIVESIGN)
+		negativeMode = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_INEGNUMBER)
+		decimalSep = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SDECIMAL)
+		symbols.complexSymbols['decimal point'] = ur'(?<![^\d %s])%s(?=\d)' % (re.escape(negativeSign), re.escape(decimalSep))
 	except:
 		log.error("Error while creating windows symbols dictionary for locale %s" % locale, exc_info=True)
 		return None
