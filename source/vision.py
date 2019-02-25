@@ -14,7 +14,6 @@ Add-ons can provide their own implementation for any or all of these
 using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
 
-import config
 import visionEnhancementProviders
 import pkgutil
 from baseObject import AutoPropertyObject
@@ -30,7 +29,6 @@ import NVDAObjects
 import winVersion
 from locationHelper import RectLTRB
 from synthDriverHandler import StringParameterInfo
-import textInfos
 
 # Context in which cases in NVDA can trigger a visual change
 # When tracking a magnifier to a specified area on screen,
