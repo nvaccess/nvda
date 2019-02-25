@@ -816,7 +816,7 @@ def _buildNegativeNumberRegex(mode, negativeSign, decimalPoint):
 			int(spaceInBetween)
 		)
 	else:
-		regex = ur"(?<= {%d}\d)%s(?!\w)" % (
+		regex = ur"(?<=\d {%d})%s(?!\w)" % (
 			int(spaceInBetween),
 			negativeSign
 		)
