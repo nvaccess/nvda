@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #characterProcessing.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2010-2019 NV Access Limited, World Light Information Limited, Hong Kong Blind Union, Babbage B.V., Derek Riemer
@@ -786,6 +787,18 @@ def _buildNumerGroupRegex(separators, grouping):
 	lookbehind = ur"(?<=\d)"
 	lookahead = ur"(?=\d{%d,%d})" % (min(groupNumbers), max(groupNumbers))
 	return ur"{}[{}]{}".format(lookbehind, re.escape(separators), lookahead)
+
+def _buildNegativeNumberRegex(mode, negativeSign, decimalPoint):
+	"""
+	Builds a regular expression for negative numbers (i.e. -4)
+	@param mode: The negative number mode, one of the C{languageHandler.LOCALE_INEGNUMBER_*} constants.
+	@type mode: int
+	@param negativeSign: The negative sign to use.
+	@type negativeSign: str
+	@param decimalPoint: The decimal point to use.
+	@type decimalPoint: str
+	"""
+	currencies = u"$£€¥₹"
 
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:
