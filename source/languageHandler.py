@@ -84,6 +84,25 @@ def getLanguageParameter(language, param):
 		raise ctypes.WinError()
 	return buf.value
 
+def getLanguageParameterForAvailableLanguages(param):
+	#Make a list of all the locales found in NVDA's locale dir
+	locales = [x for x in os.listdir('locale') if not x.startswith('.')]
+	locales = [x for x in locales if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
+	#Make sure that en (english) is in the list as it may not have any locale files, but is default
+	if 'en' not in locales:
+		locales.append('en')
+		locales.sort()
+	#For each locale, ask Windows for its human readable display name
+	import collections
+	paramDict = collections.OrderedDict()
+	for locale in locales:
+		try:
+			value = getLanguageParameter(locale, param)
+		except RuntimeError:
+			value = None
+		paramDict[locale] = value
+	return paramDict
+
 def getLanguageDescription(language):
 	"""Finds out the description (localized full name) of a given local name"""
 	#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
