@@ -926,9 +926,6 @@ class UIA(Window):
 			for ID in initialUIACachedPropertyIDs:
 				elementCache[ID]=self.UIAElement
 
-	def _get_uniqueID(self):
-		return         self.UIAElement.getRuntimeId()
-
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
 			return False
