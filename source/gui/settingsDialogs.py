@@ -2144,9 +2144,19 @@ class AdvancedPanel(SettingsPanel):
 		self.advancedControls = AdvancedPanelControls(self)
 		sHelper.sizer.Add(self.advancedControls, flag=wx.EXPAND)
 
+		def onEnableControlsCheckBox(evt):
+			# due to some not very well understood mis ordering of event processing, we force NVDA to
+			# process pending events. This fixes an issue where the checkbox state was being reported
+			# incorrectly. This checkbox is slightly different from most, in that its behaviour is to
+			# enable more controls than is typical. This might be causing enough of a delay, that there
+			# is a mismatch in the state of the checkbox and when the events are processed by NVDA.
+			from api import processPendingEvents
+			processPendingEvents()
+			self.advancedControls.Enable(evt.IsChecked())
+
 		self.enableControlsCheckBox.Bind(
 			wx.EVT_CHECKBOX,
-			lambda evt: self.advancedControls.Enable(evt.IsChecked())
+			onEnableControlsCheckBox
 		)
 		self.advancedControls.Enable(self.enableControlsCheckBox.IsChecked())
 
