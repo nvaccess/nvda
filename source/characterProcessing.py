@@ -406,20 +406,24 @@ def _getWindowsSpeechSymbolsForLocale(locale):
 		# Create thousands separator regex.
 		thousandsSeps = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_STHOUSAND)
 		# The thousands separator for a locale with country may differ from the universal locale.
-		# This is known in the case of de_CH, where the separator is \u2019.
+		# This is known in the case of de_CH, where the separator is "\u2019",
+		# whereas the normal separator for de is "."
 		if '_' in locale:
 			lang = locale[:2]
 			langThousandsSep = languageHandler.getLanguageParameter(lang, languageHandler.LOCALE_STHOUSAND)
 			if langThousandsSep != thousandsSeps:
-				thousandsSeparators += langThousandsSeparator
+				thousandsSeps += langThousandsSep
 		symbols.complexSymbols['thousands separator'] = _buildNumerGroupRegex(
 			thousandsSeps,
 			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SGROUPING)
 		)
 		negativeSign = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SNEGATIVESIGN)
 		negativeMode = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_INEGNUMBER)
-		decimalSep = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SDECIMAL)
-		symbols.complexSymbols['decimal point'] = ur'(?<![^\d %s])%s(?=\d)' % (re.escape(negativeSign), re.escape(decimalSep))
+		decimalPoint = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SDECIMAL)
+		symbols.complexSymbols['decimal point'] = ur'(?<![^\d %s])%s(?=\d)' % (
+			re.escape(negativeSign),
+			re.escape(decimalPoint)
+		)
 	except:
 		log.error("Error while creating windows symbols dictionary for locale %s" % locale, exc_info=True)
 		return None
@@ -790,15 +794,22 @@ def _buildNumerGroupRegex(separators, grouping):
 
 def _buildNegativeNumberRegex(mode, negativeSign, decimalPoint):
 	"""
-	Builds a regular expression for negative numbers (i.e. -4)
-	@param mode: The negative number mode, one of the C{languageHandler.LOCALE_INEGNUMBER_*} constants.
+	Builds a regular expression for negative numbers (i.e. -3).
+	@param mode: The negative presentation mode, one of the C{languageHandler.LOCALE_INEGNUMBER_* constants.
 	@type mode: int
 	@param negativeSign: The negative sign to use.
 	@type negativeSign: str
-	@param decimalPoint: The decimal point to use.
-	@type decimalPoint: str
 	"""
-	currencies = u"$£€¥₹"
+	if mode == languageHandler.LOCALE_INEGNUMBER_PARENTHESIS:
+		# As of february 2019, There is no NVDA locale that uses this.
+		raise NotImplementedError
+	negativeSign = re.escape(negativeSign)
+	decimalPoint = re.escape(decimalPoint)
+	spaceInBetween = mode in (languageHandler.LOCALE_INEGNUMBER_PRE_SPACE, languageHandler.LOCALE_INEGNUMBER_SUF_SPACE)
+	beforeNumber = mode in (languageHandler.LOCALE_INEGNUMBER_PRE_NOSPACE, languageHandler.LOCALE_INEGNUMBER_PRE_SPACE)
+	if beforeNumber:
+		regex = ur"(?<!\w)%s(?= {%d}[]?\d)
+	return regex
 
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:
