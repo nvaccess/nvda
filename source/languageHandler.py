@@ -19,26 +19,42 @@ from logHandler import log
 #a few Windows locale constants
 
 LOCALE_SLOCALIZEDDISPLAYNAME = LOCALE_SLANGUAGE = 0x2
-# Decimal separator, eg "." for 1,234.00
+#: Decimal separator, eg "." for 1,234.00
 LOCALE_SDECIMAL = 0xe
-# Thousand separator, eg "," for 1,234.00
+#: Thousand separator, eg "," for 1,234.00
 LOCALE_STHOUSAND = 0xf
-# Digit grouping, eg "3;0" for 1,000,000
+#: Digit grouping, eg "3;0" for 1,000,000
 LOCALE_SGROUPING = 0x10
-# Number of fractional digits eg 2 for 1.00
+#: Number of fractional digits eg 2 for 1.00
 LOCALE_IDIGITS = 0x11
-# Negative sign, eg "-"
+#: Negative sign, eg "-"
 LOCALE_SNEGATIVESIGN = 0x51
-# Negative number mode, 0-4, see https://docs.microsoft.com/en-us/windows/desktop/intl/locale-ineg-constants
+#: Negative number mode, 0-4, see https://docs.microsoft.com/en-us/windows/desktop/intl/locale-ineg-constants
 LOCALE_INEGNUMBER = 0x1010
-# Language Display Name for a language, eg "German" in UI language
+#: Language Display Name for a language, eg "German" in UI language
 LOCALE_SLOCALIZEDLANGUAGENAME = LOCALE_SLANGDISPLAYNAME = 0x6f
 LOCALE_CUSTOM_UNSPECIFIED = 0x1000
+#: Do not take user overrides into account.
+#: The use of this constant is discouraged, but for NVDA"s usage, it makes sense.
+LOCALE_NOUSEROVERRIDE = 0x80000000
 #: Returned from L{localeNameToWindowsLCID} when the locale name cannot be mapped to a locale identifier.
 #: This might be because Windows doesn't know about the locale (e.g. "an"),
 #: because it is not a standardized locale name anywhere (e.g. "zz")
 #: or because it is not a legal locale name (e.g. "zzzz").
 LCID_NONE = 0 # 0 used instead of None for backwards compatibility.
+
+# Internal NVDA constants for negative number modes
+# See https://docs.microsoft.com/en-us/windows/desktop/intl/locale-ineg-constants
+#: Left parenthesis, number, right parenthesis; for example, (1.1)
+LOCALE_INEGNUMBER_PARENTHESIS = 0
+#: Negative sign, number; for example, -1.1
+LOCALE_INEGNUMBER_PRE_NOSPACE = 1
+#: Negative sign, space, number; for example, - 1.1
+LOCALE_INEGNUMBER_PRE_SPACE = 2
+#: Number, negative sign; for example, 1.1-
+LOCALE_INEGNUMBER_SUF_NOSPACE = 3
+#: Number, space, negative sign; for example, 1.1 -
+LOCALE_INEGNUMBER_SUF_SPACE = 3
 
 curLang="en"
 
@@ -73,8 +89,10 @@ def windowsLCIDToLocaleName(lcid):
 	if lang:
 		return normalizeLanguage(lang)
 
-def getLanguageParameter(language, param):
+def getLanguageParameter(language, param, noUserOverride=True):
 	"""Fetches the given parameter for the given language."""
+	if noUserOverride:
+		param |= LOCALE_NOUSEROVERRIDE
 	LCID=localeNameToWindowsLCID(language)
 	if LCID is LCID_NONE:
 		raise RuntimeError("Unknown language %s" % language)
