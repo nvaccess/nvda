@@ -83,7 +83,6 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		return obj
 
 	def _removeOpenDlg(self):
-		log.debug("{}".format(repr(self)))
 		if self in SettingsDialog._instances:
 			SettingsDialog._instances.remove(self)
 
