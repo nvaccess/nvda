@@ -156,7 +156,6 @@ class AppModule(appModuleHandler.AppModule):
 			if winUser.getClassName(hwnd) in ("LiteTreeView32", "RICHEDIT50W"):
 				return True
 
-		return UIAHandler.handler.isUIAWindow(hwnd)
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
