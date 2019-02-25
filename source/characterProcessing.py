@@ -403,8 +403,16 @@ def _getWindowsSpeechSymbolsForLocale(locale):
 	symbols = SpeechSymbols(locale)
 	try:
 		# Create thousands separator regex.
+		thousandsSeps = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_STHOUSAND)
+		# The thousands separator for a locale with country may differ from the universal locale.
+		# This is known in the case of de_CH, where the separator is \u2019.
+		if '_' in locale:
+			lang = locale[:2]
+			langThousandsSep = languageHandler.getLanguageParameter(lang, languageHandler.LOCALE_STHOUSAND)
+			if langThousandsSep != thousandsSeps:
+				thousandsSeparators += langThousandsSeparator
 		symbols.complexSymbols['thousands separator'] = _buildNumerGroupRegex(
-			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_STHOUSAND),
+			thousandsSeps,
 			languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SGROUPING)
 		)
 		negativeSign = languageHandler.getLanguageParameter(locale, languageHandler.LOCALE_SNEGATIVESIGN)
