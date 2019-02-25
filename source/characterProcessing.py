@@ -619,7 +619,7 @@ class SpeechSymbolProcessor(object):
 		# the thousands separator is still reflected in the output:
 		# E.g. 1,234 will be read as 1  2  34.
 		text = self._thousandsRegex.sub("  ", text)
-		return regex.sub(r"\1  ", text)
+		return regex.sub(ur"\1  ", text)
 
 	def updateSymbol(self, newSymbol):
 		"""Update information for a symbol if it has changed.
@@ -742,9 +742,9 @@ NR_PROC_TRIPLE = 3
 # regexp for parsing numbers:
 NR_PROC_REGEX = {
 	#NNR_PROC_FULL: None,
-	NR_PROC_SINGLE: re.compile(r"(\d?)(?=\d+(\D|\b))", re.UNICODE),
-	NR_PROC_DOUBLE: re.compile(r"(\d{0,2})(?=(\d{2})+(\D|\b))", re.UNICODE),
-	NR_PROC_TRIPLE: re.compile(r"(\d{0,3})(?=(\d{3})+(\D|\b))", re.UNICODE),
+	NR_PROC_SINGLE: re.compile(r"(\d)(?= ?\d+(\D|\b))", re.UNICODE),
+	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?= ?(\d{2})+(\D|\b))", re.UNICODE),
+	NR_PROC_TRIPLE: re.compile(r"(\d{1,3})(?= ?(\d{3})+(\D|\b))", re.UNICODE),
 }
 
 NR_PROC_LABELS = (
