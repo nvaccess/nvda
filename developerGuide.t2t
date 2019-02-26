@@ -269,7 +269,7 @@ import versionInfo
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
-	@scriptHandler.script(gesture="kb:NVDA+shift+v")
+	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
 		ui.message(versionInfo.version)
 
