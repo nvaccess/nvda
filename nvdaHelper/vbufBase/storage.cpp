@@ -122,7 +122,12 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, 
 	return tempNode;
 }
 
-inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
+// @param out the stream to which the escaped attribute string should be written
+// @param text The attribute string to be escaped
+// @param maxLength the maximum length of the attribute string that should be copied. If maxLength is 0 or not specified, the entire string is copied.
+// @return the number of characters written to the output stream (before expansion / filtering). This number can be used to see if the string was truncated at all.
+inline size_t outputEscapedAttribute(wostringstream& out, const wstring& text, size_t maxLength=0) {
+	size_t count=0;
 	for (wstring::const_iterator it = text.begin(); it != text.end(); ++it) {
 		switch (*it) {
 			case L':':
@@ -132,10 +137,21 @@ inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
 			default:
 			out << *it;
 		}
+		count++;
+		if(maxLength>0) {
+			if(count==maxLength) {
+				break;
+			}
+		}
 	}
+	return count;
 }
 
 bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp) {
+	// The max length for a node attribute value when used in a regular expression for matching.
+	// regex_match throws regex_error (error_stack) In Firefox when a value is very large.
+	// Most values will be way under this limit, but for large ones such as name for example, as we only are checking whether it is not empty, then truncating is fine.
+	const size_t regexAttribValueLimit=100;
 	wostringstream regexpInput;
 	wstring parentPrefix=L"parent::";
 	for (vector<wstring>::const_iterator attribName = attribs.begin(); attribName != attribs.end(); ++attribName) {
@@ -148,18 +164,29 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& a
 		if(this->parent&&attribName->find(parentPrefix)==0) {
 			VBufStorage_attributeMap_t::const_iterator foundAttrib = this->parent->attributes.find(attribName->substr(parentPrefix.length()));
 			if (foundAttrib != this->parent->attributes.end()) {
-				outputEscapedAttribute(regexpInput, foundAttrib->second);
+				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				if(outLen<foundAttrib->second.length()) {
+					LOG_DEBUGWARNING(L"Truncated attribute "<<(*attribName));
+				}
 			}
 			regexpInput << L";";
 		} else { // not a parent attribute
 			VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
 			if (foundAttrib != attributes.end()) {
-				outputEscapedAttribute(regexpInput, foundAttrib->second);
+				auto outLen=outputEscapedAttribute(regexpInput, foundAttrib->second,regexAttribValueLimit);
+				if(outLen<foundAttrib->second.length()) {
+					LOG_DEBUGWARNING(L"Truncated attribute "<<(*attribName));
+				}
 			}
 			regexpInput << L";";
 		}
 	}
-	return regex_match(regexpInput.str(), regexp);
+	try {
+		return regex_match(regexpInput.str(), regexp);
+	} catch(const std::regex_error& e) {
+		LOG_DEBUGWARNING(L"regex_match threw "<<(e.what()));
+	}
+	return false;
 }
 
 int VBufStorage_fieldNode_t::calculateOffsetInTree() const {

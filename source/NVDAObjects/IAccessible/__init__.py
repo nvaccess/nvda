@@ -1412,6 +1412,9 @@ the NVDAObject for IAccessible
 		if self.role != controlTypes.ROLE_ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
+		if not self.name and not self.description and self.childCount == 0:
+			# Don't report if there's no content.
+			return
 		# If the focus is within the alert object, don't report anything for it.
 		if eventHandler.isPendingEvents("gainFocus"):
 			# The alert event might be fired before the focus.
