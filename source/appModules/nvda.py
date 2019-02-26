@@ -31,6 +31,19 @@ class NvdaDialog(IAccessible):
 			return self.presType_content
 		return presType
 
+
+class NvdaDialogEmptyDescription(IAccessible):
+	"""Fix to ensure the NVDA settings dialog does not run getDialogText including panel descriptions
+		when alt+tabbing back to a focused control on a panel with a description. This would result in the
+		description being spoken twice.
+	"""
+
+	def _get_description(self):
+		"""Override the description property (because we can't override the classmethod getDialogText)
+			However this will do to ensure that the dialog is described as we wish.
+		"""
+		return ""
+
 class AppModule(appModuleHandler.AppModule):
 	# The configuration profile that has been previously edited.
 	# This ought to be a class property.
@@ -86,6 +99,17 @@ class AppModule(appModuleHandler.AppModule):
 		self.handlePossibleProfileSwitch()
 		nextHandler()
 
+	def isNvdaSettingsDialog(self, obj):
+		if not isinstance(obj, IAccessible):
+			return False
+		controlId = obj.windowHandle
+		from gui.settingsDialogs import NvdaSettingsDialogWindowHandle
+		if controlId == NvdaSettingsDialogWindowHandle:
+			return True
+		return False
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
 			clsList.insert(0, NvdaDialog)
+			if self.isNvdaSettingsDialog(obj):
+				clsList.insert(0, NvdaDialogEmptyDescription)

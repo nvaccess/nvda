@@ -353,8 +353,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title=""
-	accTitle = ""
-	accDescription=""
 	categoryClasses=[]
 
 	class CategoryUnavailableError(RuntimeError): pass
@@ -402,16 +400,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	# exceeds the the initial width a debugWarning will be added to the log.
 	INITIAL_SIZE = (800, 480)
 	MIN_SIZE = (470, 240) # Min height required to show the OK, Cancel, Apply buttons
-
-	def _startAccPropServer(self):
-		import oleacc
-		self.server = nvdaControls.AccPropertyOverride(
-			self,
-			propertyAnnotations={
-				oleacc.PROPID_ACC_DESCRIPTION: lambda: self.accDescription,  # set a description
-				oleacc.PROPID_ACC_NAME: lambda: self.accTitle,
-			}
-		)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -536,8 +524,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			# when postInit is called without a setPostInitFocus ie because onApply was called
 			# then set the focus to the listCtrl. This is a good starting point for a "fresh state"
 			self.catListCtrl.SetFocus()
-		self._startAccPropServer()
-		self.SetLabel(self.accTitle)
 
 
 	def onCharHook(self,evt):
@@ -2722,9 +2708,10 @@ This is set when the currently edited configuration profile is determined and re
 This can be used by an AppModule for NVDA to identify and announce
 changes in the name of the edited configuration profile when categories are changed"""
 NvdaSettingsDialogActiveConfigProfile = None
+NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
-	accTitle = title = _("NVDA Settings")
+	title = _("NVDA Settings")
 	categoryClasses=[
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -2749,6 +2736,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		# Ensure that after the settings dialog is created the name is set correctly
 		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
 		self._doOnCategoryChange()
+		global NvdaSettingsDialogWindowHandle
+		NvdaSettingsDialogWindowHandle = self.GetHandle()
 
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
@@ -2757,10 +2746,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
 		self.SetTitle(self._getDialogTitle())
-		self.SetLabel(self.accTitle)
 
 	def _getDialogTitle(self):
-		self.accDescription = NvdaSettingsDialogActiveConfigProfile
 		return u"{dialogTitle}: {configProfile}".format(
 			dialogTitle=self.title,
 			configProfile=NvdaSettingsDialogActiveConfigProfile
@@ -2773,8 +2760,9 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		global NvdaSettingsDialogActiveConfigProfile
+		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
+		NvdaSettingsDialogWindowHandle = None
 		super(NVDASettingsDialog, self).Destroy()
 
 class AddSymbolDialog(wx.Dialog):
