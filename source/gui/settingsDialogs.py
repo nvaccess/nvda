@@ -68,23 +68,45 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 
 	class MultiInstanceError(RuntimeError): pass
 
-	_instances=weakref.WeakSet()
+	_DIALOG_CREATED_STATE = 0
+	_DIALOG_DESTROYED_STATE = 1
+	# holds instances of SettingsDialogs as keys, and state as the value
+	_instances=weakref.WeakKeyDictionary()
 	title = ""
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		if next((dlg for dlg in SettingsDialog._instances if isinstance(dlg,cls)),None) or (
-			SettingsDialog._instances and not kwargs.get('multiInstanceAllowed',False)
-		):
+		instanceItems = SettingsDialog._instances.iteritems()
+		instancesOfSameClass = (
+			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
+		)
+		firstMatchingInstance, state = next(instancesOfSameClass, (None, None))
+		multiInstanceAllowed = kwargs.get('multiInstanceAllowed', False)
+		if log.isEnabledFor(log.DEBUG):
+			instancesState = dict(SettingsDialog._instances.iteritems())
+			log.debug(
+				"Creating new settings dialog (multiInstanceAllowed:{}). "
+				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
+			)
+		if state is cls._DIALOG_CREATED_STATE and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-			pass
+		if state is cls._DIALOG_DESTROYED_STATE and not multiInstanceAllowed:
+			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
+			# keeping it alive.
+			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
-		SettingsDialog._instances.add(obj)
+		SettingsDialog._instances[obj] = cls._DIALOG_CREATED_STATE
 		return obj
 
-	def _removeOpenDlg(self):
-		if self in SettingsDialog._instances:
-			SettingsDialog._instances.remove(self)
+	def _setInstanceDestroyedState(self):
+		if log.isEnabledFor(log.DEBUG):
+			instancesState = dict(SettingsDialog._instances.iteritems())
+			log.debug(
+				"Setting state to destroyed for instance: {!r}\n"
+				"Current _instances {!r}".format(self, instancesState)
+			)
+		if self in SettingsDialog._instances.iterkeys():
+			SettingsDialog._instances[self] = self._DIALOG_DESTROYED_STATE
 
 	def __init__(
 			self, parent,
@@ -148,7 +170,7 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		# Garbage collection normally handles removing the settings instance, however this may not happen immediately
 		# after a window is closed, or may be blocked by a circular reference. So instead, remove when the window is
 		# destroyed.
-		self.Bind(wx.EVT_WINDOW_DESTROY, lambda evt: self._removeOpenDlg)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 		self.postInit()
 		self.CentreOnScreen()
@@ -209,6 +231,10 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		"""
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
+
+	def _onWindowDestroy(self, evt):
+		evt.Skip()
+		self._setInstanceDestroyedState()
 
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
