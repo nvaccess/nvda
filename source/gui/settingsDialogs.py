@@ -1622,11 +1622,6 @@ class BrowseModePanel(SettingsPanel):
 		self.trapNonCommandGesturesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("&Trap all non-command gestures from reaching the document"))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 		settingsSizer.Add(self.trapNonCommandGesturesCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# browse mode settings panel.
-		self.focusFollowsBrowseCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("System focus follows browse mode focus automatically"))
-		self.focusFollowsBrowseCheckBox.SetValue(config.conf["virtualBuffers"]["focusFollowsBrowse"])
-		settingsSizer.Add(self.focusFollowsBrowseCheckBox,border=10,flag=wx.BOTTOM)
 
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
@@ -1638,7 +1633,6 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["trapNonCommandGestures"]=self.trapNonCommandGesturesCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["focusFollowsBrowse"] = self.focusFollowsBrowseCheckBox.IsChecked()
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
