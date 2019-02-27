@@ -14,6 +14,7 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
