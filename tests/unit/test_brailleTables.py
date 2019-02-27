@@ -11,7 +11,7 @@ import unittest
 import brailleTables
 import os.path
 
-class TestFBrailleTables(unittest.TestCase):
+class TestBrailleTables(unittest.TestCase):
 	"""Tests for braille table files and their existence."""
 
 	def test_tableExistence(self):

@@ -738,9 +738,9 @@ NR_PROC_TRIPLE = 3
 # regexp for parsing numbers:
 NR_PROC_REGEX = {
 	#NNR_PROC_FULL: None,
-	NR_PROC_SINGLE: re.compile(r"(\d)(?= ?\d+(\D|\b))", re.UNICODE),
-	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?= ?(\d{2})+(\D|\b))", re.UNICODE),
-	NR_PROC_TRIPLE: re.compile(r"(\d{1,3})(?= ?(\d{3})+(\D|\b))", re.UNICODE),
+	NR_PROC_SINGLE: re.compile(r"(\d)(?=\d+(\D|\b))", re.UNICODE),
+	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?=(\d{2})+(\D|\b))", re.UNICODE),
+	NR_PROC_TRIPLE: re.compile(r"(\d{1,3} ?)(?=(\d{3})+(\D|\b))", re.UNICODE),
 }
 
 NR_PROC_LABELS = (
@@ -767,7 +767,7 @@ def processNumbers(locale, nrProcType, text):
 		ss = _localeSpeechSymbolProcessors.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en_"):
-			return processSpeechSymbols("en", text, level)
+			return processNumbers("en", text, level)
 		raise
 	return ss.processNumbers(nrProcType, text)
 
