@@ -7,7 +7,6 @@
 
 from abc import abstractmethod
 from six import with_metaclass
-import glob
 import os
 import copy
 import re
@@ -29,7 +28,6 @@ from logHandler import log
 import nvwave
 import audioDucking
 import speechDictHandler
-import appModuleHandler
 import queueHandler
 import braille
 import brailleTables
@@ -70,19 +68,45 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 
 	class MultiInstanceError(RuntimeError): pass
 
-	_instances=weakref.WeakSet()
+	_DIALOG_CREATED_STATE = 0
+	_DIALOG_DESTROYED_STATE = 1
+	# holds instances of SettingsDialogs as keys, and state as the value
+	_instances=weakref.WeakKeyDictionary()
 	title = ""
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		if next((dlg for dlg in SettingsDialog._instances if isinstance(dlg,cls)),None) or (
-			SettingsDialog._instances and not kwargs.get('multiInstanceAllowed',False)
-		):
+		instanceItems = SettingsDialog._instances.items()
+		instancesOfSameClass = (
+			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
+		)
+		firstMatchingInstance, state = next(instancesOfSameClass, (None, None))
+		multiInstanceAllowed = kwargs.get('multiInstanceAllowed', False)
+		if log.isEnabledFor(log.DEBUG):
+			instancesState = dict(SettingsDialog._instances)
+			log.debug(
+				"Creating new settings dialog (multiInstanceAllowed:{}). "
+				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
+			)
+		if state is cls._DIALOG_CREATED_STATE and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceError("Only one instance of SettingsDialog can exist at a time")
-			pass
+		if state is cls._DIALOG_DESTROYED_STATE and not multiInstanceAllowed:
+			# the dialog has been destroyed by wx, but the instance is still available. This indicates there is something
+			# keeping it alive.
+			log.error("Opening new settings dialog while instance still exists: {!r}".format(firstMatchingInstance))
 		obj = super(SettingsDialog, cls).__new__(cls, *args, **kwargs)
-		SettingsDialog._instances.add(obj)
+		SettingsDialog._instances[obj] = cls._DIALOG_CREATED_STATE
 		return obj
+
+	def _setInstanceDestroyedState(self):
+		if log.isEnabledFor(log.DEBUG):
+			instancesState = dict(SettingsDialog._instances)
+			log.debug(
+				"Setting state to destroyed for instance: {!r}\n"
+				"Current _instances {!r}".format(self, instancesState)
+			)
+		if self in SettingsDialog._instances:
+			SettingsDialog._instances[self] = self._DIALOG_DESTROYED_STATE
 
 	def __init__(
 			self, parent,
@@ -143,6 +167,10 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		self.Bind(wx.EVT_BUTTON, self.onApply, id=wx.ID_APPLY)
 		self.Bind(wx.EVT_CHAR_HOOK, self._enterActivatesOk_ctrlSActivatesApply)
+		# Garbage collection normally handles removing the settings instance, however this may not happen immediately
+		# after a window is closed, or may be blocked by a circular reference. So instead, remove when the window is
+		# destroyed.
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 		self.postInit()
 		self.CentreOnScreen()
@@ -204,6 +232,10 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 		self.postInit()
 		self.SetReturnCode(wx.ID_APPLY)
 
+	def _onWindowDestroy(self, evt):
+		evt.Skip()
+		self._setInstanceDestroyedState()
+
 # An event and event binder that will notify the containers that they should
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
@@ -226,6 +258,7 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 	"""
 
 	title=""
+	panelDescription=""
 
 	def __init__(self, parent):
 		"""
@@ -398,17 +431,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# The provided column header is just a placeholder, as it is hidden due to the wx.LC_NO_HEADER style flag.
 		self.catListCtrl.InsertColumn(0,categoriesLabelText)
 
-		# Put the settings panel in a scrolledPanel, we don't know how large the settings panels might grow. If they exceed
-		# the maximum size, its important all items can be accessed visually.
-		# Save the ID for the panel, this panel will have its name changed when the categories are changed. This name is
-		# exposed via the IAccessibleName property.
-		global NvdaSettingsCategoryPanelId
-		# #7077: wxPython 4.0.0 to 4.0.2 have a wrap-around bug with wx.NewId function, so use the fixed version below.
-		# Among other things, this allows dialogs and panels to work correctly after using NVDA for a long time.
-		NvdaSettingsCategoryPanelId = wx.NewIdRef()
 		self.container = scrolledpanel.ScrolledPanel(
 			parent = self,
-			id = NvdaSettingsCategoryPanelId,
 			style = wx.TAB_TRAVERSAL | wx.BORDER_THEME,
 			size=containerDim
 		)
@@ -478,6 +502,15 @@ class MultiCategorySettingsDialog(SettingsDialog):
 					 "MultiCategorySettingsDialog.MIN_SIZE"
 					).format(cls, panel.Size[0])
 				)
+			panel.SetLabel(panel.title)
+			import oleacc
+			panel.server = nvdaControls.AccPropertyOverride(
+				panel,
+				propertyAnnotations={
+					oleacc.PROPID_ACC_ROLE: oleacc.ROLE_SYSTEM_PROPERTYPAGE,  # change the role from pane to property page
+					oleacc.PROPID_ACC_DESCRIPTION: panel.panelDescription,  # set a description
+				}
+			)
 		return panel
 
 	def postInit(self):
@@ -545,10 +578,6 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# call Layout and SetupScrolling on the container to make sure that the controls apear in their expected locations.
 		self.container.Layout()
 		self.container.SetupScrolling()
-		# Set the label for the container, this is exposed via the Name property on an NVDAObject.
-		# For one or another reason, doing this before SetupScrolling causes this to be ignored by NVDA in some cases.
-		# Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-		self.container.SetLabel(_("%s Settings Category")%newCat.title)
 		self.container.Thaw()
 
 	def onCategoryChange(self, evt):
@@ -1638,12 +1667,13 @@ class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
 	title = _("Document Formatting")
 
+	# Translators: This is a label appearing on the document formatting settings panel.
+	panelDescription = _("The following options control the types of document formatting reported by NVDA.")
+
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
-		# Translators: This is a label appearing on the document formatting settings panel.
-		panelText =_("The following options control the types of document formatting reported by NVDA.")
-		sHelper.addItem(wx.StaticText(self, label=panelText))
+		sHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
 		# Translators: This is the label for a group of document formatting options in the 
 		# document formatting settings panel
@@ -1928,21 +1958,23 @@ class UwpOcrPanel(SettingsPanel):
 		lang = self.languageCodes[self.languageChoice.Selection]
 		config.conf["uwpOcr"]["language"] = lang
 
-class AdvancedPanel(SettingsPanel):
-	# Translators: This is the label for the Advanced settings panel.
-	title = _("Advanced")
+class AdvancedPanelControls(wx.Panel):
+	"""Holds the actual controls for the Advanced Settings panel, this allows the state of the controls to
+	be more easily managed.
+	"""
+	def __init__(self, parent):
+		super(AdvancedPanelControls, self).__init__(parent)
+		self._defaultsRestored = False
 
-	def makeSettings(self, settingsSizer):
-		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-
-		# Translators: This is a label appearing on the Advanced settings panel.
-		panelText =_("Warning! The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA  developers.")
-		sHelper.addItem(wx.StaticText(self, label=panelText))
-
-		# Translators: This is the label for a group of  Advanced options in the 
+		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		self.SetSizer(sHelper.sizer)
+		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		groupText = _("NVDA Development")
-		devGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		devGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
+		)
 		sHelper.addItem(devGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -1950,18 +1982,25 @@ class AdvancedPanel(SettingsPanel):
 		label = _("Enable loading custom code from Developer Scratchpad directory")
 		self.scratchpadCheckBox=devGroup.addItem(wx.CheckBox(self, label=label))
 		self.scratchpadCheckBox.SetValue(config.conf["development"]["enableScratchpadDir"])
-		self.scratchpadCheckBox.Bind(wx.EVT_CHECKBOX,self.onToggleScratchpadCheckBox)
+		self.scratchpadCheckBox.defaultValue = self._getDefaultValue(["development", "enableScratchpadDir"])
+		self.scratchpadCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
+		)
 
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
-		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
+		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
 
-		# Translators: This is the label for a group of  Advanced options in the 
+		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		groupText = _("Microsoft UI Automation")
-		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		label = _("Microsoft UI Automation")
+		UIAGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
 		sHelper.addItem(UIAGroup)
 
 		# Translators: This is the label for a checkbox in the
@@ -1969,25 +2008,36 @@ class AdvancedPanel(SettingsPanel):
 		label = _("Use UI Automation to access Microsoft &Word document controls when available")
 		self.UIAInMSWordCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
+		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
-		# Translators: This is the label for a group of  Advanced options in the 
+		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
-		groupText = _("Editable Text")
-		editableTextGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		label = _("Editable Text")
+		editableTextGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
 		sHelper.addItem(editableTextGroup)
 
 		# Translators: This is the label for a numeric control in the
 		#  Advanced settings panel.
 		label = _("Caret movement timeout (in ms)")
-		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(label,nvdaControls.SelectOnFocusSpinCtrl,
-			min=0, max=2000, 
+		self.caretMoveTimeoutSpinControl=editableTextGroup.addLabeledControl(
+			label,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=0,
+			max=2000,
 			initial=config.conf["editableText"]["caretMoveTimeoutMs"]
 		)
+		self.caretMoveTimeoutSpinControl.defaultValue = self._getDefaultValue(["editableText", "caretMoveTimeoutMs"])
 
-		# Translators: This is the label for a group of  Advanced options in the 
-		#  Advanced settings panel
-		groupText = _("Debug logging")
-		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(wx.StaticBox(self, label=groupText), wx.VERTICAL))
+		# Translators: This is the label for a group of advanced options in the
+		# Advanced settings panel
+		label = _("Debug logging")
+		debugLogGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
 		sHelper.addItem(debugLogGroup)
 
 		self.logCategories=[
@@ -1997,26 +2047,137 @@ class AdvancedPanel(SettingsPanel):
 			"louis",
 			"timeSinceInput",
 		]
-		# Translators: This is the label for a list in the 
+		# Translators: This is the label for a list in the
 		#  Advanced settings panel
 		logCategoriesLabel=_("Enabled logging categories")
-		self.logCategoriesList=debugLogGroup.addLabeledControl(logCategoriesLabel, nvdaControls.CustomCheckListBox, choices=self.logCategories)
-		self.logCategoriesList.CheckedItems=[index for index,x in enumerate(self.logCategories) if config.conf['debugLog'][x]]
+		self.logCategoriesList=debugLogGroup.addLabeledControl(
+			logCategoriesLabel,
+			nvdaControls.CustomCheckListBox,
+			choices=self.logCategories
+		)
+		self.logCategoriesList.CheckedItems = [
+			index for index, x in enumerate(self.logCategories) if config.conf['debugLog'][x]
+		]
 		self.logCategoriesList.Select(0)
-
-	def onToggleScratchpadCheckBox(self,evt):
-		self.openScratchpadButton.Enable(evt.IsChecked())
+		self.logCategoriesList.defaultCheckedItems = [
+				index for index, x in enumerate(self.logCategories) if bool(
+					self._getDefaultValue(['debugLog', x])
+			)
+		]
+		self.Layout()
 
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
 
+	def _getDefaultValue(self, configPath):
+		return config.conf.getConfigValidation(configPath).default
+
+	def haveConfigDefaultsBeenRestored(self):
+		return (
+			self._defaultsRestored and
+			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
+			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
+			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
+			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
+			True  # reduce noise in diff when the list is extended.
+		)
+
+	def restoreToDefaults(self):
+		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
+		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
+		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
+		self._defaultsRestored = True
+
 	def onSave(self):
+		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
 			config.conf['debugLog'][key]=self.logCategoriesList.IsChecked(index)
+
+class AdvancedPanel(SettingsPanel):
+	enableControlsCheckBox = None  # type: wx.CheckBox
+	# Translators: This is the label for the Advanced settings panel.
+	title = _("Advanced")
+
+	# Translators: This is the label to warn users about the Advanced options in the
+	# Advanced settings panel
+	warningHeader = _("Warning!")
+
+	# Translators: This is a label appearing on the Advanced settings panel.
+	warningExplanation = _(
+		"The following settings are for advanced users. "
+		"Changing them may cause NVDA to function incorrectly. "
+		"Please only change these if you know what you are doing or "
+		"have been specifically instructed by NVDA developers."
+	)
+
+	panelDescription = "{}\n{}".format(warningHeader, warningExplanation)
+
+	def makeSettings(self, settingsSizer):
+		"""
+		:type settingsSizer: wx.BoxSizer
+		"""
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		warningGroup = guiHelper.BoxSizerHelper(
+			self,
+			sizer=wx.StaticBoxSizer(wx.StaticBox(self), wx.VERTICAL)
+		)
+		sHelper.addItem(warningGroup)
+		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
+
+		warningText = wx.StaticText(warningBox, label=self.warningHeader)
+		warningText.SetFont(wx.Font(18, wx.FONTFAMILY_DEFAULT, wx.NORMAL, wx.BOLD))
+		warningGroup.addItem(warningText)
+
+		self.windowText = warningGroup.addItem(wx.StaticText(warningBox, label=self.warningExplanation))
+		self.windowText.Wrap(self.scaleSize(544))
+
+		# Translators: This is the label for a checkbox in the Advanced settings panel.
+		enableAdvancedControlslabel = _(
+			"I understand that changing these settings may cause NVDA to function incorrectly."
+		)
+		self.enableControlsCheckBox = warningGroup.addItem(
+			wx.CheckBox(parent=warningBox, label=enableAdvancedControlslabel, id=wx.NewIdRef())
+		)
+		boldedFont = self.enableControlsCheckBox.GetFont().Bold()
+		self.enableControlsCheckBox.SetFont(boldedFont)
+
+		restoreDefaultsButton = warningGroup.addItem(
+			# Translators: This is the label for a button in the Advanced settings panel
+			wx.Button(self, label=_("Restore defaults"))
+		)
+		restoreDefaultsButton.Bind(wx.EVT_BUTTON, lambda evt: self.advancedControls.restoreToDefaults())
+
+		self.advancedControls = AdvancedPanelControls(self)
+		sHelper.sizer.Add(self.advancedControls, flag=wx.EXPAND)
+
+		self.enableControlsCheckBox.Bind(
+			wx.EVT_CHECKBOX,
+			self.onEnableControlsCheckBox
+		)
+		self.advancedControls.Enable(self.enableControlsCheckBox.IsChecked())
+
+	def onSave(self):
+		if (
+			self.enableControlsCheckBox.IsChecked() or
+			self.advancedControls.haveConfigDefaultsBeenRestored()
+		):
+			self.advancedControls.onSave()
+
+
+	def onEnableControlsCheckBox(self, evt):
+		# due to some not very well understood mis ordering of event processing, we force NVDA to
+		# process pending events. This fixes an issue where the checkbox state was being reported
+		# incorrectly. This checkbox is slightly different from most, in that its behaviour is to
+		# enable more controls than is typical. This might be causing enough of a delay, that there
+		# is a mismatch in the state of the checkbox and when the events are processed by NVDA.
+		from api import processPendingEvents
+		processPendingEvents()
+		self.advancedControls.Enable(evt.IsChecked())
 
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
@@ -2543,18 +2704,15 @@ class BrailleSettingsSubPanel(SettingsPanel):
 	def onNoMessageTimeoutChange(self, evt):
 		self.messageTimeoutEdit.Enable(not evt.IsChecked())
 
-""" The Id of the category panel in the multi category settings dialog, this is set when the dialog is created
-and returned to None when the dialog is destroyed. This can be used by an AppModule for NVDA to identify and announce
-changes in name for the panel when categories are changed"""
-NvdaSettingsCategoryPanelId = None
 """ The name of the config profile currently being edited, if any.
 This is set when the currently edited configuration profile is determined and returned to None when the dialog is destroyed.
 This can be used by an AppModule for NVDA to identify and announce
 changes in the name of the edited configuration profile when categories are changed"""
 NvdaSettingsDialogActiveConfigProfile = None
+NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
-	title = _("NVDA")
+	title = _("NVDA Settings")
 	categoryClasses=[
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
@@ -2579,6 +2737,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		# Ensure that after the settings dialog is created the name is set correctly
 		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
 		self._doOnCategoryChange()
+		global NvdaSettingsDialogWindowHandle
+		NvdaSettingsDialogWindowHandle = self.GetHandle()
 
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
@@ -2602,9 +2762,9 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		self._doOnCategoryChange()
 
 	def Destroy(self):
-		global NvdaSettingsCategoryPanelId, NvdaSettingsDialogActiveConfigProfile
-		NvdaSettingsCategoryPanelId = None
+		global NvdaSettingsDialogActiveConfigProfile, NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogActiveConfigProfile = None
+		NvdaSettingsDialogWindowHandle = None
 		super(NVDASettingsDialog, self).Destroy()
 
 class AddSymbolDialog(wx.Dialog):
