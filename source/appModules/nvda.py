@@ -102,9 +102,9 @@ class AppModule(appModuleHandler.AppModule):
 	def isNvdaSettingsDialog(self, obj):
 		if not isinstance(obj, IAccessible):
 			return False
-		controlId = obj.windowHandle
+		windowHandle = obj.windowHandle
 		from gui.settingsDialogs import NvdaSettingsDialogWindowHandle
-		if controlId == NvdaSettingsDialogWindowHandle:
+		if windowHandle == NvdaSettingsDialogWindowHandle:
 			return True
 		return False
 

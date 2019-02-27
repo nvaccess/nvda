@@ -76,14 +76,14 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		instanceItems = SettingsDialog._instances.iteritems()
+		instanceItems = SettingsDialog._instances.items()
 		instancesOfSameClass = (
 			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
 		)
 		firstMatchingInstance, state = next(instancesOfSameClass, (None, None))
 		multiInstanceAllowed = kwargs.get('multiInstanceAllowed', False)
 		if log.isEnabledFor(log.DEBUG):
-			instancesState = dict(SettingsDialog._instances.iteritems())
+			instancesState = dict(SettingsDialog._instances)
 			log.debug(
 				"Creating new settings dialog (multiInstanceAllowed:{}). "
 				"State of _instances {!r}".format(multiInstanceAllowed, instancesState)
@@ -100,12 +100,12 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 
 	def _setInstanceDestroyedState(self):
 		if log.isEnabledFor(log.DEBUG):
-			instancesState = dict(SettingsDialog._instances.iteritems())
+			instancesState = dict(SettingsDialog._instances)
 			log.debug(
 				"Setting state to destroyed for instance: {!r}\n"
 				"Current _instances {!r}".format(self, instancesState)
 			)
-		if self in SettingsDialog._instances.iterkeys():
+		if self in SettingsDialog._instances:
 			SettingsDialog._instances[self] = self._DIALOG_DESTROYED_STATE
 
 	def __init__(
@@ -2155,19 +2155,9 @@ class AdvancedPanel(SettingsPanel):
 		self.advancedControls = AdvancedPanelControls(self)
 		sHelper.sizer.Add(self.advancedControls, flag=wx.EXPAND)
 
-		def onEnableControlsCheckBox(evt):
-			# due to some not very well understood mis ordering of event processing, we force NVDA to
-			# process pending events. This fixes an issue where the checkbox state was being reported
-			# incorrectly. This checkbox is slightly different from most, in that its behaviour is to
-			# enable more controls than is typical. This might be causing enough of a delay, that there
-			# is a mismatch in the state of the checkbox and when the events are processed by NVDA.
-			from api import processPendingEvents
-			processPendingEvents()
-			self.advancedControls.Enable(evt.IsChecked())
-
 		self.enableControlsCheckBox.Bind(
 			wx.EVT_CHECKBOX,
-			onEnableControlsCheckBox
+			self.onEnableControlsCheckBox
 		)
 		self.advancedControls.Enable(self.enableControlsCheckBox.IsChecked())
 
@@ -2177,6 +2167,17 @@ class AdvancedPanel(SettingsPanel):
 			self.advancedControls.haveConfigDefaultsBeenRestored()
 		):
 			self.advancedControls.onSave()
+
+
+	def onEnableControlsCheckBox(self, evt):
+		# due to some not very well understood mis ordering of event processing, we force NVDA to
+		# process pending events. This fixes an issue where the checkbox state was being reported
+		# incorrectly. This checkbox is slightly different from most, in that its behaviour is to
+		# enable more controls than is typical. This might be causing enough of a delay, that there
+		# is a mismatch in the state of the checkbox and when the events are processed by NVDA.
+		from api import processPendingEvents
+		processPendingEvents()
+		self.advancedControls.Enable(evt.IsChecked())
 
 class DictionaryEntryDialog(wx.Dialog):
 	TYPE_LABELS = {
