@@ -1,5 +1,4 @@
 #cursorManager.py
-#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2018 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -26,6 +25,10 @@ import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
+
+# search history list constants
+SEARCH_HISTORY_FRONT = 0
+SEARCH_HISTORY_MAX_SIZE=20
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -68,22 +71,24 @@ class FindDialog(wx.Dialog):
 		if not searchEntries:
 			searchEntries.insert(0, currentSearchTerm)
 			return
-		# we can not accept entries that differ only on text case because of a wxComboBox limitation on MS Windows
+		# we can not accept entries that differ only on text case
+		#because of a wxComboBox limitation on MS Windows
 		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
-		#notice also that python 2 does not offer caseFold functionality so lower is the best we can have for comparing strings
+		#notice also that python 2 does not offer caseFold functionality
+		# so lower is the best we can have for comparing strings
 		for index, item in enumerate(searchEntries):
 			if(item.lower() == currentSearchTerm.lower()):
 				#if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the current search term becomes the first item of the list,
 				# so that it will appear selected by default when the dialog is shown again
 				# If the current search term differs from the current item only in case letters, we will choose to store the new search as we can not store both.
 				searchEntries.pop(index)
-				searchEntries.insert(0, currentSearchTerm)
+				searchEntries.insert(SEARCH_HISTORY_FRONT, currentSearchTerm)
 				return
 		# not yet listed. Save it.
-		if len(searchEntries) >= 20:
-			del searchEntries[19:]
-		searchEntries.insert(0, currentSearchTerm)
-	
+		if len(searchEntries) >= SEARCH_HISTORY_MAX_SIZE:
+			self._truncateSearchHistory(searchEntries)
+		searchEntries.insert(SEARCH_HISTORY_FRONT, currentSearchTerm)
+		
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
 		# update the list of searched entries so that it can be exibited in the next find dialog call
@@ -97,6 +102,9 @@ class FindDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
+
+	def _truncateSearchHistory(self, entries):
+		del entries[(SEARCH_HISTORY_MAX_SIZE -1):]
 
 class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""
