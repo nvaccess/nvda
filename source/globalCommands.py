@@ -2381,7 +2381,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",
 		"kb:NVDA+p": "cycleSpeechSymbolLevel",
-		"kb:NVDA+d": "cycleSpeechReadNumbersAs",
+		"kb:NVDA+0": "cycleSpeechReadNumbersAs",
 		"kb:NVDA+s": "speechMode",
 		"kb:NVDA+m": "toggleMouseTracking",
 		"kb:NVDA+u": "toggleProgressBarOutput",
