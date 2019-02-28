@@ -689,9 +689,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_cycleSpeechReadNumbersAs(self, gesture):
 		labels = characterProcessing.NR_PROC_LABELS
-		index = config.conf["speech"]["readNumbersAs"]
+		index = config.conf["speech"][speech.getSynth().name]["readNumbersAs"]
 		newIndex = (index+1) % len(labels)
-		config.conf["speech"]["readNumbersAs"] = newIndex
+		config.conf["speech"][speech.getSynth().name]["readNumbersAs"] = newIndex
 		# Translators: Reported when the user cycles through the available ways
 		# numbers can be spoken by NVDA.
 		# %s will be replaced by full numbers, single digits, Double digits, or Triple digits.

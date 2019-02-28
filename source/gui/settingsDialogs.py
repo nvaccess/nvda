@@ -1141,7 +1141,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		digitsText = _("Speak &numbers as")
 		self.digitsCombo = settingsSizerHelper.addLabeledControl(digitsText, wx.Choice, choices=characterProcessing.NR_PROC_LABELS)
 		try:
-			self.digitsCombo.SetSelection(config.conf["speech"]["readNumbersAs"])
+			self.digitsCombo.SetSelection(config.conf["speech"][getSynth().name]["readNumbersAs"])
 		except:
 			log.debugWarning("Could not set read numbers list to current selection",exc_info=True)
 
@@ -1218,7 +1218,7 @@ class VoiceSettingsPanel(SettingsPanel):
 		config.conf["speech"][synth.name]["capPitchChange"]=self.capPitchChangeEdit.Value
 		config.conf["speech"][synth.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][synth.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
-		config.conf["speech"]["readNumbersAs"]=self.digitsCombo.GetSelection()
+		config.conf["speech"][synth.name]["readNumbersAs"]=self.digitsCombo.GetSelection()
 		config.conf["speech"][synth.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
 
 class KeyboardSettingsPanel(SettingsPanel):
