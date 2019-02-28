@@ -47,10 +47,10 @@ Oplysninger om andre talesynteser som NVDA understøtter kan findes i afsnittet 
 ++ Understøttelse af punktskrift ++[BrailleSupport]
 Brugere, som har et punktdisplay, kan med NVDA få tekst ud på punktskrift.
 Indtastning på uforkortet og uforkortet punkt er også understøttet ved hjælp af et punkttastatur.
-Desuden kan NVDA tilkoble mange af disse displays automatisk som standard.
+Desuden kan NVDA tilkoble sig mange af disse displays automatisk som standard.
 Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 
-NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer braille.
+NVDA understøtter punkttabeller for mange sprog, herunder forkortet, fuldskrift og computer braille.
 
 ++ Licens og Ophavsret ++[LicenseAndCopyright]
 NVDA er ophavsret NVDA_COPYRIGHT_YEARS NVDA bidragydere.
@@ -107,9 +107,16 @@ Der er desuden nogle få indstillinger i denne dialog der vil blive forklaret ne
 Når installationen er færdig vil du få en besked om, at installationen er lykkedes.
 Når du trykker OK på dette tidspunkt, vil din nyinstallerede kopi af NVDA starte op.
 
++++ Advarsel om inkompatible tilføjelser +++[InstallWithIncompatibleAddons]
+Hvis du allerede har tilføjelser installeret, vil en dialog muligvis fremkomme der advarer om inkompatible tilføjelser.
+Før du kan fortsætte, vil det være nødvendigt at vælge check boxen der bekræfter, at inkompatible tilføjelser deaktiveres.
+I denne dialog vil du også finde en knap der lader dig gennemgå de inkompatible tilføjelser.
+Læs venligst afsnittet om [dialogen omfattende inkompatible tilføjelser #incompatibleAddonsManager] for yderligere hjælp med denne knap.
+
 +++ Start ved Windows Logon +++[StartAtWindowsLogon]
 Med denne indstilling bestemmer du, om du vil starte NVDA på Windows logon-skærmen, før du har indtastet din adgangskode.
-Dette omfanger også UAC kontrol af brugerkonti og andre sikre skærme.
+Dette omfanger også kontrol af brugerkonti og andre sikre skærme.
+Denne indstilling er aktiveret for nye installationer.
 
 +++ Opret Genvej på Skrivebordet (ctrl+alt+n) +++[CreateDesktopShortcut]
 Denne indstilling, hvis valgt, vil oprette en genvej til NVDA på skrivebordet. 
@@ -137,7 +144,7 @@ Tryk Ok for at lukke denne dialog.
 ++ Start NVDA ++[LaunchingNVDA]
 Hvis du har installeret NVDA med installationsprogrammet, kan du blot starte NVDA ved enten at trykke Ctrl+Alt+n eller vælge NVDA fra NVDA-menuen under Programmer i menuen Start.
 Derudover kan du skrive NVDA i dialogboksen Kør og trykke på Enter.
-Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) slå tilføjelsesprogrammer fra (--disable-addons) osv.
+Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) deaktivere tilføjelsesprogrammer fra (--disable-addons) osv.
 
 For installerede kopier, vil konfigurationen af NVDA blive gemt i roaming application data mappen af den aktuelle bruger som standard (f.eks. "C:\Users\<user>\AppData\Roaming").
 Det er muligt at ændre dette således NVDA indlæser konfigurationen fra den lokale application data mappe i stedet.
@@ -152,25 +159,25 @@ Hvis det tager ekstra lang tid, bør NVDA sige "Indlæser NVDA. Vent venligst ..
 Hvis du ikke hører noget af dette, eller du hører Windows lyden der indikere en fejl eller en faldende række af toner, så betyder det, at NVDA har en fejl, og du bliver nødt til eventuelt at rapportere en fejl til udviklerne.
 Venligst tjek på NVDA hjemmesiden for hvordan du gør dette.
 
-+++ Velkommen dialog +++[WelcomeDialog]
-Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA tasten og NVDA-menuen.
++++ Dialogen Velkommen +++[WelcomeDialog]
+Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA/tasten og NVDA-menuen.
 (Se de følgende afsnit om disse emner).
 Dialogboksen indeholder også en combo box og tre check boxe.
 Combo boxen lader dig vælge tastaturlayout.
-Med den første check box kan du bestemme, om NVDA skal bruge capslock som en NVDA tast.
-Den anden bestemmer, om NVDA skal starte automatisk, efter du har logget på Windows. Det er kun tilgængeligt i installerede kopier af NVDA.
+Med den første check box kan du bestemme, om NVDA skal bruge capslock som en NVDA/tast.
+Den anden bestemmer, om NVDA skal starte automatisk, efter du har logget på Windows. Denne indstilling er kun tilgængelig i installerede kopier af NVDA.
 Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NVDA starter.
 
 ++ Om NVDA tastaturkommandoer ++[AboutNVDAKeyboardCommands]
 
 +++ NVDA-tasten +++[TheNVDAModifierKey]
-De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA tasten, samtidig med en eller flere andre taster.
+De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA/tasten, samtidig med en eller flere andre taster.
 Bemærkelsesværdige undtagelser herfra er tekstlæsekommandoerne i desktop-tastaturlayoutet, som kun består af tasterne i det numeriske tastatur alene, men der er også andre undtagelser.
 
 NVDA kan konfigureres således, at enten den numeriske Insert Udvidede Insert, eller Caps Lock-tasten kan bruges som NVDA-tast.
 Som standard er både Numerisk Insert og udvidet Insert tasterne indstillet som NVDA-tast.
 
-Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at tænde Caps Lock, når du har valgt Caps Lock til at være en NVDA tast) kan du trykke på tasten to gange i hurtig rækkefølge.
+Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at tænde Caps Lock, når du har valgt Caps Lock til at være en NVDA/tast) kan du trykke på tasten to gange i hurtig rækkefølge.
 
 +++ Tastaturlayouts +++[KeyboardLayouts]
 NVDA har i øjeblikket to sæt tastaturkommandoer eller tastaturlayouts: Desktop-layoutet og laptop-layoutet.
@@ -216,7 +223,7 @@ Derfor er bevægelser som svirp op med to fingre og svirp til venstre med fire f
 +++ Berøringstilstande +++[TouchModes]
 Eftersom der er mange flere NVDA-kommandoer tilgængelige end der er mulige bevægelser, har NVDA implementeret forskellige tilstande der gør det muligt for dig, at benytte dig af forskellige undergrupper af kommandoer.
 De to tilstande er teksttilstand og objekttilstand.
-Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter berøringsbevægelsen.
+Visse NVDA-kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter berøringsbevægelsen.
 For eksempel, svirp op (teksttilstand) betyder at kommandoen vil blive udført hvis du svirper op, men kun hvis teksttilstand er aktiv.
 Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af hvilken tilstand NVDA befinder sig i.
 
@@ -329,7 +336,7 @@ Når du flytter til et objekt, vil NVDA rapportere det på samme måde, som det 
 Du kan også benytte den såkaldte [skærmlæsetilstand #ScreenReview] til at læse al tekst, præcis som den vises på skærmen.
 
 I stedet for at skulle flytte frem og tilbage mellem hvert enkelt objekt i systemet, er objekterne grupperet i et hierarki.
-Dette betyder, at nogle objekter kan indeholde andre objekter, ogat du skal åbne objekterne for at få adgang til objekter inde i dem.
+Dette betyder, at nogle objekter kan indeholde andre objekter, og at du skal åbne objekterne for at få adgang til objekter inde i dem.
 Fx.: En liste indeholder listeemner. Så du må gå ind i listen for at komme til dens listeemner.
 Hvis du har fundet et emne i listen, kan du komme til andre emner i listen ved at gå til forrige eller næste objekt.
 Du kan komme tilbage til selve listen ved at gå til det overordnede objekt for listeemnet.
@@ -338,12 +345,12 @@ På samme måde er der kontroller (fx. knapper) inde i en værktøjslinje. Så d
 
 Det objekt, du er i gang med at gennemse, kaldes for navigatorobjektet.
 Når du navigerer til et objekt, kan du gennemse det ved at benytte [ kommandoerne til gennemsyn af tekst #ReviewingText] når du befinder dig i [objektlæsetilstand #ObjectReview].
-Som standard, flytter navigator objektet sammen med System fokus, men denne adfærd kan slås til og fra.
+Som standard, flytter navigator objektet sammen med System fokus, men denne adfærd kan slås til  og fra.
 
 Bemærk, at punkt følger [fokus #SystemFocus] og [systemmarkør #SystemCaret], samt objektnavigation og læsemarkøren som standardindstilling.
 Hvis du derimod ønsker at punkt kun skal følge fokus og systemmarkøren, skal du [konfigurere punkt til at følge #BrailleTether] fokus.
 I dette tilfæld vil punkt ikke følge objektnavigation og læsemarkøren.
-Hvis du derimød ønsker at punkt skal følge objektnavigation og læsemarkøren i stedet, skal du [konfigurere punkt til at følge #BrailleTether] læsemarkøren.
+Hvis du derimod ønsker at punkt skal følge objektnavigation og læsemarkøren i stedet, skal du [konfigurere punkt til at følge #BrailleTether] læsemarkøren.
 
 For at navigere imellem objekter, skal du benytte følgende kommandoer:
 
@@ -355,7 +362,7 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 | Gå til næste objekt | NVDA+Numpad6 | NVDA+Shift+Højre-pil | Svirp til højre (objekttilstand) | Flytter til objektet efter det aktuelle navigatorobjekt |
 | Gå til første underordnede objekt | NVDA+Numpad2 | NVDA+Shift+Pil-ned | Svirp ned (objekttilstand) | Flytter til det første objekt, som er indeholdt i det aktuelle navigatorobjekt.
 | Gå til objektet i fokus | NVDA+Numpad-Minus | NVDA+Backmellemrum | Ingen | Flytter til det objekt, som er i fokus. Placerer også læsemarkøren ved systemmarkøren, hvis den er synlig. |
-| Aktiver aktuelle navigatorobjekt | NVDA+Numpad-Enter | NVDA+Enter | Dobbelttryk | Aktiverer det nuværende navigatorobjekt (svarende til at klikke med musen eller trykke på mellemrums tasten, når det er i fokus) |
+| Aktivér aktuelle navigatorobjekt | NVDA+Numpad-Enter | NVDA+Enter | Dobbelttryk | Aktiverer det nuværende navigatorobjekt (svarende til at klikke med musen eller trykke på mellemrums tasten, når det er i fokus) |
 | Flyt systemfokus eller systemmarkør til den aktuelle læseposition | NVDA+Shift+Numpad-Minus | NVDA+Shift+Backmellemrum | Ingen | Tryk en gang for at flytte systemfokus til det nuværende navigatorobjekt. Tryk to gange for at flytte systemmarkøren til læsemarkøren.
 | Sig læsemarkørens position | NVDA+Numpad-del | NVDA+Del Ingen | Giver information om placeringen af teksten eller objektet ved læsemarkøren. Fx. procentdel af dokumentet, afstand fra venstre kant af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
 %kc:endInclude
@@ -411,8 +418,8 @@ Læsetilstand er en erstatning for det ældre koncept Flad Visning.
 Du skifter mellem læsetilstandene med følgende kommandoer:
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
-| skift til næste læsetilstand | NVDA+Numpad7 | NVDA+pageUp | svirp op med to fingre | skifter til den næste tilgængelige læsetilstand. |
-| skift til forrige læsetilstand | NVDA+Numpad1 | NVDA+pageDown | Svirp ned med to fingre | skifter til den forrige tilgængelige læsetilstand. |
+| skift til næste læsetilstand | NVDA+Numpad7 | NVDA+sideOp | svirp op med to fingre | skifter til den næste tilgængelige læsetilstand. |
+| skift til forrige læsetilstand | NVDA+Numpad1 | NVDA+sideNed | Svirp ned med to fingre | skifter til den forrige tilgængelige læsetilstand. |
 %kc:endInclude
 
 +++ ObjektLæsetilstand +++[ObjectReview]
@@ -439,11 +446,11 @@ Når du flytter rundt på skærmen med læsekommandoer, bliver navigatorobjektet
 Bemærk, at NVDA muligvis ikke kan se hele eller dele af teksten i nogle af applikationer på grund af nyere teknologier brugt til at tegne skærmen. Disse teknologier er umulige at understøtte på nuværende tidspunkt.
 
 ++ Navigering ved brug af musen ++[NavigatingWithTheMouse]
-Når du bevæger musen, rapporter NVDA som standard tekst, der er direkte under musemarkøren, mens den bevæger sig hen over teksten.
+Når du bevæger musen, rapporterer NVDA som standard tekst, der er direkte under musemarkøren, mens den bevæger sig hen over teksten.
 Der hvor det kan lade sig gøre, vil NVDA læse det omkringstående tekstafsnit, selv om der i nogle felter kun er tale om den aktuelle linje.
 
 NVDA kan desuden konfigureres til også at annoncere typen af det [objekt #Objects] musen bevæger sig over, (f.eks listboks, trykknap osv.)..
-Dette kan være nyttigt for helt blinde brugere hvor teksten nogle gangeikke er nok.
+Dette kan være nyttigt for helt blinde brugere hvor teksten nogle gange ikke er nok.
 
 NVDA gør det muligt for brugerne at finde ud af, hvor musen er placeret på skærmen, ved at afspille musens position som biptoner.
 Jo højere oppe musen befinder sig på skærmen, jo højere tonehøjde har lydsignalerne.
@@ -465,10 +472,10 @@ Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen,
 
 + Gennemsynstilstand +[BrowseMode]
 Komplekse dokumenter, der ikke kan redigeres, fx. web-sider, bliver præsenteret med NVDA i gennemsynstilstand.
-Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader og Adobe Flash.
 Gennemsynstilstand kan også bruges i Microsoft Word-dokumenter.
 
-Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var det normalt dokument.
+Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var et normalt dokument.
 Alle NVDAs kommandoer til [systemmarkør #SystemCaret] fungerer i denne tilstand; fx. læs alt, rapportér tekstformatering, kommandoer til navigering af tabeller, osv.
 Oplysninger såsom, om teksten er et link, en overskrift osv bliver annonceret sammen med teksten mens du bevæger dig rundt.
 
@@ -548,7 +555,7 @@ Når du har valgt et element, kan du bruge knapperne i dialogen til at flytte ti
 ++ Indlejrede objekter ++[ImbeddedObjects]
 Sider kan ved hjælp af teknologier som Adobe Flash, Oracle Java og HTML5 omfatte meget dynamisk indhold, såsom applikationer og dialoger.
 Når man støder på disse objekter i i et dokument, vil NVDA henholdsvist annoncere "Indlejret objekt", "applikation" og "dialog".
-Du kan hurtigt flytte til dem ved brug af O og skift+O bogstavnavigationstasterne til indlejrede objekter.
+Du kan hurtigt flytte til dem ved brug af O og shift+O bogstavnavigationstasterne til indlejrede objekter.
 Du kan trykke Enter på disse objekter for at aktivere dem.
 Hvis objektet er tilgængeligt, kan du derefter tabbe rundt indenfor det og interagere med det som ethvert andet program
 du kan med et tastetryk vende tilbage til den oprindelige side, der indeholder det indlejrede objekt:
@@ -582,7 +589,7 @@ Hvis du befinder dig i gennemsynstilstand, kan du gøre dette ved at flytte mark
 Hvis du ikke er i gennemsynstilstand:
 + Flyt læsemarkøren til det matematiske indhold.
 Som udgangspunkt følger læsemarkøren systemmarkøren, så som regel kan du bare bruge systemmarkøren til at gå til det ønskede indhold.
-+ Aktiver så følgende kommando:
++ Aktivér så følgende kommando:
 +
 
 %kc:beginInclude
@@ -594,14 +601,14 @@ På dette tidspunkt kan du bruge MathPlayer-kommandoer, såsom piletasterne, til
 For eksempel kan du flytte gennem udtrykket med Venstre- og Højre-pil og zoome ind på en del af udtrykket, f.eks. en brøk, med Pil-ned.
 Læs venligst [dokumentationen om navigationskommandoer til MathPlayer https://www.dessci.com/en/products/mathplayer/navigation_commands.htm] for flere oplysninger.
 
-Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
+Når du vil tilbage til dokumentet, skal du blot trykke på Escape-tasten.
 
 + Punktskrift +
-Hvis du eger et punktdisplay, kan NVDA vise information på punkt.
+Hvis du ejer et punktdisplay, kan NVDA vise information på punkt.
 Hvis dit punktdisplay har et punkttastatur, kan du også indtaste forkortet og uforkortet punkt.
 
 Se venligst afsnittet [Understøttede Punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
-Dette afsnit indeholder også yderligere oplysninger om NVDAs automatiske detektion af punktdisplays.
+Dette afsnit indeholder også yderligere oplysninger om NVDAs automatiske detektering af punktdisplays.
 Du kan konfigurere punkt ved hjælp af [indstillingskategorien Punkt #BrailleSettings] fra dialogen med [NVDAs indstillinger #NVDASettings].
 
 ++ Punktforkortelser for felttyper, felttilstande og landmærker ++[BrailleAbbreviations]
@@ -699,12 +706,12 @@ Du kan vælge den ønskede indtastningstabel ved brug af indstillingen [Indtastn
 Når uforkortet punktskrift benyttes, vil tekst indsættes så snart det skrives.
 Når forkortet punkt benyttes, vil tekst indsættes når der trykkes på mellemrum eller enter efter et ord.
 Bemærk, at oversættelsen kun reflektere det aktuelle ord du er ved at indtaste, men kan ikke bearbejde eksisterende tekst.
-Hvis du f.eks. bruger en punktkode der starter indtastning af numre ved brug af et nummertegn, skal du indtaste et nummertegn igen, hvis du har trykket backmellemrum for at flytte til slutningen af et nummer, og såfrem du ønsker at indtaste yderligere numre.
+Hvis du f.eks. bruger en indtastningstabel der starter indtastning af numre ved brug af et taltegn, skal du indtaste et taltegn igen, hvis du har trykket backspace for at flytte til slutningen af et nummer, og såfrem du ønsker at indtaste yderligere numre.
 
 %kc:beginInclude
 Et tryk på punkt 7 sletter sidst indtastede punktcelle eller tegn.
 Punkt 8 oversætter alt indtastet punkt og trykker på enter-tasten.
-Ved at trykke på punkt 7 og 8 sammen oversættes det indtastede punktskrift, men tilføjer ikke et mellemrum eller et tryk på enter-tasten.
+Ved at trykke på punkt 7 og 8 sammen oversættes den indtastede punktskrift, men tilføjer ikke et mellemrum eller et tryk på enter-tasten.
 %kc:endInclude
 
 + Indholdsgenkendelse +[ContentRecognition]
@@ -751,7 +758,7 @@ Disse indstillinger bliver gemt i dokumentet som bogmærker, der er kompatible m
 Dette betyder, at brugere af andre skærmlæsere, som senere åbner dette dokument, automatisk vil have fået indstillet overskrifterne på rækker og kolonner rigtigt.
 
 +++ Gennemsynstilstand i Microsoft Word +++[BrowseModeInMicrosoftWord]
-Ligesom på webbet kan gennemsynstilstand bruges i Microsoft word til at give adgang til funktioner som hurtignavigation og elementlisten.
+Ligesom på internettet kan gennemsynstilstand bruges i Microsoft word til at give adgang til funktioner som bogstavnavigation og elementlisten.
 %kc:beginInclude
 For at slå gennemsynstilstand til eller fra i Microsoft Word skal du trykke NVDA+mellemrum.
 %kc:endInclude
@@ -785,12 +792,12 @@ Disse indstillinger bliver gemt i projektmappen som definerede navneområder, og
 Det betyder, at brugere af andre skærmlæsere, som senere åbner denne projektmappe, automatisk vil få overskrifter på kolonner og rækker rigtigt sat.
 
 +++ Elementlisten +++[ExcelElementsList]
-Ligesom på webbet har NVDA en elementliste til Microsoft Excel, hvor du kan få vist og få adgang til flere forskellige typer oplysninger.
+Ligesom på internettet har NVDA en elementliste til Microsoft Excel, hvor du kan få vist og få adgang til flere forskellige typer af oplysninger.
 %kc:beginInclude
 For at komme til elementlisten i Excel skal du trykke NVDA+f7.
 %kc:endInclude
-De forskellige typer oplysninger, du kan se i elementlisten, er følgende:
-- Diagrammer: Viser alle diagrammer i DET AKTIVE REGNEARK.
+De forskellige typer af oplysninger, du kan se i elementlisten, er følgende:
+- Diagrammer: Viser alle diagrammer i det aktive regneark.
 Hvis du vælger et diagram og trykker på Enter eller knappen "Flyt til", får du diagrammet i fokus, så du kan bevæge dig rundt i det og læse det med piletasterne.
 - Kommentarer: Viser en liste over alle celler i REGNEARKET, som indeholder kommentarer.
 For hver celle for du vist adressen og den tilhørende kommentar.
@@ -815,12 +822,12 @@ Du kan også få vist alle kommentarer i projektarket i elementlisten.
 +++ Læsning af beskyttede celler +++[ExcelReadingProtectedCells]
 Hvis en projektmappe er blevet skrivebeskyttet, kan det være, det ikke er muligt at flytte fokus til de celler, der er låst for redigering.
 %kc:beginInclude
-For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige flyttekommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
+For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige bevægelseskommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
 %kc:endInclude
 
 +++ Formularfelter +++[ExcelFormFields]
 Excel regneark kan indeholde formularfelter.
-Du kan få adgang til disse ved brug af elementlisten eller F og Skift+F bogstavnavigation for formularfelter.
+Du kan få adgang til disse ved brug af elementlisten eller F og Shift+F bogstavnavigation for formularfelter.
 Når du flytter til et formularfelt i gennemsynstilstand, kan du benytte enter eller mellemrum til at aktivere eller skifte til fokustilstand, så du kan interagere med feltet, afhængigt af kontrollen.
 For yderligere informationer om gennemsynstilstand samt bogstavnavigation, se [Gennemsynstilstand #BrowseMode].
 
@@ -833,9 +840,9 @@ For yderligere informationer om gennemsynstilstand samt bogstavnavigation, se [G
 ++ foobar2000 ++[Foobar2000]
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Rapportér resterende tid | Ctrl+Skift+r | Rapporterer den resterende tid af det igangværende spor, hvis tilgængelig. |
-| Rapportér forløbne tid | Ctrl+skift+e | Rapporterer den forløbne tid for det igangværende spor, hvis tilgængelig. |
-| Rapportér længden af det aktuelle spor | Ctrl+skift+t | Rapporterer længden for det igangværende spor, hvis tilgængelig. |
+| Rapportér resterende tid | Ctrl+Shift+r | Rapporterer den resterende tid af det igangværende spor, hvis tilgængelig. |
+| Rapportér forløbne tid | Ctrl+shift+e | Rapporterer den forløbne tid for det igangværende spor, hvis tilgængelig. |
+| Rapportér længden af det aktuelle spor | Ctrl+shift+t | Rapporterer længden for det igangværende spor, hvis tilgængelig. |
 %kc:endInclude
 
 Bemærk: Ovenstående genveje virker kun, når statuslinjen i Foobar er formateret som standard.
@@ -879,9 +886,9 @@ Se venligst afsnittet [Læsning af matematisk materiale #ReadingMath] for yderli
 
 +++ Valg af tekst +++[KindleTextSelection]
 Kindle lader dig udføre diverse funktioner på udvalgt tekst, såsom at slå ord op i en ordbog, tilføje noter og fremhævelser, kopiere tekst til udklipsholderen og søge på nettet.
-For at gøre dette, skal du først vælge tekst som du normalt ville gøre det i gennemsynstilstand f.eks. ved at bruge skift og piletasterne.
+For at gøre dette, skal du først vælge tekst som du normalt ville gøre det i gennemsynstilstand f.eks. ved at bruge shift og piletasterne.
 %kc:beginInclude
-Når du har valgt tekst, skal du trykke på applikationstasten eller Skift+F10 for at vise de tilgængelige muligheder og arbejde med den udvalgte tekst.
+Når du har valgt tekst, skal du trykke på applikationstasten eller Shift+F10 for at vise de tilgængelige muligheder og arbejde med den udvalgte tekst.
 %kc:endInclude
 Hvis du gør dette uden at vælge tekst, vil tilgængelige muligheder vises for det aktuelle ord under markøren.
 
@@ -940,14 +947,13 @@ Der er mange sprog. Som standard sættes sproget imidlertid til Windows standard
 Denne valgmulighed giver NVDA besked på at benytte det sprog, som Windows aktuelt er sat til at bruge.
 
 Bemærk, at NVDA skal genstartes efter ændring af sproget.
-Hvis du ændrer denne indstilling, spørger NVDA dig, om du ønsker at genstarte.
-Tryk OK, hvorefter NVDA genstarter.
+Når dialogen til at bekræfte ændring til et andet sprog vises, skal du tage stilling til om du vil genstarte nu eller senere. Vælger du at genstarte senere, skal konfigurationen gemmes manuelt eller ved brug af den tilsvarende indstilling, der gemmer din konfiguration ved afslutning af NVDA.
 
 ==== Gem konfiguration ved afslutning ====[GeneralSettingsSaveConfig]
 Denne indstilling er en check box, der får NVDA til automatisk at gemme den aktuelle konfiguration ved afslutning, når den er slået til.
 
 ==== Vis muligheder ved afslutning af NVDA ====[GeneralSettingsShowExitOptions]
-Denne indstillingsmulighed er en check boxe, der giver mulighed for at vælge, hvorvidt en dialog skal fremkomme ved afslutning af NVDA med spørgsmålet om hvilken handling, du vil foretage dig.
+Denne indstillingsmulighed er en check box, der giver mulighed for at vælge, hvorvidt en dialog skal fremkomme ved afslutning af NVDA med spørgsmålet om hvilken handling, du vil foretage dig.
 Når den er slået til, fremkommer en dialog, når du forsøger at afslutte NVDA, hvor du skal tage stilling til, hvorvidt du ønsker at afslutte, genstarte, genstarte med tilføjelsesprogrammer deaktiverede eller installere ventende opdateringer (hvis relevant).
 Når den er slået fra, bliver NVDA afsluttet med det samme.
 
@@ -959,12 +965,20 @@ Dette er en combo box, hvor du kan bestemme, hvor meget NVDA skal logge under af
 Generelt bør det ikke være nødvendigt for brugeren at ændre denne indstilling, idet der ikke logges for meget.
 Det kan imidlertid være en nyttig funktion, hvis du ønsker at give tilbagemelding i forbindelse med fejlfinding til en fejlrapport.
 
+De tilgængelige logningsmuligheder er:
+- Deaktiveret: Udover en kort besked ved opstart, vil NVDA ikke benytte logning under kørsel-
+- Info: NVDA vil logge grundlæggende informationer under opstart og andre nyttige informationer for udviklere.
+- Fejlfinding og advarsler: Advarsler der ikke forårsages af alvorlige fejl vil logges.
+- Input/output: Denne indstilling logger både input og output fra punktdisplays, tastaturenheder samt tale. Hvis du bekymre dig om dit privatliv, benyt ikke denne valgmulighed.
+- Fejlfinding: Udover diverse informationer, input/output, og beskeder om advarsler, vil yderligere fejlbeskeder logges ved brug af denne indstilling. Hvis du ligeledes bekymre dig om dit privatliv, skal du ikke aktivere denne indstilling, da alt vil blive logget.
+-
+
 ==== Start NVDA automatisk, når jeg har logget på Windows ====[GeneralSettingsStartAfterLogOn]
 Hvis denne funktion er slået til, vil NVDA starte, så snart du er logget på Windows.
 Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 
 ==== Brug NVDA på Windows Logon-skærmen (kræver administratorrettigheder) ====[GeneralSettingsStartOnLogOnScreen]
-Hvis du skal angive brugernavn og password for at logge på Windows, kan denne funktion slås til, og NVDA startes automatisk op på logon-skærmen når Windows starter.
+Hvis du skal angive brugernavn og adgangskode for at logge på Windows, kan denne funktion slås til, og NVDA startes automatisk op på logon-skærmen når Windows starter.
 Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 
 ==== Benyt de aktuelt gemte indstillinger på logon-skærmen og andre beskyttede skærmbilleder (kræver administratorrettigheder)====[GeneralSettingsCopySettings]
@@ -988,8 +1002,8 @@ Bemærk, at selvom din IP-adresse vil blive brugt til at beregne dit land under 
 Bortset fra de obligatoriske oplysninger, der kræves for at kontrollere efter opdateringer, er følgende yderligere oplysninger også sendt i øjeblikket:
 - NVDAs aktuelle sprog
 - Om denne kopi af NVDA er flytbar eller installeret
-- Navn på den aktuelle talesyntese i brug (herunder navnet på tilføjelsesprogrammet, som driveren kommer fra)
-- Navn på det aktuelle punktdisplay i brug (herunder navnet på tilføjelsen, som driveren kommer fra)
+- Navn på den aktuelle talesyntese i brug (herunder navnet på tilføjelsesprogrammet, som driveren tilhører)
+- Navn på det aktuelle punktdisplay i brug (herunder navnet på tilføjelsen, som driveren tilhører)
 - Den aktuelle oversættelsestabel (hvis punkt er i brug)
 
 
@@ -1011,14 +1025,14 @@ Denne dialog åbnes oveni dialogen med NVDAs indstillinger.
 Ved at gemme eller kassere dine ændringer, vil du få fokus i NVDAs indstillingsdialog.
 
 ==== Stemme ====[SpeechSettings]
-Denne valgmulighed er en combo box med en liste over alle stemmerne i den aktuelt valgte talesyntese.
+Denne valgmulighed er en combo box med en liste over alle stemmerne tilhørende den aktuelt valgte talesyntese.
 Med piletasterne kan du lytte til de enkelte stemmemuligheder.
 Venstre-pil og Pil-op fører dig opad i listen, mens Højre-pil og Pil-ned flytter nedad i listen.
 
 ==== Variant ====[SpeechSettingsVariant]
 Hvis du bruger talesyntesen ESpeak NG, som følger med NVDA, indeholder denne combo box en liste hvorfra du kan vælge den variant, som talesyntesen skal tale med.
 eSpeak NGs Varianter minder om forskellige stemmer, idet de får ESpeak NG-stemmen til at tale på lidt forskellige måder.
-Nogle varianter lyder som en mand, nogle som en kvinde, andre lyder enddog som en frø.
+Nogle varianter lyder som en mand, nogle som en kvinde, andre lyder endda som en frø.
 
 ==== Hastighed ====[SpeechSettingsRate]
 Med denne indstilling kan du ændre hastigheden for den aktuelle stemme.
@@ -1063,7 +1077,7 @@ Hvis du ønsker, at NVDA skal udtale beskrivelser af emoji ved brug af denne dat
 Hvis du derimod bruger en talesyntese, der har denne funktionalitet indbygget, vil det evt. være nødvendigt at slå denne funktion fra.
 
 Bemærk: Manuelt tilføjede og redigerede tegnbeskrivelser gemmes som en del af din brugerkonfiguration.
-Dette betyder, at dine tilpassede udtaler for emoji vil blive udtalt, uanset om denne indstilling er slået til.
+Dette betyder, at dine tilpassede udtaler for emoji vil blive udtalt, uanset om denne indstilling er slået til eller ej.
 Du kan tilføje, redigere og fjerne symbolbeskrivelser i NVDAs [ dialog Udtale af Sætningstegn og Symboler #SymbolPronunciation].
 
 ==== Ændring af tonehøjde ved store bogstaver ====[SpeechSettingsCapPitchChange]
@@ -1107,9 +1121,9 @@ Denne valgmulighed bruges til at bestemme, hvilket lydkort den aktuelt valgte ta
 
 %kc:setting
 ==== Lyddæmpningstilstand ====[SelectSynthesizerDuckingMode]
-Tast: NVDA+skift+d
+Tast: NVDA+shift+D
 
-Hvis du bruger Windows 8 eller derover, lader denne indstilling dig vælge, om NVDA skal sænke lydstyrken af andre applikationer, når NVDA taler, eller om NVDA konstant skal sænke lydstyrken imens NVDA kører.
+Hvis du bruger Windows 8 eller nyere, lader denne indstilling dig vælge, om NVDA skal sænke lydstyrken af andre applikationer, når NVDA taler, eller om NVDA konstant skal sænke lydstyrken imens NVDA kører.
 - Ingen dæmpning: NVDA vil aldrig dæmpe lydstyrken af andre lydkilder. 
 - Dæmp når der udsendes tale og lyde: NVDA vil kun dæmpe lyden, hvis NVDA afspiller lyde eller taler. Dette virker muligvis ikke for alle talesynteser. 
 - Altid dæmp: NVDA vil sænke lyden fra alle andre lydkilder, så længe NVDA kører.
@@ -1350,6 +1364,11 @@ Jo længere mod venstre eller højre musen befinder sig på skærmen, desto læn
 Hvis check boxen "Afspil lydkoordinater under flytning af mus" er slået til, bevirker markering af denne check box, at lydstyrken på biptonen ved lydkoordinaterne bestemmes af, hvor lyst skærmbilledet under musen er.
 Denne indstilling er slået fra som standard.
 
+==== Ignorér museinput fra andre applikationer ====[MouseSettingsHandleMouseControl]
+Denne indstilling lader brugeren ignorere musehandlinger (f.eks. musebevægelse og museklik) udført af andre programmer som TeamViewer og andet software til fjernstyring.
+Denne indstilling er slået fra som standard.
+Hvis du vælger denne indstilling og du har musefølgning slået til, vil NVDA ikke annoncere hvad der befinder sig under musen, når musen flyttes af andre applikationer.
+
 +++ Berøringsinteraktion +++[TouchInteraction]
 Denne indstillingskategori vil kun være tilgængelig på computere, der kører Windows 8 og nyere, samt har mulighed for touch-funktionalitet. Disse indstillinger lader dig konfigurere, hvordan NVDA håndtere berøring af touchskærme.
 Denne kategori indeholder følgende indstillinger:
@@ -1517,6 +1536,13 @@ Hvis denne indstilling er slået til, afspiller NVDA en særlig lyd i stedet for
 med denne indstilling, som er slået til som udgangspunkt, kan du vælge om kommandobevægelser, f.eks. tastetryk, som ikke udgør en NVDA-kommando, og som ikke anses for at være en generel kommando, skal forhindres i at komme videre til det dokument, du har fokus på.
 Hvis denne indstilling er slået til, og du f.eks. trykker på bogstavet j, vil tastetrykket blive forhindret i at komme videre til dokumentet, selv om det ikke er en kommando til hurtignavigation, og det heller ikke er sandsynligt, at det er en kommando i selve programmet.
 
+==== Fokus følger gennemsynstilstand ====[BrowseModeSettingsFocusFollowsBrowseMode]
+Tast: NVDA+8
+
+denne indstilling er aktiveret som standard, og lader dig bestemme om systemfokus automatisk skal følge gennemsynstilstand i browsere.
+Hvis denne indstilling er slået til, fungerer NVDA som NVDA 2018.4 og tidligere.
+Deaktivering af denne indstilling kan betyde, at NVDA begår sig hurtigere på internettet og udviser bedre reaktionshastighed i gennemsynstilstand generelt. Denne funktion er eksperimental siden NVDA 2019.1.
+
 +++ Ddokumentformatering (NVDA+Ctrl+d) +++[DocumentFormattingSettings]
 De fleste check boxe i denne indstillingskategori bruges til at angive, hvilke typer formatering, du ønsker oplæst automatisk, når du flytter markøren rundt inden i dokumenter.
 Hvis du fx markerer check boxen "oplæs skrifttypenavn", hører du navnet på skrifttypen, hver gang du med piletasterne bevæger dig hen over tekst med en anden skrifttype.
@@ -1583,6 +1609,37 @@ Denne kategori indeholder følgende indstillinger:
 
 ==== Sprog til tekstgenkendelse ====[Win10OcrSettingsRecognitionLanguage]
 Denne combo box lader dig vælge det ønskede sprog til brugen af tekstgenkendelse.
+
++++ Avancerede Indstillinger +++
+Advarsel! Indstillingerne i denne kategori gælder for avancerede brugere. Hvis du ændrer disse, kan NVDA fungere uhensigtsmæssigt.
+Du skal kun ændre disse, hvis du ved hvad du laver eller er specifikt instrueret af NVDA-udviklere.
+
+==== Tillad indlæsning af tilpasset kode fra mappen Developer Scratchpad ====
+Når du udvikler kode for en NVDA-tilføjelse, så er det nyttigt at have muligheden for at afprøve din kode, når du skriver den.
+Denne indstilling, hvis slået til, lader dig indlæse tilpasset appModules, globalPlugins, brailleDisplayDrivers og synthDrivers fra en særlig mappe ved navn "Developer Scrachpad" i konfigurationsmappen for din bruger af NVDA.
+Tidligere ville NVDA indlæse tilpasset kode direkte fra brugerens konfigurationsmappe uden mulighed for at deaktivere dette.
+Denne indstilling er slået fra. Dette vil sikre, at ingen kode kan køres uden brugerens samtykke.
+Hvis du ønsker at distribuere kode til andre, skal du gøre dette som en tilføjelsespakke.
+
+==== Åbn mappen Developer Scratchpad ====
+Denne knap åbner mappen vor du kan placere din kode under udvikling.
+Denne knap vil kun være tilgængelig, hvis NVDA tillader indlæsning af tilpasset kode.
+
+==== Benyt UI Automation til at få adgang til kontrolelementer for Microsoft &Word-dokumenter, når disse er tilgængelige ====
+Når denne indstilling er aktiveret, vil NVDA forsøge at benytte Microsoft UI Automation tilgængeligheds-API for at indfange information om diverse kontrolelementer i Microsoft Word-dokumenter.
+Dette omfatter selve Microsoft Word, samt under skrivning og læsning af meddelelser i Microsoft Outlook.
+For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 er understøttelse af UI Automation komplet nok til næsten at give samme oplevelse, der allerede leveres med NVDA. Denne indstilling har også den fordel, at reaktionshastigheden er øget markant.
+Vær dog opmærksom på, at dette også kan betyde at noget information ikke er synligt, eller vises forkert, hvilket betyder at denne understøttelse ikke altid kan forekomme pålidelig.
+Vi anbefaler ikke at størstedelen af brugere slår denne indstilling til, men vi ønsker gerne henvendelser fra brugere af Office 2016/365.
+
+==== Interval for markøren (i MS) ====
+Denne indstilling lader dig konfigurere hvor mange millisekunder NVDA skal vente på systemmarkøren (indsættelsesmarkøren) i redigerbare tekstfelter.
+Hvis du opdager, at NVDA har problemer med at følge systemmarkøren (f.eks. hvis NVDA konsekvent er et tegn bagud eller gentager linjer), kan du forøge denne værdi.
+
+==== Aktiverede logningskategorier ====
+Check boxene i denne liste lader dig vælge, hvilke logningskategorier der skal benyttes under skrivning af NVDAs logfil.
+Logning af disse hændelser kan resultere i lavere ydeevne og store logfiler.
+Slå kun dette til, hvis du er blevet bedt om det af en NVDA-udvikler (f.eks. for at finde ud af, hvorfor et punktdisplay ikke fungere som forventet).
 
 ++ yderligere indstillinger ++[MiscSettings]
 Udover [NVDAs indstillingsdialog #NVDASettings], indeholder menuen "Opsætning" under NVDA-menuen yderligere indstillinger, der beskrives nedenfor.
@@ -1825,17 +1882,33 @@ For at deaktivére et tilføjelsesprogram, tryk på knappen "Deaktivér".
 For at aktivére et tidligere deaktivéret tilføjelsesprogram, tryk på knappen "Aktivér".
 Du kan deaktivére et tilføjelsesprogram, hvis status indikerer at tilføjelsespakken er aktiveret, eller deaktivére det hvis tilføjelsesprogrammet er aktiveret.
 For hvert tryk af disse knapper vil status ændres, så du ved hvad der vil ske, når NVDA genstartes.
-Hvis tilføjelsespakken tidligere var deaktiveret, vil status vise "aktiveret efter genstart". Hvis tilføjelsespakken tidligere var aktiveret, vil status vise "deaktiveret efter genstart".
+Hvis tilføjelsespakken tidligere var deaktiveret, vil status vise "aktiveret efter genstart".
+Hvis tilføjelsespakken tidligere var aktiveret, vil status vise "deaktiveret efter genstart".
 Hvis du har lavet ændringer til tilføjelsesprogrammer,skal du genstarte NVDA, så dine ændringer kan træde i kraft.
 
 Dialogboksen har også en luk-knap.
 Hvis du har installeret, fjernet eller ændret status af et tilføjelsesprogram, vil NVDA spørge om du ønsker at genstarte, så ændringerne kan træde i kraft.
 
-Det har før i tiden været muligt at udvide funktionaliteten af NVDA ved at kopiere plugins og drivere ind i mappen med brugerkonfigurationen til NVDA.
-Selv om denne version af NVDA kan indlæse dem, vil de ikke figurere i listen over tilføjelsesprogrammer.
-Det er bedst at slette disse filer, og derefter installere det rigtige tilføjelsesprogram hvis det er tilgængeligt.
+Nogle ældre tilføjelsesprogrammer er muligvis ikke længere kompatible med den version af NVDA, som du benytter.
+Hvis du benytter en ældre version af NVDA, kan det også være, at nyere tilføjelser ikke kan benyttes.
+Hvis du forsøger at installere en inkompatibel tilføjelsespakke, vil der fremkomme en fejl samt en beskrivelse af hvorfor pakken ikke kunne installeres.
+For at gennemgå disse inkompatible tilføjelser, kan du bruge knappen "Vis inkompatible tilføjelser...".
 
 Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en inputbevægelse med [dialogen inputbevægelser [InputGestures].
+
+++ Styring af inkompatible tilføjelser ++[incompatibleAddonsManager]
+Knappen "Vis inkompatible tilføjelser..." vil åbne en dialog, hvorfra du kan administrere og gennemse inkompatible tilføjelser, samt hvorfor disse anses for at være inkompatible med din version af NVDA.
+Tilføjelser anses som inkompatible, når de ikke har været opdateret således at de virker med markante ændringer til NVDA, eller benytter en funktion i NVDA der ikke længere er tilgængelig.
+Styringen af inkompatible tilføjelser viser en kort besked om dialogens formål, samt din NVDA-version.
+Inkompatible tilføjelser vises i en list omfattende følgende kolonner:
++ Pakke: Navnet på tilføjelsen
++ Version: versionsnummeret på tilføjelsen
++ Årsag for inkompatibilitet: Grunden til tilføjelsen anses for at vrære inkompatibel
++
+
+Dialogen har også en knap ved navn "Om tilføjelsesprogram...".
+Denne knap viser alle detaljer om tilføjelsen, så du evt. kan kontakte udvikleren af det pågældende tilføjelsesprogram.
+
 
 ++ Python konsollen ++[PythonConsole]
 NVDAs Python-konsol, der ligger under Værktøjer i NVDA-menuen, er et udviklerværktøj. Det er især velegnet til brug ved fejlfinding, generel inspektion af interne processer i NVDA eller inspektion af tilgængelighedshierarkiet i en applikation.
@@ -2756,15 +2829,17 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -r | --replace | Afslut en allerede kørende kopi af NVDA og start denne kopi |
 | -k | --check-running | Fortæl via exitkoden, om NVDA kører (0 hvis NVDA kører, 1 hvis den ikke gør) |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Filen hvor NVDAs log skal gemmes |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, info 20, advarsler 30, fejl 40 og kritiske fejl 50). Standard er advarsler. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Det laveste niveau af meddelelser, som skal logges (fejlfinding 10, input/output 12, fejlfinding og advarsler 15, info 20, advarsler 30, fejl 40, kritiske fejl 50, deaktiveret 100). Standard er advarsler. |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Stien hvor alle indstillinger i NVDA bliver gemt |
 | -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
-| -s | --secure | Sikker tilstand (uden Python console) |
+| -s | --secure | Sikker tilstand (deaktiverer Python console og logningsfunktioner, ofte brugt på sikre skærme) |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
 | Ingen | --debug-logging | Aktivér logningsniveau til brug ved fejlfinding for kun denne opstart. Denne indstilling vil overstyre alle logningsniveau ( ""--loglevel"", -l) argumenter. |
+| Ingen | --no-logging | Deaktivér logning fuldstændigt under brugen af NVDA. Denne indstilling kan blive tilsidesat hvis ( ""--loglevel"", -l) angives fra kommandolinjen eller såfremt logning for fejlfinding er slået til. |
 | Ingen | --no-sr-flag  | Forhindre ændring af det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
+| Ingen | --enable-start-on-logon=True|False | Under installation vil dette aktivere [opstart ved logon-skærmen #StartAtWindowsLogon] |
 | Ingen | --create-portable | Opretter en flytbar kopi af NVDA (starter den nyoprettede kopi). Kræver --portable-path angives |
 | Ingen | --create-portable-silent | Opretter en flytbar kopi af NVDA (starter ikke den nyoprettede kopi). Kræver --portable-path angives |
 | Ingen | --portable-path=PORTABLEPATH | Stien hvor den flytbare kopi oprettes |
