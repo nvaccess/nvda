@@ -23,8 +23,9 @@ What's New in NVDA
 
 == Changes ==
 - Updated liblouis braille translator to version 3.8.0. (#9013)
-- Add-on authors now can enforce a minimum required NVDA version for their add-ons. Unsupported add-ons will not load or install. (#6275)
-- Add-on authors must now specify the last version of NVDA the add-on has been tested against. Users will be warned against installing or enabling untested add-ons. (#6275)
+- Add-on authors now can enforce a minimum required NVDA version for their add-ons. NVDA will refuse to install or load an add-on whose minimum required NVDA version is higher than the current NVDA version. (#6275)
+- Add-on authors can now specify the last version of NVDA the add-on has been tested against. If an add-on has been only tested against a  version of NVDA lower than the current version, then NVDA will refuse to install or load the add-on. (#6275)
+- This version of NVDA will allow installing and loading of add-ons  that do not yet contain Minimum and Last Tested NVDA version information, but upgrading to future versions of NVDA (E.g. 2019.2) may automatically cause these older add-ons to be disabled.
 - The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
 - Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
 - When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
