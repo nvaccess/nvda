@@ -143,7 +143,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
-	focusFollowsBrowse = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)
