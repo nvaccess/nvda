@@ -465,7 +465,7 @@ def installAddon(parentWindow, addonPath):
 
 	prevAddon = None
 	for addon in addonHandler.getAvailableAddons():
-		if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
+		if not addon.isPendingRemove and bundle.name.lower()==addon.manifest['name'].lower():
 			prevAddon=addon
 			break
 	if prevAddon:
