@@ -6,7 +6,7 @@ Was ist neu in NVDA
 = 2019.1 =
 
 == Neue Funktionen ==
-- Neue Braille-Tabellen: Arabisches 8-Punkt computer braille, Arabisch grade 2, Spanisch grade 2. (#4435)
+- Neue Braille-Tabellen: Arabisches 8-Punkt-Computerbraille, Arabische Kurzschrift, Spanische Kurzschrift. (#4435)
 - Den Maus-Einstellungen von NVDA wurde eine Option hinzugefügt, womit  NVDA  nun auch die Maus erkennen kann, selbst wenn diese von einer anderen Anwendung gesteuert wird. (#8452) 
  - Dies ermöglicht  die Mausverfolgung in NVDA, wenn ein System durch Teamviewer oder ähnliche Software ferngesteuert wird.
 - Der Befehlszeilenparameter `--disable-start-on-logon` wurde hinzugefügt, um stille Installationen von NVDA zu ermöglichen, bei welchen NVDA danach  standardmäßig nicht auf dem Anmeldebildschirm ausgeführt wird. (#8574)
@@ -15,7 +15,7 @@ Was ist neu in NVDA
 - In Mozilla Firefox und Google Chrome meldet der Lesemodus nun das ausgewählte Element in Listenfeldern und Baumansichten.
  - Dies funktioniert ab Firefox 66 und höher.
  - Dies funktioniert noch nicht für bestimmte Listenfelder (HTML Select Controls) in Chrome.
-- Die afrikaanische Braille-Tabelle wurde hinzugefügt. (#9186)
+- Die BrailleTabelle für Afrikaans wurde hinzugefügt. (#9186)
 - Basisunterstützung von Apps wie Mozilla Firefox auf Computern mit ARM64-Prozessoren (z.B. Qualcom Snapdragon). (#9216)
 - Eine neue Kategorie "Erweiterte Einstellungen" wurde dem NVDA-Einstellungsdialog hinzugefügt, welche u.a.  eine Option enthält, um die neue Unterstützung für Microsoft Word durch NVDA über die Microsoft UI Automation API testen zu können. (#9200)
 - Unterstützung für die grafische Ansicht in der Windows Datenträgerverwaltung wurde hinzugefügt. (#1486)
@@ -240,7 +240,7 @@ Zu den Highlights dieser Version gehören die Unterstützung von Tabellen in Kin
 - Die Spalte Status im Dialogfeld Erweiterungen verwalten zeigt den Status als "aktiviert" oder "deaktiviert" an; nicht mehr als "wird ausgeführt" oder "stillgelegt". (#7929)
 - Liblouis wurde auf Version 3.5.0 aktualisiert. (#7839)
 - Die litauische Braille-Übersetzungstabelle wurde auf Litauisch 6-Punkt umbenannt, um Verwechslungen mit der neuen 8-Punkt-Tabelle zu vermeiden. (#7839)
-- Die kanadisch-französischen Braille-Übersetzungstabellen für Kurz- und Vollschrift wurden entfernt, stattdessen werden die vereinheitlichten 6-Punkt-Computerbraille und Kurzschrift-Tabellen verwendet. (#7839)
+- Die kanadisch-französischen Braille-Tabellen für Kurz- und Vollschrift wurden entfernt, stattdessen werden die vereinheitlichten 6-Punkt-Computerbraille und Kurzschrift-Tabellen verwendet. (#7839)
 - Die sekundären Routingtasten auf Alva BC6-, EuroBraille- und Papenmeier-Braillezeilen zeigen nun Formatierungsinformationen für den Text unter dem Braille-Modul dieser Taste an. (#7106)
 - Beim Eingeben von Kurzschrift fällt NVDA automatisch auf eine Basisschrift-Eingabetabelle zurück, wenn sich der Fokus z. B. im Lesemodus auf einem Steuerelement befindet, das keine Einfügemarke besitzt. (#7306)
 - NVDA zeigt in Outlook weniger ausführliche Informationen an, wenn eine Besprechung oder ein Termin angezeigt wird, der/die einen ganzen Tag umfasst. (#7949)

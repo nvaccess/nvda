@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 04:38+1000\n"
+"POT-Creation-Date: 2019-02-22 00:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"Last-Translator: Adriani <adriani.botez@gmail.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -423,11 +423,11 @@ msgstr "klk"
 
 #. Translators: Displayed in braille when an object is sorted ascending.
 msgid "sorted asc"
-msgstr "<Aufsteigend sortiert>"
+msgstr "Aufsteigend sortiert"
 
 #. Translators: Displayed in braille when an object is sorted descending.
 msgid "sorted desc"
-msgstr "<Absteigend sortiert>"
+msgstr "Absteigend sortiert"
 
 #. Translators: Displayed in braille when an object (usually a graphic) has a long description.
 msgid "ldesc"
@@ -617,7 +617,7 @@ msgstr "Nicht unterstützte Eingabe"
 #. Translators: Reported when a braille input modifier is released.
 #, python-brace-format
 msgid "{modifier} released"
-msgstr "{modifier} freigegeben"
+msgstr "{modifier} losgelassen"
 
 #. Translators: Reported when a braille input modifier is pressed.
 #, python-brace-format
@@ -1738,7 +1738,7 @@ msgstr "&Aktivieren"
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
-msgstr "F&okussieren"
+msgstr "S&pringe zu"
 
 #, python-format
 msgid "%s landmark"
@@ -1997,13 +1997,13 @@ msgstr "sehr dunkles, blasses {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
-msgstr "{color}weiß"
+msgstr "{color} weiß"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
-msgstr "{color}grau"
+msgstr "{color} grau"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
 #, python-brace-format
@@ -3972,7 +3972,7 @@ msgid ""
 "state of GUI components."
 msgstr ""
 "Öffnet das WX-GUI-Inspektionstool. Wird verwendet, um weitere Informationen "
-"über den Zustand der GUI-Komponenten zu erhalten."
+"über den Zustand der Benutzeroberfläche-Komponenten zu erhalten."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -4050,11 +4050,11 @@ msgstr "Schaltet die Kopplung des Navigators an den Fokus um."
 
 #. Translators: presented when toggled.
 msgid "Focus follows browse mode off"
-msgstr "Fokus folgt im Lesemodus ausgeschaltet"
+msgstr "Fokus folgt nicht dem virtuellen Cursor im Lesemodus"
 
 #. Translators: presented when toggled.
 msgid "Focus follows browse mode on"
-msgstr "Fokus folgt im Lesemodus eingeschaltet"
+msgstr "Fokus folgt dem virtuellen Cursor im Lesemodus"
 
 #. Translators: Input help mode message for toggle browse moves focus command.
 msgid ""
@@ -4515,7 +4515,9 @@ msgstr "Die Windows 10-OCR ist nicht verfügbar"
 #. Translators: Describes a command.
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
-msgstr "Erkennt das aktuelle Navigator-Objekt mit Hilfe der Windows 10 OCR."
+msgstr ""
+"Erkennt den Inhalt des aktuellen Navigator-Objekt (NVDA-Cursor) mit Hilfe "
+"der Windows 10 OCR."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4915,7 +4917,7 @@ msgstr "alle Tastaturschemata"
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
-msgstr "Argonesisch"
+msgstr "Aragonesisch"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -6198,7 +6200,7 @@ msgstr "Keine Rahmenlinien"
 #. {color2} will be replaced with the second background color.
 #, python-brace-format
 msgid "{color1} to {color2}"
-msgstr "{color1} auf {color2}"
+msgstr "{color1} und {color2}"
 
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
@@ -6629,23 +6631,24 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"Ihre NVDA-Konfiguration enthält jedoch Erweiterungen  die mit dieser Version "
-"von NVDA nicht kompatibel sind. Diese Erweiterungen werden nach der "
-"Installation deaktiviert. Wenn Sie sich auf diese Erweiterungen verlassen, "
-"lesen Sie bitte die Liste, um zu entscheiden, ob Sie mit der Installation "
-"fortfahren möchten."
+"\n"
+"Ihre NVDA-Konfiguration enthält jedoch Erweiterungen, welche mit dieser "
+"Version von NVDA nicht kompatibel sind. Diese Erweiterungen werden nach der "
+"Installation deaktiviert. Wenn Sie auf diese Erweiterungen angewiesen sind, "
+"prüfen Sie bitte die Liste, um zu entscheiden, ob Sie mit der Installation "
+"fortfahren möchten oder nicht."
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
 #. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 #. available, will be disabled after installation.
 msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Inkompatible Erweiterungen werden deaktiviert"
+msgstr "Mir ist bewust, dass Inkompatible Erweiterungen deaktiviert werden"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
 msgid "&Review add-ons..."
-msgstr "Erweiterungen an&zeigen"
+msgstr "Erweiterungen &prüfen"
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6693,8 +6696,8 @@ msgstr ""
 "\n"
 "Ihre NVDA-Konfiguration enthält jedoch Erweiterungen, die mit dieser Version "
 "von NVDA nicht kompatibel sind. Diese Erweiterungen werden nach der "
-"Installation deaktiviert. Wenn Sie sich auf diese Erweiterungen verlassen, "
-"lesen Sie bitte die Liste, um zu entscheiden, ob Sie mit der Installation "
+"Installation deaktiviert. Wenn Sie auf diese Erweiterungen angewiesen sind, "
+"prüfen Sie bitte die Liste, um zu entscheiden, ob Sie mit der Installation "
 "fortfahren möchten."
 
 #. Translators: The label of a button to install an NVDA update.
@@ -6919,7 +6922,7 @@ msgstr ""
 #. Translators: A position in a Kindle book
 #, no-python-format, python-brace-format
 msgid "{bookPercentage}%, location {curLocation} of {maxLocation}"
-msgstr "{bookPercentage}%, Ort {curLocation} von {maxLocation}"
+msgstr "{bookPercentage}%, Position {curLocation} von {maxLocation}"
 
 #. Translators: a page in a Kindle book
 #, python-brace-format
@@ -8160,7 +8163,7 @@ msgstr "Nach Neustart aktiviert"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "&Aktivieren"
+msgstr "&Erweiterung Aktivieren"
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #, python-brace-format
@@ -8238,7 +8241,7 @@ msgstr ""
 
 #. Translators: The title of a dialog presented when an error occurs.
 msgid "Add-on not compatible"
-msgstr "Erweiterung nicht kompatibel"
+msgstr "Die Erweiterung ist nicht kompatibel"
 
 #, python-brace-format
 msgid ""
@@ -8279,7 +8282,7 @@ msgstr "Inkompatible Erweiterungen"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
 msgid "Incompatible reason"
-msgstr "Inkompatiblitätsgrund"
+msgstr "Grund der Inkompatiblität"
 
 #. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
 #. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
@@ -9328,7 +9331,7 @@ msgstr "Beides - Sprache und Töne"
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
-msgstr "Absatzeinr&ückungen"
+msgstr "Absatzeinr&ückung"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
@@ -9437,7 +9440,7 @@ msgstr ""
 "Achtung: Die folgenden Einstellungen gelten für fortgeschrittene Benutzer. "
 "Eine Änderung dieser Werte kann dazu führen, dass NVDA nicht richtig "
 "funktioniert. Bitte ändern Sie diese nur, wenn Sie wissen, was Sie tun oder "
-"von NVDA-Entwicklern speziell angewiesen wurden!"
+"wenn Sie von NVDA-Entwicklern speziell darauf angewiesen wurden!"
 
 #. Translators: This is the label for a group of  Advanced options in the
 #. Advanced settings panel
@@ -9999,7 +10002,7 @@ msgstr "100% Gestapelter 3D-Balken"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr "3D-Spalte"
+msgstr "3D-Säule"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -10084,7 +10087,7 @@ msgstr "gestapelte Spalte"
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr "100% Gestapelte Spalte"
+msgstr "100% Gestapelte Säule"
 
 #. Translators: A type of chart in Microsoft Office.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -10509,7 +10512,7 @@ msgstr "Wert {valueAxisData}"
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
-" Bruchteil {fractionValue:.2f} Prozent, Segment {pointIndex} von {pointCount}"
+" Anteil {fractionValue:.2f} Prozent Abschnitt {pointIndex} von {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -10584,13 +10587,14 @@ msgid ""
 "{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: "
 "{trendlineLabel} "
 msgstr ""
-"{seriesName}-Trennlinien: {trendlineType}, name: {trendlineName}, "
-"Bezeichnung: {trendlineLabel} "
+"{seriesName} Typ der Trendlinie: {trendlineType}, name: {trendlineName}, "
+"Beschriftung: {trendlineLabel} "
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
 msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
-msgstr "{seriesName}-Trennlinien: {trendlineType}, Name: {trendlineName}"
+msgstr ""
+"{seriesName} Typ der Trendlinie: {trendlineType}, Name: {trendlineName}"
 
 #. Translators: Details about a chart title in Microsoft Office.
 #, python-brace-format

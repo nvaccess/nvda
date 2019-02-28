@@ -11,13 +11,66 @@
  - Điều này sẽ cho phép NVDA theo dõi chuột khi hệ thống được điều khiển từ xa bằng TeamViewer hay các phần mềm điều khiển từ xa khác.
 - Đã thêm tham số `--disable-start-on-logon` vào dòng lệnh nhằm cho phép cài NVDA ở chế độ silent mà mặc định không chạy ở màn hình khởi động. (#8574)
 - Có thể tắt tính năng log của NVDA bằng cách thiết lập mức độ log là "tắt" trong bản cài đặt chung. (#8516)
-- Trình bày các công thức của các bẳng tính trong LibreOffice và Apache OpenOffice giờ đây đã được đọc. (#860)
+- Trình bày các công thức của các bảng tính trong LibreOffice và Apache OpenOffice giờ đây đã được đọc. (#860)
 - Trong Mozilla Firefox và Google Chrome, chế độ duyệt  giờ đây đã đọc thành phần được chọn trong các hộp danh sách và cây thư mục.
  - Tính năng này hoạt động trong Firefox 66 trở lên.
  - không hoạt động trong một số hộp danh sách nhất định (HTML select controls) trong Chrome.
-  - Đã thêm bảng chữ nổi tiếng Nam Phi. (#9186)
+- Đã thêm bảng chữ nổi tiếng Nam Phi. (#9186)
+- Sớm hỗ trợ cho các ứng dụng như Mozilla Firefox trên các máy vi tính với các bộ vi xử lý ARM64 (ví dụ: Qualcom Snapdragon). (#9216)
+- Một phân loại cài đặt nâng cao đã được thêm vào hộp thoại cấu hình của NVDA, bao gồm một tùy chọn để dùng thử tính năng mới của NVDA hỗ trợ cho Microsoft Word thông qua Microsoft UI Automation API. (#9200)
+- Đã hỗ trợ dạng xem đồ họa trong Disk Management của Windows. (#1486)
+- Đã thêm hỗ trợ cho Handy Tech Connect Braille và Basic Braille 84. (#9249)
+- Đã thêm một tùy chọn thử nghiệm vào bảng cài đặt chế độ duyệt cho phép bạn ngưng không cho con trỏ hệ thống đi theo con trỏ duyệt. (#2039) Dù điều này không thể tắt trên toàn bộ các trang web, nó có thể khắc phục:
+ - Hiệu ứng Rubber band: NVDA lâu lâu lại không thực hiện phím lệnh cuối cùng của chế độ duyệt bằng cách nhảy về vị trí trước.
+ - Các ô nhập liệu đánh cắp focus hệ thống khi bấm mũi tên xuống qua chúng trên các trang web.
+ - Các phím lệnh trong chế độ duyệt phản hồi chậm chạp.
+   
+   
+   == Các thay đổi ==
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.8.0. (#9013)
+- Tác giả của add-on giờ đây có thể yêu cầu một phiên bản NVDA tối thiểu cho các add-on của mình. Các add-on không hỗ trợ sẽ không được tải và cài đặt. (#6275)
+- Các tác giả của add-on giờ đây phải xác nhận phiên bản NVDA cuối cùng mà add-on đã được thử nghiệm. Người dùng sẽ được cảnh báo khi cài hay bật các add-on chưa được thử nghiệm. (#6275)
+- Lệnh di chuyển chuột đến đối tượng điều hướng giờ đây đã có trong Microsoft Word cũng như các điều khiển UIA, cụ thể là Microsoft Edge. (#7916, #8371)
+- Việc thông báo văn bản tại vị trí chuột đã được cải thiện trong Microsoft Edge và các ứng dụng UIA khác. (#8370)
+- Khi NVDA được khởi động với tham số dòng lệnh `--portable-path`, đường dẫn đã được cung cấp sẽ được điền tự động khi tạo bản NVDA chạy trực tiếp bằng thực đơn của NVDA. (#8623)
+- Đã cập nhật đường dẫn đến bản chữ nổi  tiếng Na Uy  để phản ánh đúng tiêu chuẩn từ năm 2015. (#9170)
+- Khi duyệt theo đoạn (control+các phím mũi tên) hay theo ô trong bảng (control+alt+các phím mũi tên), các lỗi chính tả đang tồn tại sẽ không còn được đọc lên nữa, ngay cả khi NVDA được cấu hình để tự đọc chúng. Điều này là do số lượng các đoạn và ô trong bảng có thể rất lớn, việc đếm các lỗi chính tả trong vài ứng dụng có thể mất rất nhiều thời gian. (#9217)
+- NVDA không còn tự gọi các Module ứng dụng, Plugins toàn cục, chữ nổi và các trình điều khiển bộ đọc đã tùy  chỉnh từ thư mục cấu hình người dùng NVDA.  Thay vào đó, những mã nguồn này nên được đóng gói như một add-on với thông tin phiên bản chính xác, đảm bảo rằng các đoạn mã không tương thích sẽ không chạy trên phiên bản NVDA hiện tại. (#9238)
+ - Với những nhà phát triển muốn thử nghiệm các đoạn mã đang được phát triển,  hãy bật  tùy chọn developer scratchpad directory của NVDA trong phân loại nâng cao trong phần cài đặt NVDA, và lưu mã nguồn của bạn trong thư mục 'scratchpad'  được tìm thấy trong thư mục cấu hình người dùng của NVDA khi tùy chọn này được bật.
 
 
+== Sửa lỗi ==
+- Bộ đọc OneCore: trên Windows 10 April 2018 trở lên, không còn tình trạng nhiều khoảng lặng bị chèn vào giữa các câu nói. (#8985)
+- Khi di chuyển bằng kí tự trong   các điều khiển văn bản đơn giản (như là Notepad) hay trong chế độ duyệt, các kí tự biểu tượng cảm xúc 32 bit  gồm hai điểm mã UTF-16  (như ðŸ¤¦) giờ đây sẽ được đọc đúng cách. (#8782)
+- Cải thiện hộp thoại xác nhận khởi động lại sau khi thay đổi ngôn ngữ giao diện. Nội dung và nhãn của các nút giờ đây sẽ rõ ràng và dễ hiểu hơn. (#6416)
+- Nếu không gọi được một bộ đọc nào đó của bên thứ ba, NVDA sẽ gọi trở lại bộ đọc Windows OneCore trên Windows 10, thay vì là espeak. (#9025)
+- Gỡ bỏ mục "Hộp thoại chào mừng" trong thực đơn của NVDA khi ở  trong các màn hình bảo vệ. (#8520)
+- Khi chạm hay dùng di chuyển nhanh trong chế độ duyệt, các ghi chú trên tab panels giờ đây đã được đọc nhất quán hơn. (#709)
+- NVDA giờ đây sẽ thông báo sự thay đổi lựa chọn cho một số bộ chọn giờ nhất định như trong ứng dụng Alarms and Clock. (#5231)
+- Trong Action Center của Windows 10, NVDA sẽ thông báo các thông điệp trạng thái  khi bật / tắt các hành động nhanh  như là độ sáng và hỗ trợ tập trung. (#8954)
+- Trong action Center của Windows 10 October 2018 Update trở về trước, NVDA sẽ nhận dạng điều khiển chỉnh độ sáng là một nút bấm thay vì là một nút chuyện. (#8845)
+- NVDA sẽ lại theo dõi  con trỏ và thông báo các kí tự đã xóa trong hộp thoại Go To và ô find edit của Microsoft Excel. (#9042)
+- Sửa một lỗi hiếm gặp làm cho bị treo ở chế độ duyệt trong Firefox. (#9152)
+- NVDA không còn bị lỗi khi thông báo focus cho vài điều khiển trong Microsoft Office 2016 ribbon khi bị thu gọn.
+- NVDA không còn bị lỗi không đọc các gợi ý liên lạc khi nhập các địa chỉ cho các thư mới trong Outlook 2016. (#8502)
+- Vài phím đưa con trỏ cuối  trên các màn hình nổi 80 ô eurobraille  không còn đưa con trỏ đến ngay hoặc sau vị trí là nơi bắt đầu của một dòng chữ nổi. (#9160)
+- Sửa lỗi khi duyệt trong bảng ở chế độ xem threaded trong Mozilla Thunderbird. (#8396)
+- Trong Mozilla Firefox và Google Chrome, chuyển sang chế độ focus giờ đây đã hoạt động chính xác với một số hộp danh sách và  cây thư mục nhất định (khi mà hộp danh sách và cây thư mục không tự nó có focus nhưng các thành phần của chúng thì có). (#3573, #9157)
+- Chế độ duyệt giờ đã mặc định được bật một cách chính xác khi đọc thư trong  Outlook 2016/365 nếu dùng hỗ trợ thử nghiệm UI Automation của NVDA cho các tài liệu Word. (#9188)
+- NVDA giờ đây ít rơi vào tình trạng giống bị đóng băng theo cách  mà đó chỉ là cách duy nhất để thoát khỏi việc đăng xuất khỏi Windows. (#6291)
+- Trong Windows 10 October 2018 Update trở lên, khi mở lịch sử bộ nhớ tạm đám mây mà bộ nhớ không có gì, NVDA sẽ thông báo trạng thái bộ nhớ tạm. (#9112)
+- Trong Windows 10 October 2018 Update trở lên, khi tìm các biểu tượng cảm xúc trong bảng biểu tượng cảm xúc, NVDA sẽ thông báo các kết quả tìm kiếm hàng đầu. (#9112)
+- NVDA không còn bị đóng băng trong cửa sổ chính của Virtualbox 5.2 trở lên. (#9202)
+- Phản hồi trong Microsoft Word khi duyệt theo dòng, đoạn hay theo ô trong bảng có thể được cải thiện đáng kể trong một số tài liệu. Một lời nhắc rằng để làm việc một cách tốt nhất, hãy thiết lập Microsoft Word ở dạng xem Draft với alt+w,e sau khi mở một tài liệu. (#9217) 
+- Trong Mozilla Firefox và Google Chrome, các thông báo rỗng không còn được đọc nữa. (#5657)
+- Cải thiện hiệu năng vận hành đáng kể khi duyệt qua các ô trong Microsoft Excel, cụ thể là khi một bảng tính có chứa các chú thích hay các hộp xổ xác nhận. (#7348)
+- Không cần phải tắt in-cell editing trong Options của Microsoft Excel để tiếp cận điều khiển nhập liệu của ô với NVDA trong Excel 2016/365. (#8146).
+ 
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+ 
 = 2018.4.1 =
  Bản phát hành này sửa lỗi làm cho NVDA bị treo lúc khởi động, nếu cài đặt ngôn ngữ giao diện người dùng là tiếng Aragon. (#9089)
 
@@ -1237,6 +1290,100 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 - Trong Microsoft PowerPoint, các đối tượng không còn thỉnh thoảng bị đọc hai lần khi bạn chọn hay chỉnh sửa chúng. (#3394)
 - NVDA không còn làm cho Adobe Reader bị lỗi hay treo với một vài mẫu tài liệu PDF bị định dạng sai quy cách, có các dòng nằm ngoài bảng biểu. (#3399)
 - NVDA giờ đã nhận dạng chính xác slide kế tiếp với focus khi xóa một slide trong Microsoft PowerPoint ở chế độ xem thumbnails. (#3415)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2013.1.1 =
+Bản phát hành này sửa lỗi NVDA bị treo khi khởi động nếu đã được cấu hình để dùng với tiếng Irish, cũng bao gồm cả việc cập nhật và sửa vài lỗi khác.
+
+== Sửa lỗi ==
+- Sửa lỗi các kí tự được tạo ra khi gõ trong giao diện người dùng của NVDA với phương thức nhập mặc định là tiếng Nhật hay tiếng Hàn quốc. (#2909)
+- Trong Internet Explorer và các điều khiển MSHTML khác, các trường được đánh dấu có một entry không hợp lệ giờ đây đã được quản lý một cách chính xác. (#3256)
+- NVDA không còn bị lỗi khi khởi động nếu nó được cấu hình để dùng với tiếng Irish.
+
+
+= 2013.1 =
+Các cải tiến của bản phát hành này bao gồm kiểu bàn phím laptop trực quan và nhất quán hơn; hỗ trợ cơ bản cho Microsoft PowerPoint; hỗ trợ mô tả trên các trình duyệt web; và hỗ trợ kiểu nhập chữ nổi máy tính cho  các màn hình nổi có bàn phím.
+
+== Quan trọng ==
+
+=== Kiểu bàn phím Laptop mới ===
+Kiểu bàn phím laptop đã được thiết kế lại hoàn toàn để nó trở nên trực quan và nhất quán hơn.
+Kiểu bàn phím mới dùng các phím mũi tên phối hợp với phím NVDA và các phím bổ trợ khác cho các lệnh kiểm duyệt.
+
+Xin lưu ý các thay đổi sau cho các lệnh được dùng phổ biến:
+|| Tên | Phím |
+| Đọc tất cả | NVDA+a |
+| Đọc dòng hiện tại | NVDA+l |
+| Đọc vùng văn bản đang chọn | NVDA+shift+s |
+| Thông báo thanh trạng thái | NVDA+shift+end |
+Ngoài ra, trong các thay đổi khác, tất cả lệnh của việc duyệt đối tượng, duyệt văn bản, nhấp chuột và các thiết lập nhanh cho bộ đọc cũng bị thay đổi.
+Vui lòng xem [Bản tham khảo các phím lệnh keyCommands.html] để biết các phím lệnh mới.
+
+
+== Các tính năng mới ==
+- Hỗ trợ cơ bản cho việc đọc và soạn thảo các bài trình chiếu Microsoft PowerPoint. (#501)
+- Hỗ trợ cơ bản cho việc đọc và soạn tin nhắn trong Lotus Notes 8.5. (#543)
+- Hỗ trợ tự chuyển ngôn ngữ khi đọc tài liệu trong Microsoft Word. (#2047) 
+- Ở chế độ duyệt cho MSHTML (ví dụ: Internet Explorer) và Gecko (ví dụ: Firefox), các mô tả đã được thông báo. Cũng có thể mở thông báo mô tả trên một cửa sổ mới bằng cách bấm NVDA+d. (#809)
+- Thông báo trong Internet Explorer 9 trở lên giờ đây đã được đọc (nội dung bị chặn hay có tập tin tải về chẳng hạn). (#2343)
+- Việc tự đọc tiêu đề cột và dòng giờ đây đã hỗ trợ cho tài liệu ở chế độ duyệt trong Internet Explorer và  các điều khiển MSHTML khác. (#778)
+- Các ngôn ngữ mới: Aragon, Ailen
+- Các bản phiên dịch chữ nổi mới: Đan Mạch cấp 2, Hàn Quốc cấp 1. (#2737)
+- Hỗ trợ các màn hình chữ nổi kết nối qua bluetooth trên máy tính đang chạy Bluetooth Stack cho Windows của Toshiba. (#2419)
+- Hỗ trợ chọn cổng khi dùng các màn hình của Freedom Scientific (Tự động, USB hoặc Bluetooth).
+- Hỗ trợ cho BrailleNote thành viên của notetakers từ HumanWare khi hoạt động như braille terminal cho trình đọc màn hình. (#2012)
+- Hỗ trợ các mẫu cũ của màn hình nổi Papenmeier BRAILLEX. (#2679)
+- Hỗ trợ nhập chữ nổi máy tính cho các màn hình có bàn phím chữ nổi. (#808)
+- Cài đặt mới của bàn phím cho phép lựa chọn để NVDA ngừng đọc khi gõ kí tự hay phím Enter. (#698)
+- Hỗ trợ vài trình duyệt web trên nền tản Google Chrome: Rockmelt, BlackHawk, Comodo Dragon và SRWare Iron. (#2236, #2813, #2814, #2815)
+
+
+== Các thay đổi ==
+- Cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 2.5.2. (#2737)
+- Kiểu bàn phím laptop đã được thiết kế lại hoàn toàn để nó trực quan và nhất quán hơn. (#804)
+- Cập nhật bộ đọc eSpeak lên 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
+
+
+== Sửa lỗi ==
+- các phím di chuyển nhanh đến phân cách trước hay phân cách kế ở chế độ duyệt giờ đã hoạt động trong  Internet Explorer và các điều khiển MSHTML khác. (#2781)
+- Nếu NVDA trở lại bộ đọc eSpeak hoặc không đọc do bộ đọc đã thiết lập bị lỗi khi khởi động, cấu hình lựa chọn không còn bị chuyển sang bộ đọc này nữa. Điều đó có nghĩa là bộ đọc trước đó sẽ được thử lại vào lần khởi động NVDA tiếp theo. (#2589)
+- Nếu NVDA chuyển sang Không có Braille vì cấu hình cho màn hình chữ nổi bị lỗi khi khởi động, cấu hình sẽ không còn tự thiết lập là Không có Braille. Điều này có nghĩa là màn hình trước đó sẽ được thử lại vào lần khởi động  NVDA tiếp theo. (#2264)
+- Ở chế độ duyệt trong các ứng dụng Mozilla, các cập nhật cho bảng biểu đã được thể hiện chính xác. Ví dụ, trong các ô đã cập nhật, tọa độ dòng và cột đã được đọc và điều hướng trong bảng đã hoạt động như bình thường. (#2784)
+- Ở chế độ duyệt trong các trình duyệt web, một số biểu tượng có thể kích không gắn nhãn mà trước đây không được thể hiện, giờ đã thể hiện chính xác. (#2838)
+- Đã hỗ trợ các phiên bản cũ và mới hơn của SecureCRT. (#2800)
+- Với các phương thức nhập như Easy Dots IME trên XP, các chuỗi để đọc giờ đã được thông báo chính xác.
+- Danh sách thử nghiệm của kiểu nhập tiếng Trung giản thể Microsoft Pinyin trên Windows 7 giờ đã được đọc chính xác khi chuyển trang bằng mũi tên trái / phải, và ở lần mở đầu với Home.
+- Khi các thông tin tùy biến cho phát âm kí hiệu được lưu, trường mở rộng "Giữ lại" không còn bị gỡ bỏ. (#2852)
+- Khi tắt tự động cập nhật, NVDA không còn yêu cầu phải khởi động lại để  thay đổi có hiệu lực.
+- NVDA không còn tình trạng không khởi động được khi có một add-on không thể gỡ bỏ do  thư mục của nó đang được dùng bởi một ứng dụng khác. (#2860)
+- Nhãn của các thẻ trong hộp thoại  preferences của Dropbox đã có thể xem được với Flat Review.
+- Nếu ngôn ngữ đầu vào được thay đổi khác với mặc định, NVDA giờ đây đã nhận ra các phím chính xác cho phím lệnh và chế độ trợ giúp nhập.
+- Với các ngôn ngữ như tiếng Đức, kí hiệu + (dấu cộng) là một phím riêng lẽ trên bàn phím, giờ đây đã có thể liên kết các lệnh đến nó bằng cách dùng từ "plus". (#2898)
+- Trong Internet Explorer và các điều khiển MSHTML khác, các đoạn trích dẫn giờ đã được thông báo hợp lý. (#2888)
+- Driver của dòng màn hình nổi HumanWare Brailliant BI/B giờ đây đã có thể được lựa chọn khi màn hình được kết nối qua Bluetooth nhưng chưa bao giờ kết nối qua USB.
+- Việc lọc các thành phần ở chế độ duyệt danh sách các thành phần với chế độ lọc văn bản chữ hoa giờ đây trả về kết quả không phân biệt chữ hoa / thường giống như chữ thường thay vì không trả về cái gì. (#2951)
+- Trong các trình duyệt Mozilla, chế độ duyệt lại có thể dùng khi nội dung Flash có focus. (#2546)
+- Khi dùng một bảng chữ nổi viết tắt và bật tùy chọn mở rộng sang chữ nổi máy tính cho từ tại vị trí con trỏ, con trỏ nổi giờ đây đã đứng chính xác khi ở sau một từ mà một kí tự được thể hiện bởi nhiều ô chữ nổi (ví dụ: kí tự hoa, chữ cái, số, v...v...). (#2947)
+- Việc chọn văn bản giờ đây đã hiển thị chính xác trên một màn hình chữ nổi trong các ứng dụng như Microsoft word 2003 và các điều khiển soạn thảo của Internet Explorer.
+- Lại có thể chọn văn bản theo hướng ngược trong Microsoft Word khi bật Braille.
+- Khi kiểm duyệt, xóa  các kí tự trong điều khiển soạn thảo của Scintilla, NVDA thông báo chính xác các kí tự đa nhân. (#2855)
+- NVDA không còn tình trạng không cài đặt được khi đường dẫn đến hồ sơ người dùng chứa một số kí tự đa nhân nhất định. (#2729)
+- Việc thông báo các nhóm cho các điều khiển danh sách (SysListview32) trong các ứng dụng 64-bit không còn gây ra lỗi.
+- Ở chế độ duyệt trong các ứng dụng Mozilla, nội dung văn bản không còn bị nhận dạng sai là có thể nhập trong vài trường hợp hiếm gặp. (#2959)
+- Trong IBM Lotus Symphony và OpenOffice, việc di chuyển con trỏ sẽ di chuyển luôn con trỏ duyệt nếu phù hợp.
+- Nội dung của Adobe Flash giờ đây đã tiếp cận được trong Internet Explorer trên Windows 8. (#2454)
+- Sửa lỗi hỗ trợ Bluetooth cho Papenmeier Braillex Trio. (#2995)
+- Sửa lỗi không dùng được một số giọng đọc Microsoft Speech API phiên bản 5 như các giọng đọc Koba Speech 2. (#2629)
+- Trong các ứng dụng dùng Java Access Bridge, các màn hình nổi giờ đây đã được cập nhật chính xác khi dấu nháy di chuyển trong các trường nhập liệu. (#3107)
+- Hỗ trợ các trường cột mốc trong các tài liệu chế độ duyệt có hỗ trợ các cột mốc. (#2997) 
+- Trình điều khiển của bộ đọc eSpeak giờ đây quản lý việc đọc theo kí tự một cách phù hợp hơn (ví dụ: đọc tên của một kí tự tiếng nước ngoài hay giá trị thay vì chỉ âm thanh hay tên chung của nó ). (#3106)
+- NVDA không còn bị lỗi khi  sao chép các thiết lập của người dùng để sử dụng ở màn hình khởi động hay các màn hình bảo vệ khác khi  đường dẫn đến thư mục hồ sơ người dùng có chứa các kí tự không thuộc mã ASCII. (#3092)
+- NVDA Không còn bị đóng băng khi dùng đầu vào là các kí tự Châu Á trong vài ứng dụng .NET. (#3005)
+- Giờ đây đã có thể dùng chế độ duyệt cho các trang trong Internet Explorer 10 ở chế độ chuẩn; ví dụ: trang đăng nhập www.gmail.com. (#3151)
 
 
 == Các thay đổi cho nhà phát triển ==
