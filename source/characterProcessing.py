@@ -306,7 +306,15 @@ class SpeechSymbols(object):
 		except StopIteration:
 			# These fields are optional. Defaults will be used for unspecified fields.
 			pass
-		self.symbols[identifier] = SpeechSymbol(self.locale, identifier, None, replacement, level, preserve, displayName)
+		self.symbols[identifier] = SpeechSymbol(
+			self.locale,
+			identifier,
+			None, # Simple symbols have no pattern
+			replacement,
+			level,
+			preserve,
+			displayName
+		)
 
 	def save(self, fileName=None):
 		"""Save symbol information to a file.
@@ -401,6 +409,10 @@ def _getSpeechSymbolsForLocale(locale):
 	return windows, builtin, user
 
 def _getWindowsSpeechSymbolsForLocale(locale):
+	""" Creates a symbols dictionary based on Windows metadata.
+	Returns C{None} when creating a symbols dictionary fails, such as due to an unknown locale.
+	@rtype: L{SpeechSymbols} or C{None}
+	"""
 	symbols = SpeechSymbols(locale)
 	try:
 		# Create thousands separator regex.
@@ -477,9 +489,13 @@ class SpeechSymbolProcessor(object):
 		for source in sources:
 			for identifier, pattern in source.complexSymbols.iteritems():
 				if identifier in symbols:
-					# Already defined
+					# Already defined.
 					continue
-				symbol = SpeechSymbol(source.locale, identifier, pattern)
+				symbol = SpeechSymbol(
+					source.locale,
+					identifier,
+					pattern
+				)
 				symbols[identifier] = symbol
 				complexSymbolsList.append(symbol)
 
@@ -492,7 +508,10 @@ class SpeechSymbolProcessor(object):
 				except KeyError:
 					# This is a new simple symbol.
 					# (All complex symbols have already been added.)
-					symbol = symbols[identifier] = SpeechSymbol(source.locale, identifier)
+					symbol = symbols[identifier] = SpeechSymbol(
+						source.locale,
+						identifier
+					)
 					if len(identifier) == 1:
 						characters.append(identifier)
 					else:
@@ -606,7 +625,7 @@ class SpeechSymbolProcessor(object):
 		return self._regexp.sub(self._regexpRepl, text)
 
 	def processNumbers(self, nrProcType, text):
-		regex = NR_PROC_REGEX.get(nrProcType)
+		regex = NR_PROC_REGEX[nrProcType]
 		if not regex:
 			# Return the text untouched
 			return text
@@ -730,14 +749,18 @@ def clearSpeechSymbols():
 
 
 # Types of number processing
+#: Full numbers, i.e. controlled by synthesizer
 NR_PROC_FULL = 0
+#: Single digits, e.g. "1  2  3  4"
 NR_PROC_SINGLE = 1
+#: Double digits, e.g. "12  34"
 NR_PROC_DOUBLE = 2
+#: Triple digits, e.g. "1  234"
 NR_PROC_TRIPLE = 3
 
-# regexp for parsing numbers:
+# regexes for parsing numbers:
 NR_PROC_REGEX = {
-	#NR_PROC_FULL: None,
+	NR_PROC_FULL: None, # There's no regex for this
 	NR_PROC_SINGLE: re.compile(r"(\d)(?=\d+(\D|\b))", re.UNICODE),
 	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?=(\d{2})+(\D|\b))", re.UNICODE),
 	NR_PROC_TRIPLE: re.compile(r"(\d{1,3} ?)(?=(\d{3})+(\D|\b))", re.UNICODE),
@@ -781,11 +804,11 @@ def _buildNumerGroupRegex(separators, grouping):
 		for more information about the expected pattern
 	@type grouping: str
 	"""
+	lookbehind = ur"(?<=\d)"
 	groupNumbers = [int(i) for i in grouping.split(";")]
 	hasRepeater = groupNumbers[-1] == 0
 	if hasRepeater:
 		groupNumbers.pop()
-	lookbehind = ur"(?<=\d)"
 	lookahead = ur"(?=\d{%d,%d})" % (min(groupNumbers), max(groupNumbers))
 	return ur"{}[{}]{}".format(lookbehind, separators, lookahead)
 

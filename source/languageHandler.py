@@ -21,7 +21,7 @@ from logHandler import log
 LOCALE_SLOCALIZEDDISPLAYNAME = LOCALE_SLANGUAGE = 0x2
 #: Decimal separator, eg "." for 1,234.00
 LOCALE_SDECIMAL = 0xe
-#: Thousand separator, eg "," for 1,234.00
+#: Thousands separator, eg "," for 1,234.00
 LOCALE_STHOUSAND = 0xf
 #: Digit grouping, eg "3;0" for 1,000,000
 LOCALE_SGROUPING = 0x10
@@ -103,14 +103,15 @@ def getLanguageParameter(language, param, noUserOverride=True):
 	return buf.value
 
 def getLanguageParameterForAvailableLanguages(param):
-	#Make a list of all the locales found in NVDA's locale dir
+	"""
+	Helper function to get a specific language parameter for all the languages that are known to NVDA.
+	"""
+	# Make a list of all the locales found in NVDA's locale dir
 	locales = [x for x in os.listdir('locale') if not x.startswith('.')]
 	locales = [x for x in locales if os.path.isfile('locale/%s/LC_MESSAGES/nvda.mo'%x)]
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
 	if 'en' not in locales:
 		locales.append('en')
-		locales.sort()
-	#For each locale, ask Windows for its human readable display name
 	import collections
 	paramDict = collections.OrderedDict()
 	for locale in locales:
@@ -163,7 +164,7 @@ def getAvailableLanguages(presentational=False):
 	#Make sure that en (english) is in the list as it may not have any locale files, but is default
 	if 'en' not in locales:
 		locales.append('en')
-		locales.sort()
+	locales.sort()
 	#For each locale, ask Windows for its human readable display name
 	displayNames = []
 	for entry in locales:
