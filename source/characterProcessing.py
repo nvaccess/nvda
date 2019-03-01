@@ -730,14 +730,14 @@ def clearSpeechSymbols():
 
 
 # Types of number processing
-NNR_PROC_FULL = 0
+NR_PROC_FULL = 0
 NR_PROC_SINGLE = 1
 NR_PROC_DOUBLE = 2
 NR_PROC_TRIPLE = 3
 
 # regexp for parsing numbers:
 NR_PROC_REGEX = {
-	#NNR_PROC_FULL: None,
+	#NR_PROC_FULL: None,
 	NR_PROC_SINGLE: re.compile(r"(\d)(?=\d+(\D|\b))", re.UNICODE),
 	NR_PROC_DOUBLE: re.compile(r"(\d{1,2})(?=(\d{2})+(\D|\b))", re.UNICODE),
 	NR_PROC_TRIPLE: re.compile(r"(\d{1,3} ?)(?=(\d{3})+(\D|\b))", re.UNICODE),
