@@ -9,7 +9,7 @@ What's New in NVDA
 - New braille tables: Afrikaans, Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435, #9186)
 - Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
-- Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
+- Added the `--enable-start-on-logon` command line parameter to allow configuring whether silent installations of NVDA set NVDA to start at Windows logon or not. Specify true to start at logon or false to not start at logon. If the --enable-start-on-logon argument is not specified at all then NVDA will default to starting at logon, unless it was  already configured not to by a previous installation. (#8574)
 - It is possible to turn NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
 - The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
 - In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
