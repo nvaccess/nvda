@@ -18,9 +18,7 @@ NrProcTestCase = namedtuple("NrProcTestCase", ("origin", "single", "double", "tr
 
 nrProcTestCases = {}
 
-
-# English
-nrProcTestCases["en"] = [
+onlyDigits = [
 	NrProcTestCase(origin="1",
 		single="1",
 		double="1",
@@ -37,7 +35,26 @@ nrProcTestCases["en"] = [
 		single="1  1  1  1",
 		double="11  11",
 		triple="1  111"),
-	# Decimals
+	# Mixed with letters
+	NrProcTestCase(origin="a1b2c3", # Untouched
+		single="a1b2c3",
+		double="a1b2c3",
+		triple="a1b2c3"), 
+	NrProcTestCase(origin="a12b34c56",
+		single="a1  2b3  4c5  6",
+		double="a12b34c56",
+		triple="a12b34c56"),
+	NrProcTestCase(origin="a123b456c789",
+		single="a1  2  3b4  5  6c7  8  9",
+		double="a1  23b4  56c7  89",
+		triple="a123b456c789"),
+	NrProcTestCase(origin="a1234b5678c9012",
+		single="a1  2  3  4b5  6  7  8c9  0  1  2",
+		double="a12  34b56  78c90  12",
+		triple="a1  234b5  678c9  012"),
+]
+
+decimalDot = [
 	NrProcTestCase(origin="1.1",
 		single="1.1",
 		double="1.1",
@@ -82,49 +99,6 @@ nrProcTestCases["en"] = [
 		single="1  1  1  1.1  1  1  1",
 		double="11  11.11  11",
 		triple="1  111.1  111"),
-	# Thousands separator
-	NrProcTestCase(origin="1,234",
-		single="1  2  3  4",
-		double="1  2  34",
-		triple="1  234"),
-	NrProcTestCase(origin="12,345",
-		single="1  2  3  4  5",
-		double="12  3  45",
-		triple="12  345"),
-	NrProcTestCase(origin="123,456",
-		single="1  2  3  4  5  6",
-		double="1  23  4  56",
-		triple="123  456"),
-	NrProcTestCase(origin="1,234,567",
-		single="1  2  3  4  5  6  7",
-		double="1  2  34  5  67",
-		triple="1  234  567"),
-	# Mixed with letters
-	NrProcTestCase(origin="a1b2c3", # Untouched
-		single="a1b2c3",
-		double="a1b2c3",
-		triple="a1b2c3"), 
-	NrProcTestCase(origin="a12b34c56",
-		single="a1  2b3  4c5  6",
-		double="a12b34c56",
-		triple="a12b34c56"),
-	NrProcTestCase(origin="a123b456c789",
-		single="a1  2  3b4  5  6c7  8  9",
-		double="a1  23b4  56c7  89",
-		triple="a123b456c789"),
-	NrProcTestCase(origin="a1234b5678c9012",
-		single="a1  2  3  4b5  6  7  8c9  0  1  2",
-		double="a12  34b56  78c90  12",
-		triple="a1  234b5  678c9  012"),
-	# Thousands separator with letters
-	NrProcTestCase(origin="1a,234b",
-		single="1a,2  3  4b",
-		double="1a,2  34b",
-		triple="1a,234b"),
-	NrProcTestCase(origin="1a,2,345b",
-		single="1a,2  3  4  5b",
-		double="1a,2  3  45b",
-		triple="1a,2  345b"),
 	# Decimal with letters
 	NrProcTestCase(origin="1a.234b",
 		single="1a.2  3  4b",
@@ -140,25 +114,7 @@ nrProcTestCases["en"] = [
 		triple="1a.2.3  456b"),
 ]
 
-# Dutch
-nrProcTestCases["nl"] = [
-	NrProcTestCase(origin="1",
-		single="1",
-		double="1",
-		triple="1"),
-	NrProcTestCase(origin="11",
-		single="1  1",
-		double="11",
-		triple="11"),
-	NrProcTestCase(origin="111",
-		single="1  1  1",
-		double="1  11",
-		triple="111"),
-	NrProcTestCase(origin="1111",
-		single="1  1  1  1",
-		double="11  11",
-		triple="1  111"),
-	# Decimals
+decimalComma = [
 	NrProcTestCase(origin="1,1",
 		single="1,1",
 		double="1,1",
@@ -203,7 +159,23 @@ nrProcTestCases["nl"] = [
 		single="1  1  1  1,1  1  1  1",
 		double="11  11,11  11",
 		triple="1  111,1  111"),
-	# Thousands separator
+	# Decimal with letters
+	NrProcTestCase(origin="1a,234b",
+		single="1a,2  3  4b",
+		double="1a,2  34b",
+		triple="1a,234b"),
+	NrProcTestCase(origin="1a,2,345b",
+		single="1a,2,3  4  5b",
+		double="1a,2,3  45b",
+		triple="1a,2,345b"),
+	NrProcTestCase(origin="1a,2,3456b",
+		single="1a,2,3  4  5  6b",
+		double="1a,2,34  56b",
+		triple="1a,2,3  456b"),
+
+]
+
+thousandsSepDot = [
 	NrProcTestCase(origin="1.234",
 		single="1  2  3  4",
 		double="1  2  34",
@@ -220,23 +192,6 @@ nrProcTestCases["nl"] = [
 		single="1  2  3  4  5  6  7",
 		double="1  2  34  5  67",
 		triple="1  234  567"),
-	# Mixed with letters
-	NrProcTestCase(origin="a1b2c3", # Untouched
-		single="a1b2c3",
-		double="a1b2c3",
-		triple="a1b2c3"), 
-	NrProcTestCase(origin="a12b34c56",
-		single="a1  2b3  4c5  6",
-		double="a12b34c56",
-		triple="a12b34c56"),
-	NrProcTestCase(origin="a123b456c789",
-		single="a1  2  3b4  5  6c7  8  9",
-		double="a1  23b4  56c7  89",
-		triple="a123b456c789"),
-	NrProcTestCase(origin="a1234b5678c9012",
-		single="a1  2  3  4b5  6  7  8c9  0  1  2",
-		double="a12  34b56  78c90  12",
-		triple="a1  234b5  678c9  012"),
 	# Thousands separator with letters
 	NrProcTestCase(origin="1a.234b",
 		single="1a.2  3  4b",
@@ -246,85 +201,37 @@ nrProcTestCases["nl"] = [
 		single="1a.2  3  4  5b",
 		double="1a.2  3  45b",
 		triple="1a.2  345b"),
-	# Decimal with letters
+]
+
+thousandsSepComma = [
+	NrProcTestCase(origin="1,234",
+		single="1  2  3  4",
+		double="1  2  34",
+		triple="1  234"),
+	NrProcTestCase(origin="12,345",
+		single="1  2  3  4  5",
+		double="12  3  45",
+		triple="12  345"),
+	NrProcTestCase(origin="123,456",
+		single="1  2  3  4  5  6",
+		double="1  23  4  56",
+		triple="123  456"),
+	NrProcTestCase(origin="1,234,567",
+		single="1  2  3  4  5  6  7",
+		double="1  2  34  5  67",
+		triple="1  234  567"),
+	# Thousands separator with letters
 	NrProcTestCase(origin="1a,234b",
 		single="1a,2  3  4b",
 		double="1a,2  34b",
 		triple="1a,234b"),
 	NrProcTestCase(origin="1a,2,345b",
-		single="1a,2,3  4  5b",
-		double="1a,2,3  45b",
-		triple="1a,2,345b"),
-	NrProcTestCase(origin="1a,2,3456b",
-		single="1a,2,3  4  5  6b",
-		double="1a,2,34  56b",
-		triple="1a,2,3  456b"),
+		single="1a,2  3  4  5b",
+		double="1a,2  3  45b",
+		triple="1a,2  345b"),
 ]
 
-# Swedish
-nrProcTestCases["sv"] = [
-	NrProcTestCase(origin="1",
-		single="1",
-		double="1",
-		triple="1"),
-	NrProcTestCase(origin="11",
-		single="1  1",
-		double="11",
-		triple="11"),
-	NrProcTestCase(origin="111",
-		single="1  1  1",
-		double="1  11",
-		triple="111"),
-	NrProcTestCase(origin="1111",
-		single="1  1  1  1",
-		double="11  11",
-		triple="1  111"),
-	# Decimals
-	NrProcTestCase(origin="1,1",
-		single="1,1",
-		double="1,1",
-		triple="1,1"),
-	NrProcTestCase(origin="11,1",
-		single="1  1,1",
-		double="11,1",
-		triple="11,1"),
-	NrProcTestCase(origin="111,1",
-		single="1  1  1,1",
-		double="1  11,1",
-		triple="111,1"),
-	NrProcTestCase(origin="1111,1",
-		single="1  1  1  1,1",
-		double="11  11,1",
-		triple="1  111,1"),
-	NrProcTestCase(origin="1,11",
-		single="1,1  1",
-		double="1,11",
-		triple="1,11"),
-	NrProcTestCase(origin="1,111",
-		single="1,1  1  1",
-		double="1,1  11",
-		triple="1,111"),
-	NrProcTestCase(origin="1,1111",
-		single="1,1  1  1  1",
-		double="1,11  11",
-		triple="1,1  111"),
-	NrProcTestCase(origin="11,111",
-		single="1  1,1  1  1",
-		double="11,1  11",
-		triple="11,111"),
-	NrProcTestCase(origin="11,1111",
-		single="1  1,1  1  1  1",
-		double="11,11  11",
-		triple="11,1  111"),
-	NrProcTestCase(origin="111,111",
-		single="1  1  1,1  1  1",
-		double="1  11,1  11",
-		triple="111,111"),
-	NrProcTestCase(origin="1111,1111",
-		single="1  1  1  1,1  1  1  1",
-		double="11  11,11  11",
-		triple="1  111,1  111"),
-	# Thousands separator, Swedish uses a non breaking space
+thousandsSepNBSP = [
 	NrProcTestCase(origin="1\xa0234",
 		single="1  2  3  4",
 		double="1  2  34",
@@ -341,23 +248,6 @@ nrProcTestCases["sv"] = [
 		single="1  2  3  4  5  6  7",
 		double="1  2  34  5  67",
 		triple="1  234  567"),
-	# Mixed with letters
-	NrProcTestCase(origin="a1b2c3", # Untouched
-		single="a1b2c3",
-		double="a1b2c3",
-		triple="a1b2c3"), 
-	NrProcTestCase(origin="a12b34c56",
-		single="a1  2b3  4c5  6",
-		double="a12b34c56",
-		triple="a12b34c56"),
-	NrProcTestCase(origin="a123b456c789",
-		single="a1  2  3b4  5  6c7  8  9",
-		double="a1  23b4  56c7  89",
-		triple="a123b456c789"),
-	NrProcTestCase(origin="a1234b5678c9012",
-		single="a1  2  3  4b5  6  7  8c9  0  1  2",
-		double="a12  34b56  78c90  12",
-		triple="a1  234b5  678c9  012"),
 	# Thousands separator with letters
 	NrProcTestCase(origin="1a\xa0234b",
 		single="1a\xa02  3  4b",
@@ -367,20 +257,16 @@ nrProcTestCases["sv"] = [
 		single="1a\xa02  3  4  5b",
 		double="1a\xa02  3  45b",
 		triple="1a\xa02  345b"),
-	# Decimal with letters
-	NrProcTestCase(origin="1a,234b",
-		single="1a,2  3  4b",
-		double="1a,2  34b",
-		triple="1a,234b"),
-	NrProcTestCase(origin="1a,2,345b",
-		single="1a,2,3  4  5b",
-		double="1a,2,3  45b",
-		triple="1a,2,345b"),
-	NrProcTestCase(origin="1a,2,3456b",
-		single="1a,2,3  4  5  6b",
-		double="1a,2,34  56b",
-		triple="1a,2,3  456b"),
 ]
+
+# English
+nrProcTestCases["en"] = onlyDigits + decimalDot + thousandsSepComma
+
+# Dutch
+nrProcTestCases["nl"] = onlyDigits + decimalComma + thousandsSepDot
+
+# Swedish
+nrProcTestCases["sv"] = onlyDigits + decimalComma + thousandsSepNBSP
 
 # German, equal to Dutch
 nrProcTestCases["de"] = nrProcTestCases["nl"]
