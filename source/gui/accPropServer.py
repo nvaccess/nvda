@@ -8,7 +8,7 @@
 
 from logHandler import log
 from  comtypes.automation import VT_EMPTY
-from  comtypes import COMObject
+from  comtypes import COMObject, GUID
 from comInterfaces.Accessibility import IAccPropServer, ANNO_CONTAINER, ANNO_THIS
 from abc import ABCMeta, abstractmethod, abstractproperty
 from six import with_metaclass
@@ -32,14 +32,31 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 		IAccPropServer
 	]
 
-	def __init__(self, control, annotateChildren=True):
+	# Constants used with `IAccPropServer::GetPropValue` method see
+	# https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx
+	HAS_PROP = 1  # TRUE - Constant for `BOOL* pfHasProp` out param of `IAccPropServer::GetPropValue` method
+	DOES_NOT_HAVE_PROP = 0  # FALSE - Constant for `BOOL* pfHasProp` out param of `IAccPropServer::GetPropValue` method
+	# When returning `DOES_NOT_HAVE_PROP` or FALSE as the pfHasProp part of the return of `IAccPropServer::GetPropValue`
+	# method, then `pvarValue` return value must be `VT_EMPTY`.
+	# Consider using `NO_RETURN_VALUE`
+	NO_RETURN_VALUE = (VT_EMPTY, DOES_NOT_HAVE_PROP)
+
+	# An array with the GUIDs of the properties that an AccPropServer should override
+	properties_GUIDPTR = []
+	properties = []
+
+	def __init__(self, control, annotateProperties, annotateChildren=False):
 		"""Initialize the instance of AccPropServer. 
 		@param control: the WX control instance, so you can look up things in the _getPropValue method.
 			It's available on self.control.
 		@Type control: Subclass of wx.Window
+		@param annotateProperties The properties that should be annotated, see oleacc.py for constants.
+		@type annotateProperties List of oleacc constants. Internally these are converted to GUID pointers for the server.
 		@param annotateChildren: whether the WX control is a container which children should be annotated.
 		@type annotateChildren: bool
 		"""
+		self.properties = annotateProperties
+		self.properties_GUIDPTR = convertToGUIDPointerList(annotateProperties)
 		self.control = weakref.ref(control)
 		self.hwnd = control.GetHandle()
 		super(IAccPropServer_Impl, self).__init__()
@@ -49,8 +66,8 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 			hwnd=self.hwnd,
 			idObject=winUser.OBJID_CLIENT,
 			idChild=0,
-			paProps=self.properties,
-			cProps=len(self.properties),
+			paProps=self.properties_GUIDPTR,
+			cProps=len(self.properties_GUIDPTR),
 			pServer=self,
 			AnnoScope=ANNO_CONTAINER if annotateChildren else ANNO_THIS
 		)
@@ -65,7 +82,7 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
 		"""use this method to implement GetPropValue. It  is wrapped by the callback GetPropValue to handle exceptions.
 		For instructions on implementing accPropServers, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx .
-		For instructions specifically about this method, see see https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx .
+		For instructions specifically about this method, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx .
 		@param pIDString: Contains a string that identifies the property being requested.
 			If a single callback object is registered for annotating multiple accessible elements,
 			the identity string can be used to determine which element the request refers to.
@@ -79,6 +96,10 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 		@type dwIDStringLen: int
 		@param idProp: Specifies a GUID indicating the desired property.
 		@type idProp: One of the oleacc.PROPID_* GUIDS
+		@return A tuple of the out params for the `IAccPropServer::GetPropValue` method: `VARIANT* pvarValue` and `BOOL*
+		pfHasProp`. When the pfHasProp part is FALSE / self.DOES_NOT_HAVE_PROP, then the pvarValue part must be VT_EMPTY.
+		Consider using self.NO_RETURN_VALUE instead. Returning (VT_EMPTY, HAS_PROP) IS valid, meaning the property exists
+		but is empty.
 		"""
 		raise NotImplementedError
 
@@ -87,17 +108,10 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 			return self._getPropValue(pIDString, dwIDStringLen, idProp)
 		except Exception:
 			log.exception()
-			return VT_EMPTY, 0
-
-	@abstractproperty
-	def properties(self):
-		""" Returns an array of properties that should be handled by this instance.
-		@rtype: L{comtypes.GUID}*n
-		"""
-		raise NotImplementedError
+			return self.NO_RETURN_VALUE
 
 	def _onDestroyControl(self, evt):
-		evt.Skip() # Allow other handlers to process this event.
+		evt.Skip()  # Allow other handlers to process this event.
 		self._cleanup()
 
 	def _cleanup(self):
@@ -107,6 +121,9 @@ class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
 			hwnd=self.hwnd,
 			idObject=winUser.OBJID_CLIENT,
 			idChild=0,
-			paProps=self.properties,
-			cProps=len(self.properties)
+			paProps=self.properties_GUIDPTR,
+			cProps=len(self.properties_GUIDPTR)
 		)
+
+def convertToGUIDPointerList(propList):
+	return (GUID * len(propList))(*propList)
