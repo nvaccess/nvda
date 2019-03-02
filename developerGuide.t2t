@@ -47,7 +47,7 @@ It is assumed that characters will have the same description regardless of their
 
 ++ Symbol Pronunciation ++
 It is often useful to hear punctuation and other symbols pronounced as words when reading text, particularly when moving by character.
-Unfortunately, the pronunciation of symbols is inconsistent between speech synthesisers and many synthesisers do not speak many symbols and/or do not allow control over what symbols are spoken.
+Unfortunately, the pronunciation of symbols is inconsistent between speech synthesizers and many synthesizers do not speak many symbols and/or do not allow control over what symbols are spoken.
 Therefore, NVDA allows information about symbol pronunciation to be provided.
 
 This is done for a locale by providing a file named symbols.dic in the directory for the locale.
@@ -74,7 +74,16 @@ For example:
 . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
 ```
 
-Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
+For most languages, NVDA provides language specific regular expression patterns based on data provided for Windows at the source code level.
+In Swedish, for example, the comma is used as a decimal point.
+Furthermore, the non breaking space (```\xa0```) is used as a thousands separator, e.g. as in ```1 234```
+Therefore, the built-in patterns for Swedish are as follows:
+```
+thousands separator	(?<=\d)[ ](?=\d{3,3})
+decimal point	(?<![\D -])\,(?=\d)
+```
+Note that the patterns you provide in the language specific symbol dictionary always take priority over the built-in patterns.
+Except for the thousands separator and decimal point patterns, the English symbols are inherited, so you need not include any complex symbols already defined for English.
 
 +++ Defining Symbol Information +++
 The second section provides information about when and how to pronounce all symbols.
@@ -103,7 +112,7 @@ The symbol level is configured by the user and specifies the amount of symbols t
 This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
 "char" means that the symbol should only be pronounced when moving by character.
 The default is to inherit the value or "all" if there is nothing to inherit.
-- preserve: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
+- preserve: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesizer.
 For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
 This field should be one of the following:
  - never: Never preserve the symbol.
@@ -124,7 +133,7 @@ This means that the "(" character should be spoken as "left paren" only when the
 ```
 ,	comma	all	always
 ```
-This means that the "," character should be spoken as "comma" when the symbol level is set to all and that the character itself should always be preserved so that the synthesiser will pause appropriately.
+This means that the "," character should be spoken as "comma" when the symbol level is set to all and that the character itself should always be preserved so that the synthesizer will pause appropriately.
 ```
 . sentence ending	point	# . fin de phrase
 ```
