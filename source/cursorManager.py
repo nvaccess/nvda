@@ -27,8 +27,9 @@ import ui
 from textInfos import DocumentWithPageTurns
 
 # search history list constants
-SEARCH_HISTORY_FRONT = 0
-SEARCH_HISTORY_MAX_SIZE=20
+SEARCH_HISTORY_FIRST_INDEX = 0
+SEARCH_HISTORY_MAX_ITEMS=20
+SEARCH_HISTORY_LAST_INDEX = (SEARCH_HISTORY_MAX_ITEMS - 1)
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -82,12 +83,12 @@ class FindDialog(wx.Dialog):
 				# so that it will appear selected by default when the dialog is shown again
 				# If the current search term differs from the current item only in case letters, we will choose to store the new search as we can not store both.
 				searchEntries.pop(index)
-				searchEntries.insert(SEARCH_HISTORY_FRONT, currentSearchTerm)
+				searchEntries.insert(SEARCH_HISTORY_FIRST_INDEX, currentSearchTerm)
 				return
 		# not yet listed. Save it.
-		if len(searchEntries) >= SEARCH_HISTORY_MAX_SIZE:
+		if len(searchEntries) >= SEARCH_HISTORY_MAX_ITEMS:
 			self._truncateSearchHistory(searchEntries)
-		searchEntries.insert(SEARCH_HISTORY_FRONT, currentSearchTerm)
+		searchEntries.insert(SEARCH_HISTORY_FIRST_INDEX, currentSearchTerm)
 		
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
@@ -104,7 +105,7 @@ class FindDialog(wx.Dialog):
 		self.Destroy()
 
 	def _truncateSearchHistory(self, entries):
-		del entries[(SEARCH_HISTORY_MAX_SIZE -1):]
+		del entries[SEARCH_HISTORY_LAST_INDEX:]
 
 class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""

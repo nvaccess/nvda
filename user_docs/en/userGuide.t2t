@@ -552,6 +552,18 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 | Browse mode elements list | NVDA+f7 | Lists various types of elements in the current document |
 %kc:endInclude
 
+++ Searching for text ++[SearchingForText]
+Use the find dialog   to search for text  on the document.
+This dialog  presents a text field where you can type   search terms to be found on the current document.  While on the text field, you can also use up and down arrows to select previous searched terms.
+When NVDA is restarted, the list of previous searched terms is cleared.
+Use the following keys for performing searches:
+%kc:beginInclude
+|| Name | Key | Description |
+| Find text | NVDA+f | Opens the  search dialog |
+| Find next | NVDA+f3 | searches the next occurrence of the current search term  |
+| Find previous | NVDA+shift+f3 | searches the previous  occurrence of the current search term  |
+%kc:endInclude
+
 ++ Embedded Objects ++[ImbeddedObjects]
 Pages can include rich content using technologies such as Adobe Flash, Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
