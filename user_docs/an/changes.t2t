@@ -3,6 +3,82 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+
+== Nuevas caracteristicas ==
+- Nuevas tablas braille: braille computerizau arabe de 8 puntos, arabe grau 2, espanyol grau 2. (#4435)
+- S'ha anyadiu una opción a las opcions d'o churi d'o NVDA pa fer que lo NVDA maneye situgacions en que lo rato siga controlau por unatra aplicación. (#8452) 
+ - Ixo permitirá a lo NVDA rastriar lo churi quan un sistema siga controlau remotament fendo servir lo TeamViewer u atros programas de control remoto.
+- S'ha anyadiu lo parametro de linia de comandos `--disable-start-on-logon` pa permitir instalacions silenciosas d'o NVDA que no s'executen en a pantalla d'inicio de sesión por defecto. (#8574)
+- Ye posible desenchegar las funcions de rechistro d'o NVDA configurando lo libel de rechistro a "desenchegau" dende lo panel d'opcions chenerals. (#8516)
+- Agora s'anuncia la presencia de formulas en as fuellas de calculo d'o LibreOffice y l'Apache openOffice. (#860)
+- En o Mozilla Firefox y lo Google Chrome, lo modo de navegación agora anuncia l'elemento trigau en os quadros de lista y en os arbols.
+ - Ixo marcha en o Firefox 66 y posteriors.
+ - Ixo no marcha pa bells quadros de lista (controls HTML select) en o Chrome.
+- S'ha anyadiu la tabla braille d'africano. (#9186)
+- Suporte preliminar pa aplicacions tals como lo Mozilla Firefox en os ordinadors con procesadors ARM64 (p.eix.: Qualcom Snapdragon). (#9216)
+- S'ha anyadiu una nueva categoría d'opcions abanzadas en o dialogo d'opcions d'o NVDA, incluyindo una opción pa prebar lo nuevo suporte d'o NVDA pa lo Microsoft Word a traviés de l'API d'o Microsoft UI Automation. (#9200)
+- S'ha anyadiu lo suporte pa la envista grafica en l'Administrador de Discos d'o Windows. (#1486)
+- S'ha anyadiu lo suporte d'Handy Tech Connect Braille y Basic Braille 84. (#9249)
+- S'ha anyadiu una opción experimental en o panel d'opcions d'o modo de navegación que te permite aturar lo foco d'o sistema pa que no siga a lo cursor d'o modo de navegación. (#2039) Encara que ixo podrá no estar adequau pa desenchegar-lo en totz los puestos web, puede apanyar-se: 
+ - Efecto goma elastica: Lo NVDA desfá esporadicament la zaguera pretada d'o teclau d'o modo de navegación blincando t'a ubicación anterior.
+ - Los quadros d'edición pillan lo foco d'o sistema en mover-se-bi con a flecha abaixo por ells en qualques puestos web.
+ - Las pretadas de teclas d'o modo de navegación son lentas de respuesta.
+
+
+== Cambios ==
+- S'ha esviellau lo transcriptor braille liblouis t'a versión 3.8.0. (#9013)
+- Los autors de complementos agora pueden fer complir una versión minima requiesta d'o NVDA pa los suyos complementos. Los complementos no suportaus no se cargarán ni s'instalarán. (#6275)
+- Los autors de complementos agora han d'especificar la zaguer versión d'o NVDA con a quala s'ha prebau lo complemento. S'alvertirá a los usuarios que no han d'instalar u enchegar complementos no prebaus. (#6275)
+- Lo comando de mover lo churi t'o navegador d'obchectos agora ye disponible tanto en o Microsoft Word como en os controls UIA, especialment en o Microsoft Edge. (#7916, #8371)
+- S'ha amillorau l'anunciau d'o texto baixo lo churi adintro d'o Microsoft Edge y atras aplicacions UIA. (#8370)
+- Quan s'encieta lo NVDA con o parametro de linia de comandos `--portable-path`, la rota furnida se replena automaticament en que se mira de creyar una copia portable d'o NVDA fendo servir lo menú d'o NVDA. (#8623)
+- S'ha esviellau la rota t'a tabla braille noruega pa refleixar lo estandard a partir de l'anyo 2015. (#9170)
+- Quan se navega por paragrafos (control+flechas) u se navega por celdas de tablas (control+alt+flechas), la existencia d'errors d'ortografía ya no s'anunciará, mesmo si lo NVDA ye configurau pa anunciar-las automaticament. Ixo ye porque los paragrafos y las celdas de tabla pueden estar pro grans, y calcular las errors d'ortografía en qualques aplicacions puede estar bien costoso. (#9217)
+- Lo NVDA ya no carga automaticament appModules, globalPlugins y controladors braille y de sintetizador dende lo directorio de configuración de l'usuario d'o NVDA. Ixe codigo habría d'estar empaquetau en cuenta como un complemento con información correcta de versión, guarenciando que lo codigo incompatible no s'execute con as versions actuals d'o NVDA. (#9238)
+ - Pa los desembolicadors que lis faga falta prebar lo codigo seguntes se desembolica, s'ha habilitau lo directorio developer scratchpad d'o NVDA en a categoría d'abanzau d'as opcions d'o NVDA, y colocar lo codigo en o directorio 'scratchpad' trobau en o directorio de configuración de l'usuario quan ixa opción siga enchegada.
+
+
+== Corrección d'errors ==
+- Sintetizador de voz OneCore: en o Windows 10 d'abril d'o 2018 y posteriors, ya no se fica grans trozos de silencio entre las expresions orals. (#8985)
+- Quan te muevas por caracters en controls de texto plano (tals como lo Notepad) u en o modo de navegación, los caracters emoticonos de 32 bits que pendan en dos puntos de codigo UTF-16 (tals como ðŸ¤¦) agora se leyerán apropiadament. (#8782)
+- S'ha amillorau lo dialogo de confirmación de reenchegue dimpués de cambiar l'idioma d'a interficie. Lo texto y las etiquetas d'os botons son agora mas breus y menos confusos. (#6416)
+- Si bell sintetizador de voz de tercers no se carga lo NVDA recorrerá a lo Windows OneCore en o Windows 10, en cuenta d'espeak. (#9025)
+- S'ha eliminau la dentrada d'o dialogo de bienvenida en o menú d'o NVDA en as pantallas seguras. 
+- A lo tabular u en emplegar la navegación rapeda en o modo de navegación, las lechendas en os panels de pestanyas s'informan agora de forma mas coderent. (#709)
+- Lo NVDA anunciará agora los cambios de selección pa determinaus selectors de tiempo tals como en as Alarmas y en l'aplicación d'o reloch. (#5231)
+- En o Centro d'actividatz d'o Windows 10 lo NVDA anunciará los mensaches d'estau a lo alternar entre accions rapidas como lo brilo y l'enfoque. (#8954)
+- En o centro d'actividatz en l'actualización d'o Windows 10 d'octubre de 2018 y versions anteriors lo NVDA reconoixerá lo control de brilo d'acción rapeda como un botón en cuenta de como un botón commutable. (#8845)
+- Lo NVDA tornará a rastriar lo cursor y anunciará los caracters eliminaus en o Microsoft Excel y buscará los campos d'edición. (#9042)
+- S'ha correchiu una error rara en o modo de navegación en o Firefox. (#9152)
+- Lo NVDA ya no falla en anunciar l'enfoque de qualques controls en a cinta d'o Microsoft Office 2016 quan ye contraita.
+- Lo NVDA ya no falla en anunciar lo contacto sucheriu en ficar adrezas en os nuevos mensaches de l'Outlook 2016. (#8502)
+- Las zagueras teclas d'enrotamiento d'o cursor en as linias eurobraille de 80 celdas ya no endrezan lo cursor ta una posición en u chusto dimpués de l'inicio d'a linia braille. (#9160)
+- S'ha correchiu la navegación de tablas en a envista en filo d'o Mozilla Thunderbird. (#8396)
+- En o Mozilla Firefox y lo Google Chrome, cambiar t'o modo foco agora funciona correctament pa bells quadros de lista y arbols (en do lo quadro de lista u arbol no siga en o mesmo enfocable pero los suyos elementos sí en sigan). (#3573, #9157)
+- Lo modo de navegación s'enchega agora correctament de traza predeterminada quan se leye mensaches en l'Outlook 2016/365 si s'usa la compatibilidat con o suporte experimental de l'UI Automation d'o NVDA pa los documentos d'o Word. (#9188)
+- Agora ye menos prebable que lo NVDA se chele de tal traza que la sola forma d'eslampar-ne siga zarrar la sesión actual d'o Windows. (#6291)
+- En l'actualización d'octubre d'o 2018 d'o Windows 10 y las versions posteriors, en ubrir lo historial d'o portafuellas d'a boira con o portafuellas vuedo, lo NVDA anunciará lo estau d'o portafuellas. (#9112)
+- En l'actualización d'octubre d'o 2018 d'o Windows 10 y posteriors, en buscar emoticonos en o panel d'emoticonos, lo NVDA anunciará lo millor resultau d'a busca. (#9112)
+- Lo NVDA ya no se chela en a finestra prencipal d'o Virtualbox 5.2 y superiors. (#9202)
+- La respuesta en o Microsoft Word en navegar por linias, paragrafos u celdas de tabla puede amillorar-se significativament en qualques documentos. Se recuerda que pa un millor rendimiento, s'establirá la envista de borrador en o Microsoft Word con alt+w,y dimpués d'ubrir un documento. (#9217) 
+- En o Mozilla Firefox y lo Google Chrome, las alertas vuedas ya no se notifican. (#5657)
+- Milloras significativas en o rendimiento en navegar por las celdas d'o Microsoft Excel, especialment quan la fuella de calculo contienga comentarios y/u listas desplegables de validación. (#7348)
+- Ya no habría d'estar necesario desactivar la edición en a celda en as opcions d'o Microsoft Excel pa acceder t'o control d'edición de celdas con o NVDA en l'Excel 2016/365. (#8146).
+
+
+== Cambios pa los Desembolicadors ==
+- Lo NVDA agora puede compilar-se con totas las edicions d'o Microsoft Visual Studio 2017 (no nomás con a edición Community). (#8939)
+- Agora puetz incluyir la salida d'o rechistro d'o liblouis en o rechistro d'o NVDA configurando la bandera booleana louis en a sección debugLogging d'a configuración d'o NVDA. (#4554)
+- Los autors de complementos agora pueden furnir información sobre la compatibilidat d'as versions d'o NVDA en os manifests d'os complementos. (#6275, #9055)
+ - minimumNVDAVersion: La versión minima reqiesta d'o NVDA pa que un complemento marche como cal.
+ - lastTestedNVDAVersion: La zaguer versión d'o NVDA con a quala ye estau prebau bell complemento.
+- OffsetsTextInfo agora puede implementar lo metodo _getBoundingRectFromOffset pa permitir la recuperación de rectanglos delimitadors por caracters en cuenta de puntos. (#8572)
+- S'ha anyadiu una propiedat boundingRect a los obchectos TextInfo pa recuperar lo rectanglo delimitador d'un rango de texto. (#8371)
+- Las propiedatz y metodos adintro d'as clases agora pueden estar marcadas como abstractas en o NVDA. Ixas clases chenerarán una error si se instancian. (#8294, #8652, #8658)
+- Lo NVDA puede rechistrar lo tiempo transcorriu dende que s'introdució lo texto, lo que aduya a medir la capacidat de respuesta percita. Esto puede activar-se configurando la opción timeSinceInput como True en a sección debugLog d'a configuración d'o NVDA. (#9167)
+
+
 = 2018.4.1 =
 Ista versión apanya una crebadura en rancar si l'idioma d'a interficie d'usuario d'o NVDA ye establiu en aragonés. (#9089)
 
