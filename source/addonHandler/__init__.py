@@ -657,7 +657,8 @@ docFileName = string(default=None)
 # Eg: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
 # The first integer must be a Year (4 characters)
-# "0.0.0" is also valid
+# "0.0.0" is also valid.
+# The final integer can be left out, and in that case will default to 0. E.g. 2019.1
 
 """))
 

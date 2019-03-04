@@ -233,17 +233,17 @@ no-break space	空格	most
 糎	公分	none
 ~	波浪号	none	always
 
-# 特殊数字和字母
-１	全角一	none	always
-２	全角二	none	always
-３	全角三	none	always
-４	全角四	none	always
-５	全角五	none	always
-６	全角六	none	always
-７	全角七	none	always
-８	全角八	none	always
-９	全角九	none	always
-０	全角零	none	always
+# 特殊数字
+１	全角一	char	always
+２	全角二	char	always
+３	全角三	char	always
+４	全角四	char	always
+５	全角五	char	always
+６	全角六	char	always
+７	全角七	char	always
+８	全角八	char	always
+９	全角九	char	always
+０	全角零	char	always
 ①	第一	none
 ②	第二	none
 ③	第三	none
@@ -264,16 +264,17 @@ no-break space	空格	most
 ⒏	8 .	none
 ⒐	9 .	none
 ⒑	10 .	none
-Ⅰ	罗马字符1	none
-Ⅱ	罗马字符2	none
-Ⅲ	罗马字符3	none
-Ⅳ	罗马字符4	none
-Ⅴ	罗马字符5	none
-Ⅵ	罗马字符6	none
-Ⅶ	罗马字符7	none
-Ⅷ	罗马字符8	none
-Ⅸ	罗马字符9	none
-Ⅹ	罗马字符10	none
+Ⅰ	罗马数字1	none
+Ⅱ	罗马数字2	none
+Ⅲ	罗马数字3	none
+Ⅳ	罗马数字4	none
+Ⅴ	罗马数字5	none
+Ⅵ	罗马数字6	none
+Ⅶ	罗马数字7	none
+Ⅷ	罗马数字8	none
+Ⅸ	罗马数字9	none
+Ⅹ	罗马数字10	none
+# 特殊字母
 Ⓐ	圆圈大写字母A	none
 Ⓑ	圆圈大写字母B	none
 Ⓒ	圆圈大写字母C	none
@@ -317,30 +318,30 @@ no-break space	空格	most
 Ｘ	X	none
 Ｙ	Y	none
 Ｚ	Z	none
-ī	一声一	none
-í	二声疑	none
-ǐ	三声已	none
-ì	四声艺	none
-ō	一声蜗	none
-ó	二声哦	none
-ǒ	三声我	none
-ò	四声卧	none
-ū	一声乌	none
-ú	二声吴	none
-ǔ	三声武	none
-ù	四声物	none
-ā	一声阿	none
-á	二声啊	none
-ǎ	三声啊	none
-à	四声啊	none
-ē	一声婀	none
-é	二声俄	none
-ě	三声峩	none
-è	四声饿	none
-ǖ	一声淤	none
-ǘ	二声愚	none
-ǚ	三声与	none
-ǜ	四声欲	none
+ī	一声一	all	never
+í	二声疑	all	never
+ǐ	三声已	all	never
+ì	四声艺	all	never
+ō	一声蜗	all	never
+ó	二声哦	all	never
+ǒ	三声我	all	never
+ò	四声卧	all	never
+ū	一声乌	all	never
+ú	二声吴	all	never
+ǔ	三声武	all	never
+ù	四声物	all	never
+ā	一声阿	all	never
+á	二声啊	all	never
+ǎ	三声啊	all	never
+à	四声啊	all	never
+ē	一声婀	all	never
+é	二声俄	all	never
+ě	三声峩	all	never
+è	四声饿	all	never
+ǖ	一声淤	all	never
+ǘ	二声愚	all	never
+ǚ	三声与	all	never
+ǜ	四声欲	all	never
 ˉ	长音符	none
 ˊ	锐音符	none
 ˇ	倒折音符	none
