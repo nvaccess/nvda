@@ -107,9 +107,16 @@ Hay también algunas opciones en este diálogo que se explican más abajo.
 Una vez se haya completado la instalación, aparecerá un mensaje diciéndote que se ha realizado con éxito.
 Pulsando Aceptar en este punto se reiniciará la copia nueva instalada de NVDA.
 
++++ Advertencia sobre complementos incompatibles +++[InstallWithIncompatibleAddons]
+Si ya tienes complementos instalados también puede haber una advertencia de que se deshabilitarán los complementos incompatibles.
+Antes de poder pulsar el botón Continuar tendrás que utilizar la casilla de verificación para confirmar que comprendes que estos complementos serán desactivados.
+También habrá presente un botón para revisar los complementos que se deshabilitarán.
+Consulta la [sección diálogo complementos incompatibles #incompatibleAddonsManager] para más ayuda sobre este botón.
+
 +++ Arrancar en el inicio de sesión de Windows +++[StartAtWindowsLogon]
 Esta opción te permite elegir si NVDA debería arrancar automáticamente o no mientras está en la ventana de inicio de sesión de Windows, antes de haber introducido una clave.
-Esto también incluye al control del UAC y otras pantallas seguras.
+Esto también incluye el control de la cuenta de usuario y otras pantallas seguras.
+Esta opción está habilitada por defecto para instalaciones nuevas.
 
 +++ Crear Atajos del Escritorio (ctrl+alt+n) +++[CreateDesktopShortcut]
 Esta opción te permite elegir si NVDA debería crear o no un atajo en el escritorio para iniciar NVDA. 
@@ -587,7 +594,7 @@ Por omisión, el cursor de revisión sigue al cursor del sistema, así puedes ut
 
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Interactuar con contenido matemático | NVDA+alt+m | Comienza la interactuación con el contenido matemático. |
+| Interactuar con contenido matemático | NVDA+alt+m | Comienza la interacción con el contenido matemático. |
 %kc:endInclude
 
 En este punto, puedes utilizar órdenes de MathPlayer tales como las teclas de cursor para explorar la  expresión.
@@ -940,8 +947,7 @@ Hay muchos idiomas, no obstante la opción predeterminada es llamada "Predetermi
 Esta elección dirá a NVDA que utilice el idioma en el que Windows esté actualmente ajustado. 
 
 Por favor ten en cuenta que NVDA debe reiniciarse cuando se cambie el idioma. 
-NVDA te preguntará si deseas reiniciar si haces cambios en la selección y guarda los cambios.
-	Pulsa Aceptar y NVDA se reiniciará. 
+Cuando aparezca el diálogo de confirmación, selecciona "reiniciar ahora" o "reiniciar más tarde" si deseas utilizar el idioma nuevo ahora o en un momento posterior, respectivamente. Si está seleccionado "reiniciar más tarde", la configuración debe guardarse (o manualmente o utilizando la funcionalidad guardar al salir).
 
 ==== Guardar Configuración al Salir ====[GeneralSettingsSaveConfig]
 Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA que guarde automáticamente la actual configuración cuando se salga de NVDA. 
@@ -957,7 +963,15 @@ Esta Opción es una casilla de verificación que, cuando está marcada, dice a N
 ==== Nivel del Registro ====[GeneralSettingsLogLevel]
 Este es un cuadro combinado que te permite elegir cuánta info pondrá NVDA en el registro según se ejecute. 
 Generalmente los usuarios no deberían necesitar tocar esto ya que no es demasiado amigable. 
-Sin embargo si estás queriendo proporcionar información en un informe sobre un fallo etc., entonces podrá ser una buena opción.
+Sin embargo, si deseas proporcionar información en un informe de fallos, o habilitar o deshabilitar todo el registro, entonces podrá ser una opción útil.
+
+Los niveles disponibles del registro son:
+- Deshabilitado: Aparte de un breve mensaje de inicio, NVDA no registrará nada mientras se ejecute.
+- Información: NVDA registrará información básica tal como mensajes de inicio e información útil para los desarrolladores.
+- Advertencia de depuración: se registrarán mensajes de advertencia que no sean causados por errores graves.
+- Entrada/salida: se registrarán las entradas de las pantallas braille y de los teclados, así como la salida de la voz y del braille. Si te preocupa la privacidad, no configures esta opción de nivel de registro.
+- Depuración: además de los mensajes de información, advertencia y entrada/salida, se registrarán mensajes de depuración adicionales. Al igual que con la Entrada/salida, si te preocupa la privacidad, no deberías configurar el nivel de registro en esta opción.
+-
 
 ==== Arrancar automáticamente NVDA después de Iniciar sesión en Windows ====[GeneralSettingsStartAfterLogOn]
 Si esta opción está activada, NVDA arrancará automáticamente tan pronto como inicies sesión en Windows. 
@@ -1350,6 +1364,11 @@ Cuanto más esté situado el ratón a la izquierda o a la derecha  en la pantall
 Si la casilla de verificación 'reproducir audio cuando el ratón se mueva' está marcada, entonces marcando esta casilla de verificación significa que el volumen de los pitidos de audio está controlado por cómo el brillo de la pantalla esté bajo el ratón. 
 Esta opción está desmarcada de forma predeterminada.
 
+==== Ignorar la entrada del ratón desde otras aplicaciones ====[MouseSettingsHandleMouseControl]
+Esta opción permite al usuario ignorar los eventos del ratón (incluyendo el movimiento del ratón y las pulsaciones de botones) generados por otras aplicaciones como TeamViewer y otros programas de control remoto.
+Esta opción está desmarcada por defecto.
+Si marcas esta opción y tienes activada la opción "Habilitar seguimiento del ratón", NVDA no anunciará lo que hay debajo del ratón si éste es movido por otra aplicación.
+
 +++ Interacción Táctil +++[TouchInteraction]
 Esta categoría de opciones, sólo disponible en ordenadores que ejecuten Windows 8 y posterior con capacidades táctiles, te permite configurar la forma en que NVDA interactúa con pantallas táctiles.
 Esta Categoría contiene las siguientes opciones:
@@ -1516,6 +1535,13 @@ Si esta opción está activada, NVDA reproducirá sonidos especiales cuando camb
 Habilitada de modo predeterminado, esta opción te permite elegir si los gestos (tales como la pulsación de teclas) que no sean una orden de NVDA y que no se considere que sea una tecla de orden en general, deberían capturarse para no pasar al documento que esté en el foco actualmente. 
 Como un ejemplo, al estar activada, si se pulsó la letra j, debería capturarse para no alcanzar el documento, ya que no es ni una tecla de navegación rápida ni es probable que sea una orden de la misma aplicación.
 
+==== El foco sigue al modo exploración ====[BrowseModeSettingsFocusFollowsBrowseMode]
+Tecla: NVDA+8
+
+Habilitada por defecto, esta opción te permite elegir si el foco del sistema sigue automáticamente al foco del modo exploración en los navegadores web.
+Si está habilitado, esto representa el comportamiento predeterminado de NVDA a partir de la versión 2018.4 y anteriores.
+Deshabilitar esta opción puede resultar en una experiencia de navegación más rápida y una mejor respuesta en el modo exploración. Esto es experimental a partir de la versión 2019.1.
+
 +++ Formateado de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
 La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
 Por Ejemplo, si marcas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
@@ -1582,6 +1608,38 @@ Esta categoría contiene las siguientes opciones:
 
 ==== Idioma de Reconocimiento ====[Win10OcrSettingsRecognitionLanguage]
 Este cuadro combinado te permite elegir el idioma para utilizar con el reconocimiento de texto.
+
++++ Opciones Avanzadas +++
+¡Advertencia! Las opciones en esta categoría son para usuarios avanzados y pueden causar que NVDA no funcione correctamente si se configura de forma incorrecta.
+Realiza cambios en estas opciones únicamente si estás seguro de que sabes lo que estás haciendo o si has recibido las instrucciones específicas de un desarrollador de NVDA.
+
+==== Habilitar la carga de código personalizado desde el directorio Developer Scratchpad ====
+Al desarrollar complementos para NVDA, es útil poder probar el código a medida que lo escribes.
+Esta opción al estar habilitada, permite a NVDA cargar appModules personalizados, globalPlugins, brailleDisplayDrivers y synthDrivers, desde un directorio especial de desarrolladores scratchpad de tu directorio de configuración de usuario de NVDA.
+Anteriormente, NVDA cargaba código personalizado directamente desde el directorio de configuración del usuario, sin posibilidad de deshabilitarlo.
+Esta opción está desactivada de forma predeterminada, lo que garantiza que nunca se ejecute ningún código no probado en NVDA sin el conocimiento explícito del usuario.
+Si deseas distribuir código personalizado a otros, debes empaquetarlo como un complemento de NVDA.
+
+==== Abrir el directorio Developer Scratchpad ====
+Este botón abre el directorio donde puedes colocar el código personalizado mientras lo desarrollas.
+Este botón sólo está habilitado si NVDA está configurado para permitir la carga de código personalizado desde el directorio de desarrolladores del Scratchpad.
+ 
+==== Utilizar UI automation para acceder a controles de documento de Microsoft Word cuando esté disponible ====
+Cuando esta opción esté activada, NVDA intentará utilizar la API de accesibilidad de Microsoft UI Automation para obtener información de los controles de documentos de Microsoft Word.
+Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compositor de Microsoft Outlook.
+ Para las versiones más recientes de Microsoft Office 2016/365 que se ejecutan en Windows 10, la compatibilidad con la UI Automation  es lo suficientemente completa como para proporcionar acceso a documentos de Microsoft Word casi igual a la compatibilidad con Microsoft Word existente de NVDA, con la ventaja añadida de que la capacidad de respuesta aumenta considerablemente.
+
+Sin embargo, puede haber alguna información que no esté expuesta o que esté incorrectamente expuesta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de la UI automation.
+Todavía no recomendamos que la mayoría de los usuarios activen esta opción de forma predeterminada, aunque invitamos a los usuarios de Office 2016/365 a que prueben esta función y nos envíen sus comentarios.
+
+==== Tiempo de espera para el movimiento del cursor (en MS) ====
+Esta opción te permite configurar el número de milésimas de segundo que NVDA esperará a que el cursor (punto de inserción) se mueva en los controles de texto editables.
+Si ves que NVDA aparenta estar siguiendo incorrectamente el cursor, por ejemplo, parece estar siempre un carácter por detrás o repitiendo líneas, entonces puedes intentar aumentar este valor.
+
+==== Categorías de registro de depuración ====
+Las casillas de verificación de esta lista te permiten habilitar categorías específicas de mensajes de depuración en el registro de NVDA.
+El registro de estos mensajes puede incurrir en un menor rendimiento y en archivos de registro de gran tamaño.
+Activa sólo uno de ellos si un desarrollador de NVDA te ha dado instrucciones específicas, por ejemplo, al depurar por qué un controlador de pantalla braille no está funcionando correctamente.
 
 ++ Miscelánea de Opciones ++[MiscSettings]
 Además del cuadro de diálogo [Opciones de NVDA #NVDASettings], el submenú Preferencias del menú NVDA contiene otros elementos que se describen a continuación.
@@ -1824,17 +1882,32 @@ Para deshabilitar un complemento, pulsa el botón deshabilitar.
 Para habilitar un comnplemento anteriormente deshabilitado, pulsa el botón habilitar.
 Puedes deshabilitar un complemento si su estado indica que está en ejecución o habilitado, o habilitarlo si el complemento está suspendido o deshabilitado.
 Para cada pulsación del botón habilitar/deshabilitar, el estado del complemento cambia para indicar qué ocurrirá al reiniciar NVDA.
-Si el complemento fue deshabilitado anteriormente, se mostrará un estado "habilitado después de reiniciar". Si el complemento fue anteriormente "Habilitado", se mostrará un estado "deshabilitado después de reiniciar"
+Si el complemento fue deshabilitado anteriormente, se mostrará un estado "habilitado después de reiniciar".
+Si el complemento fue anteriormente "Habilitado", se mostrará un estado "deshabilitado después de reiniciar"
 Al igual que cuando instalas o eliminas complementos, tienes que reiniciar NVDA para que los cambios tengan efecto.
 
 El administrador también tiene un botón Cerrar para cerrar el diálogo.
 Si has instalado, eliminado o cambiado el estado de los complementos, NVDA primero te preguntará si deseas reiniciar para que los cambios puedan llevarse a cabo.
 
-En el pasado ha sido posible extender la funcionalidad de NVDA copiando plugins y controladores individuales en tu directorio de configuración del usuario de NVDA.
-Aunque esta versión de NVDA todavía podrá cargarlos, No se mostrarán en el Administrador de Complementos.
-Es mejor eliminar estos ficheros de tu configuración e instalar el complemento apropiado si hay uno disponible.
+Algunos complementos antiguos pueden ya no ser compatibles con la versión de NVDA que tienes.
+Cuando utilices una versión más antigua de NVDA, algunos complementos nuevos pueden no ser compatibles.
+Intentar instalar un complemento incompatible resultará en un error explicando por qué el complemento se considera incompatible.
 
 Para acceder al Administrador de Complementos desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogho Gestos de Entrada #InputGestures].
+
+++ Administrador de Complementos Incompatibles ++[incompatibleAddonsManager]
+El Administrador de Complementos Incompatibles, al que se puede acceder a través de los botones "ver complementos incompatibles" en el Administrador de Complementos, te permite inspeccionar cualquier complemento incompatible y la razón por la que se consideran incompatibles.
+Los complementos se consideran incompatibles cuando no han sido actualizados para funcionar con cambios significativos de NVDA, o cuando se basan en una característica no disponible en la versión de NVDA que estás utilizando.
+El Administrador de Complementos Incompatibles tiene un mensaje breve para explicar su propósito así como la versión de NVDA.
+Los complementos incompatibles se presentan en una lista con las siguientes columnas:
++ Paquete, el nombre del complemento
++ Versión, la versión del complemento
++ Razón de Incompatiblilidad, una explicación de por qué el complemento se considera incompatible
++
+
+El Administrador de Complementos Incompatibles también tiene un botón "Acerca del complemento...".
+Esto abre lo que te permitirá conocer todos los detalles del complemento, lo cual es de ayuda cuando contactes con el autor del complemento.
+
 
 ++ Consola de Python ++[PythonConsole]
 La consola de Python de NVDA, encontrada en Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
@@ -2755,15 +2828,17 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | -r | --replace | Sale de la copia que ya se esté ejecutando de NVDA y arranca esta otra |
 | -k | --check-running | Informa si NVDA está en ejecución a través del código de salida; 0 si está en ejecución, 1 si no está en ejecución |
 | -f LOGFILENAME | --log-file=LOGFILENAME | El fichero donde deberían escribirse los mensajes de registro |
-| -l LOGLEVEL | --log-level=LOGLEVEL | El nivel más bajo de mensaje registrado (depuración 10, información 20, aviso 30, error 40, crítico 50), por defecto está en aviso |
+| -l LOGLEVEL | --log-level=LOGLEVEL | El nivel más bajo de mensaje registrado (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | La ruta donde se almacenan todos los ajustes para NVDA |
 | -m | --minimal | Sin sonidos, sin interface, sin mensaje de inicio etc |
-| -s | --secure | Modo seguro (deshabilita la consola Python) |
+| -s | --secure | Modo seguro (deshabilita la consola Python y las características de registro, a menudo utilizado en pantallas seguras) |
 | None | --disable-addons | Los complementos no tendrán efecto |
-| None | --debug-logging | Habilita el nivel depuración en el registro sólo para esta ejecución. Esta opción anulará cualquier otro argumento del nivel del registro ( ""--loglevel"", -l) dado. |
+| None | --debug-logging | Habilita el nivel de registro de depuración sólo para esta ejecución. Esta configuración sobreescribirá cualquier otro nivel de registro ( ""--loglevel"", -l) argumento dado, incluyendo la opción no registro. |
+| None | --no-logging | Deshabilita el registro durante el uso de NVDA. Esta opción puede sobreescribirse si se especifica un nivel de registro ( ""--loglevel"", -l) desde la línea de órdenes o si el registro de depuración está activado. |
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
+| None | --enable-start-on-logon=True|False | Al instalar, habilita [arrancar en la pantalla de inicio #StartAtWindowsLogon] de NVDA |
 | None | --create-portable | Crea una copia portable de NVDA (iniciando la copia recientemente creada). Requiere especificarse --portable-path |
 | None | --create-portable-silent | Crea una copia portable de NVDA (no inicia la copia recientemente instalada). Requiere expecificarse --portable-path |
 | None | --portable-path=PORTABLEPATH | La ruta donde se creará una copia portable |
