@@ -29,6 +29,21 @@ cpp_quote("*/")
 import "wtypes.idl";
 import "oaidl.idl";
 
+typedef struct {
+	BSTR text;
+	BSTR address;
+	BSTR inputTitle;
+	BSTR inputMessage;
+	hyper states;
+	long rowNumber;
+	long rowSpan;
+	long columnNumber;
+	long columnSpan;
+	long outlineLevel;
+	BSTR comments;
+	BSTR formula;
+} EXCEL_CELLINFO;
+
 /**
  * Useful utlity methods that can be executed in-process from NVDA
  */
@@ -67,5 +82,7 @@ interface NvdaInProcUtils {
  * @param value a pointer to a VARIANT that will hold the result.
  */
  	error_status_t outlook_getMAPIProp(const long threadID, [in] IUnknown* mapiObject, const unsigned long mapiPropTag, [out] VARIANT* val);
+
+	error_status_t excel_getCellInfos([in] const unsigned long windowHandle,[in] IDispatch* rangeObj, [in] long cellInfoFlags, [in] long cellCount, [out,size_is(cellCount)] EXCEL_CELLINFO* cellInfos, [out] long* numCellsFetched);
 
 }

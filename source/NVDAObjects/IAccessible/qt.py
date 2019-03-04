@@ -1,6 +1,6 @@
 #NVDAObjects/IAccessible/qt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,6 +9,27 @@ import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
 from scriptHandler import isScriptWaiting
+
+def _getActiveChild(obj):
+	# QT doesn't do accFocus properly, so find the active child ourselves.
+	child = obj.firstChild
+	for i in xrange(obj.childCount):
+		states = child.states
+		if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:
+			return child
+		oldChild = child
+		child = child.next
+		# 9202: In Virtualbox 5.2 and above, accNavigate is severely broken,
+		# returning the current object when calling next, causing an endless loop.
+		if oldChild == child:
+			break
+	else:
+		return None				
+	for child in obj.children:
+		states = child.states
+		if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:
+			return child
+	return None
 
 class Client(IAccessible):
 
@@ -32,31 +53,13 @@ class Client(IAccessible):
 		# This is not a widget container.
 		return None
 
-	def event_gainFocus(self):
-		if eventHandler.isPendingEvents("gainFocus"):
-			return
-
-		widget = self._containedWidget
-		if widget:
-			# This is a widget container.
-			# Redirect the focus to the contained widget, since QT doesn't do it properly.
-			self.event_focusEntered()
-			eventHandler.executeEvent("gainFocus", widget)
-			return
-
-		return super(Client, self).event_gainFocus()
+	def _get_focusRedirect(self):
+		return self._containedWidget
 
 class Container(IAccessible):
 
 	def _get_activeChild(self):
-		# QT doesn't do accFocus properly, so find the active child ourselves.
-		child = self.firstChild
-		while child:
-			states = child.states
-			if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:
-				return child
-			child = child.next
-		return None
+		return _getActiveChild(self)
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# QT doesn't fire focus on the active child as it should, so we will bounce the focus to it.
@@ -66,19 +69,8 @@ class Container(IAccessible):
 			res=bool(self.activeChild)
 		return res
 
-	def event_gainFocus(self):
-		if eventHandler.isPendingEvents("gainFocus"):
-			return
-
-		child = self.activeChild
-		if child:
-			# QT doesn't fire focus on the active child as it should, so redirect the focus.
-			self.event_focusEntered()
-			eventHandler.executeEvent("gainFocus", child)
-			return
-
-		return super(Container, self).event_gainFocus()
-
+	def _get_focusRedirect(self):
+		return self.activeChild
 
 class TableRow(Container):
 
@@ -86,15 +78,7 @@ class TableRow(Container):
 	description=None
 
 	def _get_activeChild(self):
-		# QT doesn't do accFocus properly, so find the active child ourselves.
-		child = self.firstChild
-		while child:
-			states = child.states
-			if controlTypes.STATE_FOCUSED in states:
-				return child
-			child = child.next
-		return None
-
+		return _getActiveChild(self)
 
 class TableCell(IAccessible):
 
