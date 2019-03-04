@@ -258,7 +258,7 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 	"""
 
 	title=""
-	panelDescription=""
+	panelDescription=u""
 
 	def __init__(self, parent):
 		"""
