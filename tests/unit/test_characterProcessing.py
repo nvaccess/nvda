@@ -274,7 +274,7 @@ nrProcTestCases["de"] = nrProcTestCases["nl"]
 class testNumberPronunciation(unittest.TestCase):
 	"""
 	Tests the pronunciation of numbers for the several levels of digit reporting,
-	(i.e. single digits, double digits, triplle digits).
+	(i.e. single digits, double digits, triple digits).
 	Whole numbers isn't tested, as in that case, the number input isn't touched at all.
 	"""
 
