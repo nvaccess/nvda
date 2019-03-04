@@ -1,6 +1,6 @@
 #languageHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV access Limited, Joseph Lee
+#Copyright (C) 2007-2019 NV access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
