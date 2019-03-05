@@ -4,7 +4,15 @@ NVDA更新日志
 %!includeconf: ../changes.t2tconf
 
 = 2019.1 =
+此版本的亮点包括访问Microsoft Word和Excel时的性能、稳定性和安全性改进，对具有版本兼容性信息的加载项的支持，以及许多其他错误修复。
 
+请注意，从这个版本的NVDA开始，自定义AppModules、GlobalPlugins、盲文显示驱动程序和语音库驱动将不再从NVDA用户配置目录中自动加载。
+
+相反，这些应该放在NVDA插件里安装。如果在NVDA新的高级设置面板中打开了开发人员测试目录选项，那么开发者可以把测试代码放在NVDA用户配置目录中新的开发人员测试目录中。
+
+这些更改是为了确保自定义代码的兼容性，这样它们不兼容新版本时，NVDA就不会因为这些代码而出错。
+
+请参阅下面的更改列表，了解更多有关此的详细信息，以及如何更好地对插件进行版本控制。
 == 新特性 ==
 - 新盲文表: 阿拉伯语八点电脑点字， 阿拉伯语二级点字， 西班牙语二级点字。 (#4435)
 - New braille tables: Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435)
@@ -18,7 +26,7 @@ NVDA更新日志
 - It is possible to turn NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
 - NVDA现在可朗读LibreOffice和Apache OpenOffice电子表格中的公式。 (#860)
 - The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
-- 在Mozilla Firefox和Google Chrome中，浏览模式现在可在列表框和树中朗读所选项目。
+- 在Mozilla Firefox和Google Chrome中，浏览模式现在可在列表框和树是图中朗读所选项目。
 - In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
  - 这适用于Firefox 66及更高版本。
  - This works in Firefox 66 and later.
@@ -76,11 +84,11 @@ NVDA更新日志
 - Improved restart confirmation dialog after changing interface language. The text and the button labels are now more concise and less confusing. (#6416)
 - 现在，假如第三方语音合成器无法加载，NVDA将回退到Windows 10上的Windows OneCore语音，而不是espeak。 (#9025)
 - If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech on Windows 10, rather than espeak. (#9025)
-- 在安全见面上删除NVDA菜单中的“欢迎对话框”条目。 (#8520)
+- 在安全见面删除NVDA菜单中的“欢迎对话框”条目。 (#8520)
 - Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
-- 在浏览模式下选项卡或使用快速浏览时，现在可以更一致地朗读选项卡面板上的图例。 (#709)
+- 在浏览模式下选项卡或使用快速浏览时，现在可以朗读选项卡面板上的图例。 (#709)
 - When tabbing or using quick navigation in browse mode, legends on tab panels are now reported more consistently. (#709)
-- NVDA现在将朗读某些时间选择器的选择更改，例如闹钟和时钟应用程序。 (#5231)
+- NVDA现在将朗读某些时间选择器的选择修改，例如闹钟和时钟应用程序。 (#5231)
 - NVDA will now announce selection changes for certain time pickers such as in the Alarms and Clock app. (#5231)
 - 在Windows 10的操作中心中，NVDA将在切换亮度和聚焦辅助等快速操作时朗读状态消息。 (#8954)
 - In Windows 10's Action Center, NVDA will announce status messages when toggling quick actions such as brightness and focus assist. (#8954)
@@ -98,9 +106,11 @@ NVDA更新日志
 - The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)
 - 修复Mozilla Thunderbird中线程视图中的表格浏览。 (#8396)
 - Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)
+- 在Mozilla Firefox和google chrome中，现在可切换到焦点模式正常用于某些列表框和树是图 （列表框/树是图本身不可调，但其项目可用） 。 (#3573, #9157)
 - In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)
-- 如果使用NVDA针对Word文档的实验性UI自动化支持，则在Outlook 2016/365中阅读邮件时，默认情况下会正确启用“浏览”模式。 (#9188)
+- 如果使用在Word里使用微软 UI Automation 无障碍接口，和在Outlook 2016/365中阅读邮件时，默认情况下会正确启用“浏览”模式。 (#9188)
 - Browse mode is now correctly turned on by default when reading messages in Outlook 2016/365 if using NVDA's experimental UI Automation support for Word Documents. (#9188)
+- 解决在NVDA核心被冻结时的键盘输入问题。 (#6291)
 - NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)
 - 在Windows 10 10月2018更新及更高版本中，当打开剪贴板为空的云剪贴板历史记录时，NVDA将朗读剪贴板状态。 (#9112）
 - In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9112)
