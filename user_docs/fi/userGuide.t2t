@@ -1533,15 +1533,8 @@ Jos esim. verkkosivua nuolinäppäimillä selattaessa tullaan muokkauskentän ko
 Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheella.
 
 ==== Estä muiden kuin syötekomentojen pääsy asiakirjaan ====[BrowseModeSettingsTrapNonCommandGestures]
-Tällä oletusarvoisesti käytössä olevalla asetuksella voit valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
-Esimerkiksi, jos asetuksen ollessa käytössä painat J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
-
-==== Kohdistus seuraa selaustilakohdistinta ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Pikanäppäin: NVDA+8
-
-Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, seuraako järjestelmän kohdistus selaustilakohdistinta verkkoselaimissa.
-Jos tämä on käytössä, NVDA toimii kuten versio 2018.4 ja sitä aiemmat.
-Asetuksen käytöstä poistaminen saattaa tarjota nopeamman selauskokemuksen sekä komentoihin vastaamisen selaustilassa. Toiminto on kokeellinen versiossa 2019.1.
+Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
+Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
 
 +++ Asiakirjojen muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Useimmilla tämän kategorian valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla siirtäessäsi kohdistinta asiakirjoissa.
@@ -1604,42 +1597,50 @@ Ilmaise rivien sisennykset -yhdistelmäruudussa on neljä vaihtoehtoa.
 -
 
 +++ Windows 10:n tekstintunnistusasetukset +++[Win10OcrSettings]
-Tämän kategorian asetuksilla voit määrittää [Windows 10:n tekstintunnistuksen #Win10Ocr] toimintaa.
+Tämän kategorian asetuksilla voidaan määrittää [Windows 10:n tekstintunnistuksen #Win10Ocr] toimintaa.
 Kategoria sisältää seuraavat asetukset:
 
 ==== Tunnistuksen kieli ====[Win10OcrSettingsRecognitionLanguage]
-Tästä yhdistelmäruudusta voit valita tekstintunnistuksessa käytettävän kielen.
+Tästä yhdistelmäruudusta voidaan valita tekstintunnistuksen käyttämä kieli.
 
-+++ Lisäasetukset +++
-Varoitus! Tämän kategorian asetukset on tarkoitettu vain edistyneille käyttäjille, ja voivat aiheuttaa väärin muutettuina NVDA:n virheellistä toimintaa.
-Tee muutoksia näihin asetuksiin vain, jos olet varma, mitä teet tai jos NVDA:n kehittäjä on kehottanut tekemään niin.
++++ Lisäasetukset +++[AdvancedSettings]
+Varoitus! Tämän kategorian asetukset on tarkoitettu vain edistyneille käyttäjille, ja voivat saada väärin muutettuina NVDA:n toimimaan virheellisesti.
+Tee muutoksia näihin asetuksiin vain, jos olet varma, mitä teet tai jos NVDA:n kehittäjä on neuvonut tekemään niin.
 
-==== Ota käyttöön mukautetun koodin lataaminen kehittäjän leikepöytähakemistosta ====
+==== Muutosten tekeminen ====[AdvancedSettingsMakingChanges]
+Jotta lisäasetuksiin voidaan tehdä muutoksia, säätimet on ensin otettava käyttöön valintaruudulla, jolla vahvistetaan, että näiden asetusten muuttamisen riskit ymmärretään.
+
+==== Oletusasetusten palauttaminen ====[AdvancedSettingsRestoringDefaults]
+Palauta oletukset -painike palauttaa asetusten oletusarvot, vaikka vahvistusvalintarutua ei ole valittu.
+Saatat haluta palauttaa oletusarvot muutettuasi asetuksia.
+Voit tehdä niin myös silloin, jos et ole varma, onko asetuksia muutettu.
+
+==== Ota käyttöön oman koodin lataaminen kehittäjän leikepöytähakemistosta ====[AdvancedSettingsEnableScratchpad]
 Koodin testaaminen on hyödyllistä NVDA:n lisäosia kehitettäessä.
 Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä sekä pistenäyttö- ja syntetisaattoriajureita erityisestä kehittäjän leikepöytähakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
 Aiemmin NVDA latasi mukautetun koodin suoraan käyttäjän asetushakemistosta ilman mahdollisuutta toiminnallisuuden käytöstä poistamiseen.
 Tämä asetus on oletusarvoisesti poissa käytöstä, mikä varmistaa, ettei NVDA suorita testaamatonta koodia käyttäjän tietämättä.
 Jos kehittäjä haluaa jakaa koodiaan muille käyttäjille, se tulee paketoida NVDA:n lisäosaksi.
 
-==== Avaa kehittäjän leikepöytähakemisto ====
+==== Avaa kehittäjän leikepöytähakemisto ====[AdvancedSettingsOpenScratchpadDir]
 Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
 Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua koodia kehittäjän leikepöytähakemistosta.
 
-==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäädinten käyttämiseen, kun käytettävissä ====
+==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimille, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
 Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseksi Microsoft Wordin asiakirjasäätimistä.
 Niitä ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
 Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
 Joissakin Microsoft Officen versioissa ei ehkä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
 Tämän asetuksen käyttöön ottamista ei vielä suositella suurimmalle osalle käyttäjistä, mutta Office 2016/365 -käyttäjät voivat silti testata ominaisuutta ja antaa palautetta.
 
-==== Kohdistimen siirtymisen aikakatkaisu (ms) ====
+==== Kohdistimen siirtymisen aikakatkaisu (ms) ====[AdvancedSettingsCaretMoveTimeout]
 Tällä asetuksella voidaan määrittää, montako millisekuntia NVDA odottaa kohdistimen (lisäyskohdan) siirtymistä muokattavissa tekstisäätimissä.
 Mikäli NVDA näyttää seuraavan kohdistinta virheellisesti, esim. on aina yhden merkin jäljessä tai toistaa rivejä, Tämän arvon kasvattamisesta voi olla apua.
 
-==== Virheenkorjauslokin kategoriat ====
+==== Virheenkorjauslokin kategoriat ====[AdvancedSettingsDebugLoggingCategories]
 Tämän luettelon valintaruuduilla voidaan ottaa käyttöön tiettyjen kategorioiden virheenkorjausilmoituksia NVDA:n lokissa.
 Näiden ilmoitusten tallentamisesta lokiin voi olla seurauksena suorituskyvyn huonontumista sekä suurikokoisia lokitiedostoja.
-Ota jokin näistä käyttöön vain, jos NVDA:n kehittäjä on pyytänyt tekemään niin, esim. sen selvittämiseksi, miksi pistenäytön ajuri ei toimi oikein.
+Ota jokin näistä käyttöön vain, jos NVDA:n kehittäjä on neuvonut tekemään niin, esim. sen selvittämiseksi, miksi pistenäytön ajuri ei toimi oikein.
 
 ++ Sekalaiset asetukset ++[MiscSettings]
 [Asetukset #NVDASettings]-valintaikkunan lisäksi NVDA-valikosta löytyvä Asetukset-alavalikko sisältää myös useita muita kohteita, jotka on kuvailtu alla.
