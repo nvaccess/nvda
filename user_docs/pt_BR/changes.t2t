@@ -4,6 +4,86 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2019.1 =
+
+== Novas Características ==
+- Novas tabelas braile: Árabe braille informático de 8 pontos, Árabe grau 2, Espanhol grau 2. (#4435)
+- Adicionado uma opção à configurações do mouse do NVDA para fazer com que o NVDA lide com situações em que o mouse é controlado por outro aplicativo. (#8452)
+ - Isso permitirá que o NVDA rastreie o mouse quando um sistema for controlado remotamente usando o TeamViewer ou outro software de controle remoto.
+- Adicionado o parâmetro de linha de comando `--disable-start-on-logon` para permitir instalações silenciosas do NVDA que não são executadas na tela de logon por padrão. (#8574)
+- É possível desativar os recursos de log do NVDA definindo o nível de log como "desativado" no painel de configurações gerais. (#8516)
+- A presença de fórmulas nas planilhas do LibreOffice e do Apache OpenOffice é agora relatada. (#860)
+- No Mozilla Firefox e no Google Chrome, o modo de navegação agora informa o item selecionado em caixas de listagem e árvores.
+ - Isso funciona no Firefox 66 e posterior.
+ - Isso não funciona para determinadas caixas de listagem (controles de seleção de HTML) no Chrome.
+- Adicionada a tabela braille Africâner. (#9186)
+- Suporte antecipado para aplicativos como o Mozilla Firefox em computadores com processadores ARM64 (por exemplo, Qualcom Snapdragon). (#9216)
+- Uma nova categoria de Configurações Avançadas foi adicionada ao diálogo Configurações do NVDA, incluindo uma opção para testar o novo suporte do NVDA para o Microsoft Word via API UI Automation ""[Automação da Interface do Usuário]"" da Microsoft. (#9200)
+- Adicionado suporte para a visualização gráfica no Gerenciamento de Disco do Windows. (#1486)
+- Adicionado suporte para Handy Tech Connect Braille e Basic Braille 84. (#9249)
+- Adicionada uma opção experimental ao painel Configurações do modo de navegação que permite que você pare o foco do sistema seguindo o cursor do modo de navegação. (#2039) Embora isso possa não ser adequado para impedir todos os sites, isso pode resolver:
+ - Efeito elástico: o NVDA esporadicamente desfaz o último pressionamento de tecla do modo de navegação ao pular para o local anterior.
+ - As caixas de edição roubam o foco do sistema quando são exibidas em alguns sites.
+ - O pressionamento de teclas no modo de navegação demora a responder.
+
+
+== Alterações ==
+- Atualizado o transcritor braille liblouis para a versão 3.8.0. (#9013)
+- Os autores de complementos agora podem impor uma versão mínima necessária do NVDA para seus complementos. Complementos não suportados não serão carregados nem instalados. (#6275)
+- Os autores de complementos devem agora especificar a última versão do NVDA para a qual o complemento foi testado. Os usuários serão avisados contra a instalação ou ativação de complementos não testados. (#6275)
+- O comando Mover o mouse para o objeto do navegador está agora disponível no Microsoft Word, bem como para os controles UIA, especialmente o Microsoft Edge. (#7916, #8371)
+- O relato de texto sob o mouse foi aprimorado no Microsoft Edge e em outros aplicativos UIA. (#8370)
+- Quando o NVDA é iniciado com o parâmetro de linha de comando `--portable-path`, o caminho fornecido é automaticamente preenchido ao tentar criar uma cópia portátil do NVDA usando o menu do NVDA. (#8623)
+- Atualizado o caminho para a tabela braille norueguesa para refletir o padrão a partir do ano de 2015. (#9170)
+- Ao navegar pelo parágrafo (control+setas) ou navegar pela célula da tabela (control+alt+setas), a existência de erros ortográficos não será mais anunciada, mesmo que o NVDA esteja configurado para anunciá-los automaticamente. Isso ocorre porque os parágrafos e as células da tabela podem ser muito grandes, e o cálculo de erros de ortografia em alguns aplicativos pode ser muito custoso. (#9217)
+- O NVDA não carrega mais automaticamente os appModules ""[módulos de aplicativos]"" personalizados, globalPlugins ""[plug-ins globais]"" e drivers de braille e sintetizador do diretório de configuração do usuário do NVDA. Esse código deve ser empacotado como um complemento com informações de versão corretas, garantindo que o código incompatível não seja executado com as versões atuais do NVDA. (#9238)
+ - Para desenvolvedores que precisam testar o código conforme está sendo desenvolvido, ative o diretório de rascunho ""[scratchpad]"" do desenvolvedor do NVDA na categoria Avançado das configurações do NVDA e coloque seu código no diretório 'scratchpad' encontrado no diretório de configuração do NVDA quando esta opção estiver habilitada.
+
+
+== Correção de Falhas ==
+- Sintetizador de fala OneCore: no Windows 10 de abril de 2018 e superiores, grandes pedaços de silêncio não são mais inseridos entre enunciados de fala. (#8985)
+- Ao mover por caractere em controles de texto sem formatação (como o Bloco de Notas) ou no modo de navegação, os caracteres emoji de 32 bit consistindo em dois pontos de código UTF-16 (como ðŸ¤¦) agora serão lidos corretamente. (#8782)
+- Diálogo de confirmação de reinicialização aprimorado depois de mudar idioma de interface. O texto e os rótulos dos botões são agora mais concisos e menos confusos. (#6416)
+- Se um sintetizador de fala de terceiros não for carregado, o NVDA voltará para o Windows OneCore no Windows 10, em vez de sem fala. (#9025)
+- Removida a entrada "Diálogo de Boas Vindas" no menu do NVDA durante as telas seguras. (#8520)
+- Após tab ou usar a navegação rápida no modo de navegação, as legendas nos painéis de guias agora são relatadas de forma mais consistente. (#709)
+- O NVDA agora anunciará alterações de seleção para determinados selecionadores de tempo, como no aplicativo Alarmes e Relógio. (#5231)
+- Na Central de Ações do Windows 10, o NVDA anunciará mensagens de status ao alternar ações rápidas, como brilho e assistente de foco. (#8954)
+- Na Central de ações no Windows 10 de outubro de 2018 e anteriores, o NVDA reconhecerá o controle de ação rápida do brilho como um botão em vez de um botão de alternância. (#8845)
+- O NVDA novamente rastreará o cursor e anunciará os caracteres excluídos nos campos de edição ir para e localizar do Microsoft Excel. (#9042)
+- Corrigido uma falha rara no modo de navegação em Firefox. (#9152)
+- O NVDA não deixa de reportar o foco de alguns controles da faixa ""[ribbon]"" do Microsoft Office 2016 quando recolhido.
+- O NVDA não deixa de reportar o contato sugerido ao inserir endereços em novas mensagens no Outlook 2016. (#8502)
+- As últimas teclas de rolagem do cursor em linhas eurobraille de 80 células não direcionam mais o cursor para uma posição logo após o início da linha em braille. (#9160)
+- Corrigido a navegação de tabela na visão segmentada no Mozilla Thunderbird. (#8396)
+- No Mozilla Firefox e no Google Chrome, a mudança para o modo de foco agora funciona corretamente para determinadas caixas de lista e árvores (onde a caixa de lista/árvore não é focável, mas seus itens são). (#3573, #9157)
+- O modo de navegação agora está corretamente ativado por padrão ao ler mensagens no Outlook 2016/365 se estiver usando o suporte experimental de UI Automation ""[automação de interface do usuário]"" do NVDA para documentos do Word. (#9188)
+- Agora é menos provável que o NVDA congele de forma que a única maneira de escapar seja sair da sessão atual do Windows. (#6291)
+- No Windows 10 atualização de outubro de 2018 e posteriores, ao abrir o histórico da área de transferência na nuvem com a área de transferência vazia, o NVDA anunciará o status da área de transferência. (#9112)
+- No Windows 10 atualização de outubro de 2018 e posteriores, ao procurar por emojis no painel de emojis, o NVDA anunciará o resultado da pesquisa. (#9112)
+- O NVDA não congela mais na janela principal do Virtualbox 5.2 e superiores. (#9202)
+- Capacidade de resposta no Microsoft Word ao navegar por linha, parágrafo ou célula de tabela pode ser significativamente melhorada em alguns documentos. Um lembrete de que, para um melhor desempenho, defina a exibição Microsoft Word para Rascunho com alt+w,e depois de abrir um documento. (#9217)
+- No Mozilla Firefox e no Google Chrome, os alertas vazios não são mais informados. (#5657)
+- Melhorias significativas no desempenho ao navegar pelas células no Microsoft Excel, especialmente quando a planilha contém comentários e/ou listas suspensas de validação. (#7348)
+- Não deve mais ser necessário desativar a edição na célula nas opções do Microsoft Excel para acessar o controle de edição de célula com o NVDA no Excel 2016/365. (#8146).
+
+
+== Alterações para Desenvolvedores ==
+- O NVDA agora pode ser construído com todas as edições do Microsoft Visual Studio 2017 (não apenas na edição Community). (#8939)
+- Agora você pode incluir a saída de log do liblouis no log do NVDA, definindo o sinalizador booleano louis na seção debugLogging da configuração do NVDA. (#4554)
+- Os autores de complementos podem agora fornecer informações de compatibilidade de versão do NVDA em manifests ""[manifestos]"" dos complementos. (#6275, #9055)
+ - minimumNVDAVersion: A versão mínima exigida do NVDA para um complemento funcionar corretamente.
+ - lastTestedNVDAVersion: A última versão do NVDA testada com o complemento.
+- Os objetos OffsetsTextInfo agora podem implementar o método _getBoundingRectFromOffset para permitir a recuperação de retângulos delimitadores por caracteres em vez de pontos. (#8572)
+- Adicionada uma propriedade boundingRect aos objetos TextInfo para recuperar o retângulo delimitador de um intervalo de texto. (#8371)
+- Propriedades e métodos dentro de classes agora podem ser marcados como abstratos no NVDA. Essas classes gerarão um erro se forem instanciadas. (#8294, #8652, #8658)
+- O NVDA pode registrar o tempo desde a entrada quando o texto é falado, o que ajuda a medir a capacidade de resposta percebida. Isso pode ser ativado definindo a configuração timeSinceInput como True ""[Verdadeiro]"" na seção debugLog da configuração do NVDA. (#9167)
+
+
+= 2018.4.1 =
+Essa versão corrige uma falha na inicialização se o idioma da interface do usuário do NVDA estiver definido como Aragonês. (#9089)
+
+
 = 2018.4 =
 Os destaques desta versão incluem melhorias de desempenho em versões recentes do Mozilla Firefox, anúncio de emojis com todos os sintetizadores, informação do status de resposta/encaminhamento no Outlook, informação da distância do cursor até a borda de uma página do Microsoft Word e muitas correções de bugs.
 

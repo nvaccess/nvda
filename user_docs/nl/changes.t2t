@@ -3,7 +3,77 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+
+== Nieuwe Functies ==
+
+
+== Veranderingen ==
+
+
+== Opgeloste Problemen ==
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
+= 2018.4.1 =
+Deze versie lost een crash op bij het opstarten wanneer de taal van de NVDA gebruikersinterface is ingesteld op Aragonees. (#9089)
+
+
+= 2018.4 =
+Hoogtepunten in deze versie zijn prestatieverbeteringen in rece				nte Mozilla Firefox versies, het uitspreken van emoji door alle synthesizers, het melden van beantwoord/doorgestuurd voor berichten in Outlook, het melden van de afstand tussen de cursor en de rand van een Microsoft Word pagina, en vele probleemoplossingen.
+
+== Nieuwe Functies ==
+- Nieuwe brailletabellen: Chinees (China, Mandarijn) graden 1 en 2. (#5553)
+- De status beantwoord / doorgestuurd wordt nu gemeld voor e-mails in de Microsoft Outlook berichtenlijst. (#6911)
+- NVDA is nu in staat om beschrijvingen te lezen van emoji en andere tekens die deel uitmaken van de Unicode Common Locale Data Repository. (#6523)
+- In Microsoft Word kan de afstand tussen de cursor en de linker- en bovenrand van de pagina gemeld worden bij het indrukken van NVDA+numpadDelete. (#1939)
+- In Google Sheets met brailleondersteuning ingeschakeld, meldt NVDA niet langer 'geselecteerd' voor iedere cel bij het verplaatsen van de focus tussen cellen. (#8879)
+- Ondersteuning toegevoegd voor Foxit Reader en Foxit Phantom PDF. (#8944)
+- Ondersteuning toegevoegd voor de DBeaver database tool. (#8905)
+
+
+== Veranderingen ==
+- "Helpbalonnen melden" in de instellingen voor objectweergave is hernoemd naar "Notificaties melden" om aan te geven dat deze optie ook het melden van toast-notificaties in Windows 8 en nieuwer omvat. (#5789)
+- In de NVDA toetsenbordinstellingen worden de selectievakjes voor het in- of uitschakelen van de NVDA_toetsen nu weergegeven in een lijst in plaats van als aparte selectievakjes. 
+- NVDA zal niet langer overbodige informatie presenteren bij het lezen van de klok in de systeembalk bij sommige versies van Windows. (#4364)
+- Liblouis braillevertaler bijgewerkt naar versie 3.7.0. (#8697)
+- eSpeak-ng is bijgewerkt naar commit 919f3240cbb.
+
+
+== Opgeloste Problemen ==
+- In Outlook 2016/365 worden de categorie en vlagstatus nu gemeld voor berichten. (#8603)
+- Wanneer de taal van NVDA is ingesteld op Kirgyzisch, Mongools of Macedonisch wordt er niet langer een waarschuwing weergegeven dat de taal niet ondersteund wordt door het besturingssysteem. (#8064)
+- Het verplaatsen van de muis naar het navigatorobject zal de muis nu veel accurater verplaatsen naar de bladermoduspositie in Mozilla Firefox, Google Chrome en Acrobat Reader DC. (#6460)
+- De interactie met vervolgkeuzelijsten op het web in Firefox, Chrome en Internet Explorer is verbeterd. (#8664)
+- Bij gebruik met de Japanse versie van Windows XP of Vista geeft NVDA nu zoals verwacht de systeemvereisten weer. (#8771)
+- Prestatieverbeteringen bij het navigeren binnen lange pagina's met een grote hoeveelheid dynamische wijzigingen in Mozilla Firefox. (#8678)
+- Er zijn niet langer lettertypeattributen zichtbaar in braille wanneer deze zijn uitgeschakeld in de instellingen voor documentopmaak. (#7615)
+- NVDA no longer fails to track focus in File Explorer and other applications using UI Automation when another app is busy (such as batch processing audio). (#7345)
+- In ARIA menu's op het web wordt de escape-toets nu doorgestuurd naar het menu, waardoor de focusmodus niet langer  onvoorwaardelijk wordt uigeschakeld. (#3215)
+- Bij het lezen van berichten in de nieuwe webinterface van GMail wordt bij het gebruiken van snelnavigatie niet langer de volledige inhoud gemeld na het element waar naartoe genavigeerd is. (#8887)
+- Na het updaten van NVDA zullen browsers zoals Firefox en google Chrome niet langer crashen, en zal bladermodus updates blijven weergeven in momenteel geladen documenten. (#7641) 
+- NVDA meldt niet langer meerdere malen klikbaar op een rij bij het navigeren door klikbare inhoud. (#7430)
+- Invoerhandelingen uitgevoerd op baum Vario 40 brailleleesregels worden opnieuw correct afgehandeld. (#8894)
+- In Google Slides met Mozilla Firefox zal NVDA niet langer geselecteerde tekst melden bij ieder element dat de focus krijgt. (#8964)
+
+
+== Veranderingen voor ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
+= 2018.3.2 =
+Dit is een kleine versie die een probleem oplost dat een crash in Google Chrome veroorzaakte bij het navigeren tussen tweets op www.twitter.com. (#8777)
+
+
+= 2018.3.1 =
+Dit is een kleine versie die een kritiek probleem oplost in NVDA dat ervoor zorgde dat 32-bit versies van Mozilla Firefox konden crashen. (#8759)
+
+
 = 2018.3 =
+Hoogtepunten in deze versie zijn het automatisch detecteren van verschillende brailleleesregels, ondersteuning voor nieuwe Windows 10 functies waaronder het Windows 10 Emoji invoerpaneel, en veel aanvullende probleemoplossingen.
 
 == Nieuwe Functies ==
 - NVDA meldt nu grammaticafouten wanneer zij correct worden aangeboden op webpagina's in Mozilla Firefox en Google Chrome. (#8280)
@@ -56,6 +126,8 @@ Wat is Nieuw in NVDA
  - De in eerdere versies overdreven focusweergave is gereduceerd voor zowel spraak als braille wanneer een Word-document de focus krijgt. (#8407)
  - Cursor routing in braille werkt nu correct bij gebruik in een lijst in een Word-document. (#7971)
  - Nieuw ingevoegde opsommingstekens/nummering in een Word-document worden correct gemeld voor zowel braille als spraak. (#7970)
+- In Windows 10 1803 en nieuwer is het nu mogelijk om add-ons te installeren wanneer de optie "Gebruik Unicode UTF-8 voor wereldwijde taalondersteuning" is ingeschakeld. (#8599)
+- NVDA maakt het gebruik van iTunes 12.9 en nieuwer niet langer compleet onmogelijk. (#8744)
 
 
 == Veranderingen voor ontwikkelaars ==
