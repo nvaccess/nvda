@@ -1536,13 +1536,6 @@ Nếu được chọn thì NVDA sẽ phát ra âm thanh báo hiệu khi chuyển
 Mặc định, tùy chọn này cho phép bạn chặn các thao tác như bấm phím không thuộc lệnh của NVDA và cũng không phải là phím lệnh nói chung, phím đó sẽ không được gửi đến tài liệu đang có focus.
 Ví dụ khi tùy chọn này được bật, khi bấm chữ j, nó sẽ bị chặn lại, không được gửi đến tài liệu. Mặc dù, nó không phải là phím lệnh di chuyển nhanh và cũng không phải là phím lệnh của ứng dụng đang có focus.
 
-==== Focus đi theo chế độ duyệt ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Phím tắt: NVDA+8
-
-Mặc định được bật. Tùy chỉnh này cho phép bạn lựa chọn để focus hệ thống tự đi theo focus chế độ duyệt trong các trình duyệt.
-Nếu được bật, nó sẽ tương ứng với cách thức hoạt động mặc định của NVDA phiên bản 2018.4 trở về trước.
-Tắt tùy chọn này có thể mang lại trải nghiệm lướt web và phản hồi nhanh hơn trong chế độ duyệt. Đây là một thử nghiệm của phiên bản 2019.1.
-
 +++ Thiết Lập Định Dạng Tài Liệu (NVDA+control+d) +++[DocumentFormattingSettings]
 Các mục trong phân loại này là các thành phần thông tin sẽ được thông báo khi bạn duyệt tài liệu.
 Ví dụ nếu bạn chọn mục thông báo tên phông chữ thì khi bạn duyệt tài liệu, nếu đến vùng nội dung có phông chữ khác nhau thì nó sẽ tự động thông báo tên phông chữ đó cho bạn.
@@ -1610,33 +1603,41 @@ Phân loại này gồm các mục sau:
 ==== Ngôn Ngữ Nhận Dạng ====[Win10OcrSettingsRecognitionLanguage]
 Hộp xổ này cho phép chọn ngôn ngữ dùng để nhận dạng.
 
-+++ Cài đặt nâng cao +++
++++ Cài đặt nâng cao +++[AdvancedSettings]
 Cảnh báo! Các thiết lập trong phân loại này dành cho người dùng ở cấp độ nâng cao có thể làm cho NVDA hoạt động không chính xác nếu bị cấu hình sai cách.
 Chỉ nên thực hiện các thay đổi thiết lập nếu chắc rằng bạn biết mình đang làm gì hoặc đã được hướng dẫn cụ thể bởi một lập trình viên của NVDA.
 
-==== Cho phép gọi mã nguồn từ thư mục Developer Scratchpad ====
+==== Thực hiện thay đổi cho các cài đặt nâng cao ====[AdvancedSettingsMakingChanges]
+Để thực hiện thay đổi cho các cài đặt nâng cao, phải bật các điều khiển qua việc xác nhận bằng một hộp kiểm  rằng bạn hiểu sự rủi ro của việc thay đổi những cài đặt này
+
+==== Khôi phục về cài đặt mặc định ====[AdvancedSettingsRestoringDefaults]
+Nút bấm này sẽ khôi phục về giá trị mặc định cho các thiết lập, kể cả khi hộp kiểm xác nhận không được đánh dấu chọn.
+Sau khi thay đổi các cài đặt, có thể bạn muôn quay trở lại với các giá trị mặc định.
+Cũng có thể dùng trong trường hợp mà bạn không chắc là các cài đặt có bị thay đổi hay chưa.
+
+==== Cho phép gọi mã nguồn từ thư mục Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Khi phát triển các add-on cho NVDA, sẽ rất tiện lợi nếu có thể chạy thử mã nguồn trong khi đang viết ra nó.
 Việc bật tùy chọn này sẽ cho phép NVDA gọi các Module ứng dụng, Plugins toàn cục, chữ nổi và các trình điều khiển bộ đọc đã tùy chỉnh từ thư mục đặc biệt tên developer scratchpad trong thư mục cấu hình người dùng NVDA của bạn.
 Trước đây, NVDA gọi các mã nguồn đã tùy chỉnh trực tiếp từ thư mục cấu hình người dùng, và không có cách nào để vô hiệu.
 Mặc định, tùy chọn này bị tắt để đảm bảo rằng không có những đoạn mã chưa được kiểm nghiệm được gọi chạy trong NVDA mà người dùng không có thông tin rõ ràng.
 Nếu muốn chia sẻ mã nguồn cho người khác, bạn nên đóng gói nó thành một NVDA add-on.
 
-==== Mở thư mục developer scratchpad ====
+==== Mở thư mục developer scratchpad ====[AdvancedSettingsOpenScratchpadDir]
 Nút này mở thư mục mà bạn có thể lưu mã nguồn trong khi đang phát triển nó.
 Nút này chỉ xuất hiện nếu NVDA được cấu hình để gọi mã nguồn tùy chỉnh từ thư mục Developer Scratchpad.
 
-==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====
+==== Sử dụng UI Automation để truy cập các điều khiển của tài liệu Microsoft Word khi có thể ====[AdvancedSettingsUseUiaForWord]
 Khi bật tùy chọn này, NVDA sẽ nỗ lực dùng  Microsoft UI Automation accessibility api để lấy các thông tin từ các điều khiển của tài liệu Microsoft Word.
 Nó được tích hợp trong chính Microsoft Word cũng như trình xem và soạn thư của Microsoft Outlook.
  Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên windows 10, hỗ trợ UI Automation hoàn toàn đủ để truy cập các tài liệu Microsoft Word gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với lợi thế là tăng khả năng phản hồi.
  Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
  Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
  
- ==== Thời gian chờ di chuyển dấu nháy (ms) ====
+ ==== Thời gian chờ di chuyển dấu nháy (ms) ====[AdvancedSettingsCaretMoveTimeout]
  Tùy chọn này cho phép bạn cấu hình thời gian tính bằng mili giây mà NVDA sẽ chờ dấu náy (điểm chèn) di chuyển trong các điều khiển có thể nhập.
- Nếu bạn nhận thấy rằng có vẻ như NVDA theo dõi dấu náy không chính xác, ví dụ: nó có vẻ như luôn đứng ở một kí tự đằng sau hoặc lặp lại các dòng, có thể bạn sẽ phải thử tăng giá trị của nó.
+ Nếu bạn nhận thấy rằng có vẻ như NVDA theo dõi dấu náy không chính xác, ví dụ: nó có vẻ như luôn đứng ở một kí tự đằng sau hoặc lặp lại các dòng, có thể bạn sẽ phải thử tăng giá trị này.
  
- ==== Kiểu bản ghi dò lỗi ====
+ ==== Kiểu bản ghi dò lỗi ====[AdvancedSettingsDebugLoggingCategories]
  Các hộp kiểm trong danh sách này cho phép bạn bật một số kiểu thông điệp dò lỗi nhất định trong log của NVDA.
  Việc ghi các thông điệp này có thể làm giảm hiệu năng vận hành và tạo các tập tin log dung lượng lớn.
  Chỉ nên bật một trong số chúng nếu được  hướng dẫn cụ thể bởi một lập trình viên NVDA. Ví dụ: khi tìm hiểu xem tại sao một màn hình nổi không hoạt động như mong muốn.
