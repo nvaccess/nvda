@@ -108,9 +108,9 @@ Nach dem Abschluss der Installation erscheint eine Meldung, die Sie über den er
 Wenn Sie hier "OK" auswählen, wird die soeben installierte Kopie von NVDA gestartet.
 
 +++ Warnung bei inkompatiblen Erweiterungen +++[InstallWithIncompatibleAddons]
-Wenn Sie bereits Erweiterungen installiert haben, kann auch eine Warnung erscheinen, dass inkompatible Erweiterungen deaktiviert werden.
-Bevor Sie auf die Schaltfläche "Fortfahren" klicken können, müssen Sie über das Kontrollkästchen bestätigen, dass Sie verstehen, dass diese Add-Ons deaktiviert werden.
-Es wird auch eine Schaltfläche vorhanden sein, um die Add-ons zu überprüfen, die deaktiviert werden.
+Wenn Sie Erweiterungen bereits installiert haben, kann möglicherweise  eine Warnung erscheinen, dass inkompatible Erweiterungen deaktiviert werden.
+Bevor Sie auf die Schaltfläche "Fortfahren" klicken können, müssen Sie zuerst über das Kontrollkästchen bestätigen, dass Sie mit der Deaktivierung inkompatibler Erweiterungen  einverstanden sind.
+Es ist auch eine Schaltfläche zur Überprüfung inkompatibler Erweiterungen, welche nach der Installation deaktiviert werden, vorhanden.
 Weitere Informationen zu dieser Schaltfläche finden Sie im Abschnitt [Inkompatible Erweiterungen #incompatibleAddonsManager].
 
 +++ NVDA bei der Windows-Anmeldung starten +++[StartAtWindowsLogon]
@@ -1535,13 +1535,6 @@ Bei eingeschalteter Option ertönt in NVDA vor der Ansage über die Änderung ei
 Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schnellnavigationsbefehlen belegt sind, direkt an die aktuelle Anwendung weitergereicht, wenn Sie diese innerhalb des Lesemodus benutzen. 
 Wenn die Option aktiviert ist, wird beispielsweise der Buchstabe "J" vom Dokument ferngehalten, da "J" keine Schnellnavigationstaste sowie wahrscheinlich kein Tastenkürzel im Programm ist. 
 
-==== Fokus folgt Lesemodus ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Tastenkombination: NVDA+8
-
-Diese Option ist standardmäßig aktiviert und ermöglicht es Ihnen, auszuwählen, ob der System-Fokus automatisch dem Fokus im Lesemodus folgt.
-Falls aktiviert, stellt dieses das Standardverhalten von NVDA ab Version 2018.4 und früher dar.
-Das Deaktivieren dieser Option kann zu einem schnelleren Browser-Erlebnis und einer besseren Reaktionsfähigkeit im Lesemodus führen. Dies ist ab der Version 2019.1 experimentell.
-
 +++ Dokumentformatierungen (NVDA+Strg+D) +++[DocumentFormattingSettings]
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten.
 Wenn Sie z. B. das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes Mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
@@ -1609,33 +1602,41 @@ Folgende Optionen sind enthalten:
 ==== Erkennungssprache ====[Win10OcrSettingsRecognitionLanguage]
 In diesem Kombinationsfeld können Sie die Sprache festlegen, die für die Zeichenerkennung verwendet werden soll.
 
-+++ Erweiterte Einstellungen +++
++++ Erweiterte Einstellungen +++[AdvancedSettings]
 Achtung! Die Einstellungen in dieser Kategorie sind für fortgeschrittene Benutzer und können dazu führen, dass NVDA bei falscher Konfiguration nicht richtig funktioniert.
 Nehmen Sie Änderungen an diesen Einstellungen nur dann vor, wenn Sie sicher sind, dass Sie wissen, was Sie tun, oder wenn Sie von einem NVDA-Entwickler ausdrücklich dazu angewiesen wurden.
 
-==== Laden von benutzerdefiniertem Code aus dem Developer Scratchpad-Verzeichnis aktivieren ====
+==== Änderungen an erweiterten Einstellungen vornehmen ====[AdvancedSettingsMakingChanges]
+Um Änderungen an den erweiterten Einstellungen vornehmen zu können, müssen die Bedienelemente aktiviert werden, indem Sie mit dem Kontrollkästchen bestätigen, dass Sie die Risiken einer Änderung dieser Einstellungen verstanden haben.
+
+==== Die Standard-Einstellungen wiederherstellen ====[AdvancedSettingsRestoringDefaults]
+Die Schaltfläche stellt die Standardwerte für die Einstellungen wieder her, auch wenn das Kontrollkästchen zur Bestätigung nicht aktiviert ist.
+Nach dem Ändern der Einstellungen können Sie zu den Standardwerten zurückkehren.
+Dies kann auch der Fall sein, wenn Sie sich nicht sicher sind, ob die Einstellungen geändert wurden.
+
+==== Laden von benutzerdefiniertem Code aus dem Developer Scratchpad-Verzeichnis aktivieren ====[AdvancedSettingsEnableScratchpad]
 Bei der Entwicklung von Erweiterungen für NVDA ist es sinnvoll, Code bereits beim Schreiben testen zu können.
 Diese Option ermöglicht es NVDA, benutzerdefinierte AppModule, globalPlugins, BrailleDisplayDrivers und synthDrivers aus einem speziellen Developer Scratchpad-Verzeichnis in Ihrem NVDA-Benutzerkonfigurationsverzeichnis zu laden.
 Bisher hat NVDA benutzerdefinierten Code direkt aus dem Konfigurationsverzeichnis des Benutzers geladen, ohne dass dies deaktiviert werden konnte.
 Diese Option ist standardmäßig deaktiviert und stellt sicher, dass kein ungetesteter Code ohne explizites Wissen des Benutzers in NVDA ausgeführt wird.
 Wenn Sie benutzerdefinierten Code an andere weitergeben möchten, sollten Sie ihn als NVDA-Erweiterungspaket verpacken.
 
-==== Developer Scratchpad-Verzeichnis öffnen ====
+==== Developer Scratchpad-Verzeichnis öffnen ====[AdvancedSettingsOpenScratchpadDir]
 Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung benutzerdefinierten Code platzieren können.
 Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
  
-==== Verwenden Sie die Benutzeroberflächenautomatisierung, um auf Microsoft Word-Dokumenten-Steuerelemente zuzugreifen, falls verfügbar. ====
-Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft UI Automation Accessibility API zu verwenden, um Informationen von Microsoft Word-Dokument-Steuerelementen abzurufen.
-Dazu gehört in Microsoft Word selbst, aber auch der Microsoft Outlook Message Viewer und Composer.
+==== Verwendung der Benutzeroberflächenautomatisierung, um auf Microsoft Word-Dokumenten-Steuerelemente zuzugreifen, falls verfügbar. ====[AdvancedSettingsUseUiaForWord]
+Wenn diese Option aktiviert ist, versucht NVDA die Microsoft UI Automation Accessibility API zu verwenden, um Informationen von Microsoft Word-Dokument-Steuerelementen abzurufen.
+Dazu gehört in Microsoft Word selbst aber auch der Microsoft Outlook Message Viewer und Composer.
  Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich gesteigert wird.
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der Benutzeroberflächenautomatisierung verlassen kann.
-Wir empfehlen immer noch nicht, dass die Mehrheit der Benutzer dies standardmäßig aktiviert, obwohl wir Benutzer von Office 2016 / 365 begrüßen, um diese Funktion zu testen und Rückmeldung zu geben.
+Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben.
 
-==== Zeitüberschreitung beim Bewegen des System-Cursors (in ms) ====
-Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügemarke) in den Steuerelement Eingabefeldern bewegt wird.
-Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z.B. scheint es immer ein Zeichen hinterher zu liegen oder wiederholt Zeilen, dann sollten Sie versuchen, diesen Wert zu erhöhen.
+==== Zeitüberschreitung beim Bewegen des System-Cursors (in Millisekunden) ====[AdvancedSettingsCaretMoveTimeout]
+Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügepunkt) in den editierbaren Textsteuerelementen bewegt.
+Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z.B. wenn NVDA immer ein Zeichen hinterher liegt oder beim Navigieren manche Zeilen wiederholt, dann sollten Sie versuchen diesen Wert zu erhöhen.
 
-==== Kategorien der Protokollierungsstufe ====
+==== Kategorien der Protokollierungsstufe ====[AdvancedSettingsDebugLoggingCategories]
 Die Kontrollkästchen in dieser Liste ermöglichen es Ihnen, bestimmte Kategorien von Debug-Meldungen im Protokoll von NVDA zu aktivieren.
 Das Protokollieren dieser Meldungen kann zu Leistungseinbußen und großen Protokolldateien führen.
 Schalten Sie nur eines davon ein, wenn dies von einem NVDA-Entwickler ausdrücklich angeordnet wurde, z. B. beim Debuggen, warum ein Braille-Treiber nicht ordnungsgemäß funktioniert.
@@ -1882,7 +1883,7 @@ Um eine zuvor deaktivierte Erweiterung wieder zu aktivieren, verwenden Sie den S
 Sie können momentan laufende sowie aktivierte Erweiterungen deaktivieren. Sie können Erweiterungen aktivieren, deren Status als "deaktiviert" angezeigt wird.
 Nach jedem Tastendruck des Aktivieren-/Deaktivieren-Schalters zeigt der Status der Erweiterung an, was nach dem Neustart von NVDA passiert.
 Wenn die Erweiterung zuvor "Deaktiviert" war, zeigt ein Status "Aktiviert nach Neustart" an.
-Wenn das Add-on zuvor "Aktiviert" war, zeigt ein Status "Deaktiviert nach Neustart" an.
+Wenn die Erweiterung zuvor "Aktiviert" war, zeigt ein Status "Deaktiviert nach Neustart" an.
 Ähnlich wie beim Installieren oder Entfernen von Erweiterungen müssen Sie NVDA neu starten, damit die Änderungen wirksam werden.
 
 Die Erweiterungsverwaltung enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen.
@@ -1896,9 +1897,9 @@ Um diese inkompatiblen Erweiterungen zu überprüfen, können Sie die Schaltflä
 Um den Dialog "Erweiterungen verwalten" per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures]
 
 ++ Verwaltung inkompatibler Erweiterungen ++[incompatibleAddonsManager]
-Diese Verwaltung, auf den Sie über die Schaltflächen "Inkompatible Erweiterungen anzeigen" im Dialog "Erweiterungen veralten" zugreifen können, ermöglicht es Ihnen, alle inkompatiblen Add-ons und den Grund, warum sie als inkompatibel gelten, zu überprüfen.
-Erweiterungen gelten als inkompatibel, wenn sie nicht aktualisiert wurden, um mit wesentlichen Änderungen an NVDA zu arbeiten, oder wenn sie auf eine Funktion angewiesen sind, die in der von Ihnen verwendeten Version von NVDA nicht verfügbar ist.
-Die Verwaltung inkompatibler Erweiterungen hat eine kurze Nachricht, um seinen Zweck und die Version von NVDA zu erklären.
+Der Verwaltungsdialog, auf welchem  Sie über die Schaltfläche "Inkompatible Erweiterungen anzeigen" im Dialog "Erweiterungen verwalten" zugreifen können, ermöglicht Ihnen alle inkompatiblen Erweiterungen zu überprüfen , einschließlich den Grund der  inkompatibilität.
+Erweiterungen gelten als inkompatibel, wenn sie nicht laufend aktualisiert wurden, um mit den aktuellen wesentlichen Änderungen im Kern des NVDA zu entsprechen. Ein Grund, warum ein Entwickler auf aktualisierungen verzichten könnte, wäre gegeben, wenn man auf eine Funktion angewiesen ist, die in der aktuellen  verwendeten Version von NVDA nicht verfügbar ist.
+Die Verwaltung inkompatibler Erweiterungen benachrichtigt den Anwender entsprechend.
 Die inkompatiblen Erweiterungen werden in einer Liste mit den folgenden Spalten dargestellt:
 + Paket, der Name der Erweiterung
 + Version, die Version der Weiterung
@@ -1906,7 +1907,7 @@ Die inkompatiblen Erweiterungen werden in einer Liste mit den folgenden Spalten 
 +
 
 Die Verwaltung inkompatibler Erweiterungen hat auch eine Schaltfläche "Über diese Erweiterung...".
-In diesem Fall werden Ihnen die vollständigen Details des Add-ons mitgeteilt, was bei der Kontaktaufnahme mit dem Add-on-Autor hilfreich ist.
+In diesem Fall werden Ihnen die vollständigen Details der Erweiterung mitgeteilt, was bei der Kontaktaufnahme mit dem Add-on-Autor hilfreich ist.
 
 
 ++ Die Python-Konsole ++[PythonConsole]
