@@ -104,13 +104,19 @@ Ločeno od tega, da se NVDA ne more samodejno zagnati pred in/ali po prijavi, im
 Pogovorno okno namestitve, ki se prikaže, potrdi, ali želite namestiti NVDA in pove tudi ali bo ta namestitev posodobila prejšnjo namestitev.
 S pritiskom na gumb Nadaljuj, boste sprožili nameščanje NVDA.
 V tem pogovornem oknu je še nekaj možnosti, ki jih ta priročnik razloži v nadaljevanju.
-Ko je namestitev končana, se prikaže sporočilo o tem, da je namestitev končana.
+Ko se namestitev zaključi, se prikaže sporočilo o tem, da je namestitev uspešna.
 Pritisk na gumb V redu na tej točki bo ponovno zagnal na novo nameščeno kopijo NVDA.
+
++++ Opozorilo o nezdružljivih dodatkih +++[InstallWithIncompatibleAddons]
+Če imate že nameščene dodatke, se vam lahko pokaže opozorilo, da se bodo nezdružljivi dodatki onemogočili.
+Preden boste lahko pritisnili gumb Nadaljuj, boste morali uporabiti izbirnik za potrditev, da razumete, da se bodo ti dodatki onemogočili.
+Tukaj je tudi gumb, ki vam omogoči pregled dodatkov, ki se bodo onemogočili.
+Oglejte si [razdelek s pogovornim oknom nezdružljivih dodatkov #incompatibleAddonsManager] za več pomoči za ta gumb.
 
 +++ Zagon ob Prijavi v Windows +++[StartAtWindowsLogon]
 Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu, še preden morate vnesti geslo za prijavo v sistem.
-To vključuje tudi NUR nadzor in druge "varne" zaslone.
-
+To vključuje tudi Nadzor Uporabniških Računov in druge "varne" zaslone.
+Ta možnost je privzeto omogočena za sveže namestitve.
 +++ Ustvari Bližnjico na Namizju (ctrl+alt+a) +++[CreateDesktopShortcut]
 Ta možnost omogoča izbiro, če želite, da mora NVDA ustvariti bližnjico na namizju za zagon NVDA.
 Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+a. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
