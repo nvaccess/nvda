@@ -16,6 +16,7 @@ complexSymbols:
 : phrase ending	(?<=[^\s:])\s?:(?=\s|$)
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
+thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
 in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
@@ -30,14 +31,15 @@ symbols:
 
 # Complex symbols
 . sentence ending	point	# . fin de phrase
-! sentence ending	point dexclamation	# ! fin de phrase
-? sentence ending	point dinterrogation	# ? fin de phrase
+! sentence ending	point d'exclamation	# ! fin de phrase
+? sentence ending	point d'interrogation	# ? fin de phrase
 ... sentence ending	points de suspension	all	always	# ... fin de phrase
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
 
 decimal point		# virgule décimale
+thousands separator		# point des mille
 dates .	 	all	always	# point de date
 dates /	 	all	always	# barre oblique de date
 negative number	moins	none	norep	# - devant un nombre
@@ -56,7 +58,7 @@ n°	numéro	none	norep	# numéro
  	espace insécable	char	# espace insécable
 
 # Standard punctuation/symbols
-!	point dexclamation
+!	point d'exclamation
 "	guillemet
 \#	dièse
 $	dollar
@@ -83,8 +85,8 @@ $	dollar
 <	inférieur
 >	supérieur
 =	égal
-?	point dinterrogation
-¿	point dinterrogation renversé	some
+?	point d'interrogation
+¿	point d'interrogation renversé	some
 @	arobase	none
 [	crochet gauche
 ]	crochet droit

@@ -105,11 +105,18 @@ Der erscheinende Installationsdialog fragt noch einmal ab, ob Sie NVDA installie
 Wenn Sie auf den Schalter "Fortfahren" klicken, wird die Installation gestartet.
 Es gibt allerdings noch weitere Optionen. Diese werden weiter unten beschrieben.
 Nach dem Abschluss der Installation erscheint eine Meldung, die Sie über den erfolgreichen Abschluss der Installation informiert.
-Wenn Sie hier "OK" wählen, wird die soeben installierte Kopie von NVDA gestartet.
+Wenn Sie hier "OK" auswählen, wird die soeben installierte Kopie von NVDA gestartet.
+
++++ Warnung bei inkompatiblen Erweiterungen +++[InstallWithIncompatibleAddons]
+Wenn Sie bereits Erweiterungen installiert haben, kann auch eine Warnung erscheinen, dass inkompatible Erweiterungen deaktiviert werden.
+Bevor Sie auf die Schaltfläche "Fortfahren" klicken können, müssen Sie über das Kontrollkästchen bestätigen, dass Sie verstehen, dass diese Add-Ons deaktiviert werden.
+Es wird auch eine Schaltfläche vorhanden sein, um die Add-ons zu überprüfen, die deaktiviert werden.
+Weitere Informationen zu dieser Schaltfläche finden Sie im Abschnitt [Inkompatible Erweiterungen #incompatibleAddonsManager].
 
 +++ NVDA bei der Windows-Anmeldung starten +++[StartAtWindowsLogon]
 Mit dieser Option können Sie entscheiden, ob NVDA beim Erscheinen des Windows-anmeldebildschirms gestartet werden soll, bevor Sie ein Passwort eingegeben haben.
-dies betrifft auch die Benutzerkontensteuerung und andere Sicherheitsbildschirme.
+Dies betrifft auch die Benutzerkontensteuerung und andere Sicherheitsbildschirme.
+Diese Option ist standardmäßig für Neuinstallationen aktiviert.
 
 +++ Desktop-Verknüpfung erstellen (Strg+Alt+N) +++[CreateDesktopShortcut]
 Mit dieser Option entscheiden Sie, ob NVDA eine Desktop-Verknüpfung anlegen soll.
@@ -577,7 +584,7 @@ Falls Sie eine Braillezeile verwenden, wird es auch in Braille ausgegeben.
 ++ Interaktive Navigation ++[InteractiveNavigation]
 Wenn Sie NVDA hauptsächlich mit einer Sprachausgabe verwenden, können Sie einen mathematischen Ausdruck in Segmente unterteilt abfragen, anstatt ihn in einem Stück angesagt zu bekommen.
 
-Wenn Sie sich momentan im lese-modus befinden, können Sie den Cursor auf den Ausdruck stellen und die Eingabetaste drücken.
+Wenn Sie sich momentan im Lesemodus befinden, können Sie den Cursor auf den Ausdruck stellen und die Eingabetaste drücken.
 
 Wenn Sie sich nicht im Lesemodus befinden, gehen Sie folgendermaßen vor:
 + Bewegen Sie den NVDA-Cursor auf den mathematischen Ausdruck
@@ -940,8 +947,7 @@ Standardmäßig ist die Option "Benutzerstandard, Windows" ausgewählt. NVDA ent
 Dies besagt, dass NVDA die Sprache verwendet, welche in Windows eingestellt ist.
 
 Bitte beachten Sie: Um die Sprache zu ändern, muss NVDA neu gestartet werden.
-Wenn Sie die Auswahl ändern und die Einstellungen speichern, wird NVDA nachfragen, ob Sie es jetzt neu starten wollen.
-Bestätigen Sie mit "OK", so startet NVDA neu.
+Wenn das Bestätigungsfenster erscheint, wählen Sie "Jetzt neu starten" oder "Später neu starten", wenn Sie die neue Sprache jetzt oder zu einem späteren Zeitpunkt verwenden möchten. Wenn "Später neu starten" ausgewählt ist, muss die Konfiguration gespeichert werden (entweder manuell oder über die Save-On-Exit-Funktion).
 
 ==== Einstellungen beim Beenden speichern ====[GeneralSettingsSaveConfig]
 Diese Option ist ein Kontrollfeld, wenn aktiviert, speichert NVDA jedes Mal beim Beenden automatisch die aktuelle Konfiguration.
@@ -955,9 +961,16 @@ Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 Dieses Kontrollfeld legt fest, ob NVDA Klänge abspielen soll, wenn es gestartet oder beendet wird. 
 
 ==== Protokollierungsstufe ====[GeneralSettingsLogLevel]
-Mit dieser Option legen Sie fest, wieviel im laufenden Betrieb protokolliert wird.
-Normalerweise müssen Anwender hier nichts ändern, wodurch nur das wichtigste protokolliert wird.
-Sollten Sie in einem Fehlerbericht nähere Informationen bereitstellen wollen, kann diese Option nützlich sein.
+Dies ist ein Kombinationsfeld, in dem Sie auswählen können, wie viel NVDA während der Ausführung protokolliert soll.
+Wenn Sie jedoch Informationen in einem Fehlerbericht bereitstellen oder die Protokollierung ganz aktivieren oder deaktivieren möchten, kann dies eine nützliche Option sein.
+
+Die verfügbaren Protokollierungsstufen sind:
+- Deaktiviert: Abgesehen von einer kurzen Startmeldung protokolliert NVDA während der Ausführung nichts.
+- Info: NVDA protokolliert grundlegende Informationen wie Startmeldungen und Informationen, die für Entwickler nützlich sind.
+- Debug-Warnung: Warnmeldungen, die nicht durch schwere Fehler verursacht werden, werden protokolliert.
+- Ein-/Ausgaben: Eingaben von Tastatur- und Braillezeilen sowie Sprach- und Braillezeilen werden protokolliert. Wenn Sie sich Sorgen um den Datenschutz machen, setzen Sie die Protokollierungsstufe nicht auf diese Option.
+- Debuggen: Zusätzlich zu den Info-, Warn- und Ein-/Ausgabemeldungen werden weitere Debug-Meldungen protokolliert. Genau wie bei der Ein-/Ausgabe, wenn Sie sich um den Datenschutz sorgen, sollten Sie die Protokollierungsstufe nicht auf diese Option setzen.
+-
 
 ==== NVDA automatisch nach der Windows-Anmeldung starten ====[GeneralSettingsStartAfterLogOn]
 Wenn Sie dieses Kontrollfeld aktiviert haben, wird NVDA gleich nach der Anmeldung in Windows automatisch gestartet.
@@ -1350,6 +1363,11 @@ Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der
 Wenn die Option "Audiokoordinaten bei Mausbewegungen wiedergeben" und diese Option aktiviert sind, passt NVDA die Lautstärke der Signaltöne an die Helligkeit unter dem Mauszeiger an.
 Diese Option ist standardmäßig deaktiviert.
 
+==== Maus-Eingaben aus anderen Anwendungen ignorieren ====[MouseSettingsHandleMouseControl]
+Diese Option ermöglicht es dem Benutzer, Mausereignisse (einschließlich Mausbewegungen und Tastendrucke) zu ignorieren, die von anderen Anwendungen wie TeamViewer und anderen Fernsteuerungssoftware erzeugt werden.
+Diese Option ist standardmäßig deaktiviert.
+Wenn Sie diese Option aktivieren und die Option "Mausverfolgung aktivieren" aktiviert haben, wird NVDA nicht bekannt geben, was sich unter der Maus befindet, wenn die Maus von einer anderen Anwendung bewegt wird.
+
 +++ Touch-Interaktion +++[TouchInteraction]
 Diese Kategorie ist nur auf Computern mit Windows 8 oder neuer verfügbar, sofern dieser ein berührungsempfindlicher Bildschirm (Touchscreen) besitzt. Hier können Sie einstellen, wie NVDA mit Touchscreens interagiert. 
 Folgende Optionen sind enthalten:
@@ -1517,6 +1535,13 @@ Bei eingeschalteter Option ertönt in NVDA vor der Ansage über die Änderung ei
 Wenn diese Option aktiviert ist, werden Tastenkombinationen, die nicht mit Schnellnavigationsbefehlen belegt sind, direkt an die aktuelle Anwendung weitergereicht, wenn Sie diese innerhalb des Lesemodus benutzen. 
 Wenn die Option aktiviert ist, wird beispielsweise der Buchstabe "J" vom Dokument ferngehalten, da "J" keine Schnellnavigationstaste sowie wahrscheinlich kein Tastenkürzel im Programm ist. 
 
+==== Fokus folgt Lesemodus ====[BrowseModeSettingsFocusFollowsBrowseMode]
+Tastenkombination: NVDA+8
+
+Diese Option ist standardmäßig aktiviert und ermöglicht es Ihnen, auszuwählen, ob der System-Fokus automatisch dem Fokus im Lesemodus folgt.
+Falls aktiviert, stellt dieses das Standardverhalten von NVDA ab Version 2018.4 und früher dar.
+Das Deaktivieren dieser Option kann zu einem schnelleren Browser-Erlebnis und einer besseren Reaktionsfähigkeit im Lesemodus führen. Dies ist ab der Version 2019.1 experimentell.
+
 +++ Dokumentformatierungen (NVDA+Strg+D) +++[DocumentFormattingSettings]
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten.
 Wenn Sie z. B. das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes Mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
@@ -1583,6 +1608,37 @@ Folgende Optionen sind enthalten:
 
 ==== Erkennungssprache ====[Win10OcrSettingsRecognitionLanguage]
 In diesem Kombinationsfeld können Sie die Sprache festlegen, die für die Zeichenerkennung verwendet werden soll.
+
++++ Erweiterte Einstellungen +++
+Achtung! Die Einstellungen in dieser Kategorie sind für fortgeschrittene Benutzer und können dazu führen, dass NVDA bei falscher Konfiguration nicht richtig funktioniert.
+Nehmen Sie Änderungen an diesen Einstellungen nur dann vor, wenn Sie sicher sind, dass Sie wissen, was Sie tun, oder wenn Sie von einem NVDA-Entwickler ausdrücklich dazu angewiesen wurden.
+
+==== Laden von benutzerdefiniertem Code aus dem Developer Scratchpad-Verzeichnis aktivieren ====
+Bei der Entwicklung von Erweiterungen für NVDA ist es sinnvoll, Code bereits beim Schreiben testen zu können.
+Diese Option ermöglicht es NVDA, benutzerdefinierte AppModule, globalPlugins, BrailleDisplayDrivers und synthDrivers aus einem speziellen Developer Scratchpad-Verzeichnis in Ihrem NVDA-Benutzerkonfigurationsverzeichnis zu laden.
+Bisher hat NVDA benutzerdefinierten Code direkt aus dem Konfigurationsverzeichnis des Benutzers geladen, ohne dass dies deaktiviert werden konnte.
+Diese Option ist standardmäßig deaktiviert und stellt sicher, dass kein ungetesteter Code ohne explizites Wissen des Benutzers in NVDA ausgeführt wird.
+Wenn Sie benutzerdefinierten Code an andere weitergeben möchten, sollten Sie ihn als NVDA-Erweiterungspaket verpacken.
+
+==== Developer Scratchpad-Verzeichnis öffnen ====
+Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung benutzerdefinierten Code platzieren können.
+Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
+ 
+==== Verwenden Sie die Benutzeroberflächenautomatisierung, um auf Microsoft Word-Dokumenten-Steuerelemente zuzugreifen, falls verfügbar. ====
+Wenn diese Option aktiviert ist, versucht NVDA, die Microsoft UI Automation Accessibility API zu verwenden, um Informationen von Microsoft Word-Dokument-Steuerelementen abzurufen.
+Dazu gehört in Microsoft Word selbst, aber auch der Microsoft Outlook Message Viewer und Composer.
+ Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich gesteigert wird.
+Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der Benutzeroberflächenautomatisierung verlassen kann.
+Wir empfehlen immer noch nicht, dass die Mehrheit der Benutzer dies standardmäßig aktiviert, obwohl wir Benutzer von Office 2016 / 365 begrüßen, um diese Funktion zu testen und Rückmeldung zu geben.
+
+==== Zeitüberschreitung beim Bewegen des System-Cursors (in ms) ====
+Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügemarke) in den Steuerelement Eingabefeldern bewegt wird.
+Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z.B. scheint es immer ein Zeichen hinterher zu liegen oder wiederholt Zeilen, dann sollten Sie versuchen, diesen Wert zu erhöhen.
+
+==== Kategorien der Protokollierungsstufe ====
+Die Kontrollkästchen in dieser Liste ermöglichen es Ihnen, bestimmte Kategorien von Debug-Meldungen im Protokoll von NVDA zu aktivieren.
+Das Protokollieren dieser Meldungen kann zu Leistungseinbußen und großen Protokolldateien führen.
+Schalten Sie nur eines davon ein, wenn dies von einem NVDA-Entwickler ausdrücklich angeordnet wurde, z. B. beim Debuggen, warum ein Braille-Treiber nicht ordnungsgemäß funktioniert.
 
 ++ Verschiedene Optionen ++[MiscSettings]
 Neben dem [Einstellungsdialog #NVDASettings], befinden sich weitere Einträge im NVDA-Menü unter "Optionen". Diese werden weiter unten erläutert.
@@ -1785,7 +1841,7 @@ Für sehende Softwareentwickler oder für diejenigen, die NVDA anderen Sehenden 
 Um den Sprachbetrachter einzuschalten, aktivieren Sie den Eintrag Sprachbetrachter, welchen Sie im Menü Extras des NVDA-Menüs finden.
 Deaktivieren Sie den Menüpunkt, um ihn wieder auszuschalten.
 
-Das Sprachbetrachter-Fenster enthält das Kontrollkästchen "Sprachbetrachter beim Start anzeigen".
+Das Fenster des Sprachbetrachters enthält das Kontrollkästchen "Sprachbetrachter beim Start anzeigen".
 Wenn dieses Kontrollkästchen aktiviert ist, wird der Sprachbetrachter geöffnet, sobald NVDA gestartet wird.
 Sofern möglich, wird dessen Fenster dieselbe Position sowie die gleiche Größe wie bei der letzten Verwendung einnehmen.	
 
@@ -1821,23 +1877,39 @@ Sie werden gefragt, ob Sie dies wirklich möchten.
 Genau wie beim Installieren von Erweiterungen muss NVDA auch hier neu gestartet werden, damit die Erweiterung tatsächlich entfernt wird.
 Solange Sie den Neustart von NVDA nicht durchführen, wird im Erweiterungs-Manager in der Spalte "Status" der Zustand "Entfernen" angezeigt.
 
-Um eine Erweiterung zu deaktivieren, drücken Sie den Schalter "deaktivieren"
-Um eine zuvor deaktivierte Erweiterung wieder zu aktivieren, verwenden Sie den Schalter "aktivieren".
+Um eine Erweiterung zu deaktivieren, drücken Sie den Schalter "Deaktivieren"
+Um eine zuvor deaktivierte Erweiterung wieder zu aktivieren, verwenden Sie den Schalter "Aktivieren".
 Sie können momentan laufende sowie aktivierte Erweiterungen deaktivieren. Sie können Erweiterungen aktivieren, deren Status als "deaktiviert" angezeigt wird.
-Nach jedem Tastendruck des aktivieren/deaktivieren- Schalters zeigt der Status der Erweiterung an, was nach dem Neustart von NVDA passiert.
-Wenn eine Erweiterung zuvor deaktiviert war, wird ihr Status als "aktiviert nach Neustart" angezeigt. Wenn eine Erweiterung zuvor aktiviert war, wird ihr Status als "deaktiviert nach Neustart" angezeigt.
+Nach jedem Tastendruck des Aktivieren-/Deaktivieren-Schalters zeigt der Status der Erweiterung an, was nach dem Neustart von NVDA passiert.
+Wenn die Erweiterung zuvor "Deaktiviert" war, zeigt ein Status "Aktiviert nach Neustart" an.
+Wenn das Add-on zuvor "Aktiviert" war, zeigt ein Status "Deaktiviert nach Neustart" an.
 Ähnlich wie beim Installieren oder Entfernen von Erweiterungen müssen Sie NVDA neu starten, damit die Änderungen wirksam werden.
 
 Die Erweiterungsverwaltung enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen.
 Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, zu dem Erweiterungen installiert oder entfernt werden müssen oder deren Status geändert werden muss, werden Sie gefragt, ob NVDA neu gestartet werden soll, damit die Änderungen wirksam werden.
 
-In früheren NVDA-Versionen war es möglich, den Funktionsumfang durch Plug-ins, Anwendungsmodule oder Treiber zu erweitern, indem diese in das benutzerspezifische Konfigurationsverzeichnis kopiert wurden. 
-Auch wenn NVDA solche Module immer noch lädt, werden diese nicht im Erweiterungs-Manager angezeigt. 
-Es ist daher zu empfehlen, derartig "untergeschobene" Dateien zu entfernen und eine passende Erweiterung zu installieren, sofern verfügbar.
+Einige ältere Erweiterungen sind möglicherweise nicht mehr mit der Version von NVDA kompatibel, die Sie besitzen.
+Wenn Sie eine ältere Version von NVDA verwenden, sind einige neue Erweiterungen möglicherweise ebenfalls nicht kompatibel.
+Der Versuch, eine inkompatible Erweiterung zu installieren, führt zu einem Fehler, der erklärt, warum diese als inkompatibel gilt.
+Um diese inkompatiblen Erweiterungen zu überprüfen, können Sie die Schaltfläche "Inkompatible Erweiterungen anzeigen" verwenden, um die Verwaltung für inkompatible Erweiterungen zu starten.
 
-Um den Dialog Erweiterungen verwalten per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures]
+Um den Dialog "Erweiterungen verwalten" per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures]
 
-++ Python-Konsole ++[PythonConsole]
+++ Verwaltung inkompatibler Erweiterungen ++[incompatibleAddonsManager]
+Diese Verwaltung, auf den Sie über die Schaltflächen "Inkompatible Erweiterungen anzeigen" im Dialog "Erweiterungen veralten" zugreifen können, ermöglicht es Ihnen, alle inkompatiblen Add-ons und den Grund, warum sie als inkompatibel gelten, zu überprüfen.
+Erweiterungen gelten als inkompatibel, wenn sie nicht aktualisiert wurden, um mit wesentlichen Änderungen an NVDA zu arbeiten, oder wenn sie auf eine Funktion angewiesen sind, die in der von Ihnen verwendeten Version von NVDA nicht verfügbar ist.
+Die Verwaltung inkompatibler Erweiterungen hat eine kurze Nachricht, um seinen Zweck und die Version von NVDA zu erklären.
+Die inkompatiblen Erweiterungen werden in einer Liste mit den folgenden Spalten dargestellt:
++ Paket, der Name der Erweiterung
++ Version, die Version der Weiterung
++ Inkompatibilitätsgrund, eine Erklärung, warum das Addon als inkompatibel gilt.
++
+
+Die Verwaltung inkompatibler Erweiterungen hat auch eine Schaltfläche "Über diese Erweiterung...".
+In diesem Fall werden Ihnen die vollständigen Details des Add-ons mitgeteilt, was bei der Kontaktaufnahme mit dem Add-on-Autor hilfreich ist.
+
+
+++ Die Python-Konsole ++[PythonConsole]
 Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Extras" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum Beheben von Fehlern, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
 Für weitere Informationen sehen Sie sich bitte das [NVDA-Entwicklerhandbuch https://www.nvaccess.org/files/nvda/documentation/developerGuide.html] an.
 
@@ -2756,15 +2828,17 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | -r | --replace | Beendet eine laufende Instanz von NVDA und startet eine neue. |
 | -k | --check-running | Meldet, ob NVDA bereits ausgeführt wird. Falls ja, wird ein Fehlercode von 0 zurückgegeben, anderenfalls wird 1 zurückgegeben. |
 | -f Protokolldateiname | --log-file=Protokolldateiname | Legt die Datei fest, in der NVDA sein Protokoll schreiben soll. |
-| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Legt die Protokollierungsstufe fest (10=Fehlerkorrektur, 20, Warnung 30, Fehler 40, Kritisch 50), Standard ist 20. |
+| -l Protokollierungsstufe | --log-level=Protokollierungsstufe | Die niedrigste Stufe der protokollierten Nachricht (Debug 10, Input/Output 12, Debug-Warnung 15, Info 20, Warnung 30, Fehler 40, kritisch 50, deaktiviert 100), Standard ist Warnung. |
 | -c Konfigurationspfad | --config-path=KonfigurationsPfad | Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. |
 | -m | --minimal | Startet NVDA minimalistisch (keine Klänge, keine Benutzeroberfläche). |
-| -s | --secure | Sicherer Modus, schaltet die Python-Konsole aus. |
+| -s | --secure | Sicherer Modus (deaktiviert die Python-Konsole und Protokollierungsfunktionen, die häufig in sicheren Bildschirmen verwendet werden). |
 | Keine | --disable-addons | Deaktiviert alle Erweiterungen. |
-| Keine | --debug-logging | Aktiviert die Debug-Protokollierung für diese Sitzung. Diese Option überschreibt andere Angaben zur Protokollebene ( ""--loglevel"", -l). |
+| Keine | --debug-logging | Aktivieren Sie die Protokollierung nur für diesen Lauf. Diese Einstellung überschreibt alle anderen Argumente der Protokollebene ( ""--loglevel"", -l), einschließlich der Option keine Protokollierung. |
+| Keine | --no-logging | Deaktivieren Sie die Protokollierung vollständig, während Sie NVDA verwenden. Diese Einstellung kann überschrieben werden, wenn eine Protokollebene ("--loglevel"", -l) von der Kommandozeile aus angegeben wird oder wenn die Debug-Protokollierung eingeschaltet ist. |
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | Keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
+| Keine | --enable-start-on-logon=True/False | Aktivieren Sie bei der Installation [NVDA starten im Anmeldebildschirm #StartAtWindowsLogon]. |
 | Keine | --create-portable | Erstellt und startet eine neue portable Version von NVDA. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
 | Keine | --create-portable-silent | Erstellt eine neue portable Kopie von NVDA, ohne diese zu starten. Hierfür müssen Sie außerdem den Parameter --portable-path angeben. |
 | Keine | --portable-path=Ordner | Gibt den Ordner an, in dem die portable Version erstellt werden soll. |
