@@ -36,6 +36,7 @@ import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
+import tones
 
 REASON_QUICKNAV = "quickNav"
 
@@ -501,6 +502,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		if obj.hasFocus:
 			synchronousCall = True
 
+		synchronousCall = True
 		if not synchronousCall:
 			uid = obj.uniqueID
 			if uid in self.postFocusFuncDict:
@@ -509,9 +511,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 				self.postFocusFuncDict[uid] = postFocusFunc
 		if setFocusCall:
 			obj.setFocus()
+			#tones.beep(500, 50)
+			log.info("hahaha cache fast %s %s" % (obj, obj.uniqueID))
+			speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 		if synchronousCall:
 			if postFocusFunc is not None:
 				postFocusFunc()
+		return obj
 
 	def script_passThrough(self,gesture):
 		self.maybeSyncFocus()
@@ -1516,11 +1522,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We read the info from the browseMode document  instead of the control itself.
 				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
+				tones.beep(500, 50)
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
 				# Although we are going to speak the object rather than textInfo content, we still need to silently speak the textInfo content so that the textInfo speech cache is updated correctly.
 				# Not doing this would cause  later browseMode speaking to either not speak controlFields it had entered, or speak controlField exits after having already exited.
 				# See #7435 for a discussion on this.
+				tones.beep(500, 50)
 				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_ONLYCACHE)
 				self._replayFocusEnteredEvents()
 				nextHandler()
@@ -1531,7 +1539,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not self.passThrough:
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				if  config.conf["virtualBuffers"]["focusFollowsBrowse"]:
+					log.info("hahaha cache trad %s" % obj)
+					speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 				uid = obj.uniqueID
 				try:
 					queueHandler.queueFunction(queueHandler.eventQueue, self.postFocusFuncDict.pop(uid))
