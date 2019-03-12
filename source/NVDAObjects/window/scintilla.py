@@ -74,7 +74,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
 		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
-		if point.x and point.y:
+		if point.x is not None and point.y is not None:
 			return point
 		else:
 			raise NotImplementedError
