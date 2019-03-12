@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/miranda32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NVDA Contributors, Bill Dengler
+#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Joseph Lee, Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
