@@ -180,7 +180,7 @@ def _getAvailableAddonsFromPath(path):
 	for p in os.listdir(path):
 		if p.endswith(DELETEDIR_SUFFIX): continue
 		addon_path = os.path.join(path, p)
-		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
+		if os.path.isdir(addon_path) and addon_path not in ('.', '..') and len(os.listdir(addon_path)):
 			log.debug("Loading add-on from %s", addon_path)
 			try:
 				a = Addon(addon_path)
