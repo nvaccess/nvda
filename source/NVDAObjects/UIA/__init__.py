@@ -724,6 +724,9 @@ class UIATextInfo(textInfos.TextInfo):
 
 	updateCaret = updateSelection
 
+	def scrollIntoView(self):
+		self._rangeObj.ScrollIntoView(False)
+
 class UIA(Window):
 
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
