@@ -52,9 +52,6 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 			raise LookupError("Object is off screen, invisible or has no location")
 		return [self.obj.location,]
 
-	def scrollIntoView(self):
-		self.obj.scrollIntoView()
-
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.
 	In this case, for the purposes of NVDA, the object should be considered non-existent.

@@ -246,5 +246,5 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart
 
-	def scrollIntoView(self):
-		self.innerTextInfo.scrollIntoView()
+	def scrollIntoView(self, alignToTop=True):
+		self.innerTextInfo.scrollIntoView(alignToTop)

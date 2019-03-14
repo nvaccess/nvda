@@ -724,8 +724,8 @@ class UIATextInfo(textInfos.TextInfo):
 
 	updateCaret = updateSelection
 
-	def scrollIntoView(self):
-		self._rangeObj.ScrollIntoView(False)
+	def scrollIntoView(self, alignToTop=True):
+		self._rangeObj.ScrollIntoView(alignToTop)
 
 class UIA(Window):
 
@@ -1443,10 +1443,10 @@ class UIA(Window):
 			info["level"]=level
 		return info
 
-	def scrollIntoView(self):
+	def scrollIntoView(self, alignToTop=True):
 		if self.UIAScrollItemPattern:
 			try:
-				self.UIAScrollItemPattern.ScrollIntoView()
+				self.UIAScrollItemPattern.ScrollIntoView(alignToTop)
 			except COMError:
 				log.debugWarning("UIA ScrollItem pattern ScrollIntoView failed", exc_info=True)
 

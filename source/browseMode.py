@@ -1164,6 +1164,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# We need to cache this because it will be unavailable once the document dies.
 		if not hasattr(self.rootNVDAObject.appModule, "_browseModeRememberedCaretPositions"):
 			self.rootNVDAObject.appModule._browseModeRememberedCaretPositions = {}
+		self._prevCaretPosition = None
 		self._lastCaretPosition = None
 		#: True if the last caret move was due to a focus change.
 		self._lastCaretMoveWasFocus = False
@@ -1256,6 +1257,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# causing the last caret position to be lost.
 		caret = info.copy()
 		caret.collapse()
+		self._prevCaretPosition = self._lastCaretPosition
 		self._lastCaretPosition = caret.bookmark
 		review.handleCaretMove(caret)
 		if reason == controlTypes.REASON_FOCUS:
@@ -1279,8 +1281,16 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 					focusObj.setFocus()
 			else:
 				self._lastFocusableObj = focusObj
+			if isinstance(self._prevCaretPosition, textInfos.offsets.Offsets):
+				# We're dealing with caret offsets here, so start and end are the same.
+				alignToTop = self._lastCaretPosition.startOffset < self._prevCaretPosition.startOffset
+			else:
+				try:
+					alignToTop = self._lastCaretPosition.compareEndPoints(self._prevCaretPosition, "startToStart") == -1
+				except AttributeError:
+					alignToTop = True
 			try:
-				info.scrollIntoView()
+				info.scrollIntoView(alignToTop)
 			except NotImplementedError:
 				try:
 					obj.scrollIntoView()

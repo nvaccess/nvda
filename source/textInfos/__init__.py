@@ -522,9 +522,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def scrollIntoView(self):
+	def scrollIntoView(self, alignToTop=True):
 		"""
 		Scrolls the text range into view on the screen, if possible.
+		@param alignToTop: C{True} if the text should be scrolled so the text range is
+			flush with the top of the viewport;
+			C{False} if it should be flush with the bottom of the viewport.
+		@type alignToTop: bool
 		"""
 		raise NotImplementedError
 
