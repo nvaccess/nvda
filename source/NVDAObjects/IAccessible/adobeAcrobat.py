@@ -98,6 +98,7 @@ class AcrobatNode(IAccessible):
 			self.pdDomNode.ScrollTo()
 		except (AttributeError, COMError):
 			log.debugWarning("IPDDomNode::ScrollTo failed", exc_info=True)
+			raise NotImplementedError
 
 	def _isEqual(self, other):
 		if self.windowHandle == other.windowHandle and self.accID and other.accID:

@@ -1282,7 +1282,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			try:
 				info.scrollIntoView()
 			except NotImplementedError:
-				obj.scrollIntoView()
+				try:
+					obj.scrollIntoView()
+				except NotImplementedError:
+					pass
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)

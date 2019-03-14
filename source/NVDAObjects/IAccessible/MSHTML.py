@@ -912,12 +912,13 @@ class MSHTML(IAccessible):
 			raise NotImplementedError
 
 	def scrollIntoView(self):
-		if not self.HTMLNode:
-			return
-		try:
-			self.HTMLNode.scrollInToView()
-		except (COMError,NameError):
-			pass
+		if self.HTMLNode:
+			try:
+				self.HTMLNode.scrollInToView()
+				return
+			except (COMError,NameError):
+				log.debugWarning("HTML node scrollIntoView failed", exc_info=True)
+		raise NotImplementedError
 
 	def doAction(self, index=None):
 		if self.HTMLNode:

@@ -366,7 +366,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			)
 		except COMError:
 			log.debugWarning("IAccessible2text::scrollSubstringTo failed", exc_info=True)
-			super(IA2TextTextInfo, self).scrollIntoView()
+			raise NotImplementedError
 
 class IAccessible(Window):
 	"""
@@ -1376,8 +1376,10 @@ the NVDAObject for IAccessible
 		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
 			try:
 				self.IAccessibleObject.scrollTo(IAccessibleHandler.IA2_SCROLL_TYPE_ANYWHERE)
+				return
 			except COMError:
 				log.debugWarning("IAccessible2::scrollTo failed", exc_info=True)
+		raise NotImplementedError
 
 	def _get_allowIAccessibleChildIDAndChildCountForPositionInfo(self):
 		"""if true position info should fall back to using the childID and the parent's accChildCount for position information if there is nothing better available."""
