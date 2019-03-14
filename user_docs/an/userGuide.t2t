@@ -1048,13 +1048,23 @@ Ista opción ye desactivada de traza predeterminada.
 ==== Libel de Puntuación y simbolos ====[SpeechSettingsSymbolLevel]
 Tecla: NVDA+p
 
-Isto te permite de trigar la cantidat de puntuación y atros simbolos que habrían de charrar-sen como parolas.
+Ixo te permite trigar la cantidat de puntuación y atros simbolos que habría de charrar-sen como parolas.
 Por eixemplo, quan se configura a toda, totz los simbolos se charrarán como parolas.
 Ista opción s'aplica a totz os sintetizadors, no solament a lo sintetizador activo actualment.
 
 ==== Confidar en l'idioma d'a voz en procesar caracters y simbolos ====[SpeechSettingsTrust]
 Enchegada por defecto, ista opción le diz a lo NVDA si se puet confidar en l'idioma d'a voz actual en procesar simbolos y caracters .
-Si trobas que lo NVDA ye leyendo puntuación en l'idioma incorrecto  pa bell sintetizador u voz particular  puetz deseyar  de desenchegar isto pa aforzar a lo NVDA  pa que faiga servir a suya opción d'idioma global en cuenta.
+Si trobas que lo NVDA ye leyendo puntuación en l'idioma incorrecto  pa bell sintetizador u voz particular  puetz querer  desenchegar ixo pa aforzar a lo NVDA  pa que faiga servir a suya opción d'idioma global en cuenta.
+
+==== Incluyir los datos Unicode Consortium (incluyindo emoji) en procesar caracters y simbolos ====[SpeechSettingsCLDR]
+Quan ixa caixeta de verificación siga enchegada lo NVDA incluyirá los diccionarios de pronuncia de simbolos adicionals en pronunciar caracters y simbolos.
+Ixos diccionarios contienen descripcions pa simbolos (en particular emoji) furnius por lo [Unicode Consortium http://www.unicode.org/consortium/] como parti d'o suyo [Common Locale Data Repository http://cldr.unicode.org/].
+Si quiers que lo NVDA diga las descripcions de caracters d'emoji basaus en ixos datos, habrías d'enchegar ixa opción.
+Por tanto, si yes fendo servir bell sintetizador de voz que admita la verbalización de descripcions d'emoji nativament, habrías de desenchegar ixo.
+
+Tiene en cuenta que las descripcions de caracters anyadidas u editadas manualment s'alzan como parti d'as tuyas opcions d'usuario.
+Por tanto, si cambias la descripción d'bell emoji en particular, la tuya descripción personalizada se verbalizará pa ixe emoji sin importar si ixa opción ye enchegada.
+Puetz anyadir, editar u eliminar descripcions de simbolos en o [dialogo de pronuncia de puntuación y simbolos #SymbolPronunciation] d'o NVDA.
 
 ==== Cambio de Porcentache de Ton pa las Mayusclas ====[SpeechSettingsCapPitchChange]
 Iste campo d'edición te permite de tecliar la cantidat en que lo ton d'a voz cambiará quan se charre una letra mayuscla.
@@ -1257,20 +1267,18 @@ La categoría de teclau en o dialogo d'opcions d'o NVDA contién achustes que es
 Ista categoría d'opcions contién los siguients achustes:
 
 ==== Disposición d'o Teclau ====[KeyboardSettingsLayout]
-Iste quadro combinau te permite de trigar qué tipo de distribución de teclau habría d'emplegar lo NVDA. Actualment totz dos que vienen con o NVDA son Sobremesa y Portatil.
+Iste quadro combinau te permite trigar qué tipo de distribución de teclau habría d'emplegar lo NVDA. Actualment totz dos que vienen con o NVDA son Sobremesa y Portatil.
 
-==== Emplegar o  Bloqueyo de mayusclas como tecla modificadera d'o NVDA ====[KeyboardSettingsCapsModifier]
-Si ista caixeta de verificación ye marcada, o BloqMayus puet emplegar-se como una tecla modificadera d'o NVDA.
+==== Seleccionar las Teclas Modificaderas d'o NVDA ====[KeyboardSettingsModifiers]
+Las caixetas de verificación en ista lista controlan qué teclas pueden utilizar-sen como [teclas modificaderas d'o NVDA #TheNVDAModifierKey]. Las siguients teclas son disponibles pa trigar:
+- La tecla de bloqueyo de mayusclas
+- La tecla de ficar en o teclau numerico
+- La tecla de ficar extendida (trobada por un regular dencima d'as teclas de flecha, amán d'inicio y fin)
+-
 
-==== Emplegar l'insertar d'o teclau estendillau como tecla modificadera d'o NVDA ====[KeyboardSettingsExtendedInsert]
-Si ista caixeta de verificación ye marcada, a tecla insert (normalment trobada dencima d'as teclas de flecha, amán d'inicio y fin) puet emplegar-se como una tecla modificadera d'o NVDA.
-
-==== Emplegar l'insertar d'o teclau numerico como tecla modificadera d'o NVDA ====[KeyboardSettingsNumpadInsert]
-Si ista caixeta de verificación ye marcada, a tecla insert d'o teclau numerico puet emplegar-se como una tecla modificadera d'o NVDA.
-
-Si no se triga garra tecla como a tecla d'o NVDA podría estar imposible accedir ta bellas ordens d'o NVDA.
+Si no se triga garra tecla como la tecla modificadera d'o NVDA podría estar imposible accedir ta bells comandos d'o NVDA.
 Por tanto, lo dialogo d'opcions d'o NVDA amostrará un mensache d'error si todas las teclas son sin trigar  en pretar l'acceptar.
-Dimpués de zarrar lo mensache d'error, has de'n trigar a lo menos una antis de poder pretar l'acceptar pa zarrar lo dialogo correctament.
+Dimpués de zarrar lo mensache d'error, has de trigar-ne a lo menos una antis de no poder pretar l'acceptar pa zarrar lo dialogo correctament.
 
 %kc:setting
 ==== Charrar os caracters en escribir-los ====[KeyboardSettingsSpeakTypedCharacters]
