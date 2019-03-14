@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-28 00:10+1000\n"
-"PO-Revision-Date: 2019-01-01 09:54-0800\n"
+"POT-Creation-Date: 2019-03-08 00:10+1000\n"
+"PO-Revision-Date: 2019-03-08 00:07+0000\n"
 "Last-Translator: Dong Hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -103,6 +103,12 @@ msgstr "철자: {text}"
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr "문법: {text}"
+
+#. Translators: shown when an addon API version string is unknown
+#. Translators: The word for an unknown control type.
+#. Translators: Reported when the type of a chart is not known.
+msgid "unknown"
+msgstr "알 수 없음"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -649,8 +655,23 @@ msgstr "any dots"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 1"
+msgstr "아프리칸스어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Arabic 8 dot computer braille"
+msgstr "아랍어 8점 컴퓨터 점자"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic grade 1"
 msgstr "아랍어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Arabic grade 2"
+msgstr "아랍어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -801,6 +822,11 @@ msgstr "스페인어 8점 컴퓨터 점자"
 #. braille settings dialog.
 msgid "Spanish grade 1"
 msgstr "스페인어 1종"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Spanish grade 2"
+msgstr "스페인어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1998,11 +2024,6 @@ msgstr "갈색"
 msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "갈색"
-
-#. Translators: The word for an unknown control type.
-#. Translators: Reported when the type of a chart is not known.
-msgid "unknown"
-msgstr "알 수 없음"
 
 #. Translators: The word for window of a program such as document window.
 msgid "window"
@@ -3894,6 +3915,12 @@ msgstr ""
 msgid "Speaks the current foreground object"
 msgstr "현재 활성 Window를 읽습니다"
 
+#. Translators: GUI development tool, to get information about the components used in the NVDA GUI
+msgid ""
+"Opens the WX GUI inspection tool. Used to get more information about the "
+"state of GUI components."
+msgstr ""
+
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
@@ -4800,6 +4827,11 @@ msgstr "북부 쿠르드어"
 msgctxt "languageName"
 msgid "Burmese"
 msgstr "버마어,"
+
+#. Translators: The name of a language supported by NVDA.
+msgctxt "languageName"
+msgid "Somali"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5842,7 +5874,7 @@ msgstr "문서"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "End"
-msgstr ", 종료"
+msgstr "종료"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5878,7 +5910,7 @@ msgstr "동영상"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Return"
-msgstr "RETURN"
+msgstr "리턴"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -6479,22 +6511,43 @@ msgstr "오류"
 msgid "NVDA Update"
 msgstr "NVDA 업데이트"
 
+# Literally means, "no new update is availible."
+#. Translators: A message indicating that no update to NVDA is available.
+msgid "No update available."
+msgstr "새 업데이트가 없습니다."
+
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "NVDA 버전 {version}을 다운로드하였습니다."
 
-#. Translators: A message indicating that an updated version of NVDA is available.
-#. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
-msgid "NVDA version {version} is available."
-msgstr "NVDA {version} 버전이 준비되어 있습니다."
+msgid ""
+"\n"
+"\n"
+"However, your NVDA configuration contains add-ons that are incompatible with "
+"this version of NVDA. These add-ons will be disabled after installation. If "
+"you rely on these add-ons, please review the list to decide whether to "
+"continue with the installation"
+msgstr ""
+"\n"
+"\n"
+"하지만 현재 설치되어 있는 NVDA에는 새 버전의 NVDA에 호환되지 않는 추가 기능"
+"이 포함되어 있습니다. 이 추가 기능은 새 버전이 설치된 후에 비활성화됩니다. 중"
+"요한 추가 기능을 사용하고 있다면 설치를 계속 진행하기 전에 추가 기능의 호환"
+"성 여부를 검토하세요."
 
-# Literally means, "no new update is availible."
-#. Translators: A message indicating that no update to NVDA is available.
-msgid "No update available."
-msgstr "새 업데이트가 없습니다."
+#. Translators: A message to confirm that the user understands that addons that have not been
+#. reviewed and made available, will be disabled after installation.
+#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+#. available, will be disabled after installation.
+msgid "I understand that these incompatible add-ons will be disabled"
+msgstr "호환되지 않는 추가 기능은 비활성화된다는 것을 이해했습니다."
+
+#. Translators: The label of a button to review add-ons prior to NVDA update.
+#. Translators: The label of a button to launch the add-on compatibility review dialog.
+msgid "&Review add-ons..."
+msgstr "추가 기능 호환성 검토하기 (&R)..."
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6506,6 +6559,12 @@ msgstr "NVDA 버전 {version} 설치 (&I)"
 msgid "Re-&download update"
 msgstr "업데이트 다시 받기 (&D)"
 
+#. Translators: A message indicating that an updated version of NVDA is available.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "NVDA version {version} is available."
+msgstr "NVDA {version} 버전이 준비되어 있습니다."
+
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
 msgstr "업데이트 받기 (&D)"
@@ -6516,6 +6575,7 @@ msgstr "나중에 알림 (&L)"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
+#. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "닫기 (&C)"
@@ -6524,6 +6584,14 @@ msgstr "닫기 (&C)"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA {version} 버전을 설치합니다.\n"
+
+msgid ""
+"\n"
+"However, your NVDA configuration contains add-ons that are incompatible with "
+"this version of NVDA. These add-ons will be disabled after installation. If "
+"you rely on these add-ons, please review the list to decide whether to "
+"continue with the installation"
+msgstr ""
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -6662,9 +6730,9 @@ msgstr ""
 "비: 화면의 {width:.1f} 퍼센트; 높이: 화면의 {height:.1f} 퍼센트"
 
 #. Translators: a message announcing a candidate's character and description.
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{symbol} as in {description}"
-msgstr "{description}"
+msgstr "{description} 중에서 {symbol}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 #, python-brace-format
@@ -6701,7 +6769,7 @@ msgid "Candidate"
 msgstr "후보"
 
 msgid "Display"
-msgstr "Display"
+msgstr "화면"
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -6709,21 +6777,19 @@ msgstr "시작"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
-msgstr "재생되는 트랙 없음"
+msgstr "재생 중인 트랙 없음"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "트랙이 재생될 때 현재 트랙의 남은 시간을 알려줍니다"
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the elapsed time of the currently playing track, if any"
-msgstr "트랙이 재생될 때 현재 트랙의 남은 시간을 알려줍니다"
+msgstr "트랙이 재생될 때 현재 트랙의 재생된 시간을 알려줍니다"
 
 #. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
-#, fuzzy
 msgid "Reports the length of the currently playing track, if any"
-msgstr "트랙이 재생될 때 현재 트랙의 남은 시간을 알려줍니다"
+msgstr "트랙이 재생될 때 현재 트랙의 전체 길이를 알려줍니다"
 
 #. Translators: Describes a command.
 msgid "Shows options related to selected text or text at the cursor"
@@ -6865,7 +6931,7 @@ msgstr "제목: %s"
 #. Translators: This is presented in outlook or live mail, email received time
 #, python-format
 msgid "received: %s"
-msgstr "received: %s"
+msgstr "받은 시간: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
@@ -6874,7 +6940,7 @@ msgstr "첨부 파일"
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
 msgid "sent: %s"
-msgstr "sent: %s"
+msgstr "보낸 날짜: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
@@ -7056,7 +7122,7 @@ msgstr "마스터 축소판 그림"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 #, python-brace-format
 msgid "Slide {slideNumber}"
-msgstr "Slide {slideNumber}"
+msgstr "슬라이드 {slideNumber}"
 
 #. Translators:   an unlabelled item in Powerpoint another shape is overlapping
 msgid "other item"
@@ -7164,16 +7230,16 @@ msgstr ""
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
 msgid "Slide show notes - {slideName}"
-msgstr "슬라이드쇼 노트 - {slideName}"
+msgstr "슬라이드 쇼 노트 - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 #, python-brace-format
 msgid "Slide show - {slideName}"
-msgstr "Slide show - {slideName}"
+msgstr "슬라이드 쇼 - {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
-msgstr "Slide Show - 끝"
+msgstr "슬라이드 쇼 - 끝"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
@@ -7189,7 +7255,7 @@ msgstr "파워포인트 여는 중..."
 
 #. Translators: The name of the NVDA command category for Skype specific commands.
 msgid "Skype"
-msgstr "Skype"
+msgstr "스카이프"
 
 msgid "Reports and moves the review cursor to a recent message"
 msgstr "리뷰 커서를 최근 메시지로 옮기고 메시지를 알려줍니다"
@@ -7658,6 +7724,8 @@ msgstr "NVDA에 오신 것을 환영합니다"
 msgid "Welcome to NVDA!"
 msgstr "NVDA에 오신 것을 환영합니다!"
 
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+#. Translators: The label for a group box containing the NVDA installation dialog options.
 msgid "Options"
 msgstr "옵션"
 
@@ -7766,12 +7834,68 @@ msgstr ""
 "시겠습니까?"
 
 #. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
 msgid "&Yes"
 msgstr "예 (&Y)"
 
 #. Translators: The label of a No button in a dialog
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
 msgid "&No"
 msgstr "아니요 (&N)"
+
+msgid ""
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
+msgstr ""
+"추가 기능이 변경되었습니다. 변경된 사항을 적용하려면 NVDA를 다시 시작해야 합"
+"니다. NVDA를 다시 시작하시겠습니까?"
+
+#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
+msgid "Restart NVDA"
+msgstr "NVDA 재시작"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+#. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
+msgid "&About add-on..."
+msgstr "정보 (&A)..."
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+#. Translators: An ok button on a message dialog.
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "확인"
+
+#, python-brace-format
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Author: {author}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"버전: {version}\n"
+"저자: {author}\n"
+"설명: {description}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgid "URL: {url}"
+msgstr "URL: {url}"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgid "Minimum required NVDA version: {}"
+msgstr "지원하는 최소 NVDA 버전: {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgid "Last NVDA version tested: {}"
+msgstr "검증된 최근의 NVDA 버전: {}"
+
+#. Translators: title for the Addon Information dialog
+msgid "Add-on Information"
+msgstr "추가 기능 정보"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -7781,8 +7905,8 @@ msgstr "추가 기능 관리자"
 msgid ""
 "All add-ons are currently disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"모든 추가 기능이 일시 정지되어 있습니다. 추가 기능을 사용하려면 NVDA를 재시작"
-"하십시오."
+"현재 모든 추가 기능이 비활성화되어 있습니다. 추가 기능을 사용하려면 NVDA를 재"
+"시작하십시오."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -7797,16 +7921,13 @@ msgid "Status"
 msgstr "상태"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
+#. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
 msgid "Version"
 msgstr "버전"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
 msgid "Author"
 msgstr "저자"
-
-#. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-msgid "&About add-on..."
-msgstr "정보 (&A)..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
@@ -7815,10 +7936,6 @@ msgstr "도움말 (&H)"
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
 msgstr "사용 안 함 (&D)"
-
-#. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
-msgid "&Install..."
-msgstr "설치 (&I)..."
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -7832,6 +7949,14 @@ msgstr "제거 (&R)"
 msgid "&Get add-ons..."
 msgstr "추가 기능 탐색 (&G)..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
+msgid "&Install..."
+msgstr "설치 (&I)..."
+
+#. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
+msgid "&View incompatible add-ons..."
+msgstr "호환되지 않는 추가 기능 보기 (&V)"
+
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
 msgstr "추가 기능 설치 파일 선택"
@@ -7840,6 +7965,56 @@ msgstr "추가 기능 설치 파일 선택"
 #, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA 추가 기능 패키지 (*.{ext})"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+msgstr "NVDA에서 선택된 추가 기능을 삭제하시겠습니까?"
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
+msgid "Remove Add-on"
+msgstr "추가 기능 제거"
+
+#. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
+msgid "Incompatible"
+msgstr "호환되지 않음"
+
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "활성화"
+
+#. Translators: The status shown for a newly installed addon before NVDA is restarted.
+msgid "Install"
+msgstr "설치"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "비활성화"
+
+#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+msgid "Removed after restart"
+msgstr "재시작 후에 삭제됩니다"
+
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "재시작 후에 비활성화됩니다"
+
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "재시작 후에 활성화됩니다"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "&Enable add-on"
+msgstr "사용 (&E)"
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#, python-brace-format
+msgid "Could not disable the {description} add-on."
+msgstr ""
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#, python-brace-format
+msgid "Could not enable the {description} add-on."
+msgstr ""
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -7850,27 +8025,14 @@ msgstr ""
 "%s: 추가 기능 설치 파일 열기 실패 - 파일이 존재하지 않거나 파일 형식이 잘못되"
 "었습니다"
 
-#. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
-msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from "
-"trusted sources.\n"
-"Addon: {summary} {version}\n"
-"Author: {author}"
-msgstr ""
-"\"NVDA 추가 기능을 설치하시겠습니까? 신뢰받는 사이트의 추가 기능 설치를 권장"
-"합니다.\n"
-"추가 기능: {summary} {version}\n"
-"저자: {author}\\"
-
+#. Translators: A title for the dialog asking if the user wishes to update a previously installed
+#. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 msgid "Add-on Installation"
 msgstr "추가 기능 설치"
 
 # Literally means: The add-on already exists. Would you like to update to
 # installing version?
-#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
 #, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
@@ -7881,7 +8043,6 @@ msgstr ""
 
 # Literally means: The add-on already exists. Would you like to update to
 # installing version?
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 #, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
@@ -7900,82 +8061,80 @@ msgstr "추가 기능을 설치하고 있습니다. 잠시만 기다려 주십�
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
-msgid "Failed to install add-on  from %s"
+msgid "Failed to install add-on from %s"
 msgstr "%s 에서 추가 기능 설치 실패"
-
-#. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "NVDA에서 선택된 추가 기능을 삭제하시겠습니까?"
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "추가 기능 제거"
-
-#. Translators: The status shown for a newly installed addon before NVDA is restarted.
-msgid "install"
-msgstr "설치"
-
-#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-msgid "remove"
-msgstr "제거"
-
-#. Translators: The status shown for an addon when it requires a restart to become disabled
-msgid "Disabled after restart"
-msgstr "재시작 후 사용 않함"
-
-#. Translators: The status shown for an addon when it requires a restart to become enabled
-msgid "Enabled after restart"
-msgstr "재시작 후 사용"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "disabled"
-msgstr "사용 안 함"
-
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "enabled"
-msgstr "사용"
-
-#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "&Enable add-on"
-msgstr "사용 (&E)"
-
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
-msgid ""
-"Changes were made to add-ons. You must restart NVDA for these changes to "
-"take effect. Would you like to restart now?"
-msgstr ""
-"추가 기능이 변경되었습니다. 변경된 사항을 적용하려면 NVDA를 다시 시작해야 합"
-"니다. NVDA를 다시 시작하시겠습니까?"
-
-#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
-msgid "Restart NVDA"
-msgstr "NVDA 재시작"
-
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"버전: {version}\n"
-"저자: {author}\n"
-"설명: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "URL: {url}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "추가 기능 정보"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "NVDA Windows Store 버전 사용시 추가 기능을 설치할 수 없습니다"
+
+#, python-brace-format
+msgid ""
+"Installation of {summary} {version} has been blocked. The minimum NVDA "
+"version required for this add-on is {minimumNVDAVersion}, your current NVDA "
+"version is {NVDAVersion}"
+msgstr ""
+"{summary} {version} 버전의 설치가 중지되었습니다. 이 추가 기능을 사용하기 위"
+"한 최소 NVDA 버전은 {minimumNVDAVersion} 입니다. 현재 설치된 NVDA 버전은 "
+"{NVDAVersion} 입니다."
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgid "Add-on not compatible"
+msgstr "사용할 수 없는 추가 기능입니다"
+
+#, python-brace-format
+msgid ""
+"Installation of {summary} {version} has been blocked. An updated version of "
+"this add-on is required, the minimum add-on API supported by this version of "
+"NVDA is {backCompatToAPIVersion}"
+msgstr ""
+"{summary} {version} 버전의 설치가 중지되었습니다. 이 추가 기능의 상위 버전이 "
+"필요합니다. 현재 NVDA 버전에서 지원하는 최소 API 버전은 "
+"{backCompatToAPIVersion} 입니다."
+
+#, python-brace-format
+msgid ""
+"Are you sure you want to install this add-on?\n"
+"Only install add-ons from trusted sources.\n"
+"Addon: {summary} {version}"
+msgstr ""
+"\"NVDA 추가 기능을 설치하시겠습니까? 신뢰받는 사이트의 추가 기능 설치를 권장"
+"합니다.\n"
+"추가 기능: {summary} {version}"
+
+#. Translators: The title of the Incompatible Addons Dialog
+msgid "Incompatible Add-ons"
+msgstr "호환되지 않는 추가 기능"
+
+msgid ""
+"The following add-ons are incompatible with NVDA version {}. These add-ons "
+"can not be enabled. Please contact the add-on author for further assistance."
+msgstr ""
+"다음 추가 기능은 NVDA {} 버전과 호환되지 않습니다. 이 추가 기능은 활성화될 "
+"수 없습니다. 각 추가 기능의 작성자에게 연락해 도움을 받으시기 바랍니다."
+
+#. Translators: the label for the addons list in the incompatible addons dialog.
+msgid "Incompatible add-ons"
+msgstr "호환되지 않는 추가 기능"
+
+#. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
+msgid "Incompatible reason"
+msgstr "호환되지 않는 이유"
+
+#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
+#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
+msgid "An updated version of NVDA is required. NVDA version {} or later."
+msgstr ""
+"상위 버전의 NVDA로 업데이트해야 합니다. NVDA {} 버전 이상이 필요합니다."
+
+#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
+#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {}"
+msgstr ""
+"상위 버전의 추가 기능으로 업데이트해야 합니다. 현재 지원되는 최소 API 버전은 "
+"{} 입니다."
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8244,8 +8403,6 @@ msgstr "휴대용 버전 환경 설정을 현재 사용자 계정에 복사 (&P)
 msgid "&Continue"
 msgstr "계속 (&C)"
 
-#. Translators: A warning presented when the user attempts to downgrade NVDA
-#. to an older version.
 msgid ""
 "You are attempting to install an earlier version of NVDA than the version "
 "currently installed. If you really wish to revert to an earlier version, you "
@@ -8355,10 +8512,7 @@ msgstr "다른 이름으로 저장"
 msgid "Error saving log: %s"
 msgstr "로그 파일 저장 오류 : %s"
 
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
-msgid "OK"
-msgstr "확인"
-
+#. Translators: A cancel button on a message dialog.
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
 msgstr "취소"
@@ -8371,14 +8525,13 @@ msgstr "적용"
 msgid "&Categories:"
 msgstr "설정 패널"
 
-#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-#, python-format
-msgid "%s Settings Category"
-msgstr "%s 설정 패널"
-
 #. Translators: This is the label for the general settings panel.
 msgid "General"
 msgstr "일반 설정"
+
+#. Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+msgid "disabled"
+msgstr "사용 안 함"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8485,19 +8638,21 @@ msgstr "이 설정 변경은 관리자 권한이 필요합니다."
 msgid "Insufficient Privileges"
 msgstr "사용자 권한 부족"
 
-#. Translators: The message displayed after NVDA interface language has been changed.
-msgid ""
-"For the new language to take effect, the configuration must be saved and "
-"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
-"manually save and exit at a later time."
-msgstr ""
-"새 언어를 적용하기 위해서는 현재 환경 설정을 저장하고 NVDA를 다시 시작해야 합"
-"니다. 엔터를 눌러 환경 설정을 저장하고 NVDA를 다시 시작하거나, 취소하고 수동"
-"으로 다시 시작하십시오."
-
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
 msgstr "언어 변경"
+
+#. Translators: The message displayed after NVDA interface language has been changed.
+msgid "NVDA must be restarted for the new language to take effect."
+msgstr "새 언어를 적용하려면 NVDA를 다시 시작해야 합니다."
+
+#. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+msgid "Restart &now"
+msgstr "바로 재시작 (&N)"
+
+#. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+msgid "Restart &later"
+msgstr "나중에 재시작 (&L)"
 
 #. Translators: A label for the synthesizer on the speech panel.
 msgid "&Synthesizer"
@@ -8570,7 +8725,7 @@ msgstr "기호 및 글자 출력 시 선택된 음성 엔진 언어 사용"
 msgid ""
 "Include Unicode Consortium data (including emoji) when processing characters "
 "and symbols"
-msgstr "기호 및 글자 출력 시 Unicode Consortium 데이터(이모지 포함) 사용 (&I)"
+msgstr "기호 및 글자 출력 시 Unicode Consortium 데이터 (이모지 포함) 사용 (&I)"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -8678,6 +8833,11 @@ msgstr "마우스 이동 시 경고음으로 좌표 알림 (&P)"
 #. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "밝기에 따른 비프음 크기 제어 (&B)"
+
+#. Translators: This is the label for a checkbox in the
+#. mouse settings panel.
+msgid "Ignore mouse input from other &applications"
+msgstr "다른 프로그램으로부터의 키보드 입력을 무시합니다 (&A)"
 
 #. Translators: This is the label for the review cursor settings panel.
 msgid "Review Cursor"
@@ -9058,6 +9218,81 @@ msgstr "윈도우 10 OCR"
 msgid "Recognition &language:"
 msgstr "문자 인식 언어 (&L)"
 
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "NVDA Development"
+msgstr "NDVA 개발자 설정"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable loading custom code from Developer Scratchpad directory"
+msgstr "Developer Scratchpad 디렉토리에서 코드를 불러들일 수 있습니다"
+
+#. Translators: the label for a button in the Advanced settings category
+msgid "Open developer scratchpad directory"
+msgstr "Developer Scratchpad 디렉토리를 엽니다"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Microsoft UI Automation"
+msgstr "마이크로소프트 UI 자동화"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Word document controls when available"
+msgstr ""
+"적용 가능한 경우 마이크로소프트 워드 문서를 조정하기 위해서 UI 자동화를 사용"
+"합니다 (&W)"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Editable Text"
+msgstr "문자 편집"
+
+#. Translators: This is the label for a numeric control in the
+#. Advanced settings panel.
+msgid "Caret movement timeout (in ms)"
+msgstr "커서 이동 시간제한 (천분의 일초 단위)"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Debug logging"
+msgstr "디버그 기록"
+
+#. Translators: This is the label for a list in the
+#. Advanced settings panel
+msgid "Enabled logging categories"
+msgstr "활성화된 기록 유형"
+
+#. Translators: This is the label for the Advanced settings panel.
+msgid "Advanced"
+msgstr "고급 설정"
+
+#. Translators: This is the label to warn users about the Advanced options in the
+#. Advanced settings panel
+msgid "Warning!"
+msgstr "경고!"
+
+msgid ""
+"The following settings are for advanced users. Changing them may cause NVDA "
+"to function incorrectly. Please only change these if you know what you are "
+"doing or have been specifically instructed by NVDA developers."
+msgstr ""
+"다음 설정 항목들은 숙련된 사용자를 대상으로 합니다. 이 설정 값을 바꾸면 NVDA"
+"가 비정상적으로 동작할 수 있습니다. 각 항목의 기능을 숙지하고 있거나, NVDA 개"
+"발자에게 따로 안내를 받은 경우에만 바꾸시기 바랍니다."
+
+msgid ""
+"I understand that changing these settings may cause NVDA to function "
+"incorrectly."
+msgstr ""
+"이 설정을 변경하면 NVDA가 비정상적으로 동작할 수 있다는 점을 이해합니다."
+
+#. Translators: This is the label for a button in the Advanced settings panel
+msgid "Restore defaults"
+msgstr "기본값 복원"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "무제한 (&A)"
@@ -9224,8 +9459,8 @@ msgid "Focus context presentation:"
 msgstr "포커스 세부 내용 출력:"
 
 #. Translators: This is the label for the NVDA settings dialog.
-msgid "NVDA"
-msgstr "NVDA"
+msgid "NVDA Settings"
+msgstr "NVDA 설정"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
@@ -9338,6 +9573,11 @@ msgstr "음성 출력 끔"
 msgid "word"
 msgstr "단어"
 
+#. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
+msgid "Positioned at {x}, {y}"
+msgstr "좌표 {x}, {y}에 있습니다"
+
 #. Translators: current position in a document as a percentage of the document length
 #, python-brace-format
 msgid "{curPercent:.0f}%"
@@ -9380,7 +9620,7 @@ msgstr "작업 표시줄"
 #. Translators: a color, broken down into its RGB red, green, blue parts.
 #, python-brace-format
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
-msgstr "RGB 적 {rgb.red}, 녹 {rgb.green}, 청 {rgb.blue}"
+msgstr "RGB 적색 {rgb.red}, 녹색 {rgb.green}, 청색 {rgb.blue}"
 
 #, python-format
 msgid "%s items"
@@ -9493,7 +9733,7 @@ msgstr "삭제: {text}"
 #. Translators: The general label shown for track changes
 #, python-brace-format
 msgid "track change: {text}"
-msgstr ""
+msgstr "변경 내용 추적: {text}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #, python-brace-format
@@ -10002,22 +10242,22 @@ msgstr "{seriesName} 계열 {seriesIndex} 총 {seriesCount}"
 #. Translators: Message to be spoken to report Slice Color in Pie Chart
 #, python-brace-format
 msgid "Slice color: {colorName} "
-msgstr ""
+msgstr "슬라이스 색상: {colorName} "
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 #, python-brace-format
 msgid "no change from point {previousIndex}, "
-msgstr ""
+msgstr "{previousIndex} 포인트부터 변동 없음, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 #, python-brace-format
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "증가 {incrementValue} from point {previousIndex}, "
+msgstr "{previousIndex} 포인트로부터 {incrementValue} 증가, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 #, python-brace-format
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "감소 {decrementValue} from point {previousIndex}, "
+msgstr "{previousIndex} 포인트로부터 {decrementValue} 감소, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
@@ -10090,38 +10330,35 @@ msgstr " 제목: {axisTitle}"
 
 #. Translators: Indicates that trendline type is Exponential
 msgid "Exponential"
-msgstr ""
+msgstr "기하급수형"
 
 #. Translators: Indicates that trendline type is Linear
-#, fuzzy
 msgid "Linear"
-msgstr "꺾은선형"
+msgstr "선형"
 
 #. Translators: Indicates that trendline type is Logarithmic
 msgid "Logarithmic"
-msgstr ""
+msgstr "로그형"
 
 #. Translators: Indicates that trendline type is Moving Average
 msgid "Moving Average"
-msgstr ""
+msgstr "이동평균형"
 
 #. Translators: Indicates that trendline type is Polynomial
 msgid "Polynomial"
-msgstr ""
+msgstr "다항식"
 
 #. Translators: Indicates that trendline type is Power
 msgid "Power"
-msgstr ""
+msgstr "멱함수"
 
 #. Translators: Substitute superscript two by square for R square value
-#, fuzzy
 msgid " square "
 msgstr " 제곱 "
 
 #. Translators: Substitute - by minus in trendline equations.
-#, fuzzy
 msgid " minus "
-msgstr "키패드 대시"
+msgstr " 빼기 "
 
 #. Translators: This message gives trendline type and name for selected series
 #, python-brace-format
@@ -10164,6 +10401,9 @@ msgid ""
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
 "{plotAreaInsideLeft:.0f}"
 msgstr ""
+"그림 영역, 내부 높이: {plotAreaInsideHeight:.0f}, 내부 너비: "
+"{plotAreaInsideWidth:.0f}, 영역내 세로 위치: {plotAreaInsideTop:.0f}, 영역내 "
+"가로 위치: {plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Office chart.
 msgid "Plot area "
@@ -10172,12 +10412,12 @@ msgstr "그림 영역"
 #. Translators: a message for the legend entry of a chart in MS Office
 #, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "범례 항목 계열 {seriesName} {seriesIndex} 총 {seriesCount}"
+msgstr "범례 항목 계열 {seriesName} {seriesCount} 중 {seriesIndex}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr " {segmentType} {pointIndex} 총 {pointCount}"
+msgstr "범례 항목 {legendEntryCount} 중 {legendEntryIndex}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -10398,7 +10638,7 @@ msgstr ""
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
 msgid "Sheet {0}, {1}"
-msgstr "Sheet {0}, {1}"
+msgstr "시트 {0}, {1}"
 
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
@@ -10451,18 +10691,16 @@ msgid "down-right diagonal line"
 msgstr "하향 대각선"
 
 #. Translators: border positions in Microsoft Excel.
-#, fuzzy
 msgid "horizontal borders except outside"
-msgstr "가로 줄"
+msgstr "가장자리를 제외한 가로선"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "vertical borders except outside"
-msgstr ""
+msgstr "가장자리를 제외한 세로선"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "continuous"
-msgstr "컨텐츠 정보"
+msgstr "연속선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "dashed"
@@ -10485,9 +10723,8 @@ msgid "double"
 msgstr "이중"
 
 #. Translators: border styles in Microsoft Excel.
-#, fuzzy
 msgid "slanted dash dot"
-msgstr "space with dot"
+msgstr "비스듬한 쇄선"
 
 #. Translators: border styles in Microsoft Excel.
 msgid "hair"
@@ -10666,14 +10903,14 @@ msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{description} {revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{distance} from left edge of page"
-msgstr "슬라이드 좌측으로부터 {distance:.3g} 포인트"
+msgstr "슬라이드 좌측으로부터 거리 {distance}"
 
 #. Translators: a distance from the left edge of the page in Microsoft Word
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{distance} from top edge of page"
-msgstr "슬라이드 위로부터 {distance:.3g} 포인트"
+msgstr "슬라이드 위로부터 거리 {distance}"
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -10833,3 +11070,31 @@ msgstr "두 줄 간격"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 줄 간격"
+
+#, fuzzy
+#~ msgid "Passes gesture through to the application"
+#~ msgstr "다른 프로그램에서의 키보드 입력 처리 (&A)"
+
+#, fuzzy
+#~ msgid ""
+#~ "Toggles on and off the movement of the system focus due to browse mode "
+#~ "commands"
+#~ msgstr "탐색 객체가 포커스 이동을 따라갈 것인지를 토글합니다"
+
+#~ msgid "%s Settings Category"
+#~ msgstr "%s 설정 패널"
+
+#~ msgid "NVDA"
+#~ msgstr "NVDA"
+
+#~ msgid "remove"
+#~ msgstr "제거"
+
+#~ msgid ""
+#~ "For the new language to take effect, the configuration must be saved and "
+#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
+#~ "to manually save and exit at a later time."
+#~ msgstr ""
+#~ "새 언어를 적용하기 위해서는 현재 환경 설정을 저장하고 NVDA를 다시 시작해"
+#~ "야 합니다. 엔터를 눌러 환경 설정을 저장하고 NVDA를 다시 시작하거나, 취소하"
+#~ "고 수동으로 다시 시작하십시오."
