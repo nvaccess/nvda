@@ -247,4 +247,4 @@ class RootProxyTextInfo(textInfos.TextInfo):
 		return self.innerTextInfo.pointAtStart
 
 	def scrollIntoView(self):
-		return self.innerTextInfo.scrollIntoView()
+		self.innerTextInfo.scrollIntoView()
