@@ -989,6 +989,10 @@ class UIA(Window):
 		self.UIASelectionItemPattern=self._getUIAPattern(UIAHandler.UIA_SelectionItemPatternId,UIAHandler.IUIAutomationSelectionItemPattern)
 		return self.UIASelectionItemPattern
 
+	def _get_UIAScrollItemPattern(self):
+		self.UIAScrollItemPattern=self._getUIAPattern(UIAHandler.UIA_ScrollItemPatternId,UIAHandler.IUIAutomationScrollItemPattern)
+		return self.UIAScrollItemPattern
+
 	def _get_UIATextPattern(self):
 		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=True)
 		return self.UIATextPattern
@@ -1437,7 +1441,11 @@ class UIA(Window):
 		return info
 
 	def scrollIntoView(self):
-		pass
+		if self.UIAScrollItemPattern:
+			try:
+				self.UIAScrollItemPattern.ScrollIntoView()
+			except COMError:
+				log.debugWarning("UIA ScrollItem pattern ScrollIntoView failed", exc_info=True)
 
 	def _get_controllerFor(self):
 		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
