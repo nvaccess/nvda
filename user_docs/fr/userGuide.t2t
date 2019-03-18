@@ -1536,13 +1536,6 @@ Si cette option est activée, NVDA émettra des sons particuliers au passage du 
 Activée par défaut, cette option vous permet de choisir si des gestes (tels que l'appui sur des touches) qui ne déclenchent pas une commande NVDA et ne sont pas considérés comme une commande en général, devraient être interceptés pour ne pas interagir avec le document actuellement en focus. 
 Par exemple, si l'option est activée, si la lettre j est pressée, elle sera interceptée pour ne pas atteindre le document, même si ce n'est ni une touche de navigation rapide ni une commande dans l'application elle-même.
 
-==== Le focus suit le mode navigation ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Touche : NVDA+8
-
-Activée par défaut, cette option vous permet de choisir si le focus système doit suivre automatiquement le focus du mode navigation dans les navigateurs.
-Si activée, c'est le comportement par défaut de NVDA jusqu'à la version 2018.4.
-Désactiver cette option pourrait apporter une expérience de navigation plus rapide et une meilleure réactivité en mode navigation. Ceci est expérimental dans la version 2019.1.
-
 +++ Mise en Forme des Documents (NVDA+contrôle+d) +++[DocumentFormattingSettings]
 La plupart des cases à cocher de cette catégorie servent à définir quelles informations de mise en forme on souhaite entendre automatiquement lorsqu'on parcourt un document.
 Par exemple, si on coche la case "Annoncer le nom de la police", à chaque fois que les flèches amènent sur un texte avec une police différente, le nom de la police est annoncé.
@@ -1610,33 +1603,41 @@ Elle contient les options suivantes :
 ==== Langue de Reconnaissance ====[Win10OcrSettingsRecognitionLanguage]
 Cette liste déroulante vous permet de choisir la langue à utiliser pour la reconnaissance de texte.
 
-+++ Paramètres Avancés +++
++++ Paramètres Avancés +++[AdvancedSettings]
 Avertissement ! Les paramètres dans cette catégorie sont pour les utilisateurs avancés et peuvent provoquer un mauvais fonctionnement de NVDA si mal configurés.
 Ne modifiez ces paramètres que si vous êtes sûr de ce que vous faites ou si un développeur NVDA vous a demandé de le faire.
 
-==== Activer le chargement de code personnalisé depuis le Répertoire Bloc-notes du Développeur ====
+==== Modifier les paramètres avancés ====[AdvancedSettingsMakingChanges]
+Pour pouvoir modifier les paramètres avancés, les contrôles doivent être activés en confirmant, via la case à cocher, que vous comprenez les risques qu'il y a à modifier ces paramètres
+
+==== Rétablir les paramètres par défaut ====[AdvancedSettingsRestoringDefaults]
+Le bouton rétablit les valeurs par défaut des paramètres, même si la case de confirmation n'est pas cochée.
+Après avoir modifié les paramètres vous pouvez souhaiter revenir aux valeurs par défaut.
+Cela peut aussi être le cas si vous n'êtes pas sûr que les paramètres ont été modifiés.
+
+==== Activer le chargement de code personnalisé depuis le Répertoire Bloc-notes du Développeur ====[AdvancedSettingsEnableScratchpad]
 Quand vous développez des extensions pour NVDA, il est utile de pouvoir tester le code en cours d'écriture.
 Quand elle est activée, cette option permet à NVDA de charger des extensions applicatives personnalisées, globalPlugins, brailleDisplayDrivers et synthDrivers, depuis un répertoire bloc-notes du développeur spécial dans votre répertoire de configuration utilisateur.
 Précédemment NVDA aurait chargé le code personnalisé directement depuis le répertoire de configuration utilisateur, sans possibilité de désactiver ce comportement. 
 Cette option est désactivée par défaut, garantissant qu'aucun code non testé n'est exécuté par NVDA sans que l'utilisateur en ait explicitement connaissance.
 Si vous voulez distribuer du code spécifique à d'autres personnes, vous devriez l'empaqueter sous forme d'extension pour NVDA.
 
-==== Ouvrir le Répertoire Bloc-notes du Développeur ====
+==== Ouvrir le Répertoire Bloc-notes du Développeur ====[AdvancedSettingsOpenScratchpadDir]
 Ce bouton ouvre le répertoire où vous pouvez placer le code personnalisé que vous êtes en train de développer.
 Ce bouton n'est disponible que si NVDA est configuré pour permettre le chargement de code personnalisé depuis le répertoire Bloc-notes du développeur.
  
-==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word quand disponible ====
+==== Utiliser UI automation pour accéder aux contrôles des documents Microsoft Word quand disponible ====[AdvancedSettingsUseUiaForWord]
 Quand cette option est activée, NVDA essaie d'utiliser l'API d'accessibilité Microsoft UI Automation pour récupérer les informations des contrôles de documents Microsoft Word.
 Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de message de Miicrosoft Outlook.
  Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous windows 10, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de  Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
 Cependant, il peut exister certaines informations qui ne sont pas exposées, ou exposées incorrectement sous certaines versions de Microsoft Office, ce qui signifie qu'on ne peut pas toujours se fier à ce support UI automation.
 Nous ne recommandons pas encore que la majorité des utilisateurs activent cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
 
-==== Délai d'attente de mouvement du curseur (en ms) ====
+==== Délai d'attente de mouvement du curseur (en ms) ====[AdvancedSettingsCaretMoveTimeout]
 Cette option vous permet de configurer le nombre de millisecondes durant lequel NVDA attendra le déplacement du curseur (point d'insertion) dans les contrôles de texte éditable.
 Si vous trouvez que NVDA semble mal suivre le curseur ex : il semble être toujours un caractère en retard ou il répète les lignes, alors vous pouvez essayer d'accroître cette valeur.
 
-==== Catégories de journalisation de débogage ====
+==== Catégories de journalisation de débogage ====[AdvancedSettingsDebugLoggingCategories]
 Les cases à cocher dans cette liste vous permettent d'activer des catégories spécifiques de messages de débogage dans le journal de NVDA.
 La journalisation de ces messages peut dégrader la performance et produire de gros fichiers de journal.
 N'activez l'une d'entre elle que si un développeur de NVDA vous l'a spécifiquement demandé ex : pour déboguer un pilote de terminal braille ne fonctionnant pas correctement.
@@ -2561,7 +2562,7 @@ Les modèles suivants sont supportés :
 - BrailleNote Apex (connexion Bluetooth et USB)
 -
 
-Pour le BrailleNote Touch, Veuillez vous référer à la section [Séries Brailliant BI / BrailleNote Touch HumanWareBrailliant].
+Pour le BrailleNote Touch, Veuillez vous référer à la section [Séries Brailliant BI / BrailleNote Touch #HumanWareBrailliant].
 
 Excepté pour le BrailleNote PK, les claviers braille (BT) et QWERTY (QT) sont supportés.
 Pour le BrailleNote QT, l'émulation de clavier PC n'est pas supportée.

@@ -3,6 +3,84 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+Caracteristicile principale ale acestei versiuni includ îmbunătățiri de performanță la accesarea Microsoft Word și Microsoft Excel, îmbunătățiri de stabilitate și securitate precum suportul pentru suplimente cu informații despre compatibilitatea versiunii și multe alte defecte rezolvate.
+
+Vă rugăm să țineți cont de faptul că începând cu această versiune de NVDA, appModule-urile personalizate, globalPlugin-urile, driverele afișajelor braille și ale sintetizatoarelor nu vor mai fi încărcate automat din dosarul configurației utilizatorului. 
+S-a ajuns la concluzia că ar fi mai bine ca acestea să fie instalate ca parte a unui supliment NVDA. Pentru cei care lucrează la un supliment, codul pentru test poate fi pus într-un dosar scratchpad pentru dezvoltatori, aflat în dosarul configurației utilizatorului NVDA, dacă opțiunea Developer scratchpad este activată din noul panou al setărilor avansate NVDA.
+Aceste modificări sunt făcute pentru a asigura compatibilitatea codului personalizat, astfel încât NVDA să nu aibă probleme dacă acel cod devine incompatibil cu versiunile mai noi.
+Vă rugăm să consultați cu atenție lista de modificări pentru mai multe detalii în legătură cu asta, iar astfel veți afla și cum suplimentele sunt mai bine versionate.
+
+== Noi funcționalități ==
+- Noi tabele braille: Afrikaans, arabă (braille în 8 puncte pentru calculator), arabă grad 2, spaniolă grad 2. (#4435, #9186)
+- S-a adăugat o opțiune în setările mausului care face ca NVDA să se descurce în situațiile în care mausul este controlat de o altă aplicație. (#8452)
+ - Aceasta va permite ca NVDA să urmărească mausul atunci când calculatorul este controlat de la distanță prin utilizarea TeamViewer sau a altui program de control de la distanță.
+- S-a adăugat parametrul liniei de comandă `--enable-start-on-logon` pentru a ne permite să  setăm dacă vrem ca instalările silențioase de NVDA să îl facă să pornească la autentificarea în windows sau nu.
+- Puteți dezactiva caracteristicile NVDA de înregistrare în jurnal setând nivelul de înregistrare la „dezactivat” din panoul setărilor generale. (#8516)
+- Prezența formulelor în LibreOffice și în foile de calcul Apache OpenOffice este raportată. (#860)
+- În Mozilla Firefox și Google Chrome, modul de navigare raportează elementul selectat din casetele de liste și din cele de tip vedere listă extinsă.
+ - Aceasta funcționează în Firefox 66 și mai nou.
+ - Nu funcționează pentru anumite casete de liste (controale de selectare HTML) din Chrome.
+- Suport prematur pentru aplicații precum Mozilla Firefox pe calculatoare cu procesoare ARM64 (e.x. Qualcomm Snapdragon). (#9216)
+- S-a adăugat o nouă categorie pentru setările avansate în dialogul setărilor NVDA, incluzând o opțiune de încercare a noului suport NVDA pentru Microsoft Word prin API-ul Microsoft UI Automation. (#9200)
+- S-a adăugat suportul pentru vizualizarea grafică din Windows Disk Management. (#1486)
+- S-a adăugat suportul pentru Handy Tech Connect Braille și Basic Braille 84. (#9249)
+
+
+== Modificări ==
+- S-a actualizat traducătorul braille liblouis la versiunea 3.8.0. (#9013)
+- Autorii de suplimente pot stabili acum o versiune minimă necesară de NVDA pentru suplimentele lor. NVDA va refuza să instaleze sau să încarce un supliment a cărui versiune minimă necesară de NVDA este mai veche decât versiunea NVDA curentă. (#6275)
+- Autorii de suplimente pot să specifice ultima versiune de NVDA cu care și-au testat suplimentul. Dacă un supliment a fost testat cu o versiune mai veche decât cea curentă, NVDA va refuza să instaleze sau să încarce acel supliment. (#6275)
+- Această versiune de NVDA va permite instalarea și încărcarea suplimentelor care încă nu conțin informații despre versiunea minimă de NVDA și despre cea cu care au fost testate, însă actualizarea la viitoarele versiuni de NVDA (E.X. 2019.2) poate face ca aceste suplimente mai vechi să fie dezactivate.
+- Comanda de deplasare a mausului la obiectul navigator este disponibilă acum și în Microsoft Word, precum și pentru comenzile UIA, în mod particular și în Microsoft Edge. (#7916, #8371)
+- Raportarea textului de sub maus a fost îmbunătățită în Microsoft Edge și în alte aplicații UIA. (#8370)
+- Când NVDA este pornit cu parametrul liniei de comandă `--portable-path`, calea furnizată este completată automat la încercarea de creare a unei copii portabile de NVDA utilizându-se meniul acestuia. (#8623)
+- S-a actualizat calea către tabelul braille norvegian pentru reflectarea standardului din anul 2015. (#9170)
+- La navigarea în paragrafe (control plus săgețile sus și jos( sau la cea în celulele de tabel (control plus alt plus toate săgețile), existența greșelilor de ortografie nu va mai fi anunțată, chiar dacă NVDA este configurat astfel încât să facă asta automat. Temeiul care stă la baza implementării acestei modificări este acela că paragrafele și celulele de tabel pot fi destul de mari, iar detectarea erorilor în unele aplicații poate fi foarte enervantă. (#9217)
+- NVDA nu mai încarcă automat  appModule-uri personalizate, globalPlugin-uri și și drivere ale sintetizatoarelor și ale afișajelor braille din dosarul configurației utilizatorului. Acest cod trebuie să fie inclus într-un supliment NVDA, cu informații corecte despre versiune, asigurându-ne astfel că  codul incompatibil nu este executat cu versiunea curentă de NVDA. (#9238)
+ - Pentru dezvoltatorii care vor să-și testeze codul, trebuie să activeze opțiunea „Activează dosarul scratchpad pentru dezvoltatorii NVDA”, aflată în categoria setărilor avansate NVDA, și să-și pună codul în folder-ul „scratchpad”, aflat în directorul configurației utilizatorului NVDA, atunci când această opțiune este activată.
+
+ 
+== Defecte rezolvate ==
+- La utilizarea sintetizatorului Windows OneCore pe actualizarea Windows 10 din aprilie 2018 sau mai nouă, nu se mai fac pauze mari în vorbire. (#8985)
+- La deplasarea caracter cu caracter în editoarele de text de tip plain text control (cum ar fi Notepad) sau în modul de navigare, caracterele emoji pe 32 de biți care conțin două puncte de cod UTF-16 (cum ar fi đź¤¦) se vor citi corect. (#8782)
+- S-a îmbunătățit dialogul de confirmare a repornirii după modificarea limbii de interfață a NVDA. Textele și etichetele butoanelor sunt acum mai concise și mai puțin confuze. (#6416)
+- Dacă a treia parte din sintetizator eșuează să se încarce, NVDA va reveni la sintetizatorul Windows OneCore pe Windows 10, nu la Espeak. (#9025)
+- S-a scos opțiunea dialogului de bun venit din meniul NVDA atâta timp cât acesta se află în ecranele securizate. (#8520)
+- La deplasarea cu tasta Tab sau la folosirea navigării rapide în modul de navigare, legendele din panourile tabulator sunt raportate acum mai consistent. (#709)
+- NVDA va anunța schimbările de selecție pentru anumite elemente de selectare a orei în aplicații din Windows 10 precum Alarme și Ceas. (#5231)
+- În centrul de acțiuni din Windows 10, NVDA va anunța starea mesajelor la activarea sau dezactivarea acțiunilor rapide precum luminozitatea și asistarea focalizării. (#8954)
+- În centrul de acțiuni din Windows 10 October 2018 Update și mai vechi, NVDA va recunoaște controlul acțiunii rapide de luminozitate ca buton în loc de buton de activare. (#8845)
+- NVDA va urmări din nou cursorul și va anunța caracterele șterse din câmpurile de editare „Salt la” și „Caută” din Microsoft Excel. (#9042)
+- S-a reparat o eroare rară aflată în modul de navigare din Mozilla Firefox. (#9152)
+- NVDA nu mai eșuează să raporteze focalizarea pentru niște controale din pamblica Microsoft Office 2016 dacă aceasta este închisă.
+- Ultimele taste de deplasare a cursorului pe afișajele eurobraille cu 80 de celule nu mai deplasează cursorul la o poziție la sau după începutul rândului braille. (#9152)
+- S-a reparat navigarea de tabel în vizualizarea din Mozilla Thunderbird. (#8396)
+- În Mozilla Firefox și Google Chrome, trecerea la modul de focalizare funcționează cum trebuie pentru anumite casete de liste tree-uri (unde caseta de listă sau tree nu este ea însăși focalizabilă, însă elementele ei sunt). (#3573, #9157)
+- Modul de navigare este acum activat cum trebuie la citirea mesajelor din Outlook 2016/365 dacă se utilizează suportul experimental UI Automation al NVDA pentru documentele Word. (#9188)
+- Acum, este mult mai puțin probabil ca NVDA să se blocheze astfel încât singura soluție rămasă să fie deconectarea dumneavoastră de la sesiunea curentă de Windows. (#6291)
+- În Windows 10 October 2018 Update și mai nou, la deschiderea istoricului planșetei cloud, planșeta fiind goală, NVDA îi va anunța starea. (#9103)
+- În Windows 10 October 2018 Update și mai nou, la căutarea emoji-urilor în panoul lor, NVDA va anunța topul rezultatelor căutării. (#9105)
+- NVDA nu se mai blochează în fereastra principală a Oracle VirtualBox 5.2 și mai nou. (#9202)
+- Reacția în Microsoft Word la navigarea rând cu rând, paragraf cu paragraf sau celulă cu celulă poate fi semnificativ îmbunătățită în unele documente. Memento: pentru cea mai bună performanță, setați Microsoft Word la vizualizare schiță cu alt+w după deschiderea unui document. (#9217)
+- În Mozilla Firefox și Google Chrome, alertele false nu mai sunt raportate. (#5657)
+- Îmbunătățiri semnificative de performanță la navigarea celulelor din Microsoft Excel, în mod particular atunci când foile de calcul conțin comentarii. (#7348)
+- N-ar mai trebui să fie necesară activarea  opțiunilor de editare a celulelor din Microsoft Excel pentru accesarea controlului de editare a celulelor cu NVDA în Excel 2016/365. (#8146)
+- S-a reparat o blocare raportată uneori în Firefox la navigarea rapidă printre repere atunci când suplimentul Enhanced Aria era în uz. (#8980)
+
+
+== Modificări pentru dezvoltatori ==
+- NVDA poate fi făcut acum cu toate edițiile Microsoft Visual Studio 2017 (nu doar cu ediția pentru comunitate). (#8939)
+- Puteți include o ieșire de jurnal din liblouis în jurnalul NVDA setând steagul louis boolean în secțiunea debugLogging din configurația NVDA. (#4554)
+- Autorii de suplimente pot furniza acum informații despre compatibilitatea versiunii NVDA în manifesturile suplimentelor. (#6275, #9055)
+ - minimumNVDAVersion: Versiunea minimă necesară de NVDA cu care un supliment să funcționeze corespunzător..
+ - lastTestedNVDAVersion: Ultima versiune de NVDA cu care a fost testat suplimentul.
+- Obiectele OffsetsTextInfo  pot implementa metoda _getBoundingRectFromOffset pentru a permite recuperarea dreptunghiurilor asciate pe caractere în loc de puncte. (#8572)
+- S-a adăugat o proprietate numită boundingRect la obiectele pentru recuperarea dreptunghiurilor asciate ale unei părți de text. (#8371)
+- Proprietățile și metodele din clase pot fi marcate ca abstracte în NVDA. Aceste clase se vor scoate în față o eroare  dacă sunt instanțiate. (#8294, #8652, #8658)
+- NVDA poate loga timpul de la intrare atunci când este vorba de text, ceea ce ajută la măsurarea reacției percepute. Aceasta poate fi activată setând opțiunea timeSinceInput la True în secțiunea debugLog a configurației NVDA. (#9167)
+
+
 = 2018.4.1 =
 Această versiune repară o eroare care apărea la pornirea NVDA dacă aragoneza era setată ca limbă de interfață a acestuia. (#9089)
 
