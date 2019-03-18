@@ -446,15 +446,15 @@ Khi di chuyển trên màn hình với các lệnh duyệt, đối tượng đi�
 Chú ý là với một số ứng dụng mới thì NVDA có thể chưa nhận biết được hết nội dung trên màn hình do có thể là ứng dụng đã dùng cơ chế vẽ màn hình mới.
 
 ++ Di chuyển với chuột ++[NavigatingWithTheMouse]
-Khi bạn di chuyển chuột thì theo mặc định NVDA sẽ tự động thông báo văn bản và đối tượng ở dưới vị trí con trỏ chuột hay nơi chuột đi qua.
+Khi bạn di chuyển chuột thì theo mặc định, NVDA sẽ tự động thông báo văn bản và đối tượng ở dưới vị trí con trỏ chuột hay nơi chuột đi qua.
 Nếu bạn lựa chọn thì NVDA có thể thông báo cả đoạn văn bản, hay một dòng tại vị trí con trỏ chuột.
 
-Bạn cũng có thể cài đặt để NVDA thông báo kiểu đối tượng [object #Objects] khi nó đi qua như kiểu nút, danh sách, v...v...
-Chức năng này rất hữu ích trong nhiều trường hợp khi thông tin hiển thị chưa đủ để bạn hiểu rõ về đối tượng đó.
+Bạn cũng có thể cài đặt để NVDA thông báo kiểu đối tượng [(object) #Objects] khi nó đi qua như kiểu nút, danh sách, v...v...
+Chức năng này rất hữu ích với người mù hoàn toàn trong nhiều trường hợp khi thông tin hiển thị chưa đủ để bạn hiểu rõ về đối tượng đó.
 
 NVDA giúp bạn dễ hình dung được vị trí của chuột trên màn hình dựa vào sự thay đổi âm thanh theo tọa độ của chuột.
 Nếu chuột ở vị trí trên cao thì độ cao của tiếng bip cũng tăng theo.
-Còn khi chuột thay đổi vị trí theo chiều ngang (trái hoặc phải) thì âm lượng của tiếng bíp ở 2 bên loa cũng sẽ thay đổi theo.
+Còn khi chuột thay đổi vị trí theo chiều ngang (trái hoặc phải) thì âm lượng của tiếng bíp ở 2 bên loa cũng sẽ thay đổi theo (điều kiện là người dùng phải có loa hoặc tai nghe âm thanh stereo).
 
 Tính năng này mặc định không được bật.
 Nếu muốn bật tính năng này, bạn có thể cấu hình trong phân loại [Chuột #MouseSettings] của hộp thoại [cấu hình NVDA #NVDASettings], được tìm thấy trong trình đơn tùy chọn của NVDA.
@@ -477,16 +477,16 @@ Chế độ duyệt tài liệu cũng được hỗ trợ cho Microsoft Word.
 
 Trong chế độ duyệt tài liệu, nội dung có thể được duyệt bằng các phím mũi tên.
 Tất cả các phím tắt sử dụng cho [con trỏ nháy #SystemCaret] cũng đều hoạt động tốt như đọc cả tài liệu, thông báo thuộc tính văn bản, di chuyển qua các hàng, các cột trong bảng, v...v...
-Các thông tin khác như liên kết, tiêu đề, 	v của văn bản khi bạn duyệt qua cũng sẽ được thông báo.
+Các thông tin khác như liên kết, tiêu đề, v...v... của văn bản cũng sẽ được thông báo khi bạn duyệt qua.
 
 Đôi khi, bạn muốn tương tác trực tiếp với các đối tượng trong tài liệu.
 Ví dụ bạn cần thao tác trực tiếp với ô nhập liệu để nhập nội dung.
 Bạn chuyển qua chế độ focus (focus mode) để cho phép đối tượng nhận trực tiếp sự kiện từ bàn phím.
 Mặc định, khi bạn dùng phím tab chuyển đến một đối tượng cho phép nhập, NVDA sẽ tự động chuyển qua chế độ focus.
-Ngược lại, nếu bạn chuyển đến một đối tượng mà không hoạt động ở chế độ focus thì NVDA sẽ tự động chuyển trở lại chế độ duyệt.
+Ngược lại, nếu bạn chuyển đến một đối tượng bằng tab hay dùng chuột bấm vào đối tượn không hoạt động ở chế độ focus thì NVDA sẽ tự động chuyển trở lại chế độ duyệt.
 Bạn cũng có thể tự chuyển sang chế độ focus ở một đối tượng nào đó bằng cách bấm enter hoặc khoảng trắng.
 Bấm phím ESC để quay lại chế độ duyệt.
-Bạn cũng có thể thiết lập để chế độ focus tiếp tục hoạt động cho đến khi bạn thoát khỏi nó
+Thêm vào đó, bạn cũng có thể thiết lập để chế độ focus tiếp tục hoạt động cho đến khi bạn thoát khỏi nó
 
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
@@ -500,7 +500,7 @@ Bạn cũng có thể thiết lập để chế độ focus tiếp tục hoạt 
 %kc:endInclude
 
 ++ Ký tự di chuyển đơn ++[SingleLetterNavigation]
-Trong chế độ duyệt tài liệu, NVDA cung cấp cơ chế duyệt nhanh đến các thành phần trong tài liệu đó.
+Trong chế độ duyệt tài liệu, để duyệt nhanh hơn, NVDA cung cấp các phím di chuyển đơn để di chuyển nhanh đến một thành phần nhất định trong tài liệu.
 Chú ý rằng không phải tất cả các phím tắt này đều hỗ trợ cho mọi loại tài liệu.
 
 %kc:beginInclude
@@ -543,7 +543,7 @@ Bấm NVDA+shift+khoảng trắng để bật/tắt ký tự di chuyển đơn.
 
 ++ Hộp thoại danh sách các thành phần ++[ElementsList]
 NVDA cho phép bạn lọc và truy cập nhanh đến các đối tượng trong tài liệu 
-Ví dụ như liên kết (link), tiêu đề (heading), biểu mẫu, nút  hay cột mốc (landmarks) bằng hộp thoại danh sách các thành phần. 
+Ví dụ: trên các trình duyệt, có thể liệt kê các liên kết (link), tiêu đề (heading), biểu mẫu (form), nút (button) hay cột mốc (landmarks) bằng hộp thoại danh sách các thành phần. 
 Bạn có thể thay đổi liệt kê giữa các loại thành phần trên ở nhóm nút radio.
 Có ô nhập liệu cũng cho phép bạn nhập các ký tự để lọc các đối tượng trong danh sách.
 Khi tìm thấy đối tượng mong muốn, bạn có thể đi đến đối tượng đó hoặc kích hoạt luôn nó.
@@ -553,12 +553,12 @@ Khi tìm thấy đối tượng mong muốn, bạn có thể đi đến đối t
 %kc:endInclude
 
 ++ Thao tác trên đối tượng nhúng ++[ImbeddedObjects]
-Tài liệu có thể chứa các loại đối tượng sử dụng công nghệ như Adobe Flash, Oracle Java, HTML5 cũng như các hộp thoại hay ứng dụng  khác.
+Các trang có thể chứa các loại đối tượng sử dụng công nghệ như Adobe Flash, Oracle Java, HTML5 cũng như các hộp thoại hay ứng dụng  khác.
 Trong quá trình duyệt tài liệu, nếu gặp các đối tượng trên thì NVDA sẽ thông báo kiểu đối tượng cho bạn, ví dụ đối tượng nhúng, hộp thoại, v...v...
 Có thể bấm phím di chuyển đơn o và shift+o để đi nhanh đến các đối tượng đó.
 Bạn có thể bấm phím enter để tương tác trực tiếp trên các đối tượng này.
-Nếu đối tượng đó có thể tương tác được thì bạn có thể dùng phím tab để chuyển qua lại giữa các thành phần con trong đối tượng đó.
-Một lệnh quan trọng được cung cấp để trở về trang gốc chứa đối tượng đã nhúng
+Nếu đối tượng tiếp cận được thì bạn có thể dùng phím tab để chuyển qua lại giữa các thành phần con trong đối tượng đó.
+Một lệnh được cung cấp để trở về trang gốc chứa đối tượng đã nhúng
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
 | Quay về chế độ duyệt tài liệu | NVDA+control+khoảng trắng | Quay về chế độ duyệt tài liệu |
@@ -604,64 +604,64 @@ Vui lòng đọc tài liệu hướng dẫn của MathPlayer phần các lệnh 
 Bấm escape nếu bạn muốn trở về tài liệu.
 
 + Chữ Nổi +[Braille]
-Nếu bạn sử dụng màn hình nổi, NVDA có thể xuất thông tin ra dạng chữ nổi.
+Nếu bạn sử dụng màn hình nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
 Nếu màn hình nổi của bạn có bàn phím kiểu Perkins, bạn có thể nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt.
 
 Vui lòng xem phần [các màn hình nổi được hỗ trợ #SupportedBrailleDisplays] để biết thêm thông tin về các mẫu màn hình được hỗ trợ.
-Phần này cũng có các thông tin về các màn hình được hỗ trợ tính năng ngầm tự nhận biết của NVDA.
+Phần này cũng có các thông tin về các màn hình được hỗ trợ tính năng tự dò tìm ngầm của NVDA.
 Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi #BrailleSettings] trong [hộp thoại cấu hình NVDA #NVDASettings.
 
 ++ Quy ước viết tắt cho loại điều khiển, trạng thái và cột mốc ++[BrailleAbbreviations]
 Để giúp hiển thị thông tin đầy đủ trên màn hình nổi, sau đây là một số quy ước viết tắt cho các loại điều khiển, trạng thái và cột mốc.
 
 || Viết tắt | Loại điều khiển |
-| app | application |
-| bqt | block quote |
-| btn | button |
-| drbtn | drop down button |
-| spnbtn | spin button |
-| splbtn | split button |
-| tgbtn | toggle button |
-| cbo | combo box |
-| chk | checkbox |
-| dlg | dialog |
-| doc | document |
-| edt | editable text field |
-| pwdedt | password edit |
-| embedded | embedded object |
-| enote | end note |
-| fnote | foot note |
-| gra | graphic |
+| app | application (ứng dụng) |
+| bqt | block quote ()trích dẫn) |
+| btn | button (nút) |
+| drbtn | drop down button (nút xổ xuông) |
+| spnbtn | spin button (nút cuộn) |
+| splbtn | split button (nút tách) |
+| tgbtn | toggle button (nút bật / tắt) |
+| cbo | combo box (hộp xổ) |
+| chk | checkbox (hộp kiểm) |
+| dlg | dialog (hộp thoại) |
+| doc | document (tài liệu) |
+| edt | editable text field (ô nhập liệu) |
+| pwdedt | password edit (ô nhập mật khẩu) |
+| embedded | embedded object (đối tượng nhún) |
+| enote | end note (chú thích cuối) |
+| fnote | foot note (chú thích chân trang) |
+| gra | graphic (hình ảnh) |
 | grp | grouping |
-| hN | heading at level n, e.g. h1, h2. |
+| hN | tiêu đề cấp n, ví dụ: h1, h2. |
 | hlp | help baloon |
-| lmk | landmark |
-| lnk | link |
-| vlnk | visited link |
-| lst | list |
-| mnu | menu |
-| mnubar | menu bar |
-| mnubtn | menu button |
-| mnuitem | menu item |
-| pnl | panel |
-| prgbar | progress bar |
-| rbtn | radio button |
-| scrlbar | scroll bar |
-| sect | section |
-| stbar | status bar |
-| tabctl | tab control |
-| tbl | table |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
+| lmk | landmark (cột mốc) |
+| lnk | link (liên kết) |
+| vlnk | visited link (liên kết đã xem) |
+| lst | list (danh sách) |
+| mnu | menu (thực đơn) |
+| mnubar | menu bar (thanh thực đơn) |
+| mnubtn | menu button (nút thực đơn) |
+| mnuitem | menu item (thành phần trong thực đơn) |
+| pnl | panel (bảng) |
+| prgbar | progress bar (thanh tiến độ) |
+| rbtn | radio button (nút radio) |
+| scrlbar | scroll bar (thanh cuộn) |
+| sect | section (phần) |
+| stbar | status bar (thanh trạng thái) |
+| tabctl | tab control (điều khiển tab) |
+| tbl | table (bảng biẻu) |
+| cN | số cột n của bảng, ví dụ: c1, c2. |
+| rN | số dòng n của bảng, ví dụ: r1, r2. |
 | term | terminal |
-| tlbar | tool bar |
-| tltip | tool tip |
-| tv | tree view |
-| tvbtn | tree view button |
-| tvitem | tree view item |
-| lv N | a tree view item has a hierarchical level N|
-| wnd | window |
-| ⠤⠤⠤⠤⠤ | separator |
+| tlbar | tool bar (thanh công cụ) |
+| tltip | tool tip (thông tin trợ giúp) |
+| tv | tree view (cây thư mục) |
+| tvbtn | tree view button (nút cây thư mục) |
+| tvitem | tree view item (thành phần trong cây thư mục) |
+| lv N | thành phần trong cây thư mục có cấp độ N|
+| wnd | window (cửa sổ) |
+| ⠤⠤⠤⠤⠤ | separator (phân cách) |
 
 Sau đây là quy ước cho trạng thái của điều khiển:
 || Viết tắt | Trạng thái |
@@ -739,26 +739,26 @@ Có thể cài đặt thêm ngôn ngữ nhận dạng bằng cách mở start me
 Bấm NVDA+r để nhận dạng với Windows 10 OCR.
 %kc:endInclude
 
-+ Phím tắt cho một số ứng dụng +[ApplicationSpecificFeatures]
-NVDA cung cấp một số phím tắt mở rộng để hỗ trợ người dùng thao tác trên một số ứng dụng.
++ Tính năng cụ thể cho một số ứng dụng +[ApplicationSpecificFeatures]
+NVDA cung cấp vài tính năng bổ sung cho một số ứng dụng, giúp một số thao tác nhất định trở nên dễ dàng hơn, hoặc cho phép truy cập một số tính năng vốn không tiếp cận được với người dùng trình đọc màn hình.
 
 ++ Microsoft Word ++[MicrosoftWord]
 
 +++ Tự động đọc tiêu đề dòng và cột +++[WordAutomaticColumnAndRowHeaderReading]
-NVDA sẽ tự động thông báo tiêu đề dòng và cột khi duyệt qua các bảng trong Word.
+NVDA có khả năng tự động thông báo tiêu đề dòng và cột khi duyệt qua các bảng trong Word.
 Để làm được điều này, trước tiên, phải bật tùy chọn thông báo tiêu đề dòng / cột trong phân loại Định dạng tài liệu trong [hộp thoại cấu hình NVDA #NVDASettings].
 Tiếp theo, NVDA cần biết dòng nào cột nào chứa tiêu đề trong bảng bất kỳ.
-Sau đó, chuyển đến ô đầu tiên của dòng hoặc cột chứa tiêu đề, có thể sử dụng một số phím tắt sau:  
+Sau khi chuyển đến ô đầu tiên của dòng hoặc cột chứa tiêu đề, có thể sử dụng một số phím tắt sau:  
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
 | Chọn tiêu đề cho cột | NVDA+shift+c | Bấm một  lần để lựa chọn ô này là ô tiêu đề đầu tiên của các cột, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các cột trong bảng. Bấm nhanh hai lần để bỏ lựa chọn này | 
 | Chọn tiêu đề cho dòng | NVDA+shift+r | Bấm một lần để lựa chọn ô này là ô tiêu đề đầu tiên của các dòng, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các hàng trong bảng. Bấm nhanh hai lần để bỏ lựa chọn này | | 
 %kc:endInclude
-Những thiết lập này sẽ được lưu lại trong tài liệu và có thể tương thích với những trình đọc màn hình khác như Jaws chẳng hạn.
+Những thiết lập này sẽ được lưu lại trong tài liệu dưới dạng điểm đánh dấu, tương thích với những trình đọc màn hình khác như Jaws chẳng hạn.
 Nghĩa là khi người dùng sử dụng trình đọc màn hình khác và mở tài liệu này thì thiết lập này sẽ tự động có sẵn
 
 +++ Chế độ duyệt tài liệu trong Microsoft Word +++[BrowseModeInMicrosoftWord]
-Tương tự đối với web, chế độ duyệt có thể được dùng trong Word, bạn có thể sử dụng những chức năng như duyệt nhanh, duyệt đối tượng.
+Tương tự đối với web, chế độ duyệt có thể được dùng trong Word, bạn có thể sử dụng những chức năng như duyệt nhanh, duyệt danh sách các thành phần.
 %kc:beginInclude
 Để bật tắt chế độ duyệt trong Word, bấm NVDA+khoảng trắng.
 %kc:endInclude
@@ -779,8 +779,8 @@ Tất cả các chú thích cũng như những thay đổi liên quan của tài
 ++ Microsoft Excel ++[MicrosoftExcel]
 
 +++ Tự Động Đọc Tiêu Đề Dòng Và Cột +++[ExcelAutomaticColumnAndRowHeaderReading]
-Khi di chuyển trong bảng tính của Excel, NVDA hoàn toàn có thể tự động đọc các tiêu đề của cột và dòng.
-Trước hết, bạn cần bật mục thông báo tiêu đề dòng/cột trong phân loại Định dạng tài liệu, được tìm thấy trong [hộp thoại cấu hình NVDA #NVDASettings].
+Khi di chuyển trong bảng tính của Excel, NVDA có khả năng tự động đọc các tiêu đề của cột và dòng.
+Trước tiên, bạn cần bật mục thông báo tiêu đề dòng/cột trong phân loại Định dạng tài liệu, được tìm thấy trong [hộp thoại cấu hình NVDA #NVDASettings].
 Bước thứ hai là NVDA cần biết dòng hoặc cột nào có tiêu đề.
 Sau khi chuyển đến ô đầu tiên của cột hoặc dòng có tiêu đề, hãy thực hiện một trong các lệnh sau:
 %kc:beginInclude
@@ -788,8 +788,8 @@ Sau khi chuyển đến ô đầu tiên của cột hoặc dòng có tiêu đề
 | Thiết lập tiêu đề cột | NVDA+shift+c | Bấm một lần, NVDA sẽ coi đây là ô tiêu đề đầu tiên nằm trên dòng có các tiêu đề cột; điều này nghĩa là khi di chuyển giữa các cột ở những dòng dưới, tiêu đề cột sẽ tự động được đọc. Bấm hai lần để xóa các thiết lập. |
 | Thiết lập tiêu đề dòng | NVDA+shift+r | Bấm một lần, NVDA sẽ coi đây là ô tiêu đề đầu tiên nằm ở cột có các tiêu đề dòng; điều này nghĩa là khi di chuyển giữa các dòng nằm sau cột này, tiêu đề dòng sẽ tự động được đọc. Bấm hai lần để xóa các thiết lập. |
 %kc:endInclude
-Những thiết lập này sẽ được lưu lại trong tài liệu và có thể tương thích với những trình đọc màn hình khác như Jaws chẳng hạn.
-Nghĩa là, sau này, khi tài liệu được mở và dùng một trình đọc màn hình khác để đọc, thì các thiết lập tiêu đề của cột và dòng vẫn còn giữ nguyên.
+Những thiết lập này sẽ được lưu lại trong tài liệu dưới dạng định nghĩa tên cho vùng, tương thích với những trình đọc màn hình khác như Jaws chẳng hạn.
+Nghĩa là, sau này, khi tài liệu được mở và dùng một trình đọc màn hình khác để đọc thì các thiết lập tiêu đề của cột và dòng vẫn còn giữ nguyên.
 
 +++ Danh Sách Thành Phần +++[ExcelElementsList]
 Giống như trên web, NVDA cung cấp tính năng danh sách thành phần, sẽ liệt kê một số loại thông tin giúp bạn truy xuất nhanh.
@@ -828,7 +828,7 @@ Chuyển qua chế độ duyệt bằng cách bấm NVDA+khoảng trắng. Lúc 
 +++ Biểu Mẫu +++[ExcelFormFields]
 Các bảng tính của Excel có thể có các biểu mẫu.
 Bạn có thể đi nhanh đến các biểu mẫu thông qua danh sách thành phần hoặc bằng ký tự di chuyển đơn với f và shift+f.
-Khi bạn chuyển đến một biểu mẫu ở chế độ duyệt, bấm enter hoặc phím khoảng trắng để kích hoạt hoặc chuyển qua chế độ focus và tương tác với biểu mẫu đó.
+Khi bạn chuyển đến một biểu mẫu ở chế độ duyệt, bấm enter hoặc khoảng trắng để kích hoạt hoặc chuyển qua chế độ focus và tương tác với biểu mẫu đó.
 Để biết thêm về chế độ duyệt và ký tự di chuyển đơn, hãy xem [phần chế độ duyệt #BrowseMode].
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
