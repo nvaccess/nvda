@@ -117,6 +117,7 @@ Oglejte si [razdelek s pogovornim oknom nezdružljivih dodatkov #incompatibleAdd
 Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu, še preden morate vnesti geslo za prijavo v sistem.
 To vključuje tudi Nadzor Uporabniških Računov in druge "varne" zaslone.
 Ta možnost je privzeto omogočena za sveže namestitve.
+
 +++ Ustvari Bližnjico na Namizju (ctrl+alt+a) +++[CreateDesktopShortcut]
 Ta možnost omogoča izbiro, če želite, da mora NVDA ustvariti bližnjico na namizju za zagon NVDA.
 Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+a. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
@@ -945,9 +946,8 @@ To je spustni seznam, kjer izbirate jezik, v katerem naj se prikazuje NVDA upora
 Na voljo je veliko jezikov, privzeto pa NVDA upošteva sistemski jezik "Windows".
 Možnost Privzeto pove NVDA, da naj uporabi jezik operacijskega sistema, ki je trenutno nastavljen.
 
-Za uveljavitev spremembe jezika, morate NVDA znova zagnati.
-NVDA vas bo vprašala, če jo želite ponovno zagnati, v primeru, da spremenite nastavitev in jo shranite.
-Pritisnite V redu in NVDA se bo ponovno naložila.
+Prosimo, pomnite, Za uveljavitev spremembe jezika, morate NVDA znova zagnati.
+Ko se pokaže pogovorno okno za potrditev, izberite "zaženi zdaj" ali "zaženi kasneje", če  želite uporabljati nov jezik zdaj ali ob ustrezno kasnejšem času. Če boste izbrali "zaženi kasneje", boste morali shraniti konfiguracijo (ali ročno ali z uporabo the funkcije shrani ob izhodu).
 
 ==== Shrani konfiguracijo ob izhodu ====[GeneralSettingsSaveConfig]
 Ta možnost v obliki izbirnika, ko je izbrana, pove NVDA, da naj ob izhodu trenutno konfiguracijo samodejno shrani.
@@ -961,9 +961,17 @@ Ko ta možnost ni izbrana, se bo NVDA po ukazu nemudoma izključila.
 Ta možnost je izbirnik, ki pove NVDA, naj, ali pa ne, predvaja zvok ob zagonu NVDA in izhodu iz nje.
 
 ==== Nivo beleženja ====[GeneralSettingsLogLevel]
-To je spustni meni, ki vam dovoljuje izbiro, koliko bo NVDA beležila med tem, ko bo v uporabi.
+To je spustni meni, ki vas spodbuja k izbiri, koliko bo NVDA beležila med tem, ko bo v uporabi.
 V splošnem se uporabnikom tega ni potrebno dotikati, ker se ne beleži preveč.
-Toda, če želite poslati poročilo o napaki, potem je to uporabna možnost.
+Toda, če želite oskrbeti poročilo o napaki z informacijami ali popolnoma omogočiti ali onemogočiti beleženje v dnevnik, potem je to uporabna možnost.
+
+Na voljo so tile nivoji beleženja:
+- Onemogočeno: Razen kratkega sporočila o zagonu, NVDA ne bo beležila ničesar med tem, ko bo v pogonu.
+- Info: NVDA bo beležila osnovne informacije, kot so sporočila ob zagonu in informacije uporabne za razvijalce.
+- Opozorilo razhroščevanja: Sporočila z opozorili, ki jih niso povzročile resne napake, se bodo zabeležila.
+- Vhod/izhod: Vnos prek tipkovnice in brajevih vrstic, kot seveda povratna govorna informacija in informacija v brajici se bo beležila. Če vas skrbi zasebnost, nivo beleženja ne nastavite na to možnost.
+- Razhroščevanje: Poleg info, opozorila in sporočil vhoda/izhoda, se bodo beležila dodatna sporočila za razhroščevanje. Kot velja za vhod/izhod, tudi tu, če vas skrbi zasebnost, ne smete nastaviti nivoja beleženja na to možnost.
+-
 
 ==== Samodejno zaženi NVDA, ko se prijavim v Okna ====[GeneralSettingsStartAfterLogOn]
 Če je ta možnost izbrana, se NVDA zažene takoj, ko se prijavite v Okna.
@@ -1356,6 +1364,11 @@ Bolj, kot je miška na levi ali desni strani zaslona, bolj izrazit bo zvok na le
 Če je možnost "Zaigraj avdio koordinate, ko se miška premika" izbrana, potem to pomeni, da se jakost zvoka piskov nadzira. Jakost zvoka je odvisna od svetlosti zaslona pod miškinim kazalcem.
 Ta nastavitev je privzeto izključena.
 
+==== Prezri vnos miške iz drugih programov ====[MouseSettingsHandleMouseControl]
+Ta možnost dovoljuje uporabniku, da prezre dogodke povezane z miško (vključno s premikom miške in pritiski gumba), ki jih povzročijo drugi programi, kot je TeamViewer in drugi programi za oddaljen nadzor.
+Ta možnost je privzeto odznačena.
+Če izberete to možnost in hkrati imate izbrano tudi možnost "Omogoči sledenje miške", vam NVDA ne bo naznanila, kaj je pod miško, ko se bo miška premikala zaradi drugega programa.
+
 +++ Interakcija z Dotikom +++[TouchInteraction]
 Ta zvrst nastavitev, ki je na voljo samo na računalnikih, kjer tečejo Windows 8 ali novejši in z zaznavami dotika, vam omogoča nastaviti, kako seNVDA obnaša na zaslonih na dotik.
 Ta zvrst vsebuje naslednje možnosti:
@@ -1590,6 +1603,45 @@ Ta zvrst vsebuje naslednje možnosti:
 ==== Jezik prepoznave ====[Win10OcrSettingsRecognitionLanguage]
 Ta spustni seznam vam omogoča izbiro jezika, ki se bo uporabil za prepoznavo besedila.
 
++++ Napredne Nastavitve +++[AdvancedSettings]
+Opozorilo! Nastavitve v tej zvrsti so namenjene naprednim uporabnikom in lahko povzročijo, da  NVDA ne bo delovala pravilno, če jo boste napačno nastavili.
+Te nastavitve spreminjajte samo, če ste popolnoma gotovi, da veste, kaj delate ali če so vam izretsno tako naročili razvijalci NVDA.
+
+==== Spreminjanje naprednih nastavitev ====[AdvancedSettingsMakingChanges]
+Da bi izvedli spremembe v naprednih nastavitvah, morate omogočiti kontrolnike s potrditvijo izbirnika, ki označuje, da razumete tveganja, ki so povezana s spreminjanjem teh nastavitev.
+
+==== Obnavljanje privzetih nastavitev ====[AdvancedSettingsRestoringDefaults]
+Gumb obnovi privzete vrednosti za nastavitve, tudi, če izbirnik o potrditvi ni izbran.
+Po spremembi nastavitev boste morda želeli povrniti le-te na privzete vrednosti.
+To je lahko tudi rešitev, ko ne boste gotovi ali so se nastavitve spremenile.
+
+==== Omogoči nalaganje kode po meri iz Scratchpad Imenika za Razvijalce ====[AdvancedSettingsEnableScratchpad]
+Ko se razvija dodatke za NVDA, je uporabnmo, da ima razvijalec priložnost testiranja kode že med tem, ko se jo piše.
+Ta možnost, ko je omogočena, dovoljuje NVDA nalaganja kode po meri (programske Module, globalne Vtičnike, Gonilnike za brajeve Vrstice in Gonilnike za sinteze, iz posebnega imenika za razvijalce scratchpad v vašem NVDA uporabniškem konfiguracijskem imeniku.
+Pred tem bi NVDA lahko naložila kodo po meri neposredno iz the imenika namenjega uporabniški konfiguraciji, brez možnosti onemogočenja kode.
+Ta možnost je privzeto izključena, zaradi zagotovitve, da nobena koda, ki se ni testirala, se nikoli ne izvaja v NVDA brez uporabnikove izretsne vednosti.
+Če boste želeli razširiti kodo po meri med druge, jo boste morali zapakirati kot NVDA dodatek.
+
+==== Odpri Scratchpad Imenik za Razvijalce ====[AdvancedSettingsOpenScratchpadDir]
+Ta gumb odpre imenik kjer lahko odložite vašo kodo po meri, ki je še v razvoju.
+Ta gumb je na voljo samo takrat, ko je NVDA nastavljena tako, da dovoli kodo po meri iz Imenika Scratchpad za Razvijalce.
+
+==== Uporabi UI (UV) automation za dostop do kontrolnikov Microsoft Word dokumenta, ko so na voljo ====[AdvancedSettingsUseUiaForWord]
+Ko je ta možnost vključena, bo NVDA poskušala uporabiti Microsoft UI (UV) Automation accessibility api (API za dostopnost), da bi pridobila informacije iz kontrolnikov v Microsoft Word dokumentu.
+To vključuje kontrolnike znotraj Microsoft Worda, samega in tudi pregledovalnik sporočil Microsoft Outlook in urejevalnik.
+Za najbolj posodobljene različice Microsoft Offica 2016/365, ki tečejo v windows 10, je podpora za UI (UV) Automation dodelana dovolj,da  lahko NVDA oskrbi dostop do Microsoft Word dokumentov skoraj tako dobro kot s trenutno podporo NVDA za Microsoft Word, z dodatno vrednostjo precej izboljšane odzivnosti.
+Toda, lahko obstaja tudi nekaj informacij, ki bodisi se ne morejo osvetljiti ali so osvtljene napačno v nekaj različicah Microsoft Offica, kar pomeni, da se na to UI (UV) automation podporo ne moremo vselej zanesti.
+Tako mi še ne priporočamo, da bi večina uporabnikov to možnost imela privzeto vklopljeno, čeprav s hvaležnostjo pozdravljamo uporabnike Offica 2016/365, da testirajo to zmožnost in sporočijo povratne informacije.
+
+==== Zakasnitev premika kazalke (v MS) ====[AdvancedSettingsCaretMoveTimeout]
+Ta možnost vam omogoča nastavitev števila milisekund, v katerih bo NVDA čakala na premik kazalke (točke vnosa) v kontrolnikh, kjer se lahko ureja besedilo.
+Če boste ugotovili, da izgleda, da NVDA neustrezno sledi kazalko, npr. izgleda, da je zmeraj znak zadaj ali ponavlja vrstice, boste morda želeli poskusiti s povečanjem te vrednosti.
+
+==== Zvrsti beleženja hroščev ====[AdvancedSettingsDebugLoggingCategories]
+Izbirniki na tem seznamu vam dovoljujejo omogočiti točno določene zvrsti sporočil o hroščih v NVDA dnevniku.
+Beleženje teh sporočil lahko rezultira v zmanjšani učinkovitosti in velikih dnevniških ddatotekah.
+Eno od njih vključite samo, če vam je tako izretsno naročeno NVDA razvijalca npr., ko se ugotavlja, zakaj gonilnik brajeve vrstice ne dela pravilno.
+
 ++ Raznotere Nastavitve ++[MiscSettings]
 Razen pogovornega okna [NVDA Nastavitev #NVDASettings], podmeni Izbire menija NVDA vsebuje več drugih postavk, ki so orisane v nadaljevanju.
 
@@ -1700,7 +1752,7 @@ Profil konfiguracije vsebuje samo tiste nastavitve, ki so se spremenile med tem,
 V profilih konfiguracije se lahko spremenijo skoraj vse nastavitve razen tistih v zvrsti  Splošno v pogovornem oknu [NVDA Nastavitev #NVDASettings], ki vplivajo na delovanje NVDA v celoti.
 
 Profili konfiguracije se lahko aktivirajo ročno.
-Lahko pa se aktivirajo tudi samodejno glede na prožilec. Prožilec je lahko prehod v izbrano ačlikacijo.
+Lahko pa se aktivirajo tudi samodejno glede na prožilec. Prožilec je lahko prehod v izbran program.
 
 +++ Osnovno Upravljanje +++[ProfilesBasicManagement]
 S profili konfiguracije lahko upravljate z izbiro Profilov Konfiguracije v meniju NVDA.
@@ -1817,7 +1869,7 @@ Za dodatek, ki ste ga že prej posedovali, pritisnite gumb Namesti.
 To vam bo omogočilo brskanje za paketom dodatka (nvda-addon datoteko) nekje na vašem računalniku ali mreži.
 Ko enkrat pritisnete Odpri, se bo začel potek namestitve.
 
-Ko se namešča dodatek, vas bo NVDA najprej zaprosila, za potrditev, da  res želite namestiti dodatek.
+Ko se namešča dodatek, vas bo NVDA najprej zaprosila za potrditev, da  res želite namestiti dodatek.
 Ker je funkcionalnost dodatka znotraj NVDA brez omejitev, kar v teoriji vključuje tudi dostop do vaših osebnih podatkov ali lahko tudi do samega jedra sistema, če je NVDA na sistemu nameščena; je zelo pomembno, da nameščate dodatke samo iz virov, ki jim zaupate.
 Ko se dodatek namesti, morate NVDA ponovno zagnati, da se dodatek spravi v pogon.
 Dokler tega ne naredite, bo stanje dodatka v seznamu prikazano kot "Namesti".
@@ -1831,15 +1883,17 @@ Dokler tega ne naredite, bo stanje dodatka v seznamu prikazano kot "odstrani".
 Ko boste želeli izključeni dodatek znova vključiti, pritisnite gumb "omogoči".
 Izključite lahko tiste dodatke, katerih stanje kaže, da tečejo ali pa da so "omogočeni", ravno tako pa lahko znova vključite tiste dodatke, katerih stanje kaže, da so "onemogočeni".
 Ob vsakem pritisku gumba Omogoči/onemogoči, se stanje dodatka spremeni, tako da boste lahko vedeli, v kakšnem stanju bo deloval dodatek, ko boste NVDA ponovno zagnali.
-Če je bil dodatek prej onemogočen, je njegovo stanje prikazano kot "omogočeno po ponovnem zagonu. Če je bil dodatek prej "omogočen", je njegovo stanje prikazano kot "onemogočeno po ponovnem zagonu".
+Če je bil dodatek prej onemogočen, je njegovo stanje prikazano kot "omogočeno po ponovnem zagonu.
+Če je bil dodatek prej "omogočen", je njegovo stanje prikazano kot "onemogočeno po ponovnem zagonu".
 Tako kot ob namestitvi ali odstranitvi dodatka, je tudi tu potreben ponovni zagon NVDA, da bodo spremembe stopile v veljavo.
 
 Upravitelj dodatkov vsebuje tudi gumb Zapri, s katerim lahko zaprete pogovorno okno.
 Neglede na to, če ste namestili, spremenili ali odstranili dodatek, vas bo NVDA vprašala, če jo želite ponovno zagnati, da se bodo lahko spremembe, ki ste jih naredili, uveljavile.
 
-V preteklosti je bilo mogoče razširiti zmožnosti NVDA s preslikavo posameznega vtičnika in gonilnika v vaš NVDA uporabniški imenik konfiguracije.
-Čeprav ta različica NVDA še vedno le-te lahko naloži, ti ne bodo prikazani v Upravitelju dodatkov.
-Najbolje je, da te datoteke odstranite iz vaše konfiguracije in namestite ustrezen dodatek, če je na voljo.
+Nekateri starejši dodatki verjetno ne bodo več združljivi s to različico NVDA, ki jo imate.
+Ob uporabi starejše različice NVDA prav tako nekateri novejši dodatki ne bodo združljivi.
+Poskus namestitve nezdružljivega dodatka bo rezultiral v napaki z razlago, zakaj je dodatek ocenjen kot nezdružljiv.
+Za pregled teh nezdružljivih dodatkov , lahko uporabite gumb "poglejte nezdružljive dodatke" za zagon upravitelja nezdružljivih dodatkov.
 
 Za dostop do Upravitelja dodatkov od kjerkoli, prosimo, dodelite lastno kretnjo z uporabo [pogovornega okna Kretenj Vnosa. #InputGestures]
 
@@ -2762,12 +2816,12 @@ NVDA pozna naslednje možnosti ukazne vrstice:
 | -r | --replace | Zaključi z izvajanjem trenutne kopije NVDA in zažene novo. |
 | -k | --check-running | Sporoča, če je NVDA v pogonu. To sporoča z uporabo izhodne kode. Nič (0) pomeni, da teče in ena (1) pomeni, da NVDA ni v pogonu. |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka, kjer se morajo beležiti dogodki, ki se zapisujejo v dnevnik. |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Najnižji nivo beleženja sporočil v dnevnik (razhroščevanje 10, info 20, opozorilo, 30, napaka 40, kritično 50). Privzeta vrednost je nastavljena na opozorilo. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najnižji nivo beleženja sporočil v dnevnik (razhroščevanje 10, vhod/izhod 12, opozorilo razhroščevanja 15, info 20, opozorilo, 30, napaka 40, kritično 50 , onemogočeno 100). Privzeta vrednost je nastavljena na opozorilo. |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Prostor, kjer so shranjene vse nastavitve za NVDA. |
 | -m | --minimal | Brez zvokov, brez vmesnika, brez sporočila po zagonu ipd. |
-| -s | --secure | Varni način (Onemogočena konzola Pythona) |
+| -s | --secure | Varni način (Onemogočena konzola Pythona in zmožnosti beleženja; pogosto v uporabi na varnih zaslonih) |
 | None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
-| None | --debug-logging | Nastavi nivo beleženja na Razhroščevanje samo za naslednji zagon NVDA. Ta nastavitev bo preglasila katerikoli drug dan argument, ki definira nivo beleženja ( ""--loglevel"", -l). |
+| None | --debug-logging | Nastavi nivo beleženja na Razhroščevanje samo za naslednji zagon NVDA. Ta nastavitev bo preglasila katerikoli drug dan argument nivoja beleženja ( ""--loglevel"", -l), ki definira nivo beleženja vključno z možnostjo brez beleženja. |
 | None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
 | None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
 | None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |
