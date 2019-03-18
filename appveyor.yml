@@ -120,7 +120,11 @@ build_script:
 before_test:
  # Manually grab pyscreeze 0.1.13 as latest release is completely broken.
  - py -m pip install pyscreeze==0.1.13
- - py -m pip install robotframework robotremoteserver pyautogui nose
+ # The latest release of PyAutoGUI requires PyScreeze 0.1.20 which unfortunately doesn't work with Python 2.7.
+ # See https://github.com/asweigart/pyscreeze/issues/46
+ # Therefore install version 0.9.41.
+ - py -m pip install pyautogui==0.9.41
+ - py -m pip install robotframework robotremoteserver nose
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system

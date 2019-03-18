@@ -111,7 +111,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 如果已经安装了不兼容的插件，NVDA可能还会发出警告，说明不兼容的插件将被禁用。
 您必须使用复选框确认您了解这些插件将被禁用之后才可以按确认按钮继续安装。
 还将显示一个按钮来查看将被禁用的插件。
-请看[不兼容的插件提示对话框 #incompatibleAddonsManager]这一节了解详细情况。
+请看 [管理不兼容的插件 #incompatibleAddonsManager] 这一节了解详细情况。
 
 +++ 在Windows启动时运行NVDA +++[StartAtWindowsLogon]
 此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码以前)启动 NVDA。
@@ -994,7 +994,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 - 当前 NVDA 版本
 - 操作系统版本
 - 操作系统是 64 位还是 32 位
-
+- 
 
 ==== 允许NVDA获取用户统计信息 ====[GeneralSettingsGatherUsageStats]
 选中这一项之后，NV Access 会在检查更新时获取您的信息，以便统计NVDA用户的分布。比如使用的操作系统和所在国家的比例。
@@ -1005,7 +1005,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 - 当前使用的语音合成器名称(包括合成器插件名称)
 - 当前使用的点显器名称(包括点显器驱动插件名称)
 - 当前使用的盲文表(使用点显器时才会上传)
-
+- 
 
 这些信息有助于 NV Access 决定NVDA开发的侧重点。
 
@@ -1536,13 +1536,6 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 默认启用，此选项允许您选择手势输入(如按下一个按键)是否不作为 NVDA 命令或一般的命令键，命令将被拦截，以防止其通过所聚焦的文档。
 举一个例子，如果启用，当您按下字母“j”后，它会被阻拦在所聚焦的文档，极它既不会作为 NVDA 的跳转热键，也不会作为程序自身的命令(译者注：就上面的例子来说，假设我们现在聚焦在word文档里，当按j的时候，他不会跳转文档，也不会当成字母j输入到文档，就是j就无效了)。
 
-==== Focus follows browse mode ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Key: NVDA+8
-
-Enabled by default, this option allows you to choose if system focus automatically follows browse mode focus in browsers.
-If enabled, this represents default behavior of NVDA as of version 2018.4 and before.
-Disabling this option might result in faster browsing experience and better responsiveness in browse mode. This is experimental as of version 2019.1.
-
 +++ 文档格式设置 (NVDA+control+d) +++[DocumentFormattingSettings]
 “文档格式...”这个分类下面的大多数复选框都是用来配置，在您用光标浏览整个文档时朗读什么类型的格式信息。
 例如，如果您选择了“朗读字体名称”复选框，每次您用光标进入拥有不同字体的文本时，字体名称就会被读出。
@@ -1610,36 +1603,44 @@ Disabling this option might result in faster browsing experience and better resp
 ==== 识别用语言 ====[Win10OcrSettingsRecognitionLanguage]
 此组合框允许您选择用于光学字符识别的语言。
 
-+++ Advanced Settings +++
-Warning! The settings in this category are for advanced users and may cause NVDA to not function correctly if configured in the wrong way.
-Only make changes to these settings if you are sure you know what you are doing or if you have been specifically instructed to by an NVDA developer.
++++ 高级设置 +++
+警告！ 此类别中的设置适用于高级用户，如果随意修改，可能会导致NVDA无法正常运行。
+只有在您确定知道自己在做什么，或者NVDA开发人员明确指示您修改时，才应该对这些设置进行更改。
 
-==== Enable loading custom code from Developer Scratchpad Directory ====
-When developing add-ons for NVDA, it is useful to be able to test code as you are writing it.
-This option when enabled, allows NVDA to load custom appModules, globalPlugins, brailleDisplayDrivers and synthDrivers, from a special developer scratchpad directory in your NVDA user configuration directory.
-Previously NVDA would load custom code directly from the user configuration directory, with no way of disabling this.
-This option is off by default, ensuring that no untested code is ever run in NVDA with out the user's explicit knowledge.
-If you wish to distribute custom code to others, you should package it as an NVDA add-on.
+==== 更改高级设置 ====[AdvancedSettingsMakingChanges]
+更改下面的设置之前必须选中这个复选框，表示用户了解随意更改这些设置的风险。
 
-==== Open Developer Scratchpad Directory ====
+==== 恢复高级设置为默认值 ====[AdvancedSettingsRestoringDefaults]
+即使未勾选确认复选框，该按钮也会恢复高级设置为默认值。
+更改高级设置后，您可能希望恢复高级设置为默认值。
+如果您不确定设置是否已更改，您可能也会需要恢复高级设置为默认值。
+
+==== Enable loading custom code from Developer Scratchpad Directory ====[AdvancedSettingsEnableScratchpad]
+在为NVDA开发附加组件时，能够在编写代码时对其进行测试非常有用。
+启用此选项后，NVDA允许从NVDA用户配置目录中的特殊开发人员暂存器目录加载自定义appModules，globalPlugins，brailleDisplayDrivers和synthDrivers。
+以前NVDA会直接从用户配置目录加载自定义代码，无法禁用此功能。
+默认情况下，此选项处于关闭状态，确保在用户明确知晓的情况下，未在NVDA中运行未经测试的代码。
+如果您希望将自定义代码分发给其他人，则应将其打包为NVDA插件。
+
+==== Open Developer Scratchpad Directory ====[AdvancedSettingsOpenScratchpadDir]
 This button opens the directory where you can place custom code while developing it.
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
  
-==== Use UI automation to access Microsoft Word document controls when available ====
+==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
 When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
 This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
  For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
-==== Caret move timeout (in MS) ====
-This option allows you to configure the number of mili seconds NVDA will wait for the caret (insertion point) to move in editable text controls.
-If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
+==== 光标移动超时（单位是千分之一秒） ====[AdvancedSettingsCaretMoveTimeout]
+此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
+如果您发现NVDA光标朗读有问题，比如位置不对，那么你可以增加这个时间试试。
 
-==== Debug logging categories ====
-The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.
-Logging these messages can resort in decreased performance and large log files.
-Only turn one of these on if specifically instructed to by an NVDA developer e.g. when debugging why a braille display driver is not functioning correctly.
+==== 调试日志 ====[AdvancedSettingsDebugLoggingCategories]
+此列表中的复选框允许您在NVDA日志中启用特定类别的调试信息。
+记录这些信息可能会影响性能而且会让日志文件比以前大。
+例如 调试盲文显示器驱动程序时，NVDA开发者会让你打开其中一个，请不要同时开启多个。
 
 ++ 杂项设置 ++[MiscSettings]
 除了[NVDA 设置 #NVDASettings]对话框以外，NVDA菜单的“首选项”子菜单包含下面列出的其他几个项目。

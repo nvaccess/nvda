@@ -107,9 +107,16 @@ Na tym etapie jest do wyboru kilka opcji opisanych poniżej.
 Po pomyślnej instalacji wyświetlony zostanie odpowiedni komunikat. 
 Po wciśnięciu przycisku OK, nastąpi uruchomienie zainstalowanej właśnie kopii programu.
 
++++ Ostrzeżenie o niezgodnych dodatkach +++[InstallWithIncompatibleAddons]
+Jeśli masz zainstalowane jakieś dodatki,  może pojawić się informacja o wyłączeniu niekompatybilnych dodatków.
+Zanim możliwe będzie naciśnięcie przycisku Kontynuuj, należy zaznaczyć pole wyboru potwierdzające, że przeczytanie informacji o wyłączeniu tych dodatków.
+Pojawi się również przycisk umożliwiający przegląd dodatków, które zostaną wyłączone.
+Aby uzyskać więcej informacji, zajrzyj do [rozdziału o niezgodnych dodatkach #incompatibleAddonsManager].
+
 +++ Uruchamiaj NVDA na ekranie logowania +++[StartAtWindowsLogon]
 Ta opcja pozwala określić, czy NVDA ma uruchamiać się na ekranie logowania do systemu Windows, zanim jeszcze wprowadzono hasło.
 Dotyczy to również ekranów bezpiecznego pulpitu oraz kontroli konta użytkownika.
+Opcja domyślnie jest włączona dla nowych instalacji.
 
 +++ Utwórz skrót na pulpicie (Ctrl+Alt+D) +++[CreateDesktopShortcut]
 Ta opcja pozwala określić, czy NVDA ma utworzyć na pulpicie skrót uruchamiający program.
@@ -940,8 +947,7 @@ Dostępnych jest wiele języków, jednak domyślnie wybrana jest opcja "Domyśln
 Opcja ta powoduje, że NVDA automatycznie wybiera język interfejsu systemu Windows.
 
 Proszę zauważyć, że NVDA musi zostać zrestartowane po zmianie języka.
-Jeśli zmienisz język i zapiszesz preferencje, NVDA zapyta, czy chcesz zrestartować program.
-Naciśnij Ok, a program uruchomi się ponownie.
+Gdy pojawi się okno potwierdzenia, wybierz "uruchom ponownie teraz" lub "Uruchom ponownie później" zależnie od tego, czy chcesz używać nowego języka teraz lub później. Jeśli wybrano "Uruchom ponownie później", ustawienia muszą zostać zapisane (albo ręcznie, albo przy użyciu funkcji zapisywania ustawień przy wyjściu).
 
 ==== Zapisz ustawienia przy wyjściu ====[GeneralSettingsSaveConfig]
 Ta opcja, to pole wyboru. Jeśli jest zaznaczone, to NVDA automatycznie zapisze aktualne ustawienia przy wyjściu z programu.
@@ -957,7 +963,15 @@ Ta opcja jest polem wyboru, które ustawia odtwarzanie dźwięków przy uruchami
 ==== Poziom logowania ====[GeneralSettingsLogLevel]
 Pole rozwijalne pozwalające na ustawienie poziomu logowania (ile czynności wykonanych przez użytkownika ma trafić do pliku logów).
 Na ogół użytkownik nie powinien zmieniać tego ustawienia, ponieważ zapisywane jest niezbyt wiele informacji.
-Jeśli jednak chcesz przesłać zgłoszenie błędu, ta opcja może być użyteczna.
+Jeśli jednak chcesz przesłać zgłoszenie błędu, albo całkowicie wyłączyć zapisywanie dziennika, ta opcja może być użyteczna.
+
+Dostępne poziomy logowania, to:
+- Wyłączone: poza krótką informacją przy uruchamianiu, NVDA nie będzie zapisywał niczego podczas działania.
+- Info: NVDA będzie zapisywać podstawowe informacje, takie jak informacje startowe i inne użyteczne dla programistów.
+- Ostrzeżenie debugowania: Komunikaty ostrzegawcze, które nie są spowodowane poważnymi błędami, będą zapisywane.
+- Wejście/wyjście: zapisywane będą klawisze naciskane na klawiaturze lub linijkach brajlowskich, oraz komunikaty generowane mową i brajlem. If you are concerned about privacy, do not set logging level to this option.
+- Debugowanie: jako rozszerzeniee informacji, ostrzeżeń i powiadomień wejścia/wyjścia, zapisywane będą dodatkowe informacje debugowania. Tak jak Wejście/wyjście, jeśli zwracasz uwagę na prywatność, nie powinieneś ustawiać poziomu komunikatów na ten poziom.
+
 
 ==== Automatycznie uruchom NVDA po zalogowaniu się do systemu Windows ====[GeneralSettingsStartAfterLogOn]
 Jeśli ta opcja jest włączona, NVDA uruchomi się automatycznie zaraz po zalogowaniu się do systemu.
@@ -1350,6 +1364,11 @@ Im bardziej po lewej lub prawej stronie ekranu znajduje się wskaźnik myszy, ty
 Jeśli zaznaczysz to pole, dźwięki sygnalizujące położenie myszy będą tym głośniejsze, im jaśniejszy jest obraz znajdujący się w miejscu wskaźnika. Opcja ta ma znaczenie tylko, jeśli włączona jest funkcja "Sygnalizuj dźwiękiem położenie myszy". 
 Funkcja domyślnie jest wyłączona.
 
+==== Ignoruj ruch myszy z innych aplikacji ====[MouseSettingsHandleMouseControl]
+Ta opcja pozwala na ignorowanie zdarzeń myszy (ruchów myszy i naciskanych przycisków) wygenerowanych przez inne aplikacje, takie jak TeamViewer i inne oprogramowanie kontroli zdalnej.
+Opcja domyślnie wyłączona.
+Jeśli ją włączysz i masz włączoną opcję  śledzenia myszy, NVDA nie będzie oznajmiać co jest pod myszą jeśli zostanie ona przesunięta przez inną aplikację.
+
 +++ Interakcja dotykowa +++[TouchInteraction]
 Ta kategoria preferencji, , dostępna tylko na komputerach z systemem Windows 8 i nowszymi z ekranem dotykowym, pozwala skonfigurować w jaki sposób NVDA obsługuje ekrany dotykowe.
 Zawiera następujące ustawienia:
@@ -1583,6 +1602,45 @@ Zawiera następujące ustawienia:
 
 ==== Język rozpoznawania ====[Win10OcrSettingsRecognitionLanguage]
 Ta lista rozwijana pozwala wybrać język, używany do rozpoznawania tekstu.
+
++++ Ustawienia zaawansowane +++[AdvancedSettings]
+Uwaga! Ustawienia w tej kategorii są przeznaczone dla zaawansowanych użytkowników i mogą spowodować nieprawidłowe działanie NVDA jeśli zostaną błędnie zmodyfikowane.
+Zmieniaj te ustawienia tylko jeśli wiesz co robisz lub zostałeś poinstruowany przez twórcę NVDA.
+
+==== Zmienianie ustawień zaawansowanych ====[AdvancedSettingsMakingChanges]
+Aby zmienić ustawienia zaawansowane, musi zostać zaznaczone pole wyboru potwierdzenia, że rozumiesz ryzyko wynikające ze zmieniania tych ustawień.
+
+==== Przywracanie ustawień domyślnych ====[AdvancedSettingsRestoringDefaults]
+Przycisk przywraca domyślne wartości ustawień, nawet jeśli pole wyboru potwierdzenia nie jest zaznaczone.
+Po zmianie ustawień, możesz chcieć wrócić do ich wartości domyślnych.
+Może również to mieć miejsce jeśli nie jesteś pewien, czy ustawienia zostały zmienione.
+
+==== włącz wczytywanie własnego kodu z piaskownicy dewelopera NVDA ====[AdvancedSettingsEnableScratchpad]
+Podczas tworzenia dodatków dla NVDA jest istotna możliwość testowania kodu w trakcie jego tworzenia.
+Ta opcja, gdy zaznaczona, zezwala NVDA na wczytywanie własnych modułów aplikacji, wtyczek globalnych, sterowników linijek brajlowskich i syntezatorów, ze specjalnego folderu scratchpad w folderze twojej konfiguracji NVDA.
+Poprzednio NVDA bezpośrednio wczytywał własny kod z folderu konfiguracji użytkownika, bez możliwości wyłączenia tego.
+Ta opcja jest domyślnie wyłączona, zapewniając, że nieprzetestowany kod nie będzie uruchamiany przez NVDA  bez wiedzy użytkownika.
+Jeśli chcesz rozpowszechniać własny kod do innych, powinieneś spakować go jako dodatek NVDA.
+
+==== Otwórz katalog piaskownicy NVDA ====[AdvancedSettingsOpenScratchpadDir]
+Ten przycisk otwiera folder, w którym możesz umieszczać własny kod podczas prac nad nim.
+Przycisk jest aktywny tylko, gdy NVDA jest ustawione na wczytywanie własnego kodu z piaskownicy programisty.
+ 
+==== Użyj Microsoft UI automation do interakcji z kontrolkami dokumentów  Word ====[AdvancedSettingsUseUiaForWord]
+Gdy ta opcja jest włączona, NVDA będzie próbowało używać interfejsu Microsoft UI Automation dla pozyskiwania informacji o dokumencie w kontrolkach Microsoft Word.
+Obejmuje to sam edytor Microsoft Word oraz okna przeglądania i tworzenia wiadomości w Microsoft Outlook.
+ Dla najnowszych wersji Microsoft Office 2016/365 uruchomionych na systemie windows 10, obsługa UI Automation jest wystarczająco kompletna aby umożliwić dostęp do Microsoft Word prawie równy z wcześniej istniejącą obsługą dokumentów Word przez NVDA, z dodatkową zaletą zwiększonej responsywności.
+Mogą jednak istnieć informacje, które nie są wcale dostarczane, albo są dostarczane nieprawidłowo  w niektórych wersjach Microsoft Office,  co znaczy, że na obsłudze UI Automation nie zawsze można polegać.
+Wciąż nie zalecamy domyślnego włączania tej funkcji przez większość użytkowników, ale mile widziane będą testy i uwagi od użytkowników Office 2016/365.
+
+==== Szybkość śledzenia przemieszczania się po polach edycji (w milisekundach) ====[AdvancedSettingsCaretMoveTimeout]
+Pozwala skonfigurować ilość milisekund, którą  NVDA będzie czekało przed przesunięciem kursora w polach edycji.
+Jeśli zauważysz, że NVDA nieprawidłowo śledzi kursor, np.  jest zawsze znak za kursorem lub powtarza linie, możesz próbować zwiększyć tę wartość.
+
+==== Włączone logowanie kategorii debugowania ====[AdvancedSettingsDebugLoggingCategories]
+Pola wyboru na tej liście pozwalają włączyć konkretne kategorie informacji debugowania w dzienniku NVDA.
+Zapisywanie tych informacji może zmniejszyć wydajność i zwiększyć rozmiar pliku logu.
+Włącz określone kategorie tylko, gdy zostaniesz poinstruowany przez programistę NVDA np. w trakcie badania, dlaczego sterownik linijki brajlowskiej nie pracuje prawidłowo.
 
 ++ Różne ustawienia ++[MiscSettings]
 Oprócz okna [preferencji NVDA #NVDASettings], podmenu Ustawienia w menu NVDA zawiera kilka innych elementów, omówionych poniżej.
@@ -1825,17 +1883,33 @@ Aby wyłączyć dodatek, użyj przycisku Wyłącz.
 Aby włączyć wyłączony wcześniej dodatek, użyj przycisku Włącz.
 Możesz wyłączyć dodatek, jeśli jego status to włączony, albo włączyć, gdy jest wyłączony.
 Po każdym naciśnięciu przycisku Włącz / Wyłącz, status dodatku zmienia się i informuje, co się stanie po restarcie NVDA.
-Jeśli dodatek był poprzednio wyłączony, a  status będzie zawierać "włączony po restarcie". Jeśli dodatek był poprzednio włączony, status będzie zawierać "wyłączony po restarcie"
+Jeśli dodatek był poprzednio wyłączony, status będzie zawierać "włączony po restarcie". 
+Jeśli dodatek był poprzednio włączony, status będzie zawierać "wyłączony po restarcie"
 Tak jak w przypadku instalacji lub usunięcia dodatku, należy uruchomić ponownie NVDA aby wprowadzone zmiany zaczęły obowiązywać.
 
 Okno managera dodatków zawiera również przycisk "Zamknij".
 Jeśli zainstalowałeś lub usunąłeś jakieś dodatki albo zmieniłeś ich status, NVDA zapyta, czy chcesz zrestartować program, aby wprowadzone zmiany mogły zostać wprowadzone.
 
-W przeszłości możliwe było rozszerzanie funkcjonalności NVDA poprzez  kopiowanie pojedynczych wtyczek i sterowników do folderu konfiguracji użytkownika.
-O ile obecna wersja NVDA może wciąż uruchamiać takie wtyczki, nie będą się one pojawiać na liście Managera dodatków.
-Najlepiej byłoby usunąć takie pliki z folderu konfiguracji i zainstalować odpowiedni pakiet dodatku, jeśli jest dostępny.
+Niektóre starsze dodatki mogą być niezgodne z obecnie używaną wersją NVDA.
+Gdy używasz starszej wersji NVDA, niektóre nowe dodatki mogą być z nią również niezgodne.
+Próba instalacji niezgodnego dodatku wygeneruje błąd z informacją, dlaczego dodatek jest uważany za niezgodny.
+Aby przejrzeć te niezgodne dodatki, możesz użyć przycisku "podgląd niezgodnych dodatków".
 
 Aby uruchamiać manager dodatków z każdego miejsca, określ własne zdarzenie wejścia używając [okna zdarzenia wejścia #InputGestures].
+
+++ Manager niezgodnych dodatków ++[incompatibleAddonsManager]
+Manager niezgodnych dodatków, dostępny pod przyciskiem "Przeglądaj niezgodne dodatki"  w managerze dodatków, pozwala badać niezgodne dodatki, oraz przyczyny, dla których są uznawane za niezgodne.
+Dodatki są uznawane za niezgodne, jeśli nie zostały zaktualizowane do działania po istotnych zmianach w NVDA, lub jeśli polegają na funkcji niedostępnej w używanej wersji NVDA.
+Manager niezgodnych dodatków zawiera informację wyjaśniającą  jego cel i wersję NVDA.
+Niezgodne dodatki są prezentowane na liście z następującymi kolumnami:
++ Pakiet, nazwa dodatku
++ Wersja, wersja dodatku
++ Powód niezgodności, wyjaśnienie dlaczego dodatek jest uznawany za niezgodny
++
+
+Manager niezgodnych dodatków zawiera również przycisk "O dodatku...".
+Pozwala przejrzeć wszystkie szczegóły dodatku, co jest przydatne przy kontakcie z autorem dodatku.
+
 
 ++ Konsola Pythona ++[PythonConsole]
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
@@ -2756,15 +2830,17 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 | -r | --replace | Zakończ aktualną kopię NVDA i uruchom obecną |
 | -k | --check-running | Poinformuj kodem wyjścia, czy NVDA jest uruchomiony; 0 jeśli uruchomiony, 1 jeśli nie uruchomiony |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Plik, do którego powinny być zapisywane informacje logu |
-| -l poziom | --log-level=poziom | Najniższy poziom zapisywanych informacji logu (debugowanie 10, informacje 20, ostrzeżenia 30, błędy 40, krytyczne 50), domyślnie ostrzeżenia |
+| -l poziom | --log-level=poziom | Najniższy poziom zapisywanych informacji logu (debugowanie 10, wejście/wyjście 12, ostrzeżenie debugowania 15, informacje 20, ostrzeżenia 30, błędy 40, krytyczne 50, wyłączone 100), domyślnie ostrzeżenia |
 | -c ścieżka | --config-path=ścieżka | Ścieżka folderu, w którym zapisane są wszystkie ustawienia NVDA |
 | -m | --minimal | Bez dźwięku, interfejsu, informacji początkowej etc |
-| -s | --secure | Tryb bezpieczny (wyłącz konsolę Pythona) |
+| -s | --secure | Tryb bezpieczny (wyłącz konsolę Pythona i funkcje zapisywania logów, używane często na zabezpieczonych ekranach) |
 | Brak | --disable-addons | Dodatki będą ignorowane |
-| Brak | --debug-logging | Ustaw poziom logowania na informacje debugowania, dla bieżącego uruchomienia. To ustawienie nadpisze jakiekolwiek ustawienie poziomu logowania ( ""--loglevel"", -l). |
+| Brak | --debug-logging | Ustaw poziom logowania na informacje debugowania, dla bieżącego uruchomienia. To ustawienie nadpisze jakiekolwiek ustawienie poziomu logowania ( ""--loglevel"", -l) z wyłączeniem zapisywania logów włącznie. |
+| Brak | --no-logging | Wyłącz zapisywanie dziennika podczas używania NVDA. To ustawienie może być nadpisane, gdy poziom logowania ( ""--loglevel"", -l) jest określony w linii komend lub rejestrowanie debugowania jest włączone. |
 | Brak | --no-sr-flag  | Nie zmieniaj globalnej flagi systemowej czytnika ekranu |
-| None | --install | Po cichu instaluje NVDA i uruchamia zainstalowaną kopię |
+| Brak | --install | Po cichu instaluje NVDA i uruchamia zainstalowaną kopię |
 | Brak | --install-silent | Po cichu instaluje NVDA (nie uruchamia zainstalowanej kopii) |
+| Brak | --enable-start-on-logon=True|False | Przy instalacji włącz funkcję NVDA [Uruchamiaj na ekranie logowania #StartAtWindowsLogon] |
 | Brak | --create-portable | Tworzy przenośną kopię NVDA (uruchamiając nowo utworzoną kopię). Wymaga określenia parametru --portable-path |
 | Brak | --create-portable-silent | Tworzy przenośną kopię NVDA (nie uruchamiając nowo utworzonej kopii). Wymaga określenia parametru --portable-path |
 | Brak | --portable-path=SCIEZKA | Ścieżka, w której zostanie utworzona przenośna kopia |
