@@ -7,14 +7,14 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	точка	all	always
-! sentence ending	восклицательный знак	all	always
-? sentence ending	вопросительный знак	all	always
-; phrase ending	точка с запятой	most	always
-: phrase ending	двоеточие	most	always
-decimal point		none	always
-in-word '	апостроф	all	norep
-negative number	минус	none	norep
+. sentence ending	точка	all	always	# . в конце предложения
+! sentence ending	восклицательный знак	all	always	# ! в конце предложения
+? sentence ending	вопросительный знак	all	always	# ? в конце предложения
+; phrase ending	точка с запятой	most	always	# ; в конце фразы
+: phrase ending	двоеточие	most	always	# : в конце фразы
+decimal point		none	always	# десятичная точка
+in-word '	апостроф	all	norep	# ' в слове
+negative number	минус	none	norep	# отрицательное число
 
 # Whitespace
 \0	чисто	char	# null
@@ -22,9 +22,13 @@ negative number	минус	none	norep
 \n	перевод строки	char
 \f	разделитель страниц	none
 \r	возврат каретки	char
- 	пробел	char
+ 	пробел	char	# обычный пробел
  	пробел	char	# неразрывный пробел
-​	пробел нулевой ширины	char
+ 	пробел	char	# круглая шпация
+ 	пробел	char	# полукруглая шпация
+ 	пробел	char	# тонкая шпация
+ 	пробел	char	# узкий неразрывный пробел
+​	пробел нулевой ширины	char	# пробел нулевой ширины
 
 # Standard punctuation/symbols
 !	восклицательный знак	all
