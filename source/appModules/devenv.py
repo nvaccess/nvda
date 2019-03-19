@@ -98,7 +98,7 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList.insert(0, VsTextEditPane)
-			
+
 	def _getDTE(self):
 	# Return the already fetched instance if there is one.
 		try:
@@ -148,12 +148,14 @@ class AppModule(appModuleHandler.AppModule):
 		return self._textManager
 
 	def isGoodUIAWindow(self, hwnd):
-		vs_version = [int(x)
-			for x in self.productVersion.split(".")]
+		vs_major, vs_minor, rest = self.productVersion.split(".", 2)
+		vs_major, vs_minor = int(vs_major), int(vs_minor)
 
-		if vs_version[0] >= 15 and vs_version[1] >= 3:
-			#: #9311: Sometimes object explorer objects are recognized as IAccessible2 objects
-			if winUser.getClassName(hwnd) in ("LiteTreeView32", "RICHEDIT50W"):
+		if (vs_major == 15 and vs_minor >= 3)
+			or vs_major >= 16:
+
+			# #9311: Sometimes object explorer objects are recognized as IAccessible2 objects
+			if winUser.getClassName(hwnd) in ("LiteTreeView32",):
 				return True
 
 
