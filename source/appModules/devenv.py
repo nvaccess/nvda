@@ -151,8 +151,8 @@ class AppModule(appModuleHandler.AppModule):
 		vs_major, vs_minor, rest = self.productVersion.split(".", 2)
 		vs_major, vs_minor = int(vs_major), int(vs_minor)
 
-		if (vs_major == 15 and vs_minor >= 3)
-			or vs_major >= 16:
+		if ((vs_major == 15 and vs_minor >= 3)
+			or vs_major >= 16):
 
 			# #9311: Sometimes object explorer objects are recognized as IAccessible2 objects
 			if winUser.getClassName(hwnd) in ("LiteTreeView32",):
