@@ -27,9 +27,8 @@ import ui
 from textInfos import DocumentWithPageTurns
 
 # search history list constants
-SEARCH_HISTORY_FIRST_INDEX = 0
-SEARCH_HISTORY_MAX_ITEMS=20
-SEARCH_HISTORY_LAST_INDEX = (SEARCH_HISTORY_MAX_ITEMS - 1)
+SEARCH_HISTORY_MOST_RECENT_INDEX = 0
+SEARCH_HISTORY_LEAST_RECENT_INDEX = 19
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -50,7 +49,7 @@ class FindDialog(wx.Dialog):
 
 		# if there is a previous list of searched entries, make sure we present the last searched term  selected by default
 		if searchEntries:
-			self.findTextField.Select(0)
+			self.findTextField.Select(SEARCH_HISTORY_MOST_RECENT_INDEX)
 		findSizer.Add(self.findTextField)
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
@@ -70,7 +69,7 @@ class FindDialog(wx.Dialog):
 		if not currentSearchTerm:
 			return
 		if not searchEntries:
-			searchEntries.insert(0, currentSearchTerm)
+			searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
 			return
 		# we can not accept entries that differ only on text case
 		#because of a wxComboBox limitation on MS Windows
@@ -79,16 +78,17 @@ class FindDialog(wx.Dialog):
 		# so lower is the best we can have for comparing strings
 		for index, item in enumerate(searchEntries):
 			if(item.lower() == currentSearchTerm.lower()):
-				#if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the current search term becomes the first item of the list,
-				# so that it will appear selected by default when the dialog is shown again
-				# If the current search term differs from the current item only in case letters, we will choose to store the new search as we can not store both.
+				# if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the 
+				# current search term becomes the first item of the list, so that it will appear selected by default when the dialog is
+				# shown again. If the current search term differs from the current item only in case letters, we will choose to store the
+				# new search as we can not store both.
 				searchEntries.pop(index)
-				searchEntries.insert(SEARCH_HISTORY_FIRST_INDEX, currentSearchTerm)
+				searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
 				return
 		# not yet listed. Save it.
-		if len(searchEntries) >= SEARCH_HISTORY_MAX_ITEMS:
+		if len(searchEntries) > SEARCH_HISTORY_LEAST_RECENT_INDEX:
 			self._truncateSearchHistory(searchEntries)
-		searchEntries.insert(SEARCH_HISTORY_FIRST_INDEX, currentSearchTerm)
+		searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
 		
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
@@ -105,7 +105,7 @@ class FindDialog(wx.Dialog):
 		self.Destroy()
 
 	def _truncateSearchHistory(self, entries):
-		del entries[SEARCH_HISTORY_LAST_INDEX:]
+		del entries[SEARCH_HISTORY_LEAST_RECENT_INDEX:]
 
 class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""
@@ -124,6 +124,11 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	scriptCategory=SCRCAT_BROWSEMODE
 
 	_lastCaseSensitivity=False
+	#  History of search terms.
+	# Sorted in most to least recently searched order.
+	# First, most recently searched item index: SEARCH_HISTORY_MOST_RECENT_INDEX
+	# Last, least recently searched item index: SEARCH_HISTORY_LEAST_RECENT_INDEX
+	# Items that differ only by case will only have one entry. 
 	_searchEntries = []
 
 	def __init__(self, *args, **kwargs):
@@ -209,7 +214,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if not self._searchEntries:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._searchEntries[0], caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX], caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
@@ -217,7 +222,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if not self._searchEntries:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._searchEntries[0],reverse=True, caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX], reverse=True, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
