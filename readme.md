@@ -15,7 +15,7 @@ To learn more about NVDA or download a copy, visit the main [NV Access](http://w
 * [NVDA Controller Client](http://www.nvda-project.org/nvdaControllerClient/nvdaControllerClient_20100219.7z) (2010-02-19): NVDA API for external applications to directly speak or braille messages, etc.
 * [NVDA Developer Guide](http://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Contributing to NVDA](https://github.com/nvaccess/nvda/wiki/Contributing): Guidelines for contributing to the NVDA source code
-* [NVDA development email list](http://lists.sourceforge.net/lists/listinfo/nvda-devel) ([archives](http://nabble.nvda-project.org/Development-f1.html)): Discussion about NVDA development
+* [NVDA development email list](https://nvda-devel.groups.io/) ([Old archives](http://nabble.nvda-project.org/Development-f1.html)): Discussion about NVDA development
 * [NVDA commits email list](http://lists.sourceforge.net/lists/listinfo/nvda-commits): Notifications for all commits to the Git repository
 
 ## Getting the Source Code
