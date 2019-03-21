@@ -1897,6 +1897,20 @@ Za pregled teh nezdružljivih dodatkov , lahko uporabite gumb "poglejte nezdruž
 
 Za dostop do Upravitelja dodatkov od kjerkoli, prosimo, dodelite lastno kretnjo z uporabo [pogovornega okna Kretenj Vnosa. #InputGestures]
 
+++ Upravitelj Nezdružljivih Dodatkov ++[incompatibleAddonsManager]
+Upravitelj Nezdružljivih Dodatkov, do katerega se lahko dostopa prek gumba "preglej nezdružljive dodatke" v Upravitelju dodatkov, vam dovoljuje pregled kateregakoli nezdružljivega dodatka in razlog, zakaj je bil ocenjen kot nezdružljiv.
+Dodatki se ocenijo kot nezdružljivi takrat, ko se niso posodobili tako, da bi delovali skladno z večjimi spremembami v NVDA ali, ko se zanašajo na zmožnost, ki ni na voljo v različici NVDA, katera se uporablja.
+Upravitelj nezdružljivih dodatkov vsebuje kratko sporočilo o njegovem namenu kot tudi različico NVDA.
+Nezdružljivi dodatki so predstavljeni na seznamu z naslednjimi stolpci:
++ Paket, ime dodatka
++ Različica, različica dodatka
++ Razlog nezdružljivosti, razlaga, zakaj je dodatek ocenjen kot nezdružljiv
++
+
+Upravitelj nezdružljivih dodatkov ima tudi gumb "O dodatku...".
+Ta gumb odpre pogovorno okno s podrobnimi informacijami o dodatku, kar vam bo v pomoč, ko boste skušali stopiti v stik z avtorjem dodatka.
+
+
 ++ Python Konzola ++[PythonConsole]
 NVDA Python konzola, ki se nahaja v Orodjih menija NVDA, je orodje za razvijalce, ki je uporabno za razhroščevanje, splošno inšpekcijo NVDA notranjosti ali inšpekcijo hierarhije dostopnosti v programu.
 Več informacij, prosimo, poiščite v [Vodiču za Razvijalce  NVDA (v Angleščini) https://www.nvaccess.org/files/nvda/documentation/developerGuide.html].
@@ -2822,9 +2836,11 @@ NVDA pozna naslednje možnosti ukazne vrstice:
 | -s | --secure | Varni način (Onemogočena konzola Pythona in zmožnosti beleženja; pogosto v uporabi na varnih zaslonih) |
 | None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
 | None | --debug-logging | Nastavi nivo beleženja na Razhroščevanje samo za naslednji zagon NVDA. Ta nastavitev bo preglasila katerikoli drug dan argument nivoja beleženja ( ""--loglevel"", -l), ki definira nivo beleženja vključno z možnostjo brez beleženja. |
+| None | --no-logging | Popolnoma onemogoči beleženje med uporabo NVDA. Ta nastavitev se lahko preglasi, če je nivo beleženja ( ""--loglevel"", -l) is definiran prek ukazne vrstice ali, če je vključeno beleženje razhroščevanja. |
 | None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
 | None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
 | None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |
+| None | --enable-start-on-logon=True|False | Ob namestitvi, omogoči možnost v NVDA [zaženi na prijavnem zaslonu #StartAtWindowsLogon] |
 | None | --create-portable | Ustvari prenosljivo kopijo NVDA (to novo kopijo potem tudi nemudoma zažene). Obvezno je treba določiti parameter --portable-path |
 | None | --create-portable-silent | Ustvari prenosljivo kopijo NVDA (te nove kopije potem ne zažene). Obvezno je treba določiti parameter --portable-path |
 | None | --portable-path=PORTABLEPATH | Cilj, kjer se bo prenosljiva kopija ustvarila |
