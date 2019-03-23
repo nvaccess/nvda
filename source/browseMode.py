@@ -184,6 +184,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def report(self,readUnit=None):
 		info=self.textInfo
+		# If we are dealing with a form field, ensure we don't read the whole content if it's an editable text.
 		if self.itemType == "formField":
 			if self.obj.role == controlTypes.ROLE_EDITABLETEXT:
 				readUnit = textInfos.UNIT_LINE
