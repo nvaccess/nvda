@@ -180,26 +180,28 @@ def _getAvailableAddonsFromPath(path):
 	for p in os.listdir(path):
 		if p.endswith(DELETEDIR_SUFFIX): continue
 		addon_path = os.path.join(path, p)
-		if os.path.isdir(addon_path) and addon_path not in ('.', '..') and len(os.listdir(addon_path)):
-			log.debug("Loading add-on from %s", addon_path)
-			try:
-				a = Addon(addon_path)
-				name = a.manifest['name']
-				log.debug(
-					"Found add-on {name} - {a.version}."
-					" Requires API: {a.minimumNVDAVersion}."
-					" Last-tested API: {a.lastTestedNVDAVersion}".format(
-						name=name,
-						a=a
-					))
-				if a.isDisabled:
-					log.debug("Disabling add-on %s", name)
-				if not isAddonCompatible(a):
-					log.debugWarning("Add-on %s is considered incompatible", name)
-					_blockedAddons.add(a.name)
-				yield a
-			except:
-				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
+		if os.path.isdir(addon_path) and addon_path not in ('.', '..') ):
+			if (len(os.listdir(addon_path))):
+				log.debug("Loading add-on from %s", addon_path)
+				try:
+					a = Addon(addon_path)
+					name = a.manifest['name']
+					log.debug(
+						"Found add-on {name} - {a.version}."
+						" Requires API: {a.minimumNVDAVersion}."
+						" Last-tested API: {a.lastTestedNVDAVersion}".format(
+							name=name,
+							a=a
+						))
+					if a.isDisabled:
+						log.debug("Disabling add-on %s", name)
+					if not isAddonCompatible(a):
+						log.debugWarning("Add-on %s is considered incompatible", name)
+						_blockedAddons.add(a.name)
+					yield a
+				except:
+					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
+			else(log.error("Addon Directory Emtpy at %s, please try reinstalling %s", addon_path, name)
 
 _availableAddons = collections.OrderedDict()
 def getAvailableAddons(refresh=False, filterFunc=None):
