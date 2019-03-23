@@ -493,7 +493,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | Switches back to browse mode if focus mode was previously switched to automatically |
 | Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document. Not available in Microsoft Word and Outlook.) |
-| Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
+| Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document. See [searching for text #SearchingForText] for more information. |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
 | Open long description | NVDA+d | Opens a new window containing a long description for the element you are on if it has one. | 
@@ -563,7 +563,7 @@ When NVDA is restarted, the list of previous searched terms is cleared.
 Use the following keys for performing searches:
 %kc:beginInclude
 || Name | Key | Description |
-| Find text | NVDA+f | Opens the  search dialog |
+| Find text | NVDA+control+f | Opens the  search dialog |
 | Find next | NVDA+f3 | searches the next occurrence of the current search term  |
 | Find previous | NVDA+shift+f3 | searches the previous  occurrence of the current search term  |
 %kc:endInclude
