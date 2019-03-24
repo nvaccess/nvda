@@ -181,7 +181,9 @@ def _getAvailableAddonsFromPath(path):
 		if p.endswith(DELETEDIR_SUFFIX): continue
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
-			if(len(os.listdir(addon_path))):
+			if not len(os.listdir(addon_path)):
+				log.error("Error loading Addon from path: %s", addon_path)
+			else:
 				log.debug("Loading add-on from %s", addon_path)
 				try:
 					a = Addon(addon_path)
@@ -201,8 +203,7 @@ def _getAvailableAddonsFromPath(path):
 					yield a
 				except:
 					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
-			else:
-				log.error("Error loading Addon from path: %s, try reinstalling: %s", addon_path, name,exc_info=True)
+				
 _availableAddons = collections.OrderedDict()
 def getAvailableAddons(refresh=False, filterFunc=None):
 	""" Gets all available addons on the system.
