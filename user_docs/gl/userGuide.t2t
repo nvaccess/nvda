@@ -1369,13 +1369,6 @@ Esta opción permite ao usuario ignorar os eventos do rato (incluindo o movement
 Esta opción está desmarcada por defecto.
 Se marcas esta opción e tes activada a opción "Habilitar seguemento do rato", o NVDA non anunciará o que hai por enbaixo do rato se este é movido por outra aplicación.
 
-==== O foco sigue ao modo exploración ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Tecla: NVDA+8
-
-Habilitada por defecto, esta opción permíteche escoller se o foco do sistema segue automáticamente ao foco do modo exploración nos navegadores web.
-Se está habilitado, esto representa o comportamento predeterminado do NVDA a partir da versión 2018.4 e anteriores.
-Deshabilitar esta opción pode resultar nunha experiencia de navegación máis rápida e unha mellor resposta no modo exploración. Esto é experimental a partir da versión 2019.1.
-
 +++ Interación Tactil +++[TouchInteraction]
 Esta categoría de opcións, só dispoñible en computadores que executen Windows 8 e posterior con capacidades tactiles, permítenche configurar o xeito no que NVDA interactúa con pantallas tactiles.
 Esta categoría contén as seguintes opcións:
@@ -1609,22 +1602,30 @@ Esta categoría contén as seguintes opcións:
 ==== Lingua de Recoñecemento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permíteche escoller a lingua para usar co recoñecemento de texto.
 
-+++ Opcións Avanzadas +++
++++ Opcións Avanzadas +++[AdvancedSettings]
 ¡Advertencia! As opcións nesta categoría son para usuarios avanzados e poden causar que o NVDA non funcione correctamente se se configura de xeito incorrecto.
 Realiza cambios nestas opcións únicamente se estás seguro de que sabes o que estás a facer ou se recibiches as instrucións específicas dun desenvolvedor do NVDA.
 
-==== Habilitar a carga de código persoalizado dende o directorio Developer Scratchpad ====
+==== Facer cambios a opcións avanzadas ====[AdvancedSettingsMakingChanges]
+Para realizar cambios nas Opcións Avanzadas, os controis deben estar habilitados confirmando coa caixa de verificación, que entendes os resgos de modificar estas opcións.
+
+==== Reestablecer as opcións predeterminadas ====[AdvancedSettingsRestoringDefaults]
+O botón reestablece os valores predeterminados para as opcións, incluso se a caixa de confirmación non está marcada.
+Despois de cambiar as opcións é posible que desexes voltar aos valores predeterminados.
+Este tamén pode ser o caso se non estás seguro de que se cambiaran as opcións.
+
+==== Habilitar a carga de código persoalizado dende o directorio Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Ao desenvolver complementos para o NVDA, é útil poder probar o código a medida que o escrebes.
 Esta opción ao estar habilitada, permite ao NVDA cargar appModules persoalizados, globalPlugins, brailleDisplayDrivers e synthDrivers, dende un directorio especial de desenvolvedores scratchpad do teu directorio de configuración de usuario do NVDA.
 Anteriormente, o NVDA cargaba código persoalizado directamente dende o directorio de configuración do usuario, sen posibilidade de deshabilitalo.
 Esta opción está desactivada de xeito predeterminado, o que garante que nunca se execute ningún código non probado no NVDA sen o coñecemento explícito do usuario.
 Se desexas distribuir código persoalizado a outros, debes empaquetalo coma un complemento de NVDA.
 
-==== Abrir o directorio Developer Scratchpad ====
+==== Abrir o directorio Developer Scratchpad ====[AdvancedSettingsOpenScratchpadDir]
 Este botón abre o directorio onde podes colocar o código persoalizado mentres o desenvolves.
 Este botón só está habilitado se o NVDA está configurado para permitir a carga de código persoalizado dende o directorio de desenvolvedores do Scratchpad.
  
-==== Usar UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====
+==== Usar UI automation para acesar a controis de documento de Microsoft Word cando estea dispoñible ====[AdvancedSettingsUseUiaForWord]
 Cando esta opción estea activada, o NVDA tentará usar a API de accesibilidade de Microsoft UI Automation para obter información dos controis de documentos de Microsoft Word.
 Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o compositor de Microsoft Outlook.
  Para as versións máis recentes de Microsoft Office 2016/365 que se executan en Windows 10, a compatibilidade coa UI Automation  é o suficentemente compreta como para proporcionar acceso a documentos de Microsoft Word case igual á compatibilidade con Microsoft Word existente de NVDA, coa ventaxa engadida de que a capacidade de resposta aumenta considerablemente.
@@ -1632,11 +1633,11 @@ Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o composito
 Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
 Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
 
-==== Tempo de espera para o movemento do cursor (en MS) ====
+==== Tempo de espera para o movemento do cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opción permíteche configurar o número de milésimas de segundo que o NVDA esperará a que o cursor (ponto de inserción) se mova nos controis de texto editables.
 Se ves que o NVDA semella estar seguindo incorrectamente o cursor, por exemplo, parece estar sempre un carácter por detrás ou repetindo liñas, entón podes tentar aumentar este valor.
 
-==== Categorías de rexistro de depuración ====
+==== Categorías de rexistro de depuración ====[AdvancedSettingsDebugLoggingCategories]
 As caixas de verificación desta listaxe permíteche habilitar categorías específicas de mensaxes de depuración no rexistro do NVDA.
 O rexistro destas mensaxes pode incurrir nun menor rendemento e en arquivos de rexistro de gran tamaño.
 Activa só un deles se un desenvolvedor do NVDA che dou instrucións específicas, por exemplo, ao depurar por que un controlador de pantalla braille non está funcionando correctamente.

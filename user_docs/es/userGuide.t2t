@@ -1535,13 +1535,6 @@ Si esta opción está activada, NVDA reproducirá sonidos especiales cuando camb
 Habilitada de modo predeterminado, esta opción te permite elegir si los gestos (tales como la pulsación de teclas) que no sean una orden de NVDA y que no se considere que sea una tecla de orden en general, deberían capturarse para no pasar al documento que esté en el foco actualmente. 
 Como un ejemplo, al estar activada, si se pulsó la letra j, debería capturarse para no alcanzar el documento, ya que no es ni una tecla de navegación rápida ni es probable que sea una orden de la misma aplicación.
 
-==== El foco sigue al modo exploración ====[BrowseModeSettingsFocusFollowsBrowseMode]
-Tecla: NVDA+8
-
-Habilitada por defecto, esta opción te permite elegir si el foco del sistema sigue automáticamente al foco del modo exploración en los navegadores web.
-Si está habilitado, esto representa el comportamiento predeterminado de NVDA a partir de la versión 2018.4 y anteriores.
-Deshabilitar esta opción puede resultar en una experiencia de navegación más rápida y una mejor respuesta en el modo exploración. Esto es experimental a partir de la versión 2019.1.
-
 +++ Formateado de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
 La mayoría de las casillas de verificación en este diálogo son para configurar qué tipo de formato deseas escuchar automáticamente cuando muevas el cursor por los documentos. 
 Por Ejemplo, si marcas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
@@ -1609,22 +1602,30 @@ Esta categoría contiene las siguientes opciones:
 ==== Idioma de Reconocimiento ====[Win10OcrSettingsRecognitionLanguage]
 Este cuadro combinado te permite elegir el idioma para utilizar con el reconocimiento de texto.
 
-+++ Opciones Avanzadas +++
++++ Opciones Avanzadas +++[AdvancedSettings]
 ¡Advertencia! Las opciones en esta categoría son para usuarios avanzados y pueden causar que NVDA no funcione correctamente si se configura de forma incorrecta.
 Realiza cambios en estas opciones únicamente si estás seguro de que sabes lo que estás haciendo o si has recibido las instrucciones específicas de un desarrollador de NVDA.
 
-==== Habilitar la carga de código personalizado desde el directorio Developer Scratchpad ====
+==== Hacer cambios a opciones avanzadas ====[AdvancedSettingsMakingChanges]
+Para realizar cambios en las Opciones Avanzadas, los controles deben estar habilitados confirmando con la casilla de verificación, que comprendes los riesgos de modificar estas opciones.
+
+==== Reestablecer las opciones predeterminadas ====[AdvancedSettingsRestoringDefaults]
+El botón reestablece los valores predeterminados para las opciones, incluso si la casilla de confirmación no está marcada.
+Después de cambiar las opciones es posible que desees volver a los valores predeterminados.
+Este también puede ser el caso si no estás seguro de que se hayan cambiado las opciones.
+
+==== Habilitar la carga de código personalizado desde el directorio Developer Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Al desarrollar complementos para NVDA, es útil poder probar el código a medida que lo escribes.
 Esta opción al estar habilitada, permite a NVDA cargar appModules personalizados, globalPlugins, brailleDisplayDrivers y synthDrivers, desde un directorio especial de desarrolladores scratchpad de tu directorio de configuración de usuario de NVDA.
 Anteriormente, NVDA cargaba código personalizado directamente desde el directorio de configuración del usuario, sin posibilidad de deshabilitarlo.
 Esta opción está desactivada de forma predeterminada, lo que garantiza que nunca se ejecute ningún código no probado en NVDA sin el conocimiento explícito del usuario.
 Si deseas distribuir código personalizado a otros, debes empaquetarlo como un complemento de NVDA.
 
-==== Abrir el directorio Developer Scratchpad ====
+==== Abrir el directorio Developer Scratchpad ====[AdvancedSettingsOpenScratchpadDir]
 Este botón abre el directorio donde puedes colocar el código personalizado mientras lo desarrollas.
 Este botón sólo está habilitado si NVDA está configurado para permitir la carga de código personalizado desde el directorio de desarrolladores del Scratchpad.
  
-==== Utilizar UI automation para acceder a controles de documento de Microsoft Word cuando esté disponible ====
+==== Utilizar UI automation para acceder a controles de documento de Microsoft Word cuando esté disponible ====[AdvancedSettingsUseUiaForWord]
 Cuando esta opción esté activada, NVDA intentará utilizar la API de accesibilidad de Microsoft UI Automation para obtener información de los controles de documentos de Microsoft Word.
 Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compositor de Microsoft Outlook.
  Para las versiones más recientes de Microsoft Office 2016/365 que se ejecutan en Windows 10, la compatibilidad con la UI Automation  es lo suficientemente completa como para proporcionar acceso a documentos de Microsoft Word casi igual a la compatibilidad con Microsoft Word existente de NVDA, con la ventaja añadida de que la capacidad de respuesta aumenta considerablemente.
@@ -1632,11 +1633,11 @@ Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compo
 Sin embargo, puede haber alguna información que no esté expuesta o que esté incorrectamente expuesta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de la UI automation.
 Todavía no recomendamos que la mayoría de los usuarios activen esta opción de forma predeterminada, aunque invitamos a los usuarios de Office 2016/365 a que prueben esta función y nos envíen sus comentarios.
 
-==== Tiempo de espera para el movimiento del cursor (en MS) ====
+==== Tiempo de espera para el movimiento del cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opción te permite configurar el número de milésimas de segundo que NVDA esperará a que el cursor (punto de inserción) se mueva en los controles de texto editables.
 Si ves que NVDA aparenta estar siguiendo incorrectamente el cursor, por ejemplo, parece estar siempre un carácter por detrás o repitiendo líneas, entonces puedes intentar aumentar este valor.
 
-==== Categorías de registro de depuración ====
+==== Categorías de registro de depuración ====[AdvancedSettingsDebugLoggingCategories]
 Las casillas de verificación de esta lista te permiten habilitar categorías específicas de mensajes de depuración en el registro de NVDA.
 El registro de estos mensajes puede incurrir en un menor rendimiento y en archivos de registro de gran tamaño.
 Activa sólo uno de ellos si un desarrollador de NVDA te ha dado instrucciones específicas, por ejemplo, al depurar por qué un controlador de pantalla braille no está funcionando correctamente.
