@@ -159,11 +159,21 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 deviceInfoFetcher = _DeviceInfoFetcher()
 
 class Detector(object):
-	"""Automatically detect braille displays.
+	"""Detector class used to automatically detect braille displays.
 	This should only be used by the L{braille} module.
 	"""
 
 	def __init__(self, usb=True, bluetooth=True, limitToDevices=None):
+		"""Constructor.
+		The keyword arguments initialize the detector in a particular state.
+		On an initialized instance, these initial arguments can be overridden by calling L{_startBgScan} or L{rescan}.
+		@param usb: Whether this instance should detect USB devices initially.
+		@type usb: bool
+		@param bluetooth: Whether this instance should detect Bluetooth devices initially.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited initially.
+			C{None} if no driver filtering should occur.
+		"""
 		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
@@ -192,6 +202,16 @@ class Detector(object):
 			self._scanQueued = state
 
 	def _startBgScan(self, usb=False, bluetooth=False, limitToDevices=None):
+		"""Starts a scan for devices.
+		If a scan is already in progress, a new scan will be queued after the current scan.
+		To explicitely cancel a scan in progress, use L{rescan}.
+		@param usb: Whether USB devices should be detected for this and subsequent scans.
+		@type usb: bool
+		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+			C{None} if no driver filtering should occur.
+		"""
 		with self._queuedScanLock:
 			self._detectUsb = usb
 			self._detectBluetooth = bluetooth
@@ -260,7 +280,14 @@ class Detector(object):
 							self._btDevs = btDevsCache
 
 	def rescan(self, usb=True, bluetooth=True, limitToDevices=None):
-		"""Stop a current scan when in progress, and start scanning from scratch."""
+		"""Stop a current scan when in progress, and start scanning from scratch.
+		@param usb: Whether USB devices should be detected for this and subsequent scans.
+		@type usb: bool
+		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+			C{None} if no driver filtering should occur.
+		"""
 		self._stopBgScan()
 		with self._btDevsLock:
 			# A Bluetooth com port or HID device might have been added.
