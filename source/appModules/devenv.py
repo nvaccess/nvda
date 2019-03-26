@@ -43,15 +43,16 @@ from comtypes.automation import IDispatch
 
 from logHandler import log
 import textInfos.offsets
+import ui
 
-from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, EditableTextWithSuggestions
 from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
+from NVDAObjects.IAccessible import IAccessible
 
 import appModuleHandler
-import UIAHandler
-import winUser
+import controlTypes
 
 
 #
@@ -90,6 +91,9 @@ SB_VERT = 1
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		vs_major, vs_minor, rest = self.productVersion.split(".", 2)
+		vs_major, vs_minor = int(vs_major), int(vs_minor)
+
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
 		if obj.windowClassName == VsTextEditPaneClassName and self._getDTE():
@@ -99,6 +103,12 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 			clsList.insert(0, VsTextEditPane)
 
+		if ((vs_major == 15 and vs_minor >= 3)
+			or vs_major >= 16):
+			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
+				clsList.insert(0, ObjectsTreeItem)
+
+
 	def _getDTE(self):
 	# Return the already fetched instance if there is one.
 		try:
@@ -106,7 +116,7 @@ class AppModule(appModuleHandler.AppModule):
 				return self._DTE
 		except AttributeError:
 			pass
-		
+
 		# Retrieve and cache the top level automation object for the IDE
 		DTEVersion = VsVersion_None
 		bctx = objbase.CreateBindCtx()
@@ -122,7 +132,7 @@ class AppModule(appModuleHandler.AppModule):
 				DTEVersion = VsVersion_2003
 			elif "!VisualStudio.DTE:%d"%self.processID==displayName:
 				DTEVersion = VsVersion_2002
-				
+
 			if DTEVersion != VsVersion_None:
 				self._DTEVersion = DTEVersion
 				self._DTE = comtypes.client.dynamic.Dispatch(ROT.GetObject(mon).QueryInterface(IDispatch))
@@ -136,7 +146,7 @@ class AppModule(appModuleHandler.AppModule):
 
 		# Loop has completed
 		return self._DTE
-		
+
 	def _getTextManager(self):
 		try:
 			if self._textManager:
@@ -146,18 +156,6 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
-
-	def isGoodUIAWindow(self, hwnd):
-		vs_major, vs_minor, rest = self.productVersion.split(".", 2)
-		vs_major, vs_minor = int(vs_major), int(vs_minor)
-
-		if ((vs_major == 15 and vs_minor >= 3)
-			or vs_major >= 16):
-
-			# #9311: Sometimes object explorer objects are recognized as IAccessible2 objects
-			if winUser.getClassName(hwnd) in ("LiteTreeView32",):
-				return True
-
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
@@ -486,3 +484,20 @@ IVsTextView._methods_ = [
     COMMETHOD([], HRESULT, 'SetTopLine',
               ( ['in'], c_int, 'iBaseLine' )),
 ]
+
+class ObjectsTreeItem(IAccessible):
+
+	def event_gainFocus(self):
+
+		# If this object has the focus, simply go to the super implementation
+		if controlTypes.STATE_FOCUSED in self.states:
+			super(ObjectsTreeItem, self).event_gainFocus()
+			return
+
+		import eventHandler
+		eventHandler.executeEvent("gainFocus", self.objectWithFocus())
+
+	def _get_positionInfo(self):
+		return {
+			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
+		}
