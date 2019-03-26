@@ -692,3 +692,6 @@ class VisionHandler(AutoPropertyObject):
 			# No active providers or focus/review hasn't yet been initialised.
 			return
 		self.handleGainFocus(api.getFocusObject())
+
+def _isDebug():
+	return config.conf["debugLog"]["vision"]

@@ -313,7 +313,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		className = u"wxWindowClassNR"
 		#Just define these constants here, so we don't have to import win32con
 		WM_POWERBROADCAST = 0x218
-		WM_DISPLAYCHANGE = 0x7e
 		PBT_APMPOWERSTATUSCHANGE = 0xA
 		UNKNOWN_BATTERY_STATUS = 0xFF
 		AC_ONLINE = 0X1
@@ -334,7 +333,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			post_windowMessageReceipt.notify(msg=msg, wParam=wParam, lParam=lParam)
 			if msg == self.WM_POWERBROADCAST and wParam == self.PBT_APMPOWERSTATUSCHANGE:
 				self.handlePowerStatusChange()
-			elif msg == self.WM_DISPLAYCHANGE:
+			elif msg == winUser.WM_DISPLAYCHANGE:
 				self.handleScreenOrientationChange(lParam)
 
 		def handleScreenOrientationChange(self, lParam):

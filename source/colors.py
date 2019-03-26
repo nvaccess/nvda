@@ -64,6 +64,21 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 					return RGB(r,g,b)
 		raise ValueError("invalid RGB string: %s"%s)
 
+	def toCOLORREF(self):
+		"""Returns a COLORREF ctypes instance
+		@rtype: L{COLORREF}
+		"""
+		return COLORREF(self.red&0xff | ((self.green&0xff) << 8) | ((self.blue&0xff) << 16))
+
+	def toGDIPlusARGB(self, alpha=255):
+		"""Creates a GDI+ compatible ARGB color, using the specified alpha for the alpha component.
+		@param alpha: The alpha part of the ARGB color,
+			0 is fully transparent and 255 is fully opaque.
+			Defaults to 255 (opaque).
+		@type alpha: int
+		"""
+		return (alpha<<24) | (self.red<<16) | (self.green<<8) | self.blue
+
 	@property
 	def name(self):
 		foundName=RGBToNamesCache.get(self,None)

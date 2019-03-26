@@ -12,6 +12,9 @@ import weakref
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT
 from logHandler import log
+from six import with_metaclass
+from abc import ABCMeta, abstractmethod, abstractproperty
+from baseObject import AutoPropertyObject
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
@@ -129,7 +132,7 @@ def getWindowScalingFactor(window):
 
 
 appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
-class CustomWindow(object):
+class CustomWindow(with_metaclass(ABCMeta, AutoPropertyObject)):
 	"""Base class to enable simple implementation of custom windows.
 	Subclasses need only set L{className} and implement L{windowProc}.
 	Simply create an instance to create the window.
@@ -137,30 +140,71 @@ class CustomWindow(object):
 	but it can be explicitly destroyed using L{destroy}.
 	"""
 
-	#: The class name of this window.
-	#: @type: unicode
-	className = None
+	@classmethod
+	def _get__wClass(cls):
+		return WNDCLASSEXW(
+			cbSize=ctypes.sizeof(WNDCLASSEXW),
+			lpfnWndProc = cls._rawWindowProc,
+			hInstance = appInstance,
+			lpszClassName = cls.className,
+		)
+
+	@classmethod
+	def _get_className(cls):
+		"""The class name of this window.
+		@rtype: unicode
+		"""
+		return None
 
 	_hwndsToInstances = weakref.WeakValueDictionary()
 
-	def __init__(self, windowName=None):
+	def __init__(
+		self,
+		windowName=None,
+		windowStyle=0,
+		extendedWindowStyle=0,
+		parent=None
+	):
 		"""Constructor.
+		@param windowName: The name of the window.
+		@type windowName: unicode
+		@param windowStyle: The style of the window.
+			This is a combination of the C{winUser.WS_*} constants.
+		@type windowStyle: int
+		@param extendedWindowStyle: The extended style of the window.
+			This is a combination of the C{winUser.WS_EX_*} constants.
+		@type extendedWindowStyle: int
+		@param parent: The handle of the parent window, if any.
+		@type parent: int
 		@raise WindowsError: If an error occurs.
 		"""
 		if not isinstance(self.className, unicode):
-			raise ValueError("className attribute must be a unicode string")
+			raise TypeError("className attribute must be a unicode string")
 		if windowName and not isinstance(windowName, unicode):
-			raise ValueError("windowName must be a unicode string")
-		self._wClass = WNDCLASSEXW(
-			cbSize=ctypes.sizeof(WNDCLASSEXW),
-			lpfnWndProc = CustomWindow._rawWindowProc,
-			hInstance = appInstance,
-			lpszClassName = self.className,
-		)
+			raise TypeError("windowName must be a unicode string")
+		if not isinstance(windowStyle, (int, long)):
+			raise TypeError("windowStyle must be an integer")
+		if not isinstance(extendedWindowStyle, (int, long)):
+			raise TypeError("extendedWindowStyle must be an integer")
+		if parent and not isinstance(parent, (int, long)):
+			raise TypeError("parent must be an integer")
 		res = self._classAtom = ctypes.windll.user32.RegisterClassExW(ctypes.byref(self._wClass))
 		if res == 0:
 			raise ctypes.WinError()
-		res = ctypes.windll.user32.CreateWindowExW(0, self._classAtom, windowName or self.className, 0, 0, 0, 0, 0, None, None, appInstance, None)
+		res = ctypes.windll.user32.CreateWindowExW(
+			extendedWindowStyle,
+			self._classAtom,
+			windowName or self.className,
+			windowStyle,
+			0,
+			0,
+			0,
+			0,
+			parent,
+			None,
+			appInstance,
+			None
+		)
 		if res == 0:
 			raise ctypes.WinError()
 		#: The handle to the created window.
@@ -181,6 +225,7 @@ class CustomWindow(object):
 		if self.handle:
 			self.destroy()
 
+	@abstractmethod
 	def windowProc(self, hwnd, msg, wParam, lParam):
 		"""Process messages sent to this window.
 		@param hwnd: The handle to this window.
@@ -195,12 +240,14 @@ class CustomWindow(object):
 			or C{None} to call DefWindowProc.
 		@rtype: int or None
 		"""
+		return None
 
 	@WNDPROC
 	def _rawWindowProc(hwnd, msg, wParam, lParam):
 		try:
 			inst = CustomWindow._hwndsToInstances[hwnd]
 		except KeyError:
+			log.debugWarning("CustomWindow rawWindowProc, called for unknown window %d" % hwnd)
 			return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
 		try:
 			res = inst.windowProc(hwnd, msg, wParam, lParam)
