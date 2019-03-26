@@ -105,11 +105,18 @@ O diálogo de instalação que aparece confirmará se deseja instalar o NVDA e d
 Pressionando o botão "Continuar" iniciará a instalação do NVDA.
 Existem também algumas opções, neste diálogo, que serão seguidamente explicadas.
 Uma vez a instalação concluída, aparecerá uma mensagem a indicar-lhe que a instalação foi bem sucedida.
-Pressionando OK, neste ponto, irá reiniciar a cópia agora instalada do NVDA.
+Pressionando OK, neste ponto, irá reiniciar a cópia instalada do NVDA.
+
++++ Aviso sobre extras Incompatíveis +++[InstallWithIncompatibleAddons]
+Se tiver extras instalados, poderá haver um aviso de que os extras incompatíveis serão desativados.
+Antes de poder pressionar o botão "Continuar", terá de marcar a caixa de verificação para confirmar que sabe que esses extras serão desativados.
+Também haverá um botão para poder analisar os extras que serão desativados.
+Consulte a [secção Extras incompatíveis #incompatibleAddonsManager] para obter mais informações sobre este botão.
 
 +++ Iniciar no ecrã de início de sessão do Windows +++[StartAtWindowsLogon]
 Esta opção permite-lhe que escolha se o NVDA deverá ou não iniciar, automaticamente, no ecrã de início de sessão do Windows, antes de escrever a palavra passe.
-Tal também engloba os ecrãs de controlo de acesso (UAC) e outros ecrãs de ambiente seguro.
+Isto também engloba os ecrãs de controlo de acesso do utilizador (UAC) e outros ecrãs de ambiente seguro.
+Por padrão, esta opção está activada em novas instalações.
 
 +++ Criar Atalho no Ambiente de Trabalho (control+alt+n) +++[CreateDesktopShortcut]
 Esta opção permite-lhe escolher se deverá, ou não, ser criado um atalho, no Ambiente de trabalho, para iniciar o NVDA.
@@ -940,8 +947,7 @@ Existem diversos idiomas, contudo, a opção padrão é "Predefinição do utili
 Esta definição indica ao software para utilizar o idioma para o qual o Windows está definido no momento.
 
 Note, por favor, que o NVDA precisa ser reiniciado, quando alterar o idioma.
-O NVDA questioná-lo-á se pretende reiniciar, caso altere a selecção e guarde a nova configuração.
-Pressione "OK", e o NVDA irá reiniciar.
+Quando o diálogo de confirmação aparecer, seleccione "Reiniciar agora" ou "Reiniciar mais tarde", respectivamente se quiser usar o novo idioma agora ou mais tarde. Se pretender reiniciar mais tarde, deve guardar a nova configuração (manualmente ou usando a funcionalidade "Guardar configurações ao sair").
 
 ==== Guardar A Configuração ao Sair ====[GeneralSettingsSaveConfig]
 Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para guardar automaticamente a configuração actual, ao sair do programa.
@@ -957,7 +963,15 @@ Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA p
 ==== Nível de registo ====[GeneralSettingsLogLevel]
 Esta é uma caixa de combinação que lhe permite seleccionar a quantidade de informação que o NVDA coloca no registo, quando está em execução.
 Geralmente, os utilizadores não necessitam de alterar isto, para que não seja registada demasiada informação.
-Contudo, se pretender fornecer informação para relatar um erro, esta poderá ser uma opção útil.
+Contudo, se pretender fornecer informação para relatar um erro, ou activar/desactivar completamente o registo, esta poderá ser uma opção útil.
+
+Os níveis de registo disponíveis são:
+- Desactivado: Além de uma breve mensagem de início, o NVDA não registará nada enquanto estiver em execução;
+- Informação: O NVDA registará informações básicas, como mensagens de início e informações úteis para os desenvolvedores;
+- Aviso de depuração: Serão registadas mensagens de aviso que não são causadas por erros graves;
+- Entrada/saída de dados: As entradas pelo teclado ou linha Braille, bem como o que é falado ou representado em Braille, serão registadas. Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção;
+- Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais. Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
+-
 
 ==== Iniciar o NVDA automaticamente depois de iniciar cessão no Windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opção estiver marcada, o NVDA arrancará, automaticamente, assim que iniciar sessão no Windows.
@@ -1060,7 +1074,7 @@ Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determina
 Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
 Esses dicionários contém descriçãos para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode http://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
 Se quiser que o NVDA fale as descriçõess dos emojis desta base de dados, deve activar esta opção.
-Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar.
+Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar esta opção.
 
 Note que descrições adicionadas ou editadas manualmente são guardadas nas suas configurações.
 Por isso, se alterar a descrição dum emoji, essa descrição será sempre falada, mesmo com esta opção desactivada.
@@ -1350,6 +1364,11 @@ Quanto mais à esquerda ou à direita estiver o rato no ecrã, tanto mais à esq
 Se a caixa de verificação "tocar as coordenadas de áudio quando o rato se mover" estiver marcada, ao marcar esta opção, faz com que o volume dos bips das coordenadas de áudio seja controlado pelo quão brilhante está o ecrã sob o rato.
 Esta definição não está marcada, por padrão.
 
+==== Ignorar eventos do rato de outras aplicações ==== [MouseSettingsHandleMouseControl]
+Esta opção permite que sejam ignorados os eventos do rato (incluindo o movimento do rato e o pressionar dos botões) gerados por outras aplicações, como TeamViewer e outro software de controlo remoto.
+Esta opção está desmarcada por padrão.
+Se marcar esta opção, e tiver activada a opção "Activar seguimento do rato, o NVDA não anunciará o que está por baixo do rato se o rato for movido por outra aplicação.
+
 +++ Interacção táctil +++[TouchInteraction]
 Esta secção, apenas disponível em computadores com Windows 8 ou superior  e com ecrã táctil, permite configurar como o NVDA interage com os ecrãs tácteis.
 Actualmente, esta secção apenas contém uma opção:
@@ -1584,8 +1603,47 @@ Actualmente, só contém uma opção:
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
 
++++ Configurações Avançadas +++[AdvancedSettings]
+Aviso! As configurações desta secção são para utilizadores avançados e podem fazer com que o NVDA não funcione correctamente se configurado de maneira errada.
+Apenas faça alterações nestas configurações se tiver a certeza de que sabe o que está a fazer ou se foi especificamente instruído por um desenvolvedor do NVDA ou por alguém com conhecimentos bastantes e em quem confie.
+
+==== Alterar as configurações avançadas ==== [AdvancedSettingsMakingChanges]
+Para fazer alterações nas configurações avançadas, deve activar os controlos, confirmando, com a caixa de verificação, que entende os riscos de modificar essas configurações.
+
+==== Restaurar as configurações padrão ==== [AdvancedSettingsRestoringDefaults]
+O botão "Restaurar padrões", mesmo que a caixa de verificação de confirmação não esteja marcada, restaura as configurações avançadas para os valores padrão.
+Depois de alterar as configurações, pode querer reverter para os valores padrão.
+Também pode usar este botão se não tiver a certeza que as configurações foram alteradas.
+
+==== Activar o carregamento de código personalizado a partir do diretório Scratchpad ==== [AdvancedSettingsEnableScratchpad]
+Ao desenvolver add-ons para o NVDA, é útil poder testar o código à medida que você o escreve.
+Esta opção, quando activada, permite que o NVDA carregue appModules, globalPlugins, brailleDisplayDrivers e synthDrivers personalizados, a partir de um diretório especial, scratchpad, no diretório de configurações do utilizador do NVDA.
+Anteriormente, o NVDA carregava código personalizado diretamente do diretório de configurações do utilizador, sem a possibilidade de desactivá-lo.
+Esta opção está desactivada por padrão, para garantir que nenhum código não testado seja executado no NVDA sem o conhecimento explícito do utilizador.
+Se deseja distribuir código personalizado para outras pessoas, você deve empacotá-lo como um extra do NVDA.
+ 
+==== Abrir Diretório do Scratchpad do Desenvolvedor ==== [AdvancedSettingsOpenScratchpadDir]
+ Este botão abre o diretório onde você pode colocar um código personalizado enquanto o desenvolve.
+ Este botão só é ativado se o NVDA estiver configurado para ativar o carregamento de código personalizado a partir do Diretório do Scratchpad do Desenvolvedor.
+  
+==== Usar UI Automation para aceder a controlos de documentos do Microsoft Word, se disponível ====[AdvancedSettingsUseUiaForWord]
+Ao activar esta opção, o NVDA irá utilizar a API de acessibilidade da Microsoft, UI Automation, para obter informações dos controlos de documentos do Microsoft Word.
+Isto inclui o próprio Microsoft Word e também o visualizador e o compositor de mensagens do Microsoft Outlook.
+Para as versões mais recentes do Microsoft Office, 2016/365, em execução no Windows 10, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
+No entanto, em algumas versões do Microsoft Office, pode haver algumas informações que não são expostas, ou o são incorrectamente, pelo que o suporte UI Automation nem sempre deve ser activado.
+Ainda não é recomendável, para a maioria dos utilizadores, activar esta opção por padrão, embora seja aceitável que os utilizadores do Office 2016/365 queiram testar este recurso e fornecer feedback.
+ 
+==== Tempo limite dos movimentos do cursor (em ms) ====[AdvancedSettingsCaretMoveTimeout]
+Esta opção permite configurar quantos milissegundos o NVDA irá aguardar até que o cursor (ponto de inserção) se mova nos controlos de texto editáveis.
+Se o NVDA parecer estar a seguir incorrectamente o cursor de inserção, por exemplo parecer sempre um caractere atrasado ou repetir linhas, pode tentar aumentar este valor. 
+
+==== Categorias do registo em modo de depuração ====[AdvancedSettingsDebugLoggingCategories]
+As caixas de verificação desta lista permitem activar categorias específicas de mensagens de depuração no registo do NVDA.
+O registo dessas mensagens pode provocar desempenho reduzido e grandes ficheiros de registo.
+Apenas active uma destas categorias se isso for solicitado por um desenvolvedor do NVDA, ou de um extra, para verificar a causa de um mau funcionamento.
+
 ++ Outras Opções ++[MiscSettings]
-Para além de [Configurações #NVDASettings], o submenu "Preferências", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
+Para além das [Configurações #NVDASettings], o submenu "Preferências", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
 
 +++ Dicionários +++[SpeechDictionaries]
 O submenu "Dicionários" (que se encontra no menu "Preferências") contém diálogos que lhe permitem controlar o modo como o NVDA pronuncia palavras ou expressões em particular.
@@ -1825,17 +1883,31 @@ Para desactivar um Extra, pressione o botão "Desactivar".
 Para activar um Extra previamente desactivado, pressione o botão "Activar".
 Pode desactivar um Extra se o seu estado indicar "Activado", ou activar um Extra se o seu estado for "Desactivado".
 Cada vez que pressionar o botão "Activar"/"Desactivar", o estado do Extra é alterado para reflectir o que acontecerá quando o NVDA reiniciar.
-Se o extra estiver activado, o seu estado passará a "Desactivado após reinício". Se o extra estiver desactivado, o seu estado passará a "Activado após reinício".
+Se o extra estiver activado, o seu estado passará a "Desactivado após reinício".
+Se o extra estiver desactivado, o seu estado passará a "Activado após reinício".
 Tal como quando instala ou desinstala um Extra, tem de reiniciar o NVDA para que as alterações surtam efeito.
 
 O gestor tem também um botão "fechar" para que o diálogo seja fechado.
 Se instalou, removeu ou alterou o estado de algum extra, o NVDA pedirá para reiniciar, para que as suas modificações possam ter efeito.
 
-No passado, foi possível estender as funcionalidades do NVDA, copiando plugins ou drivers individuais para a sua pasta de configurações do NVDA.
-Apesar desta versão do NVDA poder ainda carregá-los, estes não serão mostrados no gestor de extras.
-Será melhor remover estes ficheiros das suas configurações e instalar o extra apropriado, se existir.
+Alguns extras mais antigos podem já não ser compatíveis com a versão do NVDA que possui.
+Ao usar uma versão mais antiga do NVDA, alguns novos complementos podem não ser compatíveis.
+A tentativa de instalar um extra incompatível resultará em um erro explicando porque o extra é considerado incompatível.
+Para inspecionar esses complementos incompatíveis, você pode usar o botão "ver extras incompatíveis" para abrir o gestor de extras incompatíveis.
 
 Para aceder ao Gestor de Extras, a partir de qualquer local, por favor associe-lhe um comando através da opção [Definir comandos #InputGestures].
+
+++ Gestor de extras Incompatíveis ++[incompatibleAddonsManager]
+O Gestor de extras Incompatíveis, que pode aceder através do botão "ver extras incompatíveis" no gestor de extras, permite inspecionar quaisquer extras incompatíveis e o motivo pelo qual eles são considerados incompatíveis.
+Os extras são considerados incompatíveis quando não foram actualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que está a usar.
+O gestor de extras incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
+Os extras incompatíveis são apresentados numa lista com as seguintes colunas:
+Pacote, o nome do extra;
+Versão, a versão do extra
+Razão, uma explicação de porque o extra é considerado incompatível
+
+O Gerenciador de extras Incompatíveis também possui um botão "Sobre o extra...".
+Este botão abre um diálogo contendo informações do extra, para conhecer os detalhes completos do extra, o que é útil ao entrar em contato com o autor do extra.
 
 ++ Consola de Python ++[PythonConsole]
 A Consola de Python do NVDA encontra-se dentro das Ferramentas do Menu do NVDA. É uma ferramenta de programação muito útil para depuração, inspecção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.

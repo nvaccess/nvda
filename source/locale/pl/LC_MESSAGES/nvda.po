@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 00:10+1000\n"
-"PO-Revision-Date: 2019-02-23 18:39+0100\n"
-"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2019-03-08 00:10+1000\n"
+"PO-Revision-Date: 2019-03-13 18:44+0100\n"
+"Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
@@ -587,7 +587,7 @@ msgstr "automatycznie"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to focus.
 msgid "to focus"
-msgstr "Do punktu uwagi"
+msgstr "Do fokusu"
 
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
@@ -778,7 +778,7 @@ msgstr "Angielski (U.K.) skróty"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "Ujednolicony brajl angielski (UEB) skróty"
+msgstr "Ujednolicony brajl angielski (UEB) pismo pełne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1128,7 +1128,7 @@ msgstr "Słoweński brajl komputerowy"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian grade 1"
-msgstr "Słoweński skróty"
+msgstr "Słoweński pismo pełne"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1229,10 +1229,6 @@ msgstr "Tworzy listę  różnych typów elementów w tym dokumencie."
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "Aktywuje bieżący obiekt w dokumencie"
-
-#. Translators: the description for the passThrough script on browseMode documents.
-msgid "Passes gesture through to the application"
-msgstr "Przepuszcza zdarzenie wejścia do innej aplikacji"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -2035,7 +2031,7 @@ msgstr "pasek tytułu"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "obszar"
+msgstr "okno"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
@@ -3594,21 +3590,21 @@ msgstr ""
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
-msgstr "Przejdź do fokusu"
+msgstr "Przejdź do fokusa"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Sprowadza obiekt nawigatora do fokusu, i przenosi punkt przeglądu do kursora "
+"Sprowadza obiekt nawigatora do fokusa i przenosi punkt przeglądu do kursora "
 "w ramach tego obiektu, gdy jest to możliwe"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
 msgid "No focus"
-msgstr "Brak fokusu"
+msgstr "Brak fokusa"
 
 #. Translators: Reported when attempting to move focus to navigator object.
 msgid "Move focus"
@@ -3840,7 +3836,7 @@ msgstr "Zamyka NVDA"
 
 #. Translators: Input help mode message for restart NVDA command.
 msgid "Restarts NVDA!"
-msgstr "Uruchamia ponownie nVDA!"
+msgstr "Uruchamia ponownie NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -3939,8 +3935,8 @@ msgid ""
 "Opens the WX GUI inspection tool. Used to get more information about the "
 "state of GUI components."
 msgstr ""
-"Otwiera narzędzie do inspekcji komponentów WX, używane do zdobycia stanu "
-"komponentów graficznych."
+"Otwiera narzędzie do inspekcji komponentów WX, używane do uzyskania "
+"rozszerzonych informacji na temat stanu komponentów graficznych."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -4016,23 +4012,7 @@ msgstr "fokus przesuwa obiekt nawigatora tak"
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów fokusu"
-
-#. Translators: presented when toggled.
-msgid "Focus follows browse mode off"
-msgstr "Fokus śledzi tryb przeglądania wyłączone"
-
-#. Translators: presented when toggled.
-msgid "Focus follows browse mode on"
-msgstr "Fokus śledzi tryb przeglądania włączone"
-
-#. Translators: Input help mode message for toggle browse moves focus command.
-msgid ""
-"Toggles on and off the movement of the system focus due to browse mode "
-"commands"
-msgstr ""
-"Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów fokusu, gdy "
-"skróty trybu przeglądania są włączone."
+msgstr "Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów fokusa"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4338,7 +4318,7 @@ msgstr "Wprowadza punkty brajla przy pomocy klawiatury brajlowskiej"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the current focus"
-msgstr "Przenosi wyświetlanie brajla do fokusu"
+msgstr "Przenosi wyświetlanie brajla do fokusa"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Erases the last entered braille cell or character"
@@ -6580,7 +6560,7 @@ msgstr ""
 "\n"
 "\n"
 "Jednakże, państwa konfiguracja NVDA zawiera dodatki niezgodne z tą wersją "
-"NVDA. Po instalacji, te dodatki będą wyłączone. Jeżeli państwu załeży na "
+"NVDA. Po instalacji, te dodatki będą wyłączone. Jeżeli zależy państwu na "
 "tych dodatkach, proszę przejrzeć listę niezgodnych dodatków, aby się "
 "zdecydować na kontynuację instalacji"
 
@@ -6589,7 +6569,7 @@ msgstr ""
 #. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 #. available, will be disabled after installation.
 msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Rozumiem, że te niezgodne dodatki będą wyłaczone"
+msgstr "Rozumiem, że te niezgodne dodatki będą wyłączone"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -8155,7 +8135,7 @@ msgid ""
 "Addon: {summary} {version}"
 msgstr ""
 "Czy jesteś pewien, że chcesz zainstalować ten dodatek?\n"
-"Instaluj dodatki tylko ze zaufanych źródeł.\n"
+"Instaluj dodatki tylko z zaufanych źródeł.\n"
 "Dodatek: {summary} {version}"
 
 #. Translators: The title of the Incompatible Addons Dialog
@@ -8591,11 +8571,6 @@ msgstr "Zastosu&j"
 msgid "&Categories:"
 msgstr "&Kategorie:"
 
-#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-#, python-format
-msgid "%s Settings Category"
-msgstr "Kategoria ustawień %s"
-
 #. Translators: This is the label for the general settings panel.
 msgid "General"
 msgstr "Ogólne"
@@ -8726,7 +8701,7 @@ msgstr "Uruchom ponownie tera&z"
 
 #. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
 msgid "Restart &later"
-msgstr "Uruchom ponownie pó&źniej"
+msgstr "Uruchom ponownie póź&niej"
 
 #. Translators: A label for the synthesizer on the speech panel.
 msgid "&Synthesizer"
@@ -9072,7 +9047,7 @@ msgstr "Dołącz &tabele układu treści"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
-msgstr "Automatyczny tryb formularza przy zmianie &fokusu"
+msgstr "Automatyczny tryb formularza przy zmianie &fokusa"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9088,11 +9063,6 @@ msgstr "Sygnalizuj &dźwiękiem tryby przeglądania"
 #. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr "Nie p&rzekazuj do dokumentu zdarzeń wejścia niebędących poleceniami"
-
-#. Translators: This is the label for a checkbox in the
-#. browse mode settings panel.
-msgid "System focus follows browse mode focus automatically"
-msgstr "Fokus systemowy automatycznie śledzi fokus trybu przeglądania"
 
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
@@ -9296,23 +9266,7 @@ msgstr "Windows 10 OCR"
 msgid "Recognition &language:"
 msgstr "&Język rozpoznawania:"
 
-#. Translators: This is the label for the Advanced settings panel.
-msgid "Advanced"
-msgstr "Zaawansowane"
-
-#. Translators: This is a label appearing on the Advanced settings panel.
-msgid ""
-"Warning! The following settings are for advanced users. Changing them may "
-"cause NVDA to function incorrectly. Please only change these if you know "
-"what you are doing or have been specifically instructed by NVDA  developers."
-msgstr ""
-"Uwaga! Następujące ustawienia przeznaczone są dla użytkowników "
-"zaawansowanych. Zmiana tych ustawień może spowodować niepoprawne "
-"funkcjonowanie NVDA. Prosimy państwa, zmieniajcie te ustawienia, jeżeli "
-"wiecie, co robicie, lub jeżeli programista z zespołu NVDA kazał wam je "
-"zmieniać."
-
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "NVDA Development"
 msgstr "Rozwój NVDA"
@@ -9326,7 +9280,7 @@ msgstr "włącz wczytywanie własnego kodu z piaskownicy dewelopera NVDA"
 msgid "Open developer scratchpad directory"
 msgstr "Otwórz katalog piaskownicy NVDA"
 
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
@@ -9339,7 +9293,7 @@ msgstr ""
 "Użyj Microsoft UI automation do interakcji z kontrolkami dokumentów "
 "Microsoft &Word gdy jest to możliwe"
 
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
 msgstr "Pola edycyjne"
@@ -9350,7 +9304,7 @@ msgid "Caret movement timeout (in ms)"
 msgstr ""
 "Szybkość śledzenia przemieszczania się po polach edycji (w milisekundach)"
 
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
 msgstr "Logowanie debugowania"
@@ -9359,6 +9313,36 @@ msgstr "Logowanie debugowania"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "Włączone kategorie logowania:"
+
+#. Translators: This is the label for the Advanced settings panel.
+msgid "Advanced"
+msgstr "Zaawansowane"
+
+#. Translators: This is the label to warn users about the Advanced options in the
+#. Advanced settings panel
+msgid "Warning!"
+msgstr "Uwaga!"
+
+msgid ""
+"The following settings are for advanced users. Changing them may cause NVDA "
+"to function incorrectly. Please only change these if you know what you are "
+"doing or have been specifically instructed by NVDA developers."
+msgstr ""
+"Następujące ustawienia przeznaczone są dla użytkowników zaawansowanych. "
+"Zmiana tych ustawień może spowodować niepoprawne funkcjonowanie NVDA. "
+"Prosimy państwa, zmieniajcie te ustawienia, jeżeli wiecie, co robicie, lub "
+"jeżeli programista z zespołu NVDA kazał wam je zmieniać."
+
+msgid ""
+"I understand that changing these settings may cause NVDA to function "
+"incorrectly."
+msgstr ""
+"Rozumiem, że zmiana tych ustawień może spowodować nieprawidłowe działanie "
+"NVDA."
+
+#. Translators: This is the label for a button in the Advanced settings panel
+msgid "Restore defaults"
+msgstr "przywróć do ustawień domyślnych"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -9493,7 +9477,7 @@ msgstr "&Tempo migania kursora (w milisekundach)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
-msgstr "Kształt kursora dla &fokusu:"
+msgstr "Kształt kursora dla &fokusa:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
@@ -9521,11 +9505,11 @@ msgstr "Unikaj &rozdzielania słów"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "Kontekstowa prezentacja fokusu:"
+msgstr "Kontekstowa prezentacja fokusa:"
 
 #. Translators: This is the label for the NVDA settings dialog.
-msgid "NVDA"
-msgstr "NVDA"
+msgid "NVDA Settings"
+msgstr "Ustawienia NVDA"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
@@ -11157,6 +11141,31 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
+
+#~ msgid "Passes gesture through to the application"
+#~ msgstr "Przepuszcza zdarzenie wejścia do innej aplikacji"
+
+#~ msgid "Focus follows browse mode off"
+#~ msgstr "Fokus śledzi tryb przeglądania wyłączone"
+
+#~ msgid "Focus follows browse mode on"
+#~ msgstr "Fokus śledzi tryb przeglądania włączone"
+
+#~ msgid ""
+#~ "Toggles on and off the movement of the system focus due to browse mode "
+#~ "commands"
+#~ msgstr ""
+#~ "Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów fokusu, "
+#~ "gdy skróty trybu przeglądania są włączone."
+
+#~ msgid "%s Settings Category"
+#~ msgstr "Kategoria ustawień %s"
+
+#~ msgid "System focus follows browse mode focus automatically"
+#~ msgstr "Fokus systemowy automatycznie śledzi fokus trybu przeglądania"
+
+#~ msgid "NVDA"
+#~ msgstr "NVDA"
 
 #~ msgid "remove"
 #~ msgstr "usuń"
