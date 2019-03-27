@@ -476,7 +476,6 @@ def getProviderList(excludeNegativeChecks=True):
 	return providerList
 
 class VisionHandler(AutoPropertyObject):
-	cachePropertiesByDefault = True
 
 	def __init__(self):
 		self.lastReviewMoveContext = None
@@ -487,8 +486,8 @@ class VisionHandler(AutoPropertyObject):
 			configuredProviders[config.conf['vision'][role]].add(role)
 		for name, roles in configuredProviders.iteritems():
 			if name:
-				# Some providers might rely on wx being fully initialized,
-				# e.g. when they use an overlay window.
+				# Some providers, such as the highlighter, rely on wx being fully initialized,
+				# e.g. when they use an overlay window which parent is NVDA's main frame.
 				wx.CallAfter(self.setProvider, name, *roles)
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
