@@ -1,4 +1,4 @@
-Co nowego w NVDA.
+﻿Co nowego w NVDA.
 
 
 %!includeconf: ../changes.t2tconf
@@ -6,8 +6,8 @@ Co nowego w NVDA.
 = 2019.1 =
 Najważniejsze zmiany w tej wersji to poprawki wydajności w Microsoft word i Excel, poprawki stabilności i bezpieczeństwa np. obsługa dodatków z informacjami o kompatybilności, oraz wiele innych.
 
-Począwszy od tego wydania NVDA, podfoldery appModules, globalPlugins, braille display drivers i synth drivers nie będą automatycznie wczytywane z twojego folderu konfiguracji NVDA. 
-Powinny one zostać zainstalowane jako dodatki NVDA. Dla autorów dodatków, kod testowy może być umieszczony w nowym podfolderze scratchpad w folderze konfiguracji NVDA,  jeśli opcja piaskownicy NVDA jest zaznaczona w panelu zaawansowanych ustawień.
+Począwszy od tego wydania NVDA, dodatkowe wtyczki dla aplikacji,, sterowniki monitorów brajlowskich lub głosów, instalowane do podkatalogów appModules, globalPlugins, braille display drivers i synth drivers nie będą już wczytywane automatycznie.
+Od teraz powinny one zostać zainstalowane jako dodatki NVDA. Dla autorów dodatków, kod testowy może być umieszczony w nowym podfolderze scratchpad w katalogu konfiguracji NVDA,  jeśli opcja piaskownicy NVDA jest zaznaczona w panelu zaawansowanych ustawień.
 Te zmiany są konieczne dla zapewnienia lepszej kompatybilności własnego kodu, aby NVDA nie ulegał awariom, gdy ten eksperymentalny kod przestanie być kompatybilny z nowszymi wersjami.
 Więcej informacji o wersjonowaniu dodatków, znajduje się na liście zmian poniżej.
 

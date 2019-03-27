@@ -1,4 +1,4 @@
-Podręcznik użytkownika - NVDA NVDA_VERSION
+﻿Podręcznik użytkownika - NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -21,7 +21,7 @@ Najważniejsze właściwości NVDA to:
 - wsparcie popularnych aplikacji takich jak przeglądarki internetowe, klienty poczty, komunikatory internetowe, pakiety biurowe,
 - wbudowany syntezator mowy obsługujący ponad 80 języków,
 - ogłaszanie formatowania tekstu, jeśli jest dostępne, takiego jak nazwa i rozmiar czcionki, styl oraz błędy ortograficzne,
-- automatyczne ogłaszanie tekstu znajdującego się pod myszką oraz opcjonalna dźwiękowa sygnalizacja pozycji myszki,
+- automatyczne ogłaszanie tekstu znajdującego się pod myszką oraz opcjonalna dźwiękowa sygnalizacja jej pozycji,
 - wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość automatycznego wykrywania wielu z nich, oraz wprowadzania tekstu na monitorach z klawiaturą brajlowską,
 - możliwość uruchamiania z pamięci USB lub innych nośników przenośnych bez konieczności instalacji,
 - łatwy w użyciu udźwiękowiony instalator,
@@ -89,7 +89,7 @@ Uruchomienie wersji przenośnej z nośnika tylko do odczytu nie jest w tym momen
 Kontynuowanie używania wersji tymczasowej może być przydatne do przedstawienia innej osobie możliwości programu. Uruchamianie pliku instalacyjnego za każdym razem może jednak zabierać mnóstwo czasu.
 
 ++ Ograniczenia kopii przenośnej i tymczasowej ++[PortableAndTemporaryCopyRestrictions]
-Poza brakiem możliwości automatycznego startu po zalogowaniu do systemu, przenośna i tymczasowa kopia NVDA posiada następujące ograniczenia:
+Poza brakiem możliwości automatycznego startu po zalogowaniu do systemu, przenośna i tymczasowa kopia NVDA posiadają następujące ograniczenia:
 - Brak obsługi aplikacji uruchomionych z prawami administratora, chyba że NVDA również został uruchomiony z takimi uprawnieniami (niezalecane).
 - Brak odczytu ekranu kontroli konta użytkownika, podczas uruchamiania programu z uprawnieniami administratora.
 - Windows 8 i nowsze: brak obsługi ekranu dotykowego.
@@ -109,7 +109,7 @@ Po wciśnięciu przycisku OK, nastąpi uruchomienie zainstalowanej właśnie kop
 
 +++ Ostrzeżenie o niezgodnych dodatkach +++[InstallWithIncompatibleAddons]
 Jeśli masz zainstalowane jakieś dodatki,  może pojawić się informacja o wyłączeniu niekompatybilnych dodatków.
-Zanim możliwe będzie naciśnięcie przycisku Kontynuuj, należy zaznaczyć pole wyboru potwierdzające, że przeczytanie informacji o wyłączeniu tych dodatków.
+Zanim możliwe będzie naciśnięcie przycisku Kontynuuj, należy zaznaczyć pole wyboru potwierdzające przeczytanie informacji o wyłączeniu tych dodatków.
 Pojawi się również przycisk umożliwiający przegląd dodatków, które zostaną wyłączone.
 Aby uzyskać więcej informacji, zajrzyj do [rozdziału o niezgodnych dodatkach #incompatibleAddonsManager].
 
@@ -146,7 +146,7 @@ W celu uruchomienia programu zainstalowanego za pomocą instalatora wybierz NVDA
 Możesz również wpisać NVDA w oknie Uruchom w menu Start i nacisnąć klawisz Enter, a program zostanie uruchomiony.
 Możesz również podać pewne [parametry linii komend #CommandLineOptions], które pozwalają zrestartować NVDA (-r), zakończyć (-q), wyłączyć dodatki (--disable-addons), etc.
 
-Dla kopii zainstalowanych, NVDA domyślnie przechowuje konfigurację w podfolderze roaming folderu dane aplikacji aktualnego użytkownika (np. "C:\Users\<uzytkownik>\AppData\Roaming").
+Dla zainstalowanych kopii, NVDA domyślnie przechowuje konfigurację w podfolderze roaming folderu dane aplikacji aktualnego użytkownika (np. "C:\Users\<uzytkownik>\AppData\Roaming").
 Można to zmienić w taki sposób, że NVDA wczyta konfigurację z lokalnego folderu danych aplikacji.
 Więcej w rozdziale o [Parametrach systemu #SystemWideParameters].
 
@@ -233,7 +233,7 @@ Aby przełączać tryby dotyku, wykonaj stuknięcie trzema palcami.
 
 +++ Klawiatura ekranowa +++[TouchKeyboard]
 Klawiatura ekranowa jest używana do wprowadzania tekstu i komend z ekranu dotykowego.
-Gdy punkt uwagi znajduje się w polu edycji, możesz przywołać klawiaturę dwukrotnie stukając w ikonę  klawiatury ekranowej na dole ekranu.
+Gdy fokus znajduje się w polu edycji, możesz przywołać klawiaturę dwukrotnie stukając w ikonę  klawiatury ekranowej na dole ekranu.
 Na tabletach takich jak Microsoft Surface Pro, klawiatura ekranowa jest dostępna zawsze, gdy nie jest podłączona fizyczna klawiatura.
 Aby wyłączyć klawiaturę ekranową, stuknij dwukrotnie jej ikonę lub wyjdź z pola edycji.
 
@@ -284,26 +284,26 @@ NVDA pozwala eksplorować i nawigować w systemie na kilka sposobów, uwzględni
 Każda aplikacja i sam system operacyjny składa się z wielu obiektów.
 Obiekt to pojedynczy element, taki jak fragment tekstu, przycisk, pole wyboru, suwak, lista lub pole edycji.
 
-++ Nawigacja punktem uwagi ++[SystemFocus]
-Punkt uwagi, często określany po prostu jako fokus, jest to [obiekt #Objects], który otrzymuje informację o klawiszach naciskanych na klawiaturze.
-Jeśli np. wpisujesz tekst do pola edycji - to pole edycji posiada punkt uwagi.
+++ Nawigacja fokusem ++[SystemFocus]
+Fokus jest to [obiekt #Objects], który otrzymuje informację o klawiszach naciskanych na klawiaturze.
+Jeśli np. wpisujesz tekst do pola edycji, to pole edycji posiada w tej chwili fokus.
 
-Najczęściej używaną metodą nawigacji wśród okien i formularzy w systemie Windows jest nawigacja przy użyciu punktu uwagi. Odbywa się ona za pomocą klawiatury - na przykład gdy naciskasz Tab, by przejść od jednej kontrolki do następnej, Shift+Tab by przejść do poprzedniej kontrolki, Alt by dostać się do menu programu czy też Alt+Tab by przełączać się między działającymi aplikacjami.
-Za każdym razem, gdy wykonujesz te czynności, NVDA będzie informować cię o obiekcie, który aktualnie posiada punkt uwagi, podając jego nazwę, typ, zawartość, stan, opis, skrót klawiaturowy i informacje o położeniu.
+Najczęściej używaną metodą nawigacji wśród okien i formularzy w systemie Windows jest nawigacja przy użyciu fokusa. Gdy naciskasz Tab, by przejść od jednej kontrolki do następnej, Shift+Tab by przejść do poprzedniej kontrolki, Alt by dostać się do menu programu czy też Alt+Tab by przełączać się między działającymi aplikacjami, zmienia się połorzenie fokusa.
+Za każdym razem, gdy wykonujesz te czynności, NVDA będzie informować cię o obiekcie, który aktualnie posiada fokus, podając jego nazwę, typ, zawartość, stan, opis, skrót klawiaturowy i informacje o położeniu.
 
-Przydatne skróty klawiszowe do nawigacji za pomocą punktu uwagi:
+Przydatne skróty klawiszowe do nawigacji za pomocą fokusa:
 %kc:beginInclude
 || Działanie | Skrót Desktopa | Skrót laptopa | Opis |
-| Odczytuje aktualny punkt uwagi | NVDA+Tab | NVDA+Tab | Odczytuje obiekt posiadający aktualnie punkt uwagi. Dwukrotne naciśnięcie literuje informacje  |
+| Odczytuje aktualny fokus | NVDA+Tab | NVDA+Tab | Odczytuje obiekt posiadający aktualnie fokus. Dwukrotne naciśnięcie literuje informacje  |
 | Odczytuje tytuł okna | NVDA+t | NVDA+t | Odczytuje tytuł aktualnej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka. |
 | Odczytuje aktywne okno | NVDA+b | NVDA+b | Odczytuje zawartość obiektu na pierwszym planie (aktualnie aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone. |
 | Odczytaj pasek stanu | NVDA+End | NVDA+Shift+End | Odczytuje pasek statusu jeśli go znajdzie, przenosi tam także obiekt nawigatora. Dwukrotne naciśnięcie przeliteruje informację. Trzykrotne naciśnięcie kopiuje ją do schowka. |
 %kc:endInclude
 
 ++ Nawigacja kursorem systemowym ++
-Gdy [obiekt #Objects], który umożliwia nawigację i/lub edycję tekstu, otrzymuje [punkt uwagi #SystemFocus], możesz przemieszczać się po tekście, używając kursora systemowego, nazywanego także kursorem edycji.
+Gdy [obiekt #Objects], który umożliwia nawigację i/lub edycję tekstu, otrzymuje [fokus #SystemFocus], możesz przemieszczać się po tekście, używając kursora systemowego, nazywanego także kursorem edycji.
 
-Gdy punkt uwagi znajduje się na obiekcie, który posiada kursor systemowy, możesz używać klawiszy strzałek, Page up, Page down, Home, End, etc. do przemieszczania się po tekście.
+Gdy fokus znajduje się na obiekcie, który posiada kursor systemowy, możesz używać klawiszy strzałek, Page up, Page down, Home, End, etc. do przemieszczania się po tekście.
 Możesz również zmieniać tekst, jeśli kontrolka umożliwia edycję.
 NVDA będzie czytał, gdy przemieszczasz się po znakach słowach i liniach, będzie również ogłaszał zmiany w zaznaczeniu tekstu.
 
@@ -326,13 +326,13 @@ Do poruszania się w strukturze tabel służą następujące klawisze poleceń:
 %kc:endInclude
 
 ++ Nawigacja w hierarchii obiektów ++[ObjectNavigation]
-Przez większość czasu będziesz pracować z aplikacjami, używając komend przenoszących [punkt uwagi #SystemFocus] i [kursor systemowy #SystemCaret].
-Czasem jednak możesz chcieć eksplorować aktualną aplikację lub system operacyjny bez przemieszczania punktu uwagi lub kursora.
+Przez większość czasu będziesz pracować z aplikacjami, używając komend przenoszących [fokus #SystemFocus] i [kursor systemowy #SystemCaret].
+Czasem jednak możesz chcieć eksplorować aktualną aplikację lub system operacyjny bez przemieszczania fokusa lub kursora.
 Może się też zdarzyć konieczność pracy z  [obiektami #Objects], do których nie można uzyskać dostępu przy użyciu klawiatury.
 W takich przypadkach, możesz posłużyć się nawigacją w hierarchii obiektów.
 
 Nawigacja w hierarchii obiektów pozwala ci przemieszczać się pomiędzy pojedynczymi [obiektami #Objects] i uzyskiwać o nich informacje.
-Gdy przejdziesz do obiektu, NVDA ogłosi go podobnie jak ogłasza punkt uwagi.
+Gdy przejdziesz do obiektu, NVDA ogłosi go podobnie jak ogłasza fokus.
 Aby obejrzeć tekst w układzie takim, jak jest on rozmieszczony na ekranie, możesz zamiast tego użyć [trybu przeglądania ekranu #ScreenReview].
 
 Obiekty w systemie są uporządkowane hierarchicznie.
@@ -345,10 +345,10 @@ Podobnie: pasek narzędzi zawiera kontrolki, więc musisz wejść do tego paska,
 
 Obiekt aktualnie przeglądany, jest nazywany obiektem nawigatora.
 Gdy dotrzesz do obiektu, możesz przejrzeć jego treść, używając [poleceń przeglądania tekstu, #ReviewingText] gdy znajdujesz się w [trybie przeglądania obiektu #ObjectReview].
-Domyślnie obiekt nawigatora podąża za punktem uwagi, ale to zachowanie można włączać i wyłączać.
+Domyślnie obiekt nawigatora podąża za fokusem, ale to zachowanie można włączać i wyłączać.
 
-Monitor brajlowski domyślnie podąża za [punktem uwagi #SystemFocus] i [kursorem systemowym #SystemCaret] oraz obiektem nawigatora i kursorem przeglądu tekstu.
-Jeśli chcesz spowodować podążanie brajla tylko za obiektem nawigatora lub przeglądaniem tekstu, musisz [ustawić powiązanie brajla z #BrailleTether] punktem uwagi.
+Monitor brajlowski domyślnie podąża za [fokusem #SystemFocus] i [kursorem systemowym #SystemCaret] oraz obiektem nawigatora i kursorem przeglądu tekstu.
+Jeśli chcesz spowodować podążanie brajla tylko za obiektem nawigatora lub przeglądaniem tekstu, musisz [ustawić powiązanie brajla z #BrailleTether] fokusem.
 W takim przypadku, brajl nie będzie podążał za obiektem nawigacyjnym i kursorem przeglądu.
 Aby brajl podążał za obiektem nawigatora i przeglądem tekstu, należy [skonfigurować powiązanie brajla z #BrailleTether] przeglądem.
  
@@ -361,10 +361,10 @@ Poniżej znajdują się skróty klawiszowe do nawigacji w hierarchii obiektów:
 | Przechodzi do poprzedniego obiektu      | NVDA+Numeryczne 4 | NVDA+Shift+Strzałka w lewo | Machnięcie w lewo (tryb obiektowy) | Przechodzi do poprzedniego obiektu znajdującego się na tym samym poziomie. |
 | Przechodzi do następnego obiektu | NVDA+Numeryczne 6 | NVDA+Shift+Strzałka w prawo | Machnięcie w prawo (tryb obiektowy) | Przechodzi do następnego obiektu znajdującego się na tym samym poziomie. |
 | Przechodzi do pierwszego obiektu podrzędnego | NVDA+Numeryczne 2 | NVDA+Shift+Strzałka w dół | Machnięcie w dół (tryb obiektowy) | Przechodzi do pierwszego obiektu zawieranego przez aktualny obiekt nawigatora. |
-| Przechodzi do punktu uwagi | NVDA+Numeryczny minus | NVDA+Backspace | Brak | Przechodzi do obiektu, który aktualnie posiada punkt uwagi, oraz umieszcza kursor przeglądu na pozycji kursora systemu |
-| Aktywuje aktualny obiekt | NVDA+Numeryczny enter | NVDA+Enter | Podwójne stuknięcie | Aktywuje bieżący obiekt (podobnie jak kliknięcie myszą lub naciśnięcie klawisza spacji, gdy ma punkt uwagi) |
-| Przenosi punkt uwagi lub kursor na aktualną pozycję przeglądania | NVDA+Shift+Numeryczny minus | NVDA+Shift+Backspace | Brak | Naciśnięty raz przenosi punkt uwagi do aktualnego obiektu nawigatora, naciśnięty dwukrotnie przenosi kursor systemowy do aktualnej pozycji kursora przeglądania |
-| Odczytuje położenie kursora przeglądu | NVDA+Numeryczne delete | NVDA+delete | Brak | Zgłasza położenie tekstu lub obiektu pod kursorem przeglądu. Może to być wyrażone albo w procentach w obrębie dokumentu albo jako odległość od krawędzi strony albo jako dokładna pozycja na ekranie. Dwukrotne naciśnięcie odczyta dalsze informacje.|
+| Przechodzi do fokusa | NVDA+Numeryczny minus | NVDA+Backspace | Brak | Przechodzi do obiektu, który aktualnie posiada fokus, oraz umieszcza kursor przeglądu na pozycji kursora systemu |
+| Aktywuje aktualny obiekt | NVDA+Numeryczny enter | NVDA+Enter | Podwójne stuknięcie | Aktywuje bieżący obiekt (podobnie jak kliknięcie myszą lub naciśnięcie klawisza spacji, gdy ma fokus) |
+| Przenosi fokus lub kursor na aktualną pozycję przeglądania | NVDA+Shift+Numeryczny minus | NVDA+Shift+Backspace | Brak | Naciśnięty raz przenosi fokus do aktualnego obiektu nawigatora, naciśnięty dwukrotnie przenosi kursor systemowy do aktualnej pozycji kursora przeglądania |
+| Odczytuje położenie kursora przeglądu | NVDA+Numeryczne delete | NVDA+delete | Brak | Zgłasza położenie tekstu lub obiektu pod kursorem przeglądu. Może to być wyrażone w procentach w obrębie dokumentu, jako odległość od krawędzi strony lub jako dokładna pozycja na ekranie. Dwukrotne naciśnięcie odczyta dalsze informacje.|
 %kc:endInclude
 
 UWAGA: Aby skróty na klawiaturze numerycznej działały poprawnie, należy wyłączyć klawisz NumLock.
@@ -378,7 +378,7 @@ Przesuwając kursor przeglądania, nie zmieniasz położenia kursora systemowego
 Jeśli jednak kursor systemowy zostanie przesunięty, kursor przeglądu domyślnie podąża za nim.
 To domyślne zachowanie można wyłączyć.
 
-Monitor brajlowski domyślnie podąża za [punktem uwagi #SystemFocus] i [kursorem systemowym #SystemCaret] zamiast za obiektem nawigatora i przeglądaniem tekstu.
+Monitor brajlowski domyślnie podąża za [fokusem #SystemFocus] i [kursorem systemowym #SystemCaret] zamiast za obiektem nawigatora i przeglądaniem tekstu.
 Jeśli chcesz spowodować podążanie brajla za obiektem nawigatora lub przeglądaniem tekstu, musisz [ustawić powiązanie brajla z #BrailleTether] przeglądaniem.
 
 Do przeglądania tekstu są dostępne następujące polecenia:
@@ -476,7 +476,7 @@ Dotyczy to dokumentów wyświetlanych w programach Mozilla Firefox, Microsoft In
 Tryb czytania jest również opcjonalnie dostępny dla dokumentów w programie Microsoft Word. 
 
 W trybie czytania treść dokumentu jest udostępniana w płaskiej reprezentacji, po której można się przemieszczać z użyciem klawiszy kursora tak jak w zwykłych dokumentach tekstowych.
-Wszystkie polecenia NVDA dotyczące [punktu uwagi #SystemCaret] będą działały w tym trybie; np. czytaj wszystko, odczytaj formatowanie, komendy nawigacji wewnątrz tabel, etc.
+Wszystkie polecenia NVDA dotyczące [fokusa #SystemCaret] będą działały w tym trybie; np. czytaj wszystko, odczytaj formatowanie, komendy nawigacji wewnątrz tabel, etc.
 Informacja o tym, że tekst jest linkiem, nagłówkiem itd. jest automatycznie anonsowana, gdy się przemieszczasz po dokumencie.
 
 Czasem zachodzi potrzeba interakcji z formularzami znajdującymi się w tych dokumentach. 
@@ -561,7 +561,7 @@ Jeśli obiekt jest dostępny dla NVDA, będziesz mógł przemieszczać się w ni
 Odpowiednia komenda klawiszowa pozwala na powrót do oryginalnej strony zawierającej aktywowany wcześniej obiekt.
 %kc:beginInclude
 || Działanie | Skrót klawiszowy | Opis |
-| Przechodzi do zawartości strony | NVDA+Ctrl+Spacja | Przenosi punkt uwagi z wewnątrz obiektu zagnieżdżonego do dokumentu, który zawierał ten obiekt. |
+| Przechodzi do zawartości strony | NVDA+Ctrl+Spacja | Przenosi fokus z wewnątrz obiektu zagnieżdżonego do dokumentu, który zawierał ten obiekt. |
 %kc:endInclude
 
 + Odczyt treści matematycznej +[ReadingMath]
@@ -572,7 +572,7 @@ MathPlayer jest bezpłatnie dostępny do pobrania z : https://www.dessci.com/en/
 NVDA obsługuje następujące rodzaje treści matematycznej:
 - MathML w Mozilla Firefox, Microsoft Internet Explorer i Google Chrome.
 - Design Science MathType w Microsoft Word and PowerPoint. 
-Aby to działało, MathType musi być zainstalowany. Wersja próbna jest wystarczająca.
+Aby to działało, musi być zainstalowany mathtype. Wersja próbna jest wystarczająca.
 - MathML w Adobe Reader.
 Nie jest to jeszcze oficjalny standard, nie istnieje publicznie dostępne oprogramowanie mogące wytwarzać taką treść.
 - Matematyka w Kindle dla PC w książkach z dostępną matematyką.
@@ -720,7 +720,7 @@ NVDA obsługuje funkcjonalność optycznego rozpoznawania znaków (OCR) wbudowan
 Dodatkowe narzędzie rozpoznawania treści może zostać dostarczone poprzez dodatki NVDA.
 
 When Przy użyciu komendy rozpoznawania treści, NVDA rozpoznaje zawartość aktualnego [obiektu nawigatora #ObjectNavigation].
-Domyślnie, obiekt nawigatora podąża za systemowym punktem uwagi lub kursorem w trybie czytania, więc wystarczy przesunąć punkt uwagi lub kursor trybu czytania tam gdzie jest to potrzebne.
+Domyślnie, obiekt nawigatora podąża za fokusem systemowym lub kursorem w trybie czytania, więc wystarczy przesunąć fokus lub kursor trybu czytania tam gdzie jest to potrzebne.
 Dla przykładu, przesunięcie kursora trybu czytania na obrazek, domyślnie rozpoznanie wydobędzie tekst z tej grafiki.
 Można jednak użyć funkcji nawigacji w chierarchi obiektów, aby na przykład rozpoznać zawartość całego okna aplikacji.
 
@@ -798,19 +798,19 @@ Aby otworzyć listę elementów w Excel, naciśnij NVDA+F7.
 %kc:endInclude
 Różne typy informacji na liście elementów to:
 - Wykresy: wymienia wszystkie wykresy w aktywnym arkuszu. 
-Wybranie wykresu i naciśnięcie Enter lub przycisku "idź do" przeniesie punkt uwagi do tego wykresu, umożliwiając nawigację i odczyt strzałkami.
+Wybranie wykresu i naciśnięcie Enter lub przycisku "idź do" przeniesie fokus do tego wykresu, umożliwiając nawigację i odczyt strzałkami.
 - komentarze: wszystkie komórki w aktywnym arkuszu, zawierające komentarze. 
 Wyświetlany jest  adres komórki i jej komentarze. 
-Naciśnięcie Enter lub przycisku "idź do", przeniesie punkt uwagi do wybranej komórki.
+Naciśnięcie Enter lub przycisku "idź do", przeniesie fokus do wybranej komórki.
 - Formuły: Wymienia wszystkie komórki w arkuszu, które zawierają formułę. 
 Wyświetlany jest adres komórki, oraz zawarta w niej formuła.
-Naciśnięcie Enter lub przycisku "idź do", przeniesie punkt uwagi do wybranej komórki.
+Naciśnięcie Enter lub przycisku "idź do", przeniesie fokus do wybranej komórki.
 - Arkusze: wyświetla wszystkie arkusze w skoroszycie. 
 Naciśnięcie F2 na liście arkuszy pozwala zmienić nazwę arkusza. 
-Naciśnięcie Enter lub przycisku "idź do", przeniesie punkt uwagi do wybranego arkusza.
+Naciśnięcie Enter lub przycisku "idź do", przeniesie fokus do wybranego arkusza.
 - Pola formularzy: wyświetla wszystkie pola formularzy w aktywnym arkuszu.
 Dla każdego pola formularza, lista elementów wyświetla alternatywny tekst pola oraz adresy komórek, które ono zajmuje.
-Zaznaczenie pola i naciśnięcie Enter lub przycisku "idź do", przeniesie punkt uwagi do wybranego pola.
+Zaznaczenie pola i naciśnięcie Enter lub przycisku "idź do", przeniesie fokus do wybranego pola.
 -
 
 +++ Zgłaszanie komentarzy +++[ExcelReportingComments]
@@ -872,7 +872,7 @@ NVDA obsługuje odczyt i nawigację wewnątrz książek w aplikacji Amazon Kindl
 Ta funkcjonalność jest dostępna tylko w książkach Kindle zaprojektowanych z właściwością "Czytnik ekranu: obsługiwany", co można sprawdzić na stronie szczegółów książki.
 
 Tryb czytania jest używany do czytania książek.
-Jest włączany automatycznie po otwarciu książki lub ustawieniu punktu uwagi na obszarze książki.
+Jest włączany automatycznie po otwarciu książki lub ustawieniu fokusa na obszarze książki.
 Strona zostanie zmieniona automatycznie gdy będzie to konieczne czyli po przesunięciu kursora lub włączeniu polecenia czytaj wszystko.
 %kc:beginInclude
 Ręczne przejście do kolejnej strony nastąpi po wciśnięciu klawisza Page down, a przejście do poprzedniej strony po naciśnięciu Page up.
@@ -1180,8 +1180,8 @@ Ta opcja nie ma wpływu na wskaźnik zaznaczenia, są to zawsze punkty 7 i 8 bez
 ==== Tempo migania kursora (ms) ====[BrailleSettingsBlinkRate]
 Ta opcja jest polem liczbowym, które pozwala zmienić częstotliwość migania kursora wyrażoną w milisekundach.
 
-==== Kształt kursora dla punktu uwagi ====[BrailleSettingsCursorShapeForFocus]
-Ta opcja pozwala wybrać kształt (wzorzec punktowy) kursora brajlowskiego, gdy brajl jest związany z punktem uwagi.
+==== Kształt kursora dla fokusa ====[BrailleSettingsCursorShapeForFocus]
+Ta opcja pozwala wybrać kształt (wzorzec punktowy) kursora brajlowskiego, gdy brajl jest związany z fokusem.
 Ustawienie nie ma wpływu na wskaźnik zaznaczenia, są to zawsze punkty 7 i 8 bez migotania.
 
 ==== Kształt kursora dla przeglądu ====[BrailleSettingsCursorShapeForReview]
@@ -1199,9 +1199,9 @@ Ta opcja powoduje, że wiadomości NVDA są w nieskończoność wyświetlane na 
 ==== Powiązanie brajla ====[BrailleTether]
 Skrót Klawiszowy: NVDA+Ctrl+T
 
-Ta opcja pozwala wybrać, czy monitor brajlowski będzie podążać za punktem uwagi, czy obiektem nawigatora/punktem przeglądu, albo oboma.
-Gdy ustawione jest "automatycznie", NVDA będzie domyślnie podążać za punktem uwagi i kursorem systemu.
-W takim przypadku, gdy pozycja obiektu nawigatora lub kursora przeglądu się zmieni na skutek interakcji użytkownika, NVDA tymczasowo powiąże brajl z kursorem przeglądu, do czasu, gdy zmieni się pozycja punktu uwagi lub kursora systemowego.
+Ta opcja pozwala wybrać, czy monitor brajlowski będzie podążać za fokusem, czy obiektem nawigatora/punktem przeglądu, albo oboma.
+Gdy ustawione jest "automatycznie", NVDA będzie domyślnie podążać za fokusem i kursorem systemu.
+W takim przypadku, gdy pozycja obiektu nawigatora lub kursora przeglądu zmieni się na skutek interakcji użytkownika, NVDA tymczasowo powiąże brajl z kursorem przeglądu, do czasu, gdy zmieni się pozycja fokusa lub kursora systemowego.
 
 ==== czytaj akapitami ====[BrailleSettingsReadByParagraph]
 Gdy zaznaczysz to pole, monitor brajlowski będzie wyświetlać tekst akapitami, nie liniami. 
@@ -1222,31 +1222,31 @@ Po przesunięciu wyświetlacza, możliwe będzie przeczytanie reszty słowa.
 
 Włączenie tej opcji umożliwia bardziej płynne czytanie, ale zmusza do częstszego przewijania wyświetlacza.
 
-==== Kontekstowa prezentacja punktu uwagi ====[BrailleSettingsFocusContextPresentation]
-Opcja pozwala wybrać, jaką informację kontekstową NVDA zaprezentuje na monitorze brajlowskim, gdy obiekt znajdzie się w punkcie uwagi.
-Informacja kontekstowa odnosi się do chierarchii obiektów zawierających punkt uwagi.
-Dla przykładu, jeśli punkt uwagi znajdzie się na elemencie listy, ten element jest częścią listy nadrzędnej.
+==== Kontekstowa prezentacja fokusa ====[BrailleSettingsFocusContextPresentation]
+Opcja pozwala wybrać, jaką informację kontekstową NVDA zaprezentuje na monitorze brajlowskim, gdy fokus znajdzie się na obiekcie.
+Informacja kontekstowa odnosi się do chierarchii obiektów zawierających fokus.
+Dla przykładu, jeśli znajdzie się on na elemencie listy, ten element stanie się częścią listy nadrzędnej.
 Lista ta może się znajdować wewnątrz okna dialogowego, etc.
 Więcej informacji o chierarchii obiektów w NVDA znajduje się w sekcji [Nawigacja w chierarchii obiektów #ObjectNavigation].
 
-Gdy ustawione na wypełnianie wyświetlacza zmianami kontekstowymi, NVDA spróbuje wyświetlić tak wiele informacji kontekstowych, ile zmieści się na monitorze brajlowskim, ale tylko dla zmienionych części kontekstu.
+Gdy ustawiono na wypełnianie wyświetlacza zmianami kontekstowymi, NVDA spróbuje wyświetlić tak wiele informacji kontekstowych, ile zmieści się na monitorze brajlowskim, ale tylko dla zmienionych części kontekstu.
 W przykładzie powyżej, oznacza to, że zmiana punktu uwagi na listę, spowoduje pokazanie przez NVDA elementu listy na monitorze brajlowskim.
 Ponadto, jeśli pozostała wystarczająca ilość miejsca na monitorze brajlowskim, NVDA spróbuje pokazać, że  ten element listy jest częścią listy nadrzędnej.
 Jeśli będziesz przemieszczać się po liście klawiszami strzałek, zakłada się, że masz świadomość, iż znajdujesz się ciągle w obrębie tej samej listy nadrzędnej.
-Dlatego też, dla pozostałych elementów listy, które znajdą się w punkcie uwagi, NVDA pokaże tylko element listy.
+Dlatego też, dla pozostałych elementów listy, które otrzymają fokus, NVDA pokaże tylko element listy.
 Aby przeczytać kontekst ponownie (np. że jesteś na liście będącej częścią okna dialogowego), musisz przewinąć wyświetlacz brajlowski wstecz.
 
 Jeśli ta opcja jest ustawiona aby zawsze wypełniała wyświetlacz, NVDA będzie próbował dostarczać tak wiele informacji kontekstowej jak to możliwe na używanym monitorze brajlowskim, niezależnie od tego, czy informacja kontekstowa była wyświetlana wcześniej.
 Zaletą jest, że NVDA będzie dostarczał maksymalną ilość informacji na monitorze brajlowskim.
-Minusem tego rozwiązania jest różnica pozycji na monitorze brajlowskim, w której będzie się wyświetlał punkt uwagi.
+Minusem tego rozwiązania jest różnica pozycji na monitorze brajlowskim, w której będzie się wyświetlał fokus.
 Może to utrudnić przeglądanie długiej listy elementów, ponieważ będzie konieczne ciągłe poszukiwanie miejsca, gdzie zaczyna się aktualny element.
 Było to domyślne zachowanie w NVDA 2017.2 i starszych.
 
 Jeśli ustawisz tę opcję, aby informacja kontekstowa była prezentowana tylko przy przewijaniu monitora wstecz, NVDA nie będzie domyślnie pokazywał informacji kontekstowych.
-W przykładzie powyżej, NVDA pokaże, że punkt uwagi znajduje się na elemencie listy.
+W przykładzie powyżej, NVDA pokaże, że fokus znajduje się na elemencie listy.
 Aby przeczytać informację kontekstową, konieczne będzie przewinięcie monitora brajlowskiego wstecz.
 
-Aby w dowolnym miejscu przełączyć kontekstową prezentację punktu uwagi, można przypisać własne zdarzenie wejścia przy pomocy [okna ustawień zdarzenia wejścia #InputGestures].
+Aby w dowolnym miejscu przełączyć kontekstową prezentację fokusa, można przypisać własne zdarzenie wejścia przy pomocy [okna ustawień zdarzenia wejścia #InputGestures].
 
 +++ Wybór monitora brajlowskiego (NVDA+control+a) +++[SelectBrailleDisplay]
 Okno wyboru monitora brajlowskiego jest otwierane po kliknięciu przycisku "Zmień..."  w kategorii brajl preferencji NVDA, pozwala wybrać, której linijki brajlowskiej NVDA ma używać do generowania komunikatów w brajlu.
@@ -1383,10 +1383,10 @@ W tej kategorii preferencji, można określić działanie kursora przeglądu.
 Zawiera następujące ustawienia:
 
 %kc:setting
-==== Śledź punkt uwagi ====[ReviewCursorFollowFocus]
+==== Śledź fokus ====[ReviewCursorFollowFocus]
 Skrót Klawiszowy: NVDA+7
 
-Gdy opcja jest włączona, kursor przeglądu zawsze zostanie umieszczony w tym samym obiekcie, w którym znajduje się punkt uwagi, gdy aktualny punkt uwagi się zmieni.
+Gdy opcja jest włączona, kursor przeglądu zawsze zostanie umieszczony w tym samym obiekcie, w którym znajduje się fokus, gdy aktualny się zmieni.
 
 %kc:setting
 ==== Śledź kursor systemu ====[ReviewCursorFollowCaret]
@@ -1408,7 +1408,7 @@ Zawiera następujące ustawienia:
 
 ==== Czytaj dymki podpowiedzi ====[ObjectPresentationReportToolTips]
 Jeśli zaznaczysz to pole, NVDA będzie czytać pojawiające się dymki podpowiedzi (tooltip).
-Są to niewielkie wiadomości wyświetlane często po wskazaniu myszą lub przeniesieniu punktu uwagi na dane okno lub kontrolkę.
+Są to niewielkie wiadomości wyświetlane często po wskazaniu myszą lub przeniesieniu fokusa na dane okno lub kontrolkę.
 
 ==== Czytaj dymki powiadomień ====[ObjectPresentationReportBalloons]
 Jeśli zaznaczysz to pole, NVDA będzie czytać informacje pojawiające się w postaci dymków w obszarze powiadomień systemu Windows.
@@ -1419,7 +1419,7 @@ Jeśli zaznaczysz to pole, NVDA informując o obiektach, pozycjach menu lub kont
 Dla przykładu, menu plik może mieć przypisany skrót Alt+P.
 
 ==== Odczytuj położenie obiektów ====[ObjectPresentationPositionInfo]
-Ta opcja pozwala zmienić sposób ogłaszania pozycji obiektu po przejściu do obiektu z punktem uwagi lub obiektu nawigacji (np. 1 z 4).
+Ta opcja pozwala zmienić sposób ogłaszania pozycji obiektu po przejściu do obiektu z fokusem lub obiektu nawigacji (np. 1 z 4).
 
 ==== odgadnij położenie obiektu, gdy nie dostępne ====[ObjectPresentationGuessPositionInfo]
 Gdy włączona jest opcja powiadamiania o położeniu obiektu, a z przyczyn technicznych jest ono niedostępne dla NVDA w aktualnej kontrolce, NVDA może próbować je odgadnąć.
@@ -1521,9 +1521,8 @@ Aby przełączać dołączanie tabel układu treści z każdego miejsca, należy
 ==== Konfiguracja ogłaszania pól, takich jak linki i nagłówki ====[BrowseModeLinksAndHeadings]
 Proszę przejrzeć opcje w [kategorii formatowania dokumentu #DocumentFormattingSettings] w oknie [Preferencji NVDA #NVDASettings], aby skonfigurować informacje, które są ogłaszane w trakcie nawigacji, takie jak linki, nagłówki i tabele.
 
-==== Automatyczny tryb formularza przy zmianie punktu uwagi ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
-Ta opcja pozwala na wywołanie trybu formularza z trybu czytania, gdy zmieni się punkt uwagi. Jeśli naciskając TAB znajdziesz się we formularzu, a ta opcja jest zaznaczona, NVDA automatycznie przejdzie do trybu formularza.
-Dla przykładu: gdy na stronie internetowej naciśnięcie klawisza Tab spowoduje przejście do pola formularza,  tryb formularza zostanie automatycznie włączony, jeśli ta opcja jest zaznaczona.
+==== Automatyczny tryb formularza przy zmianie fokusa ====[BrowseModeSettingsAutoPassThroughOnFocusChange]
+Ta opcja pozwala na wywołanie trybu formularza z trybu czytania, gdy zmieni się fokus. Jeśli poruszając się po stronie internetowej naciskając TAB znajdziesz się we formularzu, a ta opcja zostanie zaznaczona, NVDA automatycznie przejdzie do trybu formularza.
 
 ==== Automatyczny tryb formularza przy ruchach kursora ====[BrowseModeSettingsAutoPassThroughOnCaretMove]
 Opcja ta, gdy zaznaczona, powoduje automatyczne wejście i wyjście z trybu formularza za pomocą klawiszy strzałek.
@@ -1533,7 +1532,7 @@ Na przykład, gdy poruszając się strzałkami po stronie internetowej natrafisz
 Jeśli ta opcja jest włączona, NVDA będzie sygnalizować dźwiękiem przełączanie się między trybem czytania i trybem formularza, zamiast ogłaszać te zmiany mową.
 
 ==== Nie przekazuj do dokumentu zdarzeń wejścia niebędących poleceniami ====[BrowseModeSettingsTrapNonCommandGestures]
-Domyślnie włączone, to ustawienie pozwala zdecydować, że zdarzenia wejścia, (takie jak naciskane klawisze) które nie są poleceniami NVDA, ani nie wyglądają na polecenia aplikacji, powinny być nieprzekazywane do dokumentu, w którym znajduje się punkt uwagi. 
+Domyślnie włączone, to ustawienie pozwala zdecydować, że zdarzenia wejścia, (takie jak naciskane klawisze) które nie są poleceniami NVDA, ani nie wyglądają na polecenia aplikacji, powinny nie być przekazywane do dokumentu, w którym znajduje się punkt uwagi. 
 Dla przykładu: jeśli to ustawienie jest włączone i naciśnięto literę j, zostanie ona zignorowana, ponieważ nie jest komendą szybkiej nawigacji i nie wydaje się być poleceniem aplikacji.
 
 +++ Formatowanie dokumentów (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
@@ -1549,18 +1548,18 @@ Możemy w ten sposób skonfigurować odczytywanie:
  - Podkreślenia
  - Stylu tekstu
  - Kolorów
-- Informacje o dokumencie
+- Informacji o dokumencie
  - Komentarzy
  - Zmian edycyjnych
  - Błędów pisowni
-- strony i odstępy
+- stron i odstępów
  - Numerów stron
  - Numerów linii
  - Wcięć linii [(Wyłączone, Mowa, Dźwięki, Mowa i dźwięki) #lineIndentationOptions]
  - Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
  - Interlinii (pojedyncza, podwójna etc)
  - Wyrównania tekstu
-- Informacje o tabeli
+- Informacji o tabeli
  - Tabel
  - Nagłówków kolumn i wierszy tabeli
  - Współrzędnych komórek tabeli
@@ -1848,7 +1847,7 @@ Jeśli jest zaznaczone, podgląd mowy otworzy się po starcie NVDA.
 Okno podglądu mowy będzie zawsze pojawiało się w tym samym miejscu i w takich samych rozmiarach, jakie ustawione były w chwili jego zamknięcia .
 
 Gdy podgląd mowy jest włączony, jego okienko stale się odświeża by pokazać aktualnie wypowiadany tekst.
-Gdy klikniesz lub umieścisz punkt uwagi wewnątrz podglądu, NVDA tymczasowo zatrzyma aktualizację tekstu, dzięki czemu możesz łatwo zaznaczyć lub skopiować istniejące treści.
+Gdy klikniesz lub umieścisz fokus wewnątrz podglądu, NVDA tymczasowo zatrzyma aktualizację tekstu, dzięki czemu możesz łatwo zaznaczyć lub skopiować istniejące treści.
 
 Aby przełączać podgląd mowy z każdego miejsca, zdefiniuj własne zdarzenie wejścia używając [okna Zdarzenia wejścia #InputGestures].
 
@@ -2076,7 +2075,7 @@ Aby je odnaleźć, zajrzyj do dokumentacji urządzenia.
 || Działanie | Klawisz skrótu |
 | Przewiń brajl do tyłu | T1, Etouch1 |
 | Przenieś monitor do poprzedniej linii | T2
-| Przenieś do punktu uwagi | T3 |
+| Przenieś do fokusa | T3 |
 | Przenieś monitor do następnej linii | T4 |
 | Przewiń brajl do przodu | T5, Etouch3 |
 | Przywołaj do komórki brajla | Routing |
@@ -2139,7 +2138,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Menu NVDA | B2+B4+B5+B6 |
 | Przełącz brajl związany z | b2 |
 | Przełącz kursor brajla | b1 |
-| Przełącz prezentację kontekstu punktu uwagi | b7 |
+| Przełącz prezentację kontekstu fokusa | b7 |
 | Przełącz wprowadzanie brajla | spacja+b1+b3+b4 (spacja+duże B) |
 %kc:endInclude
 
@@ -2309,7 +2308,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Przejdź do następnej linii w przeglądzie | prawy klawisz przewijania w dół |
 | Przejdź do poprzedniego znaku w przeglądzie | strzałka w lewo po prawej stronie |
 | Przejdź do następnego znaku w przeglądzie | strzałka w prawo po prawej stronie |
-| Przejdź do punktu uwagi| lewy klawisz przewijania w górę+lewy klawisz przewijania w dół, prawy klawisz przewijania w górę+prawy klawisz przewijania w dół, lewy klawisz przewijania+prawy klawisz przewijania |
+| Przejdź do fokusa| lewy klawisz przewijania w górę+lewy klawisz przewijania w dół, prawy klawisz przewijania w górę+prawy klawisz przewijania w dół, lewy klawisz przewijania+prawy klawisz przewijania |
 | Klawisz control | smartbeetle:f1, brailleedge:f3 |
 | Klawisz windows | f7, smartbeetle:f2 |
 | klawisz alt | punkt 1+punkt 3+punkt 4+spacja, f2, smartbeetle:f3, brailleedge:f4 |
@@ -2674,9 +2673,9 @@ Proszę przeczytać [Dokumentację EcoBraille ftp://ftp.once.es/pub/utt/bibliote
 | Przejdź do poprzedniego obiektu | F4 |
 | Zgłoś bieżący obiekt | F5 |
 | Przejdź do następnego obiektu | F6 |
-| Przejdź do obiektu w punkcie uwagi | F7 |
+| Przejdź do obiektu z fokusem | F7 |
 | Przejdź do pierwszego obiektu podrzędnego | F8 |
-| Przenieś kursor lub punkt uwagi do aktualnej pozycji kursora przeglądu | F9 |
+| Przenieś kursor lub fokus do aktualnej pozycji kursora przeglądu | F9 |
 | Zgłoś położenie kursora przeglądu | F0 |
 | Przełącz "Brajl związany z..." | A |
 %kc:endInclude
@@ -2707,7 +2706,7 @@ Informacje na temat rozmieszczenia tych klawiszy, znajdują się w dokumentacji 
 || Nazwa | Klawisz |
 | Przewiń wyświetlacz wstecz | switch1-6Lewo, l1 |
 | Przewiń wyświetlacz do przodu | switch1-6 Prawo, l8 |
-| Przejdź do punktu uwagi | switch1-6Lewo+switch1-6Prawo, l1+l8 |
+| Przejdź do fokusa | switch1-6Lewo+switch1-6Prawo, l1+l8 |
 | Przywołaj do komórki brajla | routing |
 | Zgłoś formatowanie tekstu pod komórką brajla | podwójne naciśnięcie routingu |
 | Przejdź do poprzedniej linii w przeglądzie | joystick1Góra |
@@ -2804,7 +2803,7 @@ NVDA  akceptuje jeden lub więcej przełączników startowych, zmieniających je
 Możesz podać tak wiele opcji, jak to jest potrzebne.
 Te opcje mogą być wpisane podczas uruchamiania ze skrótu  (we właściwościach skrótu), w oknie dialogowym "Uruchom"  (Menu start-> Uruchom lub Windows+R) lub w konsoli wiersza poleceń Windows.
 Opcje powinny być oddzielone spacjami od nazwy pliku wykonywalnego NVDA, oraz od innych opcji.
-Dla przykładu, skrót tworzony na pulpicie przez instalator, posiada przełącznik -r, który nakazuje NVDA zamknąć aktualnie uruchomioną kopię przed uruchomieniem nowej.
+Przykładowo, skrót tworzony na pulpicie przez instalator, posiada przełącznik -r, który nakazuje NVDA zamknąć aktualnie uruchomioną kopię przed uruchomieniem nowej.
 Inny użyteczny parametr to --disable-addons, który nakazuje NVDA zawiesić wszystkie dodatki.
 Pozwala to ustalić, czy jakiś problem jest powodowany przez dodatek i szybko go naprawić.
 
