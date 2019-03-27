@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 00:10+1000\n"
-"PO-Revision-Date: 2019-03-13 18:44+0100\n"
+"POT-Creation-Date: 2019-03-22 00:10+1000\n"
+"PO-Revision-Date: 2019-03-26 20:21+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -600,7 +600,7 @@ msgstr "Nieznany monitor brajlowski"
 #. Translators: Name of a Bluetooth serial communications port.
 #, python-brace-format
 msgid "Bluetooth Serial: {port} ({deviceName})"
-msgstr "Bluetoot połączony szeregowo: {port} ({deviceName})"
+msgstr "Bluetooth połączony szeregowo: {port} ({deviceName})"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
@@ -2092,7 +2092,7 @@ msgstr "dymek"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "balonik"
+msgstr "dymek"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -2845,11 +2845,11 @@ msgstr "Ładowanie NVDA... proszę czekać..."
 
 #. Translators: The screen is oriented so that it is wider than it is tall.
 msgid "Landscape"
-msgstr "pejzaż"
+msgstr "Orientacja pozioma"
 
 #. Translators: The screen is oriented in such a way that the height is taller than it is wide.
 msgid "Portrait"
-msgstr "Portret"
+msgstr "Orientacja pionowa"
 
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #, python-format
@@ -3011,7 +3011,7 @@ msgstr "Formatowanie dokumentów"
 
 #. Translators: a message when audio ducking is not supported on this machine
 msgid "Audio ducking not supported"
-msgstr "Przyciszenie audio nie jest obsługiwane."
+msgstr "Przyciszanie audio nie jest obsługiwane."
 
 #. Translators: Describes the Cycle audio ducking mode command.
 msgid ""
@@ -3216,11 +3216,11 @@ msgstr "Włącza i wyłącza odczytywanie atrybutów czcionek "
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "zgłaszaj zmiany edycyjne wyłączone"
+msgstr "zgłaszaj zmiany edycyjne nie"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "zgłaszaj zmiany edycyjne włączone"
+msgstr "zgłaszaj zmiany edycyjne tak"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -3228,11 +3228,11 @@ msgstr "Włącza i wyłącza zgłaszanie zmian edycyjnych"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis off"
-msgstr "odczytuj podkreślenie wyłączone"
+msgstr "odczytuj podkreślenie nie"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 msgid "report emphasis on"
-msgstr "odczytuj podkreślenie włączone"
+msgstr "odczytuj podkreślenie tak"
 
 #. Translators: Input help mode message for toggle report emphasis command.
 msgid "Toggles on and off the reporting of emphasis"
@@ -3240,11 +3240,11 @@ msgstr "Włącza i wyłącza odczytywanie podkreślenia"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "Sygnalizuj kolory wyłączone"
+msgstr "Sygnalizuj kolory nie"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "Sygnalizuj kolory włączone"
+msgstr "Sygnalizuj kolory tak"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3252,11 +3252,11 @@ msgstr "Włącza i wyłącza sygnalizowanie kolorów"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "informuj o wyrównaniu tekstu wyłączone"
+msgstr "informuj o wyrównaniu tekstu nie"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "informuj o wyrównaniu tekstu włączone"
+msgstr "informuj o wyrównaniu tekstu tak"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -3264,11 +3264,11 @@ msgstr "Włącza i wyłącza informowanie o wyrównaniu tekstu "
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "informuj o stylach wyłączone"
+msgstr "informuj o stylach nie"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "informuj o stylach włączone"
+msgstr "informuj o stylach tak"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3276,11 +3276,11 @@ msgstr "Włącza i wyłącza informowanie o stylach "
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "informuj o błędach pisowni wyłączone"
+msgstr "informuj o błędach pisowni tak"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "informuj o błędach pisowni włączone"
+msgstr "informuj o błędach pisowni tak"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
@@ -3288,11 +3288,11 @@ msgstr "Włącza i wyłącza informowanie o błędach pisowni "
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "odczytuj numery stron wyłączone"
+msgstr "odczytuj numery stron nie"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "odczytuj numery stron włączone"
+msgstr "odczytuj numery stron tak"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -3300,11 +3300,11 @@ msgstr "Włącza i wyłącza odczytywanie numerów stron"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "odczytuj numery linii wyłączone"
+msgstr "odczytuj numery linii nie"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "odczytuj numery linii włączone"
+msgstr "odczytuj numery linii tak"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
@@ -3332,11 +3332,11 @@ msgstr "Przełącza tryby zgłaszania wcięć linii"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "oznajmiaj wcięcia akapitu wyłączone"
+msgstr "oznajmiaj wcięcia akapitu nie"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "oznajmiaj wcięcia akapitu włączone"
+msgstr "oznajmiaj wcięcia akapitu tak"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3344,11 +3344,11 @@ msgstr "Włącza i wyłącza oznajmianie wcięcia akapitu"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing off"
-msgstr "zgłaszaj interlinię wyłączone"
+msgstr "zgłaszaj interlinię nie"
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 msgid "report line spacing on"
-msgstr "zgłaszaj interlinię włączone"
+msgstr "zgłaszaj interlinię tak"
 
 #. Translators: Input help mode message for toggle report line spacing command.
 msgid "Toggles on and off the reporting of line spacing"
@@ -3356,11 +3356,11 @@ msgstr "Włącza i wyłącza informowanie o interlinii"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "informuj o tabelach wyłączone"
+msgstr "informuj o tabelach nie"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "informuj o tabelach włączone"
+msgstr "informuj o tabelach tak"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -3368,11 +3368,11 @@ msgstr "Włącza i wyłącza informowanie o tabelach"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "odczytuj nagłówki tabel wyłączone"
+msgstr "odczytuj nagłówki tabel nie"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "odczytuj nagłówki tabel włączone"
+msgstr "odczytuj nagłówki tabel tak"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
@@ -3380,11 +3380,11 @@ msgstr "Włącza i wyłącza odczytywanie nagłówków tabel"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "odczytuj współrzędne komórek tabeli wyłączone"
+msgstr "odczytuj współrzędne komórek tabeli nie"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "odczytuj współrzędne komórek tabeli włączone"
+msgstr "odczytuj współrzędne komórek tabeli tak"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3392,11 +3392,11 @@ msgstr "Włącza i wyłącza odczytywanie współrzędnych komórek tabeli"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "informuj o linkach wyłączone"
+msgstr "informuj o linkach nie"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "informuj o linkach włączone"
+msgstr "informuj o linkach tak"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3404,11 +3404,11 @@ msgstr "Włącza i wyłącza informowanie o linkach"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "czytaj komentarze wyłączone"
+msgstr "czytaj komentarze nie"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "czytaj komentarze włączone"
+msgstr "czytaj komentarze tak"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
@@ -3416,11 +3416,11 @@ msgstr "Włącza i wyłącza czytanie komentarzy"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "informuj o listach wyłączone"
+msgstr "informuj o listach nie"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "informuj o listach włączone"
+msgstr "informuj o listach tak"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3428,11 +3428,11 @@ msgstr "Włącza i wyłącza informowanie o listach"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "informuj o nagłówkach wyłączone"
+msgstr "informuj o nagłówkach nie"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "informuj o nagłówkach włączone"
+msgstr "informuj o nagłówkach tak"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
@@ -3440,11 +3440,11 @@ msgstr "Włącza i wyłącza informowanie o nagłówkach"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "informuj o cytatach wyłączone"
+msgstr "informuj o cytatach nie"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "informuj o cytatach włączone"
+msgstr "informuj o cytatach tak"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
@@ -3452,11 +3452,11 @@ msgstr "Włącza i wyłącza informowanie o cytatach"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "informuj o punktach orientacyjnych wyłączone"
+msgstr "informuj o punktach orientacyjnych nie"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "informuj o punktach orientacyjnych włączone"
+msgstr "informuj o punktach orientacyjnych tak"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -3464,11 +3464,11 @@ msgstr "Włącza i wyłącza informowanie o punktach orientacyjnych"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "zgłaszaj ramki wyłączone"
+msgstr "zgłaszaj ramki nie"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "zgłaszaj ramki włączone"
+msgstr "zgłaszaj ramki tak"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -3476,11 +3476,11 @@ msgstr "Włącza i wyłącza zgłaszanie ramek"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "zgłaszaj jeśli klikalne wyłączone"
+msgstr "zgłaszaj jeśli klikalne nie"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "zgłaszaj jeśli klikalne włączone"
+msgstr "zgłaszaj jeśli klikalne tak"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -4187,14 +4187,14 @@ msgstr "Brajl powiązany z %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy "
-"punktem uwagi a punktem przeglądu"
+"fokusem a punktem przeglądu"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
 #. For example, the full message might be "Braille focus context presentation: fill display for context changes"
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr "kontekstowa brajlowska prezentacja punktu uwagi %s"
+msgstr "kontekstowa brajlowska prezentacja fokusa %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 msgid "Toggle the way context information is presented in braille"
@@ -4202,11 +4202,11 @@ msgstr "Zmień sposób prezentacji informacji kontekstowych w brajlu"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
-msgstr "Kursor brajlowski wyłączony"
+msgstr "Kursor brajlowski nie"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor on"
-msgstr "Kursor brajlowski włączony"
+msgstr "Kursor brajlowski tak"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 msgid "Toggle the braille cursor on and off"
@@ -5074,13 +5074,13 @@ msgstr "Strzałka zakrzywiona w lewo"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Right Arrow"
-msgstr "Zakrzywiona strzałka w prawo"
+msgstr "Strzałka zakrzywiona w prawo"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Curved Up Arrow"
-msgstr "Zakrzywiona strzałka w górę"
+msgstr "strzałka zakrzywiona w górę"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
