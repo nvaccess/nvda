@@ -137,6 +137,18 @@ def getSystemConfigPath():
 			pass
 	return None
 
+def getScratchpadDir(ensureExists=False):
+	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
+	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	if ensureExists:
+		if not os.path.isdir(path):
+			os.makedirs(path)
+		for subdir in ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers'):
+			subpath=os.path.join(path,subdir)
+			if not os.path.isdir(subpath):
+				os.makedirs(subpath)
+	return path
+
 def initConfigPath(configPath=None):
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
@@ -149,7 +161,7 @@ def initConfigPath(configPath=None):
 		os.makedirs(configPath)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
-		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+		subdirs.append("addons")
 	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
@@ -295,6 +307,7 @@ def getConfigDirs(subpath=None):
 	@return: The configuration directories in the order in which they should be searched.
 	@rtype: list of str
 	"""
+	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
 	return [os.path.join(dir, subpath) if subpath else dir
 		for dir in (globalVars.appArgs.configPath,)
 	]
@@ -309,16 +322,22 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""
 	if isAppX or globalVars.appArgs.disableAddons:
 		return
-	if not subdir:
-		subdir = module.__name__
-	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
-	dirs.extend(module.__path__ )
-	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
+	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
+		return
+	if not subdir:
+		subdir = module.__name__
+	fullPath=os.path.join(getScratchpadDir(),subdir)
+	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	fullPath=fullPath.encode("mbcs")
+	# Insert this path at the beginning  of the module's search paths.
+	# The module's search paths may not be a mutable  list, so replace it with a new one 
+	pathList=[fullPath]
+	pathList.extend(module.__path__)
+	module.__path__=pathList
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
@@ -332,7 +351,12 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+	BASE_ONLY_SECTIONS = {
+	"general", 
+	"update", 
+	"upgrade",
+	"development",
+}
 
 	def __init__(self):
 		self.spec = confspec
@@ -784,20 +808,69 @@ class ConfigManager(object):
 		self.triggersToProfiles.parent.write()
 		log.info("Profile triggers saved")
 
-	def getConfigValidationParameter(self, keyPath, validationParameter):
-		"""Get a config validation parameter
-		This can be used to get the min, max, default, or other values for a config key.
-		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
-		@param validationParameter: the parameter to return the value for. EG "max"
-		@type validationParameter: string
-		"""
+	def _getSpecFromKeyPath(self, keyPath):
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
 
 		spec = conf.spec
 		for nextKey in keyPath:
 			spec = spec[nextKey]
-		return conf.validator._parse_with_caching(spec)[2][validationParameter]
+		return spec
+
+	def _getConfigValidation(self, spec):
+		"""returns a tuple with the spec for the config spec:
+		("type", [], {}, "default value") EG:
+		- (u'boolean', [], {}, u'false')
+		- (u'integer', [], {'max': u'255', 'min': u'1'}, u'192')
+		- (u'option', [u'changedContext', u'fill', u'scroll'], {}, u'changedContext')
+		"""
+		return conf.validator._parse_with_caching(spec)
+
+	def getConfigValidationParameter(self, keyPath, validationParameter):
+		"""@deprecated: Use L{getConfigValidation} instead.
+		Get a config validation parameter
+		This can be used to get the min, max, or other values for a config key.
+
+		Note: does not work for default, convertFunction, or options. Use L{getConfigValidation} instead.
+
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@param validationParameter: the parameter to return the value for. EG "max"
+		@type validationParameter: string
+		"""
+		spec = self._getSpecFromKeyPath(keyPath)
+		parsedSpec = self._getConfigValidation(spec)
+		return parsedSpec[2][validationParameter]
+
+	def getConfigValidation(self, keyPath):
+		"""Get a config validation details
+		This can be used to get a L{ConfigValidationData} containing the type, default, options list, or
+		other validation parameters (min, max, etc) for a config key.
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@return ConfigValidationData
+		"""
+		spec = self._getSpecFromKeyPath(keyPath)
+		parsedSpec = self._getConfigValidation(spec)
+		data = ConfigValidationData(parsedSpec[0])
+		data.args = [1]
+		data.kwargs = [2]
+		data.default = conf.validator.get_default_value(spec)
+		return data
+
+class ConfigValidationData(object):
+	validationFuncName = None  # type: str
+
+	def __init__(self, validationFuncName):
+		self.validationFuncName = validationFuncName
+		super(ConfigValidationData, self).__init__()
+
+	# args passed to the convert function
+	args = []  # type: List[Any]
+
+	# kwargs passed to the convert function.
+	kwargs = {}  # type: Dict[str, Any]
+
+	# the default value, used when config is missing.
+	default = None  # converted to the appropriate type
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
