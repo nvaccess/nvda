@@ -283,11 +283,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		try:
 			left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
 		except RuntimeError:
-			log.debugWarning("physicalToLogicalPoint failed for top left", exc_info=True)
+			log.error("physicalToLogicalPoint failed for top left", exc_info=True)
+			return [],[],[]
 		try:
 			right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
 		except RuntimeError:
-			log.debugWarning("physicalToLogicalPoint failed for bottom right", exc_info=True)
+			log.error("physicalToLogicalPoint failed for bottom right", exc_info=True)
+			return [],[],[]
 		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
 		if not text:
 			return [],[],[]
@@ -444,9 +446,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		try:
 			rect = rect.toPhysical(self.obj.windowHandle)
 		except RuntimeError:
-			log.debugWarning(
+			raise LookupError(
 				"Couldn't convert character rectangle at offset %d to physical coordinates"
-				% offset, exc_info=True)
+				% offset
+			)
 		return rect
 
 	def _getNVDAObjectFromOffset(self,offset):
@@ -524,9 +527,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			try:
 				lineRect = rect.toPhysical(self.obj.windowHandle)
 			except RuntimeError:
-				log.debugWarning(
+				raise LookupError(
 					"Couldn't convert line rectangle at offsets %d to %d to physical coordinates"
-					% (startOffset, endOffset), exc_info=True)
+					% (startOffset, endOffset)
+				)
 			rects.append(lineRect)
 		return rects
 
@@ -569,8 +573,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		try:
 			objRect=objRect.toLogical(self.obj.windowHandle)
 		except RuntimeError:
-			log.debugWarning("Couldn't convert object location to logical coordinates when getting caret offset",
-				exc_info=True)
+			raise RuntimeError("Couldn't convert object location to logical coordinates when getting caret offset")
 		caretRect.left=max(objRect.left,caretRect.left)
 		caretRect.top=max(objRect.top,caretRect.top)
 		caretRect.right=min(objRect.right,caretRect.right)
@@ -601,7 +604,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		try:
 			point = point.toPhysical(self.obj.windowHandle)
 		except RuntimeError:
-			log.debugWarning("Conversion to physical coordinates failed when setting caret offset", exc_info=True)
+			raise RuntimeError("Conversion to physical coordinates failed when setting caret offset")
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(*point)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
