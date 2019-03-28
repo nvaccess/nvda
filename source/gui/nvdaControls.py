@@ -10,7 +10,6 @@ from gui import accPropServer
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 import oleacc
 import winUser
-import comtypes
 import winsound
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
@@ -43,31 +42,67 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		self.SetSelection(0, numChars)
 		evt.Skip()
 
+class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
+
+	def __init__(self, control, propertyAnnotations):
+		"""
+		A simple class for overriding specific values on a control
+		:type propertyAnnotations: dict
+		"""
+		super(AccPropertyOverride, self).__init__(
+			control,
+			annotateProperties=list(propertyAnnotations.keys()),
+			annotateChildren=False
+		)
+		self.propertyAnnotations = propertyAnnotations
+
+	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
+		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
+		if control is None or not self.propertyAnnotations:
+			return self.NO_RETURN_VALUE
+
+		try:
+			val = self.propertyAnnotations[idProp]
+			if callable(val):
+				val = val()
+			return val, self.HAS_PROP
+		except KeyError:
+			pass
+
+		return self.NO_RETURN_VALUE
+
+	def _cleanup(self):
+		# could contain references (via lambda) of our owner, set it to None to avoid a circular reference which
+		# would block destruction.
+		self.propertyAnnotations = None
+		super(AccPropertyOverride, self)._cleanup()
+
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
 
-	#: An array with the GUIDs of the properties that an AccPropServer should override for list controls with checkboxes.
-	#: The role is supposed to be checkbox, rather than list item.
-	#: The state should be overridden to include the checkable state as well as the checked state if the item is checked.
-	properties = (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE])
-
 	def __init__(self, control):
-		super(ListCtrlAccPropServer, self).__init__(control, annotateChildren=True)
+		super(ListCtrlAccPropServer, self).__init__(
+			control,
+			annotateProperties=[
+				oleacc.PROPID_ACC_ROLE,  # supposed to be checkbox, rather than list item
+				oleacc.PROPID_ACC_STATE  # should include the checkable state and checked state if the item is checked.
+			],
+			annotateChildren=True
+		)
 
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
-		empty = (comtypes.automation.VT_EMPTY, 0)
 		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
 		if control is None:
-			return empty
+			return self.NO_RETURN_VALUE
 
 		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
 		if childid == winUser.CHILDID_SELF:
-			return empty
+			return self.NO_RETURN_VALUE
 
 		if idProp == oleacc.PROPID_ACC_ROLE:
-			return oleacc.ROLE_SYSTEM_CHECKBUTTON, 1
+			return oleacc.ROLE_SYSTEM_CHECKBUTTON, self.HAS_PROP
 
 		if idProp == oleacc.PROPID_ACC_STATE:
 			states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
@@ -77,17 +112,15 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				# wx doesn't seem to  have a method to check whether a list item is focused.
 				# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
 				states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
-			return states, 1
+			return states, self.HAS_PROP
 
 class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
 		super(CustomCheckListBox, self).__init__(*args, **kwargs)
-		# Import late to prevent circular import.
-		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
-		server = ListCtrlAccPropServer(self)
+		self.server = ListCtrlAccPropServer(self)
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
@@ -113,7 +146,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
 		# Register object with COM to fix accessibility bugs in wx.
-		server = ListCtrlAccPropServer(self)
+		self.server = ListCtrlAccPropServer(self)
 		# Register our hook to check/uncheck items with space.
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
