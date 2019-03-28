@@ -269,7 +269,7 @@ import versionInfo
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
-	@scriptHandler.script(gesture="kb:NVDA+shift+v")
+	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
 		ui.message(versionInfo.version)
 
@@ -669,13 +669,13 @@ Otherwise, the add-on will not install.
 - url: A URL where this add-on, further info and upgrades can be found.
 - docFileName: The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
 - minimumNVDAVersion: The minimum required version of NVDA for this add-on to be installed or enabled.
-  - e.g "2019.1.0"
-  - Must be a three part version string I.E. Year.Minor.Minor. Two part version strings ("2019.1") will not pass validation.
+  - e.g "2019.1.1"
+  - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
   - Must be less than or equal to `lastTestedNVDAVersion`
 - lastTestedNVDAVersion: The last version of NVDA this add-on has been tested with.
   - e.g "2019.1.0"
-  - Must be a three part version string I.E. Year.Minor.Minor. Two part version strings ("2019.1") will not pass validation.
+  - Must be a three part version string I.E. Year.Major.Minor, or a two part version string of Year.Major. In the second case, Minor defaults to 0.
   - Defaults to "0.0.0"
   - Must be greater than or equal to `minimumNVDAVersion`
 -

@@ -178,6 +178,15 @@ class UIProperty(UIA):
 			return value
 		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
+class ReadOnlyEditBox(IAccessible):
+#Used for read-only edit boxes in a properties window.
+#These can contain dates that include unwanted left-to-right and right-to-left indicator characters.
+
+	def _get_windowText(self):
+		windowText = super(ReadOnlyEditBox, self).windowText
+		if windowText is not None and controlTypes.STATE_READONLY in self.states:
+			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return windowText
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -208,6 +217,10 @@ class AppModule(appModuleHandler.AppModule):
 					toolbarParent = None
 				if toolbarParent and toolbarParent.windowClassName == "SysPager":
 					clsList.insert(0, NotificationArea)
+			return 
+
+		if windowClass == "Edit":
+			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32" and role == controlTypes.ROLE_MENUITEM:

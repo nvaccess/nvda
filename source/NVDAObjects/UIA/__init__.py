@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V.
+#Copyright (C) 2009-2019 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
 
 """Support for UI Automation (UIA) controls."""
 
@@ -758,7 +758,11 @@ class UIA(Window):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
-		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		try:
+			cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		except COMError:
+			log.debugWarning("IUIAutomationElement.buildUpdatedCache failed given IDs of %s"%IDs)
+			return
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
@@ -813,6 +817,8 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
+		if UIAControlType==UIAHandler.UIA_MenuItemControlTypeId:
+			clsList.append(MenuItem)
 		# Some combo boxes and looping selectors do not expose value pattern.
 		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
 		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
@@ -1485,6 +1491,16 @@ class TreeviewItem(UIA):
 		info=super(TreeviewItem,self).positionInfo or {}
 		info['level']=self._level
 		return info
+
+class MenuItem(UIA):
+
+	def _get_description(self):
+		name=self.name
+		description=super(MenuItem,self)._get_description()
+		if description!=name:
+			return description
+		else:
+			return None
 
 class UIColumnHeader(UIA):
 
