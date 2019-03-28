@@ -7,10 +7,10 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\s?\.(?=[\"'”’);\s]|$)
-! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’)\s]|$)
-... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\s?\!(?=[\"'”’);\s]|$)
+? sentence ending	(?<=[^\s?])\s?\?(?=[\"'”’);\s]|$)
+... sentence ending	(?<=[^\s.])\s?\.\.\.(?=[\"'”’);\s]|$)
+… sentence ending	(?<=[^\s…])\s?\…(?=[\"'”’);\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;])\s?;(?=\s|$)
 : phrase ending	(?<=[^\s:])\s?:(?=\s|$)
@@ -284,8 +284,8 @@ _	souligné
 χ	khi	none	never
 Χ	khi	none	never
 υ	upsilon	none	never
-Υ	upsilon crochet	none	never
-ϒ	upsilon	none	never
+Υ	upsilon	none	never
+ϒ	upsilon crochet	none	never
 Ϛ	stigma	none	never
 ϛ	stigma	none	never
 Ϙ	koppa	none	never
