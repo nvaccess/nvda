@@ -81,12 +81,6 @@ class VisionEnhancementProvider(Highlighter):
 		winGDI.gdiPlusTerminate()
 		super(VisionEnhancementProvider, self).terminateHighlighter()
 
-	def updateContextRect(self, context, rect=None, obj=None):
-		super(VisionEnhancementProvider, self).updateContextRect(context, rect, obj)
-		# Though a refresh happens at least once per core cycle,
-		# force a refresh for a change to avoid delays.
-		self.refresh()
-
 	def _run(self):
 		if _isDebug():
 			log.debug("Starting NVDAHighlighter thread")
