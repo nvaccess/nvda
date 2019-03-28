@@ -184,6 +184,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def report(self,readUnit=None):
 		info=self.textInfo
+		# If we are dealing with a form field, ensure we don't read the whole content if it's an editable text.
+		if self.itemType == "formField":
+			if self.obj.role == controlTypes.ROLE_EDITABLETEXT:
+				readUnit = textInfos.UNIT_LINE
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -613,8 +617,7 @@ qn("formField", key="f",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous form field"),
-	readUnit=textInfos.UNIT_LINE)
+	prevError=_("no previous form field"))
 qn("list", key="l",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next list"),
