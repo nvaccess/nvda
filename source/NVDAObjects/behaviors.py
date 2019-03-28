@@ -85,7 +85,17 @@ class Dialog(NVDAObject):
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_UNKNOWN):
+			if childRole in (
+					controlTypes.ROLE_PROPERTYPAGE,
+					controlTypes.ROLE_PANE,
+					controlTypes.ROLE_PANEL,
+					controlTypes.ROLE_WINDOW,
+					controlTypes.ROLE_GROUPING,
+					controlTypes.ROLE_PARAGRAPH,
+					controlTypes.ROLE_SECTION,
+					controlTypes.ROLE_TEXTFRAME,
+					controlTypes.ROLE_UNKNOWN
+			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
 				childText=cls.getDialogText(child,not isinstance(child,Dialog))
