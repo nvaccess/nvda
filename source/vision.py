@@ -254,7 +254,7 @@ class Highlighter(VisionEnhancementProvider):
 	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.
 		The base implementation updates the position in the L{contextToRectMap}.
-		if rect and obj are C{None}, the position is retrieved from the object associated with the context.
+		If rect and obj are C{None}, the position is retrieved from the object associated with the context.
 		Otherwise, either L{obj} or L{rect} should be provided.
 		Subclasses should extend or override this method if they want to get the context position in a different way.
 		"""
@@ -428,6 +428,8 @@ def pumpAll():
 	# Note that a pending review update has to be executed before a pending caret update.
 	handler.handlePendingReviewUpdate()
 	handler.handlePendingCaretUpdate()
+	if handler.highlighter and handler.highlighter.enabled:
+		handler.highlighter.refresh()
 
 def getProvider(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
@@ -625,8 +627,7 @@ class VisionHandler(AutoPropertyObject):
 			# Intentionally check this after tracking a magnifier to the object itself.
 			self.handleCaretMove(obj)
 		if self.highlighter and context in self.highlighter.enabledHighlightContexts:
-			if context != CONTEXT_CARET:
-				self.highlighter.updateContextRect(context, obj=obj)
+			self.highlighter.updateContextRect(context, obj=obj)
 			if not mightHaveCaret and CONTEXT_CARET in self.highlighter.enabledHighlightContexts:
 				# If this object does not have a caret, clear the caret rectangle from the map
 				# However, in the unlikely case it yet has a caret, we want to highlight that.
