@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-15 00:10+1000\n"
-"PO-Revision-Date: 2019-03-16 21:55+0800\n"
+"PO-Revision-Date: 2019-03-21 22:19+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1633,19 +1633,19 @@ msgstr "Нет предыдущего ориентира"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "Переходит на следующий встроеный объект"
+msgstr "Переходит на следующий встроенный объект"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
-msgstr "Нет следующего встроеного объекта"
+msgstr "Нет следующего встроенного объекта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr "Переходит на предыдущий встроеный объект"
+msgstr "Переходит на предыдущий встроенный объект"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
-msgstr "Нет предыдущего встроеного объекта"
+msgstr "Нет предыдущего встроенного объекта"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
@@ -1751,12 +1751,12 @@ msgstr "Выделено %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
-msgstr "Нет полного описания"
+msgstr "Нет подробного описания"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
 msgid "Shows the long description at this position if one is found."
 msgstr ""
-"Показывает полное описание на этой позиции, если таковое будет найдено."
+"Показывает подробное описание элемента в текущей позиции, если оно имеется"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
@@ -2740,11 +2740,11 @@ msgstr "отсортировано по убыванию"
 
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 msgid "has long description"
-msgstr "имеет полное описание"
+msgstr "содержит подробное описание"
 
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
-msgstr "зафиксирован"
+msgstr "закреплено"
 
 #. Translators: a state that denotes the existance of a formula on a spreadsheet cell
 msgid "has formula"
@@ -2885,7 +2885,7 @@ msgstr "Учитывать &регистр"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "Текст \"%s\" не найден"
+msgstr "Текст «%s» не найден"
 
 msgid "Find Error"
 msgstr "Ошибка поиска"
@@ -6296,7 +6296,7 @@ msgstr "выравнивание распределено"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
-msgstr "Выравнивание поумолчанию"
+msgstr "Выравнивание по умолчанию"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -6770,7 +6770,7 @@ msgstr ""
 "к оригинальной версии этого программного обеспечения, его измененным копиям, "
 "а также ко всем его производным.\n"
 "Для получения дополнительной информации, пожалуйста обратитесь к лицензии в "
-"подменю \"Справка\".\n"
+"подменю «Справка».\n"
 "Она также может быть получена онлайн по адресу: https://www.gnu.org/licenses/"
 "old-licenses/gpl-2.0.html\n"
 "\n"
@@ -6779,7 +6779,7 @@ msgstr ""
 "людей с проблемами зрения.\n"
 "Если вы находите NVDA полезной и хотите, чтобы она продолжала развиваться, "
 "пожалуйста, рассмотрите возможность пожертвования в пользу NV Access. Для "
-"этого из меню NVDA выберите пункт \"Сделать пожертвование\"."
+"этого из меню NVDA выберите пункт «Сделать пожертвование»."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 #, python-brace-format
@@ -7275,7 +7275,7 @@ msgstr "С верхнего края слайда на {distance:.3g} points"
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 #, python-brace-format
 msgid "{distance:.3g} points from right slide edge"
-msgstr "{distance:.3g} точек отправого края слайда"
+msgstr "{distance:.3g} точек от правого края слайда"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 #, python-brace-format
@@ -8472,7 +8472,7 @@ msgstr "Установка NVDA"
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr ""
 "Для установки NVDA на ваш жёсткий диск, пожалуйста, нажмите кнопку "
-"\"Продолжить\"."
+"«Продолжить»."
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
@@ -8543,7 +8543,7 @@ msgid ""
 "and then press Continue"
 msgstr ""
 "Для создания переносной копии NVDA, пожалуйста, укажите путь и другие "
-"настройки, а затем нажмите кнопку \"Продолжить\""
+"настройки, а затем нажмите кнопку «Продолжить»"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -8854,7 +8854,7 @@ msgstr "Процент смены высоты для заглавных"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
 msgid "Say &cap before capitals"
-msgstr "Говорить \"&Большая\" перед заглавными буквами"
+msgstr "Говорить «&Большая» перед заглавными буквами"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel.
@@ -9458,7 +9458,7 @@ msgstr "Ошибка словарной статьи"
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #, python-format
 msgid "Regular Expression error: \"%s\"."
-msgstr "Ошибка в регулярном выражении: \"%s\"."
+msgstr "Ошибка в регулярном выражении: «%s»."
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -9520,7 +9520,7 @@ msgid "Could not load the %s display."
 msgstr "Не удалось загрузить дисплей %s."
 
 msgid "Braille Display Error"
-msgstr "Ошибка Брайлевского дисплея"
+msgstr "Ошибка брайлевского дисплея"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -9636,7 +9636,7 @@ msgstr "Уд&алить"
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
 msgid "Symbol \"%s\" is already present."
-msgstr "Символ \"%s\" уже присутствует."
+msgstr "Символ «%s» уже существует."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
@@ -9755,9 +9755,8 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"Не удается установить заголовки. Пожалуйста, установите параметр \"Читать "
-"заголовки строк и столбцов в таблицах\" в настройках \"Форматирование "
-"документа...\""
+"Не удаётся установить заголовки. Пожалуйста, в настройках форматирования "
+"документа включите чтение заголовков строк и столбцов в таблицах"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #, python-brace-format
@@ -11015,7 +11014,7 @@ msgid "cell merge"
 msgstr "Слияние ячеек"
 
 msgid "Comments"
-msgstr "Коментарии"
+msgstr "Комментарии"
 
 msgid "Endnotes"
 msgstr "Пояснение"
@@ -11163,7 +11162,7 @@ msgstr "Помещён под %s"
 
 #. Translators: a message reported when a paragraph is moved below a blank paragraph
 msgid "Moved below blank paragraph"
-msgstr "Помещён под пустым абзацом"
+msgstr "Помещён под пустым абзацем"
 
 #. Translators: a message reported when a paragraph is moved above another paragraph
 #, python-format
@@ -11172,7 +11171,7 @@ msgstr "Помещён над %s"
 
 #. Translators: a message reported when a paragraph is moved above a blank paragraph
 msgid "Moved above blank paragraph"
-msgstr "Помещён над пустым абзацом"
+msgstr "Помещён над пустым абзацем"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 #, python-brace-format
