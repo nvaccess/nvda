@@ -108,6 +108,7 @@ source = [
 	"winword.cpp",
 	"WinWord/Fields.cpp",
 	"outlook.cpp",
+	"excel.cpp",
 	nvdaInProcUtilsRPCServerSource,
 	"nvdaHelperRemote.def",
 	vbufBackendLibs,
@@ -124,6 +125,7 @@ libs = [
 	"advapi32",
 	"version",
 	"DbgHelp",
+	"gdi32",
 ]
 # MinHook doesn't support ARM64, which means we can't support displayModel on ARM64.
 if env["TARGET_ARCH"] != 'arm64':
@@ -133,7 +135,6 @@ if env["TARGET_ARCH"] != 'arm64':
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
 	))
-	libs.append("gdi32")
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=source,
