@@ -11,9 +11,8 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 import gettext
 import locale
 #Localization settings
-locale.setlocale(locale.LC_ALL,'')
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
 except:
 	gettext.install('nvda',unicode=True)
 

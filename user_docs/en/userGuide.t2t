@@ -472,7 +472,18 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 
 + Browse Mode +[BrowseMode]
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
-This includes documents in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+This includes documents in the following applications:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML messages in Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Supported books in Amazon Kindle for PC
+-
 Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
@@ -1519,7 +1530,15 @@ This field sets the amount of lines you will move by when pressing page up or pa
 ==== Use screen layout ====[BrowseModeSettingsScreenLayout]
 Key: NVDA+v
 
-This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown. If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+This option allows you to specify whether content in browse mode should place content such as links and other fields on their own line, or if it should keep them in the flow of text as it is visually shown.
+If the option is enabled then things will stay as they are visually shown, but if it is disabled then fields will be placed on their own line.
+
+==== Enable browse mode on page load ====[BrowseModeSettingsEnableOnPageLoad]
+This checkbox toggles whether browse mode should be automatically enabled when loading a page.
+When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
+See the [Browse Mode section #BrowseMode] for a list of applications supported by browse mode.
+Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
+This option is enabled by default.
 
 ==== Automatic Say All on page load ====[BrowseModeSettingsAutoSayAll]
 This checkbox toggles the automatic reading of a page after it loads in browse mode.
