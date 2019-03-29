@@ -487,15 +487,18 @@ IVsTextView._methods_ = [
 
 class ObjectsTreeItem(IAccessible):
 
-	def event_gainFocus(self):
+	def _get_focusRedirect(self):
+		"""
+		Returns the correct focused item in the object explorer trees
+		"""
 
-		# If this object has the focus, simply go to the super implementation
-		if controlTypes.STATE_FOCUSED in self.states:
-			super(ObjectsTreeItem, self).event_gainFocus()
-			return
-
-		import eventHandler
-		eventHandler.executeEvent("gainFocus", self.objectWithFocus())
+		if not controlTypes.STATE_FOCUSED in self.states:
+			# Object explorer tree views have a bad IAccessible implementation.
+			# When expanding a primary node and going to secondary node, the 
+			# focus is placed to the next root node, so we need to redirect
+			# it to the real focused widget. Fortunately, the states are
+			# still correct and we can detect if this is really focused or not.
+			return self.objectWithFocus()
 
 	def _get_positionInfo(self):
 		return {
