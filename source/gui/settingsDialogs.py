@@ -1600,62 +1600,77 @@ class BrowseModePanel(SettingsPanel):
 	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
-		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
-		settingsSizer.Add(maxLengthLabel)
-		self.maxLengthEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
-			min=10, max=250, # min and max are not enforced in the config for virtualBuffers.maxLineLength
+		maxLengthLabelText = _("&Maximum number of characters on one line")
+		self.maxLengthEdit = sHelper.addLabeledControl(maxLengthLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			# min and max are not enforced in the config for virtualBuffers.maxLineLength
+			min=10, max=250,
 			initial=config.conf["virtualBuffers"]["maxLineLength"])
-		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
-		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
-		settingsSizer.Add(pageLinesLabel)
-		self.pageLinesEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
-			min=5, max=150, # min and max are not enforced in the config for virtualBuffers.linesPerPage
+		pageLinesLabelText = _("&Number of lines per page")
+		self.pageLinesEdit = sHelper.addLabeledControl(pageLinesLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			# min and max are not enforced in the config for virtualBuffers.linesPerPage
+			min=5, max=150,
 			initial=config.conf["virtualBuffers"]["linesPerPage"])
-		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.useScreenLayoutCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Use &screen layout (when supported)"))
+		useScreenLayoutText = _("Use &screen layout (when supported)")
+		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
-		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
+
+		# Translators: The label for a checkbox in browse mode settings to 
+		# enable browse mode on page load.
+		enableOnPageLoadText = _("&Enable browse mode on page load")
+		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
+		self.enableOnPageLoadCheckBox.SetValue(config.conf["virtualBuffers"]["enableOnPageLoad"])
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoSayAllCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic &Say All on page load"))
+		autoSayAllText = _("Automatic &Say All on page load")
+		self.autoSayAllCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoSayAllText))
 		self.autoSayAllCheckBox.SetValue(config.conf["virtualBuffers"]["autoSayAllOnPageLoad"])
-		settingsSizer.Add(self.autoSayAllCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.layoutTablesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Include l&ayout tables"))
+		layoutTablesText = _("Include l&ayout tables")
+		self.layoutTablesCheckBox = sHelper.addItem(wx.CheckBox(self, label =layoutTablesText))
 		self.layoutTablesCheckBox.SetValue(config.conf["documentFormatting"]["includeLayoutTables"])
-		settingsSizer.Add(self.layoutTablesCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
+		autoPassThroughOnFocusChangeText = _("Automatic focus mode for focus changes")
+		self.autoPassThroughOnFocusChangeCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnFocusChangeText))
 		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
-		settingsSizer.Add(self.autoPassThroughOnFocusChangeCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
+		autoPassThroughOnCaretMoveText = _("Automatic focus mode for caret movement")
+		self.autoPassThroughOnCaretMoveCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnCaretMoveText))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
-		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.passThroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of focus and browse modes"))
+		passThroughAudioIndicationText = _("Audio indication of focus and browse modes")
+		self.passThroughAudioIndicationCheckBox = sHelper.addItem(wx.CheckBox(self, label=passThroughAudioIndicationText))
 		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
-		settingsSizer.Add(self.passThroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.trapNonCommandGesturesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("&Trap all non-command gestures from reaching the document"))
+		trapNonCommandGesturesText = _("&Trap all non-command gestures from reaching the document")
+		self.trapNonCommandGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=trapNonCommandGesturesText))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
-		settingsSizer.Add(self.trapNonCommandGesturesCheckBox,border=10,flag=wx.BOTTOM)
 
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["enableOnPageLoad"] = self.enableOnPageLoadCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]=self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
