@@ -45,7 +45,7 @@ MODEL_MODULAR_EVOLUTION_88 = b"\x38"
 MODEL_MODULAR_CONNECT_88 = b"\x3A"
 MODEL_EASY_BRAILLE = b"\x44"
 MODEL_ACTIVE_BRAILLE = b"\x54"
-MODEL_CONNECT_BRAILLE_40 = b"\x55"
+MODEL_CONNECT_BRAILLE = b"\x55"
 MODEL_ACTILINO = b"\x61"
 MODEL_ACTIVE_STAR_40 = b"\x64"
 MODEL_BASIC_BRAILLE_16 = b"\x81"
@@ -56,6 +56,7 @@ MODEL_BASIC_BRAILLE_48 = b"\x8A"
 MODEL_BASIC_BRAILLE_64 = b"\x86"
 MODEL_BASIC_BRAILLE_80 = b"\x87"
 MODEL_BASIC_BRAILLE_160 = b"\x8B"
+MODEL_BASIC_BRAILLE_84 = b"\x8C"
 MODEL_BRAILLINO = b"\x72"
 MODEL_BRAILLE_STAR_40 = b"\x74"
 MODEL_BRAILLE_STAR_80 = b"\x78"
@@ -355,11 +356,11 @@ class ActiveBraille(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
 	genericName = name = 'Active Braille'
 
 
-class ConnectBraille40(TimeSyncMixin, TripleActionKeysMixin, Model):
-	deviceId = MODEL_CONNECT_BRAILLE_40
+class ConnectBraille(TripleActionKeysMixin, Model):
+	deviceId = MODEL_CONNECT_BRAILLE
 	numCells = 40
 	genericName = "Connect Braille"
-	name = "Connect Braille 40"
+	name = "Connect Braille"
 
 
 class Actilino(TimeSyncMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
@@ -417,6 +418,7 @@ BasicBraille48 = basicBrailleFactory(48, MODEL_BASIC_BRAILLE_48)
 BasicBraille64 = basicBrailleFactory(64, MODEL_BASIC_BRAILLE_64)
 BasicBraille80 = basicBrailleFactory(80, MODEL_BASIC_BRAILLE_80)
 BasicBraille160 = basicBrailleFactory(160, MODEL_BASIC_BRAILLE_160)
+BasicBraille84 = basicBrailleFactory(84, MODEL_BASIC_BRAILLE_84)
 
 
 class BrailleStar(TripleActionKeysMixin, Model):

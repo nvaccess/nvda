@@ -20,7 +20,7 @@ def getTreeInterceptor(obj):
 		if obj in ti:
 			return ti
 
-def update(obj):
+def update(obj, force=False):
 	# Don't create treeInterceptors for objects for which NVDA should sleep.
 	if obj.sleepMode:
 		return None
@@ -33,6 +33,15 @@ def update(obj):
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
+		if not force and (
+			not config.conf['virtualBuffers']['enableOnPageLoad'] or
+			getattr(obj.appModule, "disableBrowseModeByDefault", False)
+		):
+			# Import late to avoid circular import.
+			from browseMode import BrowseModeTreeInterceptor
+			# Disabling enableOnPageLoad should only affect browse mode tree interceptors.
+			if issubclass(newClass, BrowseModeTreeInterceptor):
+				return None
 		ti=newClass(obj)
 		if not ti.isAlive:
 			return None
@@ -207,6 +216,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_text(self):
 		return self.innerTextInfo.text
+
+	def _get_boundingRects(self):
+		return self.innerTextInfo.boundingRects
 
 	def getTextWithFields(self,formatConfig=None):
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)

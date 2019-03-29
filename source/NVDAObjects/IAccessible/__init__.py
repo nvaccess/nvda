@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited 
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -118,21 +118,34 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
-			return self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			offset = self.obj.IAccessibleTextObject.OffsetAtPoint(x,y,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE)
+			# IA2 specifies that a result of -1 indicates that
+			# the point is invalid or there is no character under the point.
+			# Note that Chromium does not follow the spec and returns 0 for invalid or no character points.
+			# As 0 is a valid offset, there's nothing we could do other than just returning it.
+			if offset == -1:
+				raise LookupError("Invalid point or no character under point")
+			return offset
 		else:
-			raise NotImplementedError
+			raise LookupError
 
 	@classmethod
-	def _getPointFromOffsetInObject(cls,obj,offset):
+	def _getBoundingRectFromOffsetInObject(cls,obj,offset):
 		try:
 			res=RectLTWH(*obj.IAccessibleTextObject.characterExtents(offset,IAccessibleHandler.IA2_COORDTYPE_SCREEN_RELATIVE))
 		except COMError:
 			raise NotImplementedError
-		point=textInfos.Point(*res.center)
-		return point
+		if not any(res[2:]):
+			# Gecko tends to return (0,0,0,0) rectangles sometimes, for example in empty text fields.
+			# Chromium could return rectangles that are positioned at the upper left corner of the object,
+			# and they have a width and height of 0.
+			# Other IA2 implementations, such as the one in LibreOffice,
+			# tend to return the caret rectangle in this case, which is ok.
+			raise LookupError
+		return res
 
-	def _getPointFromOffset(self,offset):
-		return self._getPointFromOffsetInObject(self.obj, offset)
+	def _getBoundingRectFromOffset(self,offset):
+		return self._getBoundingRectFromOffsetInObject(self.obj, offset)
 
 	def _get_unit_mouseChunk(self):
 		return "mouseChunk"
@@ -148,6 +161,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		super(IA2TextTextInfo,self).expand(unit)
 		if isMouseChunkUnit:
 			text=self._getTextRange(self._startOffset,self._endOffset)
+			if not text:
+				return
 			try:
 				self._startOffset=text.rindex(u'\ufffc',0,oldStart-self._startOffset)
 			except ValueError:
@@ -199,7 +214,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getTextRange(self,start,end):
 		try:
-			return self.obj.IAccessibleTextObject.text(start,end)
+			return self.obj.IAccessibleTextObject.text(start,end) or u""
 		except COMError:
 			return u""
 
@@ -1397,6 +1412,9 @@ the NVDAObject for IAccessible
 		if self.role != controlTypes.ROLE_ALERT:
 			# Ignore alert events on objects that aren't alerts.
 			return
+		if not self.name and not self.description and self.childCount == 0:
+			# Don't report if there's no content.
+			return
 		# If the focus is within the alert object, don't report anything for it.
 		if eventHandler.isPendingEvents("gainFocus"):
 			# The alert event might be fired before the focus.
@@ -1698,19 +1716,32 @@ class Groupbox(IAccessible):
 		self.isPresentableFocusAncestor = res = super(Groupbox, self).isPresentableFocusAncestor
 		return res
 
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
+	Depending on the version of Windows name or value contains left-to-right or right-to-left characters, so remove them from both.
 	"""
 
 	def _get_role(self):
+		# On Windows 10 Anniversary update and later the text 'clock' is included in the name so having clock in the control type is redundant.
+		if super(TrayClockWClass, self).value is None:
+			return controlTypes.ROLE_BUTTON
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
-		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
 		if super(TrayClockWClass, self).value is None:
-			return super(TrayClockWClass, self).name
+			clockName = super(TrayClockWClass, self).name
+			return clockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return None
+
+	def _get_value(self):
+		clockValue = super(TrayClockWClass, self).value
+		if clockValue is not None:
+			clockValue = clockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return clockValue
 
 class OutlineItem(IAccessible):
 
@@ -1888,7 +1919,7 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
-	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("TrayClockWClass",oleacc.ROLE_SYSTEM_PUSHBUTTON):"TrayClockWClass",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",

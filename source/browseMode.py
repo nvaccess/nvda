@@ -34,6 +34,8 @@ import inputCore
 import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
 REASON_QUICKNAV = "quickNav"
 
@@ -91,7 +93,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(object):
+class QuickNavItem(with_metaclass(ABCMeta, object)):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -108,6 +110,7 @@ class QuickNavItem(object):
 		self.itemType=itemType
 		self.document=document
 
+	@abstractmethod
 	def isChild(self,parent):
 		"""
 		Is this item a child of the given parent?
@@ -119,6 +122,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def report(self,readUnit=None):
 		"""
 		Reports the contents of this item.
@@ -127,6 +131,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def moveTo(self):
 		"""
 		Moves the browse mode caret or focus to this item.
@@ -179,6 +184,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def report(self,readUnit=None):
 		info=self.textInfo
+		# If we are dealing with a form field, ensure we don't read the whole content if it's an editable text.
+		if self.itemType == "formField":
+			if self.obj.role == controlTypes.ROLE_EDITABLETEXT:
+				readUnit = textInfos.UNIT_LINE
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -253,10 +262,18 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
 
+	def event_treeInterceptor_gainFocus(self):
+		"""Triggered when this browse mode interceptor gains focus.
+		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
+		"""
+		reportPassThrough(self)
+
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
 		controlTypes.ROLE_EDITABLETEXT,
 		controlTypes.ROLE_LIST,
+		controlTypes.ROLE_LISTITEM,
 		controlTypes.ROLE_SLIDER,
 		controlTypes.ROLE_TABCONTROL,
 		controlTypes.ROLE_MENUBAR,
@@ -607,8 +624,7 @@ qn("formField", key="f",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous form field"),
-	readUnit=textInfos.UNIT_LINE)
+	prevError=_("no previous form field"))
 qn("list", key="l",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next list"),
@@ -1133,10 +1149,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
-		"""Triggered when this browse mode document gains focus.
-		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
-		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
-		"""
 		doSayAll=False
 		hadFirstGainFocus=self._hadFirstGainFocus
 		if not hadFirstGainFocus:
@@ -1512,6 +1524,26 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		return False
 
+	def _isNVDAObjectInApplication_noWalk(self, obj):
+		"""Determine whether a given object is within an application without walking ancestors.
+		The base implementation simply checks whether the object has an application role.
+		Subclasses can override this if they can provide a definite answer without needing to walk.
+		For example, for virtual buffers, if the object is in the buffer,
+		it definitely isn't in an application.
+		L{_isNVDAObjectInApplication} calls this and walks to the next ancestor if C{None} is returned.
+		@return: C{True} if definitely in an application,
+			C{False} if definitely not in an application,
+			C{None} if this can't be determined without walking ancestors.
+		"""
+		if (
+			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
+			obj.role in self.APPLICATION_ROLES 
+			# Anything inside a combo box should be treated as being outside a browseMode document.
+			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+		):
+			return True
+		return None
+
 	def _isNVDAObjectInApplication(self, obj):
 		"""Determine whether a given object is within an application.
 		The object is considered to be within an application if it or one of its ancestors has an application role.
@@ -1542,13 +1574,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We found a cached result.
 				return doResult(inApp)
 			objs.append(obj)
-			if (
-				# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
-				obj.role in self.APPLICATION_ROLES 
-				# Anything inside a combo box should be treated as being outside a browseMode document.
-				or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
-			):
-				return doResult(True)
+			inApp = self._isNVDAObjectInApplication_noWalk(obj)
+			if inApp is not None:
+				return doResult(inApp)
+			# We must walk ancestors.
 			# Cache container.
 			container = obj.container
 			obj.container = container
