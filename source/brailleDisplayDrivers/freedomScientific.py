@@ -36,6 +36,9 @@ MODELS = {
 	"pm display 40": 40,
 }
 
+#: Number of cells of Focus first generation displays
+FOCUS_1_CELL_COUNTS = (44, 70, 84,)
+
 # Packet types
 FS_PKT_QUERY = b"\x00"
 FS_PKT_ACK = b"\x01"
@@ -50,6 +53,14 @@ FS_PKT_INFO = b"\x80"
 FS_PKT_WRITE = b"\x81"
 FS_PKT_EXT_KEY = b"\x82"
 
+# Parts of packets
+FS_BYTE_NULL = b"\x00"
+FS_DATA_EMPTY = b""
+
+# Braille translation
+DOTS_TABLE_SIZE = 8
+TRANSLATION_TABLE_SIZE = 2 ** DOTS_TABLE_SIZE
+
 def _makeTranslationTable(dotsTable):
 	"""Create a translation table for braille dot combinations
 
@@ -59,16 +70,24 @@ def _makeTranslationTable(dotsTable):
 		"""
 		Returns the ISO 11548 formatted braille dot for the given number.
 
-		@param number: The dot to encode (0-8)
+		From least- to most-significant octal digit:
+		
+		* the first contains dots 1-3
+		* the second contains dots 4-6
+		* the third contains dots 7-8
+
+		Based on: https://github.com/brltty/brltty/blob/master/Headers/brl_dots.h
+
+		@param number: The dot to encode (1-8)
 		@type number: int
 		"""
-		return 1 << ((number + 1) - 1)
+		return 1 << (number - 1)
 
-	outputTable = [0] * 256
-	for byte in xrange(256):
+	outputTable = [0] * TRANSLATION_TABLE_SIZE
+	for byte in xrange(TRANSLATION_TABLE_SIZE):
 		cell = 0
-		for dot in xrange(8):
-			if byte & isoDot(dot):
+		for dot in xrange(DOTS_TABLE_SIZE):
+			if byte & isoDot(dot + 1):
 				cell |= dotsTable[dot]
 		outputTable[byte] = cell
 	return outputTable
@@ -177,7 +196,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendPacket(self, packetType, arg1=b"\x00", arg2=b"\x00", arg3=b"\x00", data=b""):
+	def _sendPacket(self, packetType, arg1=FS_BYTE_NULL, arg2=FS_BYTE_NULL, arg3=FS_BYTE_NULL, data=FS_DATA_EMPTY):
 		"""Send a packet to the display
 
 		@param packetType: Type of packet (first byte), use one of the FS_PKT constants
@@ -223,7 +242,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			calculatedChecksum = self._calculateChecksum(packetType + arg1 + arg2 + arg3 + payload)
 			assert calculatedChecksum == checksum, "Checksum mismatch, expected %s but got %s" % (checksum, payload[-1])
 		else:
-			payload = b""
+			payload = FS_DATA_EMPTY
 
 		self._handlePacket(packetType, arg1, arg2, arg3, payload)
 
@@ -235,16 +254,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debugWarning("NAK received!")
 			self._handleAck()
 		elif packetType == FS_PKT_INFO:
-			self._manufacturer = payload[:24].replace("\x00", "")
-			self._model = payload[24:40].replace("\x00", "")
-			self._firmwareVersion = payload[40:48].replace("\x00", "")
+			self._manufacturer = payload[:24].replace(FS_DATA_EMPTY, "")
+			self._model = payload[24:40].replace(FS_DATA_EMPTY, "")
+			self._firmwareVersion = payload[40:48].replace(FS_DATA_EMPTY, "")
 			self.numCells = MODELS.get(self._model, 0)
-			if self.numCells in (44, 70, 84,):
+			if self.numCells in FOCUS_1_CELL_COUNTS:
 				# Focus 1: apply custom translation table
 				self.translationTable = FOCUS_1_TRANSLATION_TABLE
 			log.debug("Device info: manufacturer: %s model: %s, version: %s",
 				self._manufacturer, self._model, self._firmwareVersion)
 		elif packetType == FS_PKT_WHEEL:
+			# We use 0X7 to only get the last three bits
 			wheelNumber = ((ord(arg1) >> 3) & 0X7)
 			count = ord(arg1) & 0X7
 			if wheelNumber < 2:
