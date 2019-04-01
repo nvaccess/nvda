@@ -646,14 +646,6 @@ the NVDAObject for IAccessible
 		if None not in (event_windowHandle,event_objectID,event_childID):
 			IAccessibleHandler.liveNVDAObjectTable[(event_windowHandle,event_objectID,event_childID)]=self
 
-	def _get_uniqueID(self):
-		if self.IA2UniqueID:
-			return (self.windowHandle, self.IA2UniqueID)
-		elif self.IAccessibleIdentity:
-			return self.IAccessibleIdentity
-		else:
-			return (self.windowHandle, hash(self.IAccessibleObject))
-
 	def isDuplicateIAccessibleEvent(self,obj):
 		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""
 		#MSAA child elements do not have unique winEvent params as a childID could be reused if an element was deleted etc
@@ -1725,19 +1717,32 @@ class Groupbox(IAccessible):
 		self.isPresentableFocusAncestor = res = super(Groupbox, self).isPresentableFocusAncestor
 		return res
 
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
+	Depending on the version of Windows name or value contains left-to-right or right-to-left characters, so remove them from both.
 	"""
 
 	def _get_role(self):
+		# On Windows 10 Anniversary update and later the text 'clock' is included in the name so having clock in the control type is redundant.
+		if super(TrayClockWClass, self).value is None:
+			return controlTypes.ROLE_BUTTON
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
-		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
 		if super(TrayClockWClass, self).value is None:
-			return super(TrayClockWClass, self).name
+			clockName = super(TrayClockWClass, self).name
+			return clockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return None
+
+	def _get_value(self):
+		clockValue = super(TrayClockWClass, self).value
+		if clockValue is not None:
+			clockValue = clockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return clockValue
 
 class OutlineItem(IAccessible):
 
@@ -1915,7 +1920,7 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
-	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("TrayClockWClass",oleacc.ROLE_SYSTEM_PUSHBUTTON):"TrayClockWClass",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",

@@ -184,6 +184,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def report(self,readUnit=None):
 		info=self.textInfo
+		# If we are dealing with a form field, ensure we don't read the whole content if it's an editable text.
+		if self.itemType == "formField":
+			if self.obj.role == controlTypes.ROLE_EDITABLETEXT:
+				readUnit = textInfos.UNIT_LINE
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -257,6 +261,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
+
+	def event_treeInterceptor_gainFocus(self):
+		"""Triggered when this browse mode interceptor gains focus.
+		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
+		"""
+		reportPassThrough(self)
 
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
@@ -478,46 +489,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
-		self.maybeSyncFocus(postFocusFunc=self._activatePosition)
+		self._activatePosition()
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
-
-	def maybeSyncFocus(self, postFocusFunc=None):
-		if  config.conf["virtualBuffers"]["focusFollowsBrowse"]:
-			if postFocusFunc is not None:
-				postFocusFunc()
-			return
-		try:
-			obj = self._lastFocusableObject
-		except AttributeError:
-			return
-		if not obj:
-			return
-		synchronousCall =True
-		setFocusCall = False 
-		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
-			setFocusCall = True
-			synchronousCall = False
-		if obj.hasFocus:
-			synchronousCall = True
-
-		if not synchronousCall:
-			uid = obj.uniqueID
-			if uid in self.postFocusFuncDict:
-				log.error("postFocusFunc has not been called asynchronously")
-			if postFocusFunc is not None:
-				self.postFocusFuncDict[uid] = postFocusFunc
-		if setFocusCall:
-			obj.setFocus()
-		if synchronousCall:
-			if postFocusFunc is not None:
-				postFocusFunc()
-
-	def script_passThrough(self,gesture):
-		self.maybeSyncFocus()
-		gesture.send()
-	# Translators: the description for the passThrough script on browseMode documents.
-	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -538,15 +512,6 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
-		"kb:Control+enter": "passThrough",
-		"kb:Control+numpadEnter": "passThrough",
-		"kb:Shift+enter": "passThrough",
-		"kb:Shift+numpadEnter": "passThrough",
-		"kb:Control+Shift+enter": "passThrough",
-		"kb:Control+Shift+numpadEnter": "passThrough",
-		"kb:Alt+enter": "passThrough",
-		"kb:Alt+numpadEnter": "passThrough",
-		"kb:Applications": "passThrough",
 	}
 
 # Add quick navigation scripts.
@@ -659,8 +624,7 @@ qn("formField", key="f",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous form field"),
-	readUnit=textInfos.UNIT_LINE)
+	prevError=_("no previous form field"))
 qn("list", key="l",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next list"),
@@ -1172,7 +1136,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastCaretPosition = None
 		#: True if the last caret move was due to a focus change.
 		self._lastCaretMoveWasFocus = False
-		self.postFocusFuncDict = {}
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
@@ -1181,17 +1144,11 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			except AttributeError:
 				# The app module died.
 				pass
-		if len(self.postFocusFuncDict) > 0:
-			log.error("Some asynchronous gainFocus events in this treeInterceptor weren't handled.")
 
 	def _get_currentNVDAObject(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
-		"""Triggered when this browse mode document gains focus.
-		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
-		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
-		"""
 		doSayAll=False
 		hadFirstGainFocus=self._hadFirstGainFocus
 		if not hadFirstGainFocus:
@@ -1274,7 +1231,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
-			self._lastFocusableObject = info.focusableNVDAObjectAtStart
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
@@ -1284,16 +1240,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-			followBrowseModeFocus= config.conf["virtualBuffers"]["focusFollowsBrowse"]
-			if followBrowseModeFocus:
-				if obj==self.rootNVDAObject:
-					return
-				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-					focusObj.setFocus()
-			else:
-				self._lastFocusableObject = focusObj
-				if obj==self.rootNVDAObject:
-					return
+			if obj==self.rootNVDAObject:
+				return
+			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+				focusObj.setFocus()
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
@@ -1349,7 +1299,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
-		self.maybeSyncFocus() 
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
@@ -1532,11 +1481,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
-				uid = obj.uniqueID
-				try:
-					queueHandler.queueFunction(queueHandler.eventQueue, self.postFocusFuncDict.pop(uid))
-				except KeyError:
-					pass
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
