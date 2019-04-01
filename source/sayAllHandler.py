@@ -22,10 +22,6 @@ lastSayAllMode = None
 _activeSayAll = lambda: None # Return None when called like a dead weakref.
 
 def stop():
-	if speech.shouldUseCompatCodeForIndexing():
-		# Import late to avoid circular import.
-		import speechCompat
-		return speechCompat.sayAll_stop()
 	active = _activeSayAll()
 	if active:
 		active.stop()
@@ -35,17 +31,9 @@ def isRunning():
 	@return: C{True} if say all is currently running, C{False} if not.
 	@rtype: bool
 	"""
-	if speech.shouldUseCompatCodeForIndexing():
-		# Import late to avoid circular import.
-		import speechCompat
-		return speechCompat.sayAll_isRunning()
 	return bool(_activeSayAll())
 
 def readObjects(obj):
-	if speech.shouldUseCompatCodeForIndexing():
-		# Import late to avoid circular import.
-		import speechCompat
-		return speechCompat.sayAll_readObjects(obj)
 	global _activeSayAll
 	reader = _ObjectsReader(obj)
 	_activeSayAll = weakref.ref(reader)
@@ -92,10 +80,6 @@ def readText(cursor):
 	# managed entirely by _TextReader.
 	trigger = SayAllProfileTrigger()
 	trigger.enter()
-	if speech.shouldUseCompatCodeForIndexing():
-		# Import late to avoid circular import.
-		import speechCompat
-		return speechCompat.sayAll_readText(cursor, trigger)
 	reader = _TextReader(cursor, trigger)
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
