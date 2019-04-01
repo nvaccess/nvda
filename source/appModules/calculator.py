@@ -31,16 +31,6 @@ def shouldLiveRegionChangeProceed(obj):
 
 class AppModule(appModuleHandler.AppModule):
 
-	def event_NVDAObject_init(self, obj):
-		# Remove heading designation from calculator results, as the output is confusing.
-		# Sometimes, this won't work because global plugin isn't loaded at that time.
-		import globalPlugins
-		try:
-			if isinstance(obj, globalPlugins.wintenObjs.XAMLHeading):
-				obj.role = controlTypes.ROLE_STATICTEXT
-		except AttributeError:
-			pass
-
 	_shouldAnnounceResult = False
 	# Name change says the same thing multiple times for some items.
 	_resultsCache = ""
