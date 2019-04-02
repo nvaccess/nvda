@@ -1981,6 +1981,7 @@ class AdvancedPanelControls(wx.Panel):
 		super(AdvancedPanelControls, self).__init__(parent)
 		self._defaultsRestored = False
 
+		# #9438: Windows Store version does not allow add-ons to be loaded, so there is no point enabling this.
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		self.SetSizer(sHelper.sizer)
 		# Translators: This is the label for a group of advanced options in the
@@ -1990,7 +1991,8 @@ class AdvancedPanelControls(wx.Panel):
 			parent=self,
 			sizer=wx.StaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
 		)
-		sHelper.addItem(devGroup)
+		if not config.isAppX:
+			sHelper.addItem(devGroup)
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
@@ -2002,12 +2004,16 @@ class AdvancedPanelControls(wx.Panel):
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
 		)
+		if config.isAppX:
+			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		if config.isAppX:
+			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
