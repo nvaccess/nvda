@@ -71,8 +71,8 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPointFromOffset(self,offset):
 		point=textInfos.Point(
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
 		if point.x is not None and point.y is not None:
 			return point
@@ -193,9 +193,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# Lines in Scintilla refer to document lines, not wrapped lines.
 			# There's no way to retrieve wrapped lines, so use screen coordinates.
 			y=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
-			left,top,width,height=self.obj.location
-			start = self._getOffsetFromPoint(left,top+y)
-			end=self._getOffsetFromPoint(left+width,top+y)
+			location=self.obj.location
+			start = self._getOffsetFromPoint(location.left, location.top+y)
+			end=self._getOffsetFromPoint(location.right, location.top+y)
 			# If this line wraps to the next line,
 			# end is the first offset of the next line.
 			if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,end)==y:
