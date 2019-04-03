@@ -1119,7 +1119,7 @@ class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
 		count=collectionObject.count
 		cellInfos=(ExcelCellInfo*count)()
 		numCellsFetched=ctypes.c_long()
-		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,oleacc.LresultFromObject(-0,collectionObject._comobj),self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
+		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,oleacc.LresultFromObject(None,collectionObject._comobj),self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
 		for index in xrange(numCellsFetched.value):
 			ci=cellInfos[index]
 			if not ci.address:
@@ -1148,7 +1148,7 @@ class ExcelCell(ExcelBase):
 			return None
 		ci=ExcelCellInfo()
 		numCellsFetched=ctypes.c_long()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,oleacc.LresultFromObject(0,self.excelCellObject._comobj),NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,oleacc.LresultFromObject(None,self.excelCellObject._comobj),NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
 		if res!=0 or numCellsFetched.value==0:
 			return None
 		return ci
