@@ -457,7 +457,7 @@ error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const 
 	execInThread(threadID,[&](){
 		// Unmarshal the IDispatch pointer from the COM global interface table.
 		CComPtr<IDispatch> pDispatchRange=nullptr;
-		HRESULT res=ObjectFromLresult(arg_rangeID,IID_IDispatch,0,reinterpret_cast<void**>(&pDispatchRange));
+		HRESULT res=ObjectFromLresult(arg_rangeID,IID_IDispatch,nullptr,reinterpret_cast<void**>(&pDispatchRange));
 		if(res!=S_OK) {
 			LOG_ERROR(L"ObjectFromLResult failed with "<<res);
 			return;
