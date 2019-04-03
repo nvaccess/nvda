@@ -70,11 +70,12 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		location = self.obj.location
-		point=textInfos.Point(
-			location.left + watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-			location.top + watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+		#location = self.obj.location
+		x, y = winUser.ClientToScreen(self.obj.windowHandle,
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
+		point=textInfos.Point(x, y)
 		if point.x is not None and point.y is not None:
 			return point
 		else:
