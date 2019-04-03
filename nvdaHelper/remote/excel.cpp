@@ -450,20 +450,32 @@ HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EX
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const unsigned long windowHandle, LRESULT arg_rangeID, long cellInfoFlags, long cellCount, EXCEL_CELLINFO* cellInfos, long* numCellsFetched) {
+error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const unsigned long windowHandle, BSTR arg_rangeAddress, long cellInfoFlags, long cellCount, EXCEL_CELLINFO* cellInfos, long* numCellsFetched) {
+	if(!arg_rangeAddress) {
+		LOG_ERROR(L"rangeAddress is NULL");
+		return E_UNEXPECTED;
+	}
 	HWND hwnd=static_cast<HWND>(UlongToHandle(windowHandle));
 	long threadID=GetWindowThreadProcessId(hwnd,nullptr);
 	// Execute the following code in Excel's GUI thread. 
 	execInThread(threadID,[&](){
-		// Unmarshal the IDispatch pointer from the COM global interface table.
-		CComPtr<IDispatch> pDispatchRange=nullptr;
-		HRESULT res=ObjectFromLresult(arg_rangeID,IID_IDispatch,nullptr,reinterpret_cast<void**>(&pDispatchRange));
-		if(res!=S_OK) {
-			LOG_ERROR(L"ObjectFromLResult failed with "<<res);
+		// Fetch the Excel object model and create a range object for the given range address. 
+		CComPtr<IDispatch> pDispatchWindow=nullptr;
+		HRESULT res=AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,reinterpret_cast<void**>(&pDispatchWindow));
+		if(res!=S_OK||!pDispatchWindow) {
+			LOG_ERROR(L"AccessibleObjectFromWindow failed. Code "<<res);
 			return;
 		}
-		if(!pDispatchRange) {
-			LOG_ERROR(L"Failed to unmarshal range object into Excel GUI thread");
+		CComPtr<IDispatch> pDispatchApplication=nullptr;
+		res=_com_dispatch_raw_propget(pDispatchWindow,XLDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication);
+		if(res!=S_OK||!pDispatchApplication) {
+			LOG_ERROR(L"window.application failed. Code "<<res);
+			return;
+		}
+		CComPtr<IDispatch> pDispatchRange=nullptr;
+		res=_com_dispatch_raw_method(pDispatchApplication,XLDISPID_APPLICATION_RANGE,DISPATCH_PROPERTYGET,VT_DISPATCH,&pDispatchRange,L"\x008",arg_rangeAddress);
+		if(res!=S_OK||!pDispatchRange) {
+			LOG_ERROR(L"application.range failed. Code "<<res<<L", rangeAddress "<<arg_rangeAddress);
 			return;
 		}
 		if(cellCount==1) {
