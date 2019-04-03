@@ -16,8 +16,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <comdef.h>
 #include <atlcomcli.h>
 #include <windows.h>
+#include <oleacc.h>
 #include <common/log.h>
-#include <common/COMUtils.h>
 #include "inProcess.h"
 #include "nvdaInProcUtils.h"
 #include "excel/constants.h"
@@ -450,19 +450,18 @@ HRESULT getCellInfo(HWND hwnd, IDispatch* pDispatchRange, long cellInfoFlags, EX
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const unsigned long windowHandle, IDispatch* arg_pDispatchRange, long cellInfoFlags, long cellCount, EXCEL_CELLINFO* cellInfos, long* numCellsFetched) {
+error_status_t nvdaInProcUtils_excel_getCellInfos(handle_t bindingHandle, const unsigned long windowHandle, LRESULT arg_rangeID, long cellInfoFlags, long cellCount, EXCEL_CELLINFO* cellInfos, long* numCellsFetched) {
 	HWND hwnd=static_cast<HWND>(UlongToHandle(windowHandle));
 	long threadID=GetWindowThreadProcessId(hwnd,nullptr);
-	nvCOMUtils::InterfaceMarshaller im;
-	HRESULT res=im.marshal(arg_pDispatchRange);
-	if(FAILED(res)) {
-		LOG_ERROR(L"Failed to marshal range object from rpc thread");
-		return E_UNEXPECTED;
-	}
 	// Execute the following code in Excel's GUI thread. 
 	execInThread(threadID,[&](){
 		// Unmarshal the IDispatch pointer from the COM global interface table.
-		CComPtr<IDispatch> pDispatchRange=im.unmarshal<IDispatch>();
+		CComPtr<IDispatch> pDispatchRange=nullptr;
+		HRESULT res=ObjectFromLresult(arg_rangeID,IID_IDispatch,0,reinterpret_cast<void**>(&pDispatchRange));
+		if(res!=S_OK) {
+			LOG_ERROR(L"ObjectFromLResult failed with "<<res);
+			return;
+		}
 		if(!pDispatchRange) {
 			LOG_ERROR(L"Failed to unmarshal range object into Excel GUI thread");
 			return;
