@@ -70,7 +70,6 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		#location = self.obj.location
 		x, y = winUser.ClientToScreen(self.obj.windowHandle,
 			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
 			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
