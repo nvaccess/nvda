@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -2002,12 +2002,16 @@ class AdvancedPanelControls(wx.Panel):
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
 		)
+		if config.isAppX:
+			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		if config.isAppX:
+			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
