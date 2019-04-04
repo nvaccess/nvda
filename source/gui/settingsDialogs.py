@@ -1981,7 +1981,6 @@ class AdvancedPanelControls(wx.Panel):
 		super(AdvancedPanelControls, self).__init__(parent)
 		self._defaultsRestored = False
 
-		# #9438: Windows Store version does not allow add-ons to be loaded, so there is no point enabling this.
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		self.SetSizer(sHelper.sizer)
 		# Translators: This is the label for a group of advanced options in the
@@ -1991,8 +1990,7 @@ class AdvancedPanelControls(wx.Panel):
 			parent=self,
 			sizer=wx.StaticBoxSizer(parent=self, label=groupText, orient=wx.VERTICAL)
 		)
-		if not config.isAppX:
-			sHelper.addItem(devGroup)
+		sHelper.addItem(devGroup)
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
