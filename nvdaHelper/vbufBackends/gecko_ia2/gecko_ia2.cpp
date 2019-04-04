@@ -339,10 +339,15 @@ CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
 	IAccessible2* container, const map<wstring, wstring>& attribs
 ) {
 	if (this->toolkitName.compare(L"Chrome") == 0) {
-		// #9364: Google Chrome crashes when fetching the currently selected item from some listboxes.
-		// Specifically when calling IEnumVARIANT::next.
-		// Due to this, and other issues around incorrect focus state setting, it is best to disable fetching of currently selected item in listboxes in Chrome all together.
-		return nullptr;
+		const auto attribsIt = attribs.find(L"tag");
+		if (attribsIt != attribs.end() &&
+				attribsIt->second.compare(L"select") == 0) {
+			// In a <select size>1>, Chrome reports that list items are focusable,
+			// but programmatically focusing them does nothing. Therefore, we don't
+			// want to render this in Chrome because a user wouldn't be able to focus
+			// these list boxes in browse mode if we did.
+			return nullptr;
+		}
 	}
 
 	CComVariant selection;
