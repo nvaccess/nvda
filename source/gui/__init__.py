@@ -20,20 +20,25 @@ import ui
 from logHandler import log
 import config
 import versionInfo
+import addonAPIVersion
 import speech
 import queueHandler
 import core
-import guiHelper
-from settingsDialogs import *
+from . import guiHelper
+from .settingsDialogs import *
 import speechDictHandler
 import languageHandler
 import keyboardHandler
-import logViewer
+from . import logViewer
 import speechViewer
 import winUser
 import api
-import guiHelper
+from . import guiHelper
 import winVersion
+
+# Temporary: #8599: add cp65001 codec
+#            #7105: upgrading to python 3 should fix this issue. See https://bugs.python.org/issue13216
+codecs.register(lambda name: codecs.lookup('utf-8') if name == 'cp65001' else None)
 
 try:
 	import updateCheck
@@ -209,7 +214,19 @@ class MainFrame(wx.Frame):
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
-			updateCheck.executeUpdate()
+			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
+			from addonHandler import getIncompatibleAddons
+			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
+					parent=gui.mainFrame,
+					destPath=destPath,
+					version=version,
+					apiVersion=apiVersion,
+					backCompatTo=backCompatToAPIVersion
+				)
+				gui.runScriptModalDialog(confirmUpdateDialog)
+			else:
+				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
 		try:
@@ -465,10 +482,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to view NVDA Contributors list document.
 			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
-		# Translators: The label for the menu item to open NVDA Welcome Dialog.
-		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
-		menu_help.AppendSeparator()
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+			menu_help.AppendSeparator()
 		if updateCheck:
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
 			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
@@ -536,6 +553,13 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
+	for instance, state in gui.SettingsDialog._instances.iteritems():
+		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
+			log.error(
+				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
 	# This is called after the main loop exits because WM_QUIT exits the main loop
 	# without destroying all objects correctly and we need to support WM_QUIT.
@@ -630,7 +654,15 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
-		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
+
+		optionsSizer = wx.StaticBoxSizer(
+			wx.StaticBox(
+				self,
+				# Translators: The label for a group box containing the NVDA welcome dialog options.
+				label=_("Options")
+			),
+			wx.VERTICAL
+		)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -841,7 +873,19 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		elif action == 4:
 			if updateCheck:
-				updateCheck.executeUpdate()
+				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
+				from addonHandler import getIncompatibleAddons
+				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
+					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
+						parent=gui.mainFrame,
+						destPath=destPath,
+						version=version,
+						apiVersion=apiVersion,
+						backCompatTo=backCompatTo
+					)
+					confirmUpdateDialog.ShowModal()
+				else:
+					updateCheck.executePendingUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):

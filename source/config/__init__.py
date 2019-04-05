@@ -12,7 +12,10 @@ For the latter two actions, one can perform actions prior to and/or after they t
 """ 
 
 import globalVars
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import ctypes
 import ctypes.wintypes
 import os
@@ -23,7 +26,7 @@ import contextlib
 from copy import deepcopy
 from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
-from validate import Validator
+from configobj.validate import Validator
 from logHandler import log, levelNames
 from logging import DEBUG
 import shlobj
@@ -32,7 +35,7 @@ import easeOfAccess
 from fileUtils import FaultTolerantFile
 import winKernel
 import extensionPoints
-import profileUpgrader
+from . import profileUpgrader
 from .configSpec import confspec
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
@@ -76,11 +79,11 @@ def saveOnExit():
 def isInstalledCopy():
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
-		k=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
-		instDir=_winreg.QueryValueEx(k,"UninstallDirectory")[0]
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		instDir=winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return False
-	_winreg.CloseKey(k)
+	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir)==os.stat(os.getcwdu()) 
 	except WindowsError:
@@ -98,8 +101,8 @@ CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
 
 def getInstalledUserConfigPath():
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		configInLocalAppData = bool(_winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
 	except WindowsError:
 		configInLocalAppData=False
 	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
@@ -134,6 +137,18 @@ def getSystemConfigPath():
 			pass
 	return None
 
+def getScratchpadDir(ensureExists=False):
+	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
+	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	if ensureExists:
+		if not os.path.isdir(path):
+			os.makedirs(path)
+		for subdir in ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers'):
+			subpath=os.path.join(path,subdir)
+			if not os.path.isdir(subpath):
+				os.makedirs(subpath)
+	return path
+
 def initConfigPath(configPath=None):
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
@@ -146,7 +161,7 @@ def initConfigPath(configPath=None):
 		os.makedirs(configPath)
 	subdirs=["speechDicts","profiles"]
 	if not isAppX:
-		subdirs.extend(["addons", "appModules","brailleDisplayDrivers","synthDrivers","globalPlugins"])
+		subdirs.append("addons")
 	for subdir in subdirs:
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
@@ -156,11 +171,11 @@ RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
 	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
-			and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER)):
+			and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)):
 		return True
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
-		val = _winreg.QueryValueEx(k, u"nvda")[0]
+		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
+		val = winreg.QueryValueEx(k, u"nvda")[0]
 		return os.stat(val) == os.stat(sys.argv[0])
 	except (WindowsError, OSError):
 		return False
@@ -169,7 +184,7 @@ def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
 	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
-		easeOfAccess.setAutoStart(_winreg.HKEY_CURRENT_USER, enable)
+		easeOfAccess.setAutoStart(winreg.HKEY_CURRENT_USER, enable)
 		if enable:
 			return
 		# We're disabling, so ensure the run key is cleared,
@@ -177,12 +192,12 @@ def setStartAfterLogon(enable):
 		run = False
 	else:
 		run = enable
-	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
+	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, winreg.KEY_WRITE)
 	if run:
-		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
+		winreg.SetValueEx(k, u"nvda", None, winreg.REG_SZ, sys.argv[0])
 	else:
 		try:
-			_winreg.DeleteValue(k, u"nvda")
+			winreg.DeleteValue(k, u"nvda")
 		except WindowsError:
 			pass
 
@@ -223,11 +238,11 @@ SLAVE_FILENAME = u"nvda_slave.exe"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
-	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_LOCAL_MACHINE):
+	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
 		return True
 	try:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
+		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
 	except WindowsError:
 		return False
 
@@ -235,10 +250,10 @@ def _setStartOnLogonScreen(enable):
 	if easeOfAccess.isSupported:
 		# The installer will have migrated service config to EoA if appropriate,
 		# so we only need to deal with EoA here.
-		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, enable)
+		easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
 	else:
-		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
-		_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, winreg.KEY_WRITE)
+		winreg.SetValueEx(k, u"startOnLogonScreen", None, winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
@@ -292,6 +307,7 @@ def getConfigDirs(subpath=None):
 	@return: The configuration directories in the order in which they should be searched.
 	@rtype: list of str
 	"""
+	log.warning("getConfigDirs is deprecated. Use globalVars.appArgs.configPath instead")
 	return [os.path.join(dir, subpath) if subpath else dir
 		for dir in (globalVars.appArgs.configPath,)
 	]
@@ -306,16 +322,22 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	"""
 	if isAppX or globalVars.appArgs.disableAddons:
 		return
-	if not subdir:
-		subdir = module.__name__
-	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
-	dirs.extend(module.__path__ )
-	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
+	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
+		return
+	if not subdir:
+		subdir = module.__name__
+	fullPath=os.path.join(getScratchpadDir(),subdir)
+	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	fullPath=fullPath.encode("mbcs")
+	# Insert this path at the beginning  of the module's search paths.
+	# The module's search paths may not be a mutable  list, so replace it with a new one 
+	pathList=[fullPath]
+	pathList.extend(module.__path__)
+	module.__path__=pathList
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
@@ -329,7 +351,12 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+	BASE_ONLY_SECTIONS = {
+	"general", 
+	"update", 
+	"upgrade",
+	"development",
+}
 
 	def __init__(self):
 		self.spec = confspec
@@ -361,13 +388,14 @@ class ConfigManager(object):
 		if not self._shouldHandleProfileSwitch:
 			self._pendingHandleProfileSwitch = True
 			return
-		init = self.rootSection is None
+		currentRootSection = self.rootSection
+		init = currentRootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		post_configProfileSwitch.notify()
+		post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -436,6 +464,9 @@ class ConfigManager(object):
 
 	def __setitem__(self, key, val):
 		self.rootSection[key] = val
+
+	def dict(self):
+		return self.rootSection.dict()
 
 	def listProfiles(self):
 		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
@@ -777,20 +808,69 @@ class ConfigManager(object):
 		self.triggersToProfiles.parent.write()
 		log.info("Profile triggers saved")
 
-	def getConfigValidationParameter(self, keyPath, validationParameter):
-		"""Get a config validation parameter
-		This can be used to get the min, max, default, or other values for a config key.
-		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
-		@param validationParameter: the parameter to return the value for. EG "max"
-		@type validationParameter: string
-		"""
+	def _getSpecFromKeyPath(self, keyPath):
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
 
 		spec = conf.spec
 		for nextKey in keyPath:
 			spec = spec[nextKey]
-		return conf.validator._parse_with_caching(spec)[2][validationParameter]
+		return spec
+
+	def _getConfigValidation(self, spec):
+		"""returns a tuple with the spec for the config spec:
+		("type", [], {}, "default value") EG:
+		- (u'boolean', [], {}, u'false')
+		- (u'integer', [], {'max': u'255', 'min': u'1'}, u'192')
+		- (u'option', [u'changedContext', u'fill', u'scroll'], {}, u'changedContext')
+		"""
+		return conf.validator._parse_with_caching(spec)
+
+	def getConfigValidationParameter(self, keyPath, validationParameter):
+		"""@deprecated: Use L{getConfigValidation} instead.
+		Get a config validation parameter
+		This can be used to get the min, max, or other values for a config key.
+
+		Note: does not work for default, convertFunction, or options. Use L{getConfigValidation} instead.
+
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@param validationParameter: the parameter to return the value for. EG "max"
+		@type validationParameter: string
+		"""
+		spec = self._getSpecFromKeyPath(keyPath)
+		parsedSpec = self._getConfigValidation(spec)
+		return parsedSpec[2][validationParameter]
+
+	def getConfigValidation(self, keyPath):
+		"""Get a config validation details
+		This can be used to get a L{ConfigValidationData} containing the type, default, options list, or
+		other validation parameters (min, max, etc) for a config key.
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@return ConfigValidationData
+		"""
+		spec = self._getSpecFromKeyPath(keyPath)
+		parsedSpec = self._getConfigValidation(spec)
+		data = ConfigValidationData(parsedSpec[0])
+		data.args = [1]
+		data.kwargs = [2]
+		data.default = conf.validator.get_default_value(spec)
+		return data
+
+class ConfigValidationData(object):
+	validationFuncName = None  # type: str
+
+	def __init__(self, validationFuncName):
+		self.validationFuncName = validationFuncName
+		super(ConfigValidationData, self).__init__()
+
+	# args passed to the convert function
+	args = []  # type: List[Any]
+
+	# kwargs passed to the convert function.
+	kwargs = {}  # type: Dict[str, Any]
+
+	# the default value, used when config is missing.
+	default = None  # converted to the appropriate type
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
@@ -897,13 +977,13 @@ class AggregatedSection(object):
 		self._cache[key] = val
 		return val
 
-	def iteritems(self):
+	def __iter__(self):
 		keys = set()
 		# Start with the cached items.
 		for key, val in self._cache.iteritems():
 			keys.add(key)
 			if val is not KeyError:
-				yield key, val
+				yield key
 		# Walk through the profiles and spec looking for items not yet cached.
 		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
 			if not profile:
@@ -912,15 +992,35 @@ class AggregatedSection(object):
 				if key in keys:
 					continue
 				keys.add(key)
-				# Use __getitem__ so caching, AggregatedSections, etc. are handled.
-				try:
-					yield key, self[key]
-				except KeyError:
-					# This could happen if the item is in the spec but there's no default.
-					pass
+				yield key
+
+	def iteritems(self):
+		for key in self:
+			try:
+				yield (key, self[key])
+			except KeyError:
+				# This could happen if the item is in the spec but there's no default.
+				pass
 
 	def copy(self):
 		return dict(self.iteritems())
+
+	def dict(self):
+		"""Return a deepcopy of self as a dictionary.
+		Adapted from L{configobj.Section.dict}.
+		"""
+		newdict = {}
+		for key, value in self.iteritems():
+			if isinstance(value, AggregatedSection):
+				value = value.dict()
+			elif isinstance(value, list):
+				# create a copy rather than a reference
+				value = list(value)
+			elif isinstance(value, tuple):
+				# create a copy rather than a reference
+				value = tuple(value)
+			newdict[key] = value
+		return newdict
 
 	def __setitem__(self, key, val):
 		spec = self._spec.get(key) if self.spec else None

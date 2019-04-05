@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017-2018 NV Access Limited, Babbage B.V., Eurobraille
+#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
 from cStringIO import StringIO
@@ -188,7 +188,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._sendPacket(EB_VISU, EB_VISU_DOT, '0')
 				# A device identification results in multiple packets.
 				# Make sure we've received everything before we continue
-				while self._dev.waitForRead(self.timeout):
+				while self._dev.waitForRead(self.timeout*2):
 					continue
 				if self.numCells and self.deviceType:
 					break
@@ -559,7 +559,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				if groupKeysDown & 0x100:
 					names.append("backSpace")
 			if group == EB_KEY_INTERACTIVE: # Routing
-				self.routingIndex = (groupKeysDown & 0x3f)-1
+				self.routingIndex = (groupKeysDown & 0xff)-1
 				names.append("doubleRouting" if groupKeysDown>>8 ==ord(EB_KEY_INTERACTIVE_DOUBLE_CLICK) else "routing")
 			if group == EB_KEY_COMMAND:
 				for key, keyName in display.keys.iteritems():

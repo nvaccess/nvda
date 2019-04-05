@@ -75,7 +75,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Reset all settings to default state',
 	'Write the current configuration to nvda.ini',
 	'E&xit',
-	'Options',
 	'Error renaming profile.',
 	'Use this profile for:',
 	'This change requires administrator privileges.',

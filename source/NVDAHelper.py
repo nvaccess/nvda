@@ -1,12 +1,15 @@
 #NVDAHelper.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2018 NV Access Limited, Peter Vagner, Davy Kager
+#Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import os
 import sys
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 import msvcrt
 import versionInfo
 import winKernel
@@ -25,7 +28,10 @@ import time
 import globalVars
 
 versionedLibPath='lib'
-versionedLib64Path='lib64'
+if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
+	versionedLib64Path = 'libArm64'
+else:
+	versionedLib64Path = 'lib64'
 if getattr(sys,'frozen',None):
 	# Not running from source. Libraries are in a version-specific directory
 	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
@@ -78,7 +84,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf=create_unicode_buffer(1024)
 	bufSize=c_int(2048)
 	key=HKEY()
-	if windll.advapi32.RegOpenKeyExW(_winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,_winreg.KEY_QUERY_VALUE,byref(key))==0:
+	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:
 		try:
 			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
 				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)
@@ -388,10 +394,13 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
+	if globalVars.appArgs.launcher:
+		log.debugWarning("Unable to install addon into launcher.")
+		return
 	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
-	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
+	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
 class RemoteLoader64(object):
@@ -490,7 +499,7 @@ def initialize():
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
+	if os.environ.get('PROCESSOR_ARCHITEW6432') in ('AMD64', 'ARM64'):
 		_remoteLoader64=RemoteLoader64()
 
 def terminate():

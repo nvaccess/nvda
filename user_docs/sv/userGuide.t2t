@@ -10,7 +10,7 @@ NVDA NVDA_VERSION User Guide
 + Introduktion +
 NonVisual Desktop Access (NVDA) är en gratis skärmläsare baserad på öppen källkod för Microsoft Windows operativsystem.
 Genom att ge återkoppling via syntetiskt tal och punktskrift ger den blinda och synnedsatta tillgång till datorer som kör Windows för ingen ytterliggare kostnad i jämförelse med en seende person.
-NVDA utvecklas av [NV Access http://www.nvaccess.org/], med bidrag från gemenskapen.
+NVDA utvecklas av [NV Access https://www.nvaccess.org/], med bidrag från gemenskapen.
 
 ++ Allmänna funktioner ++
 NVDA låter blinda och synskadade människor få tillgång till och interagera med operativsystemet Windows och många tredjepartsprogram.
@@ -37,7 +37,7 @@ Förutom engelska, har NVDA översatts till 45 språk, inklusive: afrikaans, alb
 ++ Talsyntessupport ++
 Förutom att tillhandahålla meddelanden och gränssnitt på flera språk kan NVDA också göra det möjligt för användaren att få innehåll uppläst på alla språk. Detta gäller så länge användaren har en talsyntes som kan tala det språket.
 
-NVDA levereras med [eSpeak http://espeak.sourceforge.net/], en fri, öppen källkod, flerspråkig talsyntes.
+NVDA levereras med [eSpeak https://espeak.sourceforge.net/], en fri, öppen källkod, flerspråkig talsyntes.
 
 Information om andra talsynteser som NVDA stöder finns under [Talsyntesstöd #SupportedSpeechSynths].
 
@@ -53,7 +53,7 @@ NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 NVDA täcks av GNU General Public License (Version 2).
 Du är fri att dela eller ändra den här mjukvaran på vilket sätt du vill sålänge licensen medföljer och du gör all källkod tillgänglig till alla som vill ha den.
 Det här gäller både originalet och modifierade exemplar av denna mjukvara, samt  eventuella härledda verk.
-För vidare information kan du se hela licensen [här. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+För vidare information kan du se hela licensen [här. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systemkrav +
 - Operativsystem: alla 32-bitars och 64-bitars versioner av Windows XP, Windows Vista, Windows 7 och Windows 8 (inluderar även serverversionerna)
@@ -1227,7 +1227,7 @@ A package name, version and author are shown for each add-on, though further inf
 If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
 
 To browse and download available add-ons online, press the Get add-ons button.
-This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
+This button opens the [NVDA Add-ons page https://addons.nvda-project.org/].
 If NVDA is installed on your system, you can open the add-on directly from the browser to begin the installation process as described below.
 Otherwise, save the add-on package and follow the instructions below.
 
@@ -1254,17 +1254,17 @@ It is best to remove these files from your configuration and install  the approp
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
+For more information, please see the Developer Guide available from [the Development section of the NVDA web site https://community.nvda-project.org/wiki/Development].
 
 ++ Reload plugins ++
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
 
 + Supported Speech Synthesizers +[SupportedSpeechSynths]
 This section contains information about the speech synthesizers supported by NVDA.
-For an even more extensive list of  free and commercial synthesizers that you can purchase and download for use with NVDA, please see the page at [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+For an even more extensive list of  free and commercial synthesizers that you can purchase and download for use with NVDA, please see the page at [https://www.nvda-project.org/wiki/ExtraVoices https://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
-The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
+The [eSpeak https://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
 NVDA starts using eSpeak by default.
 As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
@@ -1278,7 +1278,7 @@ SAPI 4 is an older Microsoft standard for software speech synthesizers.
 Many speech synthesizers that comply with this standard may be purchased or downloaded for free from various companies and websites.
 When using this synthesizer with NVDA, the available voices (accessed from the [Voice Settings dialog #VoiceSettings] or by the [Synth Settings Ring #SynthSettingsRing]) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
-If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+If you have SAPI 4 voices installed but the synthesizer does not appear in NVDA's list of synthesizers, please install the SAPI 4.0 runtime binaries, available at https://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 is a Microsoft standard for software speech synthesizers.
@@ -1290,8 +1290,8 @@ The Microsoft Speech Platform provides voices for many languages which are norma
 These voices can also be used with NVDA.
 
 To use these voices, you will need to install two components:
-- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Version 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - This page includes many files for both speech recognition and text-to-speech.
  Choose the files containing the TTS data for the desired languages/voices.
  For example, the file MSSpeech_TTS_en-US_ZiraPro.msi is a U.S. English voice.
@@ -1307,7 +1307,7 @@ This synthesizer does not support [spelling functionality #VoiceSpellingFunction
 
 ++ Newfon ++
 Newfon is a free commercial synthesizer by Sergey Shishmintzev which supports the Russian and Ukrainian languages.
-To download this synthesizer, please visit the downloads section of the Russian NVDA community site: http://ru.nvda-community.org/?page_id=10
+To download this synthesizer, please visit the downloads section of the Russian NVDA community site: https://ru.nvda-community.org/?page_id=10
 
 This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
 
@@ -1316,16 +1316,16 @@ Nuance Vocalizer is a commercial, high quality voice synthesizer developed by Nu
 It contains over 50 different voices you can install, speaking over 30 languages.
 All synthesizer components and voices are bundled in add-on packages, which allows for full usage in portable copies of NVDA.
 
-You can get more information about Nuance Vocalizer for NVDA and how to buy it on its web site at [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+You can get more information about Nuance Vocalizer for NVDA and how to buy it on its web site at [www.vocalizer-nvda.com https://www.vocalizer-nvda.com/].
 A percentage of sales of this product is donated to NV Access to fund further development of the NVDA Screen Reader.
 
 + Supported Braille Displays +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
-All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
+All Focus and PAC Mate displays from [Freedom Scientific https://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+If you do not have them already, you can obtain them from https://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
@@ -1384,7 +1384,7 @@ For Focus 80 only:
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Both the ALVA BC640 and BC680 displays from [Optelec https://www.optelec.com/] are supported when connected via USB or bluetooth.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
@@ -1416,7 +1416,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
+NVDA supports all displays from [Handy Tech https://www.handytech.de/] when connected via USB or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
 
 Braille input is not yet supported.
@@ -1442,7 +1442,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ MDV Lilli ++
-The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
+The Lilli braille display available from [MDV https://www.mdvbologna.it/] is supported.
 You do not need any specific drivers to be installed to use this display.
 Just plug in the display and configure NVDA to use it.
 
@@ -1462,7 +1462,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Baum/Humanware/APH Braille Displays ++
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
+Several [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/] and [APH https://www.aph.org/] displays are supported when connected via USB or bluetooth.
 These include:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
@@ -1493,7 +1493,7 @@ For displays which have a joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++
-The hedo ProfiLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+The hedo ProfiLine USB from [hedo Reha-Technik https://www.hedo.de/] is supported.
 You must first install the USB drivers provided by the manufacturer.
 
 Following are the key assignments for this display with NVDA.
@@ -1510,7 +1510,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ hedo MobilLine USB ++
-The hedo MobilLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+The hedo MobilLine USB from [hedo Reha-Technik https://www.hedo.de/] is supported.
 You must first install the USB drivers provided by the manufacturer.
 
 Following are the key assignments for this display with NVDA.
@@ -1527,7 +1527,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series ++
-The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+The Brailliant BI and B series of displays from [HumanWare https://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB, you must first install the USB drivers provided by the manufacturer.
 
 Following are the key assignments for this display with NVDA.
@@ -1557,9 +1557,9 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+NVDA supports Braille Sense and Braille EDGE displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
+You can download these from the HIMS Resource Center: https://www.hims-inc.com/resource-center/
 On this page, select your device and download the driver in the Window-Eyes section.
 Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
 
@@ -1620,7 +1620,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
-NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
+NVDA supports the SyncBraille Display from [HIMS https://www.hims-inc.com/].
 You will need to install the USB drivers from HIMS on your system.
 
 Following are the key assignments for this display with NVDA.
@@ -1633,8 +1633,8 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Seika Braille Displays ++
-The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft http://www.nippontelesoft.com/] are supported.
-You can find more information about these displays at http://www.seika-braille.com/.
+The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft https://www.nippontelesoft.com/] are supported.
+You can find more information about these displays at https://www.seika-braille.com/.
 You must first install the USB drivers provided by the manufacturer.
 
 Following are the key assignments for this display with NVDA.
@@ -1815,7 +1815,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
-NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
+NVDA supports the BrailleNote notetakers from [Humanware https://www.humanware.com] when acting as a display terminal for a screen reader.
 The following models are supported:
 - BrailleNote Classic (serial connection only)
 - BrailleNote PK (Serial and bluetooth connections)
@@ -1863,8 +1863,8 @@ Please check your BrailleNote's documentation to find where these keys are locat
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY https://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows https://brl.thefreecat.org/brltty/].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
 
@@ -1872,7 +1872,7 @@ For displays which have a braille keyboard, BRLTTY currently handles braille inp
 Therefore, NVDA's braille input table setting is not relevant.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key tables documentation https://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Namn | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
@@ -1890,7 +1890,7 @@ For example, you can specify whether the raw symbol should be sent to the synthe
 
 To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
 The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site https://community.nvda-project.org/wiki/Development].
 However, it is not possible for users to define complex symbols.
 
 + Further Information +
