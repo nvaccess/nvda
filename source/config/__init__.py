@@ -275,14 +275,15 @@ def _setSystemConfig(fromPath):
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
 	for curSourceDir, subDirs, files in os.walk(fromPath):
-		relativePath = os.path.relpath(curSourceDir, fromPath)
-		# Don't copy files that we know will be ignored due to security risks.
-		if relativePath in SCRATCH_PAD_ONLY_DIRS:
-			log.debug("Ignored folder that may contain unpackaged addons: %s", curSourceDir)
-			continue
 		if curSourceDir == fromPath:
 			curDestDir = toPath
+			# Don't copy from top-level config dirs we know will be ignored due to security risks.
+			removeSubs = set(SCRATCH_PAD_ONLY_DIRS).intersection(subDirs)
+			for subPath in removeSubs:
+				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
+				subDirs.remove(subPath)
 		else:
+			relativePath = os.path.relpath(curSourceDir, fromPath)
 			curDestDir = os.path.join(toPath, relativePath)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
