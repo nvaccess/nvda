@@ -59,7 +59,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following dependencies are included in Git submodules:
 
-* [comtypes](https://github.com/enthought/comtypes), version 1.1.4
+* [comtypes](https://github.com/enthought/comtypes), version 1.1.7
 * [wxPython](http://www.wxpython.org/), version 4.0.3
 * [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
