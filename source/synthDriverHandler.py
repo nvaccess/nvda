@@ -266,7 +266,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,
+		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Volume'))
 	@classmethod
