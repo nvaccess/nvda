@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
 
 from copy import deepcopy
 import os
