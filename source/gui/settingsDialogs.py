@@ -2644,7 +2644,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		)
 
 	def makeSettings(self, settingsSizer):
-		self.filteredSymbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+		self.filteredSymbols = self.symbols = [
+			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()
+		]
 		self.pendingRemovals = {}
 
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2746,40 +2748,46 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.SetFocus()
 
 	def filter(self, filterText=''):
-		index = self.symbolsList.GetFirstSelected()
-		oldFilteredSymbols = self.filteredSymbols
+		NONE_SELECTED = -1
+		previousSelectionValue = None
+		previousIndex = self.symbolsList.GetFirstSelected()  # may return NONE_SELECTED
+		if previousIndex != NONE_SELECTED:
+			previousSelectionValue = self.filteredSymbols[previousIndex]
+
 		if not filterText:
 			self.filteredSymbols = self.symbols
 		else:
-			#Do case-insensitive matching by lowering both filterText and each symbols's text.
-			filterText=filterText.lower()
+			# Do case-insensitive matching by lowering both filterText and each symbols's text.
+			filterText = filterText.lower()
 			self.filteredSymbols = [
 				symbol for symbol in self.symbols
 				if filterText in symbol.displayName.lower()
 				or filterText in symbol.replacement.lower()
 			]
 		self.symbolsList.ItemCount = len(self.filteredSymbols)
-		# When filtering and there was a selection before, try to preserve the selection in the list.
-		if index != -1:
+
+		# sometimes filtering may result in an empty list.
+		if not self.symbolsList.ItemCount:
+			self.editingItem = None
+			# disable the "change symbol" controls, since there are no items in the list.
+			self.replacementEdit.Disable()
+			self.levelList.Disable()
+			self.preserveList.Disable()
+			return  # exit early, no need to select an item.
+
+		# If there was a selection before filtering, try to preserve it
+		newIndex = 0  # select first item by default.
+		if previousSelectionValue:
 			try:
-				index = self.filteredSymbols.index(oldFilteredSymbols[index])
+				newIndex = self.filteredSymbols.index(previousSelectionValue)
 			except ValueError:
-				index = -1
-		if index == -1:
-			if self.symbolsList.ItemCount:
-				index = 0
-			else:
-				self.editingItem = None
-				# disable the "change symbol" controls, since there are no items in the list.
-				self.replacementEdit.Disable()
-				self.levelList.Disable()
-				self.preserveList.Disable()
-				return
+				pass
+
 		# Change the selection
-		self.symbolsList.Select(index)
-		self.symbolsList.Focus(index)
+		self.symbolsList.Select(newIndex)
+		self.symbolsList.Focus(newIndex)
 		# We don't get a new focus event with the new index.
-		self.symbolsList.sendListItemFocusedEvent(index)
+		self.symbolsList.sendListItemFocusedEvent(newIndex)
 
 	def getItemTextForList(self, item, column):
 		symbol = self.filteredSymbols[item]
