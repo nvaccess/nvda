@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
+#Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger, Arnold Loubriat
 
 import os
 import weakref
@@ -296,23 +296,25 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			return incompatibleStatus
 
 		statusList = []
-		if addon.isPendingInstall:
+		if addon.isRunning:
+			# Translators: The status shown for an addon when its currently running in NVDA.
+			statusList.append(_("Enabled"))
+		elif addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
 			statusList.append(_("Install"))
 		# in some cases an addon can be expected to be disabled after install, so we want "install" to take precedence here
-		elif addon.isDisabled:
+		elif addon.isDisabled or globalVars.appArgs.disableAddons:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			statusList.append(_("Disabled"))
-		elif addon.isRunning:
-			# Translators: The status shown for an addon when its currently running in NVDA.
-			statusList.append(_("Enabled"))
 		if addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			statusList.append(_("Removed after restart"))
-		elif addon.isPendingDisable or (not addon.isPendingEnable and addon.isPendingInstall and addon.isDisabled):
+		elif addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable
+			and (addon.isPendingInstall or globalVars.appArgs.disableAddons)):
 			# Translators: The status shown for an addon when it requires a restart to become disabled
 			statusList.append(_("Disabled after restart"))
-		elif addon.isPendingEnable or (addon.isPendingInstall and not addon.isDisabled):
+		elif addon.isPendingEnable or (not addon.isDisabled
+			and (addon.isPendingInstall or globalVars.appArgs.disableAddons)):
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
 		return ", ".join(statusList)
@@ -365,7 +367,6 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(
-			not globalVars.appArgs.disableAddons and
 			addon is not None and
 			not addon.isPendingRemove and
 			addonVersionCheck.isAddonCompatible(addon)
@@ -379,7 +380,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		for addon in self.curAddons:
 			if (addon.isPendingInstall or addon.isPendingRemove
 				or addon.isDisabled and addon.isPendingEnable
-				or addon.isRunning and addon.isPendingDisable):
+				or addon.isRunning and addon.isPendingDisable
+				or (not addon.isRunning and addon.isPendingDisable and globalVars.appArgs.disableAddons)):
 				needsRestart = True
 				break
 		if needsRestart:

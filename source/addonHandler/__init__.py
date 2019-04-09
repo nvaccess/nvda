@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -389,20 +389,20 @@ class Addon(AddonBase):
 			if self.name in state["pendingEnableSet"]:
 				# Undoing a pending enable.
 				state["pendingEnableSet"].discard(self.name)
-			# No need to disable an addon that is already disabled.
+			# No need to disable an addon that is already disabled, except if all add-ons are disabled.
 			# This also prevents the status in the add-ons dialog from saying "disabled, pending disable"
-			elif self.name not in state["disabledAddons"]:
+			elif self.name not in state["disabledAddons"] or globalVars.appArgs.disableAddons:
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		saveState()
 
 	@property
 	def isRunning(self):
-		return not (self.isPendingInstall or self.isDisabled or self.isBlocked)
+		return not (globalVars.appArgs.disableAddons or self.isPendingInstall or self.isDisabled or self.isBlocked)
 
 	@property
 	def isDisabled(self):
-		return globalVars.appArgs.disableAddons or self.name in _disabledAddons
+		return self.name in _disabledAddons
 
 	@property
 	def isBlocked(self):
