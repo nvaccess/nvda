@@ -2650,14 +2650,11 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		# Translators: The label of a text field to search for symbols in the speech symbols dialog.
 		filterText = pgettext("speechSymbols", "&Filter by:")
-		labeledFilterBy = guiHelper.LabeledTextCtrl(
-			parent=self,
-			labelText=filterText,
-			expandTextCtrlWidth=True,
+		self.filterEdit = sHelper.addLabeledControl(
+			labelText = filterText,
+			wxCtrlClass=wx.TextCtrl,
 			size=self.scaleSize((310, -1)),
 		)
-		sHelper.addItem(labeledFilterBy.sizer, flag=wx.EXPAND)
-		self.filterEdit = labeledFilterBy.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 
 		# Translators: The label for symbols list in symbol pronunciation dialog.
@@ -2704,14 +2701,11 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 		replacementText = _("&Replacement")
-		labeledReplacementEdit = guiHelper.LabeledTextCtrl(
-			parent=self,
+		self.replacementEdit = sHelper.addLabeledControl(
 			labelText=replacementText,
-			expandTextCtrlWidth=True,
+			wxCtrlClass=wx.TextCtrl,
 			size=self.scaleSize((300, -1)),
 		)
-		changeSymbolHelper.addItem(labeledReplacementEdit.sizer, flag=wx.EXPAND)
-		self.replacementEdit = labeledReplacementEdit.control
 		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
 
 		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
