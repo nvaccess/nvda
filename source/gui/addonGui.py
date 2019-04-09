@@ -296,16 +296,16 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			return incompatibleStatus
 
 		statusList = []
-		if addon.isRunning:
-			# Translators: The status shown for an addon when its currently running in NVDA.
-			statusList.append(_("Enabled"))
-		elif addon.isPendingInstall:
+		if addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
 			statusList.append(_("Install"))
 		# in some cases an addon can be expected to be disabled after install, so we want "install" to take precedence here
-		elif globalVars.appArgs.disableAddons or addon.isDisabled:
+		elif addon.isDisabled:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			statusList.append(_("Disabled"))
+		elif addon.isRunning:
+			# Translators: The status shown for an addon when its currently running in NVDA.
+			statusList.append(_("Enabled"))
 		if addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			statusList.append(_("Removed after restart"))
@@ -365,6 +365,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
 		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.enableDisableButton.Enable(
+			not globalVars.appArgs.disableAddons and
 			addon is not None and
 			not addon.isPendingRemove and
 			addonVersionCheck.isAddonCompatible(addon)
