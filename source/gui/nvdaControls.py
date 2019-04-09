@@ -30,7 +30,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		self,
 		parent,
 		id=wx.ID_ANY,
-		autoSizeColumnIndex="LAST",
+		autoSizeColumn="LAST",
 		itemTextCallable=None,
 		pos=wx.DefaultPosition,
 		size=wx.DefaultSize,
@@ -38,9 +38,9 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	):
 		""" initialiser
 			Takes the same parameter as a wx.ListCtrl with the following additions:
-			@param autoSizeColumnIndex: defaults to "LAST" which results in the last column being resized.
-				Pass the index of the column to be resized.
-			@type autoSizeColumnIndex: int
+			@param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
+				Pass the column number to be resized, valid values: 1 to N
+			@type autoSizeColumn: int
 			@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
 				It should accept the same parameters as L{OnGetItemText},
 			@type itemTextCallable: L{callable}
@@ -53,7 +53,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 			self._itemTextCallable = self._super_itemTextCallable
 		wx.ListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.ListCtrlAutoWidthMixin.__init__(self)
-		self.setResizeColumn(autoSizeColumnIndex)
+		self.setResizeColumn(autoSizeColumn)
 		self.Bind(wx.EVT_WINDOW_DESTROY, source=self, id=self.GetId, handler=self._onDestroy)
 
 	def _onDestroy(self, evt):
@@ -152,10 +152,10 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	This event is only fired when an item is toggled with the mouse or keyboard.
 	"""
 
-	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumnIndex="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
+	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumn="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
 		check_image=None, uncheck_image=None, imgsz=(16, 16)
 	):
-		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
+		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style, autoSizeColumn=autoSizeColumn)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
 		# Register object with COM to fix accessibility bugs in wx.
 		server = ListCtrlAccPropServer(self)

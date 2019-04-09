@@ -390,7 +390,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		self.catListCtrl = nvdaControls.AutoWidthColumnListCtrl(
 			self,
-			autoSizeColumnIndex=0,
+			autoSizeColumn=1,
 			size=catListDim,
 			style=wx.LC_REPORT|wx.LC_SINGLE_SEL|wx.LC_NO_HEADER
 		)
@@ -2662,7 +2662,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList = sHelper.addLabeledControl(
 			symbolsText,
 			nvdaControls.AutoWidthColumnListCtrl,
-			autoSizeColumnIndex=2,  # The replacement column is likely to need the most space
+			autoSizeColumn=2,  # The replacement column is likely to need the most space
 			itemTextCallable=self.getItemTextForList,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
 		)
