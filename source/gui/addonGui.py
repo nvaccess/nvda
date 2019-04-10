@@ -303,6 +303,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
 			statusList.append(_("Install"))
 		# in some cases an addon can be expected to be disabled after install, so we want "install" to take precedence here
+		# If add-ons are globally disabled, they should appear as such regardless of their real status.
 		elif addon.isDisabled or globalVars.appArgs.disableAddons:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			statusList.append(_("Disabled"))

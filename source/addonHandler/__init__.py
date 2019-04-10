@@ -391,7 +391,7 @@ class Addon(AddonBase):
 				state["pendingEnableSet"].discard(self.name)
 			# No need to disable an addon that is already disabled, except if all add-ons are disabled.
 			# This also prevents the status in the add-ons dialog from saying "disabled, pending disable"
-			elif self.name not in state["disabledAddons"] or globalVars.appArgs.disableAddons:
+			elif self.name not in state["disabledAddons"]:
 				state["pendingDisableSet"].add(self.name)
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		saveState()
