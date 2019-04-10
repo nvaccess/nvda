@@ -254,9 +254,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debugWarning("NAK received!")
 			self._handleAck()
 		elif packetType == FS_PKT_INFO:
-			self._manufacturer = payload[:24].replace(FS_DATA_EMPTY, "")
-			self._model = payload[24:40].replace(FS_DATA_EMPTY, "")
-			self._firmwareVersion = payload[40:48].replace(FS_DATA_EMPTY, "")
+			self._manufacturer = payload[:24].replace(FS_BYTE_NULL, "")
+			self._model = payload[24:40].replace(FS_BYTE_NULL, "")
+			self._firmwareVersion = payload[40:48].replace(FS_BYTE_NULL, "")
 			self.numCells = MODELS.get(self._model, 0)
 			if self.numCells in FOCUS_1_CELL_COUNTS:
 				# Focus 1: apply custom translation table
