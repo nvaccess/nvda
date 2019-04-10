@@ -83,7 +83,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	description = "Seika Mini Notetaker"
 
 	numCells = 0
-	# numBtns = 0
 
 	@classmethod
 	def check(cls):
@@ -100,19 +99,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		nCells = pint(0)
 		nBut = pint(0)
 
-		# seikaDll.BrailleOpen.errcheck=self.seika_errcheck
 		seikaDll.BrailleOpen.restype=c_int
 		seikaDll.BrailleOpen.argtype=(c_int,c_int)
 
-		# seikaDll.GetBrailleDisplayInfo.errcheck=self.seika_errcheck
 		seikaDll.GetBrailleDisplayInfo.restype=c_int
 		seikaDll.GetBrailleDisplayInfo.argtype=(c_void_p,c_void_p)
 
-		# seikaDll.UpdateBrailleDisplay.errcheck=self.seika_errcheck
 		seikaDll.UpdateBrailleDisplay.restype=c_int
 		seikaDll.UpdateBrailleDisplay.argtype=(c_char_p,c_int)
 
-		# seikaDll.GetBrailleKey.errcheck=self.seika_errcheck
 		seikaDll.GetBrailleKey.restype=c_int
 		seikaDll.GetBrailleKey.argtype=(c_void_p,c_void_p)
 
@@ -122,7 +117,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			seikaDll.GetBrailleDisplayInfo(nCells,nBut)
 			log.info("seikamini an USB-HID, Cells {c} Buttons {b}".format(c=nCells[0], b=nBut[0]))
 			self.numCells=nCells[0]
-			# self.numBtns=nBut[0]
 		else: # search the blutooth ports
 			for portInfo in sorted(hwPortUtils.listComPorts(onlyAvailable=True), key=lambda item: "bluetoothName" in item):
 				port = portInfo["port"]
@@ -148,7 +142,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					seikaDll.GetBrailleDisplayInfo(nCells,nBut)
 					log.info("seikamini via Bluetooth {p} Cells {c} Buttons {b}".format(p=port,c=nCells[0], b=nBut[0]))
 					self.numCells=nCells[0]
-					# self.numBtns=nBut[0]
 					break
 			else:
 				raise RuntimeError("No MINI-SEIKA display found")
@@ -185,7 +178,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			Brl = (nKey[0] >> 8) & 0xff
 			Key = (nKey[0] >> 16) & 0xffff
 			space = (nKey[0] >> 16) & 0x2
-#			log.info("Seika Brl {brl} Key {c} Buttons {b} Route {r}".format(brl=Brl, c=Key, b=Btn, r=Rou))
+			log.io("Seika Brl {brl} Key {c} Buttons {b} Route {r}".format(brl=Brl, c=Key, b=Btn, r=Rou))
 			if not (Rou or Key or Btn or Brl):
 				pass
 			if Rou: # Routing key is pressed
@@ -280,4 +273,4 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.routingIndex = routing
 			names.add('routing')
 		self.id = "+".join(names)
-#		log.info("keys {keys}".format(keys=names))
+		log.io("keys {keys}".format(keys=names))
