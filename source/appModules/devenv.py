@@ -90,8 +90,8 @@ SB_VERT = 1
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		vs_major, vs_minor, rest = self.productVersion.split(".", 2)
-		vs_major, vs_minor = int(vs_major), int(vs_minor)
+		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
+		vsMajor, vsMinor = int(vs_major), int(vs_minor)
 
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
@@ -102,8 +102,8 @@ class AppModule(appModuleHandler.AppModule):
 				pass
 			clsList.insert(0, VsTextEditPane)
 
-		if ((vs_major == 15 and vs_minor >= 3)
-			or vs_major >= 16):
+		if ((vsMajor == 15 and vsMinor >= 3)
+			or vsMajor >= 16):
 			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
 
