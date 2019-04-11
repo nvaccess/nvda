@@ -164,8 +164,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
 		if globalVars.appArgs.disableAddons:
-			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
-			label = _("All add-ons are currently disabled. To enable add-ons you must restart NVDA.")
+			# Translators: A message in the add-ons manager shown when add-ons are globally disabled.
+			label = _("NVDA was started with all add-ons disabled, no add-ons will run until NVDA is restarted. You may modify the enabled / disabled state, install or uninstall add-ons, which will take effect after NVDA is restarted.")
 			firstTextSizer.Add(wx.StaticText(self, label=label))
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel = _("Installed Add-ons")
@@ -303,8 +303,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
 			statusList.append(_("Install"))
 		# in some cases an addon can be expected to be disabled after install, so we want "install" to take precedence here
-		# If add-ons are globally disabled, they should appear as such regardless of their real status.
-		elif addon.isDisabled or globalVars.appArgs.disableAddons:
+		# If add-ons are globally disabled, don't show this status.
+		elif addon.isDisabled and not globalVars.appArgs.disableAddons:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			statusList.append(_("Disabled"))
 		if addon.isPendingRemove:
