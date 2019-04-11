@@ -6,7 +6,7 @@ Was ist neu in NVDA
 = 2019.1 =
 Zu den Highlights dieser Version gehören Leistungssteigerungen beim Zugriff auf Microsoft Word und Excel, Stabilitäts- und Sicherheitsverbesserungen wie die Unterstützung von Erweiterungen mit Versionskompatibilitätsinformationen und viele andere Fehlerbehebungen.
 
-Bitte beachten Sie, dass ab dieser Version von NVDA benutzerdefinierte AppModule, GlobalPlugins, Braillezeilen-Treiber und Synth-Treiber nicht mehr automatisch aus Ihrem NVDA-Benutzerkonfigurationsverzeichnis geladen werden.
+Bitte beachten Sie, dass ab dieser Version von NVDA benutzerdefinierte AppModule, GlobalPlugins, Braillezeilen- und Sprachausgabentreiber nicht mehr automatisch aus Ihrem NVDA-Benutzerkonfigurationsverzeichnis geladen werden.
 Vielmehr sollten diese als Teil einer NVDA-Erweiterung installiert werden. Für diejenigen, die Code für eine Erweiterung entwickeln, kann Code zum Testen in ein neues Developer Scratchpad-Verzeichnis im NVDA-Benutzerkonfigurationsverzeichnis verschoben werden. Dies funktioniert nur, wenn die Option Developer-Scratchpad in der neuen NVDA-Einstellungskathegorie "erweitert" aktiviert ist.
 Diese Änderungen sind notwendig, um die Kompatibilität von benutzerdefiniertem Code besser zu gewährleisten, so dass NVDA stabil bleibt, wenn dieser Code mit neueren Versionen inkompatibel wird.
 Bitte beachten Sie die Liste der Änderungen weiter unten für weitere Details dazu und wie Erweiterungen nun versioniert sind.
@@ -36,7 +36,7 @@ Bitte beachten Sie die Liste der Änderungen weiter unten für weitere Details d
 - Wenn NVDA mit dem Befehlszeilenparameter "--portable-path" gestartet wird, wird der angegebene Pfad beim Erstellen einer portablen Version aus dem Menü automatisch ausgefüllt. (#8623)
 - Der Pfad zur norwegischen Braille-Table wurde geändert, um dem Standard aus dem Jahr 2015 zu entsprechen. (#9170)
 - Bei der Navigation nach Absatz (Strg+Pfeiltasten) oder nach Tabellenzelle (Strg+Alt+Pfeiltasten) werden Rechtschreibfehler nicht mehr gemeldet, auch wenn dies in den Einstellungen aktiviert ist. Absätze und Tabellenzellen können recht groß sein und große Textmengen enthalten. Die Berechnung von Rechtschreibfehlern in einigen Anwendungen kann sehr kostspielig sein und die Performance stark beeinträchtigen. (#9217)
-- NVDA lädt nicht mehr automatisch benutzerdefinierte Anwendungsmodulle, globalPlugins sowie Braille- und Synth-Treiber aus dem NVDA-Benutzer-Konfigurationsverzeichnis. Dieser Code sollte stattdessen als Erweiterung mit korrekten Versionsinformationen verpackt werden, um sicherzustellen, dass inkompatibler Code nicht mit aktuellen Versionen von NVDA ausgeführt wird. (#9238)
+- NVDA lädt nicht mehr automatisch benutzerdefinierte Anwendungsmodulle, globalPlugins sowie Braille- und Sprachausgabentreiber aus dem NVDA-Benutzer-Konfigurationsverzeichnis. Dieser Code sollte stattdessen als Erweiterung mit korrekten Versionsinformationen verpackt werden, um sicherzustellen, dass inkompatibler Code nicht mit aktuellen Versionen von NVDA ausgeführt wird. (#9238)
 - Für Entwickler, die Code während der Entwicklung testen müssen, aktivieren Sie das Developer Scratchpad-Verzeichnis von NVDA in der Kategorie Erweiterte Einstellungen in den NVDA-Einstellungen und legen Sie Ihren Code in das Verzeichnis 'scratchpad' im NVDA-Benutzerkonfigurationsverzeichnis ab, nachdem  diese Option aktiviert wurde.
 
 
