@@ -156,7 +156,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# when add-ons manager reopens or another add-on is installed remotely.
 		AddonsDialog._instance = weakref.ref(self)
 		# Translators: The title of the Addons Dialog
-		title = _("Add-ons Manager")
+		title = _("Add-ons Manager") if not globalVars.appArgs.disableAddons else _("Add-ons Manager (add-ons globally disabled)")
 		wx.Dialog.__init__(self, parent, title=title)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
