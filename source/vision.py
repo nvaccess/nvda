@@ -428,8 +428,6 @@ def pumpAll():
 	# Note that a pending review update has to be executed before a pending caret update.
 	handler.handlePendingReviewUpdate()
 	handler.handlePendingCaretUpdate()
-	if handler.highlighter and handler.highlighter.enabled:
-		handler.highlighter.refresh()
 
 def getProvider(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
@@ -628,6 +626,8 @@ class VisionHandler(AutoPropertyObject):
 			self.handleCaretMove(obj)
 		if self.highlighter and context in self.highlighter.enabledHighlightContexts:
 			self.highlighter.updateContextRect(context, obj=obj)
+			if config.conf['reviewCursor']['followFocus']:
+				self.highlighter.updateContextRect(CONTEXT_NAVIGATOR, obj=obj)
 			if not mightHaveCaret and CONTEXT_CARET in self.highlighter.enabledHighlightContexts:
 				# If this object does not have a caret, clear the caret rectangle from the map
 				# However, in the unlikely case it yet has a caret, we want to highlight that.

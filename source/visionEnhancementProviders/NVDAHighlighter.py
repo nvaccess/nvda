@@ -1,4 +1,5 @@
 #visionEnhancementProviders/NVDAHighlighter.py
+#visionEnhancementProviders/NVDAHighlighter.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -101,6 +102,10 @@ class VisionEnhancementProvider(Highlighter):
 	def refresh(self):
 		if self.window:
 			self.window.refresh()
+
+	def updateContextRect(self, context, rect=None, obj=None):
+		super(VisionEnhancementProvider, self).updateContextRect(context, rect, obj)
+		self.refresh()
 
 class HighlightWindow(CustomWindow):
 	transparency = 0xff
