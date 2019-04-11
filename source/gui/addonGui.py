@@ -176,7 +176,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 				"You may modify the enabled / disabled state, and install or uninstall add-ons. "
 				"Changes will not take effect until after NVDA is restarted."
 			)
-			firstTextSizer.Add(wx.StaticText(self, label=label))
+			addonsDisabledText = wx.StaticText(self, label=label)
+			addonsDisabledText.Wrap(self.scaleSize(670))
+			firstTextSizer.Add(addonsDisabledText)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel = _("Installed Add-ons")
 		firstTextSizer.Add(wx.StaticText(self, label=entriesLabel))
