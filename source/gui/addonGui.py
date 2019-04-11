@@ -171,7 +171,11 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when add-ons are globally disabled.
-			label = _("NVDA was started with all add-ons disabled. You may modify the enabled / disabled state, and install or uninstall add-ons. Changes will not take effect after NVDA is restarted.")
+			label = _(
+				"NVDA was started with all add-ons disabled. "
+				"You may modify the enabled / disabled state, and install or uninstall add-ons. "
+				"Changes will not take effect until after NVDA is restarted."
+			)
 			firstTextSizer.Add(wx.StaticText(self, label=label))
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel = _("Installed Add-ons")
@@ -316,12 +320,22 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		if addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			statusList.append(_("Removed after restart"))
-		elif addon.isPendingDisable or (addon.isDisabled and not addon.isPendingEnable
-			and (addon.isPendingInstall or globalVars.appArgs.disableAddons)):
+		elif addon.isPendingDisable or (
+				# yet to be installed, disabled after install
+				not addon.isPendingEnable and addon.isPendingInstall and addon.isDisabled
+			) or (
+				# addons globally disabled, disabled after restart
+				globalVars.appArgs.disableAddons and addon.isDisabled and not addon.isPendingEnable
+			):
 			# Translators: The status shown for an addon when it requires a restart to become disabled
 			statusList.append(_("Disabled after restart"))
-		elif addon.isPendingEnable or (not addon.isDisabled
-			and (addon.isPendingInstall or globalVars.appArgs.disableAddons)):
+		elif addon.isPendingEnable or (
+				# yet to be installed, enabled after install
+				addon.isPendingInstall and not addon.isDisabled
+			) or (
+				# addons globally disabled, enabled after restart
+				globalVars.appArgs.disableAddons and not addon.isDisabled
+			):
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
 		return ", ".join(statusList)
