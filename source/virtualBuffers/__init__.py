@@ -699,7 +699,12 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if inApp is not None:
 			return inApp
 		# If the object is in the buffer, it's definitely not in an application.
-		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		try:
+			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		except:
+			log.debugWarning("getIdentifierFromNVDAObject failed. "
+				"Object probably died while walking ancestors.", exc_info=True)
+			return None
 		node = VBufRemote_nodeHandle_t()
 		if not self.VBufHandle:
 			return None
