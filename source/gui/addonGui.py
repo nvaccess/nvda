@@ -157,9 +157,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		AddonsDialog._instance = weakref.ref(self)
 		# Translators: The title of the Addons Dialog
 		title = _("Add-ons Manager")
-		# Translators: The title of the Addons Dialog when add-ons are globally disabled
-		titleWhenAddonsAreDisabled = _("Add-ons Manager (add-ons globally disabled)")
-		wx.Dialog.__init__(self, parent, title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled)
+		# Translators: The title of the Addons Dialog when add-ons are disabled
+		titleWhenAddonsAreDisabled = _("Add-ons Manager (add-ons disabled)")
+		wx.Dialog.__init__(
+			self,
+			parent,
+			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled
+		)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -167,7 +171,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the add-ons manager shown when add-ons are globally disabled.
-			label = _("NVDA was started with all add-ons disabled, no add-ons will run until NVDA is restarted. You may modify the enabled / disabled state, install or uninstall add-ons, which will take effect after NVDA is restarted.")
+			label = _("NVDA was started with all add-ons disabled. You may modify the enabled / disabled state, and install or uninstall add-ons. Changes will not take effect after NVDA is restarted.")
 			firstTextSizer.Add(wx.StaticText(self, label=label))
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel = _("Installed Add-ons")
@@ -384,7 +388,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			if (addon.isPendingInstall or addon.isPendingRemove
 				or addon.isDisabled and addon.isPendingEnable
 				or addon.isRunning and addon.isPendingDisable
-				or (not addon.isRunning and addon.isPendingDisable and globalVars.appArgs.disableAddons)):
+				or not addon.isDisabled and addon.isPendingDisable):
 				needsRestart = True
 				break
 		if needsRestart:
