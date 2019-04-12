@@ -153,16 +153,8 @@ class VisionEnhancementProvider(AutoPropertyObject):
 			obj = cls.getContextObject(context)
 		if not obj:
 			raise LookupError
-		# Import late to avoid circular import
-		import treeInterceptorHandler
-		isTreeInterceptor = isinstance(obj, treeInterceptorHandler.TreeInterceptor)
-		if (
-			(context == CONTEXT_FOCUS and isTreeInterceptor) or
-			context == CONTEXT_CARET
-		):
-			if isTreeInterceptor:
-				pass
-			elif getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough:
+		if context == CONTEXT_CARET:
+			if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough:
 				obj = obj.treeInterceptor
 			elif isinstance(obj, NVDAObjects.NVDAObject):
 				# Import late to avoid circular import
@@ -174,6 +166,9 @@ class VisionEnhancementProvider(AutoPropertyObject):
 				except RuntimeError:
 					if not obj._hasNavigableText:
 						return None
+		# Import late to avoid circular import
+		import treeInterceptorHandler
+		if isinstance(obj, treeInterceptorHandler.TreeInterceptor):
 			try:
 				caretInfo = obj.makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError):
@@ -627,7 +622,11 @@ class VisionHandler(AutoPropertyObject):
 		if self.highlighter and context in self.highlighter.enabledHighlightContexts:
 			self.highlighter.updateContextRect(context, obj=obj)
 			if config.conf['reviewCursor']['followFocus']:
-				self.highlighter.updateContextRect(CONTEXT_NAVIGATOR, obj=obj)
+				# Purposely don't provide the object to updateContextRect here.
+				# This is because obj could also be a tree interceptor.
+				# Furthermore, even when review follows focus, there might be
+				# reasons why the navigator object is not the same as the focus object.
+				self.highlighter.updateContextRect(CONTEXT_NAVIGATOR)
 			if not mightHaveCaret and CONTEXT_CARET in self.highlighter.enabledHighlightContexts:
 				# If this object does not have a caret, clear the caret rectangle from the map
 				# However, in the unlikely case it yet has a caret, we want to highlight that.
