@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2018 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -16,6 +16,7 @@ import pkgutil
 import shutil
 from six.moves import cStringIO as StringIO, cPickle
 from six import string_types
+import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
@@ -181,26 +182,29 @@ def _getAvailableAddonsFromPath(path):
 		if p.endswith(DELETEDIR_SUFFIX): continue
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
-			log.debug("Loading add-on from %s", addon_path)
-			try:
-				a = Addon(addon_path)
-				name = a.manifest['name']
-				log.debug(
-					"Found add-on {name} - {a.version}."
-					" Requires API: {a.minimumNVDAVersion}."
-					" Last-tested API: {a.lastTestedNVDAVersion}".format(
-						name=name,
-						a=a
-					))
-				if a.isDisabled:
-					log.debug("Disabling add-on %s", name)
-				if not isAddonCompatible(a):
-					log.debugWarning("Add-on %s is considered incompatible", name)
-					_blockedAddons.add(a.name)
-				yield a
-			except:
-				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
-
+			if not len(os.listdir(addon_path)):
+				log.error("Error loading Addon from path: %s", addon_path)
+			else:
+				log.debug("Loading add-on from %s", addon_path)
+				try:
+					a = Addon(addon_path)
+					name = a.manifest['name']
+					log.debug(
+						"Found add-on {name} - {a.version}."
+						" Requires API: {a.minimumNVDAVersion}."
+						" Last-tested API: {a.lastTestedNVDAVersion}".format(
+							name=name,
+							a=a
+						))
+					if a.isDisabled:
+						log.debug("Disabling add-on %s", name)
+					if not isAddonCompatible(a):
+						log.debugWarning("Add-on %s is considered incompatible", name)
+						_blockedAddons.add(a.name)
+					yield a
+				except:
+					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
+				
 _availableAddons = collections.OrderedDict()
 def getAvailableAddons(refresh=False, filterFunc=None):
 	""" Gets all available addons on the system.
@@ -394,7 +398,7 @@ class Addon(AddonBase):
 
 	@property
 	def isRunning(self):
-		return not (self.isPendingInstall or self.isDisabled or self.isBlocked)
+		return not (globalVars.appArgs.disableAddons or self.isPendingInstall or self.isDisabled or self.isBlocked)
 
 	@property
 	def isDisabled(self):

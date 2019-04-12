@@ -104,11 +104,17 @@ Fereastra de dialog a instalării care apare va confirma dacă doriți să insta
 Apăsând butonul „Continuă”, va porni instalarea NVDA.
 În această fereastră de dialog se mai află câteva opțiuni care sunt explicate mai jos.
 Odată finalizată instalarea, va apărea un mesaj care vă va notifica succesul operației.
-Apăsând „OK”, în acest moment, se va reporni copia nou-instalată a NVDA.
+Apăsând „OK”, în acest moment, se va reporni copia nou instalată a NVDA.
+
++++ Avertismentul suplimentelor incompatibile +++[InstallWithIncompatibleAddons]
+Dacă aveți suplimente deja instalate, s-ar putea să fiți avertizat că suplimentele care sunt incompatibile vor fi dezactivate.
+Înainte de a putea apăsa butonul de continuare, trebuie să bifați caseta pentru a confirma că înțelegeți că aceste suplimente vor fi dezactivate.
+De asemenea, va exista și un buton care, odată apăsat, vă va da posibilitatea de a examina suplimentele ce urmează a fi dezactivate.
+Consultați secțiunea [suplimentelor incompatibile #incompatibleAddonsManager] pentru mai multe detalii cu privire la acest buton.
 
 +++ Pornirea la autentificarea în Windows +++[PornireCuWindows]
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să pornească sau nu automat, în timpul afișării ferestrei de autentificare în Windows, înainte de a vă introduce parola.
-Opțiunea include și controlul UAC și alte ecrane securizate.
+Opțiunea include și controlul Contului Utilizatorului și alte ecrane securizate.
 
 +++ Creează scurtătură pe spațiul de lucru (ctrl+alt+n) +++[CreeazaScurtaturaLucru]
 Această opțiune vă permite să alegeți dacă NVDA ar trebui să creeze sau nu o scurtătură de pornire NVDA în spațiul de lucru.
@@ -595,7 +601,7 @@ Consultați documentația MathPlayer despre comenzile de navigare pentru informa
 
 Când doriți să vă reîntoarceți la document, pur și simplu apăsați tasta „escape”.
 
-++ Braille ++[BrailleSupport]
++ Braille +[BrailleSupport]
 Dacă dețineți un afișaj braille, NVDA poate afișa informația în braille.
 Dacă afișajul dumneavoastră braille are o tastatură stil Perkins, puteți, de asemenea, să introduceți braille abreviat și neabreviat.
 NVDA recunoaște automat multe afișaje braile.
@@ -956,7 +962,15 @@ Această opțiune este o casetă de bifat care, când este bifată, instruiește
 ==== Nivel înregistrări din jurnal ====[GeneralSettingsLogLevel]
 Aceasta este o listă de selecție care vă permite să alegeți cât va înregistra NVDA în jurnal când rulează.
 În general, utilizatorii nu trebuie să modifice această opțiune, nefiind înregistrat prea mult în jurnal.
-Dar dacă doriți să oferiți informații în raportarea unui defect, atunci poate fi o opțiune utilă.
+Dar dacă doriți să oferiți informații în raportarea unui defect sau să activați ori să dezactivați complet nivelul de înregistrare, atunci poate fi o opțiune utilă.
+
+Nivelele de înregistrare disponibile sunt:
+Dezactivat: În afară de un scurt mesaj de pornire, NVDA nu va înregistra nimic cât timp rulează.
+- Info: NVDA va înregistra informații de bază precum mesaje de pornire și informații utile pentru dezvoltatori.
+- Avertisment la diagnosticare: Mesajele de avertisment care nu sunt cauzate de erori grave vor fi înregistrate.
+- Intrare/ieșire: Intrare de la tastatură și de la afișajele braille, dar și ieșirea și vorbirea braille vor fi înregistrate. Dacă sunteți preocupat de confidențialitate, nu setați nivelul de înregistrare la această opțiune.
+- Diagnosticare: În plus față de info, avertisment și mesajele de intrare/ieșire, mesajele suplimentare de diagnosticare vor fi înregistrate. Ca și în cazul opțiunii intrare/ieșire, dacă sunteți preocupat de confidențialitate, nu activați această opțiune.
+-
 
 ==== Pornește NVDA automat după ce mă autentific în Windows ====[GeneralSettingsStartAfterLogOn]
 Dacă această opțiune este activată, NVDA va porni automat imediat ce v-ați autentificat în Windows.
@@ -1577,6 +1591,45 @@ Sunetul își va mări amplitudinea cu fiecare spațiu adăugat, iar pentru un t
 ==== Limba de recunoaștere ====[Win10OcrSettingsRecognitionLanguage]
 Această casetă combinată vă permite alegerea limbii care va fi folosită pentru recunoașterea de text.
 
++++ Setări Avansate +++[AdvancedSettings]
+Atenție! Setările din această categorie sunt pentru utilizatorii experimentați și pot face ca NVDA să nu meargă cum trebuie dacă este configurat greșit.
+Faceți modificări la aceste setări numai dacă sunteți sigur că știți ceea ce faceți sau dacă ați fost îndrumat de un dezvoltator NVDA.
+
+==== Efectuarea modificărilor la setările avansate ====[AdvancedSettingsMakingChanges]
+Ca să faceți modificări la setările avansate, controalele trebuie să fie activate prin confirmarea, cu caseta de bifat, a faptului că înțelegeți riscurile modificării acestor setări.
+
+==== Restaurarea setărilor implicite ====[AdvancedSettingsRestoringDefaults]
+Butonul restaurează valorile implicite ale setărilor, chiar dacă caseta de confirmare nu este activată.
+După modificarea setărilor, s-ar putea să vă doriți să reveniți la valorile implicite.
+De asemenea, acesta poate fi cazul în care nu sunteți sigur că setările au fost modificate.
+
+==== Activează încărcarea codului personalizat din directorul Scratchpad pentru Dezvoltatori ====
+Când dezvoltați suplimente pentru NVDA, vă este util să testați codul, întrucât îl scrieți.
+Când e activată, această opțiune îi permite NVDA-ului să încarce appModule-uri personalizate, globalPlugin-uri, brailleDisplayDrivere și synthDrivere, dintr-un folder special Scratchpad pentru dezvoltatori în cel al configurației de utilizator NVDA.
+Înainte, NVDA încărca codul personalizat direct din dosarul configurației utilizatorului NVDA fără niciun mod în care asta să poată fi dezactivată.
+Această opțiune este inactivă în mod implicit pentru siguranța faptului că niciun cod netestat nu rulează în NVDA fără înștiințarea utilizatorului.
+Dacă doriți să distribuiți cod personalizat altora, trebuie să-l împachetați într-un supliment NVDA.
+
+==== Deschide dosarul Scratchpad pentru Dezvoltatori ====[AdvancedSettingsOpenScratchpadDir]
+Acest buton deschide dosarul în care vă puteți pune codul personalizat cât timp lucrați la el.
+El este activat doar dacă NVDA este setat să activeze încărcarea codului personalizat din directorul Scratchpad pentru Dezvoltatori.
+
+==== Utilizează UI automation pentru a accesa controalele de document Microsoft Word când sunt disponibile ====[AdvancedSettingsUseUiaForWord]
+Când această opțiune este activată, NVDA va încerca să utilizeze API-ul de accesibilitate Microsoft UI Automation pentru a obține informații de la controalele de document Microsoft Word.
+Este inclus însuși Microsoft Word, vizualizatorul și compozitorul de mesaje Microsoft Outlook.
+Pentru versiunile cele mai recente ale Microsoft Office 2016/365 care rulează pe Windows 10, suportul UI Automation este suficient de complet încât să ofere accesul la documentele Microsoft Word în mod aproape egal în care o face suportul NVDA pentru Microsoft Word, adăugând avantajul capacității de reacție major îmbunătățite.
+Cu toate acestea, pot exista informații care să nu fie expuse sau expuse incorect, în cel mai bun caz, în unele versiuni ale Microsoft Office, ceea ce înseamnă că acest suport UI automation nu poate fi întotdeauna fiabil.
+Încă nu recomandăm majorității utilizatorilor s-o activeze în mod implicit, deși îi invităm pe cei ai Office 2016/365 să o testeze și să ne ofere o recenzie.
+
+==== Timpul de expirare a deplasării cursorului de scriere al sistemului )în milisecunde) ====[AdvancedSettingsCaretMoveTimeout]
+Această opțiune vă permite să configurați numărul de milisecunde în care NVDA să aștepte ca cursorul de scriere (punct de inserare) să se deplaseze în câmpurile de editare.
+Dacă observați că NVDA tinde să nu urmărească cum trebuie cursorul de scriere, de exemplu atunci când acesta rămâne mereu cu un caracter în urmă sau când repetă rânduri, este posibil să vreți să-i modificați valoarea.
+
+==== Categoriile de diagnosticare la înregistrare ====[AdvancedSettingsDebugLoggingCategories]
+Casetele de bifat din această listă vă permit să activați categorii specifice ale mesajelor de diagnosticare din jurnalul NVDA.
+Înregistrarea acestor mesaje poate duce la scăderea performanței și a fișierelor jurnal mari.
+Activați una dintre aceste categorii numai dacă sunteți îndrumat de un dezvoltator NVDA atunci când, de exemplu, căutați răspunsul la întrebarea de ce un driver al unui afișaj braille nu merge cum trebuie.
+
 ++ Setări diverse ++[MiscSettings]
 În afară de [Dialogul setărilor NVDA #NVDASettings], submeniul Preferințe mai conține și alte câteva elemente care sunt prezentate mai jos.
 
@@ -1826,7 +1879,26 @@ Dacă ați instalat, înlăturat sau modificat starea unui supliment, NVDA vă v
 Deși este posibil ca această versiune de NVDA să continue să le încarce, acestea nu vor fi afișate în Administratorul de suplimente.
 Cel mai bine este să înlăturați aceste fișiere din configurația dumneavoastră și să instalați suplimentul corespunzător, dacă este disponibil.
 
+Unele suplimente mai vechi pot să nu mai fie compatibile cu versiunea de NVDA pe care o aveți.
+La utilizarea unei versiuni mai vechi de NVDA, unele suplimente noi ar putea să nu fie nici ele compatibile cu versiunea respectivă.
+Încercarea de a instala un supliment incompatibil va rezulta o eroare care va explica de ce acel supliment este considerat incompatibil.
+Pentru a vedea care sunt suplimentele incompatibile, puteți folosi butonul „Vizualizare suplimente incompatibile” ca să lansați administratorul de suplimente incompatibile.
+
 Pentru a accesa Managerul de suplimente de oriunde, trebuie să-i atribuiți un gest personalizat folosind [fereastra de dialog pentru Gesturi de intrare #GesturiIntrare].
+
+++ Administratorul suplimentelor incompatibile ++[incompatibleAddonsManager]
+Administratorul suplimentelor, care poate fi accesat prin apăsarea butonului „Vizualizare suplimente incompatibile” din administratorul de suplimente, vă permite să vedeți orice supliment incompatibil și motivul pentru care este considerat incompatibil.
+Suplimentele sunt considerate incompatibile atunci când nu au fost actualizate ca să lucreze cu modificări semnificative aduse NVDA-ului, sau atunci când se bazează pe o caracteristică inexistentă în versiunea de NVDA pe care o utilizați.
+Acest manager are un mesaj scurt în care își explică obiectivul, la fel ca și versiunea de NVDA.
+Suplimentele incompatibile sunt prezentate într-o listă cu următoarele coloane:
++ Pachet, numele suplimentului
++ Versiune, versiunea acestuia
++ Motiv de incompatibilitate, o explicație din care reiese motivul pentru care suplimentul este considerat incompatibil
++
+
+Administratorul are și un buton numit „Despre supliment”.
+Apăsându-l veți afla informații relevante despre supliment, care pot fi utile atunci când vreți să-l contactați pe cel care l-a creat.
+
 
 ++ Consola Python ++[PythonConsole]
 Consola Python NVDA, aflată în meniul „Instrumente”, este un instrument pentru dezvoltare folositor pentru depanare, inspecția generală a elementelor interne ale NVDA sau inspecția ierarhiei disponibilității unei aplicații.
@@ -2755,10 +2827,11 @@ Urmează opțiunile în linie de comandă ale NVDA:
 | None | --disable-addons | Extensiile add-on nu vor avea niciun efect |
 | None | --debug-logging | Activează diagnosticarea doar pentru această executare. Această setare va suprascrie orice alt nivel de jurnal ( ""--loglevel"", -l) argument dat. |
 | None | --no-sr-flag  | Indicator „Nu schimba cititorul de ecran la nivel global pentru sistem” |
-| None | --install | Instalează NVDA (pornind copia nou-instalată) |
+| None | --install | Instalează NVDA (pornind copia nou instalată) |
 | None | --install-silent | Instalează NVDA în mod discret (nu pornește copia nou-instalată) |
-| None | --create-portable | Creează o copie portabilă a NVDA-ului (pornind copia nou-creată). Necesită --portable-path pentru a fi specificată |
-| None | --create-portable-silent | Creează o copie portabilă a NVDA-ului (nu pornește copia nou-instalată). Necesită --portable-path pentru a fi specificată |
+| None | --enable-start-on-logon=True|False | La instalare, activează [pornirea în ecranul de autentificare #StartAtWindowsLogon] |
+| None | --create-portable | Creează o copie portabilă a NVDA-ului (pornind copia nou creată). Necesită --portable-path pentru a fi specificată |
+| None | --create-portable-silent | Creează o copie portabilă a NVDA-ului (nu pornește copia nou instalată). Necesită --portable-path pentru a fi specificată |
 | None | --portable-path=PORTABLEPATH | Calea în care va fi creată o copie portabilă |
 
 ++ Parametri la nivel de sistem ++[ParametriGeneraliSistem]
@@ -2778,4 +2851,4 @@ Dacă aveți nevoie de informații suplimentare sau asistență în privința NV
 Aici puteți găsi documentație adițională, precum și asistență tehnică și resurse ale comunității. 
 De asemenea, el furnizează informații și resurse privind dezvoltarea NVDA.
 
-Puteți vizita și site-ul comunității românești a NVDA-ului la www.ro-nvda.tk. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.
+Puteți vizita și site-ul comunității românești NVDA la www.nvda.ro. Acest site le oferă vizitatorilor săi tutoriale audio, text,  voci pentru NVDA puse la dispoziția acestora de membrii comunității, dar și modalitatea de a-i contacta pe cei ce se ocupă cu traducerea NVDA-ului și a suplimentelor sale în limba română. De asemenea, comunitatea mai pune la dispoziția utilizatorilor vorbitori de română și o listă de mailing unde aceștia pot să discute și să pună întrebări în legătură cu NVDA și suplimentele sale. Aceasta este NVDA-romanian-comunity@googlegroups.com.

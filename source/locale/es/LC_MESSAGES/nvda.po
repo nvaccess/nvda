@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-22 00:10+1000\n"
-"PO-Revision-Date: 2019-02-21 17:34+0100\n"
+"POT-Creation-Date: 2019-03-04 10:39+1000\n"
+"PO-Revision-Date: 2019-03-04 14:11+0100\n"
 "Last-Translator: José Manuel Delicado <jmdaweb@hotmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -1229,10 +1229,6 @@ msgstr "Enumera varios tipos de elementos en este documento"
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "Activa el objeto actual en el documento"
-
-#. Translators: the description for the passThrough script on browseMode documents.
-msgid "Passes gesture through to the application"
-msgstr "Pasa el gesto a través de la aplicación"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -4053,22 +4049,6 @@ msgid ""
 msgstr ""
 "Activa y desactiva el movimiento del navegador de objetos debido a cambios "
 "del foco"
-
-#. Translators: presented when toggled.
-msgid "Focus follows browse mode off"
-msgstr "Foco sigue al modo exploración desactivado"
-
-#. Translators: presented when toggled.
-msgid "Focus follows browse mode on"
-msgstr "Foco sigue al modo exploración activado"
-
-#. Translators: Input help mode message for toggle browse moves focus command.
-msgid ""
-"Toggles on and off the movement of the system focus due to browse mode "
-"commands"
-msgstr ""
-"Activa y desactiva el movimiento del foco del sistema debido a órdenes del "
-"modo exploración"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -8665,11 +8645,6 @@ msgstr "Aplicar"
 msgid "&Categories:"
 msgstr "&Categorías:"
 
-#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-#, python-format
-msgid "%s Settings Category"
-msgstr "%s Categoría de Opciones"
-
 #. Translators: This is the label for the general settings panel.
 msgid "General"
 msgstr "General"
@@ -9171,11 +9146,6 @@ msgstr ""
 "&Capturar todo lo que no sean órdenes de gestos para que no alcance el "
 "documento"
 
-#. Translators: This is the label for a checkbox in the
-#. browse mode settings panel.
-msgid "System focus follows browse mode focus automatically"
-msgstr "El foco del sistema sigue al foco del modo exploración automáticamente"
-
 #. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "Formateado de Documentos"
@@ -9380,22 +9350,7 @@ msgstr "OCR de Windows 10"
 msgid "Recognition &language:"
 msgstr "&Idioma de reconocimiento:"
 
-#. Translators: This is the label for the Advanced settings panel.
-msgid "Advanced"
-msgstr "Avanzado"
-
-#. Translators: This is a label appearing on the Advanced settings panel.
-msgid ""
-"Warning! The following settings are for advanced users. Changing them may "
-"cause NVDA to function incorrectly. Please only change these if you know "
-"what you are doing or have been specifically instructed by NVDA  developers."
-msgstr ""
-"¡Advertencia! Las siguientes opciones son para usuarios avanzados. Si las "
-"cambias es posible que NVDA no funcione correctamente. Por favor  cámbialas "
-"sólo si sabes lo que estás haciendo o si has recibido instrucciones de los "
-"desarrolladores de NVDA."
-
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "NVDA Development"
 msgstr "Desarrollo de NVDA"
@@ -9411,7 +9366,7 @@ msgstr ""
 msgid "Open developer scratchpad directory"
 msgstr "Abrir el directorio developer scratchpad"
 
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
 msgstr "Microsoft UI Automation"
@@ -9424,7 +9379,7 @@ msgstr ""
 "Utilizar UI Automation para acceder a controles de documento de Microsoft "
 "&Word cuando esté disponible"
 
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
 msgstr "Texto editable"
@@ -9434,7 +9389,7 @@ msgstr "Texto editable"
 msgid "Caret movement timeout (in ms)"
 msgstr "Tiempo de espera de movimiento del cursor del sistema (en ms)"
 
-#. Translators: This is the label for a group of  Advanced options in the
+#. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Debug logging"
 msgstr "Registro de depuración"
@@ -9443,6 +9398,36 @@ msgstr "Registro de depuración"
 #. Advanced settings panel
 msgid "Enabled logging categories"
 msgstr "Habilitar categorías de registro"
+
+#. Translators: This is the label for the Advanced settings panel.
+msgid "Advanced"
+msgstr "Avanzado"
+
+#. Translators: This is the label to warn users about the Advanced options in the
+#. Advanced settings panel
+msgid "Warning!"
+msgstr "¡Atención!"
+
+msgid ""
+"The following settings are for advanced users. Changing them may cause NVDA "
+"to function incorrectly. Please only change these if you know what you are "
+"doing or have been specifically instructed by NVDA developers."
+msgstr ""
+"Las siguientes opciones son para usuarios avanzados. Si las cambias es "
+"posible que NVDA no funcione correctamente. Por favor  cámbialas  sólo si "
+"sabes lo que estás haciendo o si has recibido instrucciones de los "
+"desarrolladores de NVDA."
+
+msgid ""
+"I understand that changing these settings may cause NVDA to function "
+"incorrectly."
+msgstr ""
+"Comprendo que cambiar estas opciones puede hacer que NVDA funcione "
+"incorrectamente."
+
+#. Translators: This is the label for a button in the Advanced settings panel
+msgid "Restore defaults"
+msgstr "Restaurar opciones predeterminadas"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -9608,8 +9593,8 @@ msgid "Focus context presentation:"
 msgstr "Presentación de contexto para el foco:"
 
 #. Translators: This is the label for the NVDA settings dialog.
-msgid "NVDA"
-msgstr "NVDA"
+msgid "NVDA Settings"
+msgstr "Opciones de NVDA"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
@@ -11253,6 +11238,32 @@ msgstr "Espaciado de línea doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
+
+#~ msgid "Passes gesture through to the application"
+#~ msgstr "Pasa el gesto a través de la aplicación"
+
+#~ msgid "Focus follows browse mode off"
+#~ msgstr "Foco sigue al modo exploración desactivado"
+
+#~ msgid "Focus follows browse mode on"
+#~ msgstr "Foco sigue al modo exploración activado"
+
+#~ msgid ""
+#~ "Toggles on and off the movement of the system focus due to browse mode "
+#~ "commands"
+#~ msgstr ""
+#~ "Activa y desactiva el movimiento del foco del sistema debido a órdenes "
+#~ "del modo exploración"
+
+#~ msgid "%s Settings Category"
+#~ msgstr "%s Categoría de Opciones"
+
+#~ msgid "System focus follows browse mode focus automatically"
+#~ msgstr ""
+#~ "El foco del sistema sigue al foco del modo exploración automáticamente"
+
+#~ msgid "NVDA"
+#~ msgstr "NVDA"
 
 #~ msgid "remove"
 #~ msgstr "eliminar"

@@ -112,9 +112,16 @@ In dit dialoogvenster treft u enkele opties aan die hieronder worden uitgelegd.
 Als de installatie voltooid is, wordt gemeld dat deze gelukt is. 
 Door nu op OK te drukken wordt de zojuist geïnstalleerde versie van NVDA opgestart.
 
++++ Waarschuwing voor Incompatibele add-ons +++[InstallWithIncompatibleAddons]
+Als u reeds add-ons geïnstalleerd hebt, dan kunt u een waarschuwing krijgen dat incompatibele add-ons worden uitgeschakeld.
+Voordat u op de knop Doorgaan  kunt drukken dient u het selectievakje aan te vinken om aan te geven dat u begrijpt dat deze add-ons zullen worden uitgeschakeld.
+Er is ook een knop waarmee u kunt nagaan welke add-ons zullen worden uitgeschakeld.
+Raadpleeg het dialoogvenster [incompatibele add-ons van #incompatibleAddonsManager] voor meer hulp bij deze knop.
+
 +++ Opstarten vanaf het Aanmeldscherm van Windows +++[StartAtWindowsLogon]
 Met deze optie bepaalt u of NVDA automatisch moet worden opgestart wanneer u zich in het Aanmeldscherm bevindt nog voordat u een wachtwoord hebt ingevoerd. 
-Dit geldt ook voor UAC Beheer en andere beveiligde schermen.
+Dit geldt ook voor Gebruikersaccountbeheer en andere beveiligde schermen.
+In geval van een nieuwe (of her-)installatie is deze optie standaard ingeschakeld.
 
 +++ Snelkoppeling voor het bureaublad aanmaken (ctrl+alt+n) +++[CreateDesktopShortcut]
 Met deze optie kunt u bepalen of er een snelkoppeling voor het bureaublad moet worden aangemaakt waarmee u NVDA kunt starten. 
@@ -947,8 +954,7 @@ Er is een groot aantal talen waaruit gekozen kan worden, maar de standaardinstel
 Hiermee wordt bewerkstelligt dat NVDA de taal gebruikt die standaard op uw PC is ingesteld.
 
 Merk op dat NVDA opnieuw moet worden gestart als u de taal verandert.
-NVDA vraagt u of u het programma opnieuw wilt starten als u de taalkeuze verandert en de wijziging wilt opslaan.
-Druk op OK en NVDA wordt opnieuw gestart.
+Wanneer u gevraagd wordt uw keus te bevestigen, kunt u kiezen uit "Nu opnieuw starten" of "Later herstarten", al naar gelang of u de nieuwe taal respectievelijk meteen of pas later, wilt gebruiken. Als 'Later herstarten wordt gekozen, moet de configuratie ( of handmatig of via de (geactiveerde) functionaliteit 'Opslaan bij afsluiten') worden opgeslagen.
 
 ==== Configuratie opslaan bij afsluiten ====[GeneralSettingsSaveConfig]
 Als u een vinkje plaatst in het selectievakje zal de huidige configuratie automatisch worden opgeslagen bij afsluiting van NVDA.
@@ -963,7 +969,15 @@ Als u een vinkje plaatst in dit selectievakje zal NVDA bij het opstarten of afsl
 ==== Niveau van loggen ====[GeneralSettingsLogLevel]
 Dit is een vervolgkeuzelijst waarmee u het niveau van loggen kiest, met andere worden wat moet NVDA allemaal loggen terwijl het draait.
 In het algemeen kunt u de standaardinstelling ongewijzigd laten.
-Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma kan het nuttig zijn het niveau van loggen te wijzigen.
+Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma kan het nuttig zijn het niveau van loggen te wijzigen, of u schakelt loggen uit als u dat wilt.
+
+De beschikbare logniveaus zijn:
+- Uitgeschakeld: Behalve een korte melding bij opstarten zal NVDA niets loggen.
+- Info: NVDA logt basale informatie zoals opstartmeldingen en informatie die nuttig is voor ontwikkelaars.
+- Debug-waarschuwing: Waarschuwingen die niet voortkomen uit ernstige fouten worden gelogd.
+- Invoer/Uitvoer: Toetsenbordinvoer en invoer van brailleleesregels, alsmede spraak- en braille-uitvoer worden gelogd. Als u zich zorgen maakt over uw privacy, kies dan niet voor dit logniveau.
+- Debug: Naast info, waarschuwingen, en gegevens uit invoer/uitvoer worden ook debug-berichten  gelogd. Evenals voor   invoer/uitvoer geldt hier ook dat u niet voor dit logniveau moet kiezen, als u zich zorgen maakt over uw privacy.
+
 
 ==== NVDA automatisch starten nadat ik me bij windows heb aangemeld ====[GeneralSettingsStartAfterLogOn]
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij Windows aanmeldt.
@@ -1357,6 +1371,11 @@ Bij gebruik van stereoluidsprekers of een koptelefoon zal het geluidssignaal ste
 Als dit selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is ingeschakeld, dan zal het inschakelen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
 Deze functies staan standaard uit.
 
+==== Muisinvoer van andere toepassingen negeren ====[MouseSettingsHandleMouseControl]
+Deze optie biedt de gebruiker de mogelijkheid muisacties (met inbegrip van muisbewegingen het klikken met muisknoppen die worden gegenereerd door andere toepassingen zoals TeamViewer en andere software waarmee pc's op afstand bestuurd worden) te negeren.
+Deze optie staat standaard uit.
+Als u deze optie inschakelt en als u de optie 'Muis volgen inschakelen" hebt aangevinkt zal NVDA niet melden wat er zich onder de muis bevindt als deze wordt verplaatst door een andere toepassing.
+
 +++ Aanraakinteractie +++[TouchInteraction]
 Via deze categorie instellingen, die u alleen aantreft op computers die draaien onder Windows 8 en later welke beschikken over mogelijkheden voor bediening d.m.v. aanraking, kunt u configureren hoe NVDA omgaat met aanraakschermen.
 In deze categorie zijn de volgende keuzemogelijkheden beschikbaar:
@@ -1593,6 +1612,45 @@ In deze categorie zijn de volgende keuzemogelijkheden beschikbaar:
 
 ==== Herkenningstaal ====[Win10OcrSettingsRecognitionLanguage]
 In het vervolgkeuzemenu kunt u de taal kiezen die voor de tekstherkenning gebruikt moet worden.
+
++++ Geavanceerde Instellingen +++[AdvancedSettings]
+Waarschuwing! De instellingen in deze categorie zijn bedoeld voor gevorderde gebruikers en als deze instellingen verkeerd worden geconfigureerd kan dit ertoe leiden dat NVDA niet correct werkt.
+Breng alleen wijzigingen in deze instellingen aan als u zeker weet wat u doet of als u daartoe uitdrukkelijk opdracht hebt gekregen van een ontwikkelaar van NVDA.
+
+==== Wijzigingen aanbrengen  in Geavanceerde Instellingen ====[AdvancedSettingsMakingChanges]
+Om wijzigingen in de geavanceerde instellingen te kunnen aanbrengen is het noodzakelijk dat, alvorens u hiermee begint, u door het aanvinken van het selectievakje te kennen  geeft de risico's te begrijpen die het wijzigen van deze instellingen inhoudt.
+
+==== Teruggaan naar de standaardinstellingen ====[AdvancedSettingsRestoringDefaults]
+De knop herstelt de standaardwaarden voor de instellingen zelfs als het selectievakje (ter bevestiging) niet is aangevinkt.
+Na wijziging van de instellingen wilt u wellicht terug naar de standaardwaarden.
+Dat kan ook het geval zijn als u er niet zeker van bent of de instellingen wel gewijzigd zijn.
+
+==== Schakel het laden van aangepaste, te testen code in, afkomstig uit ontwikkelaarskladblokmap ====[AdvancedSettingsEnableScratchpad]
+Bij het ontwikkelen van add-ons voor NVDA, is het nuttig dat u deze kunt testen terwijl u volop bezig bent met de ontwikkeling ervan.
+Als deze optie is ingeschakeld kan NVDA aangepaste appModules, globalPlugins, brailleleesregel drivers en synthesizer drivers, afkomstig uit  een speciale directory met codeontwikkelmappen in uwNVDA gebruikersconfiguratiemap laden.
+Voorheen haalde NVDA aangepaste code rechtstreeks uit de de gebruikersconfiguratiemap zonder dat de mogelijkheid bestond dit uit te schakelen.
+Deze optie staat standaard uit, zodat voorkomen wordt dat er ongeteste code actief is in NVDA zonder medeweten van de gebruiker.
+Als u aangepaste code aan anderen ter beschikking wilt stellen, dient dat te gebeuren in de vorm van een NVDA add-on.
+
+==== Ontwikkelaarskladblokmap openen ====[AdvancedSettingsOpenScratchpadDir]
+Met deze knop opent u de directory waar u aangepaste code kunt bewaren terwijl u deze ontwikkelt.
+Deze knop is eerst dan ingeschakeld als NVDA zo is ingesteld dat het laden van aangepaste code uit ontwikkelaarskladblokmap geactiveerd is.
+ 
+==== UI automation gebruiken voor toegang tot besturingselementen van Microsoft Word-documenten voor zover beschikbaar ====[AdvancedSettingsUseUiaForWord]
+Wanneer  deze optie is ingeschakeld zal NVDA proberen de Microsoft UI (= User Interface) Automation accessibility api te gebruiken om informatie op te halen van besturingselementen van Microsoft Word-documenten.
+Dit betreft in Microsoft Word zelf, en ook de Microsoft Outlook message viewer alsmede  de composer.
+Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10, draaien, is de ondersteuning  van UI Automation voldoende om toegang te kunnen bieden tot Microsoft Word-documenten. De ondersteuning is nagenoeg gelijk aan die welke NVDA reeds biedt voor Microsoft Word maar met het bijkomende voordeel dat de reactiegevoeligheid substantieel wordt verhoogd.
+Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
+Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Office 2016/365 de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
+
+==== Reactievertraging invoercursor(in MS) ====[AdvancedSettingsCaretMoveTimeout]
+Met deze optie kunt u het aantal miliseconden instellen dat NVDA wacht voordat de invoercursor beschikbaar is voor het invoeren / bewerken van tekst.
+Als u ervaart dat NVDA de invoercursor niet juist lijkt te volgen, hij loopt bijv. altijd 1 teken achter of herhaalt steeds regels dan kunt u eens proberen deze waarde te verhogen.
+
+==== categorieën Debug logging ====[AdvancedSettingsDebugLoggingCategories]
+Het selectievakje in deze lijst biedt u de mogelijkheid specifieke categorieën debug-meldingen in NVDA's log te activeren.
+Het loggen van deze meldingen kan de prestatie nadelig beïnvloeden en kan grote logbestanden tot gevolg hebben.
+Activeer er pas één als u daar uitdrukkelijk om gevraagd wordt door een ontwikkelaar van NVDA, bijv. bij  pogingen te achterhalen wat de oorzaak is dat de driver van een brailleleesregel niet goed werkt.
 
 ++ Diverse instellingen ++[MiscSettings]
 Naast het dialoogvenster Instellingen van [NVDA #NVDASettings] kent het sub-menu Opties van het NVDA-menu nog verscheidene andere onderdelen die hierna worden voorgesteld.
@@ -1835,17 +1893,33 @@ Om een add-on uit te schakelen drukt u op de knop ' Add-on Uitschakelen'
 Om een eerder uitgeschakelde add-on in te schakelen drukt u op de knop 'Add-on Inschakelen'
 U kunt een add-on uitschakelen als de status van de add-on als werkend of ingeschakeld wordt aangemerkt. Een add-on kan worden ingeschakeld indien de status wordt omschreven als 'uitgeschakeld'.
 Telkens wanneer de knop 'In- / Uitschakelen'wordt ingedrukt geeft de statusvermelding van de add-on de wijziging te zien die geldt na herstart van NVDA.
-Als een add-on eerder werd uitgeschakeld, zal 'ingeschakeld (werkend) na een herstart' als status worden vermeld. Als een add-on eerder werd'ingeschakeld (werkend)', zal"uitgeschakeld na een herstart' als status worden vermeld.
+Als een add-on eerder werd uitgeschakeld, zal 'ingeschakeld (werkend) na een herstart' als status worden vermeld. 
+Als een add-on eerder werd'ingeschakeld (werkend)', zal"uitgeschakeld na een herstart' als status worden vermeld.
 Evenals bij het installeren en verwijderen van add-ons, moet u NVDA opnieuw starten om de wijzigingen door te voeren.
 
 Door op de knop "Sluiten" te drukken wordt het dialoogvenster "Add-ons Beheren" gesloten.
 Als u Add-ons hebt geïnstalleerd, verwijderd of de status ervan hebt gewijzigd, zal NVDA vragen of u eerst NVDA opnieuw wilt starten om de wijzigingen van kracht te laten worden.
 
-In het verleden kon de functionaliteit van NVDA worden uitgebreid door plug-ins en drivers naar de gebruikersconfiguratiemap te kopiëren.
-Hoewel de huidige versie van NVDA deze mogelijk nog steeds zal laden, worden ze niet getoond in de lijst met geïnstalleerde Add-ons in Add-on Beheer. 
-Het is het beste deze bestanden te verwijderen uit uw configuratie en via Add-on Beheer de geschikte add-on te installeren als deze beschikbaar is.
+Sommige oudere add-ons zijn mogelijk niet meer compatibel met de versie van NVDA die  u gebruikt.
+Wanneer u een oudere versie van NVDA, gebruikt zijn sommige nieuwe add-ons mogelijk ook niet compatibel.
+Wanneer u probeert een incompatibele add-on te installeren zal dit een foutmelding opleveren waarin wordt  uitgelegd waarom de add-on als niet compatibel wordt beschouwd.
+U kunt deze incompatibele add-ons inspecteren dor op de knop "Incompatibele add-ons bekijken" te drukken, waarmee u de incompatibele add-ons manager opent.
 
 Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
+
+++ Incompatibele Add-ons Manager ++[incompatibleAddonsManager]
+Met de Manager Incompatibele Add-ons, die u bereikt via de knoppen "Incompatibele add-ons bekijken" in Add-ons Beheren, kunt u incompatibele add-ons, inspecteren en nagaan waarom ze als niet compatibel beschouwd worden.
+Add-ons worden als incompatibel beschouwd wanneer ze niet zijn bijgewerkt waardoor ze niet kunnen werken met significante aanpassingen  in NVDA, of wanneer ze afhankelijk zijn van een optie die niet beschikbaar is in de versie van NVDA die u gebruikt.
+De Manager incompatibele add-ons geeft een beknopte uitleg over het doel ervan  en tevens wordt de versie van NVDA gemeld.
+De incompatibele add-ons worden weergegeven in  een lijst met de volgende kolommen:
++ Pakket,dhe naam van de add-on
++ Versie, de versie van de add-on
++ Reden incompatibel, uitleg waarom addon als incompatibel wordt beschouwd
++
+
+De Manager incompatible add-ons  heeft ook een knop "Over add-on...".
+Door op deze knop te drukken krijgt u de volledige details van de add-on te zien, wat handig is als u contact opneemt met de auteur van de add-on.
+
 
 ++ Python Console ++[PythonConsole]
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
@@ -2767,15 +2841,17 @@ Hieronder volgen de commandoregelopties voor NVDA:
 | -r | --replace | De reeds actieve kopie van NVDA afsluiten en deze (nieuwe) starten. |
 | -k | --check-running | Melden via afsluitcode of NVDA actief is,; 0 voor actief, 1 voor niet actief. |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Het bestand waar log-berichten naartoe moeten worden geschreven. |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Het laagste niveau gelogd bericht (debug 10, info 20, waarschuwing 30, fout 40, kritiek 50), standaardinstelling is waarschuwing |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Het laagste niveau gelogd bericht (debug 10, invoer/uitvoer 12, debugmelding 15,info 20, waarschuwing 30, fout 40, kritiek 50, uitgeschakeld 100), standaardinstelling is waarschuwing |
 | -c CONFIGPATH | --config-path=CONFIGPATH | Het pad waar alle instellingen voor NVDA worden opgeslagen. |
 | -m | --minimal | Geen geluiden, geen interface, geen opstartbericht etc. |
-| -s | --secure | Veilige modus (Python consool uitschakelen) |
+| -s | --secure | Veilige modus (schakelt Python consool en logopties vaak gebruikt in beveiligde schermen uit) |
 | Geen | --disable-addons | Addons buiten werking gesteld. |
-| geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l)gegeven argument. |
+| geen | --debug-logging | Loggen op Debug niveau alleen voor deze sessie inschakelen. Met deze instelling wordt elk ander niveau van loggen buiten werking gesteld ( ""--loglevel"", -l) gegeven argument, optie niet loggen inbegrepen. |
+| Geen | --no-logging | loggen volledig uitschakelen terwijl NVDA in gebruik is. Deze instelling kan overschreven worden als een logniveau ( ""--loglevel"", -l) wordt gespecifieerd vanuit commandoregel of als debug-loggen wordt ingeschakeld. |
 | Geen | --no-sr-flag | Verander de systeem-brede vlag voor de schermlezer niet. |
 | Geen | --install | Installeert NVDA (de zojuist geïnstalleerde kopie wordt gestart) |
 | Geen | --install-silent | Silently stille installatie van NVDA (de zojuist geïnstalleerde kopie wordt niet gestart) |
+| Geen | --enable-start-on-logon=True|False | Bij het installeren, NVDA laten [starten  in thhet logon scherm #StartAtWindowsLogon] |
 | Geen | --Create-portable | Draagbare kopie van NVDA wordt aangemaakt (waarbij de aangemaakte kopie vervolgens opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --Create-portable-silent | Draagbare kopie van NVDA wordt aangemaakt (waarbij aangemaakte kopie vervolgens niet opstart). Het pad voor de draagbare kopie dient te worden opgegeven. |
 | Geen | --portable-path=PORTABLEPATH | Het pad waar een draagbare kopie wordt aangemaakt. |

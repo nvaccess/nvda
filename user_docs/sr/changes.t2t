@@ -3,6 +3,77 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+Glavne karakteristike ove verzije uključuju poboljšanja u brzini kada koristite programe Microsoft word i Excel, poboljšanja u stabilnosti i sigurnosti kao što su podrška za dodatke koji mogu označiti informacije o kompatibilnosti sa različitim verzijama programa NVDA, i brojne druge ispravljene greške.
+
+Molimo imajte na umu da od ove verzije programa NVDA, prilagođeni moduli za aplikacije (eng. AppModules), globalni dodaci (ENG. GlobalPlugins), drajveri za brajeve redove (ENG. Braille display drivers) i  drajveri za sintetizatore (ENG. Synth drivers) neće biti automatski učitani iz vašeg foldera sa podešavanjima. 
+Umesto toga oni se trebaju instalirati kao NVDA dodatak. Za one koji programiraju kod za NVDA dodatak, kod za njih se može kopirati u novi razvojni scratchpad folder u folderu sa korisničkim podešavanjima,  ako je razvojni scratchpad folder omogućen u novom panelu za napredna NVDA podešavanja.
+Ove promene su neophodne kako bi se bolje osigurala kompatibilnost prilagođenog koda, kako nebi dolazilo do grešaka u programu NVDA kada ovaj kod postane nekompatibilan sa budućim NVDA verzijama.
+Molimo pogledajte listu promena ispod kako biste videli kako dodaci mogu osigurati bolju kompatibilnost.
+
+== Nove karakteristike ==
+- Nove brajeve tabele: Afrikanski, Arapski osmotačkasti brajev kod, Arapski stepen 2, Španski stepen 2. (#4435, #9186)
+- Dodata opcija u podešavanjima miša programa NVDA za situacije  u kojima je miš kontrolisan od strane druge aplikacije. (#8452) 
+ - Ovo će dozvoliti programu NVDA da prati miš kada kontrolišete sistem programima kao što su  TeamViewer.
+- Dodat `--enable-start-on-logon` parametar komandne linije za podešavanje tihih instalacija programa NVDA koji određuje da li će se NVDA pokrenuti na Windows ekranima za prijavljivanje. Upišite true ako želite da se pokreće na ovim ekranima ili false da se ne pokreće. Ako --enable-start-on-logon parametar nije uopšte određen NVDA će podrazumevano biti pokrenut na ekranima za prijavu, osim ako je već podešen da se ne pokreće u prethodnoj instalaciji. (#8574)
+- Moguće je onemogućiti karakteristike evidentiranja u dnevniku programa NVDA izborom opcije "onemogućeno" iz panela opštih podešavanja. (#8516)
+- Postojanje formula u radnim listovima programa  LibreOffice i Apache OpenOffice se sada prijavljuje. (#860)
+- U programima Mozilla Firefox i  Google Chrome, režim pretraživanja sada prijavljuje izabranu stavku u listama i prikazima stabla.
+ - Ovo radi u Firefox verziji 66 i novijim.
+ - Ovo ne radi za određene liste (HTML select controls) u programu Chrome.
+- Početna podrška za aplikacije kao što su Mozilla Firefox na računarima sa ARM64 (na primer Qualcom Snapdragon) procesorima. (#9216)
+- Nova kategorija za napredna podešavanja je dodata u NVDA panel sa podešavanjima, koja uključuje opciju za testiranje podrške u programu Microsoft Word korišćenjem Microsoft UI Automation API-a. (#9200)
+- Dodata podrška za tabelu grafičkog prikaza u programu Windows upravljač diska (eng. Windows disk management). (#1486)
+- Dodata podrška za Handy Tech Connect Braille i  Basic Braille 84. (#9249)
+
+
+== Promene ==
+- Ažuriran liblouis brajev prevodilac na verziju 3.8.0. (#9013)
+- Autori dodataka sada mogu da označe minimalnu neophodnu verziju programa NVDA za korišćenje njihovih dodataka. NVDA će odbiti instalaciju ili učitavanje dodataka u kojima je minimalna verzija označena kao novija verzija od verzije koja se trenutno koristi. (#6275)
+- Autori dodataka sada mogu označiti poslednju verziju programa NVDA sa kojom je njihov dodatak testiran. Ako je dodatak testiran uz verziju koja je starija od trenutne, NVDA će odbiti instalaciju ili učitavanje tog dodatka. (#6275)
+- Ova verzija programa NVDA će dozvoliti učitavanje i instalaciju dodataka koji ne sadrže informacije o minimalnoj i poslednjoj testiranoj verziji, ali ažuriranje na buduće verzije programa NVDA (na primer 2019.2) može izazvati automatsko onemogućavanje ovih dodataka.
+- Komanda za pomeranje miša na navigacioni objekat je sada dostupna za Microsoft Word kao i za UIA kontrole, posebno Microsoft Edge. (#7916, #8371)
+- Prijavljivanje teksta ispod miša je poboljšano za Microsoft Edge i druge UIA aplikacije. (#8370)
+- Kada se NVDA pokrene sa `--portable-path` parametrom komandne linije, upisana adresa se automatski popunjava kada pokušate da napravite prenosnu kopiju iz NVDA menija. (#8623)
+- Ažurirana adresa za Norvešku brajevu tabelu kako bi se koristio standard iz 2015 godine. (#9170)
+- Kada se krećete po pasusima (control+strelice gore ili dole) ili po ćelijama tabele (control+alt+strelice), postojanje pravopisnih grešaka se više neće prijavljivati, čak iako je NVDA podešen da ih automatski prijavi. Ovo je urađeno zbog toga što pasusi i ćelije u tabeli često mogu imati velik sadržaj, i računanje pravopisnih grešaka može izazivati usporavanja u nekim aplikacijama. (#9217)
+- NVDA više ne učitava prilagođene module za aplikacije, globalne dodatke ili drajvere za brajeve redove i sintetizatore govora iz foldera korisničkih podešavanja. Ovaj kod se treba upakovati kao NVDA dodatak sa ispravnim informacijama o verziji, što će osigurati da nekompatibilan kod neće biti pokrenut sa trenutnom NVDA verzijom. (#9238)
+ - Za programere koji žele da testiraju kod dok se razvija,  omogućite NVDA scratchpad folder iz napredne kategorije NVDA podešavanja, i kopirajte vaš kod u 'scratchpad' folder koji se nalazi u folderu korisničkih podešavanja kada je ova opcija omogućena.
+
+
+== Ispravljene greške ==
+- Kada koristite OneCore sintetizator govora na Windowsu 10 ažuriranje iz aprila 2018 i novijim, velike pauze se više ne ubacuju nakon izgovaranja. (#8985)
+- Kada se krećete između znakova u tekstualnim kontrolama (na primer Notepad) ili režim pretraživanja, 32 bitni emoji znakovi koji sadrže 2  UTF-16 karaktera (kao što su ðŸ¤¦) će se ispravno čitati. (#8782)
+- Poboljšan dijalog za potvrdu ponovnog pokretanja kada se promeni jezik interfejsa. Tekst i dugmad u dijalogu su jasniji i manje zbunjujući. (#6416)
+- Ako drugi sintetizator ima grešku pri učitavanju, NVDA  će se vratiti na Windows OneCore na Windowsu 10, umesto na ESpeak. (#9025)
+- Uklonjena stavka "dijalog dobrodošlice" iz NVDA menija kada ste na sigurnim ekranima. (#8520)
+- Kada koristite tab ili brzu navigaciju u režimu pretraživanja, legende na kontrolama kartica se sada preciznije prijavljuju. (#709)
+- NVDA će sada izgovarati promene u izboru za određene birače vremena, na primer u aplikaciji alarmi i sat u Windowsu 10. (#5231)
+- U centru za obaveštenja Windowsa 10, NVDA će izgovarati promene statusa kada menjate brze akcije kao što su osvetljenje ili asistent fokusa. (#8954)
+- U centru za obaveštenja Windowsa 10 ažuriranje iz oktobra 2018 i novijim, NVDA će prepoznati akciju za osvetljenje kao dugme umesto ranijeg prepoznavanja kao dugme prekidača. (#8845)
+- NVDA će ponovo pratiti kursor i izgovarati obrisane znakove u poljima za unos pretrage ili pomeranja na određenu ćeliju u programu Microsoft Excel. (#9042)
+- Ispravljena retka greška u režimu pretraživanja programa Firefox. (#9152)
+- NVDA više ne greši u prijavljivanju fokusa za neke kontrole na traci programa Microsoft Office 2016 kada su skupljene.
+- NVDA više ne greši u prijavljivanju predloženih kontakata kada pišete novu poruku u programu Outlook 2016. (#8502)
+- Nekoliko poslednjih tastera za prebacivanje kursora na brajevim redovima  kompanije eurobraille sa 80 ćelija više ne pomeraju kursor na početak ili nekoliko znakova nakon početka brajevog reda. (#9160)
+- Ispravljena navigacija kroz tabele u pregledu konverzacija programa Mozilla Thunderbird. (#8396)
+- U programima Mozilla Firefox i Google Chrome, prebacivanje u režim fokusiranja ispravno radi za određene liste (u kojima se lista/stablo ne može fokusirati ali same stavke u njima mogu). (#3573, #9157)
+- Režim pretraživanja se sada ispravno uključuje podrazumevano kada čitate poruke u  Outlooku 2016/365 ako koristite eksperimentalnu NVDA podršku za korišćenje "UI Automation" za čitanje Word dokumenata. (#9188)
+- NVDA ima manju verovatnoću da prestane sa radom tako da je jedini način vraćanja da se odjavite iz vašeg trenutnog Windowsa. (#6291)
+- U Windowsu 10 ažuriranje iz oktobra 2018 i novijim, kada otvarate istoriju privremene memorije u oblaku a privremena memorija je prazna, NVDA će izgovoriti status privremene memorije. (#9103)
+- U Windowsu 10 ažuriranje iz oktobra 2018 i novijim, kada tražite emoji znakove iz panela sa emoji znakovima, NVDA će izgovoriti prvi rezultat pretrage. (#9105)
+- NVDA više ne prestaje sa radom u glavnom prozoru programa Oracle VirtualBox  5.2 i novijim. (#9202)
+- Odziv u programu Microsoft Word kada se krećete po redovima, pasusima ili po ćelijama tabele može biti znatno poboljšana u nekim dokumentima. Potsećamo da za najbolje performanse, potrebno je podesiti Word u draft prikaz komandom alt+w,e nakon otvaranja dokumenta. (#9217) 
+- U programima Mozilla Firefox i Google Chrome, prazna upozorenja se više ne prijavljuju. (#5657)
+- Ogromna poboljšanja  brzine kada koristite program Microsoft Excel, posebno kada radni list sadrži komentare. (#7348)
+- Više nema potrebe da onemogućite uređivanje u ćelijama u Microsoft Excel podešavanjima da biste pristupili kontroli za uređivanje ćelije sa programom NVDA u Excel 2016/365. (#8146).
+- Ispravljena greška u programu Firefox koja se nekada pojaljuje u navigaciji kroz regione, ako se koristi dodatak enhanced ARIA. (#8980)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
 = 2018.4.1 =
 Ova verzija ispravlja grešku pri pokretanju programa NVDA ako je jezik podešen na Aragoneski. (#9089)
 
