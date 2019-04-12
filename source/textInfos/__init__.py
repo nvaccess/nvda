@@ -268,7 +268,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def getTextWithFields(self,formatConfig=None):
-		"""Retreaves the text in this range, as well as any control/format fields associated therewith.
+		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
 		@type formatConfig: dict
@@ -297,7 +297,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def unitIndex(self,unit):
 		"""
-		@param unit: a unit constant for which you want to retreave an index
+		@param unit: a unit constant for which you want to retrieve an index
 		@type: string
 		@returns: The 1-based index of this unit, out of all the units of this type in the object
 		@rtype: int
@@ -415,13 +415,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def _get_NVDAObjectAtStart(self):
-		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		"""retrieves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
 
 	def _get_focusableNVDAObjectAtStart(self):
-		"""retreaves the deepest focusable NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		"""retrieves the deepest focusable NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
@@ -525,6 +525,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def scrollIntoView(self, alignToTop=True):
 		"""
 		Scrolls the text range into view on the screen, if possible.
+		If the text is already visible, no scrolling should occur,
 		@param alignToTop: C{True} if the text should be scrolled so the text range is
 			flush with the top of the viewport;
 			C{False} if it should be flush with the bottom of the viewport.

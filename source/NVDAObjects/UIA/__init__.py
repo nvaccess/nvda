@@ -1452,12 +1452,14 @@ class UIA(Window):
 			info["level"]=level
 		return info
 
-	def scrollIntoView(self, alignToTop=True):
+	def scrollIntoView(self):
 		if self.UIAScrollItemPattern:
 			try:
-				self.UIAScrollItemPattern.ScrollIntoView(alignToTop)
+				self.UIAScrollItemPattern.ScrollIntoView()
+				return
 			except COMError:
 				log.debugWarning("UIA ScrollItem pattern ScrollIntoView failed", exc_info=True)
+		raise NotImplementedError
 
 	def _get_controllerFor(self):
 		e=self._getUIACacheablePropertyValue(UIAHandler.UIA_ControllerForPropertyId)
