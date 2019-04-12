@@ -23,7 +23,14 @@ from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def _getBoundingRectFromOffset(self,offset):
+	def _getNVDAObjectWithIA2TextOffsetFromOffset(self, offset):
+		"""
+		Gets the NVDAObject from the given offset,
+		along with the corresponding offset within the NVDAObject's IAccessibleTextObject.
+		"""
+		obj = self._getNVDAObjectFromOffset(offset)
+		if not hasattr(obj, "IAccessibleTextObject"):
+			raise LookupError("Object doesn't have an IAccessibleTextObject")
 		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
@@ -37,11 +44,25 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				continue
 			ia2TextStartOffset += attrs.get("strippedCharsFromStart", 0)
 			relOffset = offset - formatFieldStart + ia2TextStartOffset
-			obj = self._getNVDAObjectFromOffset(offset)
-			if not hasattr(obj, "IAccessibleTextObject"):
-				raise LookupError("Object doesn't have an IAccessibleTextObject")
+			return (obj, relOffset)
+		raise LookupError("No appropriate format field found for offset %d" % offset)
+
+	def _getBoundingRectFromOffset(self,offset):
+		try:
+			obj, relOffset = self._getNVDAObjectWithIA2TextOffsetFromOffset(offset)
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
-		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
+		except LookupError:
+			return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
+
+	def scrollIntoView(self, alignToTop=True):
+		try:
+			obj, relOffset = self._getNVDAObjectWithIA2TextOffsetFromOffset(
+				self._startOffset if alignToTop else self._endOffset
+			)
+		except LookupError:
+			raise NotImplementedError
+		position = textInfos.offsets.Offsets(relOffset, relOffset)
+		obj.makeTextInfo(position).scrollIntoView(alignToTop)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
