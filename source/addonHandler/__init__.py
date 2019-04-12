@@ -389,7 +389,7 @@ class Addon(AddonBase):
 			if self.name in state["pendingEnableSet"]:
 				# Undoing a pending enable.
 				state["pendingEnableSet"].discard(self.name)
-			# No need to disable an addon that is already disabled, except if all add-ons are disabled.
+			# No need to disable an addon that is already disabled.
 			# This also prevents the status in the add-ons dialog from saying "disabled, pending disable"
 			elif self.name not in state["disabledAddons"]:
 				state["pendingDisableSet"].add(self.name)
