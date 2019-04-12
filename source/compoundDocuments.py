@@ -181,11 +181,13 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def __ne__(self, other):
 		return not self == other
 
-	def scrollIntoView(self, alignToTop=True):
-		if alignToTop:
-			self._start.scrollIntoView(alignToTop=True)
-		else:
-			self._end.scrollIntoView(alignToTop=False)
+	def _isVisibleInObject(self, end=False):
+		info = self._end if end else self._start
+		return info._isVisibleInObject(end=end)
+
+	def _scrollIntoView(self, alignToTop=True):
+		info = self._start if alignToTop else self._end
+		info._scrollIntoView(alignToTop=alignToTop)
 
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.

@@ -30,6 +30,17 @@ FORMATSTATE_EMPH=16
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
+	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+		try:
+			obj = self._getNVDAObjectFromOffset(
+				self._startOffset if alignToTop else self._endOffset
+			)
+		except LookupError:
+			raise NotImplementedError
+		if not obj.HTMLNode:
+			raise NotImplementedError
+		obj._scrollHTMLNodeIntoView(obj.HTMLNode, True)
+
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
 		formatState=int(formatState)

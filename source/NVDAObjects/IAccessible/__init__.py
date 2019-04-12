@@ -357,7 +357,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				chunkStart = chunkEnd + 1
 			offset += itemLen
 
-	def scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop=True):
 		try:
 			self.obj.IAccessibleTextObject.scrollSubstringTo(
 				self._startOffset,

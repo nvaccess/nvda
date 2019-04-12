@@ -400,6 +400,13 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return textInfos.Bookmark(self.__class__,self._rangeObj.getBookmark())
 
+	def _scrollIntoView(self, alignToTop=True):
+		try:
+			self._rangeObj.scrollIntoView(alignToTop)
+		except COMError:
+			log.debugWarning("HTML text range scrollIntoView failed", exc_info=True)
+			raise NotImplementedError
+
 class MSHTML(IAccessible):
 
 	def _get__UIAControl(self):
@@ -578,6 +585,8 @@ class MSHTML(IAccessible):
 	def _get_zoomFactors(self):
 		return getZoomFactorsFromHTMLDocument(self.HTMLNode.document)
 
+	# Location retrieval is expensive for MSHTML
+	_cache_location = True
 	def _get_location(self):
 		if self.HTMLNodeName and not self.HTMLNodeName.startswith('#'):
 			try:
@@ -911,13 +920,17 @@ class MSHTML(IAccessible):
 		except:
 			raise NotImplementedError
 
+	@classmethod
+	def _scrollHTMLNodeIntoView(cls, node, alignToTop=True):
+		try:
+			node.scrollIntoView(alignToTop)
+		except (COMError,NameError):
+			log.debugWarning("HTML node scrollIntoView failed", exc_info=True)
+			raise NotImplementedError
+
 	def scrollIntoView(self):
 		if self.HTMLNode:
-			try:
-				self.HTMLNode.scrollInToView()
-				return
-			except (COMError,NameError):
-				log.debugWarning("HTML node scrollIntoView failed", exc_info=True)
+			self._scrollHTMLNodeIntoView(HTMLNode, True)
 		raise NotImplementedError
 
 	def doAction(self, index=None):

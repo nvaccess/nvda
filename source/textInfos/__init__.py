@@ -522,16 +522,57 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def scrollIntoView(self, alignToTop=True):
+	def _isVisibleInObject(self, end=False):
+		"""Checks whether the start or end of the range is visible in the originating object.
+		This relies on L{pointAtStart} and intentionally doesn't catch exceptions when fetching that property.
+		@param end: Whether to check the positioning of the end;
+			C{True} for the end, C{False} for the start.
+		@type end: bool
+		@returns: C{True} if the text is visible, C{False} otherwise.
+		@rtype: bool
 		"""
-		Scrolls the text range into view on the screen, if possible.
-		If the text is already visible, no scrolling should occur,
+		copy = self.copy()
+		copy.collapse(end=end)
+		# Import late to avoid circular import.
+		from treeInterceptorHandler import TreeInterceptor
+		obj = self.obj.rootNVDAObject if isinstance(self.obj, TreeInterceptor) else self.obj
+		return copy.pointAtStart in obj.location
+
+	def _scrollIntoView(self, alignToTop=True):
+		"""
+		Scrolls the text range into the given position of the screen view, if possible.
+		This method is called by L{scrollIntoView} to perform scrolling and is usually never called directly.
 		@param alignToTop: C{True} if the text should be scrolled so the text range is
 			flush with the top of the viewport;
 			C{False} if it should be flush with the bottom of the viewport.
 		@type alignToTop: bool
 		"""
 		raise NotImplementedError
+
+	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+		"""
+		Scrolls the text range into the given position of the screen view, if possible.
+		If scrolling should occur, this method calls L{_scrollIntoView} internally.
+		This public wrapper method makes sure that scrolling doesn't occur when onlyWhenInvisible is C{True}.
+		@param alignToTop: C{True} if the text should be scrolled so the text range is
+			flush with the top of the viewport;
+			C{False} if it should be flush with the bottom of the viewport.
+		@type alignToTop: bool
+		@param onlyWhenInvisible: Whether scrolling should occur when the text is invisible (C{True}),
+			or when already visible as well(C{False}).
+			Defaults to C{True}.
+			When C{True}, subclasses can call L{_isVisibleInObject} to retrieve the visibility of the start or end of the range,
+			providing the negation of alignToTop to the end argument.
+		@type onlyWhenInvisible: bool
+		"""
+		if onlyWhenInvisible:
+			try:
+				visible = self._isVisibleInObject(end=not alignToTop)
+			except (LookupError, NotImplementedError):
+				visible = False
+			if visible:
+				return
+		self._scrollIntoView(alignToTop=alignToTop)
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):

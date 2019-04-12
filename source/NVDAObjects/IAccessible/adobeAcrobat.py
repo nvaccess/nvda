@@ -195,6 +195,13 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 		except (ValueError, TypeError):
 			raise RuntimeError("Bad caret index")
 
+	def _scrollIntoView(self, alignToTop=True):
+		try:
+			self.obj.pdDomNode.ScrollToEx(True, alignToTop)
+		except (AttributeError, COMError):
+			log.debugWarning("IPDDomNode::ScrollTo failed", exc_info=True)
+			raise NotImplementedError
+
 class EditableTextNode(EditableText, AcrobatNode):
 	TextInfo = AcrobatTextInfo
 

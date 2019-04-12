@@ -724,16 +724,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 	updateCaret = updateSelection
 
-	def scrollIntoView(self, alignToTop=True):
-		# Calling ScrollIntoView always scrolls, also when the current text is already in view.
-		# This is not what we want.
-		tempInfo=self.copy()
-		# Usually align to the bottom is scrolling downwards, so collapse at the end in that case.
-		tempInfo.collapse(end=not alignToTop)
-		tempInfo.expand(textInfos.UNIT_CHARACTER)
-		if tempInfo.boundingRects:
-			# The last character of our range is already in view.
-			return
+	def _scrollIntoView(self, alignToTop=True):
 		self._rangeObj.ScrollIntoView(alignToTop)
 
 class UIA(Window):
