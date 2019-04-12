@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2017 NV Access Limited
+#Copyright (C) 2015-2019 NV Access Limited, Mozilla Corporation
 
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
@@ -324,11 +324,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				field = controlStack.pop()
 				if field:
 					fields.append(textInfos.FieldCommand("controlEnd", None))
-					if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
+				if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
+					if field:
 						field["_endOfNode"] = True
-					else:
-						# We're not at the end of this object, which also means we're not at the end of any ancestors.
-						break
+				else:
+					# We're not at the end of this object, which also means we're not at the end of any ancestors.
+					break
 				ti = self._getEmbedding(obj)
 				obj = ti.obj
 
