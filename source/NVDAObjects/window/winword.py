@@ -1021,6 +1021,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise LookupError
 		return locationHelper.Point(left.value, top.value)
 
+	def scrollIntoView(self, alignToTop=True):
+		# Calling ScrollIntoView always scrolls, also when the current text is already in view.
+		# This is not what we want.
+		tempInfo=self.copy()
+		# Usually align to the bottom is scrolling downwards, so collapse at the end in that case.
+		tempInfo.collapse(end=not alignToTop)
+		tempInfo.expand(textInfos.UNIT_CHARACTER)
+		try:
+			startPoint = tempInfo.pointAtStart
+		except:
+			pass
+		else:
+			if startPoint in self.obj.location:
+				return
+		try:
+			self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj, alignToTop)
+		except COMError:
+			log.debugWarning("Word ScrollIntoView failed", exc_info=True)
+
 	def updateCaret(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.Start)
