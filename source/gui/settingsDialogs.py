@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -726,21 +726,29 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
-			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
-				if gui.messageBox(
-					# Translators: A message to warn the user when attempting to copy current settings to system settings.
-					_("Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
-					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
-				)==wx.NO:
-					return
-				break
-		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while settings are being copied
-		_("Copying Settings"),
-		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
-		_("Please wait while settings are copied to the system configuration."))
+		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
+		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
+			# Translators: A message to warn the user when attempting to copy current
+			# settings to system settings.
+			message = _(
+				"Add-ons were detected in your user settings directory. "
+				"Copying these to the system profile could be a security risk. "
+				"Do you still wish to copy your settings?"
+			)
+			# Translators: The title of the warning dialog displayed when trying to
+			# copy settings for use in secure screens.
+			title = _("Warning")
+			style = wx.YES | wx.NO | wx.ICON_WARNING
+			if wx.NO == gui.messageBox(message, title, style, self):
+				return
+		progressDialog = gui.IndeterminateProgressDialog(
+			gui.mainFrame,
+			# Translators: The title of the dialog presented while settings are being copied
+			_("Copying Settings"),
+			# Translators: The message displayed while settings are being copied
+			# to the system configuration (for use on Windows logon etc)
+			_("Please wait while settings are copied to the system configuration.")
+		)
 		while True:
 			try:
 				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
@@ -2017,12 +2025,16 @@ class AdvancedPanelControls(wx.Panel):
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
 		)
+		if config.isAppX:
+			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		if config.isAppX:
+			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
