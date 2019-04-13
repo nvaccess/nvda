@@ -137,13 +137,15 @@ def getSystemConfigPath():
 			pass
 	return None
 
+SCRATCH_PAD_ONLY_DIRS = ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers')
+
 def getScratchpadDir(ensureExists=False):
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
 	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
-		for subdir in ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers'):
+		for subdir in SCRATCH_PAD_ONLY_DIRS:
 			subpath=os.path.join(path,subdir)
 			if not os.path.isdir(subpath):
 				os.makedirs(subpath)
@@ -269,13 +271,20 @@ def setSystemConfigToCurrentConfig():
 def _setSystemConfig(fromPath):
 	import installer
 	toPath=os.path.join(sys.prefix.decode('mbcs'),'systemConfig')
+	log.debug("Copying config to systemconfig dir: %s", toPath)
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
-	for curSourceDir,subDirs,files in os.walk(fromPath):
-		if curSourceDir==fromPath:
-			curDestDir=toPath
+	for curSourceDir, subDirs, files in os.walk(fromPath):
+		if curSourceDir == fromPath:
+			curDestDir = toPath
+			# Don't copy from top-level config dirs we know will be ignored due to security risks.
+			removeSubs = set(SCRATCH_PAD_ONLY_DIRS).intersection(subDirs)
+			for subPath in removeSubs:
+				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
+				subDirs.remove(subPath)
 		else:
-			curDestDir=os.path.join(toPath,os.path.relpath(curSourceDir,fromPath))
+			relativePath = os.path.relpath(curSourceDir, fromPath)
+			curDestDir = os.path.join(toPath, relativePath)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
@@ -351,7 +360,12 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+	BASE_ONLY_SECTIONS = {
+	"general", 
+	"update", 
+	"upgrade",
+	"development",
+}
 
 	def __init__(self):
 		self.spec = confspec
@@ -803,20 +817,69 @@ class ConfigManager(object):
 		self.triggersToProfiles.parent.write()
 		log.info("Profile triggers saved")
 
-	def getConfigValidationParameter(self, keyPath, validationParameter):
-		"""Get a config validation parameter
-		This can be used to get the min, max, default, or other values for a config key.
-		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
-		@param validationParameter: the parameter to return the value for. EG "max"
-		@type validationParameter: string
-		"""
+	def _getSpecFromKeyPath(self, keyPath):
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
 
 		spec = conf.spec
 		for nextKey in keyPath:
 			spec = spec[nextKey]
-		return conf.validator._parse_with_caching(spec)[2][validationParameter]
+		return spec
+
+	def _getConfigValidation(self, spec):
+		"""returns a tuple with the spec for the config spec:
+		("type", [], {}, "default value") EG:
+		- (u'boolean', [], {}, u'false')
+		- (u'integer', [], {'max': u'255', 'min': u'1'}, u'192')
+		- (u'option', [u'changedContext', u'fill', u'scroll'], {}, u'changedContext')
+		"""
+		return conf.validator._parse_with_caching(spec)
+
+	def getConfigValidationParameter(self, keyPath, validationParameter):
+		"""@deprecated: Use L{getConfigValidation} instead.
+		Get a config validation parameter
+		This can be used to get the min, max, or other values for a config key.
+
+		Note: does not work for default, convertFunction, or options. Use L{getConfigValidation} instead.
+
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@param validationParameter: the parameter to return the value for. EG "max"
+		@type validationParameter: string
+		"""
+		spec = self._getSpecFromKeyPath(keyPath)
+		parsedSpec = self._getConfigValidation(spec)
+		return parsedSpec[2][validationParameter]
+
+	def getConfigValidation(self, keyPath):
+		"""Get a config validation details
+		This can be used to get a L{ConfigValidationData} containing the type, default, options list, or
+		other validation parameters (min, max, etc) for a config key.
+		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
+		@return ConfigValidationData
+		"""
+		spec = self._getSpecFromKeyPath(keyPath)
+		parsedSpec = self._getConfigValidation(spec)
+		data = ConfigValidationData(parsedSpec[0])
+		data.args = [1]
+		data.kwargs = [2]
+		data.default = conf.validator.get_default_value(spec)
+		return data
+
+class ConfigValidationData(object):
+	validationFuncName = None  # type: str
+
+	def __init__(self, validationFuncName):
+		self.validationFuncName = validationFuncName
+		super(ConfigValidationData, self).__init__()
+
+	# args passed to the convert function
+	args = []  # type: List[Any]
+
+	# kwargs passed to the convert function.
+	kwargs = {}  # type: Dict[str, Any]
+
+	# the default value, used when config is missing.
+	default = None  # converted to the appropriate type
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
