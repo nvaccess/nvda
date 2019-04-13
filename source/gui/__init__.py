@@ -20,6 +20,7 @@ import ui
 from logHandler import log
 import config
 import versionInfo
+import addonAPIVersion
 import speech
 import queueHandler
 import core
@@ -213,11 +214,16 @@ class MainFrame(wx.Frame):
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
-			updateTuple = updateCheck.getPendingUpdate()
-			newNVDAVersionTuple = updateTuple[2]
-			from addonHandler import getAddonsWithoutKnownCompatibility
-			if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
-				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
+			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
+			from addonHandler import getIncompatibleAddons
+			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
+					parent=gui.mainFrame,
+					destPath=destPath,
+					version=version,
+					apiVersion=apiVersion,
+					backCompatTo=backCompatToAPIVersion
+				)
 				gui.runScriptModalDialog(confirmUpdateDialog)
 			else:
 				updateCheck.executePendingUpdate()
@@ -547,6 +553,13 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
+	for instance, state in gui.SettingsDialog._instances.iteritems():
+		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
+			log.error(
+				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
 	# This is called after the main loop exits because WM_QUIT exits the main loop
 	# without destroying all objects correctly and we need to support WM_QUIT.
@@ -860,11 +873,16 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		elif action == 4:
 			if updateCheck:
-				updateTuple = updateCheck.getPendingUpdate()
-				newNVDAVersionTuple = updateTuple[2]
-				from addonHandler import getAddonsWithoutKnownCompatibility
-				if any(getAddonsWithoutKnownCompatibility(newNVDAVersionTuple)):
-					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(gui.mainFrame, updateTuple[0], updateTuple[1], newNVDAVersionTuple)
+				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
+				from addonHandler import getIncompatibleAddons
+				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
+					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
+						parent=gui.mainFrame,
+						destPath=destPath,
+						version=version,
+						apiVersion=apiVersion,
+						backCompatTo=backCompatTo
+					)
 					confirmUpdateDialog.ShowModal()
 				else:
 					updateCheck.executePendingUpdate()

@@ -20,19 +20,28 @@ def getTreeInterceptor(obj):
 		if obj in ti:
 			return ti
 
-def update(obj):
+def update(obj, force=False):
 	# Don't create treeInterceptors for objects for which NVDA should sleep.
 	if obj.sleepMode:
 		return None
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:
-		if not obj.shouldCreateTreeInterceptor:
+		if not obj.shouldCreateTreeInterceptor and not force:
 			return None
 		try:
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
+		if not force and (
+			not config.conf['virtualBuffers']['enableOnPageLoad'] or
+			getattr(obj.appModule, "disableBrowseModeByDefault", False)
+		):
+			# Import late to avoid circular import.
+			from browseMode import BrowseModeTreeInterceptor
+			# Disabling enableOnPageLoad should only affect browse mode tree interceptors.
+			if issubclass(newClass, BrowseModeTreeInterceptor):
+				return None
 		ti=newClass(obj)
 		if not ti.isAlive:
 			return None

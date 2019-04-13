@@ -240,6 +240,8 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 				synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
 			count = len(char)
 			index=count+1
+			import inputCore
+			inputCore.logTimeSinceInput()
 			log.io("Speaking character %r"%char)
 			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
 			if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
@@ -553,6 +555,8 @@ def speak(speechSequence,symbolLevel=None):
 		# After normalisation, the sequence is empty.
 		# There's nothing to speak.
 		return
+	import inputCore
+	inputCore.logTimeSinceInput()
 	log.io("Speaking %r" % speechSequence)
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
@@ -762,10 +766,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	extraDetail=unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD)
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
+	formatConfig=formatConfig.copy()
 	if extraDetail:
-		formatConfig=formatConfig.copy()
 		formatConfig['extraDetail']=True
 	reportIndentation=unit==textInfos.UNIT_LINE and ( formatConfig["reportLineIndentation"] or formatConfig["reportLineIndentationWithTones"])
+	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
+	if unit in (textInfos.UNIT_PARAGRAPH,textInfos.UNIT_CELL) and reason is controlTypes.REASON_CARET:
+		formatConfig['reportSpellingErrors']=False
 
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
@@ -1210,7 +1217,11 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine the order of speech.
 	# speakContentFirst: Speak the content before the control field info.
-	speakContentFirst = reason == controlTypes.REASON_FOCUS and presCat != attrs.PRESCAT_CONTAINER and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX) and not tableID and controlTypes.STATE_EDITABLE not in states
+	speakContentFirst = (reason == controlTypes.REASON_FOCUS
+		and presCat != attrs.PRESCAT_CONTAINER
+		and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_LIST)
+		and not tableID
+		and controlTypes.STATE_EDITABLE not in states)
 	# speakStatesFirst: Speak the states before the role.
 	speakStatesFirst=role==controlTypes.ROLE_LINK
 
