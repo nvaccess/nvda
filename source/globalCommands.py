@@ -1434,6 +1434,7 @@ class GlobalCommands(ScriptableObject):
 		try:
 			index = values.index(config.conf["mouse"]["mouseTextUnit"])
 		except:
+			log.debugWarning("Couldn't get current mouse text resolution setting", exc_info=True)
 			index=0
 		newIndex = (index+1) % len(values)
 		config.conf["mouse"]["mouseTextUnit"]= values[newIndex]
