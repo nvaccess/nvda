@@ -58,7 +58,7 @@ NVDA copyright NVDA_COPYRIGHT_YEARS Contribuidores do NVDA.
 O NVDA está coberto pela GNU General Public License (Versão 2).
 É livre para partilhar ou alterar este software, da forma que pretender, desde que o NVDA esteja acompanhado pela respectiva licença e por todo o código-fonte modificado, que tem de estar disponível para quem o pretender.
 Isto aplica-se a todas as cópias, originais e modificadas, deste software, bem como a qualquer trabalho com ele relacionado.
-Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Para mais detalhes, pode [ver a licença completa. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisitos Do Sistema +[SystemRequirements]
 - Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows 7, Windows 8 e Windows 10, e todas as versões Server a partir do Windows Server 2008 R2.
@@ -105,11 +105,18 @@ O diálogo de instalação que aparece confirmará se deseja instalar o NVDA e d
 Pressionando o botão "Continuar" iniciará a instalação do NVDA.
 Existem também algumas opções, neste diálogo, que serão seguidamente explicadas.
 Uma vez a instalação concluída, aparecerá uma mensagem a indicar-lhe que a instalação foi bem sucedida.
-Pressionando OK, neste ponto, irá reiniciar a cópia agora instalada do NVDA.
+Pressionando OK, neste ponto, irá reiniciar a cópia instalada do NVDA.
+
++++ Aviso sobre extras Incompatíveis +++[InstallWithIncompatibleAddons]
+Se tiver extras instalados, poderá haver um aviso de que os extras incompatíveis serão desativados.
+Antes de poder pressionar o botão "Continuar", terá de marcar a caixa de verificação para confirmar que sabe que esses extras serão desativados.
+Também haverá um botão para poder analisar os extras que serão desativados.
+Consulte a [secção Extras incompatíveis #incompatibleAddonsManager] para obter mais informações sobre este botão.
 
 +++ Iniciar no ecrã de início de sessão do Windows +++[StartAtWindowsLogon]
 Esta opção permite-lhe que escolha se o NVDA deverá ou não iniciar, automaticamente, no ecrã de início de sessão do Windows, antes de escrever a palavra passe.
-Tal também engloba os ecrãs de controlo de acesso (UAC) e outros ecrãs de ambiente seguro.
+Isto também engloba os ecrãs de controlo de acesso do utilizador (UAC) e outros ecrãs de ambiente seguro.
+Por padrão, esta opção está activada em novas instalações.
 
 +++ Criar Atalho no Ambiente de Trabalho (control+alt+n) +++[CreateDesktopShortcut]
 Esta opção permite-lhe escolher se deverá, ou não, ser criado um atalho, no Ambiente de trabalho, para iniciar o NVDA.
@@ -560,7 +567,7 @@ Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir, com
 + Leitura de conteúdo Matemático +[ReadingMath]
 Usando o "MathPlayer 4", da "Design Science", o NVDA pode ler e navegar interactivamente o conteúdo matemático suportado.
 Para isso, é necessário que esteja instalado o "MathPlayer 4".
-O "MathPlayer" está disponível, como download gratuito, em http://www.dessci.com/en/products/mathplayer/
+O "MathPlayer" está disponível, como download gratuito, em https://www.dessci.com/en/products/mathplayer/
 
 O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox, Microsoft Internet Explorer e Google Chrome.
@@ -940,8 +947,7 @@ Existem diversos idiomas, contudo, a opção padrão é "Predefinição do utili
 Esta definição indica ao software para utilizar o idioma para o qual o Windows está definido no momento.
 
 Note, por favor, que o NVDA precisa ser reiniciado, quando alterar o idioma.
-O NVDA questioná-lo-á se pretende reiniciar, caso altere a selecção e guarde a nova configuração.
-Pressione "OK", e o NVDA irá reiniciar.
+Quando o diálogo de confirmação aparecer, seleccione "Reiniciar agora" ou "Reiniciar mais tarde", respectivamente se quiser usar o novo idioma agora ou mais tarde. Se pretender reiniciar mais tarde, deve guardar a nova configuração (manualmente ou usando a funcionalidade "Guardar configurações ao sair").
 
 ==== Guardar A Configuração ao Sair ====[GeneralSettingsSaveConfig]
 Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para guardar automaticamente a configuração actual, ao sair do programa.
@@ -957,7 +963,15 @@ Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA p
 ==== Nível de registo ====[GeneralSettingsLogLevel]
 Esta é uma caixa de combinação que lhe permite seleccionar a quantidade de informação que o NVDA coloca no registo, quando está em execução.
 Geralmente, os utilizadores não necessitam de alterar isto, para que não seja registada demasiada informação.
-Contudo, se pretender fornecer informação para relatar um erro, esta poderá ser uma opção útil.
+Contudo, se pretender fornecer informação para relatar um erro, ou activar/desactivar completamente o registo, esta poderá ser uma opção útil.
+
+Os níveis de registo disponíveis são:
+- Desactivado: Além de uma breve mensagem de início, o NVDA não registará nada enquanto estiver em execução;
+- Informação: O NVDA registará informações básicas, como mensagens de início e informações úteis para os desenvolvedores;
+- Aviso de depuração: Serão registadas mensagens de aviso que não são causadas por erros graves;
+- Entrada/saída de dados: As entradas pelo teclado ou linha Braille, bem como o que é falado ou representado em Braille, serão registadas. Se estiver preocupado com a privacidade, não defina o nível de registo para esta opção;
+- Depuração: Além do que é registado nos níveis anteriores, serão registadas mensagens de depuração adicionais. Assim como no nível anterior, se estiver preocupado com a privacidade, não deve definir o nível de registo para esta opção.
+-
 
 ==== Iniciar o NVDA automaticamente depois de iniciar cessão no Windows ====[GeneralSettingsStartAfterLogOn]
 Se esta opção estiver marcada, o NVDA arrancará, automaticamente, assim que iniciar sessão no Windows.
@@ -1055,6 +1069,16 @@ Esta opção aplica-se a todos os sintetizadores, e não apenas ao sintetizador 
 ==== Usar o idioma da voz ao processar caracteres e símbolos ====[SpeechSettingsTrust]
 Activada por padrão, esta opção indica ao NVDA se deve usar o idioma da voz actual para processar a leitura de símbolos e caracteres, incluindo sinais de pontuação.
 Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determinado sintetizador ou voz, pode desactivar esta funcionalidade para forçar o NVDA a usar o idioma da interface.
+
+==== Incluir dados do Unicode Consortium (incluindo emoji) ao processar caracteres e símbolos ====[SpeechSettingsCLDR]
+Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
+Esses dicionários contém descriçãos para símbolos (principalmente emoji) fornecidas pelo [Consórcio Unicode http://www.unicode.org/consortium/] como parte do seu [Common Locale Data Repository http://cldr.unicode.org/].
+Se quiser que o NVDA fale as descriçõess dos emojis desta base de dados, deve activar esta opção.
+Contudo, se estiver a utilizar um sintetizador que já suporte anunciar as descrições dos emojis, pode preferir desactivar esta opção.
+
+Note que descrições adicionadas ou editadas manualmente são guardadas nas suas configurações.
+Por isso, se alterar a descrição dum emoji, essa descrição será sempre falada, mesmo com esta opção desactivada.
+Pode adicionar, editar ou remover descrições de símbolos no [diálogo "Pronúncia de pontuação e símbolos" do NVDA #SymbolPronunciation].
 
 ==== Alterar a Percentagem da Entoação para Letras Maiúsculas ====[SpeechSettingsCapPitchChange]
 Este campo de edição permite-lhe definir a alteração da entoação da voz, que irá ser usada para falar uma letra maiúscula.
@@ -1259,15 +1283,13 @@ Segue uma descrição das várias opções:
 ==== Esquema do teclado ====[KeyboardSettingsLayout]
 Esta caixa de combinação permite-lhe escolher qual o esquema do teclado que o NVDA utiliza. Actualmente, os dois esquemas incluídos no NVDA são o Desktop, para computadores de secretária, e o Laptop, para computadores portáteis.
 
-==== Utilizar o Caps Lock como uma tecla modificadora do NVDA ====[KeyboardSettingsCapsModifier]
-Se esta caixa de verificação estiver marcada, o Caps Lock pode ser usado como uma tecla modificadora do NVDA.
-
-==== Utilizar Insert do bloco numérico como uma tecla modificadora do NVDA ====[KeyboardSettingsExtendedInsert]
-Se esta caixa de verificação estiver marcada, a tecla Insert do bloco numérico pode ser utilizada como uma tecla modificadora do NVDA.
-
-==== Utilizar Insert do bloco intermédio como uma tecla modificadora do NVDA ====[KeyboardSettingsNumpadInsert]
-Se esta caixa de verificação estiver marcada, a tecla Insert do bloco intermédio (que se encontra normalmente acima das setas, perto do Home e End) pode ser usada como uma tecla modificadora do NVDA.
-
+==== Seleccionar teclas modificadoras do NVDA ====[KeyboardSettingsModifiers]
+As caixas de verificação desta lista controlam que teclas serão usadas como [teclas modificadoras do NVDA #TheNVDAModifierKey]. Pode escolher entre as seguintes teclas:
+- A tecla CapsLock;
+- O Insert do bloco numérico;
+- O Insert do bloco intermédio.
+-
+ 
 Se nenhuma tecla for seleccionada como tecla NVDA, poderá ser impossível aceder a algumas funções deste.
 Por isso, o diálogo de configurações do NVDA mostrará uma mensagem de erro, se todas as teclas estiverem desmarcadas ao pressionar o botão "Ok".
 Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla, antes de pressionar "Ok" para fechar o diálogo convenientemente.
@@ -1341,6 +1363,11 @@ Quanto mais à esquerda ou à direita estiver o rato no ecrã, tanto mais à esq
 ==== Brilho controla o volume das coordenadas de áudio ====[MouseSettingsBrightness]
 Se a caixa de verificação "tocar as coordenadas de áudio quando o rato se mover" estiver marcada, ao marcar esta opção, faz com que o volume dos bips das coordenadas de áudio seja controlado pelo quão brilhante está o ecrã sob o rato.
 Esta definição não está marcada, por padrão.
+
+==== Ignorar eventos do rato de outras aplicações ==== [MouseSettingsHandleMouseControl]
+Esta opção permite que sejam ignorados os eventos do rato (incluindo o movimento do rato e o pressionar dos botões) gerados por outras aplicações, como TeamViewer e outro software de controlo remoto.
+Esta opção está desmarcada por padrão.
+Se marcar esta opção, e tiver activada a opção "Activar seguimento do rato, o NVDA não anunciará o que está por baixo do rato se o rato for movido por outra aplicação.
 
 +++ Interacção táctil +++[TouchInteraction]
 Esta secção, apenas disponível em computadores com Windows 8 ou superior  e com ecrã táctil, permite configurar como o NVDA interage com os ecrãs tácteis.
@@ -1576,8 +1603,47 @@ Actualmente, só contém uma opção:
 ==== Idioma de reconhecimento ====[Win10OcrSettingsRecognitionLanguage]
 Esta caixa combinada permite seleccionar qual o idioma a ser usado no reconhecimento de texto.
 
++++ Configurações Avançadas +++[AdvancedSettings]
+Aviso! As configurações desta secção são para utilizadores avançados e podem fazer com que o NVDA não funcione correctamente se configurado de maneira errada.
+Apenas faça alterações nestas configurações se tiver a certeza de que sabe o que está a fazer ou se foi especificamente instruído por um desenvolvedor do NVDA ou por alguém com conhecimentos bastantes e em quem confie.
+
+==== Alterar as configurações avançadas ==== [AdvancedSettingsMakingChanges]
+Para fazer alterações nas configurações avançadas, deve activar os controlos, confirmando, com a caixa de verificação, que entende os riscos de modificar essas configurações.
+
+==== Restaurar as configurações padrão ==== [AdvancedSettingsRestoringDefaults]
+O botão "Restaurar padrões", mesmo que a caixa de verificação de confirmação não esteja marcada, restaura as configurações avançadas para os valores padrão.
+Depois de alterar as configurações, pode querer reverter para os valores padrão.
+Também pode usar este botão se não tiver a certeza que as configurações foram alteradas.
+
+==== Activar o carregamento de código personalizado a partir do diretório Scratchpad ==== [AdvancedSettingsEnableScratchpad]
+Ao desenvolver add-ons para o NVDA, é útil poder testar o código à medida que você o escreve.
+Esta opção, quando activada, permite que o NVDA carregue appModules, globalPlugins, brailleDisplayDrivers e synthDrivers personalizados, a partir de um diretório especial, scratchpad, no diretório de configurações do utilizador do NVDA.
+Anteriormente, o NVDA carregava código personalizado diretamente do diretório de configurações do utilizador, sem a possibilidade de desactivá-lo.
+Esta opção está desactivada por padrão, para garantir que nenhum código não testado seja executado no NVDA sem o conhecimento explícito do utilizador.
+Se deseja distribuir código personalizado para outras pessoas, você deve empacotá-lo como um extra do NVDA.
+ 
+==== Abrir Diretório do Scratchpad do Desenvolvedor ==== [AdvancedSettingsOpenScratchpadDir]
+ Este botão abre o diretório onde você pode colocar um código personalizado enquanto o desenvolve.
+ Este botão só é ativado se o NVDA estiver configurado para ativar o carregamento de código personalizado a partir do Diretório do Scratchpad do Desenvolvedor.
+  
+==== Usar UI Automation para aceder a controlos de documentos do Microsoft Word, se disponível ====[AdvancedSettingsUseUiaForWord]
+Ao activar esta opção, o NVDA irá utilizar a API de acessibilidade da Microsoft, UI Automation, para obter informações dos controlos de documentos do Microsoft Word.
+Isto inclui o próprio Microsoft Word e também o visualizador e o compositor de mensagens do Microsoft Outlook.
+Para as versões mais recentes do Microsoft Office, 2016/365, em execução no Windows 10, o suporte da UI Automation está suficientemente completo para fornecer praticamente o mesmo acesso aos documentos do Microsoft Word, que havia antes, com a vantagem adicional de aumentar significativamente a capacidade de resposta.
+No entanto, em algumas versões do Microsoft Office, pode haver algumas informações que não são expostas, ou o são incorrectamente, pelo que o suporte UI Automation nem sempre deve ser activado.
+Ainda não é recomendável, para a maioria dos utilizadores, activar esta opção por padrão, embora seja aceitável que os utilizadores do Office 2016/365 queiram testar este recurso e fornecer feedback.
+ 
+==== Tempo limite dos movimentos do cursor (em ms) ====[AdvancedSettingsCaretMoveTimeout]
+Esta opção permite configurar quantos milissegundos o NVDA irá aguardar até que o cursor (ponto de inserção) se mova nos controlos de texto editáveis.
+Se o NVDA parecer estar a seguir incorrectamente o cursor de inserção, por exemplo parecer sempre um caractere atrasado ou repetir linhas, pode tentar aumentar este valor. 
+
+==== Categorias do registo em modo de depuração ====[AdvancedSettingsDebugLoggingCategories]
+As caixas de verificação desta lista permitem activar categorias específicas de mensagens de depuração no registo do NVDA.
+O registo dessas mensagens pode provocar desempenho reduzido e grandes ficheiros de registo.
+Apenas active uma destas categorias se isso for solicitado por um desenvolvedor do NVDA, ou de um extra, para verificar a causa de um mau funcionamento.
+
 ++ Outras Opções ++[MiscSettings]
-Para além de [Configurações #NVDASettings], o submenu "Preferências", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
+Para além das [Configurações #NVDASettings], o submenu "Preferências", do menu  do NVDA, contém outros itens, que são detalhados seguidamente.
 
 +++ Dicionários +++[SpeechDictionaries]
 O submenu "Dicionários" (que se encontra no menu "Preferências") contém diálogos que lhe permitem controlar o modo como o NVDA pronuncia palavras ou expressões em particular.
@@ -1817,17 +1883,31 @@ Para desactivar um Extra, pressione o botão "Desactivar".
 Para activar um Extra previamente desactivado, pressione o botão "Activar".
 Pode desactivar um Extra se o seu estado indicar "Activado", ou activar um Extra se o seu estado for "Desactivado".
 Cada vez que pressionar o botão "Activar"/"Desactivar", o estado do Extra é alterado para reflectir o que acontecerá quando o NVDA reiniciar.
-Se o extra estiver activado, o seu estado passará a "Desactivado após reinício". Se o extra estiver desactivado, o seu estado passará a "Activado após reinício".
+Se o extra estiver activado, o seu estado passará a "Desactivado após reinício".
+Se o extra estiver desactivado, o seu estado passará a "Activado após reinício".
 Tal como quando instala ou desinstala um Extra, tem de reiniciar o NVDA para que as alterações surtam efeito.
 
 O gestor tem também um botão "fechar" para que o diálogo seja fechado.
 Se instalou, removeu ou alterou o estado de algum extra, o NVDA pedirá para reiniciar, para que as suas modificações possam ter efeito.
 
-No passado, foi possível estender as funcionalidades do NVDA, copiando plugins ou drivers individuais para a sua pasta de configurações do NVDA.
-Apesar desta versão do NVDA poder ainda carregá-los, estes não serão mostrados no gestor de extras.
-Será melhor remover estes ficheiros das suas configurações e instalar o extra apropriado, se existir.
+Alguns extras mais antigos podem já não ser compatíveis com a versão do NVDA que possui.
+Ao usar uma versão mais antiga do NVDA, alguns novos complementos podem não ser compatíveis.
+A tentativa de instalar um extra incompatível resultará em um erro explicando porque o extra é considerado incompatível.
+Para inspecionar esses complementos incompatíveis, você pode usar o botão "ver extras incompatíveis" para abrir o gestor de extras incompatíveis.
 
 Para aceder ao Gestor de Extras, a partir de qualquer local, por favor associe-lhe um comando através da opção [Definir comandos #InputGestures].
+
+++ Gestor de extras Incompatíveis ++[incompatibleAddonsManager]
+O Gestor de extras Incompatíveis, que pode aceder através do botão "ver extras incompatíveis" no gestor de extras, permite inspecionar quaisquer extras incompatíveis e o motivo pelo qual eles são considerados incompatíveis.
+Os extras são considerados incompatíveis quando não foram actualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que está a usar.
+O gestor de extras incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
+Os extras incompatíveis são apresentados numa lista com as seguintes colunas:
+Pacote, o nome do extra;
+Versão, a versão do extra
+Razão, uma explicação de porque o extra é considerado incompatível
+
+O Gerenciador de extras Incompatíveis também possui um botão "Sobre o extra...".
+Este botão abre um diálogo contendo informações do extra, para conhecer os detalhes completos do extra, o que é útil ao entrar em contato com o autor do extra.
 
 ++ Consola de Python ++[PythonConsole]
 A Consola de Python do NVDA encontra-se dentro das Ferramentas do Menu do NVDA. É uma ferramenta de programação muito útil para depuração, inspecção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
@@ -1867,8 +1947,8 @@ O Microsoft Speech Platform fornece vozes para vários idiomas, que são normalm
 Estas vozes podem também ser usadas com o NVDA.
 
 Para as usar, precisa de instalar dois componentes:
-- Microsoft Speech Platform - Suporte de Execução (Runtime) (Versão 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Suporte de Execução de Idiomas (Runtime Languages) (Versão 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Suporte de Execução (Runtime) (Versão 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Suporte de Execução de Idiomas (Runtime Languages) (Versão 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - Esta página contém vários ficheiros, tanto para reconhecimento de voz como para texto para voz.
  Escolha os ficheiros que contêm os dados de texto para voz para os idiomas/vozes que deseja.
  Por exemplo, o ficheiro MSSpeech_TTS_en-US_ZiraPro.msi é uma voz de inglês dos E.U.A.
@@ -1913,9 +1993,9 @@ Estas são as linhas que suportam a funcionalidade de detecção automática:
 -
 
 ++ Freedom Scientific: Séries Focus e PM ++[FreedomScientificFocus]
-Todas as linhas Focus e PM da [Freedom Scientific http://www.freedomscientific.com/] são suportadas, quando conectadas via USB ou Bluetooth.
+Todas as linhas Focus e PM da [Freedom Scientific https://www.freedomscientific.com/] são suportadas, quando conectadas via USB ou Bluetooth.
 Necessitará dos drivers das linhas Braille da Freedom Scientific instalados no seu sistema.
-Se ainda não os tem, pode obtê-los em http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Se ainda não os tem, pode obtê-los em https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Apesar desta página apenas mencionar as linhas Focus Blue, os drivers suportam todas as linhas da Freedom Scientific.
 Se o seu sistema está a correr um Windows de 64 bits e os drivers já foram instalados, por outro leitor de ecrã, irá, provavelmente, necessitar de os reinstalar a partir deste link, visto que, com alguma probabilidade, os ficheiros necessários ao NVDA ainda não foram instalados.
 
@@ -1976,7 +2056,7 @@ Apenas para a Focus 80:
 %kc:endInclude
 
 ++ Optelec: ALVA série 6 / protocol converter ++[OptelecALVA]
-As linhas ALVA BC640 e BC680, da [Optelec, http://www.optelec.com/] são suportadas, quer por USB quer por Bluetooth.
+As linhas ALVA BC640 e BC680, da [Optelec, https://www.optelec.com/] são suportadas, quer por USB quer por Bluetooth.
 Também pode usar uma linha antiga, como a Braille Voyager, usando o Protocol converter, vendido pela Optelec.
 Não necessita de quaisquer drivers específicos instalados, para utilizar estes terminais.
 Basta ligar o terminal e configurar o NVDA para o utilizar.
@@ -2028,7 +2108,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 %kc:endInclude
 
 ++ Handy Tech ++[HandyTech]
-O NVDA suporta a maioria dos terminais da [Handy Tech http://www.handytech.de/].
+O NVDA suporta a maioria dos terminais da [Handy Tech https://www.handytech.de/].
 Para modelos USB mais antigos, precisará de instalar os drivers USB da HandyTech no seu sistema.
 
 Os seguintes modelos não são automaticamente suportados, mas podem ser usados com o [Handy Tech universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] e o extra do NVDA:
@@ -2062,7 +2142,7 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-As linhas Braille Lilli, disponíveis em [MDV http://www.mdvbologna.it/], são suportadas.
+As linhas Braille Lilli, disponíveis em [MDV https://www.mdvbologna.it/], são suportadas.
 Não necessitará de quaisquer drivers específicos instalados, para utilizar estes terminais.
 Basta conectar a linha e configurar o NVDA para a utilizar.
 
@@ -2084,7 +2164,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 %kc:endInclude
 
 ++ Baum, HumanWare, APH e Orbit ++[Baum]
-São suportadas várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] e [Orbit http://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
+São suportadas várias linhas braille da [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] e [Orbit https://www.orbitresearch.com/] quando ligadas via USB, porta série ou bluetooth.
 Incluem-se:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2 e Vario 340;
 - HumanWare: Brailliant, BrailleConnect e Brailliant2;
@@ -2120,7 +2200,7 @@ Para linhas braille que tenham um joistick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-A linha hedo ProfiLine USB da [hedo Reha-Technik http://www.hedo.de/] é suportada.
+A linha hedo ProfiLine USB da [hedo Reha-Technik https://www.hedo.de/] é suportada.
 Deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
 
 Esta linha ainda não suporta a detecção automática em segundo plano do NVDA.
@@ -2139,7 +2219,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-A linha hedo MobilLine USB da [hedo Reha-Technik http://www.hedo.de/] é suportada.
+A linha hedo MobilLine USB da [hedo Reha-Technik https://www.hedo.de/] é suportada.
 Deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
 
 Esta linha ainda não suporta a detecção automática em segundo plano do NVDA.
@@ -2158,7 +2238,7 @@ Por favor, consulte a documentação desta linha braille para obter a descriçã
 %kc:endInclude
 
 ++ HumanWare séries Brailliant BI/B / BrailleNote Touch ++[HumanWareBrailliant]
-A série de linhas braille Brailliant BI e B da [HumanWare http://www.humanware.com/], incluindo as BI 14, BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
+A série de linhas braille Brailliant BI e B da [HumanWare https://www.humanware.com/], incluindo as BI 14, BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
 Se as ligar via USB, usando o protocolo Humanware, deverá instalar previamente os drivers fornecidos pelo fabricante.
 Os drivers USB não serão necessários se utilizar o protocolo OpenBraille.
 
@@ -2210,9 +2290,9 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 %kc:endInclude
 
 ++ HIMS: Séries Braille Sense, Braille EDGE, Smart Beetle e Sync Braille ++[Hims]
-O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth.
+O NVDA suporta as linhas Braille Sense, Braille EDGE, Smart Beetle e Sync Braille da [Hims https://www.hims-inc.com/] quando conectadas via USB ou bluetooth.
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
-Pode fazer o download dos drivers de http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Pode fazer o download dos drivers de https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor, consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -2282,8 +2362,8 @@ Por favor, consulte a documentação da sua linha braille para obter a descriç�
 %kc:endInclude
 
 ++ Seika ++[Seika]
-As linhas braille Seika versão 3, 4 e 5 (40 células) e Seika80 (80 células) da [Nippon Telesoft http://www.nippontelesoft.com/] são suportadas.
-Pode econtrar mais sobre estas linhas em http://www.seika-braille.com/.
+As linhas braille Seika versão 3, 4 e 5 (40 células) e Seika80 (80 células) da [Nippon Telesoft https://www.nippontelesoft.com/] são suportadas.
+Pode econtrar mais sobre estas linhas em https://www.seika-braille.com/.
 Deverá, primeiro, instalar os drivers USB fornecidos pelo fabricante.
 
 Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
@@ -2472,7 +2552,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-O NVDA suporta os notetakers BrailleNote da [Humanware http://www.humanware.com] quando usados como linha Braille.
+O NVDA suporta os notetakers BrailleNote da [Humanware https://www.humanware.com] quando usados como linha Braille.
 Os seguintes modelos são suportados:
 - BrailleNote Classic (apenas ligação por porta série)
 - BrailleNote PK (Ligação por porta Sére e bluetooth)
@@ -2564,7 +2644,7 @@ Seguem-se os comandos associados à roda de deslocamento:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-O NVDA suporta as linhas Braille EcoBraille da [ONCE http://www.once.es/].
+O NVDA suporta as linhas Braille EcoBraille da [ONCE https://www.once.es/].
 Os modelos seguintes são suportados:
 - EcoBraille 20
 - EcoBraille 40
@@ -2610,7 +2690,7 @@ Por isso, e para manter a compatibilidade com outros leitores de ecrã em Taiwan
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-As linhas Braille Esys, Esytime e Iris da [Eurobraille http://www.eurobraille.fr/] são suportadas pelo NVDA.
+As linhas Braille Esys, Esytime e Iris da [Eurobraille https://www.eurobraille.fr/] são suportadas pelo NVDA.
 Esys e Esytime-Evo são suportadas, quando ligadas quer por USB ou bluetooth.
 As Esytime antigas apenas são suportadas via USB.
 As Iris apenas podem ser ligadas por portas série.
@@ -2694,8 +2774,8 @@ Por favor, consulte a documentação destas linhas Braille para obter a descriç
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-O [BRLTTY http://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
-Para utilizá-lo, terá que instalar o [BRLTTY para o Windows http://www.brltty.com/download.html].
+O [BRLTTY https://www.brltty.com/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
+Para utilizá-lo, terá que instalar o [BRLTTY para o Windows https://www.brltty.com/download.html].
 Para isso, deverá efectuar o download e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se está a utilizar uma linha USB e já tem as drivers do fabricante instaladas.
 
@@ -2705,7 +2785,7 @@ Por isso, a tabela de conversão da escrita do NVDA é irrelevante
 O BRLTTY não está envolvido na detecção automática em segundo plano do NVDA.
 
 Seguem-se as associações de teclas do BRLTTY com o NVDA.
-Por favor, consulte na documentação do BRLTTY as [tabelas de associação teclas do BRLTTY http://mielke.cc/brltty/doc/KeyBindings/] para informação sobre como os comandos do BRLTTY são mapiados nas linhas braille.
+Por favor, consulte na documentação do BRLTTY as [tabelas de associação teclas do BRLTTY https://mielke.cc/brltty/doc/KeyBindings/] para informação sobre como os comandos do BRLTTY são mapiados nas linhas braille.
 %kc:beginInclude
 || Nome | Comando BRLTTY |
 | Mover a linha braille para trás | fwinlt (go left one window) |

@@ -12,7 +12,7 @@ NVDA NVDA_VERSION 用户指南
 
 无视觉桌面访问(NVDA)是一个免费且开放源码的微软 Windows 操作系统的屏幕阅读器。
 通过接受合成器语音或者盲文点字的反馈，盲人和低视力人群无需付出更多而能使用运行在 Windows 操作系统下运作的电脑。，
-NVDA 由 [NV Access http://www.nvaccess.org/]和其他贡献者共同开发(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 http://www.nvdacn.com/]获取)。
+NVDA 由 [NV Access https://www.nvaccess.org/]和其他贡献者共同开发(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 https://www.nvdacn.com/]获取)。
 
 ++ 主要功能 ++[GeneralFeatures]
 NVDA允许盲人和低视力人群访问 Windows 操作系统以及与许多第三方程序进行交互。
@@ -58,7 +58,7 @@ NVDA 支持显示多种语言的简写或非简写点字以及电脑点字。
 NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。 
 只要将此公开许可协议随附于软件内，您可以自由地以任何形式分享或改变此软件，并将所有的源代码提供给需要的人
 此槼则适用于原始发布的软件或任何以此软件修改之后发布的作品，以及所有采用此软件内的程序码所生成的作品。 
-更详细的信息，请查看[完整的授权协议 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+更详细的信息，请查看[完整的授权协议 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + 系统需求 +[SystemRequirements]
 - 操作系统： 所有32位或者64位的Windows 7 Sp1、Windows 8 、Windows 8.1 、Windows 10(包括服务器系统)。
@@ -70,7 +70,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 -
 
 + 获取和配置 NVDA +[GettingAndSettingUpNVDA]
-如果您还没有 NVDA 的副本， 请从[www.nvaccess.org NVDA_URL]下载它(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 http://www.nvdacn.com/]获取)。
+如果您还没有 NVDA 的副本， 请从[www.nvaccess.org NVDA_URL]下载它(译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 https://www.nvdacn.com/]获取)。
 
 转到下载区域，您将发现一个可下载最新版本 NVDA 的链接。
 
@@ -107,9 +107,16 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 一旦安装完成，将弹出消息提示您，安装已经成功。
 再此点击“确定”按钮，将启动更新版本的 NVDA。
 
-+++ 在 Windows 启动时运行 +++[StartAtWindowsLogon]
++++ 插件不兼容的警告 +++[InstallWithIncompatibleAddons]
+如果已经安装了不兼容的插件，NVDA可能还会发出警告，说明不兼容的插件将被禁用。
+您必须使用复选框确认您了解这些插件将被禁用之后才可以按确认按钮继续安装。
+还将显示一个按钮来查看将被禁用的插件。
+请看 [管理不兼容的插件 #incompatibleAddonsManager] 这一节了解详细情况。
+
++++ 在Windows启动时运行NVDA +++[StartAtWindowsLogon]
 此选项将允许您选择是否在 Windows 欢迎屏幕(即在输入密码以前)启动 NVDA。
-此选项还可应用于 UAC 控制和其他安全界面。
+此选项还可应用于用户账户控制（UAC）和其他安全界面。
+全新安装时默认启用这个选项。
 
 +++ 创建桌面快捷方式 (control+alt+n) +++[CreateDesktopShortcut]
 此选项允许您选择，是否要在桌面上创建一个快捷方式启动 NVDA。
@@ -141,7 +148,7 @@ NVDA 受到《GNU 通用公共许可证条款(第二版)》的保护。
 
 NVDA安装版的配置在“漫游”应用程序配置文件夹 (比如 "C:\Users\<用户名>\AppData\Roaming")。
 可以更改注册表把安装版的配置存放在“本地”应用程序配置文件夹(比如 "C:\Users\<用户名>\AppData\Local")。
-请查看[系统层面的配置#SystemWideParameters]这一节，了解更多信息。
+请查看[系统层面的配置 #SystemWideParameters]这一节，了解更多信息。
 
 如果想启动便携版本的NVDA，您可以找到您的便携版本所在的文件夹，按“回车键”选择或双击 nvda.exe 即可。
 
@@ -231,7 +238,7 @@ NVDA 目前共有两套被称为键盘布局的快捷键配置：一套台式机
 要关闭触摸键盘，请双击触摸键盘图标或离开编辑区域。
 
 当触摸键盘处于活动状态时，要定位触摸键盘上的键，请将手指移动到触摸键盘所在的位置（通常位于屏幕底部），然后用一根手指在键盘上移动。
-当您找到想要按的按键时，根据NVDA设置的[触摸交互设置#TouchInteraction]中选择的选项，双击该按键或抬起手指。
+当您找到想要按的按键时，根据NVDA设置的[触摸交互设置 #TouchInteraction]中选择的选项，双击该按键或抬起手指。
 
 ++ 输入帮助模式 ++[InputHelpMode]
 剩余的文档中会陆续提及许多 NVDA 命令，但更方便的快速了解所有不同命令的方法，就是打开“输入帮助”模式。
@@ -560,7 +567,7 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 + 阅读数学内容 +[ReadingMath]
 使用Design Science发行的 MathPlayer 4， NVDA 可以阅读并有交互性的浏览数学内容。
 这要求 MathPlayer 4 已经安装在了电脑上。
-MathPlayer可免费从 http://www.dessci.com/en/products/mathplayer/ 处下载。
+MathPlayer可免费从 https://www.dessci.com/en/products/mathplayer/ 处下载。
 
 NVDA 支持下列类型的数学内容：
 - Mozilla Firefox 和 Microsoft Internet Explorer 的 MathML。
@@ -600,11 +607,11 @@ NVDA 支持下列类型的数学内容：
 如果你有一个点显器，NVDA可以以盲文的形式显示屏幕上的信息
 如果你的点显器有 Perkins 键盘，你还可以键入简写或非简写点字。
 
-有关支持的点显器的信息，请参阅[支持的点显器#SupportedBrailleDisplays]部分。
+有关支持的点显器的信息，请参阅[支持的点显器 #SupportedBrailleDisplays]部分。
 本节还包含有关支持NVDA自动背景盲文显示检测功能的显示器的信息。
-您可以使用[NVDA设置#NVDASettings]对话框的[盲文类别#BrailleSettings]配置盲文。
+您可以使用[NVDA设置 #NVDASettings]对话框的[盲文类别 #BrailleSettings]配置盲文。
 
-++ 控件类型/状态和路标缩写 ++ [BrailleAbbreviations]
+++ 控件类型/状态和路标缩写 ++[BrailleAbbreviations]
 为了在点显器上安装尽可能多的信息，已经定义了以下缩写来指示控制类型和状态以及界标。
 
 || 缩写 | 控件类型 |
@@ -626,7 +633,7 @@ NVDA 支持下列类型的数学内容：
 | fnote | 注脚 |
 | gra | 图片 |
 | grp | 群组 |
-| hN | 标题层级，例如，1级标题 H1、2级标题 H2。 |
+| hN | 标题层级，例如，1级标题 H1、2级标题 H2 |
 | hlp | 气泡帮助 |
 | lmk | 地标 |
 | lnk | 链接 |
@@ -658,39 +665,39 @@ NVDA 支持下列类型的数学内容：
 
 下面是NVDA定义的控件状态的缩写:
 || 缩写 | 控件状态 |
-| ...... |当对象支持自动完成时显示|
-| ⢎⣿⡱|当按下对象（例如切换按钮）时显示|
-| ⢎⣀⡱|当没有按下对象（例如切换按钮）时显示|
-| ⣏⣿⣹|当对象（例如复选框）被选中时显示|
-| ⣏⣸⣹|当对象（例如复选框）被选中一半时显示|
-| ⣏⣀⣹|当对象（例如复选框）未被选中时显示|
-| - |当对象（例如树视图项）可折叠时显示|
-| + |当对象（例如树视图项）可展开时显示|
-| *** |遇到受保护的控件或文档时显示|
-| clk |对象可单击时显示|
-| cmnt |当文档中的电子表格单元格或文本片段有注释时显示|
-| frml |在电子表格单元格中有公式时显示|
-|无效|在输入无效条目时显示|
-| ldesc |当对象（通常是图形）具有长描述时显示|
-| mln |当编辑字段允许键入多行文本（例如网站上的注释字段）时显示|
-| req |遇到所需的表单字段时显示|
-| ro |当对象（例如，可编辑的文本字段）是只读时显示|
-| sel |选择对象时显示|
-| nsel |未选择对象时显示|
-| sorted asc |当对象按升序排序时显示|
-| sorted desc |当对象按降序排序时显示|
-| submnu |当对象有弹出窗口（通常是子菜单）时显示
+| ...... | 当对象支持自动完成时显示 |
+| ⢎⣿⡱ | 当按下对象（例如切换按钮）时显示 |
+| ⢎⣀⡱ | 当没有按下对象（例如切换按钮）时显示 |
+| ⣏⣿⣹ | 当对象（例如复选框）被选中时显示 |
+| ⣏⣸⣹ | 当对象（例如复选框）被选中一半时显示 |
+| ⣏⣀⣹ | 当对象（例如复选框）未被选中时显示 |
+| - | 当对象（例如树视图项）可折叠时显示 |
+| + | 当对象（例如树视图项）可展开时显示 |
+| *** | 遇到受保护的控件或文档时显示 |
+| clk | 对象可单击时显示 |
+| cmnt | 当文档中的电子表格单元格或文本片段有注释时显示 |
+| frml |在电子表格单元格中有公式时显示 |
+| invalid |在输入无效条目时显示 |
+| ldesc | 当对象（通常是图形）具有长描述时显示 |
+| mln | 当编辑字段允许键入多行文本（例如网站上的注释字段）时显示 |
+| req | 遇到所需的表单字段时显示 |
+| ro | 当对象（例如，可编辑的文本字段）是只读时显示 |
+| sel | 选择对象时显示 |
+| nsel | 未选择对象时显示 |
+| sorted asc | 当对象按升序排序时显示 |
+| sorted desc | 1当对象按降序排序时显示 |
+| submnu | 当对象有弹出窗口（通常是子菜单）时显示 |
 
 最后，定义了以下路标缩写：
-||缩写|地标|
-| bnnr |横幅区路标|
-| cinf |内容信息区路标|
-| cmpl |补充信息区路标|
-| form |表单区路标|
-| main |主要内容区路标|
-| navi |导航区路标|
-| srch |搜索区路标|
-| rgn |区域路标|
+|| 缩写 | 路标 |
+| bnnr | 横幅区路标 |
+| cinf | 内容信息区路标 |
+| cmpl | 补充信息区路标 |
+| form | 表单区路标 |
+| main | 主要内容区路标 |
+| navi | 导航区路标 |
+| srch | 搜索区路标 |
+| rgn | 区域路标 |
 
 ++ 点字输入 ++[BrailleInput]
 NVDA支持从点显器输入简写以及非简写点字。
@@ -712,7 +719,7 @@ NVDA支持从点显器输入简写以及非简写点字。
 NVDA 支持 Windows 10内置的光学字符识别（OCR）功能，以便将图像识别成为文本。 
 NVDA的插件也有提供额外的内容识别器。
 
-当您使用内容识别指令时，NVDA会从目前的[导航对象#ObjectNavigation]识别内容。
+当您使用内容识别指令时，NVDA会从目前的[导航对象 #ObjectNavigation]识别内容。
 默认设置下，导航对象会跟随系统焦点或浏览模式光标，因此需要OCR时，通常您只需移动焦点或浏览模式光标即可。 
 例如，如果将浏览模式光标移动到图形上，在默认设置下，识别器会开始从图形中识别其内容。 
 您可能希望直接使用对象导航。例如，识别整个应用程序窗口的内容。
@@ -725,7 +732,7 @@ NVDA的插件也有提供额外的内容识别器。
 Windows 10包含许多语言的光学字符识别功能。
 NVDA可以使用它来识别来自图像或无障碍支持差的应用程序的文本。
 
-您可以在[NVDA设置#NVDASettings]对话框的[Windows 10 OCR部分#Win10OcrSettings]中设置用于文本识别的语言。
+您可以在[NVDA设置 #NVDASettings]对话框的[Windows 10 OCR部分 #Win10OcrSettings]中设置用于文本识别的语言。
 您可以打开开始菜单，选择设置，选择时间和语言 - >地区和语言，然后选择添加语言来安装其他语言。
 
 %kc:beginInclude
@@ -822,7 +829,7 @@ NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
 Excel 工作簿可包含表单。
 您可以使用“元素列表”对话框查看他们或字母F 和 shift+F 来跳转。
 当您使用浏览模式移动到某个表单项后，您可以使用“回车”键或“空格”键切换到焦点模式，您可以与之交互，方法取决于当前所在处的控件。
-更多有关于浏览模式或单键导航使用方面的信息，请查阅[浏览模式张节 #BrowseMode]。
+更多有关于浏览模式或单键导航使用方面的信息，请查阅[浏览模式 #BrowseMode]这一节。
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
@@ -877,7 +884,7 @@ NVDA支持在亚马逊Kindle for PC上阅读和导航书籍。
 NVDA为具有数学内容无障碍支持的书籍提供数学内容的阅读和交互式导航的早期支持。
 有关详细信息，请参阅[阅读数学内容#ReadingMath]部分。
 
-+++ 文本选择 +++ [KindleTextSelection]
++++ 文本选择 +++[KindleTextSelection]
 Kindle允许您对所选文本执行各种功能，包括获取字典定义，添加注释和突出显示，将文本复制到剪贴板以及搜索Web。
 为此，首先像在浏览模式下一样选择文本; 例如 通过使用shift和光标键。
 ％KC：beginInclude
@@ -885,7 +892,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 ％KC：endInclude
 如果在未选择文本的情况下执行此操作，将在光标处显示单词的选项。
 
-+++ 用户注释 +++ [KindleUserNotes]
++++ 用户注释 +++[KindleUserNotes]
 您可以添加关于文字的单词或段落的注释。
 要执行此操作，请首先选择相关文本并访问上述选择选项。
 然后，选择添加注释。
@@ -894,9 +901,9 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 
 查看，编辑或删除笔记的流程：
 
-+将光标移动到包含笔记的文本。
-+如上所述访问选择选项。
-+选择编辑笔记。
++ 将光标移动到包含笔记的文本。
++ 如上所述访问选择选项。
++ 选择编辑笔记。
 +
 
 ++ Azardi ++[Azardi]
@@ -917,7 +924,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 
 ++ NVDA设置对话框 ++[NVDASettings]
 %kc:settingsSection: || 名称 | 台式机键盘 | 笔记本键盘 | 描述 |
-[NVDA设置对话框#NVDASettings]里面有很多设置选项。
+[NVDA设置对话框 #NVDASettings]里面有很多设置选项。
 这个对话框有一个列表，里面有设置选项的分类。
 选中一个分类，这一类的设置就在对话框里显示出来。
 按”应用“按钮，立即应用设置而不用关闭对话框。
@@ -940,8 +947,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 此选项告诉 NVDA，使用 Windows 当前设置的语言。
 
 请注意，更改语言时，NVDA 必须先重新启动。
- 如果您做出了不同的选择，NVDA 将询问您是否要重新启动。
-点击“确定”按钮，NVDA 将重新启动。
+出现确认对话框时，如果您希望现在或稍后使用新语言，请选择“立即重启”或“稍后重启”。 如果选择“稍后重启”，则必须保存配置（手动保存或打开退出时保存配置的功能）。
 
 ==== 退出时保存设置 ====[GeneralSettingsSaveConfig]
 此选项是一个复选框，告诉 NVDA 在您退出时自动地保存当前的配置。
@@ -957,7 +963,15 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 ==== 日志记录级别 ====[GeneralSettingsLogLevel]
 这是一个组合框，允许您指定在 NVDA 运行时日志记录的数量。
 用户一般不用更改这一设置，以免日志太多。
-然而，如果您希望在报告 Bug 时提供信息，这个选项或许是有用的。
+然而，如果您希望在报告 Bug 时提供更多信息，或者完全关闭日志功能，这个选项或许是有用的。
+
+日志记录级别有以下几种：
+- 停用 除了NVDA启动的信息，不记录其他日志。
+- 基本信息 启动信息以及对开发者有用的其他信息。
+- 调试警告 包括信息级别的日志以及不严重的错误
+- 输入/输出 包括上面几个级别的日志以及键盘和点显器的输入信息、语音和点显器输出信息，这些日志可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为输入/输出。
+- 调试 包括上面几个级别的日志以及对调试有用的信息，这些日志同样可能包含您的个人隐私，如果您希望保护隐私请不要把日志级别设为调试。
+-
 
 ==== 系统启动后自动运行 NVDA ====[GeneralSettingsStartAfterLogOn]
 如果此选项被选中，NVDA 将在 Windows 登陆后尽快启动。
@@ -980,7 +994,7 @@ Kindle允许您对所选文本执行各种功能，包括获取字典定义，�
 - 当前 NVDA 版本
 - 操作系统版本
 - 操作系统是 64 位还是 32 位
-
+- 
 
 ==== 允许NVDA获取用户统计信息 ====[GeneralSettingsGatherUsageStats]
 选中这一项之后，NV Access 会在检查更新时获取您的信息，以便统计NVDA用户的分布。比如使用的操作系统和所在国家的比例。
@@ -991,7 +1005,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 - 当前使用的语音合成器名称(包括合成器插件名称)
 - 当前使用的点显器名称(包括点显器驱动插件名称)
 - 当前使用的盲文表(使用点显器时才会上传)
-
+- 
 
 这些信息有助于 NV Access 决定NVDA开发的侧重点。
 
@@ -1056,6 +1070,16 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 默认启用，该选项告诉 NVDA 在处理字符和标点时当前语音语言是否可信。
 如果您发现 NVDA 在使用特定的合成器或声音读出某标点时使用了错误的语言，您可能希望把它关闭并强制 NVDA 使用其自身的本地设置来代替语音语言译者注：对于vocalizer和vocalizer express的语音库而言此设置无效。
 
+==== 处理字符和符号时包含Unicode联盟提供的数据（包括表情符号） ====[SpeechSettingsCLDR]
+启用此复选框后，NVDA将在拼读字符和符号时包含其他符号发音词典。
+这些词典包含[Unicode 联盟 http://www.unicode.org/consortium/] 在 [通用本地化数据库 http://cldr.unicode.org/]中提供的一部分符号（特别是表情符号）的描述。
+如果您希望NVDA根据此数据拼读表情符号以及其他字符的描述，则应启用此选项。
+但是，如果您使用的语音合成器本身支持表情符号，您可以关闭这个选项。
+
+请注意，手动添加或编辑的字符描述将保存为用户设置的一部分。
+因此，如果您更改特定表情符号的说明，则无论是否启用此选项，该表情符号按照自定义说明拼读。
+您可以在NVDA的[标点符号读音 #SymbolPronunciation]设置中添加，编辑或删除符号说明。
+
 ==== 大写时音高变化的百分比 ====[SpeechSettingsCapPitchChange]
 这是一个编辑框，允许您定义在遇到大写字母时，语音语调变化的数值。
 此数值是一个百分数，负数语调降低，正数语调升高。
@@ -1069,7 +1093,7 @@ NVDA更新服务器只根据您的IP判断用户在哪国使用NVDA，并不会�
 如果此复选框被选中，每次遇到大写字母时，NVDA 会自行发出一个小小的提示音。
 和“遇到大写字母时先提示大写”的复选框一样，当合成器无法正常地改变语调时，这会是一个实用的选择。
 
-==== 激活拼读功能(如果支持) ====[VoiceSpellingFunctionality]
+==== 在合成器支持的情况下激活拼读功能  ====[SpeechSettingsUseSpelling]
 一些单词由一个字符组成，而朗读的标点符号会依照读出的字符(例如一个单独的字符(在单词拼读时)或者一个单词)而不同。
 例如，“a”在英语里既用来表示“a”这个字母，也是一个单词，并且在不同的场景下读法也不尽相同。
 此选项允许合成器在这两者之间进行区分，前提是合成器支持这个特性。
@@ -1123,7 +1147,7 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 这个分类包含以下选项
 
 ==== 更改点显器 ====[BrailleSettingsChange]
-按下盲文分类内的更改按钮，就会打开[Select Braille Display #SelectBrailleDisplay]对话框
+按下盲文分类内的更改按钮，就会打开[选择点显器 #SelectBrailleDisplay]对话框
 这个对话框会出现在NVDA设置对话框之上
 保存或者更改点显器设置之后，会回到NVDA设置对话框。
 
@@ -1203,7 +1227,7 @@ NVDA 正在运行的时候，如果您想在不进入“语音设置”对话框
 上下文信息是指包含焦点的对象的层次结构。
 例如，当您关注列表项时，此列表项是列表的一部分。
 该列表可能包含在对话框等中。
-有关适用于NVDA中对象的层次结构的更多信息，请参阅有关[对象导航#ObjectNavigation]的部分。
+有关适用于NVDA中对象的层次结构的更多信息，请参阅有关[对象导航 #ObjectNavigation]的部分。
 
 当设置为填充显示以进行上下文更改时，NVDA将尝试在点显器上显示尽可能多的上下文信息，但仅针对已更改的上下文部分。
 对于上面的示例，这意味着当将焦点更改为列表时，NVDA将在点显器上显示列表项。
@@ -1260,7 +1284,7 @@ NVDA设置对话框中的“键盘设置”部分包含一些选项，用于设�
 这个组合框允许您选择 NVDA 使用的键盘布局的类型，当前，NVDA 自带着台式机和笔记本两套键盘布局。
 
 ==== 选择 NVDA 键 ====[KeyboardSettingsModifiers]
-这个列表中有几个复选框，决定了哪些按键可以当作[NVDA 键#TheNVDAModifierKey] 有以下几个选项
+这个列表中有几个复选框，决定了哪些按键可以当作[NVDA 键 #TheNVDAModifierKey] 有以下几个选项
 - 大小写锁定键(capslock)
 - 扩展的插入键(Insert)(通常在光标键的上面，与行首键(home)、行尾键(end)相邻)
 - 数字键盘的插入键
@@ -1338,7 +1362,12 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 
 ==== 亮度控制音频坐标的音量 ====[MouseSettingsBrightness]
 如果“鼠标移动时播放音频坐标”复选框被选中之后，选中此复选框意味着，播放音频坐标的音量由鼠标下的屏幕亮度的大小来决定。
-此设置默认情况下不选中。
+默认设置没有启用这个功能。
+
+==== 忽略某些软件的鼠标操作 ====[MouseSettingsHandleMouseControl]
+使用TeamViewer等远程控制软件时，远程控制端会操作鼠标，选中这个复选框可以让NVDA忽略这些操作。
+默认设置没有启用这个功能。
+如果您还选中了启用鼠标导航复选框，NVDA不会读出这些软件远程控制端对鼠标的操作。
 
 +++ 使用触摸屏与系统交互 +++[TouchInteraction]
 这个部分只有在设备有触摸屏并且系统是Windows 8或者更高的版本才可用。
@@ -1574,8 +1603,47 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 ==== 识别用语言 ====[Win10OcrSettingsRecognitionLanguage]
 此组合框允许您选择用于光学字符识别的语言。
 
++++ 高级设置 +++
+警告！ 此类别中的设置适用于高级用户，如果随意修改，可能会导致NVDA无法正常运行。
+只有在您确定知道自己在做什么，或者NVDA开发人员明确指示您修改时，才应该对这些设置进行更改。
+
+==== 更改高级设置 ====[AdvancedSettingsMakingChanges]
+更改下面的设置之前必须选中这个复选框，表示用户了解随意更改这些设置的风险。
+
+==== 恢复高级设置为默认值 ====[AdvancedSettingsRestoringDefaults]
+即使未勾选确认复选框，该按钮也会恢复高级设置为默认值。
+更改高级设置后，您可能希望恢复高级设置为默认值。
+如果您不确定设置是否已更改，您可能也会需要恢复高级设置为默认值。
+
+==== 允许从开发者实验目录加载代码 ====[AdvancedSettingsEnableScratchpad]
+在为NVDA开发插件时，能够边写边测试会给开发者带来很大便利。
+启用此选项后，NVDA允许从NVDA用户配置目录中特殊的开发者实验目录目录加载自定义appModules，globalPlugins，brailleDisplayDrivers和synthDrivers。
+以前NVDA会直接从用户配置目录加载自定义代码而且不提供关闭加载的选项，这种做法不太安全。
+默认情况下，此选项处于关闭状态，可以确保用户仅仅在明确了解的情况下，用NVDA运行未经测试的代码。
+如果您希望将代码分发给其他人，则应将其打包为NVDA插件。
+
+==== 打开开发者实验目录 ====[AdvancedSettingsOpenScratchpadDir]
+此按钮可打开开发者实验目录。
+仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
+ 
+==== 在Word里使用Microsoft UI Automation Microsoft UI Automation是微软的最新无障碍接口 简称UIA  ====[AdvancedSettingsUseUiaForWord]
+启用此选项后，NVDA将尝试使用UIA这个无障碍接口从Word文档控件中获取信息。
+这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
+  对于在Windows 10上运行的最新版本的Office 2016或者Office 365，UIA能够获取的信息和原来的方式差不多，而且响应速度更快。
+但是，在某些版本的Office中可能存在某些未公开或未正确显示的信息，这意味着UIA支持不好用。
+我们建议大多数用户不要启用此功能，但我们欢迎Office 2016或者Office 365的用户测试此功能并提供反馈。
+
+==== 光标移动超时（单位是千分之一秒） ====[AdvancedSettingsCaretMoveTimeout]
+此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
+如果您发现NVDA光标朗读有问题，比如位置不对，那么你可以增加这个时间试试。
+
+==== 调试日志 ====[AdvancedSettingsDebugLoggingCategories]
+此列表中的复选框允许您在NVDA日志中启用特定类别的调试信息。
+记录这些信息可能会影响性能而且会让日志文件比以前大。
+例如 调试盲文显示器驱动程序时，NVDA开发者会让你打开其中一个，请不要同时开启多个。
+
 ++ 杂项设置 ++[MiscSettings]
-Besides the [NVDA Settings #NVDASettings] dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
+除了[NVDA 设置 #NVDASettings]对话框以外，NVDA菜单的“首选项”子菜单包含下面列出的其他几个项目。
 
 +++ 语音字典 +++[SpeechDictionaries]
 “语音字典”对话框，可用来为特定词语或者短语指定特殊的朗读方法，他可以再“选项”菜单下的“语音字典”找到。
@@ -1710,7 +1778,7 @@ NVDA 的语音字典比之单词替换更为强大。
 如果您只想手动使用此配置，选择“手动激活”，这是默认设置。
 否则，选择一个“关联”来自动激活该配置。
 为了方便，如果您并没有为配置输入名称，名称就会依照您选择的关联而自动填入。
-请查看[下面 #ConfigProfileTriggers]有关于“关联”的信息。
+请查看下面[激活配置 #ConfigProfileTriggers]那一节有关于“关联”的信息。
 
 点击“确认”按钮创建配置并关闭配置文件对话框，使得您可以开始对其进行编辑。
 
@@ -1793,7 +1861,7 @@ NVDA 的语音字典比之单词替换更为强大。
 如果选择的插件拥有可用的帮助，您可以通过点击“插件帮助”按钮访问。
 
 要想浏览并下载在线的可用插件包，点击“获取插件”按钮。
-此按钮会打开[NVDA 插件页面 http://addons.nvda-project.org/]。
+此按钮会打开[NVDA 插件页面 https://addons.nvda-project.org/]。
 如果 NVDA 已经安装并运行在了您的系统上，您可以使用浏览器直接打开插件，开始下面将要叙述的安装进程。
 否则，保存插件并按照下面的教程进行。
 
@@ -1815,28 +1883,44 @@ NVDA 会询问您是否真的要这样做。
 要想启用先前停用的插件，点击“启用”按钮。
 当插件状态显示为“正在运行”或“已启用”时，您可以停用该插件；当状态显示为“挂起”或“已停用”时，您可以启用该插件。
 每次点击“启用”和“停用”按钮后，插件状态栏都能实时地显示在下次 NVDA 重新启动时会发生什么变化。
-如果之前停用了插件，状态一栏会显示“重启后启用”。如果之前插件是启用的，状态一栏会显示“重启后禁用”。
+如果之前停用了插件，状态一栏会显示“重启后启用”。
+如果之前插件是启用的，状态一栏会显示“重启后禁用”。
 就像是添加或删除插件一样，您必须重新启动 NVDA 才能使之生效。
 
 管理器也包含“关闭”按钮，使用它可以关闭对话框。
 如果您已经安装卸载插件或修改了插件的状态，NVDA 会首先询问您是否要重新启动以使修改生效。
 
-在过去，您只需单独复制插件或驱动到 NVDA 的用户配置目录即可扩展 NVDA 的功能。
-虽然此版本的 NVDA 仍然会加载他们，但是他们不会被显示在插件管理器。
-最好从您的配置删除这些文件并安装可用的适合插件。
+旧插件可能不兼容新版NVDA。
+为新版NVDA编写的插件也可能不兼容旧版NVDA。
+安装这些插件时，NVDA会报错并提示原因。
+您可以在插件管理器内找到“查看不兼容的插件”这个按钮，点击这个按钮就可以查看这些插件。
 
 要想在任何地方访问插件管理器，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
 
+++ 管理不兼容的插件 ++[incompatibleAddonsManager]
+可以通过插件管理器中的“查看不兼容的插件”按钮访问不兼容的加插件管理器，允许您检查任何不兼容的插件以及不兼容的原因。
+如果NVDA进行重大更改之后插件尚未更新，或者它们依赖于您正在使用的NVDA版本中未提供的功能，NVDA则会认为插件不兼容。
+不兼容的附加组件管理器有一条简短的消息来解释它的用途以及NVDA的版本。
+不兼容的加载项显示在列表中，其中包含以下列：
++ 名称， 插件名称
++ 版本， 插件版本
++ 不兼容的原因， 解释为什么插件不兼容
++
+
+不兼容插件管理器里面也有关于插件按钮
+点击这个按钮会打开一个对话框，里面有这个插件的详细信息，或许可以帮你找到开发者。
+
+
 ++ Python 控制台 ++[PythonConsole]
 NVDA Python 控制台可以再 NVDA 的“工具”菜单找到，他是一个开发工具，他可用来进行调试，一般的内部检查和程序可访问程度的检查。
-更多信息，可从[NVDA 网站的开发部分 http://community.nvda-project.org/wiki/Development]查看可用的开发文档。
+更多信息，可从[NVDA 网站的开发部分 https://community.nvda-project.org/wiki/Development]查看可用的开发文档。
 
 ++ 重新加载插件 ++[ReloadPlugins]
 一旦此项目被激活，即可在不重新启动 NVDA 的情况下重新加载程序模块和全局插件，此功能对于开发者非常有用。
 
 + 支持的语音合成器 +[SupportedSpeechSynths]
 此章节包含 NVDA 支持的合成器的信息。
-要想查看更多您可以购买或下载的、可用于 NVDA 的免费或商业语音合成器的列表，请查看页面[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices](译者注：更多的语音合成器资源也可访问：[NVDA语音合成器集中下载 http://www.nvdacn.com/vd/]页获取)。
+要想查看更多您可以购买或下载的、可用于 NVDA 的免费或商业语音合成器的列表，请查看页面[https://www.nvda-project.org/wiki/ExtraVoices https://www.nvda-project.org/wiki/ExtraVoices](译者注：更多的语音合成器资源也可访问：[NVDA语音合成器集中下载 https://www.nvdacn.com/vd/]页获取)。
 
 ++ eSpeak NG++[eSpeakNG]
 [eSpeak NG https://github.com/espeak-ng/espeak-ng] 语音合成器预装在 NVDA 之中，不需要安装特别的驱动或者组件。
@@ -1853,7 +1937,7 @@ SAPI 4 是一个很有历史的微软软件语音合成器标准。
 许多在此标准下编译的语音合成器可以在各种各样的公司或网站购买或免费下载。
 当在 NVDA 使用此合成器时，“可用的语音”(访问[语音设置对话框 #VoiceSettings]或者通过 [循环切换合成器设置 #SynthSettingsRing])将包含所有安装在系统的 SAPI4 的语音合成器引擎的所有语音。
 
-如果您已经安装了 SAPI 4语音，但合成器并未出现在 NVDA 的合成器列表，请安装 SAPI 4运行接口，请访问 http://activex.microsoft.com/activex/controls/sapi/spchapi.exe 。
+如果您已经安装了 SAPI 4语音，但合成器并未出现在 NVDA 的合成器列表，请安装 SAPI 4运行接口，请访问 https://activex.microsoft.com/activex/controls/sapi/spchapi.exe 。
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++[SAPI5]
 SAPI 5 是一个微软软件语音合成器标准。
@@ -1865,8 +1949,8 @@ Microsoft Speech Platform (微软语音平台)包含许多语言的声音，它�
 此语音也可用于 NVDA。
 
 要想使用此语音，您必须安装以下两种组件：
-- Microsoft Speech Platform - 运行库 (版本 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - 运行库语言包 (版本 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - 运行库 (版本 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - 运行库语言包 (版本 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  此页面包含了许多用于语音识别和文字转语音的文件。
  为您希望的语言和语音选择包含 TTS 数据的文件。
  例如，文件 MSSpeech_TTS_en-US_ZiraPro.msi 是一个英国英语的语音。
@@ -1896,7 +1980,7 @@ Windows 10包括称为“OneCore”或“移动”语音的新语音。
 
 ++ 后台自动检测点显器 ++[AutomaticDetection]
 NVDA能够通过USB或蓝牙自动检测后台的许多点显器。
-通过从NVDA的[盲文设置对话框#BrailleSettings]中选择自动选项作为首选盲文显示，可以实现此行为。
+通过从NVDA的[盲文设置对话框 #BrailleSettings]中选择自动选项作为首选盲文显示，可以实现此行为。
 默认情况下此选项是开启的。
 
 以下点显器支持此自动检测功能。
@@ -1911,9 +1995,9 @@ NVDA能够通过USB或蓝牙自动检测后台的许多点显器。
 -
 
 ++ Freedom Scientific Focus/PAC Mate Series ++[FreedomScientificFocus]
-All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
+All Focus and PAC Mate displays from [Freedom Scientific https://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+If you do not have them already, you can obtain them from https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
@@ -1974,7 +2058,7 @@ For Focus 80 only:
 %kc:endInclude
 
 ++ Optelec ALVA 6 series/protocol converter ++[OptelecALVA]
-Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+Both the ALVA BC640 and BC680 displays from [Optelec https://www.optelec.com/] are supported when connected via USB or bluetooth.
 Alternatively, you can connect an older Optelec display, such as a Braille Voyager, using a protocol converter supplied by Optelec.
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
@@ -2026,7 +2110,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Handy Tech Displays ++[HandyTech]
-NVDA supports most displays from [Handy Tech http://www.handytech.de/] when connected via USB, serial port or bluetooth.
+NVDA supports most displays from [Handy Tech https://www.handytech.de/] when connected via USB, serial port or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
 
 The following displays are not supported out of the box, but can be used via [Handy Tech's universal driver https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
@@ -2060,7 +2144,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
+The Lilli braille display available from [MDV https://www.mdvbologna.it/] is supported.
 You do not need any specific drivers to be installed to use this display.
 Just plug in the display and configure NVDA to use it.
 
@@ -2082,7 +2166,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit Braille Displays ++[Baum]
-Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/], [APH http://www.aph.org/] and [Orbit http://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
+Several [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/], [APH https://www.aph.org/] and [Orbit https://www.orbitresearch.com/] displays are supported when connected via USB, bluetooth or serial.
 These include:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2118,7 +2202,7 @@ For displays which have a joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-The hedo ProfiLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+The hedo ProfiLine USB from [hedo Reha-Technik https://www.hedo.de/] is supported.
 You must first install the USB drivers provided by the manufacturer.
 
 This display does not yet support NVDA's automatic background braille display detection functionality.
@@ -2137,7 +2221,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ hedo MobilLine USB ++[HedoMobilLine]
-The hedo MobilLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+The hedo MobilLine USB from [hedo Reha-Technik https://www.hedo.de/] is supported.
 You must first install the USB drivers provided by the manufacturer.
 
 This display does not yet support NVDA's automatic background braille display detection functionality.
@@ -2156,7 +2240,7 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series / BrailleNote Touch  ++[HumanWareBrailliant]
-The Brailliant BI and B series of displays  from [HumanWare http://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+The Brailliant BI and B series of displays  from [HumanWare https://www.humanware.com/], including the BI 14, BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
 If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
 USB drivers are not required if the protocol is set to OpenBraille.
 
@@ -2208,9 +2292,9 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series ++[Hims]
-NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims https://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from here: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+You can download these from here: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -2281,7 +2365,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ 清华点显器 ++[Seika]
 支持来自的清华V3,V4和V5（40方）和80（80方）点显器。
-您可以在http://qhqmx.com.cn/dianziji.html上找到有关这些显示的更多信息。
+您可以在https://qhqmx.com.cn/dianziji.html上找到有关这些显示的更多信息。
 您必须先安装制造商提供的USB驱动程序。
 
 这些显示器尚不支持NVDA的自动后台检测盲文显示检测功能。
@@ -2470,7 +2554,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
+NVDA supports the BrailleNote notetakers from [Humanware https://www.humanware.com] when acting as a display terminal for a screen reader.
 The following models are supported:
 - BrailleNote Classic (serial connection only)
 - BrailleNote PK (Serial and bluetooth connections)
@@ -2562,7 +2646,7 @@ Following are commands assigned to the scroll wheel:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA supports EcoBraille displays from [ONCE http://www.once.es/].
+NVDA supports EcoBraille displays from [ONCE https://www.once.es/].
 The following models are supported:
 - EcoBraille 20
 - EcoBraille 40
@@ -2608,7 +2692,7 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-The Esys, Esytime and Iris displays from [Eurobraille http://www.eurobraille.fr/] are supported by NVDA.
+The Esys, Esytime and Iris displays from [Eurobraille https://www.eurobraille.fr/] are supported by NVDA.
 Esys and Esytime-Evo devices are supported when connected via USB or bluetooth.
 Older Esytime devices only support USB.
 Iris displays can only be connected via a serial port.
@@ -2692,8 +2776,8 @@ Please see the display's documentation for descriptions of where these keys can 
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] is a separate program which can be used to support many more braille displays.
-In order to use this, you need to install [BRLTTY for Windows http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows https://www.brltty.com/download.html].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
 
@@ -2703,7 +2787,7 @@ Therefore, NVDA's braille input table setting is not relevant.
 BRLTYY is not involved in NVDA's automatic background braille display detection functionality.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key binding lists http://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key binding lists https://mielke.cc/brltty/doc/KeyBindings/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
@@ -2746,15 +2830,17 @@ nvda -q
 | -r | --replace | 退出已运行的版本并启用这个版本。 |
 | -k | --check-running | 通过退出代码报告 NVDA 是否在运行，0 表示运行， 1 表示没有运行。 |
 | -f LOGFILENAME | --log-file=LOGFILENAME | 日志消息需要写入的文件。 |
-| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级(调试 10， 信息 20， 警告 30， 错误 40， 严重 50默认为“警告”。 |
+| -l LOGLEVEL | --log-level=LOGLEVEL | 日志消息记录的最低级别(调试 10， 信息 20， 警告 30， 错误 40， 严重 50，停用 100 默认为“警告”。 |
 | -c CONFIGPATH | --config-path=CONFIGPATH | 所有 NVDA 设置存储的路径。 |
 | -m | --minimal | 无声、无界面、无启动通知等。 |
-| -s | --secure | 安全模式 (禁用 Python 控制台)。 |
+| -s | --secure | 安全模式 (禁用 Python 控制台并且停用日志)。 |
 | None | --disable-addons | 使插件无效。 |
-| None | --debug-logging | 开启调试日志 覆盖之前的日志等级设置( ""--loglevel"", -l) argument given. |
-| None | --no-sr-flag  | 不修改全局系统屏幕阅读器的标志。 |
+| None | --debug-logging | 开启调试日志 覆盖之前的日志等级设置( ""--loglevel"", -l) 注意：这个参数会覆盖其他停用日志的参数 |
+| None | --no-logging | 关闭NVDA日志功能 注意 --debug-logging 和 --loglevel 会覆盖这个参数|
+| None | --no-sr-flag  | 不修改Windows系统全局屏幕阅读器的标志。 |
 | None | --install | 安装 NVDA(启动最新安装的副本)。 |
 | None | --install-silent | 静默安装 NVDA(不启动最新安装的副本)。 |
+| None | --enable-start-on-logon=True|False | 为安装的副本开启[在 Windows 启动时运行 #StartAtWindowsLogon]这个选项 |
 | None | --create-portable |创建一个便携版 (并且启动这个便携版). 必须和 --portable-path 一起用 |
 | None | --create-portable-silent | 创建一个便携版 (不启动这个便携版). 必须和 --portable-path 一起用 |
 | None | --portable-path=PORTABLEPATH | 创建便携版的目录 |

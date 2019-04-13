@@ -12,7 +12,7 @@ Dobrodošli u NVDA!
 
 NonVisual Desktop Access (NVDA) je  besplatan čitač zaslona otvorenog koda za operacijski sustav Microsoft Windows.
 Pružajući povratne informacije pomoću sintetičkog govora i brajice, NVDA omogućuje slijepim osobama i osobama s oštećenjem vida pristup računalima sa windows operativnim sustavom za cijenu koja nije veća od one koju plaćaju korisnici normalnog vida.
-NVDA razvija organizacija [NV Access http://www.nvaccess.org/], uz doprinose zajednice.
+NVDA razvija organizacija [NV Access https://www.nvaccess.org/], uz doprinose zajednice.
 
 ++ Glavne Značajke ++[GeneralFeatures]
 Nvda omogućuje slijepim i slabovidnim osobama  pristup i rad u windows operativnom sustavu te u puno aplikacija napravljenih od strane treće strane.
@@ -58,7 +58,7 @@ NVDA sva prava zadržana NVDA_COPYRIGHT_YEARS NVDA doprinositelji.
 Nvda pokriva GNU General Public License (Inačica 2).
 Dozvoljeno je dijeljenje i izmjena ovog softvera na koji god način želite, sve dok je popraćeno licencom i dok činite otvoreni kod dostupnim bilo kome tko želi.
 Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz tog proizašao.
-Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Za više pojedinosti, možete [pogledati cijelu licencu. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +[SystemRequirements]
 - Operativni sustavi: sva 32-bitna i 64-bitna izdanja Windowsa 7, Windowsa 8, Windowsa 8.1, Windowsa 10, i svih Serverskih Operacijskih Sustava počevši od Windows Server 2008 R2.
@@ -107,9 +107,16 @@ Također postoji nekoliko opcija u ovom dijaloškom okviru koje su objašnjene i
 Nakon završetka instalacije, pojavit će se poruka da je instalacija uspješna.
 Kada pritisnete U redu, pokrenut ćete netom instaliranu kopiju.
 
++++ Upozorenje o Nekompatibilnim dodacima +++[InstallWithIncompatibleAddons]
+Ako već imate instalirane dodatke, može se pojaviti upozorenje koje označava potrebu deinstaliranja nekompatibilnih dodataka.
+Prije nego što ćete moći pritisnuti gumb nastavi, morat ćete označiti potvrdni okvir koji glasi "razumijem da će svi nekompatibilni dodaci biti onemogućeni".
+Također postoji gumb, koji omogućuje pregled nekompatibilnih dodataka.
+Pogledajte poglavlje [Dijaloški okvir nekompatibilni dodaci #incompatibleAddonsManager] za više informacija o ovom gumbu.
+
 +++ Pokreni na windows zaslonu za prijavu +++[StartAtWindowsLogon]
 Ova opcija vam omogućuje pokretanje NVDA na windows zaslonu za prijavu, prije nego što upišete lozinku.
 Ovo također uključuje kontrolu korisničkog računa i ostale sigurnosne zaslone.
+Ova je opcija uključena podrazumjevano za nove instalacije.
 
 +++ Napravi prečac na radnoj površini (ctrl+alt+F5) +++[CreateDesktopShortcut]
 Ova vam opcija omogućuje odabir između toga hoće li ili neće NVDA napraviti prečac na radnoj površini za njegovo pokretanje. 
@@ -560,7 +567,7 @@ Dostupan je prečac koji služi za vraćanje na izvornu stranicu koja sadrži ta
 + Čitanje matematičkog sadržaja +[ReadingMath]
 Koristeći MathPlayer4 tvrtke Design Science, NVDA može čitati i istovremeno biti u interakciji sa podržanim matematičkim sadržajem.
 Ovo zahtjeva instaliranu kopiju MathPlayera na vašem računalu.
-MathPlayer je dostupan za besplatno preuzimanje sa adrese: http://www.dessci.com/en/products/mathplayer/
+MathPlayer je dostupan za besplatno preuzimanje sa adrese: https://www.dessci.com/en/products/mathplayer/
 
 NVDA podržava slijedeće vrste matematičkog sadržaja:
 - MathML u Mozilla Firefoxu, Google Chromeu i Microsoft Internet Exploreru.
@@ -940,8 +947,7 @@ Postoji puno jezika, međutim zadana opcija je "Korisnički zadano, Windows".
 Kad je ova opcija aktivna, NVDA koristi zadani jezik sustava.
 
 Imajte na umu da NVDA mora biti ponovno pokrenut kad mijenjate jezik.
-NVDA će vas pitati za ponovno pokretanje ako želite pospremiti učinjene promjene.
-Pritisnite u redu i NVDA će ponovno biti pokrenut.
+Kada se pojavi dijaloški okvir za potvrdu, odaberite "ponovno pekreni sada" ili "ponovno pokreni kasnije" ako želite koristiti novi jezik sada ili kasnije. ako je odabran gumb "Pokreni ponovno kasnije",, konfiguracija mora biti pospremljena (ručno ili koristeći opciju "pospremi konfiguraciju pri izlazu").
 
 ==== Spremi konfiguraciju pri izlazu ====[GeneralSettingsSaveConfig]
 Ova je opcija potvrdni okvir koji, kad je odabran, sprema konfiguraciju pri izlazu.
@@ -955,9 +961,17 @@ Kad nije odabran ovaj potvrdni okvir, NVDA će se odmah isključiti.
 Ova opcija je potvrdni okvir koji, kad je odabran, prouzrokuje da NVDA reproducira zvukove kad se pokrene ili isključi.
 
 ==== Razina loga ====[GeneralSettingsLogLevel]
-Ovo je odabirni okvir koji vam omogućuje odabir koliko će poruka u zapisniku NVDA prikazivati u pregledniku zapisnika kad je pokrenut.
+Ovo je odabirni okvir u kojem se može odabrati razina zapisnika NVDA.
 Zapravo, korisnici ovo ne bi trebali dirati, jer nije baš sve zapisano u zapisnik.
-Međutim, ako želite dati više informacija uz prijavu greške, ovo može biti korisna opcija.
+Međutim, ako želite dati više informacija u izvještaju o grešci, ili pak potpuno omogućiti ili onemogućiti zapisnik, onda je ova opcija korisna.
+
+Dostupne razine zapisnika jesu:
+- Onemogućeno: Osim kratke poruke o pokretanju, NVDA neće zapisivati ništa za svo vrijeme dok je pokrenut.
+- Info: NVDA će zapisivati osnovne informacije, poput poruke o pokretanju te informaciju korisnu za razvojne programere.
+- Debug warning: Upozorenja, koja ne prouzrokuju ozbiljne pogreške bit će zapisivana.
+- Ulaz/izlaz: Upisani znakovi s tipkovnice ili s brajičnog retka, kao i sve što je poslano govornoj jedinicibit će zapisivano. Ako se bojite za svoju privatnost, ne postavljajte ovu razinu.
+- Debug: Za razliku od info, upozorenja te ulaz/izlaz razina, bit će zapisivane dodatne poruke koje služe za ispravljanje greške. Baš kao i ulaz/izlaz, ako se bojite za svoju privatnost, ne biste trebali postavljati razinu zapisnika na ovu opciju.
+-
 
 ==== Automatski pokreni NVDA kad se prijavim u sustav windows ====[GeneralSettingsStartAfterLogOn]
 Ako je ova opcija omogućena, NVDA će se automatski pokrenuti kada se prijavite u windows.
@@ -1052,9 +1066,19 @@ Ova vam opcija omogućuje određivanje količine interpunkcijskih znakova i drug
 Na primjer, Kad je ova opcija postavljena na način da se izgovaraju svi simboli, Svi će simboli biti izgovoreni kao riječi.
 Ova se opcija primjenjuje na sve govorne jedinice, ne samo na trenutno aktivnu.
 
-==== Vjeruj jeziku trenutnog glasa kad se procesiraju simboli i znakovi ====[SpeechSettingsTrust]
+==== Vjeruj jeziku trenutnog glasa kad se procesiraju znaci i simboli ====[SpeechSettingsTrust]
 Zadano uključena, ova opcija govori programu NVDA da se jeziku trenutno odabranog glasa može vjerovati, kada se procesiraju simboli i znakovi.
 Ako shvatite da NVDA čita interpunkciju koristeći krivi jezik za određenu govornu jedinicu ili glas, možda biste ovu opciju željeli isključiti kako biste prisilili NVDA da umjesto toga koristi glavnu jezičnu postavku.
+
+==== Koristi Unicode bazu podataka pri čitanju simbola ====[SpeechSettingsCLDR]
+Kada je ovaj potvrdni okvir uključen, NVDA će uključivati dodatne znakove i simbole pri čitanju.
+Ovi rječnici sadrže izgovor simbola (Uglavnom Emoji) koje je dostavio [Unicode Consortium http://www.unicode.org/consortium/] kao dio njihovog [repozitorija općih jezičnih podataka http://cldr.unicode.org/].
+Ako želite da NVDA čita emoji uz pomoć ovih podataka, Možete uključiti ovu opciju.
+Međutim, ako vaša govorna jedinica čita emoji, možete isključiti ovu opciju.
+
+Imajte na umu, da izmijenjeni opisi znakova se spremaju u vašu korisničku mapu.
+Dakle, ako izmijenite naziv određenog emoji,, vaš će opis biti izgovoren neovisno o tome, je li ova opcija uključena.
+Možete dodati, ukloniti ili urediti opise simbola u [dijaloškom okviru izgovaranja simbola #SymbolPronunciation].
 
 ==== Postotak visine glasa kod velikih slova ====[SpeechSettingsCapPitchChange]
 Ovo polje za uređivanje vam omogućuje promjenu vrijednosti visine koju će govorna jedinica koristiti pri izgovoru velikih slova.
@@ -1257,16 +1281,14 @@ Kategorija tipkovnica u NVDA dijaloškom okviru postavki sadrži opcije kojima s
 Ova kategorija postavki sadrži slijedeće opcije:
 
 ==== Izgled tipkovnice ====[KeyboardSettingsLayout]
-Ova vam opcija omogućuje odabir izgleda tipkovnice koji će NVDA koristiti. Trenutno uz NVDA dolazi izgled tipkovnice za stolna i izgled tipkovnice za prijenosna računala.
+Ova vam opcija omogućuje odabir izgleda tipkovnice kojeg će NVDA koristiti. Trenutno uz NVDA dolazi izgled tipkovnice za stolna i izgled tipkovnice za prijenosna računala.
 
-==== Koristi capslock kao NVDA modifikacijsku tipku ====[KeyboardSettingsCapsModifier]
-Ako je ovaj potvrdni okvir odabran, Capslock se može koristiti kao NVDA modifikacijska tipka.
-
-==== Koristi prošireni insert kao NVDA modifikacijsku tipku ====[KeyboardSettingsExtendedInsert]
-Ako je ovaj potvrdni okvir odabran, prošireni insert (često se može na tipkovnicama pronaći iznad kursorskih tipaka, blizu tipaka home i end), može se koristiti kao NVDA modifikacijska tipka.
-
-==== Koristi numerički insert kao NVDA modifikacijsku tipku ====[KeyboardSettingsNumpadInsert]
-Ako je potvrdni okvir odabran, insert na numeričkoj tipkovnici može se koristiti kao NVDA modifikacijska tipka.
+==== Odaberi NVDA modifikacijske tipke ====[KeyboardSettingsModifiers]
+Ovi potvrdni okviri u ovom popisu određuju, koja će se [NVDA modifikacijska tipka ili tipke #TheNVDAModifierKey] koristiti kao NVDA tipka. Slijedee tipke su dostupne:
+- caps lock
+- Numerički insert
+- Proširena tipka insert (obično se nalazi iznad strelica, blizu home i end tipki)
+-
 
 Ako ni jedna tipka nije izabrana kao NVDA modifikacijska tipka, možda će biti nemoguće pristupiti većini NVDA funkcija.
 Međutim, ako ne odaberete niti jednu modifikacijsku tipku, a pritom pritisnete OK ili primijeni, NVDA će prikazati poruku o grešci.
@@ -1341,6 +1363,11 @@ Kad se ovaj potvrdni okvir odabere to uzrokuje da NVDA reproducira zvučni signa
 ==== Kontrola glasnoće zvučnih koordinata ovisno o jačini svjetlosti ====[MouseSettingsBrightness]
 Ako je potvrdni okvir "reproduciraj zvučne koordinate prilikom pomicanja miša" označen, to znači da će jačina zvučnih koordinata biti određena po tome koliko je svijetao dio zaslona koji je pod mišem.
 Ovaj potvrdni okvir zadano nije odabran.
+
+==== Ignoriraj ulaz miša iz drugih aplikacija ====[MouseSettingsHandleMouseControl]
+Ova opcija omogućuje korisniku ignoriranje događaja miša (uključujući kretnje mišem i gumbe) koji su generirale druge aplikacije poput Teamviewera i drugih softvera za udaljenu kontrolu računala.
+Ova opcija je isključena podrazumjevano.
+Ako označite ovu opciju i pri tom imate uključenu opciju "omogući praćenje miša", NVDA neće izgovarati što je pod pokazivačem miša ako druga aplikacija iće miš.
 
 +++ Interakcija sa zaslonima osjetljivim na dodir +++[TouchInteraction]
 Ova kategorija postavki, koja je dostupna samo na računalima s instaliranim windowsima 8 ili višom verzijom,, omogućava podešavanje ponašanja NVDA sa zaslonima osjetljivim na dodir.
@@ -1576,6 +1603,45 @@ Ova kategorija sadrži slijedeće opcije:
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
 Ovaj odabirni okvir omogućava izbor jezika koji će se koristiti za prepoznavanje sadržaja.
 
++++ Napredne postavke +++[AdvancedSettings]
+Upozorenje! Ove postavke mogu prouzroćiti nepravilno funkcionireanje NVDA, ako su konfigurirane nepravilno.
+Radite ove izmjene ako znate što radite, ili vas je na to uputio NVDA razvojni programer.
+
+==== Mijenjanje narednih postavki ====[AdvancedSettingsMakingChanges]
+U slučaju da želite promijeniti napredne postavke, kontrole moraju biti omogućene potvrdnim okvirom, kojim razumijete koje postavke mijenjate
+
+==== Vraćanje na zadane postavke ====[AdvancedSettingsRestoringDefaults]
+Gumb vraća zadane postavke, čak kada potvrdni okvir nije označen.
+Poslije testiranja izmjena, možda se želite vratiti na zadane vrijednosti.
+To isto može biti slučaj ako niste sigurni, jeste li promijenili postavke.
+
+==== Omogući pokretanje koda iz bilježnice razvojnog programera ====[AdvancedSettingsEnableScratchpad]
+Prilikom razvijanja NVDA dodataka, korisno je testirati kod prilikom pisanja istog.
+Kada je ova opcija omogućena, ista omogućava pokreatanje komponenti NVDA iy bilježnice NVDA razvojnog programera u vašom nvda konfiguracijskoj mapi.
+Prije su se NVDA komponente učitavale iz konfiguracijske mape bez mogučnosti onemogučavanja takvog ponašanja.
+Ova opcija je podrazumijevano isključena, kako bi korisnik bio siguran da se nekompatibilan kod neće izvršavati u NVDA čitaču ekrana.
+Ako želite distribuirati prilagođeni kod drugima, spakirajte ga kao NVDA dodatak.
+
+==== Otvori mapu bilježnica razvojnog programera ====[AdvancedSettingsOpenScratchpadDir]
+Ovaj gumb otvara mapu gdje je smješten prilagođeni kod kojeg trenutno razvijate.
+Ovaj gumb postoji, samo kada je uključena opcija "omogući bilježnicu razvojnog programere NVDA".
+
+==== Koristi UIA automation za pristup kontrolama Microsoft word dokumenata kada je to moguće ====[AdvancedSettingsUseUiaForWord]
+Kada je ova opcija uključena, NVDA će dohvaćati sve informacije iz Microsoft word dokumenata koristeći Microsoft UIA API.
+Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Outlooku.
+ Za zadnje inačice Microsoft Office 2016(365, ova podrška je skoro jednaka podrazumijevanoj podršci za Microsoft Word, uz tu razliku, da su performanse poboljšane.
+Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
+Još uvijek ne preporučujemo ukljućivanje ove opcije podrazumijevano, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu funkcionalnost, te da daju povratne informacije.
+
+==== Čekanje za pomicanje kursora u milisekundama ====[AdvancedSettingsCaretMoveTimeout]
+Ova opcija omogućuje povećanje ogranićenja čekanja, u kojem NVDA čeka da se pojavi pokazivač u polju za uređivanje.
+Ako mislite da je NVDA uvijek jedan nak iza ili ponavlja retke, tada biste htjeli povećati ovu vrijednost.
+
+==== Kategorije debugiranja ====[AdvancedSettingsDebugLoggingCategories]
+Potvrdni okviri u ovoj kategoriji omogućuju dodavanje kategorija debugiranja u zapisnik.
+Zapisivanje ovih poruka može prouzročiti pad performansi, te velike datoteke zapisnika.
+Uključite iste samo ako vas je na to naveo Programer NVDA razvojnog tima, u slučaju da, na primjer, ne radi brajični redak.
+
 ++ Dodatne postavke ++[MiscSettings]
 Osim [Postavki NVDA #NVDASettings] dijaloškog okvira, podizbornik postavke, sadrži slijedeće stavke koje su opisane ispod.
 
@@ -1795,7 +1861,7 @@ Ime paketa, stanje, inačica i autor prikazani su za svaki dodatak, međutim, vi
 Ako je dostupna pomoč za dodatak, možete joj pristupiti kad označite dodatak i pritisnete gumb pomoč za dodatak.
 
 Da biste istražili i preuzeli dodatke na mreži, pritisnite gumb preuzmi dodatke.
-Ovaj gumb otvara [Stranicu s NVDA dodacima http://addons.nvda-project.org/].
+Ovaj gumb otvara [Stranicu s NVDA dodacima https://addons.nvda-project.org/].
 Ako je NVDA instaliran i pokrenut na vašem sustavu, možete izravno otvoriti dodatak iz preglednika da biste započeli instalacijski postupak kao što je opisano ispod.
 U suprotnom, pospremite paket sa dodatkom I pratite upute ispod.
 
@@ -1814,20 +1880,36 @@ Kao i kod instalacije, NVDA mora ponovno biti pokrenut da bi dodatak bio potpuno
 Sve dok to ne učinite, status "uklanjanje" će se prikazivati za taj dodatak na popisu.
 
 Kako biste onemogućili dodatak, pritisnite gumb Onemogući..
-Kako biste   mnemogućili prethodno onemogućen dodatak, pritisnite gumb omogući.
+Kako biste   omogućili prethodno onemogućen dodatak, pritisnite gumb omogući.
 Možete onemogućiti dodatak, ako je status dodatka omogućen,, ili ga možete omogućiti ako je onemogućen.
 Pri svakom pritisku na gumb omogući-onemogući, stanje dodatka se mijenja kako bi pokazivalo na akciju koja će se izvršiti pri ponovnom pokretanju nvda.
-Ako je dodatak prethodno onemogućen, prikazat će se stanje "omogućeno poslije ponovnog pokretanja". ako je dodatak prethodno omogućen, prikazat će se status, onemogućeno poslije ponovnog pokretanja
+Ako je dodatak prethodno onemogućen", pokazat će se poruka onemogućen poslije ponovnog pokretanja".
+Ako je dodatak omogućen, pokazat će se poruka omogućeno poslije ponovnog pokretanja"
 Kao i prilikom uklanjanja i-ili deinstalacije dodataka, trebate ponovno pokrenuti nvda, kako bi vaše izmjene stupile na snagu.
 
 Upravitelj također ima gumb zatvori da biste zatvorili dijaloški okvir.
 Ako ste dodali, uklonili ili promijenili status dodataka, NVDA će vas najprije pitati želite li ga ponovno pokrenuti kako bi vaše promjene stupile na snagu.
 
-U prošlosti je bilo moguće proširiti funkcionalnost NVDA kopirajući dodatne dodatke i upravljačke programe u vašu korisničku mapu.
-Iako ih ova NVDA inačica može pokretati, oni neće biti prikazani u upravitelju dodataka.
-Najbolje je ukloniti ove datoteke iz vaše konfiguracije i instalirati  odgovarajući dodatak ako je dostupan.
+Neki stariji dodaci mogu biti nekompatibilni sa NVDA inačicom koju imate.
+Kada koristite stariju inačicu NVDA, neki noviji dodaci također mogu biti nekompatibilni.
+Pokušavajući instalirati nekompatibilan dodatak, iskočit će poruka o grešci i razlog, zašto je dodatak nekompatibilan.
+Kako biste provjerili nekompatibilne dodatke, možete koristiti "gumb pogledaj nekompatibilne dodatke" kako biste pokrenuli upravitelj nekompatibilnih dodataka.
 
 Kako biste pristupili upravitelju dodataka sa bilo kojeg mjesta, molimo pridjelite odgovarajuću prilagođenu gestu koristeći [dijaloški okvir ulazne geste #InputGestures].
+
+++ Upravitelj nekompatibilnih dodataka ++[incompatibleAddonsManager]
+Upravitelj nekompatibilnih dodataka, koji se može aktivirati putem gumba "Pogledaj nekompatibilne dodatke" u upravitelju dodataka, omogućuje vam provjeru svakog nekompatibilnog dodatka, te također razloga nekompatibilnosti.
+Dodaci se smatraju nekompatibilnima kada su pisani za stariju inačicu NVDA od one koju koristite, ili ovise o setu funkcija nedostupnih u Vašoj inačici NVDA.
+U upravitelju nekompatibilnih dodataka postoji poruka o njegovoj namjeni, te je ispisana inačica NVDA.
+NVDA dodaci su prikazani u popisu sa slijedećim stupcima:
++ Paket, ime dodatka
++ Inačica, inačica dodatka
++ Razlog nekompatibilnosti, razlog zbog kojeg se dodatak smatra nekompatibilnim
++
+
+Upravitelj nekompatibilnih dodataka u sebi sadrži gumb "O dodatku...".
+Kada se ovo otvori, prikazat će se sve informacije o dodatku, što je korisno pri kontaktiranju autora.
+
 
 ++ Python Konzola ++[PythonConsole]
 NVDA PYTHON konzola, koja se može pronaći u podizborniku alati u NVDA izborniku, je alat za razvojne programere koji je koristan za otkrivanje grešaka, opću provjeru NVDA unutarnjih funkcija ili provjeru hijerarhije pristupačnosti neke aplikacije.
@@ -1867,8 +1949,8 @@ Microsoft Speech Platform pruža glasove za mnoge jezike koji se uobičajeno kor
 Ovi se glasovi mogu također koristiti uz pomoć NVDA.
 
 Kako biste mogli koristiti ove glasove, trebat ćete instalirati dvije komponente:
-- Microsoft Speech Platform - Runtime (Inačica 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Runtime jezici (Inačica 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Runtime (Inačica 11) , x86: https://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime jezici (Inačica 11): https://www.microsoft.com/download/en/details.aspx?id=27224
  - Ova stranica uključuje datoteke za "tekst-u govor" i za prepoznavanje govora.
  Odaberite datoteke koje sadrže glasovne podatke za željene glasove/jezike.
  Na primjer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas za američki engleski.
@@ -1913,9 +1995,9 @@ Slijedeći brajični redci podržavaju ovu značajku automatskog prepoznavanja.
 -
 
 ++ Brajični retci Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
-Svi su Focus i PAC Mate brajični retci firme [Freedom Scientific http://www.freedomscientific.com/] podržani kad se spajaju putem USB ili Bluetooth veze.
+Svi su Focus i PAC Mate brajični retci firme [Freedom Scientific https://www.freedomscientific.com/] podržani kad se spajaju putem USB ili Bluetooth veze.
 Trebat ćete instalirati upravljačke programe za freedom scientific brajične retke.
-Ako ih još uvijek nemate, možete ih preuzeti sa adrese http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Ako ih još uvijek nemate, možete ih preuzeti sa adrese https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Premda se na ovoj stranici govori o focus blue brajičnim recima, Upravljački programi podržavaju sve focus i Pac mate brajične retke.
 Ako koristite 64 bitni sustav windows i neki drugi čitač ekrana je instalirao svoj upravljački program, možda ćete još uvijek trebati instalirati upravljačke programe s ovog linka, jer neke datoteke, koje NVDA zahtjeva, možda nisu instalirane u sustavu kad su ti određeni upravljački programi instalirani.
 
@@ -1976,7 +2058,7 @@ Samo za Focus 80:
 %kc:endInclude
 
 ++ Optelec Alva 6 serije/pretvornik protokola ++[OptelecALVA]
-ALVA BC640 i BC680 brajični retci firme [Optelec http://www.optelec.com/] podržani su kada se spajaju putem USB ili bluetooth veze.
+ALVA BC640 i BC680 brajični retci firme [Optelec https://www.optelec.com/] podržani su kada se spajaju putem USB ili bluetooth veze.
 U drugom slučaju, možete spojiti stariji Optelec brajični redak , kao što je braille voyager, koristeći pretvornik protokola kojeg dostavlja Optelec.
 Ne trebate imati specijalne upravljačke programe da biste koristili ove brajične retke.
 Samo spojite brajični redak i podesite NVDA za njegovo korištenje.
@@ -2028,7 +2110,7 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste pogledali opis 
 %kc:endInclude
 
 ++ Handy Tech brajični retci ++[HandyTech]
-NVDA podržava većinu brajičnih redaka tvrtke [Handy Tech http://www.handytech.de/] kad su spojeni putem USB ili Bluetooth veze.
+NVDA podržava većinu brajičnih redaka tvrtke [Handy Tech https://www.handytech.de/] kad su spojeni putem USB ili Bluetooth veze.
 Za starije brajične retke, koji se povezuju USB vezom, trebat ćete instalirati Usb upravljačke programe na vaš sustav.
 
 Ovi brajični retci nisu podržani izravno iz NVDA, no mogu se koristiti pomoću [Handy Techovog univerzalnog upravljačkog programa https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers] and NVDA add-on:
@@ -2062,7 +2144,7 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka da biste znali gdje se o
 %kc:endInclude
 
 ++ MDV Lilli ++[MDVLilli]
-Brajični redak, kojeg prodaje talijanska tvrtka [MDV http://www.mdvbologna.it/] je podržan.
+Brajični redak, kojeg prodaje talijanska tvrtka [MDV https://www.mdvbologna.it/] je podržan.
 Ne trebate imati instalirane dodatne upravljačke programe da biste koristili ovaj brajični redak.
 Samo spojite brajični redak i podesite NVDA za njegovo korištenje.
 
@@ -2084,7 +2166,7 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste ustanovili gd
 %kc:endInclude
 
 ++ Baum/Humanware/APH/Orbit Brajični Retci ++[Baum]
-Nekoliko [Baumovih http://www.baum.de/cms/en/], [HumanWare-ovih http://www.humanware.com/], [APH-ovih http://www.aph.org/] i [Orbitovih http://www.orbitresearch.com/] brajičnih redaka su podržani kada su spojeni putem usb, bluetooth ili serijske veze.
+Nekoliko [Baumovih https://www.baum.de/cms/en/], [HumanWare-ovih https://www.humanware.com/], [APH-ovih https://www.aph.org/] i [Orbitovih https://www.orbitresearch.com/] brajičnih redaka su podržani kada su spojeni putem usb, bluetooth ili serijske veze.
 Slijedeći brajični retci su podržani:
 - Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
 - HumanWare: Brailliant, BrailleConnect, Brailliant2
@@ -2120,7 +2202,7 @@ Za brajične retke koji imaju joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++[HedoProfiLine]
-Hedo ProfiLine USB brajični redak tvrtke [hedo Reha-Technik http://www.hedo.de/] je podržan.
+Hedo ProfiLine USB brajični redak tvrtke [hedo Reha-Technik https://www.hedo.de/] je podržan.
 Prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 
 Ovaj brajični redak još uvijek ne podržava funkcionalnost automatskog otkrivanja brajičnih redaka.
@@ -2139,7 +2221,7 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka za više informacija o s
 %kc:endInclude
 
 ++ Hedo MobilLine USB ++[HedoMobilLine]
-Hedo MobilLine USB tvrtke [hedo Reha-Technik http://www.hedo.de/] je podržan.
+Hedo MobilLine USB tvrtke [hedo Reha-Technik https://www.hedo.de/] je podržan.
 Prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 
 Ovaj brajični redak još uvijek ne podržava funkcionalnost automatskog otkrivanja brajičnih redaka.
@@ -2158,7 +2240,7 @@ Molimo pogledajte uputstvo za upotrebu brajičnog retka kako biste saznali smje�
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Serije / BrailleNote Touch  ++[HumanWareBrailliant]
-Brailliant BI i B serije brajični retci tvrtke [HumanWare http://www.humanware.com/], uključujući the BI 14, BI 32, BI 40 i B 80, su podržani kada su spojeni putem USB ili bluetooth veze.
+Brailliant BI i B serije brajični retci tvrtke [HumanWare https://www.humanware.com/], uključujući the BI 14, BI 32, BI 40 i B 80, su podržani kada su spojeni putem USB ili bluetooth veze.
 Ako brajični redak spajate putem USB veze, i protokolom postavljenim na Human Ware prvo morate instalirati USB upravljačke programe koje je napravio proizvođač.
 USB upravljački programi nisu potrebni ako  je protokol postavljen na OpenBraille.
 
@@ -2210,9 +2292,9 @@ Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Serije ++[Hims]
-NVDA podržava Braille Sense, Braille EDGE, Smart Beetle i Sync Braille brajične retke tvrtke [Hims http://www.hims-inc.com/] kada su spojeni preko USB ili bluetooth veze. 
+NVDA podržava Braille Sense, Braille EDGE, Smart Beetle i Sync Braille brajične retke tvrtke [Hims https://www.hims-inc.com/] kada su spojeni preko USB ili bluetooth veze. 
 Ako redak spajate preko USB priključka, trebat ćete instalirati USB upravljačke programe tvrtke HIMS na vaš sustav.
-Možete ih preuyeti ovdje: http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
+Možete ih preuyeti ovdje: https://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip
 
 Slijede prečice za ovaj brajični redak.
 Molimo pročitajte dokumentaciju kako biste saznali gdje se te tipke nalaze.
@@ -2282,8 +2364,8 @@ Molimo pročitajte dokumentaciju kako biste saznali gdje se te tipke nalaze.
 %kc:endInclude
 
 ++ Seika brajični retci ++[Seika]
-Seika inačice 3, 4 i 5 (40 ćelija) i Seika80 (80 ćelija)brajični retci koje je proizvela tvrtka [Nippon Telesoft http://www.nippontelesoft.com/] su podržani.
-Za više informacija o ovim brajičnim retcima posjetite http://www.seika-braille.com/.
+Seika inačice 3, 4 i 5 (40 ćelija) i Seika80 (80 ćelija)brajični retci koje je proizvela tvrtka [Nippon Telesoft https://www.nippontelesoft.com/] su podržani.
+Za više informacija o ovim brajičnim retcima posjetite https://www.seika-braille.com/.
 Prvo morate instalirati USB upravljačke programe koje je proizveo proizvođač.
 
 Ovaj brajični redak još uvijek ne podržava funkcionalnost automatskog otkrivanja brajičnih redaka.
@@ -2472,7 +2554,7 @@ BRAILLEX 2D Screen:
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++[HumanWareBrailleNote]
-NVDA podržava BrailleNote elektroničke bilježnice tvrtke [Humanware http://www.humanware.com] Kad se ponašaju kao brajični retci za čitače zaslona.
+NVDA podržava BrailleNote elektroničke bilježnice tvrtke [Humanware https://www.humanware.com] Kad se ponašaju kao brajični retci za čitače zaslona.
 Sljedeći modeli su podržani:
 - BrailleNote Classic (samo serijska veza)
 - BrailleNote PK (serijska i bluetooth veza)
@@ -2564,7 +2646,7 @@ Slijede prečaci dodijeljeni kotačiću:
 %kc:endInclude
 
 ++ EcoBraille ++[EcoBraille]
-NVDA podržava EcoBraille brajične retke koje proizvodi [ONCE http://www.once.es/].
+NVDA podržava EcoBraille brajične retke koje proizvodi [ONCE https://www.once.es/].
 Slijedeći modeli su podržani:
 - EcoBraille 20
 - EcoBraille 40
@@ -2610,7 +2692,7 @@ Zbog toga, te kako bi se zadržala kompatibilnost sa drugim čitačima ekrana na
 %kc:endInclude
 
 ++ Eurobraille Esys/Esytime/Iris displays ++[Eurobraille]
-Esys, Esytime и Iris brajični retci tvrtke [Eurobraille http://www.eurobraille.fr/] podržavaju NVDA čitač ekrana.
+Esys, Esytime и Iris brajični retci tvrtke [Eurobraille https://www.eurobraille.fr/] podržavaju NVDA čitač ekrana.
 Esys i Esytime-Evo podržani su, kada su spojeni putem USB ili Bluetooth veze.
 Stariji Esytime uređaji podržavaju samo USB vezu.
 Iris brajični retci mogu se koristiti, ako su spojeni preko Serijskog priključka.
@@ -2694,8 +2776,8 @@ Molimo pogledajte uputstvo za upotrebu vašeg brajičnog retka, kako biste dozna
 %kc:endInclude
 
 ++ BRLTTY ++[BRLTTY]
-[BRLTTY http://www.brltty.com/] je program koji se može koristiti za podršku puno više brajičnih redaka.
-Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows http://www.brltty.com/download.html].
+[BRLTTY https://www.brltty.com/] je program koji se može koristiti za podršku puno više brajičnih redaka.
+Da biste ga mogli koristiti, morate instalirati [BRLTTY za Windows https://www.brltty.com/download.html].
 Treba li biste preuzeti i instalirati trenutnu inačicu paketa, na primjer koji će biti imenovan, brltty-win-4.2-2.exe.
 Kad podešavate brajični redak i priključak za korištenje, budite sigurni da strogo pratite upute, pogotovo ako koristite Usb brajični redak i ako već imate instalirane upravljačke programe proizvođača.
 
@@ -2705,7 +2787,7 @@ Stoga, postavka za ulaznu brajičnu tablicu u dijaloškom okviru Brajične posta
 BRLTTY ne sudjeluje u automatskom otkrivanju brajičnih redaka.
 
 Ovo su BRLTTY prečaci za NVDA.
-Molimo pogledajte [BRLTTY tablice tipkovničkih prečaca http://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su pridjeljeni prečaci za kontrole na brajičnim retcima.
+Molimo pogledajte [BRLTTY tablice tipkovničkih prečaca https://mielke.cc/brltty/doc/KeyBindings/] za više informacija o tome kako su pridjeljeni prečaci za kontrole na brajičnim retcima.
 %kc:beginInclude
 || Naziv | BRLTTY komanda |
 | Prebaci brajični redak u natrag | fwinlt (idi jedan prozor u lijevo) |
@@ -2748,15 +2830,17 @@ Sljede opcije naredbenog retka za NVDA:
 | -r | --replace | Zaustavlja sadašnju kopiju NVDA i ponovno je pokreće |
 | -k | --check-running | Izvještava o pokrenutosti NVDA putem izlaznog koda; 0 ako je pokrenut, 1 ako nije pokrenut |
 | -f LOGFILENAME | --log-file=LOGFILENAME | datoteka u kojoj poruke zapisnika trebaju biti zapisane |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Najmanja vrijednost bilježene poruke (debug 10, info 20, upozorenje 30, greška 40, kritično 50), zadano je upozorenje |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina poruka zapisivana (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), podrazumijevano je warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | određuje mapu u kojoj su pospremljene sve postavke |
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
 | -s | --secure | siguran način (onemogućuje python konzolu) |
 | Nema | --disable-addons | dodaci neće imati utjecaja |
-| Nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument. |
+| Nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument uključujući i opciju bez logiranja. |
+| Nema | --no-logging | Potpuno isključuje vođenje zapisnika. OVa postavka može biti nadpisana ako razina loga ( ""--loglevel"", -l) je specificiran iz naredbenog retka, ili je uključeno vođenje zapisnika. |
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
 | Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+| Nema | --enable-start-on-logon=True|False | Kada je omogućeno, omogućuje [opciju pokretanja NVDA na zaslonu za prijavu #StartAtWindowsLogon] |
 | Nema | --create-portable | Stvara prijenosnu inačicu NVDA (pri tome ponovno pokrečući novostvorenu kopiju). Zahtjeva određenu funkciju --portable-path |
 | Nema | --create-portable-silent | Stvara prijenosnu inačicu NVDA (ne pokreće novostvorenu kopiju). zahtjeva određen parametar --portable-path |
 | Nema | --portable-path=PORTABLEPATH | putanja u koju prijenosna inačica treba biti stvorena |

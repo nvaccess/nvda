@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat
 
 from copy import deepcopy
 import os
@@ -85,6 +85,13 @@ def getSynthInstance(name):
 		newSynth.saveSettings() #save defaults
 	return newSynth
 
+# The synthDrivers that should be used by default.
+# The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
+defaultSynthPriorityList=['espeak','silence']
+if winVersion.winVersion.major>=10:
+	# Default to OneCore on Windows 10 and above
+	defaultSynthPriorityList.insert(0,'oneCore')
+
 def setSynth(name,isFallback=False):
 	global _curSynth,_audioOutputDevice
 	if name is None: 
@@ -92,8 +99,7 @@ def setSynth(name,isFallback=False):
 		_curSynth=None
 		return True
 	if name=='auto':
-		# Default to OneCore on Windows 10 and above, and eSpeak on previous Operating Systems
-		name='oneCore' if winVersion.winVersion.major>=10 else 'espeak'
+		name=defaultSynthPriorityList[0]
 	if _curSynth:
 		_curSynth.cancel()
 		_curSynth.terminate()
@@ -110,12 +116,19 @@ def setSynth(name,isFallback=False):
 		return True
 	except:
 		log.error("setSynth", exc_info=True)
+		# As there was an error loading this synth:
 		if prevSynthName:
+			# There was a previous synthesizer, so switch back to that one. 
 			setSynth(prevSynthName,isFallback=True)
-		elif name not in ('espeak','silence'):
-			setSynth('espeak',isFallback=True)
-		elif name=='espeak':
-			setSynth('silence',isFallback=True)
+		else:
+			# There was no previous synth, so fallback to the next available default synthesizer that has not been tried yet.
+			try:
+				nextIndex=defaultSynthPriorityList.index(name)+1
+			except ValueError:
+				nextIndex=0
+			if nextIndex<len(defaultSynthPriorityList):
+				newName=defaultSynthPriorityList[nextIndex]
+				setSynth(newName,isFallback=True)
 		return False
 
 def handlePostConfigProfileSwitch():
@@ -253,7 +266,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,
+		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Volume'))
 	@classmethod

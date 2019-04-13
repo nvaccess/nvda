@@ -40,6 +40,7 @@ from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
+from textInfos import Point
 
 #Word constants
 
@@ -565,17 +566,22 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def _get_locationText(self):
 		textList=[]
-		offset=self._rangeObj.information(wdHorizontalPositionRelativeToPage)
+		# #8994: MS Word can only give accurate distances (taking paragraph indenting into account) when directly querying the selection. 
+		r=self._rangeObj
+		s=self.obj.WinwordSelectionObject
+		if s.isEqual(r):
+			r=s
+		else:
+			return super(WordDocumentTextInfo,self).locationText
+		offset=r.information(wdHorizontalPositionRelativeToPage)
 		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
 		textList.append(_("{distance} from left edge of page").format(distance=distance))
-		offset=self._rangeObj.information(wdVerticalPositionRelativeToPage)
+		offset=r.information(wdVerticalPositionRelativeToPage)
 		distance=self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
 		textList.append(_("{distance} from top edge of page").format(distance=distance))
 		return ", ".join(textList)
-
-
 
 	def copyToClipboard(self):
 		self._rangeObj.copy()
@@ -921,12 +927,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if end:
 			oldEndOffset=self._rangeObj.end
 		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
-		newEndOffset = self._rangeObj.end
-		# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
-		# a case where you called move end then collapse until the size of the range is no longer being reduced.
-		# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
-		if end and newEndOffset < oldEndOffset :
-			raise RuntimeError
+		if end:
+			newEndOffset = self._rangeObj.end
+			# the new endOffset should not have become smaller than the old endOffset, this could cause an infinite loop in
+			# a case where you called move end then collapse until the size of the range is no longer being reduced.
+			# For an example of this see sayAll (specifically readTextHelper_generator in sayAllHandler.py)
+			if newEndOffset < oldEndOffset :
+				raise RuntimeError
 
 	def copy(self):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
@@ -999,6 +1006,19 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def _get_bookmark(self):
 		return textInfos.offsets.Offsets(self._rangeObj.Start,self._rangeObj.End)
+
+	def _get_pointAtStart(self):
+		left = ctypes.c_int()
+		top = ctypes.c_int()
+		width = ctypes.c_int()
+		height = ctypes.c_int()
+		try:
+			self.obj.WinwordWindowObject.GetPoint(ctypes.byref(left), ctypes.byref(top), ctypes.byref(width), ctypes.byref(height), self._rangeObj)
+		except COMError:
+			raise LookupError
+		if not any((left.value, top.value, width.value, height.value)):
+			raise LookupError
+		return Point(left.value, top.value)
 
 	def updateCaret(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
