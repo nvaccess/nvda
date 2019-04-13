@@ -72,7 +72,7 @@ TRANSLATION_TABLE_SIZE = 2 ** DOTS_TABLE_SIZE
 def _makeTranslationTable(dotsTable):
 	"""Create a translation table for braille dot combinations
 
-	@param dotsTable: The list of 8 bitmasks to use for every dot
+	@param dotsTable: The list of 8 bitmasks to use for each dot (dot 1 - 8)
 	"""
 	def isoDot(number):
 		"""
@@ -100,13 +100,16 @@ def _makeTranslationTable(dotsTable):
 		outputTable[byte] = cell
 	return outputTable
 
-def _translate(cells, dotsTable):
-	"""Translate cells according to a dots table
+def _translate(cells, translationTable):
+	"""Translate cells according to a translation table
+
+	The translation table contains the bytes to encode all the possible dot combinations.
+	See L{_makeTranslationTable} as well.
 
 	@param cells: The cells to translate, given in ISO 11548 format (used by most braille displays)
 	@type cells: [int]
-	@param dotsTable: A list of 8 items containing the bitmask to use for every dot
-	@type dotsTable: [int]
+	@param translationTable: A list of all possible braille dot combinations
+	@type translationTable: [int]
 	"""
 	outCells = [0] * len(cells)
 	for i, cell in enumerate(cells):
@@ -381,7 +384,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def display(self, cells):
 		if self.translationTable:
-			cells = _translate(cells, FOCUS_1_DOTS_TABLE)
+			cells = _translate(cells, FOCUS_1_TRANSLATION_TABLE)
 		if not self._awaitingAck:
 			cells = b"".join([int2byte(x) for x in cells])
 			self._sendPacket(FS_PKT_WRITE, int2byte(self.numCells), 0, 0, cells)
