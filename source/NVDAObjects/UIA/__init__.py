@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2018 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V.
+#Copyright (C) 2009-2019 NV Access Limited, Joseph Lee, Mohammad Suliman, Babbage B.V., Leonard de Ruijter
 
 """Support for UI Automation (UIA) controls."""
 
@@ -758,7 +758,11 @@ class UIA(Window):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				log.debug("Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"%ID)
-		cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		try:
+			cacheElement=self.UIAElement.buildUpdatedCache(cacheRequest)
+		except COMError:
+			log.debugWarning("IUIAutomationElement.buildUpdatedCache failed given IDs of %s"%IDs)
+			return
 		for ID in IDs:
 			elementCache[ID]=cacheElement
 
@@ -813,6 +817,8 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
+		if UIAControlType==UIAHandler.UIA_MenuItemControlTypeId:
+			clsList.append(MenuItem)
 		# Some combo boxes and looping selectors do not expose value pattern.
 		elif (UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId
 		# #5231: Announce values in time pickers by "transforming" them into combo box without value pattern objects.
@@ -1452,7 +1458,7 @@ class UIA(Window):
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
 		This base implementation announces all notifications from the UIA element.
@@ -1463,6 +1469,10 @@ class UIA(Window):
 		if self.appModule != api.getFocusObject().appModule:
 			return
 		if displayString:
+			if notificationProcessing in (UIAHandler.NotificationProcessing_ImportantMostRecent, UIAHandler.NotificationProcessing_MostRecent):
+				# These notifications superseed earlier notifications.
+				# Note that no distinction is made between important and non-important.
+				speech.cancelSpeech()
 			ui.message(displayString)
 
 class TreeviewItem(UIA):
@@ -1485,6 +1495,16 @@ class TreeviewItem(UIA):
 		info=super(TreeviewItem,self).positionInfo or {}
 		info['level']=self._level
 		return info
+
+class MenuItem(UIA):
+
+	def _get_description(self):
+		name=self.name
+		description=super(MenuItem,self)._get_description()
+		if description!=name:
+			return description
+		else:
+			return None
 
 class UIColumnHeader(UIA):
 

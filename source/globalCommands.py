@@ -1229,10 +1229,7 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		vbuf = focus.treeInterceptor
 		if not vbuf:
-			# #2023: Search the focus and its ancestors for an object for which browse mode is optional.
 			for obj in itertools.chain((api.getFocusObject(),), reversed(api.getFocusAncestors())):
-				if obj.shouldCreateTreeInterceptor:
-					continue
 				try:
 					obj.treeInterceptorClass
 				except:
@@ -1241,8 +1238,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				return
 			# Force the tree interceptor to be created.
-			obj.shouldCreateTreeInterceptor = True
-			ti = treeInterceptorHandler.update(obj)
+			ti = treeInterceptorHandler.update(obj, force=True)
 			if not ti:
 				return
 			if focus in ti:
@@ -1252,7 +1248,11 @@ class GlobalCommands(ScriptableObject):
 				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
 				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
 					browseMode.reportPassThrough(ti,False)
-					braille.handler.handleGainFocus(ti)
+					# #8716: Only let braille handle the focus when the tree interceptor is ready.
+					# If not ready (e.g. a loading virtual buffer),
+					# the buffer will take responsibility to update braille as soon as it completed loading.
+					if ti.isReady:
+						braille.handler.handleGainFocus(ti)
 			return
 
 		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
@@ -1461,6 +1461,15 @@ class GlobalCommands(ScriptableObject):
 		text=obj.displayText
 		speech.speakMessage(text)
 		log.info(text)
+
+	def script_startWxInspectionTool(self, gesture):
+		import wx.lib.inspection
+		wx.lib.inspection.InspectionTool().Show()
+	script_startWxInspectionTool.__doc__ = _(
+		# Translators: GUI development tool, to get information about the components used in the NVDA GUI
+		"Opens the WX GUI inspection tool. Used to get more information about the state of GUI components."
+	)
+	script_startWxInspectionTool.category = SCRCAT_TOOLS
 
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
