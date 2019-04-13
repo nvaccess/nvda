@@ -2960,6 +2960,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.replacementEdit.Disable()
 			self.levelList.Disable()
 			self.preserveList.Disable()
+			self.removeButton.Disable()
 			return  # exit early, no need to select an item.
 
 		# If there was a selection before filtering, try to preserve it
@@ -3055,14 +3056,23 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbol = self.filteredSymbols[index]
 		self.pendingRemovals[symbol.identifier] = symbol
 		del self.filteredSymbols[index]
-		self.symbolsList.ItemCount = len(self.filteredSymbols)
 		if self.filteredSymbols is not self.symbols:
 			self.symbols.remove(symbol)
-		index = min(index, self.symbolsList.ItemCount - 1)
-		self.symbolsList.Select(index)
-		self.symbolsList.Focus(index)
-		# We don't get a new focus event with the new index.
-		self.symbolsList.sendListItemFocusedEvent(index)
+		self.symbolsList.ItemCount = len(self.filteredSymbols)
+		# sometimes removing may result in an empty list.
+		if not self.symbolsList.ItemCount:
+			self.editingItem = None
+			# disable the "change symbol" controls, since there are no items in the list.
+			self.replacementEdit.Disable()
+			self.levelList.Disable()
+			self.preserveList.Disable()
+			self.removeButton.Disable()
+		else:
+			index = min(index, self.symbolsList.ItemCount - 1)
+			self.symbolsList.Select(index)
+			self.symbolsList.Focus(index)
+			# We don't get a new focus event with the new index.
+			self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
 
 	def onOk(self, evt):
