@@ -57,6 +57,14 @@ FS_PKT_EXT_KEY = b"\x82"
 FS_BYTE_NULL = b"\x00"
 FS_DATA_EMPTY = b""
 
+# FS_PKT_INFO payload offsets
+INFO_MANU_START = 0
+INFO_MANU_END = 24
+INFO_MODEL_START = INFO_MANU_END
+INFO_MODEL_END = INFO_MODEL_START + 16
+INFO_VERSION_START = INFO_MODEL_END
+INFO_VERSION_END = INFO_MODEL_END + 8
+
 # Braille translation
 DOTS_TABLE_SIZE = 8
 TRANSLATION_TABLE_SIZE = 2 ** DOTS_TABLE_SIZE
@@ -254,9 +262,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debugWarning("NAK received!")
 			self._handleAck()
 		elif packetType == FS_PKT_INFO:
-			self._manufacturer = payload[:24].replace(FS_BYTE_NULL, "")
-			self._model = payload[24:40].replace(FS_BYTE_NULL, "")
-			self._firmwareVersion = payload[40:48].replace(FS_BYTE_NULL, "")
+			self._manufacturer = payload[INFO_MANU_START:INFO_MANU_END].replace(FS_BYTE_NULL, "")
+			self._model = payload[INFO_MODEL_START:INFO_MODEL_END].replace(FS_BYTE_NULL, "")
+			self._firmwareVersion = payload[INFO_VERSION_START:INFO_VERSION_END].replace(FS_BYTE_NULL, "")
 			self.numCells = MODELS.get(self._model, 0)
 			if self.numCells in FOCUS_1_CELL_COUNTS:
 				# Focus 1: apply custom translation table
