@@ -1676,7 +1676,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			else: # detected:
 				self._disableDetection()
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
-			self.initialDisplay()
+			try:
+				self.initialDisplay()
+			except:
+				# #8877: initialDisplay might fail because NVDA tries to focus
+				# an object for which property fetching raises an exception.
+				# We should handle this more gracefully, since this is no reason
+				# to stop a display from loading successfully.
+				log.debugWarning("Error in initial display after display load", exc_info=True)
 			return True
 		except:
 			# For auto display detection, logging an error for every failure is too obnoxious.
@@ -1820,7 +1827,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.setTether(self.TETHER_FOCUS, auto=True)
 		if self._tether != self.TETHER_FOCUS:
 			return
-		if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough:
+		if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough and obj.treeInterceptor.isReady:
 			obj = obj.treeInterceptor
 		self._doNewObject(itertools.chain(getFocusContextRegions(obj, oldFocusRegions=self.mainBuffer.regions), getFocusRegions(obj)))
 

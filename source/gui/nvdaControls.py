@@ -7,10 +7,10 @@
 import wx
 from wx.lib.mixins import listctrl as listmix
 from gui import accPropServer
+from gui.dpiScalingHelper import DpiScalingHelperMixin
 import oleacc
 import winUser
-import comtypes
-from ctypes import c_int
+import winsound
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 	"""
@@ -42,22 +42,67 @@ class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 		self.SetSelection(0, numChars)
 		evt.Skip()
 
+class AccPropertyOverride(accPropServer.IAccPropServer_Impl):
+
+	def __init__(self, control, propertyAnnotations):
+		"""
+		A simple class for overriding specific values on a control
+		:type propertyAnnotations: dict
+		"""
+		super(AccPropertyOverride, self).__init__(
+			control,
+			annotateProperties=list(propertyAnnotations.keys()),
+			annotateChildren=False
+		)
+		self.propertyAnnotations = propertyAnnotations
+
+	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
+		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
+		if control is None or not self.propertyAnnotations:
+			return self.NO_RETURN_VALUE
+
+		try:
+			val = self.propertyAnnotations[idProp]
+			if callable(val):
+				val = val()
+			return val, self.HAS_PROP
+		except KeyError:
+			pass
+
+		return self.NO_RETURN_VALUE
+
+	def _cleanup(self):
+		# could contain references (via lambda) of our owner, set it to None to avoid a circular reference which
+		# would block destruction.
+		self.propertyAnnotations = None
+		super(AccPropertyOverride, self)._cleanup()
+
 class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 	"""AccPropServer for wx checkable lists which aren't fully accessible."""
+
+	def __init__(self, control):
+		super(ListCtrlAccPropServer, self).__init__(
+			control,
+			annotateProperties=[
+				oleacc.PROPID_ACC_ROLE,  # supposed to be checkbox, rather than list item
+				oleacc.PROPID_ACC_STATE  # should include the checkable state and checked state if the item is checked.
+			],
+			annotateChildren=True
+		)
+
 	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
-		empty = (comtypes.automation.VT_EMPTY, 0)
 		control = self.control()  # self.control held as a weak ref, ensure it stays alive for the duration of this method
 		if control is None:
-			return empty
+			return self.NO_RETURN_VALUE
 
 		# Import late to prevent circular import.
 		from IAccessibleHandler import accPropServices
 		handle, objid, childid = accPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen)
 		if childid == winUser.CHILDID_SELF:
-			return empty
+			return self.NO_RETURN_VALUE
 
 		if idProp == oleacc.PROPID_ACC_ROLE:
-			return oleacc.ROLE_SYSTEM_CHECKBUTTON, 1
+			return oleacc.ROLE_SYSTEM_CHECKBUTTON, self.HAS_PROP
 
 		if idProp == oleacc.PROPID_ACC_STATE:
 			states = oleacc.STATE_SYSTEM_SELECTABLE|oleacc.STATE_SYSTEM_FOCUSABLE
@@ -67,31 +112,15 @@ class ListCtrlAccPropServer(accPropServer.IAccPropServer_Impl):
 				# wx doesn't seem to  have a method to check whether a list item is focused.
 				# Therefore, assume that a selected item is focused,which is the case in single select list boxes.
 				states |= oleacc.STATE_SYSTEM_SELECTED | oleacc.STATE_SYSTEM_FOCUSED
-			return states, 1
-
-#: An array with the GUIDs of the properties that an AccPropServer should override for list controls with checkboxes.
-#: The role is supposed to be checkbox, rather than list item.
-#: The state should be overridden to include the checkable state as well as the checked state if the item is checked.
-CHECK_LIST_PROPS = (comtypes.GUID * 2)(*[oleacc.PROPID_ACC_ROLE,oleacc.PROPID_ACC_STATE])
+			return states, self.HAS_PROP
 
 class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
 		super(CustomCheckListBox, self).__init__(*args, **kwargs)
-		# Import late to prevent circular import.
-		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
-		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(
-			hwnd=self.Handle,
-			idObject=winUser.OBJID_CLIENT,
-			idChild=0,
-			paProps=CHECK_LIST_PROPS,
-			cProps=len(CHECK_LIST_PROPS),
-			pServer=server,
-			AnnoScope=1
-		)
+		self.server = ListCtrlAccPropServer(self)
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
 		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
 
@@ -116,19 +145,8 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	):
 		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
-		# Import late to prevent circular import.
-		from IAccessibleHandler import accPropServices
 		# Register object with COM to fix accessibility bugs in wx.
-		server = ListCtrlAccPropServer(self)
-		accPropServices.SetHwndPropServer(
-			hwnd=self.Handle,
-			idObject=winUser.OBJID_CLIENT,
-			idChild=0,
-			paProps=CHECK_LIST_PROPS,
-			cProps=len(CHECK_LIST_PROPS),
-			pServer=server,
-			AnnoScope=1
-		)
+		self.server = ListCtrlAccPropServer(self)
 		# Register our hook to check/uncheck items with space.
 		# Use wx.EVT_CHAR_HOOK, because EVT_LIST_KEY_DOWN isn't triggered for space.
 		self.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
@@ -187,14 +205,115 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		evt.Int = index
 		self.ProcessEvent(evt)
 
-	def Destroy(self):
-		from IAccessibleHandler import accPropServices
-		accPropServices.ClearHwndProps(
-			hwnd=self.Handle,
-			idObject=winUser.OBJID_CLIENT,
-			idChild=0,
-			paProps=CHECK_LIST_PROPS,
-			cProps=len(CHECK_LIST_PROPS)
-		)
-		AutoWidthColumnListCtrl.Destroy(self)
+class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
+	"""Automatically calls constructors in the right order, passing on arguments, and providing scaling features.
+	Until wxWidgets/wxWidgets#334 is resolved, and we have updated to that build of wx.
+	"""
+	def __init__(self, *args, **kwargs):
+		"""Called in place of wx.Dialog __init__ arguments are forwarded on.
+		Expected args (from wx docs):
+		parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE, name=wx.DialogNameStr
+		where:
+		wx.DEFAULT_DIALOG_STYLE = (wxCAPTION | wxSYSTEM_MENU | wxCLOSE_BOX)
+		"""
+		wx.Dialog.__init__(self, *args, **kwargs)
+		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
+
+class MessageDialog(DPIScaledDialog):
+	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
+	buttons and behaviour.
+	"""
+
+	# Dialog types currently supported
+	DIALOG_TYPE_STANDARD = 1
+	DIALOG_TYPE_WARNING = 2
+	DIALOG_TYPE_ERROR = 3
+
+	_DIALOG_TYPE_ICON_ID_MAP = {
+		# DIALOG_TYPE_STANDARD is not in the map, since we wish to use the default icon provided by wx
+		DIALOG_TYPE_ERROR: wx.ART_ERROR,
+		DIALOG_TYPE_WARNING: wx.ART_WARNING,
+	}
+
+	_DIALOG_TYPE_SOUND_ID_MAP = {
+		# DIALOG_TYPE_STANDARD is not in the map, since there should be no sound for a standard dialog.
+		DIALOG_TYPE_ERROR: winsound.MB_ICONHAND,
+		DIALOG_TYPE_WARNING: winsound.MB_ICONASTERISK,
+	}
+
+	def _addButtons(self, buttonHelper):
+		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality.
+		"""
+		ok = buttonHelper.addButton(
+			self,
+			id=wx.ID_OK,
+			# Translators: An ok button on a message dialog.
+			label=_("OK")
+		)
+		ok.SetDefault()
+		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+
+		cancel = buttonHelper.addButton(
+			self,
+			id=wx.ID_CANCEL,
+			# Translators: A cancel button on a message dialog.
+			label=_("Cancel")
+		)
+		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+
+	def _setIcon(self, type):
+		try:
+			iconID = self._DIALOG_TYPE_ICON_ID_MAP[type]
+		except KeyError:
+			# type not found, use default icon.
+			return
+		icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
+		self.SetIcon(icon)
+
+	def _setSound(self, type):
+		try:
+			self._soundID = self._DIALOG_TYPE_SOUND_ID_MAP[type]
+		except KeyError:
+			# type not found, no sound.
+			self._soundID = None
+			return
+
+	def _playSound(self):
+		winsound.MessageBeep(self._soundID)
+
+	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
+		DPIScaledDialog.__init__(self, parent, title=title)
+
+		self._setIcon(dialogType)
+		self._setSound(dialogType)
+		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
+
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		from . import guiHelper
+		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
+
+		text = wx.StaticText(self, label=message)
+		text.Wrap(self.scaleSize(self.GetSize().Width))
+		contentsSizer.addItem(text)
+
+		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		self._addButtons(buttonHelper)
+		contentsSizer.addDialogDismissButtons(buttonHelper)
+
+		mainSizer.Add(
+			contentsSizer.sizer,
+			border=guiHelper.BORDER_FOR_DIALOGS,
+			flag=wx.ALL
+		)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.CentreOnScreen()
+
+	def _onShowEvt(self, evt):
+		"""
+		:type evt: wx.ShowEvent
+		"""
+		if evt.IsShown():
+			self._playSound()
+		evt.Skip()
