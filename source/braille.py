@@ -1954,7 +1954,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._tether != self.TETHER_REVIEW:
 			return
 		region = self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
-		if region and region.obj == reviewPos.obj:
+		if region == reviewPos.obj:
 			self._doCursorMove(region)
 		else:
 			# We're reviewing a different object.
