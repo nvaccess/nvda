@@ -877,6 +877,8 @@ class ExcelWorksheet(ExcelBase):
 		"kb:shift+tab",
 		"kb:enter",
 		"kb:numpadEnter",
+		"kb:shift+enter",
+		"kb:shift+numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
