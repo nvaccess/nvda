@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2018 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.
+#Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -16,6 +16,7 @@ import pkgutil
 import shutil
 from six.moves import cStringIO as StringIO, cPickle
 from six import string_types
+import globalVars
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
@@ -397,7 +398,7 @@ class Addon(AddonBase):
 
 	@property
 	def isRunning(self):
-		return not (self.isPendingInstall or self.isDisabled or self.isBlocked)
+		return not (globalVars.appArgs.disableAddons or self.isPendingInstall or self.isDisabled or self.isBlocked)
 
 	@property
 	def isDisabled(self):
