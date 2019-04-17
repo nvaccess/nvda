@@ -170,7 +170,7 @@ An NVDAObject for a window
 		super(Window,self).__init__()
 
 	def _get_uniqueID(self):
-		return self.windowHandle
+		return (self.processID, self.windowHandle)
 
 	def _isEqual(self,other):
 		return super(Window,self)._isEqual(other) and other.windowHandle==self.windowHandle
