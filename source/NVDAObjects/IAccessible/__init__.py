@@ -561,15 +561,15 @@ the NVDAObject for IAccessible
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
-@param pacc: a pointer to an IAccessible object
-@type pacc: ctypes.POINTER(IAccessible)
-@param child: A child ID that will be used on all methods of the IAccessible pointer
-@type child: int
-@param hwnd: the window handle, if known
-@type hwnd: int
-@param objectID: the objectID for the IAccessible Object, if known
-@type objectID: int
-"""
+		@param pacc: a pointer to an IAccessible object
+		@type pacc: ctypes.POINTER(IAccessible)
+		@param child: A child ID that will be used on all methods of the IAccessible pointer
+		@type child: int
+		@param hwnd: the window handle, if known
+		@type hwnd: int
+		@param objectID: the objectID for the IAccessible Object, if known
+		@type objectID: int
+		"""
 		self.IAccessibleObject=IAccessibleObject
 		self.IAccessibleChildID=IAccessibleChildID
 
