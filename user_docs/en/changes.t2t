@@ -2,10 +2,57 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
-
-= 2019.1 =
+= 2019.2 =
 
 == New Features ==
+- The find dialog now includes a history of the last 20 searches. (#8482)
+ - The search history is cleared when NVDA exits or restarts.
+- NVDA's Miranda NG support  works with newer versions of the client. (#9053) 
+- You can now disable browse mode by default by disabling the new "Enable browse mode on page load" option in NVDA's browse mode settings. (#8716) 
+ - Note that when this option is disabled, you can still enable browse mode manually by pressing NVDA+space.
+
+
+== Changes ==
+- Synthesizer volume is now increased and decreased by 5 instead of 10 when using the settings ring. (#6754)
+- Clarification to the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
+- Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
+- Updated liblouis braille translator to version 3.9.0 (#9439)
+
+
+== Bug Fixes ==
+- NVDA no longer crashes when an add-on directory is empty. (#7686)
+- LTR and RTL marks are no longer reported in Braille or per-character speech when accessing the properties window. (#8361)
+- When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)
+- NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)
+- NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)
+- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vise versa, browse mode state is now reported appropriately. (#8846)
+- NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
+- In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)
+- In the Windows 10 May 2019 update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when Windows Explorer has focus. (#9466)
+
+
+== Changes for Developers ==
+- You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
+- The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)
+
+
+= 2019.1.1 =
+This point release fixes the following bugs:
+- NVDA no longer causes Excel 2007 to crash or refuses to report if a cell has a formula. (#9431)
+- Google Chrome no longer crashes when interacting with certain listboxes. (#9364)
+- An issue has been fixed which prevented copying a users configuration to the system configuration profile. (#9448)
+- In Microsoft Excel, NVDA again uses the localized message when reporting the location of merged cells. (#9471)
+
+
+= 2019.1 =
+Highlights of this release include performance improvements when accessing both Microsoft word and Excel, stability and security improvements such as support for add-ons with version compatibility information, and many other bug fixes.
+
+Please note that starting from this release of NVDA, custom appModules, globalPlugins, braille display drivers and synth drivers will no longer be automatically loaded from your NVDA user configuration directory. 
+Rather these  should be installed as part of an NVDA add-on. For those developing code for an add-on, code for testing can be placed in a new developer scratchpad directory in the NVDA user configuration directory,  if the Developer scratchpad option  is turned on in NVDA's new Advanced settings panel.
+These changes are necessary to better ensure compatibility of custom code, so that NVDA does not break when this code becomes incompatible with newer releases.
+Please refer to the list of changes further down for more details on this and how add-ons are now better versioned.
+
+ == New Features ==
 - New braille tables: Afrikaans, Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435, #9186)
 - Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.

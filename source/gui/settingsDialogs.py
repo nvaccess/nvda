@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -258,7 +258,7 @@ class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHel
 	"""
 
 	title=""
-	panelDescription=""
+	panelDescription=u""
 
 	def __init__(self, parent):
 		"""
@@ -726,21 +726,29 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 	def onCopySettings(self,evt):
-		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
-			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
-				if gui.messageBox(
-					# Translators: A message to warn the user when attempting to copy current settings to system settings.
-					_("Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
-					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
-				)==wx.NO:
-					return
-				break
-		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while settings are being copied
-		_("Copying Settings"),
-		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
-		_("Please wait while settings are copied to the system configuration."))
+		addonsDirPath = os.path.join(globalVars.appArgs.configPath, 'addons')
+		if os.path.isdir(addonsDirPath) and 0 < len(os.listdir(addonsDirPath)):
+			# Translators: A message to warn the user when attempting to copy current
+			# settings to system settings.
+			message = _(
+				"Add-ons were detected in your user settings directory. "
+				"Copying these to the system profile could be a security risk. "
+				"Do you still wish to copy your settings?"
+			)
+			# Translators: The title of the warning dialog displayed when trying to
+			# copy settings for use in secure screens.
+			title = _("Warning")
+			style = wx.YES | wx.NO | wx.ICON_WARNING
+			if wx.NO == gui.messageBox(message, title, style, self):
+				return
+		progressDialog = gui.IndeterminateProgressDialog(
+			gui.mainFrame,
+			# Translators: The title of the dialog presented while settings are being copied
+			_("Copying Settings"),
+			# Translators: The message displayed while settings are being copied
+			# to the system configuration (for use on Windows logon etc)
+			_("Please wait while settings are copied to the system configuration.")
+		)
 		while True:
 			try:
 				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
@@ -1600,74 +1608,90 @@ class BrowseModePanel(SettingsPanel):
 	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
-		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
-		settingsSizer.Add(maxLengthLabel)
-		self.maxLengthEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
-			min=10, max=250, # min and max are not enforced in the config for virtualBuffers.maxLineLength
+		maxLengthLabelText = _("&Maximum number of characters on one line")
+		self.maxLengthEdit = sHelper.addLabeledControl(maxLengthLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			# min and max are not enforced in the config for virtualBuffers.maxLineLength
+			min=10, max=250,
 			initial=config.conf["virtualBuffers"]["maxLineLength"])
-		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a textfield in the
 		# browse mode settings panel.
-		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
-		settingsSizer.Add(pageLinesLabel)
-		self.pageLinesEdit=nvdaControls.SelectOnFocusSpinCtrl(self,
-			min=5, max=150, # min and max are not enforced in the config for virtualBuffers.linesPerPage
+		pageLinesLabelText = _("&Number of lines per page")
+		self.pageLinesEdit = sHelper.addLabeledControl(pageLinesLabelText, nvdaControls.SelectOnFocusSpinCtrl,
+			# min and max are not enforced in the config for virtualBuffers.linesPerPage
+			min=5, max=150,
 			initial=config.conf["virtualBuffers"]["linesPerPage"])
-		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.useScreenLayoutCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Use &screen layout (when supported)"))
+		useScreenLayoutText = _("Use &screen layout (when supported)")
+		self.useScreenLayoutCheckBox = sHelper.addItem(wx.CheckBox(self, label=useScreenLayoutText))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
-		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
+
+		# Translators: The label for a checkbox in browse mode settings to 
+		# enable browse mode on page load.
+		enableOnPageLoadText = _("&Enable browse mode on page load")
+		self.enableOnPageLoadCheckBox = sHelper.addItem(wx.CheckBox(self, label=enableOnPageLoadText))
+		self.enableOnPageLoadCheckBox.SetValue(config.conf["virtualBuffers"]["enableOnPageLoad"])
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoSayAllCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic &Say All on page load"))
+		autoSayAllText = _("Automatic &Say All on page load")
+		self.autoSayAllCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoSayAllText))
 		self.autoSayAllCheckBox.SetValue(config.conf["virtualBuffers"]["autoSayAllOnPageLoad"])
-		settingsSizer.Add(self.autoSayAllCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.layoutTablesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Include l&ayout tables"))
+		layoutTablesText = _("Include l&ayout tables")
+		self.layoutTablesCheckBox = sHelper.addItem(wx.CheckBox(self, label =layoutTablesText))
 		self.layoutTablesCheckBox.SetValue(config.conf["documentFormatting"]["includeLayoutTables"])
-		settingsSizer.Add(self.layoutTablesCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
+		autoPassThroughOnFocusChangeText = _("Automatic focus mode for focus changes")
+		self.autoPassThroughOnFocusChangeCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnFocusChangeText))
 		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
-		settingsSizer.Add(self.autoPassThroughOnFocusChangeCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
+		autoPassThroughOnCaretMoveText = _("Automatic focus mode for caret movement")
+		self.autoPassThroughOnCaretMoveCheckBox = sHelper.addItem(wx.CheckBox(self, label=autoPassThroughOnCaretMoveText))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
-		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.passThroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of focus and browse modes"))
+		passThroughAudioIndicationText = _("Audio indication of focus and browse modes")
+		self.passThroughAudioIndicationCheckBox = sHelper.addItem(wx.CheckBox(self, label=passThroughAudioIndicationText))
 		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
-		settingsSizer.Add(self.passThroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.trapNonCommandGesturesCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("&Trap all non-command gestures from reaching the document"))
+		trapNonCommandGesturesText = _("&Trap all non-command gestures from reaching the document")
+		self.trapNonCommandGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=trapNonCommandGesturesText))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
-		settingsSizer.Add(self.trapNonCommandGesturesCheckBox,border=10,flag=wx.BOTTOM)
+
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
-		self.focusFollowsBrowseCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("System focus follows browse mode focus automatically"))
+		focusFollowsBrowseModeText = _("System focus follows browse mode focus automatically")
+		self.focusFollowsBrowseModeCheckBox=sHelper.addItem(wx.CheckBox(self,wx.ID_ANY,label=focusFollowsBrowseModeText)
 		self.focusFollowsBrowseCheckBox.SetValue(config.conf["virtualBuffers"]["focusFollowsBrowse"])
-		settingsSizer.Add(self.focusFollowsBrowseCheckBox,border=10,flag=wx.BOTTOM)
 
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
 		config.conf["virtualBuffers"]["useScreenLayout"]=self.useScreenLayoutCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["enableOnPageLoad"] = self.enableOnPageLoadCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]=self.autoSayAllCheckBox.IsChecked()
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["trapNonCommandGestures"]=self.trapNonCommandGesturesCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["focusFollowsBrowse"] = self.focusFollowsBrowseCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["focusFollowsBrowse"] = self.focusFollowsBrowseModeCheckBox.IsChecked()
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
@@ -1993,12 +2017,16 @@ class AdvancedPanelControls(wx.Panel):
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked())
 		)
+		if config.isAppX:
+			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label=_("Open developer scratchpad directory")
 		self.openScratchpadButton=devGroup.addItem(wx.Button(self, label=label))
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON,self.onOpenScratchpadDir)
+		if config.isAppX:
+			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2121,7 +2149,7 @@ class AdvancedPanel(SettingsPanel):
 		"have been specifically instructed by NVDA developers."
 	)
 
-	panelDescription = "{}\n{}".format(warningHeader, warningExplanation)
+	panelDescription = u"{}\n{}".format(warningHeader, warningExplanation)
 
 	def makeSettings(self, settingsSizer):
 		"""
