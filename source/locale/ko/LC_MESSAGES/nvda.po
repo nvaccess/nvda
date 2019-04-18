@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 00:10+1000\n"
-"PO-Revision-Date: 2019-04-04 23:24+0100\n"
+"POT-Creation-Date: 2019-04-12 00:10+1000\n"
+"PO-Revision-Date: 2019-04-13 22:17+0100\n"
 "Last-Translator: Stanley Chung <stanley@mail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -40,35 +40,35 @@ msgstr "반각 모드"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "half alphanumeric"
+msgstr "반각 영숫자"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "half katakana"
+msgstr "반각 가타카나"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
-msgstr "alphanumeric"
+msgstr "영숫자"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
-msgstr "hiragana"
+msgstr "히라가나"
 
 #. Translators: For Japanese character input: Katacana input mode.
 msgid "katakana"
-msgstr "katakana"
+msgstr "가타카나"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "half katakana roman"
+msgstr "반각 가타카나 로마자"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
-msgstr "hiragana roman"
+msgstr "히라가나 로마자"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "katakana roman"
+msgstr "가타카나 로마자"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
@@ -581,7 +581,7 @@ msgstr "c{columnNumber}"
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "%s 끝"
+msgstr "%s end"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -609,7 +609,7 @@ msgstr "블루투스 Serial: {port} ({deviceName})"
 #. Translators: Name of a serial communications port
 #, python-brace-format
 msgid "Serial: {portName}"
-msgstr "Serial: {portName}"
+msgstr "시리얼포트: {portName}"
 
 #. Translators: Reported when translation didn't succeed due to unsupported input.
 msgid "Unsupported input"
@@ -1942,7 +1942,7 @@ msgstr "분홍"
 #, python-brace-format
 msgctxt "color variation"
 msgid "bright {color}"
-msgstr "bright {color}"
+msgstr "밝은 {color}"
 
 #. Translators: color (HSV saturation 100% and value 72%)
 #, python-brace-format
@@ -1954,19 +1954,19 @@ msgstr "{color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark {color}"
-msgstr "진한 {color}"
+msgstr "어두운 {color}"
 
 #. Translators: a very dark color (HSV saturation 100% and value 16%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color}"
-msgstr "매우 진한 {color}"
+msgstr "매우 어두운 {color}"
 
 #. Translators: a light pale color (HSV saturation 50% and value 100%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "light pale {color}"
-msgstr "연한 {color}"
+msgstr "매우 연한 {color}"
 
 #. Translators: a pale color (HSV saturation 50% and value 72%)
 #, python-brace-format
@@ -1978,42 +1978,42 @@ msgstr "연한 {color}"
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark pale {color}"
-msgstr "매우 연한 {color}"
+msgstr "어둡고 연한 {color}"
 
 #. Translators: a very dark color (HSV saturation 50% and value 16%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark pale {color}"
-msgstr "매우 연한 {color}"
+msgstr "매우 어둡고 연한 {color}"
 
 #. Translators: a light color almost white - hardly any hue (HSV saturation 10% and value 100%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color} white"
-msgstr "매우 연한 {color}"
+msgstr "{color}빛 하얀색"
 
 #. Translators: a color almost grey - hardly any hue (HSV saturation 10% and value 72%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "{color} grey"
-msgstr "진한 {color}"
+msgstr "{color}빛 희색"
 
 #. Translators: a dark color almost grey - hardly any hue (HSV saturation 10% and value 44%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "dark {color} grey"
-msgstr "매우 진한 {color}"
+msgstr "어두운 {color}빛 회색"
 
 #. Translators: a very dark color almost grey - hardly any hue (HSV saturation 10% and value 16%)
 #, python-brace-format
 msgctxt "color variation"
 msgid "very dark {color} grey"
-msgstr "매우 진한 {color}"
+msgstr "매우 어두운 {color}빛 회색"
 
 #. Translators: The color between  red and brown (HSV hue 15 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "red-brown"
-msgstr "갈색"
+msgstr "적갈색"
 
 #. Translators: The color brown (HSV hue 30 degrees, below 50% brightness)
 msgctxt "color hue"
@@ -2023,7 +2023,7 @@ msgstr "갈색"
 #. Translators: The color between  brown and yellow (HSV hue 45 degrees, below 50% brightness)
 msgctxt "color hue"
 msgid "brown-yellow"
-msgstr "갈색"
+msgstr "누런 갈색"
 
 #. Translators: The word for window of a program such as document window.
 msgid "window"
@@ -2260,7 +2260,7 @@ msgstr "속성 페이지"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
-msgstr "canvas"
+msgstr "캔버스"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
@@ -2346,7 +2346,7 @@ msgstr "루트 창"
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 msgid "edit bar"
-msgstr "edit bar"
+msgstr "편집 막대"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
@@ -7337,7 +7337,7 @@ msgstr "HumanWare Brailliant BI/B/브레일노트 터치"
 
 #. Translators: The name of a braille display.
 msgid "EcoBraille displays"
-msgstr "EcoBraille"
+msgstr "EcoBraille 디스플레이"
 
 #. Translators: Names of braille displays.
 msgid "Eurobraille Esys/Esytime/Iris displays"
@@ -7401,7 +7401,7 @@ msgstr "베이펀마이어 브레일렉스 구형 모델"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
-msgstr "Seika"
+msgstr "Seika 점자 디스플레이"
 
 #. Translators: Names of braille displays.
 msgid "SuperBraille"
@@ -8572,7 +8572,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "NVDA 업데이트 자동 확인 (&U)"
+msgstr "NVDA에서 업데이트를 자동으로 확인 (&U)"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
