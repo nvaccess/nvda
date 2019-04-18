@@ -1677,7 +1677,7 @@ class BrowseModePanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
 		focusFollowsBrowseModeText = _("System focus follows browse mode focus automatically")
-		self.focusFollowsBrowseModeCheckBox=sHelper.addItem(wx.CheckBox(self,wx.ID_ANY,label=focusFollowsBrowseModeText)
+		self.focusFollowsBrowseModeCheckBox=sHelper.addItem(wx.CheckBox(self,wx.ID_ANY,label=focusFollowsBrowseModeText))
 		self.focusFollowsBrowseCheckBox.SetValue(config.conf["virtualBuffers"]["focusFollowsBrowse"])
 
 	def onSave(self):
