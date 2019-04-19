@@ -948,7 +948,6 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def event_stateChange(self):
 		if self is api.getFocusObject():
-			log.info("hahaha speak stateChanged %s %s" % (self, self.uniqueID))
 			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
 
