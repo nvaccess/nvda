@@ -501,10 +501,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		obj = self._lastFocusableObj
 		if not obj:
 			return
-		setFocusCall = False 
 		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
-			setFocusCall = True
-		if setFocusCall:
 			obj.setFocus()
 			speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 		if activatePosition:
@@ -1523,8 +1520,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not self.passThrough:
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				if  config.conf["virtualBuffers"]["focusFollowsBrowse"]:
-					speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				if (
+					not config.conf["virtualBuffers"]["focusFollowsBrowse"]
+					and obj == self._lastFocusableObj
+					and obj is not self._lastFocusableObj
+				):
+					speech.speakObject(self._lastFocusableObj,controlTypes.REASON_CHANGE)
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
