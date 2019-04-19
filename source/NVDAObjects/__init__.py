@@ -300,12 +300,6 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		self.textRepresentationLineLength=None #:If an integer greater than 0 then lines of text in this object are always this long.
 
-	def _get_uniqueID(self):
-		"""
-		Gets an unique identifier for this object.
-		"""
-		return hash(self)
-
 	def _isEqual(self,other):
 		"""Calculates if this object is equal to another object. Used by L{NVDAObject.__eq__}.
 		@param other: the other object to compare with.
@@ -313,7 +307,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		@return: True if equal, false otherwise.
 		@rtype: boolean
 		"""
-		return self.uniqueID == other.uniqueID
+		return True
 
 	def __eq__(self,other):
 		"""Compaires the objects' memory addresses, their type, and uses L{NVDAObject._isEqual} to see if they are equal.
