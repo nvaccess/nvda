@@ -247,7 +247,7 @@ class CustomWindow(with_metaclass(ABCMeta, AutoPropertyObject)):
 		try:
 			inst = CustomWindow._hwndsToInstances[hwnd]
 		except KeyError:
-			log.debugWarning("CustomWindow rawWindowProc, called for unknown window %d" % hwnd)
+			log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)
 			return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
 		try:
 			res = inst.windowProc(hwnd, msg, wParam, lParam)
