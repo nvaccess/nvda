@@ -139,7 +139,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
-	focusFollowsBrowse = boolean(default=True)
+	autoFocusFocusableElements = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)

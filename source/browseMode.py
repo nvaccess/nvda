@@ -489,15 +489,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
-		self.maybeSyncFocus(activatePosition=True)
+		if  config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._activatePosition()
+		else:
+			self._focusLastFocusableObject(activatePosition=True)
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
 
-	def maybeSyncFocus(self, activatePosition=False):
-		if  config.conf["virtualBuffers"]["focusFollowsBrowse"]:
-			if activatePosition:
-				self._activatePosition()
-			return
+	def _focusLastFocusableObject(self, activatePosition=False):
 		obj = self._lastFocusableObj
 		if not obj:
 			return
@@ -508,7 +507,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activatePosition()
 
 	def script_passThrough(self,gesture):
-		self.maybeSyncFocus()
+		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._focusLastFocusableObject()
 		gesture.send()
 	# Translators: the description for the passThrough script on browseMode documents.
 	script_passThrough.__doc__ = _("Passes gesture through to the application")
@@ -1275,7 +1275,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
-			followBrowseModeFocus= config.conf["virtualBuffers"]["focusFollowsBrowse"]
+			followBrowseModeFocus= config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 			if followBrowseModeFocus:
 				if obj==self.rootNVDAObject:
 					return
@@ -1340,7 +1340,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
-		self.maybeSyncFocus() 
+		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._focusLastFocusableObject()
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
@@ -1524,7 +1525,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 				if (
-					not config.conf["virtualBuffers"]["focusFollowsBrowse"]
+					not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 					and obj == self._lastFocusableObj
 					and obj is not self._lastFocusableObj
 				):

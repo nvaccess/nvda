@@ -1664,6 +1664,12 @@ class BrowseModePanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# browse mode settings panel.
+		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
+		self.autoFocusFocusableElementsCheckBox=sHelper.addItem(wx.CheckBox(self,wx.ID_ANY,label=autoFocusFocusableElementsText))
+		self.autoFocusFocusableElementsCheckBox.SetValue(config.conf["virtualBuffers"]["autoFocusFocusableElements"])
+
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings panel.
 		passThroughAudioIndicationText = _("Audio indication of focus and browse modes")
 		self.passThroughAudioIndicationCheckBox = sHelper.addItem(wx.CheckBox(self, label=passThroughAudioIndicationText))
 		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
@@ -1674,12 +1680,6 @@ class BrowseModePanel(SettingsPanel):
 		self.trapNonCommandGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=trapNonCommandGesturesText))
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
-		# Translators: This is the label for a checkbox in the
-		# browse mode settings panel.
-		focusFollowsBrowseModeText = _("System focus follows browse mode focus automatically")
-		self.focusFollowsBrowseModeCheckBox=sHelper.addItem(wx.CheckBox(self,wx.ID_ANY,label=focusFollowsBrowseModeText))
-		self.focusFollowsBrowseCheckBox.SetValue(config.conf["virtualBuffers"]["focusFollowsBrowse"])
-
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"]=self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"]=self.pageLinesEdit.GetValue()
@@ -1689,9 +1689,9 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["documentFormatting"]["includeLayoutTables"]=self.layoutTablesCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"]=self.autoPassThroughOnFocusChangeCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"]=self.autoPassThroughOnCaretMoveCheckBox.IsChecked()
+		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["passThroughAudioIndication"]=self.passThroughAudioIndicationCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["trapNonCommandGestures"]=self.trapNonCommandGesturesCheckBox.IsChecked()
-		config.conf["virtualBuffers"]["focusFollowsBrowse"] = self.focusFollowsBrowseModeCheckBox.IsChecked()
 
 class DocumentFormattingPanel(SettingsPanel):
 	# Translators: This is the label for the document formatting panel.
