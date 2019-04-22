@@ -295,6 +295,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="foreground")
 		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
 
+
 	def __init__(self):
 		super(NVDAObject,self).__init__()
 		self._mouseEntered=False #:True if the mouse has entered this object (for use in L{event_mouseMoved})
@@ -308,7 +309,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		@rtype: boolean
 		"""
 		return True
-
+ 
 	def __eq__(self,other):
 		"""Compaires the objects' memory addresses, their type, and uses L{NVDAObject._isEqual} to see if they are equal.
 		"""
@@ -748,8 +749,8 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def setFocus(self):
 		"""
-		Tries to force this object to take the focus.
-		"""
+Tries to force this object to take the focus.
+"""
 		pass
 
 	def scrollIntoView(self):
@@ -960,8 +961,8 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def event_gainFocus(self):
 		"""
-		This code is executed if a gain focus event is received by this object.
-		"""
+This code is executed if a gain focus event is received by this object.
+"""
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
@@ -1202,4 +1203,3 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
-
