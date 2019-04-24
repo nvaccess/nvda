@@ -31,4 +31,4 @@ https://github.com/nvaccess/nvda/wiki/Github-issue-template-explanation-and-exam
 ### Other questions
 #### Does the issue still occur after restarting your PC?
 
-#### Have you tried any other versions of NVDA?
+#### Have you tried any other versions of NVDA? If so, please report their behaviors.

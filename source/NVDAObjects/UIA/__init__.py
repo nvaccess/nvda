@@ -1458,7 +1458,7 @@ class UIA(Window):
 		# Ideally, we wouldn't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
-	def event_UIA_notification(self, notificationKind=None, notificationProcessing=None, displayString=None, activityId=None):
+	def event_UIA_notification(self, notificationKind=None, notificationProcessing=UIAHandler.NotificationProcessing_CurrentThenMostRecent, displayString=None, activityId=None):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
 		This base implementation announces all notifications from the UIA element.
@@ -1469,6 +1469,10 @@ class UIA(Window):
 		if self.appModule != api.getFocusObject().appModule:
 			return
 		if displayString:
+			if notificationProcessing in (UIAHandler.NotificationProcessing_ImportantMostRecent, UIAHandler.NotificationProcessing_MostRecent):
+				# These notifications superseed earlier notifications.
+				# Note that no distinction is made between important and non-important.
+				speech.cancelSpeech()
 			ui.message(displayString)
 
 class TreeviewItem(UIA):
