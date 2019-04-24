@@ -1285,7 +1285,8 @@ class ExcelCell(ExcelBase):
 			rawAddress=self.excelCellObject.address(False,False,1,False)
 		coords=rawAddress.split('!')[-1].split(':')
 		if len(coords)==2:
-			return "%s through %s"%(coords[0],coords[1])
+			# Translators: Used to express an address range in excel.
+			return _("{start} through {end}").format(start=coords[0], end=coords[1])
 		else:
 			return coords[0]
 
