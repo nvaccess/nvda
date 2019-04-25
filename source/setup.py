@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -214,6 +214,8 @@ setup(
 			# Since configobj 5.1.0, validate is a part of the configobj package
 			# and should be imported as configobj.validate instead
 			"validate",
+			# RemotePythonConsole should be included in binary builds
+			"remotePythonConsole",
 		],
 	}},
 	data_files=[
