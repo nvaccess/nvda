@@ -182,7 +182,7 @@ class SynthDriver(SynthDriver):
 		if self.supportsProsodyOptions:
 			conv = _OcSsmlConverter(self.language)
 		else:
-			conv = _OcPreAPI5SsmlConverter(self.language, self.rate, self.pitch, self.volume)
+			conv = _OcPreAPI5SsmlConverter(self.language, self._rate, self._pitch, self._volume)
 		text = conv.convertToXml(speechSequence)
 		# #7495: Calling WaveOutOpen blocks for ~100 ms if called from the callback
 		# when the SSML includes marks.
