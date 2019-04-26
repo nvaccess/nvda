@@ -72,6 +72,12 @@ class SynthDriver(SynthDriver):
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
+	supportedSettings = (
+		SynthDriver.VoiceSetting(),
+		SynthDriver.RateSetting(),
+		SynthDriver.PitchSetting(),
+		SynthDriver.VolumeSetting(),
+	)
 
 	@classmethod
 	def check(cls):
@@ -91,16 +97,10 @@ class SynthDriver(SynthDriver):
 		super(SynthDriver, self).__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
-		self.supportedSettings = [SynthDriver.VoiceSetting()]
 		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
 			self._dll.ocSpeech_getVolume.restype = ctypes.c_double
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
-			self.supportedSettings.extend((
-				SynthDriver.RateSetting(),
-				SynthDriver.PitchSetting(),
-				SynthDriver.VolumeSetting(),
-			))
 		else:
 			log.debugWarning("Prosody options not supported")
 		self._handle = self._dll.ocSpeech_initialize()
