@@ -62,16 +62,16 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			return None
 		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
 
-class _PreAPI5OcSsmlConverter(_OcSsmlConverter):
+class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 
 	def __init__(self, defaultLanguage, rate, pitch, volume):
-		super(_PreAPI5OcSsmlConverter, self).__init__(defaultLanguage)
+		super(_OcPreAPI5SsmlConverter, self).__init__(defaultLanguage)
 		self._rate = rate
 		self._pitch = pitch
 		self._volume = volume
 
 	def generateBalancerCommands(self, speechSequence):
-		commands = super(_PreAPI5OcSsmlConverter, self).generateBalancerCommands(speechSequence)
+		commands = super(_OcPreAPI5SsmlConverter, self).generateBalancerCommands(speechSequence)
 		# The EncloseAllCommand from SSML must be first.
 		yield next(commands)
 		# OneCore didn't provide a way to set base prosody values before API version 5.
@@ -123,6 +123,10 @@ class SynthDriver(SynthDriver):
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
+			# Use SSML to communicate the below options.
+			self._rate = None
+			self._pitch = None
+			self._volume = None
 		self._handle = self._dll.ocSpeech_initialize()
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
@@ -165,14 +169,20 @@ class SynthDriver(SynthDriver):
 		self._wasCancelled = True
 		log.debug("Cancelling")
 		# There might be more text pending. Throw it away.
-		# However, we must keep any parameter changes.
-		self._queuedSpeech = [item for item in self._queuedSpeech
-			if not isinstance(item, basestring)]
+		if self.supportsProsodyOptions:
+			# In this case however, we must keep any parameter changes.
+			self._queuedSpeech = [item for item in self._queuedSpeech
+				if not isinstance(item, basestring)]
+		else:
+			self._queuedSpeech = []
 		if self._player:
 			self._player.stop()
 
 	def speak(self, speechSequence):
-		conv = _OcSsmlConverter(self.language)
+		if self.supportsProsodyOptions:
+			conv = _OcSsmlConverter(self.language)
+		else:
+			conv = _OcPreAPI5SsmlConverter(self.language, self.rate, self.pitch, self.volume)
 		text = conv.convertToXml(speechSequence)
 		# #7495: Calling WaveOutOpen blocks for ~100 ms if called from the callback
 		# when the SSML includes marks.
@@ -195,26 +205,41 @@ class SynthDriver(SynthDriver):
 		return float(percent) / 100 * (max - min) + min
 
 	def _get_pitch(self):
+		if not self.supportsProsodyOptions:
+			return self._pitch
 		rawPitch = self._dll.ocSpeech_getPitch(self._handle)
 		return self._paramToPercent(rawPitch, self.MIN_PITCH, self.MAX_PITCH)
 
 	def _set_pitch(self, pitch):
+		if not self.supportsProsodyOptions:
+			self._pitch = pitch
+			return
 		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
 		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
 
 	def _get_volume(self):
+		if not self.supportsProsodyOptions:
+			return self._volume
 		rawVolume = self._dll.ocSpeech_getVolume(self._handle)
 		return int(rawVolume * 100)
 
 	def _set_volume(self, volume):
+		if not self.supportsProsodyOptions:
+			self._volume = volume
+			return
 		rawVolume = volume / 100.0
 		self._queuedSpeech.append((self._dll.ocSpeech_setVolume, rawVolume))
 
 	def _get_rate(self):
+		if not self.supportsProsodyOptions:
+			return self._rate
 		rawRate = self._dll.ocSpeech_getRate(self._handle)
 		return self._paramToPercent(rawRate, self.MIN_RATE, self.MAX_RATE)
 
 	def _set_rate(self, rate):
+		if not self.supportsProsodyOptions:
+			self._rate = rate
+			return
 		rawRate = self._percentToParam(rate, self.MIN_RATE, self.MAX_RATE)
 		self._queuedSpeech.append((self._dll.ocSpeech_setRate, rawRate))
 
@@ -229,6 +254,7 @@ class SynthDriver(SynthDriver):
 			item = self._queuedSpeech.pop(0)
 			if isinstance(item, tuple):
 				# Parameter change.
+				# Note that, if prosody otions aren't supported, this code will never be executed.
 				func, value = item
 				value = ctypes.c_double(value)
 				func(self._handle, value)
