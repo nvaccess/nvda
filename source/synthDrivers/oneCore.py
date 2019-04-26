@@ -62,6 +62,26 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			return None
 		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
 
+class _PreAPI5OcSsmlConverter(_OcSsmlConverter):
+
+	def __init__(self, defaultLanguage, rate, pitch, volume):
+		super(_PreAPI5OcSsmlConverter, self).__init__(defaultLanguage)
+		self._rate = rate
+		self._pitch = pitch
+		self._volume = volume
+
+	def generateBalancerCommands(self, speechSequence):
+		commands = super(_PreAPI5OcSsmlConverter, self).generateBalancerCommands(speechSequence)
+		# The EncloseAllCommand from SSML must be first.
+		yield next(commands)
+		# OneCore didn't provide a way to set base prosody values before API version 5.
+		# Therefore, the base values need to be set using SSML.
+		yield self.convertRateCommand(speech.RateCommand(multiplier=1))
+		yield self.convertVolumeCommand(speech.VolumeCommand(multiplier=1))
+		yield self.convertPitchCommand(speech.PitchCommand(multiplier=1))
+		for command in commands:
+			yield command
+
 class SynthDriver(SynthDriver):
 
 	MIN_PITCH = 0.0
