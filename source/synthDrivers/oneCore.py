@@ -83,12 +83,16 @@ class SynthDriver(SynthDriver):
 		# For binary copies, only present this as an available synth if this is Windows 10.
 		return winVersion.winVersion.major >= 10
 
+	def _get_supportsProsodyOptions(self):
+		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
+		return self.supportsProsodyOptions
+
 	def __init__(self):
 		super(SynthDriver, self).__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		self.supportedSettings = [SynthDriver.VoiceSetting()]
-		if self._dll.ocSpeech_supportsProsodyOptions():
+		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
 			self._dll.ocSpeech_getVolume.restype = ctypes.c_double
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
