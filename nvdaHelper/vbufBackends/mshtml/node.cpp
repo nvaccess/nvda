@@ -6,7 +6,7 @@ Copyright 2006-2015 NVDA contributers.
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
     This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
+class    but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -20,7 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <mshtmdid.h>
 #include <common/log.h>
 #include "mshtml.h"
-#include <remote/nvdaController.h>
+#include <remote/nvdaControllerInternal.h>
 #include <common/xml.h>
 #include "node.h"
 
@@ -76,6 +76,7 @@ class CDispatchChangeSink : public IDispatch {
 		this->dwCookie=dwCookie;
 		return true;
 	}
+
 
 	BOOL disconnect() {
 		if(this->dwCookie==0) return false;
@@ -276,6 +277,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 
 };
 
+
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);
@@ -353,11 +355,13 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap) {
-	 auto i=attribsMap.find(L"HTMLAttrib::aria-live");
+	auto i=attribsMap.find(L"HTMLAttrib::aria-live");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
 		this->ariaLiveNode=((i->second.compare(L"polite")==0)||(i->second.compare(L"assertive")==0))?this:NULL;
+		this->ariaLiveLevel = i->second.c_str();
 	} else {
 		this->ariaLiveNode=parent?parent->ariaLiveNode:NULL;
+		this->ariaLiveLevel=this->ariaLiveNode ? ((MshtmlVBufStorage_controlFieldNode_t*)this->ariaLiveNode)->ariaLiveLevel : NULL;
 	}
 	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
@@ -387,10 +391,10 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
 }
 
-void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text) {
+void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text, const wchar_t* level) {
 	for(auto c: text) {
 		if(!iswspace(c)) {
-			nvdaController_speakText(text.c_str());
+			nvdaControllerInternal_reportLiveRegion(text.c_str(), level);
 			break;
 		}
 	}
@@ -407,7 +411,7 @@ bool isNodeInLiveRegion(VBufStorage_fieldNode_t* node) {
 void MshtmlVBufStorage_controlFieldNode_t::reportLiveAddition() {
 	wstring text; //=(this->ariaLiveAtomicNode==this)?L"atomic: ":L"additions: ";
 	this->getTextInRange(0,this->getLength(),text,false,isNodeInLiveRegion);
-	this->reportLiveText(text);
+	this->reportLiveText(text, this->ariaLiveLevel);
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
@@ -469,7 +473,7 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 	} else if(reportNode) {
 		this->reportLiveAddition();
 	} else if(!newChildrenText.empty()) {
-		this->reportLiveText(newChildrenText);
+		this->reportLiveText(newChildrenText, this-> ariaLiveLevel);
 	}
 }
 

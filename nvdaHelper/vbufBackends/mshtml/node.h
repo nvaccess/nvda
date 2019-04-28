@@ -32,12 +32,13 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	DWORD HTMLChangeSinkCookey;
 	std::wstring language;
 	VBufStorage_controlFieldNode_t*  ariaLiveNode;
+	const wchar_t* ariaLiveLevel;
 	unsigned int formatState;
 	bool ariaLiveIsTextRelevant;
 	bool ariaLiveIsAdditionsRelevant;
 	bool ariaLiveIsBusy;
 	VBufStorage_controlFieldNode_t*  ariaLiveAtomicNode;
-	void reportLiveText(std::wstring& text);
+	void reportLiveText(std::wstring& text, const wchar_t* level);
 	void reportLiveAddition();
 	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
