@@ -19,6 +19,7 @@ from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
 
+
 """Support for Microsoft Word via UI Automation."""
 
 class ElementsListDialog(browseMode.ElementsListDialog):
@@ -68,7 +69,7 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj=UIA(UIAElement=UIAElement)
-		if not obj.parent or obj.parent.name!='Comment':
+		if obj.parent.role !=controlTypes.ROLE_GROUPING and not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId):
 			continue
 		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 		dateObj=obj.previous
@@ -334,7 +335,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			UIAElement=UIAElementArray.getElement(index)
 			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			obj=UIA(UIAElement=UIAElement)
-			if not obj.parent or obj.parent.name!='Comment':
+			if obj.parent.role !=controlTypes.ROLE_GROUPING and not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId):
 				continue
 			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 			dateObj=obj.previous
