@@ -614,7 +614,15 @@ class VisionHandler(AutoPropertyObject):
 		context = CONTEXT_FOCUS
 		if self.magnifier and context in self.magnifier.enabledTrackingContexts:
 			self.magnifier.trackToObject(obj, context=context)
-		mightHaveCaret = getattr(obj, "_hasNavigableText", False)
+		# Estimate whether this object has a caret.
+		# Checking the _hasNavigableText property is usually a good guess,
+		# Excel being an exception to this rule.
+		# Import late to avoid circular import.
+		from NVDAObjects.window.excel import ExcelCell, ExcelSelection
+		mightHaveCaret = (
+			getattr(obj, "_hasNavigableText", False)
+			or isinstance(obj, (ExcelCell, ExcelSelection))
+		)
 		if mightHaveCaret:
 			# This object most likely has a caret.
 			# Intentionally check this after tracking a magnifier to the object itself.
@@ -630,7 +638,6 @@ class VisionHandler(AutoPropertyObject):
 			if not mightHaveCaret and CONTEXT_CARET in self.highlighter.enabledHighlightContexts:
 				# If this object does not have a caret, clear the caret rectangle from the map
 				# However, in the unlikely case it yet has a caret, we want to highlight that.
-				# This happens in Microsoft Excel, for example.
 				self.highlighter.updateContextRect(CONTEXT_CARET, obj=obj)
 
 	def handleCaretMove(self, obj):
