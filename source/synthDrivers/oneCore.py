@@ -131,10 +131,11 @@ class SynthDriver(SynthDriver):
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
-			# Use SSML to communicate the below options.
-			self._rate = None
-			self._pitch = None
-			self._volume = None
+			# Set initial values for parameters that can't be queried.
+			# This initialises our cache for the value.
+			self._rate = 50
+			self._pitch = 50
+			self._volume = 100
 		self._handle = self._dll.ocSpeech_initialize()
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
