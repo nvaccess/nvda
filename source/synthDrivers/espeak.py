@@ -23,9 +23,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VoiceSetting(),
 		SynthDriver.VariantSetting(),
 		SynthDriver.RateSetting(),
-		# Translators: This is the name of the rate boost voice toggle
-		# which further increases the speaking rate when enabled.
-		BooleanSynthSetting("rateBoost",_("Rate boos&t")),
+		SynthDriver.RateBoostSetting(),
 		SynthDriver.PitchSetting(),
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),

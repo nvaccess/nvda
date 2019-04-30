@@ -263,6 +263,15 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Rate'))
 	@classmethod
+	def RateBoostSetting(cls):
+		"""Factory function for creating rate boost setting."""
+		# Translators: This is the name of the rate boost voice toggle
+		# which further increases the speaking rate when enabled.
+		return 		BooleanSynthSetting("rateBoost",_("Rate boos&t"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Rate boost'),
+		availableInSynthSettingsRing=True)
+	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
