@@ -87,17 +87,12 @@ class SynthDriver(SynthDriver):
 	MIN_PITCH = 0.0
 	MAX_PITCH = 2.0
 	MIN_RATE = 0.5
-	MAX_RATE = 6.0
+	DEFAULT_MAX_RATE = 1.5
+	BOOSTED_MAX_RATE = 6.0
 
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
-	supportedSettings = (
-		SynthDriver.VoiceSetting(),
-		SynthDriver.RateSetting(),
-		SynthDriver.PitchSetting(),
-		SynthDriver.VolumeSetting(),
-	)
 
 	@classmethod
 	def check(cls):
@@ -112,6 +107,19 @@ class SynthDriver(SynthDriver):
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
 		return self.supportsProsodyOptions
+
+	def _get_supportedSettings(self):
+		self.supportedSettings = settings = [
+			SynthDriver.VoiceSetting(),
+			SynthDriver.RateSetting(),
+		]
+		if self.supportsProsodyOptions:
+			settings.append(SynthDriver.RateBoostSetting())
+		settings.extend([
+			SynthDriver.PitchSetting(),
+			SynthDriver.VolumeSetting(),
+		])
+		return settings
 
 	def __init__(self):
 		super(SynthDriver, self).__init__()
@@ -234,14 +242,28 @@ class SynthDriver(SynthDriver):
 		if not self.supportsProsodyOptions:
 			return self._rate
 		rawRate = self._dll.ocSpeech_getRate(self._handle)
-		return self._paramToPercent(rawRate, self.MIN_RATE, self.MAX_RATE)
+		maxRate = self.BOOSTED_MAX_RATE if self._rateBoost else self.DEFAULT_MAX_RATE
+		return self._paramToPercent(rawRate, self.MIN_RATE, maxRate)
 
 	def _set_rate(self, rate):
 		if not self.supportsProsodyOptions:
 			self._rate = rate
 			return
-		rawRate = self._percentToParam(rate, self.MIN_RATE, self.MAX_RATE)
+		maxRate = self.BOOSTED_MAX_RATE if self._rateBoost else self.DEFAULT_MAX_RATE
+		rawRate = self._percentToParam(rate, self.MIN_RATE, maxRate)
 		self._queuedSpeech.append((self._dll.ocSpeech_setRate, rawRate))
+
+	_rateBoost = False
+
+	def _get_rateBoost(self):
+		return self._rateBoost
+
+	def _set_rateBoost(self, enable):
+		if enable == self._rateBoost:
+			return
+		rate = self.rate
+		self._rateBoost = enable
+		self.rate = rate
 
 	def _processQueue(self):
 		if not self._queuedSpeech:
