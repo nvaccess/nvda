@@ -107,7 +107,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	@classmethod
 	def _get_supportedRoles(cls):
 		"""Returns the roles supported by this provider."""
-		return frozenset(role for role, baseCls in ROLE_TO_CLASS_MAP.iteritems() if issubclass(cls, baseCls))
+		return frozenset(role for role, baseCls in ROLE_TO_CLASS_MAP.items() if issubclass(cls, baseCls))
 
 	def _get_running(self):
 		"""Returns whether the provider is running.
@@ -476,10 +476,10 @@ class VisionHandler(AutoPropertyObject):
 		self.lastReviewMoveContext = None
 		self.lastCaretObjRef = None
 		configuredProviders = defaultdict(set)
-		for role in ROLE_TO_CLASS_MAP.iterkeys():
+		for role in ROLE_TO_CLASS_MAP.keys():
 			setattr(self, role, None)
 			configuredProviders[config.conf['vision'][role]].add(role)
-		for name, roles in configuredProviders.iteritems():
+		for name, roles in configuredProviders.items():
 			if name:
 				# Some providers, such as the highlighter, rely on wx being fully initialized,
 				# e.g. when they use an overlay window which parent is NVDA's main frame.
@@ -592,7 +592,7 @@ class VisionHandler(AutoPropertyObject):
 
 	def terminate(self):
 		config.post_configProfileSwitch.unregister(self.handleConfigProfileSwitch)
-		for role in ROLE_TO_CLASS_MAP.iterkeys():
+		for role in ROLE_TO_CLASS_MAP.keys():
 			self.terminateProviderForRole(role)
 
 	def handleUpdate(self, obj):
@@ -687,7 +687,7 @@ class VisionHandler(AutoPropertyObject):
 			self.magnifier.trackToPoint((x, y), context=CONTEXT_MOUSE)
 
 	def handleConfigProfileSwitch(self):
-		for role in ROLE_TO_CLASS_MAP.iterkeys():
+		for role in ROLE_TO_CLASS_MAP.keys():
 			newProviderName = config.conf['vision'][role]
 			curProvider = getattr(self, role)
 			if  not curProvider or newProviderName != curProvider.name:
