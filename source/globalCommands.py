@@ -1433,9 +1433,10 @@ class GlobalCommands(ScriptableObject):
 		labels = [textInfos.unitLabels[x] for x in values]
 		try:
 			index = values.index(config.conf["mouse"]["mouseTextUnit"])
-		except:
+		except ValueError:
 			log.debugWarning("Couldn't get current mouse text resolution setting", exc_info=True)
-			index=0
+			default = 				config.conf.getConfigValidation(("mouse", "mouseTextUnit")).default
+			index = values.index(default)
 		newIndex = (index+1) % len(values)
 		config.conf["mouse"]["mouseTextUnit"]= values[newIndex]
 		# Translators: Reports the new state of the mouse text unit resolution:.
