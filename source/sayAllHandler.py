@@ -49,7 +49,7 @@ def readObjects(obj):
 	_startGenerator(readObjectsHelper_generator(obj))
 
 def generateObjectSubtreeSpeech(obj,indexGen):
-	index=next(indexGen)
+	index=indexGen.next()
 	speech.speakObject(obj,reason=controlTypes.REASON_SAYALL,index=index)
 	yield obj,index
 	child=obj.simpleFirstChild
@@ -71,7 +71,7 @@ def readObjectsHelper_generator(obj):
 		if lastReceivedIndex is None or (lastSentIndex-lastReceivedIndex)<=1:
 			if keepReading:
 				try:
-					o,lastSentIndex=next(speechGen)
+					o,lastSentIndex=speechGen.next()
 				except StopIteration:
 					keepReading=False
 					continue
