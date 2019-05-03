@@ -2375,7 +2375,6 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+p": "cycleSpeechSymbolLevel",
 		"kb:NVDA+s": "speechMode",
 		"kb:NVDA+m": "toggleMouseTracking",
-		"kb:NVDA+shift+r": "toggleMouseTextResolution",
 		"kb:NVDA+u": "toggleProgressBarOutput",
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
