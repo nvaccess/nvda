@@ -89,7 +89,7 @@ class _EventExecuter(object):
 		self.kwargs = kwargs
 		self._gen = self.gen(eventName, obj)
 		try:
-			self.next()
+			next(self)
 		except StopIteration:
 			pass
 		del self._gen

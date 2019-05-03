@@ -2667,7 +2667,7 @@ class BrailleSettingsSubPanel(SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
-		selection = (x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice).next()
+		selection = next((x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice))
 		try:
 			self.tetherList.SetSelection(selection)
 		except:
