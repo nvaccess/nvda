@@ -2494,7 +2494,7 @@ class _SpeechManager(object):
 			except:
 				log.exception("Error exiting active trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
-		synthDriverHandler.handlePostConfigProfileSwitch()
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 		if command.enter and shouldUseCompatCodeForIndexing():
 			log.debugWarning("Synth in new profile doesn't support indexing. Exiting trigger.")
 			try:
@@ -2503,7 +2503,7 @@ class _SpeechManager(object):
 				log.exception("Error exiting trigger %r" % command.trigger.spec)
 			assert self._curPriQueue.enteredProfileTriggers[-1] is command.trigger, "Last profile trigger should be the trigger just entered"
 			del self._curPriQueue.enteredProfileTriggers[-1]
-			synthDriverHandler.handlePostConfigProfileSwitch()
+			synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _exitProfileTriggers(self, triggers):
 		for trigger in reversed(triggers):
@@ -2511,7 +2511,7 @@ class _SpeechManager(object):
 				trigger.exit()
 			except:
 				log.exception("Error exiting profile trigger %r" % command.trigger.spec)
-		synthDriverHandler.handlePostConfigProfileSwitch()
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _restoreProfileTriggers(self, triggers):
 		for trigger in triggers:
@@ -2519,7 +2519,7 @@ class _SpeechManager(object):
 				trigger.enter()
 			except:
 				log.exception("Error entering profile trigger %r" % command.trigger.spec)
-		synthDriverHandler.handlePostConfigProfileSwitch()
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def cancel(self):
 		getSynth().cancel()

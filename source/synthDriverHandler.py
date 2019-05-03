@@ -132,9 +132,19 @@ def setSynth(name,isFallback=False):
 				setSynth(newName,isFallback=True)
 		return False
 
-def handlePostConfigProfileSwitch():
+def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
+	"""
+	Switches synthesizers and or applies new voice settings to the synth due to a config profile switch.
+	@var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first. This is what happens by default. 
+	However, Speech itself may call this with false internally if this is a config profile switch within a currently processing speech sequence. 
+	@type resetSpeechIfNeeded: bool
+	"""
 	conf = config.conf["speech"]
 	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
+		if resetSpeechIfNeeded:
+			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
+			import speech
+			speech.cancelSpeech()
 		setSynth(conf["synth"])
 		return
 	_curSynth.loadSettings(onlyChanged=True)
