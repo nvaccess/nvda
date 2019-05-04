@@ -846,8 +846,7 @@ class AddonUpdateSettingsDialog(wx.Dialog):
 		noAddonUpdatesLabel = _("Do &not update add-ons:")
 		# Some add-ons come with pretty badly formatted summary text, so try catching them and exclude them from this list.
 		# #7105: this is Python 2 specific solution at the moment.
-		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel, nvdaControls.CustomCheckListBox, choices=[unicode(addon.manifest["summary"]) for addon in addonHandler.getAvailableAddons()
-			if isinstance(addon.manifest['summary'], basestring)])
+		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel, nvdaControls.CustomCheckListBox, choices=[addon.manifest["summary"]) for addon in addonHandler.getAvailableAddons()])
 		self.noAddonUpdates.SetCheckedStrings([addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()
 			if addon.name in addonHandler.state["noUpdates"]])
 		self.noAddonUpdates.SetSelection(0)
@@ -864,7 +863,7 @@ class AddonUpdateSettingsDialog(wx.Dialog):
 	def onOk(self, evt):
 		noAddonUpdateSummaries = self.noAddonUpdates.GetCheckedStrings()
 		addonHandler.state["noUpdates"] = set([addon.name for addon in addonHandler.getAvailableAddons()
-			if unicode(addon.manifest["summary"]) in noAddonUpdateSummaries])
+			if addon.manifest["summary"] in noAddonUpdateSummaries])
 		# Prepare for disasters.
 		addonHandler.saveState()
 		self.Parent.addonsList.SetFocus()
@@ -928,7 +927,7 @@ class AddonUpdatesDialog(wx.Dialog):
 		wx.CallAfter(self.Show)
 
 	def onAddonsChecked(self, evt):
-		self.updateButton.Enable() if any([self.addonsList.IsChecked(addon) for addon in xrange(self.addonsList.GetItemCount())]) else self.updateButton.Disable()
+		self.updateButton.Enable() if any([self.addonsList.IsChecked(addon) for addon in range(self.addonsList.GetItemCount())]) else self.updateButton.Disable()
 
 	def onUpdate(self, evt):
 		self.Destroy()
@@ -937,10 +936,10 @@ class AddonUpdatesDialog(wx.Dialog):
 		if not self.auto:
 			self.Parent.Hide()
 		availableAddons = sorted(self.addonUpdateInfo.keys())
-		for addon in xrange(self.addonsList.GetItemCount()):
+		for addon in range(self.addonsList.GetItemCount()):
 			if not self.addonsList.IsChecked(addon):
 				del self.addonUpdateInfo[availableAddons[addon]]
-		updateAddonsGenerator(self.addonUpdateInfo.values(), auto=self.auto).next()
+		next(updateAddonsGenerator(self.addonUpdateInfo.values(), auto=self.auto))
 
 	def onClose(self, evt):
 		self.Destroy()
