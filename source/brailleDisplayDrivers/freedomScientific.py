@@ -40,33 +40,55 @@ MODELS = {
 FOCUS_1_CELL_COUNTS = (44, 70, 84,)
 
 # Packet types
+#: Query the display for information such as manufacturer, model and firmware version
 FS_PKT_QUERY = b"\x00"
+#: Response from the display that acknowledges a packet has been received
 FS_PKT_ACK = b"\x01"
+#: Negative response from the display indicating a problem
 FS_PKT_NAK = b"\x02"
+#: The display indicates that one ore more keys on the display are pressed/released. This includes normal buttons and the braille keyboard
 FS_PKT_KEY = b"\x03"
+#: A routing button on the display is pressed/released
 FS_PKT_BUTTON = b"\x04"
+#: Indicates a whiz wheel has turned. Please note that on newer models the wheels have been replaced by buttons, but there is no difference in the protocol.
 FS_PKT_WHEEL = b"\x05"
+#: Set braille dot firmness. Not yet used in this driver.
 FS_PKT_HVADJ = b"\x08"
+#: Lets the display beep. Not yet used in this driver.
 FS_PKT_BEEP = b"\x09"
+#: Sends a configuration request to the display. Mainly used to enable extended key mode on newer displays to use all the buttons.
 FS_PKT_CONFIG = b"\x0F"
+#: Indicates a response to FS_PKT_QUERY from the display
 FS_PKT_INFO = b"\x80"
+#: Sends braille cells to the display.
 FS_PKT_WRITE = b"\x81"
+#: Indicates extended keys have been pressed. Newer displays use this for some of their keys, see also the list in KeyGesture.extendedKeyLabels
 FS_PKT_EXT_KEY = b"\x82"
 
 # Parts of packets
+#: An empty packet argument or null byte
 FS_BYTE_NULL = b"\x00"
+#: Empty data in the packet payload
 FS_DATA_EMPTY = b""
 
 # FS_PKT_INFO payload offsets
+#: Start position of manufacturer in FS_PKT_INFO payload
 INFO_MANU_START = 0
+#: End position of manufacturer in FS_PKT_INFO payload
 INFO_MANU_END = 24
+#: Start position of model in FS_PKT_INFO payload
 INFO_MODEL_START = INFO_MANU_END
+#: End position of model in FS_PKT_INFO payload
 INFO_MODEL_END = INFO_MODEL_START + 16
+#: Start position of firmware version in FS_PKT_INFO payload
 INFO_VERSION_START = INFO_MODEL_END
+#: End position of firmware version in FS_PKT_INFO payload
 INFO_VERSION_END = INFO_MODEL_END + 8
 
 # Braille translation
+#: The number of dots in a braille character/cell
 DOTS_TABLE_SIZE = 8
+#: THe size of a full braille translation table including all possible dot combinations
 TRANSLATION_TABLE_SIZE = 2 ** DOTS_TABLE_SIZE
 
 def _makeTranslationTable(dotsTable):
@@ -121,6 +143,7 @@ FOCUS_1_DOTS_TABLE = [
 	0X01, 0X02, 0X04, 0X10, 0X20, 0X40, 0X08, 0X80
 ]
 
+#: Braille translation table used by first generation Focus displays
 FOCUS_1_TRANSLATION_TABLE = _makeTranslationTable(FOCUS_1_DOTS_TABLE)
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
@@ -230,10 +253,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg3 = handleArg(arg3)
 		packet = [packetType, arg1, arg2, arg3, data]
 		if data:
-			packet.append(int2byte(self._calculateChecksum("".join(packet))))
+			packet.append(int2byte(BrailleDisplayDriver._calculateChecksum("".join(packet))))
 		self._dev.write("".join(packet))
 
 	def _onReceive(self, data):
+		"""Event handler when data from the display is received
+
+		Formats a packet of four bytes in a packet type and three arguments.
+		If the packet is known to have a payload, this is also fetched and the checksum is verified.
+		The constructed packet is handed off to L{_handlePacket}.
+		"""
 		if self.isUsb:
 			data = BytesIO(data)
 			packetType = data.read(1)
@@ -250,7 +279,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			length = ord(arg1)
 			payload = data.read(length)
 			checksum = ord(data.read(1))
-			calculatedChecksum = self._calculateChecksum(packetType + arg1 + arg2 + arg3 + payload)
+			calculatedChecksum = BrailleDisplayDriver._calculateChecksum(packetType + arg1 + arg2 + arg3 + payload)
 			assert calculatedChecksum == checksum, "Checksum mismatch, expected %s but got %s" % (checksum, payload[-1])
 		else:
 			payload = FS_DATA_EMPTY
@@ -258,7 +287,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._handlePacket(packetType, arg1, arg2, arg3, payload)
 
 	def _handlePacket(self, packetType, arg1, arg2, arg3, payload):
-		"Handle a packet from the device"
+		"""Handle a packet from the device"
+
+		The following packet types are handled:
+
+		 * FS_PKT_ACK: See L{_handleAck}
+		 * FS_PKT_NAK: Logged and handled as an ACK
+		 * FS_PKT_INFO: Manufacturer, model and firmware version are extracted and set as
+		   properties on the object. Cell count is determined based on L{MODELS}.
+		   * arg1: length of payload
+		   * payload: manufacturer, model, firmware version in a fixed width field string
+		 * FS_PKT_WHEEL: The corresponding L{WheelGesture}s are sent for the wheel events.
+		   * arg1: movement direction (up/down) and number of clicks moved
+		     Bits: bbbaaa
+				   * a: number of clicks the wheel has moved
+				   * b: the wheel (left/right) and direction (up/down)
+			* FS_PKT_BUTTON: the corresponding L{RoutingGesture} is sent
+			  * arg1: number of routing button
+			  * arg2: key press/release
+			  * arg3: if this is a button on the second row of routing buttons
+			* FS_PKT_KEY: a key or button on the display is pressed/released (including the braille keyboard)
+			  * arg 1, 2, 3, 4: These bytes form the value indicating which keys are pressed.
+			    Key releases can be detected by comparing to the previous state, this work is done in L{_handleKeys}.
+		"""
 		if packetType == FS_PKT_ACK:
 			self._handleAck()
 		elif packetType == FS_PKT_NAK:
@@ -270,7 +321,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._firmwareVersion = payload[INFO_VERSION_START:INFO_VERSION_END].replace(FS_BYTE_NULL, "")
 			self.numCells = MODELS.get(self._model, 0)
 			if self.numCells in FOCUS_1_CELL_COUNTS:
-				# Focus 1: apply custom translation table
+				# Focus first gen: apply custom translation table
 				self.translationTable = FOCUS_1_TRANSLATION_TABLE
 			log.debug("Device info: manufacturer: %s model: %s, version: %s",
 				self._manufacturer, self._model, self._firmwareVersion)
