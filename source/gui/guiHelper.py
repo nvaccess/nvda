@@ -152,6 +152,7 @@ class LabeledControlHelper(object):
 			@param labelText: The text to associate with a wx control.
 			@type labelText: string
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+			@type wxCtrlClass: class
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
