@@ -2467,7 +2467,7 @@ class _SpeechManager(object):
 			except:
 				log.exception("Error exiting active trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
-			synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _exitProfileTriggers(self, triggers):
 		for trigger in reversed(triggers):
