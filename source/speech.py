@@ -146,21 +146,7 @@ def spellTextInfo(info,useCharacterDescriptions=False,priority=None):
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
 
-def shouldUseCompatCodeForIndexing():
-	synth = getSynth()
-	if synthDriverHandler.synthIndexReached in synth.supportedNotifications:
-		return False
-	warnings.warn(DeprecationWarning(
-		"Synth %s does not support synthIndexReached notifications. "
-		"Using old speech code (which will be removed in future)."
-		% synth.name))
-	return True
-
 def speakSpelling(text, locale=None, useCharacterDescriptions=False,priority=None):
-	if shouldUseCompatCodeForIndexing():
-		# Import late to avoid circular import.
-		import speechCompat
-		return speechCompat.speakSpelling(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions)
 	seq = list(getSpeechForSpelling(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions))
 	speak(seq,priority=priority)
 
@@ -571,8 +557,6 @@ def speak(speechSequence, symbolLevel=None, priority=None):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)
 			if not inCharacterMode:
 				speechSequence[index]+=CHUNK_SEPARATOR
-	if shouldUseCompatCodeForIndexing():
-		return getSynth().speak(speechSequence)
 	_manager.speak(speechSequence, priority)
 
 def speakSelectionMessage(message,text,priority=None):
@@ -1802,18 +1786,10 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 		if pendingSpeechSequence:
 			pendingSpeechSequence.reverse()
 			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
-	if shouldUseCompatCodeForIndexing():
-		# Compat code to support speechCompat.sayAll_readText.
-		#Scan the final speech sequence backwards
-		for item in reversed(finalSpeechSequence):
-			if isinstance(item,IndexCommand):
-				speakWithoutPauses._lastSentIndex=item.index
-				break
 	if finalSpeechSequence:
 		speak(finalSpeechSequence)
 		return True
 	return False
-speakWithoutPauses._lastSentIndex=None # For speechCompat.sayAll_readText
 speakWithoutPauses._pendingSpeechSequence=[]
 
 class SpeechCommand(object):
@@ -2479,9 +2455,6 @@ class _SpeechManager(object):
 	def _switchProfile(self):
 		command = self._curPriQueue.pendingSequences.pop(0)[0]
 		assert isinstance(command, ConfigProfileTriggerCommand), "First pending command should be a ConfigProfileTriggerCommand"
-		if not command.enter and command.trigger not in self._curPriQueue.enteredProfileTriggers:
-			# speechCompat: We already exited this profile due to synth incompatibility.
-			return
 		if command.enter:
 			try:
 				command.trigger.enter()
@@ -2494,15 +2467,6 @@ class _SpeechManager(object):
 			except:
 				log.exception("Error exiting active trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
-		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
-		if command.enter and shouldUseCompatCodeForIndexing():
-			log.debugWarning("Synth in new profile doesn't support indexing. Exiting trigger.")
-			try:
-				command.trigger.exit()
-			except:
-				log.exception("Error exiting trigger %r" % command.trigger.spec)
-			assert self._curPriQueue.enteredProfileTriggers[-1] is command.trigger, "Last profile trigger should be the trigger just entered"
-			del self._curPriQueue.enteredProfileTriggers[-1]
 			synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _exitProfileTriggers(self, triggers):
