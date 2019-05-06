@@ -7,7 +7,7 @@
 
 import time
 from collections import OrderedDict
-from cStringIO import StringIO
+from io import StringIO
 import braille
 import inputCore
 from logHandler import log

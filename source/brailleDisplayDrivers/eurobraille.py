@@ -6,7 +6,7 @@
 #Copyright (C) 2017-2019 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
-from cStringIO import StringIO
+from io import StringIO
 import serial
 import bdDetect
 import braille
