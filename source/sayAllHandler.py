@@ -74,13 +74,7 @@ class _ObjectsReader(object):
 def readText(cursor):
 	global lastSayAllMode, _activeSayAll
 	lastSayAllMode=cursor
-	# speechCompat: We have to enter the profile trigger here because it might change synths
-	# and we need to check whether we have to use compat code for the desired synth.
-	# Ideally, once the compat code is removed, the trigger would be
-	# managed entirely by _TextReader.
-	trigger = SayAllProfileTrigger()
-	trigger.enter()
-	reader = _TextReader(cursor, trigger)
+	reader = _TextReader(cursor)
 	_activeSayAll = weakref.ref(reader)
 	reader.nextLine()
 
@@ -106,9 +100,10 @@ class _TextReader(object):
 	"""
 	MAX_BUFFERED_LINES = 10
 
-	def __init__(self, cursor, trigger):
+	def __init__(self, cursor):
 		self.cursor = cursor
-		self.trigger = trigger
+		self.trigger = SayAllProfileTrigger()
+		self.trigger.enter()
 		# Start at the cursor.
 		if cursor == CURSOR_CARET:
 			try:
