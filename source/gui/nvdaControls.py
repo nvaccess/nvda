@@ -199,12 +199,12 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		self.Bind(wx.EVT_LEFT_DOWN, self.onLeftDown)
 
 	def GetCheckedItems(self):
-		return tuple(i for i in xrange(self.ItemCount) if self.IsChecked(i))
+		return tuple(i for i in range(self.ItemCount) if self.IsChecked(i))
 
 	def SetCheckedItems(self, indexes):
 		for i in indexes:
 			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i
-		for i in xrange(self.ItemCount):
+		for i in range(self.ItemCount):
 			self.CheckItem(i, i in indexes)
 
 	CheckedItems = property(fget=GetCheckedItems, fset=SetCheckedItems)

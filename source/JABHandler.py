@@ -716,7 +716,7 @@ def initialize():
 	if ChangeWindowMessageFilter:
 		if not ChangeWindowMessageFilter(winUser.WM_COPYDATA,1):
 			raise WinError()
-		for msg in xrange(winUser.WM_USER+1,65535):
+		for msg in range(winUser.WM_USER+1,65535):
 			if not ChangeWindowMessageFilter(msg,1):
 				raise WinError()
 	#Register java events

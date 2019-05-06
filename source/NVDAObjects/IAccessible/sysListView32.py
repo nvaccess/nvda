@@ -404,7 +404,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				return self.displayText
 			return name
 		textList = []
-		for col in xrange(1, self.childCount + 1):
+		for col in range(1, self.childCount + 1):
 			content = self._getColumnContent(col)
 			if not content:
 				continue

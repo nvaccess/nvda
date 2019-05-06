@@ -14,7 +14,6 @@ import textInfos
 from locationHelper import RectLTWH
 from treeInterceptorHandler import TreeInterceptor
 import api
-from six.moves import range
 
 HIGH_SURROGATE_FIRST = u"\uD800"
 HIGH_SURROGATE_LAST = u"\uDBFF"

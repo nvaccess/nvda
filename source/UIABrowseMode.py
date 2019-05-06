@@ -175,7 +175,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		# All items are requested (such as for elements list)
 		elements=document.rootNVDAObject.UIAElement.findAll(UIAHandler.TreeScope_Descendants,UIACondition)
 		if elements:
-			for index in xrange(elements.length):
+			for index in range(elements.length):
 				element=elements.getElement(index)
 				try:
 					elementRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(element)

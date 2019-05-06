@@ -181,7 +181,7 @@ def readTextHelper_generator(cursor):
 			yield
 		# Some synths say they've handled the index slightly sooner than they actually have,
 		# so wait a bit longer.
-		for i in xrange(30):
+		for i in range(30):
 			yield
 
 class SayAllProfileTrigger(config.ProfileTrigger):

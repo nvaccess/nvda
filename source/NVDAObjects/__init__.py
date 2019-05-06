@@ -98,7 +98,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		# Determine the bases for the new class.
 		bases=[]
-		for index in xrange(len(clsList)):
+		for index in range(len(clsList)):
 			# A class doesn't need to be a base if it is already implicitly included by being a superclass of a previous base.
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])

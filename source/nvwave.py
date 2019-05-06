@@ -278,7 +278,7 @@ class WavePlayer(object):
 
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
-	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
+	for devID in range(-1, winmm.waveOutGetNumDevs()):
 		try:
 			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
 			yield devID, caps.szPname

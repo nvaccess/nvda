@@ -607,7 +607,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			return u'*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
-		for offset in xrange(len(bufText)):
+		for offset in range(len(bufText)):
 			if ord(bufText[offset])==0xfffc:
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
 				embedRangeObj.setRange(start+offset,start+offset+1)
