@@ -13,10 +13,7 @@ import os
 from ctypes import *
 import comtypes.client
 from comtypes import COMError
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import audioDucking
 import NVDAHelper
 import globalVars
