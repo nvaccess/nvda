@@ -1032,11 +1032,11 @@ class UIA(Window):
 		info.append("UIA className: %s"%ret)
 		patternsAvailable = []
 		patternAvailableConsts = dict(
-			(const, name) for name, const in UIAHandler.__dict__.iteritems()
+			(const, name) for name, const in UIAHandler.__dict__.items()
 			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
 		)
 		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
-		for const, name in patternAvailableConsts.iteritems():
+		for const, name in patternAvailableConsts.items():
 			try:
 				res = self._getUIACacheablePropertyValue(const)
 			except COMError:

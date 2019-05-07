@@ -109,7 +109,7 @@ class SynthDriver(SynthDriver):
 				if not prosody:
 					continue
 				textList.append("<prosody")
-				for attr,val in prosody.iteritems():
+				for attr,val in prosody.items():
 					textList.append(' %s="%d%%"'%(attr,val))
 				textList.append(">")
 			elif isinstance(item,speech.PhonemeCommand):
@@ -237,4 +237,4 @@ class SynthDriver(SynthDriver):
 		_espeak.setVoiceAndVariant(variant=self._variant)
 
 	def _getAvailableVariants(self):
-		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.iteritems())
+		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.items())

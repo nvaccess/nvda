@@ -701,7 +701,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		startOffset=self._rangeObj.start
 		endOffset=self._rangeObj.end
 		text=BSTR()
-		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
+		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.items() if formatConfig.get(x,False))
 		if self.shouldIncludeLayoutTables:
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
