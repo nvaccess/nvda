@@ -279,10 +279,15 @@ class UIAHandler(COMObject):
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
+	# The last UIAElement that received a UIA focus event
+	# This is updated no matter if this is a native element, the window is UIA blacklisted by NVDA, or  the element is proxied from MSAA 
+	lastFocusedUIAElement=None
+
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
+		self.lastFocusedUIAElement=sender
 		if not self.isNativeUIAElement(sender):
 			return
 		import NVDAObjects.UIA

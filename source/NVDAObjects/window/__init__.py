@@ -1,6 +1,6 @@
 #NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -287,6 +287,9 @@ An NVDAObject for a window
 	def _get_windowStyle(self):
 		return winUser.getWindowStyle(self.windowHandle)
 
+	def _get_extendedWindowStyle(self):
+		return winUser.getExtendedWindowStyle(self.windowHandle)
+
 	def _get_isWindowUnicode(self):
 		if not hasattr(self,'_isWindowUnicode'):
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
@@ -357,6 +360,11 @@ An NVDAObject for a window
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("windowStyle: %s" % ret)
+		try:
+			ret = repr(self.extendedWindowStyle)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("extendedWindowStyle: %s" % ret)
 		try:
 			ret = repr(self.windowThreadID)
 		except Exception as e:
