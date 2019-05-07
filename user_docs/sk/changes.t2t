@@ -3,6 +3,77 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.1 =
+Prednosti tejto verzie zahŕňajú vylepšenia pri používaní aplikácií Word a Excel, úpravy týkajúce sa stability a bezpečnosti, keďže sa vyžaduje väčšia kontrola kompatibility doplnkov a pár ďalších vylepšení.
+
+Od tejto verzie NVDA automaticky nebude načítavať aplikačné moduly, ovládače pre braillovské riadky, hlasové výstupy a globálne pluginy uložené priamo v adresári s nastaveniami NVDA.
+Pre bežné použitie by mali byť skompilované ako doplnok nvda-addon. Ak pracujete na vývoji doplnku a potrebujete testovať svoj kód, začiarknite v pokročilých nastaveniach načítanie vlastných modulov a následne uložte súbory do priečinka scratchpad v priečinku s vašou konfiguráciou NVDA.
+Tieto zmeny sú dôležité, aby sme zaistili kompatibilitu vlastnoručne písaného kódu, a aby nedochádzalo k pádom NVDA v prípade, že po aktualizácii prestane byť kód nekompatibilný.
+Podrobnosti nájdete popísané nižšie v zozname zmien.
+
+== Nové vlastnosti ==
+- Pridané nové braillovské tabuľky: Afrikánčina, Arabský 8-bodový počítačový kód, Arabčina skratkopis, Španielčina skratkopis. (#4435, #9186)
+- V nastaveniach môžete určiť, ako sa má NVDA správať, ak s myšou pracuje iná aplikácia. (#8452)
+ - Toto umožňuje sledovať kurzor myši aj v prípade, ak ju ovláda napríklad aplikácia TeamViewer.
+- Pri inštalácii NVDA z príkazového riadka je možné použiť parameter `--enable-start-on-logon`. Pomocou tohto parametra je možné určiť, či chcete NVDA spúšťať po prihlásení do systému (hodnota true) alebo NVDA nechcete spúšťať automaticky (hodnota false). Ak nie je tento parameter určený, pri prvej inštalácii NVDA sa bude predvolene  NVDA spúšťať po štarte systému. Ak ide o aktualizáciu NVDA, kde používateľ určil, že sa nemá NVDA spúšťať po štarte, bude toto nastavenie zachované. (#8574)
+- Vo všeobecných nastaveniach je teraz možné vypnúť zaznamenávanie do log súboru nastavením hodnoty na "zakázaný". (#8516)
+- Odteraz sú oznamované vzorce v aplikáciách LibreOffice a tabuľkách Apache OpenOffice. (#860)
+- V prehliadačoch Mozilla Firefox a Google Chrome NVDA oznamuje vybraté položky v stromoch a zoznamoch.
+ - Toto funguje od verzie Firefox 66.
+ - Toto nefunguje v niektorých zoznamoch (HTML select controls) v prehliadači  Chrome.
+- Prvotná podpora pre aplikácie ako napríklad Mozilla Firefox na počítačoch s procesorom ARM64 (napríklad Qualcomm Snapdragon). (#9216)
+- V nastaveniach sme pridali novú kategóriu pokročilé. Tu je napríklad možné zapnúť podporu pre Office aplikácie cez UI Automation. (#9200)
+- Pridaná podpora pre grafické rozhranie v aplikácii správa diskov. (#1486)
+- Pridaná podpora pre braillovské riadky Handy Tech Connect Braille a Basic Braille 84. (#9249)
+
+
+== zmeny ==
+- Prekladová tabuľka liblouis aktualizovaná na verziu 3.8.0. (#9013)
+- Autori doplnkov teraz môžu určiť minimálnu verziu NVDA, s ktorou ich doplnok spolupracuje. NVDA nenačíta a nenainštaluje doplnky, ktoré vyžadujú novšiu verziu NVDA. (#6275)
+- Autori doplnkov môžu určiť, s ktorou verziou NVDA bol doplnok testovaný. Ak bol doplnok testovaný so staršou verziou NVDA, opäť NVDA nenainštaluje a nenačíta doplnok. (#6275)
+- Táto verzia NVDA ešte načíta doplnky, ktoré nemajú špecifikovanú minimálnu a poslednú vyžadovanú verziu NVDA. Po aktualizácii na verziu 2019.2 však môžu byť tieto doplnky zakázané.
+- Príkaz presunúť myš na miesto zamerané objektovou navigáciou je teraz dostupný v aplikácii MS Word a v UIA prvkoch, konkrétne v aplikácii Microsoft Edge. (#7916, #8371)
+- Vylepšené oznamovanie textu pod kurzorom myši v aplikácii MS Edge a iných UIA aplikáciách. (#8370)
+- Ak je NVDA spustené s argumentom `--portable-path`, pri vytváraní prenosnej verzie sa vyplní cesta z argumentu. (#8623)
+- Opravená cesta pre Nórsku braillovskú tabuľku, čím sa odteraz rešpektuje kodifikácia z roku 2015. (#9170)
+- Pri pohybe po odsekoch (ctrl+šípky hore dole) alebo po bunkách tabuľky (ctrl+alt+šípky) NVDA neoznamuje pravopisné chyby a to ani v takom prípade, ak je oznamovanie pravopisných chýb zapnuté. Odseky a stĺpce v tabuľkách môžu byť totiž dlhé a detegovanie chýb je náročné na výkon. (#9217)
+- NVDA viac automaticky nespúšťa aplikačné moduly, ovládače pre braillovské riadky a rečové syntézy a globálne pluginy priamo z používateľského priečinka NVDA. Tieto je potrebné skompilovať ako doplnok nvda-addon a určiť správne verzie, s ktorými je doplnok kompatibilný. (#9238)
+ - Ak pracujete na vývoji vlastného kódu, povoľte načítanie vlastného kódu v pokročilých nastaveniach. Následne umiestnite kód do priečinka scratchpad v priečinku s nastaveniami NVDA.
+ 
+ 
+== Opravy ==
+- Pri použití hlasového výstupu Onecore v systéme Windows 10 od verzie Apríl 2018, nie sú vkladané zbytočné pauzy. (#8985)
+- Pri pohybe po znakoch v editačných poliach (napríklad v poznámkovom bloku) alebo v režime prehliadania, NVDA správne oznamuje 32-bitové emoji pozostávajúce z dvoch buniek UTF-16 (napríklad đź¤¦). (#8782)
+- Upravený dialóg, ktorý sa objaví pri zmene jazyka. Text a tlačidlá sú teraz zrozumiteľnejšie. (#6416)
+- Ak nie je možné použiť nastavený hlasový výstup, NVDA sa v systéme Windows 10 vráti k hlasu Onecore a nie k syntéze eSpeak. (#9025)
+- Položka Vitajte v NVDA bola odstránená z menu NVDA na zabezpečených obrazovkách. (#8520)
+- V režime prehliadania pri použití tabulátora alebo skratiek rýchlej navigácie, NVDA presnejšie oznamuje popisy pre tab panely. (#709)
+- NVDA správne oznamuje výber času v aplikáciách budík a hodiny v systéme Windows 10. (#5231)
+- V centre akcií v systéme Windows 10 NVDA odteraz oznamuje stav pri zmene jasu alebo asistenta na lepšie sústredenie. (#8954)
+- Od októbrovej aktualizácie Windows 10 NVDA správne rozpoznáva tlačidlo jas v centre akcií ako tlačidlo a nie ako prepínacie tlačidlo. (#8845)
+- NVDA opäť správne sleduje kurzor a oznamuje vymazané znaky v aplikácii Excel v dialógoch ísť na a vyhľadávanie. (#9042)
+- Opravené občasné pády v režime prehliadania v prehliadači Firefox. (#9152)
+- NVDA správne oznamuje fokus v zbalených prvkoch v rybbonoch v aplikácii MS Office 2016.
+- NVDA správne oznamuje navrhnutý kontakt pri písaní e-mailovej adresy v novej správe v aplikácii Outlook 2016. (#8502)
+- Posledné klávesy na presun kurzora na bunku na 80-znakovom riadku eurobraille viac nesmerujú kurzor na začiatok alebo tesne po začiatku riadka. (#9160)
+- Opravená navigácia po tabuľkách ak je použité zobrazenie po vláknach v aplikácii Mozilla Thunderbird. (#8396)
+- V prehliadačoch Mozilla Firefox a Google Chrome je možné aktivovať režim fokusu v zoznamoch a stromoch, ktoré samotné síce nemôžu mať fokus, ale položky v nich už áno. (#3573, #9157)
+- V aplikácii Outlook 2016 sa automaticky aktivuje režim prehliadania aj v prípade, že je povolené experimentálne použitie UI Automation. (#9188)
+- NVDA viac nemrzne takým spôsobom, že jediné východisko je odhlásenie a opätovné prihlásenie používateľa. (#6291)
+- V systéme Windows 10 od  aktualizácie október 2018, NVDA oznámi, ak je schránka prázdna a pokúšate sa otvoriť zoznam textov pridaných do schránky Windows. (#9103)
+- V systéme Windows 10 od verzie Október 2018 NVDA pri prezeraní Emoji panela  pri vyhľadávaní oznámi prvý navrhnutý symbol. (#9105)
+- NVDA viac nezamrzne v hlavnom okne aplikácie Oracle VirtualBox od verzie 5.2. (#9202)
+- Zrýchlená odozva pre niektoré dokumenty MS Word pri navigácii po riadkoch, odsekoch a bunkách v tabuľke. Odporúča sa použiť zobrazenie koncept. (#9217)
+- V prehliadačoch Mozilla Firefox a Google Chrome NVDA viac neoznamuje prázdne upozornenia. (#5657)
+- Zrýchlená navigácia v dokumentoch MS Excel v prípadoch, ak tabuľka obsahuje komentáre alebo zoznamy návrhov zmien. (#7348)
+- Nie je viac potrebné vypnúť editáciu vo vnútry bunky v aplikácii MS Excel 2016/365, aby bolo možné prejsť do editačného poľa bunky. (#8146)
+- Opravená chyba, ktorá spôsobila zamrznutie v režime prehliadania v prehliadači Mozilla Firefox pri navigácii po oblastiach stránky, ak je použité pokročilé Enhanced Aria add-on. (#8980)
+
+
+= 2018.4.1 =
+Táto verzia opravuje pád, ktorý nastával, ak bol jazyk NVDA nastavený na Aragónčinu.
+
+
 = 2018.4 =
 Prednosti tejto verzie zahŕňajú lepšiu podporu pre nové verzie prehliadača Mozilla Firefox, oznamovanie emotikonov cez všetky hlasové výstupy, oznamovanie stavu pri správach v aplikácii MS Outlook (odpovedané, preposlané), oznamovanie vzdialenosti kurzora v dokumentoch MS Word a viacero opráv.
 

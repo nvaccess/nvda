@@ -1229,10 +1229,7 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		vbuf = focus.treeInterceptor
 		if not vbuf:
-			# #2023: Search the focus and its ancestors for an object for which browse mode is optional.
 			for obj in itertools.chain((api.getFocusObject(),), reversed(api.getFocusAncestors())):
-				if obj.shouldCreateTreeInterceptor:
-					continue
 				try:
 					obj.treeInterceptorClass
 				except:
@@ -1241,8 +1238,7 @@ class GlobalCommands(ScriptableObject):
 			else:
 				return
 			# Force the tree interceptor to be created.
-			obj.shouldCreateTreeInterceptor = True
-			ti = treeInterceptorHandler.update(obj)
+			ti = treeInterceptorHandler.update(obj, force=True)
 			if not ti:
 				return
 			if focus in ti:
@@ -1252,7 +1248,11 @@ class GlobalCommands(ScriptableObject):
 				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
 				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
 					browseMode.reportPassThrough(ti,False)
-					braille.handler.handleGainFocus(ti)
+					# #8716: Only let braille handle the focus when the tree interceptor is ready.
+					# If not ready (e.g. a loading virtual buffer),
+					# the buffer will take responsibility to update braille as soon as it completed loading.
+					if ti.isReady:
+						braille.handler.handleGainFocus(ti)
 			return
 
 		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
@@ -1428,6 +1428,25 @@ class GlobalCommands(ScriptableObject):
 	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 	script_toggleMouseTracking.category=SCRCAT_MOUSE
 
+	def script_toggleMouseTextResolution(self,gesture):
+		values = textInfos.MOUSE_TEXT_RESOLUTION_UNITS
+		labels = [textInfos.unitLabels[x] for x in values]
+		try:
+			index = values.index(config.conf["mouse"]["mouseTextUnit"])
+		except ValueError:
+			log.debugWarning("Couldn't get current mouse text resolution setting", exc_info=True)
+			default = 				config.conf.getConfigValidation(("mouse", "mouseTextUnit")).default
+			index = values.index(default)
+		newIndex = (index+1) % len(values)
+		config.conf["mouse"]["mouseTextUnit"]= values[newIndex]
+		# Translators: Reports the new state of the mouse text unit resolution:.
+		# %s will be replaced with the new label.
+		# For example, the full message might be "Mouse text unit resolution character"
+		ui.message(_("Mouse text unit resolution %s")%labels[newIndex])
+	# Translators: Input help mode message for toggle mouse text unit resolution command.
+	script_toggleMouseTextResolution.__doc__=_("Toggles how much text will be spoken when the mouse moves")
+	script_toggleMouseTextResolution.category=SCRCAT_MOUSE
+
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
@@ -1542,20 +1561,6 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle focus moves navigator object command.
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
-
-	def script_toggleBrowseMovesFocus(self,gesture):
-		if config.conf["virtualBuffers"]["focusFollowsBrowse"]:
-			# Translators: presented when toggled.
-			state = _("Focus follows browse mode off")
-			config.conf["virtualBuffers"]["focusFollowsBrowse"]=False
-		else:
-			# Translators: presented when toggled.
-			state = _("Focus follows browse mode on")
-			config.conf["virtualBuffers"]["focusFollowsBrowse"]=True
-		ui.message(state)
-	# Translators: Input help mode message for toggle browse moves focus command.
-	script_toggleBrowseMovesFocus.__doc__=_("Toggles on and off the movement of the system focus due to browse mode commands") 
-	script_toggleBrowseMovesFocus.category=SCRCAT_FOCUS 
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
@@ -2374,7 +2379,6 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
-		"kb:NVDA+8": "toggleBrowseMovesFocus",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
