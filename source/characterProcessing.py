@@ -462,7 +462,7 @@ class SpeechSymbolProcessor(object):
 					symbol.displayName = sourceSymbol.displayName
 
 		# Set defaults for any fields not explicitly set.
-		for symbol in symbols.values():
+		for symbol in list(symbols.values()):
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
 				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(

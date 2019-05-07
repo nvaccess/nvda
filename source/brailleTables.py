@@ -56,7 +56,7 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
-	tables = _tables.values()
+	tables = list(_tables.values())
 	tables.sort(key=lambda table: table.displayName)
 	return tables
 
