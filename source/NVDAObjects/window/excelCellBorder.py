@@ -150,7 +150,7 @@ def getCellBorderStyleDescription(bordersObj,reportBorderColor=False):
 		s.append(_("{desc} up-right and down-right diagonal lines").format(desc=d.get(xlDiagonalUp)))
 		del d[xlDiagonalUp]
 		del d[xlDiagonalDown]
-	for pos,desc in d.items():
+	for pos,desc in list(d.items()):
 		# Translators: border styles in Microsoft Excel.
 		s.append(_("{desc} {position}").format(
 			desc=desc,
