@@ -986,7 +986,7 @@ class AggregatedSection(object):
 	def __iter__(self):
 		keys = set()
 		# Start with the cached items.
-		for key, val in self._cache.iteritems():
+		for key, val in self._cache.items():
 			keys.add(key)
 			if val is not KeyError:
 				yield key
