@@ -605,7 +605,7 @@ class ConfigManager(object):
 		# Remove any triggers associated with this profile.
 		allTriggers = self.triggersToProfiles
 		# You can't delete from a dict while iterating through it.
-		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.iteritems()
+		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.items()
 			if trigProfile == name]
 		if delTrigs:
 			for trigSpec in delTrigs:
@@ -654,7 +654,7 @@ class ConfigManager(object):
 		# Update any associated triggers.
 		allTriggers = self.triggersToProfiles
 		saveTrigs = False
-		for trigSpec, trigProfile in allTriggers.iteritems():
+		for trigSpec, trigProfile in allTriggers.items():
 			if trigProfile == oldName:
 				allTriggers[trigSpec] = newName
 				saveTrigs = True
@@ -762,7 +762,7 @@ class ConfigManager(object):
 		triggers = self._suspendedTriggers
 		self._suspendedTriggers = None
 		with self.atomicProfileSwitch():
-			for trigger, action in triggers.iteritems():
+			for trigger, action in triggers.items():
 				trigger.enter() if action == "enter" else trigger.exit()
 
 	def disableProfileTriggers(self):
