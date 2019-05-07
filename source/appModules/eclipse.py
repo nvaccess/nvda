@@ -19,6 +19,11 @@ from scriptHandler import script
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
+	def event_suggestionsClosed(self):
+		super(EclipseTextArea, self).event_suggestionsClosed()
+		self.appModule.selectedItem = None
+		self.appModule.selectedItemName = None
+
 	def event_valueChange(self):
 		# #2314: Eclipse incorrectly fires valueChange when the selection changes.
 		# Unfortunately, this causes us to speak the entire selection
@@ -31,9 +36,8 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		# Check suggestion item and close the list if it is not valid
 		try:
-			if not self.appModule.selectedItem.name:
+			if self.appModule.selectedItem and not self.appModule.selectedItem.name:
 				self.event_suggestionsClosed()
-				self.appModule.selectedItem = None
 		except:
 			pass
 
@@ -42,11 +46,10 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 	)
 	def script_closeAutocompleter(self, gesture):
 		gesture.send()
-		
+
 		# Close the suggestions list if it is opened
 		if self.appModule.selectedItem:
 			self.event_suggestionsClosed()
-			self.appModule.selectedItem = None
 
 	@script(
 		# Translators: Input help mode message for the 'read documentation script
@@ -54,22 +57,49 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		gesture = "kb:nvda+d"
 	)
 	def script_readDocumentation(self, gesture):
+		obj = None
+
 		# If there aren't any suggestion selected, there is no way to find quick documentation
 		if not self.appModule.selectedItem:
 			gesture.send()
 			return
 
-		obj = self.appModule.selectedItem.parent.parent.parent.parent.previous.previous
-		while obj:
-			obj = obj.firstChild
-			
-			if obj and obj.role == controlTypes.ROLE_DOCUMENT:
-				break
+		# Try to locate the documentation document
+		try:
+			obj = self.appModule.selectedItem.parent.parent.parent.parent.previous.previous
+		except:
+			pass
 
-		if obj:
+		# In XML documents this is different, maybe in other editors too
+		# so we try to locate the root window again
+		if not obj or not obj.appModule == self.appModule:
+			try:
+				obj = self.appModule.selectedItem.parent.parent.parent.parent.previous
+			except:
+				pass
+
+		# Check if this object is from the same appModule
+		if obj and obj.appModule == self.appModule:
 			api.setNavigatorObject(obj)
-			braille.handler.handleReviewMove()
-			sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
+
+			while obj:
+				if obj.firstChild:
+					obj = obj.firstChild
+					
+					# In some editors the help document is a HTML ones
+					# On XML documents, for example, it is a simple read-only editable text
+					if obj.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_EDITABLETEXT):
+						break
+				else:
+					break
+
+			if obj.role == controlTypes.ROLE_DOCUMENT:
+				api.setNavigatorObject(obj)
+				braille.handler.handleReviewMove()
+				sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
+				
+			elif obj.role == controlTypes.ROLE_EDITABLETEXT:
+				ui.message(obj.value)
 
 		else:
 			# Translators: When the help popup cannot be found for the selected autocompletion item
@@ -80,7 +110,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 	)
 	def script_completeInstruction(self, gesture):
 		"""
-		Performs a standard autocompletion with the `TAB` key.
+		Performs a standard autocompletion with the `TAB` key, like in other editors.
 		"""
 
 		# We need to ensure that the autocompletion popup is open
@@ -101,8 +131,9 @@ class AutocompletionListItem(IAccessible):
 		if self.appModule.selectedItem != self:
 			self.appModule.selectedItem = self
 
-		# When writing in the editor, the selection event is not fire.
-		# This is probably because the items are reused.
+		# If autocompletion popup is open and you write some text in the
+		# document, the selection event is not fired. For some reason, neither
+		# nameChange, so we need this check:
 		if self.appModule.selectedItemName != self.name:
 			self.appModule.selectedItemName = self.name
 			speech.cancelSpeech()
@@ -110,8 +141,10 @@ class AutocompletionListItem(IAccessible):
 			# Reporting as focused should be sufficient
 			self.reportFocus()
 
-			# Fixme: I picked up this from UIA SuggestionItem
-			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role, position=self.positionInfo))
+			# Fixme: I picked up this from UIA SuggestionItem for rendering in braille
+			braille.handler.message(
+				braille.getBrailleTextForProperties(name=self.name,
+					role=self.role, position=self.positionInfo))
 
 class AppModule(appModuleHandler.AppModule):
 	LIST_VIEW_CLASS = "SysListView32"
