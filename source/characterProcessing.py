@@ -321,7 +321,7 @@ class SpeechSymbols(object):
 
 			if self.symbols:
 				f.write(u"symbols:\r\n")
-				for symbol in self.symbols.itervalues():
+				for symbol in self.symbols.values():
 					f.write(u"%s\r\n" % self._saveSymbol(symbol))
 
 	def _saveSymbolField(self, output, outputMap=None):

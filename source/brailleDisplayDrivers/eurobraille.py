@@ -548,7 +548,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.items():
 			if group == EB_KEY_BRAILLE:
-				if sum(keysDown.itervalues())==groupKeysDown and not groupKeysDown & 0x100:
+				if sum(keysDown.values())==groupKeysDown and not groupKeysDown & 0x100:
 					# This is braille input.
 					# 0x1000 is backspace, 0x2000 is space
 					self.dots = groupKeysDown & 0xff
