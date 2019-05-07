@@ -832,7 +832,7 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	for eventType in list(winEventIDsToNVDAEventNames.keys()):
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)

@@ -83,7 +83,7 @@ def readObjectsHelper_generator(obj):
 			if lastReceivedObj is not None:
 				api.setNavigatorObject(lastReceivedObj, isFocus=lastSayAllMode==CURSOR_CARET)
 			#Clear old objects from the map
-			for i in objIndexMap.keys():
+			for i in list(objIndexMap.keys()):
 				if i<=lastReceivedIndex:
 					del objIndexMap[i]
 		while speech.isPaused:

@@ -157,7 +157,8 @@ class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
 		"""
 		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
 		# which would in turn cause an exception due to the dictionary changing size during iteration.
-		for instance in cls.__instances.keys():
+		# #7105: because of this, wrap this in a list, as dict.keys() in Python 3 returns iterators.
+		for instance in list(cls.__instances.keys()):
 			instance.invalidateCache()
 
 class ScriptableType(AutoPropertyType):
