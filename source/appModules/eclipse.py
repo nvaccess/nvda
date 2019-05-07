@@ -141,7 +141,9 @@ class AutocompletionListItem(IAccessible):
 			# Reporting as focused should be sufficient
 			self.reportFocus()
 
-			# Fixme: I picked up this from UIA SuggestionItem for rendering in braille
+			# Fixme: I picked up this from UIA SuggestionItem for rendering in braille.
+			# Simply calling `reportFocus` doesn't outputs the text to braille devices
+			# and reporting with `ui.message` needs an extra translation string when reporting position info
 			braille.handler.message(
 				braille.getBrailleTextForProperties(name=self.name,
 					role=self.role, position=self.positionInfo))
