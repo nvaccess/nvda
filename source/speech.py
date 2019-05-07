@@ -82,11 +82,6 @@ def processText(locale,text,symbolLevel):
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
 
-def getLastSpeechIndex():
-	"""@deprecated: Use L{CallbackCommand} (or one of the other subclasses of L{BaseCallbackCommand}) instead.
-	"""
-	return None
-
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
 	global beenCanceled, isPaused

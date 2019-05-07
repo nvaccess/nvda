@@ -387,12 +387,6 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 		self.speakText(character,index)
 
-	def _get_lastIndex(self):
-		"""@deprecated: Callers should use subclasses of L{speech.BaseCallbackCommand} to perform actions at various points in speech.
-			Drivers should notify about indexes using L{synthIndexReached} instead.
-		"""
-		return None
-
 	def cancel(self):
 		"""Silence speech immediately.
 		"""
