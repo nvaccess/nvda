@@ -219,3 +219,16 @@ class UnsupportedConfigParameterError(NotImplementedError):
 	"""
 	Raised when changing or retrieving a driver setting that is unsupported for the connected device.
 	"""
+
+class StringParameterInfo(object):
+	"""
+	The base class used to represent a value of a string driver setting.
+	"""
+
+	def __init__(self,ID,name):
+		#: The unique identifier of the value.
+		#: @type: str
+		self.ID=ID
+		#: The name of the value, visible to the user.
+		#: @type: str
+		self.name=name

@@ -19,6 +19,7 @@ import speechDictHandler
 import synthDrivers
 import driverHandler
 import warnings
+from driverHandler import StringParameterInfo # Backwards compatibility
 
 _curSynth=None
 _audioOutputDevice=None
@@ -432,20 +433,7 @@ class SynthDriver(driverHandler.Driver):
 			if s.name=="rate": return i
 		return None
 
-class StringParameterInfo(object):
-	"""
-	The base class used to represent a value of a string synth setting.
-	"""
-
-	def __init__(self,ID,name):
-		#: The unique identifier of the value.
-		#: @type: str
-		self.ID=ID
-		#: The name of the value, visible to the user.
-		#: @type: str
-		self.name=name
-
-class VoiceInfo(StringParameterInfo):
+class VoiceInfo(driverHandler.StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
 
@@ -454,7 +442,7 @@ class VoiceInfo(StringParameterInfo):
 		self.language=language
 		super(VoiceInfo,self).__init__(ID,name)
 
-class LanguageInfo(StringParameterInfo):
+class LanguageInfo(driverHandler.StringParameterInfo):
 	"""Holds information for a particular language"""
 
 	def __init__(self,ID):
