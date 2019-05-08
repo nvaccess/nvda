@@ -16,8 +16,7 @@ class Driver(AutoPropertyObject):
 	Abstract base class for drivers, such as speech synthesizer and braille display drivers.
 	Abstract subclasses such as L{braille.BrailleDisplayDriver} should set L{_configSection}.
 
-	At a minimum, drivers must set L{name} and L{description}.
-	The L{check} method must be overridden if the driver is not always available.
+	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
 
 	L{supportedSettings} should be set as appropriate for the settings supported by the driver.
 	Each setting is retrieved and set using attributes named after the setting;
@@ -50,11 +49,12 @@ class Driver(AutoPropertyObject):
 		@postcondition: This driver can no longer be used.
 		"""
 
+	_abstract_supportedSettings = True
 	def _get_supportedSettings(self):
 		"""The settings supported by the driver.
 		@rtype: list or tuple of L{DriverSetting}
 		"""
-		raise NotImplementedError
+		return ()
 
 	@classmethod
 	def check(cls):
