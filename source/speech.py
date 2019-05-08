@@ -8,6 +8,8 @@
 """High-level functions to speak information.
 """ 
 
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 import itertools
 import weakref
 import unicodedata
@@ -2004,7 +2006,7 @@ class PhonemeCommand(SynthCommand):
 			out += ", text=%r" % self.text
 		return out + ")"
 
-class BaseCallbackCommand(SpeechCommand):
+class BaseCallbackCommand(with_metaclass(ABCMeta, SpeechCommand)):
 	"""Base class for commands which cause a function to be called when speech reaches them.
 	This class should not be instantiated directly.
 	It is designed to be subclassed to provide specific functionality;
@@ -2013,8 +2015,10 @@ class BaseCallbackCommand(SpeechCommand):
 	This command is never passed to synth drivers.
 	"""
 
+	@abstractmethod
 	def run(self):
 		"""Code to run when speech reaches this command.
+		Note that this method is executed in NVDA's main thread, therefore must return as soon as practically possible, otherwise it will block production of further speech and or other functionality in NVDA.
 		"""
 
 class CallbackCommand(BaseCallbackCommand):
@@ -2022,7 +2026,10 @@ class CallbackCommand(BaseCallbackCommand):
 	"""
 
 	def __init__(self, callback):
-		self.run = callback
+		self._callback = callback
+
+	def run(self,*args, **kwargs):
+		return self._callback(*args,**kwargs)
 
 class BeepCommand(BaseCallbackCommand):
 	"""Produce a beep.
@@ -2051,7 +2058,7 @@ class WaveFileCommand(BaseCallbackCommand):
 
 	def run(self):
 		import nvwave
-		nvwave.playWaveFile(self.fileName, async=False)
+		nvwave.playWaveFile(self.fileName, async=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName
