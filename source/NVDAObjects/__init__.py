@@ -1029,7 +1029,7 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=" ".join([x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace()])
+			self._basicText=u" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 			if len(self._basicText)==0:
 				self._basicText=u""
 		else:
@@ -1057,7 +1057,7 @@ This code is executed if a gain focus event is received by this object.
 		@return: The formatted string.
 		@rtype: basestring
 		"""
-		if isinstance(string, str) and len(string) > truncateLen:
+		if isinstance(string, basestring) and len(string) > truncateLen:
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 

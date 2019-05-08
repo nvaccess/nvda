@@ -410,7 +410,7 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 		inBold=False
 		textList=[]
 		for field in fields:
-			if isinstance(field,str):
+			if isinstance(field,basestring):
 				if inBold: textList.append(field)
 			elif field.field:
 				inBold=field.field.get('bold',False)

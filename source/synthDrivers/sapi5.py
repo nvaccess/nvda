@@ -253,7 +253,7 @@ class SynthDriver(SynthDriver):
 		volume = self.volume
 
 		for item in speechSequence:
-			if isinstance(item, str):
+			if isinstance(item, basestring):
 				outputTags()
 				textList.append(item.replace("<", "&lt;"))
 			elif isinstance(item, speech.IndexCommand):

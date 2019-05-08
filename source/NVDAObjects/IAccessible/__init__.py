@@ -321,7 +321,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			items = [self.text]
 		offset = self._startOffset
 		for item in items:
-			if not isinstance(item, str):
+			if not isinstance(item, basestring):
 				# This is a field.
 				yield item
 				continue
@@ -736,14 +736,14 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,str) and not res.isspace() else None
+		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
 		try:
 			res=self.IAccessibleObject.accValue(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,str) and not res.isspace() else None
+		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_actionCount(self):
 		if hasattr(self,'IAccessibleActionObject'):
@@ -819,7 +819,7 @@ the NVDAObject for IAccessible
 			superRole=super(IAccessible,self).role
 			if superRole!=controlTypes.ROLE_WINDOW:
 					return superRole
-		if isinstance(IARole,str):
+		if isinstance(IARole,basestring):
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
 		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
@@ -899,7 +899,7 @@ the NVDAObject for IAccessible
 	def _get_description(self):
 		if self.hasEncodedAccDescription:
 			d=self.decodedAccDescription
-			if isinstance(d,str):
+			if isinstance(d,basestring):
 				return d
 			else:
 				return ""
@@ -907,14 +907,14 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,str) and not res.isspace() else None
+		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_keyboardShortcut(self):
 		try:
 			res=self.IAccessibleObject.accKeyboardShortcut(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,str) and not res.isspace() else None
+		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_childCount(self):
 		if self.IAccessibleChildID!=0:
@@ -1351,7 +1351,7 @@ the NVDAObject for IAccessible
 				pass
 		if self.hasEncodedAccDescription:
 			d=self.decodedAccDescription
-			if d and not isinstance(d,str):
+			if d and not isinstance(d,basestring):
 				groupdict=d.groupdict()
 				return {x:int(y) for x,y in groupdict.items() if y is not None}
 		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and self.IAccessibleChildID>0:

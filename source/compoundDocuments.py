@@ -268,7 +268,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		embedIndex = None
 		for ti in self._getTextInfos():
 			for field in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
-				if isinstance(field, str):
+				if isinstance(field, basestring):
 					fields.append(field)
 				elif isinstance(field, int): # Embedded object
 					if embedIndex is None:

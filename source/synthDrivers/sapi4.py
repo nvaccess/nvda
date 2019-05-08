@@ -83,7 +83,7 @@ class SynthDriver(SynthDriver):
 		textList=[]
 		charMode=False
 		for item in speechSequence:
-			if isinstance(item,str):
+			if isinstance(item,basestring):
 				textList.append(item.replace('\\','\\\\'))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("\\mrk=%d\\"%item.index)

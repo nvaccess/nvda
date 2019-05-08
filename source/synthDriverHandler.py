@@ -333,7 +333,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			if item is None:
 				# No more items.
 				break
-			if isinstance(item,str):
+			if isinstance(item,basestring):
 				# Merge the text between commands into a single chunk.
 				text+=item
 			elif isinstance(item,speech.IndexCommand):

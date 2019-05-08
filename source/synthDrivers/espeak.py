@@ -80,7 +80,7 @@ class SynthDriver(SynthDriver):
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.
 		for item in speechSequence:
-			if isinstance(item,str):
+			if isinstance(item,basestring):
 				textList.append(self._processText(item))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)

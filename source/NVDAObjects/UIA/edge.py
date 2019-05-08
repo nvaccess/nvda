@@ -202,7 +202,7 @@ class EdgeTextInfo(UIATextInfo):
 		index=0
 		while index<len(fields):
 			field=fields[index]
-			if index>1 and isinstance(field,str) and field.isspace():
+			if index>1 and isinstance(field,basestring) and field.isspace():
 				prevField=fields[index-2]
 				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
 					del fields[index-1:index+1]
@@ -214,7 +214,7 @@ class EdgeTextInfo(UIATextInfo):
 		numFields=len(fields)
 		for index in range(numFields-1,-1,-1):
 			field=fields[index]
-			if isinstance(field,str):
+			if isinstance(field,basestring):
 				break
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
 				startCount+=1

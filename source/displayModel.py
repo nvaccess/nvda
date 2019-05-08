@@ -56,7 +56,7 @@ def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,
 	lastHwnd=None
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
-		if isinstance(item,str):
+		if isinstance(item,basestring):
 			lastEndOffset+=len(item)
 		else:
 			hwnd=item.field['hwnd'] if item else None
@@ -75,7 +75,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 		item=commandList[index]
 		if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 			curFormatField=item.field
-		elif isinstance(item,str):
+		elif isinstance(item,basestring):
 			direction=curFormatField['direction']
 			if direction==0:
 				curFormatField['direction']=direction=detectStringDirection(item)
@@ -108,7 +108,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 		reorderList=[]
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
-		if isinstance(item,str):
+		if isinstance(item,basestring):
 			lastEndOffset+=len(item)
 		elif not item or (isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField)):
 			direction=item.field['direction'] if item else None
@@ -243,7 +243,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					inHighlightChunk=True
 					if startOffset is None:
 						startOffset=curOffset
-				elif isinstance(item,str):
+				elif isinstance(item,basestring):
 					curOffset+=len(item)
 					if inHighlightChunk:
 						endOffset=curOffset
@@ -295,7 +295,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineEndOffsets=[]
 		for index in range(len(commandList)):
 			item=commandList[index]
-			if isinstance(item,str):
+			if isinstance(item,basestring):
 				lastEndOffset+=len(item)
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
@@ -309,7 +309,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						processWindowChunksInLine(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
 						#Convert the whitespace at the end of the line into a line feed
 						item=commandList[index-1]
-						if isinstance(item,str) and len(item)==1 and item.isspace():
+						if isinstance(item,basestring) and len(item)==1 and item.isspace():
 							commandList[index-1]=u'\n'
 						lineEndOffsets.append(lastEndOffset)
 					if baseline is not None:
@@ -327,7 +327,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 				baseline=item.field['baseline']
 				direction=item.field['direction']
-			elif isinstance(item,str):
+			elif isinstance(item,basestring):
 				endOffset=lastEndOffset+len(item)
 				for rect in rects[lastEndOffset:endOffset]:
 					yield rect,baseline,direction
@@ -342,7 +342,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		startIndex=endIndex=relStart=relEnd=None
 		for index in range(len(storyFields)):
 			item=storyFields[index]
-			if isinstance(item,str):
+			if isinstance(item,basestring):
 				endOffset=lastEndOffset+len(item)
 				if lastEndOffset<=start<endOffset:
 					startIndex=index-1
@@ -366,7 +366,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return commandList
 
 	def _getStoryText(self):
-		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,str))
+		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,basestring))
 
 	def _getStoryLength(self):
 		lineEndOffsets=self._storyFieldsAndRects[2]
@@ -377,7 +377,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	useUniscribe=False
 
 	def _getTextRange(self, start, end):
-		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
+		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,basestring))
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
