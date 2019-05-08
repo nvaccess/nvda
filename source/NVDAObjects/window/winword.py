@@ -720,7 +720,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
 					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
-			elif index>0 and isinstance(item,basestring) and item.isspace():
+			elif index>0 and isinstance(item,str) and item.isspace():
 				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
 				lastItem=commandList[index-1]
 				if isinstance(lastItem,textInfos.FieldCommand) and isinstance(lastItem.field,textInfos.FormatField):

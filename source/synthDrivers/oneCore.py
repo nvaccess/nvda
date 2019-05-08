@@ -284,7 +284,7 @@ class SynthDriver(SynthDriver):
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not langDataPath or not isinstance(langDataPath[0], basestring):
+		if not langDataPath or not isinstance(langDataPath[0], str):
 			log.debugWarning("Invalid langDataPath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(langDataPath[0])):
@@ -295,7 +295,7 @@ class SynthDriver(SynthDriver):
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not voicePath or not isinstance(voicePath[0],basestring):
+		if not voicePath or not isinstance(voicePath[0],str):
 			log.debugWarning("Invalid voicePath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(voicePath[0] + '.apm')):

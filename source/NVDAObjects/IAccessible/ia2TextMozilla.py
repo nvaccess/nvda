@@ -232,7 +232,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		for item in ti._iterTextWithEmbeddedObjects(controlStack is not None, formatConfig=formatConfig):
 			if item is None:
 				yield u""
-			elif isinstance(item, basestring):
+			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded = _getEmbedded(ti.obj, item)
