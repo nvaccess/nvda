@@ -17,6 +17,7 @@ using modules in the visionEnhancementProviders package containing a L{VisionEnh
 import visionEnhancementProviders
 import pkgutil
 from baseObject import AutoPropertyObject
+import driverHandler
 from abc import abstractmethod
 import api
 import config
@@ -28,7 +29,7 @@ import textInfos
 import NVDAObjects
 import winVersion
 from locationHelper import RectLTRB
-from synthDriverHandler import StringParameterInfo
+from driverHandler import StringParameterInfo
 
 # Context in which cases in NVDA can trigger a visual change
 # When tracking a magnifier to a specified area on screen,
@@ -58,12 +59,12 @@ ROLE_MAGNIFIER = "magnifier"
 ROLE_HIGHLIGHTER = "highlighter"
 ROLE_COLORENHANCER = "colorEnhancer"
 
-class VisionEnhancementProvider(AutoPropertyObject):
+class VisionEnhancementProvider(driverHandler.Driver):
 	"""A basic, abstract class for vision enhancement providers.
 	Providers should usually base themselves on one or more of its subclasses.
 	"""
-	name = ""
-	description = ""
+
+	_configSection = "vision"
 	#: The roles that would cause conflicts with this provider when initialized.
 	#: Providers for conflicting roles are always terminated before initializing the provider.
 	#: For example, if a color enhancer is used to make the screen black,
@@ -72,10 +73,6 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	#: A vision enhancement provider is a singleton.
 	_instance = None
 	cachePropertiesByDefault = True
-
-	@classmethod
-	def check(cls):
-		return True
 
 	@classmethod
 	def __new__(cls, *args, **kwargs):
@@ -217,6 +214,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		They must extend this method if additional cleanup has to be performed after all roles are terminated,
 		e.g. when resources have to be freed or a process has to be terminated.
 		"""
+		super(VisionEnhancementProvider,self).terminate()
 		if not roles:
 			roles = self.activeRoles.copy()
 		for role in roles:
@@ -237,6 +235,29 @@ class Highlighter(VisionEnhancementProvider):
 
 	#: Tuple of supported contexts for this highlighter.
 	supportedHighlightContexts = tuple()
+	__contextOptionLabelsWithAccelerators = {
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the system focus.
+		CONTEXT_FOCUS: _("Highlight system fo&cus"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting foreground window changes.
+		CONTEXT_FOREGROUND: _("Highlight foreground win&dow changes"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the system caret.
+		CONTEXT_CARET: _("Highlight s&ystem caret"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the browse mode cursor.
+		CONTEXT_BROWSEMODE: _("Highlight browse &mode cursor"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the review cursor.
+		CONTEXT_REVIEW: _("Highlight review c&ursor"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the navigator object.
+		CONTEXT_NAVIGATOR: _("Highlight navigator &object"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the mouse.
+		CONTEXT_MOUSE: _("Highlight m&ouse"),
+	}
 
 	@abstractmethod
 	def initializeHighlighter(self):
@@ -256,6 +277,16 @@ class Highlighter(VisionEnhancementProvider):
 		Subclasses must extend this method.
 		"""
 		self.contextToRectMap.clear()
+
+	def _get_supportedSettings(self):
+		settings = list(super(Highlighter, self).supportedSettings)
+		for context in self.supportedHighlightContexts:
+			settings.append(driverHandler.BooleanDriverSetting(
+				'highlight%s' % (context[0].upper() + context[1:]),
+				self.__contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			))
+		return settings
 
 	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.
@@ -291,7 +322,7 @@ class Highlighter(VisionEnhancementProvider):
 			return ()
 		return tuple(
 			context for context in self.supportedHighlightContexts
-			if config.conf['vision'][self.name]['highlight%s' % (context[0].upper() + context[1:])]
+			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
 		)
 
 class Magnifier(VisionEnhancementProvider):
@@ -303,6 +334,29 @@ class Magnifier(VisionEnhancementProvider):
 	"""
 	#: Tuple of supported contexts for this magnifier to track to.
 	supportedTrackingContexts = tuple()
+	__contextOptionLabelsWithAccelerators = {
+		# Translators: shown for a magnifier setting that toggles
+		# following the system focus.
+		CONTEXT_FOCUS: _("Follow system &focus"),
+		# Translators: shown for a magnifier setting that toggles
+		# following foreground window changes.
+		CONTEXT_FOREGROUND: _("Follow foreground &window changes"),
+		# Translators: shown for a magnifier setting that toggles
+		# following the system caret.
+		CONTEXT_CARET: _("Follow system &caret"),
+		# Translators: shown for a magnifier setting that toggles
+		# following the browse mode cursor.
+		CONTEXT_BROWSEMODE: _("Follow &browse mode cursor"),
+		# Translators: shown for a magnifier setting that toggles
+		# following the review cursor.
+		CONTEXT_REVIEW: _("Follow &review cursor"),
+		# Translators: shown for a magnifier setting that toggles
+		# following the navigator object.
+		CONTEXT_NAVIGATOR: _("Follow navigator &object"),
+		# Translators: shown for a magnifier setting that toggles
+		# following the mouse.
+		CONTEXT_MOUSE: _("Follow &mouse"),
+	}
 
 	@abstractmethod
 	def initializeMagnifier(self):
@@ -315,6 +369,16 @@ class Magnifier(VisionEnhancementProvider):
 		"""Terminates a magnifier.
 		Subclasses must extend this method.
 		"""
+
+	def _get_supportedSettings(self):
+		settings = list(super(Magnifier, self).supportedSettings)
+		for context in self.supportedTrackingContexts:
+			settings.append(driverHandler.BooleanDriverSetting(
+				'trackTo%s' % (context[0].upper() + context[1:]),
+				self.__contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			))
+		return settings		
 
 	def trackToObject(self, obj=None, context=CONTEXT_UNDETERMINED, area=None):
 		"""Tracks the magnifier to the given object.
@@ -363,7 +427,7 @@ class Magnifier(VisionEnhancementProvider):
 			return ()
 		return tuple(
 			context for context in self.supportedTrackingContexts
-			if config.conf['vision'][self.name]['trackTo%s' % (context[0].upper() + context[1:])]
+			if getattr(self, 'trackTo%s' % (context[0].upper() + context[1:]))
 		)
 
 class ColorTransformationInfo(StringParameterInfo):
@@ -568,7 +632,8 @@ class VisionHandler(AutoPropertyObject):
 			# Providers are singletons.
 			# Get a new or current instance of the provider
 			providerInst = providerCls.__new__(providerCls)
-			if providerInst.enabled:
+			initiallyEnabled = providerInst.enabled
+			if initiallyEnabled:
 				log.debug("Provider %s is already active" % name)
 			# Terminate the provider for the roles that overlap between the provided roles and the active roles.
 			overlappingRoles =  providerInst.activeRoles & roles
@@ -582,6 +647,11 @@ class VisionHandler(AutoPropertyObject):
 					config.conf['vision'][conflict] = None
 			# Initialize the provider for the new and overlapping roles
 			providerInst.__init__(*roles)
+			if initiallyEnabled:
+				providerInst.loadSettings(onlyChanged=True)
+			else:
+				providerInst.initSettings()
+
 			# Assign the new provider to the new roles.
 			for role in newRoles:
 				setattr(self, role, providerInst)

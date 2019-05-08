@@ -77,10 +77,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	highlighter = string(default=None)
 	colorEnhancer = string(default=None)
 
-	[[NVDAHighlighter]]
-		highlightFocus = boolean(default=true)
-		highlightBrowseMode = boolean(default=true)
-		highlightNavigatorObj = boolean(default=true)
+	# Vision enhancement provider settings
+	[[__many__]]
 
 # Presentation settings
 [presentation]
