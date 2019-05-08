@@ -1662,10 +1662,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					newDisplay = newDisplay.__new__(newDisplay)
 					# initialize with supported kwargs.
 					extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-				if not firstLoad:
-					newDisplay.loadSettings()
-				else:
-					newDisplay.saveSettings() #save defaults
 				if self.display:
 					log.debug("Switching braille display from %s to %s"%(self.display.name,name))
 					try:
@@ -1673,6 +1669,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					except:
 						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
+			if not firstLoad:
+				newDisplay.loadSettings()
+			else:
+				newDisplay.saveSettings() #save defaults
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			if isFallback:
