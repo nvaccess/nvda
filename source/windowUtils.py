@@ -147,9 +147,9 @@ class CustomWindow(object):
 		"""Constructor.
 		@raise WindowsError: If an error occurs.
 		"""
-		if not isinstance(self.className, str):
+		if not isinstance(self.className, unicode):
 			raise ValueError("className attribute must be a unicode string")
-		if windowName and not isinstance(windowName, str):
+		if windowName and not isinstance(windowName, unicode):
 			raise ValueError("windowName must be a unicode string")
 		self._wClass = WNDCLASSEXW(
 			cbSize=ctypes.sizeof(WNDCLASSEXW),

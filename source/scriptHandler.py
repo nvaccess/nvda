@@ -32,7 +32,7 @@ def _makeKbEmulateScript(scriptName):
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
 	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
-	if isinstance(scriptName, str):
+	if isinstance(scriptName, unicode):
 		# __name__ must be str; i.e. can't be unicode.
 		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName

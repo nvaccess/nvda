@@ -73,7 +73,7 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
 
 def _escapeXml(text):
-	text = str(text).translate(XML_ESCAPES)
+	text = unicode(text).translate(XML_ESCAPES)
 	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
 	return text
 
