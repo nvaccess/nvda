@@ -7,7 +7,7 @@
 
 """Default highlighter based on GDI Plus."""
 
-from vision import Highlighter, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_CARET, _isDebug
+from vision import Highlighter, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE, _isDebug
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -17,7 +17,6 @@ from ctypes.wintypes import COLORREF, MSG
 import winUser
 from logHandler import log
 from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
-import cursorManager
 from locationHelper import RectLTRB, RectLTWH
 import config
 from collections import namedtuple
@@ -56,12 +55,12 @@ class VisionEnhancementProvider(Highlighter):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
-	supportedHighlightContexts = (CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_CARET)
+	supportedHighlightContexts = (CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE)
 	_ContextStyles = {
 		CONTEXT_FOCUS: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleDash, 5),
 		CONTEXT_NAVIGATOR: HighlightStyle(RGB(0xff, 0x02, 0x66), 5, winGDI.DashStyleSolid, 5),
 		CONTEXT_FOCUS_NAVIGATOR: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleSolid, 5),
-		CONTEXT_CARET: HighlightStyle(RGB(0xff, 0xde, 0x03), 2, winGDI.DashStyleSolid, 2),
+		CONTEXT_BROWSEMODE: HighlightStyle(RGB(0xff, 0xde, 0x03), 2, winGDI.DashStyleSolid, 2),
 	}
 	refreshInterval = 100
 
@@ -186,10 +185,6 @@ class HighlightWindow(CustomWindow):
 		for context in highlighter.enabledHighlightContexts:
 			rect = highlighter.contextToRectMap.get(context)
 			if not rect:
-				continue
-			if context == CONTEXT_CARET and not isinstance(api.getCaretObject(), cursorManager.CursorManager):
-				# Non virtual carets are currently not supported.
-				# As they are physical, they are visible by themselves.
 				continue
 			elif context == CONTEXT_NAVIGATOR and contextRects.get(CONTEXT_FOCUS) == rect:
 				# When the focus overlaps the navigator object, which is usually the case,

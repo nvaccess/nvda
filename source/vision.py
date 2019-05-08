@@ -42,8 +42,10 @@ CONTEXT_UNDETERMINED = "undetermined"
 CONTEXT_FOCUS = "focus"
 #: Context for foreground changes
 CONTEXT_FOREGROUND = "foreground"
-#: Context for caret changes, either physical or virtual
+#: Context for system caret changes
 CONTEXT_CARET = "caret"
+#: Context for browse mode caret changes
+CONTEXT_BROWSEMODE = "browseMode"
 #: Context for review cursor changes
 CONTEXT_REVIEW = "review"
 #: Context for navigator object changes
@@ -126,13 +128,23 @@ class VisionEnhancementProvider(AutoPropertyObject):
 
 	@classmethod
 	def getContextObject(cls, context):
-		"""Gets the appropriate NVDAObject associated with the provided context."""
+		"""Gets the appropriate NVDAObject or CursorManager associated with the provided context."""
 		if context == CONTEXT_FOCUS:
 			return api.getFocusObject()
 		elif context == CONTEXT_FOREGROUND:
 			return api.getForegroundObject()
 		elif context == CONTEXT_CARET:
 			obj = api.getCaretObject()
+			# Import late to avoid circular import
+			import cursorManager
+			if isinstance(obj, cursorManager.CursorManager):
+				obj = None
+		elif context == CONTEXT_BROWSEMODE:
+			obj = api.getCaretObject()
+			# Import late to avoid circular import
+			import cursorManager
+			if not isinstance(obj, cursorManager.CursorManager):
+				obj = None
 		elif context == CONTEXT_REVIEW:
 			return api.getReviewPosition().obj
 		elif context == CONTEXT_NAVIGATOR:
@@ -166,9 +178,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 				except RuntimeError:
 					if not obj._hasNavigableText:
 						return None
-		# Import late to avoid circular import
-		import treeInterceptorHandler
-		if isinstance(obj, treeInterceptorHandler.TreeInterceptor):
+		if context in (CONTEXT_CARET, CONTEXT_BROWSEMODE):
 			try:
 				caretInfo = obj.makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError):
@@ -180,6 +190,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 				# There is nothing to do here
 				raise LookupError
 			return cls._getRectFromTextInfo(caretInfo)
+		assert isinstance(obj, NVDAObjects.NVDAObject), "Unexpected object type"
 		location = obj.location
 		if not location:
 			raise LookupError
@@ -360,7 +371,7 @@ class ColorTransformationInfo(StringParameterInfo):
 	"""
 
 	def __init__(self,ID,name,value):
-		#: The value that cointains the color transformation info (e.g. a matrix).
+		#: The value that constains the color transformation info (e.g. a matrix).
 		self.value=value
 		super(ColorTransformationInfo,self).__init__(ID,name)
 
@@ -658,7 +669,9 @@ class VisionHandler(AutoPropertyObject):
 			# The caret object died
 			self.lastCaretObjRef = None
 			return
-		context = CONTEXT_CARET
+		# Import late to avoid circular import
+		import cursorManager
+		context = CONTEXT_CARET if not isinstance(obj, cursorManager.CursorManager) else CONTEXT_BROWSEMODE
 		try:
 			if self.magnifier and context in self.magnifier.enabledTrackingContexts:
 				self.magnifier.trackToObject(obj, context=context)

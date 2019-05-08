@@ -79,7 +79,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 	[[NVDAHighlighter]]
 		highlightFocus = boolean(default=true)
-		highlightCaret = boolean(default=true)
+		highlightBrowseMode = boolean(default=true)
 		highlightNavigatorObj = boolean(default=true)
 
 # Presentation settings
