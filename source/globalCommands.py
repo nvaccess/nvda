@@ -41,6 +41,7 @@ import characterProcessing
 from baseObject import ScriptableObject
 import core
 import winVersion
+from base64 import b16encode
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -2414,7 +2415,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 			if not c.isalnum() and c != "_":
 				invalidChars.add(c)
 		for c in invalidChars:
-			name=name.replace(c,'_')
+			name=name.replace(c, b16encode(c))
 		return str("profile_%s" % name)
 
 	@classmethod
