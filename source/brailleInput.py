@@ -126,7 +126,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			self.bufferText = u""
 		oldTextLen = len(self.bufferText)
 		pos = self.untranslatedStart + self.untranslatedCursorPos
-		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
+		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
 			mode |=  louis.partialTrans
@@ -178,7 +178,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		@rtype: unicode
 		"""
 		cells = self.bufferBraille[:pos + 1]
-		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in cells])
+		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
@@ -293,7 +293,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		if api.isTypingProtected():
 			self.untranslatedBraille = UNICODE_BRAILLE_PROTECTED * (len(self.bufferBraille) - self.untranslatedStart)
 		else:
-			self.untranslatedBraille = "".join([unichr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
+			self.untranslatedBraille = "".join([chr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
 
 	def updateDisplay(self):
 		"""Update the braille display to reflect untranslated input.

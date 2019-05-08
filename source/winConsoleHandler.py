@@ -141,7 +141,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		y=winUser.GET_Y_LPARAM(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
 		if x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
-			eventHandler.queueEvent("typedCharacter",consoleObject,ch=unichr(winUser.LOWORD(childID)))
+			eventHandler.queueEvent("typedCharacter",consoleObject,ch=chr(winUser.LOWORD(childID)))
 
 def initialize():
 	pass
