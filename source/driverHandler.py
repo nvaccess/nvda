@@ -83,6 +83,11 @@ class Driver(AutoPropertyObject):
 		return spec
 
 	def saveSettings(self):
+		"""
+		Saves the current settings for the driver to the configuration.
+		This method is also executed when the driver is loaded for the first time,
+		in order to populate the configuration with the initial settings..
+		"""
 		conf=config.conf[self._configSection][self.name]
 		# Make sure the config spec is up to date, so the config validator does its work.
 		conf.spec.update(self.getConfigSpec())
@@ -96,7 +101,17 @@ class Driver(AutoPropertyObject):
 				continue
 
 	def loadSettings(self, onlyChanged=False):
+		"""
+		Loads settings for this driver from the configuration.
+		This method assumes that the instance has attributes o/properties
+		corresponding with the name of every setting in L{supportedSettings}.
+		@param onlyChanged: When loading settings, only apply those for which
+			the value in the configuration differs from the current value.
+		@type onlyChanged: bool
+		"""
 		conf=config.conf[self._configSection][self.name]
+		# Make sure the config spec is up to date, so the config validator does its work.
+		conf.spec.update(self.getConfigSpec())
 		for setting in self.supportedSettings:
 			if not setting.useConfig or conf.get(setting.name) is None:
 				continue
