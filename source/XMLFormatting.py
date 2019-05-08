@@ -16,7 +16,7 @@ class XMLTextParser(object):
 			data=attrs.get('value',None)
 			if data is not None:
 				try:
-					data=chr(int(data))
+					data=unichr(int(data))
 				except ValueError:
 					data=u'\ufffd'
 				self._CharacterDataHandler(data)

@@ -28,7 +28,7 @@ def _buildInvalidXmlRegexp():
 	# Ranges of invalid characters.
 	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
 	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
-	rangeExprs = [u"%s-%s" % (chr(start), chr(end))
+	rangeExprs = [u"%s-%s" % (unichr(start), unichr(end))
 		for start, end in ranges]
 	leadingSurrogate = u"[\uD800-\uDBFF]"
 	trailingSurrogate = u"[\uDC00-\uDFFF]"
