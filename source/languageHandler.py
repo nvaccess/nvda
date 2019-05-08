@@ -37,7 +37,7 @@ def localeNameToWindowsLCID(localeName):
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
 	localeName=localeName.replace('_','-')
-	LCID=ctypes.windll.kernel32.LocaleNameToLCID(unicode(localeName),0)
+	LCID=ctypes.windll.kernel32.LocaleNameToLCID(str(localeName),0)
 	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
 	# This was observed for Aragonese ("an").
 	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
@@ -125,7 +125,7 @@ def makePgettext(translations):
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
 		def pgettext(context, message):
-			message = unicode(message)
+			message = str(message)
 			try:
 				# Look up the message with its context.
 				return translations._catalog[u"%s\x04%s" % (context, message)]
@@ -133,7 +133,7 @@ def makePgettext(translations):
 				return message
 	else:
 		def pgettext(context, message):
-			return unicode(message)
+			return message
 	return pgettext
 
 def getWindowsLanguage():
