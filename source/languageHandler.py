@@ -125,6 +125,7 @@ def makePgettext(translations):
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
 		def pgettext(context, message):
+			# #7105 optimization: what if this isn't needed anymore?
 			message = str(message)
 			try:
 				# Look up the message with its context.
