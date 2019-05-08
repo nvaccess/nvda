@@ -8,6 +8,7 @@
 from copy import deepcopy
 import os
 import pkgutil
+import importlib
 import config
 import baseObject
 import winVersion
@@ -37,7 +38,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 def getSynthList():
 	synthList=[]
