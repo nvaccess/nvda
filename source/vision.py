@@ -273,7 +273,9 @@ class Highlighter(VisionEnhancementProvider):
 		raise NotImplementedError
 
 	def _get_enabledHighlightContexts(self):
-		"""Gets the contexts for which the highlighter is enabled."""
+		"""Gets the contexts for which the highlighter is enabled.
+		If L{enabled} is C{False} this returns an empty tuple.
+		"""
 		if not self.enabled:
 			return ()
 		return tuple(
@@ -343,7 +345,9 @@ class Magnifier(VisionEnhancementProvider):
 		return self.enabled and self.magnificationLevel > 1.0
 
 	def _get_enabledTrackingContexts(self):
-		"""Gets the contexts for which the magnifier is enabled."""
+		"""Gets the contexts for which the magnifier is enabled.
+		If L{isMagnifying} is C{False} this returns an empty tuple.
+		"""
 		if not self.isMagnifying:
 			return ()
 		return tuple(
