@@ -1007,10 +1007,17 @@ class StringDriverSettingChanger(DriverSettingChanger):
 		if self.setting.name=="voice":
 			# Cancel speech first so that the voice will change immediately instead of the change being queued.
 			speech.cancelSpeech()
-			changeVoice(self.driver,getattr(self.container,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
+			changeVoice(
+				self.driver,
+				getattr(self.container,"_%ss"%self.setting.name)[evt.GetSelection()].ID
+			)
 			self.container.updateDriverSettings(changedSetting=self.setting.name)
 		else:
-			setattr(self.driver,self.setting.name,getattr(self.container,"_%ss"%self.setting.name)[evt.GetSelection()].ID)
+			setattr(
+				self.driver,
+				self.setting.name,
+				getattr(self.container,"_%ss"%self.setting.name)[evt.GetSelection()].ID
+			)
 
 class DriverSettingsMixin(object):
 	"""
@@ -1061,9 +1068,18 @@ class DriverSettingsMixin(object):
 		"""Same as L{makeSliderSettingControl} but for string settings. Returns sizer with label and combobox."""
 
 		labelText="%s:"%setting.displayNameWithAccelerator
-		setattr(self,"_%ss"%setting.name,getattr(self.driver,"available%ss"%setting.name.capitalize()).values())
+		setattr(
+			self,
+			"_%ss"%setting.name,
+			getattr(self.driver,"available%ss"%setting.name.capitalize()).values()
+		)
 		l=getattr(self,"_%ss"%setting.name)
-		labeledControl=guiHelper.LabeledControlHelper(self, labelText, wx.Choice, choices=[x.name for x in l])
+		labeledControl=guiHelper.LabeledControlHelper(
+			self,
+			labelText,
+			wx.Choice,
+			choices=[x.name for x in l]
+		)
 		lCombo = labeledControl.control
 		setattr(self,"%sList"%setting.name,lCombo)
 		try:
