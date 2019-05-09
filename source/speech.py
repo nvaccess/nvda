@@ -2018,11 +2018,17 @@ class BaseCallbackCommand(with_metaclass(ABCMeta, SpeechCommand)):
 	@abstractmethod
 	def run(self):
 		"""Code to run when speech reaches this command.
-		Note that this method is executed in NVDA's main thread, therefore must return as soon as practically possible, otherwise it will block production of further speech and or other functionality in NVDA.
+		This method is executed in NVDA's main thread, 
+		therefore must return as soon as practically possible, 
+		otherwise it will block production of further speech and or other functionality in NVDA.
 		"""
 
 class CallbackCommand(BaseCallbackCommand):
-	"""Call a function when speech reaches this point.
+	"""
+	Call a function when speech reaches this point.
+	Note that  the provided function is executed in NVDA's main thread, 
+		therefore must return as soon as practically possible, 
+		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
 	def __init__(self, callback):
