@@ -132,6 +132,9 @@ class Gecko_ia2(VirtualBuffer):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
 			ID=obj.IA2UniqueID
+			if not ID:
+				# Dead object.
+				return False
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 			except COMError:
