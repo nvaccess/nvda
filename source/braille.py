@@ -1623,15 +1623,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		elif not isFallback and not detected:
 			self._disableDetection()
 
-		firstLoad = not config.conf[BrailleDisplayDriver._configSection].isSet(name)
-		if firstLoad:
-			config.conf["braille"][name] = {}
 		kwargs = {}
 		if detected:
 			kwargs["port"]=detected
 		else:
 			# See if the user has defined a specific port to connect to
-			port = config.conf["braille"][name].get("port")
+			try:
+				port = config.conf["braille"][name]["port"]
+			except KeyError:
+				port = None
 			# Here we try to keep compatible with old drivers that don't support port setting
 			# or situations where the user hasn't set any port.
 			if port:
@@ -1669,10 +1669,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					except:
 						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
-			if not firstLoad:
-				newDisplay.loadSettings()
-			else:
-				newDisplay.saveSettings() #save defaults
+			newDisplay.initSettings()
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			if isFallback:

@@ -73,19 +73,8 @@ def getSynth():
 	return _curSynth
 
 def getSynthInstance(name):
-	newSynth=_getSynthDriver(name)()
-	if config.conf["speech"].isSet(name):
-		newSynth.loadSettings()
-	else:
-		# Create the new section.
-		config.conf["speech"][name]={}
-		if newSynth.isSupported("voice"):
-			voice=newSynth.voice
-		else:
-			voice=None
-		# We need to call changeVoice here so that required initialisation can be performed.
-		changeVoice(newSynth,voice)
-		newSynth.saveSettings() #save defaults
+	newSynth = _getSynthDriver(name)()
+	newSynth.initSettings()
 	return newSynth
 
 # The synthDrivers that should be used by default.
@@ -399,6 +388,26 @@ class SynthDriver(driverHandler.Driver):
 		"""
 		pass
 
+	def initSettings(self):
+		firstLoad = not config.conf[self._configSection].isSet(self.name)
+		if firstLoad:
+			# Create the new section.
+			conf = config.conf[self._configSection][self.name] = {}
+		else:
+			conf = config.conf[self._configSection][self.name]
+		# Make sure the config spec is up to date, so the config validator does its work.
+		conf.spec.update(self.getConfigSpec())
+		if firstLoad:
+			if self.isSupported("voice"):
+				voice=self.voice
+			else:
+				voice=None
+			# We need to call changeVoice here so that required initialisation can be performed.
+			changeVoice(self,voice)
+			self.saveSettings() #save defaults
+		else:
+			self.loadSettings()
+
 	def loadSettings(self, onlyChanged=False):
 		# Method override due to specific logic needed when changing a voice.
 		c=config.conf[self._configSection][self.name]
@@ -422,7 +431,7 @@ class SynthDriver(driverHandler.Driver):
 			if onlyChanged and getattr(self,s.name)==val:
 				continue
 			setattr(self,s.name,val)
-		log.info(
+		log.debug(
 			(
 				"Loaded changed settings for SynthDriver {}"
 				if onlyChanged else

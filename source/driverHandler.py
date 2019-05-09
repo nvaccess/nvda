@@ -44,6 +44,28 @@ class Driver(AutoPropertyObject):
 		super(Driver, self).__init__()
 		config.pre_configSave.register(self.saveSettings)
 
+	def initSettings(self):
+		"""
+		Initializes the configuration for this driver.
+		This method is called when initializing the driver.
+		"""
+		firstLoad = not config.conf[self._configSection].isSet(self.name)
+		if firstLoad:
+			# Create the new section.
+			conf = config.conf[self._configSection][self.name] = {}
+		else:
+			conf = config.conf[self._configSection][self.name]
+		# Make sure the config spec is up to date, so the config validator does its work.
+		conf.spec.update(self.getConfigSpec())
+		# Make sure the instance has attributes for every setting
+		for setting in self.supportedSettings:
+			if not hasattr(self, setting.name):
+				setattr(self, setting.name, setting.defaultVal)
+		if firstLoad:
+			self.saveSettings() #save defaults
+		else:
+			self.loadSettings()
+
 	def terminate(self):
 		"""Terminate this driver.
 		This should be used for any required clean up.
@@ -93,8 +115,6 @@ class Driver(AutoPropertyObject):
 		in order to populate the configuration with the initial settings..
 		"""
 		conf=config.conf[self._configSection][self.name]
-		# Make sure the config spec is up to date, so the config validator does its work.
-		conf.spec.update(self.getConfigSpec())
 		for setting in self.supportedSettings:
 			if not setting.useConfig:
 				continue
@@ -104,7 +124,7 @@ class Driver(AutoPropertyObject):
 				log.debugWarning("Unsupported setting %s; ignoring"%s.name, exc_info=True)
 				continue
 		if self.supportedSettings:
-			log.info("Saved settings for {} {}".format(self.__class__.__name__, self.name))
+			log.debug("Saved settings for {} {}".format(self.__class__.__name__, self.name))
 
 	def loadSettings(self, onlyChanged=False):
 		"""
@@ -116,8 +136,6 @@ class Driver(AutoPropertyObject):
 		@type onlyChanged: bool
 		"""
 		conf=config.conf[self._configSection][self.name]
-		# Make sure the config spec is up to date, so the config validator does its work.
-		conf.spec.update(self.getConfigSpec())
 		for setting in self.supportedSettings:
 			if not setting.useConfig or conf.get(setting.name) is None:
 				continue
@@ -130,7 +148,7 @@ class Driver(AutoPropertyObject):
 				log.debugWarning("Unsupported setting %s; ignoring"%setting.name, exc_info=True)
 				continue
 		if self.supportedSettings:
-			log.info(
+			log.debug(
 				(
 					"Loaded changed settings for {} {}"
 					if onlyChanged else
