@@ -994,7 +994,7 @@ class DriverSettingChanger(object):
 
 	def __call__(self,evt):
 		val=evt.GetSelection()
-		setattr(self.driver,self.setting.name,val)
+		setattr(self.driver,self.setting.id,val)
 
 class StringDriverSettingChanger(DriverSettingChanger):
 	"""Same as L{DriverSettingChanger} but handles combobox events."""
@@ -1004,19 +1004,19 @@ class StringDriverSettingChanger(DriverSettingChanger):
 
 	def __call__(self,evt):
 		# Quick workaround to deal with voice changes.
-		if self.setting.name=="voice":
+		if self.setting.id == "voice":
 			# Cancel speech first so that the voice will change immediately instead of the change being queued.
 			speech.cancelSpeech()
 			changeVoice(
 				self.driver,
-				getattr(self.container,"_%ss"%self.setting.name)[evt.GetSelection()].ID
+				getattr(self.container,"_%ss"%self.setting.id)[evt.GetSelection()].id
 			)
-			self.container.updateDriverSettings(changedSetting=self.setting.name)
+			self.container.updateDriverSettings(changedSetting=self.setting.id)
 		else:
 			setattr(
 				self.driver,
-				self.setting.name,
-				getattr(self.container,"_%ss"%self.setting.name)[evt.GetSelection()].ID
+				self.setting.id,
+				getattr(self.container,"_%ss"%self.setting.id)[evt.GetSelection()].id
 			)
 
 class DriverSettingsMixin(object):
@@ -1055,10 +1055,10 @@ class DriverSettingsMixin(object):
 			maxValue=setting.maxVal
 		)
 		lSlider=labeledControl.control
-		setattr(self,"%sSlider"%setting.name,lSlider)
+		setattr(self,"%sSlider"%setting.id,lSlider)
 		lSlider.Bind(wx.EVT_SLIDER,DriverSettingChanger(self.driver,setting))
 		self._setSliderStepSizes(lSlider,setting)
-		lSlider.SetValue(getattr(self.driver,setting.name))
+		lSlider.SetValue(getattr(self.driver,setting.id))
 		if self.lastControl:
 			lSlider.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=lSlider
@@ -1070,21 +1070,21 @@ class DriverSettingsMixin(object):
 		labelText="%s:"%setting.displayNameWithAccelerator
 		setattr(
 			self,
-			"_%ss"%setting.name,
-			getattr(self.driver,"available%ss"%setting.name.capitalize()).values()
+			"_%ss"%setting.id,
+			getattr(self.driver,"available%ss"%setting.id.capitalize()).values()
 		)
-		l=getattr(self,"_%ss"%setting.name)
+		l=getattr(self,"_%ss"%setting.id)
 		labeledControl=guiHelper.LabeledControlHelper(
 			self,
 			labelText,
 			wx.Choice,
-			choices=[x.name for x in l]
+			choices=[x.displayName for x in l]
 		)
 		lCombo = labeledControl.control
-		setattr(self,"%sList"%setting.name,lCombo)
+		setattr(self,"%sList"%setting.id,lCombo)
 		try:
-			cur=getattr(self.driver,setting.name)
-			i=[x.ID for x in l].index(cur)
+			cur=getattr(self.driver,setting.id)
+			i=[x.id for x in l].index(cur)
 			lCombo.SetSelection(i)
 		except ValueError:
 			pass
@@ -1097,10 +1097,10 @@ class DriverSettingsMixin(object):
 	def makeBooleanSettingControl(self,setting):
 		"""Same as L{makeSliderSettingControl} but for boolean settings. Returns checkbox."""
 		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
-		setattr(self,"%sCheckbox"%setting.name,checkbox)
+		setattr(self,"%sCheckbox"%setting.id,checkbox)
 		checkbox.Bind(wx.EVT_CHECKBOX,
-			lambda evt: setattr(self.driver,setting.name,evt.IsChecked()))
-		checkbox.SetValue(getattr(self.driver,setting.name))
+			lambda evt: setattr(self.driver,setting.id,evt.IsChecked()))
+		checkbox.SetValue(getattr(self.driver,setting.id))
 		if self.lastControl:
 			checkbox.MoveAfterInTabOrder(self.lastControl)
 		self.lastControl=checkbox
@@ -1117,21 +1117,21 @@ class DriverSettingsMixin(object):
 				self.settingsSizer.Hide(sizer)
 		#Create new controls, update already existing
 		for setting in self.driver.supportedSettings:
-			if setting.name == changedSetting:
+			if setting.id == changedSetting:
 				# Changing a setting shouldn't cause that setting's own values to change.
 				continue
-			if setting.name in self.sizerDict: #update a value
-				self.settingsSizer.Show(self.sizerDict[setting.name])
+			if setting.id in self.sizerDict: #update a value
+				self.settingsSizer.Show(self.sizerDict[setting.id])
 				if isinstance(setting,NumericDriverSetting):
-					getattr(self,"%sSlider"%setting.name).SetValue(getattr(self.driver,setting.name))
+					getattr(self,"%sSlider"%setting.id).SetValue(getattr(self.driver,setting.id))
 				elif isinstance(setting,BooleanDriverSetting):
-					getattr(self,"%sCheckbox"%setting.name).SetValue(getattr(self.driver,setting.name))
+					getattr(self,"%sCheckbox"%setting.id).SetValue(getattr(self.driver,setting.id))
 				else:
-					l=getattr(self,"_%ss"%setting.name)
-					lCombo=getattr(self,"%sList"%setting.name)
+					l=getattr(self,"_%ss"%setting.id)
+					lCombo=getattr(self,"%sList"%setting.id)
 					try:
-						cur=getattr(self.driver,setting.name)
-						i=[x.ID for x in l].index(cur)
+						cur=getattr(self.driver,setting.id)
+						i=[x.id for x in l].index(cur)
 						lCombo.SetSelection(i)
 					except ValueError:
 						pass
@@ -1145,9 +1145,9 @@ class DriverSettingsMixin(object):
 				try:
 					s=settingMaker(setting)
 				except UnsupportedConfigParameterError:
-					log.debugWarning("Unsupported setting %s; ignoring"%setting.name, exc_info=True)
+					log.debugWarning("Unsupported setting %s; ignoring"%setting.id, exc_info=True)
 					continue
-				self.sizerDict[setting.name]=s
+				self.sizerDict[setting.id]=s
 				self.settingsSizer.Insert(len(self.sizerDict)-1,s,border=10,flag=wx.BOTTOM)
 		#Update graphical layout of the dialog
 		self.settingsSizer.Layout()
@@ -1156,7 +1156,7 @@ class DriverSettingsMixin(object):
 		#unbind change events for string settings as wx closes combo boxes on cancel
 		for setting in self.driver.supportedSettings:
 			if isinstance(setting,(NumericDriverSetting,BooleanDriverSetting)): continue
-			getattr(self,"%sList"%setting.name).Unbind(wx.EVT_CHOICE)
+			getattr(self,"%sList"%setting.id).Unbind(wx.EVT_CHOICE)
 		#restore settings
 		self.driver.loadSettings()
 

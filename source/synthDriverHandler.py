@@ -33,7 +33,6 @@ def changeVoice(synth, voice):
 	if voice:
 		synth.voice = voice
 	c=config.conf["speech"][synth.name]
-	c.spec.update(synth.getConfigSpec())
 	#start or update the synthSettingsRing
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
@@ -138,6 +137,7 @@ class SynthSetting(driverHandler.DriverSetting):
 		warnings.warn("synthDriverHandler.SynthSetting is deprecated. Use driverHandler.DriverSetting instead",
 			DeprecationWarning, stacklevel=3)
 		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		self.name = name
 
 class NumericSynthSetting(driverHandler.NumericDriverSetting):
 	"""@Deprecated: use L{driverHandler.NumericDriverSetting} instead.
@@ -147,6 +147,7 @@ class NumericSynthSetting(driverHandler.NumericDriverSetting):
 		warnings.warn("synthDriverHandler.NumericSynthSetting is deprecated. Use driverHandler.NumericDriverSetting instead",
 			DeprecationWarning, stacklevel=3)
 		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
+		self.name = name
 
 class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
 	"""@Deprecated: use L{driverHandler.BooleanDriverSetting} instead.
@@ -157,6 +158,7 @@ class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
 		warnings.warn("synthDriverHandler.BooleanSynthSetting is deprecated. Use driverHandler.BooleanDriverSetting instead",
 			DeprecationWarning, stacklevel=3)
 		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName,defaultVal=defaultVal)
+		self.name = name
 
 class SynthDriver(driverHandler.Driver):
 	"""Abstract base synthesizer driver.
@@ -397,8 +399,8 @@ class SynthDriver(driverHandler.Driver):
 		config.conf[self._configSection][self.name].spec.update(self.getConfigSpec())
 		# Make sure the instance has attributes for every setting
 		for setting in self.supportedSettings:
-			if not hasattr(self, setting.name):
-				setattr(self, setting.name, setting.defaultVal)
+			if not hasattr(self, setting.id):
+				setattr(self, setting.id, setting.defaultVal)
 		if firstLoad:
 			if self.isSupported("voice"):
 				voice=self.voice
@@ -427,12 +429,12 @@ class SynthDriver(driverHandler.Driver):
 		elif not onlyChanged:
 			changeVoice(self,None)
 		for s in self.supportedSettings:
-			if s.name=="voice" or c[s.name] is None:
+			if s.id == "voice" or c[s.id] is None:
 				continue
-			val=c[s.name]
-			if onlyChanged and getattr(self,s.name)==val:
+			val=c[s.id]
+			if onlyChanged and getattr(self,s.id)==val:
 				continue
-			setattr(self,s.name,val)
+			setattr(self,s.id, val)
 		log.debug(
 			(
 				"Loaded changed settings for SynthDriver {}"
@@ -447,23 +449,27 @@ class SynthDriver(driverHandler.Driver):
 				if s.availableInSettingsRing: return i
 			return None
 		for i,s in enumerate(self.supportedSettings):
-			if s.name=="rate": return i
+			if s.id == "rate": return i
 		return None
 
 class VoiceInfo(driverHandler.StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
 
-	def __init__(self,ID,name,language=None):
-		#: The ID of the language this voice speaks, or None if not known or the synth implements language separate from voices
+	def __init__(self, id, displayName, language=None):
+		"""
+		@param language: The ID of the language this voice speaks,
+			C{None} if not known or the synth implements language separate from voices.
+		@type language: str
+		"""
 		self.language=language
-		super(VoiceInfo,self).__init__(ID,name)
+		super(VoiceInfo,self).__init__(id, displayName)
 
 class LanguageInfo(driverHandler.StringParameterInfo):
 	"""Holds information for a particular language"""
 
-	def __init__(self,ID):
+	def __init__(self, id):
 		"""Given a language ID (locale name) the description is automatically calculated."""
-		name=languageHandler.getLanguageDescription(ID)
-		super(LanguageInfo,self).__init__(ID,name)
+		displayName = languageHandler.getLanguageDescription(id)
+		super(LanguageInfo,self).__init__(ID, displayName)
 

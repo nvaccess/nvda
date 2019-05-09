@@ -57,8 +57,8 @@ class Driver(AutoPropertyObject):
 		config.conf[self._configSection][self.name].spec.update(self.getConfigSpec())
 		# Make sure the instance has attributes for every setting
 		for setting in self.supportedSettings:
-			if not hasattr(self, setting.name):
-				setattr(self, setting.name, setting.defaultVal)
+			if not hasattr(self, setting.id):
+				setattr(self, setting.id, setting.defaultVal)
 		if firstLoad:
 			self.saveSettings() #save defaults
 		else:
@@ -90,12 +90,12 @@ class Driver(AutoPropertyObject):
 		"""
 		return False
 
-	def isSupported(self,settingName):
+	def isSupported(self,settingID):
 		"""Checks whether given setting is supported by the driver.
 		@rtype: l{bool}
 		"""
 		for s in self.supportedSettings:
-			if s.name==settingName: return True
+			if s.id == settingID: return True
 		return False
 
 	def getConfigSpec(self):
@@ -103,7 +103,7 @@ class Driver(AutoPropertyObject):
 		for setting in self.supportedSettings:
 			if not setting.useConfig:
 				continue
-			spec[setting.name]=setting.configSpec
+			spec[setting.id]=setting.configSpec
 		return spec
 
 	def saveSettings(self):
@@ -117,9 +117,9 @@ class Driver(AutoPropertyObject):
 			if not setting.useConfig:
 				continue
 			try:
-				conf[setting.name]=getattr(self,setting.name)
+				conf[setting.id] = getattr(self,setting.id)
 			except UnsupportedConfigParameterError:
-				log.debugWarning("Unsupported setting %s; ignoring"%s.name, exc_info=True)
+				log.debugWarning("Unsupported setting %s; ignoring"%s.id, exc_info=True)
 				continue
 		if self.supportedSettings:
 			log.debug("Saved settings for {} {}".format(self.__class__.__name__, self.name))
@@ -135,13 +135,13 @@ class Driver(AutoPropertyObject):
 		"""
 		conf=config.conf[self._configSection][self.name]
 		for setting in self.supportedSettings:
-			if not setting.useConfig or conf.get(setting.name) is None:
+			if not setting.useConfig or conf.get(setting.id) is None:
 				continue
-			val=conf[setting.name]
-			if onlyChanged and getattr(self,setting.name)==val:
+			val=conf[setting.id]
+			if onlyChanged and getattr(self,setting.id) == val:
 				continue
 			try:
-				setattr(self,setting.name,val)
+				setattr(self,setting.id, val)
 			except UnsupportedConfigParameterError:
 				log.debugWarning("Unsupported setting %s; ignoring"%setting.name, exc_info=True)
 				continue
@@ -187,11 +187,11 @@ class DriverSetting(AutoPropertyObject):
 		"""
 		return "string(default={defaultVal})".format(defaultVal=self.defaultVal)
 
-	def __init__(self,name, displayNameWithAccelerator,
+	def __init__(self, id, displayNameWithAccelerator,
 		availableInSettingsRing=False, defaultVal=None, displayName=None, useConfig=True):
 		"""
-		@param name: internal name of the setting
-		@type name: str
+		@param id: internal identifier of the setting
+		@type id: str
 		@param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
 		@type displayNameWithAccelerator: str
 		@param availableInSettingsRing: Will this option be available in a settings ring?
@@ -204,14 +204,14 @@ class DriverSetting(AutoPropertyObject):
 			Set this to C{False} if the driver deals with loading and saving.
 		@type useConfig: bool
 		"""
-		self.name=name
-		self.displayNameWithAccelerator=displayNameWithAccelerator
+		self.id = id
+		self.displayNameWithAccelerator = displayNameWithAccelerator
 		if not displayName:
 			# Strip accelerator from displayNameWithAccelerator.
-			displayName=displayNameWithAccelerator.replace("&","")
-		self.displayName=displayName
-		self.availableInSettingsRing=availableInSettingsRing
-		self.defaultVal=defaultVal
+			displayName = displayNameWithAccelerator.replace("&","")
+		self.displayName = displayName
+		self.availableInSettingsRing = availableInSettingsRing
+		self.defaultVal = defaultVal
 		self.useConfig = useConfig
 
 class NumericDriverSetting(DriverSetting):
@@ -221,7 +221,7 @@ class NumericDriverSetting(DriverSetting):
 		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
 			defaultVal=self.defaultVal,minVal=self.minVal,maxVal=self.maxVal)
 
-	def __init__(self, name, displayNameWithAccelerator, availableInSettingsRing=False,
+	def __init__(self, id, displayNameWithAccelerator, availableInSettingsRing=False,
 		defaultVal=50, minVal=0, maxVal=100, minStep=1, normalStep=5, largeStep=10,
 		displayName=None, useConfig=True):
 		"""
@@ -239,7 +239,7 @@ class NumericDriverSetting(DriverSetting):
 		@type largeStep: int
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
+		super(NumericDriverSetting,self).__init__(id, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
 			defaultVal=defaultVal, displayName=displayName, useConfig=useConfig)
 		self.minVal=minVal
 		self.maxVal=max(maxVal,self.defaultVal)
@@ -251,13 +251,13 @@ class BooleanDriverSetting(DriverSetting):
 	"""Represents a boolean driver setting such as rate boost or automatic time sync.
 	"""
 
-	def __init__(self, name, displayNameWithAccelerator, availableInSettingsRing=False,
+	def __init__(self, id, displayNameWithAccelerator, availableInSettingsRing=False,
 		displayName=None, defaultVal=False, useConfig=True):
 		"""
 		@param defaultVal: Specifies the default value for a boolean driver setting.
 		@type defaultVal: bool
 		"""
-		super(BooleanDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
+		super(BooleanDriverSetting,self).__init__(id, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
 			defaultVal=defaultVal, displayName=displayName, useConfig=useConfig)
 
 	def _get_configSpec(self):
@@ -274,10 +274,15 @@ class StringParameterInfo(object):
 	The base class used to represent a value of a string driver setting.
 	"""
 
-	def __init__(self,ID,name):
-		#: The unique identifier of the value.
-		#: @type: str
-		self.ID=ID
-		#: The name of the value, visible to the user.
-		#: @type: str
-		self.name=name
+	def __init__(self, id, displayName):
+		"""
+		@param id: The unique identifier of the value.
+		@type id: str
+		@param displayName: The name of the value, visible to the user.
+		@type displayName: str
+		"""
+		self.id = id
+		self.displayName = displayName
+		# Keep backwards compatibility
+		self.ID = id
+		self.name = displayName
