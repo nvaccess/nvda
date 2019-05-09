@@ -713,7 +713,15 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 	}
 	altText=NULL;
 	XMLStream<<L"<control _startOfNode=\"1\" ";
-	XMLStream<<L"role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" ";
+	auto roleText = L"object";
+	if(shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture){
+		roleText=L"graphic";
+	}
+	if(shapeType==wdInlineShapeChart){
+		roleText=L"chart";
+	}
+	
+	XMLStream<<L"role=\""<<roleText<<L"\" ";
 	XMLStream<<L"content=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
