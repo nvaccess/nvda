@@ -10,6 +10,7 @@
 from baseObject import AutoPropertyObject
 import config
 from copy import deepcopy
+from logHandler import log
 
 class Driver(AutoPropertyObject):
 	"""
@@ -99,6 +100,8 @@ class Driver(AutoPropertyObject):
 			except UnsupportedConfigParameterError:
 				log.debugWarning("Unsupported setting %s; ignoring"%s.name, exc_info=True)
 				continue
+		if self.supportedSettings:
+			log.info("Saved settings for {} {}".format(self.__class__.__name__, self.name))
 
 	def loadSettings(self, onlyChanged=False):
 		"""
@@ -123,6 +126,13 @@ class Driver(AutoPropertyObject):
 			except UnsupportedConfigParameterError:
 				log.debugWarning("Unsupported setting %s; ignoring"%setting.name, exc_info=True)
 				continue
+		if self.supportedSettings:
+			log.info(
+				(
+					"Loaded changed settings for {} {}"
+					if onlyChanged else
+					"Loaded settings for {} {}"
+				).format(self.__class__.__name__, self.name))
 
 	@classmethod
 	def _paramToPercent(cls, current, min, max):

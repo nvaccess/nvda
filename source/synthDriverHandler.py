@@ -422,6 +422,12 @@ class SynthDriver(driverHandler.Driver):
 			if onlyChanged and getattr(self,s.name)==val:
 				continue
 			setattr(self,s.name,val)
+		log.info(
+			(
+				"Loaded changed settings for SynthDriver {}"
+				if onlyChanged else
+				"Loaded settings for SynthDriver {}"
+			).format(self.name))
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
