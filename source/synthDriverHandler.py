@@ -392,11 +392,9 @@ class SynthDriver(driverHandler.Driver):
 		firstLoad = not config.conf[self._configSection].isSet(self.name)
 		if firstLoad:
 			# Create the new section.
-			conf = config.conf[self._configSection][self.name] = {}
-		else:
-			conf = config.conf[self._configSection][self.name]
+			config.conf[self._configSection][self.name] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
-		conf.spec.update(self.getConfigSpec())
+		config.conf[self._configSection][self.name].spec.update(self.getConfigSpec())
 		# Make sure the instance has attributes for every setting
 		for setting in self.supportedSettings:
 			if not hasattr(self, setting.name):
