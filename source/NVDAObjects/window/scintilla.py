@@ -199,7 +199,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			end=self._getOffsetFromPoint(location.right, y)
 			# If this line wraps to the next line,
 			# end is the first offset of the next line.
-			if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,end)==y:
+			if self._getPointFromOffset(end).y==y:
 				# This is the end of the document line.
 				# Include the EOL characters in the returned offsets.
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,end,None)
