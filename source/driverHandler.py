@@ -182,12 +182,15 @@ class Driver(AutoPropertyObject):
 class DriverSetting(AutoPropertyObject):
 	"""Represents a synthesizer or braille display setting such as voice, variant or dot firmness.
 	"""
-	#: Configuration specification of this particular setting for config file validator.
-	#: @type: str
-	configSpec="string(default=None)"
+
+	def _get_configSpec(self):
+		"""Returns the configuration specification of this particular setting for config file validator.
+		@rtype: str
+		"""
+		return "string(default={defaultVal})".format(defaultVal=self.defaultVal)
 
 	def __init__(self,name, displayNameWithAccelerator,
-		availableInSettingsRing=False, displayName=None, useConfig=True):
+		availableInSettingsRing=False, defaultVal=None, displayName=None, useConfig=True):
 		"""
 		@param name: internal name of the setting
 		@type name: str
@@ -195,6 +198,8 @@ class DriverSetting(AutoPropertyObject):
 		@type displayNameWithAccelerator: str
 		@param availableInSettingsRing: Will this option be available in a settings ring?
 		@type availableInSettingsRing: bool
+		@param defaultVal: Specifies the default value for a driver setting.
+		@type param defaultVal: str or C{None}
 		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
 		@type displayName: str
 		@param useConfig: Whether the value of this option is loaded from and saved to NVDA's configuration.
@@ -208,6 +213,7 @@ class DriverSetting(AutoPropertyObject):
 			displayName=displayNameWithAccelerator.replace("&","")
 		self.displayName=displayName
 		self.availableInSettingsRing=availableInSettingsRing
+		self.defaultVal=defaultVal
 		self.useConfig = useConfig
 
 class NumericDriverSetting(DriverSetting):
@@ -236,9 +242,8 @@ class NumericDriverSetting(DriverSetting):
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
 		super(NumericDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
-			displayName=displayName, useConfig=useConfig)
+			defaultVal=defaultVal, displayName=displayName, useConfig=useConfig)
 		self.minVal=minVal
-		self.defaultVal=max(defaultVal,self.minVal)
 		self.maxVal=max(maxVal,self.defaultVal)
 		self.minStep=minStep
 		self.normalStep=max(normalStep,minStep)
@@ -255,11 +260,11 @@ class BooleanDriverSetting(DriverSetting):
 		@type defaultVal: bool
 		"""
 		super(BooleanDriverSetting,self).__init__(name, displayNameWithAccelerator, availableInSettingsRing=availableInSettingsRing,
-			displayName=displayName, useConfig=useConfig)
-		self.defaultVal=defaultVal
+			defaultVal=defaultVal, displayName=displayName, useConfig=useConfig)
 
 	def _get_configSpec(self):
-		return "boolean(default={defaultVal})".format(defaultVal=str(self.defaultVal).lower())
+		defaultVal = repr(self.defaultVal) if self.defaultVal is not None else self.defaultVal
+		return "boolean(default={defaultVal})".format(defaultVal=defaultVal)
 
 class UnsupportedConfigParameterError(NotImplementedError):
 	"""
