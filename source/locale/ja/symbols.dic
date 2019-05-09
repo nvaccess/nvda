@@ -20,7 +20,7 @@ comma between numbers	(?<=\d)\,(?=\d)
 複数のピリオド	(?<=\.)\.|\.(?=\.)
 単語中のピリオド	(?<=[\w])\.+(?=[\w])
 数字の間の全角ピリオド	(?<=[\d])．(?=[\d])
-数字の間の全角カンマ	(?<=[\d])，(?=[\d])
+数字の間の全角コンマ	(?<=[\d])，(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -42,7 +42,7 @@ negative number	マイナス	none	norep
 複数のピリオド	ドット	some
 単語中のピリオド	ドット	some
 数字の間の全角ピリオド		none	always
-数字の間の全角カンマ		none	always
+数字の間の全角コンマ		none	always
 
 # Whitespace
 \0	ブランク	char
@@ -70,7 +70,7 @@ $	ドル	none
 )	カッコトジ	-	never
 *	アスタリスク	some
 +	プラス
-,	コンマ	-	never
+,	コンマ	most	never
 -	マイナス	some
 .	ピリオド	some
 /	スラッシュ	some
@@ -351,6 +351,20 @@ _	アンダーライン	some
 Ⅷ	エイト	none
 Ⅸ	ナイン	none
 Ⅹ	テン	none
+Ⅺ	イレブン	none
+Ⅻ	トウェルブ	none
+ⅰ	ワン	none
+ⅱ	ツー	none
+ⅲ	スリー	none
+ⅳ	フォー	none
+ⅴ	ファイブ	none
+ⅵ	シックス	none
+ⅶ	セブン	none
+ⅷ	エイト	none
+ⅸ	ナイン	none
+ⅹ	テン	none
+ⅺ	イレブン	none
+ⅻ	トウェルブ	none
 ℹ	ジョウホウゲン	none
 ↔	サユウ	none
 ↕	ジョウゲ	none
@@ -419,6 +433,17 @@ _	アンダーライン	some
 ⑲	マル 19	none
 ⑳	マル 20	none
 Ⓜ	メトロ	none
+
+⓫	クロマル 11	none
+⓬	クロマル 12	none
+⓭	クロマル 13	none
+⓮	クロマル 14	none
+⓯	クロマル 15	none
+⓰	クロマル 16	none
+⓱	クロマル 17	none
+⓲	クロマル 18	none
+⓳	クロマル 19	none
+⓴	クロマル 20	none
 
 # U+2500 to U+25FF
 ─	ケイセン	most
@@ -579,6 +604,18 @@ _	アンダーライン	some
 ❗	ビックリ	none
 ❣	ハート	none
 ❤	ハート	none
+
+❶	クロマル 1	none
+❷	クロマル 2	none
+❸	クロマル 3	none
+❹	クロマル 4	none
+❺	クロマル 5	none
+❻	クロマル 6	none
+❼	クロマル 7	none
+❽	クロマル 8	none
+❾	クロマル 9	none
+❿	クロマル 10	none
+
 ➔	ミギヤジルシ
 ➕	プラス	none
 ➖	マイナス	none
