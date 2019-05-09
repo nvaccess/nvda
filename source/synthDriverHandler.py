@@ -397,6 +397,10 @@ class SynthDriver(driverHandler.Driver):
 			conf = config.conf[self._configSection][self.name]
 		# Make sure the config spec is up to date, so the config validator does its work.
 		conf.spec.update(self.getConfigSpec())
+		# Make sure the instance has attributes for every setting
+		for setting in self.supportedSettings:
+			if not hasattr(self, setting.name):
+				setattr(self, setting.name, setting.defaultVal)
 		if firstLoad:
 			if self.isSupported("voice"):
 				voice=self.voice
