@@ -42,6 +42,7 @@ class Driver(AutoPropertyObject):
 		@postcondition: This driver can be used.
 		"""
 		super(Driver, self).__init__()
+		config.pre_configSave.register(self.saveSettings)
 
 	def terminate(self):
 		"""Terminate this driver.
@@ -49,6 +50,8 @@ class Driver(AutoPropertyObject):
 		@precondition: L{initialize} has been called.
 		@postcondition: This driver can no longer be used.
 		"""
+		self.saveSettings()
+		config.pre_configSave.unregister(self.saveSettings)
 
 	_abstract_supportedSettings = True
 	def _get_supportedSettings(self):
