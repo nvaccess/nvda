@@ -41,6 +41,7 @@ import characterProcessing
 from baseObject import ScriptableObject
 import core
 import winVersion
+from base64 import b16encode
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -60,6 +61,9 @@ SCRCAT_SPEECH = _("Speech")
 #: Script category for configuration dialogs commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_CONFIG = _("Configuration")
+#: Script category for configuration profile activation and management commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
@@ -2171,7 +2175,7 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG
+	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG_PROFILES
 
 	def script_toggleConfigProfileTriggers(self,gesture):
 		if config.conf.profileTriggersEnabled:
@@ -2410,3 +2414,113 @@ class GlobalCommands(ScriptableObject):
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
 commands = GlobalCommands()
+
+class ConfigProfileActivationCommands(ScriptableObject):
+	"""Singleton scriptable object that collects scripts for available configuration profiles."""
+
+	scriptCategory = SCRCAT_CONFIG_PROFILES
+
+	@classmethod
+	def __new__(cls, *args, **kwargs):
+		# Iterate through the available profiles, creating scripts for them.
+		for profile in config.conf.listProfiles():
+			cls.addScriptForProfile(profile)
+		return 		super(ConfigProfileActivationCommands, cls).__new__(cls)
+
+	@classmethod
+	def _getScriptNameForProfile(cls, name):
+		invalidChars = set()
+		for c in name:
+			if not c.isalnum() and c != "_":
+				invalidChars.add(c)
+		for c in invalidChars:
+			name=name.replace(c, b16encode(c))
+		return str("profile_%s" % name)
+
+	@classmethod
+	def _profileScript(cls, name):
+		if gui.shouldConfigProfileTriggersBeSuspended():
+			# Translators: a message indicating that configuration profiles can't be activated using gestures,
+			# due to profile activation being suspended.
+			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+		elif config.conf.profiles[-1].name == name:
+			config.conf.manualActivateProfile(None)
+			# Translators: a message when a configuration profile is manually deactivated.
+			# {profile} is replaced with the profile's name.
+			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+		else:
+			config.conf.manualActivateProfile(name)
+			# Translators: a message when a configuration profile is manually activated.
+			# {profile} is replaced with the profile's name.
+			state = _("Configuration profile {profile} manually activated").format(profile=name)
+		ui.message(state)
+
+	@classmethod
+	def addScriptForProfile(cls, name):
+		"""Adds a script for the given configuration profile.
+		This method will not check a profile's existence.
+		@param name: The name of the profile to add a script for.
+		@type name: str
+		"""
+		script = lambda self, gesture: cls._profileScript(name)
+		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)
+		# Just set the doc string of the script, using the decorator is overkill here.
+		# Translators: The description shown in input help for a script that
+		# activates or deactivates a config profile.
+		# {profile} is replaced with the profile's name.
+		script.__doc__ = _("Activates or deactivates the {profile} configuration profile").format(profile=name)
+		setattr(cls, funcName, script)
+
+	@classmethod
+	def removeScriptForProfile(cls, name):
+		"""Removes a script for the given configuration profile.
+		@param name: The name of the profile to remove a script for.
+		@type name: str
+		"""
+		scriptName = cls._getScriptNameForProfile(name)
+		cls._moveGesturesForProfileActivationScript(scriptName)
+		delattr(cls, "script_%s" % scriptName)
+
+	@classmethod
+	def _moveGesturesForProfileActivationScript(cls, oldScriptName, newScriptName=None):
+		"""Patches the user gesture map to reflect updates to profile scripts.
+		@param oldScriptName: The current name of the profile activation script.
+		@type oldScriptName: str
+		@param newScriptName: The new name for the profile activation script, if any.
+			if C{None}, the gestures are only removed for the current profile sript.
+		@type newScriptName: str
+		"""
+		gestureMap = inputCore.manager.userGestureMap
+		for scriptCls, gesture, scriptName in gestureMap.getScriptsForAllGestures():
+			if scriptName != oldScriptName:
+				continue
+			moduleName = scriptCls.__module__
+			className = scriptCls.__name__
+			gestureMap.remove(gesture, moduleName, className, scriptName)
+			if newScriptName is not None:
+				gestureMap.add(gesture, moduleName, className, newScriptName)
+		try:
+			gestureMap.save()
+		except:
+			log.debugWarning("Couldn't save user gesture map after renaming profile script", exc_info=True)
+
+	@classmethod
+	def updateScriptForRenamedProfile(cls, oldName, newName):
+		"""Removes a script for the oldName configuration profile,
+		and adds a new script for newName.
+		Existing gestures in the gesture map are moved from the oldName to the newName profile.
+		@param oldName: The current name of the profile.
+		@type oldName: str
+		@param newName: The new name for the profile.
+		@type newName: str
+		"""
+		oldScriptName = cls._getScriptNameForProfile(oldName)
+		newScriptName = cls._getScriptNameForProfile(newName)
+		cls._moveGesturesForProfileActivationScript(oldScriptName, newScriptName)
+		delattr(cls, "script_%s" % oldScriptName)
+		cls.addScriptForProfile(newName)
+
+#: The single instance for the configuration profile activation commands.
+#: @type: L{ConfigProfileActivationCommands}
+configProfileActivationCommands = ConfigProfileActivationCommands()
+
