@@ -971,7 +971,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -1029,7 +1028,6 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		ui.reviewMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
