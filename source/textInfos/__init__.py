@@ -456,8 +456,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		# cache the caret position
 		caret = self.copy()
 		# This gets called for characters which might end a word; e.g. space.
-		# The character before the caret usually is the word end.
-		# The one before that is the last of the word, which is what we want.
+		# After such a character is typed, the caret is one position behind that character.
+		# So, the character before the caret usually is the word end.
+		# The one before that is the last character of the word, which is what we want.
 		res = self.move(UNIT_CHARACTER, -2)
 		if res == 0:
 			# Trying to look up a word before the caret, but there is none.
@@ -465,17 +466,19 @@ class TextInfo(baseObject.AutoPropertyObject):
 		self.expand(UNIT_WORD)
 		diff = self.compareEndPoints(caret,"endToStart")
 		if diff >= 0 and wordSeparator and not wordSeparator.isspace():
-			# This is no word boundary
+			# This is no word boundary.
 			return False
 		if wordSeparator == "\r" and self.text == "\n":
 			# #8065: In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
 			# In Notepad however, enter produces crlf.
 			# This can't yet be unit tested as long as the unit testing framework doesn't use NVDAHelper/Uniscribe
 			self.move(UNIT_CHARACTER, 1, endPoint="end")
-		# For CRLF, the last character of the word is one position before the current.
-		# This is also the case when the text is equal to the word separator,
-		# I.e. when using the US International keyboard layout:
+		# When CRLF was just typed,
+		# we are positioned at the CR rather than on the end of the word.
+		# This is also the case when the current text is equal to the word separator,
+		# e.g. when using the US International keyboard layout:
 		# https://support.microsoft.com/en-us/help/306560/how-to-use-the-united-states-international-keyboard-layout-in-windows
+		# In this case, when typing don't, Windows supresses passing the apostrophe until the t is pressed.
 		if self.text in (wordSeparator, "\r\n"):
 			# We need to move te start endpoint an additional -1 character.
 			if self.move(UNIT_CHARACTER, -1) == 0:
