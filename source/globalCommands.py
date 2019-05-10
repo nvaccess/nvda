@@ -1601,17 +1601,17 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
-		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
-		# Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-		# If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-		message = _("Currently running application is %s") % appName
+		message = ''
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
-			# Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-			# For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+			# Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 			# This message will not be presented if there is no module for the current program.
-			message += _(" and currently loaded module is %s") % mod.appModuleName.split(".")[0]
+			message = _(" %s module is loaded. ") % mod.appModuleName.split(".")[0]
+		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
+		# Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+		# For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+		message +=_(" %s is currently running.") % appName
 		ui.message(message)
 	# Translators: Input help mode message for report current program name and app module name command.
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
