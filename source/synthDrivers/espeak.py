@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -23,9 +23,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VoiceSetting(),
 		SynthDriver.VariantSetting(),
 		SynthDriver.RateSetting(),
-		# Translators: This is the name of the rate boost voice toggle
-		# which further increases the speaking rate when enabled.
-		BooleanSynthSetting("rateBoost",_("Rate boos&t")),
+		SynthDriver.RateBoostSetting(),
 		SynthDriver.PitchSetting(),
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),
