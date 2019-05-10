@@ -2485,10 +2485,10 @@ class ConfigProfileActivationCommands(ScriptableObject):
 	def _moveGesturesForProfileActivationScript(cls, oldScriptName, newScriptName=None):
 		"""Patches the user gesture map to reflect updates to profile scripts.
 		@param oldScriptName: The current name of the profile activation script.
-		@type oldScriptName: basestring
+		@type oldScriptName: str
 		@param newScriptName: The new name for the profile activation script, if any.
 			if C{None}, the gestures are only removed for the current profile sript.
-		@type newScriptName: basestring
+		@type newScriptName: str
 		"""
 		gestureMap = inputCore.manager.userGestureMap
 		for scriptCls, gesture, scriptName in gestureMap.getScriptsForAllGestures():
@@ -2512,7 +2512,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param oldName: The current name of the profile.
 		@type oldName: str
 		@param newName: The new name for the profile.
-		@type newScriptName: str
+		@type newName: str
 		"""
 		oldScriptName = cls._getScriptNameForProfile(oldName)
 		newScriptName = cls._getScriptNameForProfile(newName)
