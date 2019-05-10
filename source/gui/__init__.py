@@ -329,7 +329,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from addonGui import AddonsDialog
+		from .addonGui import AddonsDialog
 		d=AddonsDialog(gui.mainFrame)
 		d.Show()
 		self.postPopup()
@@ -553,6 +553,13 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
+	for instance, state in gui.SettingsDialog._instances.iteritems():
+		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
+			log.error(
+				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
 	# This is called after the main loop exits because WM_QUIT exits the main loop
 	# without destroying all objects correctly and we need to support WM_QUIT.
