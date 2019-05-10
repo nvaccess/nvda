@@ -1606,7 +1606,7 @@ class GlobalCommands(ScriptableObject):
 		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
 		# Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-			# For example, the complete message for Windows explorer is: Explorer.exe is currenty running. explorer module is loaded..
+		# For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 		message +=_(" %s is currently running.") % appName
 		ui.message(message)
 	# Translators: Input help mode message for report current program name and app module name command.
