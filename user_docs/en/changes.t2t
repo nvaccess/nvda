@@ -12,6 +12,8 @@ What's New in NVDA
  - Note that when this option is disabled, you can still enable browse mode manually by pressing NVDA+space.
 - You can now filter symbols in the punctuation/symbol pronunciation dialog, similar to how filtering works in the elements list and input gestures dialog. (#5761)
 - A command has been added to change the mouse text unit resolution (how much text will be spoken when the mouse moves), it has not been assigned a default gesture. (#9056)
+- The windows OneCore synthesizer now has a rate boost option, which allows for significantly faster speech. (#7498)
+- The Rate Boost option is now configurable  from the Synth Settings Ring for supported speech synthesizers. (Currently eSpeak-NG and Windows OneCore). (#8934)
 
 
 == Changes ==
@@ -19,6 +21,7 @@ What's New in NVDA
 - Clarification to the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
 - Updated liblouis braille translator to version 3.9.0 (#9439)
+- The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
 
 
 == Bug Fixes ==
@@ -36,6 +39,7 @@ What's New in NVDA
 - In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)
 - In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)
 - Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
+- For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
 
 
 == Changes for Developers ==
