@@ -3,11 +3,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat
 
 from copy import deepcopy
 import os
 import pkgutil
+import importlib
 import config
 import baseObject
 import winVersion
@@ -37,7 +38,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -266,7 +267,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,
+		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Volume'))
 	@classmethod

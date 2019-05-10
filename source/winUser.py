@@ -1,6 +1,6 @@
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -487,6 +487,9 @@ def getGUIThreadInfo(threadID):
 
 def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
+
+def getExtendedWindowStyle(hwnd):
+	return user32.GetWindowLongW(hwnd,GWL_EXSTYLE)
 
 def getPreviousWindow(hwnd):
 	try:
