@@ -206,7 +206,7 @@ An NVDAObject for a window
 		@raise WindowsError: If redrawing fails.
 		"""
 		# Conversion to client coordinates may fail if the window handle of this object is incorrect.
-		# This will most 
+		# This will most likely be caused by a died window.
 		location = self.location.toClient(self.windowHandle)
 		if not winUser.RedrawWindow(self.windowHandle,
 			location.toRECT(), None,
@@ -409,7 +409,7 @@ class DisplayModelLiveText(LiveText, Window):
 
 	def startMonitoring(self):
 		# Force the window to be redrawn, as our display model might be out of date.
-		# Do not possible catch exceptions caused by redraw, as if redrawing fails,
+		# Do not catch exceptions caused by redraw, as when redrawing fails,
 		# it is most likely that the window died, and we don't want to monitor in that case.
 		self.redraw()
 		displayModel.requestTextChangeNotifications(self, True)
