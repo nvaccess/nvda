@@ -731,6 +731,7 @@ def speakPreviousWord(wordSeparator=None):
 	if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
 		curWordChars = []
 		return
+	speakUsingTextInfo = False
 	for attempt in xrange(3):
 		if attempt > 0: # Not the first attempt
 			time.sleep(0.05)
@@ -752,13 +753,17 @@ def speakPreviousWord(wordSeparator=None):
 			# Checking whether the stripped TextInfo text ends with the buffer is far from perfect, but works in most cases.
 			if info.text.rstrip().endswith(bufferedWord):
 				word = info.text
+				speakUsingTextInfo = True
 				break
 			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r after attempt %d"%(bufferedWord, info.text, attempt+1))
 	curWordChars = []
 	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
 	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-		speakText(word)
+		if speakUsingTextInfo:
+			speakTextInfo(info, unit=textInfos.UNIT_WORD, reason=controlTypes.REASON_CARET)
+		else:
+			speakText(word)
 	if word != bufferedWord and reportSpellingError:
 		for command in info.getTextWithFields():
 			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
