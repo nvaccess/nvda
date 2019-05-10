@@ -1196,15 +1196,23 @@ class GlobalCommands(ScriptableObject):
 		if curLanguage is None:
 			curLanguage = speech.getCurrentLanguage()
 		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
+		if expandedSymbol == text:
+			# Translators: Reported when there is no symbol pronunciation rule for the current character.
+			ui.message(_("No symbol pronunciation rule for %s." % text))
+			return
 		repeats=scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
-			# Explicitly tether here
-			braille.handler.setTether(braille.handler.TETHER_REVIEW, auto=True)
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
-		elif expandedSymbol != text:
+			ui.message(expandedSymbol)
+		else:
+			ui.browseableMessage(_(
+				"Character: {character}\n" +
+				"Replacement: {replacement}"
+			).format(character=text, replacement=expandedSymbol),
 			# Translators: title for expanded symbol dialog.
-			ui.browseableMessage("%s\n%s" % (text, expandedSymbol), _("Expanded symbol %s" % languageHandler.getLanguageDescription(curLanguage)))
-	script_review_currentSymbol.__doc__=_("Speaks the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode")
+			_("Expanded symbol ({language})").format(
+				language=languageHandler.getLanguageDescription(curLanguage)))
+	# Translators: Input help mode message for Review Current Symbol command.
+	script_review_currentSymbol.__doc__=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode")
 	script_review_currentSymbol.category=SCRCAT_TEXTREVIEW
 
 	def script_speechMode(self,gesture):
