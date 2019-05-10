@@ -1,6 +1,6 @@
 #synthDrivers/oneCore.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 Tyler Spivey, NV Access Limited, James Teh
+#Copyright (C) 2016-2019 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
