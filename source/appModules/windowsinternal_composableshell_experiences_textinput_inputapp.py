@@ -96,7 +96,9 @@ class AppModule(appModuleHandler.AppModule):
 		# Move to clipboard list so element selected event can pick it up.
 		# #9103: if clipboard is empty, a status message is displayed instead, and luckily it is located where clipboard data items can be found.
 		elif childAutomationID == "TEMPLATE_PART_ClipboardTitleBar":
-			self.event_UIA_elementSelected(obj.children[-2], nextHandler)
+			# Under some cases, clipboard tip text isn't shown on screen, causing clipboard history title to be announced instead of most recently copied item.
+			clipboardItemsIndex = -2 if obj.children[-2].UIAElement.cachedAutomationID != childAutomationID else -1
+			self.event_UIA_elementSelected(obj.children[clipboardItemsIndex], nextHandler)
 		nextHandler()
 
 	# Argh, name change event is fired right after emoji panel opens in build 17666 and later.
