@@ -1201,20 +1201,19 @@ class GlobalCommands(ScriptableObject):
 			curLanguage = speech.getCurrentLanguage()
 		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
 		if expandedSymbol == text:
-			# Translators: Reported when there is no symbol pronunciation rule for the current character.
-			ui.message(_("No symbol pronunciation rule for %s." % text))
+			# Translators: Reported when there is no symbol at the position of the review cursor.
+			ui.message(_("No symbol"))
 			return
 		repeats=scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(expandedSymbol)
 		else:
-			ui.browseableMessage(_(
-				"Character: {character}\n" +
-				"Replacement: {replacement}"
-			).format(character=text, replacement=expandedSymbol),
+			# Translators: Character in the expanded symbol dialog.
+			ui.browseableMessage(_("Character: %s\n" % text) +
+				# Translators: Replacement in the expanded symbol dialog.
+				_("Replacement: %s" % expandedSymbol),
 			# Translators: title for expanded symbol dialog.
-			_("Expanded symbol ({language})").format(
-				language=languageHandler.getLanguageDescription(curLanguage)))
+			_("Expanded symbol (%s)" % languageHandler.getLanguageDescription(curLanguage)))
 	# Translators: Input help mode message for Review Current Symbol command.
 	script_review_currentSymbol.__doc__=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode")
 	script_review_currentSymbol.category=SCRCAT_TEXTREVIEW
