@@ -57,7 +57,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		gesture = "kb:nvda+d"
 	)
 	def script_readDocumentation(self, gesture):
-		obj = None
+		rootDocumentationWindow = None
 
 		# If there aren't any suggestion selected, there is no way to find quick documentation
 		if not self.appModule.selectedItem:
@@ -66,40 +66,42 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		# Try to locate the documentation document
 		try:
-			obj = self.appModule.selectedItem.parent.parent.parent.parent.previous.previous
+			rootDocumentationWindow = self.appModule.selectedItem.parent.parent.parent.parent.previous.previous
 		except AttributeError:
 			pass
 
 		# In XML documents this is different, maybe in other editors too
 		# so we try to locate the root window again
-		if not obj or not obj.appModule == self.appModule:
+		if not rootDocumentationWindow or not rootDocumentationWindow.appModule == self.appModule:
 			try:
-				obj = self.appModule.selectedItem.parent.parent.parent.parent.previous
+				rootDocumentationWindow = self.appModule.selectedItem.parent.parent.parent.parent.previous
 			except AttributeError:
 				pass
 
 		# Check if this object is from the same appModule
-		if obj and obj.appModule == self.appModule:
-			api.setNavigatorObject(obj)
+		if rootDocumentationWindow and rootDocumentationWindow.appModule == self.appModule:
+			api.setNavigatorObject(rootDocumentationWindow)
+			
+			documentObj = rootDocumentationWindow
 
-			while obj:
-				if obj.firstChild:
-					obj = obj.firstChild
-					
+			while documentObj:
+				if documentObj.firstChild:
+					documentObj = documentObj.firstChild
+
 					# In some editors the help document is a HTML ones
 					# On XML documents, for example, it is a simple read-only editable text
-					if obj.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_EDITABLETEXT):
+					if documentObj.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_EDITABLETEXT):
 						break
 				else:
 					break
 
-			if obj.role == controlTypes.ROLE_DOCUMENT:
-				api.setNavigatorObject(obj)
+			if documentObj.role == controlTypes.ROLE_DOCUMENT:
+				api.setNavigatorObject(documentObj)
 				braille.handler.handleReviewMove()
 				sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
-				
-			elif obj.role == controlTypes.ROLE_EDITABLETEXT:
-				ui.message(obj.value)
+
+			elif documentObj.role == controlTypes.ROLE_EDITABLETEXT:
+				ui.message(documentObj.value)
 
 		else:
 			# Translators: When the help popup cannot be found for the selected autocompletion item
@@ -141,7 +143,7 @@ class AutocompletionListItem(IAccessible):
 			# Reporting as focused should be sufficient
 			self.reportFocus()
 
-			# Fixme: I picked up this from UIA SuggestionItem for rendering in braille.
+			# I picked up this from UIA SuggestionItem for rendering in braille.
 			# Simply calling `reportFocus` doesn't outputs the text to braille devices
 			# and reporting with `ui.message` needs an extra translation string when reporting position info
 			braille.handler.message(
