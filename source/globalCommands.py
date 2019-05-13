@@ -2432,7 +2432,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
-		name = name.encode("mbcs")
+		name = name.encode("utf-8")
 		invalidChars = set()
 		for c in name:
 			if not c.isalnum() and c != "_":
