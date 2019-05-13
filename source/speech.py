@@ -1252,7 +1252,17 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		# Table.
 		rowCount=(attrs.get("table-rowcount-presentational") or attrs.get("table-rowcount"))
 		columnCount=(attrs.get("table-columncount-presentational") or attrs.get("table-columncount"))
-		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=rowCount, columnCount=columnCount),levelText))
+		return " ".join((
+			nameText,
+			roleText,
+			stateText, 
+			getSpeechTextForProperties(
+				_tableID=tableID, 
+				rowCount=rowCount, 
+				columnCount=columnCount
+			),
+			levelText
+		))
 	elif nameText and reason==controlTypes.REASON_FOCUS and fieldType == "start_addedToControlFieldStack" and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE):
 		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
 		return " ".join((nameText,roleText))

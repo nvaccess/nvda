@@ -114,8 +114,6 @@ template<typename TableType> inline void fillTableCounts(VBufStorage_controlFiel
 	wostringstream s;
 	long count = 0;
 	// Fetch row and column counts and add them as attributes on this vbuf node.
-	// The first set: table-physicalrowcount and table-physicalcolumncount represent the physical topology of the table and can be used programmatically to understand table limits.
-	// The second set: table-rowcount and table-columncount are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_nRows(&count) == S_OK) {
 		s << count;
 		node->addAttribute(L"table-rowcount", s.str());
@@ -804,7 +802,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 
 	// Add some presentational table attributes
 	// Note these are only for reporting, the physical table attributes (table-rownumber etc) for aiding in navigation etc are added  later on.
-	// propagate table-rownumber down to the cell as Gecko only includes it on the row itself
+	// propagate table-rownumber-presentational down to the cell as Gecko only includes it on the row itself
 	if(parentPresentationalRowNumber) 
 		parentNode->addAttribute(L"table-rownumber-presentational",parentPresentationalRowNumber);
 	const wchar_t* presentationalRowNumber=NULL;
