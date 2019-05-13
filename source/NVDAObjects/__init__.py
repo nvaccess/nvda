@@ -558,8 +558,32 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		"""
 		raise NotImplementedError
 
+	def _get_presentationalRowNumber(self):
+		"""
+		An optional version of the rowNumber property used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  rowNumber might be row 2 of 10, the user needs to  be told it is perhaps row 500 (taking all virtual rows into account).
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, then this property should not be implemented.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
 	def _get_columnNumber(self):
 		"""Retreaves the column number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_presentationalColumnNumber(self):
+		"""
+		An optional version of the columnNumber property used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  columnNumber might be column 2 of 10, the user needs to  be told it is perhaps column 500 (taking all virtual columns into account).
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, then this property should not be implemented.
 		@rtype: int
 		"""
 		raise NotImplementedError
@@ -578,8 +602,32 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		"""
 		raise NotImplementedError
 
+	def _get_presentationalRowCount(self):
+		"""
+		An optional version of the rowCount property used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  rowCount might be 10, the user needs to  be told the table really has 1000 rows. 
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, then this property should not be implemented.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
 	def _get_columnCount(self):
 		"""Retreaves the number of columns this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_presentationalColumnCount(self):
+		"""
+		An optional version of the columnCount property used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  columnCount might be 10, the user needs to  be told the table really has 1000 columns. 
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, then this property should not be implemented.
 		@rtype: int
 		"""
 		raise NotImplementedError
