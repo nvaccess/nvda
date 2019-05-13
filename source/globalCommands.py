@@ -1201,8 +1201,8 @@ class GlobalCommands(ScriptableObject):
 			curLanguage = speech.getCurrentLanguage()
 		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
 		if expandedSymbol == text:
-			# Translators: Reported when there is no symbol at the position of the review cursor.
-			ui.message(_("No symbol"))
+			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+			ui.message(_("No symbol replacement"))
 			return
 		repeats=scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
