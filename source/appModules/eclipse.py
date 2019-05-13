@@ -67,7 +67,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		# Try to locate the documentation document
 		try:
 			obj = self.appModule.selectedItem.parent.parent.parent.parent.previous.previous
-		except:
+		except AttributeError:
 			pass
 
 		# In XML documents this is different, maybe in other editors too
@@ -75,7 +75,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		if not obj or not obj.appModule == self.appModule:
 			try:
 				obj = self.appModule.selectedItem.parent.parent.parent.parent.previous
-			except:
+			except AttributeError:
 				pass
 
 		# Check if this object is from the same appModule
