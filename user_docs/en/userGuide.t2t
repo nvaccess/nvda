@@ -1789,7 +1789,7 @@ NVDA allows you to do this using configuration profiles.
 A configuration profile contains only those settings which are changed while the profile is being edited.
 Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings #NVDASettings] dialog, which apply to the entirety of NVDA.
 
-Configuration profiles can be manually activated.
+Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
 
 +++ Basic Management +++[ProfilesBasicManagement]
@@ -1855,6 +1855,14 @@ For example, you might wish to edit a manually activated profile or your normal 
 You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
 
 To toggle disabling triggers from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
++++ Activating a profile using input gestures +++[ConfigProfileGestures]
+For every profile you add, you are able to assign one or more input gestures to activate it.
+By default, configuration profiles do not have input gestures assigned.
+You can add gestures to activate a profile using the [Input Gestures dialog #InputGestures].
+Every profile has its own entry under the configuration profiles category.
+When you rename a profile, any gesture you added previously will still be available.
+Removing a profile will automatically delete the gestures associated with it.
 
 ++ Location of Configuration files ++[LocationOfConfigurationFiles]
 Portable versions of NVDA store all settings and add-ons in a directory called userConfig, found in the NVDA directory.

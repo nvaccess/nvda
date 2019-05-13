@@ -91,7 +91,7 @@ SB_VERT = 1
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
-		vsMajor, vsMinor = int(vs_major), int(vs_minor)
+		vsMajor, vsMinor = int(vsMajor), int(vsMinor)
 
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
