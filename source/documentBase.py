@@ -165,7 +165,6 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
 		info.collapse()
 		self.selection = info
-		#info.updateCaret()
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="next")

@@ -803,19 +803,27 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Add some presentational table attributes
 	// Note these are only for reporting, the physical table attributes (table-rownumber etc) for aiding in navigation etc are added  later on.
 	// propagate table-rownumber-presentational down to the cell as Gecko only includes it on the row itself
-	if(parentPresentationalRowNumber) 
+	if(parentPresentationalRowNumber) {
 		parentNode->addAttribute(L"table-rownumber-presentational",parentPresentationalRowNumber);
+	}
 	const wchar_t* presentationalRowNumber=NULL;
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex")) != IA2AttribsMap.end()) {
+	IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-rownumber-presentational",IA2AttribsMapIt->second);
 		presentationalRowNumber=IA2AttribsMapIt->second.c_str();
 	}
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colindex")) != IA2AttribsMap.end())
+	IA2AttribsMapIt = IA2AttribsMap.find(L"colindex");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-columnnumber-presentational",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount")) != IA2AttribsMap.end())
+	}
+	IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-rowcount-presentational",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colcount")) != IA2AttribsMap.end())
+	}
+	IA2AttribsMapIt = IA2AttribsMap.find(L"colcount");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
 		parentNode->addAttribute(L"table-columncount-presentational",IA2AttribsMapIt->second);
+	}
 
 	BSTR value=NULL;
 	if(pacc->get_accValue(varChild,&value)==S_OK) {
