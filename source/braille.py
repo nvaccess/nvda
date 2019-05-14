@@ -1591,10 +1591,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def getTether(self):
 		return self._tether
 
-	def _get_tether(self):
-		"""@deprecated: Use L{getTether instead."""
-		return self.getTether()
-
 	def setTether(self, tether, auto=False):
 		if auto and not self.shouldAutoTether:
 			return
@@ -1604,10 +1600,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		self._tether = tether
 		self.mainBuffer.clear()
-
-	def _set_tether(self, tether):
-		"""@deprecated: Use L{setTether instead."""
-		self.setTether(tether, auto=False)
 
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
