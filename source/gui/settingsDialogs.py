@@ -2050,6 +2050,13 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use UI Automation to access the Windows Console (highly experimental)")
+		self.ConsoleUIACheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.ConsoleUIACheckBox.SetValue(config.conf["UIA"]["consoleUIA"])
+		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "consoleUIA"])
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Browse mode")
@@ -2152,6 +2159,7 @@ class AdvancedPanelControls(wx.Panel):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
+		config.conf["UIA"]["consoleUIA"]=self.ConsoleUIACheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):

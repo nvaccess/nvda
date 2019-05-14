@@ -12,6 +12,7 @@ import winUser
 from logHandler import log
 import controlTypes
 import api
+import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
@@ -121,7 +122,8 @@ An NVDAObject for a window
 		elif windowClassName in ("AkelEditW", "AkelEditA"):
 			from .akelEdit import AkelEdit as newCls
 		elif windowClassName=="ConsoleWindowClass":
-			from .winConsole import WinConsole as newCls
+			if not config.conf['UIA']['consoleUIA']:
+				from .winConsole import WinConsole as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:

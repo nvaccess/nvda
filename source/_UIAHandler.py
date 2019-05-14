@@ -59,12 +59,14 @@ badUIAWindowClassNames=[
 	"SysListView32",
 	"EXCEL7",
 	"Button",
-	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
-	# It does not implement caret/selection, and probably has no new text events.
-	"ConsoleWindowClass",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
 ]
+
+# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+# It does not implement caret/selection, and probably has no new text events.
+if not config.conf['UIA']['consoleUIA']:
+	badUIAWindowClassNames.append("ConsoleWindowClass")
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
 UIADialogClassNames=[

@@ -206,7 +206,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
 			and ( # Either of
 				# We couldn't inject in-process, and its not a console window (console windows have their own specific typed character support)
-				(not focus.appModule.helperLocalBindingHandle and focus.windowClassName!='ConsoleWindowClass')
+				(not focus.appModule.helperLocalBindingHandle and (config.conf['UIA']['consoleUIA'] or focus.windowClassName!='ConsoleWindowClass'))
 				# or the focus is within a UWP app, where WM_CHAR never gets sent 
 				or focus.windowClassName.startswith('Windows.UI.Core')
 			)
