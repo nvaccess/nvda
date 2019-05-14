@@ -64,6 +64,23 @@ class VisionEnhancementProvider(Highlighter):
 	}
 	refreshInterval = 100
 
+	_contextOptionLabelsWithAccelerators = {
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the system focus.
+		CONTEXT_FOCUS: _("Highlight system fo&cus"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the browse mode cursor.
+		CONTEXT_BROWSEMODE: _("Highlight browse &mode cursor"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the navigator object.
+		CONTEXT_NAVIGATOR: _("Highlight navigator &object"),
+	}
+	def _get_supportedSettings(self):
+		settings = []
+		for context in self.supportedHighlightContexts:
+			settings.append(self.HighlightSetting(context, self._contextOptionLabelsWithAccelerators[context]))
+		return settings
+
 	def initializeHighlighter(self):
 		super(VisionEnhancementProvider, self).initializeHighlighter()
 		winGDI.gdiPlusInitialize()

@@ -235,29 +235,6 @@ class Highlighter(VisionEnhancementProvider):
 
 	#: Tuple of supported contexts for this highlighter.
 	supportedHighlightContexts = tuple()
-	__contextOptionLabelsWithAccelerators = {
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the system focus.
-		CONTEXT_FOCUS: _("Highlight system fo&cus"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting foreground window changes.
-		CONTEXT_FOREGROUND: _("Highlight foreground win&dow changes"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the system caret.
-		CONTEXT_CARET: _("Highlight s&ystem caret"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the browse mode cursor.
-		CONTEXT_BROWSEMODE: _("Highlight browse &mode cursor"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the review cursor.
-		CONTEXT_REVIEW: _("Highlight review c&ursor"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the navigator object.
-		CONTEXT_NAVIGATOR: _("Highlight navigator &object"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the mouse.
-		CONTEXT_MOUSE: _("Highlight m&ouse"),
-	}
 
 	@abstractmethod
 	def initializeHighlighter(self):
@@ -278,15 +255,14 @@ class Highlighter(VisionEnhancementProvider):
 		"""
 		self.contextToRectMap.clear()
 
-	def _get_supportedSettings(self):
-		settings = list(super(Highlighter, self).supportedSettings)
-		for context in self.supportedHighlightContexts:
-			settings.append(driverHandler.BooleanDriverSetting(
-				'highlight%s' % (context[0].upper() + context[1:]),
-				self.__contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
-			))
-		return settings
+	@classmethod
+	def HighlightSetting(cls, context, displayName, defaultVal=True):
+		"""Factory function for creating highlight setting."""
+		return driverHandler.BooleanDriverSetting(
+			'highlight%s' % (context[0].upper() + context[1:]),
+			displayName,
+			defaultVal=defaultVal
+		)
 
 	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.
@@ -370,15 +346,14 @@ class Magnifier(VisionEnhancementProvider):
 		Subclasses must extend this method.
 		"""
 
-	def _get_supportedSettings(self):
-		settings = list(super(Magnifier, self).supportedSettings)
-		for context in self.supportedTrackingContexts:
-			settings.append(driverHandler.BooleanDriverSetting(
-				'trackTo%s' % (context[0].upper() + context[1:]),
-				self.__contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
-			))
-		return settings		
+	@classmethod
+	def TrackToSetting(cls, context, displayName, defaultVal=True):
+		"""Factory function for creating track to setting."""
+		return driverHandler.BooleanDriverSetting(
+			'trackTo%s' % (context[0].upper() + context[1:]),
+			displayName,
+			defaultVal=defaultVal
+		)
 
 	def trackToObject(self, obj=None, context=CONTEXT_UNDETERMINED, area=None):
 		"""Tracks the magnifier to the given object.
@@ -471,6 +446,12 @@ class ColorEnhancer(VisionEnhancementProvider):
 
 	def _get_availableTransformations(self):
 		return OrderedDict((info.ID,info) for info in self._getAvailableTransformations())
+
+	@classmethod
+	def TransformationSetting(cls):
+		"""Factory function for creating transformation setting."""
+		# Translators: Label for a color enhancer setting.
+		return driverHandler.DriverSetting("transformation",_("&Color transformation"))
 
 	def _get_transformation(self):
 		return None
