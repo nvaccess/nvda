@@ -1729,7 +1729,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			if self.tether == self.TETHER_FOCUS:
+			if self.getTether() == self.TETHER_FOCUS:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
 			else:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
@@ -1830,7 +1830,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+			if self.getTether() == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
 				# Check focusToHardLeft for every region.
 				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
 				if region.focusToHardLeft:
@@ -1959,7 +1959,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or not api.getDesktopObject():
 			# Braille is disabled or focus/review hasn't yet been initialised.
 			return
-		if self.tether == self.TETHER_FOCUS:
+		if self.getTether() == self.TETHER_FOCUS:
 			self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 		else:
 			self.handleReviewMove(shouldAutoTether=False)
