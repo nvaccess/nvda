@@ -386,7 +386,7 @@ class ColorEnhancer(VisionEnhancementProvider):
 	In this case, the L{transformation} property ought to be implemented
 	to retrieve or change the current transformation.
 	"""
-	
+
 	@abstractmethod
 	def initializeColorEnhancer(self):
 		"""Initializes a color enhancer.
