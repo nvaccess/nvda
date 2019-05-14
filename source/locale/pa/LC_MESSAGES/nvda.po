@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-1af787b\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 20:16+1000\n"
-"PO-Revision-Date: 2017-10-31 20:49-0700\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:56-0800\n"
 "Last-Translator: Dinesh Mittal and Maheshinder Singh <punjabimaster259@gmail.com>\n"
 "Language-Team: Punjabi\n"
 "Language: pa\n"
@@ -82,10 +82,23 @@ msgstr "ਅਣਪਛਾਤੀ ਭਾਸ਼ਾ"
 msgid "unknown input method"
 msgstr "ਅਣ ਪਛਾਤਾ ਇਨਪੁੱਟ ਤਰੀਕਾ"
 
-#. Translators: the message announcing the language and keyboard layout when it changes
+#. Translators: The label shown for a spelling and grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
 #, fuzzy, python-brace-format
-msgid "{language} - {layout}"
-msgstr "{ਭਾਸ਼ਾ} - {ਲੇਆਊਟ}"
+msgid "spelling and grammar: {text}"
+msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
+
+#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, fuzzy, python-brace-format
+msgid "spelling: {text}"
+msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
+
+#. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
+#. {text} will be replaced with the text of the spelling error.
+#, python-brace-format
+msgid "grammar: {text}"
+msgstr ""
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -370,6 +383,16 @@ msgstr "ਪੈਨਲ"
 msgid "pwdedt"
 msgstr ""
 
+#. Translators: Displayed in braille for an object which is deleted.
+#, fuzzy
+msgid "del"
+msgstr "ਸੰਵਾਦ"
+
+#. Translators: Displayed in braille for an object which is inserted.
+#, fuzzy
+msgid "ins"
+msgstr "ਜਮਾ ਕਰਨਾ"
+
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
 msgstr "ਚੁਣਿੰਦਾ"
@@ -516,6 +539,18 @@ msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
 msgid "Only when scrolling back"
 msgstr ""
 
+#. Translators: String representing automatic port selection for braille displays.
+msgid "Automatic"
+msgstr "ਸ੍ਵੈਚਲਤ"
+
+#. Translators: String representing the USB port selection for braille displays.
+msgid "USB"
+msgstr ""
+
+#. Translators: String representing the Bluetooth port selection for braille displays.
+msgid "Bluetooth"
+msgstr ""
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -525,14 +560,6 @@ msgstr "ਹੈਡਿੰਗ ਪੱਧਰ%s"
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
 msgstr "ਪਹਿਲਾਂ ਵਰਤਿਆ ਹੋਇਆ"
-
-#. Translators: Indicates that a particular state on an object is negated.
-#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
-#. but this still might be used in some other cases.
-#. %s will be replaced with the negated state.
-#, python-format
-msgid "not %s"
-msgstr ""
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -550,17 +577,29 @@ msgstr ""
 msgid "lv %s"
 msgstr ""
 
+#. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
+#. Occurences of %s are replaced with the corresponding row numbers.
+#, python-brace-format
+msgid "r{rowNumber}-{rowSpan}"
+msgstr ""
+
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#, python-format
-msgid "r%s"
-msgstr "r%sਕਤਾਰ ਨੰਬਰ"
+#, python-brace-format
+msgid "r{rowNumber}"
+msgstr ""
+
+#. Translators: Displayed in braille for the table cell column numbers when a cell spans multiple columns.
+#. Occurences of %s are replaced with the corresponding column numbers.
+#, python-brace-format
+msgid "c{columnNumber}-{columnSpan}"
+msgstr ""
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#, python-format
-msgid "c%s"
-msgstr "c%s ਕਾਲਮ"
+#, python-brace-format
+msgid "c{columnNumber}"
+msgstr ""
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -568,9 +607,51 @@ msgstr "c%s ਕਾਲਮ"
 msgid "%s end"
 msgstr ""
 
-#. Translators: String representing the automatic port selection for braille displays.
-msgid "Automatic"
+#. Translators: The label for a braille setting indicating that braille should be
+#. tethered to focus or review cursor automatically.
+#, fuzzy
+msgid "automatically"
 msgstr "ਸ੍ਵੈਚਲਤ"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to focus.
+#, fuzzy
+msgid "to focus"
+msgstr "ਕੋਈ ਨਿਸ਼ਾਨਾ ਨਹੀਂ"
+
+#. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
+#, fuzzy
+msgid "to review"
+msgstr "ਅੱਖਰ ਰੀਵੀਊ"
+
+#. Translators: Displayed when the source driver of a braille display gesture is unknown.
+#, fuzzy
+msgid "Unknown braille display"
+msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
+
+#. Translators: Name of a Bluetooth serial communications port.
+#, fuzzy, python-brace-format
+msgid "Bluetooth Serial: {port} ({deviceName})"
+msgstr "ਲੜੀ: {ਪੋਰਟ ਦਾ ਨਾਂ}"
+
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
+#, fuzzy, python-brace-format
+msgid "Serial: {portName}"
+msgstr "ਲੜੀ: {ਪੋਰਟ ਦਾ ਨਾਂ}"
+
+#. Translators: Reported when translation didn't succeed due to unsupported input.
+msgid "Unsupported input"
+msgstr ""
+
+#. Translators: Reported when a braille input modifier is released.
+#, python-brace-format
+msgid "{modifier} released"
+msgstr ""
+
+#. Translators: Reported when a braille input modifier is pressed.
+#, fuzzy, python-brace-format
+msgid "{modifier} pressed"
+msgstr "ਦਬਾਇਆ"
 
 #. Translators: Used when reporting braille dots to the user.
 #. Translators: Reported when braille dots are pressed in input help mode.
@@ -626,6 +707,12 @@ msgstr "ਬਲਗਾਰੀਅਨ ਅੱਠ ਵਿਰਾਮ ਕੰਪੀਊਟਰ
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Central Kurdish grade 1"
+msgstr "ਸਵੀਦਿਸ਼ ਦਰਜ਼ਾ ਇੱਕ"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Welsh grade 1"
 msgstr "ਵੈਲਸ਼ ਦਰਜਾ ੧"
 
@@ -633,6 +720,12 @@ msgstr "ਵੈਲਸ਼ ਦਰਜਾ ੧"
 #. braille settings dialog.
 msgid "Welsh grade 2"
 msgstr "ਵੈਲਸ਼ ਦਰਜਾ ੨"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Czech 8 dot computer braille"
+msgstr "ਸਪੇਨੀ ਅੱਠ ਵਿਰਾਮ ਕੰਪੀਊਟਰ ਬ੍ਰੇਲ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -742,6 +835,12 @@ msgstr "ਅੰਗ੍ਰੇਜ਼ੀ (ਅਮਰੀਕਨ.) ਦਰਜਾ ੨"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Esperanto grade 1"
+msgstr "ਜਰਮਨੀ ਦਰਜਾ ੧"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
 msgstr "ਸਪੇਨੀ ਅੱਠ ਵਿਰਾਮ ਕੰਪੀਊਟਰ ਬ੍ਰੇਲ"
 
@@ -795,18 +894,9 @@ msgstr "ਫ਼ਰਾਂਸਿਸੀ (ਯੂਨੀਫ਼ਾਈਡ) 8 dot ਕੰ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (unified) Grade 2"
+#, fuzzy
+msgid "French (unified) grade 2"
 msgstr "ਫ਼ਰਾਂਸਿਸੀ (ਯੂਨੀਫ਼ਾਈਡ) ਦਰਜਾ 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "ਫ਼੍ਰਾਂਸਿਸੀ ਕਨੇਡਾ ਦਰਜਾ ੧"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "ਫ਼੍ਰਾਂਸਿਸੀ ਕਨੇਡਾ ਦਰਜਾ ੨"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -849,12 +939,24 @@ msgstr "ਕ੍ਰੋਏਸ਼ੀਅਨ ਅੱਠ  ਵਿਰਾਮ ਕੰਪੀਊ�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+#, fuzzy
+msgid "Croatian grade 1"
+msgstr "ਲੈਟਵੀਅਨ ਦਰਜ਼ਾ ਇੱਕ"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
 msgstr "ਹੰਗਰੀਅਨ ਅੱਠ ਵਿਰਾਮ ਕੰਪੀਊਟਰ ਬ੍ਰੇਲ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
+msgstr "ਹੰਗੇਰੀਅਨ ਦਰਜਾ ੧"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Hungarian grade 2"
 msgstr "ਹੰਗੇਰੀਅਨ ਦਰਜਾ ੧"
 
 #. Translators: The name of a braille table displayed in the
@@ -908,8 +1010,14 @@ msgstr "ਫ਼ਾਰਸੀ ਦਰਜਾ ੧"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Lithuanian"
+msgid "Lithuanian 8 dot"
 msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Lithuanian 6 dot"
+msgstr "ਡੱਚ ਦਰਜਾ ੧"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -930,8 +1038,15 @@ msgstr "ਫ਼ਾਰਸੀ ਦਰਜਾ ੧"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Mongolian"
-msgstr ""
+#, fuzzy
+msgid "Mongolian grade 1"
+msgstr "ਹੰਗੇਰੀਅਨ ਦਰਜਾ ੧"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Mongolian grade 2"
+msgstr "ਨਾਰਵੀਜਨ ਦਰਜ਼ਾ ਦੋ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1022,6 +1137,11 @@ msgstr "ਅਰਬੀ ਦਰਜਾ ਇੱਕ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Romanian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Russian braille for computer code"
 msgstr "ਰੂਸੀ ਬ੍ਰੇਲ ਕੰਪੀਊਟਰ ਕੋਡ ਲਈ"
 
@@ -1035,6 +1155,12 @@ msgstr "ਰੂਸੀ ਦਰਜਾ ੧"
 #, fuzzy
 msgid "Sanskrit grade 1"
 msgstr "ਸਪੇਨੀ ਦਰਜਾ ੧"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Swedish 8 dot computer braille"
+msgstr "ਸਪੇਨੀ ਅੱਠ ਵਿਰਾਮ ਕੰਪੀਊਟਰ ਬ੍ਰੇਲ"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1082,9 +1208,32 @@ msgstr "ਤੁਰਕੀ ਦਰਜਾ ੧"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Ukrainian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 #, fuzzy
 msgid "Unicode braille"
 msgstr "ਬ੍ਰੇਲ"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Vietnamese grade 1"
+msgstr "ਰੂਸੀ ਦਰਜਾ ੧"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 1"
+msgstr "ਚੀਨੀ (ਤਾਈਵਾਨ, ਮਾਂਡਰੀਨ)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Chinese (China, Mandarin) grade 2"
+msgstr "ਚੀਨੀ (ਤਾਈਵਾਨ, ਮਾਂਡਰੀਨ)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1595,14 +1744,14 @@ msgstr "ਕੋਈ ਪਿਛਲਾ ਹੈਡਿੰਗ ਨਹੀਂ."
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lin&ks"
 msgstr ""
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Headings"
 msgstr ""
 
@@ -1620,7 +1769,7 @@ msgstr "ਬਟਣ"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Lan&dmarks"
 msgstr ""
 
@@ -1690,33 +1839,6 @@ msgstr "ਹੇਠਾਂ"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not within a table.
-#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
-msgid "Not in a table cell"
-msgstr ""
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-msgid "Edge of table"
-msgstr ""
-
-#. Translators: the description for the next table row script on browseMode documents.
-msgid "moves to the next table row"
-msgstr ""
-
-#. Translators: the description for the previous table row script on browseMode documents.
-msgid "moves to the previous table row"
-msgstr ""
-
-#. Translators: the description for the next table column script on browseMode documents.
-msgid "moves to the next table column"
-msgstr ""
-
-#. Translators: the description for the previous table column script on browseMode documents.
-msgid "moves to the previous table column"
 msgstr ""
 
 #. Translators: The level at which the given symbol will be spoken.
@@ -2553,6 +2675,22 @@ msgstr ""
 msgid "audio"
 msgstr ""
 
+#. Translators: Identifies a chart element.
+msgid "chart element"
+msgstr ""
+
+#. Translators: Identifies deleted content.
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "ਮਿਟਾਓ"
+
+#. Translators: Identifies inserted content.
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "ਜਮਾ ਕਰਨਾ"
+
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
 msgstr "ਉਪਲਭਧ ਨਹੀਂ"
@@ -2669,7 +2807,7 @@ msgid "dragging"
 msgstr ""
 
 #. Translators: Reported where an object which is being dragged can be dropped.
-#. This is only reported for objects which support accessible drag and drop.
+#. This is only reported for objects that support accessible drag and drop.
 msgid "drop target"
 msgstr ""
 
@@ -2729,6 +2867,11 @@ msgstr "ਦਬਾਇਆ"
 msgid "not checked"
 msgstr "ਜਾਂਚਿਆ ਨਹੀਂ"
 
+#. Translators: This is presented when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+msgid "done dragging"
+msgstr ""
+
 #. Translators: Presented when an item is marked as current in a collection of items
 msgid "current"
 msgstr ""
@@ -2753,6 +2896,14 @@ msgstr ""
 
 #. Translators: Presented when a time item is marked as current in a collection of time items
 msgid "current time"
+msgstr ""
+
+#. Translators: Indicates that a particular state of an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the full identifier of the negated state (e.g. selected).
+#, python-format
+msgid "not %s"
 msgstr ""
 
 #. Translators: A message informing the user that there are errors in the configuration file.
@@ -2847,6 +2998,48 @@ msgstr "ਕੋਈ ਚੋਣ ਨਹੀਂ"
 msgid "Copied to clipboard"
 msgstr "ਕਾਪੀ ਹੋ ਗਿਆ।"
 
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+msgid "Not in a table cell"
+msgstr ""
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+msgid "Edge of table"
+msgstr ""
+
+#. Translators: the description for the next table row script on browseMode documents.
+msgid "moves to the next table row"
+msgstr ""
+
+#. Translators: the description for the previous table row script on browseMode documents.
+msgid "moves to the previous table row"
+msgstr ""
+
+#. Translators: the description for the next table column script on browseMode documents.
+msgid "moves to the next table column"
+msgstr ""
+
+#. Translators: the description for the previous table column script on browseMode documents.
+msgid "moves to the previous table column"
+msgstr ""
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables off"
+msgstr "&ਸਾਰਨੀਆਂ ਦੀ ਸੂਚਨਾ"
+
+#. Translators: The message announced when toggling the include layout tables browse mode setting.
+#, fuzzy
+msgid "layout tables on"
+msgstr "&ਸਾਰਨੀਆਂ ਦੀ ਸੂਚਨਾ"
+
+#. Translators: Input help mode message for include layout tables command.
+#, fuzzy
+msgid "Toggles on and off the inclusion of layout tables in browse mode"
+msgstr "ਟਾਗਲ ਟਾਈਪ ਕੀਤੇ ਲਫ਼ਜ਼ਾਂ ਦੀ ਆਵਾਜ਼ ਬੰਦ ਅਤੇ ਚਾਲੂ ਕਰੋ"
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
 msgstr "ਅੱਖਰ ਰੀਵੀਊ"
@@ -2860,10 +3053,12 @@ msgid "System caret"
 msgstr "ਸਿਸਟਮ ਕੈਰਟ"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the mouse settings panel.
 msgid "Mouse"
 msgstr "ਮਾਊਸ"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the speech panel
 msgid "Speech"
 msgstr "ਬੋਲੀ"
 
@@ -2872,6 +3067,7 @@ msgid "Configuration"
 msgstr "ਯੋਜਨਾ ਬੰਦੀ"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "ਬ੍ਰੇਲ"
 
@@ -2935,7 +3131,8 @@ msgid "Sleep mode on"
 msgstr "ਸਲੀਪ ਮੋਡ ਚਾਲੂ"
 
 #. Translators: Input help mode message for toggle sleep mode command.
-msgid "Toggles  sleep mode on and off for  the active application."
+#, fuzzy
+msgid "Toggles sleep mode on and off for the active application."
 msgstr "ਟਾਗਲ ਸਲੀਪ ਮੋਡ ਚੱਲ ਰਹੀ ਐਪਲੀਕੇਸ਼ਨ ਲਈ ਬੰਦ ਅਤੇ ਚਾਲੂ"
 
 #. Translators: Input help mode message for report current line command.
@@ -3470,7 +3667,7 @@ msgid ""
 "position at the point of the navigator object"
 msgstr "ਅਗਲੇ ਰੀਵੀਊ ਮੋਡ ਤੇ ਸ੍ਵਿੱਚ ਕਰੋ"
 
-#. Translators: reported when there are no  other available review modes for this object
+#. Translators: reported when there are no other available review modes for this object
 msgid "No previous review mode"
 msgstr "ਪਿੱਛੇ ਕੋਈ ਰੀਵੀਊ ਮੋਡ ਨਹੀਂ"
 
@@ -3511,7 +3708,7 @@ msgstr "%s ਕਲਿੱਪਬੋਰਡ ਤੇ ਕਾਪੀ ਹੋ ਗਿਆ"
 #, fuzzy
 msgid ""
 "Reports the current navigator object. Pressing twice spells this information, and pressing "
-"three times Copies name and value of this  object to the clipboard"
+"three times Copies name and value of this object to the clipboard"
 msgstr "੨ ਵਾਰੀ ਦਬਾਇਆਂ ਮੌਜੂਦਾ ਐਪਲੀਕੇਸ਼ਨ ਦਾ ਸਿਰਲੇਖ ਜਾਂ ਫ਼ਾਰ ਗ੍ਰਾਊਂਡ ਵਿੰਡੋ ਦੀ ਸੂਚਨਾ ਦਿੰਦਾ ਹੈ।"
 
 #. Translators: message when there is no location information for the review cursor
@@ -3769,6 +3966,15 @@ msgstr "ਮੌਜੂਦਾ ਹਾਲਤ ਪੱਟੀ ਨੂੰ ਪੜ੍ਹਦ�
 msgid "No status line found"
 msgstr "ਕੋਈ ਹਾਲਤ ਸਤਰ ਨਹੀ ਮਿਲ਼ੀ"
 
+#. Translators: Reported when status line exist, but is empty.
+#, fuzzy
+msgid "no status bar information"
+msgstr "ਜਗਾ ਬਾਰੇ ਕੋਈ ਜਾਣਕਾਰੀ ਨਹੀਂ"
+
+#. Translators: Reported when user attempts to copy content of the empty status line.
+msgid "unable to copy status bar content to clipboard"
+msgstr ""
+
 #. Translators: Input help mode message for report status line text command.
 #, fuzzy
 msgid ""
@@ -3927,51 +4133,64 @@ msgid ""
 "appModule"
 msgstr ""
 
-#. Translators: Input help mode message for go to general settings dialog command.
-msgid "Shows the NVDA general settings dialog"
+#. Translators: Input help mode message for go to general settings command.
+#, fuzzy
+msgid "Shows NVDA's general settings"
 msgstr "ਐੰਨਵੀਡੀਏ ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ ਸੰਵਾਦ ਵਿਖਾਉਂਦਾ ਏ"
 
-#. Translators: Input help mode message for go to synthesizer dialog command.
-msgid "Shows the NVDA synthesizer dialog"
+#. Translators: Input help mode message for go to select synthesizer command.
+#, fuzzy
+msgid "Shows the NVDA synthesizer selection dialog"
 msgstr "ਐੰਨਵੀਡੀਏ ਸਿੰਥੀ ਸਾਈਜ਼ਰ ਸੰਵਾਦ ਵਿਖਾਉਂਦਾ ਏ"
 
-#. Translators: Input help mode message for go to voice settings dialog command.
-msgid "Shows the NVDA voice settings dialog"
-msgstr "ਐੰਨਵੀਡੀਏ ਆਵਾਜ਼ ਸੈਟਿੰਗ ਸੰਵਾਦ"
-
-#. Translators: Input help mode message for go to braille settings dialog command.
+#. Translators: Input help mode message for go to speech settings command.
 #, fuzzy
-msgid "Shows the NVDA braille settings dialog"
+msgid "Shows NVDA's speech settings"
+msgstr "ਮਾਊਸ ਦੀ ਸੈਟਿੰਗ ਸੰਵਾਦ"
+
+#. Translators: Input help mode message for go to select braille display command.
+#, fuzzy
+msgid "Shows the NVDA braille display selection dialog"
 msgstr "ਐੰਨਵੀਡੀਏ ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ ਸੰਵਾਦ ਵਿਖਾਉਂਦਾ ਏ"
 
-#. Translators: Input help mode message for go to keyboard settings dialog command.
-msgid "Shows the NVDA keyboard settings dialog"
+#. Translators: Input help mode message for go to braille settings command.
+#, fuzzy
+msgid "Shows NVDA's braille settings"
+msgstr "ਐੰਨਵੀਡੀਏ ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ ਸੰਵਾਦ ਵਿਖਾਉਂਦਾ ਏ"
+
+#. Translators: Input help mode message for go to keyboard settings command.
+#, fuzzy
+msgid "Shows NVDA's keyboard settings"
 msgstr "ਕੁੰਜੀ ਪਟਲ ਸੈਟਿੰਗ ਸੰਵਾਦ"
 
-#. Translators: Input help mode message for go to mouse settings dialog command.
-msgid "Shows the NVDA mouse settings dialog"
+#. Translators: Input help mode message for go to mouse settings command.
+#, fuzzy
+msgid "Shows NVDA's mouse settings"
 msgstr "ਮਾਊਸ ਦੀ ਸੈਟਿੰਗ ਸੰਵਾਦ"
 
-#. Translators: Input help mode message for go to review cursor settings dialog command.
+#. Translators: Input help mode message for go to review cursor settings command.
 #, fuzzy
-msgid "Shows the NVDA review cursor settings dialog"
+msgid "Shows NVDA's review cursor settings"
 msgstr "ਐੰਨਵੀਡੀਏ ਆਵਾਜ਼ ਸੈਟਿੰਗ ਸੰਵਾਦ"
 
-#. Translators: Input help mode message for go to input composition dialog.
+#. Translators: Input help mode message for go to input composition settings command.
 #, fuzzy
-msgid "Shows the NVDA input composition settings dialog"
+msgid "Shows NVDA's input composition settings"
 msgstr "ਮਾਊਸ ਦੀ ਸੈਟਿੰਗ ਸੰਵਾਦ"
 
-#. Translators: Input help mode message for go to object presentation dialog command.
-msgid "Shows the NVDA object presentation settings dialog"
+#. Translators: Input help mode message for go to object presentation settings command.
+#, fuzzy
+msgid "Shows NVDA's object presentation settings"
 msgstr "ਵਸਤੂ ਦੀ ਪੇਸ਼ਕਾਰੀ ਸੰਵਾਦ"
 
-#. Translators: Input help mode message for go to browse mode dialog command.
-msgid "Shows the NVDA browse mode settings dialog"
+#. Translators: Input help mode message for go to browse mode settings command.
+#, fuzzy
+msgid "Shows NVDA's browse mode settings"
 msgstr "ਬ੍ਰਾਊਜ਼ ਸਥਿਤੀ ਸੰਵਾਦ ਵਿਖਾਉਂਦਾ ਹੈ।"
 
-#. Translators: Input help mode message for go to document formatting dialog command.
-msgid "Shows the NVDA document formatting settings dialog"
+#. Translators: Input help mode message for go to document formatting settings command.
+#, fuzzy
+msgid "Shows NVDA's document formatting settings"
 msgstr "ਦਸਤਾਵੇਜ਼ ਫਾਰਮੈਟਿੰਗ ਸੈਟਿੰਗ ਸੰਵਾਦ ਵਖਾਉਂਦਾ ਹੈ"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
@@ -4033,18 +4252,10 @@ msgid ""
 "NVDA is currently speaking"
 msgstr ""
 
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-msgid "review"
-msgstr "ਰੀਵੀਊ"
-
-#. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
-#. Translators: The value for a setting in the braille settings, to set whether braille should be tethered to focus or review cursor.
-msgid "focus"
-msgstr "ਨਿਸ਼ਾਨਾ"
-
-#. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
+#. Translators: Reports which position braille is tethered to
+#. (braille can be tethered automatically or to either focus or review position).
 #, python-format
-msgid "Braille tethered to %s"
+msgid "Braille tethered %s"
 msgstr ""
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
@@ -4154,6 +4365,10 @@ msgstr "ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ ਅੱਗੇ"
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
 
+#. Translators: Input help mode message for Braille report formatting command.
+msgid "Reports formatting info for the text under this braille cell"
+msgstr ""
+
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
 msgstr "ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ ਪਿਛਲੀ ਸਤਰ ਤੇ ਜਾਂਦਾ ਹੈ"
@@ -4181,6 +4396,26 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Translates any braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the left windows key to emulate a keyboard shortcut with braille input"
+msgstr ""
+
+#. Translators: Input help mode message for a braille command.
+msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
 msgstr ""
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
@@ -4222,6 +4457,22 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "ਐੰਨਵੀਡੀਏ ਕਾਨਫੀਗਰੇਸ਼ਨ ਪ੍ਰੋਫਾਈਲ ਸੰਵਾਦ ਵਿਖਾਉਂਦਾ ਹੈ"
+
+#. Translators: The message announced when temporarily disabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers disabled"
+msgstr "ਕਾਨਫ਼ੀਗਰੇਸ਼ਨ ਪ੍ਰੋਫ਼ਾਈਲ"
+
+#. Translators: The message announced when re-enabling all configuration profile triggers.
+#, fuzzy
+msgid "Configuration profile triggers enabled"
+msgstr "ਕਾਨਫ਼ੀਗਰੇਸ਼ਨ ਪ੍ਰੋਫ਼ਾਈਲ"
+
+#. Translators: Input help mode message for toggle configuration profile triggers command.
+msgid ""
+"Toggles disabling of all configuration profile triggers. Disabling remains in effect until "
+"NVDA is restarted"
+msgstr ""
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4641,28 +4892,23 @@ msgstr "ਕੁੰਜੀ ਪਟਲ ਸਾਰੇ ਲੇਅ ਆਊਟ"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Amharic"
-msgstr ""
-
-#. Translators: The name of a language supported by NVDA.
-msgctxt "languageName"
 msgid "Aragonese"
 msgstr "ਅਰਗਨੀਜ਼"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Arabic"
-msgstr "ਅਰਬੀ"
+msgid "Central Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Nepali"
-msgstr "ਨੇਪਾੱਲੀ"
+msgid "Northern Kurdish"
+msgstr ""
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
-msgid "Serbian (Latin)"
-msgstr "ਸਰਬੀਅਨ ਲਾਤੀਨੀ"
+msgid "Burmese"
+msgstr ""
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -5838,20 +6084,27 @@ msgstr "ਚੁਣਿੰਦਾ %s"
 msgid "selection removed"
 msgstr "ਚੋਣ ਹਟਾਈ"
 
-#. Translators: Reported when drag and drop is finished.
-#. This is only reported for objects which support accessible drag and drop.
-msgid "done dragging"
-msgstr ""
-
 #. Translators: Speaks current row number (example output: row 3).
 #, python-format
 msgid "row %s"
 msgstr "ਕਤਾਰ %s"
 
+#. Translators: Speaks the row span added to the current row number (example output: through 5).
+#. Translators: Speaks the column span added to the current column number (example output: through 5).
+#, python-format
+msgid "through %s"
+msgstr ""
+
 #. Translators: Speaks current column number (example output: column 3).
 #, python-format
 msgid "column %s"
 msgstr "ਕਾਲਮ %s"
+
+#. Translators: Speaks the row and column span added to the current row and column numbers
+#. (example output: through row 5 column 3).
+#, fuzzy, python-brace-format
+msgid "through row {row} column {column}"
+msgstr "ਨਾਲ {ਕਤਾਰ ਗਿਣਤੀ} ਕਤਾਰਾਂ ਅਤੇ {ਕਾਲਮ ਗਿਣਤੀ } ਕਾਲਮ"
 
 #. Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 #, fuzzy, python-brace-format
@@ -5873,7 +6126,7 @@ msgstr "ਨਾਲ %s ਕਤਾਰਾਂ"
 msgid "level %s"
 msgstr "ਪੱਧਰ %s"
 
-#. Translators: Speaks number of items in a list (example output: list with 5 items).
+#. Translators: Number of items in a list (example output: list with 5 items).
 #, python-format
 msgid "with %s items"
 msgstr "ਨਾਲ %s ਵਸਤੂਆਂ"
@@ -5986,20 +6239,10 @@ msgstr ""
 msgid "line %s"
 msgstr "ਸਤਰ %s"
 
-#. Translators: Reported when text is marked as having been inserted
-#, fuzzy
-msgid "inserted"
-msgstr "ਜਮਾ ਕਰਨਾ"
-
 #. Translators: Reported when text is no longer marked as having been inserted.
 #, fuzzy
 msgid "not inserted"
 msgstr "ਚੁਣਿਆ ਨਹੀਂ"
-
-#. Translators: Reported when text is marked as having been deleted
-#, fuzzy
-msgid "deleted"
-msgstr "ਮਿਟਾਓ"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 #, fuzzy
@@ -6103,6 +6346,34 @@ msgstr "ਅਲਾਈਨ ਵੰਡੀ ਗਈ"
 msgid "align default"
 msgstr ""
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "ਸ਼ੁਰੂਆਤੀ ਵਰਟੀਕਲ ਅਲਾਇਨ"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਵਿਚਕਾਰ"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਹੇਠਾਂ"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਸਧਾਰਨ ਸਤਰ"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr ""
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਵੰਡੀ"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr ""
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "ਖੱਬਾ ਇੰਡੈਂਟ"
@@ -6135,34 +6406,6 @@ msgstr "ਪਹਿਲਾ ਸਤਰ ਇੰਡੈਂਟ"
 msgid "no first line indent"
 msgstr "ਕੋਈ ਪਹਿਲਾ ਸਤਰ ਇੰਡੈਂਟ ਨਹੀਂ।"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "ਸ਼ੁਰੂਆਤੀ ਵਰਟੀਕਲ ਅਲਾਇਨ"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਵਿਚਕਾਰ"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਹੇਠਾਂ"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਸਧਾਰਨ ਸਤਰ"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr ""
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "ਵਰਟੀਕਲ ਅਲਾਈਨ ਵੰਡੀ"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr ""
-
 #. Translators: a type of line spacing (E.g. single line spacing)
 #, fuzzy, python-format
 msgid "line spacing %s"
@@ -6178,6 +6421,15 @@ msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
+msgstr "ਸਪੈਲਿੰਗ ਗ਼ਲਤੀ ਤੋਂ ਬਾਹਰ"
+
+#. Translators: Reported when text contains a grammar error.
+msgid "grammar error"
+msgstr ""
+
+#. Translators: Reported when moving out of text containing a grammar error.
+#, fuzzy
+msgid "out of grammar error"
 msgstr "ਸਪੈਲਿੰਗ ਗ਼ਲਤੀ ਤੋਂ ਬਾਹਰ"
 
 #. Translators: Indicates end of a table.
@@ -6365,14 +6617,22 @@ msgid "Error checking for update."
 msgstr "ਅੱਪਡੇਟ ਜਾਂਚਣ ਵਿੱਚ ਰੁਕਾਵਟ"
 
 #. Translators: The title of an error message dialog.
+#. Translators: The title of the message when a downloaded update file could not be preserved.
 #. Translators: The title of a dialog presented when an error occurs.
 #. Translators: The title of the message box
 msgid "Error"
 msgstr "ਰੁਕਾਵਟ"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
+#. Translators: The title of the dialog asking the user to Install an NVDA update.
 msgid "NVDA Update"
 msgstr "ਐੱਨਵੀਡੀਏ ਨਵਿਆਓ"
+
+#. Translators: A message indicating that an updated version of NVDA has been downloaded
+#. and is pending to be installed.
+#, python-brace-format
+msgid "NVDA version {version} has been downloaded and is pending installation."
+msgstr ""
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6384,9 +6644,16 @@ msgstr ""
 msgid "No update available."
 msgstr "ਕੋਈ ਅੱਪਡੇਟ ਉਪਲਬਧ ਨਹੀਂ"
 
-#. Translators: The label of a button to download and install an NVDA update.
-msgid "Download and &install update"
-msgstr "&ਅੱਪਡੇਟ ਨੂੰ ਡਾਊਨਲੋਡ ਅਤੇ ਇਨਸਟਾਲ ਕਰੋ"
+#. Translators: The label of a button to install a pending NVDA update.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, fuzzy, python-brace-format
+msgid "&Install NVDA {version}"
+msgstr "ਐੰਨਵੀਡੀਏ ਇਨਸਟਾਲ ਕਰੋ"
+
+#. Translators: The label of a button to re-download a pending NVDA update.
+#, fuzzy
+msgid "Re-&download update"
+msgstr "&ਅੱਪਡੇਟ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰੋ"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -6401,6 +6668,26 @@ msgstr "&ਕੁਝ ਚਿਰ ਮਗਰੋਂ ਸੂਚਤ ਕੀਤਾ ਜਾਵ
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&ਬੰਦ"
+
+#. Translators: A message indicating that an updated version of NVDA is ready to be installed.
+#, python-brace-format
+msgid "NVDA version {version} is ready to be installed.\n"
+msgstr ""
+
+#. Translators: The label of a button to install an NVDA update.
+#, fuzzy
+msgid "&Install update"
+msgstr "ਨਵਿਆਓ"
+
+#. Translators: The label of a button to postpone an NVDA update.
+#, fuzzy
+msgid "&Postpone update"
+msgstr "&ਅੱਪਡੇਟ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰੋ"
+
+#. Translators: The message when a downloaded update file could not be preserved.
+#, fuzzy
+msgid "Unable to postpone update."
+msgstr "ਕਾੱਪੀ ਕਰਨ ਲਈ ਕੁਝ ਵੀ ਨਹੀਂ"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
@@ -6417,15 +6704,6 @@ msgstr "ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ"
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
 msgstr "ਅੱਪਡੇਟ ਡਾਊਨਲੋਡ ਵਿੱਚ ਰੁਕਾਵਟ"
-
-#. Translators: The message presented when the update has been successfully downloaded
-#. and is about to be installed.
-msgid "Update downloaded. It will now be installed."
-msgstr "ਅੱਪਡੇਟ ਡਾਊਨਲੋਡ ਹੋ ਗਈ ਹੁਣ ਇਹ ਇਨਸਟਾਲ ਹੋਵੇਗੀ"
-
-#. Translators: The title of the dialog displayed when the update is about to be installed.
-msgid "Install Update"
-msgstr "ਨਵਿਆਓ"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
@@ -6551,8 +6829,16 @@ msgstr "ਸ਼ੁਰੂ"
 msgid "No track playing"
 msgstr "ਕੋਈ ਵੀ ਟ੍ਰੈਕ ਨਹੀਂ ਚੱਲ ਰਿਹਾ"
 
-#. Translators: The description of an NVDA command for Foobar 2000.
+#. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
+msgstr ""
+
+#. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
+msgid "Reports the elapsed time of the currently playing track, if any"
+msgstr ""
+
+#. Translators: The description of an NVDA command for reading the length of the currently playing track in Foobar 2000.
+msgid "Reports the length of the currently playing track, if any"
 msgstr ""
 
 #. Translators: Describes a command.
@@ -6663,36 +6949,25 @@ msgstr "ਕਿਸੇ ਹੋਰ ਵਿਅਕਤੀ ਨੂੰ ਪੇਜੋ"
 msgid "unread"
 msgstr "ਅਣਪੜਿਆ"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
+#. Translators: A message announcing what configuration profile is currently being edited.
+#, python-brace-format
+msgid "Editing profile {profile}"
+msgstr ""
+
+#. Translators: the last action taken on an Outlook mail message
 #, fuzzy
-msgid "purple flag"
-msgstr "ਜਾਮਣੀ"
+msgid "replied"
+msgstr "ਬਦਲਾਅ"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Orange flag"
-msgstr ""
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "ਬਦਲਾਅ"
 
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Green flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Yellow flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Blue flag"
-msgstr ""
-
-#. Translators: a flag for a Microsoft Outlook message
-#. See https://msdn.microsoft.com/en-us/library/office/aa211991(v=office.11).aspx
-msgid "Red flag"
-msgstr ""
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "ਅੱਗੇ"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -6723,6 +6998,11 @@ msgstr "ਭੇਜਿਆ: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
+msgstr ""
+
+#. Translators: a message reporting the date of a all day Outlook calendar entry
+#, python-brace-format
+msgid "{date} (all day)"
 msgstr ""
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
@@ -7081,35 +7361,58 @@ msgctxt "repeat"
 msgid "off"
 msgstr "ਦੁਹਰਾਅ ਬੰਦ"
 
+#. Translators: presented when there is no emoji when searching for one in Windows 10 Fall Creators Update and later.
+msgid "No emoji"
+msgstr ""
+
 #. Translators: The name of a braille display.
-msgid "ALVA BC640/680 series"
+msgid "Optelec ALVA 6 series/protocol converter"
+msgstr ""
+
+#. Translators: Message when setting HID keyboard simulation failed.
+msgid "Setting HID keyboard simulation not supported"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is enabled.
+msgid "HID keyboard simulation enabled"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is disabled.
+msgid "HID keyboard simulation disabled"
+msgstr ""
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggles HID keyboard simulation"
 msgstr ""
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH/Orbit braille displays"
 msgstr ""
 
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#. Translators: Name of a serial communications port
-#. Translators: Name of a serial communications port.
-#, fuzzy, python-brace-format
-msgid "Serial: {portName}"
-msgstr "ਲੜੀ: {ਪੋਰਟ ਦਾ ਨਾਂ}"
-
 #. Translators: Names of braille displays
 msgid "HumanWare BrailleNote"
 msgstr ""
 
 #. Translators: The name of a series of braille displays.
-msgid "HumanWare Brailliant BI/B series"
+msgid "HumanWare Brailliant BI/B series / BrailleNote Touch"
 msgstr ""
 
 #. Translators: The name of a braille display.
 #, fuzzy
 msgid "EcoBraille displays"
 msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
+
+#. Translators: Names of braille displays.
+msgid "Eurobraille Esys/Esytime/Iris displays"
+msgstr ""
+
+#. Translators: Message when HID keyboard simulation is unavailable.
+msgid "HID keyboard input simulation is unavailable."
+msgstr ""
+
+#. Translators: Description of the script that toggles HID keyboard simulation.
+msgid "Toggle HID keyboard simulation"
+msgstr ""
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7123,11 +7426,25 @@ msgstr "ਸਕਰੌਲ ਪ੍ਰਦਰਸ਼ਨ"
 msgid "line scroll"
 msgstr "ਸਤਰ ਸਕਰਾਲ"
 
-#. Translators: Names of braille displays.
+#. Translators: The name of a series of braille displays.
 msgid "Handy Tech braille displays"
 msgstr ""
 
-msgid "Show the Handy Tech driver configuration window."
+#. Translators: message when braille input is enabled
+msgid "Braille input enabled"
+msgstr ""
+
+#. Translators: message when braille input is disabled
+#, fuzzy
+msgid "Braille input disabled"
+msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
+
+#. Translators: description of the script to toggle braille input
+msgid "Toggle braille input"
+msgstr ""
+
+#. Translators: The name of a series of braille displays.
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series"
 msgstr ""
 
 #. Translators: Name of a braille display.
@@ -7140,10 +7457,6 @@ msgstr ""
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
-msgstr ""
-
-#. Translators: Describes action of routing buttons on a braille display.
-msgid "Route to and report formatting"
 msgstr ""
 
 #. Translators: Names of braille displays.
@@ -7209,9 +7522,15 @@ msgstr "ਬਦਲਾਅ ਬਚਾਇਆ।"
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 
-#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
+#. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
+#. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr "ਐੰਨਵੀਡੀਏ ਸੈਟਿੰਗ ਦਾ ਇੱਕ ਡਾਇਲਾਗ ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਖੁੱਲ੍ਹਾ ਹੈ। ਪਹਿਲਾਂ ਇਸ ਨੂੰ ਬੰਦ ਕਰੋ।"
+
+#. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
+#. (example: when trying to open touch interaction settings on an unsupported system).
+msgid "The settings panel you tried to open is unavailable on this system."
+msgstr ""
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -7230,84 +7549,43 @@ msgstr "ਆਰਜ਼ੀ ਸ਼ਬਦ ਕੋਸ਼"
 msgid "About NVDA"
 msgstr "ਐੰਨਵੀਡੀਏ ਬਾਰੇ"
 
-#. Translators: The label for the menu item to open general Settings dialog.
-msgid "&General settings..."
-msgstr "&ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ"
+#. Translators: A message to warn the user when starting the COM Registration Fixing tool
+msgid ""
+"You are about to run the COM Registration Fixing tool. This tool will try to fix common "
+"system problems that stop NVDA from being able to access content in many programs including "
+"Firefox and Internet Explorer. This tool must make changes to the System registry and "
+"therefore requires administrative access. Are you sure you wish to proceed?"
+msgstr ""
 
-msgid "General settings"
-msgstr "ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ"
+#. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
+#. Translators: The title of a warning dialog.
+#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+msgid "Warning"
+msgstr "ਖ਼ਬਰਦਾਰ!"
 
-#. Translators: The label for the menu item to open Synthesizer settings dialog.
-msgid "&Synthesizer..."
-msgstr "&ਸਿੰਥੀਸਾਈਜ਼ਰ"
+#. Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool
+#. Translators: The title of a dialog presented when the COM Registration Fixing tool is complete.
+msgid "COM Registration Fixing Tool"
+msgstr ""
 
-msgid "Change the synthesizer to be used"
-msgstr "ਲੋੜ ਅਨੁਸਾਰ ਸੰਥੀਸਿੰਥੀਸਾਈਜ਼ਰ ਦੀ ਵਰਤੋਂ ਕਰੋ"
+#. Translators: The message displayed while NVDA is running the COM Registration fixing tool
+#, fuzzy
+msgid "Please wait while NVDA tries to fix your system's COM registrations."
+msgstr "ਕਿਰਪਾ ਉਡੀਕ ਕਰੋ ਜਦੋਂ ਤੱਕ ਸੈਟਿੰਗਾਂ ਸਿਸਟਮ ਕਾਨਫ਼ੀਗਰੇਸ਼ਨ ਤੇ ਕਾਪੀ ਨਹੀਂ ਹੋ ਜਾਂਦੀਆ."
 
-#. Translators: The label for the menu item to open Voice Settings dialog.
-msgid "&Voice settings..."
+#. Translators: The message displayed when the COM Registration Fixing tool completes.
+msgid "COM Registration Fixing tool complete"
+msgstr ""
+
+#. Translators: The label for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "&Settings..."
 msgstr "&ਆਵਾਜ਼ ਸੈਟਿੰਗਾਂ"
 
-msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "ਆਵਾਜ਼, ਗਤੀ, ਪਿੱਚ ਅਤੇ ਆਵਾਜ਼ ਦਾ ਉੱਚਾਪਣ ਲੋੜ ਮੁਤਾਬਕ ਚੁਣੋ।"
-
-#. Translators: The label for the menu item to open Braille Settings dialog.
-msgid "B&raille settings..."
-msgstr "&ਬ੍ਰੇਲ ਸੈਟਿੰਗਾਂ"
-
-#. Translators: The label for the menu item to open Keyboard Settings dialog.
-msgid "&Keyboard settings..."
-msgstr "&ਕੁੰਜੀਪਟਲ ਸੈਟਿੰਗਾਂ"
-
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr ""
-
-#. Translators: The label for the menu item to open Mouse Settings dialog.
-msgid "&Mouse settings..."
-msgstr "&ਮਾਊਸ ਸੈਟਿੰਗਾਂ"
-
-msgid "Change reporting of mouse shape and object under mouse"
-msgstr ""
-
-#. Translators: The label for the menu item to open Review Cursor dialog.
-msgid "Review &cursor..."
-msgstr "ਰੀਵੀਊ &ਕਰਸਰ"
-
-msgid "Configure how and when the review cursor moves"
-msgstr ""
-
-#. Translators: The label for the menu item to open Input Composition Settings dialog.
-msgid "&Input composition settings..."
-msgstr "&ਇਨਪੁਟ ਕੰਪੋਜ਼ੀਸ਼ਨ ਸੈਟਿੰਗਾਂ"
-
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for certain languages"
-msgstr ""
-
-#. Translators: The label for the menu item to open Object Presentation dialog.
-msgid "&Object presentation..."
-msgstr "&ਵਸਤੁ ਦੀ ਪੇਸ਼ਕਾਰੀ"
-
-msgid "Change reporting of objects"
-msgstr ""
-
-#. Translators: The label for the menu item to open Browse Mode settings dialog.
-msgid "&Browse mode..."
-msgstr "&ਬ੍ਰਾਊਜ਼ ਸਥਿਤੀ"
-
-msgid "Change virtual buffers specific settings"
-msgstr ""
-
-#. Translators: The label for the menu item to open Document Formatting settings dialog.
-msgid "Document &formatting..."
-msgstr "&ਦਸਤਾਵੇਜ਼ ਫ਼ਾਰਮੈੱਟਿੰਗ"
-
-msgid "Change settings of document properties"
-msgstr "ਦਸਤਾਵੇਜ਼ ਵੇਰਵਿਆਂ ਦੀ ਸੈਟਿੰਗ ਬਦਲੋ"
-
-#. Translators: The label for the menu item to open the Windows 10 OCR settings dialog.
-msgid "Windows 10 OCR..."
-msgstr ""
+#. Translators: The description for the menu item to open NVDA Settings dialog.
+#, fuzzy
+msgid "NVDA settings"
+msgstr "ਕੋਈ ਸੈਟਿੰਗ ਨਹੀਂ"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -7373,6 +7651,10 @@ msgstr "ਸਥਾਨਾਂਤ੍ਰਨ ਕਾਪੀ ਤਿਆਰ ਕਰੋ"
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
 msgstr "&ਐੰਨਵੀਡੀਏ ਇਨਸਟਾਲ ਕਰੋ"
+
+#. Translators: The label for the menu item to run the COM registration fix tool
+msgid "Run COM Registration Fixing tool..."
+msgstr ""
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -7453,6 +7735,15 @@ msgstr ""
 msgid "Donate"
 msgstr "ਦਾਨ ਕਰੋ"
 
+#. Translators: The label for the menu item to run a pending update.
+#, fuzzy
+msgid "Install pending &update"
+msgstr "ਨਵਿਆਓ"
+
+#. Translators: The description for the menu item to run a pending update.
+msgid "Execute a previously downloaded NVDA update"
+msgstr ""
+
 msgid "E&xit"
 msgstr "&ਐੰਨਵੀਡੀਏ ਬੰਦ ਕਰੋ"
 
@@ -7491,7 +7782,7 @@ msgstr "ਵਿਕਲਪ"
 
 #. Translators: The label of a combobox in the Welcome dialog.
 #. Translators: This is the label for a combobox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "&Keyboard layout:"
 msgstr "&ਕੁੰਜੀ ਪਟਲ ਲੇ ਆਊਟ"
 
@@ -7560,9 +7851,39 @@ msgstr "ਕਿਰਪਾ ਓਦੋਂ ਤਾਈ ਉਡੀਕ ਕਰੋ ਜਦ ਤ
 msgid "Restart with debug logging enabled"
 msgstr "ਕਿਰਪਾ ਓਦੋਂ ਤਾਈ ਉਡੀਕ ਕਰੋ ਜਦ ਤਾਈਂ ਐਡ ਆਨ ਇਨਸਟਾਲ ਨਹੀਂ ਹੋ ਜਾਂਦੀ।"
 
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Install pending update"
+msgstr "ਨਵਿਆਓ"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "ਕਿਰਪਾ ਉਡੀਕ ਕਰੋ"
+
+#. Translators: The title of the dialog asking if usage data can be collected
+msgid "NVDA  Usage Data Collection"
+msgstr ""
+
+#. Translators: A message asking the user if they want to allow usage stats gathering
+msgid ""
+"In order to improve NVDA in the future, NV Access wishes to collect usage data from running "
+"copies of NVDA.\n"
+"\n"
+"Data includes Operating System version, NVDA version, language, country of origin, plus "
+"certain NVDA configuration such as current synthesizer, braille display and braille table. No "
+"spoken or braille content will be ever sent to NV Access.  Please refer to the User Guide for "
+"a current list of all data collected.\n"
+"\n"
+"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
+msgstr ""
+
+#. Translators: The label of a Yes button in a dialog
+msgid "&Yes"
+msgstr ""
+
+#. Translators: The label of a No button in a dialog
+msgid "&No"
+msgstr ""
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -7614,6 +7935,7 @@ msgstr "&ਇਨਸਟਾਲ ਕਰੋ"
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
+#. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
 msgstr "&ਹਟਾਓ"
@@ -7696,23 +8018,23 @@ msgstr "ਇਨਸਟਾਲ"
 msgid "remove"
 msgstr "ਹਟਾਓ"
 
-#. Translators: The status shown for an addon when its disabled.
-#, fuzzy
-msgid "disable"
-msgstr "ਬਦਲਾਅ ਯੋਗ"
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr ""
 
-#. Translators: The status shown for an addon when its enabled.
-#, fuzzy
-msgid "enable"
-msgstr "ਸਾਰਨੀ"
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr ""
 
 #. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "suspended"
-msgstr "ਮੁਅੱਤਲ"
+#, fuzzy
+msgid "disabled"
+msgstr "ਬਦਲਾਅ ਯੋਗ"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "running"
-msgstr "ਚਾਲੂ"
+#, fuzzy
+msgid "enabled"
+msgstr "ਸਾਰਨੀ"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 #, fuzzy
@@ -7747,6 +8069,10 @@ msgstr ""
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
 msgstr "ਐਡ-ਆਨ ਦੀ ਜਾਣਕਾਰੀ"
+
+#. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
+msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
+msgstr ""
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -7892,11 +8218,6 @@ msgid ""
 "from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-
-#. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
-msgid "Warning"
-msgstr "ਖ਼ਬਰਦਾਰ!"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
@@ -8107,8 +8428,30 @@ msgstr "ਬਚਾਓ ਬਤੌਰ"
 msgid "Error saving log: %s"
 msgstr ""
 
-#. Translators: This is the label for the general settings dialog.
-msgid "General Settings"
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr ""
+
+#. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
+msgid "Cancel"
+msgstr ""
+
+#. Translators: The Apply button on a NVDA dialog. This button will accept any changes but will not dismiss the dialog.
+msgid "Apply"
+msgstr ""
+
+#. Translators: The label for the list of categories in a multi category settings dialog.
+msgid "&Categories:"
+msgstr ""
+
+#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
+#, python-format
+msgid "%s Settings Category"
+msgstr ""
+
+#. Translators: This is the label for the general settings panel.
+#, fuzzy
+msgid "General"
 msgstr "ਸਧਾਰਨ ਸੈਟਿੰਗਾਂ"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
@@ -8161,6 +8504,15 @@ msgstr ""
 msgid "Automatically check for &updates to NVDA"
 msgstr "&ਅੱਪਡੇਟਾਂ ਦੀ ਜਾਂਚ ਸ੍ਵੈਚਲਤ ਪ੍ਰਨਾਲੀ ਨਾਲ ਹੋਵੇ"
 
+#. Translators: The label of a checkbox in general settings to toggle startup notifications
+#. for a pending NVDA update.
+msgid "Notify for &pending update on startup"
+msgstr ""
+
+#. Translators: The label of a checkbox in general settings to toggle allowing of usage stats gathering
+msgid "Allow the NVDA project to gather NVDA usage statistics"
+msgstr ""
+
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the system profile "
@@ -8212,8 +8564,21 @@ msgstr ""
 msgid "Language Configuration Change"
 msgstr "ਭਾਸ਼ਾ ਕਾਨਫ਼ੀਗਰੇਸ਼ਨ ਬਦਲੀ."
 
-#. Translators: This is the label for the synthesizer dialog.
-msgid "Synthesizer"
+#. Translators: A label for the synthesizer on the speech panel.
+#, fuzzy
+msgid "&Synthesizer"
+msgstr "&ਸਿੰਥੀਸਾਈਜ਼ਰ"
+
+#. Translators: This is the label for the button used to change synthesizer,
+#. it appears in the context of a synthesizer group on the speech settings panel.
+#. Translators: This is the label for the button used to change braille display,
+#. it appears in the context of a braille display group on the braille settings panel.
+msgid "C&hange..."
+msgstr ""
+
+#. Translators: This is the label for the synthesizer selection dialog
+#, fuzzy
+msgid "Select Synthesizer"
 msgstr "ਸਿੰਥੀਸਾਈਜ਼ਰ"
 
 #. Translators: This is a label for the select
@@ -8228,7 +8593,7 @@ msgstr "&ਸਿੰਥੀਸਾਈਜ਼ਰ"
 msgid "Output &device:"
 msgstr "&ਆਊਟ ਪੁੱਟ ਉੱਪਕਰਨ"
 
-#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+#. Translators: This is a label for the audio ducking combo box in the Synthesizer Settings dialog.
 msgid "Audio &ducking mode:"
 msgstr ""
 
@@ -8242,28 +8607,35 @@ msgstr ""
 msgid "Synthesizer Error"
 msgstr ""
 
-#. Translators: This is the label for the voice settings dialog.
-msgid "Voice Settings"
-msgstr "ਆਵਾਜ਼ ਸੈਟਿੰਗਾਂ"
+#. Translators: This is the label for the voice settings panel.
+#, fuzzy
+msgid "Voice"
+msgstr "&ਆਵਾਜ਼"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
+#. voice settings panel (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. voice settings dialog (possible choices are none, some, most and all).
+#. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&ਵਿਸ਼ਰਾਮ ਚਿੰਨ੍ਹ ਉਚਾਰਨ:"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+#. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+msgid "Include Unicode Consortium data (including emoji) when processing characters and symbols"
 msgstr ""
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -8271,81 +8643,73 @@ msgid "Capital pitch change percentage"
 msgstr "ਵੱਡੇ ਅੱਖਰਾਂ ਦੀ ਪਿੱਚ"
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Say &cap before capitals"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "&Beep for capitals"
 msgstr "&ਵੱਡੇ ਅੱਖਰਾਂ ਲਈ ਬੀਪ."
 
 #. Translators: This is the label for a checkbox in the
-#. voice settings dialog.
+#. voice settings panel.
 msgid "Use &spelling functionality if supported"
 msgstr ""
 
-#. Translators: This is the label for the keyboard settings dialog.
-msgid "Keyboard Settings"
-msgstr "ਕੁੰਜੀ ਪਟਲ ਸੈਟਿੰਗ"
+#. Translators: This is the label for the keyboard settings panel.
+#, fuzzy
+msgid "Keyboard"
+msgstr "%s ਕੁੰਜੀ ਪਟਲ"
 
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
-msgid "Use CapsLock as an NVDA modifier key"
+#. Translators: This is the label for a list of checkboxes
+#. controlling which keys are NVDA modifier keys.
+#, fuzzy
+msgid "&Select NVDA Modifier Keys"
 msgstr "ਵੱਡਾ ਅੱਖਰ ਕੁੰਜੀ ਨੂੰ ਬਤੌਰ ਐੰਨਵੀਡੀਏ ਮੌਡੀਫ਼ਾਇਅਰ ਕੁੰਜੀ ਵਰਤੋ"
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
-msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "ਨੰਬਰ ਪੈਡ ਇਨਸਰਟ ਕੀ ਐੱਨਵੀਡੀਏ ਕੁੰਜੀ ਦੇ ਤੌਰ ਤੇ ਵਰਤੀ ਜਾਵੇ"
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
-msgid "Use extended Insert as an NVDA modifier key"
-msgstr "ਐਕਸਟੈਂਡਿਡ insert ਕੁੰਜੀ ਨੂੰ ਬਤੌਰ ਐੰਨਵੀਡੀਏ ਮੌਡੀਫ਼ਾਇਰ ਕੁੰਜੀ ਵਰਤੋ."
-
-#. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &characters"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak typed &words"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for typed characters"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speech interrupt for Enter key"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Allow skim &reading in Say All"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Speak command &keys"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. keyboard settings dialog.
+#. keyboard settings panel.
 msgid "Handle keys from other &applications"
 msgstr ""
 
@@ -8353,94 +8717,92 @@ msgstr ""
 msgid "At least one key must be used as the NVDA key."
 msgstr ""
 
-#. Translators: This is the label for the mouse settings dialog.
-msgid "Mouse Settings"
-msgstr "ਮਾਊਸ ਦੀ ਸੈਟਿੰਗ"
-
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report mouse &shape changes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Enable mouse &tracking"
 msgstr "&ਮਾਊਸ ਟ੍ਰੈਕਿੰਗ ਚਾਲੂ ਕਰੋ"
 
 #. Translators: This is the label for a combobox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Text &unit resolution:"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "Report &role when mouse enters object"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Play audio coordinates when mouse moves"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. mouse settings dialog.
+#. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr ""
 
-#. Translators: This is the label for the review cursor settings dialog.
-msgid "Review Cursor Settings"
-msgstr "ਰੀਵੀਊ ਕਰਸਰ ਸੈਟਿੰਗਾਂ"
+#. Translators: This is the label for the review cursor settings panel.
+#, fuzzy
+msgid "Review Cursor"
+msgstr "ਰੀਵੀਊ &ਕਰਸਰ"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow system &focus"
 msgstr "&ਸਿਸਟਮ ਨਿਸ਼ਾਨੇ ਦੇ ਨਾਲ਼ ਚੱਲੋ"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow System &Caret"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Follow &mouse cursor"
 msgstr "&ਮਾਊਸ ਕਰਸਰ ਨਾਲ ਚੱਲੋ"
 
 #. Translators: This is the label for a checkbox in the
-#. review cursor settings dialog.
+#. review cursor settings panel.
 msgid "Simple review mode"
 msgstr "ਸਧਾਰਨ ਰੀਵੀਊ ਸਥਿਤੀ"
 
-#. Translators: This is the label for the Input Composition settings dialog.
-msgid "Input Composition Settings"
+#. Translators: This is the label for the Input Composition settings panel.
+#, fuzzy
+msgid "Input Composition"
 msgstr "ਇਨਪੁੱਟ ਕੰਪੋਜ਼ੀਸ਼ਨ ਸੈਟਿੰਗਾਂ"
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Automatically report all available &candidates"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Announce &selected candidate"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Always include short character &description when announcing candidates"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &reading string"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. Input composition settings dialog.
+#. Input composition settings panel.
 msgid "Report changes to the &composition string"
 msgstr ""
 
-#. Translators: This is the label for the object presentation dialog.
+#. Translators: This is the label for the object presentation panel.
 msgid "Object Presentation"
 msgstr "ਵਸਤੂ ਦੀ ਪੇਸ਼ਕਾਰੀ"
 
@@ -8463,186 +8825,187 @@ msgid "Speak and beep"
 msgstr "ਆਵਾਜ਼ ਅਤੇ ਬੀਪ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report &tooltips"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
-msgid "Report &help balloons"
-msgstr "ਜਾਣਕਾਰੀ &ਸਹਾਇਤਾ ਗ਼ੁੱਬਾਰੇ."
+#. object presentation settings panel.
+#, fuzzy
+msgid "Report &notifications"
+msgstr "ਐਡ-ਆਨ ਦੀ ਜਾਣਕਾਰੀ"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object shortcut &keys"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &position information"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Guess object &position information when unavailable"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report object &descriptions"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Progress &bar output:"
 msgstr "ਵਿਕਾਸ &ਪੱਟੀ ਆਊਟਪੁੱਟ:"
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report background progress bars"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Report dynamic &content changes"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. object presentation settings dialog.
+#. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
 msgstr ""
 
-#. Translators: This is the label for the browse mode settings dialog.
+#. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
 msgstr "ਬ੍ਰਾਊਜ਼ ਸਥਿਤੀ"
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Maximum number of characters on one line"
 msgstr ""
 
 #. Translators: This is the label for a textfield in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Number of lines per page"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Use &screen layout (when supported)"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic &Say All on page load"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Include l&ayout tables"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for focus changes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Automatic focus mode for caret movement"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
 msgstr "ਬ੍ਰਾਊਜ਼ ਸਥਿਤੀ  ਅਤੇ ਨਿਸ਼ਾਨੇ ਲਈ ਆਵਾਜ਼ ਸੰਕੇਤ"
 
 #. Translators: This is the label for a checkbox in the
-#. browse mode settings dialog.
+#. browse mode settings panel.
 msgid "&Trap all non-command gestures from reaching the document"
 msgstr ""
 
-#. Translators: This is the label for the document formatting dialog.
+#. Translators: This is the label for the document formatting panel.
 msgid "Document Formatting"
 msgstr "ਦਸਤਾਵੇਜ਼ ਸਰੂਪਨ"
 
-#. Translators: This is a label appearing on the document formatting settings dialog.
+#. Translators: This is a label appearing on the document formatting settings panel.
 msgid "The following options control the types of document formatting reported by NVDA."
 msgstr ""
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Font"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Font name"
 msgstr "ਫੌਂਟ ਦਾ ਨਾਂ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Font &size"
 msgstr "ਫਾਂਟ ਦਾ ਆਕਾਰ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Font attri&butes"
 msgstr "&ਫ਼ੌਂਟ ਦੇ ਆਕਾਰ ਦੀ ਸੂਚਨਾ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "E&mphasis"
 msgstr "&ਹੈਡਿੰਗਾਂ ਦੀ ਸੂਚਨਾ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "St&yle"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Colors"
 msgstr ""
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 #, fuzzy
 msgid "Document information"
 msgstr "ਦਸਤਾਵੇਜ਼ ਸਰੂਪਨ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Co&mments"
 msgstr "ਕੋਈ ਟਿੱਪਣੀ ਨਹੀਂ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Editor revisions"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Spelling e&rrors"
 msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 msgid "Pages and spacing"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Pages"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Line &numbers"
 msgstr "&ਸਤਰ ਨੰਬਰ ਦੀ ਜਾਣਕਾਰੀ"
@@ -8655,7 +9018,7 @@ msgstr "ਕੋਈ ਪਹਿਲਾ ਸਤਰ ਇੰਡੈਂਟ ਨਹੀਂ।"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Off"
 msgstr "ਬੰਦ"
@@ -8674,96 +9037,106 @@ msgstr ""
 msgid "Both  Speech and Tones"
 msgstr ""
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
 msgstr ""
 
-#. Translators: This message is presented in the document formatting settings dialogue
+#. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 #, fuzzy
 msgid "&Line spacing"
 msgstr "ਚੁਣ ਰਿਹਾ ਹੈ %s"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Alignment"
 msgstr "ਕਤਾਰ ਬੰਦੀ"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 #, fuzzy
 msgid "Table information"
 msgstr "ਜਗਾ ਬਾਰੇ ਕੋਈ ਜਾਣਕਾਰੀ ਨਹੀਂ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Tables"
 msgstr "ਸਾਰਨੀ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Row/column h&eaders"
 msgstr "ਕਾਲਮ ਸਿਰਲੇਖ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Cell c&oordinates"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Styles"
 msgstr "ਢੰਗ"
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Both Colors and Styles"
 msgstr ""
 
 #. Translators: This is the label for a combobox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "Cell borders:"
 msgstr "ਕਿਨਾਰਾ"
 
 #. Translators: This is the label for a group of document formatting options in the
-#. document formatting settings dialog
+#. document formatting settings panel
 #, fuzzy
 msgid "Elements"
 msgstr "ਲਿੰਕ ਸੂਚੀ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "&Lists"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Block &quotes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Fra&mes"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 #, fuzzy
 msgid "&Clickable"
 msgstr "ਕਲਿੱਕ ਕਰਨ ਯੋਗ"
 
 #. Translators: This is the label for a checkbox in the
-#. document formatting settings dialog.
+#. document formatting settings panel.
 msgid "Report formatting changes after the cursor (can cause a lag)"
 msgstr ""
 
-#. Translators: The title of the Windows 10 OCR dialog.
+#. Translators: This is the label for the touch interaction settings panel.
+#, fuzzy
+msgid "Touch Interaction"
+msgstr "ਕੋਈ ਪ੍ਰਤੀਕ੍ਰਿਆ ਨਹੀਂ"
+
+#. Translators: This is the label for a checkbox in the
+#. touch interaction settings panel.
+msgid "&Touch typing mode"
+msgstr ""
+
+#. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
 msgstr ""
 
@@ -8781,7 +9154,7 @@ msgid "Whole &word"
 msgstr ""
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-msgid "&Regular expression"
+msgid "Regular &expression"
 msgstr ""
 
 #. Translators: This is the label for the edit dictionary entry dialog.
@@ -8858,9 +9231,15 @@ msgstr "&ਫੇਰ-ਬਦਲ ਕਰੋ"
 msgid "Add Dictionary Entry"
 msgstr ""
 
-#. Translators: This is the label for the braille settings dialog.
-msgid "Braille Settings"
-msgstr ""
+#. Translators: A label for the braille display on the braille panel.
+#, fuzzy
+msgid "Braille &display"
+msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
+
+#. Translators: This is the label for the braille display selection dialog.
+#, fuzzy
+msgid "Select Braille Display"
+msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -8868,6 +9247,13 @@ msgstr "&ਬ੍ਰੇਲ ਡਿਸਪਲੇਅ"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
+msgstr ""
+
+#, python-format
+msgid "Could not load the %s display."
+msgstr ""
+
+msgid "Braille Display Error"
 msgstr ""
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
@@ -8913,8 +9299,9 @@ msgid "Show &messages indefinitely"
 msgstr ""
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-msgid "B&raille tethered to:"
-msgstr ""
+#, fuzzy
+msgid "Tether B&raille:"
+msgstr "ਬ੍ਰੇਲ"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -8929,12 +9316,15 @@ msgstr ""
 msgid "Focus context presentation:"
 msgstr "ਅੱਗੇ ਕੋਈ ਹੈਡਿੰਗ ਨਹੀਂ."
 
-#, python-format
-msgid "Could not load the %s display."
-msgstr ""
+#. Translators: This is the label for the NVDA settings dialog.
+#, fuzzy
+msgid "NVDA"
+msgstr "ਐੰਨਵੀਡੀਏ ਬੰਦ"
 
-msgid "Braille Display Error"
-msgstr ""
+#. Translators: The profile name for normal configuration
+#, fuzzy
+msgid "normal configuration"
+msgstr "(ਆਮ ਕਾਨਫ਼ੀਗਰੇਸ਼ਨ)"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
@@ -9091,10 +9481,805 @@ msgstr ""
 msgid "%s items"
 msgstr ""
 
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells lower and to the "
+"right of it within this table. Pressing twice will forget the current column header for this "
+"cell."
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, python-brace-format
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower and to the right "
+"of it within this table. Pressing twice will forget the current row header for this cell."
+msgstr ""
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+#, fuzzy
+msgid "No comments"
+msgstr "ਕੋਈ ਟਿੱਪਣੀ ਨਹੀਂ"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+msgid "Not in table"
+msgstr "ਸਾਰਨੀ ਵਿੱਚ ਨਹੀਂ"
+
 msgid "invoke"
 msgstr ""
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Annotations"
+msgstr "ਐਡ-ਆਨ ਦੀ ਜਾਣਕਾਰੀ"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#, fuzzy
+msgid "&Errors"
+msgstr "ਰੁਕਾਵਟ"
+
+#. Translators: The label shown for an insertion change
+#, fuzzy, python-brace-format
+msgid "insertion: {text}"
+msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
+
+#. Translators: The label shown for a deletion change
+#, fuzzy, python-brace-format
+msgid "deletion: {text}"
+msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
+
+#. Translators: The general label shown for track changes
+#, python-brace-format
+msgid "track change: {text}"
+msgstr ""
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "Comment: {comment} by {author} on {date}"
+msgstr ""
+
+#. Translators: The message reported for a comment in Microsoft Word
+#, python-brace-format
+msgid "{comment} by {author} on {date}"
+msgstr ""
+
 msgid "Desktop"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+#, fuzzy
+msgid "3D Column"
+msgstr "ਕਾਲਮ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+#, fuzzy
+msgid "Stacked Column"
+msgstr "ਕਾਲਮ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+#, fuzzy
+msgid "Pie"
+msgstr "ਪ੍ਰੋਫ਼ਾਈਲ"
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr ""
+
+#. Translators: A type of chart in Microsoft Office.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr ""
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr ""
+
+#. Translators: A column in a column chart.
+#, fuzzy
+msgctxt "chart"
+msgid "column"
+msgstr "ਕਾਲਮ"
+
+#. Translators: A data point in a line chart.
+#, fuzzy
+msgid "data point"
+msgstr "ਡੇਟਾ ਵਸਤੂ"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+#, fuzzy
+msgid "item"
+msgstr "ਮੀਨੂੰ ਵਸਤੂ"
+
+#. Translators: Message to be spoken to report Series Color
+#, fuzzy, python-brace-format
+msgid "Series color: {colorName} "
+msgstr "ਲੜੀ: {ਪੋਰਟ ਦਾ ਨਾਂ}"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Display Unit Label"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Major Gridlines"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Minor Gridlines"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Drop Zone"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Pivot Chart Field Button"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+#, fuzzy
+msgid "Down Bars"
+msgstr "ਹੇਠਲਾ ਐਰੋ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+#, fuzzy
+msgid "Drop Lines"
+msgstr "ਡਰਾਪ ਸੂਚੀ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Hi Lo Lines"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Radar Axis Labels"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Series Lines"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Up Bars"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Corners"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+#. Translators: Data Table will be spoken when chart element Data Table is selected
+#, fuzzy
+msgid "Data Table"
+msgstr "ਸਾਰਨੀ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Floor"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Nothing"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Walls"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Data Label"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+#, fuzzy
+msgid "Error Bars"
+msgstr "ਰੁਕਾਵਟ"
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "X Error Bars"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+msgid "Y Error Bars"
+msgstr ""
+
+#. Translators: A type of element in a Microsoft Office chart.
+#, fuzzy
+msgid "Shape"
+msgstr "ਆਕਾਰ"
+
+#. Translators: Message reporting the title and type of a chart.
+#, python-brace-format
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr ""
+
+#. Translators: Indicates that there is 1 series in a chart.
+#, fuzzy
+msgid "There is 1 series in this chart"
+msgstr "ਕਲਿੱਪਬੋਰਡ ਤੇ ਕੋਈ ਅੱਖਰ ਨਹੀਂ"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr ""
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+#, python-brace-format
+msgid "series {number} {name}"
+msgstr ""
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr ""
+
+#. Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
+#, fuzzy
+msgid "Chart Elements"
+msgstr "ਲਿੰਕ ਸੂਚੀ"
+
+#. Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+#, python-brace-format
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr ""
+
+#. Translators: Message to be spoken to report Slice Color in Pie Chart
+#, fuzzy, python-brace-format
+msgid "Slice color: {colorName} "
+msgstr "ਲੜੀ: {ਪੋਰਟ ਦਾ ਨਾਂ}"
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+#, python-brace-format
+msgid "no change from point {previousIndex}, "
+msgstr ""
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+#, python-brace-format
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr ""
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+#, python-brace-format
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr ""
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr ""
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+#, python-brace-format
+msgid "Category {categoryAxisData}: "
+msgstr ""
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr ""
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+#, python-brace-format
+msgid "value {valueAxisData}"
+msgstr ""
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+#, python-brace-format
+msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+#, python-brace-format
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr ""
+
+#. Translators: Indicates Primary Category Axis
+msgid "Primary Category Axis"
+msgstr ""
+
+#. Translators: Indicates Secondary Category Axis
+msgid "Secondary Category Axis"
+msgstr ""
+
+#. Translators: Indicates Primary Value Axis
+msgid "Primary Value Axis"
+msgstr ""
+
+#. Translators: Indicates Secondary Value Axis
+msgid "Secondary Value Axis"
+msgstr ""
+
+#. Translators: Indicates Primary Series Axis
+msgid "Primary Series Axis"
+msgstr ""
+
+#. Translators: Indicates Secondary Series Axis
+msgid "Secondary Series Axis"
+msgstr ""
+
+#. Translators: the title of a chart axis
+#, python-brace-format
+msgid " title: {axisTitle}"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Exponential
+msgid "Exponential"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Linear
+msgid "Linear"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Logarithmic
+msgid "Logarithmic"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Moving Average
+msgid "Moving Average"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Polynomial
+msgid "Polynomial"
+msgstr ""
+
+#. Translators: Indicates that trendline type is Power
+msgid "Power"
+msgstr ""
+
+#. Translators: Substitute superscript two by square for R square value
+msgid " square "
+msgstr ""
+
+#. Translators: Substitute - by minus in trendline equations.
+#, fuzzy
+msgid " minus "
+msgstr "ਨੰਬਰ ਪੈਡ ਨਫ਼ੀ"
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid ""
+"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} "
+msgstr ""
+
+#. Translators: This message gives trendline type and name for selected series
+#, python-brace-format
+msgid "{seriesName} trendline type: {trendlineType}, name: {trendlineName} "
+msgstr ""
+
+#. Translators: Details about a chart title in Microsoft Office.
+#, python-brace-format
+msgid "Chart title: {chartTitle}"
+msgstr ""
+
+#. Translators: Indicates an untitled chart in Microsoft Office.
+#, fuzzy
+msgid "Untitled chart"
+msgstr "ਸਿਰਲੇਖ ਪੱਟੀ"
+
+#. Translators: Details about the chart area in a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: "
+"{chartAreaLeft}"
+msgstr ""
+
+#. Translators: Indicates the chart area of a Microsoft Office chart.
+msgid "Chart area "
+msgstr ""
+
+#. Translators: Details about the plot area of a Microsoft Office chart.
+#, python-brace-format
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+
+#. Translators: Indicates the plot area of a Microsoft Office chart.
+msgid "Plot area "
+msgstr ""
+
+#. Translators: a message for the legend entry of a chart in MS Office
+#, python-brace-format
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+
+#. Translators: the legend entry for a chart in Microsoft Office
+#, python-brace-format
+msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
+msgstr ""
+
+#. Translators: Details about a legend key for a series in a Microsoft office chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+#, python-brace-format
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
 
 #. Translators: The default color of text when a color has not been set by the author.
@@ -9258,14 +10443,6 @@ msgstr ""
 #. Translators: Used to express an address range in excel.
 #, python-brace-format
 msgid "{start} through {end}"
-msgstr ""
-
-#. Translators: a message reported in the SetColumnHeader script for Excel.
-#. Translators: a message reported in the SetRowHeader script for Excel.
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
 msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
@@ -9478,671 +10655,6 @@ msgstr ""
 msgid "{desc} {position}"
 msgstr ""
 
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Area"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Area"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Area"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
-msgid "3D Column"
-msgstr "ਕਾਲਮ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Clustered Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Stacked Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D 100 percent Stacked Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Line"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Pie"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded 3D Pie"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Area"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Area"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bar of Pie"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Bubble with 3D effects"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Clustered Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
-msgid "Stacked Column"
-msgstr "ਕਾਲਮ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cone Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cone Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cone Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cone Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Cylinder Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Cylinder Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Cylinder Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Cylinder Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Doughnut"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Doughnut"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Line with Markers"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line with Markers"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line with Markers"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Stacked Line"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "100 percent Stacked Line"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
-msgid "Pie"
-msgstr "ਪ੍ਰੋਫ਼ਾਈਲ"
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Exploded Pie"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Pie of Pie"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Bar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "3D Pyramid Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Clustered Pyramid Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "Stacked Pyramid Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-msgid "100 percent Stacked Pyramid Column"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Filled Radar"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Radar with Data Markers"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "High-Low-Close"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Open-High-Low-Close"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-High-Low-Close"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Volume-Open-High-Low-Close"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View)"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Surface (Top View wireframe)"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "3D Surface (wireframe)"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Lines and No Data Markers"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines"
-msgstr ""
-
-#. Translators: A type of chart in Microsoft Excel.
-#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr ""
-
-#. Translators: Message reporting the title and type of a chart.
-#, python-brace-format
-msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr ""
-
-#. Translators: Reported when there is no title for an axis in a chart.
-#, fuzzy
-msgid "Not defined"
-msgstr "ਅੰਡਰ ਲਾਈਨ ਤੋਂ ਬਗ਼ੈਰ"
-
-#. Translators: A type of axis in a chart.
-#. Translators: The category axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Category"
-msgstr ""
-
-#. Translators: A type of axis in a chart.
-#. Translators: The value axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Value"
-msgstr ""
-
-#. Translators: A type of axis in a chart.
-#. Translators: The series axis in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Series"
-msgstr ""
-
-#. Translators: Message reporting the type and title of an axis in a chart.
-#. For example, this might report "Category axis is month"
-#, python-brace-format
-msgid "{axisName} Axis is {axisTitle}"
-msgstr ""
-
-#. Translators: Indicates that there is 1 series in a chart.
-#, fuzzy
-msgid "There is 1 series in this chart"
-msgstr "ਕਲਿੱਪਬੋਰਡ ਤੇ ਕੋਈ ਅੱਖਰ ਨਹੀਂ"
-
-#. Translators: Indicates the number of series in a chart where there are multiple series.
-#, python-format
-msgid "There are total %d series in this chart"
-msgstr ""
-
-#. Translators: Specifies the number and name of a series when listing series in a chart.
-#, python-brace-format
-msgid "series {number} {name}"
-msgstr ""
-
-#. Translators: Indicates that there are no series in a chart.
-msgid "No Series defined."
-msgstr ""
-
-#. Translators: A slice in a pie chart.
-msgid "slice"
-msgstr ""
-
-#. Translators: A column in a column chart.
-#, fuzzy
-msgctxt "chart"
-msgid "column"
-msgstr "ਕਾਲਮ"
-
-#. Translators: A data point in a line chart.
-#, fuzzy
-msgid "data point"
-msgstr "ਡੇਟਾ ਵਸਤੂ"
-
-#. Translators: A segment of a chart for charts which don't have a specific name for segments.
-#, fuzzy
-msgid "item"
-msgstr "ਮੀਨੂੰ ਵਸਤੂ"
-
-#, fuzzy, python-brace-format
-msgid "Series color: {colorName} "
-msgstr "ਲੜੀ: {ਪੋਰਟ ਦਾ ਨਾਂ}"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Display Unit Label"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Major Gridlines"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Minor Gridlines"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Drop Zone"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Pivot Chart Field Button"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
-msgid "Down Bars"
-msgstr "ਹੇਠਲਾ ਐਰੋ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
-msgid "Drop Lines"
-msgstr "ਡਰਾਪ ਸੂਚੀ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Hi Lo Lines"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Radar Axis Labels"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Series Lines"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Up Bars"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Corners"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
-msgid "Data Table"
-msgstr "ਸਾਰਨੀ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Floor"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Nothing"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Walls"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Data Label"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
-msgid "Error Bars"
-msgstr "ਰੁਕਾਵਟ"
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "X Error Bars"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-msgid "Y Error Bars"
-msgstr ""
-
-#. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
-msgid "Shape"
-msgstr "ਆਕਾਰ"
-
-#. Translators: Details about a series in a chart.
-#. For example, this might report "foo series 1 of 2"
-#, python-brace-format
-msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr ""
-
-#. Translators: For line charts, indicates no change from the previous data point on the left
-#, python-brace-format
-msgid "no change from point {previousIndex}, "
-msgstr ""
-
-#. Translators: For line charts, indicates an increase from the previous data point on the left
-#, python-brace-format
-msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
-
-#. Translators: For line charts, indicates a decrease from the previous data point on the left
-#, python-brace-format
-msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr ""
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
-
-#. Translators: Specifies the category of a data point.
-#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
-#, python-brace-format
-msgid "Category {categoryAxisData}: "
-msgstr ""
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
-
-#. Translators: Specifies the value of a data point.
-#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
-#, python-brace-format
-msgid "value {valueAxisData}"
-msgstr ""
-
-#. Translators: Details about a slice of a pie chart.
-#. For example, this might report "fraction 25.25 percent slice 1 of 5"
-#, python-brace-format
-msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
-
-#. Translators: Details about a segment of a chart.
-#. For example, this might report "column 1 of 5"
-#, python-brace-format
-msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr ""
-
-#. Translators: The primary axis group in a Microsoft Excel chart.
-msgid "Primary"
-msgstr ""
-
-#. Translators: The secondary axis group in a Microsoft Excel chart.
-msgid "Secondary"
-msgstr ""
-
-#. Translators: Details about an axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr ""
-
-#. Translators: Details about an untitled axis in a chart.
-#, python-brace-format
-msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr ""
-
-#. Translators: Indicates a chart axis title in Microsoft Excel.
-msgid "Chart axis title"
-msgstr ""
-
-#. Translators: Indicates a trendline in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, fuzzy
-msgid "trendline"
-msgstr "ਅੰਡਰ ਲਾਈਨ"
-
-#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
-msgid " squared "
-msgstr ""
-
-#. Translators: Details about a chart title in Microsoft Excel.
-#, python-brace-format
-msgid "Chart title: {chartTitle}"
-msgstr ""
-
-#. Translators: Indicates an untitled chart in Microsoft Excel.
-#, fuzzy
-msgid "Untitled chart"
-msgstr "ਸਿਰਲੇਖ ਪੱਟੀ"
-
-#. Translators: Details about the chart area in a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: "
-"{chartAreaLeft}"
-msgstr ""
-
-#. Translators: Indicates the chart area of a Microsoft Excel chart.
-msgid "Chart area "
-msgstr ""
-
-#. Translators: Details about the plot area of a Microsoft Excel chart.
-#, python-brace-format
-msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
-"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
-"{plotAreaInsideLeft:.0f}"
-msgstr ""
-
-#. Translators: Indicates the plot area of a Microsoft Excel chart.
-msgid "Plot area "
-msgstr ""
-
-#. Translators: Indicates the legend in a Microsoft Excel chart.
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-msgid "Legend"
-msgstr ""
-
-#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
-msgid "No legend"
-msgstr ""
-
-#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend entry for series Temperature 1 of 2"
-#, python-brace-format
-msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-
-#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
-#. For example, this might report "Legend key for series Temperature 1 of 2"
-#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-#, python-brace-format
-msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "ਜਮਾ ਕਰਨਾ"
@@ -10255,11 +10767,15 @@ msgstr ""
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
 
-#. Translators: The label shown for a spelling error in the NVDA Elements List dialog in Microsoft Word.
-#. {text} will be replaced with the text of the spelling error.
-#, fuzzy, python-brace-format
-msgid "spelling: {text}"
-msgstr "ਸਪੈਲਿੰਗ ਵਿੱਚ ਗ਼ਲਤੀ"
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr ""
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr ""
 
 #. Translators: single line spacing
 msgctxt "line spacing value"
@@ -10298,57 +10814,6 @@ msgstr ""
 #, fuzzy
 msgid "Table description"
 msgstr "ਲੰਮਾ ਵ੍ਰਿਤਾਂਤ ਹੈ"
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
-
-#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
-
-msgid ""
-"Pressing once will set this cell as the first column header for any cells lower and to the "
-"right of it within this table. Pressing twice will forget the current column header for this "
-"cell."
-msgstr ""
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
-
-#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-#, python-brace-format
-msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
-
-msgid ""
-"Pressing once will set this cell as the first row header for any cells lower and to the right "
-"of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr ""
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -10464,15 +10929,6 @@ msgstr ""
 msgid "{offset:.3g} picas"
 msgstr ""
 
-#. Translators: a message when there is no comment to report in Microsoft Word
-#, fuzzy
-msgid "No comments"
-msgstr "ਕੋਈ ਟਿੱਪਣੀ ਨਹੀਂ"
-
-#. Translators: a description for a script
-msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
-
 #. Translators: a message when switching to single line spacing  in Microsoft word
 msgid "Single line spacing"
 msgstr ""
@@ -10483,29 +10939,4 @@ msgstr ""
 
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
-msgstr ""
-
-#. Translators: The message reported when a user attempts to use a table movement command
-#. when the cursor is not withnin a table.
-msgid "Not in table"
-msgstr "ਸਾਰਨੀ ਵਿੱਚ ਨਹੀਂ"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-#, fuzzy
-msgid "&Annotations"
-msgstr "ਐਡ-ਆਨ ਦੀ ਜਾਣਕਾਰੀ"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-#, fuzzy
-msgid "&Errors"
-msgstr "ਰੁਕਾਵਟ"
-
-#. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
-msgstr ""
-
-#. Translators: The name of a braille display.
-msgid "HIMS SyncBraille"
 msgstr ""

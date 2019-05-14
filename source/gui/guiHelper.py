@@ -17,7 +17,7 @@ class myDialog(class wx.Dialog):
 
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 
-		sHelper = guiHelper.SizerHelper( wx.VERTICAL)
+		sHelper = guiHelper.BoxSizerHelper( wx.VERTICAL)
 
 		filterElement = guiHelper.LabeledControlHelper(dialog, "Filter:", wx.TextCtrl)
 		symbols = wx.ListCtrl()
@@ -44,6 +44,7 @@ class myDialog(class wx.Dialog):
 """
 import wx
 from wx.lib import scrolledpanel
+from abc import ABCMeta
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -105,6 +106,7 @@ def associateElements( firstElement, secondElement):
 			wx.StaticText and (wx.Choice, wx.TextCtrl or wx.Button) - Horizontal layout
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
+			wx.TextCtrl and wx.Button - Horizontal layout
 	"""
 	if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
 		raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
@@ -150,6 +152,7 @@ class LabeledControlHelper(object):
 			@param labelText: The text to associate with a wx control.
 			@type labelText: string
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+			@type wxCtrlClass: class
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
@@ -299,4 +302,8 @@ class BoxSizerHelper(object):
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
+
+class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
+	"""Meta class to be used for wx subclasses with abstract methods."""
+	pass
 

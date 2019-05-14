@@ -17,12 +17,12 @@ import speech
 import api
 import eventHandler
 import winKernel
-import winUser
 from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 import config
+from locationHelper import RectLTRB
 
 #Window messages
 LVM_FIRST=0x1000
@@ -52,6 +52,15 @@ LVIF_STATE=0x08
 LVIF_INDENT=0x10
 LVIF_GROUPID=0x100
 LVIF_COLUMNS=0x200
+
+#GETSUBITEMRECT flags
+# Returns the bounding rectangle of the entire item, including the icon and label
+LVIR_BOUNDS = 0
+# Returns the bounding rectangle of the icon or small icon.
+LVIR_ICON = 1
+# Returns the bounding rectangle of the entire item, including the icon and label.
+# This is identical to LVIR_BOUNDS.
+LVIR_LABEL = 2
 
 #Item states
 LVIS_FOCUSED=0x01
@@ -261,6 +270,9 @@ class GroupingItem(Window):
 		gesture.send()
 		eventHandler.queueEvent("stateChange",self)
 
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
+
 class ListItemWithoutColumnSupport(IAccessible):
 
 	def initOverlayClass(self):
@@ -279,10 +291,8 @@ class ListItemWithoutColumnSupport(IAccessible):
 			value=self.displayText
 		if not value:
 			return None
-		#Some list view items in Vista can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
-		value=value.replace(u'\u200E','')
-		value=value.replace(u'\u200F','')
-		return value
+		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
+		return value.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 	def _get_positionInfo(self):
 		index=self.IAccessibleChildID
@@ -296,8 +306,13 @@ class ListItemWithoutColumnSupport(IAccessible):
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
 	def _getColumnLocationRaw(self,index):
+		assert index>0, "Invalid index: %d" % index
 		processHandle=self.processHandle
-		localRect=RECT(left=2,top=index)
+		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
+		localRect=RECT(
+			left=LVIR_LABEL, # Returns the bounding rectangle of the entire item, including the icon and label
+			top=index # The one-based index of the subitem
+		)
 		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
@@ -305,9 +320,13 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
-		windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
-		windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
-		return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
+		# #8268: this might be a malformed rectangle
+		# (i.e. with a left coordinate that is greather than the right coordinate).
+		left = min(localRect.left, localRect.right)
+		top = min(localRect.top, localRect.bottom)
+		right = max(localRect.left, localRect.right)
+		bottom = max(localRect.top, localRect.bottom)
+		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
 	def _getColumnLocation(self,column):
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
@@ -397,7 +416,9 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				textList.append("%s: %s" % (header, content))
 			else:
 				textList.append(content)
-		return "; ".join(textList)
+		name = "; ".join(textList)
+		#Some list view items in Windows Vista and later can contain annoying left-to-right and right-to-left indicator characters which really should not be there.
+		return name.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 
 	value = None
 

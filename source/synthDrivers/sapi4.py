@@ -6,13 +6,16 @@
 
 import locale
 from collections import OrderedDict
-import _winreg
+try:
+	import _winreg as winreg # Python 2.7 import
+except ImportError:
+	import winreg # Python 3 import
 from comtypes import COMObject, COMError
 from ctypes import *
 from synthDriverHandler import SynthDriver,VoiceInfo
 from logHandler import log
 import speech
-from _sapi4 import *
+from ._sapi4 import *
 import config
 import nvwave
 
@@ -42,7 +45,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator).Close()
+			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator).Close()
 			return True
 		except WindowsError:
 			return False

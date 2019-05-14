@@ -3,11 +3,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 from copy import deepcopy
 import os
 import pkgutil
+import importlib
 import config
 import baseObject
 import winVersion
@@ -23,7 +24,7 @@ _audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
-	config.configProfileSwitched.register(handleConfigProfileSwitch)
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 def changeVoice(synth, voice):
 	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
@@ -37,7 +38,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -85,6 +86,13 @@ def getSynthInstance(name):
 		newSynth.saveSettings() #save defaults
 	return newSynth
 
+# The synthDrivers that should be used by default.
+# The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
+defaultSynthPriorityList=['espeak','silence']
+if winVersion.winVersion.major>=10:
+	# Default to OneCore on Windows 10 and above
+	defaultSynthPriorityList.insert(0,'oneCore')
+
 def setSynth(name,isFallback=False):
 	global _curSynth,_audioOutputDevice
 	if name is None: 
@@ -92,8 +100,7 @@ def setSynth(name,isFallback=False):
 		_curSynth=None
 		return True
 	if name=='auto':
-		# Default to OneCore on Windows 10 and above, and eSpeak on previous Operating Systems
-		name='oneCore' if winVersion.winVersion.major>=10 else 'espeak'
+		name=defaultSynthPriorityList[0]
 	if _curSynth:
 		_curSynth.cancel()
 		_curSynth.terminate()
@@ -110,15 +117,22 @@ def setSynth(name,isFallback=False):
 		return True
 	except:
 		log.error("setSynth", exc_info=True)
+		# As there was an error loading this synth:
 		if prevSynthName:
+			# There was a previous synthesizer, so switch back to that one. 
 			setSynth(prevSynthName,isFallback=True)
-		elif name not in ('espeak','silence'):
-			setSynth('espeak',isFallback=True)
-		elif name=='espeak':
-			setSynth('silence',isFallback=True)
+		else:
+			# There was no previous synth, so fallback to the next available default synthesizer that has not been tried yet.
+			try:
+				nextIndex=defaultSynthPriorityList.index(name)+1
+			except ValueError:
+				nextIndex=0
+			if nextIndex<len(defaultSynthPriorityList):
+				newName=defaultSynthPriorityList[nextIndex]
+				setSynth(newName,isFallback=True)
 		return False
 
-def handleConfigProfileSwitch():
+def handlePostConfigProfileSwitch():
 	conf = config.conf["speech"]
 	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
 		setSynth(conf["synth"])
@@ -250,10 +264,19 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Rate'))
 	@classmethod
+	def RateBoostSetting(cls):
+		"""Factory function for creating rate boost setting."""
+		# Translators: This is the name of the rate boost voice toggle
+		# which further increases the speaking rate when enabled.
+		return BooleanSynthSetting("rateBoost",_("Rate boos&t"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Rate boost'),
+		availableInSynthSettingsRing=True)
+	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,
+		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Volume'))
 	@classmethod

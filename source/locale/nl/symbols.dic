@@ -1,13 +1,14 @@
 ﻿#locale/nl/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2017 NVDA Contributors
+#Copyright (c) 2011-2019 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
 # Others
-decimal point	(?<=\d)\,(?=\d)
-thousands separator	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
+thousands separator	(?<=\d)\.(?=\d{3})
+date separator	(?<=\d\d)\-(?=\d\d)
 begin-word '	((?<=\s)|(?<=^))'(?=\w(\s|$|[-.,?!]))
 
 symbols:
@@ -30,7 +31,7 @@ negative number	minus	none	norep
 \t	tab
 \n	nieuwe regel	char
 \f	pagina-einde	none
-\r	nieuwe regel	char
+\r	einde regel	char
  	spatie	char
  	spatie	char	# no-break space
 

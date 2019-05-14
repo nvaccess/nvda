@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2010-2019 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -14,6 +14,7 @@ import sys
 import os
 import itertools
 import weakref
+import time
 import configobj
 import sayAllHandler
 import baseObject
@@ -64,6 +65,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	reportInInputHelp=True
 
+	_abstract_identifiers = True
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
 		These identifiers will be normalized and looked up in order until a match is found.
@@ -402,6 +404,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		self.userGestureMap = GlobalGestureMap()
 		self.loadLocaleGestureMap()
 		self.loadUserGestureMap()
+		self._lastInputTime = None
 
 	def executeGesture(self, gesture):
 		"""Perform the action associated with a gesture.
@@ -439,6 +442,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
+			self._lastInputTime = time.time()
 			log.io("Input: %s" % gesture.identifiers[0])
 
 		if self._captureFunc:
@@ -594,8 +598,11 @@ class _AllGestureMappingsRetriever(object):
 		for anc in reversed(ancestors):
 			self.addObj(anc, isAncestor=True)
 
-		# Global commands.
 		import globalCommands
+		# Configuration profiles
+		self.addObj(globalCommands.configProfileActivationCommands)
+
+		# Global commands.
 		self.addObj(globalCommands.commands)
 
 	def addResult(self, scriptInfo):
@@ -786,3 +793,14 @@ def terminate():
 	"""
 	global manager
 	manager=None
+
+def  logTimeSinceInput():
+	"""Log the time since the last input was received.
+	This does nothing if time since input logging is disabled.
+	"""
+	if (not log.isEnabledFor(log.IO)
+		or not config.conf["debugLog"]["timeSinceInput"]
+		or not manager or not manager._lastInputTime
+	):
+		return
+	log.io("%.3f sec since input" % (time.time() - manager._lastInputTime))
