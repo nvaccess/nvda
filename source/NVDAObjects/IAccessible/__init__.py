@@ -470,7 +470,6 @@ the NVDAObject for IAccessible
 				"Microsoft.IME.CandidateWindow.View",
 				"Microsoft.IME.UIManager.CandidateWindow.Host"
 		)):
-			import mscandui
 			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
