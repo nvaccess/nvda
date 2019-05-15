@@ -10,6 +10,7 @@ import ui
 import speech
 import winUser
 import mouseHandler
+import NVDAObjects
 from . import IAccessible
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
