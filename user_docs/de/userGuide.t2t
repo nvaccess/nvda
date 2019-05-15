@@ -29,8 +29,8 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- und 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für berührungsempfindliche Bildschirme (Touchscreens).
-- Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie z. B. Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
-- Unterstützung für die Windows-Eingabeaufforderung und Konsolenanwendungen.
+- Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie z. B. Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und Benutzeroberflächenautomatisierung (sie wird nur unter Windows 7 und höher unterstützt).
+- Unterstützung für die Windows-Eingabeaufforderung und -Konsolenanwendungen.
 -
 
 ++ Internationalisierung ++[Internationalization]
@@ -938,7 +938,7 @@ Falls Sie Kategorien oder Dialoge öffnen wollen, die nicht über zugewiesene Ta
 Weiter unten finden Sie Erläuterungen zu jeder Kategorie aus dem NVDA-Einstellungsdialog.
 
 +++ Allgemein (NVDA+Strg+G) +++[GeneralSettings]
-Hier können allgemeingültige Einstellungen von NVDA vorgenommen werden. Sie können z. B. die Sprache einstellen, in der die Meldungen und Dialoge von NVDA angezeigt werden sollen. Sie können auch festlegen, dass regelmäßig geprüft werden soll, ob Updates für NVDA verfügbar sind.
+Hier können allgemeingültige Einstellungen von NVDA vorgenommen werden. Sie können z. B. die Sprache einstellen, in der die Meldungen und Dialoge von NVDA angezeigt werden sollen. Sie können auch festlegen, dass regelmäßig geprüft werden soll, ob Aktualisierungen für NVDA verfügbar sind.
 Diese Kategorie enthält die folgenden Optionen:
 
 ==== Sprache ====[GeneralSettingsLanguage]
@@ -954,7 +954,7 @@ Diese Option ist ein Kontrollfeld, wenn aktiviert, speichert NVDA jedes Mal beim
 
 ==== Optionen zum Beenden von NVDA anzeigen ====[GeneralSettingsShowExitOptions]
 Mit diesem Kontrollkästchen legen Sie fest, ob beim Beenden von NVDA ein Dialog angezeigt wird. Hier können Sie verschiedene Aktionen auslösen.
-Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder eine ausstehende Update installieren möchten.
+Wenn das Kontrollkästchen aktiviert ist, können Sie in diesem Dialog bestimmen, ob Sie NVDA beenden, neu starten, mit deaktivierten Erweiterungen neu starten oder eine ausstehende Aktualisierung installieren möchten.
 Wenn das Kontrollkästchen nicht aktiviert ist, wird NVDA sofort beendet.
 
 ==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====[GeneralSettingsPlaySounds]
@@ -985,17 +985,17 @@ Wenn Sie diesen Schalter betätigen, wird Ihre benutzerdefinierte Konfiguration 
 Speichern Sie zuvor Ihre Konfiguration, um sicherzustellen, dass auch tatsächlich all Ihre Einstellungen übernommen wurden. Sie können dies im NVDA-Menü oder mit der Tastenkombination NVDA+Strg+C tun.
 Diese Option ist nur in der installierten Version verfügbar!
 
-==== Automatisch nach Updates suchen ====[GeneralSettingsCheckForUpdates]
-Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Updates und informiert sie, wenn eine aktualisierte Version verfügbar ist.
-Sie können auch manuell auf Updates prüfen, indem Sie "nach Updates suchen" aus dem Hilfe-Menü auswählen.
-Um beim Prüfen auf Updates von NVDA sicherzustellen, dass Sie auch wirklich die passende Update erhalten, ist es notwendig, einige Informationen an den Update-Server von NV Access zu senden. Dies gilt sowohl für die manuelle als auch für die automatische Prüfung auf Updates.
+==== Automatisch nach Aktualisierungen suchen ====[GeneralSettingsCheckForUpdates]
+Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
+Sie können auch manuell nach Aktualisierungen suchen, indem Sie "nach Aktualisierungen suchen" aus dem Hilfe-Menü auswählen.
+Um beim Suchen nach Aktualisierungen sicherzustellen, dass Sie auch wirklich die passende Aktualisierung erhalten, ist es notwendig, einige Informationen an den Aktualisierungsserver von NV Access zu senden. Dies gilt sowohl für die manuelle als auch für die automatische Suche nach Aktualisierungen.
 Die folgenden Informationen werden immer gesendet:
 - Aktuelle NVDA-Version
 - Betriebssystemversion
 - Systemarchitektur (32- oder 64-Bit)
 
 
-==== Dem NVDA-Projekt gestatten, statistische Informationen zu sammeln ====[GeneralSettingsGatherUsageStats]
+==== Dem NVDA-Projekt erlauben, statistische Informationen zu sammeln ====[GeneralSettingsGatherUsageStats]
 Ist diese Option aktiviert, sammelt NV Access zusätzliche Informationen wie die Landessprache, das Land oder die geografische Region. Diese Informationen werden benutzt, um Nutzungsstatistiken über die Anzahl der NVDA-Nutzer zu erstellen.
 Auch wenn die IP-Adresse zum Ermitteln des (ungefähren) geografischen Standortes verwendet wird, wird sie niemals protokolliert.
 Wenn die Option aktiviert ist, werden die folgenden Daten zusätzlich gesendet:
@@ -1008,9 +1008,9 @@ Wenn die Option aktiviert ist, werden die folgenden Daten zusätzlich gesendet:
 
 Diese Informationen helfen NV Access bei der zukünftigen Entwicklung von NVDA.
 
-==== Beim Start von NVDA ausstehende Updates melden ====[GeneralSettingsNotifyPendingUpdates]
-Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Update aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
-Sie können die ausstehende Update auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Updates aus dem Hilfe-Menü installieren
+==== Ausstehende Aktualisierungen nach dem Starten von NVDA ankündigen ====[GeneralSettingsNotifyPendingUpdates]
+Wenn diese Option aktiviert ist, wird NVDA nach dem Start darüber informieren, falls eine Aktualisierung aussteht und Ihnen die Möglichkeit geben, diese zu installieren. 
+Sie können die ausstehende Aktualisierung auch manuell über das NVDA-Menü, den NVDA-Beenden-Dialog oder durch eine erneute Suche nach Aktualisierungen aus dem Hilfe-Menü installieren
 
 +++ Stimme- und Sprachausgabe (NVDA+Strg+V) +++[SpeechSettings]
 Hier können Sie festlegen, welche Sprachausgabe von NVDA genutzt werden und wie sich die Akustik der Stimme anhören soll.
@@ -1432,7 +1432,7 @@ Deaktivieren Sie einfach diese Option, wenn Sie die Ansage der Objektbeschreibun
 ==== Ausgabe des Fortschrittsbalkens ====[ObjectPresentationProgressBarOutput]
 Tastenkombination: NVDA+U
 
-Diese Option kontrolliert, wie NVDA die Updates der Fortschrittsbalken ansagen soll.
+Diese Option kontrolliert, wie NVDA die Aktualisierungen der Fortschrittsbalken ansagen soll.
 
 Die folgenden Optionen stehen zur Auswahl:
 - Aus: Bei Änderungen werden keine Fortschrittsmeldungen angesagt.
@@ -1626,7 +1626,7 @@ Diese Schaltfläche öffnet das Verzeichnis, in dem Sie während der Entwicklung
 Diese Schaltfläche ist nur aktiviert, wenn NVDA so konfiguriert ist, dass benutzerdefinierter Code aus dem Developer Scratchpad-Verzeichnis geladen werden kann.
  
 ==== Verwendung der Benutzeroberflächenautomatisierung, um auf Microsoft Word-Dokumenten-Steuerelemente zuzugreifen, falls verfügbar. ====[AdvancedSettingsUseUiaForWord]
-Wenn diese Option aktiviert ist, versucht NVDA die Microsoft UI Automation Accessibility API zu verwenden, um Informationen von Microsoft Word-Dokument-Steuerelementen abzurufen.
+Wenn diese Option aktiviert ist, versucht NVDA über die API-Schnittstelle der Microsoft Benutzeroberflächenautomatisierung zu verwenden, um Informationen von Microsoft Word-Dokument-Steuerelementen abzurufen.
 Dazu gehört in Microsoft Word selbst aber auch der Microsoft Outlook Message Viewer und Composer.
  Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich gesteigert wird.
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der Benutzeroberflächenautomatisierung verlassen kann.
@@ -1634,7 +1634,7 @@ Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerding
 
 ==== Zeitüberschreitung beim Bewegen des System-Cursors (in Millisekunden) ====[AdvancedSettingsCaretMoveTimeout]
 Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügepunkt) in den editierbaren Textsteuerelementen bewegt.
-Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z.B. wenn NVDA immer ein Zeichen hinterher liegt oder beim Navigieren manche Zeilen wiederholt, dann sollten Sie versuchen diesen Wert zu erhöhen.
+Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z. B., wenn NVDA immer ein Zeichen hinterher liegt oder beim Navigieren manche Zeilen wiederholt, dann sollten Sie versuchen, diesen Wert zu erhöhen.
 
 ==== Kategorien der Protokollierungsstufe ====[AdvancedSettingsDebugLoggingCategories]
 Die Kontrollkästchen in dieser Liste ermöglichen es Ihnen, bestimmte Kategorien von Debug-Meldungen im Protokoll von NVDA zu aktivieren.
@@ -1672,7 +1672,7 @@ Ferner enthält dieses Dialogfeld auch eine Option zur Berücksichtigung der Gro
 Standardmäßig ignoriert NVDA die Groß- und Kleinschreibung.
 
 Schließlich enthält der Dialog auch noch 3 Auswahlschalter, welche festlegen, ob die betreffende Regel überall, nur auf ganze Wörter angewendet oder ob reguläre Ausdrücke berücksichtigt werden.
-Wenn Sie das Muster auf "ganze Wörter" anwenden lassen, hat dies zur Folge, dass die Übersetzung nur angewandt wird, wenn das Wort nicht Teil eines längeren Wortes ist. Dies bedeutet, dass kein Sonderzeichen wie ein Unterstrich direkt vor und/oder hinter dem Muster stehen darf. Satzzeichen sind hiervon ausgenommen.
+Wenn Sie das Muster auf "Ganze Wörter" anwenden lassen, hat dies zur Folge, dass die Übersetzung nur angewandt wird, wenn das Wort nicht Teil eines längeren Wortes ist. Dies bedeutet, dass kein Sonderzeichen wie ein Unterstrich direkt vor und/oder hinter dem Muster stehen darf. Satzzeichen sind hiervon ausgenommen.
 Wenn Sie also das Wort "Vogel" wie im vorherigen Beispiel durch "Frosch" ersetzen und den Auswahlschalter auf "ganze Wörter setzen, wird die Regel nicht auf "Singvogel" oder "Vogelhaus" zutreffen.
 
 Ein regulärer Ausdruck ist ein Muster, welches spezielle Symbole enthält. Dies erlaubt Ihnen, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen zur gleichen Zeit zutrifft 
@@ -1847,7 +1847,7 @@ Wenn dieses Kontrollkästchen aktiviert ist, wird der Sprachbetrachter geöffnet
 Sofern möglich, wird dessen Fenster dieselbe Position sowie die gleiche Größe wie bei der letzten Verwendung einnehmen.	
 
 Während der Sprachbetrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
-Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Update der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
+Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
 
 Um den Sprachbetrachter per Tastenkombination ein- oder auszuschalten, müssen Sie diesem mittels des []Dialog Eingaben #InputGestures] eine eigene Tastenkombination zuweisen.
 
@@ -1902,12 +1902,12 @@ Erweiterungen gelten als inkompatibel, wenn sie nicht laufend aktualisiert wurde
 Die Verwaltung inkompatibler Erweiterungen benachrichtigt den Anwender entsprechend.
 Die inkompatiblen Erweiterungen werden in einer Liste mit den folgenden Spalten dargestellt:
 + Paket, der Name der Erweiterung
-+ Version, die Version der Weiterung
++ Version, die Version der Erweiterung
 + Inkompatibilitätsgrund, eine Erklärung, warum das Addon als inkompatibel gilt.
 +
 
-Die Verwaltung inkompatibler Erweiterungen hat auch eine Schaltfläche "Über diese Erweiterung...".
-In diesem Fall werden Ihnen die vollständigen Details der Erweiterung mitgeteilt, was bei der Kontaktaufnahme mit dem Add-on-Autor hilfreich ist.
+Die Verwaltung inkompatibler Erweiterungen hat auch eine Schaltfläche "Mehr Informationen...".
+In diesem Fall werden Ihnen die vollständigen Details der Erweiterung mitgeteilt, was bei der Kontaktaufnahme mit dem Autor der Erweiterung hilfreich ist.
 
 
 ++ Die Python-Konsole ++[PythonConsole]
@@ -1965,7 +1965,7 @@ Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/hel
 Bitte bedenken Sie dabei, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
 Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
 Dieses Problem kann nur durch Änderungen in Windows behoben werden.
-Wir hoffen, dass dies im Rahmen einer Update von Windows geschehen wird.
+Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
 
 ++ AudioLogic TTS 3 ++[Audiologic]
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.

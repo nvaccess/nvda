@@ -66,14 +66,16 @@ class TextRangeStruct(ctypes.Structure):
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getOffsetFromPoint(self,x,y):
+		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		point=textInfos.Point(
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+		x, y = winUser.ClientToScreen(self.obj.windowHandle,
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
-		if point.x and point.y:
+		point=textInfos.Point(x, y)
+		if point.x is not None and point.y is not None:
 			return point
 		else:
 			raise NotImplementedError
@@ -191,13 +193,13 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETWRAPMODE,None,None)!=SC_WRAP_NONE:
 			# Lines in Scintilla refer to document lines, not wrapped lines.
 			# There's no way to retrieve wrapped lines, so use screen coordinates.
-			y=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
-			top,left,width,height=self.obj.location
-			start = self._getOffsetFromPoint(0,y)
-			end=self._getOffsetFromPoint(width,y)
+			y = self._getPointFromOffset(offset).y
+			location=self.obj.location
+			start = self._getOffsetFromPoint(location.left, y)
+			end=self._getOffsetFromPoint(location.right, y)
 			# If this line wraps to the next line,
 			# end is the first offset of the next line.
-			if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,end)==y:
+			if self._getPointFromOffset(end).y==y:
 				# This is the end of the document line.
 				# Include the EOL characters in the returned offsets.
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,end,None)
