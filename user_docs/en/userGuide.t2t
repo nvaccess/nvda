@@ -1566,16 +1566,6 @@ For example, when on a web page, if you press tab and you land on a form, if thi
 This option, when checked, allows NVDA to enter and leave focus mode when using arrow keys.
 For example, if arrowing down a web page and you land on an edit box, NVDA will automatically bring you into focus mode. If you arrow out of the edit box, NVDA will put you back in browse mode.
 
-==== Automatically set system focus to focusable elements ====[BrowseModeSettingsAutoFocusFocusableElements]
-Key: NVDA+8
-
-Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.).
-If enabled, this represents default behavior of NVDA as of version 2019.1 and before.
-Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
-This might result in faster browsing experience and better responsiveness in browse mode.
-The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
-This functionality is experimental as of NVDA 2019.2.
-
 ==== Audio indication of Focus and Browse modes ====[BrowseModeSettingsPassThroughAudioIndication]
 If this option is enabled, NVDA will play special sounds when it switches between browse mode and focus mode, rather than speaking the change.
 
@@ -1679,6 +1669,16 @@ This includes in Microsoft Word itself, and also the Microsoft Outlook message v
  For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+
+==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
+Key: NVDA+8
+
+Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
+If enabled, this represents default behavior of NVDA as of version 2019.1 and before.
+Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
+This might result in faster browsing experience and better responsiveness in browse mode.
+The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
+This functionality is experimental as of NVDA 2019.2.
 
 ==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
