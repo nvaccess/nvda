@@ -152,14 +152,6 @@ def handleInputCompositionEnd(result):
 	focus=api.getFocusObject()
 	result=result.lstrip(u'\u3000 ')
 	curInputComposition=None
-	msg = u"Focus:\n{0}\nInitialResult: \n{1}\nParent:\n{2}\n{5}\nContainer\n{3}\n{4}".format(
-		focus,
-		result,
-		focus.parent,
-		focus.container,
-		focus.container.parent,
-		focus.parent.parent
-	)
 	if isinstance(focus,InputComposition):
 		curInputComposition=focus
 		oldSpeechMode=speech.speechMode
