@@ -152,6 +152,14 @@ def handleInputCompositionEnd(result):
 	focus=api.getFocusObject()
 	result=result.lstrip(u'\u3000 ')
 	curInputComposition=None
+	msg = u"Focus:\n{0}\nInitialResult: \n{1}\nParent:\n{2}\n{5}\nContainer\n{3}\n{4}".format(
+		focus,
+		result,
+		focus.parent,
+		focus.container,
+		focus.container.parent,
+		focus.parent.parent
+	)
 	if isinstance(focus,InputComposition):
 		curInputComposition=focus
 		oldSpeechMode=speech.speechMode
@@ -159,21 +167,24 @@ def handleInputCompositionEnd(result):
 		eventHandler.executeEvent("gainFocus",focus.parent)
 		speech.speechMode=oldSpeechMode
 	elif isinstance(focus.parent,InputComposition):
+		#Candidate list is still up
+		curInputComposition=focus.parent
+		focus.parent=focus.parent.parent
+	if isinstance(focus, ModernCandidateUICandidateItem):
 		# Correct focus for ModernCandidateUICandidateItem
-		if isinstance(focus ,ModernCandidateUICandidateItem):
-			obj=focus.container
-			curInputComposition = obj
-			if obj:
-				if isinstance(obj,InputComposition):
-					obj=obj.parent
-				oldSpeechMode=speech.speechMode
-				speech.speechMode=speech.speechMode_off
-				eventHandler.executeEvent("gainFocus",obj.parent)
-				speech.speechMode=oldSpeechMode
+		# Find the InputComposition object and
+		# correct focus to its parent
+		if isinstance(focus.container, InputComposition):
+			curInputComposition=focus.container
+			newFocus=curInputComposition.parent
 		else:
-			#Candidate list is still up
-			curInputComposition=focus.parent
-			focus.parent=focus.parent.parent
+			# Sometimes InputCompositon object is gone
+			# Correct to container of CandidateItem
+			newFocus=focus.container
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",newFocus)
+		speech.speechMode=oldSpeechMode
 
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
