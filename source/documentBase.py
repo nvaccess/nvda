@@ -34,10 +34,6 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	A document that supports standard table navigiation comments (E.g. control+alt+arrows to move between table cells).
 	The document could be an NVDAObject, or a BrowseModeDocument treeIntercepter for example.
 	"""
-	#: The controlField attribute name that should be used as the row number when navigating in a table. By default this is the same as the presentational attribute name
-	navigationalTableRowNumberAttributeName="table-rownumber"
-	#: The controlField attribute name that should be used as the column number when navigating in a table. By default this is the same as the presentational attribute name
-	navigationalTableColumnNumberAttributeName="table-columnnumber"
 
 	def _getTableCellCoords(self, info):
 		"""
@@ -68,12 +64,12 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			tableID=attrs.get('table-id')
 			if tableID is None or tableID in layoutIDs:
 				continue
-			if self.navigationalTableColumnNumberAttributeName in attrs and not attrs.get('table-layout'):
+			if "table-columnnumber" in attrs and not attrs.get('table-layout'):
 				break
 		else:
 			raise LookupError("Not in a table cell")
 		return (attrs["table-id"],
-			attrs[self.navigationalTableRowNumberAttributeName], attrs[self.navigationalTableColumnNumberAttributeName],
+			attrs["table-rownumber"], attrs["table-columnnumber"],
 			attrs.get("table-rowsspanned", 1), attrs.get("table-columnsspanned", 1))
 
 	def _getTableCellAt(self,tableID,startPos,row,column):
