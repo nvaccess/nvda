@@ -252,8 +252,12 @@ class ModernCandidateUICandidateItem(BaseCandidateItem):
 def findExtraOverlayClasses(obj,clsList):
 	windowClassName=obj.windowClassName
 	role=obj.IAccessibleRole
-	if windowClassName=="Microsoft.IME.CandidateWindow.View":
-		if obj.role==controlTypes.ROLE_BUTTON or obj.role==controlTypes.ROLE_LISTITEM:
+	if (
+		windowClassName=="Microsoft.IME.CandidateWindow.View"
+		and (
+			obj.role==controlTypes.ROLE_BUTTON
+			or obj.role==controlTypes.ROLE_LISTITEM
+	)):
 			clsList.append(ModernCandidateUICandidateItem)
 	elif windowClassName=="MSCandUIWindow_Candidate":
 		if role==oleacc.ROLE_SYSTEM_CLIENT:
