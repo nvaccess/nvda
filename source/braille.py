@@ -653,8 +653,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		reportTableCellCoords = formatConfig["reportTableCellCoords"]
 		props = {
 			"states": states,
-			"rowNumber": field.get("table-rownumber"),
-			"columnNumber": field.get("table-columnnumber"),
+			"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
+			"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
 			"rowSpan": field.get("table-rowsspanned"),
 			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,
