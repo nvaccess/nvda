@@ -1670,6 +1670,16 @@ This includes in Microsoft Word itself, and also the Microsoft Outlook message v
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
+==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
+Key: NVDA+8
+
+Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
+If enabled, this represents default behavior of NVDA as of version 2019.1 and before.
+Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
+This might result in faster browsing experience and better responsiveness in browse mode.
+The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
+This functionality is experimental as of NVDA 2019.2.
+
 ==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
