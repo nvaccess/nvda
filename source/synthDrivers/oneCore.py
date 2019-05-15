@@ -93,12 +93,6 @@ class SynthDriver(SynthDriver):
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
-	supportedSettings = (
-		SynthDriver.VoiceSetting(),
-		SynthDriver.RateSetting(),
-		SynthDriver.PitchSetting(),
-		SynthDriver.VolumeSetting(),
-	)
 	supportedCommands = {
 		speech.IndexCommand,
 		speech.CharacterModeCommand,
@@ -110,10 +104,6 @@ class SynthDriver(SynthDriver):
 		speech.PhonemeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
-	# These are all controlled via SSML, so we only need attributes, not properties.
-	rate = None
-	pitch = None
-	volume = None
 
 	@classmethod
 	def check(cls):
