@@ -3,14 +3,12 @@ import oleacc
 import queueHandler
 import eventHandler
 import controlTypes
-import characterProcessing
 import config
 import api
 import ui
-import speech
 import winUser
 import mouseHandler
-import NVDAObjects
+import NVDAObjects.window
 from . import IAccessible
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
