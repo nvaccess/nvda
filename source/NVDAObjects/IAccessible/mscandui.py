@@ -216,7 +216,8 @@ class MSCandUIWindow(IAccessible):
 class ModernCandidateUICandidateItem(BaseCandidateItem):
 
 	def _get_parent(self):
-		# Candidate list in Microsoft Quick cannot be obtained in IAccessible _get_parent. Use _get_parent in NVDAObject.window
+		# Candidate list in Microsoft Quick cannot be obtained in IAccessible _get_parent.
+		# Use _get_parent in NVDAObject.window.
 		parent=super(IAccessible,self).parent
 		return parent
 
