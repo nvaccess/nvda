@@ -9,6 +9,7 @@ import sys
 import itertools
 import os
 import pkgutil
+import importlib
 import ctypes.wintypes
 import threading
 import time
@@ -312,14 +313,14 @@ def NVDAObjectHasUsefulText(obj):
 
 def _getDisplayDriver(moduleName, caseSensitive=True):
 	try:
-		return __import__("brailleDisplayDrivers.%s" % moduleName, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+		return importlib.import_module("brailleDisplayDrivers.%s" % moduleName, package="brailleDisplayDrivers").BrailleDisplayDriver
 	except ImportError as initialException:
 		if caseSensitive:
 			raise initialException
 		for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
 			if name.startswith('_') or name.lower() != moduleName.lower():
 				continue
-			return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+			return importlib.import_module("brailleDisplayDrivers.%s" % name, package="brailleDisplayDrivers").BrailleDisplayDriver
 		else:
 			raise initialException
 
@@ -652,8 +653,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		reportTableCellCoords = formatConfig["reportTableCellCoords"]
 		props = {
 			"states": states,
-			"rowNumber": field.get("table-rownumber"),
-			"columnNumber": field.get("table-columnnumber"),
+			"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
+			"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
 			"rowSpan": field.get("table-rowsspanned"),
 			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,

@@ -48,8 +48,10 @@ from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
+from NVDAObjects.IAccessible import IAccessible
 
 import appModuleHandler
+import controlTypes
 
 
 #
@@ -88,6 +90,9 @@ SB_VERT = 1
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
+		vsMajor, vsMinor = int(vsMajor), int(vsMinor)
+
 		# Only use this overlay class if the top level automation object for the IDE can be retrieved,
 		# as it will not work otherwise.
 		if obj.windowClassName == VsTextEditPaneClassName and self._getDTE():
@@ -96,7 +101,13 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList.insert(0, VsTextEditPane)
-			
+
+		if ((vsMajor == 15 and vsMinor >= 3)
+			or vsMajor >= 16):
+			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
+				clsList.insert(0, ObjectsTreeItem)
+
+
 	def _getDTE(self):
 	# Return the already fetched instance if there is one.
 		try:
@@ -104,7 +115,7 @@ class AppModule(appModuleHandler.AppModule):
 				return self._DTE
 		except AttributeError:
 			pass
-		
+
 		# Retrieve and cache the top level automation object for the IDE
 		DTEVersion = VsVersion_None
 		bctx = objbase.CreateBindCtx()
@@ -120,7 +131,7 @@ class AppModule(appModuleHandler.AppModule):
 				DTEVersion = VsVersion_2003
 			elif "!VisualStudio.DTE:%d"%self.processID==displayName:
 				DTEVersion = VsVersion_2002
-				
+
 			if DTEVersion != VsVersion_None:
 				self._DTEVersion = DTEVersion
 				self._DTE = comtypes.client.dynamic.Dispatch(ROT.GetObject(mon).QueryInterface(IDispatch))
@@ -134,7 +145,7 @@ class AppModule(appModuleHandler.AppModule):
 
 		# Loop has completed
 		return self._DTE
-		
+
 	def _getTextManager(self):
 		try:
 			if self._textManager:
@@ -144,7 +155,6 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
-
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
@@ -473,3 +483,23 @@ IVsTextView._methods_ = [
     COMMETHOD([], HRESULT, 'SetTopLine',
               ( ['in'], c_int, 'iBaseLine' )),
 ]
+
+class ObjectsTreeItem(IAccessible):
+
+	def _get_focusRedirect(self):
+		"""
+		Returns the correct focused item in the object explorer trees
+		"""
+
+		if not controlTypes.STATE_FOCUSED in self.states:
+			# Object explorer tree views have a bad IAccessible implementation.
+			# When expanding a primary node and going to secondary node, the 
+			# focus is placed to the next root node, so we need to redirect
+			# it to the real focused widget. Fortunately, the states are
+			# still correct and we can detect if this is really focused or not.
+			return self.objectWithFocus()
+
+	def _get_positionInfo(self):
+		return {
+			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
+		}

@@ -3,11 +3,12 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
 from copy import deepcopy
 import os
 import pkgutil
+import importlib
 import config
 import baseObject
 import winVersion
@@ -37,7 +38,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -262,6 +263,15 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Rate'))
+	@classmethod
+	def RateBoostSetting(cls):
+		"""Factory function for creating rate boost setting."""
+		# Translators: This is the name of the rate boost voice toggle
+		# which further increases the speaking rate when enabled.
+		return BooleanSynthSetting("rateBoost",_("Rate boos&t"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Rate boost'),
+		availableInSynthSettingsRing=True)
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""

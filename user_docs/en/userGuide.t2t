@@ -1379,6 +1379,8 @@ When enabled, NVDA will announce the text currently under the mouse pointer, as 
 If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken.
 The options are character, word, line and paragraph.
 
+To toggle text unit resolution from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ==== Report role when mouse enters object ====[MouseSettingsRole]
 If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
 
@@ -1731,6 +1733,7 @@ The language for which symbol pronunciation is being edited will be shown in the
 Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Speech category #SpeechSettings] of the [NVDA Settings #NVDASettings] dialog; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
 
 To change a symbol, first select it in the Symbols list.
+You can filter the symbols by entering the symbol or a part of the symbol's replacement into the Filter by edit box.
 
 - The Replacement field allows you to change the text that should be spoken in place of this symbol.
 - Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
@@ -1796,7 +1799,7 @@ NVDA allows you to do this using configuration profiles.
 A configuration profile contains only those settings which are changed while the profile is being edited.
 Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings #NVDASettings] dialog, which apply to the entirety of NVDA.
 
-Configuration profiles can be manually activated.
+Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
 
 +++ Basic Management +++[ProfilesBasicManagement]
@@ -1862,6 +1865,14 @@ For example, you might wish to edit a manually activated profile or your normal 
 You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
 
 To toggle disabling triggers from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
++++ Activating a profile using input gestures +++[ConfigProfileGestures]
+For every profile you add, you are able to assign one or more input gestures to activate it.
+By default, configuration profiles do not have input gestures assigned.
+You can add gestures to activate a profile using the [Input Gestures dialog #InputGestures].
+Every profile has its own entry under the configuration profiles category.
+When you rename a profile, any gesture you added previously will still be available.
+Removing a profile will automatically delete the gestures associated with it.
 
 ++ Location of Configuration files ++[LocationOfConfigurationFiles]
 Portable versions of NVDA store all settings and add-ons in a directory called userConfig, found in the NVDA directory.
