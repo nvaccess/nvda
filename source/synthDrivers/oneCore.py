@@ -355,10 +355,10 @@ class SynthDriver(SynthDriver):
 		for index,voiceStr in enumerate(voicesStr):
 			voiceInfo=self._getVoiceInfoFromOnecoreVoiceString(voiceStr)
 			# Filter out any invalid voices.
-			if not self._isVoiceValid(voiceInfo.ID):
+			if not self._isVoiceValid(voiceInfo.id):
 				continue
 			voiceInfo.onecoreIndex=index
-			voices[voiceInfo.ID] =  voiceInfo
+			voices[voiceInfo.id] =  voiceInfo
 		return voices
 
 	def _isVoiceValid(self,ID):
@@ -405,14 +405,14 @@ class SynthDriver(SynthDriver):
 	def _get_voice(self):
 		return self._dll.ocSpeech_getCurrentVoiceId(self._handle)
 
-	def _set_voice(self, ID):
+	def _set_voice(self, id):
 		voices = self.availableVoices
 		# Try setting the requested voice
 		for voice in voices.itervalues():
-			if voice.ID == ID:
+			if voice.id == id:
 				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
 				return
-		raise LookupError("No such voice: %s"%ID)
+		raise LookupError("No such voice: %s"%id)
 
 	def _getDefaultVoice(self):
 		"""
@@ -428,15 +428,15 @@ class SynthDriver(SynthDriver):
 		fullLanguage=languageHandler.getWindowsLanguage()
 		for voice in voices.itervalues():
 			if voice.language==fullLanguage:
-				return voice.ID
+				return voice.id
 		baseLanguage=fullLanguage.split('_')[0]
 		if baseLanguage!=fullLanguage:
 			for voice in voices.itervalues():
 				if voice.language.startswith(baseLanguage):
-					return voice.ID
+					return voice.id
 		# Just use the first available
 		for voice in voices.itervalues():
-			return voice.ID
+			return voice.id
 		raise RuntimeError("No voices available")
 
 	def _get_language(self):
