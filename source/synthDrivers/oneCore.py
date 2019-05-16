@@ -140,7 +140,7 @@ class SynthDriver(SynthDriver):
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
-		# When prosody is supported, the value are used for cachign reasons only.
+		# When prosody is supported, the values are used for cachign reasons.
 		self._rate = 50
 		self._pitch = 50
 		self._volume = 100
@@ -277,6 +277,8 @@ class SynthDriver(SynthDriver):
 	def _set_rateBoost(self, enable):
 		if enable == self._rateBoost:
 			return
+		# Use the cached rate to calculate the new rate with rate boost enabled.
+		# If we don't, getting the rate property will return the default rate when initializing the driver and applying settings.
 		rate = self._rate
 		self._rateBoost = enable
 		self.rate = rate
