@@ -33,7 +33,9 @@ ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
 
-	def _convertProsody(self, command, attr, default, base):
+	def _convertProsody(self, command, attr, default, base=None):
+		if base is None:
+			base = default
 		if command.multiplier == 1 and base == default:
 			# Returning to synth default.
 			return speechXml.DelAttrCommand("prosody", attr)
@@ -44,11 +46,13 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)
 
 	def convertRateCommand(self, command):
-		return self._convertProsody(command, "rate", 50, self._rate)
+		return self._convertProsody(command, "rate", 50)
+
 	def convertPitchCommand(self, command):
-		return self._convertProsody(command, "pitch", 50, self._pitch)
+		return self._convertProsody(command, "pitch", 50)
+
 	def convertVolumeCommand(self, command):
-		return self._convertProsody(command, "volume", 100, self._volume)
+		return self._convertProsody(command, "volume", 100)
 
 	def convertCharacterModeCommand(self, command):
 		# OneCore's character speech sounds weird and doesn't support pitch alteration.
@@ -81,6 +85,15 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		yield self.convertPitchCommand(speech.PitchCommand(multiplier=1))
 		for command in commands:
 			yield command
+
+	def convertRateCommand(self, command):
+		return self._convertProsody(command, "rate", 50, self._rate)
+
+	def convertPitchCommand(self, command):
+		return self._convertProsody(command, "pitch", 50, self._pitch)
+
+	def convertVolumeCommand(self, command):
+		return self._convertProsody(command, "volume", 100, self._volume)
 
 class SynthDriver(SynthDriver):
 
