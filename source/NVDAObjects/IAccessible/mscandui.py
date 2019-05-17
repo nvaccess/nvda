@@ -225,24 +225,32 @@ class ModernCandidateUICandidateItem(BaseCandidateItem):
 
 	_candidateNumber=""
 
+	_visibleCandidateItemsText=""
+
+	def refreshCandidateList(self):
+		textList=[]
+		candidateItems = super(ModernCandidateUICandidateItem,self).parent.children
+		for child in candidateItems:
+			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.STATE_SELECTABLE not in child.states:
+				continue
+			textList.append(child.candidateCharacters)
+		if not len(textList)<=1:
+			self._visibleCandidateItemsText=(u", ".join(textList))+u", "
+			try:
+				self._candidateNumber = textList.index(self.candidateCharacters)+1
+			except ValueError:
+				pass
+
+
 	def _get_candidateNumber(self):
-		# The following property call sets candidateNumber
-		self.visibleCandidateItemsText
+		if not self._candidateNumber:
+			self.refreshCandidateList()
 		return self._candidateNumber
 
 	def _get_visibleCandidateItemsText(self):
-		textList=[]
-		index=1
-		for child in super(ModernCandidateUICandidateItem,self).parent.children:
-			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.STATE_SELECTABLE not in child.states: continue
-			child.candidateNumber=index
-			textList.append(child.name)
-			if child.candidateCharacters==self.candidateCharacters:
-				self._candidateNumber=index
-			index+=1
-		if len(textList)<=1: return None
-		self.visibleCandidateItemsText=(u", ".join(textList))+u", "
-		return self.visibleCandidateItemsText
+		if not self._visibleCandidateItemsText:
+			self.refreshCandidateList()
+		return self._visibleCandidateItemsText
 
 	def event_stateChange(self):
 		if controlTypes.STATE_SELECTED in self.states:
