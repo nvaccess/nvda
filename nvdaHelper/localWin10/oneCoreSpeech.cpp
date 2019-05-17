@@ -32,6 +32,10 @@ using namespace Windows::Media;
 using namespace Windows::Foundation::Collections;
 using Windows::Foundation::Metadata::ApiInformation;
 
+bool __stdcall ocSpeech_supportsProsodyOptions() {
+	return ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 5, 0);
+}
+
 OcSpeech* __stdcall ocSpeech_initialize() {
 	auto instance = new OcSpeech;
 	instance->synth = ref new SpeechSynthesizer();
@@ -40,6 +44,8 @@ OcSpeech* __stdcall ocSpeech_initialize() {
 	if (ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6, 0)) {
 		auto options = instance->synth->Options;
 		options->AppendedSilence = SpeechAppendedSilence::Min;
+	} else {
+		LOG_DEBUGWARNING(L"AppendedSilence not supported");
 	}
 	return instance;
 }
@@ -125,4 +131,28 @@ void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index) {
 
 const char16 * __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* instance) {
 	return instance->synth->Voice->Language->Data();
+}
+
+double __stdcall ocSpeech_getPitch(OcSpeech* instance) {
+	return instance->synth->Options->AudioPitch;
+}
+
+void __stdcall ocSpeech_setPitch(OcSpeech* instance, double pitch) {
+	instance->synth->Options->AudioPitch = pitch;
+}
+
+double __stdcall ocSpeech_getVolume(OcSpeech* instance) {
+	return instance->synth->Options->AudioVolume;
+}
+
+void __stdcall ocSpeech_setVolume(OcSpeech* instance, double volume) {
+	instance->synth->Options->AudioVolume = volume;
+}
+
+double __stdcall ocSpeech_getRate(OcSpeech* instance) {
+	return instance->synth->Options->SpeakingRate;
+}
+
+void __stdcall ocSpeech_setRate(OcSpeech* instance, double rate) {
+	instance->synth->Options->SpeakingRate = rate;
 }

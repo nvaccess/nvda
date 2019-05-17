@@ -113,18 +113,14 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
 	wostringstream s;
 	long count = 0;
-	// Fetch row and column counts and add them as two sets of attributes on this vbuf node.
-	// The first set: table-physicalrowcount and table-physicalcolumncount represent the physical topology of the table and can be used programmatically to understand table limits.
-	// The second set: table-rowcount and table-columncount are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
+	// Fetch row and column counts and add them as attributes on this vbuf node.
 	if (paccTable->get_nRows(&count) == S_OK) {
 		s << count;
-		node->addAttribute(L"table-physicalrowcount", s.str());
 		node->addAttribute(L"table-rowcount", s.str());
 		s.str(L"");
 	}
 	if (paccTable->get_nColumns(&count) == S_OK) {
 		s << count;
-		node->addAttribute(L"table-physicalcolumncount", s.str());
 		node->addAttribute(L"table-columncount", s.str());
 	}
 }
@@ -151,16 +147,11 @@ inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAcc
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
 	// Fetch row and column extents and add them as attributes on this node.
-	// for rowNumber and columnNumber, store these as two sets of attributes.
-	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
-	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
-		node->addAttribute(L"table-physicalrownumber", s.str());
 		node->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
 		s << column + 1;
-		node->addAttribute(L"table-physicalcolumnnumber", s.str());
 		node->addAttribute(L"table-columnnumber", s.str());
 		if (columnExtents > 1) {
 			s.str(L"");
@@ -215,16 +206,11 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
 	// Fetch row and column extents and add them as attributes on this node.
-	// for rowNumber and columnNumber, store these as two sets of attributes.
-	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
-	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
-		node->addAttribute(L"table-physicalrownumber", s.str());
 		node->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
 		s << column + 1;
-		node->addAttribute(L"table-physicalcolumnnumber", s.str());
 		node->addAttribute(L"table-columnnumber", s.str());
 		if (columnExtents > 1) {
 			s.str(L"");
@@ -815,21 +801,29 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 
 	// Add some presentational table attributes
-	// Note these are only for reporting, the physical table attributes (table-physicalrownumber etc) for aiding in navigation etc are added  later on.
-	// propagate table-rownumber down to the cell as Gecko only includes it on the row itself
-	if(parentPresentationalRowNumber) 
-		parentNode->addAttribute(L"table-rownumber",parentPresentationalRowNumber);
+	// Note these are only for reporting, the physical table attributes (table-rownumber etc) for aiding in navigation etc are added  later on.
+	// propagate table-rownumber-presentational down to the cell as Gecko only includes it on the row itself
+	if(parentPresentationalRowNumber) {
+		parentNode->addAttribute(L"table-rownumber-presentational",parentPresentationalRowNumber);
+	}
 	const wchar_t* presentationalRowNumber=NULL;
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex")) != IA2AttribsMap.end()) {
-		parentNode->addAttribute(L"table-rownumber",IA2AttribsMapIt->second);
+	IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-rownumber-presentational",IA2AttribsMapIt->second);
 		presentationalRowNumber=IA2AttribsMapIt->second.c_str();
 	}
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colindex")) != IA2AttribsMap.end())
-		parentNode->addAttribute(L"table-columnnumber",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount")) != IA2AttribsMap.end())
-		parentNode->addAttribute(L"table-rowcount",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colcount")) != IA2AttribsMap.end())
-		parentNode->addAttribute(L"table-columncount",IA2AttribsMapIt->second);
+	IA2AttribsMapIt = IA2AttribsMap.find(L"colindex");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-columnnumber-presentational",IA2AttribsMapIt->second);
+	}
+	IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-rowcount-presentational",IA2AttribsMapIt->second);
+	}
+	IA2AttribsMapIt = IA2AttribsMap.find(L"colcount");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-columncount-presentational",IA2AttribsMapIt->second);
+	}
 
 	BSTR value=NULL;
 	if(pacc->get_accValue(varChild,&value)==S_OK) {

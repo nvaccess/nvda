@@ -273,10 +273,23 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
-			try:
-				newPropertyValues[name]=getattr(obj,name)
-			except NotImplementedError:
-				pass
+			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
+			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
+			names=[name]
+			if name=='rowNumber':
+				names.insert(0,'presentationalRowNumber')
+			elif name=='columnNumber':
+				names.insert(0,'presentationalColumnNumber')
+			elif name=='rowCount':
+				names.insert(0,'presentationalRowCount')
+			elif name=='columnCount':
+				names.insert(0,'presentationalColumnCount')
+			for tryName in names:
+				try:
+					newPropertyValues[name]=getattr(obj,tryName)
+				except NotImplementedError:
+					continue
+				break
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -1237,7 +1250,19 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		containerContainsText=_("with %s items")%childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
-		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
+		rowCount=(attrs.get("table-rowcount-presentational") or attrs.get("table-rowcount"))
+		columnCount=(attrs.get("table-columncount-presentational") or attrs.get("table-columncount"))
+		return " ".join((
+			nameText,
+			roleText,
+			stateText, 
+			getSpeechTextForProperties(
+				_tableID=tableID, 
+				rowCount=rowCount, 
+				columnCount=columnCount
+			),
+			levelText
+		))
 	elif nameText and reason==controlTypes.REASON_FOCUS and fieldType == "start_addedToControlFieldStack" and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE):
 		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
 		return " ".join((nameText,roleText))
@@ -1246,8 +1271,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		reportTableHeaders = formatConfig["reportTableHeaders"]
 		reportTableCellCoords = formatConfig["reportTableCellCoords"]
 		getProps = {
-			'rowNumber': attrs.get("table-rownumber"),
-			'columnNumber': attrs.get("table-columnnumber"),
+			'rowNumber': (attrs.get("table-rownumber-presentational") or attrs.get("table-rownumber")),
+			'columnNumber': (attrs.get("table-columnnumber-presentational") or attrs.get("table-columnnumber")),
 			'rowSpan': attrs.get("table-rowsspanned"),
 			'columnSpan': attrs.get("table-columnsspanned"),
 			'includeTableCellCoords': reportTableCellCoords

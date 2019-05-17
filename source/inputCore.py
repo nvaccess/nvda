@@ -604,8 +604,11 @@ class _AllGestureMappingsRetriever(object):
 		for anc in reversed(ancestors):
 			self.addObj(anc, isAncestor=True)
 
-		# Global commands.
 		import globalCommands
+		# Configuration profiles
+		self.addObj(globalCommands.configProfileActivationCommands)
+
+		# Global commands.
 		self.addObj(globalCommands.commands)
 
 	def addResult(self, scriptInfo):

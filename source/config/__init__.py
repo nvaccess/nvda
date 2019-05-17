@@ -577,7 +577,7 @@ class ConfigManager(object):
 
 	def createProfile(self, name):
 		"""Create a profile.
-		@param name: The name of the profile ot create.
+		@param name: The name of the profile to create.
 		@type name: basestring
 		@raise ValueError: If a profile with this name already exists.
 		"""
@@ -588,6 +588,10 @@ class ConfigManager(object):
 			raise ValueError("A profile with the same name already exists: %s" % name)
 		# Just create an empty file to make sure we can.
 		file(fn, "w")
+		# Register a script for the new profile.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.addScriptForProfile(name)
 
 	def deleteProfile(self, name):
 		"""Delete a profile.
@@ -601,6 +605,10 @@ class ConfigManager(object):
 		if not os.path.isfile(fn):
 			raise LookupError("No such profile: %s" % name)
 		os.remove(fn)
+		# Remove the script for the deleted profile from the script collector.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.removeScriptForProfile(name)
 		try:
 			del self._profileCache[name]
 		except KeyError:
@@ -663,6 +671,10 @@ class ConfigManager(object):
 				saveTrigs = True
 		if saveTrigs:
 			self.saveProfileTriggers()
+		# Rename the script for the profile.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.updateScriptForRenamedProfile(oldName, newName)
 		try:
 			profile = self._profileCache.pop(oldName)
 		except KeyError:
