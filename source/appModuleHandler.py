@@ -171,7 +171,9 @@ def fetchAppModule(processID,appName):
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
 	# Python 2.x can't properly handle unicode module names, so convert them.
-	modName = appName.encode("mbcs")
+	modName = appName
+	if sys.version_info.major == 2 and not isinstance(modName, bytes):
+		modName = modName.encode("mbcs")
 
 	if doesAppModuleExist(modName):
 		try:
