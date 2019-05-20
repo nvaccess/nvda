@@ -41,6 +41,7 @@ MODELS = {
 #  The assumption is that any displays with the following cell counts are due to three cells at the
 #  beginning/end of the display are used as status cells, and an extra blank cell to separate status
 #  from normal cells. These devices require a special translation table: L{FOCUS_1_TRANSLATION_TABLE}
+#  This line of displays is known as the first generation Focus displays.
 FOCUS_1_CELL_COUNTS = (44, 70, 84,)
 
 # Packet types
