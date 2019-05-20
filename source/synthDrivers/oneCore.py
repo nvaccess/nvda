@@ -33,7 +33,9 @@ ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
 
-	def _convertProsody(self, command, attr, default, base):
+	def _convertProsody(self, command, attr, default, base=None):
+		if base is None:
+			base = default
 		if command.multiplier == 1 and base == default:
 			# Returning to synth default.
 			return speechXml.DelAttrCommand("prosody", attr)
@@ -44,11 +46,13 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)
 
 	def convertRateCommand(self, command):
-		return self._convertProsody(command, "rate", 50, self._rate)
+		return self._convertProsody(command, "rate", 50)
+
 	def convertPitchCommand(self, command):
-		return self._convertProsody(command, "pitch", 50, self._pitch)
+		return self._convertProsody(command, "pitch", 50)
+
 	def convertVolumeCommand(self, command):
-		return self._convertProsody(command, "volume", 100, self._volume)
+		return self._convertProsody(command, "volume", 100)
 
 	def convertCharacterModeCommand(self, command):
 		# OneCore's character speech sounds weird and doesn't support pitch alteration.
@@ -81,6 +85,15 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		yield self.convertPitchCommand(speech.PitchCommand(multiplier=1))
 		for command in commands:
 			yield command
+
+	def convertRateCommand(self, command):
+		return self._convertProsody(command, "rate", 50, self._rate)
+
+	def convertPitchCommand(self, command):
+		return self._convertProsody(command, "pitch", 50, self._pitch)
+
+	def convertVolumeCommand(self, command):
+		return self._convertProsody(command, "volume", 100, self._volume)
 
 class SynthDriver(SynthDriver):
 
@@ -125,17 +138,19 @@ class SynthDriver(SynthDriver):
 		super(SynthDriver, self).__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
+		# Set initial values for parameters that can't be queried when prosody is not supported.
+		# This initialises our cache for the value.
+		# When prosody is supported, the values are used for cachign reasons.
+		self._rate = 50
+		self._pitch = 50
+		self._volume = 100
+
 		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
 			self._dll.ocSpeech_getVolume.restype = ctypes.c_double
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
-			# Set initial values for parameters that can't be queried.
-			# This initialises our cache for the value.
-			self._rate = 50
-			self._pitch = 50
-			self._volume = 100
 		self._handle = self._dll.ocSpeech_initialize()
 		self._callbackInst = ocSpeech_Callback(self._callback)
 		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
@@ -220,8 +235,8 @@ class SynthDriver(SynthDriver):
 		return self._paramToPercent(rawPitch, self.MIN_PITCH, self.MAX_PITCH)
 
 	def _set_pitch(self, pitch):
+		self._pitch = pitch
 		if not self.supportsProsodyOptions:
-			self._pitch = pitch
 			return
 		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
 		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
@@ -233,8 +248,8 @@ class SynthDriver(SynthDriver):
 		return int(rawVolume * 100)
 
 	def _set_volume(self, volume):
+		self._volume = volume
 		if not self.supportsProsodyOptions:
-			self._volume = volume
 			return
 		rawVolume = volume / 100.0
 		self._queuedSpeech.append((self._dll.ocSpeech_setVolume, rawVolume))
@@ -247,8 +262,8 @@ class SynthDriver(SynthDriver):
 		return self._paramToPercent(rawRate, self.MIN_RATE, maxRate)
 
 	def _set_rate(self, rate):
+		self._rate = rate
 		if not self.supportsProsodyOptions:
-			self._rate = rate
 			return
 		maxRate = self.BOOSTED_MAX_RATE if self._rateBoost else self.DEFAULT_MAX_RATE
 		rawRate = self._percentToParam(rate, self.MIN_RATE, maxRate)
@@ -262,7 +277,9 @@ class SynthDriver(SynthDriver):
 	def _set_rateBoost(self, enable):
 		if enable == self._rateBoost:
 			return
-		rate = self.rate
+		# Use the cached rate to calculate the new rate with rate boost enabled.
+		# If we don't, getting the rate property will return the default rate when initializing the driver and applying settings.
+		rate = self._rate
 		self._rateBoost = enable
 		self.rate = rate
 

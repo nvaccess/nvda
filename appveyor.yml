@@ -118,15 +118,10 @@ build_script:
  - cd ..
 
 before_test:
- # Manually grab pyscreeze 0.1.13 as latest release is completely broken.
- - py -m pip install pyscreeze==0.1.13
- # Manually grab pygetwindow 0.0.4 as 0.0.5 is broken. 
+ # Manually grab pyGetWindow 0.0.4 as latest release cannot be installed on Python 2.7.
+ # See https://github.com/asweigart/PyGetWindow/issues/9
  - py -m pip install pygetwindow==0.0.4
- # The latest release of PyAutoGUI requires PyScreeze 0.1.20 which unfortunately doesn't work with Python 2.7.
- # See https://github.com/asweigart/pyscreeze/issues/46
- # Therefore install version 0.9.41.
- - py -m pip install pyautogui==0.9.41
- - py -m pip install robotframework robotremoteserver nose
+ - py -m pip install robotframework robotremoteserver nose pyautogui
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
