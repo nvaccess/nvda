@@ -1,4 +1,4 @@
-#vision.py
+#vision/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -65,11 +65,6 @@ class VisionEnhancementProvider(driverHandler.Driver):
 	"""
 
 	_configSection = "vision"
-	#: The roles that would cause conflicts with this provider when initialized.
-	#: Providers for conflicting roles are always terminated before initializing the provider.
-	#: For example, if a color enhancer is used to make the screen black,
-	#: It does not make sense to magnify the screen or use a highlighter.
-	conflictingRoles = frozenset()
 	#: A vision enhancement provider is a singleton.
 	_instance = None
 	cachePropertiesByDefault = True
@@ -504,11 +499,11 @@ def terminate():
 	handler = None
 
 def getProviderList(excludeNegativeChecks=True):
-	"""Gets a list of available vision enhancement names with their descriptions as well as supported and conflicting roles.
+	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
 	@param excludeNegativeChecks: excludes all providers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
-	@return: list of tuples with provider names, descriptions, supported roles and conflicting roles.
-	@rtype: [(str,unicode,[ROLE_*],[ROLE_*])]
+	@return: list of tuples with provider names, descriptions, and supported roles.
+	@rtype: [(str,str,[ROLE_*])]
 	"""
 	providerList = []
 	for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
@@ -522,7 +517,11 @@ def getProviderList(excludeNegativeChecks=True):
 			continue
 		try:
 			if not excludeNegativeChecks or provider.check():
-				providerList.append((provider.name, provider.description, list(provider.supportedRoles), list(provider.conflictingRoles)))
+				providerList.append((
+					provider.name,
+					provider.description,
+					list(provider.supportedRoles)
+				))
 			else:
 				log.debugWarning("Vision enhancement provider %s reports as unavailable, excluding" % provider.name)
 		except:
@@ -556,8 +555,6 @@ class VisionHandler(AutoPropertyObject):
 		"""Enables and activates the selected provider for the provided roles.
 		If there was a previous provider in use for a role,
 		that provider will be terminated for that role.
-		A provider won't load if another provider has to be terminated
-		because of conflicting roles set for the new provider,
 		@param name: The name of the registered provider class.
 		@type name: str
 		@param roles: names of roles to enable the provider for.
@@ -604,12 +601,6 @@ class VisionHandler(AutoPropertyObject):
 					raise NotImplementedError("Provider %s does not implement role %s" % (name, role))
 
 		try:
-			conflicts = {name for name in (getattr(self, role) for role in providerCls.conflictingRoles) if name}
-			if conflicts:
-				raise RuntimeError("Provider %s couldn't be activated because of conflicts with provider(s) %s." %
-					(providerCls.name, ", ".join(conflict.name for conflict in conflicts))
-				)
-
 			# Providers are singletons.
 			# Get a new or current instance of the provider
 			providerInst = providerCls.__new__(providerCls)
@@ -617,11 +608,12 @@ class VisionHandler(AutoPropertyObject):
 			if initiallyEnabled:
 				log.debug("Provider %s is already active" % name)
 			# Terminate the provider for the roles that overlap between the provided roles and the active roles.
+			# For these roles, we want to reinitialize the provider.
 			overlappingRoles =  providerInst.activeRoles & roles
 			newRoles =  roles - overlappingRoles
 			if overlappingRoles:
 				providerInst.terminate(*overlappingRoles)
-			# Properly terminate  conflicting providers.
+			# Properly terminate  providers that are active for the current role.
 			for conflict in newRoles:
 				self.terminateProviderForRole(conflict)
 				if not temporary:
