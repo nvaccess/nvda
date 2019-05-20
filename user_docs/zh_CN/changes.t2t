@@ -20,7 +20,7 @@ NVDA更新日志
 - Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
  - 现在，当使用TeamViewer或其他远程协助软件远程控制系统时，将允许NVDA跟踪鼠标。
  - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
-- 添加了`--disable-start-on-logon`命令行参数，以允许在windows登录见面上使用禁默参数安装NVDA。 (#8574)
+- 添加了`--disable-start-on-logon`命令行参数，以允许在windows登录界面上使用静默参数安装NVDA。 (#8574)
 - Added the `--disable-start-on-logon` command line parameter to allow silent installations of NVDA that don't run at the logon screen by default. (#8574)
 - 现在，通过在常规设置面板中将日志记录级别设置为“disabled”，可以关闭NVDA的日志记录功能。 (#8516)
 - It is possible to turn NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
@@ -84,7 +84,7 @@ NVDA更新日志
 - Improved restart confirmation dialog after changing interface language. The text and the button labels are now more concise and less confusing. (#6416)
 - 现在，假如第三方语音合成器无法加载，NVDA将回退到Windows 10上的Windows OneCore语音，而不是espeak。 (#9025)
 - If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech on Windows 10, rather than espeak. (#9025)
-- 在安全见面删除NVDA菜单中的“欢迎对话框”条目。 (#8520)
+- 在安全界面删除NVDA菜单中 的“欢迎对话框”条目。 (#8520)
 - Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
 - 在浏览模式下选项卡或使用快速浏览时，现在可以朗读选项卡面板上的图例。 (#709)
 - When tabbing or using quick navigation in browse mode, legends on tab panels are now reported more consistently. (#709)
@@ -118,7 +118,7 @@ NVDA更新日志
 - In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9112)
 - 在Virtualbox 5.2及更高版本的主窗口中，NVDA现在不再冻结。 (#9202)
 - NVDA no longer freezes in the mainwindow of Virtualbox 5.2 and above. (#9202)
-- 在某些文档中，当按行，段落或表格单元格浏览时，Microsoft Word中的响应速度可能会得到显着提升。注意，为了获得最佳的体验，请在打开文档后使用alt + w，e将Microsoft Word设置为Draft视图。 (#9217)
+- 在某些文档中，当按行，段落或表格单元格浏览时，Microsoft Word中的响应速度可能会得到显着提升。注意，为了获得最佳的体验，请在打开文档后使用alt , w , E(将Microsoft Word设置为草稿视图)。 (#9217)
 - Responsiveness in Microsoft Word when navigating by line, paragraph or table cell may be significantly improved in some documents. A reminder that for best performance, set Microsoft Word to Draft view with alt+w,e after opening a document. (#9217) 
 - 在Mozilla Firefox和Google Chrome中，不再朗读空警报。 (#5657)
 - In Mozilla Firefox and Google Chrome, empty alerts are no longer reported. (#5657)

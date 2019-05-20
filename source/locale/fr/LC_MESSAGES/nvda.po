@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 00:10+1000\n"
-"PO-Revision-Date: 2019-03-04 17:20+0100\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"POT-Creation-Date: 2019-03-22 00:10+1000\n"
+"PO-Revision-Date: 2019-03-26 09:33+0100\n"
+"Last-Translator: Cyrille Boutot <cyrille.bougot2@laposte.net>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -111,7 +111,7 @@ msgstr "inconnu"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Erreur dans appModule %s"
+msgstr "Erreur dans le module applicatif %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgctxt "aria"
@@ -3952,7 +3952,7 @@ msgid ""
 "Opens the WX GUI inspection tool. Used to get more information about the "
 "state of GUI components."
 msgstr ""
-"Ouvre l'outil d'inspection du GUI. Utilisé pour obtenir plus d'informations "
+"Ouvrir l'outil d'inspection du GUI. Utilisé pour obtenir plus d'informations "
 "sur l'état des composants du GUI."
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
@@ -4401,14 +4401,14 @@ msgstr ""
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "Extensions rechargées"
+msgstr "Modules rechargés"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"Recharger les extensions globales et applicatives sans redémarrer NVDA, ce "
+"Recharger les modules globaux et applicatifs sans redémarrer NVDA, ce "
 "qui peut être utile pour les développeurs"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -6586,10 +6586,10 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Cependant, votre configuration NVDA contient des extensions qui sont "
-"incompatibles avec cette version de NVDA. Elles seront désactivées après "
-"l'installation. Si vous avez besoin de ces extensions, veuillez parcourir la "
-"liste pour décider si vous devez poursuivre l'installation"
+"Cependant, votre configuration NVDA contient des extensions incompatibles "
+"avec cette version de NVDA. Elles seront désactivées après l'installation. "
+"Si vous avez besoin de ces extensions, veuillez parcourir la liste pour "
+"décider si vous devez poursuivre l'installation"
 
 #. Translators: A message to confirm that the user understands that addons that have not been
 #. reviewed and made available, will be disabled after installation.
@@ -6647,10 +6647,10 @@ msgid ""
 "continue with the installation"
 msgstr ""
 "\n"
-"Cependant, votre configuration NVDA contient des extensions qui sont "
-"incompatibles avec cette version de NVDA. Elles seront désactivées après "
-"l'installation. Si vous avez besoin de ces extensions, veuillez parcourir la "
-"liste pour décider si vous devez poursuivre l'installation"
+"Cependant, votre configuration NVDA contient des extensions incompatibles "
+"avec cette version de NVDA. Elles seront désactivées après l'installation. "
+"Si vous avez besoin de ces extensions, veuillez parcourir la liste pour "
+"décider si vous devez poursuivre l'installation"
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -7688,7 +7688,7 @@ msgstr "Exécuter l'&outil de Correction des Inscriptions COM..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "&Recharger les extensions"
+msgstr "&Recharger les modules"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -9390,16 +9390,15 @@ msgstr "Avancé"
 msgid "Warning!"
 msgstr "Avertissement !"
 
-#, fuzzy
 msgid ""
 "The following settings are for advanced users. Changing them may cause NVDA "
 "to function incorrectly. Please only change these if you know what you are "
 "doing or have been specifically instructed by NVDA developers."
 msgstr ""
-"Avertissement ! Les réglages suivants s'adressent aux utilisateurs avancés. "
-"Les modifier peut provoquer un fonctionnement incorrect de NVDA. Veuillez ne "
-"les changer que si vous savez ce que vous faites ou si les développeurs de "
-"NVDA vous l'ont spécifiquement demandé."
+"Les réglages suivants s'adressent aux utilisateurs avancés. Les modifier "
+"peut provoquer un fonctionnement incorrect de NVDA. Veuillez ne les changer "
+"que si vous savez ce que vous faites ou si les développeurs de NVDA vous "
+"l'ont spécifiquement demandé."
 
 msgid ""
 "I understand that changing these settings may cause NVDA to function "
@@ -10830,7 +10829,7 @@ msgstr "limite droite"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "up-right diagonal line"
-msgstr "ligne diagonale haut-gauche"
+msgstr "ligne diagonale haut-droite"
 
 #. Translators: border positions in Microsoft Excel.
 msgid "down-right diagonal line"

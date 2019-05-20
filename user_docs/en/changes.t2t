@@ -7,6 +7,23 @@ What's New in NVDA
 == New Features ==
 - The find dialog now includes a history of the last 20 searches. (#8482)
  - The search history is cleared when NVDA exits or restarts.
+- NVDA's Miranda NG support  works with newer versions of the client. (#9053) 
+- You can now disable browse mode by default by disabling the new "Enable browse mode on page load" option in NVDA's browse mode settings. (#8716) 
+ - Note that when this option is disabled, you can still enable browse mode manually by pressing NVDA+space.
+
+
+== Bug Fixes ==
+- NVDA no longer crashes when an add-on directory is empty. (#7686)
+- LTR and RTL marks are no longer reported in Braille or per-character speech when accessing the properties window. (#8361)
+- When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)
+- NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)
+- NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)
+- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vise versa, browse mode state is now reported appropriately. (#8846)
+- NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
+
+
+== Changes for Developers ==
+- You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
 
 
 = 2019.1 =

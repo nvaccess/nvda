@@ -1615,23 +1615,23 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 更改高级设置后，您可能希望恢复高级设置为默认值。
 如果您不确定设置是否已更改，您可能也会需要恢复高级设置为默认值。
 
-==== Enable loading custom code from Developer Scratchpad Directory ====[AdvancedSettingsEnableScratchpad]
-在为NVDA开发附加组件时，能够在编写代码时对其进行测试非常有用。
-启用此选项后，NVDA允许从NVDA用户配置目录中的特殊开发人员暂存器目录加载自定义appModules，globalPlugins，brailleDisplayDrivers和synthDrivers。
-以前NVDA会直接从用户配置目录加载自定义代码，无法禁用此功能。
-默认情况下，此选项处于关闭状态，确保在用户明确知晓的情况下，未在NVDA中运行未经测试的代码。
-如果您希望将自定义代码分发给其他人，则应将其打包为NVDA插件。
+==== 允许从开发者实验目录加载代码 ====[AdvancedSettingsEnableScratchpad]
+在为NVDA开发插件时，能够边写边测试会给开发者带来很大便利。
+启用此选项后，NVDA允许从NVDA用户配置目录中特殊的开发者实验目录目录加载自定义appModules，globalPlugins，brailleDisplayDrivers和synthDrivers。
+以前NVDA会直接从用户配置目录加载自定义代码而且不提供关闭加载的选项，这种做法不太安全。
+默认情况下，此选项处于关闭状态，可以确保用户仅仅在明确了解的情况下，用NVDA运行未经测试的代码。
+如果您希望将代码分发给其他人，则应将其打包为NVDA插件。
 
-==== Open Developer Scratchpad Directory ====[AdvancedSettingsOpenScratchpadDir]
-This button opens the directory where you can place custom code while developing it.
-This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
+==== 打开开发者实验目录 ====[AdvancedSettingsOpenScratchpadDir]
+此按钮可打开开发者实验目录。
+仅当用户允许从开发者实验目录加载代码时，才会启用此按钮。
  
-==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
-When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility api in order to fetch information from Microsoft Word document controls.
-This includes in Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
- For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
-However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
-We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
+==== 在Word里使用Microsoft UI Automation Microsoft UI Automation是微软的最新无障碍接口 简称UIA  ====[AdvancedSettingsUseUiaForWord]
+启用此选项后，NVDA将尝试使用UIA这个无障碍接口从Word文档控件中获取信息。
+这包括Microsoft Word本身，以及Microsoft Outlook消息查看器和编写器。
+  对于在Windows 10上运行的最新版本的Office 2016或者Office 365，UIA能够获取的信息和原来的方式差不多，而且响应速度更快。
+但是，在某些版本的Office中可能存在某些未公开或未正确显示的信息，这意味着UIA支持不好用。
+我们建议大多数用户不要启用此功能，但我们欢迎Office 2016或者Office 365的用户测试此功能并提供反馈。
 
 ==== 光标移动超时（单位是千分之一秒） ====[AdvancedSettingsCaretMoveTimeout]
 此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
