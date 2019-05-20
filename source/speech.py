@@ -2530,7 +2530,8 @@ _manager = _SpeechManager()
 def clearTypedWordBuffer():
 	"""
 	Forgets any word currently being built up with typed characters for speaking. 
-	This should be called when the user's context changes such that they could no longer complete the word (such as a focus change or choosing to move the caret).
+	This should be called when the user's context changes such that they could no longer 
+	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	global curWordChars
 	curWordChars=[]
