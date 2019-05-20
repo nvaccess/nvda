@@ -480,5 +480,5 @@ class LanguageInfo(driverHandler.StringParameterInfo):
 	def __init__(self, id):
 		"""Given a language ID (locale name) the description is automatically calculated."""
 		displayName = languageHandler.getLanguageDescription(id)
-		super(LanguageInfo,self).__init__(ID, displayName)
+		super(LanguageInfo,self).__init__(id, displayName)
 
