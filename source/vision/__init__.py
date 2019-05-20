@@ -131,12 +131,14 @@ class VisionEnhancementProvider(driverHandler.Driver):
 			import cursorManager
 			if isinstance(obj, cursorManager.CursorManager):
 				obj = None
+			return obj
 		elif context == CONTEXT_BROWSEMODE:
 			obj = api.getCaretObject()
 			# Import late to avoid circular import
 			import cursorManager
 			if not isinstance(obj, cursorManager.CursorManager):
 				obj = None
+			return obj
 		elif context == CONTEXT_REVIEW:
 			return api.getReviewPosition().obj
 		elif context == CONTEXT_NAVIGATOR:
