@@ -362,3 +362,39 @@ class MessageDialog(DPIScaledDialog):
 		if evt.IsShown():
 			self._playSound()
 		evt.Skip()
+
+
+class EnhancedInputSlider(wx.Slider):
+
+	def __init__(self,*args, **kwargs):
+		super(EnhancedInputSlider,self).__init__(*args,**kwargs)
+		self.Bind(wx.EVT_CHAR, self.onSliderChar)
+
+	def SetValue(self,i):
+		super(EnhancedInputSlider, self).SetValue(i)
+		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
+		evt.SetInt(i)
+		self.ProcessEvent(evt)
+		# HACK: Win events don't seem to be sent for certain explicitly set values,
+		# so send our own win event.
+		# This will cause duplicates in some cases, but NVDA will filter them out.
+		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
+
+	def onSliderChar(self, evt):
+		key = evt.KeyCode
+		if key == wx.WXK_UP:
+			newValue = min(self.Value + self.LineSize, self.Max)
+		elif key == wx.WXK_DOWN:
+			newValue = max(self.Value - self.LineSize, self.Min)
+		elif key == wx.WXK_PAGEUP:
+			newValue = min(self.Value + self.PageSize, self.Max)
+		elif key == wx.WXK_PAGEDOWN:
+			newValue = max(self.Value - self.PageSize, self.Min)
+		elif key == wx.WXK_HOME:
+			newValue = self.Max
+		elif key == wx.WXK_END:
+			newValue = self.Min
+		else:
+			evt.Skip()
+			return
+		self.SetValue(newValue)

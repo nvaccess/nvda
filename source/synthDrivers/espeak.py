@@ -14,6 +14,7 @@ import languageHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, BooleanSynthSetting, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
+from driverHandler import BooleanDriverSetting
 
 class SynthDriver(SynthDriver):
 	name = "espeak"
