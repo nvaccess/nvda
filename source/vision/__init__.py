@@ -103,21 +103,6 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		"""Returns the roles supported by this provider."""
 		return frozenset(role for role, baseCls in ROLE_TO_CLASS_MAP.items() if issubclass(cls, baseCls))
 
-	def _get_running(self):
-		"""Returns whether the provider is running.
-		This is required for third party software, which runs in a separate process.
-		Providers that run out of the NVDA process should override this method.
-		"""
-		return True
-
-	def _get_enabled(self):
-		"""Returns whether the provider is enabled.
-		This differs from L{running}, as a provider could be temporarily disabled
-		while still active in the background.
-		By convension, this should always return C{False} when not running.
-		"""
-		return self.running and bool(self.activeRoles)
-
 	@classmethod
 	def getContextObject(cls, context):
 		"""Gets the appropriate NVDAObject or CursorManager associated with the provided context."""
@@ -291,8 +276,6 @@ class Highlighter(VisionEnhancementProvider):
 		"""Gets the contexts for which the highlighter is enabled.
 		If L{enabled} is C{False} this returns an empty tuple.
 		"""
-		if not self.enabled:
-			return ()
 		return tuple(
 			context for context in self.supportedHighlightContexts
 			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
@@ -389,7 +372,7 @@ class Magnifier(VisionEnhancementProvider):
 		"""Returns C{True} if the magnifier is magnifying the screen, C{False} otherwise.
 		By default, this property is based on L{enabled} and L{magnificationLevel}
 		"""
-		return self.enabled and self.magnificationLevel > 1.0
+		return ROLE_MAGNIFIER in self.activeRoles and self.magnificationLevel > 1.0
 
 	def _get_enabledTrackingContexts(self):
 		"""Gets the contexts for which the magnifier is enabled.
@@ -606,7 +589,7 @@ class VisionHandler(AutoPropertyObject):
 			# Providers are singletons.
 			# Get a new or current instance of the provider
 			providerInst = providerCls.__new__(providerCls)
-			initiallyEnabled = providerInst.enabled
+			initiallyEnabled = bool(providerInst.activeRoles)
 			if initiallyEnabled:
 				log.debug("Provider %s is already active" % name)
 			# Terminate the provider for the roles that overlap between the provided roles and the active roles.
