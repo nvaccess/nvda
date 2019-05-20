@@ -28,7 +28,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Speech settings
 [speech]
-	# The synthesiser to use
+	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
@@ -138,6 +138,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
+	enableOnPageLoad = boolean(default=true)
+	autoFocusFocusableElements = boolean(default=True)
 
 [touch]
 	touchTyping = boolean(default=False)

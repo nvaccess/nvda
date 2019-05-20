@@ -184,6 +184,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def report(self,readUnit=None):
 		info=self.textInfo
+		# If we are dealing with a form field, ensure we don't read the whole content if it's an editable text.
+		if self.itemType == "formField":
+			if self.obj.role == controlTypes.ROLE_EDITABLETEXT:
+				readUnit = textInfos.UNIT_LINE
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -194,7 +198,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
 
 	def activate(self):
-		self.textInfo.obj._activatePosition(self.textInfo)
+		self.textInfo.obj._activatePosition(info=self.textInfo)
 
 	def moveTo(self):
 		info=self.textInfo.copy()
@@ -257,6 +261,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
+
+	def event_treeInterceptor_gainFocus(self):
+		"""Triggered when this browse mode interceptor gains focus.
+		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
+		"""
+		reportPassThrough(self)
 
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
@@ -455,7 +466,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except NotImplementedError:
 			log.debugWarning("doAction not implemented")
 
-	def _activatePosition(self,obj=None):
+	def _activatePosition(self, obj=None):
 		if not obj:
 			obj=self.currentNVDAObject
 			if not obj:
@@ -478,9 +489,29 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
-		self._activatePosition()
+		if  config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._activatePosition()
+		else:
+			self._focusLastFocusableObject(activatePosition=True)
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
+
+	def _focusLastFocusableObject(self, activatePosition=False):
+		obj = self._lastFocusableObj
+		if not obj:
+			return
+		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
+			obj.setFocus()
+			speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+		if activatePosition:
+			self._activatePosition(obj=obj)
+
+	def script_passThrough(self,gesture):
+		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._focusLastFocusableObject()
+		gesture.send()
+	# Translators: the description for the passThrough script on browseMode documents.
+	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -501,6 +532,17 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
+		"kb:control+enter": "passThrough",
+		"kb:control+numpadEnter": "passThrough",
+		"kb:shift+enter": "passThrough",
+		"kb:shift+numpadEnter": "passThrough",
+		"kb:control+shift+enter": "passThrough",
+		"kb:control+shift+numpadEnter": "passThrough",
+		"kb:alt+enter": "passThrough",
+		"kb:alt+numpadEnter": "passThrough",
+		"kb:applications": "passThrough",
+		"kb:shift+applications": "passThrough",
+		"kb:shift+f10": "passThrough",
 	}
 
 # Add quick navigation scripts.
@@ -613,8 +655,7 @@ qn("formField", key="f",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous form field"),
-	readUnit=textInfos.UNIT_LINE)
+	prevError=_("no previous form field"))
 qn("list", key="l",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next list"),
@@ -815,7 +856,7 @@ class ElementsListDialog(wx.Dialog):
 
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		filterText = _("Filt&er by:")
+		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
 		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
@@ -1118,6 +1159,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastProgrammaticScrollTime = None
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		self._lastFocusObj = None
+		self._lastFocusableObj = None
 		self._hadFirstGainFocus = False
 		self._enteringFromOutside = True
 		# We need to cache this because it will be unavailable once the document dies.
@@ -1139,10 +1181,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
-		"""Triggered when this browse mode document gains focus.
-		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
-		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
-		"""
 		doSayAll=False
 		hadFirstGainFocus=self._hadFirstGainFocus
 		if not hadFirstGainFocus:
@@ -1203,13 +1241,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""
 		raise NotImplementedError
 
-	def _activatePosition(self, info=None):
-		obj=None
+	def _activatePosition(self, obj=None, info=None):
 		if info:
 			obj=info.NVDAObjectAtStart
 			if not obj:
 				return
-		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj)
+		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj=obj)
 
 	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
 		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
@@ -1225,6 +1262,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
+			self._lastFocusableObj = None
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
@@ -1234,10 +1272,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
+			followBrowseModeFocus= config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 			if obj==self.rootNVDAObject:
 				return
-			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-				focusObj.setFocus()
+			if followBrowseModeFocus:
+				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+					focusObj.setFocus()
+			else:
+				self._lastFocusableObj = focusObj
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
@@ -1293,6 +1335,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
+		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._focusLastFocusableObject()
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
@@ -1475,6 +1519,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				if (
+					not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+					and self._lastFocusableObj
+					and obj == self._lastFocusableObj
+					and obj is not self._lastFocusableObj
+				):
+					speech.speakObject(self._lastFocusableObj,controlTypes.REASON_CHANGE)
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()

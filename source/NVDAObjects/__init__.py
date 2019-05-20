@@ -255,7 +255,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	@staticmethod
 	def objectFromPoint(x,y):
-		"""Retreaves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
+		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		@param x: the x coordinate.
 		@type x: int
 		@param y: the y coordinate.
@@ -269,7 +269,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	@staticmethod
 	def objectWithFocus():
-		"""Retreaves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
+		"""Retrieves the object representing the control currently with focus in the Operating System. This differens from NVDA's focus object as this focus object is the real focus object according to the Operating System, not according to NVDA.
 		@return: the object with focus.
 		@rtype: L{NVDAObject}
 		"""
@@ -287,7 +287,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	@staticmethod
 	def objectInForeground():
-		"""Retreaves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
+		"""Retrieves the object representing the current foreground control according to the Operating System. This differes from NVDA's foreground object as this object is the real foreground object according to the Operating System, not according to NVDA.
 		@return: the foreground object
 		@rtype: L{NVDAObject}
 		"""
@@ -343,7 +343,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 	shouldCreateTreeInterceptor = True
 
 	def _get_treeInterceptor(self):
-		"""Retreaves the treeInterceptor associated with this object.
+		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
 		@return: the treeInterceptor
 		@rtype: L{treeInterceptorHandler.TreeInterceptor}
@@ -372,7 +372,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 			self._treeInterceptor=None
 
 	def _get_appModule(self):
-		"""Retreaves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
+		"""Retrieves the appModule representing the application this object is a part of by asking L{appModuleHandler}.
 		@return: the appModule
 		@rtype: L{appModuleHandler.AppModule}
 		"""
@@ -418,15 +418,15 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		return ""
 
 	def _get_controllerFor(self):
-		"""Retreaves the object/s that this object controls."""
+		"""Retrieves the object/s that this object controls."""
 		return []
 
 	def _get_actionCount(self):
-		"""Retreaves the number of actions supported by this object."""
+		"""Retrieves the number of actions supported by this object."""
 		return 0
 
 	def getActionName(self,index=None):
-		"""Retreaves the name of an action supported by this object.
+		"""Retrieves the name of an action supported by this object.
 		If index is not given then the default action will be used if it exists.
 		@param index: the optional 0-based index of the wanted action.
 		@type index: int
@@ -442,7 +442,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		raise NotImplementedError
 
 	def _get_defaultActionIndex(self):
-		"""Retreaves the index of the action that is the default."""
+		"""Retrieves the index of the action that is the default."""
 		return 0
 
 	def _get_keyboardShortcut(self):
@@ -458,7 +458,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		raise NotImplementedError
 
 	def _get_states(self):
-		"""Retreaves the current states of this object (example: selected, focused).
+		"""Retrieves the current states of this object (example: selected, focused).
 		@return: a set of  STATE_* constants from L{controlTypes}.
 		@rtype: set of int
 		"""
@@ -487,7 +487,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
 
 	def _get_parent(self):
-		"""Retreaves this object's parent (the object that contains this object).
+		"""Retrieves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
 		@rtype: L{NVDAObject} or None
 		"""
@@ -503,35 +503,35 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		return parent
 
 	def _get_next(self):
-		"""Retreaves the object directly after this object with the same parent.
+		"""Retrieves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
 		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
 	def _get_previous(self):
-		"""Retreaves the object directly before this object with the same parent.
+		"""Retrieves the object directly before this object with the same parent.
 		@return: the previous object if it exists else None.
 		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
 	def _get_firstChild(self):
-		"""Retreaves the first object that this object contains.
+		"""Retrieves the first object that this object contains.
 		@return: the first child object if it exists else None.
 		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
 	def _get_lastChild(self):
-		"""Retreaves the last object that this object contains.
+		"""Retrieves the last object that this object contains.
 		@return: the last child object if it exists else None.
 		@rtype: L{NVDAObject} or None
 		"""
 		return None
 
 	def _get_children(self):
-		"""Retreaves a list of all the objects directly contained by this object (who's parent is this object).
+		"""Retrieves a list of all the objects directly contained by this object (who's parent is this object).
 		@rtype: list of L{NVDAObject}
 		"""
 		children=[]
@@ -553,13 +553,45 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		return self.children[index]
 
 	def _get_rowNumber(self):
-		"""Retreaves the row number of this object if it is in a table.
+		"""Retrieves the row number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_presentationalRowNumber(self):
+		"""
+		An optional version of the rowNumber property 
+		used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, 
+		yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  rowNumber might be row 2 of 10, 
+		the user needs to  be told it is perhaps row 500 (taking all virtual rows into account).
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		then this property should not be implemented.
 		@rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_columnNumber(self):
-		"""Retreaves the column number of this object if it is in a table.
+		"""Retrieves the column number of this object if it is in a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_presentationalColumnNumber(self):
+		"""
+		An optional version of the columnNumber property 
+		used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, 
+		yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  columnNumber might be column 2 of 10, 
+		the user needs to  be told it is perhaps column 500 (taking all virtual columns into account).
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		then this property should not be implemented.
 		@rtype: int
 		"""
 		raise NotImplementedError
@@ -573,13 +605,45 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		
 
 	def _get_rowCount(self):
-		"""Retreaves the number of rows this object contains if its a table.
+		"""Retrieves the number of rows this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_presentationalRowCount(self):
+		"""
+		An optional version of the rowCount property 
+		used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, 
+		yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  rowCount might be 10, 
+		the user needs to  be told the table really has 1000 rows. 
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		then this property should not be implemented.
 		@rtype: int
 		"""
 		raise NotImplementedError
 
 	def _get_columnCount(self):
-		"""Retreaves the number of columns this object contains if its a table.
+		"""Retrieves the number of columns this object contains if its a table.
+		@rtype: int
+		"""
+		raise NotImplementedError
+
+	def _get_presentationalColumnCount(self):
+		"""
+		An optional version of the columnCount property 
+		used purely for speech and braille presentation if implemented.
+		This is never used for navigational logic.
+		This property should be implemented if the table has virtual content which may not all be loaded at one time.
+		For example, a table with 1000 rows and 1000 columns, 
+		yet the table only shows perhaps 10 rows by 10 columns at a time.
+		Although the  columnCount might be 10, 
+		the user needs to  be told the table really has 1000 columns. 
+		If the underlying APIs do not distinguish between virtual and physical cell coordinates, 
+		then this property should not be implemented.
 		@rtype: int
 		"""
 		raise NotImplementedError
@@ -609,7 +673,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		raise NotImplementedError
 
 	def _get_table(self):
-		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
+		"""Retrieves the object that represents the table that this object is contained in, if this object is a table cell.
 		@rtype: L{NVDAObject}
 		"""
 		raise NotImplementedError
@@ -723,13 +787,13 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		return child
 
 	def _get_childCount(self):
-		"""Retreaves the number of children this object contains.
+		"""Retrieves the number of children this object contains.
 		@rtype: int
 		"""
 		return len(self.children)
 
 	def _get_activeChild(self):
-		"""Retreaves the child of this object that currently has, or contains, the focus.
+		"""Retrieves the child of this object that currently has, or contains, the focus.
 		@return: the active child if it has one else None
 		@rtype: L{NVDAObject} or None
 		"""
@@ -759,21 +823,21 @@ Tries to force this object to take the focus.
 		raise NotImplementedError
 
 	def _get_labeledBy(self):
-		"""Retreaves the object that this object is labeled by (example: the static text label beside an edit field).
+		"""Retrieves the object that this object is labeled by (example: the static text label beside an edit field).
 		@return: the label object if it has one else None.
 		@rtype: L{NVDAObject} or None 
 		"""
 		return None
 
 	def _get_positionInfo(self):
-		"""Retreaves position information for this object such as its level, its index with in a group, and the number of items in that group.
+		"""Retrieves position information for this object such as its level, its index with in a group, and the number of items in that group.
 		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
 		@rtype: dict
 		"""
 		return {}
 
 	def _get_processID(self):
-		"""Retreaves an identifyer of the process this object is a part of.
+		"""Retrieves an identifyer of the process this object is a part of.
 		@rtype: int
 		"""
 		raise NotImplementedError

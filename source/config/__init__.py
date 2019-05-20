@@ -137,13 +137,15 @@ def getSystemConfigPath():
 			pass
 	return None
 
+SCRATCH_PAD_ONLY_DIRS = ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers')
+
 def getScratchpadDir(ensureExists=False):
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
 	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
-		for subdir in ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers'):
+		for subdir in SCRATCH_PAD_ONLY_DIRS:
 			subpath=os.path.join(path,subdir)
 			if not os.path.isdir(subpath):
 				os.makedirs(subpath)
@@ -269,13 +271,20 @@ def setSystemConfigToCurrentConfig():
 def _setSystemConfig(fromPath):
 	import installer
 	toPath=os.path.join(sys.prefix.decode('mbcs'),'systemConfig')
+	log.debug("Copying config to systemconfig dir: %s", toPath)
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
-	for curSourceDir,subDirs,files in os.walk(fromPath):
-		if curSourceDir==fromPath:
-			curDestDir=toPath
+	for curSourceDir, subDirs, files in os.walk(fromPath):
+		if curSourceDir == fromPath:
+			curDestDir = toPath
+			# Don't copy from top-level config dirs we know will be ignored due to security risks.
+			removeSubs = set(SCRATCH_PAD_ONLY_DIRS).intersection(subDirs)
+			for subPath in removeSubs:
+				log.debug("Ignored folder that may contain unpackaged addons: %s", subPath)
+				subDirs.remove(subPath)
 		else:
-			curDestDir=os.path.join(toPath,os.path.relpath(curSourceDir,fromPath))
+			relativePath = os.path.relpath(curSourceDir, fromPath)
+			curDestDir = os.path.join(toPath, relativePath)
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
 		for f in files:
@@ -568,7 +577,7 @@ class ConfigManager(object):
 
 	def createProfile(self, name):
 		"""Create a profile.
-		@param name: The name of the profile ot create.
+		@param name: The name of the profile to create.
 		@type name: basestring
 		@raise ValueError: If a profile with this name already exists.
 		"""
@@ -579,6 +588,10 @@ class ConfigManager(object):
 			raise ValueError("A profile with the same name already exists: %s" % name)
 		# Just create an empty file to make sure we can.
 		file(fn, "w")
+		# Register a script for the new profile.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.addScriptForProfile(name)
 
 	def deleteProfile(self, name):
 		"""Delete a profile.
@@ -592,6 +605,10 @@ class ConfigManager(object):
 		if not os.path.isfile(fn):
 			raise LookupError("No such profile: %s" % name)
 		os.remove(fn)
+		# Remove the script for the deleted profile from the script collector.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.removeScriptForProfile(name)
 		try:
 			del self._profileCache[name]
 		except KeyError:
@@ -654,6 +671,10 @@ class ConfigManager(object):
 				saveTrigs = True
 		if saveTrigs:
 			self.saveProfileTriggers()
+		# Rename the script for the profile.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.updateScriptForRenamedProfile(oldName, newName)
 		try:
 			profile = self._profileCache.pop(oldName)
 		except KeyError:
