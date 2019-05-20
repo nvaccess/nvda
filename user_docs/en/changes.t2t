@@ -16,7 +16,7 @@ What's New in NVDA
 - The Rate Boost option is now configurable from the Synth Settings Ring for supported speech synthesizers. (Currently eSpeak-NG and Windows OneCore). (#8934)
 - Configuration profiles can now be manually activated with gestures. (#4209)
  - The gesture must be configured in the "Input gestures" dialog.
-- Eclipse: Added support for autocompletion in code editor. (#5667)
+- In Eclipse, added support for autocompletion in code editor. (#5667)
  - Additionally, Javadoc information can be read from the editor when it is present by using NVDA+d.
 - Added an experimental option to the Advanced Settings panel that allows you to stop the system focus from following the browse mode cursor (Automatically set system focus to focusable elements). (#2039) Although this may not be suitable to turn off for all websites, this may fix: 
  - Rubber band effect: NVDA sporadically undoes the last browse mode keystroke by jumping to the previous location.
@@ -27,9 +27,9 @@ What's New in NVDA
 
 == Changes ==
 - Synthesizer volume is now increased and decreased by 5 instead of 10 when using the settings ring. (#6754)
-- Clarification to the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
+- Clarified the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
-- Updated liblouis braille translator to version 3.9.0 (#9439)
+- Updated liblouis braille translator to version 3.9.0. (#9439)
 - The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
 
 
@@ -39,17 +39,17 @@ What's New in NVDA
 - When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)
 - NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)
 - NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)
-- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vise versa, browse mode state is now reported appropriately. (#8846)
+- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)
 - NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
 - In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)
-- In the Windows 10 May 2019 update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when Windows Explorer has focus. (#9466)
+- In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)
 - Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)
 - In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)
 - In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)
 - In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)
 - Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
 - For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
-- The log can now be opened with control+F1 when there is no Dev info for the current navigator object. (#8613)
+- The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 
 
