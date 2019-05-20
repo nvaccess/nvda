@@ -1031,6 +1031,10 @@ This code is executed if a gain focus event is received by this object.
 		braille.handler.handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
 
+	def event_loseFocus(self):
+		# Forget the word currently being typed as focus is moving to a new control. 
+		speech.clearTypedWordBuffer()
+
 	def event_foreground(self):
 		"""Called when the foreground window changes.
 		This method should only perform tasks specific to the foreground window changing.
