@@ -106,10 +106,10 @@ class VisionEnhancementProvider(driverHandler.Driver):
 			obj = cls.getContextObject(context)
 		if not obj:
 			raise LookupError
+		if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough:
+			obj = obj.treeInterceptor
 		if context == CONTEXT_CARET:
-			if getattr(obj, "treeInterceptor", None) and not obj.treeInterceptor.passThrough:
-				obj = obj.treeInterceptor
-			elif isinstance(obj, NVDAObjects.NVDAObject):
+			if isinstance(obj, NVDAObjects.NVDAObject):
 				# Import late to avoid circular import
 				from displayModel import getCaretRect
 				# Check whether there is a caret in the window.
@@ -119,7 +119,12 @@ class VisionEnhancementProvider(driverHandler.Driver):
 				except RuntimeError:
 					if not obj._hasNavigableText:
 						return None
-		if context in (CONTEXT_CARET, CONTEXT_BROWSEMODE):
+		# Import late to avoid circular import
+		import treeInterceptorHandler
+		if (
+			context in (CONTEXT_CARET, CONTEXT_BROWSEMODe)
+			or isinstance(obj, treeInterceptorHandler.TreeInterceptor)
+		):
 			try:
 				caretInfo = obj.makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError):
@@ -130,7 +135,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 					# There is nothing to do here
 					raise LookupError
 			return cls._getRectFromTextInfo(caretInfo)
-		assert isinstance(obj, NVDAObjects.NVDAObject), "Unexpected object type"
+		assert isinstance(obj, NVDAObjects.NVDAObject), "Unexpected object type %r" % obj
 		location = obj.location
 		if not location:
 			raise LookupError
