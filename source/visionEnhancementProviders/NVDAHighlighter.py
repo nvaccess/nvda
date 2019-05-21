@@ -98,7 +98,8 @@ class VisionEnhancementProvider(Highlighter):
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
-			self._highlighterThread.join()
+			# Joining the thread here somehow stops the quit message from arriving.
+			#self._highlighterThread.join()
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		super(VisionEnhancementProvider, self).terminateHighlighter()

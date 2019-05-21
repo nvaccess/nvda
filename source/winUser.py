@@ -697,18 +697,24 @@ class WinTimer(object):
 	The timer is automatically destroyed using KillTimer when the object is terminated using L{terminate}.
 	"""
 
-	def __init__(self, hwnd, idEvent, elapse, timerFunc):
+	def __init__(self, hwnd, idEvent, elapse, timerFunc=None):
 		"""Constructor
 
 		See https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-settimer
 		for a description of the parameters.
 		"""
 		self.hwnd = hwnd
+		self.idEvent = idEvent
 		self.elapse = elapse
 		self.timerFunc = timerFunc
-		self.idEvent = user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
-		if self.idEvent == 0:
+		self.ident = user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		if self.ident == 0:
 			raise WinError()
+		if not hwnd:
+			# If the window handle passed to SetTimer is valid
+			# we need to keep the original idEvent to terminate the timer.
+			# If no hwnd is given, we need to pass l{ident} when killing it.
+			self.idEvent = self.ident
 
 	def terminate(self):
 		"""Terminates the timer.
