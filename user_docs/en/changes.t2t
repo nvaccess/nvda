@@ -23,6 +23,7 @@ What's New in NVDA
  - Edit boxes steal system focus when arrowing down through them on some websites.
  - Browse mode keystrokes are slow to respond.
 - For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
+- Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
 
 
 == Changes ==
@@ -31,6 +32,7 @@ What's New in NVDA
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
 - Updated liblouis braille translator to version 3.9.0. (#9439)
 - The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
+- When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)
 
 
 == Bug Fixes ==
@@ -51,6 +53,7 @@ What's New in NVDA
 - For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
 - The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+- The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 
 
 == Changes for Developers ==
