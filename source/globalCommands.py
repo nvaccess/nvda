@@ -2462,17 +2462,17 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		if gui.shouldConfigProfileTriggersBeSuspended():
 			# Translators: a message indicating that configuration profiles can't be activated using gestures,
 			# due to profile activation being suspended.
-			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+			state = _("Can't change the active profile while an NVDA dialog is open")
 		elif config.conf.profiles[-1].name == name:
 			config.conf.manualActivateProfile(None)
 			# Translators: a message when a configuration profile is manually deactivated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+			state = _("{profile} profile deactivated").format(profile=name)
 		else:
 			config.conf.manualActivateProfile(name)
 			# Translators: a message when a configuration profile is manually activated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually activated").format(profile=name)
+			state = _("{profile} profile activated").format(profile=name)
 		ui.message(state)
 
 	@classmethod
