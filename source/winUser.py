@@ -692,3 +692,27 @@ def paint(hwnd, painStruct=None):
 	finally:
 		user32.EndPaint(hwnd, byref(paintStruct))
 
+class WinTimer(object):
+	"""Object that wraps the SetTimer function in user32.
+	The timer is automatically destroyed using KillTimer when the object is terminated using L{terminate}.
+	"""
+
+	def __init__(self, hwnd, idEvent, elapse, timerFunc):
+		"""Constructor
+
+		See https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-settimer
+		for a description of the parameters.
+		"""
+		self.hwnd = hwnd
+		self.elapse = elapse
+		self.timerFunc = timerFunc
+		self.idEvent = user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		if self.idEvent == 0:
+			raise WinError()
+
+	def terminate(self):
+		"""Terminates the timer.
+		This should be called from the thread that initiated the timer.
+		"""
+		if not user32.KillTimer(self.hwnd, self.idEvent):
+			raise WinError()

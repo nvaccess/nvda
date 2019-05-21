@@ -107,15 +107,16 @@ class VisionEnhancementProvider(Highlighter):
 		if _isDebug():
 			log.debug("Starting NVDAHighlighter thread")
 		window = self.window = HighlightWindow(self)
-		timer = 	winUser.user32.SetTimer(window.handle, 0, self.refreshInterval, None)
+		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
 		msg = MSG()
 		while winUser.getMessage(byref(msg),None,0,0):
 			winUser.user32.TranslateMessage(byref(msg))
 			winUser.user32.DispatchMessageW(byref(msg))
 		if _isDebug():
 			log.debug("Quit message received on NVDAHighlighter thread")
-		if not winUser.user32.KillTimer(window.handle, 0):
-			raise WinError()
+		if self.timer:
+			self.timer.terminate()
+			self.timer = None
 		if self.window:
 			self.window.destroy()
 			self.window = None
