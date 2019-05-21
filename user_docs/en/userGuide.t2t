@@ -1670,6 +1670,16 @@ This includes in Microsoft Word itself, and also the Microsoft Outlook message v
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
+==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
+Key: NVDA+8
+
+Enabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
+If enabled, this represents default behavior of NVDA as of version 2019.1 and before.
+Disabling this option will not automatically focus focusable elements when they are selected with the browse mode caret.
+This might result in faster browsing experience and better responsiveness in browse mode.
+The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
+This functionality is experimental as of NVDA 2019.2.
+
 ==== Caret move timeout (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
 If you find that NVDA seems to be incorrectly tracking the caret E.g. it seems to be always one character behind or is repeating lines, then you may wish to try increasing this value.
@@ -1789,7 +1799,7 @@ NVDA allows you to do this using configuration profiles.
 A configuration profile contains only those settings which are changed while the profile is being edited.
 Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings #NVDASettings] dialog, which apply to the entirety of NVDA.
 
-Configuration profiles can be manually activated.
+Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
 
 +++ Basic Management +++[ProfilesBasicManagement]
@@ -1855,6 +1865,14 @@ For example, you might wish to edit a manually activated profile or your normal 
 You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
 
 To toggle disabling triggers from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
++++ Activating a profile using input gestures +++[ConfigProfileGestures]
+For every profile you add, you are able to assign one or more input gestures to activate it.
+By default, configuration profiles do not have input gestures assigned.
+You can add gestures to activate a profile using the [Input Gestures dialog #InputGestures].
+Every profile has its own entry under the configuration profiles category.
+When you rename a profile, any gesture you added previously will still be available.
+Removing a profile will automatically delete the gestures associated with it.
 
 ++ Location of Configuration files ++[LocationOfConfigurationFiles]
 Portable versions of NVDA store all settings and add-ons in a directory called userConfig, found in the NVDA directory.
@@ -2037,13 +2055,11 @@ All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscien
 You will need the Freedom Scientific braille display drivers installed on your system.
 If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
-If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
 However, when configuring the display, you can explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
 This might be useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
-
-These displays do not yet support NVDA's automatic background braille display detection functionality.
+NVDA's automatic braille display detection will also recognize the display on USB or Bluetooth.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
