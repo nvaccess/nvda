@@ -64,6 +64,11 @@ class VisionEnhancementProvider(Highlighter):
 	}
 	refreshInterval = 100
 
+	# Default settings for parameters
+	highlightFocus = True
+	highlightNavigatorObj = True
+	highlightBrowseMode = True
+
 	_contextOptionLabelsWithAccelerators = {
 		# Translators: shown for a highlighter setting that toggles
 		# highlighting the system focus.
