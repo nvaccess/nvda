@@ -85,6 +85,10 @@ class VisionEnhancementProvider(Highlighter):
 			settings.append(self.HighlightSetting(context, self._contextOptionLabelsWithAccelerators[context]))
 		return settings
 
+	@classmethod
+	def check(cls):
+		return True
+
 	def initializeHighlighter(self):
 		super(VisionEnhancementProvider, self).initializeHighlighter()
 		winGDI.gdiPlusInitialize()
