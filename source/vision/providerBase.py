@@ -123,13 +123,12 @@ class VisionEnhancementProvider(driverHandler.Driver):
 			try:
 				caretInfo = obj.makeTextInfo(textInfos.POSITION_CARET)
 			except (NotImplementedError, RuntimeError):
-				pass
-			# Try a selection
-			try:
-				caretInfo = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-			except (NotImplementedError, RuntimeError):
-				# There is nothing to do here
-				raise LookupError
+				# Try a selection
+				try:
+					caretInfo = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+				except (NotImplementedError, RuntimeError):
+					# There is nothing to do here
+					raise LookupError
 			return cls._getRectFromTextInfo(caretInfo)
 		assert isinstance(obj, NVDAObjects.NVDAObject), "Unexpected object type"
 		location = obj.location
