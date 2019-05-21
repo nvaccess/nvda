@@ -184,16 +184,7 @@ class VisionHandler(AutoPropertyObject):
 		context = CONTEXT_FOCUS
 		if self.magnifier:
 			self.magnifier.trackToObject(obj, context=context)
-		# Estimate whether this object has a caret.
-		# Checking the _hasNavigableText property is usually a good guess,
-		# Excel being an exception to this rule.
-		# Import late to avoid circular import.
-		from NVDAObjects.window.excel import ExcelCell, ExcelSelection
-		mightHaveCaret = (
-			getattr(obj, "_hasNavigableText", False)
-			or isinstance(obj, (ExcelCell, ExcelSelection))
-		)
-		if mightHaveCaret:
+		if getattr(obj, "_hasNavigableText", False):
 			# This object most likely has a caret.
 			# Intentionally check this after tracking a magnifier to the object itself.
 			self.handleCaretMove(obj)
