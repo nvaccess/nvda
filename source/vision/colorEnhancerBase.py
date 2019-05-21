@@ -18,10 +18,10 @@ class ColorTransformationInfo(driverHandler.StringParameterInfo):
 	"""Represents a color transformation.
 	"""
 
-	def __init__(self,ID,name,value):
-		#: The value that constains the color transformation info (e.g. a matrix).
-		self.value=value
-		super(ColorTransformationInfo,self).__init__(ID,name)
+	def __init__(self, id, name, value):
+		#: The value that contains the color transformation info (e.g. a matrix).
+		self.value = value
+		super(ColorTransformationInfo,self).__init__(id, name)
 
 class ColorEnhancer(VisionEnhancementProvider):
 	"""A vision enhancement provider that changes the coloring of the screen.
