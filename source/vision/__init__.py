@@ -54,8 +54,13 @@ def getProviderList(excludeNegativeChecks=True):
 		try:
 			provider = getProvider(name)
 		except:
-			log.error("Error while importing vision enhancement provider %s" % name,
-				exc_info=True)
+			# Purposely catch everything.
+			# A provider can raise whatever exception it likes,
+			# therefore it is unknown what to expect.
+			log.error(
+				"Error while importing vision enhancement provider %s" % name,
+				exc_info=True
+			)
 			continue
 		try:
 			if not excludeNegativeChecks or provider.check():
@@ -67,8 +72,10 @@ def getProviderList(excludeNegativeChecks=True):
 			else:
 				log.debugWarning("Vision enhancement provider %s reports as unavailable, excluding" % provider.name)
 		except:
+			# Purposely catch everything else as we don't want one failing provider
+			# make it impossible to list all the others.
 			log.error("", exc_info=True)
-	providerList.sort(key=lambda d : d[1].lower())
+	providerList.sort(key=lambda d: d[1].lower())
 	return providerList
 
 def _isDebug():
