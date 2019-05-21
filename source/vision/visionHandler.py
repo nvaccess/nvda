@@ -58,7 +58,7 @@ class VisionHandler(AutoPropertyObject):
 			if name:
 				# Some providers, such as the highlighter, rely on wx being fully initialized,
 				# e.g. when they use an overlay window which parent is NVDA's main frame.
-				wx.CallAfter(self.setProvider, name, *roles)
+				wx.CallAfter(self.setProvider, name, roles)
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
 	def terminateProviderForRole(self, role):
@@ -67,7 +67,7 @@ class VisionHandler(AutoPropertyObject):
 			curProvider.terminate(role)
 			setattr(self, role, None)
 
-	def setProvider(self, name, *roles, **kwargs):
+	def setProvider(self, name, roles, temporary=False, catchExceptions=True):
 		"""Enables and activates the selected provider for the provided roles.
 		If there was a previous provider in use for a role,
 		that provider will be terminated for that role.
@@ -75,9 +75,8 @@ class VisionHandler(AutoPropertyObject):
 		@type name: str
 		@param roles: names of roles to enable the provider for.
 			Supplied values should be one of the C{ROLE_*} constants.
-			If no roles are provided, the provider is enabled for all the roles it supports.
-			This parameter can be suplied multiple times for multiple roles.
-		@type roles: str
+			if roles is empty, the provider is enabled for all the roles it supports.
+		@type roles: [str]
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
@@ -90,12 +89,6 @@ class VisionHandler(AutoPropertyObject):
 		@returns: Whether loading of the requested provider succeeded.
 		@rtype: bool
 		"""
-		# In python 2, we need to use a **kwargs handler for keyword arguments,
-		# because we also use a catch all for positional arguments.
-		# In python 3, this is no longer necessary.
-		temporary = kwargs.pop("temporary", False)
-		catchExceptions = kwargs.pop("catchExceptions", True)
-		assert not kwargs
 		if name in (None, "None"):
 			if not roles:
 				raise ValueError("No name and no roles provided")
@@ -103,6 +96,9 @@ class VisionHandler(AutoPropertyObject):
 				try:
 					self.terminateProviderForRole(role)
 				except:
+					# Purposely catch everything.
+					# A provider can raise whatever exception,
+					# therefore it is unknown what to expect.
 					log.error("Couldn't terminate provider for role %s" % role, exc_info=True)
 				if not temporary:
 					config.conf['vision'][role] = None
@@ -125,8 +121,8 @@ class VisionHandler(AutoPropertyObject):
 				log.debug("Provider %s is already active" % name)
 			# Terminate the provider for the roles that overlap between the provided roles and the active roles.
 			# For these roles, we want to reinitialize the provider.
-			overlappingRoles =  providerInst.activeRoles & roles
-			newRoles =  roles - overlappingRoles
+			overlappingRoles = providerInst.activeRoles & roles
+			newRoles = roles - overlappingRoles
 			if overlappingRoles:
 				providerInst.terminate(*overlappingRoles)
 			# Properly terminate  providers that are active for the current role.
@@ -152,7 +148,7 @@ class VisionHandler(AutoPropertyObject):
 			if not catchExceptions:
 				raise
 			log.error("Error initializing vision enhancement provider %s for roles %s" % (name, ", ".join(roles)), exc_info=True)
-			self.setProvider(None, *roles, temporary=True)
+			self.setProvider(None, roles, temporary=True)
 			return False
 
 	def _get_initializedProviders(self):
@@ -265,8 +261,8 @@ class VisionHandler(AutoPropertyObject):
 		for role in ROLE_DESCRIPTIONS.keys():
 			newProviderName = config.conf['vision'][role]
 			curProvider = getattr(self, role)
-			if  not curProvider or newProviderName != curProvider.name:
-				self.setProvider(newProviderName, role)
+			if not curProvider or newProviderName != curProvider.name:
+				self.setProvider(newProviderName, (role,))
 
 	def initialFocus(self):
 		if not self.enabled or not api.getDesktopObject():
