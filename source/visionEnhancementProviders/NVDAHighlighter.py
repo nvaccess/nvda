@@ -17,7 +17,6 @@ from ctypes.wintypes import COLORREF, MSG
 import winUser
 from logHandler import log
 from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
-from locationHelper import RectLTRB, RectLTWH
 import config
 from collections import namedtuple
 import threading
@@ -110,7 +109,7 @@ class VisionEnhancementProvider(Highlighter):
 		window = self.window = HighlightWindow(self)
 		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
 		msg = MSG()
-		while winUser.getMessage(byref(msg),None,0,0):
+		while winUser.getMessage(byref(msg), None, 0, 0):
 			winUser.user32.TranslateMessage(byref(msg))
 			winUser.user32.DispatchMessageW(byref(msg))
 		if _isDebug():
@@ -146,7 +145,7 @@ class HighlightWindow(CustomWindow):
 	def updateLocationForDisplays(self):
 		if _isDebug():
 			log.debug("Updating NVDAHighlighter window location for displays")
-		displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+		displays = [wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount())]
 		screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 		# Hack: Windows has a "feature" that will stop desktop shortcut hotkeys from working when a window is full screen.
 		# Removing one line of pixels from the bottom of the screen will fix this.
@@ -154,7 +153,6 @@ class HighlightWindow(CustomWindow):
 		top = minPos.y
 		width = screenWidth
 		height = screenHeight-1
-		self.location = RectLTWH(left, top, width, height)
 		winUser.user32.ShowWindow(self.handle, winUser.SW_HIDE)
 		if not winUser.user32.SetWindowPos(
 			self.handle,
