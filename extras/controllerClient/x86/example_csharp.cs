@@ -55,7 +55,9 @@ namespace NVAccess
 		public static void Speak(string text, bool interrupt = true)
 		{
 			if (interrupt)
+			{
 				CancelSpeech();
+			}
 			nvdaController_speakText(text);
 		}
 	}
@@ -66,7 +68,9 @@ namespace NVAccess
 		{
 			// Test if NVDA is running.
 			if (!NVDA.IsRunning)
+			{
 				Console.Error.WriteLine("Error communicating with NVDA.");
+			}
 			else
 			{
 				// Speak and braille some messages.
