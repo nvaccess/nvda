@@ -858,6 +858,10 @@ class UIA(Window):
 		except ValueError:
 			pass
 
+		# Support Windows Console's UIA interface
+		if self.windowClassName == "ConsoleWindowClass" and self.UIAElement.cachedAutomationId == "Text Area" and config.conf['UIA']['consoleUIA']:
+			from .ConsoleUIA import consoleUIA
+			clsList.append(consoleUIA)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
