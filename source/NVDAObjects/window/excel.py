@@ -610,14 +610,14 @@ class ExcelBase(Window):
 			text=_("{start} through {end}").format(start=textList[0], end=textList[1])
 		return text
 
-	def _getDropdown(self):
+	def _getDropdown(self, selection=None):
 		w=winUser.getAncestor(self.windowHandle,winUser.GA_ROOT)
 		if not w:
 			log.debugWarning("Could not get ancestor window (GA_ROOT)")
 			return
 		obj=Window(windowHandle=w,chooseBestAPI=False)
 		if not obj:
-			log.debugWarning("Could not instnaciate NVDAObject for ancestor window")
+			log.debugWarning("Could not instanciate NVDAObject for ancestor window")
 			return
 		threadID=obj.windowThreadID
 		while not eventHandler.isPendingEvents("gainFocus"):
@@ -627,6 +627,8 @@ class ExcelBase(Window):
 				return
 			if obj.windowClassName=='EXCEL:':
 				break
+		if selection:
+			obj.parent = selection
 		return obj
 
 	def _getSelection(self):
@@ -666,16 +668,13 @@ class Excel7Window(ExcelBase):
 	def _get_excelWindowObject(self):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
-	def event_gainFocus(self):
+	def _get_focusRedirect(self):
 		selection=self._getSelection()
-		dropdown=self._getDropdown()
+		dropdown=self._getDropdown(selection=selection)
 		if dropdown:
-			if selection:
-				dropdown.parent=selection
-			eventHandler.executeEvent('gainFocus',dropdown)
-			return
+			return dropdown
 		if selection:
-			eventHandler.executeEvent('gainFocus',selection)
+			return selection
 
 class ExcelWorksheet(ExcelBase):
 
