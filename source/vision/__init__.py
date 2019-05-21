@@ -20,6 +20,7 @@ from .highlighterBase import Highlighter
 from .magnifierBase import Magnifier
 from .colorEnhancerBase import ColorEnhancer
 from .visionHandler import VisionHandler, getProvider
+import pkgutil
 import visionEnhancementProviders
 import config
 from logHandler import log
