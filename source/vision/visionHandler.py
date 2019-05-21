@@ -142,7 +142,14 @@ class VisionHandler(AutoPropertyObject):
 				setattr(self, role, providerInst)
 				if not temporary:
 					config.conf['vision'][role] = providerCls.name
-			self.initialFocus()
+			try:
+				self.initialFocus()
+			except:
+				# #8877: initialFocus might fail because NVDA tries to focus
+				# an object for which property fetching raises an exception.
+				# We should handle this more gracefully, since this is no reason
+				# to stop a provider from loading successfully.
+				log.debugWarning("Error in initial focus after provider load", exc_info=True)
 			return True
 		except:
 			if not catchExceptions:
