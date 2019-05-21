@@ -24,14 +24,24 @@ from collections import defaultdict
 def getProvider(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
-		return __import__("visionEnhancementProviders.%s" % moduleName, globals(), locals(), ("visionEnhancementProviders",)).VisionEnhancementProvider
+		return __import__(
+			"visionEnhancementProviders.%s" % moduleName,
+			globals(),
+			locals(),
+			("visionEnhancementProviders",)
+		).VisionEnhancementProvider
 	except ImportError as initialException:
 		if caseSensitive:
 			raise initialException
 		for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
 			if name.startswith('_') or name.lower() != moduleName.lower():
 				continue
-			return __import__("visionEnhancementProviders.%s" % name, globals(), locals(), ("visionEnhancementProviders",)).VisionEnhancementProvider
+			return __import__(
+				"visionEnhancementProviders.%s" % name,
+				globals(),
+				locals(),
+				("visionEnhancementProviders",)
+			).VisionEnhancementProvider
 		else:
 			raise initialException
 
