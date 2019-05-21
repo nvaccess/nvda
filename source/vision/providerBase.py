@@ -122,7 +122,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		# Import late to avoid circular import
 		import treeInterceptorHandler
 		if (
-			context in (CONTEXT_CARET, CONTEXT_BROWSEMODe)
+			context in (CONTEXT_CARET, CONTEXT_BROWSEMODE)
 			or isinstance(obj, treeInterceptorHandler.TreeInterceptor)
 		):
 			try:
