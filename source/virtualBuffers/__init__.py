@@ -382,7 +382,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return "\r\n".join(blocks)
 
 	def activate(self):
-		self.obj._activatePosition(self)
+		self.obj._activatePosition(info=self)
 
 	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
@@ -693,6 +693,28 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			if fieldId == objId:
 				return item.field
 		raise LookupError
+
+	def _isNVDAObjectInApplication_noWalk(self, obj):
+		inApp = super(VirtualBuffer, self)._isNVDAObjectInApplication_noWalk(obj)
+		if inApp is not None:
+			return inApp
+		# If the object is in the buffer, it's definitely not in an application.
+		try:
+			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		except:
+			log.debugWarning("getIdentifierFromNVDAObject failed. "
+				"Object probably died while walking ancestors.", exc_info=True)
+			return None
+		node = VBufRemote_nodeHandle_t()
+		if not self.VBufHandle:
+			return None
+		try:
+			NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.VBufHandle, docHandle, objId,ctypes.byref(node))
+		except WindowsError:
+			return None
+		if node:
+			return False
+		return None
 
 	__gestures = {
 		"kb:NVDA+f5": "refreshBuffer",

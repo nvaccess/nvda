@@ -66,10 +66,6 @@ badUIAWindowClassNames=[
 	"FoxitDocWnd",
 ]
 
-Version=namedtuple('Version',('major','minor','build'))
-# The minimum version of Microsoft Word where we can trust that UI Automation is complete enough to use
-minMSWordUIAVersion=Version(16,0,9000)
-
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
 UIADialogClassNames=[
 	"#32770",
@@ -283,10 +279,15 @@ class UIAHandler(COMObject):
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
+	# The last UIAElement that received a UIA focus event
+	# This is updated no matter if this is a native element, the window is UIA blacklisted by NVDA, or  the element is proxied from MSAA 
+	lastFocusedUIAElement=None
+
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
+		self.lastFocusedUIAElement=sender
 		if not self.isNativeUIAElement(sender):
 			return
 		import NVDAObjects.UIA
@@ -366,9 +367,10 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# the window does support UIA natively, but
-			# MS Word documents now have a very usable UI Automation implementation. However,
+			# MS Word documents now have a fairly usable UI Automation implementation. However,
 			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
-			# Therefore refuse to use UIA for builds earlier than this, if we can inject in-process.
+			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
 			if (
 				# An MS Word document window 
 				windowClass=="_WwG" 
@@ -377,21 +379,7 @@ class UIAHandler(COMObject):
 				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
 				and not config.conf['UIA']['useInMSWordWhenAvailable']
 			):
-				# We can only safely check the version of known Office apps using the Word document control, as we know their versioning scheme.
-				# But if the Word Document control is used in other unknown apps we should just use UIA if it has been implemented.
-				if appModule.appName not in ('outlook','winword','excel'):
-					log.debugWarning("Unknown application using MS Word document control: %s"%appModule.appName)
-					return True
-				try:
-					versionMajor,versionMinor,versionBuild,versionPatch=[int(x) for x in appModule.productVersion.split('.')]
-				except Exception as e:
-					log.error("Error parsing version information %s, %s"%(appModule.productVersion,e))
-					return True
-				if (
-					versionMajor<minMSWordUIAVersion.major
-					or versionMajor==minMSWordUIAVersion.major and versionMinor==minMSWordUIAVersion.minor and versionBuild<minMSWordUIAVersion.build
-				):
-					return False
+				return False
 		return bool(res)
 
 	def isUIAWindow(self,hwnd):

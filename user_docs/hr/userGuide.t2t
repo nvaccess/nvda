@@ -107,9 +107,16 @@ Također postoji nekoliko opcija u ovom dijaloškom okviru koje su objašnjene i
 Nakon završetka instalacije, pojavit će se poruka da je instalacija uspješna.
 Kada pritisnete U redu, pokrenut ćete netom instaliranu kopiju.
 
++++ Upozorenje o Nekompatibilnim dodacima +++[InstallWithIncompatibleAddons]
+Ako već imate instalirane dodatke, može se pojaviti upozorenje koje označava potrebu deinstaliranja nekompatibilnih dodataka.
+Prije nego što ćete moći pritisnuti gumb nastavi, morat ćete označiti potvrdni okvir koji glasi "razumijem da će svi nekompatibilni dodaci biti onemogućeni".
+Također postoji gumb, koji omogućuje pregled nekompatibilnih dodataka.
+Pogledajte poglavlje [Dijaloški okvir nekompatibilni dodaci #incompatibleAddonsManager] za više informacija o ovom gumbu.
+
 +++ Pokreni na windows zaslonu za prijavu +++[StartAtWindowsLogon]
 Ova opcija vam omogućuje pokretanje NVDA na windows zaslonu za prijavu, prije nego što upišete lozinku.
 Ovo također uključuje kontrolu korisničkog računa i ostale sigurnosne zaslone.
+Ova je opcija uključena podrazumjevano za nove instalacije.
 
 +++ Napravi prečac na radnoj površini (ctrl+alt+F5) +++[CreateDesktopShortcut]
 Ova vam opcija omogućuje odabir između toga hoće li ili neće NVDA napraviti prečac na radnoj površini za njegovo pokretanje. 
@@ -940,8 +947,7 @@ Postoji puno jezika, međutim zadana opcija je "Korisnički zadano, Windows".
 Kad je ova opcija aktivna, NVDA koristi zadani jezik sustava.
 
 Imajte na umu da NVDA mora biti ponovno pokrenut kad mijenjate jezik.
-NVDA će vas pitati za ponovno pokretanje ako želite pospremiti učinjene promjene.
-Pritisnite u redu i NVDA će ponovno biti pokrenut.
+Kada se pojavi dijaloški okvir za potvrdu, odaberite "ponovno pekreni sada" ili "ponovno pokreni kasnije" ako želite koristiti novi jezik sada ili kasnije. ako je odabran gumb "Pokreni ponovno kasnije",, konfiguracija mora biti pospremljena (ručno ili koristeći opciju "pospremi konfiguraciju pri izlazu").
 
 ==== Spremi konfiguraciju pri izlazu ====[GeneralSettingsSaveConfig]
 Ova je opcija potvrdni okvir koji, kad je odabran, sprema konfiguraciju pri izlazu.
@@ -955,9 +961,17 @@ Kad nije odabran ovaj potvrdni okvir, NVDA će se odmah isključiti.
 Ova opcija je potvrdni okvir koji, kad je odabran, prouzrokuje da NVDA reproducira zvukove kad se pokrene ili isključi.
 
 ==== Razina loga ====[GeneralSettingsLogLevel]
-Ovo je odabirni okvir koji vam omogućuje odabir koliko će poruka u zapisniku NVDA prikazivati u pregledniku zapisnika kad je pokrenut.
+Ovo je odabirni okvir u kojem se može odabrati razina zapisnika NVDA.
 Zapravo, korisnici ovo ne bi trebali dirati, jer nije baš sve zapisano u zapisnik.
-Međutim, ako želite dati više informacija uz prijavu greške, ovo može biti korisna opcija.
+Međutim, ako želite dati više informacija u izvještaju o grešci, ili pak potpuno omogućiti ili onemogućiti zapisnik, onda je ova opcija korisna.
+
+Dostupne razine zapisnika jesu:
+- Onemogućeno: Osim kratke poruke o pokretanju, NVDA neće zapisivati ništa za svo vrijeme dok je pokrenut.
+- Info: NVDA će zapisivati osnovne informacije, poput poruke o pokretanju te informaciju korisnu za razvojne programere.
+- Debug warning: Upozorenja, koja ne prouzrokuju ozbiljne pogreške bit će zapisivana.
+- Ulaz/izlaz: Upisani znakovi s tipkovnice ili s brajičnog retka, kao i sve što je poslano govornoj jedinicibit će zapisivano. Ako se bojite za svoju privatnost, ne postavljajte ovu razinu.
+- Debug: Za razliku od info, upozorenja te ulaz/izlaz razina, bit će zapisivane dodatne poruke koje služe za ispravljanje greške. Baš kao i ulaz/izlaz, ako se bojite za svoju privatnost, ne biste trebali postavljati razinu zapisnika na ovu opciju.
+-
 
 ==== Automatski pokreni NVDA kad se prijavim u sustav windows ====[GeneralSettingsStartAfterLogOn]
 Ako je ova opcija omogućena, NVDA će se automatski pokrenuti kada se prijavite u windows.
@@ -1350,6 +1364,11 @@ Kad se ovaj potvrdni okvir odabere to uzrokuje da NVDA reproducira zvučni signa
 Ako je potvrdni okvir "reproduciraj zvučne koordinate prilikom pomicanja miša" označen, to znači da će jačina zvučnih koordinata biti određena po tome koliko je svijetao dio zaslona koji je pod mišem.
 Ovaj potvrdni okvir zadano nije odabran.
 
+==== Ignoriraj ulaz miša iz drugih aplikacija ====[MouseSettingsHandleMouseControl]
+Ova opcija omogućuje korisniku ignoriranje događaja miša (uključujući kretnje mišem i gumbe) koji su generirale druge aplikacije poput Teamviewera i drugih softvera za udaljenu kontrolu računala.
+Ova opcija je isključena podrazumjevano.
+Ako označite ovu opciju i pri tom imate uključenu opciju "omogući praćenje miša", NVDA neće izgovarati što je pod pokazivačem miša ako druga aplikacija iće miš.
+
 +++ Interakcija sa zaslonima osjetljivim na dodir +++[TouchInteraction]
 Ova kategorija postavki, koja je dostupna samo na računalima s instaliranim windowsima 8 ili višom verzijom,, omogućava podešavanje ponašanja NVDA sa zaslonima osjetljivim na dodir.
 Ova kategorija sadrži slijedeće opcije:
@@ -1583,6 +1602,45 @@ Ova kategorija sadrži slijedeće opcije:
 
 ==== Jezik prepoznavanja ====[Win10OcrSettingsRecognitionLanguage]
 Ovaj odabirni okvir omogućava izbor jezika koji će se koristiti za prepoznavanje sadržaja.
+
++++ Napredne postavke +++[AdvancedSettings]
+Upozorenje! Ove postavke mogu prouzroćiti nepravilno funkcionireanje NVDA, ako su konfigurirane nepravilno.
+Radite ove izmjene ako znate što radite, ili vas je na to uputio NVDA razvojni programer.
+
+==== Mijenjanje narednih postavki ====[AdvancedSettingsMakingChanges]
+U slučaju da želite promijeniti napredne postavke, kontrole moraju biti omogućene potvrdnim okvirom, kojim razumijete koje postavke mijenjate
+
+==== Vraćanje na zadane postavke ====[AdvancedSettingsRestoringDefaults]
+Gumb vraća zadane postavke, čak kada potvrdni okvir nije označen.
+Poslije testiranja izmjena, možda se želite vratiti na zadane vrijednosti.
+To isto može biti slučaj ako niste sigurni, jeste li promijenili postavke.
+
+==== Omogući pokretanje koda iz bilježnice razvojnog programera ====[AdvancedSettingsEnableScratchpad]
+Prilikom razvijanja NVDA dodataka, korisno je testirati kod prilikom pisanja istog.
+Kada je ova opcija omogućena, ista omogućava pokreatanje komponenti NVDA iy bilježnice NVDA razvojnog programera u vašom nvda konfiguracijskoj mapi.
+Prije su se NVDA komponente učitavale iz konfiguracijske mape bez mogučnosti onemogučavanja takvog ponašanja.
+Ova opcija je podrazumijevano isključena, kako bi korisnik bio siguran da se nekompatibilan kod neće izvršavati u NVDA čitaču ekrana.
+Ako želite distribuirati prilagođeni kod drugima, spakirajte ga kao NVDA dodatak.
+
+==== Otvori mapu bilježnica razvojnog programera ====[AdvancedSettingsOpenScratchpadDir]
+Ovaj gumb otvara mapu gdje je smješten prilagođeni kod kojeg trenutno razvijate.
+Ovaj gumb postoji, samo kada je uključena opcija "omogući bilježnicu razvojnog programere NVDA".
+
+==== Koristi UIA automation za pristup kontrolama Microsoft word dokumenata kada je to moguće ====[AdvancedSettingsUseUiaForWord]
+Kada je ova opcija uključena, NVDA će dohvaćati sve informacije iz Microsoft word dokumenata koristeći Microsoft UIA API.
+Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Outlooku.
+ Za zadnje inačice Microsoft Office 2016(365, ova podrška je skoro jednaka podrazumijevanoj podršci za Microsoft Word, uz tu razliku, da su performanse poboljšane.
+Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
+Još uvijek ne preporučujemo ukljućivanje ove opcije podrazumijevano, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu funkcionalnost, te da daju povratne informacije.
+
+==== Čekanje za pomicanje kursora u milisekundama ====[AdvancedSettingsCaretMoveTimeout]
+Ova opcija omogućuje povećanje ogranićenja čekanja, u kojem NVDA čeka da se pojavi pokazivač u polju za uređivanje.
+Ako mislite da je NVDA uvijek jedan nak iza ili ponavlja retke, tada biste htjeli povećati ovu vrijednost.
+
+==== Kategorije debugiranja ====[AdvancedSettingsDebugLoggingCategories]
+Potvrdni okviri u ovoj kategoriji omogućuju dodavanje kategorija debugiranja u zapisnik.
+Zapisivanje ovih poruka može prouzročiti pad performansi, te velike datoteke zapisnika.
+Uključite iste samo ako vas je na to naveo Programer NVDA razvojnog tima, u slučaju da, na primjer, ne radi brajični redak.
 
 ++ Dodatne postavke ++[MiscSettings]
 Osim [Postavki NVDA #NVDASettings] dijaloškog okvira, podizbornik postavke, sadrži slijedeće stavke koje su opisane ispod.
@@ -1822,20 +1880,36 @@ Kao i kod instalacije, NVDA mora ponovno biti pokrenut da bi dodatak bio potpuno
 Sve dok to ne učinite, status "uklanjanje" će se prikazivati za taj dodatak na popisu.
 
 Kako biste onemogućili dodatak, pritisnite gumb Onemogući..
-Kako biste   mnemogućili prethodno onemogućen dodatak, pritisnite gumb omogući.
+Kako biste   omogućili prethodno onemogućen dodatak, pritisnite gumb omogući.
 Možete onemogućiti dodatak, ako je status dodatka omogućen,, ili ga možete omogućiti ako je onemogućen.
 Pri svakom pritisku na gumb omogući-onemogući, stanje dodatka se mijenja kako bi pokazivalo na akciju koja će se izvršiti pri ponovnom pokretanju nvda.
-Ako je dodatak prethodno onemogućen, prikazat će se stanje "omogućeno poslije ponovnog pokretanja". ako je dodatak prethodno omogućen, prikazat će se status, onemogućeno poslije ponovnog pokretanja
+Ako je dodatak prethodno onemogućen", pokazat će se poruka onemogućen poslije ponovnog pokretanja".
+Ako je dodatak omogućen, pokazat će se poruka omogućeno poslije ponovnog pokretanja"
 Kao i prilikom uklanjanja i-ili deinstalacije dodataka, trebate ponovno pokrenuti nvda, kako bi vaše izmjene stupile na snagu.
 
 Upravitelj također ima gumb zatvori da biste zatvorili dijaloški okvir.
 Ako ste dodali, uklonili ili promijenili status dodataka, NVDA će vas najprije pitati želite li ga ponovno pokrenuti kako bi vaše promjene stupile na snagu.
 
-U prošlosti je bilo moguće proširiti funkcionalnost NVDA kopirajući dodatne dodatke i upravljačke programe u vašu korisničku mapu.
-Iako ih ova NVDA inačica može pokretati, oni neće biti prikazani u upravitelju dodataka.
-Najbolje je ukloniti ove datoteke iz vaše konfiguracije i instalirati  odgovarajući dodatak ako je dostupan.
+Neki stariji dodaci mogu biti nekompatibilni sa NVDA inačicom koju imate.
+Kada koristite stariju inačicu NVDA, neki noviji dodaci također mogu biti nekompatibilni.
+Pokušavajući instalirati nekompatibilan dodatak, iskočit će poruka o grešci i razlog, zašto je dodatak nekompatibilan.
+Kako biste provjerili nekompatibilne dodatke, možete koristiti "gumb pogledaj nekompatibilne dodatke" kako biste pokrenuli upravitelj nekompatibilnih dodataka.
 
 Kako biste pristupili upravitelju dodataka sa bilo kojeg mjesta, molimo pridjelite odgovarajuću prilagođenu gestu koristeći [dijaloški okvir ulazne geste #InputGestures].
+
+++ Upravitelj nekompatibilnih dodataka ++[incompatibleAddonsManager]
+Upravitelj nekompatibilnih dodataka, koji se može aktivirati putem gumba "Pogledaj nekompatibilne dodatke" u upravitelju dodataka, omogućuje vam provjeru svakog nekompatibilnog dodatka, te također razloga nekompatibilnosti.
+Dodaci se smatraju nekompatibilnima kada su pisani za stariju inačicu NVDA od one koju koristite, ili ovise o setu funkcija nedostupnih u Vašoj inačici NVDA.
+U upravitelju nekompatibilnih dodataka postoji poruka o njegovoj namjeni, te je ispisana inačica NVDA.
+NVDA dodaci su prikazani u popisu sa slijedećim stupcima:
++ Paket, ime dodatka
++ Inačica, inačica dodatka
++ Razlog nekompatibilnosti, razlog zbog kojeg se dodatak smatra nekompatibilnim
++
+
+Upravitelj nekompatibilnih dodataka u sebi sadrži gumb "O dodatku...".
+Kada se ovo otvori, prikazat će se sve informacije o dodatku, što je korisno pri kontaktiranju autora.
+
 
 ++ Python Konzola ++[PythonConsole]
 NVDA PYTHON konzola, koja se može pronaći u podizborniku alati u NVDA izborniku, je alat za razvojne programere koji je koristan za otkrivanje grešaka, opću provjeru NVDA unutarnjih funkcija ili provjeru hijerarhije pristupačnosti neke aplikacije.
@@ -2756,15 +2830,17 @@ Sljede opcije naredbenog retka za NVDA:
 | -r | --replace | Zaustavlja sadašnju kopiju NVDA i ponovno je pokreće |
 | -k | --check-running | Izvještava o pokrenutosti NVDA putem izlaznog koda; 0 ako je pokrenut, 1 ako nije pokrenut |
 | -f LOGFILENAME | --log-file=LOGFILENAME | datoteka u kojoj poruke zapisnika trebaju biti zapisane |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Najmanja vrijednost bilježene poruke (debug 10, info 20, upozorenje 30, greška 40, kritično 50), zadano je upozorenje |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najniža razina poruka zapisivana (debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100), podrazumijevano je warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | određuje mapu u kojoj su pospremljene sve postavke |
 | -m | --minimal | bez zvuka, bez sučelja, bez poruke dobrodošlice itd |
 | -s | --secure | siguran način (onemogućuje python konzolu) |
 | Nema | --disable-addons | dodaci neće imati utjecaja |
-| Nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument. |
+| Nema | --debug-logging | Omogućuje dijagnostiku samo pri trenutno pokrenutoj kopiji. Ova postavka natpisuje bilo koju drugu razinu vođenja zapisnika ( ""--loglevel"", -l) specificirani argument uključujući i opciju bez logiranja. |
+| Nema | --no-logging | Potpuno isključuje vođenje zapisnika. OVa postavka može biti nadpisana ako razina loga ( ""--loglevel"", -l) je specificiran iz naredbenog retka, ili je uključeno vođenje zapisnika. |
 | Nema | --no-sr-flag  | Ne mijenjaj glavnu zastavicu čitača ekrana u sustavu |
 | Nema | --install | Instalira NVDA, pritom pokrečući novoinstaliranu kopiju |
 | Nema | --install-silent | Tiho instalira NVDA (ne pokreće novu instaliranu kopiju) |
+| Nema | --enable-start-on-logon=True|False | Kada je omogućeno, omogućuje [opciju pokretanja NVDA na zaslonu za prijavu #StartAtWindowsLogon] |
 | Nema | --create-portable | Stvara prijenosnu inačicu NVDA (pri tome ponovno pokrečući novostvorenu kopiju). Zahtjeva određenu funkciju --portable-path |
 | Nema | --create-portable-silent | Stvara prijenosnu inačicu NVDA (ne pokreće novostvorenu kopiju). zahtjeva određen parametar --portable-path |
 | Nema | --portable-path=PORTABLEPATH | putanja u koju prijenosna inačica treba biti stvorena |

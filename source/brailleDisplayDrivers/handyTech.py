@@ -24,6 +24,7 @@ from logHandler import log
 import bdDetect
 import time
 import datetime
+from driverHandler import BooleanDriverSetting
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
@@ -45,7 +46,7 @@ MODEL_MODULAR_EVOLUTION_88 = b"\x38"
 MODEL_MODULAR_CONNECT_88 = b"\x3A"
 MODEL_EASY_BRAILLE = b"\x44"
 MODEL_ACTIVE_BRAILLE = b"\x54"
-MODEL_CONNECT_BRAILLE_40 = b"\x55"
+MODEL_CONNECT_BRAILLE = b"\x55"
 MODEL_ACTILINO = b"\x61"
 MODEL_ACTIVE_STAR_40 = b"\x64"
 MODEL_BASIC_BRAILLE_16 = b"\x81"
@@ -56,6 +57,7 @@ MODEL_BASIC_BRAILLE_48 = b"\x8A"
 MODEL_BASIC_BRAILLE_64 = b"\x86"
 MODEL_BASIC_BRAILLE_80 = b"\x87"
 MODEL_BASIC_BRAILLE_160 = b"\x8B"
+MODEL_BASIC_BRAILLE_84 = b"\x8C"
 MODEL_BRAILLINO = b"\x72"
 MODEL_BRAILLE_STAR_40 = b"\x74"
 MODEL_BRAILLE_STAR_80 = b"\x78"
@@ -210,13 +212,19 @@ class AtcMixin(object):
 		self._display.atc = True
 
 
-class TimeSyncMixin(object):
-	"""Functionality for displays that support time synchronization."""
+class TimeSyncFirmnessMixin(object):
+	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
+
+	supportedSettings=(
+		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2, useConfig=False),
+	)
 
 	def postInit(self):
-		super(TimeSyncMixin, self).postInit()
+		super(TimeSyncFirmnessMixin, self).postInit()
 		log.debug("Request current display time")
 		self._display.sendExtendedPacket(HT_EXTPKT_GET_RTC)
+		log.debug("Request current dot firmness")
+		self._display.sendExtendedPacket(HT_EXTPKT_GET_FIRMNESS)
 
 	def handleTime(self, timeStr):
 		ords = map(ord, timeStr)
@@ -349,26 +357,26 @@ class EasyBraille(OldProtocolMixin, Model):
 	genericName = name = "Easy Braille"
 
 
-class ActiveBraille(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
 
 
-class ConnectBraille40(TimeSyncMixin, TripleActionKeysMixin, Model):
-	deviceId = MODEL_CONNECT_BRAILLE_40
+class ConnectBraille(TripleActionKeysMixin, Model):
+	deviceId = MODEL_CONNECT_BRAILLE
 	numCells = 40
 	genericName = "Connect Braille"
-	name = "Connect Braille 40"
+	name = "Connect Braille"
 
 
-class Actilino(TimeSyncMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Actilino(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTILINO
 	numCells = 16
 	genericName = name = "Actilino"
 
 
-class ActiveStar40(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveStar40(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_STAR_40
 	numCells = 40
 	name = "Active Star 40"
@@ -417,6 +425,7 @@ BasicBraille48 = basicBrailleFactory(48, MODEL_BASIC_BRAILLE_48)
 BasicBraille64 = basicBrailleFactory(64, MODEL_BASIC_BRAILLE_64)
 BasicBraille80 = basicBrailleFactory(80, MODEL_BASIC_BRAILLE_80)
 BasicBraille160 = basicBrailleFactory(160, MODEL_BASIC_BRAILLE_160)
+BasicBraille84 = basicBrailleFactory(84, MODEL_BASIC_BRAILLE_84)
 
 
 class BrailleStar(TripleActionKeysMixin, Model):
@@ -531,6 +540,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 		self.brailleInput = False
+		self._dotFirmness = 1
 		self._hidSerialBuffer = b""
 		self._atc = False
 
@@ -586,6 +596,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# This has been observed for Active Braille displays.
 			time.sleep(self.timeout)
 
+	def _get_supportedSettings(self):
+		settings = [
+			braille.BrailleDisplayDriver.BrailleInputSetting(),
+		]
+		if self._model:
+			# Add the per model supported settings to the list.
+			for cls in self._model.__class__.__mro__:
+				if hasattr(cls, "supportedSettings"):
+					settings.extend(cls.supportedSettings)
+		return settings
+
 	def _get_atc(self):
 		return self._atc
 
@@ -598,6 +619,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._atc = state
+
+	def _get_dotFirmness(self):
+		return self._dotFirmness
+
+	def _set_dotFirmness(self, value):
+		if self._dotFirmness is value:
+			return
+		if isinstance(self._model,TimeSyncFirmnessMixin):
+			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, value)
+		else:
+			log.debugWarning("Changing dot firmness setting for unsupported device %s"%self._model.name)
+		# Regardless whether this setting is supported or not, we want to safe its state.
+		self._dotFirmness = value
 
 	def sendPacket(self, packetType, data=""):
 		if type(data) == bool or type(data) == int:
@@ -735,8 +769,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				pass
-			elif extPacketType == HT_EXTPKT_GET_RTC and isinstance(self._model, TimeSyncMixin):
-				self._model.handleTime(packet[1:])
+			elif isinstance(self._model, TimeSyncFirmnessMixin):
+				if extPacketType == HT_EXTPKT_GET_RTC:
+					self._model.handleTime(packet[1:])
+				elif extPacketType == HT_EXTPKT_GET_FIRMNESS:
+					self._dotFirmness = ord(packet[1])
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning("Unhandled extended packet of type %r: %r" %

@@ -10,6 +10,7 @@ import ctypes
 import os
 import re
 import itertools
+import importlib
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
@@ -200,7 +201,12 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _setSelectionOffsets(self,start,end):
 		for selIndex in xrange(self.obj.IAccessibleTextObject.NSelections):
 			self.obj.IAccessibleTextObject.RemoveSelection(selIndex)
-		self.obj.IAccessibleTextObject.AddSelection(start,end)
+		if start!=end:
+			self.obj.IAccessibleTextObject.AddSelection(start,end)
+		else:
+			# A collapsed selection is the caret.
+			# Specifically handling it here as a setCaretOffset gets around some strange bugs in Chrome where setting a collapsed selection selects an entire table cell.
+			self._setCaretOffset(start)
 
 	def _getStoryLength(self):
 		try:
@@ -433,7 +439,8 @@ the NVDAObject for IAccessible
 			if classString and classString.find('.')>0:
 				modString,classString=os.path.splitext(classString)
 				classString=classString[1:]
-				mod=__import__(modString,globals(),locals(),[])
+				# #8712: Python 3 wants a dot (.) when loading a module from the same folder via relative imports, and this is done via package argument.
+				mod=importlib.import_module("NVDAObjects.IAccessible.%s"%modString, package="NVDAObjects.IAccessible")
 				newCls=getattr(mod,classString)
 			elif classString:
 				newCls=globals()[classString]
@@ -444,21 +451,21 @@ the NVDAObject for IAccessible
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName=="_WwG":
-			from winword import WordDocument 
+			from .winword import WordDocument 
 			clsList.append(WordDocument)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO"):
 			if self.windowControlID==18:
-				from winword import SpellCheckErrorField
+				from .winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from winword import WordDocument_WwN
+				from .winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
 		if windowClassName.lower().startswith('mscandui'):
-			import mscandui
+			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
@@ -1076,7 +1083,7 @@ the NVDAObject for IAccessible
 		# We currently only care about changes to the accessible drag and drop attributes, which we map to states, so treat this as a stateChange.
 		self.event_stateChange()
 
-	def _get_IA2PhysicalRowNumber(self):
+	def _get_rowNumber(self):
 		tableCell=self._IATableCell
 		if tableCell:
 			return tableCell.rowIndex+1
@@ -1096,12 +1103,17 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::rowIndex failed", exc_info=True)
 		raise NotImplementedError
 
-	def _get_rowNumber(self):
+	def _get_presentationalRowNumber(self):
 		index=self.IA2Attributes.get('rowindex')
 		if index is None and isinstance(self.parent,IAccessible):
 			index=self.parent.IA2Attributes.get('rowindex')
 		if index is None:
-			index=self.IA2PhysicalRowNumber
+			raise NotImplementedError
+		try:
+			index=int(index)
+		except (ValueError,TypeError):
+			log.debugWarning("value %s is not an int"%index,exc_info=True)
+			raise NotImplementedError
 		return index
 
 	def _get_rowSpan(self):
@@ -1109,7 +1121,7 @@ the NVDAObject for IAccessible
 			return self._IATableCell.rowExtent
 		raise NotImplementedError
 
-	def _get_IA2PhysicalColumnNumber(self):
+	def _get_columnNumber(self):
 		tableCell=self._IATableCell
 		if tableCell:
 			return tableCell.columnIndex+1
@@ -1142,10 +1154,15 @@ the NVDAObject for IAccessible
 			rowText=self.rowNumber
 		return "%s %s"%(colText,rowText)
 
-	def _get_columnNumber(self):
+	def _get_presentationalColumnNumber(self):
 		index=self.IA2Attributes.get('colindex')
 		if index is None:
-			index=self.IA2PhysicalColumnNumber
+			raise NotImplementedError
+		try:
+			index=int(index)
+		except (ValueError,TypeError):
+			log.debugWarning("value %s is not an int"%index,exc_info=True)
+			raise NotImplementedError
 		return index
 
 	def _get_columnSpan(self):
@@ -1153,7 +1170,7 @@ the NVDAObject for IAccessible
 			return self._IATableCell.columnExtent
 		raise NotImplementedError
 
-	def _get_IA2PhysicalRowCount(self):
+	def _get_rowCount(self):
 		if hasattr(self,'IAccessibleTable2Object'):
 			try:
 				return self.IAccessibleTable2Object.nRows
@@ -1166,13 +1183,18 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::nRows failed", exc_info=True)
 		raise NotImplementedError
 
-	def _get_rowCount(self):
+	def _get_presentationalRowCount(self):
 		count=self.IA2Attributes.get('rowcount')
 		if count is None:
-			count=self.IA2PhysicalRowCount
+			raise NotImplementedError
+		try:
+			count=int(count)
+		except (ValueError,TypeError):
+			log.debugWarning("value %s is not an int"%count,exc_info=True)
+			raise NotImplementedError
 		return count
 
-	def _get_IA2PhysicalColumnCount(self):
+	def _get_columnCount(self):
 		if hasattr(self,'IAccessibleTable2Object'):
 			try:
 				return self.IAccessibleTable2Object.nColumns
@@ -1185,10 +1207,15 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::nColumns failed", exc_info=True)
 		raise NotImplementedError
 
-	def _get_columnCount(self):
+	def _get_presentationalColumnCount(self):
 		count=self.IA2Attributes.get('colcount')
 		if count is None:
-			count=self.IA2PhysicalColumnCount
+			raise NotImplementedError
+		try:
+			count=int(count)
+		except (ValueError,TypeError):
+			log.debugWarning("value %s is not an int"%count,exc_info=True)
+			raise NotImplementedError
 		return count
 
 	def _get__IATableCell(self):
@@ -1411,6 +1438,9 @@ the NVDAObject for IAccessible
 	def event_alert(self):
 		if self.role != controlTypes.ROLE_ALERT:
 			# Ignore alert events on objects that aren't alerts.
+			return
+		if not self.name and not self.description and self.childCount == 0:
+			# Don't report if there's no content.
 			return
 		# If the focus is within the alert object, don't report anything for it.
 		if eventHandler.isPendingEvents("gainFocus"):
@@ -1714,19 +1744,32 @@ class Groupbox(IAccessible):
 		self.isPresentableFocusAncestor = res = super(Groupbox, self).isPresentableFocusAncestor
 		return res
 
+CHAR_LTR_MARK = u'\u200E'
+CHAR_RTL_MARK = u'\u200F'
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
+	Depending on the version of Windows name or value contains left-to-right or right-to-left characters, so remove them from both.
 	"""
 
 	def _get_role(self):
+		# On Windows 10 Anniversary update and later the text 'clock' is included in the name so having clock in the control type is redundant.
+		if super(TrayClockWClass, self).value is None:
+			return controlTypes.ROLE_BUTTON
 		return controlTypes.ROLE_CLOCK
 
 	def _get_name(self):
-		# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
+	# #4364 On some versions of Windows name contains redundant information that is available either in the role or the value, however on Windows 10 Anniversary Update and later the value is empty, so we cannot simply dismiss the name.
 		if super(TrayClockWClass, self).value is None:
-			return super(TrayClockWClass, self).name
+			clockName = super(TrayClockWClass, self).name
+			return clockName.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return None
+
+	def _get_value(self):
+		clockValue = super(TrayClockWClass, self).value
+		if clockValue is not None:
+			clockValue = clockValue.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
+		return clockValue
 
 class OutlineItem(IAccessible):
 
@@ -1904,7 +1947,7 @@ _staticMap={
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_GROUPING):"Groupbox",
-	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLIENT):"TrayClockWClass",
+	("TrayClockWClass",oleacc.ROLE_SYSTEM_PUSHBUTTON):"TrayClockWClass",
 	("TrayClockWClass",oleacc.ROLE_SYSTEM_CLOCK):"TrayClockWClass",
 	("TRxRichEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRxRichEdit",
 	(None,oleacc.ROLE_SYSTEM_OUTLINEITEM):"OutlineItem",

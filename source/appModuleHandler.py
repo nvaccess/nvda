@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee, Babbage B.V., Mozilla Corporation
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import os
 import sys
 import winVersion
 import pkgutil
+import importlib
 import threading
 import tempfile
 import comtypes.client
@@ -91,10 +92,12 @@ def getAppNameFromProcessID(processID,includeExt=False):
 
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
+	# Python 2.x can't properly handle unicode module names, so convert them.
+	# No longer the case in Python 3.
+	if sys.version_info.major == 2:
+		appName = appName.encode("mbcs")
 	try:
-		# Python 2.x can't properly handle unicode module names, so convert them.
-		mod = __import__("appModules.%s" % appName.encode("mbcs"),
-			globals(), locals(), ("appModules",))
+		mod = importlib.import_module("appModules.%s" % appName, package="appModules")
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
 		pass
@@ -172,7 +175,7 @@ def fetchAppModule(processID,appName):
 
 	if doesAppModuleExist(modName):
 		try:
-			return __import__("appModules.%s" % modName, globals(), locals(), ("appModules",)).AppModule(processID, appName)
+			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
 		except:
 			log.error("error in appModule %r"%modName, exc_info=True)
 			# We can't present a message which isn't unicode, so use appName, not modName.
@@ -412,11 +415,23 @@ class AppModule(baseObject.ScriptableObject):
 			# This is 32 bit Windows.
 			self.is64BitProcess = False
 			return False
-		res = ctypes.wintypes.BOOL()
-		if ctypes.windll.kernel32.IsWow64Process(self.processHandle, ctypes.byref(res)) == 0:
-			self.is64BitProcess = False
-			return False
-		self.is64BitProcess = not res
+		try:
+			# We need IsWow64Process2 to detect WOW64 on ARM64.
+			processMachine = ctypes.wintypes.USHORT()
+			if ctypes.windll.kernel32.IsWow64Process2(self.processHandle,
+					ctypes.byref(processMachine), None) == 0:
+				self.is64BitProcess = False
+				return False
+			# IMAGE_FILE_MACHINE_UNKNOWN if not a WOW64 process.
+			self.is64BitProcess = processMachine.value == winKernel.IMAGE_FILE_MACHINE_UNKNOWN
+		except AttributeError:
+			# IsWow64Process2 is only supported on Windows 10 version 1511 and later.
+			# Fall back to IsWow64Process.
+			res = ctypes.wintypes.BOOL()
+			if ctypes.windll.kernel32.IsWow64Process(self.processHandle, ctypes.byref(res)) == 0:
+				self.is64BitProcess = False
+				return False
+			self.is64BitProcess = not res
 		return self.is64BitProcess
 
 	def isGoodUIAWindow(self,hwnd):
