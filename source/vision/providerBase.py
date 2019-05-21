@@ -13,6 +13,7 @@ import api
 import weakref
 from logHandler import log
 import NVDAObjects
+import textInfos
 from locationHelper import RectLTRB
 
 class VisionEnhancementProvider(driverHandler.Driver):
