@@ -674,16 +674,16 @@ class VisionHandler(AutoPropertyObject):
 			self.handleCaretMove(obj)
 		if self.highlighter:
 			self.highlighter.updateContextRect(context, obj=obj)
-		if config.conf['reviewCursor']['followFocus']:
-			# Purposely don't provide the object to updateContextRect here.
-			# This is because obj could also be a tree interceptor.
-			# Furthermore, even when review follows focus, there might be
-			# reasons why the navigator object is not the same as the focus object.
-			self.highlighter.updateContextRect(CONTEXT_NAVIGATOR)
-		if not mightHaveCaret:
-			# If this object does not have a caret, clear the caret rectangle from the map
-			# However, in the unlikely case it yet has a caret, we want to highlight that.
-			self.highlighter.updateContextRect(CONTEXT_CARET, obj=obj)
+			if config.conf['reviewCursor']['followFocus']:
+				# Purposely don't provide the object to updateContextRect here.
+				# This is because obj could also be a tree interceptor.
+				# Furthermore, even when review follows focus, there might be
+				# reasons why the navigator object is not the same as the focus object.
+				self.highlighter.updateContextRect(CONTEXT_NAVIGATOR)
+			if not mightHaveCaret:
+				# If this object does not have a caret, clear the caret rectangle from the map
+				# However, in the unlikely case it yet has a caret, we want to highlight that.
+				self.highlighter.updateContextRect(CONTEXT_CARET, obj=obj)
 
 	def handleCaretMove(self, obj):
 		if not self.enabled:
