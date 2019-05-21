@@ -34,7 +34,7 @@ def handlePossibleDesktopNameChange():
 	On Windows versions lower than Windows 10, this function does nothing.
 	"""
 	global _lastDesktopName
-	# Desktop switch reporting can only be supported on Windows 10 April 2019 and above,
+	# Desktop switch reporting can only be supported on Windows 10 May 2019 Update and above,
 	# As previous Windows builds could experience delays and incorrect desktop names.
 	if winVersion.winVersion>=(10,0,18334):
 		import UIAHandler
