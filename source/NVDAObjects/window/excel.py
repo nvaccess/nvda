@@ -37,6 +37,7 @@ import scriptHandler
 import browseMode
 import inputCore
 import ctypes
+import vision
 
 excel2010VersionMajor=14
 
@@ -675,6 +676,12 @@ class Excel7Window(ExcelBase):
 			return dropdown
 		if selection:
 			return selection
+
+	def event_caret(self):
+		# This object never gains focus, so normally, caret updates would be ignored.
+		# However, we need to tell the vision handler that a caret move has occured on this object,
+		# in order for a magnifier or highlighter to be positioned correctly.
+		vision.handler.handleCaretMove(self)
 
 class ExcelWorksheet(ExcelBase):
 
