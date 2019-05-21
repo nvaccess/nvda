@@ -7,7 +7,7 @@
 import abc
 from six import with_metaclass
 import ctypes
-from comtypes import COMError
+from comtypes import COMError, BSTR
 import comtypes.automation
 import wx
 import time
@@ -648,7 +648,7 @@ class ExcelBase(Window):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
-			import _msOfficeChart
+			from . import _msOfficeChart
 			parent=ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=self.excelWindowObject.activeSheet)
 			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeChartObject = selection , initialDocument = parent)  
 		return obj
@@ -877,6 +877,8 @@ class ExcelWorksheet(ExcelBase):
 		"kb:shift+tab",
 		"kb:enter",
 		"kb:numpadEnter",
+		"kb:shift+enter",
+		"kb:shift+numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
@@ -1118,7 +1120,8 @@ class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
 		count=collectionObject.count
 		cellInfos=(ExcelCellInfo*count)()
 		numCellsFetched=ctypes.c_long()
-		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,collectionObject._comobj,self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
+		address=collectionObject.address(True,True,xlA1,True)
+		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,BSTR(address),self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
 		for index in xrange(numCellsFetched.value):
 			ci=cellInfos[index]
 			if not ci.address:
@@ -1147,7 +1150,8 @@ class ExcelCell(ExcelBase):
 			return None
 		ci=ExcelCellInfo()
 		numCellsFetched=ctypes.c_long()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
+		address=self.excelCellObject.address(True,True,xlA1,True)
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,BSTR(address),NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
 		if res!=0 or numCellsFetched.value==0:
 			return None
 		return ci
@@ -1283,7 +1287,8 @@ class ExcelCell(ExcelBase):
 			rawAddress=self.excelCellObject.address(False,False,1,False)
 		coords=rawAddress.split('!')[-1].split(':')
 		if len(coords)==2:
-			return "%s through %s"%(coords[0],coords[1])
+			# Translators: Used to express an address range in excel.
+			return _("{start} through {end}").format(start=coords[0], end=coords[1])
 		else:
 			return coords[0]
 

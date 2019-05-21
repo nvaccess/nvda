@@ -88,11 +88,17 @@ class TestAddonVersionCheck(unittest.TestCase):
 
 class TestGetAPIVersionTupleFromString(unittest.TestCase):
 
-	def test_getAPIVersionTupleFromString_succeeds(self):
+	def test_getAPIVersionTupleFromString_3_succeeds(self):
 		"""Tests trying to get the API version tuple from an API version string with a standard version
 		layout will succeed.
 		"""
 		self.assertEqual((2019, 1, 0), addonAPIVersion.getAPIVersionTupleFromString("2019.1.0"))
+
+	def test_getAPIVersionTupleFromString_2_succeeds(self):
+		"""Tests trying to get the API version tuple from an API version where the Minor part is omitted and therefore defaults to 0.
+		This will succeed.
+		"""
+		self.assertEqual((2019, 1, 0), addonAPIVersion.getAPIVersionTupleFromString("2019.1"))
 
 	def test_getAPIVersionTupleFromString_allZeros_succeeds(self):
 		"""Tests trying to get the API version tuple from an API version string that is all zeros.
@@ -123,12 +129,6 @@ class TestGetAPIVersionTupleFromString(unittest.TestCase):
 		results in an error being raised
 		"""
 		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "2019.")
-
-	def test_getAPIVersionTupleFromString_twoMatch_raises(self):
-		"""Tests trying to get the API version tuple from an API version string with two matching groups
-		results in an error being raised
-		"""
-		self.assertRaises(ValueError, addonAPIVersion.getAPIVersionTupleFromString, "2019.1")
 
 	def test_getAPIVersionTupleFromString_devAppended_raises(self):
 		"""Tests trying to get the API version tuple from an API version string with three matching groups

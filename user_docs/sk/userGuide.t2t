@@ -107,9 +107,16 @@ Počas inštalácie máte niekoľko možností, ktoré sú opísané v nasleduj�
 Po úspešnom nainštalovaní sa zobrazí okno so správou, ktoré môžete zatvoriť stlačením tlačidla OK.
 Po zatvorení okna sa NVDA reštartuje.
 
++++ Upozornenie na nekompatibilné doplnky +++[InstallWithIncompatibleAddons]
+Ak používate nejaké doplnky, NVDA vás môže upozorniť, že vaše doplnky nie sú kompatibilné s verziou NVDA, ktorú sa pokúšate nainštalovať.
+Pred tým, než budete pokračovať, musíte odsúhlasiť zakázanie doplnkov.
+Po aktivovaní tlačidla zobraziť nekompatibilné doplnky si môžete pozrieť, ktoré doplnky budú zakázané.
+Podrobnosti si môžete prečítať v časti [Nekompatibilné doplnky #incompatibleAddonsManager].
+
 +++ Spúšťať NVDA pri zobrazení prihlasovacej obrazovky +++[StartAtWindowsLogon]
 Umožňuje nastaviť, či sa má NVDA automaticky spustiť pri zobrazení prihlasovacej obrazovky, teda ešte pred tým, ako zadáte svoje heslo.
-toto zahŕňa aj obrazovky UAC a iné zabezpečené obrazovky.
+toto zahŕňa aj obrazovky UAC (zabezpečenie systému) a iné zabezpečené obrazovky.
+Táto možnosť je predvolene začiarknutá.
 
 +++ Vytvoriť odkaz na pracovnej ploche so skratkou ctrl+alt+n +++[CreateDesktopShortcut]
 Môžete sa rozhodnúť, či chcete, aby sa pri inštalácii NVDA vytvoril odkaz na pracovnej ploche.
@@ -939,9 +946,8 @@ Je to zoznam, kde je možné vybrať jazyk, ktorý NVDA bude používať a v ňo
 Nachádza sa tu mnoho jazykov a poslednou položkou zoznamu je Jazyk systému.
 Táto posledná voľba hovorí NVDA, aby používal jazyk, v ktorom sú zobrazované dialógy Windows.
 
-Ak sa jazyk zmení, NVDA potrebuje reštart.
-NVDA sa bude pýtať, či sa má automaticky reštartovať, ak sa jazyk zmení.
-Na reštartovanie stlačte tlačidlo OK.
+Aby sa prejavili zmeny, je potrebné reštartovať NVDA.
+Môžete si vybrať, či chcete reštartovať teraz, alebo neskôr. V oboch prípadoch je potrebné, aby bolo povolené ukladanie nastavení pri ukončení NVDA (buď ručne, alebo automaticky).
 
 ==== Uložiť nastavenia pri ukončení ====[GeneralSettingsSaveConfig]
 Začiarkavacie políčko, ktoré ak začiarknete, bude NVDA pri ukončení automaticky ukladať svoje nastavenia.
@@ -957,7 +963,15 @@ začiarkávacie pole. Ak začiarknete, NVDA pri spustení  a pred ukončením pr
 ==== Úroveň záznamu ====[GeneralSettingsLogLevel]
 Zoznamový rámik, ktorý umožňuje používateľovi zvoliť, aké množstvo dát má NVDA  zaznamenať počas svojho vlastného behu.
 Všeobecne sa používateľ týmto nastavením nemusí zaoberať.
-No ak chcete tvorcom programu poskytnúť informácie o chybových hláseniach, je dobré nastaviť túto voľbu na vyššiu úroveň.
+Ak chcete tvorcom programu poskytnúť informácie o chybových hláseniach, je dobré nastaviť túto voľbu na vyššiu úroveň. Takisto môžete zaznamenávanie úplne vypnúť.
+
+Dostupné sú tieto možnosti:
+- Zakázaný: NVDA zaznamená len krátku správu pri štarte.
+- Info: NVDA zaznamená správu pri štarte a základné informácie pre vývojárov.
+- Upozornenie: Zaznamená len menej závažné chyby.
+- Vstup a výstup: Zaznamená vstup z klávesnice a braillovského riadka a tiež to, čo NVDA zobrazuje a hovorí. Ak sa obávate o vaše súkromie, nepoužívajte túto úroveň záznamu.
+- Debug: Zaznamenáva závažné aj menej závažné chyby a tiež vstup a výstup. Opäť, ak sa obávate o vaše súkromie, nepoužívajte túto úroveň záznamu.
+-
 
 ==== Automaticky spustiť NVDA po prihlásení do Windows ====[GeneralSettingsStartAfterLogOn]
 Ak je táto voľba zaškrtnutá, NVDA sa spustí hneď ako sa prihlásite do Windows.
@@ -1350,6 +1364,11 @@ Ak myš posuniete doľava na obrazovke, pípanie sa bude ozývať z ľavého rep
 Začiarknutie tohto políčka znamená, že hlasitosť signalizácie je riadená tým aká je úroveň jasu na mieste obrazovky kadiaľ prechádza kurzor myši. Toto funguje len ak začiarknete možnosť "signalizovať polohu myši počas posúvania".
 Táto  voľba je predvolene vypnutá.
 
+==== Ignorovať pokyny pre myš z externých aplikácií====[MouseSettingsHandleMouseControl]
+Umožňuje ignorovať pokyny pre myš (pohyb myšou a klikanie) cez iné aplikácie, napríklad z programu TeamViewer.
+Predvolene je táto možnosť vypnutá.
+Ak začiarknete túto možnosť, máte povolené oznamovanie textu pod kurzorom myši a iná aplikácia bude napríklad hýbať myšou, NVDA ani v takomto prípade nebude oznamovať text pod kurzorom.
+
 +++ Dotyková obrazovka +++[TouchInteraction]
 Táto kategória je dostupná len v počítačoch s operačným systémom Windows od verzie 8. Môžete tu nastaviť, ako sa NVDA bude správať pri používaní dotykovej obrazovky.
 Nájdete tu nasledujúce možnosti.
@@ -1583,6 +1602,45 @@ Kategória obsahuje nasledujúce možnosti:
 
 ==== jazyk rozpoznávania ====[Win10OcrSettingsRecognitionLanguage]
 V tomto zozname môžete vybrať jazyk, ktorý sa bude používať na rozpoznávanie textu.
+
++++ Pokročilé +++[AdvancedSettings]
+Pozor! Tieto nastavenia sú určené pre pokročilých používateľov. Nesprávnou konfiguráciou môžete spôsobiť, že NVDA nebude pracovať správne.
+Upravujte tieto nastavenia v prípade, že viete, čo máte robiť alebo ste dostali inštrukcie od vývojára NVDA.
+
+==== Povolenie zmien v pokročilích nastaveniach ====[AdvancedSettingsMakingChanges]
+Pred úpravou pokročilých nastavení musíte začiarknuť začiarkávacie políčko, čím potvrdíte, že rozumiete ryzikám.
+
+==== Obnovenie predvolených nastavení ====[AdvancedSettingsRestoringDefaults]
+Toto tlačidlo obnoví predvolené hodnoty pre pokročilé možnosti a to aj v prípade, ak je vyššie spomenuté začiarkávacie políčko odčiarknuté.
+Po zmene nastavení sa časom môžete chcieť vrátiť k pôvodným hodnotám.
+Môžete chcieť obnoviť pôvodné nastavenie, ak si nie ste istí, čo všetko ste zmenili.
+
+==== Načítať vlastné moduly z priečinka Scratchpad ====[AdvancedSettingsEnableScratchpad]
+Keď vyvíjate doplnky pre NVDA, je lepšie testovať ich okamžite počas písania kódu.
+Ak začiarknete túto možnosť, NVDA bude načítavať moduly, ovládače pre syntézy reči a braillovské riadky, globálne pluginy, z priečinka scratchpad vo vašom priečinku s nastaveniami NVDA.
+Staršie verzie načítavali vlastné moduly automaticky a neponúkali možnosť vypnúť načítanie vlastného kódu.
+Predvolene je táto možnosť vypnutá, aby sme zaistili, že sa nespúšťa neoverený kód bez výslovného súhlasu používateľa.
+Ak chcete to, čo ste naprogramovali distribuovať, je potrebné vytvoriť doplnok pre NVDA vo formáte nvda-addon.
+
+==== Otvoriť priečinok Scratchpad ====[AdvancedSettingsOpenScratchpadDir]
+Po aktivovaní tohto tlačidla sa otvorí priečinok, do ktorého môžete ukladať vlastné experimentálne kódy počas práce na doplnkoch, moduloch a pod.
+Toto tlačidlo sa zobrazí, len ak povolíte načítavanie vlastných modulov z priečinka Scratchpad.
+
+==== Na zobrazenie prvkov v Microsoft aplikáciách používať UI automation ====[AdvancedSettingsUseUiaForWord]
+Ak začiarknete túto možnosť, NVDA sa pokúsi použiť Microsoft UI Automation accessibility api na zobrazenie prvkov v aplikácii MS Word.
+Toto sa týka aplikácie Word, a tiež písania a čítania správ v aplikácii Outlook.
+Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows 10 majú podporu dostatočne dobrú, ako je súčasná podpora zabudovaná priamo v NVDA. Výhodou tiež je, že aplikácie cez UI automation reagujú rýchlejšie.
+Niektoré informácie sú však nedostatočne prezentované, alebo sú prezentované nesprávne, takže nemôžeme UI automation odporúčať vo všetkých prípadoch.
+Väčšine používateľov neodporúčame používať UI automation. Zároveň privítame odozvu od používateľov Office 2016/365, ktorí sú ochotný otestovať UI automation.
+
+==== Počkať pred pohybom systémového kurzora (v milisekundách) ====[AdvancedSettingsCaretMoveTimeout]
+Tu môžete nastaviť časový úsek, ktorý NVDA počká pred pohybom systémového kurzora (bodu vloženia).
+Ak zistíte, že NVDA nesprávne sleduje kurzor, napríklad je o znak pozadu alebo opakuje riadky, môže vám pomôcť zvýšiť tento časový úsek.
+
+==== Úroveň záznamu ====[AdvancedSettingsDebugLoggingCategories]
+Začiarkávacie políčka v tejto časti umožňujú povoliť dodatočné zaznamenávanie do logu NVDA.
+Logovanie týchto správ môže spomaliť NVDA a zvýšiť veľkosť logov.
+Zaznamenávanie týchto správ povoľte, len ak dostanete inštrukcie od vývojáro, napríklad pri diagnostike nefunkčného ovládača braillovského riadka.
 
 ++ Ďalšie nastavenia ++[MiscSettings]
 Okrem rozsiahleho [dialógu nastavení #NVDASettings], je v ponuke NVDA v časti možnosti viacero položiek, ktorým sa budeme venovať v nasledujúcich riadkoch.
@@ -1825,17 +1883,33 @@ Ak chcete doplnok zakázať, aktivujte tlačidlo "zakázať".
 Doplnok, ktorý ste zakázali, môžete znovu povoliť aktivovaním tlačidla "povoliť".
 Ak je doplnok povolený, zobrazuje sa tlačidlo na jeho zakázanie, ak je zakázaný, zobrazuje sa tlačidlo na jeho povolenie.
 Po každom stlačení tlačidla sa na stavovom riadku zobrazí, čo sa stane po najbližšom reštarte NVDA.
-Ak ste zakázali doplnok, na stavovom riadku sa objaví hlásenie "zakázaný po reštarte" a naopak, ak ste povolili doplnok, na stavovom riadku sa zobrazí hlásenie "povolený po reštarte".
+Ak ste zakázali doplnok, na stavovom riadku sa objaví hlásenie "zakázaný po reštarte".
+Ak ste povolili doplnok, na stavovom riadku sa zobrazí hlásenie "povolený po reštarte".
 Aj v tomto prípade sa zmeny prejavia až po reštarte.
 
 Správcu doplnkov zatvoríte aktivovaním tlačidla Zatvoriť.
 Ak ste pridali,  odstránili, zakázali alebo povolili nejaké doplnky, NVDA sa vás opýta, či ho chcete reštartovať, aby boli uložené zmeny.
 
-V minulosti bolo možné funkcie NVDA rozšíriť skopírovaní  pluginov alebo ovládačov do používateľského priečinka s konfiguráciou NVDA.
-Táto verzia NVDA stále tieto pluginy a ovládače načíta, no nebudú zobrazené v okne správcu doplnkov.
-Najlepšie je tieto súbory odstrániť a nahradiť ich skutočnými doplnkami hneď, ako budú k dispozícii.
+Niektoré staršie doplnky už nemusia byť kompatibilné s vašou verziou NVDA.
+Takisto niektoré novšie doplnky môžu vyžadovať aj novšiu verziu NVDA.
+Ak sa pokúsite nainštalovať nekompatibilný doplnok, NVDA vás na túto skutočnosť upozorní a inštaláciu takéhoto doplnku zakáže.
+Nekompatibilné doplnky zobrazíte po aktivovaní tlačidla Nekompatibilné doplnky.
 
 Ak chcete okno  Správcu doplnkov aktivovať z hociktorého miesta, môžete mu priradiť  skratku v dialógu [Klávesové skratky #InputGestures].
+
+++ Správca nekompatibilných doplnkov ++[incompatibleAddonsManager]
+Správcu nekompatibilných doplnkov môžete zobraziť po aktivovaní príslušného tlačidla v správcovi doplnkov. Umožňuje zobraziť doplnky a dôvod ich nekompatibility.
+Doplnky sú zvyčajne nekompatibilné, ak neboli prispôsobené pre aktuálnu verziu NVDA, alebo opačne, vyžadujú už novšiu verziu NVDA.
+V správcovi nekompatibilných doplnkov vidíte aj aktuálnu verziu NVDA, ktorú máte spustenú.
+V zozname s nekompatibilnými doplnkami sú tieto údaje:
++ Názov doplnku
++ Verzia doplnku
++ Dôvod nekompatibility
++
+
+V správcovi nekompatibilných doplnkov je tiež tlačidlo O doplnku. 
+Po jeho aktivovaní sa zobrazia ďalšie informácie o doplnku, ktoré môžu byť užitočné, ak sa rozhodnete kontaktovať vývojára doplnku.
+
 
 ++ Python konzola ++[PythonConsole]
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
@@ -2756,15 +2830,17 @@ NVDA v súčasnosti podporuje tieto parametre:
 | -r | --replace | Ukončí práve spustenú kópiu NVDA a spustí novú |
 | -k | --check-running | Oznámi, či NVDA beží alebo nie. 0 =beží, 1 =nie |
 | -f c:\esta\k\suboru | --log-file=c:\esta\k\suboru | Cesta k súboru, kde sa má zapisovať log |
-| -l n | --log-level=n | Určuje úroveň záznamu (debug 10, info 20, upozornenia 30, chyby 40, kritické chyby 50), predvolene je úroveň nastavená na upozornenia |
+| -l N | --log-level=n | Určuje úroveň záznamu (debug 10, Vstup a výstup 12, debug 15, info 20, upozornenia 30, chyby 40, kritické chyby 50, vypnuté 100), predvolene je úroveň nastavená na upozornenia |
 | -c C:\esta\k\profilu | --config-path=C:\esta\k\profilu | určuje cestu, kam sa ukladajú nastavenia NVDA |
 | -m | --minimal | spustí NVDA bez zvukov, bez používateľského rozhrania, bez úvodného dialógu a podobne |
-| -s | --secure | Zabezpečený režim (je zakázaná Python konzola) |
+| -s | --secure | Zabezpečený režim (je zakázaná Python konzola a zaznamenávanie. Používa sa na zabezpečených obrazovkách) |
 | nie je | --disable-addons | Všetky doplnky budú vypnuté |
-| Nie je | --debug-logging | nastaví úroveň záznamu pre najbližšie spustenie NVDA na najvyššiu úroveň (debug). Toto nastavenie má prednosť pred ostatnými argumentmi ( ""--loglevel"", -l). |
+| Nie je | --debug-logging | nastaví úroveň záznamu pre najbližšie spustenie NVDA na najvyššiu úroveň (debug). Toto nastavenie má prednosť pred ostatnými argumentmi ( ""--loglevel"", -l aj ak bolo zaznamenávanie vypnuté). |
+| Nie je | --no-logging | Vypne zaznamenávanie do logu. Toto nastavenie môže byť zmenené ak nastavíte úroveň záznamu cez príkazový riadok (""--loglevel"" -l) alebo ak zapnete zaznamenávanie najvyššej úrovne cez príkaz --debug-logging |
 | nie je | --no-sr-flag  | Nezmení predvolené označenie čítača obrazovky v systéme |
 | Nie je | --install | Nainštaluje NVDA a spustí nainštalovanú kópiu |
 | nie je | --install-silent | Nainštaluje NVDA s predvolenými parametrami bez používateľského rozhrania, ale nespustí nainštalovanú kópiu|
+| Nie je | --enable-start-on-logon=True|False | Počas inštalácie povolí [Spustenie na prihlasovacej obrazovke  #StartAtWindowsLogon] |
 | Nie je | --create-portable | Vytvorí prenosnú verziu NVDA a spustí ju. Je potrebné určiť cestu cez argument --portable-path |
 | Nie je | --create-portable-silent | Vytvorí prenosnú verziu NVDA, ale nespustí ju. Je potrebné určiť cestu cez argument --portable-path |
 | Nie je  | --portable-path=cesta | určuje, kam sa uloží prenosná verzia NVDA|

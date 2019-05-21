@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-28 00:10+1000\n"
-"PO-Revision-Date: 2019-01-01 09:52-0800\n"
-"Last-Translator: Zvonimir Stanečić <zvonimirek222@webczatnet.pl>\n"
+"POT-Creation-Date: 2019-03-06 08:27+1000\n"
+"PO-Revision-Date: 2019-03-07 11:28+0100\n"
+"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -68,7 +68,7 @@ msgstr "hiragana rimski"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "katakana roman"
+msgstr "katakana rimski"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
@@ -103,6 +103,12 @@ msgstr "pravopis: {text}"
 #, python-brace-format
 msgid "grammar: {text}"
 msgstr "gramatika: {text}"
+
+#. Translators: shown when an addon API version string is unknown
+#. Translators: The word for an unknown control type.
+#. Translators: Reported when the type of a chart is not known.
+msgid "unknown"
+msgstr "nepoznato"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -525,11 +531,11 @@ msgstr "Bluetooth"
 #. %s is replaced with the level.
 #, python-format
 msgid "h%s"
-msgstr "h%s"
+msgstr "n%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "vlnk"
+msgstr "pvz"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -545,7 +551,7 @@ msgstr "{number} od {total}"
 #. %s is replaced with the level.
 #, python-format
 msgid "lv %s"
-msgstr "lv %s"
+msgstr "rz %s"
 
 #. Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
 #. Occurences of %s are replaced with the corresponding row numbers.
@@ -563,13 +569,13 @@ msgstr "r{rowNumber}"
 #. Occurences of %s are replaced with the corresponding column numbers.
 #, python-brace-format
 msgid "c{columnNumber}-{columnSpan}"
-msgstr "c{columnNumber}-{columnSpan}"
+msgstr "s{columnNumber}-{columnSpan}"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
 #, python-brace-format
 msgid "c{columnNumber}"
-msgstr "c{columnNumber}"
+msgstr "s{columnNumber}"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -649,23 +655,38 @@ msgstr "bilo koje točkice"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Afrikaans grade 1"
+msgstr "Afrikanersko puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Arabic 8 dot computer braille"
+msgstr "Arapska osmotočkasta kompjutorska brajica"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Arabic grade 1"
-msgstr "Arapski puno pismo"
+msgstr "Arapsko puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Arabic grade 2"
+msgstr "Arapski kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Assamese grade 1"
-msgstr "Asamski puno pismo"
+msgstr "Asamsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bengali grade 1"
-msgstr "Bengalski puno pismo"
+msgstr "Bengalsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Bulgarian 8 dot computer braille"
-msgstr "Bugarski 8-točkasta kompjutorska brajica"
+msgstr "Bugarska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -675,7 +696,7 @@ msgstr "Centralni Kurdski puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Welsh grade 1"
-msgstr "Velški puno pismo"
+msgstr "Velško puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -685,27 +706,27 @@ msgstr "Velški kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Czech 8 dot computer braille"
-msgstr "Češka osmotočkasta kompjutorska brajica"
+msgstr "Češka kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Czech grade 1"
-msgstr "Češki puno pismo"
+msgstr "Češko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot computer braille"
-msgstr "Danska osmotočkasta kompjutorska brajica"
+msgstr "Danska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 1"
-msgstr "Danski šestotočkasti puno pismo"
+msgstr "Dansko šestotočkasto puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 8 dot grade 1"
-msgstr "Danski osmotočkasti puno pismo"
+msgstr "Dansko osmotočkasto puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -720,17 +741,17 @@ msgstr "Danski osmotočkasti kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German 8 dot computer braille"
-msgstr "Njemački 8 točkasta kompjutorska brajica"
+msgstr "Njemačka kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 0"
-msgstr "Njemački osnovno pismo"
+msgstr "Njemačko osnovno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "German grade 1"
-msgstr "Njemački puno pismo"
+msgstr "Njemačko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -745,7 +766,7 @@ msgstr "Grčki (Grčka)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "Engleski (velika britanija) osmotočkasta kompjutorska brajica"
+msgstr "Engleski (velika britanija) kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -790,32 +811,37 @@ msgstr "Engleski (Sjedinjene Američke Države) kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Esperanto grade 1"
-msgstr "Esperanto puno pismo0"
+msgstr "Esperanto puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish 8 dot computer braille"
-msgstr "Španjolski 8 točkasta kompjutorska brajica"
+msgstr "Španjolska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Spanish grade 1"
-msgstr "Španjolski puno pismo"
+msgstr "Španjolsko puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Spanish grade 2"
+msgstr "Španjolski kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Estonian grade 0"
-msgstr "Estonski osnovno pismo"
+msgstr "Estonsko osnovno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Ethiopic grade 1"
-msgstr "Amharski puno pismo"
+msgstr "Amharsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Persian 8 dot computer braille"
-msgstr "Perzijska osmotočkasta kompjutorska brajica"
+msgstr "Perzijska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -825,12 +851,12 @@ msgstr "Perzijski puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 6 dot"
-msgstr "Finski šestotočkasta brajica"
+msgstr "Finska šestotočkasta brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
-msgstr "Finski 8-točkasta kompjutorska brajica"
+msgstr "Finski kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -850,7 +876,7 @@ msgstr "Unificirani francuski kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Irish grade 1"
-msgstr "Irski puno pismo"
+msgstr "Irsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -860,7 +886,7 @@ msgstr "Irski kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Gujarati grade 1"
-msgstr "Gudžaratski puno pismo"
+msgstr "Gudžaratsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -870,7 +896,7 @@ msgstr "starogrčki"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hebrew 8 dot computer braille"
-msgstr "Hebrejski 8-točkasta kompjutorska brajica"
+msgstr "Hebrejska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -880,22 +906,22 @@ msgstr "Hindi puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian 8 dot computer braille"
-msgstr "Hrvatski 8-točkasta kompjutorska brajica"
+msgstr "Hrvatska 8-točkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Croatian grade 1"
-msgstr "Hrvatski puno pismo"
+msgstr "Hrvatsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian 8 dot computer braille"
-msgstr "Mađarski 8-točkasta kompjutorska brajica"
+msgstr "Mađarska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hungarian grade 1"
-msgstr "Mađarski puno pismo"
+msgstr "Mađarsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -905,22 +931,22 @@ msgstr "Mađarski kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Icelandic 8 dot computer braille"
-msgstr "Islandski 8 točkasta kompjutorska brajica"
+msgstr "Islandska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 6 dot computer braille"
-msgstr "Talijanski 6 točkasta kompjutorska brajica"
+msgstr "Talijanska 6 točkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Italian 8 dot computer braille"
-msgstr "Talijanski 8 točkasta kompjutorska brajica"
+msgstr "Talijanska 8 točkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kannada grade 1"
-msgstr "Kanadaški jezik puno pismo"
+msgstr "Kanadaško puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -935,7 +961,7 @@ msgstr "Korejski kratkopis (2006)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1"
-msgstr "Korejski puno pismo"
+msgstr "Korejsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -945,7 +971,7 @@ msgstr "Korejski kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kashmiri grade 1"
-msgstr "Kašmirski puno pismo"
+msgstr "Kašmirsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -960,7 +986,7 @@ msgstr "Litavsko puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Latvian grade 1"
-msgstr "Letonski puno pismo"
+msgstr "Letonsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1000,7 +1026,7 @@ msgstr "Nizozemski (nizozemska)"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian 8 dot computer braille"
-msgstr "Norveški 8-točkasta kompjutorska brajica"
+msgstr "Norveška kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1040,17 +1066,17 @@ msgstr "Poljska kompjutorska brajica"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Polish grade 1"
-msgstr "Poljski puno pismo"
+msgstr "Poljsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Portuguese 8 dot computer braille"
-msgstr "Portugalski 8 točkasta kompjutorska brajica"
+msgstr "Portugalska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Portuguese grade 1"
-msgstr "Portugalski puno pismo"
+msgstr "Portugalsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1060,7 +1086,7 @@ msgstr "Portugalski kratkopis"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Punjabi grade 1"
-msgstr "Pendžapski puno pismo"
+msgstr "Pendžapsko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1070,12 +1096,12 @@ msgstr "Rumunjski"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian braille for computer code"
-msgstr "Ruska brajica za kompjutorski kod"
+msgstr "Ruska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Russian grade 1"
-msgstr "Ruski puno pismo"
+msgstr "Rusko puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1100,7 +1126,7 @@ msgstr "Slovačko puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Slovenian 8 dot computer braille"
-msgstr "Slovenska osmotočkasta kompjutorska brajica"
+msgstr "Slovenska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1125,7 +1151,7 @@ msgstr "Telugu puno pismo"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Turkish grade 1"
-msgstr "Turski 8 točkasta brajica"
+msgstr "Turska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1717,7 +1743,7 @@ msgstr "%s orijentir"
 #. Translators: This is brailled to indicate a landmark (example output: lmk main).
 #, python-format
 msgid "lmk %s"
-msgstr "lmk %s"
+msgstr "orj %s"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #. Translators: Announces selected text. %s is replaced with the text.
@@ -1997,11 +2023,6 @@ msgstr "smeđa"
 msgctxt "color hue"
 msgid "brown-yellow"
 msgstr "smeđe žuta"
-
-#. Translators: The word for an unknown control type.
-#. Translators: Reported when the type of a chart is not known.
-msgid "unknown"
-msgstr "nepoznato"
 
 #. Translators: The word for window of a program such as document window.
 msgid "window"
@@ -3927,6 +3948,14 @@ msgstr ""
 msgid "Speaks the current foreground object"
 msgstr "čita trenutni objekt ispred teksta"
 
+#. Translators: GUI development tool, to get information about the components used in the NVDA GUI
+msgid ""
+"Opens the WX GUI inspection tool. Used to get more information about the "
+"state of GUI components."
+msgstr ""
+"Otvara WX alat za provjeru grafičkog okruženja. Koristi se za dobivanje "
+"informacija o stanju NVDA grafičkih komponenti."
+
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
@@ -4859,6 +4888,11 @@ msgstr "Sjeverni kurdski"
 msgctxt "languageName"
 msgid "Burmese"
 msgstr "Burmanski"
+
+#. Translators: The name of a language supported by NVDA.
+msgctxt "languageName"
+msgid "Somali"
+msgstr "Somalijski"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -6525,21 +6559,42 @@ msgstr "Greška"
 msgid "NVDA Update"
 msgstr "NVDA ažuriranje"
 
+#. Translators: A message indicating that no update to NVDA is available.
+msgid "No update available."
+msgstr "Nema dostupnog ažuriranja."
+
 #. Translators: A message indicating that an updated version of NVDA has been downloaded
 #. and is pending to be installed.
 #, python-brace-format
 msgid "NVDA version {version} has been downloaded and is pending installation."
 msgstr "NVDA inačica {version} je preuzeta, te očekuje na instalaciju."
 
-#. Translators: A message indicating that an updated version of NVDA is available.
-#. {version} will be replaced with the version; e.g. 2011.3.
-#, python-brace-format
-msgid "NVDA version {version} is available."
-msgstr "Dostupna je NVDA inačica {version}."
+msgid ""
+"\n"
+"\n"
+"However, your NVDA configuration contains add-ons that are incompatible with "
+"this version of NVDA. These add-ons will be disabled after installation. If "
+"you rely on these add-ons, please review the list to decide whether to "
+"continue with the installation"
+msgstr ""
+"\n"
+"\n"
+"Međutim, vaša instalacija NVDA sadrži dodatke, koji su nekompatibilni sa "
+"ovom inačicom NVDA. Isti će dodaci biti isključeni poslije instalacije. Ako "
+"ovisite o tim dodacima, molimo, pregledajte listu, kako biste odlučili, "
+"želite li dalje nastaviti sa instalacijom."
 
-#. Translators: A message indicating that no update to NVDA is available.
-msgid "No update available."
-msgstr "Nema dostupnog ažuriranja."
+#. Translators: A message to confirm that the user understands that addons that have not been
+#. reviewed and made available, will be disabled after installation.
+#. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
+#. available, will be disabled after installation.
+msgid "I understand that these incompatible add-ons will be disabled"
+msgstr "Razumijem da će ovi dodaci biti onemogućeni poslije instalacije"
+
+#. Translators: The label of a button to review add-ons prior to NVDA update.
+#. Translators: The label of a button to launch the add-on compatibility review dialog.
+msgid "&Review add-ons..."
+msgstr "&Pregledaj dodatke..."
 
 #. Translators: The label of a button to install a pending NVDA update.
 #. {version} will be replaced with the version; e.g. 2011.3.
@@ -6551,6 +6606,12 @@ msgstr "&instaliraj NVDA {version}"
 msgid "Re-&download update"
 msgstr "Ponovno &preuzmi ažuriranje"
 
+#. Translators: A message indicating that an updated version of NVDA is available.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#, python-brace-format
+msgid "NVDA version {version} is available."
+msgstr "Dostupna je NVDA inačica {version}."
+
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
 msgstr "&Preuzmi ažuriranje"
@@ -6561,6 +6622,7 @@ msgstr "Podsjeti me &kasnije"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
+#. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
 #. Translators: The label of a button to close a dialog.
 msgid "&Close"
 msgstr "&Zatvori"
@@ -6569,6 +6631,19 @@ msgstr "&Zatvori"
 #, python-brace-format
 msgid "NVDA version {version} is ready to be installed.\n"
 msgstr "NVDA inačica {version} spremna je za instalaciju.\n"
+
+msgid ""
+"\n"
+"However, your NVDA configuration contains add-ons that are incompatible with "
+"this version of NVDA. These add-ons will be disabled after installation. If "
+"you rely on these add-ons, please review the list to decide whether to "
+"continue with the installation"
+msgstr ""
+"\n"
+"Međutim, vaša konfiguracija sadrži dodatke nekompatibilne s ovom inačicom "
+"NVDA. These add-ons will be disabled after installation. Ako ovisite o tim "
+"dodacima, molimo, pregledajte listu, kako biste odlučili, želite li dalje "
+"nastaviti sa instalacijom."
 
 #. Translators: The label of a button to install an NVDA update.
 msgid "&Install update"
@@ -7722,6 +7797,8 @@ msgstr "Dobrodošli u NVDA"
 msgid "Welcome to NVDA!"
 msgstr "Dobrodošli u NVDA!"
 
+#. Translators: The label for a group box containing the NVDA welcome dialog options.
+#. Translators: The label for a group box containing the NVDA installation dialog options.
 msgid "Options"
 msgstr "Izbor"
 
@@ -7832,12 +7909,68 @@ msgstr ""
 "unapređivanja NVDA?"
 
 #. Translators: The label of a Yes button in a dialog
+#. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
+#. the add-on
 msgid "&Yes"
 msgstr "&Da"
 
 #. Translators: The label of a No button in a dialog
+#. Translators: A button in the addon installation warning dialog which allows the user to decide not to
+#. install the add-on
 msgid "&No"
 msgstr "&Ne"
+
+msgid ""
+"Changes were made to add-ons. You must restart NVDA for these changes to "
+"take effect. Would you like to restart now?"
+msgstr ""
+"Izvršene su promjene u dodacima. Morate ponovo pokrenuti NVDA, kako bi "
+"promjene stupile na snagu. Želite li sada ponovno pokrenuti NVDA?"
+
+#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
+msgid "Restart NVDA"
+msgstr "Ponovo pokreni NVDA"
+
+#. Translators: A button in the addon installation warning / blocked dialog which shows
+#. more information about the addon
+#. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
+msgid "&About add-on..."
+msgstr "&O dodatku..."
+
+#. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
+#. Translators: An ok button on a message dialog.
+#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
+msgid "OK"
+msgstr "&U redu"
+
+#, python-brace-format
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Author: {author}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Inačica: {version}\n"
+"Autor: {author}\n"
+"Opis: {description}\n"
+
+#. Translators: the url part of the About Add-on information
+#, python-brace-format
+msgid "URL: {url}"
+msgstr "URL adresa: {url}"
+
+#. Translators: the minimum NVDA version part of the About Add-on information
+msgid "Minimum required NVDA version: {}"
+msgstr "Minimalna zahtjevana inačica NVDA: {}"
+
+#. Translators: the last NVDA version tested part of the About Add-on information
+msgid "Last NVDA version tested: {}"
+msgstr "Zadnja testirana NVDA inačica: {}"
+
+#. Translators: title for the Addon Information dialog
+msgid "Add-on Information"
+msgstr "Informacije o dodatku"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
@@ -7863,16 +7996,13 @@ msgid "Status"
 msgstr "Status"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
+#. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
 msgid "Version"
 msgstr "Inačica"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
 msgid "Author"
 msgstr "Autor"
-
-#. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-msgid "&About add-on..."
-msgstr "&O dodatku..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
@@ -7881,10 +8011,6 @@ msgstr "&Pomoć za dodatak"
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
 msgstr "&onemogući dodatak"
-
-#. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
-msgid "&Install..."
-msgstr "&Instaliraj..."
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -7898,6 +8024,14 @@ msgstr "&Brisanje"
 msgid "&Get add-ons..."
 msgstr "&Preuzmi &dodatke..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
+msgid "&Install..."
+msgstr "&Instaliraj..."
+
+#. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
+msgid "&View incompatible add-ons..."
+msgstr "&Pregledaj nekompatibilne NVDA dodatke..."
+
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
 msgstr "Odaberite datoteku paketa s NVDA dodacima"
@@ -7906,6 +8040,56 @@ msgstr "Odaberite datoteku paketa s NVDA dodacima"
 #, python-brace-format
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "Paket s NVDA dodacima (*.{ext})"
+
+#. Translators: Presented when attempting to remove the selected add-on.
+msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+msgstr "Jeste li sigurni da želite ukloniti odabrani dodatak iz NVDA programa?"
+
+#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
+msgid "Remove Add-on"
+msgstr "Ukloni dodatak"
+
+#. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
+msgid "Incompatible"
+msgstr "Nekompatibilan"
+
+#. Translators: The status shown for an addon when its currently running in NVDA.
+msgid "Enabled"
+msgstr "Omogućeno"
+
+#. Translators: The status shown for a newly installed addon before NVDA is restarted.
+msgid "Install"
+msgstr "Instalira se"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
+msgid "Disabled"
+msgstr "Onemogućeno"
+
+#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+msgid "Removed after restart"
+msgstr "Uklonit će se poslije ponovnog pokretanja"
+
+#. Translators: The status shown for an addon when it requires a restart to become disabled
+msgid "Disabled after restart"
+msgstr "onemogućeno poslije ponovnog pokretanja"
+
+#. Translators: The status shown for an addon when it requires a restart to become enabled
+msgid "Enabled after restart"
+msgstr "Omogućeno poslije ponovnog pokretanja"
+
+#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
+msgid "&Enable add-on"
+msgstr "O&mogući dodatak"
+
+#. Translators: The message displayed when the add-on cannot be disabled.
+#, python-brace-format
+msgid "Could not disable the {description} add-on."
+msgstr "dodatak {description} ne može biti onemogućen."
+
+#. Translators: The message displayed when the add-on cannot be enabled.
+#, python-brace-format
+msgid "Could not enable the {description} add-on."
+msgstr "Dodatak {description} ne može biti omogućen."
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -7916,25 +8100,12 @@ msgstr ""
 "Neuspjelo otvaranje paketa s NVDA dodacima na %s - datoteka nedostaje ili je "
 "neispravan format datoteke"
 
-#. Translators: A message asking the user if they really wish to install an addon.
-#, python-brace-format
-msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from "
-"trusted sources.\n"
-"Addon: {summary} {version}\n"
-"Author: {author}"
-msgstr ""
-"Jeste li sigurni da želite instalirati ovaj dodatak? Instalirajte samo "
-"dodatke od strane pouzdanih izvora.\n"
-"Dodatak: {summary} {version}\n"
-"Autor: {author}"
-
+#. Translators: A title for the dialog asking if the user wishes to update a previously installed
+#. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 msgid "Add-on Installation"
 msgstr "Instalacija dodatka"
 
-#. Translators: A message asking if the user wishes to update an add-on with the same version currently installed according to the version number.
 #, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
@@ -7943,7 +8114,6 @@ msgstr ""
 "Instalirat ćete inačicu {newVersion} dodatka {summary}, koja je već "
 "instalirana. Želite li još uvijek nadograditi?"
 
-#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 #, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
@@ -7962,82 +8132,79 @@ msgstr "Molimo pričekajte dok se dodatak instalira."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
-msgid "Failed to install add-on  from %s"
-msgstr "Neuspjela instalacija dodatka od %s"
-
-#. Translators: Presented when attempting to remove the selected add-on.
-msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Jeste li sigurni da želite ukloniti odabrani dodatak iz NVDA programa?"
-
-#. Translators: Title for message asking if the user really wishes to remove the selected Addon.
-msgid "Remove Add-on"
-msgstr "Ukloni dodatak"
-
-#. Translators: The status shown for a newly installed addon before NVDA is restarted.
-msgid "install"
-msgstr "instaliraj"
-
-#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-msgid "remove"
-msgstr "ukloni"
-
-#. Translators: The status shown for an addon when it requires a restart to become disabled
-msgid "Disabled after restart"
-msgstr "onemogućeno poslije ponovnog pokretanja"
-
-#. Translators: The status shown for an addon when it requires a restart to become enabled
-msgid "Enabled after restart"
-msgstr "Omogućeno poslije ponovnog pokretanja"
-
-#. Translators: The status shown for an addon when its currently suspended do to addons being disabled.
-msgid "disabled"
-msgstr "Onemogućeno"
-
-#. Translators: The status shown for an addon when its currently running in NVDA.
-msgid "enabled"
-msgstr "Omogućeno"
-
-#. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
-msgid "&Enable add-on"
-msgstr "O&mogući dodatak"
-
-#. Translators: A message asking the user if they wish to restart NVDA as addons have been added, enabled/disabled or removed.
-msgid ""
-"Changes were made to add-ons. You must restart NVDA for these changes to "
-"take effect. Would you like to restart now?"
-msgstr ""
-"Izvršene su promjene u dodacima. Morate ponovo pokrenuti NVDA, kako bi "
-"promjene stupile na snagu. Želite li sada ponovno pokrenuti NVDA?"
-
-#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
-msgid "Restart NVDA"
-msgstr "Ponovo pokreni NVDA"
-
-#. Translators: message shown in the Addon Information dialog.
-#, python-brace-format
-msgid ""
-"{summary} ({name})\n"
-"Version: {version}\n"
-"Author: {author}\n"
-"Description: {description}\n"
-msgstr ""
-"{summary} ({name})\n"
-"Inačica: {version}\n"
-"Autor: {author}\n"
-"Opis: {description}\n"
-
-#. Translators: the url part of the About Add-on information
-#, python-brace-format
-msgid "URL: {url}"
-msgstr "URL adresa: {url}"
-
-#. Translators: title for the Addon Information dialog
-msgid "Add-on Information"
-msgstr "Informacije o dodatku"
+msgid "Failed to install add-on from %s"
+msgstr "Neuspjela instalacija dodatka iz %s"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "Dodaci ne mogu biti instalirani u inačici NVDA za Windows Store"
+
+#, python-brace-format
+msgid ""
+"Installation of {summary} {version} has been blocked. The minimum NVDA "
+"version required for this add-on is {minimumNVDAVersion}, your current NVDA "
+"version is {NVDAVersion}"
+msgstr ""
+"Instalacija dodatka {summary} {version} hje zablokirana. Minimalna "
+"zahtjevana inačica NVDA za ovaj dodatak je {minimumNVDAVersion}, vaša "
+"trenutna NVDA inačica je {NVDAVersion}"
+
+#. Translators: The title of a dialog presented when an error occurs.
+msgid "Add-on not compatible"
+msgstr "Nekompatibilan dodatak"
+
+#, python-brace-format
+msgid ""
+"Installation of {summary} {version} has been blocked. An updated version of "
+"this add-on is required, the minimum add-on API supported by this version of "
+"NVDA is {backCompatToAPIVersion}"
+msgstr ""
+"Instalacija dodatka {summary} {version} je zablokirana. Od vas se zahtijeva "
+"da instalirate nadogradnju ovog dodatka, minimalna inačica API za NVDA "
+"dodatke je {backCompatToAPIVersion}"
+
+#, python-brace-format
+msgid ""
+"Are you sure you want to install this add-on?\n"
+"Only install add-ons from trusted sources.\n"
+"Addon: {summary} {version}"
+msgstr ""
+"Jeste li sigurni da želite instalirati ovaj dodatak?\n"
+"Instalirajte dodatke samo iz pouzdanih izvora.\n"
+"Dodatak: {summary} {version}"
+
+#. Translators: The title of the Incompatible Addons Dialog
+msgid "Incompatible Add-ons"
+msgstr "Nekompatibilni dodaci"
+
+msgid ""
+"The following add-ons are incompatible with NVDA version {}. These add-ons "
+"can not be enabled. Please contact the add-on author for further assistance."
+msgstr ""
+"Slijedeći NVDA dodaci su nekompatibilni sa NVDA inačicom {}. Ovi dodaci ne "
+"mogu biti omogućeni. Za dodatnu pomoć, kontaktirajte autora dodatka."
+
+#. Translators: the label for the addons list in the incompatible addons dialog.
+msgid "Incompatible add-ons"
+msgstr "Nekompatibilni dodaci"
+
+#. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
+msgid "Incompatible reason"
+msgstr "Razlog nekompatibilnosti"
+
+#. Translators: The reason an add-on is not compatible. A more recent version of NVDA is
+#. required for the add-on to work. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
+msgid "An updated version of NVDA is required. NVDA version {} or later."
+msgstr "Potrebna je nadograđena inačica NVDA. NVDA inačica {} ili novija."
+
+#. Translators: The reason an add-on is not compatible. The addon relies on older, removed features of NVDA,
+#. an updated add-on is required. The placeholder will be replaced with Year.Major.Minor (EG 2019.1).
+msgid ""
+"An updated version of this add-on is required. The minimum supported API "
+"version is now {}"
+msgstr ""
+"Potrebna je nadograđena inačica dodatka. Minimalna inačica API za dodatke je "
+"{}"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -8317,8 +8484,6 @@ msgstr "Kopiraj konfiguraciju &prijenosne kopije u trenutni korisnički račun"
 msgid "&Continue"
 msgstr "&Nastavi"
 
-#. Translators: A warning presented when the user attempts to downgrade NVDA
-#. to an older version.
 msgid ""
 "You are attempting to install an earlier version of NVDA than the version "
 "currently installed. If you really wish to revert to an earlier version, you "
@@ -8430,10 +8595,7 @@ msgstr "Spremi Kao"
 msgid "Error saving log: %s"
 msgstr "Greška prilikom spremanja zapisnika: %s"
 
-#. Translators: The Ok button on a NVDA dialog. This button will accept any changes and dismiss the dialog.
-msgid "OK"
-msgstr "&U redu"
-
+#. Translators: A cancel button on a message dialog.
 #. Translators: The cancel button on a NVDA dialog. This button will discard any changes and dismiss the dialog.
 msgid "Cancel"
 msgstr "&Odustani"
@@ -8446,14 +8608,13 @@ msgstr "&Primijeni"
 msgid "&Categories:"
 msgstr "&Kategorije:"
 
-#. Translators: This is the label for a category within the settings dialog. It is announced when the user presses `ctl+tab` or `ctrl+shift+tab` while focus is on a control withing the NVDA settings dialog. The %s will be replaced with the name of the panel (eg: General, Speech, Braille, etc)
-#, python-format
-msgid "%s Settings Category"
-msgstr "Kategorija postavki %s "
-
 #. Translators: This is the label for the general settings panel.
 msgid "General"
 msgstr "Općenito"
+
+#. Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
+msgid "disabled"
+msgstr "Onemogućeno"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -8564,20 +8725,21 @@ msgstr "Ova promjena zahtijeva administrativne privilegije."
 msgid "Insufficient Privileges"
 msgstr "Nedostatne Privilegije"
 
-#. Translators: The message displayed after NVDA interface language has been changed.
-msgid ""
-"For the new language to take effect, the configuration must be saved and "
-"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
-"manually save and exit at a later time."
-msgstr ""
-"Da bi se novi jezik mogao koristiti, konfiguracija mora biti spremljena a "
-"NVDA mora ponovno biti pokrenut. Pritisnite enter za spremanje i novo "
-"pokretanje NVDA programa, ili otkažite kako biste mogli odraditi ručno "
-"spremanje te kasniji izlazak  iz programa."
-
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
 msgstr "Promjena Konfiguracije Jezika"
+
+#. Translators: The message displayed after NVDA interface language has been changed.
+msgid "NVDA must be restarted for the new language to take effect."
+msgstr "Kako bi novi jezik stupio na snagu, NVDA mora ponovno biti pokrenut."
+
+#. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+msgid "Restart &now"
+msgstr "&odmah ponovno pokreni"
+
+#. Translators: The label for a button  in the dialog which appears when the user changed NVDA's interface language.
+msgid "Restart &later"
+msgstr "Ponovno pokreni &kasnije"
 
 #. Translators: A label for the synthesizer on the speech panel.
 msgid "&Synthesizer"
@@ -8760,6 +8922,11 @@ msgstr "Reprodukcija zvučnih &koordinata prilikom pomicanja miša"
 #. mouse settings panel.
 msgid "&Brightness controls audio coordinates volume"
 msgstr "Kontrola glasnoće zvučnih koordinata ovisno o jačini &svjetlosti"
+
+#. Translators: This is the label for a checkbox in the
+#. mouse settings panel.
+msgid "Ignore mouse input from other &applications"
+msgstr "Ignoriraj ulaz miša za druge &programe"
 
 #. Translators: This is the label for the review cursor settings panel.
 msgid "Review Cursor"
@@ -9140,6 +9307,83 @@ msgstr "Windows 10 OCR"
 msgid "Recognition &language:"
 msgstr "&Jezik prepoznavanja:"
 
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "NVDA Development"
+msgstr "Razvoj NVDA"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Enable loading custom code from Developer Scratchpad directory"
+msgstr "Omogući učitavanje koda iz NVDA scratchpad mape"
+
+#. Translators: the label for a button in the Advanced settings category
+msgid "Open developer scratchpad directory"
+msgstr "Otvori NVDA scratchpad mapu"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Microsoft UI Automation"
+msgstr "Microsoft UI Automation"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid ""
+"Use UI Automation to access Microsoft &Word document controls when available"
+msgstr ""
+"Koristi UI Automation za pristup kontrolama Microsoft &Word dokumenata kada "
+"je to moguće"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Editable Text"
+msgstr "tekst koji se uređuje"
+
+#. Translators: This is the label for a numeric control in the
+#. Advanced settings panel.
+msgid "Caret movement timeout (in ms)"
+msgstr "Brzina pomicanja kursora (u milisekundama)"
+
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
+msgid "Debug logging"
+msgstr "Zapisivanje grešaka"
+
+#. Translators: This is the label for a list in the
+#. Advanced settings panel
+msgid "Enabled logging categories"
+msgstr "Omogućene kategorije zapisivanja u zapisnik"
+
+#. Translators: This is the label for the Advanced settings panel.
+msgid "Advanced"
+msgstr "Napredno"
+
+#. Translators: This is the label to warn users about the Advanced options in the
+#. Advanced settings panel
+msgid "Warning!"
+msgstr "Upozorenje!"
+
+msgid ""
+"The following settings are for advanced users. Changing them may cause NVDA "
+"to function incorrectly. Please only change these if you know what you are "
+"doing or have been specifically instructed by NVDA developers."
+msgstr ""
+"Sljedeće postavke namijenjene su naprednim korisnicima. Mijenjajući iste, "
+"možete prouzročiti neispravno funkcioniranje NVDA. Molimo, mijenjajte ove "
+"postavke samo ako znate što radite, ili ako vas je na to uputio NVDA "
+"razvojni programer."
+
+msgid ""
+"I understand that changing these settings may cause NVDA to function "
+"incorrectly."
+msgstr ""
+"Razumijem da izmjenom ovih postavki mogu prouzročiti neispravno "
+"funkcioniranje NVDA."
+
+#. Translators: This is the label for a button in the Advanced settings panel
+msgid "Restore defaults"
+msgstr "Vrati zadano"
+
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
 msgstr "Bilo &gdje"
@@ -9304,8 +9548,8 @@ msgid "Focus context presentation:"
 msgstr "Prezentacija konteksta fokusa:"
 
 #. Translators: This is the label for the NVDA settings dialog.
-msgid "NVDA"
-msgstr "NVDA"
+msgid "NVDA Settings"
+msgstr "NVDA postavke"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
@@ -9418,6 +9662,11 @@ msgstr "bez govora"
 
 msgid "word"
 msgstr "riječ"
+
+#. Translators: the current position's screen coordinates in pixels
+#, python-brace-format
+msgid "Positioned at {x}, {y}"
+msgstr "smješteno na koordinatama {x}, {y}"
 
 #. Translators: current position in a document as a percentage of the document length
 #, python-brace-format
@@ -10927,3 +11176,41 @@ msgstr "Dvostruki prored"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 prored"
+
+#~ msgid "Passes gesture through to the application"
+#~ msgstr "Prosljeđuje prećac do drugog programa"
+
+#~ msgid "Focus follows browse mode off"
+#~ msgstr "Fokus prati način pregleda isključeno"
+
+#~ msgid "Focus follows browse mode on"
+#~ msgstr "Fokus prati način pregleda uključeno"
+
+#~ msgid ""
+#~ "Toggles on and off the movement of the system focus due to browse mode "
+#~ "commands"
+#~ msgstr ""
+#~ "Uključuje i isključuje pomicanje fokusa sustava zbog prečaca načina "
+#~ "pregleda"
+
+#~ msgid "%s Settings Category"
+#~ msgstr "Kategorija postavki %s "
+
+#~ msgid "System focus follows browse mode focus automatically"
+#~ msgstr "Sustavski fokus automatski prati fokus načina pregleda"
+
+#~ msgid "NVDA"
+#~ msgstr "NVDA"
+
+#~ msgid "remove"
+#~ msgstr "ukloni"
+
+#~ msgid ""
+#~ "For the new language to take effect, the configuration must be saved and "
+#~ "NVDA must be restarted. Press enter to save and restart NVDA, or cancel "
+#~ "to manually save and exit at a later time."
+#~ msgstr ""
+#~ "Da bi se novi jezik mogao koristiti, konfiguracija mora biti spremljena a "
+#~ "NVDA mora ponovno biti pokrenut. Pritisnite enter za spremanje i novo "
+#~ "pokretanje NVDA programa, ili otkažite kako biste mogli odraditi ručno "
+#~ "spremanje te kasniji izlazak  iz programa."
