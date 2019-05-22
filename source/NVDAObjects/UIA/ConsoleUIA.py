@@ -4,9 +4,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2019 Bill Dengler
 
+import time
 import textInfos
 import UIAHandler
 
+from scriptHandler import script
 from winVersion import winVersion
 from . import UIATextInfo
 from ..behaviors import Terminal
@@ -23,10 +25,25 @@ class consoleUIATextInfo(UIATextInfo):
 
 class consoleUIA(Terminal):
 	_TextInfo=consoleUIATextInfo
+	_isTyping=False
+	_lastCharTime=0
+	def _reportNewText(self, line):
+		# Additional typed character filtering beyond that in LiveText
+		if self._isTyping and time.time()-self._lastCharTime <= 2:
+			return
+		super(consoleUIA, self)._reportNewText(line)
 	def event_textChanged(self):
 		# fire textChange for liveText
-		#Todo: this is probably a good place to filter out extraneous events from user input
 		self.event_textChange()
+	def event_typedCharacter(self, ch):
+		if len(''.join(ch.split())) > 0:
+			self._isTyping=True
+		self._lastCharTime=time.time()
+		super(consoleUIA, self).event_typedCharacter(ch)
+	@script(gestures=["kb:enter","kb:numpadEnter"])
+	def script_clear_isTyping(self, gesture):
+		gesture.send()
+		self._isTyping=False
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
 		#Todo: do this (also) somewhere else so they aren't in document review either
