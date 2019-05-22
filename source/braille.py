@@ -1618,7 +1618,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName=name
 		if name == AUTO_DISPLAY_NAME:
-			self._enableDetection()
+			self._enableDetection(keepCurrentDisplay=False)
 			return True
 		elif not isFallback and not detected:
 			self._disableDetection()
@@ -1673,7 +1673,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			if isFallback:
-				self._resumeDetection()
+				if self._detectionEnabled and not self._detector:
+					# As this is the fallback display, which is usually noBraille,
+					# we can keep the current display when enabling detection.
+					# Note that in this case, L{_detectionEnabled} is set by L{handleDisplayUnavailable}
+					self._enableDetection(keepCurrentDisplay=True)
 			elif not detected:
 				config.conf["braille"]["display"] = name
 			else: # detected:
@@ -1687,11 +1691,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				# We should handle this more gracefully, since this is no reason
 				# to stop a display from loading successfully.
 				log.debugWarning("Error in initial display after display load", exc_info=True)
+			if detected and 'bluetoothName' in detected.deviceInfo:
+				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
 		except:
 			# For auto display detection, logging an error for every failure is too obnoxious.
 			if not detected:
-				log.error("Error initializing display driver for kwargs %r"%kwargs, exc_info=True)
+				log.error("Error initializing display driver %s for kwargs %r"%(name,kwargs), exc_info=True)
 			elif bdDetect._isDebug():
 				log.debugWarning("Couldn't initialize display driver for kwargs %r"%(kwargs,), exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
@@ -1994,17 +2000,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
 		self.setDisplayByName("noBraille", isFallback=True)
 
-	def _enableDetection(self):
+	def _enableDetection(self, usb=True, bluetooth=True, keepCurrentDisplay=False, limitToDevices=None):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
+		This should also be executed when auto detection should be resumed due to loss of display connectivity.
 		"""
 		if self._detectionEnabled and self._detector:
-			self._detector.rescan()
+			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
 		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
-		self.setDisplayByName("noBraille", isFallback=True)
-		self._detector = bdDetect.Detector()
+		if not keepCurrentDisplay:
+			self.setDisplayByName("noBraille", isFallback=True)
+		self._detector = bdDetect.Detector(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 		self._detectionEnabled = True
 
 	def _disableDetection(self):
@@ -2015,14 +2023,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector.terminate()
 			self._detector = None
 		self._detectionEnabled = False
-
-	def _resumeDetection(self):
-		"""Resumes automatic detection of braille displays.
-		This is executed when auto detection should be resumed due to loss of display connectivity.
-		"""
-		if not self._detectionEnabled or self._detector:
-			return
-		self._detector = bdDetect.Detector()
 
 class _BgThread:
 	"""A singleton background thread used for background writes and raw braille display I/O.
