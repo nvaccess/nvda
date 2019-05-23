@@ -92,12 +92,8 @@ def getAppNameFromProcessID(processID,includeExt=False):
 
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
-	# Python 2.x can't properly handle unicode module names, so convert them.
-	# No longer the case in Python 3.
-	if sys.version_info.major == 2:
-		appName = appName.encode("mbcs")
 	try:
-		mod = importlib.import_module("appModules.%s" % appName, package="appModules")
+		mod = importlib.import_module(u"appModules.%s" % appName, package="appModules")
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
 		pass
@@ -157,6 +153,8 @@ def cleanup():
 			log.exception("Error terminating app module %r" % deadMod)
 
 def doesAppModuleExist(name):
+	if not isinstance(name, bytes):
+		name = name.encode("mbcs")
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
 
 def fetchAppModule(processID,appName):
@@ -170,15 +168,11 @@ def fetchAppModule(processID,appName):
 	"""  
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
-	# Python 2.x can't properly handle unicode module names, so convert them.
-	modName = appName.encode("mbcs")
-
-	if doesAppModuleExist(modName):
+	if doesAppModuleExist(appName):
 		try:
-			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
+			return importlib.import_module(u"appModules.%s" % appName, package="appModules").AppModule(processID, appName)
 		except:
-			log.error("error in appModule %r"%modName, exc_info=True)
-			# We can't present a message which isn't unicode, so use appName, not modName.
+			log.error("error in appModule %r"%appName, exc_info=True)
 			# Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 			ui.message(_("Error in appModule %s")%appName)
 

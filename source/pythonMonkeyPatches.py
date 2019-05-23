@@ -24,3 +24,12 @@ def _dlopen(name, mode=ctypes.DEFAULT_MODE):
 		name = name.encode("mbcs")
 	return old_dlopen(name, mode)
 ctypes._dlopen = _dlopen
+
+# #9583: Python 2.x can't properly handle unicode module names, so convert them.
+import importlib
+old_import_module = importlib.import_module
+def import_module(name, package=None):
+	if not isinstance(name, bytes):
+		name = name.encode("mbcs")
+	return old_import_module(name, package=package)
+importlib.import_module = import_module
