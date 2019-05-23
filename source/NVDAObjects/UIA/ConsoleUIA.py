@@ -59,4 +59,6 @@ class consoleUIA(Terminal):
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
 		# Todo: do this (also) somewhere else so they aren't in document review either
-		return self.makeTextInfo(textInfos.POSITION_ALL).text.strip().split("\r\n")
+		ptr = self.UIATextPattern.GetVisibleRanges()
+		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
+		return res
