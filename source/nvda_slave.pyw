@@ -16,8 +16,6 @@ try:
 except:
 	gettext.install('nvda',unicode=True)
 
-import pythonMonkeyPatches
-
 import sys
 import os
 import versionInfo
