@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -10,9 +10,10 @@ from collections import OrderedDict
 from . import _espeak
 import threading
 import languageHandler
-from synthDriverHandler import SynthDriver,VoiceInfo,BooleanSynthSetting
+from synthDriverHandler import SynthDriver, VoiceInfo, BooleanSynthSetting, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
+from driverHandler import BooleanDriverSetting
 
 class SynthDriver(SynthDriver):
 	name = "espeak"
@@ -22,20 +23,29 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VoiceSetting(),
 		SynthDriver.VariantSetting(),
 		SynthDriver.RateSetting(),
-		# Translators: This is the name of the rate boost voice toggle
-		# which further increases the speaking rate when enabled.
-		BooleanSynthSetting("rateBoost",_("Rate boos&t")),
+		SynthDriver.RateBoostSetting(),
 		SynthDriver.PitchSetting(),
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),
 	)
+	supportedCommands = {
+		speech.IndexCommand,
+		speech.CharacterModeCommand,
+		speech.LangChangeCommand,
+		speech.BreakCommand,
+		speech.PitchCommand,
+		speech.RateCommand,
+		speech.VolumeCommand,
+		speech.PhonemeCommand,
+	}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
 	@classmethod
 	def check(cls):
 		return True
 
 	def __init__(self):
-		_espeak.initialize()
+		_espeak.initialize(self._onIndexReached)
 		log.info("Using eSpeak NG version %s" % _espeak.info())
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
@@ -123,8 +133,6 @@ class SynthDriver(SynthDriver):
 					log.debugWarning("Unknown character in IPA string: %s"%item.ipa)
 					if item.text:
 						textList.append(self._processText(item.text))
-			elif isinstance(item,speech.SpeechCommand):
-				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
 		# Close any open tags.
@@ -223,8 +231,11 @@ class SynthDriver(SynthDriver):
 			raise
 		self._language=super(SynthDriver,self).language
 
-	def _get_lastIndex(self):
-		return _espeak.lastIndex
+	def _onIndexReached(self, index):
+		if index is not None:
+			synthIndexReached.notify(synth=self, index=index)
+		else:
+			synthDoneSpeaking.notify(synth=self)
 
 	def terminate(self):
 		_espeak.terminate()

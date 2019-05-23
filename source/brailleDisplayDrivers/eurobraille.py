@@ -137,6 +137,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	description = _("Eurobraille Esys/Esytime/Iris displays")
 	isThreadSafe = True
 	timeout = 0.2
+	supportedSettings = (
+		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),
+	)
 
 	@classmethod
 	def getManualPorts(cls):

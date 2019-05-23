@@ -392,7 +392,7 @@ class ConfigManager(object):
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles = set()
 
-	def _handleProfileSwitch(self):
+	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
 			self._pendingHandleProfileSwitch = True
 			return
@@ -403,7 +403,8 @@ class ConfigManager(object):
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
-		post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
+		if shouldNotify:
+			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -576,7 +577,7 @@ class ConfigManager(object):
 
 	def createProfile(self, name):
 		"""Create a profile.
-		@param name: The name of the profile ot create.
+		@param name: The name of the profile to create.
 		@type name: basestring
 		@raise ValueError: If a profile with this name already exists.
 		"""
@@ -587,6 +588,10 @@ class ConfigManager(object):
 			raise ValueError("A profile with the same name already exists: %s" % name)
 		# Just create an empty file to make sure we can.
 		file(fn, "w")
+		# Register a script for the new profile.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.addScriptForProfile(name)
 
 	def deleteProfile(self, name):
 		"""Delete a profile.
@@ -600,6 +605,10 @@ class ConfigManager(object):
 		if not os.path.isfile(fn):
 			raise LookupError("No such profile: %s" % name)
 		os.remove(fn)
+		# Remove the script for the deleted profile from the script collector.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.removeScriptForProfile(name)
 		try:
 			del self._profileCache[name]
 		except KeyError:
@@ -662,6 +671,10 @@ class ConfigManager(object):
 				saveTrigs = True
 		if saveTrigs:
 			self.saveProfileTriggers()
+		# Rename the script for the profile.
+		# Import late to avoid circular import.
+		from globalCommands import ConfigProfileActivationCommands
+		ConfigProfileActivationCommands.updateScriptForRenamedProfile(oldName, newName)
 		try:
 			profile = self._profileCache.pop(oldName)
 		except KeyError:
@@ -685,6 +698,7 @@ class ConfigManager(object):
 			self._suspendedTriggers[trigger] = "enter"
 			return
 
+		log.debug("Activating triggered profile %s" % trigger.profileName)
 		try:
 			profile = trigger._profile = self._getProfile(trigger.profileName)
 		except:
@@ -697,7 +711,7 @@ class ConfigManager(object):
 			self.profiles.insert(-1, profile)
 		else:
 			self.profiles.append(profile)
-		self._handleProfileSwitch()
+		self._handleProfileSwitch(trigger._shouldNotifyProfileSwitch)
 
 	def _triggerProfileExit(self, trigger):
 		"""Called by L{ProfileTrigger.exit}}}.
@@ -716,6 +730,7 @@ class ConfigManager(object):
 		profile = trigger._profile
 		if profile is None:
 			return
+		log.debug("Deactivating triggered profile %s" % trigger.profileName)
 		profile.triggered = False
 		try:
 			self.profiles.remove(profile)
@@ -723,7 +738,7 @@ class ConfigManager(object):
 			# This is probably due to the user resetting the configuration.
 			log.debugWarning("Profile not active when exiting trigger")
 			return
-		self._handleProfileSwitch()
+		self._handleProfileSwitch(trigger._shouldNotifyProfileSwitch)
 
 	@contextlib.contextmanager
 	def atomicProfileSwitch(self):
@@ -1118,6 +1133,12 @@ class ProfileTrigger(object):
 	Alternatively, you can use this object as a context manager via the with statement;
 	i.e. this trigger will apply only inside the with block.
 	"""
+	#: Whether to notify handlers when activating a triggered profile.
+	#: This should usually be C{True}, but might be set to C{False} when
+	#: only specific settings should be applied.
+	#: For example, when switching profiles during a speech sequence,
+	#: we only want to apply speech settings, not switch braille displays.
+	_shouldNotifyProfileSwitch = True
 
 	@baseObject.Getter
 	def spec(self):
@@ -1126,6 +1147,13 @@ class ProfileTrigger(object):
 		@rtype: basestring
 		"""
 		raise NotImplementedError
+
+	@property
+	def hasProfile(self):
+		"""Whether this trigger has an associated profile.
+		@rtype: bool
+		"""
+		return self.spec in conf.triggersToProfiles
 
 	def enter(self):
 		"""Signal that this trigger applies.

@@ -382,7 +382,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		return "\r\n".join(blocks)
 
 	def activate(self):
-		self.obj._activatePosition(self)
+		self.obj._activatePosition(info=self)
 
 	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])

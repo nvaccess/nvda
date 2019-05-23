@@ -8,10 +8,13 @@
 """High-level functions to speak information.
 """ 
 
+from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 import itertools
 import weakref
 import unicodedata
 import time
+import warnings
 import colors
 import globalVars
 from logHandler import log
@@ -81,30 +84,21 @@ def processText(locale,text,symbolLevel):
 	text = RE_CONVERT_WHITESPACE.sub(u" ", text)
 	return text.strip()
 
-def getLastSpeechIndex():
-	"""Gets the last index passed by the synthesizer. Indexing is used so that its possible to find out when a certain peace of text has been spoken yet. Usually the character position of the text is passed to speak functions as the index.
-@returns: the last index encountered
-@rtype: int
-"""
-	return getSynth().lastIndex
-
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
-	global beenCanceled, isPaused, _speakSpellingGenerator
+	global beenCanceled, isPaused
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
 	speakWithoutPauses._pendingSpeechSequence=[]
-	speakWithoutPauses.lastSentIndex=None
-	if _speakSpellingGenerator:
-		_speakSpellingGenerator.close()
+	speakWithoutPauses._lastSentIndex=None
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
 		return
-	getSynth().cancel()
+	_manager.cancel()
 	beenCanceled=True
 	isPaused=False
 
@@ -114,14 +108,14 @@ def pauseSpeech(switch):
 	isPaused=switch
 	beenCanceled=False
 
-def speakMessage(text,index=None):
+def speakMessage(text,priority=None):
 	"""Speaks a given message.
 @param text: the message to speak
 @type text: string
-@param index: the index to mark this current text with, its best to use the character position of the text if you know it 
-@type index: int
+@param priority: The speech priority.
+@type priority: One of the C{SPRI_*} constants.
 """
-	speakText(text,index=index,reason=controlTypes.REASON_MESSAGE)
+	speakText(text,reason=controlTypes.REASON_MESSAGE,priority=priority)
 
 def getCurrentLanguage():
 	synth=getSynth()
@@ -137,7 +131,7 @@ def getCurrentLanguage():
 		language=languageHandler.getLanguage()
 	return language
 
-def spellTextInfo(info,useCharacterDescriptions=False):
+def spellTextInfo(info,useCharacterDescriptions=False,priority=None):
 	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
 	if not config.conf['speech']['autoLanguageSwitching']:
 		speakSpelling(info.text,useCharacterDescriptions=useCharacterDescriptions)
@@ -145,44 +139,68 @@ def spellTextInfo(info,useCharacterDescriptions=False):
 	curLanguage=None
 	for field in info.getTextWithFields({}):
 		if isinstance(field,basestring):
-			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions)
+			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions,priority=priority)
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
 
-_speakSpellingGenerator=None
+def speakSpelling(text, locale=None, useCharacterDescriptions=False,priority=None):
+	seq = list(getSpeechForSpelling(text, locale=locale, useCharacterDescriptions=useCharacterDescriptions))
+	speak(seq,priority=priority)
 
-def speakSpelling(text,locale=None,useCharacterDescriptions=False):
-	global beenCanceled, _speakSpellingGenerator
-	import speechViewer
-	if speechViewer.isActive:
-		speechViewer.appendText(text)
-	if speechMode==speechMode_off:
-		return
-	elif speechMode==speechMode_beeps:
-		tones.beep(config.conf["speech"]["beepSpeechModePitch"],speechMode_beeps_ms)
-		return
-	if isPaused:
-		cancelSpeech()
-	beenCanceled=False
+def getSpeechForSpelling(text, locale=None, useCharacterDescriptions=False):
 	defaultLanguage=getCurrentLanguage()
 	if not locale or (not config.conf['speech']['autoDialectSwitching'] and locale.split('_')[0]==defaultLanguage.split('_')[0]):
 		locale=defaultLanguage
 
 	if not text:
 		# Translators: This is spoken when NVDA moves to an empty line.
-		return getSynth().speak((_("blank"),))
+		yield _("blank")
+		return
 	if not text.isspace():
 		text=text.rstrip()
-	if _speakSpellingGenerator and _speakSpellingGenerator.gi_frame:
-		_speakSpellingGenerator.send((text,locale,useCharacterDescriptions))
-	else:
-		_speakSpellingGenerator=_speakSpellingGen(text,locale,useCharacterDescriptions)
-		try:
-			# Speak the first character before this function returns.
-			next(_speakSpellingGenerator)
-		except StopIteration:
-			return
-		queueHandler.registerGeneratorObject(_speakSpellingGenerator)
+
+	synth = getSynth()
+	synthConfig=config.conf["speech"][synth.name]
+	charMode = False
+	textLength=len(text)
+	count = 0
+	localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
+	charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
+	for item in charDescList:
+		if localeHasConjuncts:
+			# item is a tuple containing character and its description
+			char = item[0]
+			charDesc = item[1]
+		else:
+			# item is just a character.
+			char = item
+			if useCharacterDescriptions:
+				charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
+		uppercase=char.isupper()
+		if useCharacterDescriptions and charDesc:
+			char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
+		else:
+			char=characterProcessing.processSpeechSymbol(locale,char)
+		if uppercase and synthConfig["sayCapForCapitals"]:
+			# Translators: cap will be spoken before the given letter when it is capitalized.
+			char=_("cap %s")%char
+		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
+			yield PitchCommand(offset=synthConfig["capPitchChange"])
+		if config.conf['speech']['autoLanguageSwitching']:
+			yield LangChangeCommand(locale)
+		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
+			if not charMode:
+				yield CharacterModeCommand(True)
+				charMode = True
+		elif charMode:
+			yield CharacterModeCommand(False)
+			charMode = False
+		if uppercase and  synthConfig["beepForCapitals"]:
+			yield BeepCommand(2000, 50)
+		yield char
+		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
+			yield PitchCommand()
+		yield EndUtteranceCommand()
 
 def getCharDescListFromText(text,locale):
 	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
@@ -207,61 +225,7 @@ def getCharDescListFromText(text,locale):
 			i = i - 1
 	return charDescList
 
-def _speakSpellingGen(text,locale,useCharacterDescriptions):
-	synth=getSynth()
-	synthConfig=config.conf["speech"][synth.name]
-	buf=[(text,locale,useCharacterDescriptions)]
-	for text,locale,useCharacterDescriptions in buf:
-		textLength=len(text)
-		count = 0
-		localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
-		charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
-		for item in charDescList:
-			if localeHasConjuncts:
-				# item is a tuple containing character and its description
-				char = item[0]
-				charDesc = item[1]
-			else:
-				# item is just a character.
-				char = item
-				if useCharacterDescriptions:
-					charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
-			uppercase=char.isupper()
-			if useCharacterDescriptions and charDesc:
-				#Consider changing to multiple synth speech calls
-				char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
-			else:
-				char=characterProcessing.processSpeechSymbol(locale,char)
-			if uppercase and synthConfig["sayCapForCapitals"]:
-				# Translators: cap will be spoken before the given letter when it is capitalized.
-				char=_("cap %s")%char
-			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
-				oldPitch=synthConfig["pitch"]
-				synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
-			count = len(char)
-			index=count+1
-			import inputCore
-			inputCore.logTimeSinceInput()
-			log.io("Speaking character %r"%char)
-			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
-			if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
-				speechSequence.append(CharacterModeCommand(True))
-			if index is not None:
-				speechSequence.append(IndexCommand(index))
-			speechSequence.append(char)
-			synth.speak(speechSequence)
-			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
-				synth.pitch=oldPitch
-			while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
-				for x in range(2):
-					args=yield
-					if args: buf.append(args)
-			if uppercase and  synthConfig["beepForCapitals"]:
-				tones.beep(2000,50)
-		args=yield
-		if args: buf.append(args)
-
-def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allowedProperties):
+def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, priority=None, _prefixSpeechCommand=None, **allowedProperties):
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
@@ -273,10 +237,23 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
-			try:
-				newPropertyValues[name]=getattr(obj,name)
-			except NotImplementedError:
-				pass
+			# Certain properties such as row and column numbers have presentational versions, which should be used for speech if they are available.
+			# Therefore redirect to those values first if they are available, falling back to the normal properties if not.
+			names=[name]
+			if name=='rowNumber':
+				names.insert(0,'presentationalRowNumber')
+			elif name=='columnNumber':
+				names.insert(0,'presentationalColumnNumber')
+			elif name=='rowCount':
+				names.insert(0,'presentationalRowCount')
+			elif name=='columnCount':
+				names.insert(0,'presentationalColumnCount')
+			for tryName in names:
+				try:
+					newPropertyValues[name]=getattr(obj,tryName)
+				except NotImplementedError:
+					continue
+				break
 	if positionInfo:
 		if allowedProperties.get('positionInfo_level',False) and 'level' in positionInfo:
 			newPropertyValues['positionInfo_level']=positionInfo['level']
@@ -336,20 +313,24 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
-		speakText(text,index=index)
+		speechSequence = []
+		if _prefixSpeechCommand is not None:
+			speechSequence.append(_prefixSpeechCommand)
+		speechSequence.append(text)
+		speak(speechSequence,priority=priority)
 
-def _speakPlaceholderIfEmpty(info, obj, reason):
+def _speakPlaceholderIfEmpty(info, obj, reason,priority=None):
 	""" attempt to speak placeholder attribute if the textInfo 'info' is empty
 	@return: True if info was considered empty, and we attempted to speak the placeholder value.
 	False if info was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
-		speakObjectProperties(obj,reason=reason,placeholder=True)
+		speakObjectProperties(obj,reason=reason,placeholder=True,priority=priority)
 		return True
 	return False
 
-def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
+def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None,priority=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	role=obj.role
 	# Choose when we should report the content of this object's textInfo, rather than just the object's value
@@ -400,7 +381,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	if shouldReportTextContent:
 		allowProperties['value']=False
 
-	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
+	speakObjectProperties(obj, reason=reason, _prefixSpeechCommand=_prefixSpeechCommand, priority=priority, **allowProperties)
 	if reason==controlTypes.REASON_ONLYCACHE:
 		return
 	if shouldReportTextContent:
@@ -412,39 +393,36 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				_speakPlaceholderIfEmpty(info, obj, reason)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
+				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,priority=priority)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			if not _speakPlaceholderIfEmpty(newInfo, obj, reason):
-				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+			if not _speakPlaceholderIfEmpty(newInfo, obj, reason,priority=priority):
+				speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET,priority=priority)
 	elif role==controlTypes.ROLE_MATH:
 		import mathPres
 		mathPres.ensureInit()
 		if mathPres.speechProvider:
 			try:
-				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
+				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl),priority=priority)
 			except (NotImplementedError, LookupError):
 				pass
 
-def speakText(text,index=None,reason=controlTypes.REASON_MESSAGE,symbolLevel=None):
+def speakText(text,reason=controlTypes.REASON_MESSAGE,symbolLevel=None,priority=None):
 	"""Speaks some text.
 	@param text: The text to speak.
 	@type text: str
-	@param index: The index to mark this text with, which can be used later to determine whether this piece of text has been spoken.
-	@type index: int
 	@param reason: The reason for this speech; one of the controlTypes.REASON_* constants.
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	@param priority: The speech priority.
+	@type priority: One of the C{SPRI_*} constants.
 	"""
-	speechSequence=[]
-	if index is not None:
-		speechSequence.append(IndexCommand(index))
-	if text is not None:
-		if isBlank(text):
-			# Translators: This is spoken when the line is considered blank.
-			text=_("blank")
-		speechSequence.append(text)
-	speak(speechSequence,symbolLevel=symbolLevel)
+	if text is None:
+		return
+	if isBlank(text):
+		# Translators: This is spoken when the line is considered blank.
+		text=_("blank")
+	speak([text],symbolLevel=symbolLevel,priority=priority)
 
 RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
 def splitTextIndentation(text):
@@ -506,11 +484,28 @@ def getIndentationSpeech(indentation, formatConfig):
 			speak = True
 	return (" ".join(res) if speak else "")
 
-def speak(speechSequence,symbolLevel=None):
+# Speech priorities.
+#: Indicates that a speech sequence should have normal priority.
+SPRI_NORMAL = 0
+#: Indicates that a speech sequence should be spoken after the next utterance of lower priority is complete.
+SPRI_NEXT = 1
+#: Indicates that a speech sequence is very important and should be spoken right now,
+#: interrupting low priority speech.
+#: After it is spoken, interrupted speech will resume.
+#: Note that this does not interrupt previously queued speech at the same priority.
+SPRI_NOW = 2
+#: The speech priorities ordered from highest to lowest.
+SPEECH_PRIORITIES = (SPRI_NOW, SPRI_NEXT, SPRI_NORMAL)
+
+def speak(speechSequence, symbolLevel=None, priority=None):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
 	@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
+	@param priority: The speech priority.
+	@type priority: One of the C{SPRI_*} constants.
 	"""
+	if priority is None:
+		priority=SPRI_NORMAL
 	if not speechSequence: #Pointless - nothing to speak 
 		return
 	import speechViewer
@@ -518,8 +513,7 @@ def speak(speechSequence,symbolLevel=None):
 		for item in speechSequence:
 			if isinstance(item, basestring):
 				speechViewer.appendText(item)
-	global beenCanceled, curWordChars
-	curWordChars=[]
+	global beenCanceled
 	if speechMode==speechMode_off:
 		return
 	elif speechMode==speechMode_beeps:
@@ -562,7 +556,7 @@ def speak(speechSequence,symbolLevel=None):
 		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage
 	inCharacterMode=False
-	for index in range(len(speechSequence)):
+	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if isinstance(item,CharacterModeCommand):
 			inCharacterMode=item.state
@@ -572,16 +566,16 @@ def speak(speechSequence,symbolLevel=None):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)
 			if not inCharacterMode:
 				speechSequence[index]+=CHUNK_SEPARATOR
-	getSynth().speak(speechSequence)
+	_manager.speak(speechSequence, priority)
 
-def speakSelectionMessage(message,text):
+def speakSelectionMessage(message,text,priority=None):
 	if len(text) < 512:
-		speakMessage(message % text)
+		speakMessage(message % text,priority=priority)
 	else:
 		# Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-		speakMessage(message % _("%d characters") % len(text))
+		speakMessage(message % _("%d characters") % len(text),priority=priority)
 
-def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
+def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False,priority=None):
 	"""Speaks a change in selection, either selected or unselected text.
 	@param oldInfo: a TextInfo instance representing what the selection was before
 	@type oldInfo: L{textInfos.TextInfo}
@@ -589,6 +583,8 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 	@type newInfo: L{textInfos.TextInfo}
 	@param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
 	@type generalize: boolean
+	@param priority: The speech priority.
+	@type priority: One of the C{SPRI_*} constants.
 	"""
 	selectedTextList=[]
 	unselectedTextList=[]
@@ -632,30 +628,30 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-				speakSelectionMessage(_("%s selected"),text)
+				speakSelectionMessage(_("%s selected"),text,priority=priority)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
 			# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-			speakSelectionMessage(_("selected %s"),text)
+			speakSelectionMessage(_("selected %s"),text,priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-				speakSelectionMessage(_("%s unselected"),text)
+				speakSelectionMessage(_("%s unselected"),text,priority=priority)
 		elif len(unselectedTextList)>0:
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-				speakSelectionMessage(_("%s selected instead"),text)
+				speakSelectionMessage(_("%s selected instead"),text,priority=priority)
 			else:
 				# Translators: Reported when selection is removed.
-				speakMessage(_("selection removed"))
+				speakMessage(_("selection removed"),priority=priority)
 
 #: The number of typed characters for which to suppress speech.
 _suppressSpeakTypedCharactersNumber = 0
@@ -754,12 +750,12 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 	except (NotImplementedError, LookupError):
 		return
 
-def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
+def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, onlyInitialFields=False, suppressBlanks=False,priority=None):
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
-		 speakTextInfoState=SpeakTextInfoState(info.obj)
+		speakTextInfoState=SpeakTextInfoState(info.obj)
 	else:
 		speakTextInfoState=None
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
@@ -824,7 +820,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 			raise ValueError("unknown field: %s"%field)
 	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
-	for count in range(min(len(newControlFieldStack),len(controlFieldStackCache))):
+	for count in xrange(min(len(newControlFieldStack),len(controlFieldStackCache))):
 		# #2199: When comparing controlFields try using uniqueID if it exists before resorting to compairing the entire dictionary
 		oldUniqueID=controlFieldStackCache[count].get('uniqueID')
 		newUniqueID=newControlFieldStack[count].get('uniqueID')
@@ -837,24 +833,23 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason!=controlTypes.REASON_FOCUS:
 		endingBlock=False
-		for count in reversed(range(commonFieldCount,len(controlFieldStackCache))):
+		for count in reversed(xrange(commonFieldCount,len(controlFieldStackCache))):
 			text=info.getControlFieldSpeech(controlFieldStackCache[count],controlFieldStackCache[0:count],"end_removedFromControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
 			if not endingBlock and reason==controlTypes.REASON_SAYALL:
 				endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 		if endingBlock:
-			speechSequence.append(SpeakWithoutPausesBreakCommand())
+			speechSequence.append(EndUtteranceCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
-	# Even when there's no speakable text, we still need to notify the synth of the index.
-	if index is not None:
-		speechSequence.append(IndexCommand(index))
+	if _prefixSpeechCommand is not None:
+		speechSequence.append(_prefixSpeechCommand)
 
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
-		for count in range(commonFieldCount):
+		for count in xrange(commonFieldCount):
 			field=newControlFieldStack[count]
 			text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
@@ -867,7 +862,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	# When true, we are inside a clickable field, and should therefore not announce any more new clickable fields
 	inClickable=False
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
-	for count in range(commonFieldCount,len(newControlFieldStack)):
+	for count in xrange(commonFieldCount,len(newControlFieldStack)):
 		field=newControlFieldStack[count]
 		if not inClickable and formatConfig['reportClickable']:
 			states=field.get('states')
@@ -899,9 +894,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
 		if not onlyCache:
 			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
-				speak(speechSequence)
+				speak(speechSequence,priority=priority)
 			if not onlyInitialFields: 
-				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
+				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None,priority=priority)
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -1011,7 +1006,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		speechSequence.append(LangChangeCommand(None))
 		lastLanguage=None
 	if not extraDetail:
-		for count in reversed(range(min(len(newControlFieldStack),commonFieldCount))):
+		for count in reversed(xrange(min(len(newControlFieldStack),commonFieldCount))):
 			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"end_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
@@ -1031,9 +1026,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 
 	if not onlyCache and speechSequence:
 		if reason==controlTypes.REASON_SAYALL:
-			speakWithoutPauses(speechSequence)
+			return speakWithoutPauses(speechSequence)
 		else:
-			speak(speechSequence)
+			speak(speechSequence,priority=priority)
+			return True
 
 def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues):
 	global oldTreeLevel, oldTableID, oldRowNumber, oldRowSpan, oldColumnNumber, oldColumnSpan
@@ -1237,7 +1233,19 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		containerContainsText=_("with %s items")%childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
-		return " ".join((nameText,roleText,stateText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
+		rowCount=(attrs.get("table-rowcount-presentational") or attrs.get("table-rowcount"))
+		columnCount=(attrs.get("table-columncount-presentational") or attrs.get("table-columncount"))
+		return " ".join((
+			nameText,
+			roleText,
+			stateText, 
+			getSpeechTextForProperties(
+				_tableID=tableID, 
+				rowCount=rowCount, 
+				columnCount=columnCount
+			),
+			levelText
+		))
 	elif nameText and reason==controlTypes.REASON_FOCUS and fieldType == "start_addedToControlFieldStack" and role in (controlTypes.ROLE_GROUPING, controlTypes.ROLE_PROPERTYPAGE):
 		# #3321, #709: Report the name of groupings (such as fieldsets) and tab pages for quicknav and focus jumps
 		return " ".join((nameText,roleText))
@@ -1246,8 +1254,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		reportTableHeaders = formatConfig["reportTableHeaders"]
 		reportTableCellCoords = formatConfig["reportTableCellCoords"]
 		getProps = {
-			'rowNumber': attrs.get("table-rownumber"),
-			'columnNumber': attrs.get("table-columnnumber"),
+			'rowNumber': (attrs.get("table-rownumber-presentational") or attrs.get("table-rownumber")),
+			'columnNumber': (attrs.get("table-columnnumber-presentational") or attrs.get("table-columnnumber")),
 			'rowSpan': attrs.get("table-rowsspanned"),
 			'columnSpan': attrs.get("table-columnsspanned"),
 			'includeTableCellCoords': reportTableCellCoords
@@ -1741,20 +1749,25 @@ re_last_pause=re.compile(ur"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",
 def speakWithoutPauses(speechSequence,detectBreaks=True):
 	"""
 	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or sentence boundaries, or when given None for the speech sequence.
+	@return: C{True} if something was actually spoken,
+		C{False} if only buffering occurred.
+	@rtype: bool
 	"""
 	lastStartIndex=0
 	#Break on all explicit break commands
 	if detectBreaks and speechSequence:
 		sequenceLen=len(speechSequence)
-		for index in range(sequenceLen):
-			if isinstance(speechSequence[index],SpeakWithoutPausesBreakCommand):
+		spoke = False
+		for index in xrange(sequenceLen):
+			if isinstance(speechSequence[index],EndUtteranceCommand):
 				if index>0 and lastStartIndex<index:
 					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
 				speakWithoutPauses(None)
+				spoke = True
 				lastStartIndex=index+1
 		if lastStartIndex<sequenceLen:
-			speakWithoutPauses(speechSequence[lastStartIndex:],detectBreaks=False)
-		return
+			spoke = speakWithoutPauses(speechSequence[lastStartIndex:],detectBreaks=False)
+		return spoke
 	finalSpeechSequence=[] #To be spoken now
 	pendingSpeechSequence=[] #To be saved off for speaking  later
 	if speechSequence is None: #Requesting flush
@@ -1765,7 +1778,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	else: #Handling normal speech
 		#Scan the given speech and place all completed phrases in finalSpeechSequence to be spoken,
 		#And place the final incomplete phrase in pendingSpeechSequence
-		for index in range(len(speechSequence)-1,-1,-1): 
+		for index in xrange(len(speechSequence)-1,-1,-1): 
 			item=speechSequence[index]
 			if isinstance(item,basestring):
 				m=re_last_pause.match(item)
@@ -1780,7 +1793,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 						finalSpeechSequence.append(before)
 						# Apply the last language change to the pending sequence.
 						# This will need to be done for any other speech change commands introduced in future.
-						for changeIndex in range(index-1,-1,-1):
+						for changeIndex in xrange(index-1,-1,-1):
 							change=speechSequence[changeIndex]
 							if not isinstance(change,LangChangeCommand):
 								continue
@@ -1794,24 +1807,31 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 		if pendingSpeechSequence:
 			pendingSpeechSequence.reverse()
 			speakWithoutPauses._pendingSpeechSequence.extend(pendingSpeechSequence)
-	#Scan the final speech sequence backwards
-	for item in reversed(finalSpeechSequence):
-		if isinstance(item,IndexCommand):
-			speakWithoutPauses.lastSentIndex=item.index
-			break
 	if finalSpeechSequence:
 		speak(finalSpeechSequence)
-speakWithoutPauses.lastSentIndex=None
+		return True
+	return False
 speakWithoutPauses._pendingSpeechSequence=[]
 
-
 class SpeechCommand(object):
-	"""
-	The base class for objects that can be inserted between string of text for parituclar speech functions that convey  things such as indexing or voice parameter changes.
+	"""The base class for objects that can be inserted between strings of text to perform actions, change voice parameters, etc.
+	Note that some of these commands are processed by NVDA and are not directly passed to synth drivers.
+	synth drivers will only receive commands derived from L{SynthCommand}.
 	"""
 
-class IndexCommand(SpeechCommand):
-	"""Represents an index within some speech."""
+class SynthCommand(SpeechCommand):
+	"""Commands that can be passed to synth drivers.
+	"""
+
+class IndexCommand(SynthCommand):
+	"""Marks this point in the speech with an index.
+	When speech reaches this index, the synthesizer notifies NVDA,
+	thus allowing NVDA to perform actions at specific points in the speech;
+	e.g. synchronizing the cursor, beeping or playing a sound.
+	Callers should not use this directly.
+	Instead, use one of the subclasses of L{BaseCallbackCommand}.
+	NVDA handles the indexing and dispatches callbacks as appropriate.
+	"""
 
 	def __init__(self,index):
 		"""
@@ -1824,7 +1844,16 @@ class IndexCommand(SpeechCommand):
 	def __repr__(self):
 		return "IndexCommand(%r)" % self.index
 
-class CharacterModeCommand(SpeechCommand):
+class SynthParamCommand(SynthCommand):
+	"""A synth command which changes a parameter for subsequent speech.
+	"""
+	#: Whether this command returns the parameter to its default value.
+	#: Note that the default might be configured by the user;
+	#: e.g. for pitch, rate, etc.
+	#: @type: bool
+	isDefault = False
+
+class CharacterModeCommand(SynthParamCommand):
 	"""Turns character mode on and off for speech synths."""
 
 	def __init__(self,state):
@@ -1834,11 +1863,12 @@ class CharacterModeCommand(SpeechCommand):
 		"""
 		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))
 		self.state=state
+		self.isDefault = not state
 
 	def __repr__(self):
 		return "CharacterModeCommand(%r)" % self.state
 
-class LangChangeCommand(SpeechCommand):
+class LangChangeCommand(SynthParamCommand):
 	"""A command to switch the language within speech."""
 
 	def __init__(self,lang):
@@ -1847,17 +1877,12 @@ class LangChangeCommand(SpeechCommand):
 		@type lang: string
 		"""
 		self.lang=lang # if lang else languageHandler.getLanguage()
+		self.isDefault = not lang
 
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
-class SpeakWithoutPausesBreakCommand(SpeechCommand):
-	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point.
-	This should only be used with the L{speakWithoutPauses} function.
-	This will be removed during processing.
-	"""
-
-class BreakCommand(SpeechCommand):
+class BreakCommand(SynthCommand):
 	"""Insert a break between words.
 	"""
 
@@ -1871,52 +1896,117 @@ class BreakCommand(SpeechCommand):
 	def __repr__(self):
 		return "BreakCommand(time=%d)" % self.time
 
-class PitchCommand(SpeechCommand):
+class EndUtteranceCommand(SpeechCommand):
+	"""End the current utterance at this point in the speech.
+	Any text after this will be sent to the synthesizer as a separate utterance.
+	"""
+
+	def __repr__(self):
+		return "EndUtteranceCommand()"
+
+class BaseProsodyCommand(SynthParamCommand):
+	"""Base class for commands which change voice prosody; i.e. pitch, rate, etc.
+	The change to the setting is specified using either an offset or a multiplier, but not both.
+	The L{offset} and L{multiplier} properties convert between the two if necessary.
+	To return to the default value, specify neither.
+	This base class should not be instantiated directly.
+	"""
+	#: The name of the setting in the configuration; e.g. pitch, rate, etc.
+	settingName = None
+
+	def __init__(self, offset=0, multiplier=1):
+		"""Constructor.
+		Either of C{offset} or C{multiplier} may be specified, but not both.
+		@param offset: The amount by which to increase/decrease the user configured setting;
+			e.g. 30 increases by 30, -10 decreases by 10, 0 returns to the configured setting.
+		@type offset: int
+		@param multiplier: The number by which to multiply the user configured setting;
+			e.g. 0.5 is half, 1 returns to the configured setting.
+		@param multiplier: int/float
+		"""
+		if offset != 0 and multiplier != 1:
+			raise ValueError("offset and multiplier both specified")
+		self._offset = offset
+		self._multiplier = multiplier
+		self.isDefault = offset == 0 and multiplier == 1
+
+	@property
+	def defaultValue(self):
+		"""The default value for the setting as configured by the user.
+		"""
+		synth = getSynth()
+		synthConf = config.conf["speech"][synth.name]
+		return synthConf[self.settingName]
+
+	@property
+	def multiplier(self):
+		"""The number by which to multiply the default value.
+		"""
+		if self._multiplier != 1:
+			# Constructed with multiplier. Just return it.
+			return self._multiplier
+		if self._offset == 0:
+			# Returning to default.
+			return 1
+		# Calculate multiplier from default value and offset.
+		defaultVal = self.defaultValue
+		newVal = defaultVal + self._offset
+		return float(newVal) / defaultVal
+
+	@property
+	def offset(self):
+		"""The amount by which to increase/decrease the default value.
+		"""
+		if self._offset != 0:
+			# Constructed with offset. Just return it.
+			return self._offset
+		if self._multiplier == 1:
+			# Returning to default.
+			return 0
+		# Calculate offset from default value and multiplier.
+		defaultVal = self.defaultValue
+		newVal = defaultVal * self._multiplier
+		return int(newVal - defaultVal)
+
+	@property
+	def newValue(self):
+		"""The new absolute value after the offset or multiplier is applied to the default value.
+		"""
+		if self._offset != 0:
+			# Calculate using offset.
+			return self.defaultValue + self._offset
+		if self._multiplier != 1:
+			# Calculate using multiplier.
+			return int(self.defaultValue * self._multiplier)
+		# Returning to default.
+		return self.defaultValue
+
+	def __repr__(self):
+		if self._offset != 0:
+			param = "offset=%d" % self._offset
+		elif self._multiplier != 1:
+			param = "multiplier=%g" % self._multiplier
+		else:
+			param = ""
+		return "{type}({param})".format(
+			type=type(self).__name__, param=param)
+
+class PitchCommand(BaseProsodyCommand):
 	"""Change the pitch of the voice.
 	"""
+	settingName = "pitch"
 
-	def __init__(self, multiplier=1):
-		"""
-		@param multiplier: The number by which to multiply the current pitch setting;
-			e.g. 0.5 is half, 1 returns to the current pitch setting.
-		@param multiplier: int/float
-		"""
-		self.multiplier = multiplier
-
-	def __repr__(self):
-		return "PitchCommand(multiplier=%g)" % self.multiplier
-
-class VolumeCommand(SpeechCommand):
+class VolumeCommand(BaseProsodyCommand):
 	"""Change the volume of the voice.
 	"""
+	settingName = "volume"
 
-	def __init__(self, multiplier=1):
-		"""
-		@param multiplier: The number by which to multiply the current volume setting;
-			e.g. 0.5 is half, 1 returns to the current volume setting.
-		@param multiplier: int/float
-		"""
-		self.multiplier = multiplier
-
-	def __repr__(self):
-		return "VolumeCommand(multiplier=%g)" % self.multiplier
-
-class RateCommand(SpeechCommand):
+class RateCommand(BaseProsodyCommand):
 	"""Change the rate of the voice.
 	"""
+	settingName = "rate"
 
-	def __init__(self, multiplier=1):
-		"""
-		@param multiplier: The number by which to multiply the current rate setting;
-			e.g. 0.5 is half, 1 returns to the current rate setting.
-		@param multiplier: int/float
-		"""
-		self.multiplier = multiplier
-
-	def __repr__(self):
-		return "RateCommand(multiplier=%g)" % self.multiplier
-
-class PhonemeCommand(SpeechCommand):
+class PhonemeCommand(SynthCommand):
 	"""Insert a specific pronunciation.
 	This command accepts Unicode International Phonetic Alphabet (IPA) characters.
 	Note that this is not well supported by synthesizers.
@@ -1939,3 +2029,509 @@ class PhonemeCommand(SpeechCommand):
 		if self.text:
 			out += ", text=%r" % self.text
 		return out + ")"
+
+class BaseCallbackCommand(with_metaclass(ABCMeta, SpeechCommand)):
+	"""Base class for commands which cause a function to be called when speech reaches them.
+	This class should not be instantiated directly.
+	It is designed to be subclassed to provide specific functionality;
+	e.g. L{BeepCommand}.
+	To supply a generic function to run, use L{CallbackCommand}.
+	This command is never passed to synth drivers.
+	"""
+
+	@abstractmethod
+	def run(self):
+		"""Code to run when speech reaches this command.
+		This method is executed in NVDA's main thread, 
+		therefore must return as soon as practically possible, 
+		otherwise it will block production of further speech and or other functionality in NVDA.
+		"""
+
+class CallbackCommand(BaseCallbackCommand):
+	"""
+	Call a function when speech reaches this point.
+	Note that  the provided function is executed in NVDA's main thread, 
+		therefore must return as soon as practically possible, 
+		otherwise it will block production of further speech and or other functionality in NVDA.
+	"""
+
+	def __init__(self, callback):
+		self._callback = callback
+
+	def run(self,*args, **kwargs):
+		return self._callback(*args,**kwargs)
+
+class BeepCommand(BaseCallbackCommand):
+	"""Produce a beep.
+	"""
+
+	def __init__(self, hz, length, left=50, right=50):
+		self.hz = hz
+		self.length = length
+		self.left = left
+		self.right = right
+
+	def run(self):
+		import tones
+		tones.beep(self.hz, self.length, left=self.left, right=self.right)
+
+	def __repr__(self):
+		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
+			hz=self.hz, length=self.length, left=self.left, right=self.right)
+
+class WaveFileCommand(BaseCallbackCommand):
+	"""Play a wave file.
+	"""
+
+	def __init__(self, fileName):
+		self.fileName = fileName
+
+	def run(self):
+		import nvwave
+		nvwave.playWaveFile(self.fileName, async=True)
+
+	def __repr__(self):
+		return "WaveFileCommand(%r)" % self.fileName
+
+class ConfigProfileTriggerCommand(SpeechCommand):
+	"""Applies (or stops applying) a configuration profile trigger to subsequent speech.
+	"""
+
+	def __init__(self, trigger, enter=True):
+		"""
+		@param trigger: The configuration profile trigger.
+		@type trigger: L{config.ProfileTrigger}
+		@param enter: C{True} to apply the trigger, C{False} to stop applying it.
+		@type enter: bool
+		"""
+		self.trigger = trigger
+		self.enter = enter
+		trigger._shouldNotifyProfileSwitch = False
+
+class ParamChangeTracker(object):
+	"""Keeps track of commands which change parameters from their defaults.
+	This is useful when an utterance needs to be split.
+	As you are processing a sequence,
+	you update the tracker with a parameter change using the L{update} method.
+	When you split the utterance, you use the L{getChanged} method to get
+	the parameters which have been changed from their defaults.
+	"""
+
+	def __init__(self):
+		self._commands = {}
+
+	def update(self, command):
+		"""Update the tracker with a parameter change.
+		@param command: The parameter change command.
+		@type command: L{SynthParamCommand}
+		"""
+		paramType = type(command)
+		if command.isDefault:
+			# This no longer applies.
+			self._commands.pop(paramType, None)
+		else:
+			self._commands[paramType] = command
+
+	def getChanged(self):
+		"""Get the commands for the parameters which have been changed from their defaults.
+		@return: List of parameter change commands.
+		@type: list of L{SynthParamCommand}
+		"""
+		return self._commands.values()
+
+class _ManagerPriorityQueue(object):
+	"""A speech queue for a specific priority.
+	This is intended for internal use by L{_SpeechManager} only.
+	Each priority has a separate queue.
+	It holds the pending speech sequences to be spoken,
+	as well as other information necessary to restore state when this queue
+	is preempted by a higher priority queue.
+	"""
+
+	def __init__(self, priority):
+		self.priority = priority
+		#: The pending speech sequences to be spoken.
+		#: These are split at indexes,
+		#: so a single utterance might be split over multiple sequences.
+		self.pendingSequences = []
+		#: The configuration profile triggers that have been entered during speech.
+		self.enteredProfileTriggers = []
+		#: Keeps track of parameters that have been changed during an utterance.
+		self.paramTracker = ParamChangeTracker()
+
+class _SpeechManager(object):
+	"""Manages queuing of speech utterances, calling callbacks at desired points in the speech, profile switching, prioritization, etc.
+	This is intended for internal use only.
+	It is used by higher level functions such as L{speak}.
+
+	The high level flow of control is as follows:
+	1. A speech sequence is queued with L{speak}, which in turn calls L{_queueSpeechSequence}.
+	2. L{_processSpeechSequence} is called to normalize, process and split the input sequence.
+		It converts callbacks to indexes.
+		All indexing is assigned and managed by this class.
+		It maps any indexes to their corresponding callbacks.
+		It splits the sequence at indexes so we easily know what has completed speaking.
+		If there are end utterance commands, the sequence is split at that point.
+		We ensure there is an index at the end of all utterances so we know when they've finished speaking.
+		We ensure any config profile trigger commands are preceded by an utterance end.
+		Parameter changes are re-applied after utterance breaks.
+		We ensure any entered profile triggers are exited at the very end.
+	3. L{_queueSpeechSequence} places these processed sequences in the queue
+		for the priority specified by the caller in step 1.
+		There is a separate queue for each priority.
+	4. L{_pushNextSpeech} is called to begin pushing speech.
+		It looks for the highest priority queue with pending speech.
+		Because there's no other speech queued, that'll be the queue we just touched.
+	5. If the input begins with a profile switch, it is applied immediately.
+	6. L{_buildNextUtterance} is called to build a full utterance and it is sent to the synth.
+	7. For every index reached, L{_handleIndex} is called.
+		The completed sequence is removed from L{_pendingSequences}.
+		If there is an associated callback, it is run.
+		If the index marks the end of an utterance, L{_pushNextSpeech} is called to push more speech.
+	8. If there is another utterance before a profile switch, it is built and sent as per steps 6 and 7.
+	9. In L{_pushNextSpeech}, if a profile switch is next, we wait for the synth to finish speaking before pushing more.
+		This is because we don't want to start speaking too early with a different synth.
+		L{_handleDoneSpeaking} is called when the synth finishes speaking.
+		It pushes more speech, which includes applying the profile switch.
+	10. The flow then repeats from step 6 onwards until there are no more pending sequences.
+	11. If another sequence is queued via L{speak} during speech,
+		it is processed and queued as per steps 2 and 3.
+	12. If this is the first utterance at priority now, speech is interrupted
+		and L{_pushNextSpeech} is called.
+		Otherwise, L{_pushNextSpeech} is called when the current utterance completes
+		as per step 7.
+	13. When L{_pushNextSpeech} is next called, it looks for the highest priority queue with pending speech.
+		If that priority is different to the priority of the utterance just spoken,
+		any relevant profile switches are applied to restore the state for this queue.
+	14. If a lower priority utterance was interrupted in the middle,
+		L{_buildNextUtterance} applies any parameter changes that applied before the interruption.
+	15. The flow then repeats from step 6 onwards until there are no more pending sequences.
+
+	Note:
+	All of this activity is (and must be) synchronized and serialized on the main thread.
+	"""
+
+	def __init__(self):
+		#: A counter for indexes sent to the synthesizer for callbacks, etc.
+		self._indexCounter = self._generateIndexes()
+		self._reset()
+		synthDriverHandler.synthIndexReached.register(self._onSynthIndexReached)
+		synthDriverHandler.synthDoneSpeaking.register(self._onSynthDoneSpeaking)
+
+	#: Maximum index number to pass to synthesizers.
+	MAX_INDEX = 9999
+	def _generateIndexes(self):
+		"""Generator of index numbers.
+		We don't want to reuse index numbers too quickly,
+		as there can be race conditions when cancelling speech which might result
+		in an index from a previous utterance being treated as belonging to the current utterance.
+		However, we don't want the counter increasing indefinitely,
+		as some synths might not be able to handle huge numbers.
+		Therefore, we use a counter which starts at 1, counts up to L{MAX_INDEX},
+		wraps back to 1 and continues cycling thus.
+		This maximum is arbitrary, but
+		it's small enough that any synth should be able to handle it
+		and large enough that previous indexes won't reasonably get reused
+		in the same or previous utterance.
+		"""
+		while True:
+			for index in xrange(1, self.MAX_INDEX + 1):
+				yield index
+
+	def _reset(self):
+		#: The queues for each priority.
+		self._priQueues = {}
+		#: The priority queue for the utterance currently being spoken.
+		self._curPriQueue = None
+		#: Maps indexes to BaseCallbackCommands.
+		self._indexesToCallbacks = {}
+		#: Whether to push more speech when the synth reports it is done speaking.
+		self._shouldPushWhenDoneSpeaking = False
+
+	def speak(self, speechSequence, priority):
+		# If speech isn't already in progress, we need to push the first speech.
+		push = self._curPriQueue is None
+		interrupt = self._queueSpeechSequence(speechSequence, priority)
+		if interrupt:
+			getSynth().cancel()
+			push = True
+		if push:
+			self._pushNextSpeech(True)
+
+	def _queueSpeechSequence(self, inSeq, priority):
+		"""
+		@return: Whether to interrupt speech.
+		@rtype: bool
+		"""
+		outSeq = self._processSpeechSequence(inSeq)
+		queue = self._priQueues.get(priority)
+		if not queue:
+			queue = self._priQueues[priority] = _ManagerPriorityQueue(priority)
+		first = len(queue.pendingSequences) == 0
+		queue.pendingSequences.extend(outSeq)
+		if priority is SPRI_NOW and first:
+			# If this is the first sequence at SPRI_NOW, interrupt speech.
+			return True
+		return False
+
+	def _processSpeechSequence(self, inSeq):
+		paramTracker = ParamChangeTracker()
+		enteredTriggers = []
+		outSeq = []
+		outSeqs = []
+
+		def ensureEndUtterance(outSeq):
+			# We split at EndUtteranceCommands so the ends of utterances are easily found.
+			if outSeq:
+				# There have been commands since the last split.
+				outSeqs.append(outSeq)
+				lastOutSeq = outSeq
+				# Re-apply parameters that have been changed from their defaults.
+				outSeq = paramTracker.getChanged()
+			else:
+				lastOutSeq = outSeqs[-1] if outSeqs else None
+			lastCommand = lastOutSeq[-1] if lastOutSeq else None
+			if not lastCommand or isinstance(lastCommand, (EndUtteranceCommand, ConfigProfileTriggerCommand)):
+				# It doesn't make sense to start with or repeat EndUtteranceCommands.
+				# We also don't want an EndUtteranceCommand immediately after a ConfigProfileTriggerCommand.
+				return outSeq
+			if not isinstance(lastCommand, IndexCommand):
+				# Add an index so we know when we've reached the end of this utterance.
+				speechIndex = next(self._indexCounter)
+				lastOutSeq.append(IndexCommand(speechIndex))
+			outSeqs.append([EndUtteranceCommand()])
+			return outSeq
+
+		for command in inSeq:
+			if isinstance(command, BaseCallbackCommand):
+				# When the synth reaches this point, we want to call the callback.
+				speechIndex = next(self._indexCounter)
+				outSeq.append(IndexCommand(speechIndex))
+				self._indexesToCallbacks[speechIndex] = command
+				# We split at indexes so we easily know what has completed speaking.
+				outSeqs.append(outSeq)
+				outSeq = []
+				continue
+			if isinstance(command, ConfigProfileTriggerCommand):
+				if not command.trigger.hasProfile:
+					# Ignore triggers that have no associated profile.
+					continue
+				if command.enter and command.trigger in enteredTriggers:
+					log.debugWarning("Request to enter trigger which has already been entered: %r" % command.trigger.spec)
+					continue
+				if not command.enter and command.trigger not in enteredTriggers:
+					log.debugWarning("Request to exit trigger which wasn't entered: %r" % command.trigger.spec)
+					continue
+				outSeq = ensureEndUtterance(outSeq)
+				outSeqs.append([command])
+				if command.enter:
+					enteredTriggers.append(command.trigger)
+				else:
+					enteredTriggers.remove(command.trigger)
+				continue
+			if isinstance(command, EndUtteranceCommand):
+				outSeq = ensureEndUtterance(outSeq)
+				continue
+			if isinstance(command, SynthParamCommand):
+				paramTracker.update(command)
+			outSeq.append(command)
+		# Add the last sequence and make sure the sequence ends the utterance.
+		ensureEndUtterance(outSeq)
+		# Exit any profile triggers the caller didn't exit.
+		for trigger in reversed(enteredTriggers):
+			command = ConfigProfileTriggerCommand(trigger, False)
+			outSeqs.append([command])
+		return outSeqs
+
+	def _pushNextSpeech(self, doneSpeaking):
+		queue = self._getNextPriority()
+		if not queue:
+			# No more speech.
+			self._curPriQueue = None
+			return
+		if not self._curPriQueue:
+			# First utterance after no speech.
+			self._curPriQueue = queue
+		elif queue.priority > self._curPriQueue.priority:
+			# Preempted by higher priority speech.
+			if self._curPriQueue.enteredProfileTriggers:
+				if not doneSpeaking:
+					# Wait for the synth to finish speaking.
+					# _handleDoneSpeaking will call us again.
+					self._shouldPushWhenDoneSpeaking = True
+					return
+				self._exitProfileTriggers(self._curPriQueue.enteredProfileTriggers)
+			self._curPriQueue = queue
+		elif queue.priority < self._curPriQueue.priority:
+			# Resuming a preempted, lower priority queue.
+			if queue.enteredProfileTriggers:
+				if not doneSpeaking:
+					# Wait for the synth to finish speaking.
+					# _handleDoneSpeaking will call us again.
+					self._shouldPushWhenDoneSpeaking = True
+					return
+				self._restoreProfileTriggers(queue.enteredProfileTriggers)
+			self._curPriQueue = queue
+		while queue.pendingSequences and isinstance(queue.pendingSequences[0][0], ConfigProfileTriggerCommand):
+			if not doneSpeaking:
+				# Wait for the synth to finish speaking.
+				# _handleDoneSpeaking will call us again.
+				self._shouldPushWhenDoneSpeaking = True
+				return
+			self._switchProfile()
+		if not queue.pendingSequences:
+			# The last commands in this queue were profile switches.
+			# Call this method again in case other queues are waiting.
+			return self._pushNextSpeech(True)
+		seq = self._buildNextUtterance()
+		if seq:
+			getSynth().speak(seq)
+
+	def _getNextPriority(self):
+		"""Get the highest priority queue containing pending speech.
+		"""
+		for priority in SPEECH_PRIORITIES:
+			queue = self._priQueues.get(priority)
+			if not queue:
+				continue
+			if queue.pendingSequences:
+				return queue
+		return None
+
+	def _buildNextUtterance(self):
+		"""Since an utterance might be split over several sequences,
+		build a complete utterance to pass to the synth.
+		"""
+		utterance = []
+		# If this utterance was preempted by higher priority speech,
+		# apply any parameters changed before the preemption.
+		params = self._curPriQueue.paramTracker.getChanged()
+		utterance.extend(params)
+		for seq in self._curPriQueue.pendingSequences:
+			if isinstance(seq[0], EndUtteranceCommand):
+				# The utterance ends here.
+				break
+			utterance.extend(seq)
+		return utterance
+
+	def _onSynthIndexReached(self, synth=None, index=None):
+		if synth != getSynth():
+			return
+		# This needs to be handled in the main thread.
+		queueHandler.queueFunction(queueHandler.eventQueue, self._handleIndex, index)
+
+	def _removeCompletedFromQueue(self, index):
+		"""Removes completed speech sequences from the queue.
+		@param index: The index just reached indicating a completed sequence.
+		@return: Tuple of (valid, endOfUtterance),
+			where valid indicates whether the index was valid and
+			endOfUtterance indicates whether this sequence was the end of the current utterance.
+		@rtype: (bool, bool)
+		"""
+		# Find the sequence that just completed speaking.
+		if not self._curPriQueue:
+			# No speech in progress. Probably from a previous utterance which was cancelled.
+			return False, False
+		for seqIndex, seq in enumerate(self._curPriQueue.pendingSequences):
+			lastCommand = seq[-1] if isinstance(seq, list) else None
+			if isinstance(lastCommand, IndexCommand) and index >= lastCommand.index:
+				endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
+				if endOfUtterance:
+					# Remove the EndUtteranceCommand as well.
+					seqIndex += 1
+				break # Found it!
+		else:
+			# Unknown index. Probably from a previous utterance which was cancelled.
+			return False, False
+		if endOfUtterance:
+			# These params may not apply to the next utterance if it was queued separately,
+			# so reset the tracker.
+			# The next utterance will include the commands again if they do still apply.
+			self._curPriQueue.paramTracker = ParamChangeTracker()
+		else:
+			# Keep track of parameters changed so far.
+			# This is necessary in case this utterance is preempted by higher priority speech.
+			for seqIndex in xrange(seqIndex + 1):
+				seq = self._curPriQueue.pendingSequences[seqIndex]
+				for command in seq:
+					if isinstance(command, SynthParamCommand):
+						self._curPriQueue.paramTracker.update(command)
+		# This sequence is done, so we don't need to track it any more.
+		del self._curPriQueue.pendingSequences[:seqIndex + 1]
+		return True, endOfUtterance
+
+	def _handleIndex(self, index):
+		valid, endOfUtterance = self._removeCompletedFromQueue(index)
+		if not valid:
+			return
+		callbackCommand = self._indexesToCallbacks.pop(index, None)
+		if callbackCommand:
+			try:
+				callbackCommand.run()
+			except:
+				log.exception("Error running speech callback")
+		if endOfUtterance:
+			self._pushNextSpeech(False)
+
+	def _onSynthDoneSpeaking(self, synth=None):
+		if synth != getSynth():
+			return
+		# This needs to be handled in the main thread.
+		queueHandler.queueFunction(queueHandler.eventQueue, self._handleDoneSpeaking)
+
+	def _handleDoneSpeaking(self):
+		if self._shouldPushWhenDoneSpeaking:
+			self._shouldPushWhenDoneSpeaking = False
+			self._pushNextSpeech(True)
+
+	def _switchProfile(self):
+		command = self._curPriQueue.pendingSequences.pop(0)[0]
+		assert isinstance(command, ConfigProfileTriggerCommand), "First pending command should be a ConfigProfileTriggerCommand"
+		if command.enter:
+			try:
+				command.trigger.enter()
+			except:
+				log.exception("Error entering new trigger %r" % command.trigger.spec)
+			self._curPriQueue.enteredProfileTriggers.append(command.trigger)
+		else:
+			try:
+				command.trigger.exit()
+			except:
+				log.exception("Error exiting active trigger %r" % command.trigger.spec)
+			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
+
+	def _exitProfileTriggers(self, triggers):
+		for trigger in reversed(triggers):
+			try:
+				trigger.exit()
+			except:
+				log.exception("Error exiting profile trigger %r" % command.trigger.spec)
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
+
+	def _restoreProfileTriggers(self, triggers):
+		for trigger in triggers:
+			try:
+				trigger.enter()
+			except:
+				log.exception("Error entering profile trigger %r" % command.trigger.spec)
+		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
+
+	def cancel(self):
+		getSynth().cancel()
+		if self._curPriQueue and self._curPriQueue.enteredProfileTriggers:
+			self._exitProfileTriggers(self._curPriQueue.enteredProfileTriggers)
+		self._reset()
+
+#: The singleton _SpeechManager instance used for speech functions.
+#: @type: L{_SpeechManager}
+_manager = _SpeechManager()
+
+def clearTypedWordBuffer():
+	"""
+	Forgets any word currently being built up with typed characters for speaking. 
+	This should be called when the user's context changes such that they could no longer 
+	complete the word (such as a focus change or choosing to move the caret).
+	"""
+	global curWordChars
+	curWordChars=[]

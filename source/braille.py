@@ -8,6 +8,7 @@
 import sys
 import itertools
 import os
+import driverHandler
 import pkgutil
 import importlib
 import ctypes.wintypes
@@ -653,8 +654,8 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		reportTableCellCoords = formatConfig["reportTableCellCoords"]
 		props = {
 			"states": states,
-			"rowNumber": field.get("table-rownumber"),
-			"columnNumber": field.get("table-columnnumber"),
+			"rowNumber": (field.get("table-rownumber-presentational") or field.get("table-rownumber")),
+			"columnNumber": (field.get("table-columnnumber-presentational") or field.get("table-columnnumber")),
 			"rowSpan": field.get("table-rowsspanned"),
 			"columnSpan": field.get("table-columnsspanned"),
 			"includeTableCellCoords": reportTableCellCoords,
@@ -1627,10 +1628,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			kwargs["port"]=detected
 		else:
 			# See if the user has defined a specific port to connect to
-			if name not in config.conf["braille"]:
-				# No port was set.
-				config.conf["braille"][name] = {"port" : ""}
-			port = config.conf["braille"][name].get("port")
+			try:
+				port = config.conf["braille"][name]["port"]
+			except KeyError:
+				port = None
 			# Here we try to keep compatible with old drivers that don't support port setting
 			# or situations where the user hasn't set any port.
 			if port:
@@ -1668,6 +1669,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					except:
 						log.error("Error terminating previous display driver", exc_info=True)
 				self.display = newDisplay
+			newDisplay.initSettings()
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			if isFallback:
@@ -2142,7 +2144,7 @@ def terminate():
 	handler.terminate()
 	handler = None
 
-class BrailleDisplayDriver(baseObject.AutoPropertyObject):
+class BrailleDisplayDriver(driverHandler.Driver):
 	"""Abstract base braille display driver.
 	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory containing a BrailleDisplayDriver class which inherits from this base class.
 
@@ -2155,13 +2157,13 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
 
 	@see: L{hwIo} for raw serial and HID I/O.
+
+	There are factory functions to create L{driverHandler.DriverSetting} instances for common display specific settings; e.g. L{DotFirmnessSetting}.
 	"""
-	#: The name of the braille display; must be the original module file name.
-	#: @type: str
-	name = ""
-	#: A description of the braille display.
-	#: @type: str
-	description = ""
+	_configSection = "braille"
+	# Most braille display drivers don't have settings yet.
+	# Make sure supportedSettings is not abstract for these.
+	supportedSettings = ()
 	#: Whether this driver is thread-safe.
 	#: If it is, NVDA may initialize, terminate or call this driver  on any thread.
 	#: This allows NVDA to read from and write to the display in the background,
@@ -2213,6 +2215,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		Subclasses should call the superclass method first.
 		@postcondition: This instance can no longer be used unless it is constructed again.
 		"""
+		super(BrailleDisplayDriver,self).terminate()
 		# Clear the display.
 		try:
 			self.display([0] * self.numCells)
@@ -2370,6 +2373,39 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 			raise ctypes.WinError()
 		self._awaitingAck = False
 		_BgThread.queueApc(_BgThread.executor)
+
+	@classmethod
+	def DotFirmnessSetting(cls,defaultVal,minVal,maxVal,useConfig=False):
+		"""Factory function for creating dot firmness setting."""
+		return driverHandler.NumericDriverSetting(
+			"dotFirmness",
+			# Translators: Label for a setting in braille settings dialog.
+			_("Dot firm&ness"),
+			defaultVal=defaultVal,
+			minVal=minVal,
+			maxVal=maxVal,
+			useConfig=useConfig
+		)
+
+	@classmethod
+	def BrailleInputSetting(cls, useConfig=True):
+		"""Factory function for creating braille input setting."""
+		return driverHandler.BooleanDriverSetting(
+			"brailleInput",
+			# Translators: Label for a setting in braille settings dialog.
+			_("Braille inp&ut"),
+			useConfig=useConfig
+		)
+
+	@classmethod
+	def HIDInputSetting(cls, useConfig):
+		"""Factory function for creating HID input setting."""
+		return driverHandler.BooleanDriverSetting(
+			"hidKeyboardInput",
+			# Translators: Label for a setting in braille settings dialog.
+			_("&HID keyboard input simulation"),
+			useConfig=useConfig
+		)
 
 class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
