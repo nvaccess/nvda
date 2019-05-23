@@ -218,7 +218,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)
 		start=offset
 		tempOffset=offset-1
-		while True:
+		while tempOffset >= 0:
 			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,tempOffset,0)
 			if start<end:
 				break
