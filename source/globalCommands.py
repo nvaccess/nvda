@@ -41,6 +41,7 @@ import characterProcessing
 from baseObject import ScriptableObject
 import core
 import winVersion
+from base64 import b16encode
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -60,6 +61,9 @@ SCRCAT_SPEECH = _("Speech")
 #: Script category for configuration dialogs commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_CONFIG = _("Configuration")
+#: Script category for configuration profile activation and management commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
@@ -1428,6 +1432,25 @@ class GlobalCommands(ScriptableObject):
 	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 	script_toggleMouseTracking.category=SCRCAT_MOUSE
 
+	def script_toggleMouseTextResolution(self,gesture):
+		values = textInfos.MOUSE_TEXT_RESOLUTION_UNITS
+		labels = [textInfos.unitLabels[x] for x in values]
+		try:
+			index = values.index(config.conf["mouse"]["mouseTextUnit"])
+		except ValueError:
+			log.debugWarning("Couldn't get current mouse text resolution setting", exc_info=True)
+			default = 				config.conf.getConfigValidation(("mouse", "mouseTextUnit")).default
+			index = values.index(default)
+		newIndex = (index+1) % len(values)
+		config.conf["mouse"]["mouseTextUnit"]= values[newIndex]
+		# Translators: Reports the new state of the mouse text unit resolution:.
+		# %s will be replaced with the new label.
+		# For example, the full message might be "Mouse text unit resolution character"
+		ui.message(_("Mouse text unit resolution %s")%labels[newIndex])
+	# Translators: Input help mode message for toggle mouse text unit resolution command.
+	script_toggleMouseTextResolution.__doc__=_("Toggles how much text will be spoken when the mouse moves")
+	script_toggleMouseTextResolution.category=SCRCAT_MOUSE
+
 	def script_title(self,gesture):
 		obj=api.getForegroundObject()
 		title=obj.name
@@ -1473,7 +1496,10 @@ class GlobalCommands(ScriptableObject):
 
 	def script_navigatorObject_devInfo(self,gesture):
 		obj=api.getNavigatorObject()
-		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
+		if hasattr(obj, "devInfo"):
+			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
+		else:
+			log.info("No developer info for navigator object", activateLogViewer=True)
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
@@ -1543,6 +1569,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
+	def script_toggleAutoFocusFocusableElements(self,gesture):
+		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements off")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements on")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle auto focus focusable elements command.
+	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
+	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
+
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
 		UNKNOWN_BATTERY_STATUS = 0xFF
@@ -1578,17 +1618,17 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
-		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
-		# Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-		# If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-		message = _("Currently running application is %s") % appName
+		message = ''
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
-			# Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-			# For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+			# Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 			# This message will not be presented if there is no module for the current program.
-			message += _(" and currently loaded module is %s") % mod.appModuleName.split(".")[0]
+			message = _(" %s module is loaded. ") % mod.appModuleName.split(".")[0]
+		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
+		# Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+		# For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+		message +=_(" %s is currently running.") % appName
 		ui.message(message)
 	# Translators: Input help mode message for report current program name and app module name command.
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
@@ -2152,7 +2192,7 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG
+	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG_PROFILES
 
 	def script_toggleConfigProfileTriggers(self,gesture):
 		if config.conf.profileTriggersEnabled:
@@ -2360,6 +2400,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleAutoFocusFocusableElements",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
@@ -2391,3 +2432,115 @@ class GlobalCommands(ScriptableObject):
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
 commands = GlobalCommands()
+
+class ConfigProfileActivationCommands(ScriptableObject):
+	"""Singleton scriptable object that collects scripts for available configuration profiles."""
+
+	scriptCategory = SCRCAT_CONFIG_PROFILES
+
+	@classmethod
+	def __new__(cls, *args, **kwargs):
+		# Iterate through the available profiles, creating scripts for them.
+		for profile in config.conf.listProfiles():
+			cls.addScriptForProfile(profile)
+		return 		super(ConfigProfileActivationCommands, cls).__new__(cls)
+
+	@classmethod
+	def _getScriptNameForProfile(cls, name):
+		name = name.encode("utf-8")
+		invalidChars = set()
+		for c in name:
+			if not c.isalnum() and c != "_":
+				invalidChars.add(c)
+		for c in invalidChars:
+			name=name.replace(c, b16encode(c))
+		# Python 3: Revisit this to ensure that script names are decoded correctly
+		return "profile_%s" % name
+
+	@classmethod
+	def _profileScript(cls, name):
+		if gui.shouldConfigProfileTriggersBeSuspended():
+			# Translators: a message indicating that configuration profiles can't be activated using gestures,
+			# due to profile activation being suspended.
+			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+		elif config.conf.profiles[-1].name == name:
+			config.conf.manualActivateProfile(None)
+			# Translators: a message when a configuration profile is manually deactivated.
+			# {profile} is replaced with the profile's name.
+			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+		else:
+			config.conf.manualActivateProfile(name)
+			# Translators: a message when a configuration profile is manually activated.
+			# {profile} is replaced with the profile's name.
+			state = _("Configuration profile {profile} manually activated").format(profile=name)
+		ui.message(state)
+
+	@classmethod
+	def addScriptForProfile(cls, name):
+		"""Adds a script for the given configuration profile.
+		This method will not check a profile's existence.
+		@param name: The name of the profile to add a script for.
+		@type name: str
+		"""
+		script = lambda self, gesture: cls._profileScript(name)
+		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)
+		# Just set the doc string of the script, using the decorator is overkill here.
+		# Translators: The description shown in input help for a script that
+		# activates or deactivates a config profile.
+		# {profile} is replaced with the profile's name.
+		script.__doc__ = _("Activates or deactivates the {profile} configuration profile").format(profile=name)
+		setattr(cls, funcName, script)
+
+	@classmethod
+	def removeScriptForProfile(cls, name):
+		"""Removes a script for the given configuration profile.
+		@param name: The name of the profile to remove a script for.
+		@type name: str
+		"""
+		scriptName = cls._getScriptNameForProfile(name)
+		cls._moveGesturesForProfileActivationScript(scriptName)
+		delattr(cls, "script_%s" % scriptName)
+
+	@classmethod
+	def _moveGesturesForProfileActivationScript(cls, oldScriptName, newScriptName=None):
+		"""Patches the user gesture map to reflect updates to profile scripts.
+		@param oldScriptName: The current name of the profile activation script.
+		@type oldScriptName: str
+		@param newScriptName: The new name for the profile activation script, if any.
+			if C{None}, the gestures are only removed for the current profile sript.
+		@type newScriptName: str
+		"""
+		gestureMap = inputCore.manager.userGestureMap
+		for scriptCls, gesture, scriptName in gestureMap.getScriptsForAllGestures():
+			if scriptName != oldScriptName:
+				continue
+			moduleName = scriptCls.__module__
+			className = scriptCls.__name__
+			gestureMap.remove(gesture, moduleName, className, scriptName)
+			if newScriptName is not None:
+				gestureMap.add(gesture, moduleName, className, newScriptName)
+		try:
+			gestureMap.save()
+		except:
+			log.debugWarning("Couldn't save user gesture map after renaming profile script", exc_info=True)
+
+	@classmethod
+	def updateScriptForRenamedProfile(cls, oldName, newName):
+		"""Removes a script for the oldName configuration profile,
+		and adds a new script for newName.
+		Existing gestures in the gesture map are moved from the oldName to the newName profile.
+		@param oldName: The current name of the profile.
+		@type oldName: str
+		@param newName: The new name for the profile.
+		@type newName: str
+		"""
+		oldScriptName = cls._getScriptNameForProfile(oldName)
+		newScriptName = cls._getScriptNameForProfile(newName)
+		cls._moveGesturesForProfileActivationScript(oldScriptName, newScriptName)
+		delattr(cls, "script_%s" % oldScriptName)
+		cls.addScriptForProfile(newName)
+
+#: The single instance for the configuration profile activation commands.
+#: @type: L{ConfigProfileActivationCommands}
+configProfileActivationCommands = ConfigProfileActivationCommands()
+

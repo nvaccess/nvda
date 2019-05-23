@@ -131,6 +131,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
+		# Forget the word currently being typed as the user is moving the caret somewhere else.
+		speech.clearTypedWordBuffer()
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
