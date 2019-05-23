@@ -87,8 +87,10 @@ class AppModule(appModuleHandler.AppModule):
 		# Emoji panel in build 17666 and later (unless this changes).
 		elif childAutomationID == "TEMPLATE_PART_ExpressionGroupedFullView":
 			self._emojiPanelJustOpened = True
+			# On some systems, there is something else besides grouping controls, so another child control must be used.
+			emojisIndex = -3 if obj.firstChild.children[-2].UIAElement.cachedAutomationID != "TEMPLATE_PART_Items_GridView" else -2
 			try:
-				self.event_UIA_elementSelected(obj.firstChild.children[-2].firstChild.firstChild, nextHandler)
+				self.event_UIA_elementSelected(obj.firstChild.children[emojisIndex].firstChild.firstChild, nextHandler)
 			except AttributeError:
 				# In build 18272's emoji panel, emoji list becomes empty in some situations.
 				pass
