@@ -191,7 +191,8 @@ class VisionHandler(AutoPropertyObject):
 		context = CONTEXT_FOCUS
 		if self.magnifier:
 			self.magnifier.trackToObject(obj, context=context)
-		if getattr(obj, "_hasNavigableText", False):
+		hasNavigableText = getattr(obj, "_hasNavigableText", False)
+		if hasNavigableText:
 			# This object most likely has a caret.
 			# Intentionally check this after tracking a magnifier to the object itself.
 			self.handleCaretMove(obj)
@@ -203,7 +204,7 @@ class VisionHandler(AutoPropertyObject):
 				# Furthermore, even when review follows focus, there might be
 				# reasons why the navigator object is not the same as the focus object.
 				self.highlighter.updateContextRect(CONTEXT_NAVIGATOR)
-			if not mightHaveCaret:
+			if not hasNavigableText:
 				# If this object does not have a caret, clear the caret rectangle from the map
 				# However, in the unlikely case it yet has a caret, we want to highlight that.
 				self.highlighter.updateContextRect(CONTEXT_CARET, obj=obj)
