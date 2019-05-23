@@ -19,7 +19,7 @@ from .providerBase import VisionEnhancementProvider
 from .highlighterBase import Highlighter
 from .magnifierBase import Magnifier
 from .colorEnhancerBase import ColorEnhancer
-from .visionHandler import VisionHandler, getProvider
+from .visionHandler import VisionHandler, getProviderClass
 import pkgutil
 import visionEnhancementProviders
 import config
@@ -53,7 +53,7 @@ def getProviderList(excludeNegativeChecks=True):
 		if name.startswith('_'):
 			continue
 		try:
-			provider = getProvider(name)
+			provider = getProviderClass(name)
 		except:
 			# Purposely catch everything.
 			# A provider can raise whatever exception it likes,

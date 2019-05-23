@@ -21,7 +21,7 @@ from logHandler import log
 import wx
 from collections import defaultdict
 
-def getProvider(moduleName, caseSensitive=True):
+def getProviderClass(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
 		return __import__(
@@ -103,7 +103,8 @@ class VisionHandler(AutoPropertyObject):
 				if not temporary:
 					config.conf['vision'][role] = None
 			return True
-		providerCls = getProvider(name)
+
+		providerCls = getProviderClass(name)
 		if not roles:
 			roles = providerCls.supportedRoles
 		else:
