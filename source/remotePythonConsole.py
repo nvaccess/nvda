@@ -11,6 +11,7 @@ The server will only handle one connection at a time.
 """
 
 import threading
+# Py3 review required: Python 2 "SocketServer" vs Python 3 "socketserver".
 import socketserver
 import wx
 import pythonConsole
