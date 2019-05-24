@@ -7,6 +7,7 @@
 """Utilities for working with the Windows Ease of Access Center.
 """
 
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import ctypes
 import winUser

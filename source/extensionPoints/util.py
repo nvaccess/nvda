@@ -179,6 +179,8 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 		return func(*args, **kwargs)
 
 	supportedKwargs = set(spec.args)
+	# #9067 (Py3 review required): originally called dict.keys.
+	# Therefore wrap this inside list call.
 	for kwarg in list(kwargs.keys()):
 		if kwarg not in supportedKwargs:
 			del kwargs[kwarg]

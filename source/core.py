@@ -384,6 +384,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
+		# Py3 review required: Python 2 "os/getcwdu" vs Python 3 "os.getcwd".
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
