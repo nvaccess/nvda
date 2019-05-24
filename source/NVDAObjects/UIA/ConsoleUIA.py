@@ -51,7 +51,7 @@ class consoleUIA(Terminal):
 		self._lastCharTime = time.time()
 		super(consoleUIA, self).event_typedCharacter(ch)
 
-	@script(gestures=["kb:enter", "kb:numpadEnter"])
+	@script(gestures=["kb:enter", "kb:numpadEnter", "kb:tab"])
 	def script_clear_isTyping(self, gesture):
 		gesture.send()
 		self._isTyping = False
