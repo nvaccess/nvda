@@ -388,7 +388,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from configProfiles import ProfilesDialog
+		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 

@@ -468,7 +468,7 @@ the NVDAObject for IAccessible
 			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
-			from mozilla import GeckoPluginWindowRoot
+			from .mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
 		maybeFlash = False
 		if ((windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2))
