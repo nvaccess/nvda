@@ -1109,7 +1109,8 @@ class DriverSettingsMixin(object):
 	def updateDriverSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		#firstly check already created options
-		for name,sizer in self.sizerDict.iteritems():
+		# #9067 (Py3 review required): sizerDict is a dictionary.
+		for name,sizer in self.sizerDict.items():
 			if name == changedSetting:
 				# Changing a setting shouldn't cause that setting itself to disappear.
 				continue
@@ -2310,7 +2311,8 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 class DictionaryDialog(SettingsDialog):
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
+	# #9067 (py3 review required): type_labels is a dictionary of type/labels map.
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -2545,7 +2547,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if displayName != "auto":
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
-				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+				# #9067 (Py3 review required): getPossiblePorts returns an ordered dictionary.
+				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
 				pass
 		if self.possiblePorts:
