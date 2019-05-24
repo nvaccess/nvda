@@ -11,6 +11,7 @@ from gui.dpiScalingHelper import DpiScalingHelperMixin
 import oleacc
 import winUser
 import winsound
+# Py3 review required: Python 2 "collections.Callable" vs Python 3 "collections.abc.Callable".
 from collections.abc import Callable
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
