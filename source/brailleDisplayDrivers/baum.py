@@ -7,6 +7,7 @@
 
 import time
 from collections import OrderedDict
+# Py3 review required: Python 2 "CStringIO" vs Python 3 "io".
 from io import StringIO
 import braille
 import inputCore

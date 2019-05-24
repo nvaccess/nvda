@@ -65,6 +65,7 @@ class AppModule(appModuleHandler.AppModule):
 		parentClassName=winUser.getClassName(parentWindow)
 		#If this object is an email header field, and we have a custom label for it,
 		#Then set the object's name to the label 
+		# Py3 review required: Python 2 "dict.has_key" vs Python 3 "key in dict".
 		if parentClassName=="OE_Envelope" and isinstance(obj,IAccessible) and obj.IAccessibleChildID==0 and controlID in envelopeNames:
 			obj.name=envelopeNames[controlID]
 			obj.useITextDocumentSupport=True

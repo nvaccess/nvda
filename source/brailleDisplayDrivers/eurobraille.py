@@ -6,6 +6,7 @@
 #Copyright (C) 2017-2019 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import OrderedDict, defaultdict
+# Py3 review required: Python 2 "CStringIO" vs Python 3 "io".
 from io import StringIO
 import serial
 import bdDetect

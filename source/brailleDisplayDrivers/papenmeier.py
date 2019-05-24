@@ -27,6 +27,7 @@ import serial
 
 #for brxcom
 import ctypes as c
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import winUser
 

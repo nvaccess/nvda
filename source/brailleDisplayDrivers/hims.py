@@ -6,6 +6,7 @@
 #Copyright (C) 2010-2018 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
 
 import serial
+# Py3 review required: Python 2 "CStringIO" vs Python 3 "io".
 from io import StringIO
 import os
 import hwIo

@@ -56,6 +56,8 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
+	# #9067 (Py3 review required): originally called dict.values.
+	# Therefore wrap this inside a list call.
 	tables = list(_tables.values())
 	tables.sort(key=lambda table: table.displayName)
 	return tables
