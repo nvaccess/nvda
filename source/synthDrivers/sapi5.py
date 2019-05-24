@@ -13,6 +13,7 @@ import os
 from ctypes import *
 import comtypes.client
 from comtypes import COMError
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import audioDucking
 import NVDAHelper

@@ -6,6 +6,7 @@
 
 import locale
 from collections import OrderedDict
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 from comtypes import COMObject, COMError
 from ctypes import *

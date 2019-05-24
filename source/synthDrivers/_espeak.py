@@ -8,6 +8,7 @@
 import time
 import nvwave
 import threading
+# Py3 review required: Python 2 "Queue" vs Python 3 "queue".
 import queue
 from ctypes import *
 import config
