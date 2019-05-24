@@ -10,6 +10,7 @@ import watchdog
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
 
+# Py3 review required: Python 2 "__builtin__" vs Python 3 "builtins".
 import builtins
 import os
 import code

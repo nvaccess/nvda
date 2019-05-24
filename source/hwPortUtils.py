@@ -9,6 +9,7 @@
 import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import winKernel
 from winKernel import SYSTEMTIME

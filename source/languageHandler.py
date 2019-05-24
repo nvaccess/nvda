@@ -8,6 +8,7 @@
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
+# Py3 review required: Python 2 "__builtin__" vs Python 3 "builtins".
 import builtins
 import os
 import sys

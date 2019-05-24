@@ -6,6 +6,7 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import threading
 import time
@@ -116,6 +117,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
+	# Py3 review required: Python 2 "os.getcwdu" vs Python 3 "os.getcwd".
 	sourcePath=os.getcwd()
 	detectUserConfig=True
 	detectNVDAExe=True

@@ -7,6 +7,7 @@
 """Utilities for working with MathType.
 """
 
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import ctypes
 import mathPres
