@@ -31,13 +31,13 @@ class consoleUIATextInfo(UIATextInfo):
 
 class consoleUIA(Terminal):
 	_TextInfo = consoleUIATextInfo
-	_isTyping=False
+	_isTyping = False
 	_lastCharTime = 0
 	_TYPING_TIMEOUT = 1
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if self._isTyping and time.time()-self._lastCharTime <= self._TYPING_TIMEOUT:
+		if self._isTyping and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT:
 			return
 		super(consoleUIA, self)._reportNewText(line)
 
