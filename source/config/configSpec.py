@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+# Py3 review required: Python 2 "CStringIO" vs. Python 3 "io".
 from io import StringIO
 from configobj import ConfigObj
 

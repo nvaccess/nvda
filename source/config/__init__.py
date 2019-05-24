@@ -12,11 +12,13 @@ For the latter two actions, one can perform actions prior to and/or after they t
 """ 
 
 import globalVars
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import ctypes
 import ctypes.wintypes
 import os
 import sys
+# Py3 review required: Python 2 "CStringIO" vs Python 3 "io".
 from io import StringIO
 import itertools
 import contextlib
@@ -82,6 +84,8 @@ def isInstalledCopy():
 		return False
 	winreg.CloseKey(k)
 	try:
+		# Py3 review required: Python 2 "os.getcwdu" vs Python 3 "os.getcwd".
+		# In Python 3, both the initial try block and the exception handler may call the same function, so see if it can be simplified.
 		return os.stat(instDir)==os.stat(os.getcwd()) 
 	except AttributeError:
 		return os.stat(instDir)==os.stat(os.getcwd()) 
@@ -635,6 +639,8 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 		if self._suspendedTriggers:
 			# Remove any suspended triggers referring to this profile.
+			# #9067 (Py3 review reuqired): originally called dict.keys (note that trigers is a dictionary).
+			# Therefore wrap this inside a list call unless it can be simplified further.
 			for trigger in list(self._suspendedTriggers.keys()):
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
