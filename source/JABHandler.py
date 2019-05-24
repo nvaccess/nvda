@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+# Py3 review required: Python 2 "Queue" vs Python 3 "queue".
 import queue
 from ctypes import *
 from ctypes.wintypes import *

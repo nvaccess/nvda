@@ -284,6 +284,7 @@ class JAB(Window):
 		stateString=self.JABStates
 		stateStrings=stateString.split(',')
 		for state in stateStrings:
+			# Py3 review required: Python 2 "dict.has_key" vs Python 3 "key in dict".
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
 		if "visible" not in stateStrings:

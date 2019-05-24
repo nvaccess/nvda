@@ -6,6 +6,7 @@
 
 import os
 import sys
+# Py3 review required: Python 2 "_winreg" vs Python 3 "winreg".
 import winreg
 import msvcrt
 import versionInfo
