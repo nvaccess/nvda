@@ -210,7 +210,8 @@ class WavePlayer(object):
 				try:
 					with self._global_waveout_lock:
 						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				except WindowsError, e:
+				# Py3 review required: Syntax of the form "except exception, e" is gone in Python 3, replaced by "except exception as e".
+				except WindowsError as e:
 					self.close()
 					raise e
 			self.sync()

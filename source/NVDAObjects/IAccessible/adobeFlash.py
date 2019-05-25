@@ -21,7 +21,8 @@ class InputTextFieldTextInfo(NVDAObjectTextInfo):
 	def _getRawSelectionOffsets(self):
 		try:
 			return self.obj.ISimpleTextSelectionObject.GetSelection()
-		except COMError, e:
+		# Py3 review required: Syntax of the form "except exception, e" is gone in Python 3, replaced by "except exception as e".
+		except COMError as e:
 			if e.hresult == hresult.E_FAIL:
 				# The documentation says that an empty field should return 0 for both values, but instead, we seem to get E_FAIL.
 				# An empty field still has a valid caret.
