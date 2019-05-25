@@ -1,4 +1,4 @@
-# NVDAObjects/UIA/ConsoleUIA.py
+# NVDAObjects/UIA/winConsoleUIA.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -29,7 +29,7 @@ class consoleUIATextInfo(UIATextInfo):
 				)
 
 
-class consoleUIA(Terminal):
+class winConsoleUIA(Terminal):
 	_TextInfo = consoleUIATextInfo
 	_isTyping = False
 	_lastCharTime = 0
@@ -39,17 +39,17 @@ class consoleUIA(Terminal):
 		# Additional typed character filtering beyond that in LiveText
 		if self._isTyping and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT:
 			return
-		super(consoleUIA, self)._reportNewText(line)
+		super(winConsoleUIA, self)._reportNewText(line)
 
 	def event_textChanged(self):
 		# fire textChange for liveText
 		self.event_textChange()
 
 	def event_typedCharacter(self, ch):
-		if len(''.join(ch.split())) > 0:
+		if not ch.isspace():
 			self._isTyping = True
 		self._lastCharTime = time.time()
-		super(consoleUIA, self).event_typedCharacter(ch)
+		super(winConsoleUIA, self).event_typedCharacter(ch)
 
 	@script(gestures=["kb:enter", "kb:numpadEnter", "kb:tab"])
 	def script_clear_isTyping(self, gesture):
