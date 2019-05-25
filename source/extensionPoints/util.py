@@ -109,6 +109,7 @@ class HandlerRegistrar(object):
 		"""Generator of registered handler functions.
 		This should be used when you want to call the handlers.
 		"""
+		# #9067 (py3 review required): try wrapping this inside a list call if needed.
 		for weak in self._handlers.values():
 			handler = weak()
 			if not handler:

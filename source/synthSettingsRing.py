@@ -38,6 +38,7 @@ class SynthSetting(baseObject.AutoPropertyObject):
 
 class StringSynthSetting(SynthSetting):
 	def __init__(self,synth,setting):
+		# #9067 (Py3 review required): if dict.values is indeed used, then perhaps consider wrapping this inside a list call.
 		self._values=getattr(synth,"available%ss"%setting.id.capitalize()).values()
 		super(StringSynthSetting,self).__init__(synth,setting,0,len(self._values)-1)
 

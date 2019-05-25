@@ -1078,6 +1078,7 @@ class DriverSettingsMixin(object):
 		setattr(
 			self,
 			"_%ss"%setting.id,
+			# #9067 (Py3 review required): if this is a dictionary, consider wrapping this inside a list call.
 			getattr(self.driver,"available%ss"%setting.id.capitalize()).values()
 		)
 		l=getattr(self,"_%ss"%setting.id)
