@@ -461,7 +461,7 @@ class AppModule(baseObject.ScriptableObject):
 			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID)).decode("mbcs")
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle, path)
-		print "Dump path: %s" % path
+		print("Dump path: %s" % path)
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.
