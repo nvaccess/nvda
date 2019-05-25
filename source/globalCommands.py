@@ -983,8 +983,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1014,8 +1015,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1041,8 +1043,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_WORD)
+			info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1071,8 +1074,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_WORD)
+			info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1087,8 +1091,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_startOfLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		ui.reviewMessage(_("Left"))
@@ -1101,8 +1106,9 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(textInfos.UNIT_CHARACTER)
-		charInfo.collapse()
+		if charInfo._expandCollapseBeforeReview:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
@@ -1158,8 +1164,9 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(textInfos.UNIT_CHARACTER)
-		charInfo.collapse()
+		if charInfo._expandCollapseBeforeReview:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.

@@ -15,6 +15,8 @@ from ..behaviors import Terminal
 
 
 class consoleUIATextInfo(UIATextInfo):
+	_expandCollapseBeforeReview = False
+
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 		if position == textInfos.POSITION_CARET:
