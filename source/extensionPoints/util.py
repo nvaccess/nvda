@@ -166,6 +166,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	if not spec.defaults or numExpectedArgsWithDefaults != numExpectedArgs:
 		# get the names of the args without defaults, skipping the N positional args given to `callWithSupportedKwargs`
 		# positionals are required for the Filter extension point.
+		# #9067 (Py3 review required): is it possible to pass this, or if the below code doesn't work, perhaps wrapping this inside a list call?
 		givenKwargsKeys = set(kwargs.keys())
 		firstArgWithDefault = numExpectedArgs - numExpectedArgsWithDefaults
 		specArgs = set(spec.args[numGivenPositionalArgs:firstArgWithDefault])

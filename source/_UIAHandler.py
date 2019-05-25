@@ -192,7 +192,9 @@ class UIAHandler(COMObject):
 			pfm=self.clientObject.proxyFactoryMapping
 			for index in range(pfm.count):
 				e=pfm.getEntry(index)
-				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
+				# #9067 (Py3 review required): originally called dict.keys.
+				# Therefore wrap inside a list call.
+				for propertyID in list(UIAPropertyIdsToNVDAEventNames.keys()):
 					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
 					try:
 						oldWinEvents=e.getWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID)

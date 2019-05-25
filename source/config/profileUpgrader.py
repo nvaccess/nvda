@@ -66,6 +66,7 @@ def _doValidation(profile, validator):
 			raise ValueError(errorString)
 
 def _ensureVersionProperty(profile):
+	# #9067 (Py3 review required): can we wrap this inside a list call as "profile" is a subclass of dictionary?
 	isEmptyProfile = 1 > len(profile.keys())
 	if isEmptyProfile:
 		log.debug("Empty profile, triggering default schema version")
