@@ -1189,6 +1189,16 @@ class GlobalCommands(ScriptableObject):
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
 
+	def _getCurrentLanguageForTextInfo(self, info):
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
+		return curLanguage
+
 	@script(
 		# Translators: Input help mode message for Review Current Symbol command.
 		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
@@ -1214,16 +1224,6 @@ class GlobalCommands(ScriptableObject):
 			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 			title = _("Expanded symbol ({})").format(languageDescription)
 			ui.browseableMessage(message, title)
-
-	def _getCurrentLanguageForTextInfo(self, info):
-		curLanguage = None
-		if config.conf['speech']['autoLanguageSwitching']:
-			for field in info.getTextWithFields({}):
-				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
-					curLanguage = field.field.get('language')
-		if curLanguage is None:
-			curLanguage = speech.getCurrentLanguage()
-		return curLanguage
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
