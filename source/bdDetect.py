@@ -25,7 +25,8 @@ import ctypes
 from logHandler import log
 import config
 import time
-import thread
+# Py3 review quired: is "_thread" module really necessary in this module?
+import _thread as thread
 from win32con import WM_DEVICECHANGE, DBT_DEVNODES_CHANGED
 import appModuleHandler
 from baseObject import AutoPropertyObject
