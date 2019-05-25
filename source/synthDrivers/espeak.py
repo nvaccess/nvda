@@ -11,9 +11,10 @@ from . import _espeak
 import Queue
 import threading
 import languageHandler
-from synthDriverHandler import SynthDriver,VoiceInfo,BooleanSynthSetting
+from synthDriverHandler import SynthDriver,VoiceInfo
 import speech
 from logHandler import log
+from driverHandler import BooleanDriverSetting
 
 class SynthDriver(SynthDriver):
 	name = "espeak"

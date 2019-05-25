@@ -1599,6 +1599,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
+	def script_toggleAutoFocusFocusableElements(self,gesture):
+		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements off")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements on")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle auto focus focusable elements command.
+	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
+	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
+
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
 		UNKNOWN_BATTERY_STATUS = 0xFF
@@ -2416,6 +2430,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleAutoFocusFocusableElements",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
@@ -2462,30 +2477,32 @@ class ConfigProfileActivationCommands(ScriptableObject):
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
+		name = name.encode("utf-8")
 		invalidChars = set()
 		for c in name:
 			if not c.isalnum() and c != "_":
 				invalidChars.add(c)
 		for c in invalidChars:
 			name=name.replace(c, b16encode(c))
-		return str("profile_%s" % name)
+		# Python 3: Revisit this to ensure that script names are decoded correctly
+		return "profile_%s" % name
 
 	@classmethod
 	def _profileScript(cls, name):
 		if gui.shouldConfigProfileTriggersBeSuspended():
 			# Translators: a message indicating that configuration profiles can't be activated using gestures,
 			# due to profile activation being suspended.
-			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+			state = _("Can't change the active profile while an NVDA dialog is open")
 		elif config.conf.profiles[-1].name == name:
 			config.conf.manualActivateProfile(None)
 			# Translators: a message when a configuration profile is manually deactivated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+			state = _("{profile} profile deactivated").format(profile=name)
 		else:
 			config.conf.manualActivateProfile(name)
 			# Translators: a message when a configuration profile is manually activated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually activated").format(profile=name)
+			state = _("{profile} profile activated").format(profile=name)
 		ui.message(state)
 
 	@classmethod

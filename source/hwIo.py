@@ -269,9 +269,7 @@ class Hid(IoBase):
 		if handle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open failed: %s" % ctypes.WinError())
-			self._file = None
 			raise ctypes.WinError()
-		self._file = handle
 		pd = ctypes.c_void_p()
 		if not ctypes.windll.hid.HidD_GetPreparsedData(handle, byref(pd)):
 			raise ctypes.WinError()
@@ -340,8 +338,6 @@ class Hid(IoBase):
 			raise ctypes.WinError()
 
 	def close(self):
-		if not self._file:
-			return
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
 		self._file = None
