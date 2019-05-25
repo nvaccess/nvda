@@ -32,6 +32,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import scriptHandler
+from scriptHandler import script
 import ui
 import braille
 import brailleInput
@@ -1188,17 +1189,16 @@ class GlobalCommands(ScriptableObject):
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for Review Current Symbol command.
+		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
+		category=SCRCAT_TEXTREVIEW,
+	)
 	def script_review_currentSymbol(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
 		text = info.text
-		curLanguage = None
-		if config.conf['speech']['autoLanguageSwitching']:
-			for field in info.getTextWithFields({}):
-				if isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
-					curLanguage=field.field.get('language')
-		if curLanguage is None:
-			curLanguage = speech.getCurrentLanguage()
 		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
 		if expandedSymbol == text:
 			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
@@ -1208,15 +1208,22 @@ class GlobalCommands(ScriptableObject):
 		if repeats == 0:
 			ui.message(expandedSymbol)
 		else:
-			# Translators: Character in the expanded symbol dialog.
-			ui.browseableMessage(_("Character: %s\n" % text) +
-				# Translators: Replacement in the expanded symbol dialog.
-				_("Replacement: %s" % expandedSymbol),
-			# Translators: title for expanded symbol dialog.
-			_("Expanded symbol (%s)" % languageHandler.getLanguageDescription(curLanguage)))
-	# Translators: Input help mode message for Review Current Symbol command.
-	script_review_currentSymbol.__doc__=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode")
-	script_review_currentSymbol.category=SCRCAT_TEXTREVIEW
+			# Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+			message = _("Character: {}\nReplacement: {}").format(text, expandedSymbol)
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
+			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+			title = _("Expanded symbol ({})").format(languageDescription)
+			ui.browseableMessage(message, title)
+
+	def _getCurrentLanguageForTextInfo(self, info):
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
+		return curLanguage
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
