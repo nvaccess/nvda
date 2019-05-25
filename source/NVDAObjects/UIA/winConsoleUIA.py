@@ -41,10 +41,6 @@ class winConsoleUIA(Terminal):
 			return
 		super(winConsoleUIA, self)._reportNewText(line)
 
-	def event_textChanged(self):
-		# fire textChange for liveText
-		self.event_textChange()
-
 	def event_typedCharacter(self, ch):
 		if not ch.isspace():
 			self._isTyping = True
