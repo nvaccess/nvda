@@ -248,7 +248,9 @@ class GlobalGestureMap(object):
 		self.fileName = filename
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
-		except (configobj.ConfigObjError,UnicodeDecodeError), e:
+		# Py3 review required: Syntax of the form "except exception, e" is gone in Python 3, replaced by "except exception as e".
+		# Wondering if UnicodeDecodeError is necessary still.
+		except (configobj.ConfigObjError,UnicodeDecodeError) as e:
 			log.warning("Error in gesture map '%s': %s"%(filename, e))
 			self.lastUpdateContainedError = True
 			return
