@@ -78,6 +78,9 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	FProcessEntry32 = processEntry32W()
 	FProcessEntry32.dwSize = ctypes.sizeof(processEntry32W)
 	ContinueLoop = winKernel.kernel32.Process32FirstW(FSnapshotHandle, ctypes.byref(FProcessEntry32))
+	# #7105 (Py3 review required): although useful, it would be best to initialize this as an empty string just in case.
+	# Py2: appName = unicode()
+	# Py3: appName = ""
 	appName = unicode()
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
@@ -94,6 +97,9 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# Try querying the app module for the name of the app being hosted.
 	# Python 2.x can't properly handle unicode module names, so convert them.
 	# No longer the case in Python 3.
+	# #7105 (Py3 review required): especially if native functionality is going to be use used.
+	# Py2: version checks and appropriate code paths.
+	# Py3: remove this.
 	if sys.version_info.major == 2:
 		appName = appName.encode("mbcs")
 	try:
@@ -171,6 +177,10 @@ def fetchAppModule(processID,appName):
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
 	# Python 2.x can't properly handle unicode module names, so convert them.
+	# #7105 (Py3 review reuqired): don't need this anympore.
+	# Py2: modName = appName.encode("mbcs")
+	# Py3: modName = appName
+	# Note: this may not be needed, actually if appname is going to be used directly.
 	modName = appName.encode("mbcs")
 
 	if doesAppModuleExist(modName):
