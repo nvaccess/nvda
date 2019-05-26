@@ -14,6 +14,10 @@ import itertools
 import collections
 import pkgutil
 import shutil
+# #7105: in the end, go with native modules instead of six compatibility layer.
+# Py3:
+#import pickle
+#from io import StringIO
 from six.moves import cStringIO as StringIO, cPickle
 from six import string_types
 import globalVars
@@ -47,6 +51,9 @@ def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
+		# #9038 (Py3 review required): the showstopper here is the removed file() functio.
+		# Py2: state = cPickle.load(file(statePath, "r"))
+		# Py3: use a with statement of the form "with open(filename)".
 		state = cPickle.load(file(statePath, "r"))
 		if "disabledAddons" not in state:
 			state["disabledAddons"] = set()
@@ -67,6 +74,9 @@ def loadState():
 def saveState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
+		# #9038 (Py3 review required): file() function is going to be a hsowstopper.
+		# Py2: cPickle.dump(state, file(statePath, "wb"))
+		# Py3: with statement.
 		cPickle.dump(state, file(statePath, "wb"))
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
@@ -360,6 +370,7 @@ class Addon(AddonBase):
 			# This addon does not have extension points for this package
 			return
 		# Python 2.x doesn't properly handle unicode import paths, so convert them before adding.
+		# #8661 (Py3 review required): remove this function call altogether.
 		converted_path = self._getPathForInclusionInPackage(package)
 		package.__path__.insert(0, converted_path)
 		self._extendedPackages.add(package)
@@ -416,8 +427,12 @@ class Addon(AddonBase):
 	def isPendingDisable(self):
 		return self.name in state["pendingDisableSet"]
 
+	# #8661 (Py3 review required): consider deprecating or removing this function altogether, as its job is to present a Python 2 style string for paths.
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
+		# #8661 (Py3 review required): just deal with Unicode string directly, ideally do not even come to this code path.
+		# Py2: return extension_path.encode("mbcs")
+		# Py3: return extension_path
 		return extension_path.encode("mbcs")
 
 	def loadModule(self, name):
@@ -503,6 +518,7 @@ def getCodeAddon(obj=None, frameDist=1):
 	if obj is None:
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)
+	# #7105 (Py3 review required): is this really necessary now?
 	dir= unicode(os.path.abspath(os.path.dirname(fileName)), "mbcs")
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
@@ -528,6 +544,9 @@ def initTranslation():
 	# FIXME: shall we retrieve the caller module object explicitly?
 	try:
 		callerFrame = inspect.currentframe().f_back
+		# #7105 (Py3 review required): ugettext is gone.
+		# Py2: callerFrame.f_globals['_'] = translations.ugettext
+		# Py3: callerFrame.f_globals['_'] = translations.gettext
 		callerFrame.f_globals['_'] = translations.ugettext
 		# Install our pgettext function.
 		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
@@ -554,6 +573,7 @@ class AddonBundle(AddonBase):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
+		# #7105 (Py3 review required): just assign path from bundle path directly.
 		self._path = bundlePath if isinstance(bundlePath, unicode) else unicode(bundlePath, "mbcs")
 		# Read manifest:
 		translatedInput=None
@@ -581,6 +601,9 @@ class AddonBundle(AddonBase):
 					# #2505: Handle non-Unicode file names.
 					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
+					# #8661 (Py3 review required): Python 3 may change the mindset around this.
+					# Py2: info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
+					# Py3: remove this.
 					info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
 				z.extract(info, addonPath)
 
@@ -705,6 +728,9 @@ docFileName = string(default=None)
 
 def validate_apiVersionString(value):
 	from configobj.validate import ValidateError
+	# #8661 (Py3 review required): effectively, an instance of basestring, so change this to str.
+	# Py2: if not isinstance(value, string_types):
+	# Py3: if not isinstance(value, str):
 	if not isinstance(value, string_types):
 		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
 	try:
