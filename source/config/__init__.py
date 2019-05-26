@@ -344,6 +344,9 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 		subdir = module.__name__
 	fullPath=os.path.join(getScratchpadDir(),subdir)
 	# Python 2.x doesn't properly handle unicode import paths, so convert them.
+	# #8661 (Py3 review required): it now does in Python 3.
+	# Py2: fullPath=fullPath.encode("mbcs")
+	# Py3: remove this.
 	fullPath=fullPath.encode("mbcs")
 	# Insert this path at the beginning  of the module's search paths.
 	# The module's search paths may not be a mutable  list, so replace it with a new one 
