@@ -83,6 +83,9 @@ def addUsbDevices(driver, type, ids):
 	@type ids: set of str
 	@raise ValueError: When one of the provided IDs is malformed.
 	"""
+	# #8661 (Py3 review required): basestring -> str.
+	# Py2: malformedIds = [id for id in ids if not isinstance(id, basestring) or not USB_ID_REGEX.match(id)]
+	# Py3: malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	malformedIds = [id for id in ids if not isinstance(id, basestring) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
 		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
