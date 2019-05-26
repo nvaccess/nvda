@@ -286,6 +286,9 @@ def copyToClip(text):
 @param text: the text which will be copied to the clipboard
 @type text: string
 """
+	# #8661 (Py3 review required): basestring -> str.
+	# Py2: if isinstance(text,basestring) and len(text)>0 and not text.isspace():
+	# Py3: if isinstance(text,str) and len(text)>0 and not text.isspace():
 	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
 		try:
 			win32clipboard.OpenClipboard()
@@ -350,6 +353,9 @@ def getStatusBarText(obj):
 	text = obj.name or ""
 	if text:
 		text += " "
+	# #8661 (Py3 review required): basestring -> str, and perhpas consider splitting this long line.
+	# Py2: return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
+	# Py3: return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, str) and not chunk.isspace())
 	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
 
 def filterFileName(name):
