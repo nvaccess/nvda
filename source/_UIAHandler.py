@@ -190,7 +190,8 @@ class UIAHandler(COMObject):
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
 			pfm=self.clientObject.proxyFactoryMapping
-			for index in xrange(pfm.count):
+			# #9078 (Py3 review required): proxy factory mapping iterator.
+			for index in range(pfm.count):
 				e=pfm.getEntry(index)
 				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
 					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
