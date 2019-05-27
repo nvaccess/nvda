@@ -121,7 +121,7 @@ An NVDAObject for a window
 			from .scintilla import Scintilla as newCls
 		elif windowClassName in ("AkelEditW", "AkelEditA"):
 			from .akelEdit import AkelEdit as newCls
-		elif windowClassName=="ConsoleWindowClass" and not config.conf['UIA']['consoleUIA']:
+		elif windowClassName=="ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] == "legacy":
 			from .winConsole import WinConsole as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls

@@ -862,7 +862,7 @@ class UIA(Window):
 		if (
 			self.windowClassName == "ConsoleWindowClass"
 			and self.UIAElement.cachedAutomationId == "Text Area"
-			and config.conf['UIA']['consoleUIA']
+			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
 		):
 			from .winConsoleUIA import winConsoleUIA
 			clsList.append(winConsoleUIA)

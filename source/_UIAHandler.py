@@ -346,7 +346,7 @@ class UIAHandler(COMObject):
 		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
 		# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
 		# It does not implement caret/selection, and probably has no new text events.
-		if windowClass == "ConsoleWindowClass" and not config.conf['UIA']['consoleUIA']:
+		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] == "legacy":
 			return True
 		return windowClass in badUIAWindowClassNames
 

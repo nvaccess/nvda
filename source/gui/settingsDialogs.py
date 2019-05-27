@@ -2053,9 +2053,10 @@ class AdvancedPanelControls(wx.Panel):
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
 		label = _("Use UI Automation to access the Windows Console")
+		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
 		self.ConsoleUIACheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.ConsoleUIACheckBox.SetValue(config.conf["UIA"]["consoleUIA"])
-		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "consoleUIA"])
+		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
+		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2159,7 +2160,10 @@ class AdvancedPanelControls(wx.Panel):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
-		config.conf["UIA"]["consoleUIA"]=self.ConsoleUIACheckBox.IsChecked()
+		if self.ConsoleUIACheckBox.IsChecked():
+			config.conf['UIA']['winConsoleImplementation'] = "UIA"
+		else:
+			config.conf['UIA']['winConsoleImplementation'] = "legacy"
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
@@ -2233,7 +2237,7 @@ class AdvancedPanel(SettingsPanel):
 			self.enableControlsCheckBox.IsChecked() or
 			self.advancedControls.haveConfigDefaultsBeenRestored()
 		):
-			self.advancedControls.onSave()
+			self.advancedControls.onSave()	
 
 
 	def onEnableControlsCheckBox(self, evt):
@@ -2929,7 +2933,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
 		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
 		# a single command such as a button click or menu item selection must only be processed by one handler."
-		def skipEventAndCall(handler):
+		def skipEventAndCall(handler):	
 			def wrapWithEventSkip(event):
 				if event:
 					event.Skip()
