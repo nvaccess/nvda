@@ -21,6 +21,7 @@ import controlTypes
 import NVDAHelper
 import winKernel
 import winUser
+import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
@@ -118,7 +119,6 @@ UIAPropertyIdsToNVDAEventNames={
 
 UIAEventIdsToNVDAEventNames={
 	UIA_LiveRegionChangedEventId:"liveRegionChange",
-	UIA_Text_TextChangedEventId:"textChange",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
@@ -131,6 +131,9 @@ UIAEventIdsToNVDAEventNames={
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
+
+if winVersion.isAtLeastWin10():
+	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
 
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]

@@ -200,7 +200,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		from NVDAObjects.UIA.winConsoleUIA import winConsoleUIA
 		if (
 			# This is only possible in Windows 10 RS2 and above
-			winVersion.winVersion.build>=14986
+			winVersion.isAtLeastWin10(1703)
 			# And we only want to do this if the gesture did not result in an executed action 
 			and not gestureExecuted 
 			# and not if this gesture is a modifier key

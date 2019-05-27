@@ -9,7 +9,7 @@ import textInfos
 import UIAHandler
 
 from scriptHandler import script
-from winVersion import winVersion
+from winVersion import isAtLeastWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
 
@@ -20,7 +20,7 @@ class consoleUIATextInfo(UIATextInfo):
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 		if position == textInfos.POSITION_CARET:
-			if winVersion.build >= 18362:  # Windows 10 version 1903
+			if isAtLeastWin10(1903):
 				# The UIA implementation in 1903 causes the caret to be
 				# off-by-one, so move it one position to the right
 				# to compensate.

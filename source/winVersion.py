@@ -26,3 +26,27 @@ def canRunVc2010Builds():
 UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
 def isUwpOcrAvailable():
 	return os.path.isdir(UWP_OCR_DATA_PATH)
+
+def isAtLeastWin10(version=1507):
+	"""
+	Returns True if NVDA is running on at least the supplied version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
+	Note: this function will always return False for source copies of NVDA due to a Python bug.
+	"""
+	from logHandler import log
+	win10VersionsToBuilds={
+		1507: 10240,
+		1511: 10586,
+		1607: 14393,
+		1703: 15063,
+		1709: 16299,
+		1803: 17134,
+		1809: 17763,
+		1903: 18362
+	}
+	if winVersion.major < 10:
+		return False
+	try:
+		return winVersion.build >= win10VersionsToBuilds[version]
+	except KeyError:
+		log.warning("Unknown Windows 10 version {}".format(version))
+		return False
