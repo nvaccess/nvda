@@ -26,6 +26,7 @@ What's New in NVDA
 - Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
 - The name of the current virtual desktop on windows 10 May 2019update is now reported when switching virtual desktops. (#5641)
 - Added a command to show the replacement for the symbol under the review cursor. (#9286)
+- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
 
 
 == Changes ==
@@ -65,6 +66,7 @@ What's New in NVDA
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isAtLeastWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on at least the supplied release version of Windows 10 (such as 1809 or 1903) of Windows 10. (#9614)
 
 
 = 2019.1.1 =
