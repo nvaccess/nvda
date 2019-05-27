@@ -2163,7 +2163,7 @@ class AdvancedPanelControls(wx.Panel):
 		if self.ConsoleUIACheckBox.IsChecked():
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:
-			config.conf['UIA']['winConsoleImplementation'] = "legacy"
+			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
