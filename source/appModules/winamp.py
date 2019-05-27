@@ -115,6 +115,9 @@ class winampPlaylistEditor(winampMainWindow):
 			winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
 		finally:
 			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+		# #8661 (Py3 review required): call to unicode() function.
+		# Py2: return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
+		# Py3: return "%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength)
 		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
 
 	def _get_role(self):

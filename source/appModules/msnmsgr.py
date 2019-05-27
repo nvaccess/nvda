@@ -52,6 +52,9 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def _get_value(self):
 		value=super(OldMSNHistory,self).value
+		# #7105 (Py3 review required): basestring vs str.
+		# Py2: if not isinstance(value,basestring):
+		# Py3: if not isinstance(value,str):
 		if not isinstance(value,basestring):
 			value=""
 		return value
