@@ -23,6 +23,9 @@ What's New in NVDA
  - Edit boxes steal system focus when arrowing down through them on some websites.
  - Browse mode keystrokes are slow to respond.
 - For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
+- Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
+- Added a command to show the replacement for the symbol under the review cursor. (#9286)
+- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
 
 
 == Changes ==
@@ -31,6 +34,7 @@ What's New in NVDA
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
 - Updated liblouis braille translator to version 3.9.0. (#9439)
 - The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
+- When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)
 
 
 == Bug Fixes ==
@@ -51,6 +55,8 @@ What's New in NVDA
 - For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
 - The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+- The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
+- When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
 
 
 == Changes for Developers ==
@@ -58,6 +64,8 @@ What's New in NVDA
 - The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
+- Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isAtLeastWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on at least the supplied release version of Windows 10 (such as 1809 or 1903) of Windows 10. (#9614)
 
 
 = 2019.1.1 =
