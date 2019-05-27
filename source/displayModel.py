@@ -56,6 +56,9 @@ def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,
 	lastHwnd=None
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
+		# #8661 (Py3 review required): item could be a text.
+		# Py2: if isinstance(item,basestring):
+		# Py3: if isinstance(item,str):
 		if isinstance(item,basestring):
 			lastEndOffset+=len(item)
 		else:
@@ -75,6 +78,9 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 		item=commandList[index]
 		if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 			curFormatField=item.field
+		# #8661 (Py3 review required): item could be a text from a right-to-left language.
+		# Py2: elif isinstance(item,basestring):
+		# Py3: elif isinstance(item,str):
 		elif isinstance(item,basestring):
 			direction=curFormatField['direction']
 			if direction==0:
@@ -108,6 +114,9 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 		reorderList=[]
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
+		# #8661 (Py3 review required): item could be a text from a right-to-left language.
+		# Py2: if isinstance(item,basestring):
+		# Py3: if isinstance(item,str):
 		if isinstance(item,basestring):
 			lastEndOffset+=len(item)
 		elif not item or (isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField)):
@@ -243,6 +252,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					inHighlightChunk=True
 					if startOffset is None:
 						startOffset=curOffset
+				# #8661 (Py3 review required): perhaps a highlighted text.
+				# Py2: elif isinstance(item,basestring):
+				# Py3: elif isinstance(item,str):
 				elif isinstance(item,basestring):
 					curOffset+=len(item)
 					if inHighlightChunk:
@@ -295,6 +307,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineEndOffsets=[]
 		for index in range(len(commandList)):
 			item=commandList[index]
+			# #8661 (Py3 review required): the length of a text inside a story field.
+			# Py2: if isinstance(item,basestring):
+			# Py3: if isinstance(item,str):
 			if isinstance(item,basestring):
 				lastEndOffset+=len(item)
 			elif isinstance(item,textInfos.FieldCommand):
@@ -309,6 +324,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						processWindowChunksInLine(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
 						#Convert the whitespace at the end of the line into a line feed
 						item=commandList[index-1]
+						# #8661 (Py3 review required): an empty space/line feed.
+						# Py2: if isinstance(item,basestring) and len(item)==1 and item.isspace():
+						# Py3: if isinstance(item,str) and len(item)==1 and item.isspace():
 						if isinstance(item,basestring) and len(item)==1 and item.isspace():
 							commandList[index-1]=u'\n'
 						lineEndOffsets.append(lastEndOffset)
@@ -327,6 +345,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 				baseline=item.field['baseline']
 				direction=item.field['direction']
+			# #8661 (Py3 review required): offset for a story text.
+			# Py2: elif isinstance(item,basestring):
+			# Py3: elif isinstance(item,str):
 			elif isinstance(item,basestring):
 				endOffset=lastEndOffset+len(item)
 				for rect in rects[lastEndOffset:endOffset]:
@@ -342,6 +363,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		startIndex=endIndex=relStart=relEnd=None
 		for index in range(len(storyFields)):
 			item=storyFields[index]
+			# #8661 (Py3 review required): story text range.
+			# Py2: if isinstance(item,basestring):
+			# Py3: if isinstance(item,str):
 			if isinstance(item,basestring):
 				endOffset=lastEndOffset+len(item)
 				if lastEndOffset<=start<endOffset:
@@ -366,6 +390,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return commandList
 
 	def _getStoryText(self):
+		# #8661 (Py3 review required): story field text.
+		# Py2: return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,basestring))
+		# Py3: return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,str))
 		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,basestring))
 
 	def _getStoryLength(self):
@@ -377,6 +404,9 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	useUniscribe=False
 
 	def _getTextRange(self, start, end):
+		# #8661 (Py3 review required): story field text range.
+		# Py2: return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,basestring))
+		# Py3: return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
 		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,basestring))
 
 	def getTextWithFields(self,formatConfig=None):
