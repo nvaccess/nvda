@@ -1648,6 +1648,9 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		docConstId = self.documentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
+		# #8661 (Py3 review required): this may contain Unicode characters, so be careful when transitioning.
+		# Py2: check basestring.
+		# Py3: check str if it is safe to do so.
 		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
 	def _getInitialCaretPos(self):
