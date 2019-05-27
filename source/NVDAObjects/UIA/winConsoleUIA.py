@@ -26,7 +26,7 @@ class consoleUIATextInfo(UIATextInfo):
 				# to compensate.
 				self._rangeObj.MoveEndpointByUnit(
 					UIAHandler.TextPatternRangeEndpoint_Start,
-					UIAHandler.NVDAUnitsToUIAUnits['character'],
+					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
 					1
 				)
 

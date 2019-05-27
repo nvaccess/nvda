@@ -46,6 +46,7 @@ CONSOLE_COLORS_TO_RGB=( #http://en.wikipedia.org/wiki/Color_Graphics_Adapter
 COMMON_LVB_UNDERSCORE=0x8000
 
 
+
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
 	if event in (wincon.CTRL_C_EVENT,wincon.CTRL_BREAK_EVENT):
