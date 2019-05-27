@@ -9,9 +9,7 @@
 
 from .constants import *
 from .providerBase import VisionEnhancementProvider
-from .highlighterBase import Highlighter
-from .magnifierBase import Magnifier
-from .colorEnhancerBase import ColorEnhancer
+from .visionHandlerExtensionPoints import VisionHandlerExtensionPoints
 import pkgutil
 from baseObject import AutoPropertyObject
 import api
@@ -50,128 +48,81 @@ class VisionHandler(AutoPropertyObject):
 	def __init__(self):
 		self.lastReviewMoveContext = None
 		self.lastCaretObjRef = None
-		configuredProviders = defaultdict(set)
-		for role in ROLE_DESCRIPTIONS.keys():
-			setattr(self, role, None)
-			configuredProviders[config.conf['vision'][role]].add(role)
-		for name, roles in configuredProviders.items():
-			if name:
-				# Some providers, such as the highlighter, rely on wx being fully initialized,
-				# e.g. when they use an overlay window which parent is NVDA's main frame.
-				wx.CallAfter(self.setProvider, name, roles)
+		self.extensionPoints = VisionHandlerExtensionPoints()
+		self.providers = dict()
+		for providerName in config.conf['vision']['providers']]:
+			# Some providers, such as the highlighter, rely on wx being fully initialized,
+			# e.g. when they use an overlay window which parent is NVDA's main frame.
+			wx.CallAfter(self.initializeProvider, providerName)
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	def terminateProviderForRole(self, role):
-		curProvider = getattr(self, role)
-		if curProvider:
-			curProvider.terminate(role)
-			setattr(self, role, None)
+	def terminateProvider(self, providerName):
+		providerInstance =self.providers.pop(providerName, None):
+		if not providerInstance:
+			log.warning("Tried to terminate uninitialized provider %s" % providerName)
+			return 
+		try:
+			providerInstance.terminate()
+		except:
+			# Purposely catch everything.
+			# A provider can raise whatever exception,
+			# therefore it is unknown what to expect.
+			log.error("Error while terminating vision provider %s" % providerName, exc_info=True)
+			return
+		try:
+			config.conf['vision']['providers'].remove(providerCls.name)
+		except ValueError:
+			pass
 
-	def setProvider(self, name, roles, temporary=False, catchExceptions=True):
-		"""Enables and activates the selected provider for the provided roles.
-		If there was a previous provider in use for a role,
-		that provider will be terminated for that role.
-		@param name: The name of the registered provider class.
-		@type name: str
-		@param roles: names of roles to enable the provider for.
-			Supplied values should be one of the C{ROLE_*} constants.
-			if roles is empty, the provider is enabled for all the roles it supports.
-		@type roles: [str]
+	def initializeProvider(self, providerName, temporary=False):
+		"""
+		Enables and activates the supplied provider.
+		@param providerName: The name of the registered provider.
+		@type providerName: str
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
 		@type temporary: bool
-		@param catchExceptions: Whether exceptions raised while loading a provider should be handled gracefully.
-			This defaults to C{True}, in which case an error is logged on failure,
-			and there is an automatic fallback to no provider for the supplied roles.
-			If C{False}, the caller should catch possible exceptions.
-		@type temporary: bool
-		@returns: Whether loading of the requested provider succeeded.
+		@returns: Whether initializing the requested provider succeeded.
 		@rtype: bool
 		"""
-		if name in (None, "None"):
-			if not roles:
-				raise ValueError("No name and no roles provided")
-			for role in roles:
-				try:
-					self.terminateProviderForRole(role)
-				except:
-					# Purposely catch everything.
-					# A provider can raise whatever exception,
-					# therefore it is unknown what to expect.
-					log.error("Couldn't terminate provider for role %s" % role, exc_info=True)
-				if not temporary:
-					config.conf['vision'][role] = None
-			return True
-
-		providerCls = getProviderClass(name)
-		if not roles:
-			roles = providerCls.supportedRoles
-		else:
-			roles = set(roles)
-			for role in roles:
-				if role not in providerCls.supportedRoles:
-					raise NotImplementedError("Provider %s does not implement role %s" % (name, role))
-
+		if providerName in self.providers:
+			# Todo, what to do here? silently reinit? This could be costly.
+			self.terminateProvider(providerName)
+		providerCls = getProviderClass(providerName)
+		# Initialize the provider.
 		try:
-			# Providers are singletons.
-			# Get a new or current instance of the provider
-			providerInst = providerCls.__new__(providerCls)
-			initiallyEnabled = bool(providerInst.activeRoles)
-			if initiallyEnabled:
-				log.debug("Provider %s is already active" % name)
-			# Terminate the provider for the roles that overlap between the provided roles and the active roles.
-			# For these roles, we want to reinitialize the provider.
-			overlappingRoles = providerInst.activeRoles & roles
-			newRoles = roles - overlappingRoles
-			if overlappingRoles:
-				providerInst.terminate(*overlappingRoles)
-			# Properly terminate  providers that are active for the current role.
-			for conflict in newRoles:
-				self.terminateProviderForRole(conflict)
-				if not temporary:
-					config.conf['vision'][conflict] = None
-			# Initialize the provider for the new and overlapping roles
-			providerInst.__init__(*roles)
-			if initiallyEnabled:
-				providerInst.loadSettings(onlyChanged=True)
-			else:
-				providerInst.initSettings()
+			providerInst = providerCls()
+			providerInst.initSettings()
 
-			# Assign the new provider to the new roles.
-			for role in newRoles:
-				setattr(self, role, providerInst)
-				if not temporary:
-					config.conf['vision'][role] = providerCls.name
-			try:
-				self.initialFocus()
-			except:
-				# #8877: initialFocus might fail because NVDA tries to focus
-				# an object for which property fetching raises an exception.
-				# We should handle this more gracefully, since this is no reason
-				# to stop a provider from loading successfully.
-				log.debugWarning("Error in initial focus after provider load", exc_info=True)
-			return True
+			if not temporary:
+				config.conf['vision']['providers'].append(providerCls.name)
 		except:
-			if not catchExceptions:
-				raise
-			log.error("Error initializing vision enhancement provider %s for roles %s" % (name, ", ".join(roles)), exc_info=True)
-			self.setProvider(None, roles, temporary=True)
+			# Purposely catch everything.
+			# A provider can raise whatever exception,
+			# therefore it is unknown what to expect.
+			log.error("Error while initializing provider %s" % providerName, exc_info=True)
 			return False
 
-	def _get_initializedProviders(self):
-		return set(
-			provider for provider in (self.magnifier, self.highlighter, self.colorEnhancer)
-			if provider
-		)
+		try:
+			self.initialFocus()
+		except:
+			# #8877: initialFocus might fail because NVDA tries to focus
+			# an object for which property fetching raises an exception.
+			# We should handle this more gracefully, since this is no reason
+			# to stop a provider from loading successfully.
+			log.debugWarning("Error in initial focus after provider load", exc_info=True)
+		return True
 
 	def _get_enabled(self):
-		return bool(self.initializedProviders)
+		return bool(self.providers)
 
 	def terminate(self):
+		self.extensionPoints = None
 		config.post_configProfileSwitch.unregister(self.handleConfigProfileSwitch)
-		for role in ROLE_DESCRIPTIONS.keys():
-			self.terminateProviderForRole(role)
+		for instance in self.providers.values():
+			instance.terminate()
+		self.providers.clear()
 
 	def handleUpdate(self, obj):
 		if not self.enabled:

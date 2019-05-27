@@ -73,9 +73,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Vision enhancement provider settings
 [vision]
-	magnifier = string(default=None)
-	highlighter = string(default=None)
-	colorEnhancer = string(default=None)
+	providers = string_list()
 
 	# Vision enhancement provider settings
 	[[__many__]]
