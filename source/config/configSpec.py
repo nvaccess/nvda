@@ -187,7 +187,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [UIA]
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
-	winConsoleImplementation= option("auto", "legacy", "UIA", default="legacy")
+	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
 
 [update]
 	autoCheck = boolean(default=true)
