@@ -810,6 +810,9 @@ class TextInfoRegion(Region):
 		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
 		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
+			# #8661 (Py3 review required): command could be either text or text info field command such as control start/end marker.
+			# Py2: if isinstance(command, basestring):
+			# Py3: if isinstance(command, str):
 			if isinstance(command, basestring):
 				# Text should break a run of clickables
 				inClickable=False
@@ -2317,6 +2320,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
+		# #8661 (Py3 review required): see the above docstring for details.
+		# Py2: elif isinstance(port, basestring):
+		# Py3: elif isinstance(port, str):
 		elif isinstance(port, basestring):
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
