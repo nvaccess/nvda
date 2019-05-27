@@ -2142,6 +2142,7 @@ class AdvancedPanelControls(wx.Panel):
 			self._defaultsRestored and
 			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
 			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
+			self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue=='UIA') and
 			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
 			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
 			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
@@ -2151,6 +2152,7 @@ class AdvancedPanelControls(wx.Panel):
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
+		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue=='UIA')
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
