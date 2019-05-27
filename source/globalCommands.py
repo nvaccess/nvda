@@ -32,6 +32,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import scriptHandler
+from scriptHandler import script
 import ui
 import braille
 import brailleInput
@@ -1187,6 +1188,42 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
+
+	def _getCurrentLanguageForTextInfo(self, info):
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
+		return curLanguage
+
+	@script(
+		# Translators: Input help mode message for Review Current Symbol command.
+		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_review_currentSymbol(self,gesture):
+		info=api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		text = info.text
+		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
+		if expandedSymbol == text:
+			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+			ui.message(_("No symbol replacement"))
+			return
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(expandedSymbol)
+		else:
+			# Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+			message = _("Character: {}\nReplacement: {}").format(text, expandedSymbol)
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
+			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+			title = _("Expanded symbol ({})").format(languageDescription)
+			ui.browseableMessage(message, title)
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
@@ -2462,17 +2499,17 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		if gui.shouldConfigProfileTriggersBeSuspended():
 			# Translators: a message indicating that configuration profiles can't be activated using gestures,
 			# due to profile activation being suspended.
-			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+			state = _("Can't change the active profile while an NVDA dialog is open")
 		elif config.conf.profiles[-1].name == name:
 			config.conf.manualActivateProfile(None)
 			# Translators: a message when a configuration profile is manually deactivated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+			state = _("{profile} profile deactivated").format(profile=name)
 		else:
 			config.conf.manualActivateProfile(name)
 			# Translators: a message when a configuration profile is manually activated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually activated").format(profile=name)
+			state = _("{profile} profile activated").format(profile=name)
 		ui.message(state)
 
 	@classmethod
