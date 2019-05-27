@@ -142,7 +142,7 @@ class _TextReader(object):
 			return
 		# Call lineReached when we start speaking this line.
 		# lineReached will move the cursor and trigger reading of the next line.
-		cb = speech.CallbackCommand(lambda: self.lineReached(bookmark, self.speakTextInfoState.copy()))
+		cb = speech.CallbackCommand(lambda obj=self.reader.obj, state=self.speakTextInfoState.copy(): self.lineReached(obj,bookmark, state))
 		spoke = speech.speakTextInfo(self.reader, unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=cb,
 			useCache=self.speakTextInfoState)
@@ -168,10 +168,10 @@ class _TextReader(object):
 				# The first buffered line has now started speaking.
 				self.numBufferedLines -= 1
 
-	def lineReached(self, bookmark, state):
+	def lineReached(self, obj, bookmark, state):
 		# We've just started speaking this line, so move the cursor there.
 		state.updateObj()
-		updater = self.reader.obj.makeTextInfo(bookmark)
+		updater = obj.makeTextInfo(bookmark)
 		if self.cursor == CURSOR_CARET:
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
