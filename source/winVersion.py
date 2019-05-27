@@ -29,8 +29,9 @@ def isUwpOcrAvailable():
 
 def isAtLeastWin10(version=1507):
 	"""
-	Returns True if NVDA is running on at least the supplied version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
+	Returns True if NVDA is running on at least the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
 	Note: this function will always return False for source copies of NVDA due to a Python bug.
+	@param version: a release version of Windows 10 (such as 1903).
 	"""
 	from logHandler import log
 	win10VersionsToBuilds={
@@ -48,5 +49,5 @@ def isAtLeastWin10(version=1507):
 	try:
 		return winVersion.build >= win10VersionsToBuilds[version]
 	except KeyError:
-		log.warning("Unknown Windows 10 version {}".format(version))
+		log.error("Unknown Windows 10 version {}".format(version))
 		return False
