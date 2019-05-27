@@ -2052,7 +2052,7 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Use UI Automation to access the Windows Console")
+		label = _("Force UI Automation in the Windows Console")
 		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
 		self.ConsoleUIACheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
