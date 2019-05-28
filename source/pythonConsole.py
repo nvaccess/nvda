@@ -291,7 +291,8 @@ class ConsoleUI(wx.Frame):
 				longestComp = comp
 				longestCompLen = compLen
 		# Find the longest common prefix.
-		for prefixLen in xrange(longestCompLen, 0, -1):
+		# #9078 (Py3 review required): do this via iteration.
+		for prefixLen in range(longestCompLen, 0, -1):
 			prefix = comp[:prefixLen]
 			for comp in completions:
 				if not comp.startswith(prefix):
