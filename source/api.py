@@ -85,7 +85,8 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 				pass
 			tempObj=getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
-		for index in xrange(oldFocusLineLength-1,-1,-1):
+		# #9078 (Py3 review required): done via iteration.
+		for index in range(oldFocusLineLength-1,-1,-1):
 			watchdog.alive()
 			if tempObj==oldFocusLine[index]:
 				# Match! The old and new focus ancestors converge at this point.
@@ -252,7 +253,8 @@ def isTypingProtected():
 
 def createStateList(states):
 	"""Breaks down the given integer in to a list of numbers that are 2 to the power of their position.""" 
-	return [x for x in [1<<y for y in xrange(32)] if x&states]
+	# #9078 (Py3 review required): iteratively builds states set.
+	return [x for x in [1<<y for y in range(32)] if x&states]
 
 
 def moveMouseToNVDAObject(obj):
