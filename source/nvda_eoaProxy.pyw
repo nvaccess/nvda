@@ -35,7 +35,8 @@ def isSecureDesktop():
 
 def waitForNvdaStart():
 	# Wait up to 10 seconds for NVDA to start.
-	for attempt in xrange(11):
+	# #9078 (Py3 review required): do this via iteration.
+	for attempt in range(11):
 		process = getNvdaProcess()
 		if process:
 			return process
