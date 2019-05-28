@@ -77,7 +77,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def initTable(self):
 		"""do not use braille builtin table"""
 		table = []
-		for i in xrange(0, self.numCells): table +=[1]
+		# #9078 (Py3 review required): iterate through tables/cells.
+		for i in range(0, self.numCells): table +=[1]
 		self._dev.write(brl_out(512+self._offsetHorizontal, table))
 
 	def __init__(self, port):

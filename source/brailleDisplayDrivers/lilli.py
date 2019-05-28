@@ -50,7 +50,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def  __init__(self):
 		global lilliCellsMap
 		super(BrailleDisplayDriver, self).__init__()
-		lilliCellsMap=[convertLilliCells(x) for x in xrange(256)]
+		# #9078( Py3 review required): iteration over Lilli braille cells.
+		lilliCellsMap=[convertLilliCells(x) for x in range(256)]
 		if (lilliDll.Init408USB()):
 			self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
 			self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)

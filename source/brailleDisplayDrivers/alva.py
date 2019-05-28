@@ -139,7 +139,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			# Get cell count
 			self._ser6SendMessage(b"E", b"?")
-			for i in xrange(3):
+			# #9078 (Py3 review required): wait for time-out via iteration.
+			for i in range(3):
 				self._dev.waitForRead(self.timeout)
 				if self.numCells: # Display responded
 					break
@@ -170,7 +171,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self._dev = hwIo.Serial(port, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._ser6OnReceive)
 					# Get the device ID
 					self._ser6SendMessage(b"?", b"?")
-					for i in xrange(3):
+					# #9078 (Py3 review required): wait for time-out via iteration.
+					for i in range(3):
 						self._dev.waitForRead(self.timeout)
 						if self._deviceId: # Display responded
 							break
@@ -259,7 +261,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ignoreKeyReleases = False
 
 	def _hidDisplay(self, cells):
-		for offset in xrange(0, len(cells), ALVA_BRAILLE_OUTPUT_MAX_SIZE):
+		# #9078 (Py3 review required): do this via iteration.
+		for offset in range(0, len(cells), ALVA_BRAILLE_OUTPUT_MAX_SIZE):
 			cellsToWrite = cells[offset:offset+ALVA_BRAILLE_OUTPUT_MAX_SIZE]
 			self._dev.write("{id}{offset}{count}{cells}".format(
 				id=ALVA_BRAILLE_OUTPUT_REPORT,
@@ -341,7 +344,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			self._ser6SendMessage(b"r", rawState)
 			self._ser6SendMessage(b"r", b"?")
-			for i in xrange(3):
+			# #9078 (Py3 review required): wait for time-out via iteration.
+			for i in range(3):
 				self._dev.waitForRead(self.timeout)
 				if rawState is self._rawKeyboardInput:
 					break

@@ -121,9 +121,11 @@ def _makeTranslationTable(dotsTable):
 		return 1 << (number - 1)
 
 	outputTable = [0] * TRANSLATION_TABLE_SIZE
-	for byte in xrange(TRANSLATION_TABLE_SIZE):
+	# #9078 (Py3 review required): braile dots.
+	for byte in range(TRANSLATION_TABLE_SIZE):
 		cell = 0
-		for dot in xrange(DOTS_TABLE_SIZE):
+		# #9078 (Py3 review required): dots table.
+		for dot in range(DOTS_TABLE_SIZE):
 			if byte & isoDot(dot + 1):
 				cell |= dotsTable[dot]
 		outputTable[byte] = cell
@@ -223,7 +225,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			# Send an identification request
 			self._sendPacket(FS_PKT_QUERY)
-			for _i in xrange(3):
+			# #9078 (Py3 review required): packet size.
+			for _i in range(3):
 				self._dev.waitForRead(self.timeout)
 				if self.numCells and self._model:
 					break
@@ -367,7 +370,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			except IndexError:
 				log.debugWarning("wheelNumber unknown")
 				return
-			for _i in xrange(count):
+			# #9078 (Py3 review required): whiz wheel input.
+			for _i in range(count):
 				gesture = WizWheelGesture(self._model, isDown, isRight)
 				try:
 					inputCore.manager.executeGesture(gesture)
@@ -570,8 +574,10 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 	def __init__(self, model, keyBits, extendedKeyBits):
 		super(KeyGesture, self).__init__(model)
-		keys = [self.keyLabels[num] for num in xrange(24) if (keyBits>>num) & 1]
-		extendedKeys = [self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num) & 1]
+		# #9078 (Py3 review required): display key gesture detection.
+		keys = [self.keyLabels[num] for num in range(24) if (keyBits>>num) & 1]
+		# #9078 (Py3 review required): display key gesture detection.
+		extendedKeys = [self.extendedKeyLabels[num] for num in range(4) if (extendedKeyBits>>num) & 1]
 		# pylint: disable=invalid-name
 		self.id = "+".join(keys+extendedKeys)
 		# Don't say is this a dots gesture if some keys either from dots and space are pressed.

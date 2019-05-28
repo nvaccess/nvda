@@ -207,7 +207,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
-			for i in xrange(3):
+			# #9078 (Py3 review required): send cell count request via iteration.
+			for i in range(3):
 				self._sendCellCountRequest()
 				# Wait for an expected response.
 				if self.isBulk:
@@ -310,7 +311,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		elif mode=="\x01": # Braille input or function key
 			if not self._model:
 				return
-			_keys = sum(ord(packet[4+i])<<(i*8) for i in xrange(4))
+			# #9078 (Py3 review required): iteration over braille keys.
+			_keys = sum(ord(packet[4+i])<<(i*8) for i in range(4))
 			keys = set()
 			for keyHex in self._model.keys:
 				if _keys & keyHex:
