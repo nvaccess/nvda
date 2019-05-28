@@ -826,7 +826,8 @@ class ExcelWorksheet(ExcelBase):
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+				# #9078 (Py3 review required): iterates and locates cell headers.
+				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
 					headerCell=self.excelWorksheetObject.cells(headerRowNumber,cell.columnNumber)
 					# The header could be  merged cells. 
 					# if so, fetch text from the first in the merge as that always contains the content
@@ -836,7 +837,8 @@ class ExcelWorksheet(ExcelBase):
 						pass
 					textList.append(headerCell.text)
 			else:
-				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+				# #9078 (Py3 review required): iterates and locates cell headers.
+				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
 					headerCell=self.excelWorksheetObject.cells(cell.rowNumber,headerColumnNumber)
 					# The header could be  merged cells. 
 					# if so, fetch text from the first in the merge as that always contains the content
@@ -1122,7 +1124,8 @@ class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
 		numCellsFetched=ctypes.c_long()
 		address=collectionObject.address(True,True,xlA1,True)
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,BSTR(address),self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
-		for index in xrange(numCellsFetched.value):
+		# #9078 (Py3 review required): iterates through Excel cells.
+		for index in range(numCellsFetched.value):
 			ci=cellInfos[index]
 			if not ci.address:
 				log.debugWarning("cellInfo at index %s has no address"%index)
