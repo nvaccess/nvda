@@ -528,6 +528,9 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith("Chrome_"):
 			from . import chromium
 			chromium.findExtraOverlayClasses(self, clsList)
+		elif windowClassName == "ConsoleWindowClass":
+			from .winConsoleLegacy import winConsoleLegacy
+			clsList.append(winConsoleLegacy)
 
 
 		#Support for Windowless richEdit
