@@ -404,7 +404,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				return self.displayText
 			return name
 		textList = []
-		for col in xrange(1, self.childCount + 1):
+		# #9078 (Py3 review required): iterates through the children of this table row in order to construct object name from contents.
+		for col in range(1, self.childCount + 1):
 			content = self._getColumnContent(col)
 			if not content:
 				continue
