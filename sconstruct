@@ -78,7 +78,14 @@ if "systemTests" in COMMAND_LINE_TARGETS:
 	vars.Add("filter", "A filter for the name of the system test(s) to run. Wildcards accepted.", "")
 
 #Base environment for this and sub sconscripts
-env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettextTool","t2t",keyCommandsDocTool,'doxygen','recursiveInstall'])
+env = Environment(variables=vars,HOST_ARCH='x86',tools=[
+	"textfile",
+	"gettextTool",
+	"t2t"
+	,keyCommandsDocTool,
+	#"doxygen",
+	"recursiveInstall"
+])
 
 # speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
@@ -365,24 +372,24 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
-devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
-devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
-env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
-env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
+#devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
+#devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
+#env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
+#env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
 
-devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
-	"cd", sourceDir.path, "&&",
-	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
-	"--output", "${TARGET.abspath}",
-	"--quiet", "--html", "--include-log", "--no-frames",
-	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
-	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-	"config", "contentRecog", "extensionPoints", "globalPlugins", "gui", "mathPres", "NVDAObjects",
-	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
-]])
+#devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
+#	"cd", sourceDir.path, "&&",
+#	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
+#	"--output", "${TARGET.abspath}",
+#	"--quiet", "--html", "--include-log", "--no-frames",
+#	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
+#	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
+#	"config", "contentRecog", "extensionPoints", "globalPlugins", "gui", "mathPres", "NVDAObjects",
+#	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
+#]])
 
-env.Alias('devDocs', [devGuide, devDocs_nvda])
-env.Clean('devDocs', [devGuide, devDocs_nvda])
+#env.Alias('devDocs', [devGuide, devDocs_nvda])
+#env.Clean('devDocs', [devGuide, devDocs_nvda])
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
