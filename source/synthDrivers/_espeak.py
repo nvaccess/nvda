@@ -122,8 +122,8 @@ class espeak_VOICE(Structure):
 		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
 # constants that can be returned by espeak_callback
-callback_continue_synthesis=0
-callback_abort_synthesis=1
+CALLBACK_CONTINUE_SYNTHESIS=0
+CALLBACK_ABORT_SYNTHESIS=1
 
 t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
@@ -132,7 +132,7 @@ def callback(wav,numsamples,event):
 	try:
 		global player, isSpeaking, _numBytesPushed
 		if not isSpeaking:
-			return callback_abort_synthesis
+			return CALLBACK_ABORT_SYNTHESIS
 		indexes = []
 		for e in event:
 			if e.type==espeakEVENT_MARK:
@@ -153,7 +153,7 @@ def callback(wav,numsamples,event):
 			player.idle()
 			onIndexReached(None)
 			isSpeaking = False
-			return callback_continue_synthesis
+			return CALLBACK_CONTINUE_SYNTHESIS
 		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else ""
 		prevByte = 0
 		for indexNum, indexByte in indexes:
@@ -161,10 +161,10 @@ def callback(wav,numsamples,event):
 				onDone=lambda indexNum=indexNum: onIndexReached(indexNum))
 			prevByte = indexByte
 			if not isSpeaking:
-				return callback_abort_synthesis
+				return CALLBACK_ABORT_SYNTHESIS
 		player.feed(wav[prevByte:])
 		_numBytesPushed += len(wav)
-		return callback_continue_synthesis
+		return CALLBACK_CONTINUE_SYNTHESIS
 	except:
 		log.error("callback", exc_info=True)
 
