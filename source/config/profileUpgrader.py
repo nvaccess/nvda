@@ -20,7 +20,8 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 	_ensureVersionProperty(profile)
 	startSchemaVersion = int(profile[SCHEMA_VERSION_KEY])
 	log.debug("Current config schema version: {0}, latest: {1}".format(startSchemaVersion, latestSchemaVersion))
-	for fromVersion in xrange(startSchemaVersion, latestSchemaVersion):
+	# #9078 (Py3 review required): iterate through schema versions.
+	for fromVersion in range(startSchemaVersion, latestSchemaVersion):
 		_doConfigUpgrade(profile, fromVersion)
 	_doValidation(deepcopy(profile), validator) # copy the profile, since validating mutates the object
 	try:
