@@ -45,7 +45,8 @@ def isRunningGenerators():
 	log.debug("generators running: %s"%res)
 
 def flushQueue(queue):
-	for count in xrange(queue.qsize()+1):
+	# #9078 (Py3 review required): flush the queue via iteration.
+	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,kwargs)=queue.get_nowait()
 			watchdog.alive()
