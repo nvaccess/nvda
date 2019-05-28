@@ -159,11 +159,21 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 deviceInfoFetcher = _DeviceInfoFetcher()
 
 class Detector(object):
-	"""Automatically detect braille displays.
+	"""Detector class used to automatically detect braille displays.
 	This should only be used by the L{braille} module.
 	"""
 
-	def __init__(self):
+	def __init__(self, usb=True, bluetooth=True, limitToDevices=None):
+		"""Constructor.
+		The keyword arguments initialize the detector in a particular state.
+		On an initialized instance, these initial arguments can be overridden by calling L{_startBgScan} or L{rescan}.
+		@param usb: Whether this instance should detect USB devices initially.
+		@type usb: bool
+		@param bluetooth: Whether this instance should detect Bluetooth devices initially.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited initially.
+			C{None} if no driver filtering should occur.
+		"""
 		self._BgScanApc = winKernel.PAPCFUNC(self._bgScan)
 		self._btDevsLock = threading.Lock()
 		self._btDevs = None
@@ -172,11 +182,12 @@ class Detector(object):
 		self._stopEvent = threading.Event()
 		self._queuedScanLock = threading.Lock()
 		self._scanQueued = False
-		self._detectUsb = False
-		self._detectBluetooth = False
+		self._detectUsb = usb
+		self._detectBluetooth = bluetooth
+		self._limitToDevices = limitToDevices
 		self._runningApcLock = threading.Lock()
 		# Perform initial scan.
-		self._startBgScan(usb=True, bluetooth=True)
+		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	@property
 	def _scanQueuedSafe(self):
@@ -190,10 +201,21 @@ class Detector(object):
 		with self._queuedScanLock:
 			self._scanQueued = state
 
-	def _startBgScan(self, usb=False, bluetooth=False):
+	def _startBgScan(self, usb=False, bluetooth=False, limitToDevices=None):
+		"""Starts a scan for devices.
+		If a scan is already in progress, a new scan will be queued after the current scan.
+		To explicitely cancel a scan in progress, use L{rescan}.
+		@param usb: Whether USB devices should be detected for this and subsequent scans.
+		@type usb: bool
+		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+			C{None} if no driver filtering should occur.
+		"""
 		with self._queuedScanLock:
 			self._detectUsb = usb
 			self._detectBluetooth = bluetooth
+			self._limitToDevices = limitToDevices
 			if not self._scanQueued:
 				self._scanQueued = True
 				if self._runningApcLock.locked():
@@ -224,11 +246,12 @@ class Detector(object):
 					self._scanQueued = False
 					detectUsb = self._detectUsb
 					detectBluetooth = self._detectBluetooth
+					limitToDevices = self._limitToDevices
 				if detectUsb:
 					if self._stopEvent.isSet():
 						continue
 					for driver, match in getDriversForConnectedUsbDevices():
-						if self._stopEvent.isSet():
+						if self._stopEvent.isSet() or (self._limitToDevices and driver not in self._limitToDevices):
 							continue
 						if braille.handler.setDisplayByName(driver, detected=match):
 							return
@@ -244,7 +267,7 @@ class Detector(object):
 							btDevs = self._btDevs
 							btDevsCache = btDevs
 					for driver, match in btDevs:
-						if self._stopEvent.isSet():
+						if self._stopEvent.isSet() or (self._limitToDevices and driver not in self._limitToDevices):
 							continue
 						if btDevsCache is not btDevs:
 							btDevsCache.append((driver, match))
@@ -256,25 +279,35 @@ class Detector(object):
 						with self._btDevsLock:
 							self._btDevs = btDevsCache
 
-	def rescan(self):
-		"""Stop a current scan when in progress, and start scanning from scratch."""
+	def rescan(self, usb=True, bluetooth=True, limitToDevices=None):
+		"""Stop a current scan when in progress, and start scanning from scratch.
+		@param usb: Whether USB devices should be detected for this and subsequent scans.
+		@type usb: bool
+		@param bluetooth: Whether Bluetooth devices should be detected for this and subsequent scans.
+		@type bluetooth: bool
+		@param limitToDevices: Drivers to which detection should be limited for this and subsequent scans.
+			C{None} if no driver filtering should occur.
+		"""
 		self._stopBgScan()
 		with self._btDevsLock:
 			# A Bluetooth com port or HID device might have been added.
 			self._btDevs = None
-		self._startBgScan(usb=True, bluetooth=True)
+		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
 		if msg == WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:
-			self.rescan()
+			self.rescan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def pollBluetoothDevices(self):
 		"""Poll bluetooth devices that might be in range.
 		This does not cancel the current scan."""
+		if not self._detectBluetooth:
+			# Do not poll bluetooth devices at all when bluetooth is disabled.
+			return
 		with self._btDevsLock:
 			if not self._btDevs:
 				return
-		self._startBgScan(bluetooth=True)
+		self._startBgScan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def terminate(self):
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
@@ -465,6 +498,20 @@ addUsbDevices("eurobraille", KEY_HID, {
 })
 
 addBluetoothDevices("eurobraille", lambda m: m.id.startswith("Esys"))
+
+# freedomScientific
+addUsbDevices("freedomScientific", KEY_CUSTOM, {
+	"VID_0F4E&PID_0100", # Focus 1
+	"VID_0F4E&PID_0111", # PAC Mate
+	"VID_0F4E&PID_0112", # Focus 2
+	"VID_0F4E&PID_0114", # Focus Blue
+})
+
+addBluetoothDevices("freedomScientific", lambda m: any(m.id.startswith(prefix) for prefix in (
+	"F14", "Focus 14 BT",
+	"Focus 40 BT",
+	"Focus 80 BT",
+)))
 
 # handyTech
 addUsbDevices("handyTech", KEY_SERIAL, {

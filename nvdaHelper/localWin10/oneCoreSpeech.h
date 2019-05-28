@@ -23,6 +23,7 @@ typedef struct {
 } OcSpeech;
 
 extern "C" {
+export bool __stdcall ocSpeech_supportsProsodyOptions();
 export OcSpeech* __stdcall ocSpeech_initialize();
 export void __stdcall ocSpeech_terminate(OcSpeech* instance);
 export void __stdcall ocSpeech_setCallback(OcSpeech* instance, ocSpeech_Callback fn);
@@ -31,4 +32,10 @@ export BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance);
 export const char16* __stdcall ocSpeech_getCurrentVoiceId(OcSpeech* instance);
 export void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index);
 export const char16* __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* instance);
+export double __stdcall ocSpeech_getPitch(OcSpeech* instance);
+export void __stdcall ocSpeech_setPitch(OcSpeech* instance, double pitch);
+export double __stdcall ocSpeech_getVolume(OcSpeech* instance);
+export void __stdcall ocSpeech_setVolume(OcSpeech* instance, double volume);
+export double __stdcall ocSpeech_getRate(OcSpeech* instance);
+export void __stdcall ocSpeech_setRate(OcSpeech* instance, double rate);
 }

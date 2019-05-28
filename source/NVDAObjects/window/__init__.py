@@ -12,6 +12,7 @@ import winUser
 from logHandler import log
 import controlTypes
 import api
+import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
@@ -83,9 +84,6 @@ An NVDAObject for a window
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
 		windowHandle=kwargs['windowHandle']
 		windowClassName=winUser.getClassName(windowHandle)
-		#The desktop window should stay as a window
-		if windowClassName=="#32769":
-			return
 		#If this window has a ghost window its too dangerous to try any higher APIs 
 		if GhostWindowFromHungWindow and GhostWindowFromHungWindow(windowHandle):
 			return
@@ -123,7 +121,7 @@ An NVDAObject for a window
 			from .scintilla import Scintilla as newCls
 		elif windowClassName in ("AkelEditW", "AkelEditA"):
 			from .akelEdit import AkelEdit as newCls
-		elif windowClassName=="ConsoleWindowClass":
+		elif windowClassName=="ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
 			from .winConsole import WinConsole as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
