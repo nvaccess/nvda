@@ -122,7 +122,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self, *args, **kwargs):
 		super(AppModule, self).__init__(*args, **kwargs)
-		for n in xrange(1, self.MessageHistoryLength + 1):
+		# #9078 (Py3 review required): assigns message history review commands.
+		for n in range(1, self.MessageHistoryLength + 1):
 			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
@@ -225,7 +226,8 @@ class MPropertyPage(Dialog,IAccessible):
 				tc=None
 			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
 				children=tc.children
-				for index in xrange(len(children)):
+				# #9078 (Py3 review required): locates message history name by traversing child objects.
+				for index in range(len(children)):
 					if (children[index].role==controlTypes.ROLE_TAB) and (controlTypes.STATE_SELECTED in children[index].states):
 						name=children[index].name
 						break
