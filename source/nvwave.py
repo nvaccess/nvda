@@ -143,7 +143,9 @@ class WavePlayer(object):
 		if buffered:
 			#: Minimum size of the buffer before audio is played.
 			#: However, this is ignored if an C{onDone} callback is provided to L{feed}.
-			self._minBufferSize = samplesPerSec * channels * (bitsPerSample / 8) / 1000 * self.MIN_BUFFER_MS
+			BITS_PER_BYTE = 8
+			MS_PER_SEC = 1000
+			self._minBufferSize = samplesPerSec * channels * (bitsPerSample / BITS_PER_BYTE) / MS_PER_SEC * self.MIN_BUFFER_MS
 			self._buffer = ""
 		else:
 			self._minBufferSize = None
