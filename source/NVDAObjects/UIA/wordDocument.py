@@ -69,7 +69,8 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj=UIA(UIAElement=UIAElement)
-		if obj.parent.role !=controlTypes.ROLE_GROUPING and not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId):
+		if (obj.parent.role !=controlTypes.ROLE_GROUPING and not
+		obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)):
 			continue
 		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 		dateObj=obj.previous
@@ -342,7 +343,8 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			UIAElement=UIAElementArray.getElement(index)
 			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			obj=UIA(UIAElement=UIAElement)
-			if obj.parent.role !=controlTypes.ROLE_GROUPING and not obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId):
+			if (obj.parent.role !=controlTypes.ROLE_GROUPING and not
+			obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)):
 				continue
 			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 			dateObj=obj.previous
