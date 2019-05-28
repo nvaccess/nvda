@@ -30,6 +30,14 @@ class consoleUIATextInfo(UIATextInfo):
 					1
 				)
 
+	def move(self,unit,direction,endPoint=None):
+		# Insure we haven't gone beyond the visible text.
+		# UIA adds thousands of blank lines to the end of the console.
+		visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+		lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+		if self._rangeObj.CompareEndPoints(UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange, UIAHandler.TextPatternRangeEndpoint_End) >= 0:
+			return 0
+		super(consoleUIATextInfo, self).move(unit, direction, endPoint)
 
 class winConsoleUIA(Terminal):
 	STABILIZE_DELAY = 0.03
@@ -57,7 +65,6 @@ class winConsoleUIA(Terminal):
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
-		# Todo: do this (also) somewhere else so they aren't in document review either
 		ptr = self.UIATextPattern.GetVisibleRanges()
 		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
 		return res
