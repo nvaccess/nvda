@@ -32,6 +32,7 @@ class consoleUIATextInfo(UIATextInfo):
 
 
 class winConsoleUIA(Terminal):
+	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
 	_isTyping = False
 	_lastCharTime = 0
