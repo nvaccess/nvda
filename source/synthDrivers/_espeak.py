@@ -139,8 +139,10 @@ def callback(wav,numsamples,event):
 				indexNum = int(e.id.name)
 				# e.audio_position is ms since the start of this utterance.
 				# Convert to bytes since the start of the utterance.
-				# samplesPerSec * 2 bytes per sample / 1000 ms per sec gives us bytes per ms.
-				indexByte = e.audio_position * player.samplesPerSec * 2 / 1000
+				BYTES_PER_SAMPLE = 2
+				MS_PER_SEC = 1000
+				bytesPerMS = player.samplesPerSec * BYTES_PER_SAMPLE  / MS_PER_SEC
+				indexByte = e.audio_position * bytesPerMS
 				# Subtract bytes in the utterance that have already been handled
 				# to give us the byte offset into the samples for this callback.
 				indexByte -= _numBytesPushed
