@@ -16,6 +16,8 @@ Import(
 	'env',
 )
 
+import importlib.util
+
 def interfaceAction(target,source,env):
 	clsid=env.get('clsid')
 	if clsid:
@@ -49,7 +51,7 @@ COM_INTERFACES = {
 for k,v in COM_INTERFACES.items():
 	targets=[Dir('comInterfaces').File(k),
 		# This buillds a .pyc file as well.
-		Dir('comInterfaces').File(k + "c")]
+		Dir('comInterfaces').File(importlib.util.cache_from_source(k))]
 	source=clsid=majorVersion=None
 	if isinstance(v, str):
 		env.comtypesInterface(targets,v)
