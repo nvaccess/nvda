@@ -2,10 +2,18 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
 = threshold release =
 
 == Changes for Developers ==
  - Updated pySerial to version 3.4
+
+
+= 2019.3 =
+
+== New Features ==
+- Added a command to show the replacement for the symbol under the review cursor. (#9286)
+- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
 
 
 = 2019.2 =
@@ -31,8 +39,6 @@ Highlights of this release include auto detection of Freedom Scientific braille 
  - Browse mode keystrokes are slow to respond.
 - For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
 - Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
-- Added a command to show the replacement for the symbol under the review cursor. (#9286)
-- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
 
 
 == Changes ==
