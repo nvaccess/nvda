@@ -47,9 +47,9 @@ def brl_out(offset, data):
 
 def brl_poll(dev):
 	"""read data from braille display, used by keypress handler"""
-	if dev.inWaiting() < 10: return ""
+	if dev.in_waiting < 10: return ""
 	ret = []
-	ret.append(dev.read(dev.inWaiting()))
+	ret.append(dev.read(dev.in_waiting))
 	if ret[0][0] == chr(STX) and ret[0][9] == chr(ETX):
 		return "".join(ret)
 	return ""
