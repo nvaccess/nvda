@@ -121,6 +121,10 @@ class espeak_VOICE(Structure):
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
+# constants that can be returned by espeak_callback
+CALLBACK_CONTINUE_SYNTHESIS=0
+CALLBACK_ABORT_SYNTHESIS=1
+
 t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
@@ -128,15 +132,17 @@ def callback(wav,numsamples,event):
 	try:
 		global player, isSpeaking, _numBytesPushed
 		if not isSpeaking:
-			return 1
+			return CALLBACK_ABORT_SYNTHESIS
 		indexes = []
 		for e in event:
 			if e.type==espeakEVENT_MARK:
 				indexNum = int(e.id.name)
 				# e.audio_position is ms since the start of this utterance.
 				# Convert to bytes since the start of the utterance.
-				# samplesPerSec * 2 bytes per sample / 1000 ms per sec gives us bytes per ms.
-				indexByte = e.audio_position * player.samplesPerSec * 2 / 1000
+				BYTES_PER_SAMPLE = 2
+				MS_PER_SEC = 1000
+				bytesPerMS = player.samplesPerSec * BYTES_PER_SAMPLE  / MS_PER_SEC
+				indexByte = e.audio_position * bytesPerMS
 				# Subtract bytes in the utterance that have already been handled
 				# to give us the byte offset into the samples for this callback.
 				indexByte -= _numBytesPushed
@@ -147,7 +153,7 @@ def callback(wav,numsamples,event):
 			player.idle()
 			onIndexReached(None)
 			isSpeaking = False
-			return 0
+			return CALLBACK_CONTINUE_SYNTHESIS
 		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else ""
 		prevByte = 0
 		for indexNum, indexByte in indexes:
@@ -155,10 +161,10 @@ def callback(wav,numsamples,event):
 				onDone=lambda indexNum=indexNum: onIndexReached(indexNum))
 			prevByte = indexByte
 			if not isSpeaking:
-				return 1
+				return CALLBACK_ABORT_SYNTHESIS
 		player.feed(wav[prevByte:])
 		_numBytesPushed += len(wav)
-		return 0
+		return CALLBACK_CONTINUE_SYNTHESIS
 	except:
 		log.error("callback", exc_info=True)
 
@@ -322,11 +328,12 @@ def initialize(indexCallback=None):
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		buffered=True)
+	onIndexReached = indexCallback
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = queue.Queue()
 	bgThread=BgThread()
 	bgThread.start()
-	onIndexReached = indexCallback
+
 
 def terminate():
 	global bgThread, bgQueue, player, espeakDLL , onIndexReached
