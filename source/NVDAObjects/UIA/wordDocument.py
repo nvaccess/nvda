@@ -18,6 +18,7 @@ from UIABrowseMode import UIABrowseModeDocument, UIADocumentWithTableNavigation,
 from UIAUtils import *
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import WordDocument as WordDocumentBase
+from scriptHandler import script
 
 
 """Support for Microsoft Word via UI Automation."""
@@ -329,6 +330,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
 	name=u""
 
+	@script(gesture ="kb:NVDA+alt+c")
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
@@ -360,7 +362,3 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			# Translators: The message reported for a comment in Microsoft Word
 			ui.message(_("{comment} by {author} on {date}").format(comment=comment,date=date,author=author))
 			return
-
-	__gestures={
-		"kb:NVDA+alt+c":"reportCurrentComment",
-	}
