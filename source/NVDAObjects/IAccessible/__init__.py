@@ -33,7 +33,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-import core
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
 
@@ -1935,28 +1934,9 @@ class IENotificationBar(Dialog,IAccessible):
 				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
 			child=child.simpleNext
 
-class Desktop(IAccessible):
-	"""
-	An IAccessible overlay class for the Desktop (root of all windows on the system).
-	"""
-
-	# In the past, The Desktop NVDAObject was just a Window, not IAccessible.
-	# But now with the introduction of Virtual Desktops in Windows 10, Desktops can have names, thus why IAccessible is used.
-	# But, we still want to maintain compatibility with the existing tree structure, thus its role is still Window, and it has no parent, next or previous objects.
-	role=controlTypes.ROLE_WINDOW
-	parent=None
-	next=None
-	previous=None
-
-	def event_nameChange(self):
-		# Instruct eventHandler to detect and handle a possible desktop name change, if it has not already.
-		# It is slightly delayed just in case a focus event is already going to occur, which will handle the name change itself.
-		core.callLater(250,eventHandler.handlePossibleDesktopNameChange)
-
 ###class mappings
 
 _staticMap={
-	("#32769",oleacc.ROLE_SYSTEM_CLIENT):"Desktop",
 	("ReBarWindow32",oleacc.ROLE_SYSTEM_CLIENT):"ReBarWindow32Client",
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",

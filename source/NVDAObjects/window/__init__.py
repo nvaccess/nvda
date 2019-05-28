@@ -84,6 +84,9 @@ An NVDAObject for a window
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
 		windowHandle=kwargs['windowHandle']
 		windowClassName=winUser.getClassName(windowHandle)
+		#The desktop window should stay as a window
+		if windowClassName=="#32769":
+			return
 		#If this window has a ghost window its too dangerous to try any higher APIs 
 		if GhostWindowFromHungWindow and GhostWindowFromHungWindow(windowHandle):
 			return
