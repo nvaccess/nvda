@@ -328,11 +328,12 @@ def initialize(indexCallback=None):
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		buffered=True)
+	onIndexReached = indexCallback
 	espeakDLL.espeak_SetSynthCallback(callback)
 	bgQueue = queue.Queue()
 	bgThread=BgThread()
 	bgThread.start()
-	onIndexReached = indexCallback
+
 
 def terminate():
 	global bgThread, bgQueue, player, espeakDLL , onIndexReached
