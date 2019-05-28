@@ -507,7 +507,7 @@ class SpeechSymbolProcessor(object):
 		# Simple symbols.
 		# These are all handled in one named group.
 		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
-		patterns.append(ur"(?P<simple>{multiChars}|{singleChars})".format(
+		patterns.append(r"(?P<simple>{multiChars}|{singleChars})".format(
 			multiChars="|".join(re.escape(identifier) for identifier in multiChars),
 			singleChars=characters
 		))
