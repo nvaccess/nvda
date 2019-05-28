@@ -195,7 +195,8 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
 		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
 		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
-		self.IDsToValues={IDs[x]:values[x] for x in xrange(len(IDs))}
+		# #9078 (Py3 review required): constructs a list of text attribute ID's.
+		self.IDsToValues={IDs[x]:values[x] for x in range(len(IDs))}
 
 	def getValue(self,ID,ignoreMixedValues=False):
 		val=self.IDsToValues[ID]
