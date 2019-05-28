@@ -74,6 +74,10 @@ def getCommentInfoFromPosition(position):
 		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 		dateObj=obj.previous
 		date=dateObj.name
+		if not dateObj.previous:
+			authorObj =obj.previous
+			author =authorObj.name
+			return dict(comment=comment,author=author)
 		authorObj=dateObj.previous
 		author=authorObj.name
 		return dict(comment=comment,author=author,date=date)
@@ -85,6 +89,9 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	@property
 	def label(self):
 		commentInfo=getCommentInfoFromPosition(self.textInfo)
+		if len(commentInfo) ==2:
+			# Translators: The message reported for a comment in Microsoft Word
+			return _("Comment: {comment} by {author}").format(**commentInfo)
 		# Translators: The message reported for a comment in Microsoft Word
 		return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
 
@@ -340,6 +347,12 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
 			dateObj=obj.previous
 			date=dateObj.name
+			if not dateObj.previous:
+				authorObj =obj.previous
+				author =authorObj.name
+				# Translators: The message reported for a comment in Microsoft Word
+				ui.message(_("{comment} by {author}").format(comment=comment,author=author))
+				return
 			authorObj=dateObj.previous
 			author=authorObj.name
 			# Translators: The message reported for a comment in Microsoft Word
