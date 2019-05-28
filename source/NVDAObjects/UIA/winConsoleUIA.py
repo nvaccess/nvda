@@ -16,10 +16,12 @@ from ..behaviors import Terminal
 
 class consoleUIATextInfo(UIATextInfo):
 	_expandCollapseBeforeReview = False
+	_isCaret = False
 
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 		if position == textInfos.POSITION_CARET:
+			self._isCaret = True
 			if isAtLeastWin10(1903):
 				# The UIA implementation in 1903 causes the caret to be
 				# off-by-one, so move it one position to the right
@@ -31,12 +33,13 @@ class consoleUIATextInfo(UIATextInfo):
 				)
 
 	def move(self,unit,direction,endPoint=None):
-		# Insure we haven't gone beyond the visible text.
-		# UIA adds thousands of blank lines to the end of the console.
-		visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-		lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
-		if self._rangeObj.CompareEndPoints(UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange, UIAHandler.TextPatternRangeEndpoint_End) >= 0:
-			return 0
+		if not self._isCaret:
+			# Insure we haven't gone beyond the visible text.
+			# UIA adds thousands of blank lines to the end of the console.
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+			if self._rangeObj.CompareEndPoints(UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange, UIAHandler.TextPatternRangeEndpoint_End) >= 0:
+				return 0
 		super(consoleUIATextInfo, self).move(unit, direction, endPoint)
 
 class winConsoleUIA(Terminal):
