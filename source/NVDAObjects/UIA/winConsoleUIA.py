@@ -47,6 +47,7 @@ class winConsoleUIA(Terminal):
 	_TextInfo = consoleUIATextInfo
 	_isTyping = False
 	_lastCharTime = 0
+	_queuedChars = []
 	_TYPING_TIMEOUT = 1
 
 	def _reportNewText(self, line):
@@ -59,12 +60,19 @@ class winConsoleUIA(Terminal):
 		if not ch.isspace():
 			self._isTyping = True
 		self._lastCharTime = time.time()
-		super(winConsoleUIA, self).event_typedCharacter(ch)
+		self._queuedChars.append(ch)
+
+	def event_textChange(self):
+		while self._queuedChars:
+			ch = self._queuedChars.pop(0)
+			super(winConsoleUIA, self).event_typedCharacter(ch)
+		super(winConsoleUIA, self).event_textChange()
 
 	@script(gestures=["kb:enter", "kb:numpadEnter", "kb:tab"])
 	def script_clear_isTyping(self, gesture):
 		gesture.send()
 		self._isTyping = False
+		self._queuedChars = []
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
