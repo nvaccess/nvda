@@ -169,26 +169,27 @@ def getSpeechForSpelling(text, locale=None, useCharacterDescriptions=False):
 	for item in charDescList:
 		if localeHasConjuncts:
 			# item is a tuple containing character and its description
-			char = item[0]
+			speakCharAs = item[0]
 			charDesc = item[1]
 		else:
 			# item is just a character.
-			char = item
+			speakCharAs = item
 			if useCharacterDescriptions:
-				charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
-		uppercase=char.isupper()
+				charDesc=characterProcessing.getCharacterDescription(locale,speakCharAs.lower())
+		uppercase=speakCharAs.isupper()
 		if useCharacterDescriptions and charDesc:
-			char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
+			IDEOGRAPHIC_COMMA = u"\u3001"
+			speakCharAs=charDesc[0] if textLength>1 else IDEOGRAPHIC_COMMA.join(charDesc)
 		else:
-			char=characterProcessing.processSpeechSymbol(locale,char)
+			speakCharAs=characterProcessing.processSpeechSymbol(locale,speakCharAs)
 		if uppercase and synthConfig["sayCapForCapitals"]:
 			# Translators: cap will be spoken before the given letter when it is capitalized.
-			char=_("cap %s")%char
+			speakCharAs=_("cap %s")%speakCharAs
 		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 			yield PitchCommand(offset=synthConfig["capPitchChange"])
 		if config.conf['speech']['autoLanguageSwitching']:
 			yield LangChangeCommand(locale)
-		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
+		if len(speakCharAs) == 1 and synthConfig["useSpellingFunctionality"]:
 			if not charMode:
 				yield CharacterModeCommand(True)
 				charMode = True
@@ -197,7 +198,7 @@ def getSpeechForSpelling(text, locale=None, useCharacterDescriptions=False):
 			charMode = False
 		if uppercase and  synthConfig["beepForCapitals"]:
 			yield BeepCommand(2000, 50)
-		yield char
+		yield speakCharAs
 		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 			yield PitchCommand()
 		yield EndUtteranceCommand()
