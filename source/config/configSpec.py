@@ -73,7 +73,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Vision enhancement provider settings
 [vision]
-	providers = string_list()
+	providers = string_list(=default=list())
 
 	# Vision enhancement provider settings
 	[[__many__]]

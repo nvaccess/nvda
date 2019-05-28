@@ -580,7 +580,7 @@ class _AllGestureMappingsRetriever(object):
 
 		# Vision enhancement providers
 		import vision
-		for provider in vision.handler.initializedProviders:
+		for provider in vision.handler.providers.values():
 			if isinstance(provider, baseObject.ScriptableObject):
 				self.addObj(provider)
 

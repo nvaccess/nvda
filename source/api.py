@@ -25,6 +25,7 @@ import braille
 import vision
 import watchdog
 import appModuleHandler
+import cursorManager
 
 #User functions
 
@@ -372,6 +373,14 @@ def filterFileName(name):
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name
+
+def isCursorManager(obj):
+	"""Returns whether the supplied object is a L{cursorManager.CursorManager}"""
+	return isinstance(obj, cursorManager.CursorManager)
+
+def isTreeInterceptor(obj):
+	"""Returns whether the supplied object is a L{treeInterceptorHandler.TreeInterceptor}"""
+	return isinstance(obj, treeInterceptorHandler.TreeInterceptor)
 
 def getCaretObject():
 	"""Gets the object which contains the caret.

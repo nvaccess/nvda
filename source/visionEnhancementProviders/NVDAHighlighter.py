@@ -7,7 +7,7 @@
 
 """Default highlighter based on GDI Plus."""
 
-from vision import Highlighter, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE, _isDebug
+from vision import VisionEnhancementProvider, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE, _isDebug
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -51,7 +51,7 @@ class HighlightStyle(
 	"""
 	__slots__ = ()
 
-class VisionEnhancementProvider(Highlighter):
+class VisionEnhancementProvider(VisionEnhancementProvider):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
@@ -90,15 +90,15 @@ class VisionEnhancementProvider(Highlighter):
 	def check(cls):
 		return True
 
-	def initializeHighlighter(self):
-		super(VisionEnhancementProvider, self).initializeHighlighter()
+	def __init__(self):
+		super(VisionEnhancementProvider, self).__init__()
 		winGDI.gdiPlusInitialize()
 		self.window = None
 		self._highlighterThread = threading.Thread(target=self._run)
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 
-	def terminateHighlighter(self):
+	def terminate(self):
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
@@ -106,7 +106,7 @@ class VisionEnhancementProvider(Highlighter):
 			#self._highlighterThread.join()
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
-		super(VisionEnhancementProvider, self).terminateHighlighter()
+		super(VisionEnhancementProvider, self).terminate()
 
 	def _run(self):
 		if _isDebug():

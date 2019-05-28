@@ -9,8 +9,9 @@
 
 from .constants import *
 from .providerBase import VisionEnhancementProvider
-from .visionHandlerExtensionPoints import VisionHandlerExtensionPoints
+from .visionHandlerExtensionPoints import EventExtensionPoints
 import pkgutil
+import importlib
 from baseObject import AutoPropertyObject
 import api
 import config
@@ -48,16 +49,16 @@ class VisionHandler(AutoPropertyObject):
 	def __init__(self):
 		self.lastReviewMoveContext = None
 		self.lastCaretObjRef = None
-		self.extensionPoints = VisionHandlerExtensionPoints()
+		self.extensionPoints = EventExtensionPoints()
 		self.providers = dict()
-		for providerName in config.conf['vision']['providers']]:
+		for providerName in config.conf['vision']['providers']:
 			# Some providers, such as the highlighter, rely on wx being fully initialized,
 			# e.g. when they use an overlay window which parent is NVDA's main frame.
 			wx.CallAfter(self.initializeProvider, providerName)
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
 	def terminateProvider(self, providerName):
-		providerInstance =self.providers.pop(providerName, None):
+		providerInstance =self.providers.pop(providerName, None)
 		if not providerInstance:
 			log.warning("Tried to terminate uninitialized provider %s" % providerName)
 			return 
@@ -86,24 +87,41 @@ class VisionHandler(AutoPropertyObject):
 		@returns: Whether initializing the requested provider succeeded.
 		@rtype: bool
 		"""
-		if providerName in self.providers:
-			# Todo, what to do here? silently reinit? This could be costly.
-			self.terminateProvider(providerName)
-		providerCls = getProviderClass(providerName)
-		# Initialize the provider.
-		try:
-			providerInst = providerCls()
-			providerInst.initSettings()
-
-			if not temporary:
-				config.conf['vision']['providers'].append(providerCls.name)
-		except:
-			# Purposely catch everything.
-			# A provider can raise whatever exception,
-			# therefore it is unknown what to expect.
-			log.error("Error while initializing provider %s" % providerName, exc_info=True)
-			return False
-
+		providerInst = self.providers.pop(providerName, None)
+		if providerInst is not None:
+			try:
+				providerInst.reinitialize()
+			except:
+				# Purposely catch everything.
+				# A provider can raise whatever exception,
+				# therefore it is unknown what to expect.
+				log.error("Error while reinitializing provider %s" % providerName, exc_info=True)
+				return False
+		else:
+			providerCls = getProviderClass(providerName)
+			# Initialize the provider.
+			try:
+				providerInst = providerCls()
+			except:
+				# Purposely catch everything.
+				# A provider can raise whatever exception,
+				# therefore it is unknown what to expect.
+				log.error("Error while initializing provider %s" % providerName, exc_info=True)
+				return False
+			# Register extension points.
+			try:
+				providerInst.registerEventExtensionPoints(self.extensionPoints)
+			except:
+				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
+				try:
+					providerInst.terminate()
+				except:
+					pass
+				return False
+		providerInst.initSettings()
+		if not temporary and providerCls.name not in config.conf['vision']['providers']:
+			config.conf['vision']['providers'].append(providerCls.name)
+		self.providers[providerName] = providerInst
 		try:
 			self.initialFocus()
 		except:
@@ -133,33 +151,14 @@ class VisionHandler(AutoPropertyObject):
 			self.handleReviewMove(context=CONTEXT_NAVIGATOR)
 
 	def handleForeground(self, obj):
-		context = CONTEXT_FOREGROUND
-		if self.magnifier:
-			self.magnifier.trackToObject(obj, context=context)
-		if self.highlighter:
-			self.highlighter.updateContextRect(context, obj=obj)
+		self.extensionPoints.post_foregroundChange.notify(obj=obj)
 
 	def handleGainFocus(self, obj):
-		context = CONTEXT_FOCUS
-		if self.magnifier:
-			self.magnifier.trackToObject(obj, context=context)
+		self.extensionPoints.post_focusChange.notify(obj=obj)
 		hasNavigableText = getattr(obj, "_hasNavigableText", False)
 		if hasNavigableText:
 			# This object most likely has a caret.
-			# Intentionally check this after tracking a magnifier to the object itself.
 			self.handleCaretMove(obj)
-		if self.highlighter:
-			self.highlighter.updateContextRect(context, obj=obj)
-			if config.conf['reviewCursor']['followFocus']:
-				# Purposely don't provide the object to updateContextRect here.
-				# This is because obj could also be a tree interceptor.
-				# Furthermore, even when review follows focus, there might be
-				# reasons why the navigator object is not the same as the focus object.
-				self.highlighter.updateContextRect(CONTEXT_NAVIGATOR)
-			if not hasNavigableText:
-				# If this object does not have a caret, clear the caret rectangle from the map
-				# However, in the unlikely case it yet has a caret, we want to highlight that.
-				self.highlighter.updateContextRect(CONTEXT_CARET, obj=obj)
 
 	def handleCaretMove(self, obj):
 		if not self.enabled:
@@ -175,16 +174,10 @@ class VisionHandler(AutoPropertyObject):
 			# The caret object died
 			self.lastCaretObjRef = None
 			return
-		# Import late to avoid circular import
-		import cursorManager
-		context = CONTEXT_CARET if not isinstance(obj, cursorManager.CursorManager) else CONTEXT_BROWSEMODE
-		try:
-			if self.magnifier:
-				self.magnifier.trackToObject(obj, context=context)
-			if self.highlighter:
-				self.highlighter.updateContextRect(context, obj=obj)
-		finally:
-			self.lastCaretObjRef = None
+		if api.isCursorManager(obj):
+			self.extensionPoints.post_browseModeMove(obj=obj)
+		else:
+			self.extensionPoints.post_caretMove(obj=obj)
 
 	def handleReviewMove(self, context=CONTEXT_REVIEW):
 		if not self.enabled:
@@ -197,16 +190,11 @@ class VisionHandler(AutoPropertyObject):
 			return
 		lastReviewMoveContext = self.lastReviewMoveContext
 		self.lastReviewMoveContext = None
-		if lastReviewMoveContext in (CONTEXT_NAVIGATOR, CONTEXT_REVIEW) and self.magnifier:
-			self.magnifier.trackToObject(context=lastReviewMoveContext)
-		if self.highlighter:
-			for context in (CONTEXT_NAVIGATOR, CONTEXT_REVIEW):
-				self.highlighter.updateContextRect(context=context)
+		self.extensionPoints.post_reviewMove(obj=obj, context=lastReviewMoveContext)
 
 	def handleMouseMove(self, obj, x, y):
-		# Mouse moves execute once per core cycle.
-		if self.magnifier:
-			self.magnifier.trackToPoint((x, y), context=CONTEXT_MOUSE)
+		# For now, mouse moves execute once per core cycle.
+		self.extensionPoints.post_mouseMove(obj=obj, x=x, y=y)
 
 	def handleConfigProfileSwitch(self):
 		for role in ROLE_DESCRIPTIONS.keys():

@@ -5,20 +5,13 @@
 #Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Framework to facilitate changes in how content is displayed on screen.
-Three roles (types) of vision enhancement providers are supported:
-	* Magnifier: to magnify the full screen or a part of it.
-	* Highlighter: to highlight important areas of the screen (e.g. the focus, mouse or review position).
-	* ColorEnhancer: to change the color presentation of the whole screen or a part of it.
-A vision enhancement provider can implement either one or more of the above assistant functions.
-Add-ons can provide their own implementation for any or all of these
+One or more assistant functions can be implemented in vision enhancement providers.
+Add-ons can provide their own provider
 using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
 
 from .constants import *
 from .providerBase import VisionEnhancementProvider
-from .highlighterBase import Highlighter
-from .magnifierBase import Magnifier
-from .colorEnhancerBase import ColorEnhancer
 from .visionHandler import VisionHandler, getProviderClass
 import pkgutil
 import visionEnhancementProviders
