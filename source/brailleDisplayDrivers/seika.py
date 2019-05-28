@@ -100,7 +100,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._ser.write(line)
 
 	def handleResponses(self):
-		if not self._ser.inWaiting():
+		if not self._ser.in_waiting:
 			return
 		chars = [0,0]
 		key = 0
