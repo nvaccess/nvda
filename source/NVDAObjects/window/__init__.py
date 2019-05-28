@@ -1,6 +1,6 @@
 #NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -124,8 +124,6 @@ An NVDAObject for a window
 			from .scintilla import Scintilla as newCls
 		elif windowClassName in ("AkelEditW", "AkelEditA"):
 			from .akelEdit import AkelEdit as newCls
-		elif windowClassName=="ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
-			from .winConsole import WinConsole as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:

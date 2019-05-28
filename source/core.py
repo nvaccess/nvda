@@ -416,9 +416,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.warning("Java Access Bridge not available")
 	except:
 		log.error("Error initializing Java Access Bridge support", exc_info=True)
-	import winConsoleHandler
-	log.debug("Initializing winConsole support")
-	winConsoleHandler.initialize()
+	import winConsoleHandlerLegacy
+	log.debug("Initializing legacy winConsole support")
+	winConsoleHandlerLegacy.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
 	try:
@@ -542,7 +542,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(treeInterceptorHandler)
 	_terminate(IAccessibleHandler, name="IAccessible support")
 	_terminate(UIAHandler, name="UIA support")
-	_terminate(winConsoleHandler, name="winConsole support")
+	_terminate(winConsoleHandlerLegacy, name="Legacy winConsole support")
 	_terminate(JABHandler, name="Java Access Bridge support")
 	_terminate(appModuleHandler, name="app module handler")
 	_terminate(NVDAHelper)

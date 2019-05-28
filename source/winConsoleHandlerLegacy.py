@@ -1,13 +1,13 @@
-#winConsoleHandler.py
+#winConsoleHandlerLegacy.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2009-2019 NV Access Limited, Babbage B.V., Bill Dengler
 
 import gui
 import winUser
 import winKernel
-import wincon
+import winconLegacy as wincon
 from colors import RGB
 import eventHandler
 from logHandler import log
@@ -150,7 +150,7 @@ def terminate():
 	if consoleObject:
 		disconnectConsole()
 
-class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
+class legacyConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	_cache_consoleScreenBufferInfo=True
 	def _get_consoleScreenBufferInfo(self):
