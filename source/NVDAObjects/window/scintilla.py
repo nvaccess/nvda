@@ -13,6 +13,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import locale
 import watchdog
 import eventHandler
+import locationHelper
 
 # Window messages
 SCI_POSITIONFROMPOINT=2022
@@ -72,11 +73,10 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		x, y = winUser.ClientToScreen(self.obj.windowHandle,
+		point=locationHelper.Point(
 			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
 			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
-		)
-		point=textInfos.Point(x, y)
+		).toScreen(self.obj.windowHandle)
 		if point.x is not None and point.y is not None:
 			return point
 		else:

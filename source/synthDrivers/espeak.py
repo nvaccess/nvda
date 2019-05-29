@@ -11,7 +11,7 @@ from . import _espeak
 import Queue
 import threading
 import languageHandler
-from synthDriverHandler import SynthDriver, VoiceInfo, BooleanSynthSetting, synthIndexReached, synthDoneSpeaking
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
 from driverHandler import BooleanDriverSetting

@@ -30,7 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
-from locationHelper import RectLTWH
+import locationHelper
 import ui
 
 class UIATextInfo(textInfos.TextInfo):
@@ -308,10 +308,9 @@ class UIATextInfo(textInfos.TextInfo):
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
-		elif isinstance(position,textInfos.Point):
+		elif isinstance(position,locationHelper.Point):
 			#rangeFromPoint used to cause a freeze in UIA client library!
-			p=POINT(position.x,position.y)
-			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
+			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
 		else:
@@ -658,7 +657,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if not rectArray:
 			return rects
 		rectIndexes = xrange(0, len(rectArray), 4)
-		rectGen = (RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
+		rectGen = (locationHelper.RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
 		rects.extend(rectGen)
 		return rects
 
@@ -1353,7 +1352,7 @@ class UIA(Window):
 		if r is None:
 			return
 		# r is a tuple of floats representing left, top, width and height.
-		return RectLTWH.fromFloatCollection(*r)
+		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)

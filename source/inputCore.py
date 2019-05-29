@@ -99,11 +99,6 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
 
-	def _get_logIdentifier(self):
-		"""@deprecated: Use L{InputGesture.identifiers}[0] instead.
-		"""
-		return self.identifiers[0]
-
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
 		The base implementation calls L{getDisplayTextForIdentifier} for the first identifier.

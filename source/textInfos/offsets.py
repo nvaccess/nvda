@@ -11,7 +11,7 @@ import unicodedata
 import NVDAHelper
 import config
 import textInfos
-from locationHelper import RectLTWH
+import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import api
 from six.moves import range
@@ -231,15 +231,17 @@ class OffsetsTextInfo(textInfos.TextInfo):
 					# The end offset is in this line
 					inclusiveLineEnd = inclusiveEndOffset
 				rects.append(
-					RectLTWH.fromCollection(
+					locationHelper.RectLTWH.fromCollection(
 						startLocation if lineStart == startOffset else getLocationFromOffset(lineStart),
 						getLocationFromOffset(inclusiveLineEnd)
 					)
 				)
 				offset = inclusiveLineEnd + 1
 		else:
-			if isinstance(startLocation, textInfos.Point):
-				rects.append(RectLTWH.fromPoint(startLocation))
+			if isinstance(startLocation, locationHelper.Point):
+				rects.append(
+					locationHelper.RectLTWH.fromPoint(startLocation)
+				)
 			else:
 				rects.append(startLocation)
 		intersectedRects = []
@@ -364,9 +366,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _getPointFromOffset(self,offset):
 		# Purposely do not catch LookupError or NotImplementedError raised by _getBoundingRectFromOffset.
-		rect = self._getBoundingRectFromOffset(offset)
-		# For backwards compatibility, keep using textInfos.Point instead of locationHelper.Point
-		return textInfos.Point(*rect.center)
+		return self._getBoundingRectFromOffset(offset).center
 
 	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
@@ -385,7 +385,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		"""
 		super(OffsetsTextInfo,self).__init__(obj,position)
 		from NVDAObjects import NVDAObject
-		if isinstance(position,textInfos.Point):
+		if isinstance(position,locationHelper.Point):
 			offset=self._getOffsetFromPoint(position.x,position.y)
 			position=Offsets(offset,offset)
 		elif isinstance(position,NVDAObject):
@@ -438,7 +438,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
 		try:
-			return textInfos.Point(*self._getBoundingRectFromOffset(self._startOffset).topLeft)
+			return self._getBoundingRectFromOffset(self._startOffset).topLeft
 		except NotImplementedError:
 			return self._getPointFromOffset(self._startOffset)
 
