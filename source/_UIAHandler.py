@@ -21,6 +21,7 @@ import controlTypes
 import NVDAHelper
 import winKernel
 import winUser
+import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
@@ -45,25 +46,22 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
-	"SysTreeView32",
-	"WuDuiListView",
-	"ComboBox",
-	"msctls_progress32",
-	"Edit",
-	"CommonPlacesWrapperWndClass",
-	"SysMonthCal32",
-	"SUPERGRID", #Outlook 2010 message list
-	"RichEdit",
-	"RichEdit20",
-	"RICHEDIT50W",
-	"SysListView32",
-	"EXCEL7",
-	"Button",
-	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
-	# It does not implement caret/selection, and probably has no new text events.
-	"ConsoleWindowClass",
-	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
-	"FoxitDocWnd",
+"SysTreeView32",
+"WuDuiListView",
+"ComboBox",
+"msctls_progress32",
+"Edit",
+"CommonPlacesWrapperWndClass",
+"SysMonthCal32",
+"SUPERGRID", #Outlook 2010 message list
+"RichEdit",
+"RichEdit20",
+"RICHEDIT50W",
+"SysListView32",
+"EXCEL7",
+"Button",
+# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
+"FoxitDocWnd",
 ]
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
@@ -140,7 +138,6 @@ UIAPropertyIdsToNVDAEventNames={
 
 UIAEventIdsToNVDAEventNames={
 	UIA_LiveRegionChangedEventId:"liveRegionChange",
-	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
@@ -153,6 +150,9 @@ UIAEventIdsToNVDAEventNames={
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
+
+if winVersion.isAtLeastWin10():
+	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
 
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
@@ -347,6 +347,14 @@ class UIAHandler(COMObject):
 			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
+	def _isBadUIAWindowClassName(self, windowClass):
+		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
+		# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+		# It does not implement caret/selection, and probably has no new text events.
+		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
+			return True
+		return windowClass in badUIAWindowClassNames
+
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
 		processID=winUser.getWindowThreadProcessID(hwnd)[0]
@@ -363,7 +371,7 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isGoodUIAWindow(hwnd):
 			return True
 		# There are certain window classes that just had bad UIA implementations
-		if windowClass in badUIAWindowClassNames:
+		if self._isBadUIAWindowClassName(windowClass):
 			return False
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):

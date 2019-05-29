@@ -100,7 +100,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._ser.write(line)
 
 	def handleResponses(self, wait=False):
-		while wait or self._ser.inWaiting():
+		while wait or self._ser.in_waiting:
 			data = self._ser.read(1)
 			if data:
 				# do not handle acknowledge bytes
