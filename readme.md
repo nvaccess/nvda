@@ -79,7 +79,7 @@ For reference, the following dependencies are included in Git submodules:
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
-* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
+* [pySerial](http://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
 * [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
 * [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51

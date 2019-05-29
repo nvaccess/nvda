@@ -171,10 +171,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Try to open port
 		self._dev = serial.Serial(self._port, baudrate = 19200,  bytesize = serial.EIGHTBITS, parity = serial.PARITY_NONE, stopbits = serial.STOPBITS_ONE)
 		# Use a longer timeout when waiting for initialisation.
-		self._dev.timeout = self._dev.writeTimeout = 2.7
+		self._dev.timeout = self._dev.write_timeout = 2.7
 		self._ecoType  = eco_in_init(self._dev)
 		# Use a shorter timeout hereafter.
-		self._dev.timeout = self._dev.writeTimeout = TIMEOUT
+		self._dev.timeout = self._dev.write_timeout = TIMEOUT
 		# Always send the protocol answer.
 		self._dev.write("\x61\x10\x02\xf1\x57\x57\x57\x10\x03")
 		self._dev.write("\x10\x02\xbc\x00\x00\x00\x00\x00\x10\x03")
@@ -202,7 +202,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			pass
 
 	def _handleResponses(self):
-		if self._dev.inWaiting():
+		if self._dev.in_waiting:
 			command = eco_in(self._dev)
 			if command:
 				try:
