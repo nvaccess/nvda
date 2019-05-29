@@ -70,18 +70,17 @@ def getCommentInfoFromPosition(position):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj=UIA(UIAElement=UIAElement)
-		if (obj.parent.role !=controlTypes.ROLE_GROUPING and not
+		if not obj.parent or (obj.parent.role !=controlTypes.ROLE_GROUPING and not
 		obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)):
 			continue
 		comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
+		tempObj =obj.previous.previous
+		authorObj =tempObj or obj.previous
+		author =authorObj.name
+		if not tempObj:
+			return dict(comment=comment,author=author)
 		dateObj=obj.previous
 		date=dateObj.name
-		if not dateObj.previous:
-			authorObj =obj.previous
-			author =authorObj.name
-			return dict(comment=comment,author=author)
-		authorObj=dateObj.previous
-		author=authorObj.name
 		return dict(comment=comment,author=author,date=date)
 
 class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
@@ -91,7 +90,7 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	@property
 	def label(self):
 		commentInfo=getCommentInfoFromPosition(self.textInfo)
-		if len(commentInfo) ==2:
+		if "date" not in commentInfo:
 			# Translators: The message reported for a comment in Microsoft Word
 			return _("Comment: {comment} by {author}").format(**commentInfo)
 		# Translators: The message reported for a comment in Microsoft Word
@@ -330,35 +329,18 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
 	name=u""
 
-	@script(gesture ="kb:NVDA+alt+c")
+	@script(
+	gesture ="kb:NVDA+alt+c",
+	# Translators: a description for a script that reports the comment at the caret.
+	description=_("Reports the text of the comment where the System caret is located.")
+	)
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		caretInfo.expand(textInfos.UNIT_CHARACTER)
-		val=caretInfo._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
-		if not val:
-			return
-		try:
-			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
-		except COMError:
-			return
-		for index in xrange(UIAElementArray.length):
-			UIAElement=UIAElementArray.getElement(index)
-			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-			obj=UIA(UIAElement=UIAElement)
-			if (obj.parent.role !=controlTypes.ROLE_GROUPING and not
-			obj.parent.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)):
-				continue
-			comment=obj.makeTextInfo(textInfos.POSITION_ALL).text
-			dateObj=obj.previous
-			date=dateObj.name
-			if not dateObj.previous:
-				authorObj =obj.previous
-				author =authorObj.name
-				# Translators: The message reported for a comment in Microsoft Word
-				ui.message(_("{comment} by {author}").format(comment=comment,author=author))
-				return
-			authorObj=dateObj.previous
-			author=authorObj.name
+		commentInfo =getCommentInfoFromPosition(caretInfo)
+		if "date" not in commentInfo:
 			# Translators: The message reported for a comment in Microsoft Word
-			ui.message(_("{comment} by {author} on {date}").format(comment=comment,date=date,author=author))
+			ui.message(_("Comment: {comment} by {author}").format(**commentInfo))
 			return
+		# Translators: The message reported for a comment in Microsoft Word
+		ui.message(_("Comment: {comment} by {author} on {date}").format(**commentInfo))
+		return
