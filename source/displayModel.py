@@ -254,7 +254,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		raise LookupError
 
 	def __init__(self, obj, position,limitRect=None):
-		if isinstance(position, textInfos.Rect):
+		if isinstance(position, RectLTRB):
 			limitRect=position
 			position=textInfos.POSITION_ALL
 		if limitRect is not None:

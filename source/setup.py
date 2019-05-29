@@ -210,10 +210,6 @@ setup(
 			"bisect",
 			# Also, the previous service executable used win32api, which some add-ons use for various purposes.
 			"win32api",
-			# #8628: include an import module for validate, which older add-ons import directly.
-			# Since configobj 5.1.0, validate is a part of the configobj package
-			# and should be imported as configobj.validate instead
-			"validate",
 		],
 	}},
 	data_files=[

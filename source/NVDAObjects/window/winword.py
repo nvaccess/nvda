@@ -40,7 +40,7 @@ from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
-from textInfos import Point
+import locationHelper
 
 #Word constants
 
@@ -661,7 +661,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textInfos.Point):
+		if isinstance(position, locationHelper.Point):
 			try:
 				self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
 			except COMError:
@@ -1018,7 +1018,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise LookupError
 		if not any((left.value, top.value, width.value, height.value)):
 			raise LookupError
-		return Point(left.value, top.value)
+		return locationHelper.Point(left.value, top.value)
 
 	def updateCaret(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)

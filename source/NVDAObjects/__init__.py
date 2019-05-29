@@ -28,6 +28,7 @@ import treeInterceptorHandler
 import braille
 import globalPluginHandler
 import brailleInput
+import locationHelper
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -989,7 +990,7 @@ Tries to force this object to take the focus.
 			speechWasCanceled=False
 		self._mouseEntered=True
 		try:
-			info=self.makeTextInfo(textInfos.Point(x,y))
+			info=self.makeTextInfo(locationHelper.Point(x,y))
 		except NotImplementedError:
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
