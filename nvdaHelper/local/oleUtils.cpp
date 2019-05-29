@@ -30,7 +30,7 @@ HRESULT getOleClipboardText(IDataObject* dataObject, BSTR* text) {
 		LOG_DEBUGWARNING(L"IDataObject::getData failed with error "<<res);
 		return res;
 	}
-	if(medium.tymed!=TYMED_HGLOBAL|!medium.hGlobal) {
+	if(medium.tymed!=TYMED_HGLOBAL||!medium.hGlobal) {
 		LOG_DEBUGWARNING(L"Got back invalid medium");
 		return E_FAIL;
 	}
