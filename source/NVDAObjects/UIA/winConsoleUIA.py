@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 Bill Dengler
 
+import config
 import time
 import textInfos
 import UIAHandler
@@ -60,7 +61,16 @@ class winConsoleUIA(Terminal):
 		if not ch.isspace():
 			self._isTyping = True
 		self._lastCharTime = time.time()
-		self._queuedChars.append(ch)
+		if (
+			(
+				config.conf['keyboard']['speakTypedCharacters']
+				or config.conf['keyboard']['speakTypedWords']
+			)
+			and not config.conf['UIA']['winConsoleSpeakPasswords']
+		):
+			self._queuedChars.append(ch)
+		else:
+			super(winConsoleUIA, self).event_typedCharacter(ch)
 
 	def event_textChange(self):
 		while self._queuedChars:
