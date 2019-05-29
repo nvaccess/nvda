@@ -2058,6 +2058,13 @@ class AdvancedPanelControls(wx.Panel):
 		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
 		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
 
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Speak &passwords in UIA consoles (may improve performance)")
+		self.winConsoleSpeakPasswordsCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["UIA"]["winConsoleSpeakPasswords"])
+		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleSpeakPasswords"])
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Browse mode")
@@ -2166,6 +2173,7 @@ class AdvancedPanelControls(wx.Panel):
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		config.conf["UIA"]["winConsoleSpeakPasswords"]=self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):

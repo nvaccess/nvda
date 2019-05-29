@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V., Davy Kager
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -188,6 +188,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
+	winConsoleSpeakPasswords = boolean(default=false)
 
 [update]
 	autoCheck = boolean(default=true)
