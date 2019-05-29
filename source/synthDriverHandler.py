@@ -157,8 +157,6 @@ class SynthDriver(driverHandler.Driver):
 	L{supportedNotifications} should specify what notifications the synthesizer provides.
 	Currently, the available notifications are L{synthIndexReached} and L{synthDoneSpeaking}.
 	Both of these must be supported.
-	@ivar supportedSettings: The settings supported by the synthesiser.
-	@type supportedSettings: list or tuple of L{SynthSetting}
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
