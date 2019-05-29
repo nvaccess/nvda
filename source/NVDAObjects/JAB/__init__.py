@@ -240,7 +240,6 @@ class JAB(Window):
 		if not bindings or bindings.keyBindingsCount<1: 
 			return None
 		shortcutsList=[]
-		# #9078 (Py3 review required): iterates through and constructs keyboard shortcuts for JAB objects if it exists.
 		for index in range(bindings.keyBindingsCount):
 			binding=bindings.keyBindingInfo[index]
 			# We don't support these modifiers
@@ -432,7 +431,6 @@ class JAB(Window):
 
 	def _get_children(self):
 		children=[]
-		# #9078 (Py3 review required): iterates through and returns JAB object's children.
 		for index in range(self._JABAccContextInfo.childrenCount):
 			jabContext=self.jabContext.getAccessibleChildFromContext(index)
 			if jabContext:
@@ -601,7 +599,6 @@ class TableCell(JAB):
 		if headerTableInfo and headerTableInfo.jabTable:
 			textList=[]
 			row=self.rowNumber-1
-			# #9078 (Py3 review required): iterates through columns looking for column headers.
 			for col in range(headerTableInfo.columnCount):
 				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
 				if cellInfo and cellInfo.jabContext:
@@ -620,7 +617,6 @@ class TableCell(JAB):
 		if headerTableInfo and headerTableInfo.jabTable:
 			textList=[]
 			col=self.columnNumber-1
-			# #9078 (Py3 review required): iterates through rows looking for row headers.
 			for row in range(headerTableInfo.rowCount):
 				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
 				if cellInfo and cellInfo.jabContext:

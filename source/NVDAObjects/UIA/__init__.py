@@ -570,7 +570,6 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
 			rootElementControlType=rootElement.cachedControlType
-			# #9078 (Py3 review required): iterates through objects when constructing UIA documents.
 			for index in range(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
@@ -658,7 +657,6 @@ class UIATextInfo(textInfos.TextInfo):
 		rectArray = range.GetBoundingRectangles()
 		if not rectArray:
 			return rects
-		# #9078 (Py3 review required): assigns a generator of rectangle indecies.
 		rectIndexes = range(0, len(rectArray), 4)
 		rectGen = (RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
 		rects.extend(rectGen)
@@ -1263,7 +1261,6 @@ class UIA(Window):
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
 			return children
-		# #9078 (Py3 review required): iterates through UIA child objects.
 		for index in range(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			windowHandle=self.windowHandle
@@ -1288,7 +1285,6 @@ class UIA(Window):
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		textList=[]
-		# #9078 (Py3 review required): iterates through row headers.
 		for i in range(val.length):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
@@ -1317,7 +1313,6 @@ class UIA(Window):
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		textList=[]
-		# #9078 (Py3 review required): iterates through column headers.
 		for i in range(val.length):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
@@ -1445,7 +1440,6 @@ class UIA(Window):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		objList=[]
-		# #9078 (Py3 review required): iterated when building controller for list/array.
 		for index in range(a.length):
 			e=a.getElement(index)
 			e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
@@ -1705,7 +1699,6 @@ class PlaceholderNetUITWMenuItem(UIA):
 	def _get_focusRedirect(self):
 		# Locate the containing menu and focus that instead.
 		parent=self.parent
-		# #9078 (Py3 review required): iterated when trying to detect placeholders.
 		for count in range(4):
 			if not parent:
 				return

@@ -19,7 +19,6 @@ class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 
 	def _normalizeControlField(self,attrs):
 		role=controlTypes.ROLE_STATICTEXT
-		# #9078 (Py3 review required): build states set via iteration.
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if controlTypes.STATE_LINKED in states:
 			role=controlTypes.ROLE_LINK

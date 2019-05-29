@@ -47,7 +47,6 @@ def normalizeRtlString(s):
 	return u"".join(l)
 
 def yieldListRange(l,start,stop):
-	# #9078 (Py3 review required): create a list via iteration.
 	for x in range(start,stop):
 		yield l[x]
 
@@ -55,7 +54,6 @@ def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,
 	windowStartIndex=startIndex
 	lastEndOffset=windowStartOffset=startOffset
 	lastHwnd=None
-	# #9078 (Py3 review required): iteration.
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
 		if isinstance(item,basestring):
@@ -73,7 +71,6 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	curFormatField=None 
 	overallDirection=0 # The general reading direction calculated based on the amount of rtl vs ltr text there is
 	# Detect the direction for fields with an unknown reading direction, and calculate an over all direction for the entire passage
-	# #9078 (Py3 review required): do this via iteration.
 	for index in range(startIndex,endIndex):
 		item=commandList[index]
 		if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
@@ -94,7 +91,6 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	if overallDirection==0: overallDirection=1
 	# following the calculated over all reading direction of the passage, correct all weak/neutral fields to have the same reading direction as the field preceeding them 
 	lastDirection=overallDirection
-	# #9078 (Py3 review required): iteration.
 	for index in range(startIndex,endIndex):
 		if overallDirection<0: index=endIndex-index-1
 		item=commandList[index]
@@ -110,7 +106,6 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	runStartOffset=None
 	if overallDirection<0:
 		reorderList=[]
-	# #9078 (Py3 review required): iteration.
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
 		if isinstance(item,basestring):
@@ -125,7 +120,6 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						#Reverse rects
 						rects[runStartOffset:lastEndOffset]=rects[lastEndOffset-1:runStartOffset-1 if runStartOffset>0 else None:-1]
 						rectsStart=runStartOffset
-						# #9078 (Py3 review required): iterate through rectangles.
 						for i in range(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
@@ -299,7 +293,6 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineStartIndex=0
 		lineBaseline=None
 		lineEndOffsets=[]
-		# #9078 (Py3 review required): iterate through command list.
 		for index in range(len(commandList)):
 			item=commandList[index]
 			if isinstance(item,basestring):
@@ -347,7 +340,6 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Strip  unwanted commands and text from the start and the end to honour the requested offsets
 		lastEndOffset=0
 		startIndex=endIndex=relStart=relEnd=None
-		# #9078 (Py3 review required): iteration.
 		for index in range(len(storyFields)):
 			item=storyFields[index]
 			if isinstance(item,basestring):

@@ -63,7 +63,6 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
 		rows=table.rows
 		numHeaderRows=0
-		# #9078 (Py3 review required): iterates through table cells looking for headers.
 		for rowIndex in range(rows.count): 
 			try:
 				row=rows.item(rowIndex+1)
@@ -176,7 +175,6 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				# #9078 (Py3 review required): iterates through rows if a column header is found.
 				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
 					tempColumnNumber=columnNumber
 					while tempColumnNumber>=1:
@@ -188,7 +186,6 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 						break
 					textList.append(headerCell.range.text)
 			else:
-				# #9078 (Py3 review required): iterates through column headers looking for useful header information.
 				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
 					tempRowNumber=rowNumber
 					while tempRowNumber>=1:

@@ -23,7 +23,6 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, MudText)
 	def __init__(self, *args, **kwargs):
 		super(AppModule, self).__init__(*args, **kwargs)
-		# #9078 (Py3 review required): assigns history review commands.
 		for n in range(1, self.historyLength +1):
 			self.bindGesture("kb:control+%s" % n, "readMessage")
 	def script_readMessage(self,gesture):

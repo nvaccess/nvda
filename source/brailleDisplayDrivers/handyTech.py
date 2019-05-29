@@ -566,7 +566,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				continue
 
 			self.sendPacket(HT_PKT_RESET)
-			# #9078 (Py3 review required): do this via iteration.
 			for _i in range(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(self.timeout)
@@ -659,7 +658,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# When the packet length exceeds C{writeSize}, the packet is split up into several packets.
 		# They contain C{HT_HID_RPT_InData}, the length of the data block,
 		# the data block itself and a terminating null character.
-		# #9078 (Py3 review required): do this via iteration.
 		for offset in range(0, len(packet), maxBlockSize):
 			block = packet[offset:offset+maxBlockSize]
 			hidPacket = HT_HID_RPT_InData + chr(len(block)) + block + b"\x00"

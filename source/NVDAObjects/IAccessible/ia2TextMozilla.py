@@ -26,7 +26,6 @@ class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self.obj.childCount
 
 	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		# #9078 (Py3 review required): iterates through and returns nodes with possible embedded object controls.
 		return range(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):

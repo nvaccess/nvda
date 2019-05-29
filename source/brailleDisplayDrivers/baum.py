@@ -100,7 +100,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
 				# Send again in case the display misses the first one.
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
-			# #9078 (Py3 review required): do this via iteration.
 			for i in range(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(TIMEOUT)
@@ -239,7 +238,6 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & 0x3
 			if group == BAUM_ROUTING_KEYS:
-				# #9078 (Py3 review required): iterate over routing keys.
 				for index in range(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
 						self.routingIndex = index

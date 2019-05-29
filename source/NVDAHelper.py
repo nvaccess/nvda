@@ -286,7 +286,6 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 		if msg:
 			textList.append(msg)
 	else:
-		# #9078 (Py3 review required): IME conversion messages.
 		for x in range(32):
 			x=2**x
 			msgs=inputConversionModeMessages.get(x)

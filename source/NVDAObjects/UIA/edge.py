@@ -212,7 +212,6 @@ class EdgeTextInfo(UIATextInfo):
 		startCount=0
 		lastStartIndex=None
 		numFields=len(fields)
-		# #9078 (Py3 review required): iterates through UIA object fields.
 		for index in range(numFields-1,-1,-1):
 			field=fields[index]
 			if isinstance(field,basestring):
@@ -225,7 +224,6 @@ class EdgeTextInfo(UIATextInfo):
 		# Remove any content from fields with a content attribute
 		numFields=len(fields)
 		curField=None
-		# #9078 (Py3 review required): iterates through UIA object fields.
 		for index in range(numFields-1,-1,-1):
 			field=fields[index]
 			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):

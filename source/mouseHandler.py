@@ -200,7 +200,6 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 def executeMouseMoveEvent(x,y):
 	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
-	# #9078 (Py3 review required): fetch display count via iteration.
 	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)

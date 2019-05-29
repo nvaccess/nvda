@@ -436,7 +436,6 @@ class Region(object):
 					self.brailleSelectionEnd = len(self.brailleCells)
 				else:
 					self.brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
-				# #9078 (Py3 review required): iterate through braile selection.
 				for pos in range(self.brailleSelectionStart, self.brailleSelectionEnd):
 					self.brailleCells[pos] |= SELECTION_SHAPE
 			except IndexError:
@@ -835,7 +834,6 @@ class TextInfoRegion(Region):
 				commandLen = len(command)
 				self.rawTextTypeforms.extend((typeform,) * commandLen)
 				endPos = self._currentContentPos + commandLen
-				# #9078 (Py3 review required): extend with results of iteration.
 				self._rawToContentPos.extend(range(self._currentContentPos, endPos))
 				self._currentContentPos = endPos
 				if isSelection:
@@ -1119,7 +1117,6 @@ class ReviewTextInfoRegion(TextInfoRegion):
 		api.setReviewPosition(info)
 
 def rindex(seq, item, start, end):
-	# #9078 (Py3 review required): reverse iteration.
 	for index in range(end - 1, start - 1, -1):
 		if seq[index] == item:
 			return index
@@ -1276,7 +1273,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Search from 1 cell before in case startPos is just after a space.
 			startPos = self.brailleCells.index(0, startPos - 1, endPos)
 			# Skip past spaces.
-			# #9078 (Py3 review required): done via iteration.
 			for startPos in range(startPos, endPos):
 				if self.brailleCells[startPos] != 0:
 					break
@@ -1438,7 +1434,6 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 		# We only want the ancestors of the buffer's root NVDAObject.
 		if obj != api.getFocusObject():
 			# Search backwards through the focus ancestors to find the index of obj.
-			# #9078 (Py3 review required): do this via iteration.
 			for index, ancestor in itertools.izip(range(len(ancestors) - 1, 0, -1), reversed(ancestors)):
 				if obj == ancestor:
 					ancestorsEnd = index
@@ -1451,7 +1446,6 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 		# Also, we don't ever want to fetch ancestor 0 (the desktop).
 		newAncestorsStart = max(min(_cachedFocusAncestorsEnd, ancestorsEnd), 1)
 		# Search backwards through the old regions to find the last common region.
-		# #9078 (Py3 review required): do this via iteration.
 		for index, region in itertools.izip(range(len(oldFocusRegions) - 1, -1, -1), reversed(oldFocusRegions)):
 			ancestorIndex = getattr(region, "_focusAncestorIndex", None)
 			if ancestorIndex is None:
@@ -1539,7 +1533,6 @@ def formatCellsForLog(cells):
 	# List comprehensions without function calls are faster than loops.
 	# For str.join, list comprehensions are faster than generator comprehensions.
 	return TEXT_SEPARATOR.join([
-		# #9078 (Py3 review required): iteratively join braille dots for log output.
 		"".join([str(dot + 1) for dot in range(8) if cell & (1 << dot)])
 		if cell else "-"
 		for cell in cells])

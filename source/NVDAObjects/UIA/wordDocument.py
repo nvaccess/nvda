@@ -64,7 +64,6 @@ def getCommentInfoFromPosition(position):
 		UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 	except COMError:
 		return
-	# #9078 (Py3 review required): iterates through objects looking for comments marked by UIA.
 	for index in range(UIAElementArray.length):
 		UIAElement=UIAElementArray.getElement(index)
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
@@ -190,7 +189,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
 		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
-		# #9078 (Py3 review required): iterates through objects marked by UIA.
 		for index in range(len(fields)):
 			field=fields[index]
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
@@ -205,7 +203,6 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore, detect when at the start of a list, and strip the bullet from the text string, placing it in the text's formatField as line-prefix.
 		listItemStarted=False
 		lastFormatField=None
-		# #9078 (Py3 review required): iterates through objects marked by UIA.
 		for index in range(len(fields)):
 			field=fields[index]
 			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
@@ -333,7 +330,6 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		except COMError:
 			return
-		# #9078 (Py3 review required): iterates through objects looking for comments marked by UIA.
 		for index in range(UIAElementArray.length):
 			UIAElement=UIAElementArray.getElement(index)
 			UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)

@@ -280,7 +280,6 @@ class TrackerManager(object):
 		"""Queues the given tracker, replacing old trackers with a multiFingered plural action where possible"""
 		#Reverse iterate through the existing queued trackers comparing the given tracker to each of them
 		#as L{emitTrackers} constantly dequeues, the queue only contains trackers newer than multiTouchTimeout, though may contain more if there are still unknown singleTouchTrackers around.
-		# #9078 (Py3 review required): do this via iteration.
 		for index in range(len(self.multiTouchTrackers)):
 			index=len(self.multiTouchTrackers)-1-index
 			delayedTracker=self.multiTouchTrackers[index]

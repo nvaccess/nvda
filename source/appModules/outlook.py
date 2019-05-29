@@ -503,7 +503,6 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# This is unexpected here.
 			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
 			return super(UIAGridRow, self).name
-		# #9078 (Py3 review required): iterates through message columns in Outlook if possible.
 		for index in range(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			UIAControlType=e.cachedControlType
@@ -534,7 +533,6 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				columnHeaderItems=None
 			if columnHeaderItems:
 				columnHeaderItems=columnHeaderItems.QueryInterface(UIAHandler.IUIAutomationElementArray)
-				# #9078 (Py3 review required): iterates through column headers.
 				for index in range(columnHeaderItems.length):
 					columnHeaderItem=columnHeaderItems.getElement(index)
 					columnHeaderTextList.append(columnHeaderItem.currentName)

@@ -14,12 +14,10 @@ def calculateInsertedChars(oldComp,newComp):
 	minLen=min(oldLen,newLen)
 	diffStart=0
 	diffEnd=newLen
-	# #9078 (Py3 review required): used to iterate through changes in composition strings.
 	for index in range(minLen):
 		if newComp[index]!=oldComp[index]:
 			break
 		diffStart=index+1
-	# #9078 (Py3 review required): used to iterate through changes in composition strings.
 	for index in range(minLen,0,-1):
 		backIndex=index-minLen-1
 		if newComp[backIndex]!=oldComp[backIndex]:

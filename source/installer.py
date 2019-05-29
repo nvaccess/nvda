@@ -349,7 +349,6 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		os.rename(path,tempPath)
 	except (WindowsError,IOError):
 		raise RetriableFailure("Failed to rename file %s before  remove"%path)
-	# #9078 (Py3 review required): retry via iteration.
 	for count in range(numRetries):
 		try:
 			if os.path.isdir(tempPath):

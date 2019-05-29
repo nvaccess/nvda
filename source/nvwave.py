@@ -330,7 +330,6 @@ class WavePlayer(object):
 
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
-	# #9078 (Py3 review required): locate output device ID's via iteration.
 	for devID in range(-1, winmm.waveOutGetNumDevs()):
 		try:
 			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))

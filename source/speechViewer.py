@@ -55,11 +55,9 @@ class SpeechViewerFrame(wx.Dialog):
 	def doDisplaysMatchConfig(self):
 		configSizes = config.conf["speechViewer"]["displays"]
 		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
-		# #9078 (Py3 review required): iterate through displays.
 		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in range(len(configSizes)))
 
 	def getAttachedDisplaySizesAsStringArray(self):
-		# #9078 (Py3 review required): iterate through displays.
 		displays = ( wx.Display(i).GetGeometry().GetSize() for i in range(wx.Display.GetCount()) )
 		return [repr( (i.width, i.height) ) for i in displays]
 

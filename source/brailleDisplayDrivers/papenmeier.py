@@ -128,7 +128,6 @@ def brl_decode_keys_A(data,start,voffset):
 	n = start                           #key index iterator
 	j=  []
 	shift = 0
-	# #9078 (Py3 review required): decode iterator.
 	for i in range(0,len(data)):	#byte index
 		if(i%2==0):
 			a= ord(data[i])&0x0F		#n+4,n+3
@@ -538,9 +537,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			thumbs = b&7
 			if thumbs and dots: 
 				names = set()
-				# #9078 (Py3 review required): iterate through and assign thumb keys.
 				names.update(driver._thumbs[1 << i] for i in range(3) if (1 << i) & thumbs)
-				# #9078 (Py3 review required): iterate through and assign braille keys.
 				names.update(driver._dotNames[1 << i] for i in range(8)if (1 << i) & dots)
 				self.id = "+".join(names)
 				self.space = True

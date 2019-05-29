@@ -199,7 +199,6 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [min(start,end),max(start,end)]
 
 	def _setSelectionOffsets(self,start,end):
-		# #9078 (Py3 review required): iterates through not selected IAccessible text object.
 		for selIndex in range(self.obj.IAccessibleTextObject.NSelections):
 			self.obj.IAccessibleTextObject.RemoveSelection(selIndex)
 		if start!=end:
@@ -849,13 +848,11 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			# #9078 (Py3 review required): obtains available IAccessible object states.
 			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if not hasattr(self.IAccessibleObject,'states'):
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States
-		# #9078 (Py3 review required): obtains available IAccessible2 object states.
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		# Readonly should override editable
 		if controlTypes.STATE_READONLY in states:
@@ -1243,7 +1240,6 @@ the NVDAObject for IAccessible
 			ret = []
 			# Each header must be fetched from the headers array once and only once,
 			# as it gets released when it gets garbage collected.
-			# #9078 (Py3 review required): iterates through possible table headers.
 			for i in range(nHeaders):
 				try:
 					text = headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0)

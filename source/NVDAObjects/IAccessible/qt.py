@@ -13,7 +13,6 @@ from scriptHandler import isScriptWaiting
 def _getActiveChild(obj):
 	# QT doesn't do accFocus properly, so find the active child ourselves.
 	child = obj.firstChild
-	# #9078 (Py3 review required): iterates through object's children looking for the focused control.
 	for i in range(obj.childCount):
 		states = child.states
 		if controlTypes.STATE_FOCUSED in states or controlTypes.STATE_SELECTED in states:

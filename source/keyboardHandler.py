@@ -216,7 +216,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			)
 		):
 			keyStates=(ctypes.c_byte*256)()
-			# #9078 (Py3 review required): iterate through key states.
 			for k in range(256):
 				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
 			charBuf=ctypes.create_unicode_buffer(5)

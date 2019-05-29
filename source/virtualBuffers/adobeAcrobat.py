@@ -56,7 +56,6 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				accRole = accRole.lower()
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 
-		# #9078 (Py3 review required): build states set via iteration.
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
 		if role == controlTypes.ROLE_EDITABLETEXT and {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:

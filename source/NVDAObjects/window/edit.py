@@ -607,7 +607,6 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			return u'*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
-		# #9078 (Py3 review required): iterates through editable text.
 		for offset in range(len(bufText)):
 			if ord(bufText[offset])==0xfffc:
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate

@@ -77,7 +77,6 @@ class Dialog(NVDAObject):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		# #9078 (Py3 review required): gathers dialog text and presents it as description.
 		for index in range(childCount):
 			child=children[index]
 			childStates=child.states
@@ -324,7 +323,6 @@ class LiveText(NVDAObject):
 				textLen = len(text)
 				prevTextLen = len(prevText)
 				# Find the first character that differs between the two lines.
-				# #9078 (Py3 review required): announces changed text in terminals.
 				for pos in range(min(textLen, prevTextLen)):
 					if text[pos] != prevText[pos]:
 						start = pos
@@ -338,7 +336,6 @@ class LiveText(NVDAObject):
 					# The lines are different lengths, so assume the rest of the line changed.
 					end = textLen
 				else:
-					# #9078 (Py3 review required): announces changed text in terminals.
 					for pos in range(textLen - 1, start - 1, -1):
 						if text[pos] != prevText[pos]:
 							end = pos + 1
@@ -557,7 +554,6 @@ class RowWithoutCellObjects(NVDAObject):
 		return self._makeCell(1)
 
 	def _get_children(self):
-		# #9078 (Py3 review required): creates fake cells for this "table row".
 		return [self._makeCell(column) for column in range(1, self.childCount + 1)]
 
 	def getChild(self, index):

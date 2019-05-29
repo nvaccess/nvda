@@ -481,7 +481,6 @@ class WinWordCollectionQuicknavIterator(object):
 		items=self.collectionFromRange(self.rangeObj)
 		itemCount=items.count
 		isFirst=True
-		# #9078 (Py3 review required): iterates through objects in a Word document.
 		for index in range(1,itemCount+1):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
@@ -514,7 +513,6 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			# #9078 (Py3 review required): iterates through possible links in a Word document.
 			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
 		return t == FIELD_TYPE_HYPERLINK
 
@@ -618,7 +616,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return
 		tempRange.expand(wdParagraph)
 		fields=tempRange.fields
-		# #9078 (Py3 review required): iterates through objects in a Word document (wrapped inside a generator expression).
 		for field in (fields.item(i) for i in range(1, fields.count+1)):
 			if field.type != FIELD_TYPE_REF:
 				continue
@@ -634,7 +631,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			# #9078 (Py3 review required): iterates through possible links in a Word document.
 			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue

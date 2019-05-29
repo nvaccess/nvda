@@ -123,7 +123,6 @@ def getConsoleVisibleLines():
 	lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
 	lineLength=consoleScreenBufferInfo.dwSize.x
 	text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
-	# #9078 (Py3 review required): iterate through console line output.
 	newLines=[text[x:x+lineLength] for x in range(0,len(text),lineLength)]
 	return newLines
 
