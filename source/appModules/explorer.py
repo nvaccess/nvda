@@ -187,7 +187,7 @@ class AppModule(appModuleHandler.AppModule):
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
-			if role = controlTypes.ROLE_POPUPMENU:
+			if role != controlTypes.ROLE_POPUPMENU:
 				try:
 					# The toolbar's immediate parent is its window object, so we need to go one further.
 					toolbarParent = obj.parent.parent
