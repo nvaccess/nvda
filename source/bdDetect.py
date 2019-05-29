@@ -20,16 +20,18 @@ import wx
 import hwPortUtils
 import braille
 import winKernel
+import winUser
 import core
 import ctypes
 from logHandler import log
 import config
 import time
 import thread
-from win32con import WM_DEVICECHANGE, DBT_DEVNODES_CHANGED
 import appModuleHandler
 from baseObject import AutoPropertyObject
 import re
+
+DBT_DEVNODES_CHANGED=7
 
 _driverDevices = OrderedDict()
 USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
@@ -295,7 +297,7 @@ class Detector(object):
 		self._startBgScan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 
 	def handleWindowMessage(self, msg=None, wParam=None):
-		if msg == WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:
+		if msg == winUser.WM_DEVICECHANGE and wParam == DBT_DEVNODES_CHANGED:
 			self.rescan(bluetooth=self._detectBluetooth, limitToDevices=self._limitToDevices)
 
 	def pollBluetoothDevices(self):

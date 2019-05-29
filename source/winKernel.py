@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import *
@@ -329,3 +330,30 @@ def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desi
 
 PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
 THREAD_SET_CONTEXT = 16
+
+GMEM_MOVEABLE=2
+
+class HGLOBAL(HANDLE):
+
+	def __init__(self,h,autoFree=True):
+		super(HGLOBAL,self).__init__(h)
+		self._autoFree=autoFree
+
+	def __del__(self):
+		if self and self._autoFree:
+			windll.kernel32.GlobalFree(self)
+
+	@classmethod
+	def alloc(cls,flags,size):
+		h=windll.kernel32.GlobalAlloc(flags,size)
+		return cls(h)
+
+	@contextlib.contextmanager
+	def lock(self):
+		try:
+			yield windll.kernel32.GlobalLock(self)
+		finally:
+			windll.kernel32.GlobalUnlock(self)
+
+	def forget(self):
+		self.value=None
