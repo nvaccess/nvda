@@ -51,16 +51,16 @@ class consoleUIATextInfo(UIATextInfo):
 				return 0
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
-			offset = self._countCharsToEnd(reverse=True)
+			offset = self._getCurrentOffset()
 			index = 1 if direction > 0 else 0
 			start, end = self._getWordOffsets(offset)
-			wordOffsets = (
+			wordMoveDirections = (
 				(offset - start + 1) * -1,
 				end - offset
 			)
 			res = self.move(
 				textInfos.UNIT_CHARACTER,
-				wordOffsets[index],
+				wordMoveDirections[index],
 				endPoint=endPoint
 			)
 			if res != 0:
@@ -92,30 +92,19 @@ class consoleUIATextInfo(UIATextInfo):
 			return self._getCurrentWord()
 		return super(consoleUIATextInfo, self)._get_text()
 
-	def _countCharsToEnd(self, reverse=False):
-		direction = -1 if reverse else 1
+	def _getCurrentOffset(self):
 		lineInfo = self.copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo = self.copy()
 		res = 0
 		chars = None
-		compareCondition = True
 		while True:
 			charInfo.expand(textInfos.UNIT_CHARACTER)
-			if reverse:
-				compareCondition = charInfo.compareEndPoints(
-					lineInfo,
-					"startToStart"
-				) >= 0
-			else:
-				compareCondition = charInfo.compareEndPoints(
-					lineInfo,
-					"endToEnd"
-				) < 0
-			chars = charInfo.move(textInfos.UNIT_CHARACTER, direction)
-			if reverse:
-				chars *= -1
-			if chars != 0 and compareCondition:
+			chars = charInfo.move(textInfos.UNIT_CHARACTER, -1) * -1
+			if chars != 0 and charInfo.compareEndPoints(
+				lineInfo,
+				"startToStart"
+			) >= 0:
 				res += chars
 			else:
 				break
@@ -152,7 +141,7 @@ class consoleUIATextInfo(UIATextInfo):
 		lineInfo = self.copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		lineText = lineInfo.text
-		offset = self._countCharsToEnd(reverse=True)
+		offset = self._getCurrentOffset()
 		start, end = self._getWordOffsets(offset)
 		return lineText[start:end]
 
