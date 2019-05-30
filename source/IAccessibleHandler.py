@@ -991,6 +991,10 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
+	# #9078 (Py3 review required after 9078): consider enumeration.
+	# Py2: for i in xrange(len(text)):
+	# Py3: for i in range(len(text)):
+	# Suggested: for i, t inenumerate(text):
 	for i in range(len(text)):
 		t=text[i]
 		if ord(t)==0xFFFC:
