@@ -5,6 +5,8 @@
 # Copyright (C) 2019 Bill Dengler
 
 import config
+import ctypes
+import NVDAHelper
 import speech
 import time
 import textInfos
@@ -34,7 +36,7 @@ class consoleUIATextInfo(UIATextInfo):
 					1
 				)
 
-	def move(self,unit,direction,endPoint=None):
+	def move(self, unit, direction, endPoint=None):
 		if not self._isCaret:
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
@@ -42,7 +44,78 @@ class consoleUIATextInfo(UIATextInfo):
 			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
 			if self._rangeObj.CompareEndPoints(UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange, UIAHandler.TextPatternRangeEndpoint_End) >= 0:
 				return 0
-		super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+		if unit == textInfos.UNIT_WORD and direction != 0:
+			# UIA doesn't implement word movement, so we need to do it manually.
+			offset = self._countCharsToEnd(reverse=True)
+			index = 1 if direction > 0 else 0
+			wordOffsets = self._getWordOffsets(offset)
+			res = self.move(
+				textInfos.UNIT_CHARACTER,
+				wordOffsets[index],
+				endPoint=endPoint
+			)
+			if res != 0:
+				return direction
+			else:
+				return res
+		return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+
+	def _countCharsToEnd(self, reverse=False):
+		direction = -1 if reverse else 1
+		lineInfo = self.copy()
+		lineInfo.expand(textInfos.UNIT_LINE)
+		charInfo = self.copy()
+		res = 0
+		chars = None
+		compareCondition = True
+		while True:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			if reverse:
+				compareCondition = charInfo.compareEndPoints(
+					lineInfo,
+					"startToStart"
+				) >= 0
+			else:
+				compareCondition = charInfo.compareEndPoints(
+					lineInfo,
+					"endToEnd"
+				) < 0
+			chars = charInfo.move(textInfos.UNIT_CHARACTER, direction)
+			if reverse:
+				chars *= -1
+			if chars != 0 and compareCondition:
+				res += chars
+			else:
+				break
+		# Subtract 1 from res since UIA seems to wrap around
+		res -= 1
+		return res
+
+	def _getWordOffsets(self, offset):
+		lineInfo = self.copy()
+		lineInfo.expand(textInfos.UNIT_LINE)
+		lineText = lineInfo.text
+		# Convert NULL and non-breaking space to space to make sure
+		# that words will break on them
+		lineText = lineText.translate({0: u' ', 0xa0: u' '})
+		start = ctypes.c_int()
+		end = ctypes.c_int()
+		# Uniscribe does some strange things when you give it a string  with
+		# not more than two alphanumeric chars in a row.
+		# Inject two alphanumeric characters at the end to fix this.
+		lineText += "xx"
+		NVDAHelper.localLib.calculateWordOffsets(
+			lineText,
+			len(lineText),
+			offset,
+			ctypes.byref(start),
+			ctypes.byref(end)
+		)
+		return (
+			(offset - start.value) * -1,
+			min(end.value, len(lineText)) - offset
+		)
+
 
 class winConsoleUIA(Terminal):
 	STABILIZE_DELAY = 0.03
@@ -83,7 +156,7 @@ class winConsoleUIA(Terminal):
 			super(winConsoleUIA, self).event_typedCharacter(ch)
 		super(winConsoleUIA, self).event_textChange()
 
-	@script(gestures = [
+	@script(gestures=[
 		"kb:enter",
 		"kb:numpadEnter",
 		"kb:tab",
