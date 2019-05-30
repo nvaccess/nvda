@@ -555,7 +555,8 @@ def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
 	# However, sometimes when ARIA is used, the level on the element may not match the level in the text attributes.
 	# Therefore we need to search for all levels 1 through 6, even if a specific level is specified.
 	# Though this is still much faster than searching text attributes alone
-	levels=range(1,7)
+	# #9078: this must be wrapped inside a list, as Python 3 will treat this as iteration.
+	levels=list(range(1,7))
 	condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_LevelPropertyId:levels})
 	levelString=itemType[7:]
 	for item in UIAControlQuicknavIterator(itemType,document,position,condition,direction=direction,itemClass=EdgeHeadingQuickNavItem):
