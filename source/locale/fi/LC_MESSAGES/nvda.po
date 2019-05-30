@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 00:10+1000\n"
-"PO-Revision-Date: 2019-03-14 13:50+0200\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-28 09:21+0200\n"
 "Last-Translator: Jani Kinnunen <janikinnunen340@gmail.com>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -592,6 +592,18 @@ msgstr "kohdistusta"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "tarkastelukohdistinta"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "Pisteiden &kiinteys"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "Pistekirjoituksen s&yöttö"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "&HID-näppäimistösyötteen emulointi"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1192,6 +1204,8 @@ msgstr "Vuorovaikutustila"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Selaustila"
 
@@ -1230,6 +1244,10 @@ msgstr "Näyttää luettelon asiakirjan elementeistä."
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "Aktivoi asiakirjan nykyisen objektin."
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "Välittää syötekomennon sovellukselle"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1721,7 +1739,7 @@ msgstr "Tyyppi:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
+msgid "Filter b&y:"
 msgstr "Suo&data:"
 
 #. Translators: The label of a button to activate an element
@@ -2982,6 +3000,10 @@ msgid "Configuration"
 msgstr "Asetukset"
 
 #. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "Asetusprofiilit"
+
+#. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Pistekirjoitus"
@@ -3937,6 +3959,17 @@ msgid "Toggles the reporting of information as the mouse moves"
 msgstr ""
 "Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren liikkuessa."
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "Hiiren teksti&yksikön tarkkuus %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "Määrittää, paljonko tekstiä puhutaan hiiren liikkuessa."
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "Ei nimeä"
@@ -4042,6 +4075,22 @@ msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen "
 "kohdistusmuutosten mukana."
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr "Kohdistusta ei siirretä automaattisesti kohdistettaviin elementteihin"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr "Kohdistus siirretään automaattisesti kohdistettaviin elementteihin"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä järjestelmäkohdistuksen automaattisen "
+"siirtämisen selaustilakomentojen seurauksena."
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "Järjestelmässä ei akkua"
@@ -4078,19 +4127,18 @@ msgstr ""
 "NVDA ei käsittele seuraavaksi painettua näppäintä, vaan se välitetään "
 "suoraan Windowsille."
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "Nykyinen sovellus on %s"
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr " ja ladattu moduuli on %s"
+msgid " %s module is loaded. "
+msgstr " %s-moduuli on ladattu. "
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr " %s käynnissä."
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4489,6 +4537,33 @@ msgid ""
 msgstr ""
 "Tunnistaa nykyisen navigointiobjektin sisällön Windows 10:n "
 "tekstintunnistuksella."
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr ""
+"Aktiivista asetusprofiilia ei voi vaihtaa NVDA-valintaikkunan ollessa "
+"avoimena"
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "Asetusprofiili {profile} poistettu käytöstä manuaalisesti"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "Asetusprofiili {profile} otettu käyttöön manuaalisesti"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr "Ottaa käyttöön tai poistaa käytöstä {profile}-asetusprofiilin."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6431,6 +6506,16 @@ msgctxt "synth setting"
 msgid "Rate"
 msgstr "Nopeus"
 
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "Nopeuden l&isäys"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "Nopeuden lisäys"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Voimakkuus"
@@ -6833,6 +6918,14 @@ msgstr "Ehdotus"
 
 msgid "Display"
 msgstr "Näyttö"
+
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "Yrittää lukea ohjeen valitulle automaattisen täydennyksen kohteelle."
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "Ohjeikkunaa ei löydy."
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -7582,7 +7675,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Varoitus"
 
@@ -7979,12 +8073,18 @@ msgstr "Lisäosan tiedot"
 msgid "Add-ons Manager"
 msgstr "Lisäosien hallinta"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "Lisäosien hallinta (lisäosat poistettu käytöstä)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
 msgstr ""
-"Kaikki lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä NVDA "
-"uudelleen."
+"NVDA käynnistettiin ilman lisäosia. Käytössä / poistettu käytöstä -tilan "
+"muuttaminen sekä lisäosien asentaminen tai poistaminen on mahdollista. "
+"Muutokset tulevat voimaan vasta NVDA:n uudelleenkäynnistyksen jälkeen."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8675,7 +8775,6 @@ msgstr "Ilmoita käynnistettäessä &odottavasta päivityksestä"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "Salli käyttötilastojen kerääminen"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8689,7 +8788,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "Kopioidaan asetuksia"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "Odota, kun asetuksia kopioidaan."
 
@@ -9068,6 +9168,11 @@ msgstr "R&ivien enimmäismäärä sivulla"
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "&Ota selaustila käyttöön sivua ladattaessa"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9310,8 +9415,7 @@ msgstr "NVDA:n kehittäminen"
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Enable loading custom code from Developer Scratchpad directory"
-msgstr ""
-"Ota käyttöön oman koodin lataaminen kehittäjien scratchpad-hakemistosta"
+msgstr "Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta"
 
 #. Translators: the label for a button in the Advanced settings category
 msgid "Open developer scratchpad directory"
@@ -9329,6 +9433,12 @@ msgid ""
 msgstr ""
 "Käytä UI Automation -rajapintaa Microsoft &Wordin asiakirjasäätimille, kun "
 "käytettävissä"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr ""
+"Siirrä järjestelmä&kohdistus automaattisesti kohdistettaviin elementteihin"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9564,6 +9674,11 @@ msgstr "Symboli:"
 msgid "Symbol Pronunciation (%s)"
 msgstr "Symboleiden puhuminen (%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "&Suodata::"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "&Symbolit"
@@ -9641,11 +9756,6 @@ msgstr "Matemaattisen sisällön vuorovaikutusta ei tueta."
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "ei mitään"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "Nopeuden l&isäys"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -11174,21 +11284,24 @@ msgstr "Kaksinkertainen riviväli"
 msgid "1.5 line spacing"
 msgstr "Riviväli 1,5"
 
-#~ msgid "Passes gesture through to the application"
-#~ msgstr "Välittää syötekomennon sovellukselle"
+#~ msgid "Currently running application is %s"
+#~ msgstr "Nykyinen sovellus on %s"
+
+#~ msgid " and currently loaded module is %s"
+#~ msgstr " ja ladattu moduuli on %s"
+
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr ""
+#~ "Kaikki lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä "
+#~ "NVDA uudelleen."
 
 #~ msgid "Focus follows browse mode off"
 #~ msgstr "Kohdistus ei seuraa selaustilakohdistinta"
 
 #~ msgid "Focus follows browse mode on"
 #~ msgstr "Kohdistus seuraa selaustilakohdistinta"
-
-#~ msgid ""
-#~ "Toggles on and off the movement of the system focus due to browse mode "
-#~ "commands"
-#~ msgstr ""
-#~ "Ottaa käyttöön ja poistaa käytöstä järjestelmäkohdistuksen siirtämisen "
-#~ "selaustilakomentojen seurauksena."
 
 #~ msgid "%s Settings Category"
 #~ msgstr "Asetuskategoria: %s"

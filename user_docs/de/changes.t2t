@@ -1,15 +1,73 @@
-Was ist neu in NVDA
+﻿Was ist neu in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+= 2019.2 =
+
+== Neue Funktionen ==
+- Der NVDA-spezifische Suchdialog enthält nun einen Verlauf der letzten 20 Sucheinträge. (#8482)
+ - Der Suchverlauf wird gelöscht, wenn NVDA beendet oder neu gestartet wird.
+- Der Miranda NG-Support von NVDA arbeitet mit neueren Versionen des Clients. (#9053) 
+- Sie können den Lesemodus nun standardmäßig deaktivieren, wenn eine Webseite geladen wird. Deaktivieren Sie dazu die neue Option "Lesemodus beim Laden von Webseiten verwenden" in den Lesemodus-Einstellungen im Einstellunfsfenster von NVDA. (#8716) 
+ - Beachten Sie, dass Sie den Lesemodus mit NVDA+Leertaste manuell aktivieren können, auch wenn diese Option deaktiviert ist.
+- Sie können nun Symbole im Dialogfeld Aussprache von Symbolen und Satzzeichen filtern, ähnlich wie das Filtern in der Elementliste und im Dialogfeld "Eingaben". (#5761)
+- Es wurde ein Befehl hinzugefügt, um die Auflösung der Maustexteinheit zu ändern d.H. wie viel Text gesprochen wird, wenn sich die Maus bewegt. Eine Standardgeste wurde nicht zugewiesen. Dies können sie bequem im Dialog "Eingaben" selbst vornehmen. (#9056)
+- Die Windows OneCore-Sprachausgabe verfügt nun über eine Option, welche eine zusätzliche Erhöhung der Sprechgeschwindigkeit ermöglicht. (#7498)
+- Die Option "Geschwindigkeit zusätzlich erhöhen" kann nun über den Einstellungsring der Sprachausgabe für unterstützte Sprachausgaben konfiguriert werden (derzeit eSpeak-NG und Windows OneCore). (#8934)
+- Konfigurationsprofile können nun manuell mithilfe von Tastenkürzel aktiviert werden. (#4209)
+ - Die Tastenkürzel müssen im Dialog "Eingaben..." konfiguriert werden.
+- In eClipse wurde die Unterstützung für die Autovervollständigung im Code-Editor hinzugefügt. (#5667)
+ - Zusätzlich können vorhandene JavaDoc-Informationen aus dem Editor über den Tastenbefehl NVDA+d gelesen werden.
+- Dem Bereich Erweiterte Einstellungen wurde eine experimentelle Option hinzugefügt, mit der Sie den System-Fokus daran hindern können, dem viertuellen Cursor zu folgen (Automatische Bewegung des System-Fokus auf hervorhebbare Elemente ausschalten). (#2039)
+ Diese Option ist nicht für jede Seite von Nutzen, aber für viele Webseiten löst diese Option folgende Probleme:
+ - Gummibandeffekt: Der virtuelle Cursor im Lesemodus springt sporadisch zu vorherigen Positionen.
+ - Eingabefelder blockieren den System-Fokus, wenn sie auf einigen Webseiten mit Pfeiltaste nach unten navigieren.
+ - Die Schnellnavigationstasten im Lesemodus reagieren langsam.
+- Einstellungen für Braillezeilen-Treiber können nun direkt in der Benutzeroberfläche von NVDA in der Kategorie Braille-Einstellungen im Einstellungsdialog angepasst werden. Voraussetzung ist, dass der Treiber der Braillezeile dies unterstützt. (#7452)
+
+
+== Änderungen ==
+- Die Lautstärke der Sprachausgabe wird nun jeweils um 5 statt um 10 Einheiten erhöht oder  verringert, wenn Sie den Einstellungsring verwenden. (#6754)
+- Der Text im Dialog "Erweiterungen verwalten..." wurde angepasst, wenn NVDA mit deaktivierten Erweiterungen neu gestartet wird. (#9473)
+- Emoji Annotationen vom Unicode Common Locale Data Repository wurden auf Version 35.0 aktualisiert. (#9445)
+- Der Liblouis-Brailleübersetzer wurde auf die Version 3.9.0 aktualisiert. (#9439)
+- Die Tastenkombination für das Eingabefeld "Filtern nach" in der Elementliste im Lesemodus wurde auf Alt+y geändert. (#8728)
+
+
+== Fehlerbehebungen ==
+- NVDA stürzt nicht mehr ab, wenn ein Erweiterungsverzeichnis leer ist. (#7686)
+- LTR- und RTL-Markierungen werden beim Navigieren zeichenweise oder im Braille  im Windowsdialog "Eigenschaften" nicht mehr angezeigt oder angesagt. (#8361)
+- Beim Navigieren zu Formularfeldern mit Schnellnavigationstasten im Lesemodus wird nun das gesamte Formularfeld und nicht nur die erste Zeile angesagt. (#9388)
+- NVDA stürzt nicht mehr ab, wenn die Windows 10 Mail-App beendet wird. (#9341)
+- NVDA startet nun auch  wenn die regionalen Einstellungen des Benutzers auf ein für NVDA unbekanntes Gebietsschema wie Englisch (Niederlande) eingestellt sind. (#8726)
+- Der Status des Lesemodus wird nun auch nach dem Wechsel des Fensters zwischen MS Excel und einem Fenster mit aktivem Fokusmodus angesagt. (#8846)
+- NVDA meldet nun korrekt die Zeile am Mauszeiger in Notepad++ und anderen Scintilla-basierten Editoren. (#5450)
+- In Google Docs und anderen webbasierten Editoren zeigt die Braillezeile nicht mehr manchmal fälschlicherweise "lst ende" vor dem Cursor in der Mitte eines Listenelements an. (#9477)
+- Im Windows 10 Mai 2019 Update, wenn das Explorer oder Desktop-Fenster fokusiert ist, sagt NVDA nicht mehr viele Lautstärkebenachrichtigungen an, wenn Sie die Lautstärke mit Lautstärketasten ändern. (#9466)
+- Das Dialog "Aussprache von Symbolen und Satzzeichen" wird nun schneller geladen, auch wenn Sie Symbol-Wörterbücher mit mehr als 1000 Einträgen verwenden. (#8790)
+- NVDA liest nun die richtige Zeile, wenn der Wortumbruch in Scintilla-Steuerelementen wie Notepad++  aktiviert ist. (#9424)
+- In Microsoft Excel werden die Zellenkoordinaten nun auch beim Umschalt+Eingabetaste oder Umschalt+Numpad-Eingabe angesagt. (#9499)
+- In Visual Studio 2017 und höher, im Fenster Objektexplorer, wird das ausgewählte Element im Objektbaum oder Mitgliederbaum mit Kategorien nun korrekt angesagt. (#9311)
+- Erweiterungen mit Namen, die sich nur in der Groß- und Kleinschreibung unterscheiden, werden nicht mehr separat behandelt. (#9334)
+- Die in NVDA eingestellte Rate für Geschwindigkeit oder Stimmhöhe bei Windows OneCore-Stimmen wird nicht mehr von der in Windows 10 Spracheinstellungen eingestellten Rate beeinflusst. (#7498)
+- Der Protokollbetrachter kann nun mit NVDA+F1 geöffnet werden, auch wenn es keine Entwicklerinformationen für das aktuelle Navigatorobjekt gibt. (#8613)
+- Es ist wieder möglich, die Tabellen-Navigationsbefehle von NVDA in Google Docs unter Mozilla Firefox und Google Chrome zu verwenden. (#9494)
+
+
+== Änderungen für Entwickler ==
+- Sie können nun die Eigenschaft "disableBrowseModeByDefault" in Anwendungsmodulen so einstellen, dass der Lesemodus standardmäßig ausgeschaltet ist. (#8846)
+- Der erweiterte Fensterstil eines Fensters wird nun mit der Eigenschaft "extendedWindowStyle" auf Fenster-Objekte und deren Derivate angewendet. (#9136)
+- Das Paket "comTypes" wurde auf 1.1.7 aktualisiert. (#9440, #8522)
+- Das aktuell geladen anwendungsmodul wird nun zuerst angesagt, wenn Sie den Befehl "report module info" verwenden. (#7338)
+
 
 = 2019.1 =
 Zu den Highlights dieser Version gehören Leistungssteigerungen beim Zugriff auf Microsoft Word und Excel, Stabilitäts- und Sicherheitsverbesserungen wie die Unterstützung von Erweiterungen mit Versionskompatibilitätsinformationen und viele andere Fehlerbehebungen.
 
-Bitte beachten Sie, dass ab dieser Version von NVDA benutzerdefinierte AppModule, GlobalPlugins, Braillezeilen- und Sprachausgabentreiber nicht mehr automatisch aus Ihrem NVDA-Benutzerkonfigurationsverzeichnis geladen werden.
+Bitte beachten Sie, dass ab dieser Version von NVDA benutzerdefinierte Anwendungsmodule, GlobalPlugins, Braillezeilen- und Sprachausgabentreiber nicht mehr automatisch aus Ihrem NVDA-Benutzerkonfigurationsverzeichnis geladen werden.
 Vielmehr sollten diese als Teil einer NVDA-Erweiterung installiert werden. Für diejenigen, die Code für eine Erweiterung entwickeln, kann Code zum Testen in ein neues Developer Scratchpad-Verzeichnis im NVDA-Benutzerkonfigurationsverzeichnis verschoben werden. Dies funktioniert nur, wenn die Option Developer-Scratchpad in der neuen NVDA-Einstellungskathegorie "erweitert" aktiviert ist.
 Diese Änderungen sind notwendig, um die Kompatibilität von benutzerdefiniertem Code besser zu gewährleisten, so dass NVDA stabil bleibt, wenn dieser Code mit neueren Versionen inkompatibel wird.
-Bitte beachten Sie die Liste der Änderungen weiter unten für weitere Details dazu und wie Erweiterungen nun versioniert sind.
+Bitte beachten Sie die unten folgende Liste der Änderungen für weitere Details dazu und wie Erweiterungen nun versioniert sind.
 
 == Neue Funktionen ==
 - Neue Braille-Tabellen: Afrikaans, Arabisches 8-Punkt-Computerbraille, Arabische Kurzschrift, Spanische Kurzschrift. (#4435)
@@ -54,7 +112,7 @@ Bitte beachten Sie die Liste der Änderungen weiter unten für weitere Details d
 - Ein seltener Absturz im Lesemodus in Firefox wurde behoben. (#9152)
 - NVDA meldet nun wieder den Fokus für  einige Steuerelemente im Menüband von Microsoft Office 2016, wenn das Menüband reduziert wird.
 - NVDA meldet den vorgeschlagenen Kontakt wieder automatisch, wenn Adressen in neuen Nachrichten in Outlook 2016 eingegeben werden. (#8502)
-- Die letzten paar Cursor-Routing-Tasten auf der 80er Eurobraille-Braillezeile verschieben  den Cursor nicht mehr zum  Anfang oder kurz nach dem Beginn der Zeile auf dem Brailledisplay. (#9160)
+- Die letzten paar Cursor-Routing-Tasten auf der 80er Eurobraille-Braillezeile verschieben den Cursor nicht mehr zum Anfang oder kurz nach dem Beginn der Zeile auf dem Brailledisplay. (#9160)
 - Die Tabellennavigation in der Thread-Ansicht in Mozilla Thunderbird wurde verbessert. (#8396)
 - In Mozilla Firefox und Google Chrome funktioniert das Umschalten in den Fokus-Modus jetzt korrekt für bestimmte Ausklapplisten / Kombinationsfelder und Baumansichten, welche selbst nicht fokussierbar sind aber ihre Elemente schon. (#3573, #9157) 
 - Der Lesemodus ist nun standardmäßig richtigerweise eingeschaltet, wenn Nachrichten in Outlook 2016 / 365 gelesen werden, sofern die experimentelle UI-Automation in NVDA für Word-Dokumente aktiviert ist. (#9188) 
@@ -78,7 +136,7 @@ Bitte beachten Sie die Liste der Änderungen weiter unten für weitere Details d
 - Die "OffsetsTextInfo"-Objekte können nun die Methode _getBoundingRectFromOffset implementieren, um das Abrufen von begrenzten Rechtecken pro Zeichen anstelle von Punkten zu ermöglichen. (#8572)
 - Den TextInfo-Objekten wurde eine Eigenschaft boundingRect hinzugefügt, um das umschließende Rechteck eines Textbereichs abzurufen. (#8371)
 - Eigenschaften und Methoden innerhalb von Klassen können nun in NVDA als abstrakt gekennzeichnet werden. Diese Klassen lösen einen Fehler aus, wenn sie instanziiert werden. (#8294, #8652, #8658)
-- NVDA kann die Zeit seit der Eingabe protokollieren, wenn Text gesprochen wird, was bei der Messung der wahrgenommenen Reaktionsfähigkeit hilft. Dies kann durch Aktivieren  der Einstellung "timeSinceInput" im Abschnitt "Debugprotokollierung" in den erweiterten Einstellungen von NVDA aktiviert werden. (#9167)
+- NVDA kann die Zeit seit der Eingabe protokollieren, wenn Text gesprochen wird, was bei der Messung der wahrgenommenen Reaktionsfähigkeit hilft. Dies kann durch Aktivieren der Einstellung "timeSinceInput" im Abschnitt "Debugprotokollierung" in den erweiterten Einstellungen von NVDA aktiviert werden. (#9167)
 
 
 = 2018.4.1 =
