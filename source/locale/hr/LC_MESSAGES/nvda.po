@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 08:27+1000\n"
-"PO-Revision-Date: 2019-03-07 11:28+0100\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-23 17:05+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -595,6 +595,18 @@ msgstr "na fokus"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "na pregled"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "Čvrstoća točkica"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "Brajični &Ulaz"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "&Simulacija HID tipkovnice"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1195,6 +1207,8 @@ msgstr "Način fokusa"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Način pregleda"
 
@@ -1232,6 +1246,10 @@ msgstr "prikazuje razne vrste elemenata u ovom dokumentu"
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "aktivira trenutni objekt u dokumentu"
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "Prosljeđuje prećac do drugog programa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1723,7 +1741,7 @@ msgstr "Vrsta:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
+msgid "Filter b&y:"
 msgstr "&Izdvoji:"
 
 #. Translators: The label of a button to activate an element
@@ -2982,6 +3000,10 @@ msgid "Configuration"
 msgstr "Konfiguracija"
 
 #. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "Konfiguracijski profili"
+
+#. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Brajica"
@@ -3930,6 +3952,17 @@ msgstr "praćenje miša uključeno"
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Uključuje i isključuje izgovor informacija prilikom pomicanja miša"
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "Razlučivost tekstualne jedinice %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "Regulira koliko će teksta biti izgovoreno prilikom pomicanja miša"
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "nema naslova"
@@ -4034,6 +4067,24 @@ msgstr ""
 "Uključuje i isključuje pomicanje objekta navigatora s obzirom na promjene "
 "fokusa"
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr ""
+"Automatski postavi fokus sustava na stavku koju se može fokusirati isključeno"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr ""
+"Automatski postavi fokus sustava na stavku koju se može fokusirati uključeno"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"uključuje ili isključuje automatsko pomicanje fokusa sustava pri prečacima "
+"načina pregleda."
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "nema baterije"
@@ -4070,19 +4121,18 @@ msgstr ""
 "Sljedeća tipka koja se pritisne neće biti manipulirana od strane programa "
 "NVDA, već ćedirektno biti proslijeđena u operativni sustav MS Windows."
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "Trenutna aktivna aplikacija je %s"
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr " i trenutno učitan modul je %s"
+msgid " %s module is loaded. "
+msgstr "Modul %s je pokrenut."
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr " %s se trenutno izvršava."
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4481,6 +4531,33 @@ msgstr "Windows 10 OCR nije dostupan"
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr "Prepoznaje sadržaj objekta nawigatora sa Windows 10 ocr"
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr ""
+"Konfiguracijski profil se ne može promijeniti dok je otvoren drugi NVDA "
+"dijaloški okvir"
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "Konfiguracijski profil {profile} je ručno deaktiviran"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "Konfiguracijski profil {profile} je ručno aktiviran"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr "Aktivira ili deaktivira {profile} konfiguracijski profil"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6423,6 +6500,16 @@ msgctxt "synth setting"
 msgid "Rate"
 msgstr "Brzina"
 
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "&Dodatna brzina"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "Dodatna brzina"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Glasnoća"
@@ -6827,6 +6914,14 @@ msgstr "Kandidat"
 msgid "Display"
 msgstr "Prikaz"
 
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "Pokušava dohvatiti dokumentaciju za označenu stavku samodovršavanja."
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "Ne mogu pronaći prozor dokumentacije."
+
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
 msgstr "Početak"
@@ -6902,7 +6997,7 @@ msgstr "obilježeno"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
-msgstr "Prilozi"
+msgstr "privitci"
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 msgid "To:"
@@ -6976,7 +7071,7 @@ msgstr "Proslijeđeno"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "velika važnost"
+msgstr "visoka važnost"
 
 #. Translators: For a low importance email
 msgid "low importance"
@@ -6994,7 +7089,7 @@ msgstr "primljeno: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
-msgstr "prilog"
+msgstr "privitak"
 
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
@@ -7022,7 +7117,7 @@ msgstr "Dogovoreni termin {subject}, u {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
 msgid "Has appointment"
-msgstr "ima dogovoreni termin"
+msgstr "postoji dogovoreni termin"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -7572,7 +7667,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Upozorenje"
 
@@ -7976,12 +8072,18 @@ msgstr "Informacije o dodatku"
 msgid "Add-ons Manager"
 msgstr "Upravitelj dodacima"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "Upravitelj dodataka (dodaci onemogućeni)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
 msgstr ""
-"Svi dodaci su trenutno onemogućeni. Da biste omogućili dodatke, morat ćete "
-"ponovno pokrenuti NVDA."
+"NVDA je pokrenut sa svim isključenim dodacima. Možete promjeniti stanje "
+"uključenosti ili isključenosti, ili instalirati i deinstalirati dodatak. "
+"Promjene neće stupiti na snagu, sve dok ne pokrenete ponovno NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8681,7 +8783,6 @@ msgstr "prilikom pokretanja, Obavijesti o ažuriranjima na &čekanju"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "Dozvoli NVDA projektu prikupljanje statistike korištenja"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8695,7 +8796,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "Kopiranje postavki"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "Molimo pričekajte dok se postavke kopiraju u konfiguraciju sustava."
 
@@ -9072,6 +9174,11 @@ msgstr "&Broj redaka po stranici"
 msgid "Use &screen layout (when supported)"
 msgstr "Korištenje izgleda &ekrana (onda kad je podržano)"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "&Uključi način pregleda pri učitavanju stranice"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9334,6 +9441,11 @@ msgstr ""
 "Koristi UI Automation za pristup kontrolama Microsoft &Word dokumenata kada "
 "je to moguće"
 
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "Automatski postavi &fokus sustava na stavke koje se mogu fokusirati"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
@@ -9569,6 +9681,11 @@ msgstr "Simbol"
 msgid "Symbol Pronunciation (%s)"
 msgstr "Izgovor Simbola (%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "&traži:"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "&Simboli"
@@ -9646,11 +9763,6 @@ msgstr "Interakcija sa matematičkim sadržajem nije podržana"
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "ništa"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "Po&jačanje brzine"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -11177,21 +11289,24 @@ msgstr "Dvostruki prored"
 msgid "1.5 line spacing"
 msgstr "1.5 prored"
 
-#~ msgid "Passes gesture through to the application"
-#~ msgstr "Prosljeđuje prećac do drugog programa"
+#~ msgid "Currently running application is %s"
+#~ msgstr "Trenutna aktivna aplikacija je %s"
+
+#~ msgid " and currently loaded module is %s"
+#~ msgstr " i trenutno učitan modul je %s"
+
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr ""
+#~ "Svi dodaci su trenutno onemogućeni. Da biste omogućili dodatke, morat "
+#~ "ćete ponovno pokrenuti NVDA."
 
 #~ msgid "Focus follows browse mode off"
 #~ msgstr "Fokus prati način pregleda isključeno"
 
 #~ msgid "Focus follows browse mode on"
 #~ msgstr "Fokus prati način pregleda uključeno"
-
-#~ msgid ""
-#~ "Toggles on and off the movement of the system focus due to browse mode "
-#~ "commands"
-#~ msgstr ""
-#~ "Uključuje i isključuje pomicanje fokusa sustava zbog prečaca načina "
-#~ "pregleda"
 
 #~ msgid "%s Settings Category"
 #~ msgstr "Kategorija postavki %s "
