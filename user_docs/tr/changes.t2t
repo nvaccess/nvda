@@ -2,6 +2,71 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+= 2019.2 =
+
+== New Features ==
+- The find dialog now includes a history of the last 20 searches. (#8482)
+ - The search history is cleared when NVDA exits or restarts.
+- NVDA's Miranda NG support  works with newer versions of the client. (#9053) 
+- You can now disable browse mode by default by disabling the new "Enable browse mode on page load" option in NVDA's browse mode settings. (#8716) 
+ - Note that when this option is disabled, you can still enable browse mode manually by pressing NVDA+space.
+- You can now filter symbols in the punctuation/symbol pronunciation dialog, similar to how filtering works in the elements list and input gestures dialog. (#5761)
+- A command has been added to change the mouse text unit resolution (how much text will be spoken when the mouse moves), it has not been assigned a default gesture. (#9056)
+- The windows OneCore synthesizer now has a rate boost option, which allows for significantly faster speech. (#7498)
+- The Rate Boost option is now configurable from the Synth Settings Ring for supported speech synthesizers. (Currently eSpeak-NG and Windows OneCore). (#8934)
+- Configuration profiles can now be manually activated with gestures. (#4209)
+ - The gesture must be configured in the "Input gestures" dialog.
+- In Eclipse, added support for autocompletion in code editor. (#5667)
+ - Additionally, Javadoc information can be read from the editor when it is present by using NVDA+d.
+- Added an experimental option to the Advanced Settings panel that allows you to stop the system focus from following the browse mode cursor (Automatically set system focus to focusable elements). (#2039) Although this may not be suitable to turn off for all websites, this may fix: 
+ - Rubber band effect: NVDA sporadically undoes the last browse mode keystroke by jumping to the previous location.
+ - Edit boxes steal system focus when arrowing down through them on some websites.
+ - Browse mode keystrokes are slow to respond.
+- For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
+
+
+== Changes ==
+- Synthesizer volume is now increased and decreased by 5 instead of 10 when using the settings ring. (#6754)
+- Clarified the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
+- Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
+- Updated liblouis braille translator to version 3.9.0. (#9439)
+- The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
+
+
+== Bug Fixes ==
+- NVDA no longer crashes when an add-on directory is empty. (#7686)
+- LTR and RTL marks are no longer reported in Braille or per-character speech when accessing the properties window. (#8361)
+- When jumping to form fields with Browse Mode quick navigation, the entire form field is now announced rather than just the first line. (#9388)
+- NVDA will no longer become silent after exiting the Windows 10 Mail app. (#9341)
+- NVDA no longer fails to start when the users regional settings are set to a locale unknown to NVDA, such as English (Netherlands). (#8726)
+- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)
+- NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
+- In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)
+- In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)
+- Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)
+- In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)
+- In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)
+- In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)
+- Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
+- For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
+- The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
+- It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+
+
+== Changes for Developers ==
+- You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
+- The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)
+- Updated comtypes package to 1.1.7. (#9440, #8522)
+- When using the report module info command, the order of information has changed to present the module first. (#7338)
+
+
+= 2019.1.1 =
+This point release fixes the following bugs:
+- NVDA no longer causes Excel 2007 to crash or refuses to report if a cell has a formula. (#9431)
+- Google Chrome no longer crashes when interacting with certain listboxes. (#9364)
+- An issue has been fixed which prevented copying a users configuration to the system configuration profile. (#9448)
+- In Microsoft Excel, NVDA again uses the localized message when reporting the location of merged cells. (#9471)
+
 
 = 2019.1 =
 Highlights of this release include performance improvements when accessing both Microsoft word and Excel, stability and security improvements such as support for add-ons with version compatibility information, and many other bug fixes.
