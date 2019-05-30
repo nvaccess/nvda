@@ -14,7 +14,7 @@ import locale
 import watchdog
 import eventHandler
 
-#Window messages
+# Window messages
 SCI_POSITIONFROMPOINT=2022
 SCI_POINTXFROMPOSITION=2164
 SCI_POINTYFROMPOSITION=2165
@@ -48,6 +48,8 @@ SCI_GETCODEPAGE=2137
 SCI_POSITIONAFTER=2418
 
 #constants
+#: Represents an invalid position within a document.
+INVALID_POSITION=-1
 STYLE_DEFAULT=32
 SC_CP_UTF8=65001
 
@@ -218,7 +220,8 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)
 		start=offset
 		tempOffset=offset-1
-		while True:
+		
+		while tempOffset > INVALID_POSITION:
 			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,tempOffset,0)
 			if start<end:
 				break

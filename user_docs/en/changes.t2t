@@ -2,7 +2,16 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2019.3 =
+
+== New Features ==
+- Added a command to show the replacement for the symbol under the review cursor. (#9286)
+- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
+
+
 = 2019.2 =
+Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
 == New Features ==
 - The find dialog now includes a history of the last 20 searches. (#8482)
@@ -54,6 +63,7 @@ What's New in NVDA
 - The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 - The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
+- When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
 
 
 == Changes for Developers ==
@@ -62,6 +72,7 @@ What's New in NVDA
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isAtLeastWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on at least the supplied release version of Windows 10 (such as 1809 or 1903) of Windows 10. (#9614)
 
 
 = 2019.1.1 =
