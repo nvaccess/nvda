@@ -21,6 +21,7 @@ from ..behaviors import Terminal
 class consoleUIATextInfo(UIATextInfo):
 	_expandCollapseBeforeReview = False
 	_isCaret = False
+	_expandedToWord = False
 
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
@@ -48,7 +49,11 @@ class consoleUIATextInfo(UIATextInfo):
 			# UIA doesn't implement word movement, so we need to do it manually.
 			offset = self._countCharsToEnd(reverse=True)
 			index = 1 if direction > 0 else 0
-			wordOffsets = self._getWordOffsets(offset)
+			start, end = self._getWordOffsets(offset)
+			wordOffsets = (
+				(offset - start + 1) * -1,
+				end - offset
+			)
 			res = self.move(
 				textInfos.UNIT_CHARACTER,
 				wordOffsets[index],
@@ -59,6 +64,27 @@ class consoleUIATextInfo(UIATextInfo):
 			else:
 				return res
 		return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+
+	def expand(self, unit):
+		if unit == textInfos.UNIT_WORD:
+			self._expandedToWord = True
+		else:
+			self._expandedToWord = False
+			return super(consoleUIATextInfo, self).expand(unit)
+
+	def collapse(self):
+		self._expandedToWord = False
+		return super(consoleUIATextInfo, self).collapse()
+
+	def getTextWithFields(self,formatConfig=None):
+		if self._expandedToWord:
+			return [self.text]
+		return super(consoleUIATextInfo, self).getTextWithFields(formatConfig=formatConfig)
+
+	def _get_text(self):
+		if self._expandedToWord:
+			return self._getCurrentWord()
+		return super(consoleUIATextInfo, self)._get_text()
 
 	def _countCharsToEnd(self, reverse=False):
 		direction = -1 if reverse else 1
@@ -112,9 +138,17 @@ class consoleUIATextInfo(UIATextInfo):
 			ctypes.byref(end)
 		)
 		return (
-			(offset - start.value) * -1,
-			min(end.value, len(lineText)) - offset
+			start.value,
+			min(end.value, len(lineText))
 		)
+
+	def _getCurrentWord(self):
+		lineInfo=self.copy()
+		lineInfo.expand(textInfos.UNIT_LINE)
+		lineText=lineInfo.text
+		offset = self._countCharsToEnd(reverse=True)
+		start, end = self._getWordOffsets(offset)
+		return lineText[start:end]
 
 
 class winConsoleUIA(Terminal):
