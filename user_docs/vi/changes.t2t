@@ -2,6 +2,68 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2019.2 =
+
+== Các tính năng mới ==
+- Hộp thoại tìm kiếm giờ đây đã bao gồm lịch sử của hai mươi tìm kiếm gần nhất. (#8482)
+ - Lịch sử tìm kiếm sẽ được xóa khi tắt hay khởi động lại NVDA.
+- Hỗ trợ của NVDA cho Miranda NG hoạt động được với các phiên bản mới hơn của chương trình. (#9053) 
+- Giờ bạn có thể mặc định tắt chế độ duyệt bằng cách vô hiệu hóa tùy chọn  mới có tên "Bật chế độ duyệt khi tải trang" trong cài đặt chế độ duyệt của NVDA. (#8716) 
+ - Lưu ý rằng khi tùy chọn này bị vô hiệu, bạn vẫn có thể bật chế độ duyệt thủ công bằng cách bấm NVDA+khoảng trắng.
+- Giờ bạn có thể lọc các kí hiệu trong hộp thoại phát âm kí hiệu/dấu câu, tương tự như cách mà bộ lọc hoạt động trong các hộp thoại danh sách các thành phần và quản lý cử chỉ. (#5761)
+- Đã thêm một lệnh để thay đổi đơn vị văn bản của chuột (đơn vị văn bản sẽ được đọc khi di chuyển chuột), nó chưa được  gán thao tác mặc định. (#9056)
+- Bộ đọc windows OneCore giờ đây có tùy chọn  tăng tốc độ đọc, cho phép tăng tốc độ nhanh một cách đáng kể. (#7498)
+- Tùy chọn tăng tốc độ đọc giờ đây có thể cấu hình từ thiết lập nhanh cho các bộ đọc được hỗ trợ. (hiện tại là các bộ đọc eSpeak-NG và Windows OneCore). (#8934)
+- Giờ đây, đã có thể kích hoạt thủ công các hồ sơ cấu hình bằng thao tác. (#4209)
+ - Thao tác phải được cấu hình trong hộp thoại "Quản lý thao tác".
+- Trong Eclipse, đã thêm hỗ trợ cho tính năng tự hoàn tất trong trình biên tập mã nguồn (code editor). (#5667)
+ - Thêm nữa, có thể đọc các thông tin của Javadoc từ trình biên tập  khi nó xuất hiện bằng cách bấm NVDA+d.
+- Thêm tùy chọn thử nghiệm trong bảng thiết lập nâng cao cho phép bạn tắt con trỏ  hệ thống tự đi theo con trỏ duyệt (Tự đưa con trỏ &hệ thống đến các thành phần có thể có focus). (#2039) dù việc tắt nó trên tất cả các trang web có thể không khả thi, điều này cũng có thể khắc phục: 
+ - Hiệu ứng Rubber band: NVDA thỉnh thoảng hoàn tác phím tắt sau cùng của chế độ duyệt bằng cách đi đến vị trí trước.
+ - Các ô nhập liệu chiếm quyền con trỏ hệ thống khi bấm mũi tên xuống qua chúng trên các trang web.
+ - Các phím tắt trong chế độ duyệt phản hồi chậm.
+- Với các trình điều khiển màn hình nổi được hỗ trợ, các thiết lập trình điều khiển giờ đây có thể thay đổi từ phân loại chữ nổi trong hộp thoại cấu hình NVDA. (#7452) 
+
+
+== Các thay đổi ==
+- Âm lượng bộ đọc giờ đây tăng và giảm 5 thay vì 10 khi dùng thiết lập tham số nhanh. (#6754)
+- Nội dung trong trình quản lý add-on đã được làm rõ hơn khi  NVDA được gọi chạy với tùy chọn --disable-addons. (#9473)
+- Đã cập nhật dữ liệu chú thích biểu tượng cảm xúc Unicode Common Locale Data Repository  lên phiên bản 35.0. (#9445)
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.9.0. (#9439)
+- Giao diện tiếng Anh: phím nóng cho bộ lọc danh sách các thành phần trong chế độ duyệt đã đổi thành alt+y. (#8728)
+
+
+== Sửa lỗi ==
+- NVDA không còn bị sự cố khi có một thư mục add-on rỗng. (#7686)
+- Các dấu LTR và RTL không còn bị đọc lên trong chữ nổi hay đọc kí tự khi truy cập cửa sổ thuộc tính. (#8361)
+- Khi đi đến các trường biểu mẫu với điều hướng nhanh của chế độ duyệt, toàn bộ trường biểu mẫu sẽ được đọc lên, thay vì chỉ đọc dòng đầu tiên. (#9388)
+- NVDA sẽ không còn trở nên im lặng sau khi thoát khỏi ứng dụng Windows 10 Mail. (#9341)
+- NVDA không còn bị lỗi không khởi động được khi cài đặt vùng ngôn ngữ của người dùng được thiết lập là một ngôn ngữ mà NVDA không xác định, tiếng Anh Hà Lan chẳng hạn. (#8726)
+- Khi chế độ duyệt được bật trong Microsoft Excel và  bạn chuyển đến một trình duyệt trong chế độ focus hay ngược lại, trạng thái của chế độ duyệt giờ đây được thông báo một cách hợp lý. (#8846)
+- NVDA giờ đây đã đọc đúng dòng tại vị trí con trỏ chuột trong Notepad++ và các trình soạn thảo trên nền tản Scintilla khác. (#5450)
+- Trong Google Docs (và các trình soạn thảo trên nền tản web khác), không còn tình trạng chữ nổi thỉnh thoảng hiển thị "lst end" trước con trỏ giữa một mục trong danh sách. (#9477)
+- Trong Windows 10 May 2019 Update, NVDA không còn đọc quá nhiều thông báo âm lượng nếu thay đổi âm lượng bằng các nút bấm vật lý trong khi  File Explorer có focus. (#9466)
+- Việc gọi hộp thoại phát âm kí hiệu / dấu câu giờ đây đã nhanh nhẹn hơn khi từ điển phát âm chứa trên 1000 mục. (#8790)
+- Trong các điều khiển Scintilla  như Notepad++, NVDA có thể đọc chính xác một dòng khi tính năng wordwrap được bật. (#9424)
+- Trong Microsoft Excel, vị trí của một ô được thông báo sau khi nó thay đổi do thao tác shift+enter hoặc shift+Enter bàn phím số. (#9499)
+- Trong Visual Studio 2017 trở lên, trong cửa sổ Objects Explorer, thành phần được chọn trong objects tree hay members tree  với các phân loại giờ đây đã được đọc chính xác. (#9311)
+- Các add-on có tên chỉ khác nhau ở chữ hoa / thường không còn bị xem là các add-on riêng biệt. (#9334)
+- Với các giọng Windows OneCore, thiết lập tốc độ đọc trong NVDA không còn chịu ảnh hưởng từ thiết lập tốc độ đọc trong Speech Settings của Windows 10 . (#7498)
+- Giờ đây, có thể mở log bằng NVDA+F1 khi không có thông tin cho nhà phát triển ở đối tượng điều hướng hiện tại. (#8613)
+- Lại có thể dùng được các lệnh điều hướng trong bảng của NVDA trong Google Docs, trong Firefox và Chrome. (#9494)
+
+
+== Các thay đổi cho nhà phát triển ==
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
+
+
+= 2019.1.1 =
+Bản phát hành này sửa các lỗi sau:
+- NVDA không còn làm cho Excel 2007 bị  sự cố hoặc không đọc khi một ô có chứa công thức. (#9431)
+- Google Chrome không còn bị sự cố khi tương tác với một số hộp danh sách nhất định. (#9364)
+- Đã sửa một lỗi làm quá trình sao chép cấu hình người dùng sang hồ sơ cấu hình hệ thống bị chặn. (#9448)
+- Trong Microsoft Excel, NVDA lại dùng thông điệp đã bản địa hóa khi thông báo vị trí các ô đã được trộn. (#9471)
+
 
 = 2019.1 =
 Các cải tiến của bản phát hành này bao gồm cải thiện khả năng vận hành với Microsoft Word và Excel, cải thiện về độ ổn định và bảo mật như hỗ trợ thông tin về phiên bản NVDA tương thích với các add-on, và sửa nhiều lỗi khác.
