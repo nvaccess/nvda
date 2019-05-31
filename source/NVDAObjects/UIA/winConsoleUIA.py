@@ -41,7 +41,11 @@ class consoleUIATextInfo(UIATextInfo):
 			# UIA adds thousands of blank lines to the end of the console.
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
-			if self._rangeObj.CompareEndPoints(UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange, UIAHandler.TextPatternRangeEndpoint_End) >= 0:
+			if self._rangeObj.CompareEndPoints(
+				UIAHandler.TextPatternRangeEndpoint_Start,
+				lastVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_End
+			) >= 0:
 				return 0
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
@@ -74,10 +78,12 @@ class consoleUIATextInfo(UIATextInfo):
 		self._expandedToWord = False
 		return super(consoleUIATextInfo, self).collapse()
 
-	def getTextWithFields(self,formatConfig=None):
+	def getTextWithFields(self, formatConfig=None):
 		if self._expandedToWord:
 			return [self.text]
-		return super(consoleUIATextInfo, self).getTextWithFields(formatConfig=formatConfig)
+		return super(consoleUIATextInfo, self).getTextWithFields(
+			formatConfig=formatConfig
+		)
 
 	def _get_text(self):
 		if self._expandedToWord:
@@ -130,7 +136,7 @@ class consoleUIATextInfo(UIATextInfo):
 		)
 
 	def _getCurrentWord(self):
-		lineInfo=self.copy()
+		lineInfo = self.copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		lineText = lineInfo.text
 		offset = self._getCurrentOffset()
@@ -146,7 +152,10 @@ class winConsoleUIA(Terminal):
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if self._isTyping and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT:
+		if (
+			self._isTyping
+			and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT
+		):
 			return
 		super(winConsoleUIA, self)._reportNewText(line)
 
