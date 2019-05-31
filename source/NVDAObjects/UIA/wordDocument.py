@@ -83,6 +83,13 @@ def getCommentInfoFromPosition(position):
 		date=dateObj.name
 		return dict(comment=comment,author=author,date=date)
 
+def getPresentableCommentInfoFromPosition(commentInfo):
+	if "date" not in commentInfo:
+		# Translators: The message reported for a comment in Microsoft Word
+		return _("Comment: {comment} by {author}").format(**commentInfo)
+	# Translators: The message reported for a comment in Microsoft Word
+	return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
+
 class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
 	wantedAttribValues={UIAHandler.AnnotationType_Comment,}
@@ -90,11 +97,7 @@ class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	@property
 	def label(self):
 		commentInfo=getCommentInfoFromPosition(self.textInfo)
-		if "date" not in commentInfo:
-			# Translators: The message reported for a comment in Microsoft Word
-			return _("Comment: {comment} by {author}").format(**commentInfo)
-		# Translators: The message reported for a comment in Microsoft Word
-		return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
+		return getPresentableCommentInfoFromPosition(commentInfo)
 
 class WordDocumentTextInfo(UIATextInfo):
 
@@ -337,10 +340,9 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	def script_reportCurrentComment(self,gesture):
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		commentInfo =getCommentInfoFromPosition(caretInfo)
-		if "date" not in commentInfo:
-			# Translators: The message reported for a comment in Microsoft Word
-			ui.message(_("Comment: {comment} by {author}").format(**commentInfo))
-			return
-		# Translators: The message reported for a comment in Microsoft Word
-		ui.message(_("Comment: {comment} by {author} on {date}").format(**commentInfo))
+		if commentInfo is not None:
+			ui.message(getPresentableCommentInfoFromPosition(commentInfo))
+		else:
+			# Translators: a message when there is no comment to report in Microsoft Word
+			ui.message(_("No comments"))
 		return
