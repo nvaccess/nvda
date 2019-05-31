@@ -28,7 +28,14 @@ from logHandler import log
 from UIAUtils import *
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
+from NVDAObjects.behaviors import (
+	ProgressBar,
+	EditableTextWithoutAutoSelectDetection,
+	EditableTextWithAutoSelectDetection,
+	Dialog,
+	Notification,
+	EditableTextWithSuggestions
+)
 import braille
 from locationHelper import RectLTWH
 import ui
@@ -868,7 +875,10 @@ class UIA(Window):
 			clsList.append(winConsoleUIA)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithoutAutoSelectDetection)
+			if UIAHandler.autoSelectDetectionAvailable:
+				clsList.append(EditableTextWithAutoSelectDetection)
+			else:
+				clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		clsList.append(UIA)
 
@@ -1452,7 +1462,7 @@ class UIA(Window):
 		self.event_stateChange()
 
 	def event_valueChange(self):
-		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+		if self.TextInfo==UIATextInfo:
 			return
 		return super(UIA, self).event_valueChange()
 

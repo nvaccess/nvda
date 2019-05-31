@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -142,7 +142,6 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	#UIA_Text_TextSelectionChangedEventId:"caret",
 	UIA_ToolTipOpenedEventId:"UIA_toolTipOpened",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
@@ -150,8 +149,13 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
+autoSelectDetectionAvailable = False
 if winVersion.isAtLeastWin10():
-	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+	UIAEventIdsToNVDAEventNames.update({
+		UIA_Text_TextChangedEventId:"textChange",
+		UIA_Text_TextSelectionChangedEventId:"caret",
+	})
+	autoSelectDetectionAvailable = True
 
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
