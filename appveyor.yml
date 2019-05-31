@@ -118,10 +118,8 @@ build_script:
  - cd ..
 
 before_test:
- # Manually grab pyGetWindow 0.0.4 as latest release cannot be installed on Python 2.7.
- # See https://github.com/asweigart/PyGetWindow/issues/9
- - py -m pip install pygetwindow==0.0.4
- - py -m pip install robotframework robotremoteserver nose pyautogui
+ # install required packages
+ - py -m pip install -r tests/system/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
