@@ -120,7 +120,6 @@ build_script:
 before_test:
  # install required packages
  - py -m pip install -r tests/system/requirements.txt
- - py -m pip install 
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
