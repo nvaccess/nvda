@@ -51,7 +51,7 @@ class winConsoleUIA(Terminal):
 	def event_typedCharacter(self, ch):
 		if not ch.isspace():
 			self._isTyping = True
-		if ch in ('\r', '\t'):
+		if ch in ('\n', '\r', '\t'):
 			# Clear the typed word buffer for tab and return.
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
