@@ -586,7 +586,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
 		try:
 			oleObj=o.QueryInterface(oleTypes.IOleObject)
-			label="bad" #oleObj.GetUserType(1)
+			label=oleObj.GetUserType(1)
 		except comtypes.COMError:
 			pass
 		return label

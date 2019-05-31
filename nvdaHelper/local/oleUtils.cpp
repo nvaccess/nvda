@@ -26,7 +26,7 @@ HRESULT getOleClipboardText(IDataObject* dataObject, BSTR* text) {
 	FORMATETC format={CF_UNICODETEXT,nullptr,DVASPECT_CONTENT,-1,TYMED_HGLOBAL};
 	STGMEDIUM  medium={0};
 	HRESULT res=dataObject->GetData(&format,&medium);
-	if(res!=S_OK) {
+	if(FAILED(res)) {
 		LOG_DEBUGWARNING(L"IDataObject::getData failed with error "<<res);
 		return res;
 	}

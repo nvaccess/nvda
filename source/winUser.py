@@ -627,14 +627,15 @@ def openClipboard(hwndOwner=None):
 	Use as the expression of a 'with' statement, and CloseClipboard will automatically be called at the end. 
 	"""
 	if not windll.user32.OpenClipboard(hwndOwner):
-		raise RuntimeError("OpenClipboard failed")
+		raise ctypes.WinError()
 	try:
 		yield
 	finally:
 		windll.user32.CloseClipboard()
 
 def emptyClipboard():
-	windll.user32.EmptyClipboard()
+	if not windll.user32.EmptyClipboard():
+		raise ctypes.WinError()
 
 def getClipboardData(format):
 	# We only support unicode text for now
@@ -642,14 +643,14 @@ def getClipboardData(format):
 		raise ValueError("Unsupported format")
 	# Fetch the data from the clipboard as a global memory handle
 	h=windll.user32.GetClipboardData(format)
-	if h:
-		# Lock the global memory  while we fetch the unicode string
-		# But make sure not to free the memory accidentally -- it is not ours
-		h=winKernel.HGLOBAL(h,autoFree=False)
-		with h.lock() as addr:
-			if addr:
-				# Read the string from the local memory address
-				return wstring_at(addr)
+	if not h:
+		raise ctypes.WinError()
+	# Lock the global memory  while we fetch the unicode string
+	# But make sure not to free the memory accidentally -- it is not ours
+	h=winKernel.HGLOBAL(h,autoFree=False)
+	with h.lock() as addr:
+		# Read the string from the local memory address
+		return wstring_at(addr)
 
 def setClipboardData(format,data):
 	# For now only unicode is a supported format
@@ -665,6 +666,7 @@ def setClipboardData(format,data):
 		buf=(c_wchar*bufLen).from_address(addr)
 		buf.value=text
 	# Set the clipboard data with the global memory
-	windll.user32.SetClipboardData(format,h)
+	if not windll.user32.SetClipboardData(format,h):
+		raise ctypes.WinError()
 	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
 	h.forget()
