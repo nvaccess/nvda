@@ -44,7 +44,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self,attrs):
-		for attr in ("table-physicalrownumber","table-physicalcolumnnumber","table-physicalrowcount","table-physicalcolumncount"):
+		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
 			attrVal=attrs.get(attr)
 			if attrVal is not None:
 				attrs[attr]=int(attrVal)
@@ -314,12 +314,6 @@ class Gecko_ia2(VirtualBuffer):
 		if not self._handleScrollTo(obj):
 			return nextHandler()
 	event_scrollingStart.ignoreIsReady = True
-
-	# NVDA exposes IAccessible2 table interface row and column numbers as table-physicalrownumber and table-physicalcolumnnumber respectively.
-	# These should be used when navigating the physical table (I.e. these values should be provided to the table interfaces).
-	# The presentational table-columnnumber and table-rownumber attributes are normally duplicates of the physical ones, but are overridden  by the values of aria-rowindex and aria-colindex if present.
-	navigationalTableRowNumberAttributeName="table-physicalrownumber"
-	navigationalTableColumnNumberAttributeName="table-physicalcolumnnumber"
 
 	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
 		docHandle = self.rootDocHandle
