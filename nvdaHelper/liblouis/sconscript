@@ -60,8 +60,8 @@ env.Prepend(CPPPATH=[".", louisSourceDir])
 # Upstream liblouis compiles without UNICODE defined.
 env['CPPDEFINES'].remove("UNICODE")
 
-# When compling liblouis with UCS-4 widechars, several signed/unsigned missmatch warnings appear.
-# Ignore these for now.
+# When compiling liblouis with UCS-4 widechars, several signed/unsigned missmatch warnings appear.
+# Ignore these until liblouis/liblouis#637 is fixed.
 env['CCFLAGS'].remove("/WX")
 
 liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
