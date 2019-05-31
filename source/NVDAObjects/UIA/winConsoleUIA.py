@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 Bill Dengler
 
-import config
 import speech
 import time
 import textInfos
@@ -42,7 +41,10 @@ class winConsoleUIA(Terminal):
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if self._isTyping and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT:
+		if (
+			self._isTyping
+			and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT
+		):
 			return
 		super(winConsoleUIA, self)._reportNewText(line)
 
@@ -56,7 +58,7 @@ class winConsoleUIA(Terminal):
 		self._lastCharTime = time.time()
 		super(winConsoleUIA, self).event_typedCharacter(ch)
 
-	@script(gestures = [
+	@script(gestures=[
 		"kb:enter",
 		"kb:numpadEnter",
 		"kb:tab",
