@@ -10,7 +10,6 @@ import ctypes
 import os
 import re
 import itertools
-import importlib
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
@@ -439,8 +438,7 @@ the NVDAObject for IAccessible
 			if classString and classString.find('.')>0:
 				modString,classString=os.path.splitext(classString)
 				classString=classString[1:]
-				# #8712: Python 3 wants a dot (.) when loading a module from the same folder via relative imports, and this is done via package argument.
-				mod=importlib.import_module("NVDAObjects.IAccessible.%s"%modString, package="NVDAObjects.IAccessible")
+				mod=__import__(modString,globals(),locals(),[])
 				newCls=getattr(mod,classString)
 			elif classString:
 				newCls=globals()[classString]
@@ -451,21 +449,21 @@ the NVDAObject for IAccessible
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName=="_WwG":
-			from .winword import WordDocument 
+			from winword import WordDocument 
 			clsList.append(WordDocument)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO"):
 			if self.windowControlID==18:
-				from .winword import SpellCheckErrorField
+				from winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from .winword import WordDocument_WwN
+				from winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
 		if windowClassName.lower().startswith('mscandui'):
-			from . import mscandui
+			import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot

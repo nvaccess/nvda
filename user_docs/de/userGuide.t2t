@@ -2,7 +2,7 @@
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Befehlsreferenz
+%kc:title: NVDA NVDA_VERSION Kurzübersicht der Befehle
 
 = Inhaltsverzeichnis =[toc]
 %%toc
@@ -109,7 +109,7 @@ Wenn Sie hier "OK" auswählen, wird die soeben installierte Kopie von NVDA gesta
 
 +++ Warnung bei inkompatiblen Erweiterungen +++[InstallWithIncompatibleAddons]
 Wenn Sie Erweiterungen bereits installiert haben, kann möglicherweise  eine Warnung erscheinen, dass inkompatible Erweiterungen deaktiviert werden.
-Bevor Sie auf die Schaltfläche "Fortfahren" klicken können, müssen Sie zuerst über das Kontrollkästchen bestätigen, dass Sie mit der Deaktivierung inkompatibler Erweiterungen  einverstanden sind.
+Bevor Sie auf die Schaltfläche "Fortfahren" klicken können, müssen Sie zuerst über das Kontrollkästchen bestätigen, dass Sie mit der Deaktivierung inkompatibler Erweiterungen einverstanden sind.
 Es ist auch eine Schaltfläche zur Überprüfung inkompatibler Erweiterungen, welche nach der Installation deaktiviert werden, vorhanden.
 Weitere Informationen zu dieser Schaltfläche finden Sie im Abschnitt [Inkompatible Erweiterungen #incompatibleAddonsManager].
 
@@ -472,10 +472,21 @@ Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutz
 
 + Lesemodus +[BrowseMode]
 Umfangreiche schreibgeschützte Dokumente - wie beispielsweise Webseiten - werden in NVDA im so genannten Lesemodus dargestellt. 
-Dies betrifft Dokumente in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Google Chrome, Adobe Reader und Adobe Flash sowie HTML-Nachrichten in Microsoft Outlook. 
-Der Lesemodus ist optional in Microsoft Word-Dokumenten verfügbar. 
+Dies betrifft Dokumente in den folgenden Anwendungen:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML-Nachrichten in Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Unterstützte Bücher in Amazon Kindle für PC
+-
+Der Lesemodus ist optional auch in Microsoft Word- und Microsoft Excel-Dokumenten verfügbar. 
 
-Im Lesemodus wird der Inhalt von Dokumenten in einer strukturierten Dokument-ähnlichen Form dargestellt, sodass Sie sich mit den Pfeiltasten durch das Dokument bewegen können.
+Im Lesemodus wird der Inhalt von Dokumenten in einer flächenähnliche Struktur dargestellt, sodass Sie sich mit den Pfeiltasten durch das Dokument bewegen können, als ob es ein Textdokument wäre.
 Alle [Befehle zum Navigieren mit dem System-Cursor #SystemCaret] sind im Lesemodus verfügbar. So z. B. alles lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
 Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, o. ä. ist, wird Ihnen beim Navigieren unmittelbar mitgeteilt.
 
@@ -493,7 +504,7 @@ Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der
 | Zwischen Lese- und Fokusmodus wechseln | NVDA+Leertaste | Schaltet zwischen Fokus- und Lesemodus um. |
 | Fokusmodus schließen | Escape-Taste | Schaltet zurück in den Lesemodus, wenn zuvor der Fokusmodus automatisch aktiviert wurde. |
 | Lesemodus aktualisieren | NVDA+F5 | Lädt das aktuelle Dokument neu (das ist sinnvoll, wenn vielleicht einige Elemente auf der Seite fehlen sollten. Dieser Befehl ist in Microsoft Word und in Microsoft Outlook nicht verfügbar). |
-| Suchen | NVDA+Strg+F | Öffnet ein weiteres Fenster, in dem Sie einen Text eingeben können, der im aktuellen Dokument gesucht werden soll. |
+| Suchen | NVDA+Strg+F | Öffnet einen Dialog, in dem Sie einen Text eingeben können, der im aktuellen Dokument zu finden ist. Weitere Informationen finden Sie unter [Nach Text suchen #SearchingForText]. |
 | Vorwärts suchen | NVDA+F3 | Sucht die nächste Zeichenkette des gesuchten Textes im aktuellen Dokument, welche zuvor eingegeben wurde. |
 | Rückwärts suchen | NVDA+Umschalt+F3 | Sucht die vorherige Zeichenkette des gesuchten Textes im aktuellen Dokument, die zuvor eingegeben wurde. |
 | Ausführliche Beschreibung öffnen | NVDA+D | Öffnet ein neues Fenster, welches eine ausführliche Beschreibung für das aktuelle Objekt enthält, falls dieses eine ausführliche Beschreibung aufweist. |
@@ -550,6 +561,22 @@ Wenn Sie einmal einen Eintrag ausgewählt haben, können Sie mit den Schaltfläc
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | Liste der Elemente des Lesemodus | NVDA+F7 | Zeigt eine Liste bestimmter Elemente im aktuellen Dokument an. |
+%kc:endInclude
+
+++ Nach Text suchen ++[SearchingForText]
+In diesem Dialogfeld können Sie nach Begriffen im aktuellen Dokument suchen.
+Im Feld "Geben Sie den zu suchenden Text ein" kann der zu suchende Text eingegeben werden.
+Während Sie sich im Textfeld befinden, können Sie auch die Pfeiltasten nach oben und unten verwenden, um die zuletzt gesuchten Begriffe auszuwählen.
+Das Kontrollkästchen "Groß- / Kleinschreibung beachten" bewirkt, dass die Suche Groß- und Kleinschreibung unterschiedlich berücksichtigt wird.
+Wenn Sie beispielsweise "Groß- / Kleinschreibung beachten" ausgewählt haben, finden Sie "NV Access", nicht aber "nv access".
+In dem Fall werden Unterscheidungen im Suchverlauf nicht gespeichert.
+Sobald NVDA neu gestartet wird, wird die Liste der zuvor gesuchten Begriffe gelöscht.
+Verwenden Sie die folgenden Tasten für die Suche:
+%kc:beginInclude
+|| Name | Taste | BEschreibung |
+| Text suchen | NVDA+Strg+F | Öffnet das Suchfeld. |
+| Weitersuchen | NVDA+F3 | Sucht das nächste Vorkommen des aktuellen Suchbegriffs. |
+| Rückwärtssuchen | NVDA+Umschalt+F3 | Sucht das vorherige Vorkommen des aktuellen Suchbegriffs. |
 %kc:endInclude
 
 ++ Eingebettete Objekte ++[ImbeddedObjects]
@@ -1350,7 +1377,9 @@ Dieses Kontrollfeld weist NVDA an, den Text unter dem Mauszeiger vorzulesen. Das
 
 ==== Auflösung der Texteinheit ====[MouseSettingsTextUnit]
 Wenn die vorherige Option aktiviert ist, können Sie festlegen, wieviel Text angesagt wird, während Sie die Maus bewegen.
-Sie können dabei zwischen Zeichen, Wort, Zeile oder Satz auswählen.
+Sie können dabei zwischen Zeichen, Wörter, Zeile oder Absätze auswählen.
+
+Um die Auflösung der Texteinheiten von überall her umzuschalten, weisen Sie bitte eine benutzerdefinierte Geste über den Dialog [Eingaben #InputGestures] zu.
 
 ==== Objekttyp unter dem Mauszeiger ansagen ====[MouseSettingsRole]
 Wenn diese Option aktiviert ist, sagt NVDA den Typ an, sobald sich der Mauszeiger auf dem Objekt befindet.
@@ -1503,10 +1532,18 @@ Wenn gleich der Lesemodus keine wirklichen Seiten hat, können Sie jedoch hier f
 ==== Bildschirmlayout verwenden ====[BrowseModeSettingsScreenLayout]
 Tastenkombination: NVDA+V
 
-Diese Option legt fest, wie der Inhalt einer Seite in den Lesemodus übernommen werden soll. Wenn die Option aktiviert ist, bekommen Sie die Ansicht exakt so, wie sie am Bildschirm erscheint. Wenn die Option deaktiviert ist, werden alle Elemente, wie beispielsweise Links im Textverlauf in einer neuen Zeile dargestellt.
+Mit dieser Option können Sie festlegen, ob Inhalte im Lesemodus Inhalte wie Links und andere Steuerelemente in einer eigenen Zeile dargestellt werden oder ob sie im Textfluss beibehalten werden sollen, wie er visuell am Bildschirm dargestellt wird.
+Wenn die Option aktiviert ist, sagt NVDA  die Elemente so an, wie sie visuell dargestellt werden. Aber wenn die Option eaktiviert ist, werden die Steuerelemente jeweils auf  einer eigenen Zeile dargestellt.
 
-==== Automatisch alles lesen nach Aufruf einer Internetseite ====[BrowseModeSettingsAutoSayAll]
-Diese Option steuert, ob Dokumente automatisch gelesen werden sollen, sobald sie vollständig geladen werden. 
+==== Lesemodus beim Laden von Webseiten verwenden ====[BrowseModeSettingsEnableOnPageLoad]
+Mit diesem Kontrollkästchen legen Sie fest, ob der Lesemodus beim Laden einer Webseite aktiviert werden soll.
+Der Lesemodus kann auf Seiten und in Dokumenten, die diesen Modus unterstützen, weiterhin manuell aktiviert werden, auch wenn diese Option deaktiviert ist.
+Weitere Informationen, welche Anwendungen den Lesemodus unterstützen, finden Sie im Abschnitt [Lesemodus #BrowseMode].
+Beachten Sie, dass diese Option nicht für Situationen gilt, in denen der Lesemodus immer optional ist, zum Beispiel in Microsoft Word.
+Diese Option ist standardmäßig aktiviert und somit wird der Lesemodus automatisch beim Laden von Webseiten verwendet.
+
+==== Automatisch alles vorlesen nach Aufruf einer Internetseite ====[BrowseModeSettingsAutoSayAll]
+Diese Option steuert, ob Dokumente automatisch vorgelesen werden sollen, sobald sie vollständig geladen werden. 
 Diese Option ist standardmäßig aktiviert.
 
 ==== Layout-Tabellen im Lesemodus einbeziehen ====[BrowseModeSettingsIncludeLayoutTables]
@@ -1633,6 +1670,16 @@ Dazu gehört in Microsoft Word selbst aber auch der Microsoft Outlook Message Vi
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der Benutzeroberflächenautomatisierung verlassen kann.
 Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben.
 
+==== Automatisches Bewegen des System-Fokus auf hervorhebbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tastenkombination: NVDA+8
+
+Sie können mit dieser standardmäßig aktivierten Option auswählen, ob der System-Fokus automatisch auf Elemente gesetzt werden soll, die den System-Fokus übernehmen können (Links, Formularfelder, etc.), wenn Sie mit den Pfeiltasten im Lesemodus durch Inhalte navigieren.
+Wenn aktiviert, stellt dies das Standardverhalten von NVDA ab Version 2019.1 und früher dar.
+Wenn Sie diese Option deaktivieren, werden hervorhebbare Elemente nicht automatisch hervorgehoben, wenn sie mit dem Pfeiltasten im Lesemodus ausgewählt werden.
+Dies kann zu einer schnelleren und besseren Reaktionsfähigkeit beim Lesen führen.
+Der Fokus wird aber trotzdem auf das jeweilige Element gezogen, wenn Sie mit ihm interagieren (z. B. durch Drücken einer Taste, aktivieren eines Kontrollkästchens etc.).
+Diese Funktionalität ist ab NVDA 2019.2 experimentell.
+
 ==== Zeitüberschreitung beim Bewegen des System-Cursors (in Millisekunden) ====[AdvancedSettingsCaretMoveTimeout]
 Mit dieser Option können Sie die Anzahl der Millisekunden konfigurieren, die NVDA wartet, bis sich der Cursor (Einfügepunkt) in den editierbaren Textsteuerelementen bewegt.
 Wenn Sie feststellen, dass NVDA die Einfügemarke falsch zu verfolgen scheint, z. B., wenn NVDA immer ein Zeichen hinterher liegt oder beim Navigieren manche Zeilen wiederholt, dann sollten Sie versuchen, diesen Wert zu erhöhen.
@@ -1651,22 +1698,22 @@ Derzeit gibt es drei unterschiedliche Formen der Aussprachewörterbücher:
 Diese sind:
 - Standard: Regeln in diesem Wörterbuch haben Einfluss auf alle Aussprachen in NVDA.
 - Stimme: Regeln in diesem Wörterbuch haben Einfluss auf die momentan verwendete Stimme der Sprachausgabe in NVDA.
-- temporär: Regeln in diesem Wörterbuch haben nur vorläufigen Einfluss auf alle Stimmen in NVDA (gilt nur für diese Sitzung). Beim nächsten Neustart von NVDA sind diese nicht mehr vorhanden.
+- Temporär: Regeln in diesem Wörterbuch haben nur vorläufigen Einfluss auf alle Stimmen in NVDA (gilt nur für diese Sitzung). Beim nächsten Neustart von NVDA sind diese nicht mehr vorhanden.
 -
 
-Sie müssen den Dialogen eigene Tastenkombinationen zuweisen, falls Sie die Wörterbücher per Tastenkürzel aufrufen wollen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures].
+Sie müssen den Dialogfeldern eigene Tastenkombinationen zuweisen, falls Sie die Wörterbücher per Tastenkürzel aufrufen wollen. Verwenden Sie hierzu den Dialog [Eingaben #InputGestures].
 
 Alle Wörterbücher enthalten eine Liste von Sprachregeln, welche verwendet werden, um die Sprache zu verbessern.
 Die Dialogfelder enthalten die folgenden Schaltflächen: "Hinzufügen", "Bearbeiten" und "Entfernen".
 
-Mit der Schaltfläche "Hinzufügen" erstellen Sie eine neue Regel im Wörterbuch. Anschließend füllen Sie die entsprechenden Felder aus und klicken abschließend auf "OK".
+Mit der Schaltfläche "Hinzufügen" erstellen Sie eine neue Regel im Wörterbuch. Anschließend füllen Sie die entsprechenden Felder aus und klicken danach auf "OK".
 Sie sehen nun die neu hinzugefügte Regel in der Regelliste.
 Um sicherzustellen, dass die neu hinzugefügten oder bearbeiteten Regeln auch tatsächlich gespeichert bleiben, klicken Sie einmal auf die "OK"-Schaltfläche, um damit auch das Dialogfeld der Wörterbücher zu schließen.
 
 Mit den Regeln für die Aussprachewörterbücher von NVDA können Sie eine Zeichenkette in eine andere ändern.
 Ein einfaches Beispiel wäre, wenn Sie möchten, dass NVDA bei dem Wort "Frosch" jedes Mal "Vogel" sagt.
 Der einfachste Weg um dies zu erreichen ist wie folgt: Im Dialog "Wörterbucheintrag hinzufügen" geben Sie im Eingabefeld bei "Muster" das Wort "Frosch" (ohne Anführungszeichen) ein und im Eingabefeld bei "Ersetzen durch" das Wort "Vogel" (ohne Anführungszeichen) ein.
-Im Eingabefeld für die Beschreibung können Sie auch z. B. "Anpassen des Wortes Frosch durch Vogel" mit angeben.	
+Im Eingabefeld für die Beschreibung können Sie auch zum Beispiel "Anpassen des Wortes Frosch durch Vogel" mit angeben.	
 
 Die leistungsstarken Aussprachewörterbücher können weitaus mehr, als nur Wörter ersetzen.
 Ferner enthält dieses Dialogfeld auch eine Option zur Berücksichtigung der Groß- und Kleinschreibung des Musters.
@@ -1683,30 +1730,30 @@ Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und 
 In diesem Dialog können Sie die Aussprache von Satz- und Sonderzeichen verändern und festlegen, ab welcher Symbolebene dieses angesagt werden soll. 
 
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
-Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus der Kategorie [Stimme und Sprachausgabe #SpeechSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
+Außerdem wird die Option "Beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus der Kategorie [Stimme und Sprachausgabe #SpeechSettings] im Dialog [NVDA-Einstellungen #NVDASettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der NVDA-Sprache verwendet.
 
 Um die Aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
-
+Sie können die Symbole auch filtern, indem Sie das Symbol oder einen Teil der Ersetzung des Symbols in das Bearbeitungsfeld "Filter nach" eingeben.
 - Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
-- im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen.
-- Im Konbinationsfeld "aktuelles Symbol an Sprachausgabe senden" kann eingestellt werden, ob das Symbol anstelle seines Ersatztextes an die Sprachausgabe gesendet werden soll.
+- Im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen.
+- Im Konbinationsfeld "Aktuelles Symbol an Sprachausgabe senden" kann eingestellt werden, ob das Symbol anstelle seines Ersatztextes an die Sprachausgabe gesendet werden soll.
 Dies ist nützlich, wenn das Symbol die Sprachausgabe zu einer Pause oder einer anderen Betonung bringen soll.
 Beispielsweise pausiert die Sprachausgabe nach einem Komma.
 Dieses Konbinationsfeld enthält drei Optionen:
- - niemals: das Sonderzeichen wird niemals an die Sprachausgabe gesendet.
- - immer: Das Symbol wird immer an die Sprachausgabe gesendet.
- - nur unterhalb der Symbolebene: Das Sonderzeichen wird nur an die Sprachausgabe gesendet, wenn die momentan eingestellte Symbolebene niedriger ist, als im Konbinationsfeld "Stufe" (siehe oben)
+ - Niemals: das Sonderzeichen wird niemals an die Sprachausgabe gesendet.
+ - Immer: Das Symbol wird immer an die Sprachausgabe gesendet.
+ - Nur unterhalb der Symbolebene: Das Sonderzeichen wird nur an die Sprachausgabe gesendet, wenn die momentan eingestellte Symbolebene niedriger ist, als im Konbinationsfeld "Stufe" (siehe oben)
  Beispielsweise kann ein Symbol bei einer höheren Stufe ohne Pausieren gesprochen werden, während die Sprachausgabe bei einer niedrigeren Stufe pausiert.
  -
 -
 
-Um Symbole hinzuzufügen, benutzen Sie den Schalter hinzufügen.
-Geben Sie im erscheinenden Dialog das Symbol ein und drücken Sie den Schalter "OK".
+Um Symbole hinzuzufügen, benutzen Sie den Schalter "Hinzufügen".
+Geben Sie im erscheinenden Dialog das Symbol ein und klicken Sie auf den Schalter "OK".
 Ändern Sie anschließend die anderen Optionen nach Ihren Wünschen, wie Sie es bei den anderen Symbolen machen würden.
 
-Über den Schalter "entfernen" können Sie ein Symbol wieder löschen.
+Über den Schalter "Entfernen" können Sie ein Symbol wieder löschen.
 
-Wenn Sie fertig sind, bestätigen Sie die Änderungen mit "ok" oder verwerfen Sie diese mittels "abbrechen".
+Wenn Sie fertig sind, bestätigen Sie die Änderungen mit "OK" oder verwerfen Sie diese mittels "Abbrechen".
 
 +++ Eingaben +++[InputGestures]
 In diesem Dialog können Sie Eingaben (Tastenkombinationen, Tasten an einer Braillezeile, Aktionen an einem Touchscreen) an NVDA-Befehle zuweisen.
@@ -1749,12 +1796,12 @@ Zum Korrekturlesen ist es beispielsweise sinnvoll, Einrückungen und Schriftattr
 In NVDA können Sie hierfür Konfigurationsprofile verwenden.
 
 Ein Konfigurationsprofil enthält nur die geänderten Einstellungen für das aktuelle Profil.
-In Konfigurationsprofilen können die meisten Einstellungen geändert werden. Eine Ausnahme sind die Einstellungen aus der Kategorie "Allgemein" im Einstellungsdialog, da diese NVDA generell betreffen.
+In Konfigurationsprofilen können die meisten Einstellungen geändert werden. Eine Ausnahme sind die Einstellungen aus der Kategorie "Allgemein" im Dialog [NVDA-Einstellungen #NVDASettings], da diese NVDA generell betreffen.
 
-Konfigurationsprofile können manuell aktiviert werden.
+Konfigurationsprofile können entweder über einen Dialog oder mit benutzerdefinierten Tastenkürzel manuell aktiviert werden.
 Außerdem können Sie solche Profile auch automatisch aktivieren (beispielsweise beim Wechsel in eine bestimmte Anwendung).
 
-+++ Grundlegende Verwaltung +++[ProfilesBasicManagement]
++++ Grundlegende Profilverwaltung +++[ProfilesBasicManagement]
 Konfigurationsprofile werden über den Menüpunkt "Konfigurationsprofile" im NVDA-Menü verwaltet. 
 Dieser Dialog ist auch über eine Tastenkombination erreichbar:
 %kc:beginInclude
@@ -1817,6 +1864,14 @@ Ein Beispiel: Sie möchten ein manuell aktiviertes Profil bearbeiten oder die St
 Dies erreichen Sie über die Option "Alle Auslöser temporär deaktivieren" im Dialog "Konfigurationsprofile."
 
 Sie können auch eine Tastenkombination dafür im Dialog [Eingaben #InputGestures] definieren.
+
++++ Aktivieren eines Profils mit Eingabegesten +++[ConfigProfileGestures]
+Für jedes Profil, das Sie hinzufügen, können Sie eine oder mehrere Eingabegesten zuweisen, um es zu aktivieren.
+Standardmäßig sind den Konfigurationsprofilen keine Eingabegesten zugeordnet.
+Sie können Gesten für ein Profil im Dialog [Eingaben #InputGestures] definieren.
+Jedes Profil hat einen eigenen Eintrag unter der Kategorie Konfigurationsprofile.
+Wenn Sie ein Profil umbenennen, ist jede Geste, die Sie zuvor hinzugefügt haben, weiterhin verfügbar.
+Das Entfernen eines Profils löscht automatisch die damit verbundenen Gesten.
 
 ++ Speicherorte für Konfigurationsdateien ++[LocationOfConfigurationFiles]
 In der portablen Version von NVDA werden sämtliche Einstellungen und Erweiterungen im Ordner "userConfig" unterhalb des Stammordners von NVDA abgelegt.
@@ -1899,7 +1954,7 @@ Um den Dialog "Erweiterungen verwalten" per Tastenkombination aufrufen zu könne
 
 ++ Verwaltung inkompatibler Erweiterungen ++[incompatibleAddonsManager]
 Der Verwaltungsdialog, auf welchem  Sie über die Schaltfläche "Inkompatible Erweiterungen anzeigen" im Dialog "Erweiterungen verwalten" zugreifen können, ermöglicht Ihnen alle inkompatiblen Erweiterungen zu überprüfen , einschließlich den Grund der  inkompatibilität.
-Erweiterungen gelten als inkompatibel, wenn sie nicht laufend aktualisiert wurden, um mit den aktuellen wesentlichen Änderungen im Kern des NVDA zu entsprechen. Ein Grund, warum ein Entwickler auf aktualisierungen verzichten könnte, wäre gegeben, wenn man auf eine Funktion angewiesen ist, die in der aktuellen  verwendeten Version von NVDA nicht verfügbar ist.
+Erweiterungen gelten als inkompatibel, wenn sie nicht laufend aktualisiert wurden, um mit den aktuellen wesentlichen Änderungen im Kern des NVDA zu entsprechen. Ein Grund, warum ein Entwickler auf aktualisierungen verzichten könnte, wäre gegeben, wenn man auf eine Funktion angewiesen ist, die in der aktuellen verwendeten Version von NVDA nicht verfügbar ist.
 Die Verwaltung inkompatibler Erweiterungen benachrichtigt den Anwender entsprechend.
 Die inkompatiblen Erweiterungen werden in einer Liste mit den folgenden Spalten dargestellt:
 + Paket, der Name der Erweiterung

@@ -472,7 +472,18 @@ NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fa
 
 + Tarama Kipi +[BrowseMode]
 Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
- Bu, Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Google Chrome, Microsoft outlook HTML mesajları, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
+ Bu, aşağıdaki uygulamalardaki belgeleri içerir:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Microsoft Outlook'da HTML mesajları
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Amazon Kindle for PC içinde desteklenen kitaplar
+-
 Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılırken kullanılmak üzere opsiyonel olarak mevcuttur.
 
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
@@ -493,7 +504,7 @@ Tarama ve odak kipleri arasında manuel olarak da geçiş yapabilirsiniz ve Odak
 | Tarama ve odak kipleri arasında geçiş | NVDA+aralık çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
 | Odak kipinden çıkış | eskeyp | Odak kipine otomatik olarak geçildiyse, tarama kipine geri döner |
 | Tarama kipinde görüntülenen belgeyi güncelleme | NVDA+f5 | Geçerli belgeyi yeniden yükler. (İçeriğin bir kısmı eksik gibi görünüyorsa ya da ziyaret ettiğiniz sayfa sık aralıklarla güncelleniyorsa bu tuşları kullanmak yararlı olabilir.) |
-| Metin ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
+| Metin ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar Daha fazla bilgi için [metin arama #SearchingForText] bölümüne bakın. |
 | Sonrakini bul | NVDA+f3 | metni belgenin sonraki kısmında arar |
 | Öncekini bul | NVDA+şift+f3 | metni belgenin önceki kısmında arar |
 | uzun tarifi aç | NVDA+d | Eğer varsa, üzerinde bulunulan ögeyle ilgili uzun bir açıklamanın bulunduğu yeni bir pencere açar. | 
@@ -550,6 +561,22 @@ Seçim düğmeleri, bu öge türlerinden hangilerinin görüntüleneceğini beli
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
 | Tarama kipi öge listesi | NVDA+f7 | tarama kipinde görüntülenen belgedeki çeşitli ögelerin listesini gösterir |
+%kc:endInclude
+
+++ Metin arama ++[SearchingForText]
+Bu iletişim kutusu, geçerli belgedeki terimleri aramanızı sağlar.
+"Aramak istediğiniz metni yazın" alanına, bulunacak metin girilebilir.
+Metin alanındayken, daha önce aranan terimleri seçmek için yukarı ve aşağı okları da kullanabilirsiniz.
+"Büyük / küçük harfe duyarlı" onay kutusu, aramanın büyük ve küçük harfleri farklı düşünmesini sağlar.
+Örneğin, "Büyük / küçük harfe duyarlı" seçiliyken "NV Access" ifadesini bulabilirken, "nv access" ifadesini bulamazsınız.
+Büyük küçük harf duyarlılığı arama geçmişine kaydedilmez.
+NVDA yeniden başlatıldığında, önceki aranan terimlerin listesi temizlenir.
+Arama yapmak için aşağıdaki tuşları kullanın:
+%kc:beginInclude
+|| Ad | Kısayol | Açıklama |
+| Metin ara | NVDA+kontrol+f | Arama iletişim kutusunu açar |
+| Sonrakini ara | NVDA+f3 | Mevcut arama teriminin bir sonraki tekrarını arar  |
+| Öncekini ara | NVDA+shift+f3 | geçerli arama teriminin önceki tekrarını arar  |
 %kc:endInclude
 
 ++ Gömülü Nesneler ++[ImbeddedObjects]
@@ -1353,6 +1380,8 @@ Etkinleştirildiğinde, fare ile ekranda dolaşırken, NVDA, fare işaretinin al
 Eğer NVDA siz hareket ettikçe fare altındaki metni söyleyecek biçimde ayarlandıysa, bu seçenek, tam olarak ne kadar metnin söyleneceğini seçmenizi sağlar.
 Seçenekler, karakter, sözcük, satır ve paragraftır.
 
+Herhangi bir yerdeyken metin birim çözünürlüğünü değiştirmek için,   [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol atayın.
+
 ==== Fare altındaki nesne tiplerini Seslendir ====[MouseSettingsRole]
 Bu onay kutusu işaretlenirse, NVDA bir nesneye geldiğinde o nesnenin işlevini (türünü) belirtecektir.
 
@@ -1504,8 +1533,16 @@ Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterile
 ==== Destekleniyorsa Ekran Düzenini Kullan ====[BrowseModeSettingsScreenLayout]
 Kısayol tuşu: NVDA+v
 
-Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması seçenekleri arasında tercih yapmanızı sağlar. Etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
+Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması seçenekleri arasında tercih yapmanızı sağlar.
+Etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
 
+==== Sayfa yüklendiğinde tarama kipini etkinleştir ====[BrowseModeSettingsEnableOnPageLoad]
+Bu onay kutusu, bir sayfayı yüklendiğinde göz tarama kipinin otomatik olarak etkinleştirilip etkinleştirilmeyeceğini belirler.
+Bu seçenek devre dışı bırakılsa bile, sayfalarda veya tarama kipinin desteklendiği belgelerde tarama kipi manuel olarak etkinleştirilebilir.
+tarama kipinin  desteklendiği uygulamaların listesi için [tarama kipi bölümüne #BrowseMode] bakın.
+Bu seçeneğin, tarama kipinin her zaman isteğe bağlı olduğu durumlar için geçerli olmadığını unutmayın; mesela Microsoft Word'de.
+Bu seçenek varsayılan olarak etkindir.
+ 
 ==== Sayfa yüklendiğinde Otomatik Olarak Hepsini Oku ====[BrowseModeSettingsAutoSayAll]
 Bu onay kutusu tarama kipinde yüklenen sayfanın otomatik olarak okunmaya başlanmasıyla ilgili ayarı değiştirir.
 Bu seçenek varsayılan olarak etkindir.
@@ -1626,6 +1663,16 @@ Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyic
 Ancak, Microsoft Office'in bazı sürümlerinde ya açığa çıkmamış ya da yanlış açıklanmış bazı bilgiler olabilir; bu, bu UI otomasyon desteğinin her zaman güvenilemeyeceği anlamına gelir.
 Kullanıcıların çoğunun varsayılan olarak bunu açmasını önermiyoruz, ancak Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız.
 
+==== Tarama kipinde sistem odağını otomatik olarak odaklanabilir öğelere taşı ====[BrowseModeSettingsAutoFocusFocusableElements]
+Kısayol: NVDA+8
+
+Varsayılan olarak etkinleştirildiğinde, bu seçenek, tarama kipi imleci ile içerikte gezinirken, sistem odağının otomatik olarak odaklanılabilecek öğelere (bağlantılar, form alanları vb.) taşınıp taşınmayacağını belirlemenizi sağlar.
+Etkinleştirilirse, bu NVDA’nın 2019.1 ve önceki sürümlerindeki gibi sonuç verir.
+Bu seçeneği devre dışı bırakmak, tarama kipi imleci ile üzewrlerine gelindiğinde  sistem odağını odaklanabilir öğelerin üzerine  otomatik olarak taşımaz.
+Bu, tarama kipinde daha hızlı dolaşma ve daha iyi tepki deneyimi sunabilir.
+Sistem odağı Yine de, herhangi bir öğeyle  etkileşime girildiğinde güncellenecektir ve o öğe üzerine taşınacaktır (örneğin, bir düğmeye basıldığında, bir onay kutusu işaretlendiğinde).
+Bu işlev NVDA 2019.2'den itibaren deneyseldir.
+
 ==== Düzenleme imleci hareketi zaman aşımı (MS cinsinden) ====
 Bu seçenek, NVDA'nın düzenleme imleci (ekleme noktası) düzenlenebilir metin kontrollerinde hareket etmesini bekleyeceği mili saniye sayısını ayarlamanızı sağlar.
 NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter gibi görünüyor veya satırları tekrarlıyor, o zaman bu değeri arttırmayı deneyebilirsiniz.
@@ -1679,6 +1726,7 @@ Noktalama/imla telaffuzu iletişim kutusunun başlığında, düzenlemenin hangi
 Bu iletişim kutusunun , NVDA ayarları iletişim kutusu altındaki [konuşma kategorisi #SpeechSettings] bulunan "Karakter ve sembolleri işlerken sentezleyici ve sesin diline güven" ayarını dikkate alacağını not edin; yani, bu seçenek işaretliyse, NVDA dili yerine seçili sentezleyicinin dili dikkate alınır.
 
 Önce semboller listesinden değişiklik yapmak istediğiniz sembol/işareti bulun.
+Sembolü veya sembolün  bir bölümünü, Filtreye göre düzenle kutusuna girerek sembolleri filtreleyebilirsiniz.
 
 - Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
 - Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
@@ -1744,7 +1792,7 @@ NVDA konfigürasyon profillerini kullanarak bunu yapmanıza olanak tanır.
 Bir konfigürasyon profili, sadece profil düzenlenirken değiştirilen ayarları kapsar.
 Konfigürasyon profillerinde, NVDA bütünlüğü için geçerli olan [NVDA ayarları #NVDASettings] iletişim kutusundaki Genel  kategorisindekiler hariç, çoğu ayar değiştirilebilir.
 
-Konfigürasyon profilleri elle aktif hale getirilebilir.
+Konfigürasyon profilleri iletişim kutusu üzerinden manuel olarak  ya da atanacak özel bir kısayol ile etkinleştirilebilir.
 Ayrıca, tetikleyuiciler vesilesiyle, örneğin belli bir uygulama açıldığında konfigürasyon profili otomatik olarak aktif hale getirilebilir.
 
 +++ Temel Yönetim +++[ProfilesBasicManagement]
@@ -1810,6 +1858,14 @@ Bazen, tüm tetikleyicileri geçici olarak devre dışı bırakmak yararlıdır.
 Bunu, Konfigürasyon Profilleri iletişim kutusunda bulunan , Tüm tetikliyiceleri geçici olarak devre dışı bırak onay kutusunu işaretleyerek yapabilirsiniz.
 
 Tetikleyicilerin herhangi bir yerdeyken devre dışı bırakılması ya da tekrar etkinleştirilmesi için , [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol tuşu atayabilirsiniz.
+
++++ Girdi hareketlerini kullanarak bir profili etkinleştirme +++[ConfigProfileGestures]
+Eklediğiniz her profil için, etkinleştirmek üzere bir veya daha fazla girdi hareketi atayabilirsiniz.
+Varsayılan olarak, konfigürasyon profilleri için atanmış girdi hareketleri yoktur.
+[Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak Bir profili etkinleştirmek için girdi hareketi  ekleyebilirsiniz.
+Konfigürasyon profilleri kategorisi altında  her profil için bir  giriş vardır.
+Bir profili yeniden adlandırdığınızda, daha önce eklediğiniz herhangi bir hareket hala  kullanılabilir olacaktır.
+Profillerden birini kaldırmak, onunla ilişkilendirilen hareketleri de otomatik olarak siler.
 
 ++ Konfigürasyon Dosyalarının Konumu ++[LocationOfConfigurationFiles]
 NVDA taşınabilir sürümü, tüm ayarları, kişisel uygulama modüllerini ve kişisel sürücüleri NVDA dizininde bulunan ve UserConfig adı verilen dizinde saklamaktadır.

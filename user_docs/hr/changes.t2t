@@ -2,6 +2,59 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2019.2 =
+
+== Nove značajke ==
+- Dijaloški okvir pretrage sada sadrži povijest zadnjih 20 stavaka. (#8482)
+ - Povijest pretrage bit će izbrisana kada se NVDA ponovno pokrene ili isključi.
+- NVDA podrška za Miranda NG radi s novijim inačicama klijenta. (#9053) 
+- Sada podrazumjevano možete isključiti način pregleda isključujući opciju "uključi način pregleda pri učitavanju stranice" u postavkama načina pregleda NVDA. (#8716) 
+ - Imajte na umu da kada je ova opcija isključena, Još uvjek možete ručno uključiti način pregleda pritiščući tipkovnički prečac nvda+razmak.
+- Sada možete filtrirati simbole u dijaloškom okviru izgovora simbola, na sličan način na koji filtriranje radi u popisu elemenata i dijaloškom okviru ulaznih gesti. (#5761)
+- Dodana je komanda uz pomoć koje može se promjeniti razlučivost jedinice miša (to jest, kako će tekst biti izgovaran pri pomicanju miša), Ta komanda nema pridjeljen prečac. (#9056)
+- windows OneCore govorna jedinica sada podržava opciju dodatne brzine, što omogućava veću regulaciju brzine. (#7498)
+- Opcija dodatne brzine sada se može podešavati koristeći prsten govornih jedinica za podržane govorne jedinice. (trenutno su to eSpeak-NG i Windows OneCore). (#8934)
+- Konfiguracijski profili sada mogu biti ručno aktivirani uz pomoć gesti. (#4209)
+ - Geste mogu biti konfigurirane u dijaloškom okviru "ulazne geste".
+- Dodana podrška samodovršavanja u Eclipse uređivaču izvornog koda. (#5667)
+ - Dodatno, Javadoc informacija može se pročitati iz uređivača kada ista postoji koristeći NVDA+d.
+- Dodana eksperimentalna opcija на panel naprednih postavki koja zaustavlja praćenje fokusa sustava u načinu pregleda (Automatski postavi  način pregleda na elemente fokusa). (#2039) Although this may not be suitable to turn off for all websites, this may fix: 
+ - Efekt postranosti: NVDA sporadično poništava posljednih prečac u načinu pregleda preskačući na prethodnu poziciju.
+ - Polja za uređivanje uzimaju fokus sustava prilikom kretanja po njima na nekim web stranicama.
+ - Prečaci načina pregleda su sporoodzivni.
+- Za brajične retke koji to podržavaju, postavke upravljačkog programa se mogu izmjeniti iz kategorije brajičnih postavki U NVDA postavkama. (#7452)
+
+
+== Izmjene ==
+- Glasnoća govorne jedinice sada se može pojačavati ili smanjivati po svakih pet posto umjesto po svakih deset, koristeći prsten govorne jedinice. (#6754)
+- Objašnjen test u NVDA upravitelju dodataka kada je NVDA pokrenut sa zastavicom --disable-add-ons. (#9473)
+- Nadograđen repozitorij djeljenog repozitorija anotacija za emoji na inačicu 35.0. (#9445)
+- Nadograđen Liblouis brajični prevoditelj na inačicu 3.9.0. (#9439)
+- Prečac za polje filtriranja u popisu elemenata u načinu pregleda je promjenjen na alt+y. Bilješka prevoditelja: ista se promjena ne odnosi na hrvatski prijevod NVDA! (#8728)
+
+
+== Ispravci grešaka ==
+- NVDA se više ne ruši kada je mapa s dodacima prazna. (#7686)
+- LTR i RTL znakovi sada se e pokazuju na brajičnom retku ili izgovaraju kada pristupate svojstvima u upravitelju datoteka. (#8361)
+- Prilikom preskakanja po formularima u načinu pregleda brzim kretanjem,sada se izgovara cijeli formular umjesto cjijelog retka. (#9388)
+- NVDA više se neće utišavati prilikom zatvaranja Windows 10 aplikacije pošta. (#9341)
+- NVDA više neće odbijati pokretanje kada su korisničke regionalne postavke podešene na lokalnu postavku koju NVDA ne prepoznaje, poput engleskog (Nizozemska). (#8726)
+- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)
+- NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
+- In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)
+- In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)
+- Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)
+- In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)
+- In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)
+- In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)
+- Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
+- For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
+- The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
+- It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+
+
+== Izmjene za razvojne programere ==
+Informacije za razvojne programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta ../en/changes.html].
 
 = 2019.1 =
 Novosti u ovoj inačici uključuju unapređene performanse u pristupu Microsoft Wordu i Excelu, Poboljšanja u stabilnosti i sigurnosti poput dodataka sa informacijama o inačici, I mnogo drugih ispravaka grešaka.

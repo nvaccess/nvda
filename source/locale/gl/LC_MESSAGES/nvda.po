@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-04 10:39+1000\n"
-"PO-Revision-Date: 2019-03-04 14:11+0100\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-23 22:05+0100\n"
 "Last-Translator: Iván Novegil <ivan.novegil.cancelas@gmail.com>\n"
 "Language-Team: Equipo de tradución ao Galego <oprisniki@gmail.com>\n"
 "Language: gl\n"
@@ -592,6 +592,18 @@ msgstr "ao foco"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "á revisión"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "&Firmeza dos pontos"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "&Entrada braille"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "Simulación de entrada &HID"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1192,6 +1204,8 @@ msgstr "Modo foco"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Modo navegación"
 
@@ -1230,6 +1244,10 @@ msgstr "Reconta varios tipos de elementos neste documento"
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "Activa o obxecto actual no documento"
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "Pasa o xesto a través da aplicación"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1721,7 +1739,7 @@ msgstr "Tipo:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
+msgid "Filter b&y:"
 msgstr "&Filtrar por:"
 
 #. Translators: The label of a button to activate an element
@@ -2981,6 +2999,10 @@ msgid "Configuration"
 msgstr "Configuración"
 
 #. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "Configuración de perfís"
+
+#. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
@@ -3926,6 +3948,17 @@ msgstr "Seguemento do rato activado"
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Activa ou desactiva o anunciado de información cando o rato se mova"
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "Unidade de resolución de texto %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "Cambia a cantidade de texto que se falará ao se mover o rato"
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "Sen título"
@@ -4031,6 +4064,24 @@ msgstr ""
 "Activa e desactiva o movemento do navegador de obxectos debido a cambios do "
 "foco"
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr ""
+"Poñer automáticamente o foco do sistema nos elementos enfocables desactivado"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr ""
+"Poñer automáticamente o foco do sistema nos elementos enfocables activado"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"Activa e desactiva o movemento automático do foco do sistema debido ás ordes "
+"do modo Exploración."
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "Non hai batería do sistema"
@@ -4067,19 +4118,18 @@ msgstr ""
 "A seguinte tecla que se prema non será manipulada polo NVDA, será deixada "
 "pasar direitamente a Windows."
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "Actualmente a aplicación en execución é %s"
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr " e o módulo actualmente cargado é %s"
+msgid " %s module is loaded. "
+msgstr " o módulo %s está Cargado. "
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr " %s está actualmente en execución."
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4482,6 +4532,33 @@ msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr ""
 "Recoñece o contido do navegador de obxectos actual co OCR de Windows 10"
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr ""
+"Non se pode cambiar o perfil de configuración activo mentres se abre unha "
+"Caixa de diálogo do NVDA."
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "Perfil de configuración {profile} desactivado manualmente"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "Perfil de configuración {profile} activado manualmente"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr "Activa ou desactiva o perfil de configuración {profile}."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6425,6 +6502,16 @@ msgctxt "synth setting"
 msgid "Rate"
 msgstr "Velocidade"
 
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "Rate boos&t"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "Alzado brusco"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "V&olume"
@@ -6831,6 +6918,14 @@ msgstr "Candidata"
 
 msgid "Display"
 msgstr "Display"
+
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "Tenta ler a documentación do elemento de autocompletado selecionado."
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "Non se atopou a ventá comentarios."
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -7578,7 +7673,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Aviso"
 
@@ -7979,12 +8075,19 @@ msgstr "Información de Complemento"
 msgid "Add-ons Manager"
 msgstr "Administrador de Complementos"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "Administrador de complementos (complementos deshabilitados)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
 msgstr ""
-"Deshabilitáronse todos os complementos. Para habilitalos debes reiniciar ao "
-"NVDA."
+"O NVDA iniciouse con todos os complementos desactivados. Podes modificar o "
+"estado de habilitado / deshabilitado, e instalar ou desinstalar "
+"complementos. Os cambios non Terán efecto hate que se reinicie o NVDA. Tenta "
+"ler a documentación do elemento de autocompletado selecionado."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8685,7 +8788,6 @@ msgstr "Avisar dunha actualización &pendente ao comezar"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "Permitir que o proxeto NVDA recolla estadísticas de uso do NVDA"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8699,7 +8801,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "Copiando Opcións"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr ""
 "Por favor agarda mentres as opcións se copian na configuración do sistema."
@@ -9079,6 +9182,11 @@ msgstr "&número de liñas por páxina"
 msgid "Use &screen layout (when supported)"
 msgstr "Utilizar deseño en &pantalla (cando sexa soportado)"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "&Activar o modo Exploración ao se cargar a páxina"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9343,6 +9451,11 @@ msgstr ""
 "Usar UI Automation para acesar a controis de documento de Microsoft &Word "
 "cando estea dispoñible"
 
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "Poñer automáticamente o &foco do sistema nos elementos enfocables"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
@@ -9577,6 +9690,11 @@ msgstr "Símbolo:"
 msgid "Symbol Pronunciation (%s)"
 msgstr "Pronuncia de Símbolos (%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "&Filtrar por:"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "&Símbolos"
@@ -9654,11 +9772,6 @@ msgstr "Non se soporta interactuación cas matemáticas"
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "ningunha"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "Rate boos&t"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -11193,21 +11306,24 @@ msgstr "Espaciado de liña dobre"
 msgid "1.5 line spacing"
 msgstr "espaciado de liña 1.5"
 
-#~ msgid "Passes gesture through to the application"
-#~ msgstr "Pasa o xesto a través da aplicación"
+#~ msgid "Currently running application is %s"
+#~ msgstr "Actualmente a aplicación en execución é %s"
+
+#~ msgid " and currently loaded module is %s"
+#~ msgstr " e o módulo actualmente cargado é %s"
+
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr ""
+#~ "Deshabilitáronse todos os complementos. Para habilitalos debes reiniciar "
+#~ "ao NVDA."
 
 #~ msgid "Focus follows browse mode off"
 #~ msgstr "Foco segue ao modo exploración desactivado"
 
 #~ msgid "Focus follows browse mode on"
 #~ msgstr "Foco segue ao modo exploración activado"
-
-#~ msgid ""
-#~ "Toggles on and off the movement of the system focus due to browse mode "
-#~ "commands"
-#~ msgstr ""
-#~ "Activa e desactiva o movemento do foco do sistema debido a ordes do modo "
-#~ "exploración"
 
 #~ msgid "%s Settings Category"
 #~ msgstr "%s Categoría de Opcións"
