@@ -92,7 +92,11 @@ env.Append(
 		('_WIN32_WINNT','_WIN32_WINNT_WIN7')
 	]
 )
-env.Append(CCFLAGS=['/W3','/WX'])
+env.Append(CCFLAGS=[
+	'/W3',
+	'/WX',
+	'/std:c++17'
+])
 if 'analyze' in debug:
 	env.Append(CCFLAGS=['/analyze'])
 	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
