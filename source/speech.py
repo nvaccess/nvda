@@ -587,6 +587,9 @@ def speak(speechSequence,symbolLevel=None):
 	getSynth().speak(speechSequence)
 
 def speakSelectedText(text):
+	""" Helper method to speak the provided text with the word "selected" appended.
+	Implemented using L{speakSelectionMessage}, which allows for speaking text with an arbitrary attached message.
+	"""
 	# Translators: This is spoken to indicate what has been selected. for example 'hello world selected'
 	speakSelectionMessage(_("%s selected"),text)
 
