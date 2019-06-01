@@ -1462,7 +1462,7 @@ class UIA(Window):
 		self.event_stateChange()
 
 	def event_valueChange(self):
-		if self.TextInfo==UIATextInfo:
+		if issubclass(self.TextInfo, UIATextInfo):
 			return
 		return super(UIA, self).event_valueChange()
 
