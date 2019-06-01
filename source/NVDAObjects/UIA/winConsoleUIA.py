@@ -53,7 +53,7 @@ class consoleUIATextInfo(UIATextInfo):
 			index = 1 if direction > 0 else 0
 			start, end = self._getWordOffsets(offset)
 			wordMoveDirections = (
-				(offset - start + 1) * -1,
+				(offset - start) * -1,
 				end - offset
 			)
 			res = self.move(
@@ -64,7 +64,10 @@ class consoleUIATextInfo(UIATextInfo):
 			if res != 0:
 				return direction
 			else:
-				return res
+				if self.move(textInfos.UNIT_CHARACTER, -1):
+					return self.move(unit, direction, endPoint=endPoint)
+				else:
+					return res
 		return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
 
 	def expand(self, unit):
@@ -106,8 +109,6 @@ class consoleUIATextInfo(UIATextInfo):
 				res += chars
 			else:
 				break
-		# Subtract 1 from res since UIA seems to wrap around
-		res -= 1
 		return res
 
 	def _getWordOffsets(self, offset):
