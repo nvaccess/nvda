@@ -83,7 +83,7 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"gettextTool",
 	"t2t"
 	,keyCommandsDocTool,
-	#"doxygen",
+	"doxygen",
 	"recursiveInstall"
 ])
 
@@ -372,10 +372,10 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
-#devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
-#devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
-#env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
-#env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
+devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
+devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
+env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
+env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
 
 #devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 #	"cd", sourceDir.path, "&&",
