@@ -648,7 +648,7 @@ class ExcelBase(Window):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
-			from . import _msOfficeChart
+			import _msOfficeChart
 			parent=ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=self.excelWindowObject.activeSheet)
 			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeChartObject = selection , initialDocument = parent)  
 		return obj
