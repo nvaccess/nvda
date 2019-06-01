@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <memory>
 #include <functional>
-#include <boost/optional.hpp>
+#include <optional>
 #include <windows.h>
 #include <set>
 #include <string>
@@ -629,7 +629,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether the name of this node has been explicitly set (as opposed to calculated by descendant)
 	const bool nameIsExplicit = IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true";
 	// Whether the name is the content of this node.
-	std::experimental::optional<bool> isLabelVisibleVal_;
+	std::optional<bool> isLabelVisibleVal_;
 	// A version of the isLabelVisible function that caches its result
 	auto isLabelVisibleCached=[&]() {
 		if(!isLabelVisibleVal_) {
