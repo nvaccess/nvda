@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-15 00:10+1000\n"
-"PO-Revision-Date: 2019-03-16 19:45+0330\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-27 17:47+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -591,6 +591,18 @@ msgstr "به مکانِ فرمان‌پذیری"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "به بازبینی"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "&سختیِ نقطه‌ها"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "ورو&دیِ بریل"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "شبیه‌سازیِ ورودیِ صفحه‌کلیدِ &HID"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1191,6 +1203,8 @@ msgstr "حالتِ فرمان‌پذیری"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "حالتِ مرور"
 
@@ -1228,6 +1242,10 @@ msgstr "انواعِ گوناگونی از سازه‌های موجود در ا�
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "شیءِ جاری را در سندِ پیشِ رو  فعال میکند."
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "فرمان را به برنامه ارسال میکند"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1719,7 +1737,7 @@ msgstr "نوع:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
+msgid "Filter b&y:"
 msgstr "م&حدود کردن به"
 
 #. Translators: The label of a button to activate an element
@@ -2977,6 +2995,10 @@ msgid "Configuration"
 msgstr "پیکره‌بندی"
 
 #. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "گروه‌های پیکره‌بندی"
+
+#. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "بریل"
@@ -3904,6 +3926,17 @@ msgstr "صفحه خوان حرکتِ موس را دنبال میکند."
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "اعلامِ اطلاعات را هنگامِ حرکتِ موس فعال یا غیرفعال میکند."
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "تحلیلِ واحدِ متنیِ موس %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "مقدارِ متنی که هنگامِ حرکتِ موس خوانده میشود را تغییر میدهد"
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "بدونِ عنوان"
@@ -4006,6 +4039,21 @@ msgstr ""
 "حرکتِ پِیمایِشگر را به نسبتِ تغییراتِ مکانِ فرمان‌پذیری (فکوس) فعال یا غیر فعال "
 "میکند."
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr "تنظیمِ خودکارِ فکوسِ سیستم روی سازه‌های فکوس‌پذیر غیرفعال شد"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr "تنظیمِ خودکارِ فکوسِ سیستم روی سازه‌های فکوس‌پذیر فعال شد"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"حرکتِ خودکارِ فکوسِ سیستم را با توجه به فرمان‌های حالتِ مرور فعال یا غیرفعال میکند"
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "این سیستم از باتری استفاده نمیکند."
@@ -4042,19 +4090,18 @@ msgstr ""
 "کلیدِ بعدی که فشرده شود، اصلا توسط NVDA پردازش نخواهد شد؛ بلکه مستقیما به "
 "ویندوز ارسال میشود."
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "برنامه‌ی در حالِ اجرا، %s است "
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr "و تنظیماتِ بارگذاری شده‌ی فعلی عبارت است از %s"
+msgid " %s module is loaded. "
+msgstr " ماژولِ %s بارگزاری شد. "
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr " %s درحالِ اجراست."
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4448,6 +4495,33 @@ msgstr "نویسه‌خوانِ نوریِ ویندوزِ ۱۰ در دسترس �
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr "محتوای پیمایشگرِ جاری را با OCRِ ویندوز ۱۰ بازمیشناسد"
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr ""
+"نمیتوانم در حالی که پنجره‌ای از NVDA باز است، گروهِ پیکره‌بَندیِ فعال را تغییر "
+"بدهم."
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "گروهِ پیکره‌بَندیِ {profile} دستی غیرفعال شد"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "گروهِ پیکره‌بَندیِ {profile} دستی فعال شد"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr "گروهِ پیکره‌بَندیِ {profile} را فعال یا غیرفعال میکند"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6390,6 +6464,16 @@ msgctxt "synth setting"
 msgid "Rate"
 msgstr "سرعت"
 
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "افزودنِ بی&شترِ سرعت"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "افزودنِ بیشترِ سرعت"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&حجمِ صدا"
@@ -6792,6 +6876,14 @@ msgstr "کاندیدا"
 
 msgid "Display"
 msgstr "نمایش دادن"
+
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "تلاش میکند راهنمای موردِ کامل‌کننده‌ی خودکار را بخواند."
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "نمیتوانم پنجره‌ی راهنما را پیدا کنم."
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -7537,7 +7629,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "هشدار"
 
@@ -7938,12 +8031,18 @@ msgstr "اطلاعاتِ افزونه"
 msgid "Add-ons Manager"
 msgstr "مدیرِ افزونه ها"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "مدیرِ افزونه‌ها (افزونه‌ها غیرفعال هستند)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
 msgstr ""
-"در حالِ حاضر همه‌ی افزونه‌ها غیرِ فعال هستند. برای فعال کردنِ افزونه‌ها باید NVDA "
-"را دوباره راه‌بیندازید."
+"NVDA با افزونه‌های غیرفعال آغاز شد. میتوانید وضعیت فعال یا غیرفعال بودنِ "
+"افزونه‌ها را تغییر دهید، و افزونه‌ها را نصب یا حذف کنید. تغییرات تا زمانی که "
+"NVDA را دوباره راه بیندازید اِعمال نخواهند شد."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8627,7 +8726,6 @@ msgstr "یادآوری برای به‌روزرسانی‌های &در انتظ�
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "اجازه دادن به پروژه‌ی NVDA برای جمع‌آوریِ آمارِ نحوه استفاده از NVDA"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8641,7 +8739,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "در حالِ کپیِ تنظیمات"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "لطفا صبر کنید تا تنظیمات در پیکره بندی سیستم کپی شوند."
 
@@ -9018,6 +9117,11 @@ msgstr "تعدادِ خط‌ها در &صفحه"
 msgid "Use &screen layout (when supported)"
 msgstr "استفاده از &چیدمانِ صفحه (هرگاه پشتیبانی شود)"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "&فعال کردنِ حالتِ مرور هنگامِ بارگزاریِ صفحه"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9276,6 +9380,11 @@ msgstr ""
 "استفاده از UI Automation برای دستیابی به کنترل‌های مایکروسافت و اسنادِ Word در "
 "صورت موجود بودن"
 
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "تنظیمِ خودکارِ &فکوسِ سیستم روی سازه‌های فکوس‌پذیر"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
@@ -9508,6 +9617,11 @@ msgstr "نماد:"
 msgid "Symbol Pronunciation (%s)"
 msgstr "تلفظِ نمادها (%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "&محدود کردن به:"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "&نمادها"
@@ -9585,11 +9699,6 @@ msgstr "تعاملِ ریاضی پشتیبانی نمیشود."
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "هیچ‌کس"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "افزودنِ بی&شترِ سرعت"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -11113,19 +11222,24 @@ msgstr "فاصله‌ی خطّیِ دوبرابر"
 msgid "1.5 line spacing"
 msgstr "فاصله‌ی یِکُنیم خطّی"
 
-#~ msgid "Passes gesture through to the application"
-#~ msgstr "فرمان را به برنامه ارسال میکند"
+#~ msgid "Currently running application is %s"
+#~ msgstr "برنامه‌ی در حالِ اجرا، %s است "
+
+#~ msgid " and currently loaded module is %s"
+#~ msgstr "و تنظیماتِ بارگذاری شده‌ی فعلی عبارت است از %s"
+
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr ""
+#~ "در حالِ حاضر همه‌ی افزونه‌ها غیرِ فعال هستند. برای فعال کردنِ افزونه‌ها باید "
+#~ "NVDA را دوباره راه‌بیندازید."
 
 #~ msgid "Focus follows browse mode off"
 #~ msgstr "فکوس حالتِ مرور را دنبال نمیکند"
 
 #~ msgid "Focus follows browse mode on"
 #~ msgstr "فکوس حالتِ مرور را دنبال میکند"
-
-#~ msgid ""
-#~ "Toggles on and off the movement of the system focus due to browse mode "
-#~ "commands"
-#~ msgstr "حرکتِ فکوسِ سیستم را بر اثرِ فرمان‌های حالتِ مرور فعال یا غیرفعال میکند"
 
 #~ msgid "%s Settings Category"
 #~ msgstr "دسته‌ی تنظیماتِ %s"
