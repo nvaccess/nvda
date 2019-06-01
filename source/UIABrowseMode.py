@@ -444,6 +444,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		return True
 
 	def event_caret(self,obj,nextHandler):
-		pass
+		if self.passThrough:
+			nextHandler()
 
 
