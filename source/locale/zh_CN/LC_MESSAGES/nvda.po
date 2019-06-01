@@ -1,6 +1,6 @@
 # NVDASimplified Chinese translation message.
 # Copyright (C) 2006-2019 NVDA Contributors
-# 
+#
 # Translators:
 # 杨永全 <hi@qt.hk>, 2010-2012
 # 雪岭冰龙 <vgjh2005@gmail.com>, 2012-2018
@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-26 00:10+1000\n"
-"PO-Revision-Date: 2019-04-30 19:49+0800\n"
-"Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-24 08:41+0800\n"
+"Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
 "2010-2019>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -600,6 +600,18 @@ msgstr "焦点"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "浏览光标"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "点字硬度(&N)"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "启用点字输入(&U)"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "模拟HID键盘(&H)"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1200,6 +1212,8 @@ msgstr "焦点模式"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "浏览模式"
 
@@ -1236,6 +1250,10 @@ msgstr "在此文档中列举了各种类型的元素"
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "激活文档中的当前对象"
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "将手势传递给应用程序"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1727,8 +1745,8 @@ msgstr "类型:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
-msgstr "查找(&E)："
+msgid "Filter b&y:"
+msgstr "查找(&Y)："
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -2981,6 +2999,10 @@ msgid "Configuration"
 msgstr "配置"
 
 #. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "配置管理"
+
+#. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "盲文"
@@ -3863,6 +3885,17 @@ msgstr "鼠标追踪开"
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "开关鼠标移动时的信息朗读"
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "鼠标文本分辨率 %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "调整鼠标移动时朗读鼠标下面文本的单位"
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "无标题"
@@ -3883,7 +3916,7 @@ msgstr "读出当前的前景对象"
 msgid ""
 "Opens the WX GUI inspection tool. Used to get more information about the "
 "state of GUI components."
-msgstr "打开 wxPython gui检查工具。用于获取有关gui组件状态的更多信息。"
+msgstr "打开 wxPython gui检查工具。用于获取有关图形界面组件状态的更多信息。"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3955,6 +3988,20 @@ msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "切换是否允许浏览光标跟随系统焦点移动"
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr "系统焦点跟随关"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr "系统焦点跟随开"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr "打开或关闭跟随系统焦点自动移动到可聚焦的项目上"
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "没有系统电池"
@@ -3975,7 +4022,7 @@ msgstr "剩余{hours:d}小时和{minutes:d}分钟"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr "读出电池状态和可用时间（若没有连接交流电源）"
+msgstr "如果没有连接交流电源 读出电池状态和可用时间"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -3987,19 +4034,18 @@ msgid ""
 "passed directly through to Windows."
 msgstr "忽略下一个 NVDA 按键指令，将其交给系统相关的程序处理。"
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "当前运行的程序为 %s"
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr " 当前加载的模块为 %s"
+msgid " %s module is loaded. "
+msgstr "%s 已加载。"
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr "%s 当前正在运行。"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4365,6 +4411,31 @@ msgstr "Windows 10 光学识别技术 不可用"
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr "使用 Windows 10 内置 光学识别技术读取浏览光标所在控件的内容"
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr "在 NVDA 对话框打开时无法更改当前配置文件"
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "配置文件 {profile} 已经手动停用"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "配置文件 {profile} 已经手动启用"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr "激活或停用{profile} 已经手动停用"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6307,6 +6378,16 @@ msgctxt "synth setting"
 msgid "Rate"
 msgstr "速度"
 
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "调整至最大语速(&T)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "语速加倍"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "音量(&O)"
@@ -6697,6 +6778,14 @@ msgstr "候选"
 
 msgid "Display"
 msgstr "显示"
+
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "尝试读取所选自动补全的说明"
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "找不到注释窗口。"
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -7434,7 +7523,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "警告"
 
@@ -7817,10 +7907,17 @@ msgstr "插件信息"
 msgid "Add-ons Manager"
 msgstr "插件管理器"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "插件管理器 (所有插件已经禁用)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
-msgstr "所有插件已被停用，要想启用插件，您必须重新启动 NVDA。"
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
+msgstr ""
+"NVDA 是在禁用所有插件的情况下启动的。您可以修改启用/禁用状态, 并安装或卸载插"
+"件。在 NVDA 重新启动后, 更改才会生效。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8487,7 +8584,6 @@ msgstr "在启动NVDA时通知并等待更新"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "允许NVDA项目收集NVDA使用情况统计数据"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8500,7 +8596,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "正在拷贝设置"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "请等待，正在拷贝设置到系统配置。"
 
@@ -8873,6 +8970,11 @@ msgstr "每页最大行数(&N)"
 msgid "Use &screen layout (when supported)"
 msgstr "使用屏幕真实布局（若支持）(&S)"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "页面加载时启用浏览模式 (&E)"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9129,6 +9231,11 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "在Word里使用Microsoft UI Automation (微软无障碍接口)"
 
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "自动把焦点跳转到可聚焦的元素上(&F)"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
@@ -9361,6 +9468,11 @@ msgstr "标点："
 msgid "Symbol Pronunciation (%s)"
 msgstr "标点符号(%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "查找(&F):"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "符号(&S)"
@@ -9436,11 +9548,6 @@ msgstr "Math 交互不被支持。"
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "无"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "调整至最大语速(&T)"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -10948,19 +11055,22 @@ msgstr "双倍行间距"
 msgid "1.5 line spacing"
 msgstr "1.5倍行间距"
 
-#~ msgid "Passes gesture through to the application"
-#~ msgstr "将手势传递给应用程序"
+#~ msgid "Currently running application is %s"
+#~ msgstr "当前运行的程序为 %s"
+
+#~ msgid " and currently loaded module is %s"
+#~ msgstr " 当前加载的模块为 %s"
+
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr "所有插件已被停用，要想启用插件，您必须重新启动 NVDA。"
 
 #~ msgid "Focus follows browse mode off"
 #~ msgstr "关闭焦点跟随浏览模式"
 
 #~ msgid "Focus follows browse mode on"
 #~ msgstr "打开焦点跟随浏览模式"
-
-#~ msgid ""
-#~ "Toggles on and off the movement of the system focus due to browse mode "
-#~ "commands"
-#~ msgstr "打开或关闭跟随系统焦点移动"
 
 #~ msgid "%s Settings Category"
 #~ msgstr "%s 选项类型"
