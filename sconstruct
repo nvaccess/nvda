@@ -234,7 +234,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
 	updateVersionType = env["updateVersionType"] or None
-	action = [lambda target, source, env: file(buildVersionFn, "w").write(
+	action = [lambda target, source, env: open(buildVersionFn, "w").write(
 		'version = {version!r}\r\n'
 		'publisher = {publisher!r}\r\n'
 		'updateVersionType = {updateVersionType!r}\r\n'
