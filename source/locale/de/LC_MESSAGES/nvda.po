@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"POT-Creation-Date: 2019-05-31 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -2851,7 +2851,7 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Die Konfiguration ist fehlerhaft und wurde auf die Werkseinstellung "
+"Die Konfiguration ist fehlerhaft und wurde auf die Standard-Einstellung "
 "zurückgesetzt.\n"
 "Weitere Informationen finden Sie in der Protokolldatei."
 
@@ -4231,8 +4231,8 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
-"bei einmaligem Drücken wird die Konfiguration auf den letzten gespeicherten "
-"Stand zurückgesetzt, bei dreimaligem Drücken wird die Werkseinstellung "
+"Bei einmaligem Drücken wird die Konfiguration auf den letzten gespeicherten "
+"Stand zurückgesetzt, bei dreimaligem Drücken wird die Standard-Einstellung "
 "wiederhergestellt."
 
 #. Translators: Input help mode message for activate python console command.
@@ -4550,23 +4550,22 @@ msgstr ""
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-msgid ""
-"Can't change the active configuration profile while an NVDA dialog is open"
+msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"Das aktive Konfigurationsprofil konnte nicht geändert werden, während ein "
-"NVDA-Dialog geöffnet ist."
+"Das aktive Profil konnte nicht geändert werden, während ein NVDA-Dialog "
+"geöffnet ist."
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually deactivated"
-msgstr "Konfigurationsprofil {profile} manuell ausgeschaltet"
+msgid "{profile} profile deactivated"
+msgstr "Profil {profile} deaktiviert"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually activated"
-msgstr "Konfigurationsprofil {profile} manuell eingeschaltet"
+msgid "{profile} profile activated"
+msgstr "Profil {profile} aktiviert"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -7580,7 +7579,8 @@ msgstr "Schaltet die HID-Tastatur-Simulation um."
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus- / PAC-Mate-Serien"
 
-#. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+#. Translators: The name of a key on a braille display, that scrolls the display
+#. to show previous/next part of a long line.
 msgid "display scroll"
 msgstr "Abschnittweises Scrollen"
 
@@ -7668,7 +7668,7 @@ msgstr "Konfiguration übernommen."
 
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
-msgstr "Die Werkseinstellungen wurden wiederhergestellt"
+msgstr "Die Standard-Einstellungen wurden wiederhergestellt"
 
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
@@ -7900,7 +7900,7 @@ msgstr "Alle Einstellungen auf die gespeicherten Werte zurücksetzen."
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "Werkseins&tellungen wiederherstellen"
+msgstr "Auf S&tandard-Einstellungen zurücksetzen"
 
 msgid "Reset all settings to default state"
 msgstr "Alle Einstellungen auf die Standardwerte zurücksetzen"

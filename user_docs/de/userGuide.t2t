@@ -1781,13 +1781,13 @@ Sie können dies jedoch im Einstellungsmenü in den allgemeinen Optionen ändern
 Über "Konfiguration speichern" können Sie im NVDA-Menü die Konfiguration manuell speichern.
 
 Wenn Ihnen einmal ein Fehler bei der Konfiguration unterlaufen ist, können Sie über den Eintrag "Gespeicherte Konfiguration zurücksetzen" im NVDA-Menü diese wiederherstellen.
-Wenn Sie die Konfiguration auf die Werkseinstellungen zurücksetzen möchten, können Sie dies über dem Menüpunkt "Werkseinstellungen wiederherstellen" im NVDA-Menü erreichen.
+Wenn Sie die Konfiguration auf die Standard-Einstellungen zurücksetzen möchten, können Sie dies über den Menüpunkt "Auf Standard-Einstellungen zurücksetzen" im NVDA-Menü erreichen.
 
 Die folgenden Tastenbefehle sind auch hilfreich:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
 | Konfiguration speichern | NVDA+Strg+C | NVDA+Strg+C | Speichert die Konfiguration ab, sodass sie nicht beim Beenden von NVDA verloren geht. |
-| Konfiguration zurücksetzen | NVDA+Strg+R | NVDA+Strg+R | Setzt bei einmaligem Drücken die NVDA-Einstellungen auf den letzten gespeicherten Stand zurück, bei dreimaligem Drücken wird die Werkseinstellung wiederhergestellt. |
+| Konfiguration zurücksetzen | NVDA+Strg+R | NVDA+Strg+R | Setzt bei einmaligem Drücken die NVDA-Einstellungen auf den letzten gespeicherten Stand zurück, bei dreimaligem Drücken wird auf die Standard-Einstellung zurückgesetzt. |
 %kc:endInclude
 
 ++ Konfigurationsprofile ++[ConfigurationProfiles]
@@ -2054,16 +2054,15 @@ Die Braillezeilen Focus 40 Blue und alle PacMate-Zeilen von der amerikanischen F
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
 Falls diese noch nicht installiert wurden, können Sie die Treiber von der Website [hier https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
-Wenn Sie eine 64-Bit-Version von Windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von dieser Adresse installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
 Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per USB oder per Bluetooth verbunden ist.
 Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als Anschluss entweder USB oder Bluetooth auswählen.
 Dies kann sinnvoll sein, wenn Sie z. B. eine Focus-Braillezeile per Bluetooth mit NVDA verbinden wollen, aber dennoch den USB-Anschluss Ihres Rechners zum Laden der Zeile verwenden.
 
-Diese Braillezeilen unterstützen noch nicht die automatische Braillezeilenerkennung im Hintergrund von NVDA.
+Die automatische Braillezeilenerkennung von NVDA erkennt auch die Anzeige auf USB oder Bluetooth.
 
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
-Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
+Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Informationen.
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile rückwärtsscrollen | topRouting1 (Erstes Braille-Modul) |

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2019.2 =
+O subliñable desta versión inclúe a deteción automática de pantallas braille de Freedom Scientific, unha opción experimental no panel Avanzado para deter o modo exploración dende o movemento automático do foco (o que podería proporcionar melloras de rendemento), unha opción de alzado brusco para o sintetizador Windows OneCore para acadar velocidades moi rápidas, e moitas outras correcións de fallos.
 
 == Novas Características ==
 - O diálogo procurar agora inclúe un historial das últimas 20 buscas. (#8482)
@@ -24,6 +25,7 @@
  - As caixas de edición quitan o foco do sistema cando se mova a través deles nalgúns sitios web.
  - As pulsacións de teclas do modo exploración son lentas de resposta.
 - Para os controladores de pantalla braille que o admitan, agora pódense cambiar as opcións do controlador dende a categoría de opcións braille na caixa de diálogo de opcións do NVDA. (#7452)
+- Agora as pantallas braille de Freedom Scientific admiten a deteción automática de pantallas braille. (#7727)
 
 
 == Cambios ==
@@ -32,6 +34,7 @@
 - Actualizado Unicode Common Locale Data Repository anotacións emoji á versión 35.0. (#9445)
 - Actualizado o transcriptor de braille liblouis á versión 3.9.0. (#9439)
 - A tecla de atallo para o campo filtrar na listaxe de elementos no modo de búsqueda cambiou a alt+y. (#8728)
+- Cando unha pantalla braille autodetectada se conecte a través do Bluetooth, o NVDA seguerá procurando pantallas USB compatibles co mesmo controlador e cambiará a unha conexión USB se está dispoñible. (#8853)
 
 
 == corrección de Fallos ==
@@ -52,6 +55,8 @@
 - No caso das voces de Windows OneCore, a velocidade establecida no NVDA xa non se ve afectada pola velocidade establecida na configuración de voz de Windows 10. (#7498)
 - O rexistro pódese abrir agora con NVDA+F1 cando non hai información do desenvolvedor para o obxecto de navegador actual. (#8613)
 - Tamén é posible usar as ordes de navegación de táboa do NVDA en Google Docs, en Firefox e en Chrome. (#9494)
+- As teclas frontais agora funcionan correctamente nas pantallas braille de Freedom Scientific. (#8849)
+- Ao se ler o primeiro carácter dun documento en Notepad++ 7.7 X64, o NVDA xa non se conxela durante un máximo de diez segundos. (#9609)
 
 
 == Cambios para Desenvolvedores ==
@@ -59,6 +64,7 @@
 - O estilo extendido de ventá dunha ventá  agora exponse usando a propiedade `extendedWindowStyle` en obxectos ventá e os seus derivados. (#9136)
 - Actualizado o paquete comtypes a 1.1.7. (#9440, #8522)
 - Ao se usar a orde report module info, o orden da información cambiouse para presentar o módulo primeiro. (#7338)
+- Engadido un exemplo para demostrar o uso de nvdaControllerClient.dll dende C#. (#9600)
 
 
 = 2019.1.1 =

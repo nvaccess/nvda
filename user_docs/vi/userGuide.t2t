@@ -1732,7 +1732,7 @@ Tên ngôn ngữ cho phần chỉnh sửa các phát âm ký hiệu được hi�
 Lưu ý, thiết lập trong hộp thoại này dựa vào thiết lập của tùy chọn "Sử dụng giọng đọc của ngôn ngữ để xử lý ký hiệu và ký tự" trong phân loại [tiếng nói #SpeechSettings] trong [hộp thoại cấu hình của NVDA #NVDASettings]; cụ thể, nó sẽ sử dụng giọng đọc của ngôn ngữ đó thay vì dùng các thiết lập ngôn ngữ chung của NVDA nếu mục này được chọn.
 
 Để thay đổi một ký hiệu, trước tiên, hãy chọn nó trong danh sách.
-Bạn có thể lọc các kí hiệu bằng cách nhập kí hiệu hay một phần kí hiệu thay thế vào ô nhập liệu tên Lọc theo
+Bạn có thể lọc các kí hiệu bằng cách nhập kí hiệu hay một phần kí hiệu thay thế vào ô nhập liệu tên Lọc theo.
 .
 - Mục Gửi ký hiệu gốc đến bộ đọc sẽ xác định nếu phần thay thế ngược với ký hiệu, nó sẽ gửi trực tiếp đến bộ đọc.
 Điều này sẽ hữu ích khi ký hiệu có nhiệm vụ làm bộ đọc ngưng nghỉ hoặc thay đổi ngữ điệu.
@@ -2052,13 +2052,12 @@ Tất cả màn hình Focus và PAC Mate của hãng [Freedom Scientific https:/
 Máy tính của bạn cần phải cài driver màn hình nổi của Freedom Scientific.
 Bạn có thể tải về từ trang https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Trên trang này chỉ thông báo cho dòng Focus Blue nhưng nó có thể sử dụng cho cả dòng Focus và Pacmate của Freedom Scientific.
-Nếu bạn dùng bản Windows 64-bit, cho dù các driver này đã được cài đặt bởi trình đọc màn hình khác, bạn vẫn nên cài lại bản driver tải về từ liên kết này.  Do có thể có những tập tin NVDA cần vẫn chưa được cài đặt.
 
 Mặc định, NVDA sẽ tự động nhận các thiết bị này khi nó được kết nối qua cổng USB và bluetooth.
 Tuy nhiên, khi cấu hình màn hình, bạn hoàn toàn có thể chọn cổng "USB" hoặc "bluetooth" để chỉ định cụ thể kiểu kết nối nào sẽ được sử dụng.
 Điều này sẽ thích hợp khi bạn kết nối màn hình Focus với NVDA để sử dụng cổng bluetooth nhưng vẫn muốn sạc bin bằng cáp USB từ máy tính.
 
-Các màn hình này chưa hỗ trợ tính năng ngầm tự nhận biết của NVDA.
+Chức năng tự nhận màn hình chữ nổi của NVDA cũng sẽ nhận dạng màn hình qua USB hay Bluetooth.
 
 Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.

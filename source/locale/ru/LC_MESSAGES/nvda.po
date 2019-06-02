@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 00:10+1000\n"
-"PO-Revision-Date: 2019-05-24 19:44+0800\n"
+"POT-Creation-Date: 2019-05-31 00:10+1000\n"
+"PO-Revision-Date: 2019-05-30 23:00+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -4123,7 +4123,7 @@ msgstr "Загружен модуль %s. "
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 #, python-format
 msgid " %s is currently running."
-msgstr "Работает приложение %s."
+msgstr "Работает приложение %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4523,23 +4523,21 @@ msgstr ""
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-msgid ""
-"Can't change the active configuration profile while an NVDA dialog is open"
+msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"Невозможно изменить активный профиль конфигурации, пока открыто диалоговое "
-"окно NVDA"
+"Невозможно изменить активный профиль, пока открыто диалоговое окно NVDA"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually deactivated"
-msgstr "Профиль конфигурации {profile} деактивирован"
+msgid "{profile} profile deactivated"
+msgstr "Профиль {profile} деактивирован"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually activated"
-msgstr "Профиль конфигурации {profile} активирован"
+msgid "{profile} profile activated"
+msgstr "Профиль {profile} активирован"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -7539,7 +7537,8 @@ msgstr "Включает и выключает эмуляцию HID-клавиа
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate"
 
-#. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+#. Translators: The name of a key on a braille display, that scrolls the display
+#. to show previous/next part of a long line.
 msgid "display scroll"
 msgstr "прокрутка экрана"
 
@@ -7648,7 +7647,7 @@ msgstr ""
 #. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"Диалог настроек NVDA уже открыт. Для открытия другого диалога, пожалуйста, "
+"Диалог настроек NVDA уже открыт. Перед открытием нового диалога, пожалуйста, "
 "сначала закройте первый."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog

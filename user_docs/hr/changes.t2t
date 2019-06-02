@@ -3,6 +3,7 @@
 
 %!includeconf: ../changes.t2tconf
 = 2019.2 =
+Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
 == Nove značajke ==
 - Dijaloški okvir pretrage sada sadrži povijest zadnjih 20 stavaka. (#8482)
@@ -23,6 +24,7 @@
  - Polja za uređivanje uzimaju fokus sustava prilikom kretanja po njima na nekim web stranicama.
  - Prečaci načina pregleda su sporoodzivni.
 - Za brajične retke koji to podržavaju, postavke upravljačkog programa se mogu izmjeniti iz kategorije brajičnih postavki U NVDA postavkama. (#7452)
+- Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
 
 
 == Izmjene ==
@@ -31,6 +33,7 @@
 - Nadograđen repozitorij djeljenog repozitorija anotacija za emoji na inačicu 35.0. (#9445)
 - Nadograđen Liblouis brajični prevoditelj na inačicu 3.9.0. (#9439)
 - Prečac za polje filtriranja u popisu elemenata u načinu pregleda je promjenjen na alt+y. Bilješka prevoditelja: ista se promjena ne odnosi na hrvatski prijevod NVDA! (#8728)
+- When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)
 
 
 == Ispravci grešaka ==
@@ -39,18 +42,19 @@
 - Prilikom preskakanja po formularima u načinu pregleda brzim kretanjem,sada se izgovara cijeli formular umjesto cjijelog retka. (#9388)
 - NVDA više se neće utišavati prilikom zatvaranja Windows 10 aplikacije pošta. (#9341)
 - NVDA više neće odbijati pokretanje kada su korisničke regionalne postavke podešene na lokalnu postavku koju NVDA ne prepoznaje, poput engleskog (Nizozemska). (#8726)
-- When browse mode is enabled in Microsoft Excel and you switch to a browser in focus mode or vice versa, browse mode state is now reported appropriately. (#8846)
-- NVDA now properly reports the line at the mouse cursor in Notepad++ and other Scintilla based editors. (#5450)
-- In Google Docs (and other web-based editors), braille no longer sometimes incorrectly shows "lst end" before the cursor in the middle of a list item. (#9477)
-- In the Windows 10 May 2019 Update, NVDA no longer speaks many volume notifications if changing the volume with hardware buttons when File Explorer has focus. (#9466)
-- Loading the punctuation/symbol pronunciation dialog is now much faster when using symbol dictionaries containing over 1000 entries. (#8790)
-- In Scintilla controls such as Notepad++, NVDA can read the correct line when wordwrap is enabled. (#9424)
+- Kada je način pregleda uključen u Microsoft excelu i kada se prebacujete između načina pregleda i obratno, status načina pregleda se sada izgovara u skladu sa stvarnim stanjem. (#8846)
+- NVDA sada pravilno izzgovara redak pod kursorom u  Notepad++ i drugim Scintilla uređivačima teksta. (#5450)
+- U Google Docs (i drugim web baziranim uređivačima teksta), brajica više ne pokazuje sporadično "kr pop" ispred kursora usred stavke popisa. (#9477)
+- U Windows 10 nadogradnji za svibanj 2019, NVDA više ne izgovara puno obavijesti o smanjivanju ili povećavanju glasnoće ako se glasnoća mjenja sa hardverskim gumbima kada upravitelj za datoteke je u fokusu. (#9466)
+- Pokretanje dijaloškog okvira izgovora simbola i interpunkcije sada je puno brže kada se koriste rječnici simbola koji sadrže preko 1000 zapisa. (#8790)
+- U Scintilla kontrolama kao što je to Notepad++, NVDA može sada čitati točan broj retka kada je rastavljanje riječi uključeno. (#9424)
 - In Microsoft Excel, the cell location is announced after it changes due to the shift+enter or shift+numpadEnter gestures. (#9499)
 - In Visual Studio 2017 and up, in the Objects Explorer window, the selected item in objects tree or members tree with categories is now reported correctly. (#9311)
 - Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
 - For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
 - The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+- The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 
 
 == Izmjene za razvojne programere ==
