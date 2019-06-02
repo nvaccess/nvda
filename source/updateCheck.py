@@ -735,7 +735,8 @@ class DonateRequestDialog(wx.Dialog):
 
 def saveState():
 	try:
-		cPickle.dump(state, file(_stateFilename, "wb"))
+		with open(_stateFilename, "wb") as f:
+			cPickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -743,7 +744,8 @@ def initialize():
 	global state, _stateFilename, autoChecker
 	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
 	try:
-		state = cPickle.load(file(_stateFilename, "r"))
+		with open(_stateFilename, "r") as f:
+			state = cPickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
 		# Defaults.

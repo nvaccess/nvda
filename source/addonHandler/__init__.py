@@ -47,7 +47,8 @@ def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		state = cPickle.load(file(statePath, "r"))
+		with open(statePath, "r") as f:
+			state = cPickle.load(f)
 		if "disabledAddons" not in state:
 			state["disabledAddons"] = set()
 		if "pendingDisableSet" not in state:
@@ -67,7 +68,8 @@ def loadState():
 def saveState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		cPickle.dump(state, file(statePath, "wb"))
+		with open(statePath, "wb") as f:
+			cPickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
