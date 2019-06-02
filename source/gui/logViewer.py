@@ -80,6 +80,7 @@ class LogViewer(wx.Frame):
 		try:
 			# codecs.open() forces binary mode, which is bad under Windows because line endings won't be converted to crlf automatically.
 			# Therefore, do the encoding manually.
+			# #9038 (Py3 review required): although eligible for "with open" function conversion, encoding issue must be settled first.
 			file(filename, "w").write(self.outputCtrl.GetValue().encode("UTF-8"))
 		except (IOError, OSError), e:
 			# Translators: Dialog text presented when NVDA cannot save a log file.
