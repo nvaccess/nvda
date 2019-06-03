@@ -10,7 +10,6 @@ from collections import namedtuple, Sequence
 import windowUtils
 import winUser
 from ctypes.wintypes import RECT, POINT, DWORD
-import textInfos
 import wx
 
 class Point(namedtuple("Point",("x","y"))):
@@ -405,7 +404,7 @@ class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom")
 
 #: Classes which support conversion to locationHelper Points using their x and y properties.
 #: type: tuple
-POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
+POINT_CLASSES=(Point, POINT, wx.Point)
 #: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
-RECT_CLASSES=(RectLTRB, RectLTWH, RECT, textInfos.Rect)
+RECT_CLASSES=(RectLTRB, RectLTWH, RECT)

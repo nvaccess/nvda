@@ -15,6 +15,7 @@ import speech
 import textInfos
 import api
 import config
+import locationHelper
 
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100
@@ -196,7 +197,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		relativeY=(characterY-consoleScreenBufferInfo.srWindow.Top)*characterHeight
 		x=relativeX+screenLeft
 		y=relativeY+screenTop
-		return textInfos.Point(x,y)
+		return locationHelper.Point(x,y)
 
 	def _getCaretOffset(self):
 		consoleScreenBufferInfo=self.consoleScreenBufferInfo

@@ -201,9 +201,12 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		if (windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109):
 			outlookVersion=self.outlookVersion
-			if outlookVersion and outlookVersion<=9:
-				clsList.insert(0, MessageList_pre2003)
-			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
+			if (
+				outlookVersion
+				and outlookVersion > 9
+				and obj.event_objectID==winUser.OBJID_CLIENT
+				and obj.event_childID==0
+			):
 				clsList.insert(0,SuperGridClient2010)
 		if (windowClassName == "AfxWndW" and controlID==109) or (windowClassName in ("WeekViewWnd","DayViewWnd")):
 			clsList.insert(0,CalendarView)
@@ -245,67 +248,6 @@ class SuperGridClient2010(IAccessible):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		obj.parent=self.parent
 		eventHandler.executeEvent("gainFocus",obj)
-
-class MessageList_pre2003(IAccessible):
-
-	def _get_name(self):
-		if hasattr(self,'curMessageItem'):
-			return self.curMessageItem.msg.parent.name
-
-	def _get_role(self):
-		return controlTypes.ROLE_LIST
-
-	def _get_firstChild(self):
-		return getattr(self,"curMessageItem",None)
-
-	def _get_children(self):
-		child=getattr(self,"curMessageItem",None)
-		if child:
-			return [child]
-		else:
-			return []
-
-	def event_gainFocus(self):
-		try:
-			msg=self.nativeOm.ActiveExplorer().selection[0]
-		except:
-			msg=None
-			pass
-		if msg:
-			self.curMessageItem=MessageItem(self,msg)
-		super(MessageList_pre2003,self).event_gainFocus()
-		if msg:
-			eventHandler.executeEvent("gainFocus",self.curMessageItem)
-
-	def script_moveByMessage(self,gesture):
-		if hasattr(self,'curMessageItem'):
-			oldEntryID=self.curMessageItem.msg.entryID
-		else:
-			oldEntryID=None
-		gesture.send()
-		try:
-			msg=self.nativeOm.ActiveExplorer().selection[0]
-		except:
-			msg=None
-			pass
-		if msg:
-			messageItem=MessageItem(self,msg)
-			newEntryID=messageItem.msg.entryID
-			if newEntryID!=oldEntryID:
-				self.curMessageItem=messageItem
-				eventHandler.executeEvent("gainFocus",messageItem)
-
-	__moveByMessageGestures = (
-		"kb:downArrow",
-		"kb:upArrow",
-		"kb:home",
-		"kb:end",
-		"kb:delete",
-	)
-
-	def initOverlayClass(self):
-		for gesture in self.__moveByMessageGestures:
-			self.bindGesture(gesture, "moveByMessage")
 
 class MessageItem(Window):
 

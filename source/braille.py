@@ -10,7 +10,6 @@ import itertools
 import os
 import driverHandler
 import pkgutil
-import importlib
 import ctypes.wintypes
 import threading
 import time
@@ -314,14 +313,14 @@ def NVDAObjectHasUsefulText(obj):
 
 def _getDisplayDriver(moduleName, caseSensitive=True):
 	try:
-		return importlib.import_module("brailleDisplayDrivers.%s" % moduleName, package="brailleDisplayDrivers").BrailleDisplayDriver
+		return __import__("brailleDisplayDrivers.%s" % moduleName, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 	except ImportError as initialException:
 		if caseSensitive:
 			raise initialException
 		for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
 			if name.startswith('_') or name.lower() != moduleName.lower():
 				continue
-			return importlib.import_module("brailleDisplayDrivers.%s" % name, package="brailleDisplayDrivers").BrailleDisplayDriver
+			return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 		else:
 			raise initialException
 
@@ -1591,10 +1590,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def getTether(self):
 		return self._tether
 
-	def _get_tether(self):
-		"""@deprecated: Use L{getTether instead."""
-		return self.getTether()
-
 	def setTether(self, tether, auto=False):
 		if auto and not self.shouldAutoTether:
 			return
@@ -1604,10 +1599,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		self._tether = tether
 		self.mainBuffer.clear()
-
-	def _set_tether(self, tether):
-		"""@deprecated: Use L{setTether instead."""
-		self.setTether(tether, auto=False)
 
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
@@ -1743,7 +1734,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			if self.tether == self.TETHER_FOCUS:
+			if self.getTether() == self.TETHER_FOCUS:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
 			else:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
@@ -1844,7 +1835,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+			if self.getTether() == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
 				# Check focusToHardLeft for every region.
 				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
 				if region.focusToHardLeft:
@@ -1973,7 +1964,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or not api.getDesktopObject():
 			# Braille is disabled or focus/review hasn't yet been initialised.
 			return
-		if self.tether == self.TETHER_FOCUS:
+		if self.getTether() == self.TETHER_FOCUS:
 			self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 		else:
 			self.handleReviewMove(shouldAutoTether=False)

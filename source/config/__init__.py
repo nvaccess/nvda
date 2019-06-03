@@ -850,21 +850,6 @@ class ConfigManager(object):
 		"""
 		return conf.validator._parse_with_caching(spec)
 
-	def getConfigValidationParameter(self, keyPath, validationParameter):
-		"""@deprecated: Use L{getConfigValidation} instead.
-		Get a config validation parameter
-		This can be used to get the min, max, or other values for a config key.
-
-		Note: does not work for default, convertFunction, or options. Use L{getConfigValidation} instead.
-
-		@param keyPath: a sequence of the identifiers leading to the config key. EG ("braille", "messageTimeout")
-		@param validationParameter: the parameter to return the value for. EG "max"
-		@type validationParameter: string
-		"""
-		spec = self._getSpecFromKeyPath(keyPath)
-		parsedSpec = self._getConfigValidation(spec)
-		return parsedSpec[2][validationParameter]
-
 	def getConfigValidation(self, keyPath):
 		"""Get a config validation details
 		This can be used to get a L{ConfigValidationData} containing the type, default, options list, or
@@ -875,8 +860,8 @@ class ConfigManager(object):
 		spec = self._getSpecFromKeyPath(keyPath)
 		parsedSpec = self._getConfigValidation(spec)
 		data = ConfigValidationData(parsedSpec[0])
-		data.args = [1]
-		data.kwargs = [2]
+		data.args = parsedSpec[1]
+		data.kwargs = parsedSpec[2]
 		data.default = conf.validator.get_default_value(spec)
 		return data
 

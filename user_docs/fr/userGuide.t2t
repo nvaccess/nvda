@@ -1,4 +1,4 @@
-Guide de l'utilisateur de NVDA NVDA_VERSION
+NVDA NVDA_VERSION - Guide de l'utilisateur
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -29,7 +29,7 @@ Ses points forts sont :
 - La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
 - L'annonce des contrôles et du texte durant l'utilisation de gestes tactiles
-- La prise en charge des interfaces d'accessibilité communes telles que, Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
+- La prise en charge des interfaces d'accessibilité communes telles que Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
 - Support de l'invite de commandes Windows et des applications en mode console.
 -
 
@@ -472,7 +472,18 @@ Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, 
 
 + Le mode Navigation +[BrowseMode]
 Les documents complexes, tels que les pages web, sont représentés sous NVDA en utilisant le Mode Navigation.
-Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, les messages HTML sous Microsoft Outlook, Google Chrome, Adobe Reader et Adobe Flash.
+Cela inclut les documents dans les applications suivantes :
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Les messages HTML sous Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Les livres supportés sous Amazon Kindle pour PC
+-
 Le mode navigation est aussi disponible en option sous Microsoft Word.
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
@@ -493,7 +504,7 @@ De plus, vous pouvez aussi passer manuellement NVDA en mode formulaire, après q
 | Bascule entre mode formulaire et mode navigation | NVDA+espace | Bascule entre le mode formulaire et le mode navigation |
 | Quitter le mode formulaire | échap | Retourne en mode navigation si le mode formulaire a préalablement été activé automatiquement |
 | Réactualiser le document | NVDA+f5 | Recharge le document en cours, (utile si le contenu de la page semble incomplet. Non disponible sous Microsoft Word et Outlook.) |
-| Rechercher | NVDA+contrôle+f | Affiche un dialogue qui vous permet de rechercher du texte dans le document courant |
+| Rechercher | NVDA+contrôle+f | Affiche un dialogue qui vous permet de rechercher du texte dans le document courant. Voir [chercher du texte #SearchingForText] pour plus d'information |
 | Rechercher suivant | NVDA+f3 | Recherche l'occurrence suivante du texte que vous avez préalablement recherché dans le document |
 | Rechercher précédent | NVDA+maj+f3 | Recherche l'occurrence précédente du texte que vous avez préalablement recherché dans le document |
 | Ouvrir description longue | NVDA+d | Ouvre une nouvelle fenêtre contenant une longue description de l'élément sur lequel vous êtes s'il en a une. | 
@@ -550,6 +561,22 @@ Quand vous avez choisi un élément, des boutons vous permettent de vous y rendr
 %kc:beginInclude
 || Nom | Touche | Description |
 | Liste d'éléments du document | NVDA+f7 | Liste les différents types d'éléments du document courant |
+%kc:endInclude
+
+++ Chercher du texte ++[SearchingForText]
+Ce dialogue vous permet de rechercher des termes dans le document courant.
+Dans le champ "Entrez le texte à rechercher", le texte à trouver peut être saisi.
+Quand vous êtes dans le champ de texte, vous pouvez également utiliser les flèches haut et bas pour sélectionner des termes précédemment recherchés.
+La case à cocher "Respecter la casse" force la recherche à différencier les lettres majuscules et minuscules.
+Par exemple, avec "Respecter la casse" coché vous pouvez trouver "NV Access" mais pas "nv access".
+Le respect de la casse n'est pas sauvegardé dans l'historique de recherche.
+Au redémarrage de NVDA, l'historique de recherche est effacé.
+Utilisez les touches suivantes pour effectuer des recherches :
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Rechercher du texte | NVDA+contrôle+f | Ouvre le dialogue de recherche |
+| Trouver l'occurrence suivante | NVDA+f3 | recherche l'occurrence suivante du terme en cours de recherche |
+| Trouver l'occurrence précédente | NVDA+maj+f3 | recherche l'occurrence précédente du terme en cours de recherche |
 %kc:endInclude
 
 ++ Les Objets Embarqués ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Quand cette case est cochée, NVDA annonce le texte présent sous le pointeur so
 Si NVDA est configuré pour annoncer le texte sous la souris quand vous la déplacez, cette option vous permet de choisir précisément la quantité de texte qui sera lue. 
 Les options sont caractère, mot, ligne ou paragraphe.
 
+Pour activer la résolution d'unités de texte de n'importe où, veuillez assigner un geste de commande personnalisé en utilisant le dialogue [Gestes de Commandes #InputGestures].
+
 ==== Quand la souris entre dans un objet, annoncer son type ====[MouseSettingsRole]
 Quand cette case est cochée, NVDA annonce le type de l'objet quand la souris y entre.
 
@@ -1503,8 +1532,16 @@ Ce champ définit le nombre de lignes dont on se déplace par appui sur "Page Pr
 ==== Utiliser la disposition telle qu'à l'écran ====[BrowseModeSettingsScreenLayout]
 Raccourci clavier : NVDA+v
 
-Cette option vous permet d'indiquer si vous voulez que les objets tels que les liens ou autres champs soient placés sur leur propre ligne, ou s'ils doivent apparaître tels qu'à l'écran. Si l'option est activée, la représentation correspondra à l'aspect visuel. Sinon, chaque champ sera placé sur sa propre ligne.
+Cette option vous permet d'indiquer si vous voulez que les objets tels que les liens ou autres champs soient placés sur leur propre ligne, ou s'ils doivent apparaître tels qu'à l'écran.
+Si l'option est activée, la représentation correspondra à l'aspect visuel. Sinon, chaque champ sera placé sur sa propre ligne.
 
+==== Activer le mode navigation au chargement de la page ====[BrowseModeSettingsEnableOnPageLoad]
+Cette case à cocher permet de choisir si le mode navigation doit être activé automatiquement au chargement d'une page.
+Quand cette option est désactivée, le mode navigation peut quand-même être activé manuellement sur les pages ou documents où il est supporté.
+Veuillez consulter la section [Mode navigation #BrowseMode] pour avoir une liste des applications supportées par le mode navigation.
+Notez que cette opption ne s'applique pas aux situations où le mode navigation est toujours optionnel, par exemple sous Microsoft Word.
+Cette option est activée par défaut.
+ 
 ==== Dire tout automatiquement au chargement des pages ====[BrowseModeSettingsAutoSayAll]
 Cette case à cocher active ou désactive la lecture automatique des pages après leur chargement en mode navigation.
 Cette option est activée par défaut.
@@ -1631,7 +1668,17 @@ Quand cette option est activée, NVDA essaie d'utiliser l'API d'accessibilité M
 Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de message de Miicrosoft Outlook.
  Pour les versions les plus récentes de Microsoft Office 2016/365 exécutées sous windows 10, le support UI Automation est assez complet pour fournir un accès aux documents Microsoft Word presque égal au support existant de  Microsoft Word par NVDA, avec l'avantage que la réactivité est nettement accrue.
 Cependant, il peut exister certaines informations qui ne sont pas exposées, ou exposées incorrectement sous certaines versions de Microsoft Office, ce qui signifie qu'on ne peut pas toujours se fier à ce support UI automation.
-Nous ne recommandons pas encore que la majorité des utilisateurs activent cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
+Nous ne recommandons pas encore à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
+
+==== Positionner automatiquement le focus système aux éléments susceptibles d'être mis en focus en mode navigation ====[BrowseModeSettingsAutoFocusFocusableElements]
+Touche : NVDA+8
+
+Activée par défaut, cette option vous permet de choisir si le focus système doit automatiquement être amené aux éléments qui peuvent prendre le focus système (liens, champs de formulaire, etc.) quand vous parcourez un contenu avec le curseur du mode navigation.
+Quand elle est activée, c'est le comportement par défaut de NVDA 2019.1 et des versions précédentes.
+Quand elle est désactivée, les éléments "focussables" ne seront pas automatiquement mis en focus quand ils seront sélectionnés avec le curseur de mode navigation.
+Cela peut résulter en une expérience de navigation plus rapide et une meilleure réactivité en mode navigation.
+Le focus est toujours mis à jour pour un élément donné quand on interagit avec lui (par exemple quand on presse un bouton, quand on coche une case à cocher).
+Cette fonctionnalité est expérimentale jusqu'à NVDA 2019.2.
 
 ==== Délai d'attente de mouvement du curseur (en ms) ====[AdvancedSettingsCaretMoveTimeout]
 Cette option vous permet de configurer le nombre de millisecondes durant lequel NVDA attendra le déplacement du curseur (point d'insertion) dans les contrôles de texte éditable.
@@ -1686,6 +1733,7 @@ La langue pour laquelle la prononciation des symboles est en cours d'édition se
 Notez que ce dialogue tient compte de l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" qui se trouve dans la catégorie [Parole #SpeechSettings] du dialogue Paramètres. Il utilise la langue de la voix plutôt que les paramètres vocaux globaux de NVDA quand cette option est activée.
 
 Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
+Vous pouvez filtrer les symboles en entrant le symbole ou une partie du remplacement du symbole dans le champ d'édition Filtrer par.
 
 - Le champ "Remplacement" vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
 - En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
@@ -1751,7 +1799,7 @@ NVDA vous permet de faire cela en utilisant des profils de configuration.
 Un profil de configuration contient uniquement les paramètres qui sont modifiés alors que le profil est en cours d'édition.
 La plupart des paramètres peuvent être modifiés dans les profils de configuration à l'exception de ceux de la catégorie Général du dialogue [Paramètres #NVDASettings], qui s'appliquent à l'ensemble de NVDA.
 
-Les profils de configuration peuvent être activés manuellement.
+Les profils de configuration peuvent être activés manuellement soit à partir d'un dialogue soit en utilisant un geste de commande personnalisé.
 Ils peuvent également être activés automatiquement grâce à des déclencheurs tels que le passage à une application particulière.
 
 +++ Gestion Basique +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Par exemple, vous voudrez peut-être modifier un profil activé manuellement ou 
 Vous pouvez le faire en cochant la case "Désactiver temporairement tous les déclencheurs" dans le dialogue "Profils de configuration".
 
 Pour activer ou désactiver les déclencheurs de n'importe où, veuillez assigner un geste de commande en utilisant le dialogue [Gestes de Commandes #InputGestures].
+
++++ Activer un profil en utilisant les gestes de commandes +++[ConfigProfileGestures]
+Pour chaque profil que vous ajoutez, vous pouvez assigner un ou plusieurs gestes de commandes pour l'activer.
+Par défaut, les profils de configuration n'ont pas de geste de commande assigné.
+Vous pouvez ajouter des gestes pour activer un profil en utilisant le dialogue [Gestes de Commandes #InputGestures].
+Chaque profil a sa propre entrée dans la catégorie profils de configuration.
+Quand vous renommez un profil, tous les gestes que vous avez ajoutés restent disponibles.
+La suppression d'un profil entraîne la suppression de tous les gestes qui lui sont associés.
 
 ++ Emplacement des Fichiers de Configuration ++[LocationOfConfigurationFiles]
 Les versions portables de NVDA enregistrent tous les paramètres et extensions dans un répertoire nommé "userConfig" situé dans le répertoire de votre copie portable de NVDA.

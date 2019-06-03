@@ -7,7 +7,6 @@
 
 import os
 import pkgutil
-import importlib
 import config
 import baseObject
 import winVersion
@@ -19,7 +18,6 @@ import speechDictHandler
 import extensionPoints
 import synthDrivers
 import driverHandler
-import warnings
 from driverHandler import StringParameterInfo # Backwards compatibility
 
 _curSynth=None
@@ -40,7 +38,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
+	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -140,37 +138,6 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 		return
 	_curSynth.loadSettings(onlyChanged=True)
 
-class SynthSetting(driverHandler.DriverSetting):
-	"""@Deprecated: use L{driverHandler.DriverSetting} instead.
-	"""
-
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,displayName=None):
-		warnings.warn("synthDriverHandler.SynthSetting is deprecated. Use driverHandler.DriverSetting instead",
-			DeprecationWarning, stacklevel=3)
-		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName)
-		self.name = name
-
-class NumericSynthSetting(driverHandler.NumericDriverSetting):
-	"""@Deprecated: use L{driverHandler.NumericDriverSetting} instead.
-	"""
-
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10,displayName=None):
-		warnings.warn("synthDriverHandler.NumericSynthSetting is deprecated. Use driverHandler.NumericDriverSetting instead",
-			DeprecationWarning, stacklevel=3)
-		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
-		self.name = name
-
-class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
-	"""@Deprecated: use L{driverHandler.BooleanDriverSetting} instead.
-	"""
-
-	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
-		displayName=None, defaultVal=False):
-		warnings.warn("synthDriverHandler.BooleanSynthSetting is deprecated. Use driverHandler.BooleanDriverSetting instead",
-			DeprecationWarning, stacklevel=3)
-		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName,defaultVal=defaultVal)
-		self.name = name
-
 class SynthDriver(driverHandler.Driver):
 	"""Abstract base synthesizer driver.
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
@@ -189,8 +156,6 @@ class SynthDriver(driverHandler.Driver):
 	L{supportedNotifications} should specify what notifications the synthesizer provides.
 	Currently, the available notifications are L{synthIndexReached} and L{synthDoneSpeaking}.
 	Both of these must be supported.
-	@ivar supportedSettings: The settings supported by the synthesiser.
-	@type supportedSettings: list or tuple of L{SynthSetting}
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
@@ -320,28 +285,6 @@ class SynthDriver(driverHandler.Driver):
 				log.debugWarning("Unknown synth command: %s"%item)
 			else:
 				log.error("Unknown item in speech sequence: %s"%item)
-
-	def speakText(self, text, index=None):
-		"""Speak some text.
-		This method is deprecated. Instead implement speak.
-		@param text: The chunk of text to speak.
-		@type text: str
-		@param index: An index (bookmark) to associate with this chunk of text, C{None} if no index.
-		@type index: int
-		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
-		"""
-		raise NotImplementedError
-
-	def speakCharacter(self, character, index=None):
-		"""Speak some character.
-		This method is deprecated. Instead implement speak.
-		@param character: The character to speak.
-		@type character: str
-		@param index: An index (bookmark) to associate with this chunk of speech, C{None} if no index.
-		@type index: int
-		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
-		"""
-		self.speakText(character,index)
 
 	def cancel(self):
 		"""Silence speech immediately.

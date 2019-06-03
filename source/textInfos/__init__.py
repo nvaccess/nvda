@@ -16,6 +16,7 @@ import re
 import baseObject
 import config
 import controlTypes
+import locationHelper
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -158,42 +159,6 @@ POSITION_LAST="last"
 POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
-
-class Point(object):
-	"""Represents a point on the screen.
-	This is used when associating a point on the screen with a piece of text.
-	@Deprecated: use L{locationHelper.Point} instead.
-	"""
-
-	def __init__(self,x,y):
-		"""
-		@param x: the x coordinate
-		@type x: int
-		@param y: The y coordinate
-		@type y: int
-		"""
-		self.x=x
-		self.y=y
-
-class Rect(object):
-	"""Represents a rectangle on the screen.
-	@Deprecated: use L{locationHelper.Rect} instead."""
-
-	def __init__(self, left, top, right, bottom):
-		"""
-		@param left: The x coordinate of the upper left corner of the rectangle.
-		@type left: int
-		@param top: The y coordinate of the upper left corner of the rectangle.
-		@type top: int
-		@param right: The x coordinate of the lower right corner of the rectangle.
-		@type right: int
-		@param bottom: The y coordinate of the lower right corner of the rectangle.
-		@type bottom: int
-		"""
-		self.left = left
-		self.top = top
-		self.right = right
-		self.bottom = bottom
 
 class Bookmark(baseObject.AutoPropertyObject):
 	"""Represents a static absolute position in some text.
@@ -459,6 +424,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_pointAtStart(self):
 		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
 		The base implementation uses L{boundingRects}.
+		@rtype: L{locationHelper.Point}
 		"""
 		if self.isCollapsed:
 			copy = self.copy()
