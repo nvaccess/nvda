@@ -274,12 +274,18 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus=api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if (
 			not obj
@@ -287,7 +293,6 @@ class UIAHandler(COMObject):
 			or (NVDAEventName=="liveRegionChange" and not obj._shouldAllowUIALiveRegionChangeEvent)
 		):
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
@@ -329,16 +334,21 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
 		if not NVDAEventName:
 			return
-		if not self.isNativeUIAElement(sender):
+		focus = api.getFocusObject()
+		import NVDAObjects.UIA
+		if (
+			isinstance(focus, NVDAObjects.UIA.UIA)
+			and self.clientObject.compareElements(focus.UIAElement, sender)
+		):
+			pass
+		elif not self.isNativeUIAElement(sender):
 			return
 		window=self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
-		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
-		focus=api.getFocusObject()
 		if obj==focus:
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
