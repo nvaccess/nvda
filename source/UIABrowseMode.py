@@ -442,9 +442,3 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		except LookupError:
 			return False
 		return True
-
-	def event_caret(self,obj,nextHandler):
-		if self.passThrough:
-			nextHandler()
-
-
