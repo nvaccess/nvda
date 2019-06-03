@@ -8,11 +8,10 @@ import comtypes.client
 import struct
 import ctypes
 from comtypes import COMError
-import pythoncom
-import win32clipboard
 import oleTypes
 import colors
 import globalVars
+import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
@@ -578,15 +577,9 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		except comtypes.COMError:
 			dataObj=None
 		if dataObj:
-			try:
-				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-				medium=dataObj.GetData(format)
-				buf=ctypes.create_string_buffer(medium.data)
-				buf=ctypes.cast(buf,ctypes.c_wchar_p)
-				label=buf.value
-			except:
-				pass
+			text=comtypes.BSTR()
+			res=NVDAHelper.localLib.getOleClipboardText(dataObj,ctypes.byref(text));
+			label=text.value
 		if label:
 			return label
 		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").

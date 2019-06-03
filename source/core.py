@@ -303,7 +303,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
-		#Just define these constants here, so we don't have to import win32con
+		# Windows constants for power / display changes
 		WM_POWERBROADCAST = 0x218
 		WM_DISPLAYCHANGE = 0x7e
 		PBT_APMPOWERSTATUSCHANGE = 0xA

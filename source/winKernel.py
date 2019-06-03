@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import *
@@ -329,3 +330,56 @@ def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desi
 
 PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
 THREAD_SET_CONTEXT = 16
+
+GMEM_MOVEABLE=2
+
+class HGLOBAL(HANDLE):
+	"""
+	A class for the HGLOBAL Windows handle type.
+	This class can auto-free the handle when it goes out of scope, 
+	and also contains a classmethod for alloc,
+	And a context manager compatible method for locking.
+	"""
+
+	def __init__(self,h,autoFree=True):
+		"""
+		@param h: the raw Windows HGLOBAL handle
+		@param autoFree: True by default, the handle will automatically be freed with GlobalFree 
+		when this object goes out of scope.
+		"""
+		super(HGLOBAL,self).__init__(h)
+		self._autoFree=autoFree
+
+	def __del__(self):
+		if self and self._autoFree:
+			windll.kernel32.GlobalFree(self)
+
+	@classmethod
+	def alloc(cls,flags,size):
+		"""
+		Allocates global memory with GlobalAlloc
+		providing it as an instance of this class.
+		This method Takes the same arguments as GlobalAlloc.
+		"""
+		h=windll.kernel32.GlobalAlloc(flags,size)
+		return cls(h)
+
+	@contextlib.contextmanager
+	def lock(self):
+		"""
+		Used as a context manager,
+		This method locks the global memory with GlobalLock,
+		providing the usable memory address to the body of the 'with' statement.
+		When the body completes, GlobalUnlock is automatically called.
+		"""
+		try:
+			yield windll.kernel32.GlobalLock(self)
+		finally:
+			windll.kernel32.GlobalUnlock(self)
+
+	def forget(self):
+		"""
+		Sets this HGLOBAL value to NULL, forgetting the existing value.
+		Necessary if you pass this HGLOBAL to an API that takes ownership and therefore will handle freeing itself.
+		"""
+		self.value=None
