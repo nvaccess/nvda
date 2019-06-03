@@ -15,6 +15,7 @@ What's New in NVDA
 - inputCore.InputGesture.logIdentifier property has been removed. Now use inputCore.InputGesture.identifiers[0] instead.
 - speakText and speakCharacter methods on synthDriver objects are no longer supported. this functionality is handled by SynthDriver.speak now.
 - SynthSetting classes in synthDriverHandler have been removed. Now use driverHandler.DriverSetting classes instead.
+- As NVDA no longer depends on pyWin32, modules such as win32api and win32con are no longer available to add-ons. win32api calls can be replaced with direct calls to win32 dll functions via ctypes, and win32con constants should be defined at the top of your files. (#9639)
 
 
 = 2019.3 =

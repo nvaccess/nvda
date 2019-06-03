@@ -208,8 +208,6 @@ setup(
 			"nvdaBuiltin",
 			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.
 			"bisect",
-			# Also, the previous service executable used win32api, which some add-ons use for various purposes.
-			"win32api",
 		],
 	}},
 	data_files=[
