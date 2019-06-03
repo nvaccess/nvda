@@ -76,7 +76,9 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		instanceItems = SettingsDialog._instances.items()
+		# #9067 (Py3 review required): originally calls WeakKeyDictionary.items.
+		# Therefore wrap this inside a list call.
+		instanceItems = list(SettingsDialog._instances.items())
 		instancesOfSameClass = (
 			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
 		)
@@ -1071,7 +1073,9 @@ class DriverSettingsMixin(object):
 		setattr(
 			self,
 			"_%ss"%setting.id,
-			getattr(self.driver,"available%ss"%setting.id.capitalize()).values()
+			# #9067 (Py3 review required): settings are stored as an ordered dict.
+			# Therefore wrap this inside a list call.
+			list(getattr(self.driver,"available%ss"%setting.id.capitalize()).values())
 		)
 		l=getattr(self,"_%ss"%setting.id)
 		labeledControl=guiHelper.LabeledControlHelper(

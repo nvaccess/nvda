@@ -636,7 +636,9 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 		if self._suspendedTriggers:
 			# Remove any suspended triggers referring to this profile.
-			for trigger in self._suspendedTriggers.keys():
+			# #9067 (Py3 review required): originally called dict.keys (note that triggers is a dictionary).
+			# Therefore wrap this inside a list call unless it can be simplified further.
+			for trigger in list(self._suspendedTriggers.keys()):
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
 

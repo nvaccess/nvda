@@ -513,7 +513,9 @@ def getCodeAddon(obj=None, frameDist=1):
 		raise AddonError("Code does not belong to an addon package.")
 	curdir = dir
 	while curdir not in _getDefaultAddonPaths():
-		if curdir in _availableAddons.keys():
+		# #9067 (Py3 review required): originally called dict.keys.
+		# Therefore wrap this inside a list call.
+		if curdir in list(_availableAddons.keys()):
 			return _availableAddons[curdir]
 		curdir = os.path.abspath(os.path.join(curdir, ".."))
 	# Not found!

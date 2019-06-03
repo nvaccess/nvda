@@ -462,7 +462,9 @@ class SpeechSymbolProcessor(object):
 					symbol.displayName = sourceSymbol.displayName
 
 		# Set defaults for any fields not explicitly set.
-		for symbol in symbols.values():
+		# #9067 (Py3 review required): originally called dict.values.
+		# Therefore wrap this inside a list call.
+		for symbol in list(symbols.values()):
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
 				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(

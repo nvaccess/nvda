@@ -832,7 +832,9 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	# #9067 (Py3 review required): originally, this calls dict.keys, which in Python 2 returns a list and Python 3 assumes iterators.
+	# Therefore wrap this around a list call.
+	for eventType in list(winEventIDsToNVDAEventNames.keys()):
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)

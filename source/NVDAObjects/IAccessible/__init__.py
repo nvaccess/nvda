@@ -1366,7 +1366,9 @@ the NVDAObject for IAccessible
 					del info['indexInGroup']
 					del info['similarItemsInGroup']
 				# 0 means not applicable, so remove it.
-				for key, val in info.items():
+				# #9067 (Py3 review required): originally this called dict.items, which returns iterators in Python 3.
+				# Therefore wrap this inside a list call.
+				for key, val in list(info.items()):
 					if not val:
 						del info[key]
 				return info
