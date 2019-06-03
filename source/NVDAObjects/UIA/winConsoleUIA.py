@@ -19,7 +19,6 @@ from ..behaviors import Terminal
 class consoleUIATextInfo(UIATextInfo):
 	_expandCollapseBeforeReview = False
 	_isCaret = False
-	_expandedToWord = False
 
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
@@ -85,26 +84,25 @@ class consoleUIATextInfo(UIATextInfo):
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD:
-			self._expandedToWord = True
+			# UIA doesn't implement word movement, so we need to do it manually.
+			offset = self._getCurrentOffsetInThisLine()
+			start, end = self._getWordOffsetsInThisLine(offset)
+			wordEndPoints = (
+				(offset - start) * -1,
+				end - offset - 1
+			)
+			self._rangeObj.MoveEndpointByUnit(
+				UIAHandler.TextPatternRangeEndpoint_Start,
+				UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+				wordEndPoints[0]
+			)
+			self._rangeObj.MoveEndpointByUnit(
+				UIAHandler.TextPatternRangeEndpoint_End,
+				UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+				wordEndPoints[1]
+			)
 		else:
-			self._expandedToWord = False
 			return super(consoleUIATextInfo, self).expand(unit)
-
-	def collapse(self):
-		self._expandedToWord = False
-		return super(consoleUIATextInfo, self).collapse()
-
-	def getTextWithFields(self, formatConfig=None):
-		if self._expandedToWord:
-			return [self.text]
-		return super(consoleUIATextInfo, self).getTextWithFields(
-			formatConfig=formatConfig
-		)
-
-	def _get_text(self):
-		if self._expandedToWord:
-			return self._getCurrentWord()
-		return super(consoleUIATextInfo, self)._get_text()
 
 	def _getCurrentOffsetInThisLine(self):
 		lineInfo = self.copy()
