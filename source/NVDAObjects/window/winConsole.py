@@ -5,7 +5,7 @@
 # Copyright (C) 2019 Bill Dengler
 
 import warnings
-from ..IAccessible.winConsoleLegacy import winConsoleLegacy as WinConsole
+from ..IAccessible.winConsoleLegacy import WinConsoleLegacy as WinConsole
 
-warnings.warn("NVDAObjects.window.winConsole is deprecated. Use NVDAObjects.IAccessible.winConsoleLegacy or NVDAObjects.UIA.winConsoleUIA instead",
+warnings.warn("NVDAObjects.window.winConsole is deprecated. Use NVDAObjects.IAccessible.WinConsoleLegacy or NVDAObjects.UIA.winConsoleUIA instead",
 	DeprecationWarning, stacklevel=3)
