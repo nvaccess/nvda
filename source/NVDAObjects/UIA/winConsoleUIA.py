@@ -36,22 +36,20 @@ class consoleUIATextInfo(UIATextInfo):
 				)
 
 	def move(self, unit, direction, endPoint=None):
+		oldRange=None
 		if not self._isCaret:
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
-			if self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End
-			) >= 0:
-				return 0
+			if visiRanges.length > 0:
+				firstVisiRange = visiRanges.GetElement(0)
+				lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+				oldRange=self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
-			offset = self._getCurrentOffset()
+			offset = self._getCurrentOffsetInThisLine()
 			index = 1 if direction > 0 else 0
-			start, end = self._getWordOffsets(offset)
+			start, end = self._getWordOffsetsInThisLine(offset)
 			wordMoveDirections = (
 				(offset - start) * -1,
 				end - offset
@@ -64,11 +62,26 @@ class consoleUIATextInfo(UIATextInfo):
 			if res != 0:
 				return direction
 			else:
-				if self.move(textInfos.UNIT_CHARACTER, -1):
+				if self.move(textInfos.UNIT_CHARACTER, -1): # Reset word boundaries to move to the previous word
 					return self.move(unit, direction, endPoint=endPoint)
 				else:
 					return res
-		return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+		res = super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+		if oldRange and (
+			self._rangeObj.CompareEndPoints(
+				UIAHandler.TextPatternRangeEndpoint_Start,
+				firstVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_Start
+			) < 0
+			or self._rangeObj.CompareEndPoints(
+				UIAHandler.TextPatternRangeEndpoint_Start,
+				lastVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_End
+			) >= 0
+		):
+			self._rangeObj = oldRange
+			return 0
+		return res
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD:
@@ -93,7 +106,7 @@ class consoleUIATextInfo(UIATextInfo):
 			return self._getCurrentWord()
 		return super(consoleUIATextInfo, self)._get_text()
 
-	def _getCurrentOffset(self):
+	def _getCurrentOffsetInThisLine(self):
 		lineInfo = self.copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo = self.copy()
@@ -111,7 +124,7 @@ class consoleUIATextInfo(UIATextInfo):
 				break
 		return res
 
-	def _getWordOffsets(self, offset):
+	def _getWordOffsetsInThisLine(self, offset):
 		lineInfo = self.copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		lineText = lineInfo.text
@@ -140,8 +153,8 @@ class consoleUIATextInfo(UIATextInfo):
 		lineInfo = self.copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		lineText = lineInfo.text
-		offset = self._getCurrentOffset()
-		start, end = self._getWordOffsets(offset)
+		offset = self._getCurrentOffsetInThisLine()
+		start, end = self._getWordOffsetsInThisLine(offset)
 		return lineText[start:end]
 
 
@@ -153,10 +166,7 @@ class winConsoleUIA(Terminal):
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if (
-			self._isTyping
-			and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT
-		):
+		if self._isTyping and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT:
 			return
 		super(winConsoleUIA, self)._reportNewText(line)
 
