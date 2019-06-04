@@ -471,8 +471,19 @@ Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el
 %kc:endInclude
 
 + Modo Exploración +[BrowseMode]
-Los documentos complejos de sólo lectura, tales como páginas Web, son representados en NVDA con un Modo Exploración. 
-Esto incluye documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensajes HTML en Microsoft Outlook, Google Chrome, Adobe Reader y Adobe Flash.
+Los documentos complejos de sólo lectura, tales como páginas Web, se representan en NVDA con un Modo Exploración. 
+Esto incluye documentos en las siguientes aplicaciones:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Mmensajes HTML en Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash.
+- Libros admitidos en Amazon Kindle for PC
+-
 El modo Exploración también está opcionalmente disponible para documentos de Microsoft Word.
 
 En el Modo Exploración, el contenido del documento está disponible mediante una representación plana por el que te puedes mover con las teclas de cursor como si se tratara de un documento de texto normal. 
@@ -493,7 +504,7 @@ Además, puedes forzar manualmente el modo foco, después de lo cual permanecer�
 | Alternar modos exploración/foco | NVDA+espacio | Conmuta entre modo foco y modo Exploración |
 | Salir de modo foco | escape | Cambia a modo exploración si el modo foco anteriormente estaba cambiado automáticamente |
 | Refrescar documento en modo exploración | NVDA+f5 | Recarga el contenido del documento actual (útil si ciertos contenidos parecen estar desaparecidos del documento. No disponible en Microsoft Word y Outlook.) |
-| Buscar | NVDA+control+f | Despliega un diálogo en el que puedes teclear algún texto a encontrar en el  documento actual |
+| Buscar | NVDA+control+f | Despliega un diálogo en el que puedes teclear algún texto a encontrar en el  documento actual. Consulta [buscar texto #SearchingForText] para más información. |
 | Buscar siguiente | NVDA+f3 | Encuentra la siguiente  ocurrencia del texto en el documento que buscaste anteriormente |
 | Buscar anterior | NVDA+shift+f3 | Encuentra la ocurrencia anterior del texto en el documento buscado anteriormente |
 | abrir descripción larga | NVDA+d | Abre una ventana nueva conteniendo una descripción larga para el elemento sobre el que esté si tiene una. | 
@@ -550,6 +561,22 @@ Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
 | Lista de elementos del Modo Exploración | NVDA+f7 | Lista  varios tipos de elementos en el documento actual |
+%kc:endInclude
+
+++ Buscar texto ++[SearchingForText]
+Este diálogo te permite buscar términos en el documento actual.
+En el campo "Teclea el texto que desees encontrar", puede introducirse el texto a encontrar.
+Mientras estés en el campo de texto, también puedes utilizar las flechas arriba y abajo para seleccionar los términos buscados anteriormente.
+La casilla de verificación "Sensible a las mayúsculas" hace que la búsqueda considere letras en mayúsculas y en minúsculas de modo diferente.
+Por ejemplo, con "Sensible a las mayúsculas" seleccionada puedes encontrar "NV Access" pero no "nv access".
+No se guardarán las diferencias de caso en el histórico de búsquedas.
+Cuando se reinicie NVDA, la lista de los términos buscados anteriormente se vacía.
+Utiliza las siguientes teclas para realizar  búsquedas:
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Buscar texto | NVDA+control+f | Abre el diálogo buscar  |
+| Buscar siguiente | NVDA+f3 | Busca la siguiente ocurrencia del término buscado actual|
+| Buscar anterior | NVDA+shift+f3 | Busca la ocurrencia anterior del término buscado actual |
 %kc:endInclude
 
 ++ Objetos Integrados ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Cuando está marcada significa que NVDA anunciará el texto actualmente bajo el 
 Si NVDA está configurado para anunciar el texto bajo el ratón según lo muevas, esta opción te permite elegir exactamente cuánto texto será verbalizado. 
 Las opciones son carácter, palabra, línea y párrafo.
 
+Para cambiar la unidad de resolución de texto desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [Diálogo Gestos de entrada #InputGestures].
+
 ==== Anunciar rol cuando el ratón entra en los Objetos ====[MouseSettingsRole]
 Si esta casilla de verificación está marcada, NVDA anunciará el rol (tipo) de objeto cuando el ratón se mueva dentro de él.
 
@@ -1502,7 +1531,15 @@ Este campo ajusta la cantidad de líneas que moverás cuando pulses Avance de p�
 ==== Utilizar diseño de pantalla ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
-Esta opción te permite especificar si el contenido en el modo Exploración debería colocar cosas tales como enlaces y otros campos cada uno en su propia línea, o si debería conservarlos en el flujo de texto según sea mostrado visualmente. Si la opción está activada, entonces las cosas permanecerán según sean mostradas visualmente, pero si está desactivada, entonces los campos serán colocados en su propia línea.
+Esta opción te permite especificar si el contenido en el modo Exploración debería colocar cosas tales como enlaces y otros campos cada uno en su propia línea, o si debería conservarlos en el flujo de texto según sea mostrado visualmente.
+Si la opción está activada, entonces las cosas permanecerán según sean mostradas visualmente, pero si está desactivada, entonces los campos serán colocados en su propia línea.
+
+==== Habilitar modo Exploración al cargar Página ====[BrowseModeSettingsEnableOnPageLoad]
+Esta casilla de verificación conmuta si se debería habilitar automáticamente el modo exploración al cargar una página.
+Cuando esta opción esté deshabilitada, el modo exploración todavía puede activarse manualmente en páginas o en documentos donde se admita el modo exploración.
+Consulta la [Sección modo Exploración #BrowseMode] para una lista de las aplicaciones admitidas por el modo Exploración.
+Ten en cuenta que esta opción no se aplica a situaciones donde el modo exploración sea siempre opcional, por ejemplo, en Microsoft Word.
+Esta opción está habilitada por defecto.
 
 ==== Verbalizar Todo Automáticamente al Cargar la Página ====[BrowseModeSettingsAutoSayAll]
 Esta casilla de verificación alterna la verbalización automática de una página después de cargarla en modo exploración.
@@ -1633,6 +1670,16 @@ Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compo
 Sin embargo, puede haber alguna información que no esté expuesta o que esté incorrectamente expuesta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de la UI automation.
 Todavía no recomendamos que la mayoría de los usuarios activen esta opción de forma predeterminada, aunque invitamos a los usuarios de Office 2016/365 a que prueben esta función y nos envíen sus comentarios.
 
+==== Poner Automáticamente el Foco del Sistema en los Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tecla: NVDA+8
+
+Habilitada por omisión, esta opción te permite elegir si el foco del sistema debería ponerse automáticamente en los elementos que puedan tenerlo (enlaces, campos de formulario, etc.) cuando se navegue por el contenido con el cursor del modo exploración.
+Si se habilita, esto representa el comportamiento predeterminado de NVDA como la versión 2019.1 y anteriores.
+Deshabilitando esta opción no se enfocarán automáticamente los elementos enfocables cuando se seleccionen con el cursor del modo exploración.
+Esto podría resultar en una mejor experiencia de navegación y una mejor respuesta en el modo exploración.
+El foco todavía se actualizará al elemento en particular cuando interactúes con él (por ejemplo, pulsando un botón, marcando una casilla de verificación).
+Esta funcionalidad es experimental a partir de NVDA 2019.2.
+
 ==== Tiempo de espera para el movimiento del cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opción te permite configurar el número de milésimas de segundo que NVDA esperará a que el cursor (punto de inserción) se mueva en los controles de texto editables.
 Si ves que NVDA aparenta estar siguiendo incorrectamente el cursor, por ejemplo, parece estar siempre un carácter por detrás o repitiendo líneas, entonces puedes intentar aumentar este valor.
@@ -1686,7 +1733,8 @@ El idioma cuya pronunciación de símbolo vaya a ser editada se mostrará en el 
 Ten en cuenta que este diálogo respeta la opción "Confiar en el Idioma de la voz al procesar símbolos y caracteres" que se encuentra en la [Categoría Voz #SpeechSettings] del diálogo [Opciones de NVDA #NVDASettings] es decir, utiliza el idioma de la voz en lugar de la opción del idioma global de NVDA cuando esta opción esté habilitada.
 
 Para cambiar un símbolo, primero selecciónalo en la lísta de Símbolos.
-
+Puedes filtrar los símbolos introduciendo el símbolo o una parte de su sustitución en el cuadro de edición Filtrar por.
+ 
 - El campo Reemplazar te permite cambiar el texto que debería verbalizarse en lugar de este símbolo.
 - Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cual este símbolo debería verbalizarse.
 - El campo Enviar símbolo actual al sintetizador especifica cuando el propio símbolo (en contraposición con su reemplazo) debería enviarse al sintetizador.
@@ -1751,7 +1799,7 @@ NVDA te permite hacer esto utilizando perfiles de configuración.
 Un perfil de configuración contiene sólo las opciones que se cambian mientras que el perfil esté siendo editado.
 La mayoría de las opciones se pueden cambiar en los perfiles de configuración con excepción de aquellas que estén en la categoría General del cuadro de diálogo [Opciones de NVDA #NVDASettings] , las cuales se aplican a la totalidad de NVDA.
 
-Los perfiles de configuración pueden ser activados manualmente.
+Los perfiles de configuración pueden ser activados manualmente, ya sea desde un cuadro de diálogo o utilizando gestos añadidos personalizados.
 También se pueden activar de forma automática debido a disparadores tales como el cambio a una aplicación en particular.
 
 +++ Manejo Básico +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Por ejemplo, puedes querer editar un perfil activado manualmente o la configurac
 Puedes hacer esto marcando la casilla de verificación Desactivar Temporalmente Todos los Disparadores en el cuadro de diálogo  de perfiles de configuración.
 
 Para activar o desactivar los disparadores desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [Diálogo Gestos de Entrada #InputGestures].
+
++++ Activar un perfil utilizando gestos de entrada +++[ConfigProfileGestures]
+Para cada perfil que añadas, podrás asignar uno o más gestos de entrada para activarlo.
+Por defecto, los perfiles de configuración no tienen gestos de entrada asignados.
+Puedes añadir gestos para activar un perfil utilizando el [diálogo Gestos de Entrada #InputGestures].
+Cada perfil tiene su propia entrada en la categoría perfiles de configuración.
+Cuando renombres un perfil, cualquier gesto que añadieras con anterioridad todavía estará disponible.
+Borrar un perfil eliminará automáticamente el gesto asociado con él.
 
 ++ Ubicación de los Ficheros de Configuración++[LocationOfConfigurationFiles]
 Las versiones portables de NVDA almacenan todas sus opciones y complementos en un directorio llamado userConfig, que se encuentra en el directorio de NVDA.

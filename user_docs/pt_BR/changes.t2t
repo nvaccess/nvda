@@ -4,6 +4,72 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 
+= 2019.2 =
+
+== Novas Características ==
+- A caixa de diálogo procurar agora inclui um histórico das últimas 20 pesquisas. (#8482)
+ - O histórico de pesquisa é apagado quando o NVDA sai ou reinicia.
+- O suporte do NVDA ao Miranda NG funciona com versões mais recentes do cliente. (#9053)
+- Você pode desativar o modo de navegação por padrão, desativando a nova opção "Ativar o modo de navegação no carregamento da página" nas configurações do modo de navegação do NVDA. (#8716)
+ - Observe que quando esta opção está desativada, você ainda pode ativar o modo de navegação manualmente pressionando NVDA+espaço.
+- Agora você pode filtrar símbolos na caixa de diálogo pronúncia de pontuação/símbolos, semelhante a como a filtragem funciona na lista de elementos e no diálogo definir comandos. (#5761)
+- Um comando foi adicionado para alterar a resolução da unidade de texto do mouse (quanto texto será falado quando o mouse se move), não foi atribuído um comando ""[gesto]"" padrão. (#9056)
+- O sintetizador OneCore do Windows agora tem uma opção de aumento especial de velocidade, que permite uma fala significativamente mais rápida. (#7498)
+- A opção de aumento especial de velocidade agora é configurável a partir do anel de configurações do sintetizador para sintetizadores de voz suportados. (#8934)
+- Perfis de configuração agora podem ser ativados manualmente com comandos ""[gestos]"". (#4209)
+ - O comando ""[gesto]"" deve ser configurado no diálogo "Definir comandos".
+- No Eclipse, adicionado suporte para autocompletar no editor de código. (#5667)
+ - Além disso, as informações de Javadoc ""[documentação Java]"" podem ser lidas no editor quando tal estiver presente usando NVDA+d.
+- Adicionado uma opção experimental para o painel de Configurações avançadas que permite que você pare o foco do sistema seguindo o cursor do modo de navegação (definir automaticamente o foco do sistema para elementos que podem ser focalizados). (#2039) Embora isso possa não ser adequado desativar para todos os websites, isso pode resolver:
+ - Efeito elástico: o NVDA esporadicamente desfaz o último pressionamento de tecla do modo de navegação ao pular para o local anterior.
+ - As caixas de edição roubam o foco do sistema quando são exibidas em alguns sites.
+ - Teclas do modo de navegação demoram a responder.
+- Para drivers de linha braille que o suportam, as configurações do driver agora podem ser alteradas a partir da categoria de configurações de braille na caixa de diálogo de configurações do NVDA. (#7452)
+
+
+== Alterações ==
+- O volume do sintetizador agora é aumentado e diminuído em 5 em vez de 10 quando se usa o anel de configurações. (#6754)
+- Esclarecido o texto no gerenciador de complementos quando o NVDA é iniciado com o sinalizador ""[flag]"" --disable-addons. (#9473)
+- Anotações emoji atualizadas do Repositório de Dados de Localidade Comum Unicode ""[Common Locale Data Repository]"" para a versão 35.0. (#9445)
+- Atualizado o transcritor braille liblouis para a versão 3.9.0. (#9439)
+- A tecla de atalho para o campo de filtro na lista de elementos no modo de navegação foi alterada para alt+y. (#8728)
+
+
+== Correção de Falhas ==
+- O NVDA não trava mais quando um diretório de complementos está vazio. (#7686)
+- As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braile ou fala por caractere ao acessar a janela de propriedades. (#8361)
+- Ao pular para campos de formulário com navegação rápida no Modo de Navegação, o campo inteiro do formulário agora é anunciado, e não apenas a primeira linha. (#9388)
+- O NVDA não ficará mais em silêncio após sair do aplicativo Email do Windows 10. (#9341)
+- O NVDA não falha mais em iniciar quando as configurações regionais dos usuários estão definidas para uma localidade desconhecida para o NVDA, como Inglês (Holanda). (#8726)
+- Quando o modo de navegação está habilitado no Microsoft Excel e você alterna para um navegador no modo de foco ou vice-versa, o estado do modo de navegação agora é relatado apropriadamente. (#8846)
+- O NVDA agora relata corretamente a linha no cursor do mouse no Notepad++ e outros editores baseados em Scintilla. (#5450)
+- No Google Docs (e outros editores web-baseados), o braille não mostra mais algumas vezes "fim de lst" antes do cursor no meio de um item de lista. (#9477)
+- No Windows 10 Atualização de Maio de 2019, o NVDA já não fala muitas notificações de volume se estiver alterando o volume com botões de hardware quando o Gerenciador de Arquivos estiver em foco. (#9466)
+- Agora é muito mais rápido carregando o diálogo de pronúncia de pontuação/símbolos quando usando dicionários de símbolos contendo mais de 1000 entradas. (#8790)
+- Nos controles Scintilla como em Notepad++, o NVDA pode ler a linha correta quando a quebra de linha estiver ativada. (#9424)
+- No Microsoft Excel, a localização da célula é anunciada após a alteração conforme os comandos ""[gestos]"" shift+enter ou shift+numEnter. (#9499)
+- No Visual Studio 2017 e superiores, na janela Explorador de Objetos, o item selecionado na árvore de objetos ou na árvore de membros com categorias é agora relatado corretamente. (#9311)
+- Complementos com nomes que diferem apenas na maiusculização não são mais tratados como complementos separados. (#9334)
+- Para vozes Windows OneCore, a velocidade definida no NVDA não é mais afetada pela velocidade definida em Configurações de fala do Windows 10. (#7498)
+- O log ""[registro de eventos]"" agora pode ser aberto com NVDA+F1 quando não houver informações de desenvolvedor para o objeto atual de navegação. (#8613)
+- É novamente possível usar os comandos de navegação de tabelas do NvDA no Google Docs, no Firefox e no Chrome. (#9494)
+
+
+== Alterações para Desenvolvedores ==
+- Agora você pode definir a propriedade "disableBrowseModeByDefault" nos módulos de aplicativo ""[app modules]"" para deixar o modo de navegação desativado por padrão. (#8846)
+- O estilo janela estendida ""[extended window style]"" de uma janela agora é exposto usando a propriedade `extendedWindowStyle` nos objetos Window ""[Janela]"" e seus derivados. (#9136)
+- Atualizado o pacote comtypes para a versão 1.1.7. (#9440, #8522)
+- Ao usar o comando info do módulo de relatório ""[report]"", a ordem das informações foi alterada para apresentar o módulo primeiro. (#7338)
+
+
+= 2019.1.1 =
+Esta versão pontual corrige os seguintes erros:
+- O NVDA não causa mais falhas no Excel 2007 ou recusa-se a relatar se uma célula tiver uma fórmula. (#9431)
+- O Google Chrome não trava mais ao interagir com determinadas caixas de listagem. (#9364)
+- Foi corrigido um problema que impedia a cópia de uma configuração de usuários para o perfil de configuração do sistema. (#9448)
+- No Microsoft Excel, o NVDA usa novamente a mensagem localizada ""[traduzida]"" ao relatar o local das células mescladas. (#9471)
+
+
 = 2019.1 =
 Os destaques desta versão incluem melhorias de desempenho ao acessar o Microsoft Word e Excel, estabilidade e melhorias de segurança, como suporte para complementos com informações de compatibilidade de versão e muitas outras correções de bugs.
 

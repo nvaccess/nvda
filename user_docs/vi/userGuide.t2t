@@ -472,8 +472,19 @@ Bên cạnh sử dụng trực tiếp chuột thì NVDA cung cấp cho bạn th�
 
 + Chế độ duyệt tài liệu +[BrowseMode]
 Với các tài liệu phức tạp có thuộc tính chỉ đọc như tài liệu web thì sẽ được duyệt bằng chế độ duyệt tài liệu trong NVDA.
-Bao gồm các tài liệu được mở bằng  Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, nội dung HTML trong Microsoft Outlook, Google Chrome, Adobe Reader và Adobe Flash.
-Chế độ duyệt tài liệu cũng được hỗ trợ cho Microsoft Word.
+Chế độ này bao gồm tài liệu trong các ứng dụng sau:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Các tin nhắn HTML trong Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Các sách của  Amazon được hỗ trợ với máy Kindle
+-
+Chế độ duyệt tài liệu cũng được hỗ trợ cho Microsoft Word dưới dạng tùy chọn.
 
 Trong chế độ duyệt tài liệu, nội dung có thể được duyệt bằng các phím mũi tên.
 Tất cả các phím tắt sử dụng cho [con trỏ nháy #SystemCaret] cũng đều hoạt động tốt như đọc cả tài liệu, thông báo thuộc tính văn bản, di chuyển qua các hàng, các cột trong bảng, v...v...
@@ -493,7 +504,7 @@ Thêm vào đó, bạn cũng có thể thiết lập để chế độ focus ti�
 | Chuyển qua lại giữa chế độ focus và chế độ duyệt | NVDA+khoảng trắng | Chuyển qua lại giữa chế độ focus và chế độ duyệt |
 | thoát khỏi chế độ focus | escape | thoát khỏi chế độ focus và quay trở lại chế độ duyệt |
 | Cập nhật nội dung tài liệu | NVDA+f5 | Cập nhật lại nội dung tài liệu ví dụ như thông tin trong một trang web hiển thị chưa đầy đủ. Chức năng này không hỗ trợ trong Microsoft Word và Outlook |
-| Tìm kiếm nội dung trong tài liệu | NVDA+control+f | Tìm kiếm nội dung trong tài liệu |
+| Tìm kiếm | NVDA+control+f | hiển thị một hộp thoại để bạn có thể nhập nội dung tìm kiếm trong tài liệu hiện hành. Xem phần [tìm kiếm văn bản #SearchingForText] để biết thêm thông tin. |
 | Tìm kết quả tiếp theo | NVDA+f3 | Tìm kết quả tiếp theo |
 | Tìm kết quả trước đó | NVDA+shift+f3 | Tìm kết quả trước đó |
 | Mở phần mô tả chi tiết | NVDA+d | Mở phần mô tả chi tiết cho thành phần hiện tại | 
@@ -550,6 +561,22 @@ Khi tìm thấy đối tượng mong muốn, bạn có thể đi đến đối t
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
 | Mở hộp thoại danh sách các thành phần | NVDA+f7 | Mở hộp thoại danh sách các thành phần để lọc theo link, heading hay cột mốc |
+%kc:endInclude
+
+++ Tìm kiếm văn bản ++[SearchingForText]
+Hộp thoại này cho phép bạn tìm kiếm nội dung trong tài liệu hiện hành.
+Ở phần "Nhập nội dung muốn tìm", có thể nhập nội dung để tìm kiếm.
+Khi ở trường nhập văn bản, bạn có thể dùng mũi tên lên xuống để chọn các nội dung tìm kiếm trước đó.
+Hộp kiểm "Phân biệt chữ hoa và chữ thường" giúp cho việc tìm kiếm cân nhắc đến nội dung chữ hoa / chữ thường.
+Ví dụ, chọn vào "Phân biệt chữ hoa và chữ thường", bạn có thể tìm "NV Access" mà không phải là "nv access".
+Sự khác biệt chữ hoa / thường sẽ không được lưu vào lịch sử tìm kiếm.
+Khi khởi động lại NVDA, lịch sử tìm kiếm trước đó sẽ bị xóa.
+Dùng các phím lệnh sau để thực hiện tìm kiếm:
+%kc:beginInclude
+|| Tên | Phím | Mô tả |
+| Tìm kiếm văn bản | NVDA+control+f | Mở hộp thoại tìm kiếm |
+| Tìm tiếp | NVDA+f3 | tìm sự xuất hiện tiếp theo của nội dung tìm kiếm hiện hành  |
+| Tìm trước | NVDA+shift+f3 | tìm sự xuất hiện trước đó của nội dung tìm kiếm hiện hành  |
 %kc:endInclude
 
 ++ Thao tác trên đối tượng nhúng ++[ImbeddedObjects]
@@ -762,7 +789,7 @@ Tương tự đối với web, chế độ duyệt có thể được dùng tron
 %kc:beginInclude
 Để bật tắt chế độ duyệt trong Word, bấm NVDA+khoảng trắng.
 %kc:endInclude
-Xem thêm thông tin về chế độ duyệt và duyệt nhanh trong phần [Chế độ duyệt #BrowseMode].
+Xem thêm thông tin về chế độ duyệt và duyệt nhanh trong phần [Chế độ duyệt tài liệu #BrowseMode].
 
 ++++ Duyệt Danh sách các thành phần ++++[WordElementsList]
 %kc:beginInclude
@@ -829,7 +856,7 @@ Chuyển qua chế độ duyệt bằng cách bấm NVDA+khoảng trắng. Lúc 
 Các bảng tính của Excel có thể có các biểu mẫu.
 Bạn có thể đi nhanh đến các biểu mẫu thông qua danh sách thành phần hoặc bằng ký tự di chuyển đơn với f và shift+f.
 Khi bạn chuyển đến một biểu mẫu ở chế độ duyệt, bấm enter hoặc khoảng trắng để kích hoạt hoặc chuyển qua chế độ focus và tương tác với biểu mẫu đó.
-Để biết thêm về chế độ duyệt và ký tự di chuyển đơn, hãy xem [phần chế độ duyệt #BrowseMode].
+Để biết thêm về chế độ duyệt và ký tự di chuyển đơn, hãy xem [phần chế độ duyệt tài liệu #BrowseMode].
 
 ++ Microsoft PowerPoint ++[MicrosoftPowerPoint]
 %kc:beginInclude
@@ -1352,6 +1379,8 @@ Nếu được chọn và bạn di chuyển chuột trên màn hình thì NVDA s
 Tùy chọn này cho phép bạn chọn lượng nội dung sẽ được đọc khi chuột đi qua một đối tượng.
 Các giá trị cho tùy chọn này là: ký tự, từ, dòng hay đoạn.
 
+Để chọn lượng nội dung từ bất cứ đâu, hay gán một thao tác thông qua [hộp thoại Quản lý các thao tác #InputGestures].
+
 ==== Thông báo vai trò đối tượng tại vị trí chuột ====[MouseSettingsRole]
 Nếu được chọn thì NVDA sẽ thông báo vai trò của đối tượng (kiểu) khi chuột đi qua nó.
 
@@ -1503,8 +1532,15 @@ Có các mục sau trong cửa sổ phân loại này:
 ==== Sử dụng kiểu trình bày theo màn hình ====[BrowseModeSettingsScreenLayout]
 Phím bật/tắt: NVDA+v
 
-Tùy chọn này cho phép bạn thiết lập nội dung ở chế độ duyệt sẽ được trình bày nội dung như các liên kết hay những trường khác trên mỗi dòng; hoặc trình bày như nó hiển thị trên màn hình. Nếu bật, những đối tượng đó sẽ được trình bày như nó hiển thị trên màn hình; nếu tắt, mỗi trường/đối tượng sẽ được trình bày trên từng dòng riêng.
-
+Tùy chọn này cho phép bạn thiết lập nội dung ở chế độ duyệt sẽ được trình bày nội dung như các liên kết hay những trường khác trên mỗi dòng; hoặc trình bày như nó hiển thị trên màn hình.
+Nếu bật, những đối tượng đó sẽ được trình bày như nó hiển thị trên màn hình; nếu tắt, mỗi trường/đối tượng sẽ được trình bày trên từng dòng riêng.
+==== Bật chế độ duyệt khi tải trang ====[BrowseModeSettingsEnableOnPageLoad]
+Hộp kiểm này bật tắt tính năng cho phép chế độ duyệt tự động bật khi tải một trang.
+Khi tắt tùy chọn này, vẫn có thể kích hoạt thủ công chế độ duyệt trên các trang hay tài liệu có hỗ trợ chế độ duyệt.
+Xem phần [Chế độ duyệt tài liệu #BrowseMode] để biết các ứng dụng được hỗ trợ bởi chế độ này.
+Lưu ý rằng tùy chọn này không áp dụng cho các tình huống mà chế độ duyệt luôn là một tùy chỉnh, ví dụ như trong Microsoft Word.
+Mặc định, tùy chọn này được bật.
+ 
 ==== Tự động đọc tất cả khi trang được mở ====[BrowseModeSettingsAutoSayAll]
 Với tùy chọn này, NVDA sẽ tự động đọc toàn bộ nội dung tài liệu khi nó được mở (hoặc khi trang web được tải về).
 Tùy chọn này mặc định được chọn.
@@ -1632,6 +1668,16 @@ Nó được tích hợp trong chính Microsoft Word cũng như trình xem và s
  Với hầu hết các phiên bản gần đây của Microsoft Office 2016/365 chạy trên windows 10, hỗ trợ UI Automation hoàn toàn đủ để truy cập các tài liệu Microsoft Word gần như bằng với hỗ trợ sẵn có của NVDA cho Microsoft Word, với lợi thế là tăng khả năng phản hồi.
  Tuy nhiên, có thể một vài thông tin không được thể hiện hoặc thể hiện không chính xác trong vài phiên bản của Microsoft Office, có nghĩa là hỗ trợ UI automation không thể luôn được dựa vào.
  Chúng tôi vẫn không khuyến khích đa số người dùng bật tính năng này làm mặc định, dù rằng vẫn hoan nghênh những người dùng Office 2016/365 thử nghiệm tính năng này và cung cấp phản hồi.
+
+==== Tự đưa con trỏ hệ thống đến các thành phần có thể có focus trong chế độ duyệt ====[BrowseModeSettingsAutoFocusFocusableElements]
+Phím tắt: NVDA+8
+
+Mặc định được bật, tùy chọn này cho phép con trỏ hệ thống tự đưa đến các thành phần có thể có focus hệ thống (liên kết, biểu mẫu, v...v...) khi duyệt nội dugn với con trỏ chế độ duyệt.
+Nếu được bật, tùy chọn này sẽ hoạt động như với các phiên bản NVDA 2019.1 trở về trước.
+Tắt tùy chọn này sẽ không tự đưa focus đến các thành phần có thể có focus khi chúng được chọn với con trỏ chế độ duyệt.
+Kết quả của tùy chọn này có thể là trải nghiệm duyệt web nhanh và phản hồi tốt hơn trong chế độ duyệt.
+Focus sẽ vẫn được cập nhật cho các thành phần cụ thể khi tương tác với nó (ví dụ như bấm vào một nút, chọn vào một hộp kiểm).
+Tính năng này đang được thử nghiệm trong NVDA 2019.2.
  
  ==== Thời gian chờ di chuyển dấu nháy (ms) ====[AdvancedSettingsCaretMoveTimeout]
  Tùy chọn này cho phép bạn cấu hình thời gian tính bằng mili giây mà NVDA sẽ chờ dấu náy (điểm chèn) di chuyển trong các điều khiển có thể nhập.
@@ -1685,10 +1731,9 @@ Trong cửa sổ này sẽ cho phép bạn thay đổi cách phát âm cho các 
 Tên ngôn ngữ cho phần chỉnh sửa các phát âm ký hiệu được hiển thị trên tiêu đề hộp thoại.
 Lưu ý, thiết lập trong hộp thoại này dựa vào thiết lập của tùy chọn "Sử dụng giọng đọc của ngôn ngữ để xử lý ký hiệu và ký tự" trong phân loại [tiếng nói #SpeechSettings] trong [hộp thoại cấu hình của NVDA #NVDASettings]; cụ thể, nó sẽ sử dụng giọng đọc của ngôn ngữ đó thay vì dùng các thiết lập ngôn ngữ chung của NVDA nếu mục này được chọn.
 
-Để thay đổi một ký hiệu, trước tiên, hãy chọn một ký hiệu trong danh sách.
-
-- Phần thay thế sẽ là văn bản được đọc thay cho ký hiệu.
-- Ở mục mức độ, bạn có thể chọn mức độ đọc cho dấu câu này.
+Để thay đổi một ký hiệu, trước tiên, hãy chọn nó trong danh sách.
+Bạn có thể lọc các kí hiệu bằng cách nhập kí hiệu hay một phần kí hiệu thay thế vào ô nhập liệu tên Lọc theo
+.
 - Mục Gửi ký hiệu gốc đến bộ đọc sẽ xác định nếu phần thay thế ngược với ký hiệu, nó sẽ gửi trực tiếp đến bộ đọc.
 Điều này sẽ hữu ích khi ký hiệu có nhiệm vụ làm bộ đọc ngưng nghỉ hoặc thay đổi ngữ điệu.
 Ví dụ, bộ đọc sẽ ngưng khi gặp dấu phẩy.
@@ -1751,7 +1796,7 @@ NVDA cho phép bạn tạo các cấu hình riêng được gọi là hồ sơ c
 Một hồ sơ cấu hình chỉ chứa các thông tin khác so với cấu hình gốc.
 Phần lớn các thông tin cấu hình có thể được thay đổi trong các hồ sơ cấu hình riêng đó, trừ các cấu hình trong phân loại chung  trong hộp thoại [cấu hình NVDA #NVDASettings] vì chúng được dùng cho cả NVDA.
 
-Bạn có thể chủ động kích hoạt hồ sơ cấu hình của bạn.
+Bạn có thể chủ động kích hoạt hồ sơ cấu hình của bạn từ hộp thoại hoặc bằng thao tác được gán bởi người dùng.
 Hoặc nó cũng có thể được kích hoạt tự động cho một ứng dụng nào đó.
 
 +++ Quản lý hồ sơ cấu hình +++[ProfilesBasicManagement]
@@ -1817,6 +1862,14 @@ Ví dụ bạn muốn sửa một hồ sơ kích hoạt thủ công hoặc hồ 
 Bạn có thể làm điều đó bằng cách chọn hộp kiểm "tạm thời tắt hồ sơ cấu hình tự động" trong cửa sổ Hồ sơ cấu hình.
 
 Để bật / tắt tạm thời tác nhân ở bất cứ đâu, hãy dùng [hộp thoại  Quản lý thao tác #InputGestures] để gán phím lệnh hay thao tác cảm ứng.
+
++++ Kích hoạt một hồ sơ bằng thao tác +++[ConfigProfileGestures]
+Với mọi hồ sơ được thêm vào, bạn có thể gán một hay nhiều thao tác để kích hoạt nó.
+Mặc định, hồ sơ cấu hình không được gán thao tác.
+Bạn có thể gán thao tác để kích hoạt một hồ sơ bằng [Hộp thoại quản lý các thao tác #InputGestures].
+Mỗi hồ sơ sẽ tồn tại trong phân loại hồ sơ cấu hình.
+Khi bạn đổi tên một hồ sơ, các thao tác được gán trước đó vẫn hoạt động.
+Việc xóa một hồ sơ sẽ tự xóa luôn thao tác đã gán cho nó.
 
 ++ Tập tin cấu hình ++[LocationOfConfigurationFiles]
 Ở bản NVDA chạy trực tiếp, tất cả các thông tin cấu hình và các add-on đều được lưu trong thư mục userConfig, trong thư mục NVDA.

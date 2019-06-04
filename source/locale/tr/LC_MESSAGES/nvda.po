@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-04 10:39+1000\n"
-"PO-Revision-Date: 2019-03-04 09:15+0300\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-27 12:49+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
@@ -591,6 +591,18 @@ msgstr "Sistem odağı"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "inceleme imleci"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "&Nokta sertliği"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "&Braille girişi"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "&HID klavye simülasyonu"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1191,6 +1203,8 @@ msgstr "Odak kipi"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "Tarama kipi"
 
@@ -1228,6 +1242,10 @@ msgstr "Bu belgedeki çeşitli öğeleri listeler"
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "Belgede üzerinde bulunulan nesneyi etkinleştirir"
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "Hareketi uygulamaya aktarır"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1719,7 +1737,7 @@ msgstr "Tür"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
+msgid "Filter b&y:"
 msgstr "Filtr&eleme kriteri"
 
 #. Translators: The label of a button to activate an element
@@ -2976,6 +2994,10 @@ msgid "Configuration"
 msgstr "Konfigürasyon"
 
 #. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "Konfigürasyon profilleri"
+
+#. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
 msgid "Braille"
 msgstr "Braille"
@@ -3892,6 +3914,17 @@ msgstr "Fare izleme açık"
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Fare hareketlerinin bildirimiyle ilgili ayarı açıp kapatır"
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "Fare metin birim çözünürlüğü %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "Fare hareket ettiğinde ne kadar metin seslendirileceğini değiştirir"
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "Başlık yok"
@@ -3994,6 +4027,22 @@ msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Nesne sunucusunun odağı takip etmesiyle ilgili ayarı açıp kapatır"
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr "Sistem odağını otomatik olarak odaklanabilir öğelere taşı, kapalı"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr "Sistem odağını otomatik olarak odaklanabilir öğelere taşı, açık"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr ""
+"Tarama kipi komutları kullanılırken sistem odağının otomatik hareketini açıp "
+"kapatır"
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "Batarya yok"
@@ -4028,19 +4077,18 @@ msgstr ""
 "Bir sonraki tuş kombinasyonu NVDA kısayol tuşu olarak algılanmaz, doğrudan "
 "windows işletim sistemine gönderilir."
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "Şu Anda %s uygulaması çalışıyor"
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr " ve şu anda yüklü olan modül %s"
+msgid " %s module is loaded. "
+msgstr " %s modülü yüklendi. "
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr " %s şu anda çalışıyor."
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4434,6 +4482,33 @@ msgid ""
 msgstr ""
 "Windows 10 OCR  ile nesne sunucusunun üzerinde bulunduğu nesne üzerinde OCR "
 "işlemi yapar"
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr ""
+"Bir NVDA iletişim kutusu açıkken etkin konfigürasyon profili değiştirilemez"
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "{profile} konfigürasyon profili manuel olarak devre dışı bırakıldı"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "{profile} konfigürasyon profili manuel olarak etkinleştirildi"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr ""
+"{profile} konfigürasyon profilini Etkinleştirir veya devre dışı bırakır"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6377,6 +6452,16 @@ msgctxt "synth setting"
 msgid "Rate"
 msgstr "Hız"
 
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "hız ar&tırıcı"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "hız artırıcı"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "Ses se&viyesi"
@@ -6782,6 +6867,14 @@ msgstr "Önerilen"
 
 msgid "Display"
 msgstr "Display"
+
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "Seçilen otomatik tamamlama öğesinin belgelerini okumaya çalışır."
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "Belge penceresi bulunamadı."
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -7527,7 +7620,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Uyarı"
 
@@ -7928,12 +8022,18 @@ msgstr "Eklenti Bilgisi"
 msgid "Add-ons Manager"
 msgstr "Eklenti Yöneticisi"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "Eklenti Yöneticisi (eklentiler devre dışı)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
 msgstr ""
-"Tüm eklentiler şimdi devre dışı. Eklentileri etkinleştirmek için NVDA'yı "
-"yeniden başlatın."
+"NVDA Tüm eklentiler devre dışı bırakılarak başlatıldı. Etkin / devre dışı "
+"durumunu değiştirebilir ve eklentileri yükleyebilir veya kaldırabilirsiniz. "
+"NVDA yeniden başlatılıncaya kadar değişiklikler geçerli olmaz."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8628,7 +8728,6 @@ msgstr "NVDA başladığında &bekleyen güncelleme varsa bildir"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "NVDA kullanım verilerini toplaması için NVDA projesine izin ver"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8642,7 +8741,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "Ayarlar Kopyalanıyor"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "Ayarlar sistem konfigürasyon dizinine kopyalanırken lütfen bekleyin."
 
@@ -9022,6 +9122,11 @@ msgstr "&Sayfa başına satır sayısı "
 msgid "Use &screen layout (when supported)"
 msgstr "(Destekleniyorsa) &ekran düzenini kullan"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "Sayfa yüklendiğinde &tarama kipini etkinleştir"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9284,6 +9389,11 @@ msgstr ""
 "Varsa Microsoft ve Word doküman kontrollerine erişmek için UI Otomasyonu "
 "kullan"
 
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "Sistem &odağını otomatik olarak odaklanabilir öğeye taşı"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
@@ -9519,6 +9629,11 @@ msgstr "İşaret:"
 msgid "Symbol Pronunciation (%s)"
 msgstr "İmla telaffuzu  (%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "&Filtreleme kriteri:"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "İ&şaretler"
@@ -9596,11 +9711,6 @@ msgstr "Matematiksel etkileşim desteklenmiyor."
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "hiçbiri"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "hız ar&tırıcı"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
@@ -11126,21 +11236,24 @@ msgstr "Çift satır aralığı"
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
 
-#~ msgid "Passes gesture through to the application"
-#~ msgstr "Hareketi uygulamaya aktarır"
+#~ msgid "Currently running application is %s"
+#~ msgstr "Şu Anda %s uygulaması çalışıyor"
+
+#~ msgid " and currently loaded module is %s"
+#~ msgstr " ve şu anda yüklü olan modül %s"
+
+#~ msgid ""
+#~ "All add-ons are currently disabled. To enable add-ons you must restart "
+#~ "NVDA."
+#~ msgstr ""
+#~ "Tüm eklentiler şimdi devre dışı. Eklentileri etkinleştirmek için NVDA'yı "
+#~ "yeniden başlatın."
 
 #~ msgid "Focus follows browse mode off"
 #~ msgstr "Odak tarama kipini takip eder kapalı"
 
 #~ msgid "Focus follows browse mode on"
 #~ msgstr "Odak tarama kipini takip eder açık"
-
-#~ msgid ""
-#~ "Toggles on and off the movement of the system focus due to browse mode "
-#~ "commands"
-#~ msgstr ""
-#~ "Tarama kipi komutları tarafından sistem odağının hareketini açar ve "
-#~ "kapatır"
 
 #~ msgid "%s Settings Category"
 #~ msgstr "%s Ayarları Kategorisi"

@@ -472,7 +472,18 @@ Te dodatne značilnosti NVDA so privzeto izključene.
 
 + Brskalniško Delovanje +[BrowseMode]
 Kompleksne dokumente samo za branje, kot so spletne strani, v NVDA obravnavamo s pomočjo Brskalniškega delovanja.
-To vključuje dokumente v Mozilli Firefox, Microsoftovem Internet Explorerju, Mozilli Thunderbirdu,  HTML sporočila v Googlovem Chromu, Microsoftovem Outlooku, Adobe Readerju in Adobe Flashu.
+To vključuje dokumente v naslednjih programih:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML sporočila v programu Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Podprte knjige v Amazon Kindle za osebni računalnik
+- 
 Brskalniško delovanje je opcijsko na voljo tudi v Microsoftovem Wordu.
 
 V brskalniškem delovanju je vsebina dokumenta na voljo v ravninski predstavitvi, tako da lahko uporabljate tipke za krmiljenje z utripalko podobno, kot če bi bili v navadnem besedilnem dokumentu.
@@ -493,7 +504,7 @@ Vedno lahko vsilite delovanje žarišča, tako bo na voljo in bo učinkoval, dok
 | Stikalo za preklop med brskalniškim delovanjem in delovanjem žarišča | NVDA+preslednica | Preklaplja med brskalniškim delovanjem in delovanjem žarišča |
 | Izhod iz delovanja žarišča | escape | Preklopi nazaj v brskalniško delovanje, če se je prej samodejno vklopilo delovanje žarišča |
 | Osveži dokument v brskalniškem delovanju | NVDA+f5 | Ponovno naloži vsebino trenutnega dokumenta (uporabno, ko izgleda, da se del vsebine dokumenta ne prikazuje; v Microsoft Outlooku in Microsoft Wordu ni uporabno) |
-| Najdi | NVDA+control+f | Dvigne pogovorno okno v katerem lahko natipkate besedilo, ki ga želite najti v dokumentu |
+| Najdi | NVDA+control+f | Dvigne pogovorno okno v katerem lahko natipkate besedilo, ki ga želite najti v dokumentu. Glejte [iskanje po besedilou #SearchingForText] za več informacij. |
 | Najdi naslednje | NVDA+f3 | Najde naslednji kos besedila v dokumentu, ki ste ga že iskali |
 | Najdi predhodno | NVDA+shift+f3 | Najde predhodni kos besedila v dokumentu, ki ste ga že iskali |
 | Odpri daljši opis | NVDA+d | Odpre novo okno, ki vsebuje daljši opis elementa na katerem ste, če ga vsebuje. | 
@@ -550,6 +561,22 @@ Ko enkrat najdete pravo postavko, lahko izbirate med gumboma v pogovornem oknu, 
 %kc:beginInclude
 || Ime | Tipka | Opis |
 | seznam elementov v brskalniškem delovanju | NVDA+f7 | V ospredje postavi Seznam elementov, ki so del trenutnega dokumenta |
+%kc:endInclude
+
+++ Iskanje po besedilu ++[SearchingForText]
+To pogovorno okno vam omogoča iskanje po besedilu za pomeni v trenutnem dokumentu.
+V polju"Natipkajte besedilo, ki ga želite najti", se lahko vnese besedilo, ki se lahko nahaja v dokumentu.
+Med tem, ko ste še v besedilnem polju, lahko uporabite puščici gor in dol za izbor predhodnih iskanih pomenov.
+Izbirnik "Občutljivost na male in velike črke" obravnava iskanje z velikimi in malimi črkami drugače.
+Na primer, z izbranim izbirnikom "Občutljivost na male in velike črke" lahko najdete "NV Access" toda ne "nv access".
+Razlike v velikosti črk se ne bodo shranile v zgodovino iskanja.
+Ob ponovnem zagonu NVDA, se seznam predhodno iskanih pomenov počisti.
+Uporabite sledeče tipke za izvedbo iskanj:
+%kc:beginInclude
+|| Ime | Tipka | Opis |
+| Najdi besedilo | NVDA+control+f | Odpre pogovorno okno iskanja |
+| Najdi naslednje | NVDA+f3 | išče naslednji primerek trenutnega iskalnega pomena |
+| Find previous | NVDA+shift+f3 | išče predhodni primerek trenutnega iskalnega pomena |
 %kc:endInclude
 
 ++ Vdelani Predmeti ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Ko je ta možnost izbrana, bo NVDA naznanjala besedilo, ki je v tem trenutku pod
 Če ste NVDA nastavili tako, da pove, kaj je pod miško, ko jo premikate, vam ta možnost ponuja izbiro, koliko besedila naj se prebere.
 Možnosti so znak, beseda, vrstica in odstavek.
 
++Za preklop enote resolucije besedila od kjerkoli, prosimo, določite kretnjo po meri z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
++
 ==== Poročaj o vlogi predmeta, ko miška vstopi nanj ====[MouseSettingsRole]
 Če je ta možnost izbrana, bo NVDA naznanila vlogo (tip) predmeta, ko se miška pomika po njem.
 
@@ -1503,7 +1532,15 @@ To polje nastavi število vrstic, ki jih boste s pritiskom tipk stran gor ali st
 ==== Uporabljaj oblikovanje po zaslonu ====[BrowseModeSettingsScreenLayout]
 Tipka: NVDA+v
 
-Ta možnost vam omogoča, da se odločite, ali naj se postavitev vsebine, kot so povezave in druga polja, v brskalniškem delovanju zgleduje po postavitvi na zaslonu, ali naj se elementi postavijo vsak v svojo vrsto. Če je možnost izbrana, potem NVDA prikazuje elemente, tako, kot so na zaslonu, če ni izbrana, potem polja postavlja vsakega v novo vrsto.
+Ta možnost vam omogoča, da se odločite, naj se postavitev vsebine, kot so povezave in druga polja, v brskalniškem delovanju zgleduje po postavitvi na zaslonu ali naj se elementi postavijo vsak v svojo vrsto.
+Če je možnost izbrana, potem NVDA prikazuje elemente tako, kot so na zaslonu; če ni izbrana, potem polja postavlja vsakega v novo vrsto.
+
+==== Omogoči brskalniško delovanje ob naložitvi strani ====[BrowseModeSettingsEnableOnPageLoad]
+Ta izbirnik preklaplja med tem ali naj bo brskalniško delovanje omogočeno ob naložitvi strani.
+Ko je ta možnost onemogočena, se lahko brskalniško delovanje ročno aktivira na straneh ali v dokumentih, kjer je brskalniško delovanje podprto.
+Glejte [razdelek Brskalniško Delovanje #BrowseMode] za seznam programov, kjerje podprto brskalniško delovanje.
+Pomnite, da ta možnost ne zajema situacij, kjer je brskalniško delovanje vedno izbirno.
+Ta možnost je privzeto omogočena.
 
 ==== Samodejno Izgovori Vse ob končanju nalaganja strani ====[BrowseModeSettingsAutoSayAll]
 Ta možnost vklaplja samodejno branje, ko se stran naloži v brskalniško delovanje.
@@ -1630,8 +1667,18 @@ Ta gumb je na voljo samo takrat, ko je NVDA nastavljena tako, da dovoli kodo po 
 Ko je ta možnost vključena, bo NVDA poskušala uporabiti Microsoft UI (UV) Automation accessibility api (API za dostopnost), da bi pridobila informacije iz kontrolnikov v Microsoft Word dokumentu.
 To vključuje kontrolnike znotraj Microsoft Worda, samega in tudi pregledovalnik sporočil Microsoft Outlook in urejevalnik.
 Za najbolj posodobljene različice Microsoft Offica 2016/365, ki tečejo v windows 10, je podpora za UI (UV) Automation dodelana dovolj,da  lahko NVDA oskrbi dostop do Microsoft Word dokumentov skoraj tako dobro kot s trenutno podporo NVDA za Microsoft Word, z dodatno vrednostjo precej izboljšane odzivnosti.
-Toda, lahko obstaja tudi nekaj informacij, ki bodisi se ne morejo osvetljiti ali so osvtljene napačno v nekaj različicah Microsoft Offica, kar pomeni, da se na to UI (UV) automation podporo ne moremo vselej zanesti.
+Toda, lahko obstaja tudi nekaj informacij, ki bodisi se ne morejo osvetljiti ali so osvetljene napačno v nekaj različicah Microsoft Offica, kar pomeni, da se na to UI (UV) automation podporo ne moremo vselej zanesti.
 Tako mi še ne priporočamo, da bi večina uporabnikov to možnost imela privzeto vklopljeno, čeprav s hvaležnostjo pozdravljamo uporabnike Offica 2016/365, da testirajo to zmožnost in sporočijo povratne informacije.
+
+==== Samodejno postavi sistemsko žarišče na elemente, ki so lahko v žarišču v Brskalniškem Delovanju ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tipka: NVDA+8
+
+Prevzeto omogočenoa, vam ta možnost dovoljuje izbiro, če naj bi moralo biti sistemsko žarišče samodejno postavljeno na elemente, ki lahko prevzamejo sistemsko žarišče (povezave, polja v obrazcih, itd.), ko se krmili po vsebini z brskalniškim delovanjem.
+Ko je omogočeno, to predstavlja privzeto delovanje NVDA od različice 2019.1 nazaj.
+Onemogočitev te možnosti ne bo samodejno postavilo v žarišče elemente, ki so lahko v žarišču, ko bodo izbrani s kazalko brskalniškega delovanja.
+To se lahko odrazi v hitrejši izkušnji brskanja in boljši odzivnosti v brskalniškem delovanju.
+Žarišče se bo še vedno uposodilo na ta določen element ob interakciji z njim (t.j. pritisk gumba, izbor izbirnika).
+Ta zmožnost je v preizkušanju od različice NVDA 2019.2.
 
 ==== Zakasnitev premika kazalke (v MS) ====[AdvancedSettingsCaretMoveTimeout]
 Ta možnost vam omogoča nastavitev števila milisekund, v katerih bo NVDA čakala na premik kazalke (točke vnosa) v kontrolnikh, kjer se lahko ureja besedilo.
@@ -1686,6 +1733,7 @@ Jezik, čigar izgovorjavo se trenutna ureja, je prikazan v naslovu pogovornega o
 Opozarjamo, da se to pogovorno okno zanaša na "Zaupaj jeziku osebe za procesiranje simbolov in znakov", možnost, ki se nahaja v [zvrsti Nastavitev Govora #SpeechSettings] pogovornega okna [NVDA Nastavitev #NVDASettings]; tako NVDA uporablja jezik osebe namesto globalne nastavitve za jezik, ko to možnost omogočite.
 
 Za menjavo simbola, ga najprej izberite s seznama simbolov.
+Vi lahko filtrirate simbole z vnosom simbola ali delom simbolove zamenjave v polje za urejanje Preseji med.
 
 - Polje zamenjave vam omogoča spremembo besedila, ki naj se izgovori ob simbolu.
 - Z uporabo polja za nivoje določite najnižji nivo, kjer se mora simbol izgovoriti.
@@ -1751,7 +1799,7 @@ To vam NVDA omogoča skozi uporabo Profilov Konfiguracije.
 Profil konfiguracije vsebuje samo tiste nastavitve, ki so se spremenile med tem, ko je bil profil v urejanju.
 V profilih konfiguracije se lahko spremenijo skoraj vse nastavitve razen tistih v zvrsti  Splošno v pogovornem oknu [NVDA Nastavitev #NVDASettings], ki vplivajo na delovanje NVDA v celoti.
 
-Profili konfiguracije se lahko aktivirajo ročno.
+Profili konfiguracije se lahko aktivirajo ročno preko pogovornega okna ali z uporabo dodanih kretenj po meri.
 Lahko pa se aktivirajo tudi samodejno glede na prožilec. Prožilec je lahko prehod v izbran program.
 
 +++ Osnovno Upravljanje +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Tak primer se pojavi, ko želite urejati profil, ki se aktivira ročno ali Norma
 To storite s potrditvijo izbirnika Začasno onemogoči vse prožilce v pogovornem oknu Konfiguracije profilov.
 
 Za preklop stikala na onemogočitev prožilcev od kjerkoli, prosimo, določite kretnjo po meri z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
+
++++ Aktiviranje profila z uporabo kretenj vnosa +++[ConfigProfileGestures]
+Ob dodajanju vsakega profila mu lahko dodelite eno ali več kretenj vnosa za njegovo aktivacijo.
+Privzeto profili konfiguracije nimajo dodeljene kretenj vnosa.
+Kretnje za aktivacijo profila lahko dodate z uporabo [pogovornega okna Kretenj Vnosa #InputGestures].
+Vsak profil ima svoje vnosno mesto v zvrsti profilov konfiguracije.
+Ko boste profil preimenovali, bodo vse morebitne kretnje, ki ste jih predhodno dodali, še vedno na voljo.
+Odstranitev profila bo samodejno izbrisala kretnje povezane z njim.
 
 ++ Mesta datotek z Nastavitvami ++[LocationOfConfigurationFiles]
 Prenosljive različice NVDA hranijo vse nastavitve in dodatke v imeniku z imenom userConfig, ki se nahaja v imeniku NVDA.

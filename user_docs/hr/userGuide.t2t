@@ -472,7 +472,18 @@ Iako bi se za navigaciju mišem trebao koristiti miš ili trackpad, NVDA ima nek
 
 + Način pregleda +[BrowseMode]
 Kompleksni dokumenti koji su samo za čitanje kao na primjer web stranice uz pomoć NVDA pregledavaju se koristeći način pregleda.
-Ovo uključuje dokumente u Mozilla Firefoxu, Microsoft Internet Exploreru, Mozilla Thunderbirdu, html poruke u Microsoft Outlooku, Google Chromeu, Adobe Readeru i Adobe Flashu.
+Ovo uključuje dokumente u sljedećim aplikacijama:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML poruke u Microsoft Outlooku
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Podržane knjige u Amazon Kindle za osobna računala
+-
 Također, način pregleda je neobavezno dostupan u microsoft word dokumentima.
 
 U načinu pregleda, html dokument je dostupan u virtualnom pregledu koji omogućuje navigaciju pomoću kursorskih tipaka kao da je to običan tekstualni dokument.
@@ -493,7 +504,7 @@ Dodatno, ručno možete uključiti način fokusa, nakon čega će ostati aktivan
 | prebacuj se između načina pregleda i načina fokusa | NVDA+razmak | prebacuje između načina pregleda i načina fokusa |
 | izađi iz načina fokusa | escape | prebacuje s načina fokusa na Način pregleda ako se dogodilo automatsko prebacivanje na način fokusa |
 | osvježi dokument načina pregleda | NVDA+f5 | osvježava trenutni sadržaj dokumenta (korisno kada izgleda da neki dio sadržaja nedostaje iz dokumenta Nije dostupno u Microsoft Wordu i Outlooku.) |
-| Traži | NVDA+control+f | otvara dijaloški okvir u kojem možete upisati neki tekst za pretragu u trenutnom dokumentu |
+| Traži | NVDA+ctrl+f | Otvara dijaloški okvir pretrage, u kojem možete uisati bilo koji tekst za pretragu po dokumentu. Pogledajte [pretragu teksta #SearchingForText] za više informacija. |
 | pretraži slijedeće | NVDA+f3 | traži slijedeći dio u dokumentu koji se ponavlja odnosno, kojeg ste prije tražili |
 | pronađi prethodno | NVDA+shift+f3 | traži prethodno ponavljanje u tekstu u dokumentu kojeg ste prije pretraživali |
 | otvori dugi opis | NVDA+d | otvara novi prozor koji sadrži dugi opis za element na kojem se nalazite ako postoji. | 
@@ -550,6 +561,22 @@ Jednom kad ste odabrali stavku, možete koristiti ponuđene gumbe u dijaloškom 
 %kc:beginInclude
 || Naziv | Prečac | Opis |
 | lista elemenata u načinu pregleda | NVDA+f7 | popisuje raznovrsne tipove elemenata u trenutnom dokumentu |
+%kc:endInclude
+
+++ Pretraga teksta ++[SearchingForText]
+Ovaj vam dijaloški okvir omogućuje pretragu teksta u trenutnom dokumentu.
+U polju za uređivanje "Upišite pojam kojeg želite pronaći", možete upisati tekst koji biste željeli naći.
+Kada se nalazite na polju za uređivanje, također možete koristiti strelice gore i dolje kako biste pretraživali prethodno upisane pojmove.
+Potvrdni okvir "osjetljivost na velika slova" će prouzročiti da pretraga program pazi na velika i mala slova pri pretraživanju.
+Na primjer, Kada je potvrdni okvir "osjetljivost na velika slova" označen moći ćete proonaći "NV Access" ali ne i "nv access".
+Razlike u veličini slova neće biti spremljene u povijesit pretrage.
+Kada se NVDA ponovno pokrene, popis prethodno pretraživanih pojmova će biti izbrisan.
+Prilikom pretraživanja, koristite sljedeće prečace:
+%kc:beginInclude
+|| Naziv | Prečac | Opis |
+| Pretraži tekst | NVDA+ctrl+f | otvara dijaloški okvir pretrage |
+| Traži sljedeće | NVDA+f3 | Nalazi sljedeću podudarnost pojma u dokumentu |
+| Traži prethodno | NVDA+shift+f3 | Traži prethodnu podudarnost u dokumentu |
 %kc:endInclude
 
 ++ ugrađeni objekti ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Kad je ova opcija uključena, NVDA će izvijestiti o tekstu koji je trenutno isp
 Ako je NVDA podešen da izgovara tekst ispod miša kako pomićete pokazivač, ova vam opcija omogućuje podešavanje koliko će biti teksta izgovoreno pod mišem.
 Možete birati između znaka, retka, riječi i odlomka.
 
+Kako biste se mogli prebacivati između izgovora jedinica teksta pod mišem sa bilo kojeg mjesta, molimo pridjelite prilagođeni prečac u [Dijaloškom okviru ulazne geste #InputGestures].
+
 ==== Izgovor svojstva prilikom unošenja objekta mišem ====[MouseSettingsRole]
 Ako je ovaj potvrdni okvir odabran, NVDA će izvijestiti o svojstvu (tipu) kako se miš po njemu bude kretao.
 
@@ -1503,7 +1532,15 @@ Ovo polje postavlja količinu redaka po kojima se možete kretati kad u načinu 
 ==== Koristi izgled zaslona ====[BrowseModeSettingsScreenLayout]
 Prečac: NVDA+v
 
-Ova vam opcija omogućuje određivanje hoće li sadržaj u načinu pregleda biti u zasebnim retcima. To se odnosi na linkove i naslove. Ako je opcija omogućena, elementi će ostati onakvi kakvi su vizualno prikazani, ali ako je onemogućena, svi elementi će dobiti svoj redak.
+Ova opcija vam omogućuje da odredite  razmještaj sadržaja u načinu pregleda kao što su to veze i ostali elementi u zasebnom retku, ili da ostaju u "tekstualnoj struji" kako je vizualno prikazano na zaslonu.
+Ako je opcija omogućena onda će sve ostati kako je to prikazano vizualno, ali ako je onemogućeno onda će svako polje biti razmješteno u zasebnom retku.
+
+==== Uključi način pregleda pri učitavanju stranice ====[BrowseModeSettingsEnableOnPageLoad]
+Ovaj potvrdni okvir regulira hoće li se način pregleda uključiti prilikom učitavanja stranice.
+Kada je ova opcija uključena, način pregleda može biti uključen ručno na stranicama ili u dokumentima gdje je način pregleda podržan.
+Pogledajte [Poglavlje način pregleda #BrowseMode] kako biste pogledali popis podržanih aplikacija u načinu pregleda.
+Imajte na umu da se ovo ne primjenjuje u situacijama gdje je način pregleda uvijek neobavezan, NPR u Microsoft Wordu.
+Ova je opcija podrazumjevano uključena.
 
 ==== Automatski izgovori sve nakon učitavanja stranice ====[BrowseModeSettingsAutoSayAll]
 Ova opcija uključuje ili isključuje automatsko čitanje web stranice kad se ista učita u načinu pregleda.
@@ -1631,7 +1668,17 @@ Kada je ova opcija uključena, NVDA će dohvaćati sve informacije iz Microsoft 
 Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Outlooku.
  Za zadnje inačice Microsoft Office 2016(365, ova podrška je skoro jednaka podrazumijevanoj podršci za Microsoft Word, uz tu razliku, da su performanse poboljšane.
 Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
-Još uvijek ne preporučujemo ukljućivanje ove opcije podrazumijevano, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu funkcionalnost, te da daju povratne informacije.
+Još uvijek ne preporučujemo uključivanje ove opcije za stalno korištenje, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu značajku, te da šalju povratne informacije.
+
+==== Automatski postavi fokus na stavku koja može biti fokusirana u načinu pregleda ====[BrowseModeSettingsAutoFocusFocusableElements]
+Prečac: NVDA+8
+
+Podrazumjevano omogućena, ova opcija omogućuje postavljanje fokusa pokazivača sustava na stavke koje mogu biti fokusirane (veze, polja za uređivanje, itd.) prilikom kretanja po sadržaju u načinu pregleda.
+Ako je ova opcija omogućena, ovo je podrazumjevano ponašanje NVDA čitača zaslona od inačice 2019.1 i prijašnjih.
+Ako omogućite ovu opciju, NVDA neće automatski fokusirati stavke koje se mogu fokusirati kada su iste označene kursorom u načinu pregleda.
+Ovo može rezultirati bržim iskustvom pregledavanja i bržim odzivom načinu pregleda.
+Fokus će se još osvježavati na određenoj stavci kada s njom uđete u interakciju (npr. pritiskanje gumba, označavanje potvrdnog okvira).
+Od inačice NVDA 2019.2, ova značajka je eksperimentalna.
 
 ==== Čekanje za pomicanje kursora u milisekundama ====[AdvancedSettingsCaretMoveTimeout]
 Ova opcija omogućuje povećanje ogranićenja čekanja, u kojem NVDA čeka da se pojavi pokazivač u polju za uređivanje.
@@ -1686,6 +1733,7 @@ Jezik za koji se uređuje izgovor simbola će se prikazati u naslovnoj traci dij
 Imajte na umu da ovaj dijaloški okvir poštuje opciju "vjeruj jeziku trenutnog glasa pri izgovoru simbola" koja se nalazi u [kategoriji govor #SpeechSettings] u [dijaloškom okviru postavki #NVDASettings]; to jest, to koristi jezik trenutno označenog glasa, a ne glabalni jezik NVDA kada je ova opcije uključena.
 
 Da biste promijenili simbol, označite ga u listi simbola.
+Možete filtrirati simbol, upisujući cijelu zamjenu ili dio zamjene simbola u  polje za uređivanje filtriraj po.
 
 - Polje zamjena vam omogućuje izmjenu teksta koji će biti izgovoren na mjestu tog simbola.
 - Koristeći polje razina, možete podesiti najmanju razinu simbola, pri kojoj će taj simbol biti izgovoren.
@@ -1751,7 +1799,7 @@ NVDA vam to omogućuje uz pomoć konfiguracijskih profila.
 Konfiguracijski profil sadrži samo one postavke koje su mjenjane kad je profil uređivan.
 Većina postavki mogu se promijeniti u konfiguracijskim profilima osim onih postavki, koje se nalaze u kategoriji općenito u [dijaloškom okviru postavki #NVDASettings], jer se te postavke primjenjuju na NVDA u cijelosti.
 
-Konfiguracijski profili mogu biti ručno aktivirani.
+Konfiguracijski profili mogu biti aktivirani putem dijaloškog okvira ili uz pomoć prilagođenih dodanih gesti.
 Oni se mogu aktivirati i automatski zbog okidača kao što je prebacivanje na određenu aplikaciju.
 
 +++ Osnovno upravljanje +++[ProfilesBasicManagement]
@@ -1816,12 +1864,20 @@ Ponekad je korisno onemogučiti sve okidače.
 Na primjer, možda biste htjeli urediti ručno aktivirani profil ili urediti vašu uobičajenu konfiguraciju bez ometanja okinutog profila.
 Možete to učiniti tako da ćete odabrati potvrdni okvir onemogući okidače u dijaloškom okviru konfiguracijski profili.
 
-Kako biste mogli onemogućiti okidaće profila od bilo kuda,, molimo pidijeliti prilagođenu gestu koristeći [dijaloški okvir ulaznih gesti #InputGestures].
+Kako biste mogli onemogućiti okidače profila s bilo kojeg mjesta,, molimo pridjelite prilagođenu gestu koristeći [dijaloški okvir ulaznih gesti #InputGestures].
+
++++ Aktiviranje profila uz pomoć ulaznih gesti +++[ConfigProfileGestures]
+Možete dodati tipkovnički prečac za svaki profil koji stvorite kako boste ga mogli aktivirati.
+Podrazumjevano, konfiguracijski profili nemaju pridjeljenje ulazne geste.
+Možete dodati prečace koristeći [Dijaloški okvir ulazne geste #InputGestures].
+Svaki profil ima svoj zapis u kategoriji ulaznih gesti.
+Kada preimenujete profil, bilo koji prečac kojeg ste prethodno dodali oš će uvijek biti dostupan.
+Kada izbrišete profil, također će biti izbrisane i geste, koje su s njim povezane.
 
 ++ Lokacija konfiguracijskih datoteka ++[LocationOfConfigurationFiles]
 Prijenosne inačice NVDA spremaju sve postavke, prilagođene module za aplikacije i prilagođene upravljačke programe za govorne jedinice u mapu userConfig koja se nalazi u mapi gdje je smješten NVDA.
 
-Instalirane inačice NVDA spremaju sve postavke, prilagođene module aplikacije i prilagođene upravljačke programe za govorne jedinice u posebnu mapu NVDA koja se nalazi u vašem windows korisničkom profilu.
+Instalirane inačice NVDA spremaju sve postavke, prilagođene module aplikacija i prilagođene upravljačke programe za govorne jedinice u posebnu mapu NVDA koja se nalazi u vašem windows korisničkom profilu.
 To znači da svaki korisnik može imati svoje vlastite NVDA postavke spremljene u sustavu.
 Da biste došli do vaše mape, gdje NVDA sprema svoje postavke, u izborniku start možete ići u podizbornik programi -> NVDA -> istraži mapu s NVDA postavkama.
 
