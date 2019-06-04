@@ -223,7 +223,7 @@ def getAvailableAddons(refresh=False, filterFunc=None):
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
-	return (addon for addon in _availableAddons.itervalues() if not filterFunc or filterFunc(addon))
+	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
