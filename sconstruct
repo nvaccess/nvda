@@ -359,7 +359,7 @@ def makePot(target, source, env):
 	# Tweak the headers.
 	potFn = str(target[0])
 	tmpFn = "%s.tmp" % potFn
-	with file(potFn, "rt") as inp, file(tmpFn, "wt") as out:
+	with open(potFn, "rt") as inp, open(tmpFn, "wt") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
 				line = "# %s\n" % versionInfo.copyright
