@@ -449,24 +449,24 @@ the NVDAObject for IAccessible
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName=="_WwG":
-			from winword import WordDocument 
+			from .winword import WordDocument 
 			clsList.append(WordDocument)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO"):
 			if self.windowControlID==18:
-				from winword import SpellCheckErrorField
+				from .winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from winword import WordDocument_WwN
+				from .winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
 		if windowClassName.lower().startswith('mscandui'):
-			import mscandui
+			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
-			from mozilla import GeckoPluginWindowRoot
+			from .mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
 		maybeFlash = False
 		if ((windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2))
