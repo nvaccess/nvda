@@ -38,9 +38,10 @@ class consoleUIATextInfo(UIATextInfo):
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			if visiRanges.length > 0:
+			visiLength = visiRanges.length
+			if visiLength > 0:
 				firstVisiRange = visiRanges.GetElement(0)
-				lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+				lastVisiRange = visiRanges.GetElement(visiLength - 1)
 				oldRange=self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
