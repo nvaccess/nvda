@@ -17,6 +17,7 @@ import os
 import time
 from glob import glob
 import sourceEnv
+import importlib.util
 
 def recursiveCopy(env,targetDir,sourceDir):
 	targets=[]
@@ -234,12 +235,17 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
 	updateVersionType = env["updateVersionType"] or None
-	action = [lambda target, source, env: open(buildVersionFn, "w").write(
-		'version = {version!r}\r\n'
-		'publisher = {publisher!r}\r\n'
-		'updateVersionType = {updateVersionType!r}\r\n'
-		'version_build = {version_build!r}\r\n'
-		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build))]
+	# Any '\n' characters written are translated to the system default line separator, os.linesep.
+	action = [lambda target, source, env: open(buildVersionFn, "w", encoding="utf-8").write(
+		'version = {version!r}\n'
+		'publisher = {publisher!r}\n'
+		'updateVersionType = {updateVersionType!r}\n'
+		'version_build = {version_build!r}\n'
+		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build)
+	)
+	# In Python 3 write returns the number of characters written,
+	# which scons treats as an error code.	
+	and None]
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
@@ -249,16 +255,19 @@ def NVDADistGenerator(target, source, env, for_signature):
 		"py2exe", "--dist-dir", target[0].abspath))
 	if release:
 		buildCmd.append("-O1")
-	action.append(buildCmd)
-
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
+
+	action.append(buildCmd)
+
 	if certFile:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
-	for ext in "", "c", "o":
-		action.append(Delete(buildVersionFn + ext))
+	action.extend((
+		Delete(buildVersionFn),
+		Delete(importlib.util.cache_from_source(buildVersionFn))
+	))
 
 	return action
 env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
