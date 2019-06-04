@@ -211,7 +211,7 @@ setup(
 		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()
-		+ getRecursveDataFiles("synthDrivers", "synthDrivers",
+		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
 			excludes=tuple(
 				"*%s" % ext
 				for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
@@ -226,7 +226,7 @@ setup(
 				"*%s" % ext
 				for ext in importlib.machinery.SOURCE_SUFFIXES + importlib.machinery.BYTECODE_SUFFIXES
 			) + (
-				"__pycache__"
+				"__pycache__",
 		))
 		+ getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t', '*.t2tconf', '*/developerGuide.*'))
 	),
