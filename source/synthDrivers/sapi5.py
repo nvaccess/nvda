@@ -37,9 +37,9 @@ class FunctionHooker(object):
 	def __init__(self,targetDll,importDll,funcName,newFunction):
 		hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(targetDll,importDll,funcName,newFunction)
 		if hook:
-			print("hooked %s"%funcName)
+			log.debug("hooked %s"%funcName)
 		else:
-			print("could not hook %s"%funcName)
+			log.debug("could not hook %s"%funcName)
 			raise RuntimeError("could not hook %s"%funcName)
 
 	def __del__(self):
