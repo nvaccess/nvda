@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2010-2019 NV Access Limited, Mesar Hameed, Takuya Nishimoto
-#Copyright (C) 2018-2019 Takuya Nishimoto
 
 """Utilities related to NVDA Key Commands documents.
 """
