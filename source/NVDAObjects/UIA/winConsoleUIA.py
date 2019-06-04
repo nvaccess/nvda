@@ -91,16 +91,18 @@ class consoleUIATextInfo(UIATextInfo):
 				(offset - start) * -1,
 				end - offset - 1
 			)
-			self._rangeObj.MoveEndpointByUnit(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-				wordEndPoints[0]
-			)
-			self._rangeObj.MoveEndpointByUnit(
-				UIAHandler.TextPatternRangeEndpoint_End,
-				UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-				wordEndPoints[1]
-			)
+			if wordEndPoints[0]:
+				self._rangeObj.MoveEndpointByUnit(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+					wordEndPoints[0]
+				)
+			if wordEndPoints[1]:
+				self._rangeObj.MoveEndpointByUnit(
+					UIAHandler.TextPatternRangeEndpoint_End,
+					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+					wordEndPoints[1]
+				)
 		else:
 			return super(consoleUIATextInfo, self).expand(unit)
 
@@ -144,16 +146,8 @@ class consoleUIATextInfo(UIATextInfo):
 		)
 		return (
 			start.value,
-			min(end.value, len(lineText))
+			min(end.value, len(lineText) - 2)
 		)
-
-	def _getCurrentWord(self):
-		lineInfo = self.copy()
-		lineInfo.expand(textInfos.UNIT_LINE)
-		lineText = lineInfo.text
-		offset = self._getCurrentOffsetInThisLine()
-		start, end = self._getWordOffsetsInThisLine(offset)
-		return lineText[start:end]
 
 
 class winConsoleUIA(Terminal):
