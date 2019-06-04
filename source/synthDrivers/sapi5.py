@@ -272,9 +272,9 @@ class SynthDriver(SynthDriver):
 			for tag in reversed(openedTags):
 				textList.append("</%s>" % tag)
 			del openedTags[:]
-			for tag, attrs in tags.iteritems():
+			for tag, attrs in tags.items():
 				textList.append("<%s" % tag)
-				for attr, val in attrs.iteritems():
+				for attr, val in attrs.items():
 					textList.append(' %s="%s"' % (attr, val))
 				textList.append(">")
 				openedTags.append(tag)
