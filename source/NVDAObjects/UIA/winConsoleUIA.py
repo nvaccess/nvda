@@ -19,25 +19,22 @@ from ..behaviors import Terminal
 
 class consoleUIATextInfo(UIATextInfo):
 	_expandCollapseBeforeReview = False
-	_isCaret = False
 
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		if position == textInfos.POSITION_CARET:
-			self._isCaret = True
-			if isAtLeastWin10(1903):
-				# The UIA implementation in 1903 causes the caret to be
-				# off-by-one, so move it one position to the right
-				# to compensate.
-				self._rangeObj.MoveEndpointByUnit(
-					UIAHandler.TextPatternRangeEndpoint_Start,
-					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-					1
-				)
+		if position == textInfos.POSITION_CARET and isAtLeastWin10(1903):
+			# The UIA implementation in 1903 causes the caret to be
+			# off-by-one, so move it one position to the right
+			# to compensate.
+			self._rangeObj.MoveEndpointByUnit(
+				UIAHandler.TextPatternRangeEndpoint_Start,
+				UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
+				1
+			)
 
 	def move(self, unit, direction, endPoint=None):
 		oldRange=None
-		if not self._isCaret:
+		if self.basePosition != textInfos.POSITION_CARET:
 			# Insure we haven't gone beyond the visible text.
 			# UIA adds thousands of blank lines to the end of the console.
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
@@ -47,9 +44,11 @@ class consoleUIATextInfo(UIATextInfo):
 				oldRange=self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
-			offset = self._getCurrentOffsetInThisLine()
+			lineInfo = self.copy()
+			lineInfo.expand(textInfos.UNIT_LINE)
+			offset = self._getCurrentOffsetInThisLine(lineInfo)
 			index = 1 if direction > 0 else 0
-			start, end = self._getWordOffsetsInThisLine(offset)
+			start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
 			wordMoveDirections = (
 				(offset - start) * -1,
 				end - offset
@@ -86,8 +85,10 @@ class consoleUIATextInfo(UIATextInfo):
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD:
 			# UIA doesn't implement word movement, so we need to do it manually.
-			offset = self._getCurrentOffsetInThisLine()
-			start, end = self._getWordOffsetsInThisLine(offset)
+			lineInfo = self.copy()
+			lineInfo.expand(textInfos.UNIT_LINE)
+			offset = self._getCurrentOffsetInThisLine(lineInfo)
+			start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
 			wordEndPoints = (
 				(offset - start) * -1,
 				end - offset - 1
@@ -107,13 +108,14 @@ class consoleUIATextInfo(UIATextInfo):
 		else:
 			return super(consoleUIATextInfo, self).expand(unit)
 
-	def _getCurrentOffsetInThisLine(self):
-		lineInfo = self.copy()
-		lineInfo.expand(textInfos.UNIT_LINE)
+	def _getCurrentOffsetInThisLine(self, lineInfo):
 		charInfo = self.copy()
 		res = 0
 		chars = None
-		while True:
+		while charInfo.compareEndPoints(
+			lineInfo,
+			"startToEnd"
+		) <= 0:
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			chars = charInfo.move(textInfos.UNIT_CHARACTER, -1) * -1
 			if chars != 0 and charInfo.compareEndPoints(
@@ -125,9 +127,7 @@ class consoleUIATextInfo(UIATextInfo):
 				break
 		return res
 
-	def _getWordOffsetsInThisLine(self, offset):
-		lineInfo = self.copy()
-		lineInfo.expand(textInfos.UNIT_LINE)
+	def _getWordOffsetsInThisLine(self, offset, lineInfo):
 		lineText = lineInfo.text
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
