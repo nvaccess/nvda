@@ -1335,7 +1335,7 @@ class ExcelCell(ExcelBase):
 		if not cellInfo:
 			return states
 		stateBits=cellInfo.states
-		for k,v in vars(controlTypes).iteritems():
+		for k,v in vars(controlTypes).items():
 			if k.startswith('STATE_') and stateBits&v:
 				states.add(v)
 		return states

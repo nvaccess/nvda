@@ -1144,7 +1144,7 @@ This code is executed if a gain focus event is received by this object.
 		info.append("name: %s" % ret)
 		try:
 			ret = self.role
-			for name, const in controlTypes.__dict__.iteritems():
+			for name, const in controlTypes.__dict__.items():
 				if name.startswith("ROLE_") and ret == const:
 					ret = name
 					break
@@ -1152,7 +1152,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("role: %s" % ret)
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.iteritems() if name.startswith("STATE_"))
+			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
 			ret = ", ".join(
 				stateConsts.get(state) or str(state)
 				for state in self.states)
