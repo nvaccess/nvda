@@ -471,8 +471,19 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 %kc:endInclude
 
 + Selaustila +[BrowseMode]
-Monisisältöisiä, ei-muokattavia asiakirjoja kuten verkkosivuja luetaan NVDA:lla selaustilassa.
-Tällaisia ovat Mozilla Firefoxissa, Microsoft Internet Explorerissa, Mozilla Thunderbirdissä, Google Chromessa ja Adobe Readerissa luettavat asiakirjat, Microsoft Outlookin HTML-viestit sekä Flash-sisältö.
+Monisisältöisiä, ei-muokattavia asiakirjoja kuten verkkosivuja luetaan NVDA:lla selaustilaa käyttäen.
+Tällaisia asiakirjoja voidaan lukea seuraavissa sovelluksissa:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Microsoft Outlookin HTML-viestit
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Tuetut kirjat Amazon Kindle for PC:ssä
+-
 Selaustila on käytettävissä valinnaisesti myös Microsoft Wordissa.
 
 Selaustilassa asiakirjan sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstiasiakirja.
@@ -493,7 +504,7 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Vaihda selaus- ja vuorovaikutustilojen välillä | NVDA+Väli | Vaihtaa vuorovaikutus- ja selaustilojen välillä. |
 | Poistu vuorovaikutustilasta | Esc | Siirtää takaisin selaustilaan, mikäli NVDA siirtyi aiemmin automaattisesti vuorovaikutustilaan. |
 | Päivitä selaustila-asiakirja | NVDA+F5 | Lataa uudelleen nykyisen asiakirjan sisällön. (Hyödyllistä, jos sivulta vaikuttaa puuttuvan jotakin. Komento ei ole käytettävissä Microsoft Wordissa tai Outlookissa.) |
-| Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. |
+| Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. Katso lisätietoja [Tekstin etsiminen #SearchingForText] -kappaleesta. |
 | Etsi seuraava | NVDA+F3 | Etsii asiakirjasta aiemmin haetun tekstin seuraavan esiintymän. |
 | Etsi edellinen | NVDA+Vaihto+F3 | Etsii asiakirjasta aiemmin haetun tekstin edellisen esiintymän. |
 | Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
@@ -552,8 +563,24 @@ Kun haluttu kohde on valittu, sen kohdalle voidaan siirtyä tai se voidaan avata
 | Selaustilan elementtilista | NVDA+F7 | Näyttää luettelon nykyisen asiakirjan sisältämistä eri tyyppisistä elementeistä. |
 %kc:endInclude
 
+++ Tekstin etsiminen ++[SearchingForText]
+Tämän valintaikkunan avulla voidaan etsiä tekstiä nykyisestä asiakirjasta.
+Teksti kirjoitetaan "Kirjoita etsittävä teksti" -kenttään.
+Hakukentässä oltaessa on myös mahdollista käyttää ylä- ja alanuolta aiempien hakuehtojen valitsemiseen.
+"Sama kirjainkoko" -valintaruutu saa haun käsittelemään isoja ja pieniä kirjaimia eri tavalla.
+Esim. kun tämä on valittuna, teksti "NV Access" löytyy, muttei tekstiä "nv access".
+Kirjainkoon eroja ei tallenneta hakuhistoriaan.
+Hakuehdot tyhjennetään, kun NVDA käynnistetään uudelleen.
+hakujen suorittamiseen käytetään seuraavia näppäimiä:
+%kc:beginInclude
+|| Nimi | Näppäinkomento | kuvaus |
+| Etsi tekstiä | NVDA+Ctrl+F | Avaa Etsi-valintaikkunan. |
+| Etsi seuraava | NVDA+F3 | Etsii nykyisen hakuehdon seuraavan esiintymän. |
+| Etsi edellinen | NVDA+Vaihto+F3 | Etsii nykyisen hakuehdon edellisen esiintymän. |
+%kc:endInclude
+
 ++ Upotetut objektit ++[ImbeddedObjects]
-Sivut voivat sisältää monipuolista sisältöä, joka käyttää sellaisia teknologioita kuin Flash, Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
+Sivut voivat sisältää monipuolista sisältöä, jossa käytetään sellaisia tekniikoita kuin Flash, Java, HTML5, kuten myös sovelluksia ja valintaikkunoita.
 Kun selaustilassa tullaan niiden kohdalle, NVDA ilmoittaa "upotettu objekti", "sovellus" tai "valintaikkuna".
 Niihin voidaan siirtyä nopeasti käyttäen upotettuihin objekteihin siirtäviä pikaselausnäppäimiä O ja Vaihto+O.
 Näiden objektien kanssa voidaan olla vuorovaikutuksessa painamalla Enteriä niiden kohdalla.
@@ -574,7 +601,7 @@ NVDA tukee seuraavia matemaattisia sisältöjä:
 - Design Science MathType Microsoft Wordissa ja PowerPointissa.
 MathTypen on oltava asennettuna. Kokeiluversio riittää.
 - MathML Adobe Readerissa.
-Huomaa, että tämä ei ole vielä virallinen standardi, joten sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
+Huom: Tämä ei ole vielä virallinen standardi, joten sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 - Math Kindle for PC:ssä kirjoille, joissa on esteetöntä matemaattista sisältöä.
 -
 
@@ -1346,11 +1373,13 @@ Windowsissa hiirikohdistin muuttaa muotoaan ilmaistakseen tiettyjä asioita, kut
 ==== Käytä hiiren seurantaa ====[MouseSettingsTracking]
 Näppäinkomento: NVDA+M
 
-Kun tämä valintaruutu on valittuna, NVDA lukee hiiriosoittimen alla olevan tekstin. Tällä tavalla on mahdollista löytää asioita ruudulta hiirtä liikuttamalla sen sijaan, että yritettäisiin käyttää objektinavigointia.
+Kun tämä valintaruutu on valittuna, NVDA lukee hiiriosoittimen alla olevan tekstin. Tällä tavalla on mahdollista löytää asioita ruudulta hiirtä liikuttamalla sen sijaan, että käytettäisiin objektinavigointia.
 
 ==== Tekstiyksikön tarkkuus ====[MouseSettingsTextUnit]
 Jos NVDA on asetettu lukemaan hiiren alla oleva teksti, Tämän asetuksen avulla voidaan määrittää tarkasti, minkä verran tekstiä luetaan.
 Vaihtoehtoina ovat merkki, sana, rivi ja kappale.
+
+Tekstiyksikön tarkkuutta voidaan muuttaa mistä tahansa  liittämällä toimintoon syötekomento [Syötekomennot-valintaikkunassa. #InputGestures].
 
 ==== Lue hiiren alla olevan objektin rooli ====[MouseSettingsRole]
 Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä siihen.
@@ -1503,7 +1532,15 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 ==== Käytä ruutuasettelua ====[BrowseModeSettingsScreenLayout]
 Pikanäppäin: NVDA+V
 
-Tällä asetuksella määritetään, sijoitetaanko sellainen sisältö kuten linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään. Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
+Tällä asetuksella määritetään, sijoitetaanko esim. linkit ja muut elementit selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ovat ruudulla.
+Jos asetus on käytössä, elementit näytetään sellaisinaan, mutta jos asetus poistetaan käytöstä, elementit sijoitetaan omille riveilleen.
+
+==== Ota selaustila käyttöön sivua ladattaessa ====[BrowseModeSettingsEnableOnPageLoad]
+Tällä valintaruudulla voidaan määrittää, otetaanko selaustila käyttöön automaattisesti sivua ladattaessa.
+Kun asetus ei ole käytössä, selaustila voidaan edelleen ottaa käyttöön manuaalisesti verkkosivuilla tai asiakirjoissa, joissa selaustilaa tuetaan.
+Luettelo selaustilaa tukevista sovelluksista on [Selaustila -kappaleessa. #BrowseMode]
+Huom: Tämä asetus ei koske sovelluksia, joissa selaustila on aina valinnainen, kuten esim. Microsoft Wordissa.
+Asetus on oletusarvoisesti käytössä.
 
 ==== Lue sivu automaattisesti sen avauduttua ====[BrowseModeSettingsAutoSayAll]
 Tämä asetus määrittää, luetaanko sivu selaustilassa automaattisesti sen avauduttua.
@@ -1534,7 +1571,7 @@ Jos tämä asetus on käytössä, NVDA toistaa äänimerkin vaihtaessaan selaus-
 
 ==== Estä muiden kuin syötekomentojen pääsy asiakirjaan ====[BrowseModeSettingsTrapNonCommandGestures]
 Tällä oletusarvoisesti käytössä olevalla asetuksella voidaan valita, estetäänkö syötekomentojen (kuten näppäinpainallusten), jotka eivät suorita NVDA-komentoa tai joita ei pidetä yleisinä komentonäppäiminä, pääsy aktiivisena olevaan asiakirjaan.
-Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva komento.
+Esim. jos asetuksen ollessa käytössä painetaan J-kirjainta, sen tulostuminen asiakirjaan estetään, sillä se ei ole pikaselausnäppäin, tai koska on epätodennäköistä, että se olisi sovelluksen käytössä oleva näppäinkomento.
 
 +++ Asiakirjojen muotoilu (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Useimmilla tämän kategorian valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan automaattisesti kuulla siirrettäessä kohdistinta asiakirjoissa.
@@ -1615,7 +1652,7 @@ Palauta oletukset -painike palauttaa asetusten oletusarvot, vaikka vahvistusvali
 Oletusarvojen palauttaminen voi olla joskus tarpeen, kun asetuksia on muutettu.
 Näin voi tehdä myös silloin, jos ei ole varma, onko asetuksia muutettu.
 
-==== Ota käyttöön oman koodin lataaminen kehittäjien scratchpad-hakemistosta ====[AdvancedSettingsEnableScratchpad]
+==== Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta ====[AdvancedSettingsEnableScratchpad]
 Koodin testaaminen on hyödyllistä NVDA:n lisäosia kehitettäessä.
 Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä sekä pistenäyttö- ja syntetisaattoriajureita erityisestä kehittäjille tarkoitetusta scratchpad-nimisestä hakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
 Aiemmin NVDA latasi mukautetun koodin suoraan käyttäjän asetushakemistosta ilman mahdollisuutta toiminnallisuuden käytöstä poistamiseen.
@@ -1628,10 +1665,20 @@ Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua kood
 
 ==== Käytä UI automation -rajapintaa Microsoft Wordin asiakirjasäätimille, kun käytettävissä ====[AdvancedSettingsUseUiaForWord]
 Kun tämä asetus on käytössä, NVDA yrittää käyttää UI Automation -saavutettavuusrajapintaa tietojen saamiseksi Microsoft Wordin asiakirjasäätimistä.
-Niitä ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
+Tällaisia ovat muun muassa itse Microsoft Word sekä lisäksi Microsoft Outlookin viestinluku- ja kirjoitusikkuna.
 Uusimpien Microsoft Office 2016/365 -versioiden UI Automation -tuki on windows 10:ssä käytettäessä riittävän kattava tarjotakseen lähes nykyisen kaltaisen tuen Microsoft Word -asiakirjoille, jossa on lisäetuna huomattavasti lisääntynyt reagoivuus.
 Joissakin Microsoft Officen versioissa ei ehkä kuitenkaan ole saatavilla kaikkea tietoa tai ne ilmaistaan väärin, minkä vuoksi UI automation -tukeen ei voi aina luottaa.
-Tämän asetuksen käyttöön ottamista ei vielä suositella suurimmalle osalle käyttäjistä, mutta Office 2016/365 -käyttäjät voivat silti testata ominaisuutta ja antaa palautetta.
+Tämän asetuksen käyttöön ottamista ei vielä suositella, mutta Office 2016/365 -käyttäjien palaute on kuitenkin tervetullutta.
+
+==== Siirrä kohdistus automaattisesti kohdistettaviin elementteihin ====[BrowseModeSettingsAutoFocusFocusableElements]
+Pikanäppäin: NVDA+8
+
+Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, siirretäänkö järjestelmän kohdistus automaattisesti kohdistettaviin elementteihin (linkit, lomakekentät, jne.) selattaessa sisältöä selaustilakohdistimella.
+Jos tämä on käytössä, NVDA toimii kuten versio 2019.1 ja sitä aiemmat.
+Kun asetus poistetaan käytöstä, kohdistusta ei siirretä automaattisesti kohdistettaviin elementteihin selaustilakohdistimella valittaessa.
+Tämä saattaa tarjota nopeamman selauskokemuksen sekä komentoihin vastaamisen.
+Kohdistus päivitetään kuitenkin elementtiin, kun sen kanssa ollaan vuorovaikutuksessa (esim. painiketta painettaessa tai valintaruutua valittaessa).
+Tämä toiminnallisuus on kokeellinen NVDA 2019.2:ssa.
 
 ==== Kohdistimen siirtymisen aikakatkaisu (ms) ====[AdvancedSettingsCaretMoveTimeout]
 Tällä asetuksella voidaan määrittää, montako millisekuntia NVDA odottaa kohdistimen (lisäyskohdan) siirtymistä muokattavissa tekstisäätimissä.
@@ -1686,6 +1733,7 @@ Kieli, jonka symboleiden puhumista muokataan, näytetään valintaikkunan otsiko
 Huom: Tässä noudatetaan [Asetukset #NVDASettings]-valintaikkunan [Puhe-kategorian #SpeechSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n käyttämän kielen asemesta.
 
 Symbolia muutetaan valitsemalla se Symbolit-luettelosta.
+Symboleita voidaan suodattaa kirjoittamalla Suodata-muokkauskenttään haluttu symboli tai osa sen korvaavasta tekstistä.
 
 - Korvaava teksti -muokkauskentässä voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin asemesta.
 - Taso-yhdistelmäruudusta valitaan alin taso, jolla symboli puhutaan.
@@ -1751,7 +1799,7 @@ Tämä on mahdollista NVDA:n asetusprofiileja käyttäen.
 Asetusprofiili sisältää vain ne asetukset, joita profiilia muokattaessa muutetaan.
 Useimpien asetusten muuttaminen on profiileissa mahdollista, paitsi [Asetukset #NVDASettings]-valintaikkunan Yleiset-kategoriassa olevien, joita käytetään kaikkialla.
 
-Asetusprofiilit voidaan ottaa käyttöön manuaalisesti.
+Asetusprofiilit voidaan ottaa käyttöön manuaalisesti joko valintaikkunasta tai itse määritetyillä syötekomennoilla.
 Ne voidaan ottaa käyttöön myös automaattisesti käynnistimien avulla, kuten tiettyyn sovellukseen siirryttäessä.
 
 +++ Perushallinta +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Saatetaan esim. haluta muokata manuaalisesti käyttöönotettua profiilia tai no
 Tämä tehdään valitsemalla Asetusprofiilit-valintaikkunassa Poista kaikki käynnistimet käytöstä tilapäisesti -valintaruutu.
 
 Käynnistimet poistetaan käytöstä tai otetaan uudelleen käyttöön mistä tahansa liittämällä asetukseen oma syötekomento [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+
++++ Activating a profile using input gestures +++[ConfigProfileGestures]
+Jokaiseen lisättyyn profiiliin voidaan sen käyttöön ottamiseksi liittää yksi tai useampi syötekomento.
+Asetusprofiileilla ei oletusarvoisesti ole syötekomentoja.
+Syötekomennot lisätään [Syötekomennot-valintaikkunaa #InputGestures] käyttäen.
+Kullakin profiililla  on oma kohtansa Asetusprofiilit-kategoriassa.
+Kun profiili nimetään uudelleen, kaikki aiemmin lisätyt syötekomennot ovat edelleen käytettävissä.
+Profiilin poistaminen poistaa automaattisesti myös siihen liitetyt syötekomennot.
 
 ++ Asetustiedostojen sijainti ++[LocationOfConfigurationFiles]
 NVDA:n massamuistiversio tallentaa kaikki asetukset ja lisäosat hakemistossaan olevaan userConfig-nimiseen alihakemistoon.

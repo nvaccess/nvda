@@ -5,6 +5,7 @@
 # Copyright (C) 2019 Bill Dengler
 
 import config
+import speech
 import time
 import textInfos
 import UIAHandler
@@ -33,6 +34,7 @@ class consoleUIATextInfo(UIATextInfo):
 
 
 class winConsoleUIA(Terminal):
+	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
 	_isTyping = False
 	_lastCharTime = 0
@@ -41,13 +43,20 @@ class winConsoleUIA(Terminal):
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if self._isTyping and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT:
+		if (
+			self._isTyping
+			and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT
+		):
 			return
 		super(winConsoleUIA, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if not ch.isspace():
 			self._isTyping = True
+		if ch in ('\n', '\r', '\t'):
+			# Clear the typed word buffer for tab and return.
+			# This will need to be changed once #8110 is merged.
+			speech.curWordChars = []
 		self._lastCharTime = time.time()
 		if (
 			(
@@ -66,7 +75,14 @@ class winConsoleUIA(Terminal):
 			super(winConsoleUIA, self).event_typedCharacter(ch)
 		super(winConsoleUIA, self).event_textChange()
 
-	@script(gestures=["kb:enter", "kb:numpadEnter", "kb:tab"])
+	@script(gestures=[
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:tab",
+		"kb:control+c",
+		"kb:control+d",
+		"kb:control+pause"
+	])
 	def script_clear_isTyping(self, gesture):
 		gesture.send()
 		self._isTyping = False
