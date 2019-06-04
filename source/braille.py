@@ -638,6 +638,41 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
+#: Document formatting options that are currently not shown in braille.
+#: @type: list
+IGNORED_FORMAT_CONFIG = [
+	"reportFontName",
+	"reportFontSize",
+	"reportRevisions",
+	"reportEmphasis",
+	"reportColor",
+	"reportAlignment",
+	"reportLineSpacing",
+	"reportStyle",
+	"reportSpellingErrors",
+	"reportPage",
+	"reportLineIndentation",
+	"reportParagraphIndentation",
+	"reportBorderStyle",
+	"reportBorderColor",
+	"reportComments",
+]
+
+def filterFormatConfig(formatConfig):
+	"""
+	Returns the filtered version of the provided formatConfig dictionary,
+	in which all entries are removed that aren't currently shown in braille.
+	@param formatConfig: The formatting config.
+	@type formatConfig: {str : bool, ...}
+	"""
+	formatConfig = {
+		key: value
+		if key not in IGNORED_FORMAT_CONFIG
+		else False
+		for (key, value) in formatConfig.iteritems()
+	}
+	return formatConfig
+
 def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
@@ -746,8 +781,8 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	@param fieldCache: The format field of the previous run; i.e. the cached format field.
 	@type fieldCache: {str : str, ...}
 	@param isAtStart: True if this format field precedes any text in the line/paragraph.
-	This is useful to restrict display of information which should only appear at the start of the line/paragraph;
-	e.g. the line number or line prefix (list bullet/number).
+		This is useful to restrict display of information which should only appear at the start of the line/paragraph;
+		e.g. the line number or line prefix (list bullet/number).
 	@type isAtStart: bool
 	@param formatConfig: The formatting config.
 	@type formatConfig: {str : bool, ...}
@@ -846,6 +881,8 @@ class TextInfoRegion(Region):
 		formatFieldAttributesCache = getattr(info.obj, "_brailleFormatFieldAttributesCache", {})
 		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
 		inClickable=False
+		# Filter the formatConfig, because it may contain formatting we do'nt display in braille.
+		formatConfig = filterFormatConfig(formatConfig)
 		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, str):
 				# Text should break a run of clickables
