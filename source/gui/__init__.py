@@ -553,7 +553,7 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
-	for instance, state in gui.SettingsDialog._instances.iteritems():
+	for instance, state in gui.SettingsDialog._instances.items():
 		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
 			log.error(
 				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
