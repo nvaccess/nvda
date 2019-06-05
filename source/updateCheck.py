@@ -735,6 +735,7 @@ class DonateRequestDialog(wx.Dialog):
 
 def saveState():
 	try:
+		# #9038: Python 3 requires binary format when working with pickles.
 		with open(_stateFilename, "wb") as f:
 			cPickle.dump(state, f)
 	except:
@@ -744,7 +745,8 @@ def initialize():
 	global state, _stateFilename, autoChecker
 	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
 	try:
-		with open(_stateFilename, "r") as f:
+		# #9038: Python 3 requires binary format when working with pickles.
+		with open(_stateFilename, "rb") as f:
 			state = cPickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)

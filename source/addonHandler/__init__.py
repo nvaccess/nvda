@@ -47,7 +47,8 @@ def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		with open(statePath, "r") as f:
+		# #9038: Python 3 requires binary format when working with pickles.
+		with open(statePath, "rb") as f:
 			state = cPickle.load(f)
 		if "disabledAddons" not in state:
 			state["disabledAddons"] = set()
@@ -68,6 +69,7 @@ def loadState():
 def saveState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
+		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
 			cPickle.dump(state, f)
 	except:
