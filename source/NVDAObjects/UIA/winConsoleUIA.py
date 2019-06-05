@@ -16,6 +16,7 @@ from scriptHandler import script
 from winVersion import isAtLeastWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
+from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
@@ -181,6 +182,20 @@ class consoleUIATextInfo(UIATextInfo):
 			start.value,
 			min(end.value, max(1, len(lineText) - 2))
 		)
+
+
+class consoleUIAWindow(Window):
+	def _get_focusRedirect(self):
+		"""
+			Sometimes, attempting to interact with the console too quickly after
+			focusing the window can make NVDA unable to get any caret or review
+			information or receive new text events.
+			To work around this, we must redirect focus to the console text area.
+		"""
+		for child in self.children:
+			if isinstance(child, winConsoleUIA):
+				return child
+		return None
 
 
 class winConsoleUIA(Terminal):
