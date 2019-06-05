@@ -12,12 +12,10 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 #include <cstdio>
 #include <cwchar>
 #include <string>
 #include <locale>
-#include <codecvt>
 #include <vector>
 #define WIN32_LEAN_AND_MEAN 
 #define CINTERFACE
@@ -141,8 +139,9 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 		for(unsigned short idx=0;idx<fileInfo.TableSize;++idx) {
 			IID iid=*(fileInfo.pStubVtblList[idx]->header.piid);
 			CLSID clsidBackup={0};
-			wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
-			wstring name=converter.from_bytes(fileInfo.pNamesArray[idx]);
+			int nameLength=MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,NULL,0);
+			wchar_t* name=(wchar_t*)calloc(nameLength+1,sizeof(wchar_t));
+			MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,name,nameLength);
 			// Fetch the old CLSID for this interface if one is set, so we can replace it on deregistration.
 			// If not set, then we'll use the standard marshaler clsid on deregistration.
 			res=CoGetPSClsid(iid,&clsidBackup);
