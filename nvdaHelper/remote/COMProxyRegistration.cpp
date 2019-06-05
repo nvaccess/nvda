@@ -140,8 +140,10 @@ COMProxyRegistration_t* registerCOMProxy(wchar_t* dllPath) {
 			IID iid=*(fileInfo.pStubVtblList[idx]->header.piid);
 			CLSID clsidBackup={0};
 			int nameLength=MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,NULL,0);
-			wchar_t* name=(wchar_t*)calloc(nameLength+1,sizeof(wchar_t));
-			MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,name,nameLength);
+			wchar_t* wcharName=(wchar_t*)calloc(nameLength+1,sizeof(wchar_t));
+			MultiByteToWideChar(CP_UTF8,0,			fileInfo.pNamesArray[idx],-1,wcharName,nameLength);
+			wstring name(wcharName,nameLength);
+			free(wcharName);
 			// Fetch the old CLSID for this interface if one is set, so we can replace it on deregistration.
 			// If not set, then we'll use the standard marshaler clsid on deregistration.
 			res=CoGetPSClsid(iid,&clsidBackup);
