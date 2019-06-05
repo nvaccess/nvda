@@ -80,6 +80,7 @@ def stringToBool(string):
 	except ValidateError as e:
 		raise argparse.ArgumentTypeError(e.message)
 
+
 #Process option arguments
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
@@ -104,6 +105,15 @@ parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
 	help="When installing, enable NVDA's start on the logon screen")
+parser.add_argument(
+	'--copy-portable-config',
+	action="store_true",
+	dest='copyPortableConfig',
+	default=False,
+	help=(
+		"When installing, copy the portable configuration "
+		"from the provided path (--config-path, -c) to the current user account"
+	))
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
 # the downgraded copy won't be started in non-secure mode on secure desktops.

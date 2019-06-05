@@ -187,8 +187,10 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		createPortableText = _("Copy &portable configuration to current user account")
 		self.copyPortableConfigCheckbox = optionsSizer.addItem(wx.CheckBox(self, label=createPortableText))
-		self.copyPortableConfigCheckbox.Value = False
-		if globalVars.appArgs.launcher:
+		self.copyPortableConfigCheckbox.Value = bool(globalVars.appArgs.copyPortableConfig)
+		if globalVars.appArgs.copyPortableConfig is None:
+			# copyPortableConfig is set to C{None} in the main loop,
+			# when copying the portable configuration should be disabled at all costs.
 			self.copyPortableConfigCheckbox.Disable()
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))

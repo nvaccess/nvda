@@ -2897,12 +2897,13 @@ Following are the command line options for NVDA:
 | -m | --minimal | No sounds, no interface, no start message, etc. |
 | -s | --secure | Secure mode (disables Python console and logging features, used often in secure screens) |
 | None | --disable-addons | Addons will have no effect |
-| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option. |
-| None | --no-logging | Disable logging altogether while using NVDA. This setting can be overwritten if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on. |
+| None | --debug-logging | Enable debug level logging just for this run. This setting will override any other log level ( ""--loglevel"", -l) argument given, including no logging option |
+| None | --no-logging | Disable logging altogether while using NVDA. This setting can be overwritten if a log level ( ""--loglevel"", -l) is specified from command line or if debug logging is turned on |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 | None | --enable-start-on-logon=True|False | When installing, enable NVDA's [start on the logon screen #StartAtWindowsLogon] |
+| None | --copy-portable-config | When installing, copy the portable configuration from the provided path (--config-path, -c) to the current user account |
 | None | --create-portable | Creates a portable copy of NVDA (starting the newly created copy). Requires --portable-path to be specified |
 | None | --create-portable-silent | Creates a portable copy of NVDA (does not start the newly installed copy). Requires --portable-path to be specified |
 | None | --portable-path=PORTABLEPATH | The path where a portable copy will be created |
