@@ -46,28 +46,54 @@ class consoleUIATextInfo(UIATextInfo):
 				oldRange=self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
+			# Relative to the current line, calculate our offset and the current word's offsets.
 			lineInfo = self.copy()
 			lineInfo.expand(textInfos.UNIT_LINE)
 			offset = self._getCurrentOffsetInThisLine(lineInfo)
-			index = 1 if direction > 0 else 0
 			start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
-			wordMoveDirections = (
-				(offset - start) * -1,
-				end - offset
-			)
-			res = self.move(
-				textInfos.UNIT_CHARACTER,
-				wordMoveDirections[index],
-				endPoint=endPoint
-			)
-			if res != 0:
-				return direction
+			if direction>0:
+				# Moving in a forward direction, we can just jump to the end offset of the current word and we're done.
+				res = self.move(
+					textInfos.UNIT_CHARACTER,
+					end-offset,
+					endPoint=endPoint
+				)
 			else:
-				if self.move(textInfos.UNIT_CHARACTER, -1): # Reset word boundaries to move to the previous word
-					return self.move(unit, direction, endPoint=endPoint)
-				else:
-					return res
-		res = super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+				# Moving backwards
+				wordStartDistance=(offset-start) * -1
+				if wordStartDistance<0:
+					# We are after the beginning of a word.
+					# So first move back to the start of the word.
+					self.move(
+						textInfos.UNIT_CHARACTER,
+						wordStartDistance,
+						endPoint=endPoint
+					)
+					offset+=wordStartDistance
+				# Try to move one character back before the start of the word.
+				res=self.move(textInfos.UNIT_CHARACTER,-1,endPoint=endPoint)
+				if res==0:
+					return 0
+				offset-=1
+				# We are now positioned  within the previous word.
+				if offset<0:
+					# We've moved on to the previous line.
+					# Recalculate the current offset based on the new line we are now on.
+					lineInfo = self.copy()
+					lineInfo.expand(textInfos.UNIT_LINE)
+					offset = self._getCurrentOffsetInThisLine(lineInfo)
+				# Finally using the new offset,
+				# Calculate the current word offsets and move to the start of this word if we are not already there.
+				start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
+				wordStartDistance=(offset-start) * -1
+				if wordStartDistance<0:
+					self.move(
+						textInfos.UNIT_CHARACTER,
+						wordStartDistance,
+						endPoint=endPoint
+					)
+		else: # moving by a unit other than word 
+			res = super(consoleUIATextInfo, self).move(unit, direction, endPoint)
 		if oldRange and (
 			self._rangeObj.CompareEndPoints(
 				UIAHandler.TextPatternRangeEndpoint_Start,
@@ -149,7 +175,7 @@ class consoleUIATextInfo(UIATextInfo):
 		)
 		return (
 			start.value,
-			min(end.value, len(lineText) - 2)
+			min(end.value, max(1,len(lineText) - 2))
 		)
 
 
