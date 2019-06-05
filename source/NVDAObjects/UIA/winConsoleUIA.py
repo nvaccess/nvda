@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 Bill Dengler
 
+import config
 import speech
 import time
 import textInfos
@@ -37,6 +38,7 @@ class winConsoleUIA(Terminal):
 	_TextInfo = consoleUIATextInfo
 	_isTyping = False
 	_lastCharTime = 0
+	_queuedChars = []
 	_TYPING_TIMEOUT = 1
 
 	def _reportNewText(self, line):
@@ -56,7 +58,22 @@ class winConsoleUIA(Terminal):
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
 		self._lastCharTime = time.time()
-		super(winConsoleUIA, self).event_typedCharacter(ch)
+		if (
+			(
+				config.conf['keyboard']['speakTypedCharacters']
+				or config.conf['keyboard']['speakTypedWords']
+			)
+			and not config.conf['UIA']['winConsoleSpeakPasswords']
+		):
+			self._queuedChars.append(ch)
+		else:
+			super(winConsoleUIA, self).event_typedCharacter(ch)
+
+	def event_textChange(self):
+		while self._queuedChars:
+			ch = self._queuedChars.pop(0)
+			super(winConsoleUIA, self).event_typedCharacter(ch)
+		super(winConsoleUIA, self).event_textChange()
 
 	@script(gestures=[
 		"kb:enter",
@@ -69,6 +86,7 @@ class winConsoleUIA(Terminal):
 	def script_clear_isTyping(self, gesture):
 		gesture.send()
 		self._isTyping = False
+		self._queuedChars = []
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
