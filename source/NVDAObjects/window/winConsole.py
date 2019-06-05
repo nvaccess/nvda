@@ -11,6 +11,11 @@ import api
 import core
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
+	"""
+		NVDA's legacy Windows Console support.
+		This is used in situations where UIA isn't available.
+		Please consider using NVDAObjects.UIA.winConsoleUIA instead.
+	"""
 	STABILIZE_DELAY = 0.03
 
 	def _get_TextInfo(self):
