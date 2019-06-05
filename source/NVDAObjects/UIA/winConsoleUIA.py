@@ -130,7 +130,7 @@ class consoleUIATextInfo(UIATextInfo):
 		return res
 
 	def _getWordOffsetsInThisLine(self, offset, lineInfo):
-		lineText = lineInfo.text
+		lineText = lineInfo.text or u" "
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
 		lineText = lineText.translate({0: u' ', 0xa0: u' '})
