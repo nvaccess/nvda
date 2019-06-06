@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 00:10+1000\n"
-"PO-Revision-Date: 2019-05-24 08:41+0800\n"
-"Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
+"POT-Creation-Date: 2019-05-31 00:10+1000\n"
+"PO-Revision-Date: 2019-06-06 10:26+0800\n"
+"Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
 "2010-2019>\n"
 "Language: zh_CN\n"
@@ -3990,11 +3990,11 @@ msgstr "切换是否允许浏览光标跟随系统焦点移动"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
-msgstr "系统焦点跟随关"
+msgstr "将焦点自动跳转到可聚焦元素关"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements on"
-msgstr "系统焦点跟随开"
+msgstr "将焦点自动跳转到可聚焦元素开"
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
@@ -4038,14 +4038,14 @@ msgstr "忽略下一个 NVDA 按键指令，将其交给系统相关的程序处
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " %s module is loaded. "
-msgstr "%s 已加载。"
+msgstr " %s 已加载。 "
 
 #. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 #, python-format
 msgid " %s is currently running."
-msgstr "%s 当前正在运行。"
+msgstr " %s 当前正在运行。"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4414,21 +4414,20 @@ msgstr "使用 Windows 10 内置 光学识别技术读取浏览光标所在控�
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-msgid ""
-"Can't change the active configuration profile while an NVDA dialog is open"
-msgstr "在 NVDA 对话框打开时无法更改当前配置文件"
+msgid "Can't change the active profile while an NVDA dialog is open"
+msgstr "打开NVDA对话框时无法更改活动配置文件"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually deactivated"
-msgstr "配置文件 {profile} 已经手动停用"
+msgid "{profile} profile deactivated"
+msgstr "手动停用配置文件{profile}"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually activated"
-msgstr "配置文件 {profile} 已经手动启用"
+msgid "{profile} profile activated"
+msgstr "手动激活配置文件 {profile}"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -6781,7 +6780,7 @@ msgstr "显示"
 
 #. Translators: Input help mode message for the 'read documentation script
 msgid "Tries to read documentation for the selected autocompletion item."
-msgstr "尝试读取所选自动补全的说明"
+msgstr "尝试读取所选自动补全的说明。"
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
@@ -7381,7 +7380,8 @@ msgstr "切换键盘仿真开关"
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate 系列"
 
-#. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+#. Translators: The name of a key on a braille display, that scrolls the display
+#. to show previous/next part of a long line.
 msgid "display scroll"
 msgstr "显示滚动条"
 
@@ -9223,18 +9223,18 @@ msgstr "打开开发者实验目录"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Microsoft UI Automation"
-msgstr "Microsoft UI Automation(微软无障碍接口。缩写为UIA)"
+msgstr "Microsoft UI Automation 无障碍接口"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
-msgstr "在Word里使用Microsoft UI Automation (微软无障碍接口)"
+msgstr "在Word调用UI Automation接口 (&u)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr "自动把焦点跳转到可聚焦的元素上(&F)"
+msgstr "将焦点自动跳转到可聚焦元素(&F)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9254,7 +9254,7 @@ msgstr "调试日志"
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
 msgid "Enabled logging categories"
-msgstr "已经启用的日志记录种类"
+msgstr "已启用的日志记录类型"
 
 #. Translators: This is the label for the Advanced settings panel.
 msgid "Advanced"
