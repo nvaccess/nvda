@@ -16,12 +16,16 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <atlcomcli.h>
 #include <ia2.h>
 #include "nvdaController.h"
 #include <common/ia2utils.h>
 #include "nvdaHelperRemote.h"
 
 using namespace std;
+
+const long NAVRELATION_EMBEDS = 0x1009;
+const long NAVRELATION_CONTAINING_TAB_PANE = 0x1012;
 
 bool fetchIA2Attributes(IAccessible2* pacc2, map<wstring,wstring>& attribsMap) {
 	BSTR attribs=NULL;
@@ -193,6 +197,57 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 	return gotText;
 }
 
+long getIa2UniqueIdFromDispatchVariant(VARIANT& variant) {
+	if (variant.vt != VT_DISPATCH || !variant.pdispVal) {
+		return 0;
+	}
+	CComQIPtr<IServiceProvider> serv = variant.pdispVal;
+	if (!serv) {
+		return 0;
+	}
+	CComPtr<IAccessible2> acc;
+	serv->QueryService(IID_IAccessible, IID_IAccessible2, (void**)&acc);
+	if (!acc) {
+		return 0;
+	}
+	long id = 0;
+	acc->get_uniqueID(&id);
+	return id;
+}
+
+bool isInBackgroundTab(IAccessible* acc, HWND hwnd) {
+	CComVariant start(0, VT_I4);
+	// Get the tab document for `acc`.
+	CComVariant accDoc;
+	HRESULT hr = acc->accNavigate(NAVRELATION_CONTAINING_TAB_PANE, start, &accDoc);
+	if (FAILED(hr)) {
+		return false;
+	}
+	long accDocId = getIa2UniqueIdFromDispatchVariant(accDoc);
+	if (!accDocId) {
+		return false;
+	}
+	// Get the root accessible for the window.
+	CComPtr<IAccessible> root;
+	AccessibleObjectFromWindow(hwnd, OBJID_CLIENT, IID_IAccessible, (void**)&root);
+	if (!root) {
+		return false;
+	}
+	// Get the foreground tab document by asking the root.
+	CComVariant fgDoc;
+	hr = root->accNavigate(NAVRELATION_EMBEDS, start, &fgDoc);
+	if (FAILED(hr)) {
+		return false;
+	}
+	long fgDocId = getIa2UniqueIdFromDispatchVariant(fgDoc);
+	if (!fgDocId) {
+		return false;
+	}
+	// If `acc`'s document is not the foreground document, `acc` is in a background
+	// tab.
+	return accDocId != fgDocId;
+}
+
 void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
 	HWND fgHwnd=GetForegroundWindow();
 	//Ignore events for windows that are invisible or are not in the foreground
@@ -217,17 +272,13 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		return;
 	}
 	//Retreave the object states, and if its invisible or offscreen ignore the event.
-	VARIANT varState;
-	// #7709: Ensure The VARIANT is initialized, as accState may try to clear it before setting it.
-	VariantInit(&varState);
+	CComVariant varState;
 	pacc->get_accState(varChild,&varState);
 	VariantClear(&varChild);
 	if(varState.vt==VT_I4&&(varState.lVal&STATE_SYSTEM_INVISIBLE)) {
-		VariantClear(&varState);
 		pacc->Release();
 		return;
 	}
-	VariantClear(&varState);
 	//Retreave an IAccessible2 via IServiceProvider if it exists.
 	pacc->QueryInterface(IID_IServiceProvider,(void**)(&pserv));
 	pacc->Release();
@@ -244,6 +295,16 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	auto i=attribsMap.find(L"container-live");
 	bool live=(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0));
 	if(!live) {
+		pacc2->Release();
+		return;
+	}
+	// #1318: In Firefox, all tabs have the same HWND. Objects in background
+	// tabs do get the offscreen state, but offscreen live regions are used to
+	// report visually hidden information, so we can't filter based on that.
+	// Therefore, if the offscreen state is set, we do an additional background
+	// check.
+	if (varState.vt==VT_I4 && varState.lVal & STATE_SYSTEM_OFFSCREEN
+			&& isInBackgroundTab(pacc2, hwnd)) {
 		pacc2->Release();
 		return;
 	}
