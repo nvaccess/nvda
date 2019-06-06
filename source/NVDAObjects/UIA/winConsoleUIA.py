@@ -4,12 +4,14 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 Bill Dengler
 
+import api
 import config
 import ctypes
 import NVDAHelper
 import speech
 import time
 import textInfos
+import ui
 import UIAHandler
 
 from scriptHandler import script
@@ -99,16 +101,22 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction, endPoint)
 		if oldRange and (
-			self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				firstVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_Start
-			) < 0
-			or self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End
-			) >= 0
+			(
+				self.obj._reviewTopBounded and
+				self._rangeObj.CompareEndPoints(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					firstVisiRange,
+					UIAHandler.TextPatternRangeEndpoint_Start
+				) < 0
+			)
+			or (
+				self.obj._reviewBottomBounded and
+				self._rangeObj.CompareEndPoints(
+					UIAHandler.TextPatternRangeEndpoint_Start,
+					lastVisiRange,
+					UIAHandler.TextPatternRangeEndpoint_End
+				) >= 0
+			)
 		):
 			self._rangeObj = oldRange
 			return 0
@@ -190,6 +198,9 @@ class winConsoleUIA(Terminal):
 	_lastCharTime = 0
 	_queuedChars = []
 	_TYPING_TIMEOUT = 1
+	_reviewBoundsSetting = 0
+	_reviewTopBounded = True
+	_reviewBottomBounded = True
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
@@ -237,6 +248,53 @@ class winConsoleUIA(Terminal):
 		gesture.send()
 		self._isTyping = False
 		self._queuedChars = []
+
+	@script(gesture="kb:NVDA+o")
+	def script_next_review_bound(self, gesture):
+		self._reviewBoundsSetting += 1
+		self._updateReviewBounds()
+
+	@script(gesture="kb:NVDA+shift+o")
+	def script_prev_review_bound(self, gesture):
+		self._reviewBoundsSetting -= 1
+		self._updateReviewBounds()
+
+	def _updateReviewBounds(self):
+		self._reviewBoundsSetting %= 4
+		setting = self._reviewBoundsSetting
+		if setting == 0:
+			self._reviewTopBounded = True
+			self._reviewBottomBounded = True
+			ui.message(
+				#Translators: Announced in the Windows Console when review is constrained to onscreen text.
+				_("Doubly bounded")
+			)
+		elif setting == 1:
+			self._reviewTopBounded = False
+			self._reviewBottomBounded = True
+			ui.message(
+				#Translators: Announced in the Windows Console when review past the end of the onscreen text is constrained, but review before it is not.
+				_("Bottom bounded")
+			)
+		elif setting == 2:
+			self._reviewTopBounded = False
+			self._reviewBottomBounded = False
+			ui.message(
+				#Translators: Announced in the Windows Console when review is unconstrained (i.e. the entire buffer can be reviewed).
+				_("Unbounded")
+			)
+		elif setting == 3:
+			self._reviewTopBounded = True
+			self._reviewBottomBounded = False
+			ui.message(
+				#Translators: Announced in the Windows Console when review before the beginning of the onscreen text is constrained, but review after it is not.
+				_("Top bounded")
+			)
+		# Reset the review position in case we're located outside our new bounds.
+		api.setReviewPosition(
+			self.makeTextInfo(textInfos.POSITION_CARET),
+			isCaret=True
+		)
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
