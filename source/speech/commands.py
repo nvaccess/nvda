@@ -287,7 +287,7 @@ class WaveFileCommand(BaseCallbackCommand):
 
 	def run(self):
 		import nvwave
-		nvwave.playWaveFile(self.fileName, async=True)
+		nvwave.playWaveFile(self.fileName, asynchronous=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName
