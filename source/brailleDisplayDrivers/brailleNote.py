@@ -8,7 +8,8 @@
 USB, serial and bluetooth communications are supported.
 QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and scroll wheel are supported.
 See Brailliant B module for BrailleNote Touch support routines.
-"""
+"""
+
 from collections import OrderedDict
 import itertools
 import serial
