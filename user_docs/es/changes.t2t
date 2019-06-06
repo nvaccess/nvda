@@ -1,4 +1,4 @@
-﻿Qué hay de Nuevo en NVDA
+Qué hay de Nuevo en NVDA
 
 
 %!includeconf: ../changes.t2tconf
@@ -33,7 +33,7 @@ Lo reseñable de esta versión incluye la detección automática de pantallas br
 - Aclarado el texto en el administrador de complementos cuando se lanza NVDA con el indicador --disable-addons. (#9473)
 - Actualizado Unicode Common Locale Data Repository anotaciones emoji a la versión 35.0. (#9445)
 - Actualizado el transcriptor de braille liblouis a la versión 3.9.0. (#9439)
-- La tecla de acceso directo para el campo filtrar en la lista de elementos en el modo de búsqueda ha cambiado a alt+y. (#8728)
+- En inglés, la tecla de acceso directo para el campo filtrar en la lista de elementos en modo exploración ha cambiado a alt+y. (#8728)
 - Cuando una pantalla braille autodetectada se conecte a través de Bluetooth, NVDA seguirá buscando pantallas USB compatibles con el mismo controlador y cambiará a una conexión USB si está disponible. (#8853)
 
 
@@ -42,13 +42,13 @@ Lo reseñable de esta versión incluye la detección automática de pantallas br
 - Las marcas LTR y RTL ya no se anuncian en Braille o en voz por caracteres cuando se accede a la ventana de propiedades. (#8361)
 - Cuando se salte a los campos de formulario con la navegación rápida del modo Exploración, ahora se anuncia todo el campo de formulario en lugar de sólo la primera línea. (#9388)
 - NVDA ya no se silenciará después de salir de la aplicación Windows 10 Mail. (#9341)
-- NVDA ya no se inicia cuando los ajustes regionales de los usuarios se establezcan en una ubicación desconocida para NVDA, como por ejemplo Inglés (Países Bajos). (#8726)
+- NVDA ya no falla al iniciarse cuando los ajustes regionales de los usuarios se establezcan en una ubicación desconocida para NVDA, como por ejemplo Inglés (Países Bajos). (#8726)
 - Cuando el modo Exploración esté habilitado en Microsoft Excel y se cambie a un navegador en modo foco o viceversa, el estado del modo exploración ahora se notifica adecuadamente. (#8846)
-- NVDA ahora anuncia correctamente la línea en el cursor del ratón en Notepad+++ y otros editores basados en Scintilla. (#5450)
+- NVDA ahora anuncia correctamente la línea en el cursor del ratón en Notepad++ y otros editores basados en Scintilla. (#5450)
 - En Google Docs (y otros editores basados en web), el braille ya no muestra a veces de forma incorrecta "lst end" antes del cursor en medio de un elemento de la lista. (#9477)
 - En la actualización de Windows 10 de mayo de 2019, NVDA ya no verbaliza muchas notificaciones de volumen si se cambia el volumen con botones de hardware cuando el Explorador de archivos tenga el foco. (#9466)
 - La carga del diálogo de pronunciación de signos de puntuación/símbolos es ahora mucho más rápida cuando se utilicen diccionarios de símbolos que contengan más de 1.000 entradas. (#8790)
-- En los controles de Scintilla como Notepad++, NVDA puede leer la línea correcta cuando el ajuste de palabras esté activado. (#9424)
+- En los controles de Scintilla como Notepad++, NVDA puede leer la línea correcta cuando el ajuste de línea esté activado. (#9424)
 - En Microsoft Excel, la ubicación de la celda se anuncia después de que cambie debido a los gestos shift+intro o shift+intro del teclado numérico. (#9499)
 - Desde Visual Studio 2017 en adelante, en la ventana del Explorador de objetos, el elemento seleccionado en el árbol de objetos o en el árbol de miembros con categorías ahora se anuncia correctamente. (#9311)
 - Los complementos con nombres que sólo difieran en las mayúsculas ya no se tratan como complementos separados. (#9334)
