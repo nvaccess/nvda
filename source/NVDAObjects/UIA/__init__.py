@@ -863,12 +863,8 @@ class UIA(Window):
 			self.windowClassName == "ConsoleWindowClass"
 			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
 		):
-			if self.UIAElement.cachedAutomationId == "Text Area":
-				from .winConsoleUIA import winConsoleUIA
-				clsList.append(winConsoleUIA)
-			if self.UIAElement.cachedAutomationId == "Console Window":
-				from .winConsoleUIA import consoleUIAWindow
-				clsList.append(consoleUIAWindow)
+			from . import winConsoleUIA
+			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)

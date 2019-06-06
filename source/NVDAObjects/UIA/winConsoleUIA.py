@@ -258,3 +258,9 @@ class winConsoleUIA(Terminal):
 		ptr = self.UIATextPattern.GetVisibleRanges()
 		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
 		return res
+
+def findExtraOverlayClasses(obj, clsList):
+	if obj.UIAElement.cachedAutomationId == "Text Area":
+		clsList.append(winConsoleUIA)
+	if obj.UIAElement.cachedAutomationId == "Console Window":
+		clsList.append(consoleUIAWindow)
