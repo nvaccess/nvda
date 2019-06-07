@@ -266,35 +266,59 @@ class winConsoleUIA(Terminal):
 			self._reviewTopBounded = True
 			self._reviewBottomBounded = True
 			ui.message(
-				#Translators: Announced in the Windows Console when review is constrained to onscreen text.
+				# Translators: Announced in the Windows Console when review is constrained to onscreen text.
 				_("Doubly bounded")
 			)
 		elif setting == 1:
 			self._reviewTopBounded = False
 			self._reviewBottomBounded = True
 			ui.message(
-				#Translators: Announced in the Windows Console when review past the end of the onscreen text is constrained, but review before it is not.
+				# Translators: Announced in the Windows Console when review past the end of the onscreen text is constrained, but review before it is not.
 				_("Bottom bounded")
 			)
 		elif setting == 2:
 			self._reviewTopBounded = False
 			self._reviewBottomBounded = False
 			ui.message(
-				#Translators: Announced in the Windows Console when review is unconstrained (i.e. the entire buffer can be reviewed).
+				# Translators: Announced in the Windows Console when review is unconstrained (i.e. the entire buffer can be reviewed).
 				_("Unbounded")
 			)
 		elif setting == 3:
 			self._reviewTopBounded = True
 			self._reviewBottomBounded = False
 			ui.message(
-				#Translators: Announced in the Windows Console when review before the beginning of the onscreen text is constrained, but review after it is not.
+				# Translators: Announced in the Windows Console when review before the beginning of the onscreen text is constrained, but review after it is not.
 				_("Top bounded")
 			)
-		# Reset the review position in case we're located outside our new bounds.
-		api.setReviewPosition(
-			self.makeTextInfo(textInfos.POSITION_CARET),
-			isCaret=True
-		)
+		# Reset the review position if we're now out of bounds.
+		rp = api.getReviewPosition()
+		visiRanges = self.UIATextPattern.GetVisibleRanges()
+		visiLength = visiRanges.length
+		if visiLength > 0:
+			firstVisiRange = visiRanges.GetElement(0)
+			lastVisiRange = visiRanges.GetElement(visiLength - 1)
+			if (
+				(
+					self._reviewTopBounded and
+					rp._rangeObj.CompareEndPoints(
+						UIAHandler.TextPatternRangeEndpoint_Start,
+						firstVisiRange,
+						UIAHandler.TextPatternRangeEndpoint_Start
+					) < 0
+				)
+				or (
+					self._reviewBottomBounded and
+					rp._rangeObj.CompareEndPoints(
+						UIAHandler.TextPatternRangeEndpoint_Start,
+						lastVisiRange,
+						UIAHandler.TextPatternRangeEndpoint_End
+					) >= 0
+				)
+			):
+				api.setReviewPosition(
+					self.makeTextInfo(textInfos.POSITION_CARET),
+					isCaret=True
+				)
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
