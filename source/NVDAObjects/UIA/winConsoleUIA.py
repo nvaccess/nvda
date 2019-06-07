@@ -262,5 +262,5 @@ class winConsoleUIA(Terminal):
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
 		clsList.append(winConsoleUIA)
-	if obj.UIAElement.cachedAutomationId == "Console Window":
+	elif obj.UIAElement.cachedAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
