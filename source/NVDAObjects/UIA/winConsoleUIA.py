@@ -14,6 +14,7 @@ import textInfos
 import ui
 import UIAHandler
 
+from inputCore import SCRCAT_MISC
 from scriptHandler import script
 from winVersion import isAtLeastWin10
 from . import UIATextInfo
@@ -249,12 +250,20 @@ class winConsoleUIA(Terminal):
 		self._isTyping = False
 		self._queuedChars = []
 
-	@script(gesture="kb:NVDA+o")
+	@script(
+		gesture="kb:NVDA+o",
+		description=_("Selects the next review bounds setting"), # Translators: A gesture description.
+		category=SCRCAT_MISC,
+	)
 	def script_next_review_bound(self, gesture):
 		self._reviewBoundsSetting += 1
 		self._updateReviewBounds()
 
-	@script(gesture="kb:NVDA+shift+o")
+	@script(
+		gesture="kb:NVDA+shift+o",
+		description=_("Selects the previous review bounds setting"), # Translators: A gesture description.
+		category=SCRCAT_MISC,
+	)
 	def script_prev_review_bound(self, gesture):
 		self._reviewBoundsSetting -= 1
 		self._updateReviewBounds()

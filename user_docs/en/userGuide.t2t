@@ -942,6 +942,24 @@ When in the table view of added books:
 | Context menu | applications | Opens the context menu for the selected book. |
 %kc:endInclude
 
+++ Windows Console ++[windoesConsole]
+
+By default, when UI Automation is enabled for the Windows Console, the review cursor is constrained to the text currently visible on the screen (i.e. once text scrolls off the top or below the bottom of the console, it cannot be reviewed). However, this can be changed on the fly to allow previously visible text to be reviewed. The following review modes are available:
+
+- Top bounded: Review before the beginning of the onscreen text is constrained, but review after it is not.
+- Doubly bounded (default): review is constrained to onscreen text.
+- Bottom bounded: review past the onscreen text is constrained, but review before it is permitted. This mode allows text that scrolled off the top of the screen to be reviewed.
+- Unbounded: No constraints are placed on review, so all text presented by the operating system can be read.
+
+
+%kc:beginInclude
+The following commands are available in the Windows Console when UI Automation is enabled:
+
+|| Name | Key | Description |
+| next review bounds setting | NVDA+o | Selects the next review bounds setting for this console window. |
+| previous review bounds setting | NVDA+shift+o | Selects the previous review bounds setting for this console window. |
+%kc:endInclude
+
 + Configuring NVDA +[ConfiguringNVDA]
 Most configuration can be performed using dialog boxes accessed through the Preferences sub-menu of the NVDA menu.
 Many of these settings can be found in the multi-page [NVDA Settings dialog #NVDASettings].
