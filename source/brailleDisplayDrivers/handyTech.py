@@ -24,6 +24,23 @@ from logHandler import log
 import bdDetect
 import time
 import datetime
+from ctypes import windll
+import windowUtils
+
+class InvisibleDriverWindow(windowUtils.CustomWindow):
+	className = u"Handy_Tech_Server"
+	def __init__(self, driver):
+		super(InvisibleDriverWindow, self).__init__(u"Handy Tech Server")
+		self.driver = driver
+	def windowProc(self, hwnd, msg, wParam, lParam):
+		if msg == window_message:
+			if wParam == 100 and lParam == 1:
+				self.driver.go_to_sleep()
+			elif wParam == 100 and lParam == 0:
+				self.driver.wake_up()
+		return 0
+
+window_message=windll.user32.RegisterWindowMessageW(u"Handy_Tech_Server")
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
@@ -528,6 +545,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
+		self._messageWindow=InvisibleDriverWindow(self)
 		self.numCells = 0
 		self._model = None
 		self._ignoreKeyReleases = False
@@ -535,12 +553,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.brailleInput = False
 		self._hidSerialBuffer = b""
 		self._atc = False
+		self._sleepcounter = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.KEY_HID
 			self.isHidSerial = portId in USB_IDS_HID_CONVERTER
+			self.port = port
 			try:
 				if self.isHidSerial:
 					# This is either the standalone HID adapter cable for older displays,
@@ -575,8 +595,33 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			raise RuntimeError("No Handy Tech display found")
 
+	def go_to_sleep(self):
+		self._sleepcounter += 1
+		if self._dev is not None:
+			self._dev.close()
+			self._dev = None
+			time.sleep(self.timeout)
+	def wake_up(self):
+		if self._sleepcounter > 0:
+			self._sleepcounter -= 1
+		if self._sleepcounter > 0: # Still not zero after decrementing
+			return
+		# Might throw if device no longer exists.
+		# We leave it to autodetection to grab it when it reappears.
+		if self.isHidSerial:
+			# This is either the standalone HID adapter cable for older displays,
+			# or an older display with a HID - serial adapter built in
+			self._dev = hwIo.Hid(self.port, onReceive=self._hidSerialOnReceive)
+			# Send a flush to open the serial channel
+			self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
+		elif self.isHid:
+			self._dev = hwIo.Hid(self.port, onReceive=self._hidOnReceive)
+		else:
+			self._dev = hwIo.Serial(self.port, baudrate=BAUD_RATE, parity=PARITY,
+				timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._serialOnReceive)
 	def terminate(self):
 		try:
+			self._messageWindow.destroy()
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
 			# We must sleep before closing the  connection as not doing this can leave the display in a bad state where it can not be re-initialized.
@@ -602,6 +647,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._atc = state
 
 	def sendPacket(self, packetType, data=""):
+		if self._dev is None:
+			return
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		if self.isHid:
@@ -610,6 +657,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.write(packetType + data)
 
 	def sendExtendedPacket(self, packetType, data=""):
+		if self._dev is None:
+			return
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		packet = b"{length}{extType}{data}\x16".format(
