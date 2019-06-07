@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/miranda32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Joseph Lee, Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -74,7 +75,7 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 
 #other constants
 ANSILOGS=(1001,1006)
-MESSAGEVIEWERS=(1001,1005,5005)
+MESSAGEVIEWERS=(1001,1005,3011,5005)
 
 class AppModule(appModuleHandler.AppModule):
 	lastTextLengths={}

@@ -2,15 +2,16 @@ import baseObject
 import config
 import synthDriverHandler
 import queueHandler
+import driverHandler
 
 class SynthSetting(baseObject.AutoPropertyObject):
 	"""a numeric synth setting. Has functions to set, get, increase and decrease its value """
 	def __init__(self,synth,setting,min=0,max=100):
-		self.synth=synth
-		self.setting=setting
-		self.min=min
-		self.max=max
-		self.step = setting.normalStep if isinstance(setting,synthDriverHandler.NumericSynthSetting) else 1
+		self.synth = synth
+		self.setting = setting
+		self.min = setting.minVal  if isinstance(setting,driverHandler.NumericDriverSetting) else min
+		self.max = setting.maxVal  if isinstance(setting,driverHandler.NumericDriverSetting) else max
+		self.step = setting.normalStep if isinstance(setting,driverHandler.NumericDriverSetting) else 1
 
 	def increase(self):
 		val = min(self.max,self.value+self.step)
@@ -23,11 +24,11 @@ class SynthSetting(baseObject.AutoPropertyObject):
 		return self._getReportValue(val)
 
 	def _get_value(self):
-		return getattr(self.synth,self.setting.name)
+		return getattr(self.synth,self.setting.id)
 
 	def _set_value(self,value):
-		setattr(self.synth,self.setting.name,value)
-		config.conf["speech"][self.synth.name][self.setting.name]=value
+		setattr(self.synth,self.setting.id, value)
+		config.conf["speech"][self.synth.name][self.setting.id]=value
 
 	def _getReportValue(self, val):
 		return str(val)
@@ -37,27 +38,27 @@ class SynthSetting(baseObject.AutoPropertyObject):
 
 class StringSynthSetting(SynthSetting):
 	def __init__(self,synth,setting):
-		self._values=getattr(synth,"available%ss"%setting.name.capitalize()).values()
+		self._values=getattr(synth,"available%ss"%setting.id.capitalize()).values()
 		super(StringSynthSetting,self).__init__(synth,setting,0,len(self._values)-1)
 
 	def _get_value(self):
-		curID=getattr(self.synth,self.setting.name)
+		curID=getattr(self.synth,self.setting.id)
 		for e,v in enumerate(self._values):
-			if curID==v.ID:
+			if curID==v.id:
 				return e 
 
 	def _set_value(self,value):
 		"""Overridden to use code that supports updating speech dicts when changing voice"""
-		ID=self._values[value].ID
-		if self.setting.name=="voice":
-			synthDriverHandler.changeVoice(self.synth,ID)
+		id = self._values[value].id
+		if self.setting.id == "voice":
+			synthDriverHandler.changeVoice(self.synth, id)
 			# Voice parameters may change when the voice changes, so update the config.
 			self.synth.saveSettings()
 		else:
-			super(StringSynthSetting,self)._set_value(ID)
+			super(StringSynthSetting,self)._set_value(id)
 
 	def _getReportValue(self, val):
-		return self._values[val].name
+		return self._values[val].displayName
 
 class BooleanSynthSetting(SynthSetting):
 
@@ -75,7 +76,7 @@ class BooleanSynthSetting(SynthSetting):
 
 class SynthSettingsRing(baseObject.AutoPropertyObject):
 	"""
-	 A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
+	A synth settings ring which enables the user to change to the next and previous settings and ajust the selected one
 	It was written to facilitate the implementation of a way to change the settings resembling the window-eyes way.
 	"""
 
@@ -127,16 +128,20 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def updateSupportedSettings(self,synth):
 		import ui
 		from scriptHandler import _isScriptRunning
-		#Save name of the current setting to restore ring position after reconstruction
-		prevName=self.settings[self._current].setting.name if self._current is not None and hasattr(self,'settings') else None
+		#Save ID of the current setting to restore ring position after reconstruction
+		prevID = (
+			self.settings[self._current].setting.id
+			if self._current is not None and hasattr(self,'settings')
+			else None
+		)
 		list = []
 		for s in synth.supportedSettings:
-			if not s.availableInSynthSettingsRing: continue
-			if prevName==s.name: #restore the last setting
+			if not s.availableInSettingsRing: continue
+			if prevID == s.id: #restore the last setting
 				self._current=len(list)
-			if isinstance(s,synthDriverHandler.NumericSynthSetting):
+			if isinstance(s,driverHandler.NumericDriverSetting):
 				cls=SynthSetting
-			elif isinstance(s,synthDriverHandler.BooleanSynthSetting):
+			elif isinstance(s,driverHandler.BooleanDriverSetting):
 				cls=BooleanSynthSetting
 			else:
 				cls=StringSynthSetting
@@ -146,9 +151,18 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			self.settings = None
 		else:
 			self.settings = list
-		if not prevName or not self.settings or len(self.settings)<=self._current or prevName!=self.settings[self._current].setting.name:
-			#Previous chosen setting doesn't exists. Set position to default
+		if (
+			not prevID
+			or not self.settings
+			or len(self.settings) <= self._current
+			or prevID != self.settings[self._current].setting.id
+		):
+			# Previous chosen setting doesn't exists. Set position to default
 			self._current = synth.initialSettingsRingSetting
 			if _isScriptRunning:
-				#User changed some setting from ring and that setting no more exists. We have just reverted to first setting, so report this change to user
-				queueHandler.queueFunction(queueHandler.eventQueue,ui.message,"%s %s" % (self.currentSettingName,self.currentSettingValue))
+				# User changed some setting from ring and that setting no longer exists.
+				# We have just reverted to first setting, so report this change to user
+				queueHandler.queueFunction(
+					queueHandler.eventQueue,
+					ui.message,"%s %s" % (self.currentSettingName,self.currentSettingValue)
+				)
