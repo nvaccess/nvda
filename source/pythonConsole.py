@@ -10,10 +10,7 @@ import watchdog
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
 
-try:
-	import __builtin__ as builtins # Python 2.7 import
-except ImportError:
-	import builtins # Python 3 import
+import __builtin__
 import os
 import code
 import sys
@@ -123,10 +120,10 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		stdout, stderr = sys.stdout, sys.stderr
 		sys.stdout = sys.stderr = self
 		# Prevent this from messing with the gettext "_" builtin.
-		saved_ = builtins._
+		saved_ = __builtin__._
 		more = code.InteractiveConsole.push(self, line)
 		sys.stdout, sys.stderr = stdout, stderr
-		builtins._ = saved_
+		__builtin__._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
 

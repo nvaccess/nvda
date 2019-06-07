@@ -471,9 +471,20 @@ NVDA 的这个额外的鼠标特性默认情况下是关闭的。
 %kc:endInclude
 
 + 浏览模式 +[BrowseMode]
-NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
-这包括Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Microsoft Outlook  的 HTML 消息， Google Chrome, Adobe Reader 和 Adobe Flash 的文档。
-浏览模式在阅读 Microsoft Word 文档时也可用(可选)。
+NVDA 使用浏览模式来浏览复杂的只读文档，比如网页或者PDF文档。
+NVDA支持以下应用的文档
+- 火狐浏览器
+- IE浏览器
+- Mozilla Thunderbird
+- Microsoft Outlook 邮件内网页形式的消息
+- 谷歌浏览器
+- 微软Edge浏览器
+- Adobe PDF阅读器
+- 福昕PDF阅读器
+- Adobe Flash
+- 亚马逊Kindle阅读软件
+-
+浏览模式在阅读微软Word文档时也可用(可选)。
 
 在浏览模式中，文档的内容将可以以平面的形式用浏览光标快捷键进行浏览，前提是它是传统的文本文档。
 所有 NVDA 的[系统输入焦点 #SystemCaret]快捷键都可以正常的在此模式下工作，例如全文朗读、朗读格式、表格导航快捷键等等。
@@ -493,7 +504,7 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 | 切换浏览/焦点模式 | NVDA+空格 | 在焦点模式和浏览模式之间切换。 |
 | 退出焦点模式 | esc | 如果上次已经自动切换到了焦点模式则返回到浏览模式。 |
 | 刷新浏览模式文档 | NVDA+f5 | 重载当前文档的内容(对于那些丢失了原来文档内容的情况非常实用，但不可用于 Microsoft Word 和 Outlook)。 |
-| 查找 | NVDA+control+f | 弹出一个对话框，您可以输入一些文本在当前文档中进行查找。 |
+| 查找 | NVDA+control+f | 弹出一个对话框，您可以输入一些文本在当前文档中进行查找。请查看[搜索文本 #SearchingForText]这一节了解详细情况。|
 | 查找下一个 | NVDA+f3 | 在当前文档查找下一个您先前键入的文本的结果。 |
 | 查找上一个 | NVDA+shift+f3 | 在当前文档查找上一个您先前键入的文本的结果。 |
 | 打开长描述 | NVDA+d | 打开一个新窗口，显示您当前浏览元素的详细描述(如果有的话)。 |
@@ -550,6 +561,22 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
 | 浏览模式元素列表 | NVDA+f7 | 列举当前文档的各种元素。 |
+%kc:endInclude
+
+++ 搜索文本 ++[SearchingForText]
+此对话框允许您在当前文档中搜索术语。
+在“键入要查找的文本”字段中，可以输入要查找的文本。
+在文本字段中，您还可以使用向上和向下箭头选择以前搜索的术语。
+“区分大小写”复选框使搜索以不同的方式考虑大写和小写字母。
+例如，选择“区分大小写”，您可以找到“NV Access”但不能找到“nv access”。
+案例中的差异不会保存在搜索历史记录中。
+重新启动NVDA时，将清除先前搜索的术语列表。
+使用以下快捷键执行搜索：
+%kc:beginInclude
+|| 名称 | 按键 | 描述 |
+| 查找 | NVDA+control+f | 弹出搜索对话框。|
+| 查找下一个 | NVDA+f3 | 在当前文档查找下一个您先前键入的文本的结果。 |
+| 查找上一个 | NVDA+shift+f3 | 在当前文档查找上一个您先前键入的文本的结果。 |
 %kc:endInclude
 
 ++ 嵌入式对象 ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 如果设置 NVDA 在鼠标经过时朗读文本，此选项允许您设置朗读文本的多少。
 选项分别为字符、单词和段落。
 
+要从任何地方切换文本单位，请使用[输入手势对话框 #InputGestures]分配自定义手势。
+
 ==== 读出鼠标所进入对象的类型 ====[MouseSettingsRole]
 如果此复选框被选中，NVDA 将读出鼠标所进入的对象的类型。
 
@@ -1503,7 +1532,15 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 ==== 使用屏幕真实布局 ====[BrowseModeSettingsScreenLayout]
 按键: NVDA+v
 
- 此选项允许您定义是否把内容(如链接、表单)独立成为一行，或者象视觉所看到的，保持文字的布局不变。如果此选项启用，文字的布局就会与视觉同步，如果此选项被关闭，每个不同的区域就会独立成为一行。
+此选项允许您定义是否把内容(如链接、表单)独立成为一行，或者象视觉所看到的，保持文字的布局不变。如果此选项启用，文字的布局就会与屏幕的布局同步.
+如果此选项被关闭，每个不同的区域就会独立成为一行。
+
+==== 页面加载完成后启用浏览模式 ====[BrowseModeSettingsEnableOnPageLoad]
+This checkbox toggles whether browse mode should be automatically enabled when loading a page.
+When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
+See the [Browse Mode section #BrowseMode] for a list of applications supported by browse mode.
+Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
+这个选项默认情况下是开启的。
 
 ==== 页面加载完成后朗读所有内容 ====[BrowseModeSettingsAutoSayAll]
 此复选框用来切换在浏览模式下，页面加载完成之后自动朗读所有内容的开关。
@@ -1633,6 +1670,16 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 但是，在某些版本的Office中可能存在某些未公开或未正确显示的信息，这意味着UIA支持不好用。
 我们建议大多数用户不要启用此功能，但我们欢迎Office 2016或者Office 365的用户测试此功能并提供反馈。
 
+==== 浏览模式中自动把焦点放到可聚焦的元素上 ====[BrowseModeSettingsAutoFocusFocusableElements]
+快捷键: NVDA+8
+
+默认情况下启用。此选项允许您选择在使用浏览模式插入符导航内容时是否应自动将系统焦点设置为可以获取系统焦点的元素（链接，表单域等）。
+如果启用，则表示自版本2019.1及之前的NVDA的默认行为。
+禁用此选项不会自动聚焦可聚焦元素。
+这可能会在浏览模式下提供更快的浏览体验和更好的响应能力。
+当与其交互时，焦点将更新为特定元素（例如，按下按钮，选中复选框）。
+此功能在NVDA 2019.2中是实验性质的。
+
 ==== 光标移动超时（单位是千分之一秒） ====[AdvancedSettingsCaretMoveTimeout]
 此选项允许您配置NVDA等多长时间之后才从编辑框获取光标位置。
 如果您发现NVDA光标朗读有问题，比如位置不对，那么你可以增加这个时间试试。
@@ -1686,6 +1733,7 @@ NVDA 的语音字典比之单词替换更为强大。
 请注意，此对话框依照可在[语音设置对话框 #VoiceSettings]中找到的选项“处理字符和标点时信任语音语言”而定，极如果此选项被选中，将使用语音语言代替 NVDA 本地语言设置。
 
 要想修改某个标点，请在标点列表选择它。
+您可以通过在“查找”编辑框中输入符号或符号替换的一部分来寻找符号。
 
 - “替换文本”编辑区域允许您定义用来替换此标点的文本。
 - 使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别。
@@ -1751,7 +1799,7 @@ NVDA 的语音字典比之单词替换更为强大。
 配置文件仅包含当配置文件处于编辑状态时进行的那些设置。
 大多数设置都可以由配置文件进行修改，但“常规设置”对话框包含的那些可影响 NVDA 全局的设置除外。
 
-配置文件也可手动激活。
+配置文件也可手动激活。可以从对话框或使用自定义添加的手势手动激活配置文件。
 它也可由一些触发条件自动的激活，如切换到特定的程序。
 
 +++ 基本配置管理 +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ NVDA 的语音字典比之单词替换更为强大。
 您可以在“管理配置”对话框中选中“临时停用所有关联”复选框达到此目的。
 
 要想在任何地方切换是否临时停用所有关联，请在[输入手势对话框 #InputGestures]定义一个自定义手势。
+
++++ 使用输入手势激活配置 +++[ConfigProfileGestures]
+对于您添加的每个配置文件，您都可以分配一个或多个输入手势来激活它。
+默认情况下，配置文件没有分配输入手势。
+您可以使用[输入手势对话框#InputGestures]添加手势以激活配置文件。
+每个配置文件在配置文件类别下都有自己的条目。
+重命名配置文件时，您之前添加的任何手势仍然可用。
+删除配置文件将自动删除与其关联的手势。
 
 ++ 配置文件保存的位置 ++[LocationOfConfigurationFiles]
 便携版本的 NVDA 设置(包括自定义程序模块、自定义驱动)都被直接存放在 NVDA 的 userConfig 目录下。

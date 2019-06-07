@@ -311,19 +311,14 @@ def AccessibleChildren(pacc,iChildStart,cChildren):
 	return [x.value for x in varChildren[0:pcObtained.value]]
 
 def GetProcessHandleFromHwnd(windowHandle):
-	"""Retreaves a process handle of the process who owns the window.
-	If Windows Vista, uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process who is elevated.
-	if older than Windows Vista, just uses OpenProcess from user32.dll instead.
+	"""Retrieves a process handle of the process who owns the window.
+	This uses GetProcessHandleFromHwnd found in oleacc.dll which allows a client with UIAccess to open a process that is elevated.
 	@param windowHandle: a window of a process you wish to retreave a process handle for
 	@type windowHandle: integer
 	@returns: a process handle with read, write and operation access
 	@rtype: integer
 	"""
-	try:
-		return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
-	except:
-		import winKernel
-		return winKernel.openProcess(winKernel.PROCESS_VM_READ|winKernel.PROCESS_VM_WRITE|winKernel.PROCESS_VM_OPERATION,False,winUser.getWindowThreadProcessID(windowHandle)[0])
+	return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
 
 def GetRoleText(role):
 	textLen=oledll.oleacc.GetRoleTextW(role,0,0)

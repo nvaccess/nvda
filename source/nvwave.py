@@ -143,7 +143,9 @@ class WavePlayer(object):
 		if buffered:
 			#: Minimum size of the buffer before audio is played.
 			#: However, this is ignored if an C{onDone} callback is provided to L{feed}.
-			self._minBufferSize = samplesPerSec * channels * (bitsPerSample / 8) / 1000 * self.MIN_BUFFER_MS
+			BITS_PER_BYTE = 8
+			MS_PER_SEC = 1000
+			self._minBufferSize = samplesPerSec * channels * (bitsPerSample / BITS_PER_BYTE) / MS_PER_SEC * self.MIN_BUFFER_MS
 			self._buffer = ""
 		else:
 			self._minBufferSize = None
@@ -381,9 +383,11 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 
 fileWavePlayer = None
 fileWavePlayerThread=None
-def playWaveFile(fileName, async=True):
+def playWaveFile(fileName, asynchronous=True):
 	"""plays a specified wave file.
-"""
+	@param asynchronous: whether the wave file should be played asynchronously
+	@type asynchronous: bool
+	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
@@ -391,7 +395,7 @@ def playWaveFile(fileName, async=True):
 		fileWavePlayer.stop()
 	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
-	if async:
+	if asynchronous:
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
 		fileWavePlayerThread=threading.Thread(target=fileWavePlayer.idle)

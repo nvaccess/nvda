@@ -10,7 +10,6 @@ import itertools
 import os
 import driverHandler
 import pkgutil
-import importlib
 import ctypes.wintypes
 import threading
 import time
@@ -314,14 +313,14 @@ def NVDAObjectHasUsefulText(obj):
 
 def _getDisplayDriver(moduleName, caseSensitive=True):
 	try:
-		return importlib.import_module("brailleDisplayDrivers.%s" % moduleName, package="brailleDisplayDrivers").BrailleDisplayDriver
+		return __import__("brailleDisplayDrivers.%s" % moduleName, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 	except ImportError as initialException:
 		if caseSensitive:
 			raise initialException
 		for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
 			if name.startswith('_') or name.lower() != moduleName.lower():
 				continue
-			return importlib.import_module("brailleDisplayDrivers.%s" % name, package="brailleDisplayDrivers").BrailleDisplayDriver
+			return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
 		else:
 			raise initialException
 
@@ -1591,10 +1590,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def getTether(self):
 		return self._tether
 
-	def _get_tether(self):
-		"""@deprecated: Use L{getTether instead."""
-		return self.getTether()
-
 	def setTether(self, tether, auto=False):
 		if auto and not self.shouldAutoTether:
 			return
@@ -1605,10 +1600,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._tether = tether
 		self.mainBuffer.clear()
 
-	def _set_tether(self, tether):
-		"""@deprecated: Use L{setTether instead."""
-		self.setTether(tether, auto=False)
-
 	def _get_shouldAutoTether(self):
 		return self.enabled and config.conf["braille"]["autoTether"]
 
@@ -1618,7 +1609,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName=name
 		if name == AUTO_DISPLAY_NAME:
-			self._enableDetection()
+			self._enableDetection(keepCurrentDisplay=False)
 			return True
 		elif not isFallback and not detected:
 			self._disableDetection()
@@ -1673,7 +1664,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			if isFallback:
-				self._resumeDetection()
+				if self._detectionEnabled and not self._detector:
+					# As this is the fallback display, which is usually noBraille,
+					# we can keep the current display when enabling detection.
+					# Note that in this case, L{_detectionEnabled} is set by L{handleDisplayUnavailable}
+					self._enableDetection(keepCurrentDisplay=True)
 			elif not detected:
 				config.conf["braille"]["display"] = name
 			else: # detected:
@@ -1687,11 +1682,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				# We should handle this more gracefully, since this is no reason
 				# to stop a display from loading successfully.
 				log.debugWarning("Error in initial display after display load", exc_info=True)
+			if detected and 'bluetoothName' in detected.deviceInfo:
+				self._enableDetection(bluetooth=False, keepCurrentDisplay=True, limitToDevices=[name])
 			return True
 		except:
 			# For auto display detection, logging an error for every failure is too obnoxious.
 			if not detected:
-				log.error("Error initializing display driver for kwargs %r"%kwargs, exc_info=True)
+				log.error("Error initializing display driver %s for kwargs %r"%(name,kwargs), exc_info=True)
 			elif bdDetect._isDebug():
 				log.debugWarning("Couldn't initialize display driver for kwargs %r"%(kwargs,), exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
@@ -1737,7 +1734,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			if self.tether == self.TETHER_FOCUS:
+			if self.getTether() == self.TETHER_FOCUS:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeFocus"]
 			else:
 				cells[self._cursorPos] |= config.conf["braille"]["cursorShapeReview"]
@@ -1838,7 +1835,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.clear()
 		focusToHardLeftSet = False
 		for region in regions:
-			if self.tether == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
+			if self.getTether() == self.TETHER_FOCUS and config.conf["braille"]["focusContextPresentation"]==CONTEXTPRES_CHANGEDCONTEXT:
 				# Check focusToHardLeft for every region.
 				# If noone of the regions has focusToHardLeft set to True, set it for the first focus region.
 				if region.focusToHardLeft:
@@ -1967,7 +1964,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.enabled or not api.getDesktopObject():
 			# Braille is disabled or focus/review hasn't yet been initialised.
 			return
-		if self.tether == self.TETHER_FOCUS:
+		if self.getTether() == self.TETHER_FOCUS:
 			self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 		else:
 			self.handleReviewMove(shouldAutoTether=False)
@@ -1994,17 +1991,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
 		self.setDisplayByName("noBraille", isFallback=True)
 
-	def _enableDetection(self):
+	def _enableDetection(self, usb=True, bluetooth=True, keepCurrentDisplay=False, limitToDevices=None):
 		"""Enables automatic detection of braille displays.
 		When auto detection is already active, this will force a rescan for devices.
+		This should also be executed when auto detection should be resumed due to loss of display connectivity.
 		"""
 		if self._detectionEnabled and self._detector:
-			self._detector.rescan()
+			self._detector.rescan(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 			return
 		_BgThread.start()
 		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
-		self.setDisplayByName("noBraille", isFallback=True)
-		self._detector = bdDetect.Detector()
+		if not keepCurrentDisplay:
+			self.setDisplayByName("noBraille", isFallback=True)
+		self._detector = bdDetect.Detector(usb=usb, bluetooth=bluetooth, limitToDevices=limitToDevices)
 		self._detectionEnabled = True
 
 	def _disableDetection(self):
@@ -2015,14 +2014,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._detector.terminate()
 			self._detector = None
 		self._detectionEnabled = False
-
-	def _resumeDetection(self):
-		"""Resumes automatic detection of braille displays.
-		This is executed when auto detection should be resumed due to loss of display connectivity.
-		"""
-		if not self._detectionEnabled or self._detector:
-			return
-		self._detector = bdDetect.Detector()
 
 class _BgThread:
 	"""A singleton background thread used for background writes and raw braille display I/O.
@@ -2121,6 +2112,8 @@ def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
 	log.info("Using liblouis version %s" % louis.version())
+	import serial
+	log.info("Using pySerial version %s"%serial.VERSION)
 	# #6140: Migrate to new table names as smoothly as possible.
 	oldTableName = config.conf["braille"]["translationTable"]
 	newTableName = brailleTables.RENAMED_TABLES.get(oldTableName)

@@ -2,6 +2,7 @@ import api
 import tones
 import controlTypes
 import textInfos
+import locationHelper
 import speech
 
 class ScreenExplorer(object):
@@ -42,7 +43,7 @@ class ScreenExplorer(object):
 					hasNewObj=False 
 		if not pos:
 			try:
-				pos=obj.makeTextInfo(textInfos.Point(x,y))
+				pos=obj.makeTextInfo(locationHelper.Point(x,y))
 			except (NotImplementedError,LookupError):
 				pass
 			if pos: pos.expand(unit)

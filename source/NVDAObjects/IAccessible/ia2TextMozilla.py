@@ -18,7 +18,7 @@ import api
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
-from locationHelper import RectLTWH
+import locationHelper
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -111,7 +111,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._startObj = self._endObj = tempObj
 			else:
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
-		elif isinstance(position, textInfos.Point):
+		elif isinstance(position, locationHelper.Point):
 			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
 			while startObj and startObj.role == controlTypes.ROLE_STATICTEXT:
 				# Skip text leaf nodes.

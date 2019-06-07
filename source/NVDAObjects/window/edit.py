@@ -8,11 +8,10 @@ import comtypes.client
 import struct
 import ctypes
 from comtypes import COMError
-import pythoncom
-import win32clipboard
 import oleTypes
 import colors
 import globalVars
+import NVDAHelper
 import eventHandler
 import comInterfaces.tom
 from logHandler import log
@@ -32,6 +31,7 @@ from .. import NVDAObjectTextInfo
 from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 import watchdog
+import locationHelper
 
 selOffsetsAtLastCaretEvent=None
 
@@ -170,10 +170,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.readProcessMemory(processHandle,internalP,ctypes.byref(p),ctypes.sizeof(p),None)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalP,0,winKernel.MEM_RELEASE)
-			point=textInfos.Point(p.x,p.y)
+			point=locationHelper.Point(p.x,p.y)
 		else:
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_POSFROMCHAR,offset,None)
-			point=textInfos.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
+			point=locationHelper.Point(winUser.GET_X_LPARAM(res),winUser.GET_Y_LPARAM(res))
 		# A returned coordinate can be a negative value if
 		# the specified character is not displayed in the edit control's client area. 
 		# If the specified index is greater than the index of the last character in the control,
@@ -181,8 +181,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if point.x <0 or point.y <0:
 			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
 				(point.x, point.y))
-		point.x, point.y = winUser.ClientToScreen(self.obj.windowHandle, point.x, point.y)
-		return point
+		return point.toScreen(self.obj.windowHandle)
 
 
 	def _getOffsetFromPoint(self,x,y):
@@ -447,8 +446,7 @@ NVDAUnitsToITextDocumentUnits={
 class ITextDocumentTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
-		p=textInfos.Point(0,0)
-		(p.x,p.y)=self._rangeObj.GetPoint(comInterfaces.tom.tomStart)
+		p=locationHelper.Point(*self._rangeObj.GetPoint(comInterfaces.tom.tomStart))
 		if p.x and p.y:
 			return p
 		else:
@@ -570,7 +568,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			r.collapse(1)
 			left,top=r.GetPoint(comInterfaces.tom.tomStart)
 		import displayModel
-		label=displayModel.DisplayModelTextInfo(self.obj, textInfos.Rect(left, top, right, bottom)).text
+		label=displayModel.DisplayModelTextInfo(self.obj, locationHelper.RectLTRB(left, top, right, bottom)).text
 		if label and not label.isspace():
 			return label
 		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
@@ -579,15 +577,9 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		except comtypes.COMError:
 			dataObj=None
 		if dataObj:
-			try:
-				dataObj=pythoncom._univgw.interface(hash(dataObj),pythoncom.IID_IDataObject)
-				format=(win32clipboard.CF_UNICODETEXT, None, pythoncom.DVASPECT_CONTENT, -1, pythoncom.TYMED_HGLOBAL)
-				medium=dataObj.GetData(format)
-				buf=ctypes.create_string_buffer(medium.data)
-				buf=ctypes.cast(buf,ctypes.c_wchar_p)
-				label=buf.value
-			except:
-				pass
+			text=comtypes.BSTR()
+			res=NVDAHelper.localLib.getOleClipboardText(dataObj,ctypes.byref(text));
+			label=text.value
 		if label:
 			return label
 		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
@@ -625,8 +617,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textInfos.Point):
-			self._rangeObj=self.obj.ITextDocumentObject.rangeFromPoint(position.x,position.y)
+		if isinstance(position,locationHelper.Point):
+			self._rangeObj=self.obj.ITextDocumentObject.rangeFromPoint(*position)
 		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.ITextDocumentObject.range(0,0)
 			self._rangeObj.expand(comInterfaces.tom.tomStory)

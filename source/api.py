@@ -6,6 +6,7 @@
 
 """General functions for NVDA"""
 
+import ctypes
 import config
 import textInfos
 import review
@@ -18,8 +19,6 @@ import NVDAObjects
 import NVDAObjects.IAccessible
 import winUser
 import controlTypes
-import win32clipboard
-import win32con
 import eventHandler
 import braille
 import watchdog
@@ -286,37 +285,23 @@ def copyToClip(text):
 @param text: the text which will be copied to the clipboard
 @type text: string
 """
-	if isinstance(text,basestring) and len(text)>0 and not text.isspace():
-		try:
-			win32clipboard.OpenClipboard()
-		except win32clipboard.error:
-			return False
-		try:
-			win32clipboard.EmptyClipboard()
-			win32clipboard.SetClipboardData(win32con.CF_UNICODETEXT, text)
-		finally:
-			win32clipboard.CloseClipboard()
-		win32clipboard.OpenClipboard() # there seems to be a bug so to retrieve unicode text we have to reopen the clipboard
-		try:
-			got = 	win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-		finally:
-			win32clipboard.CloseClipboard()
-		if got == text:
-			return True
-	return False
+	if not isinstance(text,basestring) or len(text)==0:
+		return False
+	import gui
+	with winUser.openClipboard(gui.mainFrame.Handle):
+		winUser.emptyClipboard()
+		winUser.setClipboardData(winUser.CF_UNICODETEXT,text)
+	got=getClipData()
+	return got == text
 
 def getClipData():
 	"""Receives text from the windows clipboard.
 @returns: Clipboard text
 @rtype: string
 """
-	text = ""
-	win32clipboard.OpenClipboard()
-	try:
-		text = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
-	finally:
-		win32clipboard.CloseClipboard()
-	return text
+	import gui
+	with winUser.openClipboard(gui.mainFrame.Handle):
+		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or u""
 
 def getStatusBar():
 	"""Obtain the status bar for the current foreground object.

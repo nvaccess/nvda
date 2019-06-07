@@ -19,8 +19,6 @@ else:
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	os.chdir(os.path.normpath(os.path.dirname(__file__)))
 
-import pythonMonkeyPatches
-
 import ctypes
 import locale
 import gettext
@@ -32,7 +30,6 @@ except:
 
 import time
 import argparse
-import win32con
 import globalVars
 import config
 import logHandler
@@ -122,7 +119,7 @@ parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',d
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	winUser.PostMessage(window,win32con.WM_QUIT,0,0)
+	winUser.PostMessage(window,winUser.WM_QUIT,0,0)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
@@ -219,7 +216,7 @@ log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 #Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
 	raise WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-04 10:39+1000\n"
-"PO-Revision-Date: 2019-03-05 20:54+0900\n"
+"POT-Creation-Date: 2019-05-24 00:10+1000\n"
+"PO-Revision-Date: 2019-05-27 08:47+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -171,7 +171,7 @@ msgstr "常にダッキング"
 #. Translators: Displayed in braille for an object which is a
 #. window.
 msgid "wnd"
-msgstr "ウィンドウ"
+msgstr "ウインドウ"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
@@ -593,6 +593,18 @@ msgstr "フォーカス"
 #. Translators: The label for a braille setting indicating that braille should be tethered to the review cursor.
 msgid "to review"
 msgstr "レビュー"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Dot firm&ness"
+msgstr "点の強さ(&N)"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "Braille inp&ut"
+msgstr "点字入力(&U)"
+
+#. Translators: Label for a setting in braille settings dialog.
+msgid "&HID keyboard input simulation"
+msgstr "HID キーボード入力シミュレーション(&H)"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 msgid "Unknown braille display"
@@ -1193,6 +1205,8 @@ msgstr "フォーカスモード"
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
 #. Translators: The name of a category of NVDA commands.
+#. Translators: This is the label for a group of advanced options in the
+#. Advanced settings panel
 msgid "Browse mode"
 msgstr "ブラウズモード"
 
@@ -1229,6 +1243,10 @@ msgstr "ドキュメントの中の種類ごとの要素リスト"
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "Activates the current object in the document"
 msgstr "ドキュメント内の現在のオブジェクトのアクション実行"
+
+#. Translators: the description for the passThrough script on browseMode documents.
+msgid "Passes gesture through to the application"
+msgstr "入力ジェスチャーをアプリに送る"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -1720,8 +1738,8 @@ msgstr "種別"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-msgid "Filt&er by:"
-msgstr "フィルター(&E)"
+msgid "Filter b&y:"
+msgstr "フィルター(&Y)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -2602,7 +2620,7 @@ msgstr "削除マークあり"
 #. Translators: Identifies inserted content.
 #. Translators: Reported when text is marked as having been inserted
 msgid "inserted"
-msgstr "追加マークあり"
+msgstr "挿入マークあり"
 
 #. Translators: This is presented when a control or document is unavailable.
 msgid "unavailable"
@@ -2972,6 +2990,10 @@ msgstr "音声"
 #. Translators: The name of a category of NVDA commands.
 msgid "Configuration"
 msgstr "設定"
+
+#. Translators: The name of a category of NVDA commands.
+msgid "Configuration profiles"
+msgstr "設定プロファイル"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the braille panel
@@ -3573,7 +3595,7 @@ msgid ""
 "cursor. Pressing twice may provide further detail."
 msgstr ""
 "レビューカーソルのテキストやオブジェクトの位置の報告。2回押すと詳細な情報の報"
-"告。"
+"告"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "Move to focus"
@@ -3655,7 +3677,7 @@ msgstr "操作なし"
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr "現在のナビゲーターオブジェクトのアクション実行（例：ボタンを押す）"
+msgstr "現在のナビゲーターオブジェクトのアクション実行(例:ボタンを押す)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "Top"
@@ -3882,6 +3904,17 @@ msgstr "マウスカーソル移動を報告する"
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "マウスカーソル移動の報告の切り替え"
 
+#. Translators: Reports the new state of the mouse text unit resolution:.
+#. %s will be replaced with the new label.
+#. For example, the full message might be "Mouse text unit resolution character"
+#, python-format
+msgid "Mouse text unit resolution %s"
+msgstr "テキストの読み上げ範囲 %s"
+
+#. Translators: Input help mode message for toggle mouse text unit resolution command.
+msgid "Toggles how much text will be spoken when the mouse moves"
+msgstr "テキストの読み上げ範囲の切り替え"
+
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
 msgstr "タイトルなし"
@@ -3904,8 +3937,7 @@ msgid ""
 "Opens the WX GUI inspection tool. Used to get more information about the "
 "state of GUI components."
 msgstr ""
-"WX GUI 検査ツールを開きます。GUI コンポーネントの状態に関する詳細情報を取得で"
-"きます。"
+"WX GUI 検査ツールを開いて GUI コンポーネントの状態に関する詳細情報を取得"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3981,6 +4013,20 @@ msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "フォーカスをナビゲーターオブジェクトが追跡するモードの切り替え"
 
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements off"
+msgstr "可能な場合に自動的にフォーカスを移動しない"
+
+#. Translators: presented when toggled.
+msgid "Automatically set system focus to focusable elements on"
+msgstr "可能な場合に自動的にフォーカスを移動する"
+
+#. Translators: Input help mode message for toggle auto focus focusable elements command.
+msgid ""
+"Toggles on and off automatic movement of the system focus due to browse mode "
+"commands"
+msgstr "可能な場合に自動的にフォーカスを移動するモードの切り替え"
+
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
 msgstr "システムバッテリーなし"
@@ -4013,19 +4059,18 @@ msgid ""
 "passed directly through to Windows."
 msgstr "次のキー入力をNVDAではなくアプリに渡す"
 
-#. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
-#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
-#. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
-#, python-format
-msgid "Currently running application is %s"
-msgstr "現在動作中のアプリは%s"
-
-#. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
-#. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+#. Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 #. This message will not be presented if there is no module for the current program.
 #, python-format
-msgid " and currently loaded module is %s"
-msgstr "、読み込まれているモジュールは%s"
+msgid " %s module is loaded. "
+msgstr "%s モジュールを使用しています。"
+
+#. Translators: Indicates the name of the current program (example output: explorer.exe is currently running).
+#. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+#. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
+#, python-format
+msgid " %s is currently running."
+msgstr "%s を実行中です。"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4394,6 +4439,33 @@ msgstr "Windows 10 文字認識は利用できません"
 msgid ""
 "Recognizes the content of the current navigator object with Windows 10 OCR"
 msgstr "Windows 10 文字認識で現在のナビゲーターオブジェクトの画像を認識"
+
+#. Translators: a message indicating that configuration profiles can't be activated using gestures,
+#. due to profile activation being suspended.
+msgid ""
+"Can't change the active configuration profile while an NVDA dialog is open"
+msgstr ""
+"NVDA のダイアログを開いているときにはアクティブな設定プロファイルは変更できま"
+"せん"
+
+#. Translators: a message when a configuration profile is manually deactivated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually deactivated"
+msgstr "設定プロファイル {profile} を手動で無効化"
+
+#. Translators: a message when a configuration profile is manually activated.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Configuration profile {profile} manually activated"
+msgstr "設定プロファイル {profile} を手動で有効化"
+
+#. Translators: The description shown in input help for a script that
+#. activates or deactivates a config profile.
+#. {profile} is replaced with the profile's name.
+#, python-brace-format
+msgid "Activates or deactivates the {profile} configuration profile"
+msgstr "設定プロファイル {profile} の有効と無効の切り替え"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6097,7 +6169,7 @@ msgstr "行%s"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
 msgid "not inserted"
-msgstr "追加マークなし"
+msgstr "挿入マークなし"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
 msgid "not deleted"
@@ -6335,6 +6407,16 @@ msgstr "速さ(&R)"
 msgctxt "synth setting"
 msgid "Rate"
 msgstr "速さ"
+
+#. Translators: This is the name of the rate boost voice toggle
+#. which further increases the speaking rate when enabled.
+msgid "Rate boos&t"
+msgstr "高速読み上げ(&T)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate boost"
+msgstr "高速読み上げ"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
@@ -6580,7 +6662,7 @@ msgstr "更新ファイルを保存できません"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 msgid "Downloading Update"
-msgstr "更新をダウンロード中"
+msgstr "更新をダウンロードしています"
 
 #. Translators: The progress message indicating that a connection is being established.
 msgid "Connecting"
@@ -6588,7 +6670,7 @@ msgstr "接続中"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
-msgstr "ダウンロード中"
+msgstr "ダウンロードしています"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
@@ -6746,6 +6828,14 @@ msgstr "候補リスト"
 
 msgid "Display"
 msgstr "ディスプレイ"
+
+#. Translators: Input help mode message for the 'read documentation script
+msgid "Tries to read documentation for the selected autocompletion item."
+msgstr "選択した自動入力候補のドキュメントを読む"
+
+#. Translators: When the help popup cannot be found for the selected autocompletion item
+msgid "Cann't find the documentation window."
+msgstr "ドキュメントのウインドウが見つかりません。"
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -7485,7 +7575,8 @@ msgstr ""
 
 #. Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 #. Translators: The title of a warning dialog.
-#. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
+#. Translators: The title of the warning dialog displayed when trying to
+#. copy settings for use in secure screens.
 msgid "Warning"
 msgstr "警告"
 
@@ -7716,7 +7807,7 @@ msgstr "英語キーボードのCapsLockキーをNVDA制御キーとして使用
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Windowsへのログオン後にNVDAを自動的に開始(&A)"
+msgstr "Windowsへのログオン後にNVDAを自動的に起動(&A)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -7875,12 +7966,18 @@ msgstr "アドオンの情報"
 msgid "Add-ons Manager"
 msgstr "アドオン マネージャー"
 
-#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+#. Translators: The title of the Addons Dialog when add-ons are disabled
+msgid "Add-ons Manager (add-ons disabled)"
+msgstr "アドオン マネージャー(アドオン無効)"
+
 msgid ""
-"All add-ons are currently disabled. To enable add-ons you must restart NVDA."
+"NVDA was started with all add-ons disabled. You may modify the enabled / "
+"disabled state, and install or uninstall add-ons. Changes will not take "
+"effect until after NVDA is restarted."
 msgstr ""
-"すべてのアドオンが無効です。アドオンを有効にするにはNVDAを再起動してくださ"
-"い。"
+"NVDA はすべてのアドオンを無効にして起動されています。アドオンの有効と無効の切"
+"り替え、インストール、またはアンインストールができます。変更は NVDA を再起動"
+"するまで反映されません。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8369,7 +8466,7 @@ msgstr "デスクトップのショートカットを残す(&K)"
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "デスクトップにアイコンとショートカットキー（Ctrl+Alt+N）を作成(&D)"
+msgstr "デスクトップにアイコンとショートカットキー(Ctrl+Alt+N)を作成(&D)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
@@ -8394,7 +8491,7 @@ msgstr ""
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr "インストールを継続（非推奨）(&P)"
+msgstr "インストールを継続(非推奨)(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -8548,15 +8645,15 @@ msgstr "ログ記録レベル(&O)"
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "ログオン画面でNVDAを使用（管理者権限が必要です）"
+msgstr "ログオン画面でNVDAを使用(管理者権限が必要)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用（管理"
-"者権限が必要です）"
+"現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用(管理者"
+"権限が必要)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -8571,7 +8668,6 @@ msgstr "保留中の NVDA の更新を起動時に通知(&P)"
 msgid "Allow the NVDA project to gather NVDA usage statistics"
 msgstr "NVDA プロジェクトに NVDA の使用状況統計の収集を許可する"
 
-#. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
 "Add-ons were detected in your user settings directory. Copying these to the "
 "system profile could be a security risk. Do you still wish to copy your "
@@ -8585,7 +8681,8 @@ msgstr ""
 msgid "Copying Settings"
 msgstr "設定のコピー中"
 
-#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#. Translators: The message displayed while settings are being copied
+#. to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "システム設定がコピーされるまでお待ちください。"
 
@@ -8961,6 +9058,11 @@ msgstr "1ページの行数(&N)"
 msgid "Use &screen layout (when supported)"
 msgstr "サポートされている場合画面レイアウトを使用(&S)"
 
+#. Translators: The label for a checkbox in browse mode settings to
+#. enable browse mode on page load.
+msgid "&Enable browse mode on page load"
+msgstr "ページの読み込み時にブラウズモードを有効にする(&E)"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Automatic &Say All on page load"
@@ -9217,6 +9319,11 @@ msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr "Microsoft Word ドキュメントに UI オートメーションを使用(&W)"
 
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Automatically set system &focus to focusable elements"
+msgstr "可能な場合に自動的にフォーカスを移動(&F)"
+
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 msgid "Editable Text"
@@ -9452,6 +9559,11 @@ msgstr "記号"
 msgid "Symbol Pronunciation (%s)"
 msgstr "句読点/記号読み辞書(%s)"
 
+#. Translators: The label of a text field to search for symbols in the speech symbols dialog.
+msgctxt "speechSymbols"
+msgid "&Filter by:"
+msgstr "フィルター(&F)"
+
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
 msgstr "記号一覧(&S)"
@@ -9529,11 +9641,6 @@ msgstr "数式の操作はサポートされていません"
 msgctxt "espeakVarient"
 msgid "none"
 msgstr "なし"
-
-#. Translators: This is the name of the rate boost voice toggle
-#. which further increases the speaking rate when enabled.
-msgid "Rate boos&t"
-msgstr "高速読み上げ(&T)"
 
 #. Translators: Description for a speech synthesizer.
 msgid "Windows OneCore voices"
