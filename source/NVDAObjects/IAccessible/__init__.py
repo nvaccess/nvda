@@ -608,7 +608,7 @@ the NVDAObject for IAccessible
 			try:
 				left,top,width,height = IAccessibleObject.accLocation(0)
 				windowHandle=winUser.user32.WindowFromPoint(winUser.POINT(left,top))
-			except COMError, e:
+			except COMError as e:
 				log.debugWarning("accLocation failed: %s" % e)
 		if not windowHandle:
 			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
