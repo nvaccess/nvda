@@ -139,7 +139,7 @@ class SpeechManager(object):
 		in the same or previous utterance.
 		"""
 		while True:
-			for index in xrange(1, self.MAX_INDEX + 1):
+			for index in range(1, self.MAX_INDEX + 1):
 				yield index
 
 	def _reset(self):
@@ -355,7 +355,7 @@ class SpeechManager(object):
 		else:
 			# Keep track of parameters changed so far.
 			# This is necessary in case this utterance is preempted by higher priority speech.
-			for seqIndex in xrange(seqIndex + 1):
+			for seqIndex in range(seqIndex + 1):
 				seq = self._curPriQueue.pendingSequences[seqIndex]
 				for command in seq:
 					if isinstance(command, SynthParamCommand):

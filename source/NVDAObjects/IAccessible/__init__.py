@@ -199,7 +199,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [min(start,end),max(start,end)]
 
 	def _setSelectionOffsets(self,start,end):
-		for selIndex in xrange(self.obj.IAccessibleTextObject.NSelections):
+		for selIndex in range(self.obj.IAccessibleTextObject.NSelections):
 			self.obj.IAccessibleTextObject.RemoveSelection(selIndex)
 		if start!=end:
 			self.obj.IAccessibleTextObject.AddSelection(start,end)
@@ -848,12 +848,12 @@ the NVDAObject for IAccessible
 		except COMError:
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
-			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessibleStates) if IAccessibleHandler.IAccessibleStatesToNVDAStates.has_key(x))
+			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if not hasattr(self.IAccessibleObject,'states'):
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States
-		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
+		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessible2States) if x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		# Readonly should override editable
 		if controlTypes.STATE_READONLY in states:
 			states.discard(controlTypes.STATE_EDITABLE)
@@ -1240,7 +1240,7 @@ the NVDAObject for IAccessible
 			ret = []
 			# Each header must be fetched from the headers array once and only once,
 			# as it gets released when it gets garbage collected.
-			for i in xrange(nHeaders):
+			for i in range(nHeaders):
 				try:
 					text = headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0)
 				except COMError:

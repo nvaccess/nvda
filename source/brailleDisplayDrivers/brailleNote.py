@@ -82,7 +82,7 @@ _scrWheel = ("wCounterclockwise", "wClockwise", "wUp", "wDown", "wLeft", "wRight
 # Dots:
 # Backspace is dot7 and enter dot8
 _dotNames = {}
-for i in xrange(1,9):
+for i in range(1,9):
 	key = globals()["DOT_%d" % i]
 	_dotNames[key] = "d%d" % i
 
@@ -255,7 +255,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).
 		names = set()
 		if keys is not None:
-			names.update(_keyNames[1 << i] for i in xrange(4) if (1 << i) & keys)
+			names.update(_keyNames[1 << i] for i in range(4) if (1 << i) & keys)
 		elif wheel is not None:
 			names.add(_scrWheel[wheel])
 		elif dots is not None:
@@ -263,12 +263,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			if space:
 				self.space = space
 				names.add(_keyNames[0])
-			names.update(_dotNames[1 << i] for i in xrange(8) if (1 << i) & dots)
+			names.update(_dotNames[1 << i] for i in range(8) if (1 << i) & dots)
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
 		elif qtMod is not None:
-			names.update(_qtKeyNames[1 << i] for i in xrange(4)
+			names.update(_qtKeyNames[1 << i] for i in range(4)
 				if (1 << i) & qtMod)
 			names.add(qtData)
 		self.id = "+".join(names)

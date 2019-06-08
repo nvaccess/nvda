@@ -124,7 +124,7 @@ class OrderedWinEventLimiter(object):
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in xrange(len(e)):
+		for count in range(len(e)):
 			event=heapq.heappop(e)[1:-1]
 			r.append(event)
 		return r
@@ -993,7 +993,11 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in xrange(len(text)):
+	# #9078 (Py3 review required after 9078): consider enumeration.
+	# Py2: for i in xrange(len(text)):
+	# Py3: for i in range(len(text)):
+	# Suggested: for i, t inenumerate(text):
+	for i in range(len(text)):
 		t=text[i]
 		if ord(t)==0xFFFC:
 			try:
