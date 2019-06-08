@@ -189,7 +189,7 @@ setup(
 	],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"excludes": ["Tkinter",
+		"excludes": ["tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		"includes": [
