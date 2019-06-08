@@ -588,7 +588,8 @@ class ConfigManager(object):
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
 		# Just create an empty file to make sure we can.
-		file(fn, "w")
+		# #9038 (Py3 review required): open and then immediatley close the file.
+		open(fn, "w").close()
 		# Register a script for the new profile.
 		# Import late to avoid circular import.
 		from globalCommands import ConfigProfileActivationCommands
