@@ -214,7 +214,7 @@ class WavePlayer(object):
 				try:
 					with self._global_waveout_lock:
 						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				except WindowsError, e:
+				except WindowsError as e:
 					self.close()
 					raise e
 			self.sync()
