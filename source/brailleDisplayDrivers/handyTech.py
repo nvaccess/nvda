@@ -27,6 +27,7 @@ import datetime
 from ctypes import windll
 import windowUtils
 from driverHandler import BooleanDriverSetting
+import wx
 
 class InvisibleDriverWindow(windowUtils.CustomWindow):
 	className = u"Handy_Tech_Server"
@@ -552,7 +553,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
-		self._messageWindow=InvisibleDriverWindow(self)
+		wx.CallAfter(self.create_message_window)
 		self.numCells = 0
 		self._model = None
 		self._ignoreKeyReleases = False
@@ -601,7 +602,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.close()
 
 		else:
+			wx.CallAfter(self.destroy_message_window)
 			raise RuntimeError("No Handy Tech display found")
+
+	def create_message_window(self):
+		try:
+			self._messageWindow = InvisibleDriverWindow(self)
+		except:
+			log.debugWarning("", exc_info=True)
+	def destroy_message_window(self):
+		try:
+			self._messageWindow.destroy()
+		except:
+			log.debugWarning("", exc_info=True)
 
 	def go_to_sleep(self):
 		self._sleepcounter += 1
@@ -629,7 +642,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._serialOnReceive)
 	def terminate(self):
 		try:
-			self._messageWindow.destroy()
+			wx.CallAfter(self.destroy_message_window)
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
 			# We must sleep before closing the  connection as not doing this can leave the display in a bad state where it can not be re-initialized.
