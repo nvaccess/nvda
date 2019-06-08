@@ -184,7 +184,8 @@ class SynthDriver(SynthDriver):
 			return None
 
 	def _percentToRate(self, percent):
-		return (percent - 50) / 5
+		# #9641 (Py3 review required): rate is an integer.
+		return (percent - 50) // 5
 
 	def _set_rate(self,rate):
 		self.tts.Rate = self._percentToRate(rate)
@@ -230,7 +231,8 @@ class SynthDriver(SynthDriver):
 		self._initTts(voice=voice)
 
 	def _percentToPitch(self, percent):
-		return percent / 2 - 25
+		# #9641 (Py3 review required): pitch is an integer.
+		return percent // 2 - 25
 
 	IPA_TO_SAPI = {
 		u"θ": u"th",
