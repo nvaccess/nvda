@@ -76,7 +76,9 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
-		instanceItems = SettingsDialog._instances.items()
+		# #9067 (Py3 review required): originally calls WeakKeyDictionary.items.
+		# Therefore wrap this inside a list call.
+		instanceItems = list(SettingsDialog._instances.items())
 		instancesOfSameClass = (
 			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
 		)
@@ -589,12 +591,13 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			evt.Skip()
 
 	def _doSave(self):
-		for panel in self.catIdToInstanceMap.itervalues():
+		# #9067 (Py3 review required): category instance map is a dictionary.
+		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
 	def onOk(self,evt):
@@ -603,12 +606,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		except ValueError:
 			log.debugWarning("", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
@@ -1071,7 +1074,9 @@ class DriverSettingsMixin(object):
 		setattr(
 			self,
 			"_%ss"%setting.id,
-			getattr(self.driver,"available%ss"%setting.id.capitalize()).values()
+			# #9067 (Py3 review required): settings are stored as an ordered dict.
+			# Therefore wrap this inside a list call.
+			list(getattr(self.driver,"available%ss"%setting.id.capitalize()).values())
 		)
 		l=getattr(self,"_%ss"%setting.id)
 		labeledControl=guiHelper.LabeledControlHelper(
@@ -1109,7 +1114,8 @@ class DriverSettingsMixin(object):
 	def updateDriverSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		#firstly check already created options
-		for name,sizer in self.sizerDict.iteritems():
+		# #9067 (Py3 review required): sizerDict is a dictionary.
+		for name,sizer in self.sizerDict.items():
 			if name == changedSetting:
 				# Changing a setting shouldn't cause that setting itself to disappear.
 				continue
@@ -2334,7 +2340,8 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 class DictionaryDialog(SettingsDialog):
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
+	# #9067 (py3 review required): type_labels is a dictionary of type/labels map.
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -2569,7 +2576,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if displayName != "auto":
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
-				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+				# #9067 (Py3 review required): getPossiblePorts returns an ordered dictionary.
+				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
 				pass
 		if self.possiblePorts:
@@ -2896,7 +2904,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		self.filteredSymbols = self.symbols = [
-			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()
+			# #9067 (Py3 review required): locale data factory/data map is a dictionary.
+			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()
 		]
 		self.pendingRemovals = {}
 
@@ -3142,7 +3151,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def onOk(self, evt):
 		self.onSymbolEdited()
 		self.editingItem = None
-		for symbol in self.pendingRemovals.itervalues():
+		# #9067 (Py3 review required): pending removals is a dictionary.
+		for symbol in self.pendingRemovals.values():
 			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
 			if not symbol.replacement:

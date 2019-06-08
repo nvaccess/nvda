@@ -141,7 +141,7 @@ def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None
 def cleanup():
 	"""Removes any appModules from the cache whose process has died.
 	"""
-	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
+	for deadMod in [mod for mod in runningTable.values() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
 		del runningTable[deadMod.processID]
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
@@ -190,7 +190,7 @@ def reloadAppModules():
 	"""
 	global appModules
 	state = []
-	for mod in runningTable.itervalues():
+	for mod in runningTable.values():
 		state.append({key: getattr(mod, key) for key in ("processID",
 			# #2892: We must save nvdaHelperRemote handles, as we can't reinitialize without a foreground/focus event.
 			# Also, if there is an active context handle such as a loaded buffer,
@@ -204,7 +204,7 @@ def reloadAppModules():
 		mod._helperPreventDisconnect = True
 	terminate()
 	del appModules
-	mods=[k for k,v in sys.modules.iteritems() if k.startswith("appModules") and v is not None]
+	mods=[k for k,v in sys.modules.items() if k.startswith("appModules") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
@@ -233,7 +233,7 @@ def initialize():
 	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 
 def terminate():
-	for processID, app in runningTable.iteritems():
+	for processID, app in runningTable.items():
 		try:
 			app.terminate()
 		except:

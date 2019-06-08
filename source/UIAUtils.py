@@ -19,7 +19,7 @@ def createUIAMultiPropertyCondition(*dicts):
 	outerOrList=[]
 	for dict in dicts:
 		andList=[]
-		for key,values in dict.iteritems():
+		for key,values in dict.items():
 			innerOrList=[]
 			if not isinstance(values,(list,set)):
 				values=[values]

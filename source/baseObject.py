@@ -157,7 +157,8 @@ class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
 		"""
 		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
 		# which would in turn cause an exception due to the dictionary changing size during iteration.
-		for instance in cls.__instances.keys():
+		# #9067 (Py3 review required): because of this, wrap this in a list, as dict.keys() in Python 3 returns iterators.
+		for instance in list(cls.__instances.keys()):
 			instance.invalidateCache()
 
 class ScriptableType(AutoPropertyType):
@@ -173,8 +174,7 @@ class ScriptableType(AutoPropertyType):
 			# This class currently has no gestures dictionary,
 			# because no custom __gestures dictionary has been defined.
 			gestures = {}
-		# Python 3 incompatible.
-		for name, script in dict.iteritems():
+		for name, script in dict.items():
 			if not name.startswith('script_'):
 				continue
 			scriptName = name[len("script_"):]
@@ -261,7 +261,7 @@ class ScriptableObject(with_metaclass(ScriptableType, AutoPropertyObject)):
 		@param gestureMap: A mapping of gesture identifiers to script names.
 		@type gestureMap: dict of str to str
 		"""
-		for gestureIdentifier, scriptName in gestureMap.iteritems():
+		for gestureIdentifier, scriptName in gestureMap.items():
 			if scriptName:
 				try:
 					self.bindGesture(gestureIdentifier, scriptName)

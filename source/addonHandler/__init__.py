@@ -227,7 +227,7 @@ def getAvailableAddons(refresh=False, filterFunc=None):
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
-	return (addon for addon in _availableAddons.itervalues() if not filterFunc or filterFunc(addon))
+	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
@@ -517,7 +517,9 @@ def getCodeAddon(obj=None, frameDist=1):
 		raise AddonError("Code does not belong to an addon package.")
 	curdir = dir
 	while curdir not in _getDefaultAddonPaths():
-		if curdir in _availableAddons.keys():
+		# #9067 (Py3 review required): originally called dict.keys.
+		# Therefore wrap this inside a list call.
+		if curdir in list(_availableAddons.keys()):
 			return _availableAddons[curdir]
 		curdir = os.path.abspath(os.path.join(curdir, ".."))
 	# Not found!

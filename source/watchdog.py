@@ -176,7 +176,7 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	for logThread, logFrame in sys._current_frames().iteritems():
+	for logThread, logFrame in sys._current_frames().items():
 		log.info("Python stack for thread %d" % logThread,
 			stack_info=traceback.extract_stack(logFrame))
 

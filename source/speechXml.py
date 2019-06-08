@@ -110,7 +110,7 @@ class XmlBalancer(object):
 
 	def _openTag(self, tag, attrs, empty=False):
 		self._out.append("<%s" % tag)
-		for attr, val in attrs.iteritems():
+		for attr, val in attrs.items():
 			self._out.append(' %s="' % attr)
 			self._out.append(_escapeXml(val))
 			self._out.append('"')
@@ -145,7 +145,7 @@ class XmlBalancer(object):
 		for tag in reversed(self._openTags):
 			self._closeTag(tag)
 		del self._openTags[:]
-		for tag, attrs in self._tags.iteritems():
+		for tag, attrs in self._tags.items():
 			self._openTag(tag, attrs)
 			self._openTags.append(tag)
 		self._tagsChanged = False
