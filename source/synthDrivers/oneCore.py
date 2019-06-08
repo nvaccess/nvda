@@ -349,7 +349,9 @@ class SynthDriver(SynthDriver):
 			# pos is a time offset in 100-nanosecond units.
 			# Convert this to a byte offset.
 			# Order the equation so we don't have to do floating point.
-			pos = pos * self._bytesPerSec / HUNDRED_NS_PER_SEC
+			# #9641 (Py3 review required): one way to ensure no floating point is doing a floor division to obtain an integer.
+			# Because one slash operator will do true division in Python 3, which will return a float.
+			pos = pos * self._bytesPerSec // HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
 			self._player.feed(data[prevPos:pos],
 				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
@@ -431,7 +433,8 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self, id):
 		voices = self.availableVoices
 		# Try setting the requested voice
-		for voice in voices.itervalues():
+		# #9067 (Py3 review required): voices is an ordered dictionary.
+		for voice in voices.values():
 			if voice.id == id:
 				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
 				return
@@ -449,16 +452,16 @@ class SynthDriver(SynthDriver):
 		voices = self.availableVoices
 		# Try matching to NVDA language
 		fullLanguage=languageHandler.getWindowsLanguage()
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			if voice.language==fullLanguage:
 				return voice.id
 		baseLanguage=fullLanguage.split('_')[0]
 		if baseLanguage!=fullLanguage:
-			for voice in voices.itervalues():
+			for voice in voices.values():
 				if voice.language.startswith(baseLanguage):
 					return voice.id
 		# Just use the first available
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			return voice.id
 		raise RuntimeError("No voices available")
 

@@ -156,7 +156,8 @@ def _crashHandler(exceptionInfo):
 	# Write a minidump.
 	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
 	try:
-		with file(dumpPath, "w") as mdf:
+		# #9038 (Py3 review required): file() function is gone, replaced by open().
+		with open(dumpPath, "w") as mdf:
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
@@ -175,7 +176,7 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	for logThread, logFrame in sys._current_frames().iteritems():
+	for logThread, logFrame in sys._current_frames().items():
 		log.info("Python stack for thread %d" % logThread,
 			stack_info=traceback.extract_stack(logFrame))
 

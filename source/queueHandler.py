@@ -45,7 +45,7 @@ def isRunningGenerators():
 	log.debug("generators running: %s"%res)
 
 def flushQueue(queue):
-	for count in xrange(queue.qsize()+1):
+	for count in range(queue.qsize()+1):
 		if not queue.empty():
 			(func,args,kwargs)=queue.get_nowait()
 			watchdog.alive()
@@ -63,7 +63,8 @@ def isPendingItems(queue):
 
 def pumpAll():
 	# This dict can mutate during iteration, so use keys().
-	for ID in generators.keys():
+	# #9067 (Py3 review required): due to this, wrap this with a list call.
+	for ID in list(generators.keys()):
 		# KeyError could occur within the generator itself, so retrieve the generator first.
 		try:
 			gen = generators[ID]

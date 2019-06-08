@@ -170,7 +170,9 @@ class WavePlayer(object):
 			wfx.nChannels = self.channels
 			wfx.nSamplesPerSec = self.samplesPerSec
 			wfx.wBitsPerSample = self.bitsPerSample
-			wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
+			# #9641 (Py3 review required): wfx.nBlockAlign = ctypes.wintypes.WORD == ctypes.ushort == int.
+			# Thus use floor division so we can obtain an integer.
+			wfx.nBlockAlign = self.bitsPerSample // 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
 			with self._global_waveout_lock:
@@ -332,7 +334,7 @@ class WavePlayer(object):
 
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
-	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
+	for devID in range(-1, winmm.waveOutGetNumDevs()):
 		try:
 			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
 			yield devID, caps.szPname
@@ -383,9 +385,11 @@ def outputDeviceNameToID(name, useDefaultIfInvalid=False):
 
 fileWavePlayer = None
 fileWavePlayerThread=None
-def playWaveFile(fileName, async=True):
+def playWaveFile(fileName, asynchronous=True):
 	"""plays a specified wave file.
-"""
+	@param asynchronous: whether the wave file should be played asynchronously
+	@type asynchronous: bool
+	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
@@ -393,7 +397,7 @@ def playWaveFile(fileName, async=True):
 		fileWavePlayer.stop()
 	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
-	if async:
+	if asynchronous:
 		if fileWavePlayerThread is not None:
 			fileWavePlayerThread.join()
 		fileWavePlayerThread=threading.Thread(target=fileWavePlayer.idle)

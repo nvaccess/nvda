@@ -184,7 +184,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				log.debugWarning("Error while connecting to port %r"%port, exc_info=True)
 				continue
 
-			for i in xrange(3):
+			for i in range(3):
 				# Request device identification
 				self._sendPacket(EB_SYSTEM, EB_SYSTEM_IDENTITY)
 				# Make sure visualisation packets are disabled, as we ignore them anyway.
@@ -371,7 +371,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		blockSize = self._dev._writeSize-1
 		# When the packet length exceeds C{blockSize}, the packet is split up into several block packets.
 		# These blocks are of size C{blockSize}.
-		for offset in xrange(0, len(packet), blockSize):
+		for offset in range(0, len(packet), blockSize):
 			bytesToWrite = packet[offset:(offset+blockSize)]
 			hidPacket = b"\x00"+bytesToWrite+b"\x55"*(blockSize-len(bytesToWrite))
 			self._dev.write(hidPacket)
@@ -385,7 +385,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _set_hidKeyboardInput(self, state):
 		self._sendPacket(EB_KEY, EB_KEY_USB_HID_MODE, str(int(state)))
-		for i in xrange(3):
+		for i in range(3):
 			self._dev.waitForRead(self.timeout)
 			if state is self._hidKeyboardInput:
 				break
@@ -549,14 +549,14 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.model = display.deviceType.lower().split(" ")[0]
 		keysDown = dict(display.keysDown)
 		self.keyNames = names = []
-		for group, groupKeysDown in keysDown.iteritems():
+		for group, groupKeysDown in keysDown.items():
 			if group == EB_KEY_BRAILLE:
-				if sum(keysDown.itervalues())==groupKeysDown and not groupKeysDown & 0x100:
+				if sum(keysDown.values())==groupKeysDown and not groupKeysDown & 0x100:
 					# This is braille input.
 					# 0x1000 is backspace, 0x2000 is space
 					self.dots = groupKeysDown & 0xff
 					self.space = groupKeysDown & 0x200
-				names.extend("dot%d" % (i+1) for i in xrange(8) if (groupKeysDown &0xff) & (1 << i))
+				names.extend("dot%d" % (i+1) for i in range(8) if (groupKeysDown &0xff) & (1 << i))
 				if groupKeysDown & 0x200:
 					names.append("space")
 				if groupKeysDown & 0x100:
@@ -565,7 +565,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.routingIndex = (groupKeysDown & 0xff)-1
 				names.append("doubleRouting" if groupKeysDown>>8 ==ord(EB_KEY_INTERACTIVE_DOUBLE_CLICK) else "routing")
 			if group == EB_KEY_COMMAND:
-				for key, keyName in display.keys.iteritems():
+				for key, keyName in display.keys.items():
 					if groupKeysDown & key:
 						# This key is pressed
 						names.append(keyName)

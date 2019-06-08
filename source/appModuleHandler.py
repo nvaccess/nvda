@@ -17,6 +17,7 @@ import os
 import sys
 import winVersion
 import pkgutil
+import importlib
 import threading
 import tempfile
 import comtypes.client
@@ -93,8 +94,8 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# Try querying the app module for the name of the app being hosted.
 	try:
 		# Python 2.x can't properly handle unicode module names, so convert them.
-		mod = __import__("appModules.%s" % appName.encode("mbcs"),
-			globals(), locals(), ("appModules",))
+		# #8768 (Py3 review required): no longer the case in Python 3.
+		mod = importlib.import_module("appModules.%s" % appName, package="appModules")
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
 		pass
@@ -140,7 +141,7 @@ def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None
 def cleanup():
 	"""Removes any appModules from the cache whose process has died.
 	"""
-	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
+	for deadMod in [mod for mod in runningTable.values() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
 		del runningTable[deadMod.processID]
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
@@ -172,7 +173,7 @@ def fetchAppModule(processID,appName):
 
 	if doesAppModuleExist(modName):
 		try:
-			return __import__("appModules.%s" % modName, globals(), locals(), ("appModules",)).AppModule(processID, appName)
+			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
 		except:
 			log.error("error in appModule %r"%modName, exc_info=True)
 			# We can't present a message which isn't unicode, so use appName, not modName.
@@ -189,7 +190,7 @@ def reloadAppModules():
 	"""
 	global appModules
 	state = []
-	for mod in runningTable.itervalues():
+	for mod in runningTable.values():
 		state.append({key: getattr(mod, key) for key in ("processID",
 			# #2892: We must save nvdaHelperRemote handles, as we can't reinitialize without a foreground/focus event.
 			# Also, if there is an active context handle such as a loaded buffer,
@@ -203,7 +204,7 @@ def reloadAppModules():
 		mod._helperPreventDisconnect = True
 	terminate()
 	del appModules
-	mods=[k for k,v in sys.modules.iteritems() if k.startswith("appModules") and v is not None]
+	mods=[k for k,v in sys.modules.items() if k.startswith("appModules") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
@@ -232,7 +233,7 @@ def initialize():
 	_importers=list(pkgutil.iter_importers("appModules.__init__"))
 
 def terminate():
-	for processID, app in runningTable.iteritems():
+	for processID, app in runningTable.items():
 		try:
 			app.terminate()
 		except:
@@ -458,7 +459,7 @@ class AppModule(baseObject.ScriptableObject):
 			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID)).decode("mbcs")
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle, path)
-		print "Dump path: %s" % path
+		print("Dump path: %s" % path)
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.

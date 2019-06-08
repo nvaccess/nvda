@@ -109,7 +109,9 @@ class HandlerRegistrar(object):
 		"""Generator of registered handler functions.
 		This should be used when you want to call the handlers.
 		"""
-		for weak in self._handlers.values():
+		# #9067 (py3 review required): handlers is an ordered dictionary.
+		# Therefore wrap this inside a list call.
+		for weak in list(self._handlers.values()):
 			handler = weak()
 			if not handler:
 				continue # Died.
@@ -166,6 +168,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	if not spec.defaults or numExpectedArgsWithDefaults != numExpectedArgs:
 		# get the names of the args without defaults, skipping the N positional args given to `callWithSupportedKwargs`
 		# positionals are required for the Filter extension point.
+		# #9067 (Py3 review required): Set construction will work with iterators, too.
 		givenKwargsKeys = set(kwargs.keys())
 		firstArgWithDefault = numExpectedArgs - numExpectedArgsWithDefaults
 		specArgs = set(spec.args[numGivenPositionalArgs:firstArgWithDefault])
@@ -179,7 +182,9 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 		return func(*args, **kwargs)
 
 	supportedKwargs = set(spec.args)
-	for kwarg in kwargs.keys():
+	# #9067 (Py3 review required): originally called dict.keys.
+	# Therefore wrap this inside a list call.
+	for kwarg in list(kwargs.keys()):
 		if kwarg not in supportedKwargs:
 			del kwargs[kwarg]
 	return func(*args, **kwargs)

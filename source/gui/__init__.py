@@ -154,8 +154,10 @@ class MainFrame(wx.Frame):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
 		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
 		left, top, width, height = api.getDesktopObject().location
-		x = width / 2
-		y = height / 2
+		# #9641 (Py3 review required): pixel coordinates are integers, not floats.
+		# Thus perform a floor division.
+		x = width // 2
+		y = height // 2
 		winUser.setCursorPos(x, y)
 		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
@@ -329,7 +331,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from addonGui import AddonsDialog
+		from .addonGui import AddonsDialog
 		d=AddonsDialog(gui.mainFrame)
 		d.Show()
 		self.postPopup()
@@ -388,7 +390,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from configProfiles import ProfilesDialog
+		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
@@ -553,7 +555,7 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
-	for instance, state in gui.SettingsDialog._instances.iteritems():
+	for instance, state in gui.SettingsDialog._instances.items():
 		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
 			log.error(
 				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)

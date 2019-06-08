@@ -207,7 +207,7 @@ class TrackerManager(object):
 		return tracker
 
 	def makePreheldTrackerForTracker(self,tracker):
-		curHoverSet={x for x in self.singleTouchTrackersByID.itervalues() if x.action==action_hover}
+		curHoverSet={x for x in self.singleTouchTrackersByID.values() if x.action==action_hover}
 		excludeHoverSet={x for x in tracker.iterAllRawSingleTouchTrackers() if x.action==action_hover}
 		return self.makePreheldTrackerFromSingleTouchTrackers(curHoverSet-excludeHoverSet)
 
@@ -280,7 +280,7 @@ class TrackerManager(object):
 		"""Queues the given tracker, replacing old trackers with a multiFingered plural action where possible"""
 		#Reverse iterate through the existing queued trackers comparing the given tracker to each of them
 		#as L{emitTrackers} constantly dequeues, the queue only contains trackers newer than multiTouchTimeout, though may contain more if there are still unknown singleTouchTrackers around.
-		for index in xrange(len(self.multiTouchTrackers)):
+		for index in range(len(self.multiTouchTrackers)):
 			index=len(self.multiTouchTrackers)-1-index
 			delayedTracker=self.multiTouchTrackers[index]
 			mergedTracker=self.makeMergedTrackerIfPossible(delayedTracker,tracker)
@@ -333,7 +333,7 @@ class TrackerManager(object):
 			# yield hover downs for any new hovers
 			# But only once  there are no more trackers in the queue waiting to timeout (E.g. a hold for a tapAndHold)
 			if len(self.multiTouchTrackers)==0:
-				for singleTouchTracker in self.singleTouchTrackersByID.itervalues():
+				for singleTouchTracker in self.singleTouchTrackersByID.values():
 					if singleTouchTracker.action==action_hover and singleTouchTracker not in self.curHoverStack:
 						self.curHoverStack.append(singleTouchTracker)
 						tracker=MultiTouchTracker(action_hoverDown,singleTouchTracker.x,singleTouchTracker.y,singleTouchTracker.startTime,time.time())

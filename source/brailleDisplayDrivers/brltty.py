@@ -12,7 +12,7 @@ import inputCore
 try:
 	import brlapi
 	BRLAPI_CMD_KEYS = dict((code, name[8:].lower())
-		for name, code in brlapi.__dict__.iteritems() if name.startswith("KEY_CMD_"))
+		for name, code in brlapi.__dict__.items() if name.startswith("KEY_CMD_"))
 except ImportError:
 	pass
 

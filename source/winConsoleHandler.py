@@ -17,6 +17,11 @@ import api
 import config
 import locationHelper
 
+"""
+Handler for NVDA's legacy Windows Console support,
+used in situations where UIA isn't available.
+"""
+
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100
 
@@ -124,7 +129,7 @@ def getConsoleVisibleLines():
 	lineCount=(consoleScreenBufferInfo.srWindow.Bottom-topLine)+1
 	lineLength=consoleScreenBufferInfo.dwSize.x
 	text=wincon.ReadConsoleOutputCharacter(consoleOutputHandle,lineCount*lineLength,0,topLine)
-	newLines=[text[x:x+lineLength] for x in xrange(0,len(text),lineLength)]
+	newLines=[text[x:x+lineLength] for x in range(0,len(text),lineLength)]
 	return newLines
 
 @winUser.WINEVENTPROC

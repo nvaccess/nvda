@@ -118,8 +118,8 @@ def getDriversForConnectedUsbDevices():
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		for driver, devs in _driverDevices.iteritems():
-			for type, ids in devs.iteritems():
+		for driver, devs in _driverDevices.items():
+			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
 					yield driver, match
 
@@ -136,7 +136,7 @@ def getDriversForPossibleBluetoothDevices():
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
 	)
 	for match in btDevs:
-		for driver, devs in _driverDevices.iteritems():
+		for driver, devs in _driverDevices.items():
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
 				continue
@@ -334,7 +334,7 @@ def getConnectedUsbDevicesForDriver(driver):
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		for type, ids in devs.iteritems():
+		for type, ids in devs.items():
 			if match.type==type and match.id in ids:
 				yield match
 

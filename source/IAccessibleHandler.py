@@ -111,7 +111,7 @@ class OrderedWinEventLimiter(object):
 		g=self._genericEventCache
 		self._genericEventCache={}
 		threadCounters={}
-		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
+		for k,v in sorted(g.items(),key=lambda item: item[1],reverse=True):
 			threadCount=threadCounters.get(k[-1],0)
 			if threadCount>MAX_WINEVENTS_PER_THREAD:
 				continue
@@ -119,12 +119,12 @@ class OrderedWinEventLimiter(object):
 			threadCounters[k[-1]]=threadCount+1
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
+		for k,v in sorted(f.items(),key=lambda item: item[1])[0-self.maxFocusItems:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in xrange(len(e)):
+		for count in range(len(e)):
 			event=heapq.heappop(e)[1:-1]
 			r.append(event)
 		return r
@@ -832,7 +832,9 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	# #9067 (Py3 review required): originally, this calls dict.keys, which in Python 2 returns a list and Python 3 assumes iterators.
+	# Therefore wrap this around a list call.
+	for eventType in list(winEventIDsToNVDAEventNames.keys()):
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)
@@ -991,7 +993,11 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in xrange(len(text)):
+	# #9078 (Py3 review required after 9078): consider enumeration.
+	# Py2: for i in xrange(len(text)):
+	# Py3: for i in range(len(text)):
+	# Suggested: for i, t inenumerate(text):
+	for i in range(len(text)):
 		t=text[i]
 		if ord(t)==0xFFFC:
 			try:

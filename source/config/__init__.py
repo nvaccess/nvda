@@ -588,7 +588,8 @@ class ConfigManager(object):
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
 		# Just create an empty file to make sure we can.
-		file(fn, "w")
+		# #9038 (Py3 review required): open and then immediatley close the file.
+		open(fn, "w").close()
 		# Register a script for the new profile.
 		# Import late to avoid circular import.
 		from globalCommands import ConfigProfileActivationCommands
@@ -617,7 +618,7 @@ class ConfigManager(object):
 		# Remove any triggers associated with this profile.
 		allTriggers = self.triggersToProfiles
 		# You can't delete from a dict while iterating through it.
-		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.iteritems()
+		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.items()
 			if trigProfile == name]
 		if delTrigs:
 			for trigSpec in delTrigs:
@@ -625,7 +626,7 @@ class ConfigManager(object):
 			self.saveProfileTriggers()
 		# Check if this profile was active.
 		delProfile = None
-		for index in xrange(len(self.profiles) - 1, -1, -1):
+		for index in range(len(self.profiles) - 1, -1, -1):
 			profile = self.profiles[index]
 			if profile.name == name:
 				# Deactivate it.
@@ -636,7 +637,9 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 		if self._suspendedTriggers:
 			# Remove any suspended triggers referring to this profile.
-			for trigger in self._suspendedTriggers.keys():
+			# #9067 (Py3 review required): originally called dict.keys (note that triggers is a dictionary).
+			# Therefore wrap this inside a list call unless it can be simplified further.
+			for trigger in list(self._suspendedTriggers.keys()):
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
 
@@ -666,7 +669,7 @@ class ConfigManager(object):
 		# Update any associated triggers.
 		allTriggers = self.triggersToProfiles
 		saveTrigs = False
-		for trigSpec, trigProfile in allTriggers.iteritems():
+		for trigSpec, trigProfile in allTriggers.items():
 			if trigProfile == oldName:
 				allTriggers[trigSpec] = newName
 				saveTrigs = True
@@ -780,7 +783,7 @@ class ConfigManager(object):
 		triggers = self._suspendedTriggers
 		self._suspendedTriggers = None
 		with self.atomicProfileSwitch():
-			for trigger, action in triggers.iteritems():
+			for trigger, action in triggers.items():
 				trigger.enter() if action == "enter" else trigger.exit()
 
 	def disableProfileTriggers(self):
@@ -989,7 +992,7 @@ class AggregatedSection(object):
 	def __iter__(self):
 		keys = set()
 		# Start with the cached items.
-		for key, val in self._cache.iteritems():
+		for key, val in self._cache.items():
 			keys.add(key)
 			if val is not KeyError:
 				yield key

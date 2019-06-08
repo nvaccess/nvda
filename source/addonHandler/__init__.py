@@ -47,7 +47,9 @@ def loadState():
 	global state
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		state = cPickle.load(file(statePath, "r"))
+		# #9038: Python 3 requires binary format when working with pickles.
+		with open(statePath, "rb") as f:
+			state = cPickle.load(f)
 		if "disabledAddons" not in state:
 			state["disabledAddons"] = set()
 		if "pendingDisableSet" not in state:
@@ -67,7 +69,9 @@ def loadState():
 def saveState():
 	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
-		cPickle.dump(state, file(statePath, "wb"))
+		# #9038: Python 3 requires binary format when working with pickles.
+		with open(statePath, "wb") as f:
+			cPickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -223,7 +227,7 @@ def getAvailableAddons(refresh=False, filterFunc=None):
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
-	return (addon for addon in _availableAddons.itervalues() if not filterFunc or filterFunc(addon))
+	return (addon for addon in _availableAddons.values() if not filterFunc or filterFunc(addon))
 
 def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
@@ -513,7 +517,9 @@ def getCodeAddon(obj=None, frameDist=1):
 		raise AddonError("Code does not belong to an addon package.")
 	curdir = dir
 	while curdir not in _getDefaultAddonPaths():
-		if curdir in _availableAddons.keys():
+		# #9067 (Py3 review required): originally called dict.keys.
+		# Therefore wrap this inside a list call.
+		if curdir in list(_availableAddons.keys()):
 			return _availableAddons[curdir]
 		curdir = os.path.abspath(os.path.join(curdir, ".."))
 	# Not found!
