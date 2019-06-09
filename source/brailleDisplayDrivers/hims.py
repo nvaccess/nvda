@@ -6,7 +6,7 @@
 #Copyright (C) 2010-2018 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
 
 import serial
-from cStringIO import StringIO
+from io import StringIO
 import os
 import hwIo
 import braille

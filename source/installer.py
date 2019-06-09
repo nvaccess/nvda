@@ -6,10 +6,7 @@
 
 from ctypes import *
 from ctypes.wintypes import *
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import threading
 import time
 import os

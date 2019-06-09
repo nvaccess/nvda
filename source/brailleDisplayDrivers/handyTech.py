@@ -10,7 +10,7 @@ Braille display driver for Handy Tech braille displays.
 """
 
 from collections import OrderedDict
-from cStringIO import StringIO
+from io import StringIO
 import serial # pylint: disable=E0401
 import weakref
 import hwIo

@@ -1,14 +1,11 @@
 # -*- coding: UTF-8 -*-
 #javaAccessBridgeHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+#Copyright (C) 2007-2018 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-try:
-	import Queue as queue # Python 2.7 import
-except ImportError:
-	import queue # Python 3 import
+import queue
 from ctypes import *
 from ctypes.wintypes import *
 import time
