@@ -100,7 +100,7 @@ def main():
 	except installer.RetriableFailure:
 		logHandler.log.error("Task failed, try again",exc_info=True)
 		sys.exit(2)
-	except Exception, e:
+	except Exception as e:
 		logHandler.log.error("slave error",exc_info=True)
 		sys.exit(1)
 
