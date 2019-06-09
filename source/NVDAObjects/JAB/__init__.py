@@ -284,7 +284,7 @@ class JAB(Window):
 		stateString=self.JABStates
 		stateStrings=stateString.split(',')
 		for state in stateStrings:
-			if JABStatesToNVDAStates.has_key(state):
+			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
 		if "visible" not in stateStrings:
 			stateSet.add(controlTypes.STATE_INVISIBLE)
