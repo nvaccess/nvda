@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import logging
 from abc import abstractmethod
 from six import with_metaclass
 import os
@@ -787,7 +788,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
+		config.conf["general"]["loggingLevel"]=logging.getLevelName(logLevel)
 		logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
