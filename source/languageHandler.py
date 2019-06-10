@@ -133,7 +133,7 @@ def makePgettext(translations):
 				return message
 	else:
 		def pgettext(context, message):
-			return unicode(message)
+			return message
 	return pgettext
 
 def getWindowsLanguage():
@@ -190,9 +190,10 @@ def setLanguage(lang):
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	trans.install(unicode=True)
+	trans.install()
 	# Install our pgettext function.
-	__builtin__.__dict__["pgettext"] = makePgettext(trans)
+	import builtins
+	builtins.pgettext = makePgettext(trans)
 
 def getLanguage():
 	return curLang
