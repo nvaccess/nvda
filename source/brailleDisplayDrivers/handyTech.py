@@ -712,7 +712,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._dotFirmness = value
 
 	def sendPacket(self, packetType, data=""):
-		if self._dev is None:
+		if self._sleepcounter > 0:
 			return
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
