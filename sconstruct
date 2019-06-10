@@ -251,6 +251,8 @@ def NVDADistGenerator(target, source, env, for_signature):
 		sys.executable]
 	if release:
 		buildCmd.append("-O")
+	# Issue errors about str(bytes_instance), str(bytearray_instance)
+	buildCmd.append("-bb")
 	buildCmd.extend(("setup.py", "build", "--build-base", buildDir.abspath,
 		"py2exe", "--dist-dir", target[0].abspath))
 	if release:
