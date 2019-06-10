@@ -2286,6 +2286,21 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
+	def script_toggleReportCLDR(self,gesture):
+		if config.conf["speech"]["includeCLDR"]:
+			# Translators: presented when the present dynamic changes is toggled.
+			state = _("report CLDR characters off")
+			config.conf["speech"]["includeCLDR"]=False
+		else:
+			# Translators: presented when the present dynamic changes is toggled.
+			state = _("report CLDR characters on")
+			config.conf["speech"]["includeCLDR"]=True
+		characterProcessing.clearSpeechSymbols()
+		ui.message(state)
+	# Translators: Input help mode message for toggle report CLDR command.
+	script_toggleReportCLDR.__doc__=_("Toggles on and off the reporting of CLDR characters, such as emojis")
+	script_toggleReportDynamicContentChanges.category=SCRCAT_SPEECH
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2446,6 +2461,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
 		"kb:NVDA+8": "toggleAutoFocusFocusableElements",
 		"kb:NVDA+control+t": "braille_toggleTether",
+		"kb:NVDA+shift+p": "toggleReportCLDR",
 
 		# Synth settings ring
 		"kb(desktop):NVDA+control+leftArrow": "previousSynthSetting",

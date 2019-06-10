@@ -30,7 +30,7 @@ def createCLDRAnnotationsDict(sources, dest):
 	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
 		dictFile.write(u"symbols:\r\n")
 		for pattern, description in cldrDict.iteritems():
-			dictFile.write(u"{pattern}\t{description}\tsome\r\n".format(
+			dictFile.write(u"{pattern}\t{description}\tnone\r\n".format(
 				pattern=pattern,
 				description=description
 			))
