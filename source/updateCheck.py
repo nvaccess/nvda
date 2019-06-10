@@ -196,7 +196,7 @@ def _executeUpdate(destPath):
 	if config.isInstalledCopy():
 		executeParams = u"--install -m"
 	else:
-		portablePath = os.getcwdu()
+		portablePath = os.getcwd()
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
