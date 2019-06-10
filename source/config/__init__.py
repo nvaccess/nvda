@@ -24,7 +24,8 @@ from copy import deepcopy
 from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
 from configobj.validate import Validator
-from logHandler import log, levelNames
+from logHandler import log
+import logging
 from logging import DEBUG
 import shlobj
 import baseObject
@@ -452,7 +453,7 @@ class ConfigManager(object):
 			logLevelName = profile["general"]["loggingLevel"]
 		except KeyError as e:
 			logLevelName = None
-		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= levelNames.get(logLevelName)):
+		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
 			# Log at level info to ensure that the profile is logged.
 			log.info(u"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(profile))
 		return profile

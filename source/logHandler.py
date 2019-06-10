@@ -13,7 +13,6 @@ import warnings
 from encodings import utf_8
 import logging
 # #7105: Python 3 split the following into two dictionaries.
-from logging import _levelNames as levelNames
 import inspect
 import winsound
 import traceback
@@ -218,7 +217,7 @@ class FileHandler(logging.StreamHandler):
 		# We need to open the file in text mode to get CRLF line endings.
 		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
 		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
-		logging.StreamHandler.__init__(self, utf_8.StreamWriter(file(filename, mode)))
+		logging.StreamHandler.__init__(self, utf_8.StreamWriter(open(filename, mode)))
 
 	def close(self):
 		self.flush()
@@ -360,11 +359,12 @@ def setLogLevelFromConfig():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
-	level = levelNames.get(levelName)
+	# logging.getLevelName can give you a level number if given a name.
+	level = logging.getLevelName(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
 	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
-		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
+		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)
