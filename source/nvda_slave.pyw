@@ -48,8 +48,8 @@ def main():
 			import shellapi
 			import winUser
 			shellapi.ShellExecute(0,None,
-				ur"%s\nvda.exe"%sys.exec_prefix.decode("mbcs"),
-				subprocess.list2cmdline(args).decode("mbcs"),
+				r"%s\nvda.exe"%sys.exec_prefix,
+				subprocess.list2cmdline(args),
 				None,winUser.SW_SHOWNORMAL)
 		elif action=="setNvdaSystemConfig":
 			import config

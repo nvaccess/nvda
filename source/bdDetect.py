@@ -26,7 +26,6 @@ import ctypes
 from logHandler import log
 import config
 import time
-import thread
 import appModuleHandler
 from baseObject import AutoPropertyObject
 import re
