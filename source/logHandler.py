@@ -12,7 +12,6 @@ import sys
 import warnings
 from encodings import utf_8
 import logging
-# #7105: Python 3 split the following into two dictionaries.
 import inspect
 import winsound
 import traceback
@@ -80,14 +79,14 @@ def getCodePath(f):
 				if memberType is FunctionType and member.__code__ is f.f_code:
 					# the function was found as a standard method
 					className=cls.__name__
-				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.func_code is f.f_code:
+				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.__code__ is f.f_code:
 					# function was found as a class method
 					className=cls.__name__
 				elif memberType is property:
-					if type(member.fget) is FunctionType and member.fget.func_code is f.f_code:
+					if type(member.fget) is FunctionType and member.fget.__code__ is f.f_code:
 						# The function was found as a property getter
 						className=cls.__name__
-					elif type(member.fset) is FunctionType and member.fset.func_code is f.f_code:
+					elif type(member.fset) is FunctionType and member.fset.__code__ is f.f_code:
 						# the function was found as a property setter
 						className=cls.__name__
 				if className:
@@ -221,7 +220,7 @@ class FileHandler(logging.FileHandler):
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
 				pass
-		return logging.FileHandler.handle(self,record)
+		return super().handle(record)
 
 class Formatter(logging.Formatter):
 
