@@ -91,7 +91,7 @@ For reference, the following dependencies are included in Git submodules:
 ### Other Dependencies
 These dependencies are not included in Git submodules, but aren't needed by most people.
 
-* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.stack.nl/~dimitri/doxygen/download.html), version 1.7.3:
+* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
@@ -161,13 +161,14 @@ scons launcher
 
 The archive will be placed in the output directory.
 
-To generate developer documentation, type:
+To generate the NVDA developer guide, type:
 
 ```
-scons devDocs
+scons developerGuide
 ```
 
-The developer docs will be placed in the `devDocs` folder in the output directory.
+The developer guide will be placed in the `devDocs` folder in the output directory.
+Note that the Python 3 sources of NVDA currently do not support building NVDA developer documentation using the `scons devDocs` command.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 
