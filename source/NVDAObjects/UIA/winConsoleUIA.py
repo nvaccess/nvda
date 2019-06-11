@@ -206,7 +206,7 @@ class winConsoleUIA(Terminal):
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if len(line.strip()) < 3:
+		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
 			return
 		if self._hasNewLines:
 			# Clear the typed word buffer for new text lines.
@@ -261,18 +261,13 @@ class winConsoleUIA(Terminal):
 
 	def _calculateNewText(self, newLines, oldLines):
 		self._hasNewLines = (
-			self._findLastLineIndex(newLines)
-			!= self._findLastLineIndex(oldLines)
+			self._findNonBlankIndices(newLines)
+			!= self._findNonBlankIndices(oldLines)
 		)
 		return super(winConsoleUIA, self)._calculateNewText(newLines, oldLines)
 
-	def _findLastLineIndex(self, lines):
-		res = 0
-		for index, line in enumerate(lines):
-			if line:
-				res = index
-		return res
-
+	def _findNonBlankIndices(self, lines):
+		return [index for index, line in enumerate(lines) if line]
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
