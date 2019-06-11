@@ -40,7 +40,7 @@ if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
 # Ignore all warnings as the code is not ours
-env.Append(CCFLAGS='/W0')
+env.Replace(CCFLAGS='/W0')
 
 env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir,espeakSrcDir.Dir('ucd-tools/src/include')])
 

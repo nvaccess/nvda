@@ -203,10 +203,13 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastCaseSensitivity, self._searchEntries)
-		gui.mainFrame.prePopup()
-		d.Show()
-		gui.mainFrame.postPopup()
+		# #8566: We need this to be a modal dialog, but it mustn't block this script.
+		def run():
+			gui.mainFrame.prePopup()
+			d = FindDialog(gui.mainFrame, self, self._lastCaseSensitivity, self._searchEntries)
+			d.ShowModal()
+			gui.mainFrame.postPopup()
+		wx.CallAfter(run)
 	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
