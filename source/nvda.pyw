@@ -179,7 +179,7 @@ isSecureDesktop = desktopName == "Winlogon"
 if isSecureDesktop:
 	import winreg
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
 		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
 			globalVars.appArgs.secure = True
 	except WindowsError:

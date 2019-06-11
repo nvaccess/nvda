@@ -74,7 +74,7 @@ def getStartMenuFolder(noDefault=False):
 
 def getInstallPath(noDefault=False):
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		return winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
