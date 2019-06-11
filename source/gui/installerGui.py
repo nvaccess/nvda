@@ -380,6 +380,6 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		if startAfterCreate:
 			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
 			shellapi.ShellExecute(None, None,
-				os.path.join(os.path.abspath(unicode(portableDirectory)),'nvda.exe'),
+				os.path.join(os.path.abspath(portableDirectory),'nvda.exe'),
 				u"-r",
 				None, winUser.SW_SHOWNORMAL)

@@ -206,7 +206,7 @@ def _executeUpdate(destPath):
 			executeParams = u"--launcher"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	shellapi.ShellExecute(None, None,
-		destPath.decode("mbcs"),
+		destPath,
 		executeParams,
 		None, winUser.SW_SHOWNORMAL)
 
