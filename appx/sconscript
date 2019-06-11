@@ -32,7 +32,7 @@ def getCertPublisher(env):
 	certPassword=env.get('certPassword','')
 	cmd=['certutil','-dump','-p',certPassword,File('#'+certFile).abspath.replace('/','\\')]
 	lines=subprocess.run(cmd,check=True,capture_output=True,text=True).stdout.splitlines()
-	linePrefix=b'Subject: '
+	linePrefix='Subject: '
 	for line in lines:
 		if line.startswith(linePrefix):
 			subject=line[len(linePrefix):].rstrip()
