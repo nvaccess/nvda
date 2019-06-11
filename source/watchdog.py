@@ -291,7 +291,11 @@ class CancellableCallThread(threading.Thread):
 
 		exc = self._exc_info
 		if exc:
-			raise exc[0], exc[1], exc[2]
+			# The execution of the function in the other thread cuased an exception.
+			# Re-raise it here.
+			# Note that in Python3, the traceback (stack) is now part of the exception,
+			# So the logged traceback will correctly show the stack for both this thread and the other thread. 
+			raise e
 		return self._result
 
 	def run(self):
@@ -301,8 +305,8 @@ class CancellableCallThread(threading.Thread):
 			self._executeEvent.clear()
 			try:
 				self._result = self._func(*self._args, **self._kwargs)
-			except:
-				self._exc_info = sys.exc_info()
+			except Exception as e:
+				self._exc_info = e
 			ctypes.windll.kernel32.SetEvent(self._executionDoneEvent)
 		ctypes.windll.kernel32.CloseHandle(self._executionDoneEvent)
 
