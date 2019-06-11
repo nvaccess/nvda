@@ -625,6 +625,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._messageWindow = InvisibleDriverWindow(self)
 		except WindowsError:
 			log.debugWarning("", exc_info=True)
+
 	def destroy_message_window(self):
 		try:
 			self._messageWindow.destroy()
@@ -638,7 +639,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			time.sleep(self.timeout)
 			self._dev.close()
 			self._dev = None
-			time.sleep(self.timeout) #
+			time.sleep(self.timeout)
 
 	def wake_up(self):
 		if self._sleepcounter > 0:
