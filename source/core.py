@@ -125,8 +125,8 @@ def restart(disableAddons=False, debugLogging=False):
 	except ValueError:
 		pass
 	shellapi.ShellExecute(None, None,
-		sys.executable.decode("mbcs"),
-		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
+		sys.executable,
+		subprocess.list2cmdline(sys.argv + options),
 		None,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
 		winUser.SW_SHOWNORMAL)
