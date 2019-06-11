@@ -113,7 +113,7 @@ def checkPot(fileName):
 	errors = 0
 	expectedErrors = 0
 	unexpectedSuccesses = 0
-	with file(fileName, "rt") as pot:
+	with open(fileName, "rt") as pot:
 		for line in pot:
 			line = line.rstrip()
 			if not line:
