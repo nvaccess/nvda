@@ -93,7 +93,7 @@ def getCodePath(f):
 						className=cls.__name__
 				if className:
 					break
-	return ".".join([x for x in path,className,funcName if x])
+	return ".".join([x for x in (path,className,funcName) if x])
 
 # Function to strip the base path of our code from traceback text to improve readability.
 BASE_PATH = os.path.split(__file__)[0] + os.sep
