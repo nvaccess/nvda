@@ -29,7 +29,8 @@ class TestScriptDecorator(unittest.TestCase):
 
 		self.assertEqual(script_test.__doc__, "description")
 		self.assertEqual(script_test.category, SCRCAT_MISC)
-		self.assertItemsEqual(script_test.gestures, ["kb:a", "kb:b", "kb:c"])
+		# #9720 (Py3 review required): self.assertItemsEqual -> self.assertCountEqual.
+		self.assertCountEqual(script_test.gestures, ["kb:a", "kb:b", "kb:c"])
 		self.assertTrue(script_test.canPropagate)
 		self.assertTrue(script_test.bypassInputHelp)
 		self.assertEqual(script_test.resumeSayAllMode, CURSOR_CARET)
