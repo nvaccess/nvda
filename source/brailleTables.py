@@ -30,7 +30,7 @@ def addTable(fileName, displayName, contracted=False, output=True, input=True):
 	@param fileName: The file name of the table.
 	@type fileName: str
 	@param displayname: The name of the table as displayed to the user. This should be translatable.
-	@type displayName: unicode
+	@type displayName: str
 	@param contracted: C{True} if the table is contracted, C{False} if uncontracted.
 	@type cContracted: bool
 	@param output: C{True} if this table can be used for output, C{False} if not.

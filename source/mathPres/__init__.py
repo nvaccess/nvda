@@ -31,7 +31,7 @@ class MathPresentationProvider(object):
 		@param mathMl: The MathML markup.
 		@type mathMl: str
 		@return: A speech sequence.
-		@rtype: list of unicode and/or L{speech.SpeechCommand}
+		@rtype: list of str and/or L{speech.SpeechCommand}
 		"""
 		raise NotImplementedError
 

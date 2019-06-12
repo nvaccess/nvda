@@ -443,11 +443,11 @@ IDT_MAX_SPACES = 72
 def getIndentationSpeech(indentation, formatConfig):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
-	@type indentation: unicode
+	@type indentation: str
 	@param formatConfig: The configuration to use.
 	@type formatConfig: dict
 	@return: The phrase to be spoken.
-	@rtype: unicode
+	@rtype: str
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
@@ -1412,9 +1412,9 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 		backgroundColor2=attrs.get("background-color2")
 		oldBackgroundColor2=attrsCache.get("background-color2") if attrsCache is not None else None
 		bgColorChanged=backgroundColor!=oldBackgroundColor or backgroundColor2!=oldBackgroundColor2
-		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)
+		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else backgroundColor
 		if backgroundColor2:
-			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else unicode(backgroundColor2)
+			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else backgroundColor2
 			# Translators: Reported when there are two background colors.
 			# This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 			# {color1} will be replaced with the first background color.
@@ -1425,12 +1425,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{color} on {backgroundColor}").format(
-				color=color.name if isinstance(color,colors.RGB) else unicode(color),
+				color=color.name if isinstance(color,colors.RGB) else color,
 				backgroundColor=bgColorText))
 		elif color and color!=oldColor:
 			# Translators: Reported when the text color changes (but not the background color).
 			# {color} will be replaced with the text color.
-			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
+			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else color))
 		elif backgroundColor and bgColorChanged:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.

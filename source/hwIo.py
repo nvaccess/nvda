@@ -248,7 +248,7 @@ class Hid(IoBase):
 		"""Constructor.
 		@param path: The device path.
 			This can be retrieved using L{hwPortUtils.listHidDevices}.
-		@type path: unicode
+		@type path: str
 		@param onReceive: A callable taking a received input report as its only argument.
 		@type onReceive: callable(str)
 		@param exclusive: Whether to block other application's access to this device.
@@ -349,7 +349,7 @@ class Bulk(IoBase):
 	def __init__(self, path, epIn, epOut, onReceive, onReceiveSize=1, writeSize=None):
 		"""Constructor.
 		@param path: The device path.
-		@type path: unicode
+		@type path: str
 		@param epIn: The endpoint to read data from.
 		@type epIn: int
 		@param epOut: The endpoint to write data to.

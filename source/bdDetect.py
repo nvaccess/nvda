@@ -40,9 +40,9 @@ class DeviceMatch(
 ):
 	"""Represents a detected device.
 	@ivar id: The identifier of the device.
-	@type id: unicode
+	@type id: str
 	@ivar port: The port that can be used by a driver to communicate with a device.
-	@type port: unicode
+	@type port: str
 	@ivar deviceInfo: all known information about a device.
 	@type deviceInfo: dict
 	"""

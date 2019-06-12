@@ -656,7 +656,7 @@ def setClipboardData(format,data):
 	# For now only unicode is a supported format
 	if format!=CF_UNICODETEXT:
 		raise ValueError("Unsupported format")
-	text=unicode(data)
+	text = data
 	# Allocate global memory
 	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE,(len(text)+1)*2)
 	# Acquire a lock to the global memory receiving a local memory address

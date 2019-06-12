@@ -36,7 +36,7 @@ LOUIS_DOTS_IO_START = 0x8000
 #: @type: int
 UNICODE_BRAILLE_START = 0x2800
 #: The Unicode braille character to use when masking cells in protected fields.
-#: @type: unicode
+#: @type: str
 UNICODE_BRAILLE_PROTECTED = u"⣿" # All dots down
 
 #: The singleton BrailleInputHandler instance.
@@ -82,7 +82,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		#: or were translated but did not produce any text.
 		#: This is used to show these cells to the user while they're entering braille.
 		#: This is a string of Unicode braille.
-		#: @type: unicode
+		#: @type: str
 		self.untranslatedBraille = ""
 		#: The position in L{brailleBuffer} where untranslated braille begins.
 		self.untranslatedStart = 0
@@ -175,7 +175,7 @@ class BrailleInputHandler(AutoPropertyObject):
 	def _translateForReportContractedCell(self, pos):
 		"""Translate text for current input as required by L{_reportContractedCell}.
 		@return: The previous translated text.
-		@rtype: unicode
+		@rtype: str
 		"""
 		cells = self.bufferBraille[:pos + 1]
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
@@ -385,7 +385,7 @@ class BrailleInputHandler(AutoPropertyObject):
 	def sendChars(self, chars):
 		"""Sends the provided unicode characters to the system.
 		@param chars: The characters to send to the system.
-		@type chars: unicode
+		@type chars: str
 		"""
 		inputs = []
 		for ch in chars:

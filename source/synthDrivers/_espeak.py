@@ -122,6 +122,12 @@ class espeak_VOICE(Structure):
 CALLBACK_CONTINUE_SYNTHESIS=0
 CALLBACK_ABORT_SYNTHESIS=1
 
+def encodeEspeakString(text):
+	return text.encode('utf8')
+
+def decodeEspeakString(data):
+	return data.decode('utf8')
+
 t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 
 @t_espeak_callback
@@ -133,12 +139,12 @@ def callback(wav,numsamples,event):
 		indexes = []
 		for e in event:
 			if e.type==espeakEVENT_MARK:
-				indexNum = int(e.id.name)
+				indexNum = int(decodeEspeakString(e.id.name))
 				# e.audio_position is ms since the start of this utterance.
 				# Convert to bytes since the start of the utterance.
 				BYTES_PER_SAMPLE = 2
 				MS_PER_SEC = 1000
-				bytesPerMS = player.samplesPerSec * BYTES_PER_SAMPLE  / MS_PER_SEC
+				bytesPerMS = player.samplesPerSec * BYTES_PER_SAMPLE  // MS_PER_SEC
 				indexByte = e.audio_position * bytesPerMS
 				# Subtract bytes in the utterance that have already been handled
 				# to give us the byte offset into the samples for this callback.
@@ -151,7 +157,7 @@ def callback(wav,numsamples,event):
 			onIndexReached(None)
 			isSpeaking = False
 			return CALLBACK_CONTINUE_SYNTHESIS
-		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else ""
+		wav = string_at(wav, numsamples * sizeof(c_short)) if numsamples>0 else b""
 		prevByte = 0
 		for indexNum, indexByte in indexes:
 			player.feed(wav[prevByte:indexByte],
@@ -261,10 +267,11 @@ def setVoice(voice):
 	setVoiceByName(voice.identifier)
 
 def setVoiceByName(name):
-	_execWhenDone(espeakDLL.espeak_SetVoiceByName,name)
+	_execWhenDone(espeakDLL.espeak_SetVoiceByName,encodeEspeakString(name))
 
 def _setVoiceAndVariant(voice=None, variant=None):
-	res = getCurrentVoice().identifier.split("+")
+	v=getCurrentVoice()
+	res = decodeEspeakString(v.identifier).split("+")
 	if not voice:
 		voice = res[0]
 	if not variant:
@@ -273,12 +280,12 @@ def _setVoiceAndVariant(voice=None, variant=None):
 		else:
 			variant = "none"
 	if variant == "none":
-		espeakDLL.espeak_SetVoiceByName(voice)
+		espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 	else:
 		try:
-			espeakDLL.espeak_SetVoiceByName("%s+%s" % (voice, variant))
+			espeakDLL.espeak_SetVoiceByName(encodeEspeakString("%s+%s" % (voice, variant)))
 		except:
-			espeakDLL.espeak_SetVoiceByName(voice)
+			espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 
 def setVoiceAndVariant(voice=None, variant=None):
 	_execWhenDone(_setVoiceAndVariant, voice=voice, variant=variant)
@@ -286,11 +293,11 @@ def setVoiceAndVariant(voice=None, variant=None):
 def _setVoiceByLanguage(lang):
 	v=espeak_VOICE()
 	lang=lang.replace('_','-')
-	v.languages=lang
+	v.languages=encodeEspeakString(lang)
 	try:
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 	except:
-		v.languages="en"
+		v.languages=encodeEspeakString("en")
 		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 
 def setVoiceByLanguage(lang):
@@ -318,8 +325,9 @@ def initialize(indexCallback=None):
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
+	eSpeakPath=os.path.abspath("synthDrivers")
 	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,
-		os.path.abspath("synthDrivers"),0)
+		os.fsencode(eSpeakPath),0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16,
@@ -354,7 +362,7 @@ def getVariantDict():
 	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):
 		if os.path.isfile("%s\\%s"%(dir,fileName)):
-			file=codecs.open("%s\\%s"%(dir,fileName))
+			file=open("%s\\%s"%(dir,fileName))
 			for line in file:
 				if line.startswith('name '):
 					temp=line.split(" ")

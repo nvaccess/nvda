@@ -330,7 +330,7 @@ def getDisplayList(excludeNegativeChecks=True):
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
 	@return: list of tuples with driver names and descriptions.
-	@rtype: [(str,unicode)]
+	@rtype: [(str,str)]
 	"""
 	displayList = []
 	# The display that should be placed at the end of the list.

@@ -94,7 +94,7 @@ def isInstalledCopy():
 #: When setting it manually, a DWORD value is prefered.
 #: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
 #: A value of 1 means loading the configuration from the local application data folder.
-#: @type: unicode
+#: @type: str
 CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
 
 def getInstalledUserConfigPath():
@@ -338,8 +338,6 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	if not subdir:
 		subdir = module.__name__
 	fullPath=os.path.join(getScratchpadDir(),subdir)
-	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	fullPath=fullPath.encode("mbcs")
 	# Insert this path at the beginning  of the module's search paths.
 	# The module's search paths may not be a mutable  list, so replace it with a new one 
 	pathList=[fullPath]
