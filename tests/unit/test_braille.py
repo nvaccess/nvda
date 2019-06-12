@@ -9,7 +9,7 @@
 
 import unittest
 import braille
-from objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
+from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
 import controlTypes
 from config import conf
 import api
