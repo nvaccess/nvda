@@ -1025,7 +1025,7 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			# Search the list.
 			# We have to implement this ourselves, as tree views don't accept space as a search character.
-			char = unichr(evt.UnicodeKey).lower()
+			char = chr(evt.UnicodeKey).lower()
 			# IF the same character is typed twice, do the same search.
 			if self._searchText != char:
 				self._searchText += char
