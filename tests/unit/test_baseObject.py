@@ -8,7 +8,7 @@
 
 import unittest
 from baseObject import AutoPropertyObject, ScriptableObject
-from objectProvider import PlaceholderNVDAObject
+from .objectProvider import PlaceholderNVDAObject
 from scriptHandler import script
 from abc import abstractmethod
 
