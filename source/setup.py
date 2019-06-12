@@ -196,8 +196,12 @@ setup(
 			"serial.serialjava", 
 			"serial.serialposix", 
 			"serial.socket_connection",
-			# Py2exe seems to implicitly include this, but we don't need it. 
-			"win32api",
+			# netbios (from pywin32) is optionally used by Python3's uuid module.
+			# This is not needed.
+			"netbios",
+			# winxptheme is optionally used by wx.lib.agw.aui.
+			# We don't need this.
+			"winxptheme",
 			],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		"includes": [
