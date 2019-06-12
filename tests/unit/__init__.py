@@ -21,7 +21,7 @@ import locale
 import gettext
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
-gettext.install('nvda',unicode=True)
+gettext.install('nvda')
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
