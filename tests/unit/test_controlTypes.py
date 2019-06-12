@@ -15,13 +15,13 @@ class TestLabels(unittest.TestCase):
 
 	def test_roleLabels(self):
 		"""Test to check whether every role has its own label in controlTypes.roleLabels"""
-		for name, const in controlTypes.__dict__.iteritems():
+		for name, const in controlTypes.__dict__.items():
 			if name.startswith("ROLE_"):
 				self.assertIsNotNone(controlTypes.roleLabels.get(const),msg="{name} has no label".format(name=name))
 
 	def test_positiveStateLabels(self):
 		"""Test to check whether every state has its own label in controlTypes.stateLabels"""
-		for name, const in controlTypes.__dict__.iteritems():
+		for name, const in controlTypes.__dict__.items():
 			if name.startswith("STATE_"):
 				self.assertIsNotNone(controlTypes.stateLabels.get(const),msg="{name} has no label".format(name=name))
 
