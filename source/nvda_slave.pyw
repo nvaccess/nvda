@@ -12,9 +12,9 @@ import gettext
 import locale
 #Localization settings
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install()
 except:
-	gettext.install('nvda',unicode=True)
+	gettext.install('nvda')
 
 import sys
 import os

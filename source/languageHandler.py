@@ -120,20 +120,22 @@ def getAvailableLanguages(presentational=False):
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
-	but Python 2.7's gettext module doesn't support this,
+	but Python's gettext module doesn't support this,
 	so NVDA must provide its own implementation.
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
 		def pgettext(context, message):
-			message = unicode(message)
 			try:
 				# Look up the message with its context.
 				return translations._catalog[u"%s\x04%s" % (context, message)]
 			except KeyError:
 				return message
-	else:
+	elif isinstance(translations, gettext.NullTranslations):
+		# A language with out a translation catalog, such as English.
 		def pgettext(context, message):
-			return unicode(message)
+			return message
+	else:
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object"%translations)
 	return pgettext
 
 def getWindowsLanguage():
@@ -190,9 +192,10 @@ def setLanguage(lang):
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	trans.install(unicode=True)
+	trans.install()
 	# Install our pgettext function.
-	__builtin__.__dict__["pgettext"] = makePgettext(trans)
+	import builtins
+	builtins.pgettext = makePgettext(trans)
 
 def getLanguage():
 	return curLang
