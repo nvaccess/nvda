@@ -190,7 +190,15 @@ setup(
 	options = {"py2exe": {
 		"bundle_files": 3,
 		"excludes": ["tkinter",
-			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
+			"serial.loopback_connection", 
+			"serial.rfc2217", 
+			"serial.serialcli", 
+			"serial.serialjava", 
+			"serial.serialposix", 
+			"serial.socket_connection",
+			# Py2exe seems to implicitly include this, but we don't need it. 
+			"win32api",
+			],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		"includes": [
 			"nvdaBuiltin",
