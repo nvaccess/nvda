@@ -10,10 +10,12 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
-import threading
+import sys
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import DWORD, USHORT
+from typing import List
+
 import serial
 from serial.win32 import MAXDWORD, OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
 import winKernel
@@ -37,7 +39,7 @@ class IoBase(object):
 		@param readFileHandle: A handle to an open I/O device opened for overlapped I/O.
 			If L{writeFileHandle} is specified, this is only for input
 		@param onReceive: A callable taking the received data as its only argument.
-		@type onReceive: callable(str)
+		@type onReceive: callable(bytes)
 		@param writeFileHandle: A handle to an open output device opened for overlapped I/O.
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
 		@type onReceiveSize: int
@@ -89,18 +91,24 @@ class IoBase(object):
 				timeout -= int((time.time()-curTime)*1000)
 
 	def write(self, data):
+		"""
+		@type data: bytes
+		"""
+		if not isinstance(data, bytes):
+			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
 			log.debug("Write: %r" % data)
 		size = self._writeSize or len(data)
-		buf = ctypes.create_string_buffer(size)
-		buf.raw = data
+		# usage of self._writeSize could result in a size mismatch with data?
+		if size != len(data):
+			log.debugWarning(u"Mismatch in buffer size writing to braille device.")
 		if not ctypes.windll.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
 				if _isDebug():
 					log.debug("Write failed: %s" % ctypes.WinError())
 				raise ctypes.WinError()
-			bytes = DWORD()
-			ctypes.windll.kernel32.GetOverlappedResult(self._writeFile, byref(self._writeOl), byref(bytes), True)
+			byteData = DWORD()
+			ctypes.windll.kernel32.GetOverlappedResult(self._writeFile, byref(self._writeOl), byref(byteData), True)
 
 	def close(self):
 		if _isDebug():
@@ -125,22 +133,28 @@ class IoBase(object):
 		# onReceive can then optionally read additional bytes if it knows these are coming.
 		ctypes.windll.kernel32.ReadFileEx(self._file, self._readBuf, self._readSize, byref(self._readOl), self._ioDoneInst)
 
-	def _ioDone(self, error, bytes, overlapped):
+	def _ioDone(self, error, numberOfBytes, overlapped):
+		"""
+		@type numberOfBytes: int
+		"""
 		if not self._onReceive:
 			# close has been called.
 			self._ioDone = None
 			return
 		elif error != 0:
 			raise ctypes.WinError(error)
-		self._notifyReceive(self._readBuf[:bytes])
+		self._notifyReceive(self._readBuf[:numberOfBytes])
 		winKernel.kernel32.SetEvent(self._recvEvt)
 		self._asyncRead()
 
-	def _notifyReceive(self, data):
+	def _notifyReceive(self, data: bytes):
 		"""Called when data is received.
 		The base implementation just calls the onReceive callback provided to the constructor.
 		This can be extended to perform tasks before/after the callback.
+		@type data: bytes
 		"""
+		if not isinstance(data, bytes):
+			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
 			log.debug("Read: %r" % data)
 		try:
@@ -159,7 +173,7 @@ class Serial(IoBase):
 		There is also one additional keyword argument.
 		@param onReceive: A callable taking a byte of received data as its only argument.
 			This callable can then call C{read} to get additional data if desired.
-		@type onReceive: callable(str)
+		@type onReceive: callable(bytes)
 		"""
 		onReceive = kwargs.pop("onReceive")
 		self._ser = None
@@ -178,12 +192,18 @@ class Serial(IoBase):
 		super(Serial, self).__init__(self._ser._port_handle, onReceive)
 
 	def read(self, size=1):
+		""""
+		@return: bytes
+		"""
 		data = self._ser.read(size)
 		if _isDebug():
 			log.debug("Read: %r" % data)
 		return data
 
 	def write(self, data):
+		"""
+		@type data: bytes
+		"""
 		if _isDebug():
 			log.debug("Write: %r" % data)
 		self._ser.write(data)
@@ -194,7 +214,7 @@ class Serial(IoBase):
 		super(Serial, self).close()
 		self._ser.close()
 
-	def _notifyReceive(self, data):
+	def _notifyReceive(self, data: bytes):
 		# Set the timeout for onReceive in case it does a sync read.
 		self._setTimeout(self._origTimeout)
 		super(Serial, self)._notifyReceive(data)
@@ -250,7 +270,7 @@ class Hid(IoBase):
 			This can be retrieved using L{hwPortUtils.listHidDevices}.
 		@type path: unicode
 		@param onReceive: A callable taking a received input report as its only argument.
-		@type onReceive: callable(str)
+		@type onReceive: callable(bytes)
 		@param exclusive: Whether to block other application's access to this device.
 		@type exclusive: bool
 		"""
@@ -286,15 +306,14 @@ class Hid(IoBase):
 			onReceiveSize=caps.InputReportByteLength,
 			writeSize=caps.OutputReportByteLength)
 
-	def getFeature(self, reportId):
+	def getFeature(self, reportId: bytes) -> bytes:
 		"""Get a feature report from this device.
 		@param reportId: The report id.
-		@type reportId: str
+		@type reportId: bytes
 		@return: The report, including the report id.
-		@rtype: str
+		@rtype: bytes
 		"""
-		buf = ctypes.create_string_buffer(self._featureSize)
-		buf[0] = reportId
+		buf = ctypes.create_string_buffer(reportId, self._featureSize)
 		if not ctypes.windll.hid.HidD_GetFeature(self._file, buf, self._featureSize):
 			if _isDebug():
 				log.debug("Get feature %r failed: %s"
@@ -304,34 +323,42 @@ class Hid(IoBase):
 			log.debug("Get feature: %r" % buf.raw)
 		return buf.raw
 
-	def setFeature(self, report):
+	def setFeature(self, report: bytes) -> None:
 		"""Send a feature report to this device.
 		@param report: The report, including its id.
-		@type report: str
+		@type report: bytes
 		"""
-		length = len(report)
-		buf = ctypes.create_string_buffer(length)
-		buf.raw = report
+		buf = ctypes.create_string_buffer(report)
+		bufSize = ctypes.sizeof(buf)
 		if _isDebug():
 			log.debug("Set feature: %r" % report)
-		if not ctypes.windll.hid.HidD_SetFeature(self._file, buf, length):
+		result = ctypes.windll.hid.HidD_SetFeature(
+			self._file,
+			buf,
+			bufSize
+		)
+		if not result:
 			if _isDebug():
 				log.debug("Set feature failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 
-	def setOutputReport(self,report):
+	def setOutputReport(self, report: bytes) -> None:
 		"""
 		Write the given report to the device using HidD_SetOutputReport.
 		This is instead of using the standard WriteFile which may freeze with some USB HID implementations.
 		@param report: The report, including its id.
-		@type report: str
+		@type report: bytes
 		"""
-		length=len(report)
-		buf=ctypes.create_string_buffer(length)
-		buf.raw=report
+		buf = ctypes.create_string_buffer(report)
+		bufSize = ctypes.sizeof(buf)
 		if _isDebug():
 			log.debug("Set output report: %r" % report)
-		if not ctypes.windll.hid.HidD_SetOutputReport(self._writeFile,buf,length):
+		result = ctypes.windll.hid.HidD_SetOutputReport(
+			self._writeFile,
+			buf,
+			bufSize
+		)
+		if not result:
 			if _isDebug():
 				log.debug("Set output report failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
@@ -355,7 +382,7 @@ class Bulk(IoBase):
 		@param epOut: The endpoint to write data to.
 		@type epOut: int
 		@param onReceive: A callable taking a received input report as its only argument.
-		@type onReceive: callable(str)
+		@type onReceive: callable(bytes)
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
@@ -383,3 +410,26 @@ class Bulk(IoBase):
 			winKernel.closeHandle(self._file)
 		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:
 			winKernel.closeHandle(self._writeFile)
+
+
+def boolToByte(arg: bool) -> bytes:
+	arg.to_bytes(
+		length=1,
+		byteorder=sys.byteorder,  # for a single byte big/little endian does not matter.
+		signed=False  # Since this represents length, it makes no sense to send a negative value.
+	)
+
+
+def intToByte(arg: int) -> bytes:
+	""" Convert an int (value < 256) to a single byte bytes object
+	:type arg: int
+	"""
+	return arg.to_bytes(
+		length=1,  # Will raise if value overflows, eg arg > 255
+		byteorder=sys.byteorder,  # for a single byte big/little endian does not matter.
+		signed=False  # Since this represents length, it makes no sense to send a negative value.
+	)
+
+def getByte(arg: bytes, index: int) -> bytes:
+	""" Return the single byte at index"""
+	return arg[index:index+1]

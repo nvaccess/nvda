@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
-import sys
 import itertools
 import os
 import driverHandler
@@ -1553,7 +1552,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
-		self.display = None
+		self.display = None  # BrailleDisplayDriver
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
