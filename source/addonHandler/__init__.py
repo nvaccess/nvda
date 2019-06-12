@@ -474,9 +474,9 @@ class Addon(AddonBase):
 		An add-on can specify a default documentation file name
 		via the docFileName parameter in its manifest.
 		@param fileName: The requested file name or C{None} for the add-on's default.
-		@type fileName: basestring
+		@type fileName: str
 		@return: The path to the requested file or C{None} if it wasn't found.
-		@rtype: basestring
+		@rtype: str
 		"""
 		if not fileName:
 			fileName = self.manifest["docFileName"]

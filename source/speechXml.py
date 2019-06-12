@@ -154,7 +154,7 @@ class XmlBalancer(object):
 		"""Generate XML from a sequence of balancer commands and text.
 		"""
 		for command in commands:
-			if isinstance(command, basestring):
+			if isinstance(command, str):
 				self._outputTags()
 				self._text(command)
 			elif isinstance(command, EncloseAllCommand):
@@ -206,7 +206,7 @@ class SpeechXmlConverter(object):
 		@rtype: generator
 		"""
 		for item in speechSequence:
-			if isinstance(item, basestring):
+			if isinstance(item, str):
 				yield item
 			elif isinstance(item, speech.SpeechCommand):
 				name = type(item).__name__

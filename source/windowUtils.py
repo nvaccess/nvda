@@ -23,7 +23,7 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	@param controlID: The control ID of the window or C{None} if irrelevant.
 	@type controlID: int
 	@param className: The class name of the window or C{None} if irrelevant.
-	@type className: basestring
+	@type className: str
 	@return: The handle of the matching descendant window.
 	@rtype: int
 	@raise LookupError: if no matching window is found.

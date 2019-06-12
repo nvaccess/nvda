@@ -117,7 +117,7 @@ class WavePlayer(object):
 		@param bitsPerSample: The number of bits per sample.
 		@type bitsPerSample: int
 		@param outputDevice: The device ID or name of the audio output device to use.
-		@type outputDevice: int or basestring
+		@type outputDevice: int or str
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
@@ -130,7 +130,7 @@ class WavePlayer(object):
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		if isinstance(outputDevice, basestring):
+		if isinstance(outputDevice, str):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
 		if wantDucking:

@@ -484,7 +484,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		If extended, the superclass should be called first.
 		@param separator: The text used to separate chunks of format information;
 			defaults to L{speech.CHUNK_SEPARATOR}.
-		@type separator: basestring
+		@type separator: str
 		"""
 		# Import late to avoid circular import.
 		import speech

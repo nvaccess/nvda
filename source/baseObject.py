@@ -197,7 +197,7 @@ class ScriptableObject(with_metaclass(ScriptableType, AutoPropertyObject)):
 		e.g. in the Input Gestures dialog.
 		This can be overridden for individual scripts
 		by setting a C{category} attribute on the script method.
-	@type scriptCategory: basestring
+	@type scriptCategory: str
 	"""
 
 	def __init__(self):

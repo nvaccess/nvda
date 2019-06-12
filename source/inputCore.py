@@ -84,7 +84,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 		Subclasses must implement this method.
 		@return: One or more identifiers which uniquely identify this gesture.
-		@rtype: list or tuple of basestring
+		@rtype: list or tuple of str
 		"""
 		raise NotImplementedError
 
@@ -95,7 +95,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 		These normalized identifiers can be directly looked up in input gesture maps.
 		Subclasses should not override this method.
 		@return: One or more normalized identifiers which uniquely identify this gesture.
-		@rtype: list of basestring
+		@rtype: list of str
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
 
@@ -167,9 +167,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		the gesture's source (e.g. "laptop keyboard")
 		and the specific gesture (e.g. "alt+tab").
 		@param identifier: The normalized gesture identifier in question.
-		@type identifier: basestring
+		@type identifier: str
 		@return: A tuple of (source, specificGesture).
-		@rtype: tuple of (basestring, basestring)
+		@rtype: tuple of (str, str)
 		@raise Exception: If no display text can be determined.
 		"""
 		raise NotImplementedError
@@ -191,7 +191,7 @@ class GlobalGestureMap(object):
 		#: @type: bool
 		self.lastUpdateContainedError = False
 		#: The file name for this gesture map, if any.
-		#: @type: basestring
+		#: @type: str
 		self.fileName = None
 		if entries:
 			self.update(entries)
@@ -280,7 +280,7 @@ class GlobalGestureMap(object):
 					script = None
 				if gestures == "":
 					gestures = ()
-				elif isinstance(gestures, basestring):
+				elif isinstance(gestures, str):
 					gestures = [gestures]
 				for gesture in gestures:
 					try:
@@ -733,7 +733,7 @@ def registerGestureSource(source, gestureCls):
 	"br" will be used if it is registered.
 	This registration is used, for example, to get the display text for a gesture identifier.
 	@param source: The source prefix for associated gesture identifiers.
-	@type source: basestring
+	@type source: str
 	@param gestureCls: The input gesture class.
 	@type gestureCls: L{InputGesture}
 	"""
@@ -761,9 +761,9 @@ def getDisplayTextForGestureIdentifier(identifier):
 	the gesture's source (e.g. "laptop keyboard")
 	and the specific gesture (e.g. "alt+tab").
 	@param identifier: The normalized gesture identifier in question.
-	@type identifier: basestring
+	@type identifier: str
 	@return: A tuple of (source, specificGesture).
-	@rtype: tuple of (basestring, basestring)
+	@rtype: tuple of (str, str)
 	@raise LookupError: If no display text can be determined.
 	"""
 	gcls = _getGestureClsForIdentifier(identifier)
