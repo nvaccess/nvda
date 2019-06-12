@@ -12,8 +12,6 @@ import sys
 import warnings
 from encodings import utf_8
 import logging
-# #7105: Python 3 split the following into two dictionaries.
-from logging import _levelNames as levelNames
 import inspect
 import winsound
 import traceback
@@ -78,17 +76,17 @@ def getCodePath(f):
 				if not member:
 					continue
 				memberType=type(member)
-				if memberType is FunctionType and member.func_code is f.f_code:
+				if memberType is FunctionType and member.__code__ is f.f_code:
 					# the function was found as a standard method
 					className=cls.__name__
-				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.func_code is f.f_code:
+				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.__code__ is f.f_code:
 					# function was found as a class method
 					className=cls.__name__
 				elif memberType is property:
-					if type(member.fget) is FunctionType and member.fget.func_code is f.f_code:
+					if type(member.fget) is FunctionType and member.fget.__code__ is f.f_code:
 						# The function was found as a property getter
 						className=cls.__name__
-					elif type(member.fset) is FunctionType and member.fset.func_code is f.f_code:
+					elif type(member.fset) is FunctionType and member.fset.__code__ is f.f_code:
 						# the function was found as a property setter
 						className=cls.__name__
 				if className:
@@ -206,18 +204,7 @@ class RemoteHandler(logging.Handler):
 		except WindowsError:
 			pass
 
-class FileHandler(logging.StreamHandler):
-
-	def __init__(self, filename, mode):
-		# We need to open the file in text mode to get CRLF line endings.
-		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
-		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
-		logging.StreamHandler.__init__(self, utf_8.StreamWriter(file(filename, mode)))
-
-	def close(self):
-		self.flush()
-		self.stream.close()
-		logging.StreamHandler.close(self)
+class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
 		# Only play the error sound if this is a test version.
@@ -233,18 +220,9 @@ class FileHandler(logging.StreamHandler):
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
 				pass
-		return logging.StreamHandler.handle(self,record)
+		return super().handle(record)
 
 class Formatter(logging.Formatter):
-
-	def format(self, record):
-		s = logging.Formatter.format(self, record)
-		if isinstance(s, str):
-			# Log text must be unicode.
-			# The string is probably encoded according to our thread locale, so use mbcs.
-			# If there are any errors, just replace the character, as there's nothing else we can do.
-			s = unicode(s, "mbcs", "replace")
-		return s
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
@@ -333,8 +311,7 @@ def initialize(shouldDoRemoteLogging=False):
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
-			# Our FileHandler always outputs in UTF-8.
-			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
+			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter("%(codepath)s:\n%(message)s")
@@ -354,11 +331,12 @@ def setLogLevelFromConfig():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
-	level = levelNames.get(levelName)
+	# logging.getLevelName can give you a level number if given a name.
+	level = logging.getLevelName(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
 	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
-		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
+		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)
