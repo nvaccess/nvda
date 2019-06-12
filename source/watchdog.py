@@ -291,11 +291,11 @@ class CancellableCallThread(threading.Thread):
 
 		exc = self._exc_info
 		if exc:
-			# The execution of the function in the other thread cuased an exception.
+			# The execution of the function in the other thread caused an exception.
 			# Re-raise it here.
 			# Note that in Python3, the traceback (stack) is now part of the exception,
 			# So the logged traceback will correctly show the stack for both this thread and the other thread. 
-			raise e
+			raise exc
 		return self._result
 
 	def run(self):

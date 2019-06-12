@@ -69,7 +69,7 @@ class AutoPropertyType(ABCMeta):
 			s=dict.get('_set_%s'%x,None)
 			d=dict.get('_del_%s'%x,None)
 			if x in dict:
-				methodsString=",".join([str(i) for i in (g,s,d) if i])
+				methodsString=",".join(str(i) for i in (g,s,d) if i)
 				raise TypeError("%s is already a class attribute, cannot create descriptor with methods %s"%(x,methodsString))
 			if not g:
 				# There's a setter or deleter, but no getter.
