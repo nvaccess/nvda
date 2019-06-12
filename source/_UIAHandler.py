@@ -150,7 +150,7 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
-if winVersion.isAtLeastWin10():
+if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
 
 ignoreWinEventsMap = {
