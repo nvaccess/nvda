@@ -12,12 +12,15 @@ See Brailliant B module for BrailleNote Touch support routines.
 
 from collections import OrderedDict
 import itertools
+from typing import List
+
 import serial
 import braille
 import brailleInput
 import inputCore
 from logHandler import log
 import hwIo
+from hwIo import intToByte
 import bdDetect
 
 BAUD_RATE = 38400
@@ -49,9 +52,9 @@ QT_SHIFT = 0x2
 QT_CTRL = 0x4
 QT_READ = 0x8 #Alt key
 
-DESCRIBE_TAG = "\x1B?"
-DISPLAY_TAG = "\x1bB"
-ESCAPE = '\x1b'
+ESCAPE = b'\x1b'
+DESCRIBE_TAG = ESCAPE+b"?"
+DISPLAY_TAG = ESCAPE+b"B"
 
 # Dots
 DOT_1 = 0x1
@@ -171,7 +174,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		command = ord(command)
 		if command == STATUS_TAG:
 			arg = self._serial.read(2)
-			self.numCells = ord(arg[1])
+			self.numCells = arg[1]
 			return
 		arg = self._serial.read(1)
 		if not arg:
@@ -212,10 +215,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# ESCAPE must be quoted because it is a control character
-		cells = [chr(cell).replace(ESCAPE, ESCAPE * 2) for cell in cells]
-		self._serial.write(DISPLAY_TAG + "".join(cells))
+		cellBytesList = [intToByte(cell).replace(ESCAPE, ESCAPE * 2) for cell in cells]
+		cellBytesList.insert(0, DISPLAY_TAG)
+		self._serial.write(b"".join(cellBytesList))
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
