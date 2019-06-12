@@ -137,14 +137,16 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	"""
 
 	def test_abstractProperty(self):
-		self.assertRaisesRegexp(TypeError,
+		# #9720 (Py3 review required): self.assertRaisesRegexp is deprecated.
+		self.assertRaisesRegex(TypeError,
 			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty "
 			"with abstract methods x",
 			AutoPropertyObjectWithAbstractProperty
 		)
 
 	def test_subclassedAbstractProperty(self):
-		self.assertRaisesRegexp(TypeError,
+		# #9720 (Py3 review required): self.assertRaisesRegexp is deprecated.
+		self.assertRaisesRegex(TypeError,
 			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
 			"with abstract methods x",
 			SubclassedAutoPropertyObjectWithAbstractProperty
