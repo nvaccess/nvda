@@ -50,8 +50,8 @@ VBufStorage_findMatch_notEmpty = object()
 
 FINDBYATTRIBS_ESCAPE_TABLE = {
 	# Symbols that are escaped in the attributes string.
-	ord(u":"): ur"\\:",
-	ord(u";"): ur"\\;",
+	ord(u":"): r"\\:",
+	ord(u";"): r"\\;",
 	ord(u"\\"): u"\\\\\\\\",
 }
 # Symbols that must be escaped for a regular expression.
