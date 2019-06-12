@@ -40,7 +40,7 @@ class AppArgs:
 	# Ideally, this would be an in-memory, default configuration.
 	# However, config currently requires a path.
 	# We use the unit test directory, since we want a clean config.
-	configPath = UNIT_DIR.decode("mbcs")
+	configPath = UNIT_DIR
 	secure = False
 	disableAddons = True
 	launcher = False
@@ -80,7 +80,7 @@ braille.initialize()
 braille.handler.displaySize=40
 braille.handler.enabled = True
 # The focus and navigator objects need to be initialized to something.
-from objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
+from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
 import api
 api.setFocusObject(phObj)
