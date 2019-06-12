@@ -26,5 +26,5 @@ class TestFBrailleTables(unittest.TestCase):
 	def test_renamedTableExistence(self):
 		"""Tests whether all defined renamed tables are part of the actual list of tables."""
 		tableNames = [table.fileName for table in brailleTables.listTables()]
-		for name in brailleTables.RENAMED_TABLES.itervalues():
+		for name in brailleTables.RENAMED_TABLES.values():
 			self.assertIn(name, tableNames)
