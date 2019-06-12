@@ -54,7 +54,7 @@ class BasicTextProvider(NVDAObject):
 		@type selection: tuple of (int, int)
 		"""
 		super(BasicTextProvider, self).__init__()
-		self.basicText = unicode(text)
+		self.basicText = text
 		self.selectionOffsets = selection
 
 	def makeTextInfo(self, position):
