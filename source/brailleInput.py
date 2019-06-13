@@ -36,7 +36,7 @@ LOUIS_DOTS_IO_START = 0x8000
 #: @type: int
 UNICODE_BRAILLE_START = 0x2800
 #: The Unicode braille character to use when masking cells in protected fields.
-#: @type: str
+#: @type: unicode
 UNICODE_BRAILLE_PROTECTED = u"⣿" # All dots down
 
 #: The singleton BrailleInputHandler instance.
@@ -82,7 +82,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		#: or were translated but did not produce any text.
 		#: This is used to show these cells to the user while they're entering braille.
 		#: This is a string of Unicode braille.
-		#: @type: str
+		#: @type: unicode
 		self.untranslatedBraille = ""
 		#: The position in L{brailleBuffer} where untranslated braille begins.
 		self.untranslatedStart = 0
@@ -126,7 +126,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			self.bufferText = u""
 		oldTextLen = len(self.bufferText)
 		pos = self.untranslatedStart + self.untranslatedCursorPos
-		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
+		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
 			mode |=  louis.partialTrans
@@ -175,10 +175,10 @@ class BrailleInputHandler(AutoPropertyObject):
 	def _translateForReportContractedCell(self, pos):
 		"""Translate text for current input as required by L{_reportContractedCell}.
 		@return: The previous translated text.
-		@rtype: str
+		@rtype: unicode
 		"""
 		cells = self.bufferBraille[:pos + 1]
-		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
+		data = u"".join([unichr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
 			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
@@ -293,7 +293,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		if api.isTypingProtected():
 			self.untranslatedBraille = UNICODE_BRAILLE_PROTECTED * (len(self.bufferBraille) - self.untranslatedStart)
 		else:
-			self.untranslatedBraille = "".join([chr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
+			self.untranslatedBraille = "".join([unichr(UNICODE_BRAILLE_START + dots) for dots in self.bufferBraille[self.untranslatedStart:]])
 
 	def updateDisplay(self):
 		"""Update the braille display to reflect untranslated input.
@@ -385,7 +385,7 @@ class BrailleInputHandler(AutoPropertyObject):
 	def sendChars(self, chars):
 		"""Sends the provided unicode characters to the system.
 		@param chars: The characters to send to the system.
-		@type chars: str
+		@type chars: unicode
 		"""
 		inputs = []
 		for ch in chars:

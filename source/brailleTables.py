@@ -28,9 +28,9 @@ def addTable(fileName, displayName, contracted=False, output=True, input=True):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
 	@param fileName: The file name of the table.
-	@type fileName: str
+	@type fileName: basestring
 	@param displayname: The name of the table as displayed to the user. This should be translatable.
-	@type displayName: str
+	@type displayName: unicode
 	@param contracted: C{True} if the table is contracted, C{False} if uncontracted.
 	@type cContracted: bool
 	@param output: C{True} if this table can be used for output, C{False} if not.

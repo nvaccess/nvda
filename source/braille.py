@@ -330,7 +330,7 @@ def getDisplayList(excludeNegativeChecks=True):
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
 	@return: list of tuples with driver names and descriptions.
-	@rtype: [(str,str)]
+	@rtype: [(str,unicode)]
 	"""
 	displayList = []
 	# The display that should be placed at the end of the list.
@@ -810,7 +810,7 @@ class TextInfoRegion(Region):
 		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
 		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
-			if isinstance(command, str):
+			if isinstance(command, basestring):
 				# Text should break a run of clickables
 				inClickable=False
 				self._isFormatFieldAtStart = False
@@ -2296,7 +2296,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		This is for ports which cannot be detected automatically
 		such as serial ports.
 		@return: The name and description for each port.
-		@rtype: iterable of str, str
+		@rtype: iterable of basestring, basestring
 		"""
 		raise NotImplementedError
 
@@ -2305,13 +2305,13 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
 		@param port: the port to connect to.
-		@type port: one of str or L{bdDetect.DeviceMatch}
+		@type port: one of basestring or L{bdDetect.DeviceMatch}
 		@return: The name and description for each port.
-		@rtype: iterable of str, str
+		@rtype: iterable of basestring, basestring
 		"""
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
-		elif isinstance(port, str):
+		elif isinstance(port, basestring):
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
 			if not isUsb and not isBluetooth:

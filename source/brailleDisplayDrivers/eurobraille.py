@@ -128,7 +128,7 @@ DEVICE_TYPES={
 }
 
 def bytesToInt(bytes):
-	"""Converts a bytes object to its integral equivalent."""
+	"""Converts a basestring to its integral equivalent."""
 	return int(bytes.encode('hex'), 16)
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
