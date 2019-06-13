@@ -702,6 +702,21 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
+	def isOutOfBounds(self):
+		visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+		visiLength = visiRanges.length
+		if visiLength > 0:
+			firstVisiRange = visiRanges.GetElement(0)
+			lastVisiRange = visiRanges.GetElement(visiLength - 1)
+			if self._rangeObj.CompareEndPoints(
+				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_Start
+			) < 0 or self._rangeObj.CompareEndPoints(
+				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_End) >= 0:
+				return False
+		return True
+
 	def setEndPoint(self,other,which):
 		if which.startswith('start'):
 			src=UIAHandler.TextPatternRangeEndpoint_Start

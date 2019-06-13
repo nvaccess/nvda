@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Bill Dengler
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -259,7 +259,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	L{Points} must be supported as a position.
 	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
-	
+	To support review bounds configuration, implement the L{isOutOfBounds} method.
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""
@@ -550,6 +550,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@raise LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError
+
+	def isOutOfBounds(self):
+		"""
+		Returns True if this textInfo is positioned outside its object's
+		visible text.
+		@rtype: bool
+		"""
+		raise NotImplementedError
+
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
