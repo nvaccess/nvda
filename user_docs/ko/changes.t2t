@@ -12,19 +12,19 @@ NVDA의 이번 버전 부터 custom appModules, globalPlugins, 점자 디스플�
 이에 대한 자세한 내용과 추가 기능의 버전 관리 방법에 대한 자세한 내용은 변경 목록을 참조하십시오.
 
  == 새로 추가된 기능 ==
-- New braille tables: Afrikaans, Arabic 8 dot computer braille, Arabic grade 2, Spanish grade 2. (#4435, #9186)
-- Added an option to NVDA's mouse settings to make NVDA handle situations where the mouse is controlled by another application. (#8452) 
- - This will allow NVDA to track the mouse when a system is controlled remotely using TeamViewer or other remote control software.
-- Added the `--enable-start-on-logon` command line parameter to allow configuring whether silent installations of NVDA set NVDA to start at Windows logon or not. Specify true to start at logon or false to not start at logon. If the --enable-start-on-logon argument is not specified at all then NVDA will default to starting at logon, unless it was  already configured not to by a previous installation. (#8574)
-- It is possible to turn NVDA's logging features off by setting logging level to "disabled" from General settings panel. (#8516)
-- The presence of formulae in LibreOffice and Apache OpenOffice spreadsheets is now reported. (#860)
+- 새로운 점자 테이블: 아프리칸스어, 아랍어 8 점 컴퓨터 점자, 아랍어 grade 2, 스페인어 grade 2. (#4435, #9186)
+- NVDA의 마우스 설정에 옵션을 추가하여 NVDA가 다른 응용 프로그램에서 마우스를 제어하는 상황을 처리하도록 함. (#8452) 
+ - TeamViewer 또는 다른 원격 제어 소프트웨어를 사용하여 원격으로 시스템을 제어 할 때 NVDA가 마우스를 추적 할 수 있습니다.
+- `--enable-start-on-logon` 명령줄 매개 변수를 추가하여 NVDA 세트 NVDA의 자동 설치를 Windows 로그온 시 시작할지 여부를 구성할 수 있습니다. 로그온할 때 시작하려면 true를, 로그온할 때 시작하지 않으려면 false를 지정합니다. --enable-start-on-logon 인수가 전혀 지정되지 않은 경우 이전 설치에서 시작하지 않도록 이미 구성되어 있지 않은 한 NVDA는 로그온 시 기본적으로 시작됩니다. (#8574)
+- 일반 설정 패널에서 로깅 수준을 "사용 안 함"으로 설정하여 NVDA의 로깅 기능을 비활성화할 수 있음. (#8516)
+- LibreOffice 및 Apache OpenOffice spreadsheet에 수식이 있으면 알림. (#860)
 - In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
  - This works in Firefox 66 and later.
  - This does not work for certain list boxes (HTML select controls) in Chrome.
-- Early support for apps such as Mozilla Firefox on computers with ARM64 (e.g. Qualcomm Snapdragon) processors. (#9216)
-- A new Advanced Settings category has been added to NVDA's Settings dialog, including an option to try out NVDA's new support for Microsoft Word via the Microsoft UI Automation API. (#9200)
-- Added support for the graphical view in Windows Disk Management. (#1486)
-- Added support for Handy Tech Connect Braille and Basic Braille 84. (#9249)
+- ARM64 (예 : Qualcomm Snapdragon) 프로세서가 장착 된 컴퓨터에서 Mozilla Firefox와 같은 응용 프로그램에 대한 초기 지원 (#9216)
+- 새로운 고급 설정 범주가 Microsoft UI 자동화 API를 통해 NVDA의 Microsoft Word에 대한 새로운 지원을 시도하는 옵션을 포함하여 NVDA의 설정 대화 상자에 추가됨. (#9200)
+- Windows 디스크 관리의 그래픽 보기 지원 추가. (#1486)
+- Handy Tech Connect Braille 및 Basic Braille 84 지원 추가. (#9249)
 
 
 == 변경된 기능 ==
