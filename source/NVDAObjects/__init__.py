@@ -29,6 +29,7 @@ import treeInterceptorHandler
 import braille
 import globalPluginHandler
 import brailleInput
+import scriptCategories
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -1274,8 +1275,7 @@ This code is executed if a gain focus event is received by this object.
 	reviewBounded = False
 	
 	@script(gesture="kb:NVDA+o",
-		# Hardcoded to avoid circular import
-		category=_(u"Text review"),
+		category=scriptCategories.SCRCAT_TEXTREVIEW,
 		# Translators: A gesture description.
 		description=_(u"Toggles whether review is constrained to the currently visible text"))
 	def script_toggleReviewBounds(self, gesture):

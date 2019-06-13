@@ -403,7 +403,7 @@ For example:
 --- start ---
 	@script(
 		description=_("Speaks the date and time"),
-		category=inputCore.SCRCAT_MISC,
+		category=scriptCategories.SCRCAT_MISC,
 		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
 	)
 	def script_sayDateTime(self, gesture):
@@ -421,7 +421,7 @@ The following keyword arguments can be used when applying the script decorator:
 - category: The category of the script in order for it to be grouped with other similar scripts.
   For example, a script in a global plugin which adds browse mode quick navigation keys may be categorized under the "Browse mode" category.
   The category can be set for individual scripts, but you can also set the "scriptCategory" attribute on the plugin class, which will be used for scripts which do not specify a category.
-  There are constants for common categories prefixed with SCRCAT_ in the inputCore and globalCommands modules, which can also be specified.
+  There are constants for common categories prefixed with SCRCAT_ in the scriptCategories module, which can also be specified.
   The script will be listed under the specified category in the Input Gestures dialog.
   If no category is specified, the script will be categorized under "Miscellaneous".
 - gesture: A string containing a single gesture associated with this script, e.g. "kb:NVDA+shift+r".

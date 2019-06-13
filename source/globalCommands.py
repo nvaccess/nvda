@@ -32,7 +32,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import scriptHandler
-from scriptHandler import script
+from scriptCategories import *
 import ui
 import braille
 import brailleInput
@@ -43,49 +43,6 @@ from baseObject import ScriptableObject
 import core
 import winVersion
 from base64 import b16encode
-
-#: Script category for text review commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_TEXTREVIEW = _("Text review")
-#: Script category for Object navigation commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_OBJECTNAVIGATION = _("Object navigation")
-#: Script category for system caret commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_SYSTEMCARET = _("System caret")
-#: Script category for mouse commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_MOUSE = _("Mouse")
-#: Script category for speech commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_SPEECH = _("Speech")
-#: Script category for configuration dialogs commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_CONFIG = _("Configuration")
-#: Script category for configuration profile activation and management commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
-#: Script category for Braille commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_BRAILLE = _("Braille")
-#: Script category for tools commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_TOOLS = pgettext('script category', 'Tools')
-#: Script category for touch commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_TOUCH = _("Touch screen")
-#: Script category for focus commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_FOCUS = _("System focus")
-#: Script category for system status commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_SYSTEM = _("System status")
-#: Script category for input commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_INPUT = _("Input")
-#: Script category for document formatting commands.
-# Translators: The name of a category of NVDA commands.
-SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -1221,7 +1178,7 @@ class GlobalCommands(ScriptableObject):
 			curLanguage = speech.getCurrentLanguage()
 		return curLanguage
 
-	@script(
+	@scriptHandler.script(
 		# Translators: Input help mode message for Review Current Symbol command.
 		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
 		category=SCRCAT_TEXTREVIEW,
