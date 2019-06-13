@@ -297,9 +297,10 @@ class UIATextInfo(textInfos.TextInfo):
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 			self.collapse(True)
-		elif position==textInfos.POSITION_FIRSTVISIBLE:
+		elif position in (textInfos.POSITION_FIRSTVISIBLE, textInfos.POSITION_LASTVISIBLE):
 			try:
 				visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+				element = 0 if position == textInfos.POSITION_FIRSTVISIBLE else visiRanges.length - 1:
 				self._rangeObj = visiRanges.GetElement(0)
 			except COMError:
 				# Error: FIRST_VISIBLE position not supported by the UIA text pattern.
