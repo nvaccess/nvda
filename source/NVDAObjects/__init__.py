@@ -1272,7 +1272,9 @@ This code is executed if a gain focus event is received by this object.
 	reviewBounded = False
 	
 	@script(gesture="kb:NVDA+o",
-		#Translators: A gesture description.
+		# Hardcoded to avoid circular import
+		category=_(u"Text review"),
+		# Translators: A gesture description.
 		description=_(u"Toggles whether review is constrained to the currently visible text"))
 	def script_toggleReviewBounds(self, gesture):
 		try:
@@ -1281,7 +1283,8 @@ This code is executed if a gain focus event is received by this object.
 			self.reviewBounded = not self.reviewBounded
 			if self.reviewBounded:
 				ui.message(
-					#Translators: Reported when review is constrained to this object's visible text.
+					# Translators: Reported when review is constrained to this
+					# object's visible text.
 					_(u"Bounded review")
 				)
 				if outOfBounds:
@@ -1289,11 +1292,11 @@ This code is executed if a gain focus event is received by this object.
 						self.makeTextInfo(textInfos.POSITION_CARET), isCaret=True)
 			else:
 				ui.message(
-					#Translators: Reported when review is unconstrained, so all of this object's text can be read.
+					# Translators: Reported when review is unconstrained, so all
+					# of this object's text can be read.
 					_(u"Unbounded review")
 				)
 		except NotImplementedError:
 			ui.message(
-				#Translators: Reported when review bound configuration isn't supported for this object.
+				# Translators: Reported when review bound configuration isn't supported for this object.
 				_(u"Not supported here"))
-				
