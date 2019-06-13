@@ -173,7 +173,8 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x=offset%consoleScreenBufferInfo.dwSize.x
 		y=offset-x
-		y/=consoleScreenBufferInfo.dwSize.x
+		# #9641: add another slash because this is an integer, otherwise int/float conflict is seen and backspacing fails.
+		y//=consoleScreenBufferInfo.dwSize.x
 		y+=consoleScreenBufferInfo.srWindow.Top
 		return x,y
 
