@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+#Copyright (C) 2017-2019 NV Access Limited
 
 """Fake text provider implementation for testing of code which uses TextInfos.
 See the L{BasicTextProvider} class.
@@ -54,7 +54,7 @@ class BasicTextProvider(NVDAObject):
 		@type selection: tuple of (int, int)
 		"""
 		super(BasicTextProvider, self).__init__()
-		self.basicText = unicode(text)
+		self.basicText = text
 		self.selectionOffsets = selection
 
 	def makeTextInfo(self, position):

@@ -82,6 +82,7 @@ class HandlerRegistrar(object):
 		However, the callable must be kept alive by your code otherwise it will be de-registered. This is due to the use
 		of weak references. This is especially relevant when using lambdas.
 		"""
+		# #9720 (Py3 review required): this method causes unittest to fail in Python 3.
 		if hasattr(handler, "__self__"):
 			if not handler.__self__:
 				raise TypeError("Registering unbound instance methods not supported.")
