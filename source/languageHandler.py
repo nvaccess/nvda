@@ -108,8 +108,7 @@ def getAvailableLanguages(presentational=False):
 		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
-	# #7105 (Py3 review required): Python 2 list 0> Python 3 iterator.
-	# Thus wrap this inside a list call.
+	# Python 3: zip function changed from returning a list to an iterator, thus wrap this inside a list call.
 	langs = list(zip(locales,displayNames))
 	if presentational:
 		langs.sort(key=lambda lang: lang[1])
