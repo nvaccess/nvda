@@ -297,6 +297,20 @@ class UIATextInfo(textInfos.TextInfo):
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 			self.collapse(True)
+		elif position==textInfos.POSITION_FIRSTVISIBLE:
+			try:
+				visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+				self._rangeObj = visiRanges.GetElement(0)
+			except COMError:
+				# Error: FIRST_VISIBLE position not supported by the UIA text pattern.
+				raise RuntimeError
+		elif position==textInfos.POSITION_LASTVISIBLE:
+			try:
+				visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+				self._rangeObj = visiRanges.GetElement(visiRanges.length - 1)
+			except COMError:
+				# Error: LAST_VISIBLE position not supported by the UIA text pattern.
+				raise RuntimeError
 		elif position==textInfos.POSITION_ALL or position==self.obj:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):

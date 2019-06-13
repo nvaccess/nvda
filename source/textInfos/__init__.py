@@ -155,6 +155,8 @@ class FieldCommand(object):
 #Position constants
 POSITION_FIRST="first"
 POSITION_LAST="last"
+POSITION_FIRSTVISIBLE="firstVisible"
+POSITION_LASTVISIBLE="lastVisible"
 POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
@@ -259,7 +261,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	L{Points} must be supported as a position.
 	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
-	To support review bounds configuration, implement the L{isOutOfBounds} method.
+	To support review bounds configuration, implement the L{isOutOfBounds} method and L{POSITION_FIRSTVISIBLE} and L{POSITION_LASTVISIBLE} positions.
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""

@@ -984,7 +984,9 @@ class GlobalCommands(ScriptableObject):
 		return (newInfo, res)
 
 	def script_review_top(self,gesture):
-		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
+		obj = api.getReviewPosition().obj
+		pos = textInfos.POSITION_FIRSTVISIBLE if obj.reviewBounded else textInfos.POSITION_FIRST
+		info = obj.makeTextInfo(pos)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		ui.reviewMessage(_("Top"))
@@ -1044,7 +1046,9 @@ class GlobalCommands(ScriptableObject):
 	script_review_nextLine.category=SCRCAT_TEXTREVIEW
 
 	def script_review_bottom(self,gesture):
-		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
+		obj = api.getReviewPosition().obj
+		pos = textInfos.POSITION_LASTVISIBLE if obj.reviewBounded else textInfos.POSITION_LAST
+		info = obj.makeTextInfo(pos)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		ui.reviewMessage(_("Bottom"))
