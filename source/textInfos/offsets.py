@@ -461,7 +461,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def expand(self,unit):
 		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
 
-	def isOutOfBounds(self):
+	def isOffscreen(self):
 		try:
 			return self._startOffset < self._getFirstVisibleOffset(
 			) or self._endOffset > self._getLastVisibleOffset()

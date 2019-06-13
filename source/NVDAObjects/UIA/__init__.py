@@ -710,7 +710,7 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
-	def isOutOfBounds(self):
+	def isOffscreen(self):
 		visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 		visiLength = visiRanges.length
 		if visiLength > 0:
