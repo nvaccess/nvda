@@ -57,7 +57,7 @@ class XMLTextParser(object):
 
 	def parse(self,XMLText):
 		try:
-			self.parser.Parse(XMLText.encode('utf-8'))
+			self.parser.Parse(XMLText)
 		except:
 			log.error("XML: %s"%XMLText,exc_info=True)
 		return self._commandList

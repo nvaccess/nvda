@@ -268,7 +268,7 @@ def setSystemConfigToCurrentConfig():
 
 def _setSystemConfig(fromPath):
 	import installer
-	toPath=os.path.join(sys.prefix.decode('mbcs'),'systemConfig')
+	toPath=os.path.join(sys.prefix,'systemConfig')
 	log.debug("Copying config to systemconfig dir: %s", toPath)
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
