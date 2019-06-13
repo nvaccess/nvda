@@ -472,7 +472,18 @@ Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo sc
 
 + Modalità navigazione +[BrowseMode]
 NVDA si serve della modalità navigazione per presentare all'utente documenti complessi di sola lettura, come ad esempio le pagine web.
-Essa viene utilizzata nei doccumenti di Mozilla Firefox, Microsoft Internet Explorer, messaggi html in Microsoft Outlook, Mozilla Thunderbird, Google Chrome, Adobe Reader e Adobe Flash.
+Tale modalità funziona nelle applicazioni seguenti:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Messaggi HTML in Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- I libri supportati in Amazon Kindle for PC
+-
 Inoltre, la modalità navigazione risulta disponibile anche per la gestione dei documenti in Microsoft Word.
 
 Nella modalità navigazione, il contenuto del documento è reso disponibile tramite una rappresentazione lineare, che può essere esplorata con i comuni tasti dedicati al cursore, come se si trattasse di un normale documento.
@@ -493,7 +504,7 @@ Anche la pressione del tasto Esc farà in modo che NVDA attivi la modalità navi
 | Commuta modalità focus/navigazione | NVDA+Spazio | Commuta tra le modalità focus e navigazione |
 | Abbandona modalità focus | escape | Ritorna alla modalità navigazione se la modalità focus era stata impostata precedentemente in maniera automatica |
 | Aggiorna documento in  modalità navigazione | NVDA+f5 | Ricarica il contenuto del documento attuale (utile nel caso certi contenuti della pagina non sembrano essere presenti. Funzione non disponibile in Microsoft Word e Outlook) |
-| Trova | NVDA+Control+f | Permette di inserire in una casella di dialogo del testo da cercare all'interno del documento |
+| Trova | NVDA+Control+f | Apre una finestra di dialogo che consente di cercare del testo all'interno del documento. Fare riferimento alla sezione [Cercare del testo #SearchingForText] per ulteriori informazioni. |
 | Trova successivo | NVDA+f3 | Trova la stringa successiva di testo precedentemente cercata nel documento |
 | Trova precedente | NVDA+Shift+f3 | Trova la stringa precedente di testo nel documento cercata con control+NVDA+f  |
 | Apre descrizione | NVDA+d | Apre una nuova finestra contenente la descrizione dell'elemento, basata sull'attributo longdesc, se presente. | 
@@ -550,6 +561,22 @@ Una volta selezionato l'elemento, si possono utilizzare i bottoni che si trovano
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
 | Elenco elementi modalità navigazione | NVDA+f7 | Elenca vari tipi di elementi presenti nel documento corrente |
+%kc:endInclude
+
+++ Cercare del testo ++[SearchingForText]
+Questa finestra di dialogo consente di cercare del testo all'interno del documento corrente.
+Comparirà una casella di testo con la dicitura "digitare il testo da cercare".
+è anche possibile servirsi delle frecce orizzontali per selezionare eventuali altri termini di ricerca immessi in precedenza.
+Esiste anche una casella di controllo chiamata "distingui tra maiuscole e minuscole", che consente di stabilire se la ricerca debba tener conto o meno di questa caratteristica.
+Perciò, con la casella selezionata, cercare nvaccess sarà diverso che cercare  NvAccess. 
+Eventuali differenze tra maiuscole e minuscole non verranno salvate nella cronologia di ricerca.
+Al riavvio di NVDA, l'elenco dei termini di ricerca precedenti viene cancellato.
+Utilizzare i seguenti tasti per eseguire ricerche:
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Trova testo | NVDA+control+f | Apre la finestra di ricerca |
+| Trova successivo | NVDA+f3 | cerca la prossima occorrenza del termine appena digitato |
+| Trova precedente | NVDA+shift+f3 | cerca l'occorrenza precedente del termine appena digitato |
 %kc:endInclude
 
 ++ Oggetti incorporati ++[ImbeddedObjects]
@@ -1349,8 +1376,10 @@ Una casella di controllo che, se attivata, istruisce NVDA ad annunciare il testo
 
 ==== Parte di testo letta ====[MouseSettingsTextUnit]
 Se NVDA è configurato per annunciare il testo man mano che si sposta il Mouse, questa opzione permette di stabilire la quantità di testo che verrà vocalizzato dallo Screen Reader. 
-Le scelte disponibili sono Carattere, Parola, Sottolineato e Paragrafo.
-  
+Le scelte disponibili sono Carattere, Parola, riga e Paragrafo.
+
+Per modificare la quantità di testo letta da qualsiasi punto ci si trovi, si prega di assegnare un gesto personalizzato usando la [finestra di dialogo Tasti e gesti di immissione #InputGestures].  
+
 ==== Leggi il tipo dell'oggetto sotto il mouse ====[MouseSettingsRole]
 Se questa casella di controllo è attivata, NVDA leggerà il tipo di oggetto sul quale è posizionato il mouse, man mano che viene spostato.
 
@@ -1502,8 +1531,16 @@ Sebbene il buffer virtuale non sia costituito da pagine, questo campo modifica i
 ==== Usa il layout dello schermo, quando supportato ====[BrowseModeSettingsScreenLayout]
 Tasto: NVDA+v
 
-Questa casella di controllo modifica la modalità di visualizzazione di alcuni elementi, come ad esempio link o campi editazione. In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo, quindi, ad esempio, possono esservi più link in una stessa riga. Se invece la casella di controllo è disattivata, il buffer virtuale si occuperà di presentare ciascun elemento in una riga differente, permettendo una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
+Questa casella di controllo modifica la modalità di visualizzazione di alcuni elementi, come ad esempio link o campi editazione. 
+In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo, quindi, ad esempio, possono esservi più link in una stessa riga. Se invece la casella di controllo è disattivata, il buffer virtuale si occuperà di presentare ciascun elemento in una riga differente, permettendo una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
   
+==== Attiva modalità navigazione al caricamento della pagina ====
+Questa casella abilita o disabilita la modalità navigazione automatica al caricamento di una pagina.
+Quando questa opzione è disabilitata, la modalità di navigazione può ancora essere attivata manualmente sulle pagine o nei documenti in cui essa è supportata.
+Si veda la [sezione modalità navigazione #BrowseMode] per l'elenco delle applicazioni compatibili.
+è importante tener presente che questa opzione non si applica alle situazioni in cui la modalità di navigazione è sempre facoltativa, ad es. in Microsoft Word.
+Risulta attiva da impostazioni predefinite.
+
 ==== Dire tutto Automaticamente al caricamento di una pagina web ====[BrowseModeSettingsAutoSayAll]
 Questa casella di controllo commuta la lettura automatica delle pagine web una volta caricate.
 Essa risulta attiva da impostazioni predefinite.
@@ -1632,6 +1669,16 @@ Per le versioni più recenti di Microsoft Office 2016/365 eseguite su Windows10,
 Tuttavia, in alcune versioni di Microsoft Office, certe informazioni potrebbero non essere fornite, o essere esposte in modo errato, il che significa che non è sempre possibile fare affidamento sul supporto UI Automation.
 In linea generale, la maggior parte degli utenti non dovrebbe attivare questa funzione, a meno che non si stia utilizzando Office2016/365, nel qual caso sono graditi feedback e osservazioni  durante i test.
 
+==== Spostamento automatico del focus in modalità navigazione ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tasto: NVDA+8
+
+Attivata da impostazioni predefinite,  questa opzione consente di stabilire se, in modalità navigazione, il focus di sistema debba spostarsi automaticamente sugli elementi che lo consentono (link, campi dei form, etc) quando si utilizzano le frecce con il cursore virtuale.
+Questa è sempre stata l'impostazione predefinita dalla versione 2019.1 di NVDA e precedenti.
+Disattivandola si farà in modo che il focus di sistema rimarrà fermo mentre ci si sposta con le frecce in modalità navigazione.
+Ciò potrebbe comportare un'esperienza di navigazione più veloce e una migliore reattività nella modalità di navigazione.
+Il focus verrà immediatamente spostato non appena si interagisce con un elemento (ad esempio premendo un pulsante, selezionando una casella di controllo).
+Questa funzionalità è sperimentale a partire da NVDA 2019.2.
+
 ==== Timeout Movimento cursore (in MS) ====[AdvancedSettingsCaretMoveTimeout]
 Questa opzione consente di impostare per quanti millisecondi NVDA dovrà attendere un movimento del cursore nei campi editazione.
 Se ci si rende conto che NVDA sembra aver difficoltà nel seguire il cursore (ad esempio è sempre un carattere indietro oppure ripete la stessa riga), si può provare ad aumentare questo valore.
@@ -1685,6 +1732,7 @@ Nel titolo della finestra verrà visualizzata anche la lingua per la quale si st
 Si noti che questa finestra di dialogo rispetta le impostazioni dell'opzione "Considera attendibile la lingua della voce  corrente nel processare caratteri e simboli", situata alla [categoria voce #SpeechSettings] della [finestra Impostazioni NVDA #NVDASettings]; per esempio, verrà utilizzata la lingua della voce piuttosto che la lingua generale di NVDA, quando questa opzione è attiva.
 
 Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
+è possibile filtrare i risultati inserendo il nome del simbolo o parte di esso all'interno del campo editazione filtra per.
 
 - Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
 - Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
@@ -1750,7 +1798,7 @@ NVDA permette di effettuare questo genere di operazioni tramite la funzione prof
 Un profilo di configurazione contiene soltanto quelle impostazioni che sono state cambiate mentre si modificava il profilo.
 La maggior parte delle impostazioni può essere modificata nei profili, ad eccezione di quelle nella categoria generale della finestra [Impostazioni NVDA #NVDASettings], in quanto influiscono sul comportamento totale di NVDA.
 
-I profili possono essere anche attivati manualmente.
+I profili possono essere anche attivati manualmente, o da una finestra di dialogo oppure utilizzando gesti aggiuntivi personalizzati.
 Inoltre essi possono venir attivati automaticamente nel caso si verifichino degli eventi, come l'apertura di un programma particolare.
 
 +++ Gestione di base +++[ProfilesBasicManagement]
@@ -1816,6 +1864,14 @@ Ad esempio, si potrebbe voler modificare un profilo attivato manualmente o la co
 è possibile farlo marcando la casella di controllo Disattiva temporaneamente tutti gli eventi nella finestra di dialogo Profili di configurazione.
 
 Per fare in modo che  gli eventi possano essere disabilitati da qualsiasi posto, si prega di assegnare un gesto o una combinazione di tasti personalizzata nella [Finestra gesti di immissione #InputGestures].
+
++++ Attivare un profilo utilizzando gesti di immissione +++[ConfigProfileGestures]
+Per ogni profilo che si aggiunge, è possibile assegnare uno o più gesti di immissione per attivarlo.
+Da impostazioni predefinite, ai profili non viene assegnato alcun gesto.
+è possibile aggiungere gesti per attivare un profilo servendosi della [finestra Tasti e gesti di immissione #InputGestures].
+A ciascun profilo corrisponde una voce sotto la categoria profili di configurazione.
+Quando si rinomina un profilo, qualsiasi gesto aggiunto in precedenza sarà ancora disponibile.
+La rimozione di un profilo eliminerà automaticamente i gesti ad esso associati.
 
 ++ Posizione dei file di configurazione ++[LocationOfConfigurationFiles]
 Le versioni portabili di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i driver in una cartella chiamata userConfig, situata nella directory di NVDA.
@@ -1997,13 +2053,11 @@ Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Sc
 per un corretto funzionamento è necessario avere installati nel proprio sistema i driver per display Braille Freedom Scientific.
 Nel caso non si sia in possesso di tali driver, è possibile scaricarli dall'indirizzo https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Sebbene nella pagina sia nominata solo la barra Focus Blue, il driver funzionerà per tutti i modelli Freedom.
-Da notare che se nel proprio sistema si sta utilizzando una versione di Windows a 64 bit e i driver sono già stati installati da un altro screen reader, è probabile che sia necessario installare comunque il pacchetto, in quanto difficilmente quello screen reader avrà installato tutti i file utilizzati da NVDA.
 
 Per impostazioni predefinite, NVDA è in grado di individuare e connettersi automaticamente a questi display via USB o Bluetooth.
 Comunque, sarà anche possibile selezionare la sola connessione USB o Bluetooth, per restringere il tipo di connessioni da utilizzare.
 Questo potrebbe essere utile ad esempio se si vuole usare la Focus con NVDA via Bluetooth, ma si desidera caricare la batteria tramite la connessione USB.
-
-Questi modelli non supportano ancora la funzione di rilevazione automatica in background.
+Il rilevamento automatico barre braille di NVDA riconosce anche il display su USB o Bluetooth.
 
 Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
