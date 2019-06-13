@@ -401,6 +401,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
 			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
+		elif position==textInfos.POSITION_FIRSTVISIBLE:
+			self._startOffset=self._endOffset=self._getFirstVisibleOffset()
+		elif position==textInfos.POSITION_LASTVISIBLE:
+			self._startOffset=self._endOffset=self._getLastVisibleOffset()
 		elif position==textInfos.POSITION_CARET:
 			self._startOffset=self._endOffset=self._getCaretOffset()
 		elif position==textInfos.POSITION_SELECTION:
@@ -456,6 +460,14 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def expand(self,unit):
 		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
+
+	def isOutOfBounds(self):
+		try:
+			return self._startOffset < self._getFirstVisibleOffset(
+			) or self._endOffset > self._getLastVisibleOffset()
+		except AttributeError, LookupError: 
+			# Some implementations have incomplete support.
+			raise NotImplementedError
 
 	def copy(self):
 		return self.__class__(self.obj,self)
