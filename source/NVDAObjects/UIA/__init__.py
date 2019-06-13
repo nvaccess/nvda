@@ -300,18 +300,11 @@ class UIATextInfo(textInfos.TextInfo):
 		elif position in (textInfos.POSITION_FIRSTVISIBLE, textInfos.POSITION_LASTVISIBLE):
 			try:
 				visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-				element = 0 if position == textInfos.POSITION_FIRSTVISIBLE else visiRanges.length - 1:
+				element = 0 if position == textInfos.POSITION_FIRSTVISIBLE else visiRanges.length - 1
 				self._rangeObj = visiRanges.GetElement(0)
 			except COMError:
 				# Error: FIRST_VISIBLE position not supported by the UIA text pattern.
-				raise RuntimeError
-		elif position==textInfos.POSITION_LASTVISIBLE:
-			try:
-				visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-				self._rangeObj = visiRanges.GetElement(visiRanges.length - 1)
-			except COMError:
-				# Error: LAST_VISIBLE position not supported by the UIA text pattern.
-				raise RuntimeError
+				raise NotImplementedError
 		elif position==textInfos.POSITION_ALL or position==self.obj:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA) or isinstance(position,UIAHandler.IUIAutomationElement):
@@ -731,7 +724,7 @@ class UIATextInfo(textInfos.TextInfo):
 				UIAHandler.TextPatternRangeEndpoint_End) >= 0
 		else:
 			# Review bounds not available.
-			return False
+			return super(UIATextInfo, self).isOutOfBounds()
 
 	def setEndPoint(self,other,which):
 		if which.startswith('start'):

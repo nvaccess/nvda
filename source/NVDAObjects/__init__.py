@@ -1269,6 +1269,8 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		return 0
 
+	#: Whether review is constrained to the currently visible text.
+	#: @type: bool
 	reviewBounded = False
 	
 	@script(gesture="kb:NVDA+o",
@@ -1280,6 +1282,11 @@ This code is executed if a gain focus event is received by this object.
 		try:
 			rp = api.getReviewPosition()
 			outOfBounds = rp.isOutOfBounds()
+		except NotImplementedError:
+			ui.message(
+				# Translators: Reported when review bound configuration isn't supported for this object.
+				_(u"Not supported here"))
+		else:
 			self.reviewBounded = not self.reviewBounded
 			if self.reviewBounded:
 				ui.message(
@@ -1296,7 +1303,3 @@ This code is executed if a gain focus event is received by this object.
 					# of this object's text can be read.
 					_(u"Unbounded review")
 				)
-		except NotImplementedError:
-			ui.message(
-				# Translators: Reported when review bound configuration isn't supported for this object.
-				_(u"Not supported here"))

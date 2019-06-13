@@ -590,3 +590,8 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		if start!=end:
 			raise NotImplementedError("Expanded selections not supported")
 		self._setCaretOffset(start)
+
+	def isOutOfBounds(self):
+		"""DisplayModelTextInfo instances only show screen contents, so
+		unbounding is impossible."""
+		raise NotImplementedError
