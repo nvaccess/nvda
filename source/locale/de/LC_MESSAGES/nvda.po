@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
+"POT-Creation-Date: 2019-06-07 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -371,11 +371,11 @@ msgstr "kwef"
 
 #. Translators: Displayed in braille for an object which is deleted.
 msgid "del"
-msgstr "del"
+msgstr "entf"
 
 #. Translators: Displayed in braille for an object which is inserted.
 msgid "ins"
-msgstr "ins"
+msgstr "einfg"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
@@ -399,7 +399,7 @@ msgstr "->"
 
 #. Translators: Displayed in braille when a protected control or a document is encountered.
 msgid "***"
-msgstr "pwd"
+msgstr "kef"
 
 #. Translators: Displayed in braille when a required form field is encountered.
 msgid "req"
@@ -580,7 +580,7 @@ msgstr "s{columnNumber}"
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "%s ende"
+msgstr "Ende von %s"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -2145,7 +2145,7 @@ msgstr "Registerkarte"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr "Schieberegler"
+msgstr "Schieber"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
@@ -2640,7 +2640,7 @@ msgstr "nicht verfügbar"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "fokussiert"
+msgstr "hervorgehoben"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
@@ -2731,20 +2731,20 @@ msgstr "auswählbar"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
-msgstr "fokussierbar"
+msgstr "hervorhebbar"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
 msgstr "anklickbar"
 
 msgid "editable"
-msgstr "Eingabefeld"
+msgstr "veränderbar"
 
 msgid "checkable"
-msgstr "Ankreuzfeld"
+msgstr "anklickbar"
 
 msgid "draggable"
-msgstr "kann verschoben werden"
+msgstr "verschiebbar"
 
 msgid "dragging"
 msgstr "ziehen"
@@ -3864,7 +3864,7 @@ msgstr "Schaltet zwischen Signaltöne und Sprachausgabe um."
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr ""
-"Bewegt den Fokus zum nächstgelegenem Dokument, welches fokussiert werden "
+"Bewegt den Fokus zum nächstgelegenem Dokument, welches hervorgehoben werden "
 "kann."
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
@@ -8409,12 +8409,12 @@ msgstr "Alle Auslöser &temporär deaktivieren"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(Standardkonfiguration)"
+msgstr "(Standard-Konfiguration)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
 msgid "editing"
-msgstr "Bearbeitung"
+msgstr "Bearbeitet"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
@@ -9235,7 +9235,7 @@ msgstr "Im Hinter&grund befindliche Fortschrittsbalken ausgeben"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report dynamic &content changes"
-msgstr "&Dynamische Änderungen im Inhalt ansagen"
+msgstr "Änderungen &dynamischer Inhalte ansagen"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
@@ -9510,8 +9510,7 @@ msgstr "NVDA-Entwicklung "
 #. Advanced settings panel.
 msgid "Enable loading custom code from Developer Scratchpad directory"
 msgstr ""
-"Benutzerdefinierten Code aus dem Developer Scratchpad-Verzeichnis laden "
-"aktiviert."
+"Benutzerdefinierten Code aus dem Developer Scratchpad-Verzeichnis laden"
 
 #. Translators: the label for a button in the Advanced settings category
 msgid "Open developer scratchpad directory"
@@ -9527,8 +9526,8 @@ msgstr "Microsoft Benutzeroberflächenautomatisierung"
 msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
 msgstr ""
-"Verwenden Sie die Benutzeroberflächenautomatisierung, um auf Microsoft & "
-"Word-Dokumenten-Steuerelemente zuzugreifen, sofern verfügbar."
+"Benutzeroberflächenautomatisierung verwenden (falls verfügbar), um auf "
+"Microsoft & Word-Dokumenten-Steuerelemente zuzugreifen"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9746,7 +9745,7 @@ msgstr "Wort&umbruch verhindern (falls möglich)"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 msgid "Focus context presentation:"
-msgstr "Kontext-Darstellung für das fokussierte Objekt:"
+msgstr "Kontext-Darstellung für das hervorgehobene Objekt:"
 
 #. Translators: This is the label for the NVDA settings dialog.
 msgid "NVDA Settings"
@@ -9754,7 +9753,7 @@ msgstr "NVDA-Einstellungen"
 
 #. Translators: The profile name for normal configuration
 msgid "normal configuration"
-msgstr "Standardkonfiguration"
+msgstr "Standard-Konfiguration"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
