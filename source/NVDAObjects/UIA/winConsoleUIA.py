@@ -35,16 +35,6 @@ class consoleUIATextInfo(UIATextInfo):
 			)
 
 	def move(self, unit, direction, endPoint=None):
-		oldRange = None
-		if self.basePosition != textInfos.POSITION_CARET:
-			# Insure we haven't gone beyond the visible text.
-			# UIA adds thousands of blank lines to the end of the console.
-			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
-			visiLength = visiRanges.length
-			if visiLength > 0:
-				firstVisiRange = visiRanges.GetElement(0)
-				lastVisiRange = visiRanges.GetElement(visiLength - 1)
-				oldRange = self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
 			# Relative to the current line, calculate our offset
@@ -98,22 +88,7 @@ class consoleUIATextInfo(UIATextInfo):
 						endPoint=endPoint
 					)
 		else:  # moving by a unit other than word
-			res = super(consoleUIATextInfo, self).move(unit, direction, endPoint)
-		if oldRange and (
-			self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				firstVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_Start
-			) < 0
-			or self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End
-			) >= 0
-		):
-			self._rangeObj = oldRange
-			return 0
-		return res
+			return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD:
