@@ -708,14 +708,15 @@ class UIATextInfo(textInfos.TextInfo):
 		if visiLength > 0:
 			firstVisiRange = visiRanges.GetElement(0)
 			lastVisiRange = visiRanges.GetElement(visiLength - 1)
-			if self._rangeObj.CompareEndPoints(
+			return self._rangeObj.CompareEndPoints(
 				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
 				UIAHandler.TextPatternRangeEndpoint_Start
 			) < 0 or self._rangeObj.CompareEndPoints(
 				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End) >= 0:
-				return False
-		return True
+				UIAHandler.TextPatternRangeEndpoint_End) >= 0
+		else:
+			# Review bounds not available.
+			return False
 
 	def setEndPoint(self,other,which):
 		if which.startswith('start'):

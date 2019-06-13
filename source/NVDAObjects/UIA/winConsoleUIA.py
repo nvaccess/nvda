@@ -175,6 +175,9 @@ class consoleUIAWindow(Window):
 
 class winConsoleUIA(Terminal):
 	STABILIZE_DELAY = 0.03
+	#: Bound review in consoles by default to maintain feature parity
+	#: with legacy
+	reviewBounded = True
 	_TextInfo = consoleUIATextInfo
 	_isTyping = False
 	_lastCharTime = 0

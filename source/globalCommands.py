@@ -972,6 +972,17 @@ class GlobalCommands(ScriptableObject):
 	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 	script_review_activate.category=SCRCAT_OBJECTNAVIGATION
 
+	def _moveWithBoundsChecking(self, info, unit, direction, endPoint=None):
+		"""
+		Nondestructively moves a textInfo and returns a (newInfo, res) tuple.
+		Res is 0 if the move would be out of bounds.
+		"""
+		newInfo = info.copy()
+		res = newInfo.move(unit, direction, endPoint=endPoint)
+		if newInfo.obj.reviewBounded and newInfo.isOutOfBounds():
+			return (info, 0)
+		return (newInfo, res)
+
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
@@ -987,7 +998,7 @@ class GlobalCommands(ScriptableObject):
 		if info._expandCollapseBeforeReview:
 			info.expand(textInfos.UNIT_LINE)
 			info.collapse()
-		res=info.move(textInfos.UNIT_LINE,-1)
+		info, res = self._moveWithBoundsChecking(info, textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
 			ui.reviewMessage(_("Top"))
@@ -1019,7 +1030,7 @@ class GlobalCommands(ScriptableObject):
 		if info._expandCollapseBeforeReview:
 			info.expand(textInfos.UNIT_LINE)
 			info.collapse()
-		res=info.move(textInfos.UNIT_LINE,1)
+		info, res = self._moveWithBoundsChecking(info, textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
@@ -1047,7 +1058,7 @@ class GlobalCommands(ScriptableObject):
 		if info._expandCollapseBeforeReview:
 			info.expand(textInfos.UNIT_WORD)
 			info.collapse()
-		res=info.move(textInfos.UNIT_WORD,-1)
+		info, res = self._moveWithBoundsChecking(info, textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
 			ui.reviewMessage(_("Top"))
@@ -1078,7 +1089,7 @@ class GlobalCommands(ScriptableObject):
 		if info._expandCollapseBeforeReview:
 			info.expand(textInfos.UNIT_WORD)
 			info.collapse()
-		res=info.move(textInfos.UNIT_WORD,1)
+		info, res = self._moveWithBoundsChecking(info, textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 			ui.reviewMessage(_("Bottom"))
