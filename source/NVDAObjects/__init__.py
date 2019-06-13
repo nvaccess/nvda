@@ -12,6 +12,7 @@ import time
 import re
 import weakref
 from logHandler import log
+from scriptHandler import script
 import review
 import eventHandler
 from displayModel import DisplayModelTextInfo
@@ -1267,3 +1268,32 @@ This code is executed if a gain focus event is received by this object.
 		For performance, this method will only count up to the given maxCount number, and if there is one more above that, then sys.maxint is returned stating that many items are selected.
 		"""
 		return 0
+
+	reviewBounded = False
+	
+	@script(gesture="kb:NVDA+o",
+		#Translators: A gesture description.
+		description=_(u"Toggles whether review is constrained to the currently visible text"))
+	def script_toggleReviewBounds(self, gesture):
+		try:
+			rp = api.getReviewPosition()
+			outOfBounds = rp.isOutOfBounds()
+			self.reviewBounded = not self.reviewBounded
+			if self.reviewBounded:
+				ui.message(
+					#Translators: Reported when review is constrained to this object's visible text.
+					_(u"Bounded review")
+				)
+				if outOfBounds:
+					api.setReviewPosition(
+						self.makeTextInfo(textInfos.POSITION_CARET), isCaret=True)
+			else:
+				ui.message(
+					#Translators: Reported when review is unconstrained, so all of this object's text can be read.
+					_(u"Unbounded review")
+				)
+		except NotImplementedError:
+			ui.message(
+				#Translators: Reported when review bound configuration isn't supported for this object.
+				_(u"Not supported here"))
+				
