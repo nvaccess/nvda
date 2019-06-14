@@ -36,7 +36,7 @@
 
 import ctypes
 import objbase
-from comtypes import IUnknown, IServiceProvider , GUID, COMMETHOD, HRESULT, BSTR
+from comtypes import IUnknown, IServiceProvider , GUID, COMMETHOD, HRESULT, BSTR, COMError
 from ctypes import POINTER, c_int, c_short, c_ushort, c_ulong
 import comtypes.client.dynamic
 from comtypes.automation import IDispatch
@@ -53,6 +53,9 @@ from NVDAObjects.IAccessible import IAccessible
 import appModuleHandler
 import controlTypes
 
+# Rendering with UI module
+import ui, speech
+import scriptHandler
 
 #
 # A few helpful constants
@@ -89,6 +92,15 @@ SB_VERT = 1
 
 
 class AppModule(appModuleHandler.AppModule):
+
+	intellisenseItem = None
+
+	def _get_major(self):
+		return int(self.productVersion.split(".", 2)[0])
+
+	def _get_minor(self):
+		return int(self.productVersion.split(".", 2)[1])
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
 		vsMajor, vsMinor = int(vsMajor), int(vsMinor)
@@ -155,6 +167,37 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
+
+	def event_UIA_itemStatus(self, obj, nextHandler):
+		"""Reads the Intellisense selected item"""
+
+		# In versions 15 and 16 the class is the same (for items only)
+		if obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",):
+			itemStatus = None
+
+			try:
+				itemStatus = obj.UIAElement.CachedItemStatus
+			except COMError:
+				itemStatus = obj.UIAElement.CurrentItemStatus
+
+			if "[HIGHLIGHTED]=True" in itemStatus:
+				# The first time an item is selected, we must let the intellisense text block to be read
+				readIntellisenseMessage = not self.intellisenseItem or not self.intellisenseItem.location
+				
+				# Don't stop speech if this item is already higlighted
+				if self.intellisenseItem != obj:
+					speech.cancelSpeech()
+					if readIntellisenseMessage:
+						ui.message(obj.parent.next.next.name)
+					ui.message(obj.name)
+
+				# Keep track of this item
+				self.intellisenseItem = obj
+		nextHandler()
+
+	def event_liveRegionChange(self, obj, nextHandler):
+		if not obj.previous.previous.firstChild.UIAElement.CachedClassName in ("IntellisenseMenuItem",):
+			nextHandler()
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
