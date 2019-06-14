@@ -627,8 +627,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		otherAncs = self._getAncestors(otherTi, otherObj)
 		# Find the first common ancestor.
 		maxAncIndex = min(len(selfAncs), len(otherAncs)) - 1
-		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in
-			zip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
+		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in zip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
 			if selfAncObj == otherAncObj:
 				break
 		else:
