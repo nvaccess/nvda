@@ -7,6 +7,8 @@
 
 import itertools
 import os
+from typing import Iterable, Union
+
 import driverHandler
 import pkgutil
 import importlib
@@ -809,7 +811,7 @@ class TextInfoRegion(Region):
 		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
 		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
-			if isinstance(command, basestring):
+			if isinstance(command, str):
 				# Text should break a run of clickables
 				inClickable=False
 				self._isFormatFieldAtStart = False
@@ -2268,7 +2270,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		return ports
 
 	@classmethod
-	def _getAutoPorts(cls, usb=True, bluetooth=True):
+	def _getAutoPorts(cls, usb=True, bluetooth=True) -> Iterable[bdDetect.DeviceMatch]:
 		"""Returns possible ports to connect to using L{bdDetect} automatic detection data.
 		@param usb: Whether to search for USB devices.
 		@type usb: bool
@@ -2290,27 +2292,26 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			pass
 
 	@classmethod
-	def getManualPorts(cls):
+	def getManualPorts(cls) -> Iterable[str]:
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
 		@return: The name and description for each port.
-		@rtype: iterable of basestring, basestring
 		"""
 		raise NotImplementedError
 
 	@classmethod
-	def _getTryPorts(cls, port):
+	def _getTryPorts(
+			cls, port: Union[str, bdDetect.DeviceMatch]
+	) -> Iterable[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
 		@param port: the port to connect to.
-		@type port: one of basestring or L{bdDetect.DeviceMatch}
-		@return: The name and description for each port.
-		@rtype: iterable of basestring, basestring
+		@return: The name and description for each port
 		"""
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
-		elif isinstance(port, basestring):
+		elif isinstance(port, str):
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
 			if not isUsb and not isBluetooth:
