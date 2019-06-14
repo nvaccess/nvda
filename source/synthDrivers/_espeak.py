@@ -362,7 +362,7 @@ def getVariantDict():
 	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):
 		if os.path.isfile("%s\\%s"%(dir,fileName)):
-			file=open("%s\\%s"%(dir,fileName))
+			file=codecs.open("%s\\%s"%(dir,fileName))
 			for line in file:
 				if line.startswith('name '):
 					temp=line.split(" ")

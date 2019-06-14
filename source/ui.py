@@ -54,7 +54,14 @@ def browseableMessage(message,title=None,isHtml=False):
 	dialogString = u"{isHtml};{title};{message}".format( isHtml = isHtmlArgument , title=title , message=message ) 
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
-	windll.mshtml.ShowHTMLDialogEx( gui.mainFrame.Handle , moniker , HTMLDLG_MODELESS , addressof( dialogArguements ) , DIALOG_OPTIONS, None)
+	windll.mshtml.ShowHTMLDialogEx( 
+		gui.mainFrame.Handle , 
+		moniker , 
+		HTMLDLG_MODELESS , 
+		addressof( dialogArguements ) , 
+		DIALOG_OPTIONS, 
+		None
+	)
 	gui.mainFrame.postPopup() 
 
 def message(text):

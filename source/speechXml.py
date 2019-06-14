@@ -73,7 +73,7 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
 
 def _escapeXml(text):
-	text = str(text).translate(XML_ESCAPES)
+	text = text.translate(XML_ESCAPES)
 	text = RE_INVALID_XML_CHARS.sub(REPLACEMENT_CHAR, text)
 	return text
 
@@ -112,7 +112,9 @@ class XmlBalancer(object):
 		self._out.append("<%s" % tag)
 		for attr, val in attrs.items():
 			self._out.append(' %s="' % attr)
-			self._out.append(_escapeXml(val))
+			# Attribute values could be ints, floats etc, not just strings.
+			# Therefore coerce the value to a string, as well as escaping xml characters. 
+			self._out.append(_escapeXml(str(val)))
 			self._out.append('"')
 		self._out.append("/>" if empty else ">")
 

@@ -779,8 +779,9 @@ class GlobalCommands(ScriptableObject):
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
 				textList=[]
-				if curObject.name and isinstance(curObject.name, str) and not curObject.name.isspace():
-					textList.append(curObject.name)
+				name = curObject.name
+				if isinstance(name, str) and not name.isspace():
+					textList.append(name)
 				try:
 					info=curObject.makeTextInfo(textInfos.POSITION_SELECTION)
 					if not info.isCollapsed:
@@ -793,7 +794,10 @@ class GlobalCommands(ScriptableObject):
 					# No caret or selection on this object.
 					pass
 			else:
-				textList=[prop for prop in (curObject.name, curObject.value) if prop and isinstance(prop, str) and not prop.isspace()]
+				textList=[]
+				for prop in (curObject.name, curObject.value):
+					if isinstance(prop,str) and not prop.isspace():
+						textList.append(prop)
 			text=" ".join(textList)
 			if len(text)>0 and not text.isspace():
 				if scriptHandler.getLastScriptRepeatCount()==1:

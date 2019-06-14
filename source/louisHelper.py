@@ -52,7 +52,7 @@ def terminate():
 def translate(tableList, inbuf, typeform=None, cursorPos=None, mode=0):
 	"""
 	Convenience wrapper for louis.translate that:
-	* returns a list of integers instead of an string with cells, and
+	* returns a list of integers instead of a string with cells, and
 	* distinguishes between cursor position 0 (cursor at first character) and None (no cursor at all)
 	"""
 	text = inbuf.replace('\0','')

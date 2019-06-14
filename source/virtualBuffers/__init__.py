@@ -436,7 +436,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			if log.isEnabledFor(log.DEBUG):
 				startTime = time.time()
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,self.backendName)
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(
+				self.rootNVDAObject.appModule.helperLocalBindingHandle,
+				self.rootDocHandle,self.rootID,
+				self.backendName
+			)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:

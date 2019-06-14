@@ -1120,7 +1120,7 @@ This code is executed if a gain focus event is received by this object.
 		If the string is too long to be useful, it will be truncated.
 		This string should be included as returned. There is no need to call repr.
 		@param string: The string to format.
-		@type string: nstr
+		@type string: str
 		@param truncateLen: The length at which to truncate the string.
 		@type truncateLen: int
 		@return: The formatted string.
