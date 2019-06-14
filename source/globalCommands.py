@@ -2480,14 +2480,13 @@ class ConfigProfileActivationCommands(ScriptableObject):
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
-		name = name.encode("utf-8")
 		invalidChars = set()
 		for c in name:
-			if not c.isalnum() and c != b"_":
+			if not c.isalnum() and c != "_":
 				invalidChars.add(c)
 		for c in invalidChars:
-			name=name.replace(c, b16encode(c))
-		return "profile_%s" % name.decode("utf-8")
+			name=name.replace(c, b16encode(c.encode()).decode("ascii"))
+		return "profile_%s" % name
 
 	@classmethod
 	def _profileScript(cls, name):
