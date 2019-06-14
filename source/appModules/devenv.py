@@ -95,12 +95,6 @@ class AppModule(appModuleHandler.AppModule):
 
 	intellisenseItem = None
 
-	def _get_major(self):
-		return int(self.productVersion.split(".", 2)[0])
-
-	def _get_minor(self):
-		return int(self.productVersion.split(".", 2)[1])
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		vsMajor, vsMinor, rest = self.productVersion.split(".", 2)
 		vsMajor, vsMinor = int(vsMajor), int(vsMinor)
