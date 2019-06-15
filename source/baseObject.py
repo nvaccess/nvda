@@ -123,7 +123,7 @@ class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
 	#: @type: weakref.WeakValueDictionary
-	# Theoretically we could use weakref.WeakSet, 
+	# We really just want to store the instances as a set of weak references, 
 	# but as there is no easy way to have NVDAObjects and TextInfos remain hashable in Python3, as they override equality,
 	# We store them on a WeakValueDictionary, keyed by their id (address).
 	__instances=weakref.WeakValueDictionary()
