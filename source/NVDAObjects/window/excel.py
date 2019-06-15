@@ -1538,7 +1538,7 @@ class ExcelDropdown(Window):
 				background=item.field.get('background-color',None)
 				if (background,foreground)==self._highlightColors:
 					states.add(controlTypes.STATE_SELECTED)
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
 				children.append(obj)
 				index+=1

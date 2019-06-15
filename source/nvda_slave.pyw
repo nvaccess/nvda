@@ -69,7 +69,7 @@ def main():
 			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
 		elif action == "addons_installAddonPackage":
 			try:
-				addonPath=unicode(args[0], "mbcs")
+				addonPath=args[0]
 			except IndexError:
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib

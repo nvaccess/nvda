@@ -48,7 +48,7 @@ class BasicTextProvider(NVDAObject):
 	def __init__(self, text=None, selection=(0, 0)):
 		"""
 		@param text: The text to provide via TextInfos.
-		@type text: basestring
+		@type text: str
 		@param selection: The start and end offsets of the initial selection;
 			same start and end is caret with no selection.
 		@type selection: tuple of (int, int)

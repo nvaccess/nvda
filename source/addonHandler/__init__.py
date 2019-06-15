@@ -363,7 +363,6 @@ class Addon(AddonBase):
 		if not os.path.isdir(extension_path):
 			# This addon does not have extension points for this package
 			return
-		# Python 2.x doesn't properly handle unicode import paths, so convert them before adding.
 		converted_path = self._getPathForInclusionInPackage(package)
 		package.__path__.insert(0, converted_path)
 		self._extendedPackages.add(package)
@@ -474,9 +473,9 @@ class Addon(AddonBase):
 		An add-on can specify a default documentation file name
 		via the docFileName parameter in its manifest.
 		@param fileName: The requested file name or C{None} for the add-on's default.
-		@type fileName: basestring
+		@type fileName: str
 		@return: The path to the requested file or C{None} if it wasn't found.
-		@rtype: basestring
+		@rtype: str
 		"""
 		if not fileName:
 			fileName = self.manifest["docFileName"]
@@ -507,7 +506,7 @@ def getCodeAddon(obj=None, frameDist=1):
 	if obj is None:
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)
-	dir= unicode(os.path.abspath(os.path.dirname(fileName)), "mbcs")
+	dir= os.path.abspath(os.path.dirname(fileName))
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
 	for p in _getDefaultAddonPaths():
@@ -558,7 +557,7 @@ class AddonBundle(AddonBase):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
-		self._path = bundlePath if isinstance(bundlePath, unicode) else unicode(bundlePath, "mbcs")
+		self._path = bundlePath
 		# Read manifest:
 		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:
@@ -581,7 +580,7 @@ class AddonBundle(AddonBase):
 		"""
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for info in z.infolist():
-				if isinstance(info.filename, str):
+				if isinstance(info.filename, bytes):
 					# #2505: Handle non-Unicode file names.
 					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.

@@ -94,7 +94,7 @@ def isInstalledCopy():
 #: When setting it manually, a DWORD value is prefered.
 #: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
 #: A value of 1 means loading the configuration from the local application data folder.
-#: @type: unicode
+#: @type: str
 CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
 
 def getInstalledUserConfigPath():
@@ -153,7 +153,7 @@ def initConfigPath(configPath=None):
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
 	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
-	@type configPath: basestring
+	@type configPath: str
 	"""
 	if not configPath:
 		configPath=globalVars.appArgs.configPath
@@ -338,8 +338,6 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	if not subdir:
 		subdir = module.__name__
 	fullPath=os.path.join(getScratchpadDir(),subdir)
-	# Python 2.x doesn't properly handle unicode import paths, so convert them.
-	fullPath=fullPath.encode("mbcs")
 	# Insert this path at the beginning  of the module's search paths.
 	# The module's search paths may not be a mutable  list, so replace it with a new one 
 	pathList=[fullPath]
@@ -505,7 +503,7 @@ class ConfigManager(object):
 		"""Get a profile given its name.
 		This is useful for checking whether a profile has been manually activated or triggered.
 		@param name: The name of the profile.
-		@type name: basestring
+		@type name: str
 		@return: The profile object.
 		@raise KeyError: If the profile is not loaded.
 		"""
@@ -517,7 +515,7 @@ class ConfigManager(object):
 		If another profile was manually activated, deactivate it first.
 		If C{name} is C{None}, a profile will not be activated.
 		@param name: The name of the profile or C{None} for no profile.
-		@type name: basestring
+		@type name: str
 		"""
 		if len(self.profiles) > 1:
 			profile = self.profiles[-1]
@@ -577,7 +575,7 @@ class ConfigManager(object):
 	def createProfile(self, name):
 		"""Create a profile.
 		@param name: The name of the profile to create.
-		@type name: basestring
+		@type name: str
 		@raise ValueError: If a profile with this name already exists.
 		"""
 		if globalVars.appArgs.secure:
@@ -596,7 +594,7 @@ class ConfigManager(object):
 	def deleteProfile(self, name):
 		"""Delete a profile.
 		@param name: The name of the profile to delete.
-		@type name: basestring
+		@type name: str
 		@raise LookupError: If the profile doesn't exist.
 		"""
 		if globalVars.appArgs.secure:
@@ -644,9 +642,9 @@ class ConfigManager(object):
 	def renameProfile(self, oldName, newName):
 		"""Rename a profile.
 		@param oldName: The current name of the profile.
-		@type oldName: basestring
+		@type oldName: str
 		@param newName: The new name for the profile.
-		@type newName: basestring
+		@type newName: str
 		@raise LookupError: If the profile doesn't exist.
 		@raise ValueError: If a profile with the new name already exists.
 		"""
@@ -1131,7 +1129,7 @@ class ProfileTrigger(object):
 	def spec(self):
 		"""The trigger specification.
 		This is a string used to search for this trigger in the user's configuration.
-		@rtype: basestring
+		@rtype: str
 		"""
 		raise NotImplementedError
 

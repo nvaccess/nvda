@@ -90,7 +90,7 @@ def _setActive(isNowActive, speechViewerFrame=None):
 def appendText(text):
 	if not isActive:
 		return
-	if not isinstance(text,basestring):
+	if not isinstance(text,str):
 		return
 	#If the speech viewer text control has the focus, we want to disable updates
 	#Otherwise it would be impossible to select text, or even just read it (as a blind person).

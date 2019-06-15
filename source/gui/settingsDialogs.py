@@ -3270,7 +3270,7 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		data = self.tree.GetItemData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, basestring)
+		isGesture = isinstance(data, str)
 		self.addButton.Enabled = isCommand or isGesture
 		self.removeButton.Enabled = isGesture
 

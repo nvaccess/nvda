@@ -618,7 +618,7 @@ class SpeechSymbolProcessor(object):
 	def isBuiltin(self, symbolIdentifier):
 		"""Determine whether a symbol is built in.
 		@param symbolIdentifier: The identifier of the symbol in question.
-		@type symbolIdentifier: unicode
+		@type symbolIdentifier: str
 		@return: C{True} if the symbol is built in,
 			C{False} if it was added by the user.
 		@rtype: bool

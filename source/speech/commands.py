@@ -214,11 +214,11 @@ class PhonemeCommand(SynthCommand):
 	def __init__(self, ipa, text=None):
 		"""
 		@param ipa: Unicode IPA characters.
-		@type ipa: unicode
+		@type ipa: str
 		@param text: Text to speak if the synthesizer does not support
 			some or all of the specified IPA characters,
 			C{None} to ignore this command instead.
-		@type text: unicode
+		@type text: str
 		"""
 		self.ipa = ipa
 		self.text = text

@@ -670,7 +670,7 @@ class MSHTML(IAccessible):
 			title=self.HTMLAttributes['title']
 			# #2121: MSHTML sometimes returns a node for the title attribute.
 			# This doesn't make any sense, so ignore it.
-			if title and isinstance(title,basestring):
+			if title and isinstance(title,str):
 				return title
 			return ""
 		return super(MSHTML,self).name

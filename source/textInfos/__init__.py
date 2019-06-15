@@ -257,7 +257,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""The text with in this range.
 		Subclasses must implement this.
 		@return: The text.
-		@rtype: unicode
+		@rtype: str
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
@@ -268,7 +268,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
 		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
-		@rtype: list of unicode and L{FieldCommand}
+		@rtype: list of str and L{FieldCommand}
 		""" 
 		return [self.text]
 
@@ -484,7 +484,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		If extended, the superclass should be called first.
 		@param separator: The text used to separate chunks of format information;
 			defaults to L{speech.CHUNK_SEPARATOR}.
-		@type separator: basestring
+		@type separator: str
 		"""
 		# Import late to avoid circular import.
 		import speech
