@@ -20,6 +20,8 @@ import extensionPoints
 
 #Some dicts to store event counts by name and or obj
 _pendingEventCountsByName={}
+# Note that due to the fact it is hard to keep NVDAObjects remaining hashable in Python3 due to their equality method being overridden,
+# the id (address) of the NVDAObject will be used as the key in the dict, not the NVDAObject itself.
 _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
 # Needed to ensure updates are atomic, as these might be updated from multiple threads simultaneously.
@@ -38,8 +40,8 @@ def queueEvent(eventName,obj,**kwargs):
 		lastQueuedFocusObject=obj
 	with _pendingEventCountsLock:
 		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
-		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
-		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
+		_pendingEventCountsByObj[id(obj)]=_pendingEventCountsByObj.get(id(obj),0)+1
+		_pendingEventCountsByNameAndObj[(eventName,id(obj))]=_pendingEventCountsByNameAndObj.get((eventName,id(obj)),0)+1
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
 
 def _queueEventCallback(eventName,obj,kwargs):
@@ -49,16 +51,16 @@ def _queueEventCallback(eventName,obj,kwargs):
 			_pendingEventCountsByName[eventName]=(curCount-1)
 		elif curCount==1:
 			del _pendingEventCountsByName[eventName]
-		curCount=_pendingEventCountsByObj.get(obj,0)
+		curCount=_pendingEventCountsByObj.get(id(obj),0)
 		if curCount>1:
-			_pendingEventCountsByObj[obj]=(curCount-1)
+			_pendingEventCountsByObj[id(obj)]=(curCount-1)
 		elif curCount==1:
-			del _pendingEventCountsByObj[obj]
-		curCount=_pendingEventCountsByNameAndObj.get((eventName,obj),0)
+			del _pendingEventCountsByObj[id(obj)]
+		curCount=_pendingEventCountsByNameAndObj.get((eventName,id(obj)),0)
 		if curCount>1:
-			_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
+			_pendingEventCountsByNameAndObj[(eventName,id(obj))]=(curCount-1)
 		elif curCount==1:
-			del _pendingEventCountsByNameAndObj[(eventName,obj)]
+			del _pendingEventCountsByNameAndObj[(eventName,id(obj))]
 	executeEvent(eventName,obj,**kwargs)
 
 def isPendingEvents(eventName=None,obj=None):
@@ -73,11 +75,11 @@ def isPendingEvents(eventName=None,obj=None):
 	if not eventName and not obj:
 		return bool(len(_pendingEventCountsByName))
 	elif not eventName and obj:
-		return obj in _pendingEventCountsByObj
+		return id(obj) in _pendingEventCountsByObj
 	elif eventName and not obj:
 		return eventName in _pendingEventCountsByName
 	elif eventName and obj:
-		return (eventName,obj) in _pendingEventCountsByNameAndObj
+		return (eventName,id(obj)) in _pendingEventCountsByNameAndObj
 
 class _EventExecuter(object):
 	"""Facilitates execution of a chain of event functions.
