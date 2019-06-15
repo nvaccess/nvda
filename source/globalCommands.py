@@ -707,8 +707,8 @@ class GlobalCommands(ScriptableObject):
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))
 				return
-			x=left+(width/2)
-			y=top+(height/2)
+			x=left+(width//2)
+			y=top+(height//2)
 		winUser.setCursorPos(x,y)
 		mouseHandler.executeMouseMoveEvent(x,y)
 	# Translators: Input help mode message for move mouse to navigator object command.
