@@ -456,7 +456,7 @@ class AppModule(baseObject.ScriptableObject):
 		This should only be called if instructed by a developer.
 		"""
 		path = os.path.join(tempfile.gettempdir(),
-			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID)).decode("mbcs")
+			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID))
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle, path)
 		print("Dump path: %s" % path)

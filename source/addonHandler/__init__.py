@@ -422,7 +422,7 @@ class Addon(AddonBase):
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
-		return extension_path.encode("mbcs")
+		return extension_path
 
 	def loadModule(self, name):
 		""" loads a python module from the addon directory

@@ -1139,18 +1139,7 @@ class GlobalCommands(ScriptableObject):
 			try:
 				c = ord(info.text)
 			except TypeError:
-				# This might be a character taking multiple code points.
-				# If it is a 32 bit character, encode it to UTF-32 and calculate the ord manually.
-				# In Python 3, this is no longer necessary.
-				try:
-					encoded = info.text.encode("utf_32_le")
-				except UnicodeEncodeError:
-					c = None
-				else:
-					if len(encoded)==4:
-						c = sum(ord(cp)<<i*8 for i, cp in enumerate(encoded))
-					else:
-						c = None
+				c = None
 			if c is not None:
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
@@ -2491,14 +2480,12 @@ class ConfigProfileActivationCommands(ScriptableObject):
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
-		name = name.encode("utf-8")
 		invalidChars = set()
 		for c in name:
 			if not c.isalnum() and c != "_":
 				invalidChars.add(c)
 		for c in invalidChars:
-			name=name.replace(c, b16encode(c))
-		# Python 3: Revisit this to ensure that script names are decoded correctly
+			name=name.replace(c, b16encode(c.encode()).decode("ascii"))
 		return "profile_%s" % name
 
 	@classmethod
