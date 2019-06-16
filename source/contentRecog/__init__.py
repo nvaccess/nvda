@@ -16,10 +16,9 @@ They are implemented using the L{ContentRecognizer} class.
 from collections import namedtuple
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 from locationHelper import RectLTWH
 
-class ContentRecognizer(with_metaclass(ABCMeta, object)):
+class ContentRecognizer(object, metaclass=ABCMeta):
 	"""Implementation of a content recognizer.
 	"""
 
@@ -129,7 +128,7 @@ class RecogImageInfo(object):
 		"""
 		return int(height / self.resizeFactor)
 
-class RecognitionResult(with_metaclass(ABCMeta, object)):
+class RecognitionResult(object, metaclass=ABCMeta):
 	"""Provides access to the result of recognition by a recognizer.
 	The result is textual, but to facilitate navigation by word, line, etc.
 	and to allow for retrieval of screen coordinates within the text,
