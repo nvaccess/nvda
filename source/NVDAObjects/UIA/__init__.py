@@ -321,6 +321,11 @@ class UIATextInfo(textInfos.TextInfo):
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def _get_NVDAObjectAtStart(self):
 		e=self.UIAElementAtStart
 		if e:
