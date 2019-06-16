@@ -100,6 +100,8 @@ class AppModule(appModuleHandler.AppModule):
 	# And the code editor
 	codeEditor = None
 
+	messageRead = False
+
 	def _get_major(self):
 		return int(self.productVersion.split(".", 2)[0])
 
@@ -184,11 +186,16 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_liveRegionChange(self, obj, nextHandler):
 
-		# The live label is spoken when an item is highlighted.
-		# We don't want this, so we need to prevent this event to be processed.
-		if not (isinstance(obj, UIA.UIA)
-			and obj.UIAElement.CachedClassName in ("LiveTextBlock",)
-			and isinstance(obj.previous.previous.firstChild, IntellisenseMenuItem)):
+		try:
+			# The live label is spoken when an item is highlighted.
+			# We don't want this, so we need to prevent this event to be processed.
+			if not (isinstance(obj, UIA.UIA)
+				and obj.UIAElement.CachedClassName in ("LiveTextBlock",)
+				and isinstance(obj.previous.previous.firstChild, IntellisenseMenuItem)):
+				nextHandler()
+		except NameError:
+			# The most probably is NameError and we can safely ignore it.
+			# However, the handler needs to be executed.
 			nextHandler()
 
 	def event_gainFocus(self, obj, nextHandler):
@@ -201,6 +208,9 @@ class AppModule(appModuleHandler.AppModule):
 			# Cleanup of references, we don't need them anymore
 			self.intellisenseItem = None
 			self.codeEditor = None
+
+			# Set messageRead flag to false
+			self.messageRead = False
 
 		nextHandler()
 
@@ -575,31 +585,41 @@ class IntellisenseMenuItem(UIA.UIA):
 	def event_UIA_itemStatus(self):
 		editor = self.appModule.codeEditor
 
+		if self.appModule.major == 15 and not self.appModule.messageRead:
+			# In Visual Studio 2017, item status reports "[HIGHLIGHTED]=False"
+			# correctly, so we need to read the help text and fire suggestions
+			# opened before check if highlighted
+			self.appModule.messageRead = True
+			speech.cancelSpeech()
+
+			if editor:
+				editor.event_suggestionsOpened()
+			ui.message(self.parent.next.next.name)
+
 		if self.highlighted:
 			if self.appModule.intellisenseItem != self:
 				speech.cancelSpeech()
 
-				if not self.appModule.intellisenseItem:
+				if (not self.appModule.intellisenseItem 
+					and not self.appModule.messageRead):
+					# Note that if we are under Visual Studio 2017, the
+					# "messageRead" flag is set to true here and so this logic
+					# never runs
+					self.appModule.messageRead = True
+
+					# Same here, fire suggestionsOpened and speak help text
 					if editor:
 						editor.event_suggestionsOpened()
 					ui.message(self.parent.next.next.name)
 
 				api.setNavigatorObject(self)
+				# We are only interested in name and role properties.
 				speech.speakObjectProperties(self, controlTypes.REASON_MESSAGE, name=True, role=True)
 				braille.handler.message(
 					braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
+			# We need to track this item, for the time when another is highlighted
 			self.appModule.intellisenseItem = self
-
-	def _get_devInfo(self):
-		info = super(IntellisenseMenuItem, self).devInfo
-		info.append("UIA item status: {}".format(repr(self.UIAElement.CurrentItemStatus)))
-		info.append("UIA is selected: {}".format(self.UIASelectionItemPattern.CurrentIsSelected))
-		try:
-			info.append("UIA Selection Pattern: {}".format(repr(self.UIASelectionPattern)))
-		except Exception as ex:
-			info.append(repr(ex))
-		return info
 
 class CodeEditor(EditableTextWithSuggestions, UIA.WpfTextView):
 
@@ -607,9 +627,10 @@ class CodeEditor(EditableTextWithSuggestions, UIA.WpfTextView):
 		if self.appModule.codeEditor is not self:
 			self.appModule.codeEditor = self
 
-		if self.appModule.intellisenseItem:
+		if self.appModule.intellisenseItem or self.appModule.messageRead:
 			self.event_suggestionsClosed()
 			self.appModule.intellisenseItem = None
+			self.appModule.messageRead = False
 			braille.handler.handleGainFocus(self)
 			return
 
