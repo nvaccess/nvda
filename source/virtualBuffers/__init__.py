@@ -57,7 +57,8 @@ FINDBYATTRIBS_ESCAPE_TABLE = {
 # Symbols that must be escaped for a regular expression.
 FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
-	escape = lambda text: text.translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression. 
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
