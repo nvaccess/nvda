@@ -14,7 +14,7 @@ import itertools
 import collections
 import pkgutil
 import shutil
-from six.moves import cStringIO as StringIO
+from io import StringIO
 import pickle
 from six import string_types
 import globalVars
