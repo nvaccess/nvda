@@ -193,8 +193,8 @@ class AppModule(appModuleHandler.AppModule):
 				and obj.UIAElement.CachedClassName in ("LiveTextBlock",)
 				and isinstance(obj.previous.previous.firstChild, IntellisenseMenuItem)):
 				nextHandler()
-		except NameError:
-			# The most probably is NameError and we can safely ignore it.
+		except AttributeError:
+			# The most probably is AttributeError and we can safely ignore it.
 			# However, the handler needs to be executed.
 			nextHandler()
 
@@ -585,16 +585,18 @@ class IntellisenseMenuItem(UIA.UIA):
 	def event_UIA_itemStatus(self):
 		editor = self.appModule.codeEditor
 
-		if self.appModule.major == 15 and not self.appModule.messageRead:
-			# In Visual Studio 2017, item status reports "[HIGHLIGHTED]=False"
-			# correctly, so we need to read the help text and fire suggestions
-			# opened before check if highlighted
+		if not self.appModule.messageRead:
+			# See #9739's edit note.
 			self.appModule.messageRead = True
 			speech.cancelSpeech()
 
 			if editor:
 				editor.event_suggestionsOpened()
-			ui.message(self.parent.next.next.name)
+			try:
+				ui.message(self.parent.next.next.name)
+			except AttributeError:
+				# This happen when you open and press escape quickly.
+				pass
 
 		if self.highlighted:
 			if self.appModule.intellisenseItem != self:
@@ -602,15 +604,19 @@ class IntellisenseMenuItem(UIA.UIA):
 
 				if (not self.appModule.intellisenseItem 
 					and not self.appModule.messageRead):
-					# Note that if we are under Visual Studio 2017, the
-					# "messageRead" flag is set to true here and so this logic
-					# never runs
+					# In some project editors the "highlighted" flag is
+					# correctly set to true only when an item is selected,
+					# but in others this is not the case.
 					self.appModule.messageRead = True
 
 					# Same here, fire suggestionsOpened and speak help text
 					if editor:
 						editor.event_suggestionsOpened()
-					ui.message(self.parent.next.next.name)
+
+					try:
+						ui.message(self.parent.next.next.name)
+					except AttributeError:
+						pass
 
 				api.setNavigatorObject(self)
 				# We are only interested in name and role properties.
