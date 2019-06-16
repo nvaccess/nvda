@@ -14,7 +14,8 @@ import itertools
 import collections
 import pkgutil
 import shutil
-from six.moves import cStringIO as StringIO, cPickle
+from io import StringIO
+import pickle
 from six import string_types
 import globalVars
 import zipfile
@@ -49,7 +50,7 @@ def loadState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "rb") as f:
-			state = cPickle.load(f)
+			state = pickle.load(f)
 		if "disabledAddons" not in state:
 			state["disabledAddons"] = set()
 		if "pendingDisableSet" not in state:
@@ -71,7 +72,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
-			cPickle.dump(state, f)
+			pickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
