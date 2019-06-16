@@ -1085,7 +1085,7 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	def label(self):
 		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.formula)
 
-class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
+class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	cellInfoFlags=NVCELLINFOFLAG_ADDRESS|NVCELLINFOFLAG_COORDS
 
 	@abc.abstractproperty
