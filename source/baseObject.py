@@ -121,11 +121,8 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 	"""
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
-	#: @type: weakref.WeakValueDictionary
-	# We really just want to store the instances as a set of weak references, 
-	# but as there is no easy way to have NVDAObjects and TextInfos remain hashable in Python3, as they override equality,
-	# We store them on a WeakValueDictionary, keyed by their id (address).
-	__instances=weakref.WeakValueDictionary()
+	#: @type: weakref.WeakKeyDictionary
+	__instances=weakref.WeakKeyDictionary()
 	#: Specifies whether properties are cached by default;
 	#: can be overridden for individual properties by setting _cache_propertyName.
 	#: @type: bool
@@ -137,7 +134,7 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 		#: Maps properties to cached values.
 		#: @type: dict
 		self._propertyCache={}
-		self.__instances[id(self)]=self
+		self.__instances[self]=None
 		return self
 
 	def _getPropertyViaCache(self,getterMethod=None):
@@ -160,7 +157,7 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
 		# which would in turn cause an exception due to the dictionary changing size during iteration.
 		# #9067 (Py3 review required): because of this, wrap this in a list, as dict.keys() in Python 3 returns iterators.
-		for instance in list(cls.__instances.values()):
+		for instance in list(cls.__instances.keys()):
 			instance.invalidateCache()
 
 class ScriptableType(AutoPropertyType):
