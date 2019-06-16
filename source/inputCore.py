@@ -677,7 +677,7 @@ class _AllGestureMappingsRetriever(object):
 				scripts[script] = scriptInfo
 		for gesture, script in obj._gestureMap.items():
 			try:
-				scriptInfo = scripts[script.__func__]
+				scriptInfo = scripts[script]
 			except KeyError:
 				continue
 			key = (scriptInfo.cls, gesture)
