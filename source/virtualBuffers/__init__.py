@@ -58,7 +58,7 @@ FINDBYATTRIBS_ESCAPE_TABLE = {
 FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
 	# A lambda that coerces a value to a string and escapes xml characters.
-	escape = lambda val: val.translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
