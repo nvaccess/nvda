@@ -50,7 +50,7 @@ import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
+class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -243,7 +243,7 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHelperMixin)):
+class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
