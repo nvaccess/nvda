@@ -319,7 +319,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			return selfTi.compareEndPoints(otherTi, which)
 
 		# Different objects, so we have to compare the hierarchical positions of the objects.
-		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
+		# cmp no longer exists in Python3.
+	# Per the Python3 What's New docs:
+	# cmp can be replaced with (a>b)-(a<b).
+	# In other words, False and True coerce to 0 and 1 respectively.
+		selfPosition=self._getObjectPosition(selfObj)
+		otherPosition=other._getObjectPosition(otherObj)
+		return (selfPosition>otherPosition)-(selfPosition<otherPosition)
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:
