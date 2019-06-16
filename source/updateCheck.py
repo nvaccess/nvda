@@ -23,7 +23,7 @@ import os
 import inspect
 import threading
 import time
-import cPickle
+import pickle
 import urllib
 import tempfile
 import hashlib
@@ -737,7 +737,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(_stateFilename, "wb") as f:
-			cPickle.dump(state, f)
+			pickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -747,7 +747,7 @@ def initialize():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(_stateFilename, "rb") as f:
-			state = cPickle.load(f)
+			state = pickle.load(f)
 	except:
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
 		# Defaults.
