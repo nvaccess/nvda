@@ -10,7 +10,6 @@
 import weakref
 from logHandler import log
 from abc import ABCMeta, abstractproperty
-from six import with_metaclass
 
 class Getter(object):
 

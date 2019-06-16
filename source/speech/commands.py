@@ -7,7 +7,6 @@
 """Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
  
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 import config
 import languageHandler
 from synthDriverHandler import getSynth

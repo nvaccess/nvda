@@ -7,7 +7,6 @@
 
 import logging
 from abc import abstractmethod
-from six import with_metaclass
 import os
 import copy
 import re

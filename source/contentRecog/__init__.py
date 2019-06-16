@@ -16,7 +16,6 @@ They are implemented using the L{ContentRecognizer} class.
 from collections import namedtuple
 import textInfos.offsets
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 from locationHelper import RectLTWH
 
 class ContentRecognizer(object, metaclass=ABCMeta):

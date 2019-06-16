@@ -7,7 +7,6 @@
 
 """Module that contains the base NVDA object type"""
 
-from six import with_metaclass
 import time
 import re
 import weakref

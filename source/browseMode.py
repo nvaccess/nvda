@@ -35,7 +35,6 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 
 REASON_QUICKNAV = "quickNav"
 

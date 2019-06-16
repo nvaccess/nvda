@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import abc
-from six import with_metaclass
 import ctypes
 from comtypes import COMError, BSTR
 import comtypes.automation
