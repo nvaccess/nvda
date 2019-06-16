@@ -93,7 +93,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(with_metaclass(ABCMeta, object)):
+class QuickNavItem(object, metaclass=ABCMeta):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
