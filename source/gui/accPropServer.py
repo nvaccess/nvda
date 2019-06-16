@@ -16,7 +16,7 @@ import weakref
 import winUser
 import wx
 
-class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
+class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 	"""Base class for implementing a COM interface for a hwnd based AccPropServer\
 	to annotate a WX control.
 	The AccPropServer registers itself using the window handle of the WX control.
