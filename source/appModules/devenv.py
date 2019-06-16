@@ -44,17 +44,19 @@ from comtypes.automation import IDispatch
 from logHandler import log
 import textInfos.offsets
 
-from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, EditableTextWithSuggestions
 from NVDAObjects.window import Window
 
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects import UIA
 
 import appModuleHandler
 import controlTypes
 
 # Rendering with UI module
-import ui, speech
+import ui, speech, braille
+import api
 import scriptHandler
 
 #
@@ -93,7 +95,10 @@ SB_VERT = 1
 
 class AppModule(appModuleHandler.AppModule):
 
+	# We need to keep track of the highlighted item
 	intellisenseItem = None
+	# And the code editor
+	codeEditor = None
 
 	def _get_major(self):
 		return int(self.productVersion.split(".", 2)[0])
@@ -119,6 +124,15 @@ class AppModule(appModuleHandler.AppModule):
 			if obj.role == controlTypes.ROLE_TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
 
+		if self.major >= 15:
+			if (obj.role == controlTypes.ROLE_EDITABLETEXT and
+				obj.parent.parent.parent.parent.parent.UIAElement.CachedClassName == "DocumentGroup"):
+				clsList.insert(0, CodeEditor)
+
+			if (obj.role == controlTypes.ROLE_MENUITEM
+				and isinstance(obj, UIA.UIA)
+				and obj.UIAElement.CachedClassName == "IntellisenseMenuItem"):
+				clsList.insert(0, IntellisenseMenuItem)
 
 	def _getDTE(self):
 	# Return the already fetched instance if there is one.
@@ -168,36 +182,27 @@ class AppModule(appModuleHandler.AppModule):
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
 
-	def event_UIA_itemStatus(self, obj, nextHandler):
-		"""Reads the Intellisense selected item"""
-
-		# In versions 15 and 16 the class is the same (for items only)
-		if obj.UIAElement.CachedClassName in ("IntellisenseMenuItem",):
-			itemStatus = None
-
-			try:
-				itemStatus = obj.UIAElement.CachedItemStatus
-			except COMError:
-				itemStatus = obj.UIAElement.CurrentItemStatus
-
-			if "[HIGHLIGHTED]=True" in itemStatus:
-				# The first time an item is selected, we must let the intellisense text block to be read
-				readIntellisenseMessage = not self.intellisenseItem or not self.intellisenseItem.location
-				
-				# Don't stop speech if this item is already higlighted
-				if self.intellisenseItem != obj:
-					speech.cancelSpeech()
-					if readIntellisenseMessage:
-						ui.message(obj.parent.next.next.name)
-					ui.message(obj.name)
-
-				# Keep track of this item
-				self.intellisenseItem = obj
-		nextHandler()
-
 	def event_liveRegionChange(self, obj, nextHandler):
-		if not obj.previous.previous.firstChild.UIAElement.CachedClassName in ("IntellisenseMenuItem",):
+
+		# The live label is spoken when an item is highlighted.
+		# We don't want this, so we need to prevent this event to be processed.
+		if not (isinstance(obj, UIA.UIA)
+			and obj.UIAElement.CachedClassName in ("LiveTextBlock",)
+			and isinstance(obj.previous.previous.firstChild, IntellisenseMenuItem)):
 			nextHandler()
+
+	def event_gainFocus(self, obj, nextHandler):
+
+		# The only purpose is to play the sound of suggestions closed when we
+		# go out from the editor.
+		if not isinstance(obj, CodeEditor) and self.intellisenseItem:
+			self.codeEditor.event_suggestionsClosed()
+
+			# Cleanup of references, we don't need them anymore
+			self.intellisenseItem = None
+			self.codeEditor = None
+
+		nextHandler()
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
@@ -546,3 +551,66 @@ class ObjectsTreeItem(IAccessible):
 		return {
 			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 		}
+
+class IntellisenseMenuItem(UIA.UIA):
+
+	def _get_highlighted(self):
+		itemStatus = None
+
+		try:
+			itemStatus = self.UIAElement.CachedItemStatus
+		except COMError:
+			try:
+				itemStatus = self.UIAElement.CurrentItemStatus
+			except:
+				# Item is not initialized yet, we can safely ignore this
+				pass
+
+		# Return false, we can't obtain the status
+		if not itemStatus:
+			return False
+
+		return "[HIGHLIGHTED]=True" in itemStatus
+
+	def event_UIA_itemStatus(self):
+		editor = self.appModule.codeEditor
+
+		if self.highlighted:
+			if self.appModule.intellisenseItem != self:
+				speech.cancelSpeech()
+
+				if not self.appModule.intellisenseItem:
+					if editor:
+						editor.event_suggestionsOpened()
+					ui.message(self.parent.next.next.name)
+
+				api.setNavigatorObject(self)
+				speech.speakObjectProperties(self, controlTypes.REASON_MESSAGE, name=True, role=True)
+				braille.handler.message(
+					braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+			self.appModule.intellisenseItem = self
+
+	def _get_devInfo(self):
+		info = super(IntellisenseMenuItem, self).devInfo
+		info.append("UIA item status: {}".format(repr(self.UIAElement.CurrentItemStatus)))
+		info.append("UIA is selected: {}".format(self.UIASelectionItemPattern.CurrentIsSelected))
+		try:
+			info.append("UIA Selection Pattern: {}".format(repr(self.UIASelectionPattern)))
+		except Exception as ex:
+			info.append(repr(ex))
+		return info
+
+class CodeEditor(EditableTextWithSuggestions, UIA.WpfTextView):
+
+	def event_gainFocus(self):
+		if self.appModule.codeEditor is not self:
+			self.appModule.codeEditor = self
+
+		if self.appModule.intellisenseItem:
+			self.event_suggestionsClosed()
+			self.appModule.intellisenseItem = None
+			braille.handler.handleGainFocus(self)
+			return
+
+		super(CodeEditor, self).event_gainFocus()
