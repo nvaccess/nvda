@@ -229,7 +229,7 @@ class PhonemeCommand(SynthCommand):
 			out += ", text=%r" % self.text
 		return out + ")"
 
-class BaseCallbackCommand(with_metaclass(ABCMeta, SpeechCommand)):
+class BaseCallbackCommand(SpeechCommand, metaclass=ABCMeta):
 	"""Base class for commands which cause a function to be called when speech reaches them.
 	This class should not be instantiated directly.
 	It is designed to be subclassed to provide specific functionality;
