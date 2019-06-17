@@ -288,7 +288,7 @@ class LiveText(NVDAObject):
 				newLines = self._getTextLines()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
 					outLines = self._calculateNewText(newLines, oldLines)
-					if len(outLines) == 1 and len(outLines[0]) == 1:
+					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
 						# so ignore it.
