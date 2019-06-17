@@ -20,6 +20,8 @@ from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
+	#: At least on Windows 10 1903, expanding then collapsing the text info
+	#: causes review to get stuck, so disable it.
 	_expandCollapseBeforeReview = False
 
 	def __init__(self, obj, position, _rangeObj=None):
@@ -138,6 +140,12 @@ class consoleUIATextInfo(UIATextInfo):
 			return super(consoleUIATextInfo, self).expand(unit)
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
+		"""
+		Given a caret textInfo expanded to line, returns the index into the
+		line where the caret is located.
+		This is necessary since Uniscribe requires indices into the text to
+		find word boundaries, but UIA only allows for relative movement.
+		"""
 		charInfo = self.copy()
 		res = 0
 		chars = None
@@ -183,10 +191,10 @@ class consoleUIATextInfo(UIATextInfo):
 class consoleUIAWindow(Window):
 	def _get_focusRedirect(self):
 		"""
-			Sometimes, attempting to interact with the console too quickly after
-			focusing the window can make NVDA unable to get any caret or review
-			information or receive new text events.
-			To work around this, we must redirect focus to the console text area.
+		Sometimes, attempting to interact with the console too quickly after
+		focusing the window can make NVDA unable to get any caret or review
+		information or receive new text events.
+		To work around this, we must redirect focus to the console text area.
 		"""
 		for child in self.children:
 			if isinstance(child, WinConsoleUIA):
@@ -201,7 +209,11 @@ class WinConsoleUIA(Terminal):
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
+	#: A queue of typed characters, to be dispatched on C{textChange}.
+	#: This queue allows NVDA to suppress typed passwords when needed.
 	_queuedChars = []
+	#: Whether the console got new text lines in its last update.
+	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
 
 	def _reportNewText(self, line):
@@ -269,6 +281,10 @@ class WinConsoleUIA(Terminal):
 		return super(WinConsoleUIA, self)._calculateNewText(newLines, oldLines)
 
 	def _findNonBlankIndices(self, lines):
+		"""
+		Given a list of strings, returns a list of indices where the strings
+		are not empty.
+		"""
 		return [index for index, line in enumerate(lines) if line]
 
 def findExtraOverlayClasses(obj, clsList):
