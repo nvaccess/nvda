@@ -201,28 +201,25 @@ class consoleUIAWindow(Window):
 class winConsoleUIA(Terminal):
 	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
-	_isTyping = False
-	_lastCharTime = 0
 	_queuedChars = []
-	_TYPING_TIMEOUT = 1
+	_hasNewLines = False
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if (
-			self._isTyping
-			and time.time() - self._lastCharTime <= self._TYPING_TIMEOUT
-		):
+		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
 			return
+		if self._hasNewLines:
+			# Clear the typed word buffer for new text lines.
+			# This will need to be changed once #8110 is merged.
+			speech.curWordChars = []
+			self._queuedChars = []
 		super(winConsoleUIA, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
-		if not ch.isspace():
-			self._isTyping = True
-		if ch in ('\n', '\r', '\t'):
-			# Clear the typed word buffer for tab and return.
+		if ch == '\t':
+			# Clear the typed word buffer for tab completion.
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
-		self._lastCharTime = time.time()
 		if (
 			(
 				config.conf['keyboard']['speakTypedCharacters']
@@ -248,9 +245,12 @@ class winConsoleUIA(Terminal):
 		"kb:control+d",
 		"kb:control+pause"
 	])
-	def script_clear_isTyping(self, gesture):
+	def script_flush_queuedChars(self, gesture):
+		"""
+			Flushes the queue of typedCharacter events if present.
+			This is necessary to avoid speaking of passwords in the console if disabled.
+		"""
 		gesture.send()
-		self._isTyping = False
 		self._queuedChars = []
 
 	def _getTextLines(self):
@@ -258,6 +258,16 @@ class winConsoleUIA(Terminal):
 		ptr = self.UIATextPattern.GetVisibleRanges()
 		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
 		return res
+
+	def _calculateNewText(self, newLines, oldLines):
+		self._hasNewLines = (
+			self._findNonBlankIndices(newLines)
+			!= self._findNonBlankIndices(oldLines)
+		)
+		return super(winConsoleUIA, self)._calculateNewText(newLines, oldLines)
+
+	def _findNonBlankIndices(self, lines):
+		return [index for index, line in enumerate(lines) if line]
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
