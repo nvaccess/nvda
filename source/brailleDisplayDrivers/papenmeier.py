@@ -7,14 +7,14 @@
 #minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 
 import time
-import itertools
+from typing import List, Union, Tuple
+
 import wx
 import braille
 from logHandler import log
 
 import inputCore
 import brailleInput
-import struct
 import keyboardHandler
 
 try:
@@ -26,14 +26,11 @@ import hwPortUtils
 import serial
 
 #for brxcom
-import ctypes as c
+import ctypes
 import winreg
-import winUser
 
 #for scripting
 from baseObject import ScriptableObject
-import globalCommands
-import scriptHandler
 
 #timer intervalls used by the driver
 KEY_CHECK_INTERVAL = 50
@@ -50,67 +47,80 @@ BRAILLE = 0x43
 #Timeout for bluetooth
 BLUETOOTH_TIMEOUT = 0.2
 
-def brl_auto_id():
+def brl_auto_id() -> bytes:
 	"""send auto id command to braille display"""
-	return struct.pack('bbbbb',STX,AUTOID,0x50,0x50,ETX)
-	#device will respond with a message that allows identification of the display
+	# device will respond with a message that allows identification of the display
+	return bytes([
+		STX, AUTOID, 0x50, 0x50, ETX
+	])
 
-def brl_out(data,nrk,nlk,nv):
+def _swapDotBits(d: int) -> List[int]:
+	# swap dot bits
+	d2 = 0
+	if(d & 1): d2|=128
+	if(d & 2): d2|=64
+	if(d & 4): d2|=32
+	if(d & 8): d2|=16
+	if(d & 16): d2|=8
+	if(d & 32): d2|=4
+	if(d & 64): d2|=2
+	if(d & 128): d2|=1
+	a = 0x30|(d2 & 0x0F)
+	b = 0x30|(d2 >> 4)
+	return [b, a]
+
+def brl_out(data: List[int], nrk: int, nlk: int, nv: int) -> bytes:
 	"""write data to braille cell with nv vertical cells, nrk cells right and nlk cells left
 	some papenmeier displays have vertical cells, other displays have dummy cells with keys
 	"""
-	ret = []
-	ret.append( struct.pack('BB', STX, BRAILLE)) #STX,COMMAND BRAILLE
 	d2 = len(data) + nv + 2 * nlk + 2 * nrk
+	ret = bytearray([
+		STX,  # STX
+		BRAILLE,  # COMMAND BRAILLE
+		# write length to stream
+		0x50 | (d2 >> 4),  # big end
+		0x50 | (d2 & 0x0F),  # little end
+	])
 
-	a = 0x50|(d2 & 0x0F)
-	b = 0x50|(d2 >> 4)
-	#write length to stream
-	ret.append(struct.pack('BB',b,a))
-	#fill dummy bytes (left,vertical)
-	ret.append(struct.pack('BB',0x30,0x30)*nv)
-	ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30)*nlk)
-	#swap dot bits
+	# fill dummy bytes
+	dummyByteCount = (
+			2 * nv  # left
+			+ 4 * nlk  # vertical
+	)
+	ret.extend([0x30] * dummyByteCount)
+
 	for d in data:
-		d2 = 0
-		if(d & 1): d2|=128
-		if(d & 2): d2|=64
-		if(d & 4): d2|=32
-		if(d & 8): d2|=16
-		if(d & 16): d2|=8
-		if(d & 32): d2|=4
-		if(d & 64): d2|=2
-		if(d & 128): d2|=1
-		a = 0x30|(d2 & 0x0F)
-		b = 0x30|(d2 >> 4)
-		ret.append(struct.pack('BB',b,a))
-	#fill dummy bytes on (right)
-	ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30)*nrk)
-	#ETX
-	ret.append(struct.pack('B',ETX))
-	return "".join(ret)
+		ret.extend(_swapDotBits(d))
 
-def brl_poll(dev):
+	#fill dummy bytes on (right)
+	ret.extend([0x30] * 4 * nrk)
+
+	#ETX
+	ret.append(ETX)
+	return bytes(ret)
+
+def brl_poll(dev: serial.Serial) -> bytes:
 	"""read sequence from braille display"""
 	if dev.inWaiting() > 3:
-		status = []
-		status.append(dev.read(4))
-		if(ord(status[0][0])==STX):#first char must be an STX
-			if status[0][1] == 'K' or status[0][1] == 'L': l = (2*(((ord(status[0][2]) - 0x50) << 4) + (ord(status[0][3]) - 0x50)) +1)
-			else: l=6
-			status.append(dev.read(l))
-			if ord(status[-1][-1]) == ETX:
-				return "".join(status)[1:-1] # strip STX and ETX
-	return ""
+		status = bytearray(dev.read(4))
+		if status[0] == STX:  # first char must be an STX
+			if status[1] in [ord('K'), ord('L')]:
+				length = 2 * (((status[2] - 0x50) << 4) + status[3] - 0x50) + 1
+			else:
+				length = 6
+			status.extend(dev.read(length))
+			if status[-1] == ETX:
+				return bytes(status[1:-1])  # strip STX and ETX
+	return b""
 
-def brl_decode_trio(keys):
+def brl_decode_trio(keys: bytes)->List[int]:
 	"""decode routing keys on Trio"""
-	if(keys[0]=='K' ): #KEYSTATE CHANGED EVENT on Trio, not Braille keys
+	if keys[0] == ord('K'):  # KEYSTATE CHANGED EVENT on Trio, not Braille keys
 		keys = keys[3:]
 		i = 0
 		j = []
 		for k in keys:
-			a= ord(k)&0x0F
+			a = k & 0x0F
 			#convert bitstream to list of indexes
 			if(a & 1): j.append(i+3)
 			if(a & 2): j.append(i+2)
@@ -120,15 +130,15 @@ def brl_decode_trio(keys):
 		return j
 	return []
 
-def brl_decode_keys_A(data,start,voffset):
+def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
 	"""decode routing keys non Trio devices"""
-	n = start                           #key index iterator
-	j=  []
+	n = start #key index iterator
+	j = []
 	shift = 0
-	for i in range(0,len(data)):	#byte index
+	for i, value in enumerate(data):
 		if(i%2==0):
-			a= ord(data[i])&0x0F		#n+4,n+3
-			b= ord(data[i+1])&0x0F	#n+2,n+1
+			a = value & 0x0F  # n+4,n+3
+			b = data[i+1] & 0x0F  # n+2,n+1
 			#convert bitstream to list of indexes
 			if(n > 26): shift=voffset
 			if(b & 1): j.append(n+0-shift)
@@ -142,12 +152,14 @@ def brl_decode_keys_A(data,start,voffset):
 			n+=8
 	return j
 
-def brl_decode_key_names_repeat(driver):
+def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> List[str]:
 	"""translate key names for protocol A with repeat"""
 	driver._repeatcount+=1
+	if(driver._repeatcount < 10):
+		return []
+	else:
+		driver._repeatcount = 0
 	dec = []
-	if(driver._repeatcount < 10): return dec
-	else: driver._repeatcount = 0
 	for key in driver.decodedkeys:
 		try:
 			dec.append(driver._keynamesrepeat[key])
@@ -155,7 +167,7 @@ def brl_decode_key_names_repeat(driver):
 			pass
 	return dec
 
-def brl_decode_key_names(driver):
+def brl_decode_key_names(driver: BrailleDisplayDriver) -> List[str]:
 	"""translate key names for protocol A"""
 	dec = []
 	keys = driver.decodedkeys
@@ -166,7 +178,7 @@ def brl_decode_key_names(driver):
 			pass
 	return dec
 
-def brl_join_keys(dec):
+def brl_join_keys(dec: List[str]) -> str:
 	"""join key names with comma, this is used for key combinations"""
 	if(len(dec) == 1): return dec[0]
 	elif(len(dec) == 3 and dec[0] == dec[1]): return dec[0] + "," + dec[2]
@@ -174,7 +186,7 @@ def brl_join_keys(dec):
 	elif(len(dec) == 2): return dec[1] + "," + dec[0]
 	else: return ''
 
-def brl_keyname_decoded(key,rest):
+def brl_keyname_decoded(key: int, rest: str) -> str:
 	"""convert index used by brxcom to keyname"""
 	if(key == 11 or key == 9): return 'l1' + rest
 	elif(key == 12 or key == 10): return 'l2' + rest
@@ -192,9 +204,11 @@ def brl_keyname_decoded(key,rest):
 	elif(key == 6): return 'right2' + rest
 	else: return ''
 
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier braille display driver.
 	"""
+	_dev: serial.Serial
 	name = "papenmeier"
 	# Translators: Names of braille displays.
 	description = _("Papenmeier BRAILLEX newer models")
@@ -206,14 +220,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def connectBrxCom(self):#connect to brxcom server (provided by papenmeier)
 		try:
-			brxcomkey=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\FHP\\BrxCom")
-			value, vtype = winreg.QueryValueEx(brxcomkey, "InstallPath")
-			winreg.CloseKey(brxcomkey)
-			self._brxnvda = c.cdll.LoadLibrary(str(value+"\\brxnvda.dll"))
-			if(self._brxnvda.brxnvda_init(str(value+"\\BrxCom.dll").decode("mbcs"))==0):
+			with winreg.OpenKey(
+					winreg.HKEY_LOCAL_MACHINE,
+					r"SOFTWARE\FHP\BrxCom"
+			) as brxcomkey:
+				value, vtype = winreg.QueryValueEx(brxcomkey, "InstallPath")
+				assert vtype == winreg.REG_SZ # value is of type: str
+			self._brxnvda = ctypes.cdll.LoadLibrary(value + r"\brxnvda.dll")
+			if self._brxnvda.brxnvda_init(value + r"\BrxCom.dll"):
 				self._baud=1 #prevent bluetooth from connecting
-				self.numCells=self._brxnvda.brxnvda_numCells();
-				self._voffset=self._brxnvda.brxnvda_numVertCells();
+				self.numCells=self._brxnvda.brxnvda_numCells()
+				self._voffset=self._brxnvda.brxnvda_numVertCells()
 				log.info("Found Braille Display connected via BRXCom")
 				self.startTimer()
 				return None
@@ -235,7 +252,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						except:
 							log.debugWarning("connectBluetooth failed")
 
-	def connectUSB(self,devlist):
+	def connectUSB(self, devlist: List[bytes]):
 		"""try to connect to usb device,is triggered when BRXCOM is not installed and bluetooth
 connection could not be established"""
 		try:
@@ -256,7 +273,7 @@ connection could not be established"""
 		self._baud = 0
 		self._dev = None
 		self._proto = None
-		devlist = []
+		devlist: List[bytes] = []
 		self.connectBrxCom()
 		if(self._baud == 1): return #brxcom is running, skip bluetooth and USB
 
@@ -274,8 +291,8 @@ connection could not be established"""
 				#request type of braille display
 				self._dev.write(brl_auto_id())
 				time.sleep(0.05)# wait 50 ms in order to get response for further actions
-				autoid=brl_poll(self._dev)
-				if(autoid == ''):
+				autoid: bytes = brl_poll(self._dev)
+				if autoid == b'':
 					#no response, assume a Trio is connected
 					self._baud = 115200
 					self._dev.set_baud_rate(self._baud)
@@ -285,11 +302,10 @@ connection could not be established"""
 					self._dev.write(brl_auto_id())
 					self._dev.write(brl_auto_id())
 					time.sleep(0.05)# wait 50 ms in order to get response for further actions
-					autoid=brl_poll(self._dev)
-				if(len(autoid) != 8):
-					return None
+					autoid = brl_poll(self._dev)
+				if len(autoid) != 8:
+					return
 				else:
-					autoid = struct.unpack('BBBBBBBB',autoid)
 					if(autoid[3] == 0x35 and autoid[4] == 0x38):#EL80s
 						self.numCells = 80
 						self._nlk = 1
@@ -421,21 +437,21 @@ connection could not be established"""
 		try:
 			super(BrailleDisplayDriver, self).terminate()
 			self.stopTimer()
-			if(self._dev!=None): self._dev.close()
+			if(self._dev is not None): self._dev.close()
 			self._dev=None
 			if(self._brxnvda): self._brxnvda.brxnvda_close()
 		except:
 			self._dev=None
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		"""write to braille display"""
 		if(self._brxnvda):
-			newcells = "".join([chr(cell) for cell in cells])
+			newcells = bytes(cells)
 			self._brxnvda.brxnvda_sendToDisplay(newcells)
 			return
 		if(self._dev is None): return
 		try:
-			self._dev.write(brl_out(cells, self._nlk, self._nrk,self._voffset))
+			self._dev.write(brl_out(cells, self._nlk, self._nrk, self._voffset))
 		except:
 			self._dev.close()
 			self._dev=None
@@ -448,18 +464,18 @@ connection could not be established"""
 		"""handles key presses and performs a gesture"""
 		try:
 			if(self._brxnvda):
-				k = self._brxnvda.brxnvda_keyIndex()
+				k: int = self._brxnvda.brxnvda_keyIndex()
 				if(k!=-1):
 					self.executeGesture(InputGesture(k,self))
 				return
 			if(self._dev is None and self._baud>0):
 				try:
-					devlist = ftdi2.list_devices()
+					devlist: List[bytes] = ftdi2.list_devices()
 					if(len(devlist)>0):
 						self.connectUSB(devlist)
 				except:
 					return
-			s = brl_poll(self._dev)
+			s: bytes = brl_poll(self._dev)
 			if s:
 				self._repeatcount=0
 				ig = InputGesture(s,self)
@@ -509,29 +525,30 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 	"""Input gesture for papenmeier displays"""
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys, driver):
+	def __init__(self, keys: Union[bytes, int, None], driver: BrailleDisplayDriver):
 		"""create an input gesture and decode keys"""
 		super(InputGesture, self).__init__()
 		self.id=''
 
-		if(keys is None):
+		if keys is None:
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
 		if driver._baud != 1 and keys[0] == 'L':
-			if ((ord(keys[3]) -48) >>3):
-				scancode=ord(keys[5])-48 << 4| ord(keys[6])-48
-				press = not ord(keys[4]) & 1
-				ext = bool(ord(keys[4]) & 2)
+			assert isinstance(keys, bytes)
+			if (keys[3] - 48) >> 3:
+				scancode = keys[5] - 48 << 4 | keys[6] - 48
+				press = not keys[4] & 1
+				ext = bool(keys[4] & 2)
 				keyboardHandler.injectRawKeyboardInput(press,scancode,ext)
 				return
 			#get dots
-			z  = ord('0')
-			b = ord(keys[4])-z
-			c = ord(keys[5])-z
-			d = ord(keys[6])-z
+			z = ord('0')
+			b = keys[4] - z
+			c = keys[5] - z
+			d = keys[6] - z
 			dots = c << 4 | d
-			thumbs = b&7
+			thumbs = b & 7
 			if thumbs and dots: 
 				names = set()
 				names.update(driver._thumbs[1 << i] for i in range(3) if (1 << i) & thumbs)
@@ -548,35 +565,41 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			return
 
 		if(driver._baud==1):#brxcom
+			assert isinstance(keys, int)
 			if(keys>255 and keys<512):
 				self.routingIndex = keys-256-driver._voffset
 				self.id = "route"
-				return None
+				return
 			elif(keys>511 and keys <786):
 				self.routingIndex = keys-512-driver._voffset
 				self.id="upperRouting"
-				return None
+				return
 			else:
 				key1 = (keys & 0xFFFF0000) >> 16
 				key2 = keys & 0x0000FFFF
 				self.id=brl_keyname_decoded(key1, ',')+brl_keyname_decoded(key2, '')
-				return None
+				return
 
 		if(driver._proto == 'A'):#non trio
+			assert isinstance(keys, bytes)
 			decodedkeys = brl_decode_keys_A(keys[3:], 4, driver._voffset*2)
 		elif(driver._proto=='B'):#trio
+			assert isinstance(keys, bytes)
 			decodedkeys = brl_decode_trio(keys)
+		else:
+			decodedkeys: List[int] = []
 
-		if(len(decodedkeys)==1 and decodedkeys[0]>=32 and decodedkeys[0]<32+driver.numCells*2):
+		length = len(decodedkeys)
+		if length == 1 and 32 <= decodedkeys[0] < 32 + driver.numCells * 2:
 			#routing keys
-			self.routingIndex = (decodedkeys[0]-32)/2
+			self.routingIndex = (decodedkeys[0] - 32) // 2
 			self.id = "route"
 			if(decodedkeys[0] % 2 == 1):
 				self.id="upperRouting"
 		#other keys
-		elif(len(decodedkeys) > 0 and len(decodedkeys) >= len(driver.decodedkeys)):
+		elif length > 0 and length >= len(driver.decodedkeys):
 			driver.decodedkeys.extend(decodedkeys)
 
-		elif(len(decodedkeys) == 0 and len(driver.decodedkeys)>0):
+		elif length == 0 and len(driver.decodedkeys) > 0:
 			self.id=brl_join_keys(brl_decode_key_names(driver))
 			driver.decodedkeys=[]
