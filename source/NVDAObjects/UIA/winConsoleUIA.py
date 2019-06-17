@@ -98,19 +98,15 @@ class consoleUIATextInfo(UIATextInfo):
 						endPoint=endPoint
 					)
 		else:  # moving by a unit other than word
-			res = super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+			res = super(consoleUIATextInfo, self).move(unit, direction,
+														endPoint)
 		if oldRange and (
 			self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				firstVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_Start
-			) < 0
+				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_Start) < 0
 			or self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start,
-				lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End
-			) >= 0
-		):
+				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
+				UIAHandler.TextPatternRangeEndpoint_End) >= 0):
 			self._rangeObj = oldRange
 			return 0
 		return res
@@ -217,7 +213,7 @@ class WinConsoleUIA(Terminal):
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
 			self._queuedChars = []
-		super(winConsoleUIA, self)._reportNewText(line)
+		super(WinConsoleUIA, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
@@ -233,13 +229,13 @@ class WinConsoleUIA(Terminal):
 		):
 			self._queuedChars.append(ch)
 		else:
-			super(winConsoleUIA, self).event_typedCharacter(ch)
+			super(WinConsoleUIA, self).event_typedCharacter(ch)
 
 	def event_textChange(self):
 		while self._queuedChars:
 			ch = self._queuedChars.pop(0)
-			super(winConsoleUIA, self).event_typedCharacter(ch)
-		super(winConsoleUIA, self).event_textChange()
+			super(WinConsoleUIA, self).event_typedCharacter(ch)
+		super(WinConsoleUIA, self).event_textChange()
 
 	@script(gestures=[
 		"kb:enter",
@@ -251,11 +247,13 @@ class WinConsoleUIA(Terminal):
 	])
 	def script_flush_queuedChars(self, gesture):
 		"""
-			Flushes the queue of typedCharacter events if present.
-			This is necessary to avoid speaking of passwords in the console if disabled.
+		Flushes the typed word buffer and queue of typedCharacter events if present.
+		Since these gestures clear the current word/line, we should flush the
+		queue to avoid erroneously reporting these chars.
 		"""
 		gesture.send()
 		self._queuedChars = []
+		speech.curWordChars = []
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
@@ -268,7 +266,7 @@ class WinConsoleUIA(Terminal):
 			self._findNonBlankIndices(newLines)
 			!= self._findNonBlankIndices(oldLines)
 		)
-		return super(winConsoleUIA, self)._calculateNewText(newLines, oldLines)
+		return super(WinConsoleUIA, self)._calculateNewText(newLines, oldLines)
 
 	def _findNonBlankIndices(self, lines):
 		return [index for index, line in enumerate(lines) if line]
