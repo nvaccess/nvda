@@ -193,12 +193,16 @@ class consoleUIAWindow(Window):
 			To work around this, we must redirect focus to the console text area.
 		"""
 		for child in self.children:
-			if isinstance(child, winConsoleUIA):
+			if isinstance(child, WinConsoleUIA):
 				return child
 		return None
 
 
-class winConsoleUIA(Terminal):
+class WinConsoleUIA(Terminal):
+	#: Disable the name as it won't be localized
+	name = ""
+	#: Only process text changes every 30 ms, in case the console is getting
+	#: a lot of text.
 	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
 	_queuedChars = []
@@ -271,6 +275,6 @@ class winConsoleUIA(Terminal):
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
-		clsList.append(winConsoleUIA)
+		clsList.append(WinConsoleUIA)
 	elif obj.UIAElement.cachedAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
