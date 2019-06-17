@@ -113,97 +113,6 @@ def brl_poll(dev: serial.Serial) -> bytes:
 				return bytes(status[1:-1])  # strip STX and ETX
 	return b""
 
-def brl_decode_trio(keys: bytes)->List[int]:
-	"""decode routing keys on Trio"""
-	if keys[0] == ord('K'):  # KEYSTATE CHANGED EVENT on Trio, not Braille keys
-		keys = keys[3:]
-		i = 0
-		j = []
-		for k in keys:
-			a = k & 0x0F
-			#convert bitstream to list of indexes
-			if(a & 1): j.append(i+3)
-			if(a & 2): j.append(i+2)
-			if(a & 4): j.append(i+1)
-			if(a & 8): j.append(i)
-			i +=4
-		return j
-	return []
-
-def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
-	"""decode routing keys non Trio devices"""
-	n = start #key index iterator
-	j = []
-	shift = 0
-	for i, value in enumerate(data):
-		if(i%2==0):
-			a = value & 0x0F  # n+4,n+3
-			b = data[i+1] & 0x0F  # n+2,n+1
-			#convert bitstream to list of indexes
-			if(n > 26): shift=voffset
-			if(b & 1): j.append(n+0-shift)
-			if(b & 2): j.append(n+1-shift)
-			if(b & 4): j.append(n+2-shift)
-			if(b & 8): j.append(n+3-shift)
-			if(a & 1): j.append(n+4-shift)
-			if(a & 2): j.append(n+5-shift)
-			if(a & 4): j.append(n+6-shift)
-			if(a & 8): j.append(n+7-shift)
-			n+=8
-	return j
-
-def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> List[str]:
-	"""translate key names for protocol A with repeat"""
-	driver._repeatcount+=1
-	if(driver._repeatcount < 10):
-		return []
-	else:
-		driver._repeatcount = 0
-	dec = []
-	for key in driver.decodedkeys:
-		try:
-			dec.append(driver._keynamesrepeat[key])
-		except:
-			pass
-	return dec
-
-def brl_decode_key_names(driver: BrailleDisplayDriver) -> List[str]:
-	"""translate key names for protocol A"""
-	dec = []
-	keys = driver.decodedkeys
-	for key in keys:
-		try:
-			dec.append(driver._keynames[key])
-		except:
-			pass
-	return dec
-
-def brl_join_keys(dec: List[str]) -> str:
-	"""join key names with comma, this is used for key combinations"""
-	if(len(dec) == 1): return dec[0]
-	elif(len(dec) == 3 and dec[0] == dec[1]): return dec[0] + "," + dec[2]
-	elif(len(dec) == 3 and dec[0] == dec[2]): return dec[0] + "," + dec[1]
-	elif(len(dec) == 2): return dec[1] + "," + dec[0]
-	else: return ''
-
-def brl_keyname_decoded(key: int, rest: str) -> str:
-	"""convert index used by brxcom to keyname"""
-	if(key == 11 or key == 9): return 'l1' + rest
-	elif(key == 12 or key == 10): return 'l2' + rest
-	elif(key == 13 or key == 15): return 'r1' + rest
-	elif(key == 14 or key == 16): return 'r2' + rest
-
-	elif(key == 3): return 'up' + rest
-	elif(key == 7): return 'dn' + rest
-	elif(key == 1): return 'left' + rest
-	elif(key == 5): return 'right' + rest
-
-	elif(key == 4): return 'up2' + rest
-	elif(key == 8): return 'dn2' + rest
-	elif(key == 2): return 'left2' + rest
-	elif(key == 6): return 'right2' + rest
-	else: return ''
-
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier braille display driver.
@@ -520,6 +429,98 @@ connection could not be established"""
 			"kb:rightArrow": ("br(papenmeier):space+d4",),
 		}
 	})
+
+def brl_decode_trio(keys: bytes)->List[int]:
+	"""decode routing keys on Trio"""
+	if keys[0] == ord('K'):  # KEYSTATE CHANGED EVENT on Trio, not Braille keys
+		keys = keys[3:]
+		i = 0
+		j = []
+		for k in keys:
+			a = k & 0x0F
+			#convert bitstream to list of indexes
+			if(a & 1): j.append(i+3)
+			if(a & 2): j.append(i+2)
+			if(a & 4): j.append(i+1)
+			if(a & 8): j.append(i)
+			i +=4
+		return j
+	return []
+
+def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
+	"""decode routing keys non Trio devices"""
+	n = start #key index iterator
+	j = []
+	shift = 0
+	for i, value in enumerate(data):
+		if(i%2==0):
+			a = value & 0x0F  # n+4,n+3
+			b = data[i+1] & 0x0F  # n+2,n+1
+			#convert bitstream to list of indexes
+			if(n > 26): shift=voffset
+			if(b & 1): j.append(n+0-shift)
+			if(b & 2): j.append(n+1-shift)
+			if(b & 4): j.append(n+2-shift)
+			if(b & 8): j.append(n+3-shift)
+			if(a & 1): j.append(n+4-shift)
+			if(a & 2): j.append(n+5-shift)
+			if(a & 4): j.append(n+6-shift)
+			if(a & 8): j.append(n+7-shift)
+			n+=8
+	return j
+
+def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> List[str]:
+	"""translate key names for protocol A with repeat"""
+	driver._repeatcount+=1
+	if(driver._repeatcount < 10):
+		return []
+	else:
+		driver._repeatcount = 0
+	dec = []
+	for key in driver.decodedkeys:
+		try:
+			dec.append(driver._keynamesrepeat[key])
+		except:
+			pass
+	return dec
+
+def brl_decode_key_names(driver: BrailleDisplayDriver) -> List[str]:
+	"""translate key names for protocol A"""
+	dec = []
+	keys = driver.decodedkeys
+	for key in keys:
+		try:
+			dec.append(driver._keynames[key])
+		except:
+			pass
+	return dec
+
+def brl_join_keys(dec: List[str]) -> str:
+	"""join key names with comma, this is used for key combinations"""
+	if(len(dec) == 1): return dec[0]
+	elif(len(dec) == 3 and dec[0] == dec[1]): return dec[0] + "," + dec[2]
+	elif(len(dec) == 3 and dec[0] == dec[2]): return dec[0] + "," + dec[1]
+	elif(len(dec) == 2): return dec[1] + "," + dec[0]
+	else: return ''
+
+def brl_keyname_decoded(key: int, rest: str) -> str:
+	"""convert index used by brxcom to keyname"""
+	if(key == 11 or key == 9): return 'l1' + rest
+	elif(key == 12 or key == 10): return 'l2' + rest
+	elif(key == 13 or key == 15): return 'r1' + rest
+	elif(key == 14 or key == 16): return 'r2' + rest
+
+	elif(key == 3): return 'up' + rest
+	elif(key == 7): return 'dn' + rest
+	elif(key == 1): return 'left' + rest
+	elif(key == 5): return 'right' + rest
+
+	elif(key == 4): return 'up2' + rest
+	elif(key == 8): return 'dn2' + rest
+	elif(key == 2): return 'left2' + rest
+	elif(key == 6): return 'right2' + rest
+	else: return ''
+
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""
