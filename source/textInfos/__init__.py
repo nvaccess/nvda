@@ -181,6 +181,11 @@ class Bookmark(baseObject.AutoPropertyObject):
 		if isinstance(other,Bookmark) and self.infoClass==other.infoClass and self.data==other.data:
 			return True
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		return not self==other
 

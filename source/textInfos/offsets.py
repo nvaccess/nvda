@@ -39,6 +39,11 @@ class Offsets(object):
 		else:
 			return False
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		return not self==other
  
@@ -165,6 +170,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return True
 		else:
 			return False
+
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
 
 	def _get_locationText(self):
 		textList=[]

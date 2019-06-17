@@ -118,6 +118,11 @@ class espeak_VOICE(Structure):
 	def __eq__(self, other):
 		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 # constants that can be returned by espeak_callback
 CALLBACK_CONTINUE_SYNTHESIS=0
 CALLBACK_ABORT_SYNTHESIS=1
