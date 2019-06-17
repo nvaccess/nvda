@@ -11,12 +11,11 @@ from  comtypes.automation import VT_EMPTY
 from  comtypes import COMObject, GUID
 from comInterfaces.Accessibility import IAccPropServer, ANNO_CONTAINER, ANNO_THIS
 from abc import ABCMeta, abstractmethod, abstractproperty
-from six import with_metaclass
 import weakref
 import winUser
 import wx
 
-class IAccPropServer_Impl(with_metaclass(ABCMeta, COMObject)):
+class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 	"""Base class for implementing a COM interface for a hwnd based AccPropServer\
 	to annotate a WX control.
 	The AccPropServer registers itself using the window handle of the WX control.

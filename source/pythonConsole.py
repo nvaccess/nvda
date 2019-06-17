@@ -120,10 +120,10 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		stdout, stderr = sys.stdout, sys.stderr
 		sys.stdout = sys.stderr = self
 		# Prevent this from messing with the gettext "_" builtin.
-		saved_ = __builtin__._
+		saved_ = builtins._
 		more = code.InteractiveConsole.push(self, line)
 		sys.stdout, sys.stderr = stdout, stderr
-		__builtin__._ = saved_
+		builtins._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
 
