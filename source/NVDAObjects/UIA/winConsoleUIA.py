@@ -13,18 +13,20 @@ import textInfos
 import UIAHandler
 
 from scriptHandler import script
-from winVersion import isAtLeastWin10
+from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
 from ..window import Window
 
 
 class consoleUIATextInfo(UIATextInfo):
+	#: At least on Windows 10 1903, expanding then collapsing the text info
+	#: causes review to get stuck, so disable it.
 	_expandCollapseBeforeReview = False
 
 	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		if position == textInfos.POSITION_CARET and isAtLeastWin10(1903):
+		if position == textInfos.POSITION_CARET and isWin10(1903, atLeast=False):
 			# The UIA implementation in 1903 causes the caret to be
 			# off-by-one, so move it one position to the right
 			# to compensate.
@@ -88,7 +90,8 @@ class consoleUIATextInfo(UIATextInfo):
 						endPoint=endPoint
 					)
 		else:  # moving by a unit other than word
-			return super(consoleUIATextInfo, self).move(unit, direction, endPoint)
+			return super(consoleUIATextInfo, self).move(unit, direction,
+														endPoint)
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_WORD:
@@ -117,6 +120,12 @@ class consoleUIATextInfo(UIATextInfo):
 			return super(consoleUIATextInfo, self).expand(unit)
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
+		"""
+		Given a caret textInfo expanded to line, returns the index into the
+		line where the caret is located.
+		This is necessary since Uniscribe requires indices into the text to
+		find word boundaries, but UIA only allows for relative movement.
+		"""
 		charInfo = self.copy()
 		res = 0
 		chars = None
@@ -162,24 +171,32 @@ class consoleUIATextInfo(UIATextInfo):
 class consoleUIAWindow(Window):
 	def _get_focusRedirect(self):
 		"""
-			Sometimes, attempting to interact with the console too quickly after
-			focusing the window can make NVDA unable to get any caret or review
-			information or receive new text events.
-			To work around this, we must redirect focus to the console text area.
+		Sometimes, attempting to interact with the console too quickly after
+		focusing the window can make NVDA unable to get any caret or review
+		information or receive new text events.
+		To work around this, we must redirect focus to the console text area.
 		"""
 		for child in self.children:
-			if isinstance(child, winConsoleUIA):
+			if isinstance(child, WinConsoleUIA):
 				return child
 		return None
 
 
-class winConsoleUIA(Terminal):
+class WinConsoleUIA(Terminal):
+	#: Disable the name as it won't be localized
+	name = ""
+	#: Only process text changes every 30 ms, in case the console is getting
+	#: a lot of text.
 	STABILIZE_DELAY = 0.03
 	#: Bound review in consoles by default to maintain feature parity
 	#: with legacy
 	reviewBounded = True
 	_TextInfo = consoleUIATextInfo
+	#: A queue of typed characters, to be dispatched on C{textChange}.
+	#: This queue allows NVDA to suppress typed passwords when needed.
 	_queuedChars = []
+	#: Whether the console got new text lines in its last update.
+	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
 
 	def _reportNewText(self, line):
@@ -191,7 +208,7 @@ class winConsoleUIA(Terminal):
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
 			self._queuedChars = []
-		super(winConsoleUIA, self)._reportNewText(line)
+		super(WinConsoleUIA, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
@@ -207,13 +224,13 @@ class winConsoleUIA(Terminal):
 		):
 			self._queuedChars.append(ch)
 		else:
-			super(winConsoleUIA, self).event_typedCharacter(ch)
+			super(WinConsoleUIA, self).event_typedCharacter(ch)
 
 	def event_textChange(self):
 		while self._queuedChars:
 			ch = self._queuedChars.pop(0)
-			super(winConsoleUIA, self).event_typedCharacter(ch)
-		super(winConsoleUIA, self).event_textChange()
+			super(WinConsoleUIA, self).event_typedCharacter(ch)
+		super(WinConsoleUIA, self).event_textChange()
 
 	@script(gestures=[
 		"kb:enter",
@@ -225,11 +242,13 @@ class winConsoleUIA(Terminal):
 	])
 	def script_flush_queuedChars(self, gesture):
 		"""
-			Flushes the queue of typedCharacter events if present.
-			This is necessary to avoid speaking of passwords in the console if disabled.
+		Flushes the typed word buffer and queue of typedCharacter events if present.
+		Since these gestures clear the current word/line, we should flush the
+		queue to avoid erroneously reporting these chars.
 		"""
 		gesture.send()
 		self._queuedChars = []
+		speech.curWordChars = []
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
@@ -242,13 +261,17 @@ class winConsoleUIA(Terminal):
 			self._findNonBlankIndices(newLines)
 			!= self._findNonBlankIndices(oldLines)
 		)
-		return super(winConsoleUIA, self)._calculateNewText(newLines, oldLines)
+		return super(WinConsoleUIA, self)._calculateNewText(newLines, oldLines)
 
 	def _findNonBlankIndices(self, lines):
+		"""
+		Given a list of strings, returns a list of indices where the strings
+		are not empty.
+		"""
 		return [index for index, line in enumerate(lines) if line]
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
-		clsList.append(winConsoleUIA)
+		clsList.append(WinConsoleUIA)
 	elif obj.UIAElement.cachedAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
