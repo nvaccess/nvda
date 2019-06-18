@@ -2050,13 +2050,36 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access the Windows Console when available")
-		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
-		self.ConsoleUIACheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
-		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		# Translators: This is the label for a combo box for selecting the
+		# active console implementation in the advanced settings panel.
+		# Choices are automatic, prefer UIA, and force legacy.
+		consoleComboText = _("Windoes C&onsole support:")
+		consoleChoices=[
+			#Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine its Windows Console implementation
+			# automatically.
+			_("Automatic"),
+			#Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use UIA in the Windows Console when available.
+			_("Prefer UIA"),
+			#Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use its legacy Windoes Console support
+			# in all cases.
+			_("Force legacy")
+		]
+		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
+		consoleValsToIndices = {
+			"auto": 0,
+			"UIA": 1,
+			"legacy": 2
+		}
+		curChoice = consoleValsToIndices[
+			config.conf['UIA']['winConsoleImplementation']
+		]
+		self.consoleCombo.SetSelection(curChoice)
+		self.consoleCombo.defaultValue = consoleValsToIndices[
+			self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		]
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
@@ -2149,7 +2172,7 @@ class AdvancedPanelControls(wx.Panel):
 			self._defaultsRestored and
 			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
 			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
-			self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue=='UIA') and
+			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
 			self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue and
 			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
 			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
@@ -2160,7 +2183,7 @@ class AdvancedPanelControls(wx.Panel):
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
-		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue=='UIA')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue=='UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
@@ -2171,10 +2194,15 @@ class AdvancedPanelControls(wx.Panel):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
-		if self.ConsoleUIACheckBox.IsChecked():
-			config.conf['UIA']['winConsoleImplementation'] = "UIA"
-		else:
-			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		consoleChoice = self.consoleCombo.GetSelection()
+		consoleIndicesToVals = {
+			0: "auto",
+			1: "UIA",
+			2: "legacy"
+		}
+		config.conf['UIA']['winConsoleImplementation'] = (
+			consoleIndicesToVals[consoleChoice]
+		)
 		config.conf["UIA"]["winConsoleSpeakPasswords"]=self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
