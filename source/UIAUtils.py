@@ -205,11 +205,17 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 			raise UIAMixedAttributeError
 		return val
 
-def shouldUseUIAConsole():
-	"Determines whether to use UIA in the Windows Console."
-	setting = config.conf['UIA']['winConsoleImplementation']
+def shouldUseUIAConsole(setting=None):
+	"""Determines whether to use UIA in the Windows Console.
+@param setting: the config value to base this check on (if not provided,
+it is retrieved from config).
+	"""
+	if not setting:
+		setting = config.conf['UIA']['winConsoleImplementation']
 	if setting == "legacy":
 		return False
 	elif setting == "UIA":
 		return True
+	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+	# It does not implement caret/selection, and probably has no new text events.
 	return isWin10(1809) and not isWin10(1903, atLeast=False)
