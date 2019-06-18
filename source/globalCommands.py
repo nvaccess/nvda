@@ -932,7 +932,7 @@ class GlobalCommands(ScriptableObject):
 	def _moveWithBoundsChecking(self, info, unit, direction, endPoint=None):
 		"""
 		Nondestructively moves a textInfo and returns a (newInfo, res) tuple.
-		Res is 0 if the move would be out of bounds.
+		Res is 0 and the original C{textInfo} is returned if the move would be out of bounds.
 		"""
 		newInfo = info.copy()
 		res = newInfo.move(unit, direction, endPoint=endPoint)
