@@ -1279,8 +1279,8 @@ This code is executed if a gain focus event is received by this object.
 		# Translators: A gesture description.
 		description=_(u"Toggles whether review is constrained to the currently visible text"))
 	def script_toggleReviewBounds(self, gesture):
+		rp = api.getReviewPosition()
 		try:
-			rp = api.getReviewPosition()
 			outOfBounds = rp.isOffscreen()
 		except NotImplementedError:
 			ui.message(
@@ -1296,7 +1296,7 @@ This code is executed if a gain focus event is received by this object.
 				)
 				if outOfBounds:
 					api.setReviewPosition(
-						self.makeTextInfo(textInfos.POSITION_CARET), isCaret=True)
+						self.makeTextInfo(textInfos.POSITION_CARET))
 			else:
 				ui.message(
 					# Translators: Reported when review is unconstrained, so all
