@@ -1,12 +1,14 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2019 NV Access Limited, Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import operator
 from comtypes import COMError
+import config
 import ctypes
 import UIAHandler
+from winVersion import isWin10
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -203,3 +205,11 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 			raise UIAMixedAttributeError
 		return val
 
+def shouldUseUIAConsole():
+	"Determines whether to use UIA in the Windows Console."
+	setting = config.conf['UIA']['winConsoleImplementation']
+	if setting == "legacy":
+		return False
+	elif setting == "UIA":
+		return True
+	return isWin10(1809) and not isWin10(1903, atLeast=False)
