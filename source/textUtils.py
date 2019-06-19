@@ -82,7 +82,7 @@ class WideStringOffsetConverter:
 		if strStart == 0 and strEnd == 0:
 			return (0, 0)
 		if strEnd < strStart:
-			raise valueError(
+			raise ValueError(
 				"strEnd=%d must be greater than or equal to strStart=%d"
 				% (strEnd, strStart)
 			)
@@ -136,7 +136,7 @@ class WideStringOffsetConverter:
 		if wideStringStart == 0 and wideStringEnd == 0:
 			return (0, 0)
 		if wideStringEnd < wideStringStart:
-			raise valueError(
+			raise ValueError(
 				"wideStringEnd=%d must be greater than or equal to wideStringStart=%d"
 				% (wideStringEnd, wideStringStart)
 			)

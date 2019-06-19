@@ -194,3 +194,34 @@ class TestWideToStrOffsets(unittest.TestCase):
 		self.assertEqual(converter.wideToStrOffsets(5, 6), (4, 5))
 		self.assertEqual(converter.wideToStrOffsets(6, 6), (5, 5))
 
+class TestEdgeCases(unittest.TestCase):
+	"""
+	Tests for edge cases, such as offsets out of range of a string,
+	or end offsets less than start offsets.
+	"""
+
+	def test_wideToStrOffsets(self):
+		converter = WideStringOffsetConverter(text="abc")
+		self.assertEqual(converter.strLength, 3)
+		self.assertEqual(
+			converter.wideToStrOffsets(-1, 0, raiseOnError=False),
+			(0, 0))
+		self.assertEqual(
+			converter.wideToStrOffsets(0, 4, raiseOnError=False),
+			(0, 3))
+		self.assertRaises(IndexError, converter.wideToStrOffsets, -1, 0, raiseOnError=True)
+		self.assertRaises(IndexError, converter.wideToStrOffsets, 0, 4, raiseOnError=True)
+		self.assertRaises(ValueError, converter.wideToStrOffsets, 1, 0)
+
+	def test_strToWideOffsets(self):
+		converter = WideStringOffsetConverter(text="abc")
+		self.assertEqual(converter.wideStringLength, 3)
+		self.assertEqual(
+			converter.strToWideOffsets(-1, 0, raiseOnError=False),
+			(0, 0))
+		self.assertEqual(
+			converter.strToWideOffsets(0, 4, raiseOnError=False),
+			(0, 3))
+		self.assertRaises(IndexError, converter.strToWideOffsets, -1, 0, raiseOnError=True)
+		self.assertRaises(IndexError, converter.strToWideOffsets, 0, 4, raiseOnError=True)
+		self.assertRaises(ValueError, converter.strToWideOffsets, 1, 0)
