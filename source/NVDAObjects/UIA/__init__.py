@@ -868,6 +868,8 @@ class UIA(Window):
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
+			# Some UIA objects take a while to send caret events.
+			self._caretMovementTimeoutMultiplier = 2
 
 		clsList.append(UIA)
 
