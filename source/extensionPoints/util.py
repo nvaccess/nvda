@@ -137,6 +137,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 		- static methods
 		- functions
 		- lambdas
+		- partials
 
 		The arguments for the supplied callable, C{func}, do not need to have default values, and can take C{**kwargs} to
 		capture all arguments.
@@ -146,46 +147,16 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 			- the number of positional arguments given can not be received by C{func}.
 			- parameters required (parameters declared with no default value) by C{func} are not supplied.
 	"""
-	spec = inspect.getargspec(func)
+	sig = inspect.signature(func)
 
-	# some handlers are instance/class methods, discard "self"/"cls" because it is typically passed implicitly.
-	if inspect.ismethod(func):
-		spec.args.pop(0)  # remove "self"/"cls" for instance methods
-		if not hasattr(func, "__self__"):
-			raise TypeError("Unbound instance methods are not handled.")
+	if inspect.isfunction(func) and "self" in sig.parameters:
+		raise TypeError("Unbound instance methods are not handled.")
 
-	# Ensure that the positional args provided by the caller of `callWithSupportedKwargs` actually have a place to go.
-	# Unfortunately, positional args can not be matched on name (keyword) to the names of the params in the handler,
-	# and so calling `callWithSupportedKwargs` is at risk of causing bugs if parameter order differs.
-	numExpectedArgs = len(spec.args)
-	numGivenPositionalArgs = len(args)
-	if numGivenPositionalArgs > numExpectedArgs:
-		raise TypeError("Expected to be able to pass {} positional arguments.".format(numGivenPositionalArgs))
-
-	# Ensure that all arguments without defaults which are expected by the handler were provided.
-	# `defaults` is a tuple of default argument values or None if there are no default arguments;
-	# if this tuple has N elements, they correspond to the last N elements listed in args.
-	numExpectedArgsWithDefaults = len(spec.defaults) if spec.defaults else 0
-	if not spec.defaults or numExpectedArgsWithDefaults != numExpectedArgs:
-		# get the names of the args without defaults, skipping the N positional args given to `callWithSupportedKwargs`
-		# positionals are required for the Filter extension point.
-		# #9067 (Py3 review required): Set construction will work with iterators, too.
-		givenKwargsKeys = set(kwargs.keys())
-		firstArgWithDefault = numExpectedArgs - numExpectedArgsWithDefaults
-		specArgs = set(spec.args[numGivenPositionalArgs:firstArgWithDefault])
-		for arg in specArgs:
-			# and ensure they are in the kwargs list
-			if arg not in givenKwargsKeys:
-				raise TypeError("Parameter required for handler not provided: {}".format(arg))
-
-	if spec.keywords:
-		# func has a catch-all for kwargs (**kwargs) so we do not need to filter to just the supported args.
-		return func(*args, **kwargs)
-
-	supportedKwargs = set(spec.args)
-	# #9067 (Py3 review required): originally called dict.keys.
-	# Therefore wrap this inside a list call.
+	# Delete all the kwargs that are not supported by this callable.
+	# Wrap the items call in a list, as the dictionary changes during iteration.
 	for kwarg in list(kwargs.keys()):
-		if kwarg not in supportedKwargs:
+		if kwarg not in sig.parameters:
 			del kwargs[kwarg]
-	return func(*args, **kwargs)
+
+	boundArguments = sig.bind(*args, **kwargs)
+	return func(*boundArguments.args, **boundArguments.kwargs)
