@@ -146,7 +146,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	#: Honours documentFormatting config option if true - set to false if this is not at all slow.
 	detectFormattingAfterCursorMaybeSlow: bool = True
 	#: Use uniscribe to calculate word offsets etc.
-	useUniscribe: bool = True
+	useUniscribe: bool = False
 	#: The encoding used for wide characters
 	_WCHAR_ENCODING: str = "utf_16_le"
 	#: The encoding internal to the underlying text info implementation.
@@ -340,7 +340,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		if self.encoding == self._WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-			relStrOffset = offsetConverter.wideToStrOffsets(offset, offset - lineStart)[0]
+			relOffset = offset - lineStart
+			relStrOffset = offsetConverter.wideToStrOffsets(relOffset, relOffset)[0]
 			relStrStart = findStartOfWord(lineText, relStrOffset)
 			relStrEnd = findEndOfWord(lineText, relStrOffset)
 			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
