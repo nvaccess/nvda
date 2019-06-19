@@ -11,10 +11,19 @@ See the L{BasicTextProvider} class.
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 import textInfos
 from textInfos.offsets import Offsets
+import textUtils
 
 class BasicTextInfo(NVDAObjectTextInfo):
 	# NVDAHelper is not initialized, so we can't use Uniscribe.
 	useUniscribe = False
+	# Most of our code use UTF-16 as internal encoding.
+	# Mimic this behavior, so we can also implicitly test textUtils module code
+	encoding = NVDAObjectTextInfo._WCHAR_ENCODING
+
+	def _getStoryLength(self):
+		# NVDAObjectTextInfo will just return the str length of the story text,.
+		# As we are using UTF-16 as the internal encoding for this TextInfo, this is incorrect.
+		return textUtils.WideStringOffsetConverter(self._getStoryText()).wideStringLength
 
 	def _get_offsets(self):
 		return (self._startOffset, self._endOffset)

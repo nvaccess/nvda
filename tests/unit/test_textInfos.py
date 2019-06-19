@@ -16,6 +16,8 @@ class TestCharacterOffsets(unittest.TestCase):
 	"""
 	Tests for textInfos.offsets.OffsetsTextInfo for its ability to deal with
 	UTF-16 surrogate characters (i.e. whether a surrogate pair is treated as one character).
+	These tests are also implicit tests for the textUtils module,
+	as its logic is used for character offset calculation in wide character strings.
 	"""
 
 	def test_nonSurrogateForward(self):
@@ -113,7 +115,7 @@ class TestCharacterOffsets(unittest.TestCase):
 		self.assertEqual(ti.offsets, (5, 6)) # One offset
 
 	def test_mixedSurrogatePairsNonSurrogatesAndSingleSurrogatesBackward(self):
-		obj = BasicTextProvider(text=u"a\ud83e\ud83e\udd26\udd26b")
+		obj = BasicTextProvider(text=u"a\ud83e\U0001f926\udd26b")
 		ti = obj.makeTextInfo(Offsets(5, 5))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at c
 		self.assertEqual(ti.offsets, (5, 6)) # One offset

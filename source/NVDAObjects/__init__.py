@@ -47,10 +47,6 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getStoryLength(self):
 		return len(self._getStoryText())
 
-	def _getTextRange(self,start,end):
-		text=self._getStoryText()
-		return text[start:end]
-
 	def _get_boundingRects(self):
 		if self.obj.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
