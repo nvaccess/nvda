@@ -129,7 +129,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	"""An abstract TextInfo for text implementations which represent ranges using numeric offsets relative to the start of the text.
 	In such implementations, the start of the text is represented by 0 and the end is the length of the entire text.
 	
-	All subclasses must implement L{encoding} and L{_getStoryLength}.
+	All subclasses must implement L{_getStoryLength}.
 	Aside from this, there are two possible implementations:
 		* If the underlying text implementation does not support retrieval of line offsets, L{_getStoryText} should be implemented.
 		In this case, the base implementation of L{_getLineOffsets} will retrieve the entire text of the object and use text searching algorithms to find line offsets.
@@ -146,7 +146,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	#: Honours documentFormatting config option if true - set to false if this is not at all slow.
 	detectFormattingAfterCursorMaybeSlow: bool = True
 	#: Use uniscribe to calculate word offsets etc.
-	useUniscribe: bool = False
+	useUniscribe: bool = True
 	#: The encoding used for wide characters
 	_WCHAR_ENCODING: str = "utf_16_le"
 	#: The encoding internal to the underlying text info implementation.

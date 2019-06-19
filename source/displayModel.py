@@ -124,7 +124,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						for i in range(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
-							rectsEnd=rectsStart + textUtils.WideStringOffsetConverter(text).wideStringLength
+							rectsEnd = rectsStart + textUtils.WideStringOffsetConverter(text).wideStringLength
 							commandList[i+1]=command
 							shouldReverseText=command.field.get('shouldReverseText',True)
 							commandList[i]=normalizeRtlString(text[::-1] if shouldReverseText else text)

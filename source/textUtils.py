@@ -142,11 +142,11 @@ class WideStringOffsetConverter:
 			)
 		if wideStringStart < 0 or wideStringStart > self.wideStringLength:
 			if raiseOnError:
-				raise IndexError("Encoding aware start index out of range")
+				raise IndexError("Wide string start index out of range")
 			wideStringStart = max(0, min(wideStringStart, self.wideStringLength))
 		if wideStringEnd < 0 or wideStringEnd > self.wideStringLength:
 			if raiseOnError:
-				raise IndexError("Encoding aware end index out of range")
+				raise IndexError("Wide string end index out of range")
 			wideStringEnd = max(0, min(wideStringEnd, self.wideStringLength))
 		bytesStart: int = wideStringStart * self._bytesPerIndex
 		bytesEnd: int = wideStringEnd * self._bytesPerIndex
