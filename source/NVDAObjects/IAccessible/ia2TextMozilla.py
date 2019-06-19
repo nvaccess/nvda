@@ -20,6 +20,7 @@ from compoundDocuments import CompoundTextInfo
 import locationHelper
 
 class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+	encoding = None
 
 	def _getStoryLength(self):
 		return self.obj.childCount

@@ -220,6 +220,8 @@ class LwrTextInfo(textInfos.offsets.OffsetsTextInfo):
 	This should only be instantiated by L{LinesWordsResult}.
 	"""
 
+	encoding = None
+
 	def __init__(self, obj, position, result):
 		self.result = result
 		super(LwrTextInfo, self).__init__(obj, position)
