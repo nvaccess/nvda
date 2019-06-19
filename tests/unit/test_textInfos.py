@@ -42,9 +42,8 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
 
-	@unittest.expectedFailure
 	def test_surrogatePairsForward(self):
-		obj = BasicTextProvider(text=u"\ud83e\udd26\ud83d\ude0a\ud83d\udc4d") # 🤦😊👍
+		obj = BasicTextProvider(text=u"\U0001f926\U0001f60a\U0001f44d") # 🤦😊👍
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 🤦
 		self.assertEqual(ti.offsets, (0, 2)) # Two offsets
@@ -55,9 +54,8 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 👍
 		self.assertEqual(ti.offsets, (4, 6)) # Two offsets
 
-	@unittest.expectedFailure
 	def test_surrogatePairsBackward(self):
-		obj = BasicTextProvider(text=u"\ud83e\udd26\ud83d\ude0a\ud83d\udc4d") # 🤦😊👍
+		obj = BasicTextProvider(text=u"\U0001f926\U0001f60a\U0001f44d") # 🤦😊👍
 		ti = obj.makeTextInfo(Offsets(5, 5))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 👍
 		self.assertEqual(ti.offsets, (4, 6)) # Two offsets
@@ -68,9 +66,8 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at 🤦
 		self.assertEqual(ti.offsets, (0, 2)) # Two offsets
 
-	@unittest.expectedFailure
 	def test_mixedSurrogatePairsAndNonSurrogatesForward(self):
-		obj = BasicTextProvider(text=u"a\ud83e\udd26b") # a🤦b
+		obj = BasicTextProvider(text=u"a\U0001f926b") # a🤦b
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
@@ -81,9 +78,8 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at c
 		self.assertEqual(ti.offsets, (3, 4)) # One offset
 
-	@unittest.expectedFailure
 	def test_mixedSurrogatePairsAndNonSurrogatesBackward(self):
-		obj = BasicTextProvider(text=u"a\ud83e\udd26b") # a🤦b
+		obj = BasicTextProvider(text=u"a\U0001f926b") # a🤦b
 		ti = obj.makeTextInfo(Offsets(3, 3))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at c
 		self.assertEqual(ti.offsets, (3, 4)) # One offset
@@ -94,13 +90,12 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
 
-	@unittest.expectedFailure
 	def test_mixedSurrogatePairsNonSurrogatesAndSingleSurrogatesForward(self):
 		"""
 		Tests surrogate pairs, non surrogates as well as
 		single surrogate characters (i.e. incomplete pairs)
 		"""
-		obj = BasicTextProvider(text=u"a\ud83e\ud83e\udd26\udd26b")
+		obj = BasicTextProvider(text=u"a\ud83e\U0001f926\udd26b")
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at a
 		self.assertEqual(ti.offsets, (0, 1)) # One offset
@@ -117,7 +112,6 @@ class TestCharacterOffsets(unittest.TestCase):
 		ti.expand(textInfos.UNIT_CHARACTER) # Range at c
 		self.assertEqual(ti.offsets, (5, 6)) # One offset
 
-	@unittest.expectedFailure
 	def test_mixedSurrogatePairsNonSurrogatesAndSingleSurrogatesBackward(self):
 		obj = BasicTextProvider(text=u"a\ud83e\ud83e\udd26\udd26b")
 		ti = obj.makeTextInfo(Offsets(5, 5))

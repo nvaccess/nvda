@@ -282,6 +282,8 @@ class SimpleResultTextInfo(textInfos.offsets.OffsetsTextInfo):
 	This should only be instantiated by L{SimpleTextResult}.
 	"""
 
+	encoding = None
+
 	def __init__(self, obj, position, result):
 		self.result = result
 		super(SimpleResultTextInfo, self).__init__(obj, position)

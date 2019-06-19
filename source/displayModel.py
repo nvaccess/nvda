@@ -21,6 +21,7 @@ import watchdog
 from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
+import textUtils
 
 def wcharToInt(c):
 	i=ord(c)
@@ -57,7 +58,7 @@ def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
 		if isinstance(item,str):
-			lastEndOffset+=len(item)
+			lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 		else:
 			hwnd=item.field['hwnd'] if item else None
 			if lastHwnd is not None and hwnd!=lastHwnd:
@@ -109,7 +110,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
 		if isinstance(item,str):
-			lastEndOffset+=len(item)
+			lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 		elif not item or (isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField)):
 			direction=item.field['direction'] if item else None
 			if direction is None or (direction!=runDirection): 
@@ -123,7 +124,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						for i in range(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
-							rectsEnd=rectsStart+len(text)
+							rectsEnd=rectsStart + textUtils.WideStringOffsetConverter(text).wideStringLength
 							commandList[i+1]=command
 							shouldReverseText=command.field.get('shouldReverseText',True)
 							commandList[i]=normalizeRtlString(text[::-1] if shouldReverseText else text)
@@ -244,7 +245,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					if startOffset is None:
 						startOffset=curOffset
 				elif isinstance(item,str):
-					curOffset+=len(item)
+					curOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 					if inHighlightChunk:
 						endOffset=curOffset
 				else:
@@ -296,7 +297,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for index in range(len(commandList)):
 			item=commandList[index]
 			if isinstance(item,str):
-				lastEndOffset+=len(item)
+				lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
 					curFormatField=item.field
@@ -309,7 +310,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						processWindowChunksInLine(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
 						#Convert the whitespace at the end of the line into a line feed
 						item=commandList[index-1]
-						if isinstance(item,str) and len(item)==1 and item.isspace():
+						if (
+							isinstance(item,str)
+							# Since we're searching for white space, it is safe to
+							# do this opperation on the length of the pythonic string
+							and len(item)==1
+							and item.isspace()
+						):
 							commandList[index-1]=u'\n'
 						lineEndOffsets.append(lastEndOffset)
 					if baseline is not None:
@@ -328,7 +335,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				baseline=item.field['baseline']
 				direction=item.field['direction']
 			elif isinstance(item,str):
-				endOffset=lastEndOffset+len(item)
+				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).wideStringLength
 				for rect in rects[lastEndOffset:endOffset]:
 					yield rect,baseline,direction
 				lastEndOffset=endOffset
@@ -343,7 +350,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for index in range(len(storyFields)):
 			item=storyFields[index]
 			if isinstance(item,str):
-				endOffset=lastEndOffset+len(item)
+				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).wideStringLength
 				if lastEndOffset<=start<endOffset:
 					startIndex=index-1
 					relStart=start-lastEndOffset

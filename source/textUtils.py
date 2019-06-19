@@ -11,7 +11,7 @@ Classes and utilities to deal with offsets variable width encodings, particularl
 import encodings
 import sys
 import ctypes
-from collections.abc import ByteString # Python 3 import
+from collections.abc import ByteString
 from typing import Tuple
 
 HIGH_SURROGATE_FIRST = u"\uD800"
@@ -20,31 +20,45 @@ LOW_SURROGATE_FIRST = u"\uDC00"
 LOW_SURROGATE_LAST = u"\uDFFF"
 
 class WideStringOffsetConverter:
-	"""
+	R"""
 	Object that holds a string in both its decoded and its UTF-16 encoded form.
 	The object allows for easy convertion between offsets in str type strings,
-	and offsets that are aware of surrogate characters in UTF-16.
+	and offsets in wide character (UTF-16) strings (that are aware of surrogate characters).
+	This representation is used by all wide character strings in Windows (i.e. with characters of type L{ctypes.c_wchar}).
+
+	In Python 3 strings, every offset in a string corresponds with one unicode codepoint.
+	In UTF-16 encoded strings, 32-bit unicode characters (such as emoji)
+	are encoded as one high surrogate and one low surrogate character.
+	Therefore, they take not one, but two offsets in such a string.
+	This behavior is equivalent to how Python 2 unicode strings behave,
+	which are internally encoded as UTF-16.
+
+	For example: 😂 takes one offset in a Python 3 string.
+	However, in a Python 2 string or UTF-16 encoded wide string,
+	this character internally consists of two characters: \ud83d and \ude02.
 	"""
 
 	_encoding: str = "utf_16_le"
 	_bytesPerIndex: int = ctypes.sizeof(ctypes.c_wchar)
 
-	def __init__(self, strVal: str):
-		super(WideStringOffsetConverter, self).__init__()
-		if not isinstance(strVal, str):
+	def __init__(self, text: str):
+		super().__init__()
+		if not isinstance(text, str):
 			raise TypeError("Value must be of type str")
-		self.decoded: str = strVal
-		self.encoded: bytes = strVal.encode(self._encoding, errors="surrogatepass")
+		self.decoded: str = text
+		self.encoded: bytes = text.encode(self._encoding, errors="surrogatepass")
 
 	def __repr__(self):
 		return "{}({})".format(self.__class__.__name__, repr(self.decoded))
 
 	@property
 	def wideStringLength(self) -> int:
+		"""Returns the length of the string in its wide character (UTF-16) representation."""
 		return len(self.encoded) // self._bytesPerIndex
 
 	@property
 	def strLength(self) -> int:
+		"""Returns the length of the string in its pythonic string representation."""
 		return len(self.decoded)
 
 	def strToWideOffsets(
@@ -79,6 +93,22 @@ class WideStringOffsetConverter:
 		wideStringEnd: int,
 		strict: bool = False
 	) -> Tuple[int, int]:
+		r"""
+		This method takes two offsets from the wide character representation
+		of the string the object is initialized with, and converts them to str offsets.
+		wideStringEnd is considered an exclusive offset.
+		If either wideStringStart or wideStringEnd corresponds with an offset
+		in the middel of a surrogate pair, it is yet counted as one offset in the string.
+		For example, when L{decoded} is "😂",
+		this method returns (0, 1) in all of the following cases:
+			* wideStringStart=0, wideStringEnd=1
+			* wideStringStart=0, wideStringEnd=2
+			* wideStringStart=1, wideStringEnd=2
+		However, wideStringStart=1, wideStringEnd=1 results in (0, 0)
+		"""
+		# Obtimisation
+		if wideStringStart == 0 and wideStringEnd == 0:
+			return (0, 0)
 		if wideStringStart > self.wideStringLength:
 			if strict:
 				raise IndexError("Encoding aware start index out of range")
@@ -89,12 +119,8 @@ class WideStringOffsetConverter:
 			wideStringEnd = min(wideStringEnd, self.wideStringLength)
 		bytesStart: int = wideStringStart * self._bytesPerIndex
 		bytesEnd: int = wideStringEnd * self._bytesPerIndex
-		if bytesStart == 0:
-			precedingStr: str = ""
-			strStart: int = 0
-		else:
-			precedingStr= self.encoded[:bytesStart].decode(self._encoding, errors="surrogatepass")
-			strStart= len(precedingStr)
+		precedingStr= self.encoded[:bytesStart].decode(self._encoding, errors="surrogatepass")
+		strStart= len(precedingStr)
 		if bytesStart == bytesEnd and bytesEnd <= (len(self.encoded) - self._bytesPerIndex):
 			# Though we are trying to fetch str offsets for a single offset,
 			# we need to make sure to avoid off by one errors caused by surrogates

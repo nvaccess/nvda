@@ -130,6 +130,10 @@ class getTextExStruct(ctypes.Structure):
 	]
 
 class getTextLengthExStruct(ctypes.Structure):
+	"""
+	For documentation, see:
+	https://docs.microsoft.com/en-us/windows/desktop/api/richedit/ns-richedit-_gettextlengthex
+	"""
 	_fields_=[
 		('flags',ctypes.wintypes.DWORD),
 		('codepage',ctypes.c_uint),
@@ -321,7 +325,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryText(self):
 		if controlTypes.STATE_PROTECTED in self.obj.states:
-			return u'*'*(self._getStoryLength()-1)
+			return u'*' * (self._getStoryLength() - 1)
 		return self.obj.windowText
 
 	def _getStoryLength(self):
@@ -339,40 +343,61 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				textLen=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+			# Py3 review: investigation with Python 2 NVDA revealed that
+			# adding 1 to this creates an off by one error.
+			# Tested using Wordpad, enforcing EditTextInfo as the textInfo implementation.
 			return textLen+1
 		else:
+			# ForWM_GETTEXTLENGTH documentation, see
+			# https://docs.microsoft.com/en-us/windows/desktop/winmsg/wm-gettextlength
+			# It tetermines the length, in characters, of the text associated with a window.
+			# Py3 review: investigation with Python 2 NVDA revealed that
+			# adding 1 to this created an off by one error.
+			# Tested using Notepad
 			return watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
 
 	def _getLineCount(self):
 		return self.obj.windowTextLineCount
 
 	def _getTextRange(self,start,end):
-		if self.obj.editAPIVersion>=2:
-			bufLen=((end-start)+1)*2
-			# Even though this can return unicode text, we use the ansi version of the structure.
+		if self.obj.editAPIVersion >= 2:
+			# Calculate a buffer size that is twice the size of the text range and a NULL terminating character.
+			# As unicode characters are two bytes in size,
+			# this ensures that our buffer can hold both ANSI and unicode character strings.
+			bufLen = ((end - start) + 1) * 2
+			# Even though this can return unicode text, we use the ANSI version of the structure.
 			# Using the unicode structure isn't strictly necessary and saves us some confusion
-			textRange=TextRangeAStruct()
-			textRange.chrg.cpMin=start
-			textRange.chrg.cpMax=end
-			processHandle=self.obj.processHandle
-			internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			textRange = TextRangeAStruct()
+			textRange.chrg.cpMin = start
+			textRange.chrg.cpMax = end
+			processHandle = self.obj.processHandle
+			internalBuf = winKernel.virtualAllocEx(processHandle, None, bufLen, winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 			try:
-				textRange.lpstrText=internalBuf
-				internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+				textRange.lpstrText = internalBuf
+				internalTextRange = winKernel.virtualAllocEx(processHandle, None, ctypes.sizeof(textRange), winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 				try:
-					winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-					res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
+					winKernel.writeProcessMemory(processHandle, internalTextRange, ctypes.byref(textRange), ctypes.sizeof(textRange), None)
+					# EM_GETTEXTRANGE returns the number of characters copied,
+					# not including the terminating null character.
+					# See https://docs.microsoft.com/en-us/windows/desktop/controls/em-gettextrange
+					numChars = watchdog.cancellableSendMessage(self.obj.windowHandle, EM_GETTEXTRANGE, 0, internalTextRange)
 				finally:
-					winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-				buf=(ctypes.c_byte*bufLen)()
+					winKernel.virtualFreeEx(processHandle, internalTextRange, 0, winKernel.MEM_RELEASE)
+				buf = (ctypes.c_byte * bufLen)()
+				# Copy the text in the text range to our own buffer.
 				winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			finally:
-				winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+				winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
+			# Find out the byte size for the characters in the buffer.
 			if (
-				# The window is unicode 
+				# The window is unicode, the text range contains multi byte characters.
 				self.obj.isWindowUnicode
-				# Or the window reports being ANSI but the buffer seems to contain unicode
-				or (res>1 and (buf[res]!=0 or buf[res+1]!=0))
+				# Or the window reports being ANSI but the buffer seems to contain unicode characters.
+				# ANSI strings are terminated with one NULL terminated character.
+				# As pointed out above, numChars contains the number of characters without the null terminator.
+				# Therefore, if the string we got isn't null terminated at numCHars or numChars + 1,
+				# the buffer definitely contains multibyte characters.
+				or (numChars > 1 and (buf[numChars] != 0 or buf[numChars + 1] != 0))
 			):
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
