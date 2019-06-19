@@ -22,7 +22,7 @@ LOW_SURROGATE_LAST = u"\uDFFF"
 class WideStringOffsetConverter:
 	R"""
 	Object that holds a string in both its decoded and its UTF-16 encoded form.
-	The object allows for easy convertion between offsets in str type strings,
+	The object allows for easy conversion between offsets in str type strings,
 	and offsets in wide character (UTF-16) strings (that are aware of surrogate characters).
 	This representation is used by all wide character strings in Windows (i.e. with characters of type L{ctypes.c_wchar}).
 
@@ -65,16 +65,35 @@ class WideStringOffsetConverter:
 		self,
 		strStart: int,
 		strEnd: int,
-		strict: bool =False
+		raiseOnError: bool =False
 	) -> Tuple[int, int]:
-		if strStart > self.strLength:
-			if strict:
+		"""
+		This method takes two offsets from the str representation
+		of the string the object is initialized with, and converts them to wide character string offsets.
+		@param strStart: The start offset in the str representation of the string.
+		@param strEnd: The end offset in the str representation of the string.
+			This offset is exclusive.
+		@param raiseOnError: Raises an IndexError when one of the given offsets
+			exceeds L{strLength} or is lower than zero.
+			If C{False}, the out of range offset will be bounded to the range of the string.
+		@raise ValueError: if strEnd < strStart
+		"""
+		# Optimisation, don't do anything special if offsets are collapsed at the start.
+		if strStart == 0 and strEnd == 0:
+			return (0, 0)
+		if strEnd < strStart:
+			raise valueError(
+				"strEnd=%d must be greater than or equal to strStart=%d"
+				% (strEnd, strStart)
+			)
+		if strStart < 0 or strStart > self.strLength:
+			if raiseOnError:
 				raise IndexError("str start index out of range")
-			strStart = min(strStart, self.strLength)
-		if strEnd > self.strLength:
-			if strict:
+			strStart = max(0, min(strStart, self.strLength))
+		if strEnd < 0 or strEnd > self.strLength:
+			if raiseOnError:
 				raise IndexError("str end index out of range")
-			strEnd = min(strEnd, self.strLength)
+			strEnd = max(0, min(strEnd, self.strLength))
 		# If the original string contains surrogate characters, we want to preserve them
 		if strStart == 0:
 			wideStringStart: int = 0
@@ -91,7 +110,7 @@ class WideStringOffsetConverter:
 		self,
 		wideStringStart: int,
 		wideStringEnd: int,
-		strict: bool = False
+		raiseOnError: bool = False
 	) -> Tuple[int, int]:
 		r"""
 		This method takes two offsets from the wide character representation
@@ -99,24 +118,36 @@ class WideStringOffsetConverter:
 		wideStringEnd is considered an exclusive offset.
 		If either wideStringStart or wideStringEnd corresponds with an offset
 		in the middel of a surrogate pair, it is yet counted as one offset in the string.
-		For example, when L{decoded} is "😂",
+		For example, when L{decoded} is "😂", which is one offset in the str representation,
 		this method returns (0, 1) in all of the following cases:
 			* wideStringStart=0, wideStringEnd=1
 			* wideStringStart=0, wideStringEnd=2
 			* wideStringStart=1, wideStringEnd=2
 		However, wideStringStart=1, wideStringEnd=1 results in (0, 0)
+		@param wideStringStart: The start offset in the wide character representation of the string.
+		@param wideStringEnd: The end offset in the wide character representation of the string.
+			This offset is exclusive.
+		@param raiseOnError: Raises an IndexError when one of the given offsets
+			exceeds L{wideStringLength} or is lower than zero.
+			If C{False}, the out of range offset will be bounded to the range of the string.
+		@raise ValueError: if wideStringEnd < wideStringStart
 		"""
-		# Obtimisation
+		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if wideStringStart == 0 and wideStringEnd == 0:
 			return (0, 0)
-		if wideStringStart > self.wideStringLength:
-			if strict:
+		if wideStringEnd < wideStringStart:
+			raise valueError(
+				"wideStringEnd=%d must be greater than or equal to wideStringStart=%d"
+				% (wideStringEnd, wideStringStart)
+			)
+		if wideStringStart < 0 or wideStringStart > self.wideStringLength:
+			if raiseOnError:
 				raise IndexError("Encoding aware start index out of range")
-			wideStringStart = min(wideStringStart, self.wideStringLength)
-		if wideStringEnd > self.wideStringLength:
-			if strict:
+			wideStringStart = max(0, min(wideStringStart, self.wideStringLength))
+		if wideStringEnd < 0 or wideStringEnd > self.wideStringLength:
+			if raiseOnError:
 				raise IndexError("Encoding aware end index out of range")
-			wideStringEnd = min(wideStringEnd, self.wideStringLength)
+			wideStringEnd = max(0, min(wideStringEnd, self.wideStringLength))
 		bytesStart: int = wideStringStart * self._bytesPerIndex
 		bytesEnd: int = wideStringEnd * self._bytesPerIndex
 		precedingStr= self.encoded[:bytesStart].decode(self._encoding, errors="surrogatepass")
