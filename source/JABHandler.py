@@ -347,6 +347,11 @@ class JABContext(object):
 		else:
 			return False
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,jabContext):
 		if self.vmID!=jabContext.vmID or not bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
 			return True

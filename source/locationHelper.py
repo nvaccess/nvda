@@ -152,6 +152,10 @@ class Point(namedtuple("Point",("x","y"))):
 			return NotImplemented
 		return self.x == other.x and self.y == other.y
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		if not isinstance(other,POINT_CLASSES):
 			return NotImplemented
@@ -319,6 +323,10 @@ class _RectMixin:
 		if not isinstance(other,RECT_CLASSES):
 			return NotImplemented
 		return other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom
+
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	def __hash__(self):
+		return super().__hash__()
 
 	def __ne__(self,other):
 		if not isinstance(other,RECT_CLASSES):

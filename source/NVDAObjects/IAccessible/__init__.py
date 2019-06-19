@@ -15,6 +15,7 @@ from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
 import textInfos.offsets
+from textInfos.offsets import HIGH_SURROGATE_FIRST, HIGH_SURROGATE_LAST, LOW_SURROGATE_FIRST, LOW_SURROGATE_LAST
 import colors
 import time
 import displayModel
@@ -254,9 +255,14 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+		if HIGH_SURROGATE_FIRST <= text <= HIGH_SURROGATE_LAST or LOW_SURROGATE_FIRST <= text <= LOW_SURROGATE_LAST:
+			# #8953: Some IA2 implementations, including Gecko and Chromium,
+			# erroneously report one offset for surrogates.
+			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+		return start, end
 
 	def _getWordOffsets(self,offset):
 		try:

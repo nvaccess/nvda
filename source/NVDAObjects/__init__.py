@@ -321,6 +321,11 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			return False
 		return self._isEqual(other)
  
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		"""The opposite to L{NVDAObject.__eq__}
 		"""
