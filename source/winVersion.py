@@ -34,7 +34,6 @@ def isWin10(version=1507, atLeast=True):
 	@param version: a release version of Windows 10 (such as 1903).
 	@param atLeast: return True if NVDA is running on at least this Windows 10 build (i.e. this version or higher).
 	"""
-	return True
 	from logHandler import log
 	win10VersionsToBuilds={
 		1507: 10240,
