@@ -128,7 +128,10 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	Instead of raising a TypeError, myFunc will simply be called like this:
 	C{myFunc(a=1, b=2)}
 
-	While C{callWithSupportedKwargs} does support positional arguments (C{*args}), usage is strongly discouraged due to the
+	C{callWithSupportedKwargs} does support positional arguments (C{*args}).
+	Unfortunately, positional args can not be matched on name (keyword)
+	to the names of the params in the handler.
+	Therefore, usage is strongly discouraged due to the
 	risk of parameter order differences causing bugs.
 
 	@param func: can be any callable that is not an unbound method. EG:
@@ -149,14 +152,20 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	"""
 	sig = inspect.signature(func)
 
-	if inspect.isfunction(func) and "self" in sig.parameters:
+	if inspect.isfunction(func) and sig.parameters and list(sig.parameters)[0] == "self":
 		raise TypeError("Unbound instance methods are not handled.")
 
-	# Delete all the kwargs that are not supported by this callable.
-	# Wrap the items call in a list, as the dictionary changes during iteration.
-	for kwarg in list(kwargs.keys()):
-		if kwarg not in sig.parameters:
-			del kwargs[kwarg]
+	# Check whether func has a catch-all for kwargs (**kwargs)
+	# In this case, we do not need to filter to just the supported args.
+	if not any(
+		param for param in sig.parameters.values()
+		if param.kind == param.VAR_KEYWORD
+	):
+		# Delete all the kwargs that are not supported by this callable.
+		# Wrap the items call in a list, as the dictionary changes during iteration.
+		for kwarg in list(kwargs.keys()):
+			if kwarg not in sig.parameters:
+				del kwargs[kwarg]
 
 	boundArguments = sig.bind(*args, **kwargs)
 	return func(*boundArguments.args, **boundArguments.kwargs)
