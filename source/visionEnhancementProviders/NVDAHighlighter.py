@@ -7,7 +7,9 @@
 
 """Default highlighter based on GDI Plus."""
 
-from vision import VisionEnhancementProvider, CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE, _isDebug
+import vision
+from vision.constants import Role
+from vision.util import *
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -26,7 +28,7 @@ import weakref
 from colors import RGB
 import core
 
-# Highlighter specific contexts
+# Highlighter specific context
 #: Context for overlapping focus and navigator objects
 CONTEXT_FOCUS_NAVIGATOR = "focusNavigatorOverlap"
 
@@ -51,11 +53,11 @@ class HighlightStyle(
 	"""
 	__slots__ = ()
 
-class VisionEnhancementProvider(VisionEnhancementProvider):
+class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
-	supportedHighlightContexts = (CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE)
+	supportedContexts = (CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE)
 	_ContextStyles = {
 		CONTEXT_FOCUS: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleDash, 5),
 		CONTEXT_NAVIGATOR: HighlightStyle(RGB(0xff, 0x02, 0x66), 5, winGDI.DashStyleSolid, 5),
@@ -80,11 +82,6 @@ class VisionEnhancementProvider(VisionEnhancementProvider):
 		# highlighting the navigator object.
 		CONTEXT_NAVIGATOR: _("Highlight navigator &object"),
 	}
-	def _get_supportedSettings(self):
-		settings = []
-		for context in self.supportedHighlightContexts:
-			settings.append(self.HighlightSetting(context, self._contextOptionLabelsWithAccelerators[context]))
-		return settings
 
 	@classmethod
 	def check(cls):
@@ -126,13 +123,45 @@ class VisionEnhancementProvider(VisionEnhancementProvider):
 			self.window.destroy()
 			self.window = None
 
+	def _get_supportedSettings(self):
+		settings = []
+		for context in self.supportedHighlightContexts:
+			settings.append(driverHandler.BooleanDriverSetting(
+				'highlight%s' % (context[0].upper() + context[1:]),
+				self._contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			))
+		return settings
+
+	def updateContextRect(self, context, rect=None, obj=None):
+		"""Updates the position rectangle of the highlight for the specified context.
+		If rect and obj are C{None}, the position is retrieved from the object associated with the context.
+		Otherwise, either L{obj} or L{rect} should be provided.
+		"""
+		if context not in self.enabledContexts:
+			return
+		if rect is not None and obj is not None:
+			raise ValueError("Only one of rect or obj should be provided")
+		if rect is None:
+			try:
+				rect= getContextRect(context, obj)
+			except (LookupError, NotImplementedError):
+				rect = None
+		self.contextToRectMap[context] = rect
+
 	def refresh(self):
+		"""Refreshes the screen positions of the enabled highlights.
+		"""
 		if self.window:
 			self.window.refresh()
 
-	def updateContextRect(self, context, rect=None, obj=None):
-		super(VisionEnhancementProvider, self).updateContextRect(context, rect, obj)
-		self.refresh()
+	def _get_enabledContexts(self):
+		"""Gets the contexts for which the highlighter is enabled.
+		"""
+		return tuple(
+			context for context in self.supportedContexts
+			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
+		)
 
 class HighlightWindow(CustomWindow):
 	transparency = 0xff
