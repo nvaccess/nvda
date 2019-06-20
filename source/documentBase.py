@@ -17,6 +17,9 @@ class TextContainerObject(AutoPropertyObject):
 	E.g. NVDAObjects, BrowseModeDocument TreeInterceptors.
 	"""
 
+	#: A unique ID to represent this object.
+	uniqueID = None
+	
 	def _get_TextInfo(self):
 		raise NotImplementedError
  

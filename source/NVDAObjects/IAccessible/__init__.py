@@ -632,6 +632,7 @@ the NVDAObject for IAccessible
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
 		super(IAccessible,self).__init__(windowHandle=windowHandle)
+		self.uniqueID = (self.windowHandle, self.IA2UniqueID)
 
 		try:
 			self.IAccessibleActionObject=IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleAction)
