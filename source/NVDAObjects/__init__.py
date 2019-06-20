@@ -1277,7 +1277,7 @@ This code is executed if a gain focus event is received by this object.
 	def script_toggleReviewBounds(self, gesture):
 		rp = api.getReviewPosition()
 		try:
-			outOfBounds = rp.isOffscreen()
+			outOfBounds = rp.isOffscreen
 		except NotImplementedError:
 			ui.message(
 				# Translators: Reported when review bound configuration isn't supported for this object.

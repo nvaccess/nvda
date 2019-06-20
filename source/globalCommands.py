@@ -936,7 +936,7 @@ class GlobalCommands(ScriptableObject):
 		"""
 		newInfo = info.copy()
 		res = newInfo.move(unit, direction, endPoint=endPoint)
-		if newInfo.obj.reviewBounded and newInfo.isOffscreen():
+		if newInfo.obj.reviewBounded and newInfo.isOffscreen:
 			return (info, 0)
 		return (newInfo, res)
 
