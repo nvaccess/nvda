@@ -132,9 +132,6 @@ class VisionHandler(AutoPropertyObject):
 			log.debugWarning("Error in initial focus after provider load", exc_info=True)
 		return True
 
-	def _get_enabled(self):
-		return bool(self.providers)
-
 	def terminate(self):
 		self.extensionPoints = None
 		config.post_configProfileSwitch.unregister(self.handleConfigProfileSwitch)
@@ -142,13 +139,8 @@ class VisionHandler(AutoPropertyObject):
 			instance.terminate()
 		self.providers.clear()
 
-	def handleUpdate(self, obj):
-		if not self.enabled:
-			return
-		if obj is api.getFocusObject():
-			self.handleGainFocus(obj)
-		elif obj is api.getNavigatorObject():
-			self.handleReviewMove(context=CONTEXT_NAVIGATOR)
+	def handleUpdate(self, obj, attribute):
+		self.extensionPoints.post_objectUpdate.notify(obj=obj, attribute=attribute)
 
 	def handleForeground(self, obj):
 		self.extensionPoints.post_foregroundChange.notify(obj=obj)

@@ -18,6 +18,7 @@ class EventExtensionPoints:
 		self.post_focusChange = Action()
 		self.post_foregroundChange = Action()
 		self.post_caretMove = Action()
+		self.post_objectUpdate = Action()
 		self.post_browseModeMove = Action()
 		self.post_reviewMove = Action()
 		self.post_mouseMove = Action()

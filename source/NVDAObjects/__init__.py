@@ -1017,7 +1017,7 @@ Tries to force this object to take the focus.
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
-		vision.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="states")
 
 	def event_focusEntered(self):
 		if self.role in (controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
@@ -1059,19 +1059,19 @@ This code is executed if a gain focus event is received by this object.
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, value=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
-		vision.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="value")
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
-		vision.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="name")
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
 			speech.speakObjectProperties(self, description=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
-		vision.handler.handleUpdate(self)
+		vision.handler.handleUpdate(self, property="description")
 
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
