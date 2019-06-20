@@ -1270,10 +1270,6 @@ This code is executed if a gain focus event is received by this object.
 		"""
 		return 0
 
-	#: Whether review is constrained to the currently visible text.
-	#: @type: bool
-	reviewBounded = False
-	
 	@script(gesture="kb:NVDA+o",
 		category=scriptCategories.SCRCAT_TEXTREVIEW,
 		# Translators: A gesture description.

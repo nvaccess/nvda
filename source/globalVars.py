@@ -1,6 +1,6 @@
 #globalVars.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NVDA Contributors, Bill Dengler <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 """global variables module
@@ -18,6 +18,8 @@
 @type navigatorObject: L{NVDAObjects.NVDAObject}
 @var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
 @type navigatorTracksFocus: boolean
+@var reviewBoundsStates: maps object unique IDs to their review bounds states, needed for persistence when an object is regenerated.
+@type reviewBoundsStates: dict
 """
  
 startTime=0
@@ -32,6 +34,7 @@ mouseOldY=None
 navigatorObject=None
 reviewPosition=None
 reviewPositionObj=None
+reviewBoundsStates = dict()
 lastProgressValue=0
 appArgs=None
 appArgsExtra=None

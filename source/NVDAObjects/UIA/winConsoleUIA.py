@@ -6,6 +6,7 @@
 
 import config
 import ctypes
+import globalVars
 import NVDAHelper
 import speech
 import time
@@ -188,9 +189,6 @@ class WinConsoleUIA(Terminal):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	#: Bound review in consoles by default to maintain feature parity
-	#: with legacy
-	reviewBounded = True
 	_TextInfo = consoleUIATextInfo
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
@@ -273,5 +271,12 @@ class WinConsoleUIA(Terminal):
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
+		# Bound review in consoles by default to maintain feature parity
+		# with legacy support.
+		# There may be a better way to do this: I tried overriding __init__
+		# on the console class itself, but the console's version never
+		# got called.
+		if obj.uniqueID not in globalVars.reviewBoundsStates:
+			obj.reviewBounded = True
 	elif obj.UIAElement.cachedAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)
