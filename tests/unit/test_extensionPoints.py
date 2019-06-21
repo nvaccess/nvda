@@ -95,7 +95,7 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 
 	def test_instanceMethodHandlerTakesParamsAndKwargs_givenKwargs(self):
 		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
-		Handler takes a positional parameter and **kwargs.
+		Handler takes a parameter and **kwargs.
 		callWithSupportedKwargs given key word arguments.
 		Handler should get all values.
 		"""
@@ -112,7 +112,7 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 
 	def test_instanceMethodHandlerTakesParamsAndKwargs_givenPositional(self):
 		"""Test to ensure that a instanceMethod handler gets the correct arguments, including implicit "self"
-		Handler takes positional parameter and key word arguments.
+		Handler takes parameter and key word arguments.
 		callWithSupportedKwargs given a positional.
 		Handler should get positional.
 		"""
@@ -129,7 +129,7 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 
 	def test_instanceMethodHandlerTakesParams_givenPositional(self):
 		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
-		Handler takes a positional parameter.
+		Handler takes a parameter.
 		callWithSupportedKwargs given a positional.
 		Handler should get positional.
 		"""
