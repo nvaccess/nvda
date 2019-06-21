@@ -196,11 +196,8 @@ class WinConsoleUIA(Terminal):
 	#: Whether the console got new text lines in its last update.
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
-
-	def initOverlayClass(self):
-		# Bound consoles by default to maintain feature parity with legacy.
-		if self.uniqueID not in globalVars.reviewBoundsStates:
-			self.reviewBounded = True
+	#: Bound consoles by default to maintain feature parity with legacy.
+	_defaultReviewBounds = True
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText

@@ -33,8 +33,11 @@ class TextContainerObject(ScriptableObject):
 	def _set_selection(self,info):
 		info.updateSelection()
 
+	#: The default state for an object's review bounds.
+	_defaultReviewBounds = False
+
 	def _get_reviewBounded(self):
-		return globalVars.reviewBoundsStates.get(self.uniqueID, False)
+		return globalVars.reviewBoundsStates.get(self.uniqueID, self._defaultReviewBounds)
 
 	def _set_reviewBounded(self, state):
 		if not self.uniqueID:
