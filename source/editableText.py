@@ -48,7 +48,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
-	_caretMovementTimeoutMultiplier = 1
+	#: The caret movement timeout is multiplied by this value (useful for
+	#: controls where the caret is slow to move).
+	#: Set to a number grater than 0 to enable caret event handling
+	#: (e.g. from UIA).
+	_caretMovementTimeoutMultiplier = 0
 	
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
@@ -71,7 +75,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 		else:
 			# This function's arguments are in seconds, but we want ms.
 			timeoutMs = timeout * 1000
-		timeoutMs *= self._caretMovementTimeoutMultiplier
+		if self._caretMovementTimeoutMultiplier:
+			timeoutMs *= self._caretMovementTimeoutMultiplier
 		# time.sleep accepts seconds, so retryInterval is in seconds.
 		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
 		retryMs = int(retryInterval * 1000)
@@ -84,10 +89,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 			if eventHandler.isPendingEvents("gainFocus"):
 				log.debug("Focus event. Elapsed: %d ms" % elapsed)
 				return (True,None)
-			# Some controls implement a caret event
-			if eventHandler.isPendingEvents("caret"):
-				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-				return (True, newInfo)
+			if self._caretMovementTimeoutMultiplier:
+				# Some controls implement a caret event
+				if eventHandler.isPendingEvents("caret"):
+					newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+					return (True, newInfo)
 			# If the focus changes after this point, fetching the caret may fail,
 			# but we still want to stay in this loop.
 			try:
