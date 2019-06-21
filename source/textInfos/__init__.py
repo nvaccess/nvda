@@ -216,8 +216,6 @@ class Bookmark(baseObject.AutoPropertyObject):
 		if isinstance(other,Bookmark) and self.infoClass==other.infoClass and self.data==other.data:
 			return True
 
-	def __ne__(self,other):
-		return not self==other
 
 #Unit constants
 UNIT_CHARACTER="character"
@@ -550,9 +548,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@raise LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError
-
-	def __ne__(self, other):
-		return not self.__eq__(other)
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):

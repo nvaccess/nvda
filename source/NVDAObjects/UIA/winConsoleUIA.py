@@ -204,6 +204,9 @@ class consoleUIATextInfo(UIATextInfo):
 			min(end.value, max(1, len(lineText) - 2))
 		)
 
+	def __ne__(self,other):
+		return not self==other
+
 
 class consoleUIAWindow(Window):
 	def _get_focusRedirect(self):
@@ -232,6 +235,8 @@ class WinConsoleUIA(Terminal):
 	#: Whether the console got new text lines in its last update.
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
+	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
+	_caretMovementTimeout = 2
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
