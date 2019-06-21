@@ -200,8 +200,8 @@ class TrackerManager(object):
 		numFingers=len(childTrackers)
 		if numFingers==0: return
 		if numFingers==1: return childTrackers[0]
-		avgX=sum(t.x for t in childTrackers)/numFingers
-		avgY=sum(t.y for t in childTrackers)/numFingers
+		avgX: int = sum(t.x for t in childTrackers) // numFingers
+		avgY: int = sum(t.y for t in childTrackers) // numFingers
 		tracker=MultiTouchTracker(action_hold,avgX,avgY,childTrackers[0].startTime,time.time(),numFingers)
 		tracker.childTrackers=childTrackers
 		return tracker
@@ -257,8 +257,8 @@ class TrackerManager(object):
 			childTrackers.extend(oldTracker.childTrackers) if oldTracker.numFingers>1 else childTrackers.append(oldTracker)
 			childTrackers.extend(newTracker.childTrackers) if newTracker.numFingers>1 else childTrackers.append(newTracker)
 			numFingers=oldTracker.numFingers+newTracker.numFingers
-			avgX=sum(t.x for t in childTrackers)/numFingers
-			avgY=sum(t.y for t in childTrackers)/numFingers
+			avgX: int =sum(t.x for t in childTrackers) // numFingers
+			avgY: int = sum(t.y for t in childTrackers) // numFingers
 			mergedTracker=MultiTouchTracker(newTracker.action,avgX,avgY,oldTracker.startTime,newTracker.endTime,numFingers,newTracker.actionCount,pluralTimeout=newTracker.pluralTimeout)
 			mergedTracker.childTrackers=childTrackers
 		elif self.numUnknownTrackers==0 and newTracker.pluralTimeout is not None and newTracker.startTime>=oldTracker.endTime and newTracker.startTime<oldTracker.pluralTimeout and newTracker.action==oldTracker.action and oldTracker.numFingers==newTracker.numFingers:

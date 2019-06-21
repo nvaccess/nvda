@@ -257,11 +257,8 @@ def createStateList(states):
 def moveMouseToNVDAObject(obj):
 	"""Moves the mouse to the given NVDA object's position""" 
 	location=obj.location
-	if location and (len(location)==4):
-		(left,top,width,height)=location
-		x=(left+left+width)/2
-		y=(top+top+height)/2
-		winUser.setCursorPos(x,y)
+	if location:
+		winUser.setCursorPos(*location.center)
 
 def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
