@@ -6,7 +6,6 @@
 
 import config
 import ctypes
-import globalVars
 import NVDAHelper
 import speech
 import time
