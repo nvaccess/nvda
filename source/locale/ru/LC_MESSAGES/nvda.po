@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 00:10+1000\n"
-"PO-Revision-Date: 2019-05-24 19:44+0800\n"
+"POT-Creation-Date: 2019-05-31 00:10+1000\n"
+"PO-Revision-Date: 2019-06-06 06:55+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1740,7 +1740,7 @@ msgstr "Тип:"
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "Filter b&y:"
-msgstr "Филь&тр по:"
+msgstr "Филь&тр:"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -4073,8 +4073,8 @@ msgid ""
 "Toggles on and off automatic movement of the system focus due to browse mode "
 "commands"
 msgstr ""
-"Включает и выключает автоматическое перемещение системного фокуса вслед за "
-"командами режима обзора"
+"Включает или выключает перемещение системного фокуса вслед за курсором "
+"режима обзора"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -4123,7 +4123,7 @@ msgstr "Загружен модуль %s. "
 #. For example, the complete message for Windows explorer is: "explorer module is loaded. Explorer.exe is currenty running."
 #, python-format
 msgid " %s is currently running."
-msgstr "Работает приложение %s."
+msgstr "Работает приложение %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4523,23 +4523,21 @@ msgstr ""
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-msgid ""
-"Can't change the active configuration profile while an NVDA dialog is open"
+msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"Невозможно изменить активный профиль конфигурации, пока открыто диалоговое "
-"окно NVDA"
+"Невозможно изменить активный профиль, пока открыто диалоговое окно NVDA"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually deactivated"
-msgstr "Профиль конфигурации {profile} деактивирован"
+msgid "{profile} profile deactivated"
+msgstr "Профиль {profile} деактивирован"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually activated"
-msgstr "Профиль конфигурации {profile} активирован"
+msgid "{profile} profile activated"
+msgstr "Профиль {profile} активирован"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -7539,7 +7537,8 @@ msgstr "Включает и выключает эмуляцию HID-клавиа
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate"
 
-#. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+#. Translators: The name of a key on a braille display, that scrolls the display
+#. to show previous/next part of a long line.
 msgid "display scroll"
 msgstr "прокрутка экрана"
 
@@ -7648,7 +7647,7 @@ msgstr ""
 #. (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"Диалог настроек NVDA уже открыт. Для открытия другого диалога, пожалуйста, "
+"Диалог настроек NVDA уже открыт. Перед открытием нового диалога, пожалуйста, "
 "сначала закройте первый."
 
 #. Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
@@ -9210,7 +9209,7 @@ msgstr "Использовать &экранное представление (�
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
 msgid "&Enable browse mode on page load"
-msgstr "Включать &режим обзора при загрузке страницы"
+msgstr "Активировать &режим обзора при загрузке страницы"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9715,7 +9714,7 @@ msgstr "Произношение символов (%s)"
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr "Филь&тр по:"
+msgstr "Филь&тр:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -9762,7 +9761,7 @@ msgstr "Жесты ввода"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "&Фильтр по:"
+msgstr "Филь&тр:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -11337,16 +11336,3 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
-
-#~ msgid "Currently running application is %s"
-#~ msgstr "Работает приложение %s"
-
-#~ msgid " and currently loaded module is %s"
-#~ msgstr " для которого загружен модуль %s"
-
-#~ msgid ""
-#~ "All add-ons are currently disabled. To enable add-ons you must restart "
-#~ "NVDA."
-#~ msgstr ""
-#~ "Все дополнения в настоящее время отключены. Для их включения, необходимо "
-#~ "перезапустить NVDA."

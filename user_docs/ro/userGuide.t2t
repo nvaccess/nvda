@@ -256,7 +256,7 @@ Când se deschide meniul, puteți folosi săgețile direcționale pentru navigar
 
 ++ Comenzi NVDA de bază ++[BasicNVDACommands]
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Atingere | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Atingere | Descriere |
 | Oprește vorbire | Control | control | atingere cu 2 degete | Oprește imediat vorbirea |
 | Pauză pentru vorbire | Shift | Shift | fără | Pune vorbirea pe pauză imediat. Apăsând încă o dată va continua să vorbească de unde a rămas (dacă pauza este suportată de sintetizatorul curent) |
 | Meniu NVDA | NVDA+n | NVDA+n | atingere dublă cu 2 degete | Afișează meniul NVDA pentru a vă permite să accesați preferințe, instrumente, ajutor, etc |
@@ -291,7 +291,7 @@ Când faceți asta, NVDA va raporta informația despre obiectul focalizat, cum a
 
 Există câteva comenzi din taste care sunt utile când vă deplasați cu focalizarea sistemului:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Descriere |
 | Raportează focalizarea curentă | NVDA+tab | NVDA+tab | Anunță obiectul sau controlul curent focalizat. Apăsând de două ori va pronunța pe litere informația |
 | Raportează titlu | NVDA+t | NVDA+t | Anunță titlul ferestrei active. Apăsând de două ori va pronunța pe litere informația. Apăsând de trei ori o va copia pe planșetă |
 | Citește fereastra activă | NVDA+b | NVDA+b | Citește toate controalele din fereastra curent activă (util pentru ferestrele de dialog) |
@@ -307,7 +307,7 @@ NVDA va anunța când vă deplasați cu un caracter, cuvânt sau rând, și va a
 
 NVDA oferă următoarele comenzi din taste în relație cu cursorul de scriere al sistemului:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Descriere |
 | Pronunță tot | NVDA+săgeată jos | NVDA+a | Începe citirea din poziția curentă a cursorului de scriere, deplasându-l pe măsură ce înaintează |
 | Citește rândul curent | NVDA+săgeată sus | NVDA+l | Citește rândul unde se află cursorul de scriere. Apăsând de două ori pronunță caracterele rândului. Apăsând de trei ori citește rândul utilizând descrieri de caractere. |
 | Citește textul selectat | NVDA+Shift+săgeată sus | NVDA+shift+s | Citește orice text selectat |
@@ -353,7 +353,7 @@ Dacă vreți ca braille să urmărească în schimb navigarea prin obiect și ex
 Pentru a naviga prin obiecte, folosiți următoarele taste:
 
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Atingere | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Atingere | Descriere |
 | Raportează obiectul curent | NVDA+numpad5 | NVDA+shift+o | fără | Raportează obiectul navigator curent. Apăsând de două ori pronunță pe litere informația și apăsând de trei ori copiază în planșetă numele și valoarea obiectului. |
 | Navighează la obiectul conținător | NVDA+numpad8 | NVDA+shift+săgeată sus | glisează brusc sus (mod obiect) | Navighează la obiectul care îl conține pe obiectul navigator curent |
 | Navighează la obiectul anterior | NVDA+numpad4 | NVDA+shift+săgeată stânga | glisează brusc stânga (mod obiect) | Navighează la obiectul anterior obiectului navigator curent |
@@ -381,7 +381,7 @@ Dacă doriți să urmărească navigarea prin obiecte și descrierea textului, t
 
 Următoarele comenzi din taste sunt disponibile pentru examinarea textului:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Atingere | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Atingere | Descriere |
 | Mută la primul rând în descriere | shift+numpad7 | NVDA+control+home | fără | Mută cursorul de examinare la primul rând din text |
 | Mută la rândul anterior din descriere | numpad7 | NVDA+săgeată sus | glisează brusc sus (mod text) | Mută cursorul de examinare la rândul anterior din text |
 | Raportează rândul curent în descriere | numpad8 | NVDA+shift+. | fără | Anunță rândul curent din text unde se află cursorul de examinare. Apăsând de două ori, pronunță pe cuvinte rândul. Apăsând de trei ori pronunță rândul folosind descrierea caracterelor. |
@@ -415,7 +415,7 @@ Modurile de examinare înlocuiesc conceptul mai vechi de „Examinare uniformă�
 
 Următoarele comenzi sunt folosite pentru schimbarea între modurile de examinare:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Atingere | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Atingere | Descriere |
 | Comută la următorul mod de examinare | NVDA+numpad7 | NVDA+pageUp | glisează brusc sus cu 2 degete | Comută la următorul mod de examinare disponibil. |
 | Comută la modul de examinare anterior | NVDA+numpad1 | NVDA+pageDown | glisează brusc jos cu 2 degete | Comută la anteriorul mod de examinare disponibil. |
 %kc:endInclude
@@ -459,7 +459,7 @@ Dacă doriți să profitați de ele, le puteți configura din categoria [Setări
 
 Cu toate că un dispozitiv fizic de maus sau un trackpad ar trebui folosit pentru navigarea cu mausul, NVDA are câteva comenzi din taste asociate mausului:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Descriere |
 | clic pe butonul stânga al mausului | numpad Împărțire | NVDA+[ | face clic o dată pe butonul stânga al mausului. Obișnuitul dublu clic poate fi realizat apăsând această tastă de două ori rapid |
 | Blocarea butonului stânga al mausului | shift+numpad Împărțire | NVDA+control+[ | Blochează butonul stânga al mausului pe apăsat. Apăsați încă o dată pentru deblocare. Pentru a trage mausul, apăsați această tastă pentru blocarea butonului stânga al mausului și apoi mișcați mausul fie fizic, fie folosind una dintre celelalte comenzi de emulare a mausului |
 | clic pe butonul dreapta al mausului | numpadÎnmulțire | NVDA+] | Face clic o dată pe butonul dreapta al mausului. |
@@ -1135,7 +1135,7 @@ Atenuarea audio nu este suportată pentru copiile portabile sau temporare ale NV
 +++ Inelul setărilor sintetizatorului +++[InelSetariSintetizator]
 Dacă doriți să schimbați rapid setările vocii fără să intrați în fereastra de dialog pentru setările vocii, există câteva comenzi NVDA din taste care vă permit să accesați cele mai comune setări pentru vorbire de oriunde, când rulați NVDA:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Descriere |
 | Trece la setarea următoare a sintetizatorului | NVDA+control+săgeată dreapta | NVDA+shift+control+săgeată dreapta | Trece la următoare setare disponibilă pentru vorbire după cea curentă, selectând din nou prima setare după ce trece de ultima |
 | Trece la setarea anterioară a sintetizatorului | NVDA+control+săgeată stânga | NVDA+shift+control+săgeată stânga | Trece la următoarea setare disponibilă pentru vorbire înainte de cea curentă, selectând ultima setare după ce trece de prima |
 | Crește setarea curentă a sintetizatorului | NVDA+control+săgeată sus | NVDA+shift+control+săgeată sus | Crește setarea curentă a vorbirii. De exemplu crește viteza, alege vocea următoare, crește volumul |
@@ -1726,7 +1726,7 @@ De asemenea, puteți să reveniți la configurația inițială a aplicației, al
 
 Și următoarele comenzi NVDA din taste sunt utile:
 %kc:beginInclude
-|| Nume | Tastă birou | Tastă laptop | Descriere |
+|| Nume | Tastă desktop | Tastă laptop | Descriere |
 | Salvează configurație | NVDA+control+c | NVDA+control+c | Salvează configurația dv. curentă pentru a nu fi pierdută când închideți NVDA |
 | Revino la configurația salvată | NVDA+control+r | NVDA+control+r | Apăsând o dată, reface setările NVDA care existau când ați salvat ultima dată configurația NVDA. Apăsând de trei, va reveni la configurația inițială a aplicației. |
 %kc:endInclude

@@ -151,7 +151,10 @@ UIAEventIdsToNVDAEventNames={
 }
 
 if winVersion.isWin10():
-	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+	UIAEventIdsToNVDAEventNames.update({
+		UIA_Text_TextChangedEventId: "textChange",
+		UIA_Text_TextSelectionChangedEventId:"caret"
+	})
 
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
