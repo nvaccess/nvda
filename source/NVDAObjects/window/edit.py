@@ -257,7 +257,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["font-name"]=charFormat.szFaceName
 		if formatConfig["reportFontSize"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
+			# Font size is supposed to be an integral value
+			formatField["font-size"]="%spt"%(charFormat.yHeight//20)
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)

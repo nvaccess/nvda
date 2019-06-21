@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited
+#Copyright (C) 2008-2019 NV Access Limited, Leonard de Ruijter
 
 import watchdog
 
@@ -99,8 +99,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		#: @type: dict
 		self._namespaceSnapshotVars = None
 
-		# Can't use super here because stupid code.InteractiveConsole doesn't sub-class object. Grrr!
-		code.InteractiveConsole.__init__(self, locals=self.namespace, **kwargs)
+		super().__init__(locals=self.namespace, **kwargs)
 		self.prompt = ">>>"
 
 	def _set_prompt(self, prompt):
@@ -121,11 +120,23 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		sys.stdout = sys.stderr = self
 		# Prevent this from messing with the gettext "_" builtin.
 		saved_ = builtins._
-		more = code.InteractiveConsole.push(self, line)
+		more = super().push(line)
 		sys.stdout, sys.stderr = stdout, stderr
 		builtins._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
+
+	def showsyntaxerror(self, filename=None):
+		excepthook = sys.excepthook
+		sys.excepthook = sys.__excepthook__
+		super().showsyntaxerror(filename=filename)
+		sys.excepthook = excepthook
+
+	def showtraceback(self):
+		excepthook = sys.excepthook
+		sys.excepthook = sys.__excepthook__
+		super().showtraceback()
+		sys.excepthook = excepthook
 
 	def updateNamespaceSnapshotVars(self):
 		"""Update the console namespace with a snapshot of NVDA's current state.
