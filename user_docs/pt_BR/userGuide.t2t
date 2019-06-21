@@ -472,7 +472,18 @@ Ainda que um mouse físico ou um trackpad ""[bloco de rastreio]"" precisem ser u
 
 + Modo de Navegação +[BrowseMode]
 Documentos complexos somente leitura, tais como páginas Web, são navegados pelo NVDA usando o modo de Navegação.
-Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensagens em HTML no Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+Isso inclui documentos nos seguintes aplicativos:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Mensagens HTML no Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Livros suportados no Amazon Kindle para PC
+-
 O modo de navegação também encontra-se disponível opcionalmente para documentos no Microsoft Word.
 
 No modo de navegação, o conteúdo do documento é disposto numa representação plana que pode ser navegada com as teclas do cursor como se ele fosse um documento de texto qualquer.
@@ -493,7 +504,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 | Alternar entre modos de navegação/foco | NVDA+espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | escape | Volta para o modo de navegação se o modo de foco foi anteriormente ativado automaticamente |
 | Atualizar Documento do Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se determinado conteúdo parece estar ausente do documento. Não disponível no Microsoft Word e Outlook.) |
-| Procurar | NVDA+control+f | Abre um diálogo onde você pode digitar algum texto para procurar no documento atual |
+| Procurar | NVDA+control+f | Abre um diálogo onde você pode digitar algum texto para procurar no documento atual. Veja [procurando por texto #SearchingForText] para mais informações. |
 | Procurar seguinte | NVDA+f3 | Procura pela próxima ocorrência de texto já procurada no documento |
 | Procurar anterior | NVDA+shift+f3 | Procura pela ocorrência de texto anterior já procurada no documento |
 | Abrir descrição longa | NVDA+d | Abre uma nova janela contendo a descrição longa para o elemento sobre o qual você se encontra caso ele possua alguma. |
@@ -550,6 +561,22 @@ Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Lista de elementos do Modo de Navegação | NVDA+f7 | Lista vários tipos de elementos no documento atual |
+%kc:endInclude
+
+++ Procurando por texto ++[SearchingForText]
+Esta caixa de diálogo permite procurar termos no documento atual.
+No campo "Digite o texto que você deseja localizar", o texto a ser localizado pode ser digitado.
+No campo de texto, você também pode usar as setas para cima e para baixo para selecionar termos pesquisados anteriormente.
+A caixa de seleção "Distinguir maiúsculas e minúsculas" faz a pesquisa considerar letras maiúsculas e minúsculas de maneira diferente.
+Por exemplo, com "Distinguir maiúsculas e minúsculas" selecionada, você pode localizar "NV Access", mas não "nv access".
+As diferenças de caixa não serão salvas no histórico de pesquisa.
+Quando o NVDA é reiniciado, a lista de termos pesquisados anteriores é apagada.
+Use as seguintes teclas para realizar pesquisas:
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Localizar texto | NVDA+control+f | Abre o diálogo de pesquisa |
+| Localizar próximo | NVDA+f3 | procura a próxima ocorrência do termo de pesquisa atual |
+| Localizar anterior | NVDA+shift+f3 | procura a ocorrência anterior do termo de pesquisa atual |
 %kc:endInclude
 
 ++ Objetos Embutidos ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Esta é uma caixa de seleção que quando marcada faz com que o NVDA anuncie o t
 Se o NVDA estiver configurado para anunciar o texto sob o ponteiro do mouse à medida que o move, esta opção permite escolher exatamente quanto texto será anunciado.
 As opções são caractere, palavra, linha e parágrafo.
 
+Para alternar a resolução da unidade de texto de qualquer lugar, por favor, atribua um comando ""[gesto]"" personalizado usando o [diálogo Definir Comandos #InputGestures].
+
 ==== Anunciar função [tipo] do objeto quando o mouse entra nele ====[MouseSettingsRole]
 Se essa caixa de seleção estiver ativada, o NVDA anunciará a função (tipo) do objeto quando o mouse se mover dentro dele.
 
@@ -1503,7 +1532,15 @@ Este campo define a quantidade de linhas a mover-se quando pressionar Page Up ou
 ==== Usar Apresentação da Tela ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
-Esta opção permite definir se o conteúdo no modo de navegação deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela. Se a opção estiver marcada, os elementos ficarão como aparecem visualmente. Mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
+Esta opção permite definir se o conteúdo no modo de navegação deve posicionar os elementos como links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto tal como aparece na tela.
+Se a opção estiver marcada, os elementos ficarão como aparecem visualmente, mas se estiver desmarcada, os campos serão colocados numa linha separadamente.
+
+==== Ativar o modo de navegação no carregamento da página ====[BrowseModeSettingsEnableOnPageLoad]
+Essa caixa de seleção define se o modo de navegação deve ser ativado automaticamente ao carregar uma página.
+Quando esta opção está desativada, o modo de navegação ainda pode ser ativado manualmente em páginas ou em documentos nos quais o modo de navegação é suportado.
+Veja a [seção Modo de Navegação #BrowseMode] para obter uma lista de aplicativos suportados pelo modo de navegação.
+Observe que esta opção não se aplica a situações em que o modo de navegação é sempre opcional, por exemplo no Microsoft Word.
+Essa opção está ativada por padrão.
 
 ==== Leitura Contínua Automática ao Carregar a Página ====[BrowseModeSettingsAutoSayAll]
 Essa caixa de seleção alterna a leitura automática duma página depois que ela é carregada no Modo de Navegação.
@@ -1633,6 +1670,16 @@ Isso implica no próprio Microsoft Word, e também o visualizador de mensagens e
 No entanto, pode haver algumas informações que não são expostas ou expostas incorretamente em algumas versões do Microsoft Office, o que significa que esse suporte de UI automation nem sempre pode ser invocado.
 Ainda não recomendamos que a maioria dos usuários ative isso por padrão, embora acolhemos os usuários do Office 2016/365 para testar esse recurso e fornecer retroinformação ""[feedback]"".
 
+==== Definir automaticamente o foco do sistema para elementos que podem ser focalizados no Modo de Navegação ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tecla: NVDA+8
+
+Habilitada por padrão, essa opção permite escolher se o foco do sistema deve ser definido automaticamente para elementos que podem levar o foco do sistema (links, campos de formulário, etc.) ao navegar pelo conteúdo com o cursor do modo de navegação.
+Se ativado, isso representa o comportamento padrão do NVDA a partir da versão 2019.1 e anteriores.
+Desativar essa opção não irá focalizar automaticamente os elementos que podem ser focalizados quando eles são selecionados com o cursor de modo de navegação.
+Isso pode resultar em uma experiência de navegação mais rápida e melhor capacidade de resposta no modo de navegação.
+O foco ainda será atualizado para o elemento específico ao interagir com ele (por exemplo, pressionar um botão, marcar uma caixa de seleção).
+Esta funcionalidade é experimental a partir do NVDA 2019.2.
+
 ==== Tempo limite de movimento do cursor (em MS) ====[AdvancedSettingsCaretMoveTimeout]
 Essa opção permite-lhe configurar o número de milissegundos que o NVDA irá aguardar até que o cursor (ponto de inserção) se mova em controles de texto editáveis.
 Se você achar que o NVDA parece estar rastreando incorretamente o cursor, por exemplo parece estar sempre um caractere por trás ou está repetindo linhas, então você pode tentar aumentar esse valor.
@@ -1686,6 +1733,7 @@ O idioma para o qual a pronúncia do símbolo está sendo editada será mostrado
 Note que esse diálogo respeita a opção "Confiar no idioma da voz ao processar caracteres e símbolos" encontrada na [categoria Fala #SpeechSettings] do diálogo de [Configurações do NVDA #NVDASettings]; isto é, ele usa o idioma da voz ao invés de usar o idioma da configuração geral do NVDA quando esta opção está habilitada.
 
 Para mudar um símbolo, selecione-o na lista de símbolos.
+Você pode filtrar os símbolos inserindo o símbolo ou uma parte da substituição do símbolo na caixa de edição Filtrar por.
 
 - O campo de substituição permite que você altere o texto que será falado no lugar do símbolo.
 - Através do campo grau ""[nível]"" você poderá definir o grau de símbolos mais baixo no qual este será falado.
@@ -1751,7 +1799,7 @@ O NVDA lhe permite fazer isso usando os perfis de configuração.
 Um perfil de configuração contém somente aquelas opções que são alteradas enquanto o perfil está sendo editado.
 Maior parte das opções pode ser alterada em perfis de configuração, com exceção àquelas da categoria Geral das [Configurações do NVDA #NVDASettings], as quais aplicam-se a todo o NVDA.
 
-Os perfis de configuração podem ser ativados manualmente.
+Os perfis de configuração podem ser ativados manualmente a partir de uma caixa de diálogo ou usando comandos ""[gestos]"" adicionados personalizados.
 Podem também ser ativados automaticamente através dos disparadores, como quando se alterna para um aplicativo em particular.
 
 +++ Gerenciamento Básico +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Por exemplo, você pode querer editar um perfil ativado manualmente ou sua confi
 é possível fazer isso marcando a caixa de seleção Desabilitar Temporariamente Todos os Disparadores no diálogo de Perfis de Configuração.
 
 Para alternar a desativação dos disparadores de qualquer lugar, por favor, atribua um comando personalizado usando o [diálogo Definir Comandos #InputGestures].
+
++++ Ativando um perfil usando comandos definidos [gestos de entrada] +++[ConfigProfileGestures]
+Para cada perfil adicionado, você pode atribuir um ou mais comandos ""[gestos de entrada]"" para ativá-lo.
+Por padrão, os perfis de configuração não possuem comandos ""[gestos de entrada]"" atribuídos.
+Você pode adicionar comandos ""[gestos]"" para ativar um perfil usando o [diálogo Definir Comandos #InputGestures].
+Cada perfil tem sua própria entrada na categoria de perfis de configuração.
+Quando você renomeia um perfil, qualquer comando ""[gesto]"" adicionado anteriormente ainda estará disponível.
+A remoção de um perfil excluirá automaticamente os comandos ""[gestos]"" associados a ele.
 
 ++ Localização dos Arquivos de Configuração ++[LocationOfConfigurationFiles]
 Versões portáteis do NVDA armazenam todas as configurações e complementos numa pasta chamada userConfig que se pode encontrar na pasta do NVDA.
@@ -1999,13 +2055,11 @@ Todas as linhas Focus e PAC Mate da [Freedom Scientific https://www.freedomscien
 Será necessário instalar os drivers ""[controladores]"" para as linhas Braille da Freedom Scientific em seu sistema.
 Se ainda não tem os mesmos, pode obtê-los em https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Embora essa página mencione somente a linha Focus Blue, os drivers suportam todas as linhas focus e Pacmate da Freedom Scientific.
-Se seu sistema estiver executando o Windows de 64 bit e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers desse link, pois os arquivos requeridos pelo NVDA provavelmente não foram instalados pelo outro leitor de telas.
 
 Por padrão, o NVDA pode detectar e conectar-se automaticamente a essas linhas tanto via USB como por bluetooth.
 Todavia, ao configurar a linha, é possível escolher explicitamente as portas "USB" ou "Bluetooth" para restringir o tipo de conexão a ser usada.
 Isto pode ser útil se você deseja conectar as linhas focus ao NVDA usando o bluetooth, mas ainda conseguir carregá-la usando a energia USB do seu computador.
-
-Essas linhas ainda não suportam a funcionalidade automática de detecção de linha braille em segundo plano do NVDA.
+A detecção automática de linhas braille do NVDA também reconhecerá as linhas em USB ou Bluetooth.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
 Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.

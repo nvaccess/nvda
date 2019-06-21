@@ -29,7 +29,7 @@ Af væsentlige funktioner kan nævnes:
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
 - Kan køre på Windows logon skærmen og andre beskyttede skærme
 - Oplæsning af kontroller og tekst, når der benyttes touch-bevægelser
-- Understøttelse af almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
+- Understøttelse af fælles tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
 - Understøtter Windows kommandoprompt og konsolapplikationer
 -
 
@@ -146,7 +146,7 @@ Hvis du har installeret NVDA med installationsprogrammet, kan du blot starte NVD
 Derudover kan du skrive NVDA i dialogboksen Kør og trykke på Enter.
 Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) deaktivere tilføjelsesprogrammer fra (--disable-addons) osv.
 
-For installerede kopier, vil konfigurationen af NVDA blive gemt i roaming application data mappen af den aktuelle bruger som standard (f.eks. "C:\Users\<user>\AppData\Roaming").
+For installerede kopier, vil konfigurationen af NVDA blive gemt i mappen roaming application data for den aktuelle bruger som standard (f.eks. "C:\Users\<user>\AppData\Roaming").
 Det er muligt at ændre dette således NVDA indlæser konfigurationen fra den lokale application data mappe i stedet.
 Læs afsnittet [systemspecifikke parametre #SystemWideParameters] for flere detaljer.
 
@@ -472,8 +472,19 @@ Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen,
 
 + Gennemsynstilstand +[BrowseMode]
 Komplekse dokumenter, der ikke kan redigeres, fx. web-sider, bliver præsenteret med NVDA i gennemsynstilstand.
-Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader og Adobe Flash.
-Gennemsynstilstand kan også bruges i Microsoft Word-dokumenter.
+Dette omfatter dokumenter i følgende applikationer:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML-meddelelser i Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Understøttede bøger i Amazon Kindle for PC
+-
+Gennemsynstilstand kan også valgfrit bruges i Microsoft Word-dokumenter.
 
 Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var et normalt dokument.
 Alle NVDAs kommandoer til [systemmarkør #SystemCaret] fungerer i denne tilstand; fx. læs alt, rapportér tekstformatering, kommandoer til navigering af tabeller, osv.
@@ -493,7 +504,7 @@ Derudover kan du også manuelt tvinge NVDA i fokustilstand, hvorefter tilstanden
 | Skift mellem gennemsyns- og fokustilstand | NVDA+Mellemrum | Skifter mellem gennemsynstilstand og fokustilstand |
 | Forlad fokustilstand | Escape | Skifter tilbage til gennemsynstilstand, hvis NVDA havde skiftet automatisk til fokustilstand |
 | Opdater dokument i gennemsynstilstand | NVDA+f5 | Genindlæser det aktuelle dokument. (Kan være nyttigt, hvis noget af indholdet synes at mangle. Ikke tilgængelig i Microsoft Word og Outlook.) |
-| Søg | NVDA+Ctrl+f | Viser en dialog, hvor du kan indtaste den tekst, du vil søge efter i det aktuelle dokument |
+| Søg | NVDA+Ctrl+f | Viser en dialog, hvor du kan indtaste den tekst, du vil søge efter i det aktuelle dokument. Læs [søg efter tekst #SearchingForText] for mere information. |
 | Find næste | NVDA+f3 | Finder næste forekomst i dokumentet af den tekst, du tidligere har søgt efter |
 | Find forrige | NVDA+Shift+F3 | Finder forrige forekomst i dokumentet af den tekst, du tidligere har søgt efter |
 | Åbn lang beskrivelse | NVDA+d | Åbner et nyt vindue, som indeholder en lang beskrivelse for det element, du står på, hvis elementet har en. | 
@@ -550,6 +561,22 @@ Når du har valgt et element, kan du bruge knapperne i dialogen til at flytte ti
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
 | Elementliste i gennemsynstilstand | NVDA+f7 | Giver Element listen som indeholder forskellige elementer i det nuværende dokument |
+%kc:endInclude
+
+++ Søg efter tekst ++[SearchingForText]
+Denne dialog lader dig søge efter tekst i det aktuelle dokument.
+I feltet "Skriv teksten, du ønsker at finde" kan du indtaste den tekst, du vil søge efter.
+Når du befinder dig i tekstfeltet, kan du også bruge pilene op og ned for at flytte imellem tidligere søgninger.
+Boksen "Forskel på store og små bogstaver" bestemmer omsøgningen skal tage forbehold for store og små bogstaver.
+F.eks. hvis boksen er valt, kan du finde "NV Access" men ikke "nv access".
+Forskellen på store og små bogstaver vil ikke blive gemt i søgehistorikken.
+Når NVDA genstartes, ryddes den aktuelle søgehistorik.
+Brug følgende kommandoer for at udføre en søgning:
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Find tekst | NVDA+control+f | Åbner søgedialogen |
+| Find næste | NVDA+f3 | Søger efter den næste forekomst af den aktuelle søgning |
+| Find forrige | NVDA+shift+f3 | Søger efter den forrige forekomst af den aktuelle søgning |
 %kc:endInclude
 
 ++ Indlejrede objekter ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Når denne funktion er slået til, oplæser NVDA den tekst, der i øjeblikket be
 Hvis NVDA er indstillet til at oplæse teksten under musen, når du flytter med den, giver denne indstilling mulighed for at bestemme præcist, hvor meget tekst der skal læses op.
 Indstillingsmulighederne er tegn, ord, linje og afsnit.
 
+For at ændre opløsning for tekstenhed fra hvor som helst, kan du tildele en kommando via [dialogen Inputbevægelser #InputGestures].
+
 ==== Oplæs rolle når musen flyttes ind over et objekt ====[MouseSettingsRole]
 Hvis denne check box er markeret, oplæser NVDA rollen (typen) på objektet, når musen bevæger sig ind i det pågældende objekt.
 
@@ -1503,7 +1532,15 @@ Med dette felt kan du indstille, hvor mange linjer du springer ad gangen, når d
 ==== Brug skærmlayout ====[BrowseModeSettingsScreenLayout]
 Tast: NVDA+v
 
-Med denne indstilling kan du vælge, om NVDA i gennemsynstilstand skal placere links og andre felter på hver sin linje, eller om de skal beholdes i den løbende tekst, sådan som det bliver vist på skærmen. Hvis denne indstilling er slået til, vil alting blive vist ligesom på skærmen, men hvis den er slået fra, vil links og felter blive vist på deres eegen linje.
+Med denne indstilling kan du vælge, om NVDA i gennemsynstilstand skal placere links og andre felter på hver sin linje, eller om de skal beholdes i den løbende tekst, sådan som det bliver vist på skærmen.
+Hvis denne indstilling er slået til, vil alting blive vist ligesom på skærmen, men hvis den er slået fra, vil links og felter blive vist på deres eegen linje.
+
+==== Aktivér gennemsynstilstand ved sideindlæsning ====[BrowseModeSettingsEnableOnPageLoad]
+Denne check box lader dig vælge, om gennemsynstilstand skal aktiveres automatisk, når en side indlæses.
+Når denne indstilling er deaktiveret, kan gennemsynstilstand stadig aktiveres i dokumenter eller på sider hvor tilstanden er understøttet.
+Læs [afsnittet Gennemsynstilstand #BrowseMode] for en liste over understøttede applikationer.
+Bemærk, at denne indstilling ikke omfatter tilfæld, hvor gennemsynstilstand er valgfrit (f.eks. Microsoft Word).
+Denne indstilling er slået til som standard.
 
 ==== Automatisk sig alt efter indlæsning af side ====[BrowseModeSettingsAutoSayAll]
 Med denne indstilling kan du slå automatisk læsning til og fra af sider, når de er blevet indlæst i gennemsynstilstand.
@@ -1633,6 +1670,16 @@ For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 er
 Vær dog opmærksom på, at dette også kan betyde at noget information ikke er synligt, eller vises forkert, hvilket betyder at denne understøttelse ikke altid kan forekomme pålidelig.
 Vi anbefaler ikke at størstedelen af brugere slår denne indstilling til, men vi ønsker gerne henvendelser fra brugere af Office 2016/365.
 
+==== Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tast: NVDA+8
+
+Denne indstilling er slået til som standard. Denne indstilling lader dig vælge om systemfokus automatisk skal placeres på elementer, der kan indfange systemfokus (f.eks. links, knapper, formularfelter), når du navigerer indhold via gennemsynstilstand.
+Hvis denne indstilling er slået til, vil dette være standardadfærden for NVDA 2019.1 og tidligere.
+Ved at slå denne indstilling fra vil fokuserbare elementer ikke automatisk indfange fokus, når disse vælges ved hjælp af gennemsynstilstand.
+Dette kan resultere i en hurtigere navigation og bedre oplevelse, når gennemsynstilstand benyttes.
+Fokus vil dog genopfriskes, når du interagerer med et element (f.eks. vælger en check box, trykker en knap).
+Denne funktion er eksperimentel siden NVDA 2019.2.
+
 ==== Interval for markøren (i MS) ====
 Denne indstilling lader dig konfigurere hvor mange millisekunder NVDA skal vente på systemmarkøren (indsættelsesmarkøren) i redigerbare tekstfelter.
 Hvis du opdager, at NVDA har problemer med at følge systemmarkøren (f.eks. hvis NVDA konsekvent er et tegn bagud eller gentager linjer), kan du forøge denne værdi.
@@ -1686,6 +1733,7 @@ Det sprog, som du redigerer udtale af symboler for, bliver vist i dialogens tite
 Bemærk, at denne dialog følger indstillingen "Brug stemmens sprog til behandling af symboler og tegn", som kan findes i [indstillingskategorien Stemme #VoiceSettings] i [NVDAs indstillingsdialog #NVDASettings]; D.v.s., den bruger den aktuelle stemmes sprog og ikke NVDAs globale sprog, når denne indstilling er slået til.
 
 For at ændre et symbol, skal du først vælge det i listen med symboler.
+Du kan filtrere listen ved at indtaste symbolet eller en del af symbolets erstatning i det tilsvarende felt.
 
 - I feltet erstatning, kan du skrive den tekst du vil have læst i stedet for det oprindelige symbol.
 - I feltet niveau, kan du justere det laveste symbolniveau dette symbol skal udtales ved.
@@ -1697,10 +1745,10 @@ Der er tre muligheder:
   - Altid: Send altid selve symbolet til talesyntesen.
    - Kun under symbolets niveau: Send kun det aktuelle symbol, hvis det indstillede symbolniveau er lavere end symbolets niveau.
     Du kan f.eks. bruge dette til at få erstatningsteksten for et symbol udtalt uden pause ved højtesymbolniveauer og stadig få indikeret symbolet ved hjælp af en pause på lavere niveauer.
-	 -
-	 -
+ -
+-
 
-	 Du kan tilføje nye symboler ved at trykke på Tilføj-knappen.
+Du kan tilføje nye symboler ved at trykke på Tilføj-knappen.
 I den dialog, som fremkommer, skal du indtaste symbolet og trykke på Enter.
 Du kan så  ændre felterne for det nye symbol, præcist som med andre symboler.
 
@@ -1751,7 +1799,7 @@ Med NVDA kan du gøre dette ved hjælp af indstillingsprofiler.
 En indstillingsprofil indeholder kun de ændringer, som du laver, mens du tilpasser profilen.
 De fleste indstillinger kan ændres i en indstillingsprofil, undtagen dem, som findes i indstillingskategorien "Generelt" i [NVDAs indstillingsdialog #NVDASettings]. Disse indstillinger gælder for hele NVDA.
 
-indstillingsprofiler kan aktiveres manuelt.
+indstillingsprofiler kan aktiveres manuelt fra en dialog eller via tildelte kommandoer.
 De kan også aktiveres automatisk ved hjælp af en såkaldt udløser såsom at skifte til et bestemt program.
 
 +++ Grundlæggende styring +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Det kan fx. være, hvis du vil redigere en manuelt aktiveret profil eller standa
 Du kan gøre dette ved at markere check boxen "Slå alle udløsere fra midlertidigt" i dialogen indstillingsprofiler.
 
 For at slå udløsere fra hvor som helst, tildel et tastetryk ved at benytte [dialogen inputbevægelser #InputGestures].
+
++++ Aktivering af profiler ved brug af tastaturkommandoer +++[ConfigProfileGestures]
+For hver indstillingsprofil du opretter, kan du herefter tildele en tastaturkommando til at aktivere den fra hvor som helst.
+Som standard har ingen indstillingsprofil tildelte kommandoer.
+Du kan tildele tastaturkommandoer ved at bruge [dialogen Inputbevægelser #InputGestures].
+Hver profil har et emne under kategorien "Indstillingsprofiler".
+Hvis du omdøber en profil, vil kommandoen stadig forblive tilgængelig.
+Hvis du sletter en profil, vil tildelte kommandoer ligeledes fjernes.
 
 ++ Placering af indstillingsprofiler ++[LocationOfConfigurationFiles]
 Flytbare versioner af NVDA opbevarer alle indstillinger og tilføjelsesprogrammer i en mappe med navnet userConfig, som findes i NVDA-mappen.
@@ -1999,13 +2055,11 @@ Der er understøttelse af alle Focus og PAC Mate displays fra [Freedom Scientifi
 Punktdisplay-driverne fra Freedom Scientific skal vær installeret på dit system.
 Hvis du ikke allerede har dem, kan du hente dem fra https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Selvom siden kun henviser til displayet Focus 40 Blue,understøtter driveren alle displays fra Freedom Scientific.
-Hvis dit system kører Windows 64 bit og driverne allerede er blevet  installeret af en anden skærmlæser, skal du sandsynligvis installere driveren fra dette link alligevel, da de filer, som NVDA har brug for, sikkert ikke er blevet installeret af den anden skærmlæser.
 
 Som standard kan NVDA automatisk detektere og forbinde til disse displays via USB og Bluetooth.
 Når du konfigurer dette display kan du dog selv vælge, hvilken forbindelsestype du ønsker at benytte.
 Dette kan være nyttigt hvis du ønsker at bruge dit Focus display via Bluetooth, men fortsætte med at oplade dit punktdisplay ved brug af USB fra computeren.
-
-Disse displays understøtter ikke NVDAs automatisk detektion af punktdisplays.
+NVDAs automatiske detektion af punktdisplays vil også genkende disse display via USB eller Bluetooth.
 
 Tastekombinationerne til dette punktdisplay med NVDA er følgende.
 Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan finde knapperne.

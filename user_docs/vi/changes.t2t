@@ -3,6 +3,7 @@
 
 %!includeconf: ../changes.t2tconf
 = 2019.2 =
+Các cải tiến của bản phát hành này bao gồm tự nhận các màn hình chữ nổi của Freedom Scientific, một thiết lập thử nghiệm trong bảng cài đặt nâng cao để dừng việc tự di chuyển focus trong chế độ duyệt (có thể cải thiện tốc độ vận hành), tùy chọn tăng tốc độ đọc cho bộ đọc Windows OneCore nhằm đọc bằng tốc độ rất nhanh, và sửa nhiều lỗi khác.
 
 == Các tính năng mới ==
 - Hộp thoại tìm kiếm giờ đây đã bao gồm lịch sử của hai mươi tìm kiếm gần nhất. (#8482)
@@ -23,6 +24,7 @@
  - Các ô nhập liệu chiếm quyền con trỏ hệ thống khi bấm mũi tên xuống qua chúng trên các trang web.
  - Các phím tắt trong chế độ duyệt phản hồi chậm.
 - Với các trình điều khiển màn hình nổi được hỗ trợ, các thiết lập trình điều khiển giờ đây có thể thay đổi từ phân loại chữ nổi trong hộp thoại cấu hình NVDA. (#7452) 
+- Các màn hình chữ nổi của Freedom Scientific giờ đã được hỗ trợ bởi tính năng tự nhận màn hình nổi. (#7727)
 
 
 == Các thay đổi ==
@@ -30,6 +32,7 @@
 - Nội dung trong trình quản lý add-on đã được làm rõ hơn khi  NVDA được gọi chạy với tùy chọn --disable-addons. (#9473)
 - Đã cập nhật dữ liệu chú thích biểu tượng cảm xúc Unicode Common Locale Data Repository  lên phiên bản 35.0. (#9445)
 - Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.9.0. (#9439)
+- Khi một màn hình chữ nổi dạng tự dò tìm được kết nối qua Bluetooth, NVDA sẽ tiếp tục tìm kiếm các màn hình USB được hỗ trợ bởi cùng trình điều khiển và chuyển sang kết nối USB nếu có. (#8853)
 - Giao diện tiếng Anh: phím nóng cho bộ lọc danh sách các thành phần trong chế độ duyệt đã đổi thành alt+y. (#8728)
 
 
@@ -51,6 +54,8 @@
 - Với các giọng Windows OneCore, thiết lập tốc độ đọc trong NVDA không còn chịu ảnh hưởng từ thiết lập tốc độ đọc trong Speech Settings của Windows 10 . (#7498)
 - Giờ đây, có thể mở log bằng NVDA+F1 khi không có thông tin cho nhà phát triển ở đối tượng điều hướng hiện tại. (#8613)
 - Lại có thể dùng được các lệnh điều hướng trong bảng của NVDA trong Google Docs, trong Firefox và Chrome. (#9494)
+- Các phím bumper giờ đây đã hoạt động chính xác trên các màn hình chữ nổi của Freedom Scientific. (#8849)
+- Khi đọc kí tự đầu tiên của một tài liệu trong Notepad++ 7.7 X64, NVDA không còn bị đóng băng trong tối đa 10 giây. (#9609)
 
 
 == Các thay đổi cho nhà phát triển ==

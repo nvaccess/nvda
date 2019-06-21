@@ -19,6 +19,7 @@ What's New in NVDA
 - In Mozilla Firefox, updates to a live region are no longer reported if the live region is in a background tab. (#1318)
 - NVDA's browse mode Find dialog no longer fails to function if NVDA's About dialog is currently open in the background. (#8566)
 
+
 == Changes for Developers ==
 - Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
 
@@ -77,6 +78,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 - The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 - When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
+- HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)
 
 
 == Changes for Developers ==
