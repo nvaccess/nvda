@@ -414,10 +414,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Enumerate the character rectangles
 		a=enumerate(self._storyFieldsAndRects[1])
 		#Convert calculate center points for all the rectangles
-		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
-		#Calculate distances from all center points to the given x and y
-		#But place the distance before the character offset, to make sorting by distance easier
-		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
+		b = ((charOffset, rect.center) for charOffset, rect in a)
+		# Calculate distances from all center points to the given x and y
+		# But place the distance before the character offset, to make sorting by distance easier
+		c = ((math.sqrt(abs(x - center.x) ** 2 + abs(y - center.y) ** 2), charOffset) for charOffset, center in b)
 		#produce a static list of distances and character offsets, sorted by distance 
 		d=sorted(c)
 		#Return the lowest offset with the shortest distance
@@ -446,9 +446,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		if not l:
 			log.debugWarning("object has no location")
 			raise LookupError
-		x=l[0]+(l[2]/2)
-		y=l[1]+(l[3]/2)
-		offset=self._getClosestOffsetFromPoint(x,y)
+		offset=self._getClosestOffsetFromPoint(*l.center)
 		return offset,offset
 
 	def _getLineOffsets(self,offset):
@@ -569,9 +567,9 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		rects=self._storyFieldsAndRects[1]
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
-		left,top,right,bottom=rects[offset]
-		x=left #+(right-left)/2
-		y=top+(bottom-top)/2
+		rect = rects[offset]
+		x = rect.x
+		y= rect.center.y
 		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)

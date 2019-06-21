@@ -179,30 +179,30 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return x,y
 
 	def _getOffsetFromPoint(self,x,y):
-		consoleScreenBufferInfo=self.consoleScreenBufferInfo
-		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
-		relativeX=x-screenLeft
-		relativeY=y-screenTop
-		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
-		numLines=(consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top
-		characterWidth=screenWidth/lineLength
-		characterHeight=screenHeight/numLines
-		characterX=(relativeX/characterWidth)+consoleScreenBufferInfo.srWindow.Left
-		characterY=(relativeY/characterHeight)+consoleScreenBufferInfo.srWindow.Top
+		consoleScreenBufferInfo = self.consoleScreenBufferInfo
+		screenLeft, screenTop, screenWidth, screenHeight = self.obj.location
+		relativeX = x - screenLeft
+		relativeY = y - screenTop
+		lineLength = (consoleScreenBufferInfo.srWindow.Right + 1) - consoleScreenBufferInfo.srWindow.Left
+		numLines = (consoleScreenBufferInfo.srWindow.Bottom + 1) - consoleScreenBufferInfo.srWindow.Top
+		characterWidth = screenWidth // lineLength
+		characterHeight = screenHeight // numLines
+		characterX = (relativeX // characterWidth) + consoleScreenBufferInfo.srWindow.Left
+		characterY = (relativeY // characterHeight) + consoleScreenBufferInfo.srWindow.Top
 		return self._offsetFromConsoleCoord(characterX,characterY)
 
 	def _getPointFromOffset(self,offset):
-		consoleScreenBufferInfo=self.consoleScreenBufferInfo
-		characterX,characterY=self._consoleCoordFromOffset(offset)
-		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
-		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
-		numLines=(consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top
-		characterWidth=screenWidth/lineLength
-		characterHeight=screenHeight/numLines
-		relativeX=(characterX-consoleScreenBufferInfo.srWindow.Left)*characterWidth
-		relativeY=(characterY-consoleScreenBufferInfo.srWindow.Top)*characterHeight
-		x=relativeX+screenLeft
-		y=relativeY+screenTop
+		consoleScreenBufferInfo = self.consoleScreenBufferInfo
+		characterX, characterY = self._consoleCoordFromOffset(offset)
+		screenLeft, screenTop, screenWidth, screenHeight = self.obj.location
+		lineLength = (consoleScreenBufferInfo.srWindow.Right + 1)- consoleScreenBufferInfo.srWindow.Left
+		numLines = (consoleScreenBufferInfo.srWindow.Bottom + 1) - consoleScreenBufferInfo.srWindow.Top
+		characterWidth = screenWidth // lineLength
+		characterHeight = screenHeight // numLines
+		relativeX = (characterX - consoleScreenBufferInfo.srWindow.Left) * characterWidth
+		relativeY = (characterY - consoleScreenBufferInfo.srWindow.Top) * characterHeight
+		x = relativeX + screenLeft
+		y = relativeY + screenTop
 		return locationHelper.Point(x,y)
 
 	def _getCaretOffset(self):
