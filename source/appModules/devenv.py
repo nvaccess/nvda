@@ -57,7 +57,6 @@ import controlTypes
 # Rendering with UI module
 import ui, speech, braille
 import api
-import scriptHandler
 
 #
 # A few helpful constants
@@ -127,9 +126,13 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ObjectsTreeItem)
 
 		if self.major >= 15:
-			if (obj.role == controlTypes.ROLE_EDITABLETEXT and
-				obj.parent.parent.parent.parent.parent.UIAElement.CachedClassName == "DocumentGroup"):
-				clsList.insert(0, CodeEditor)
+			try:
+				if (obj.role == controlTypes.ROLE_EDITABLETEXT and
+					obj.parent.parent.parent.parent.parent.UIAElement.CachedClassName == "DocumentGroup"):
+					clsList.insert(0, CodeEditor)
+			except:
+				# The check can reach the desktop in some *strange* occasions
+				pass
 
 			if (obj.role == controlTypes.ROLE_MENUITEM
 				and isinstance(obj, UIA.UIA)
@@ -584,10 +587,14 @@ class IntellisenseMenuItem(UIA.UIA):
 
 	def event_UIA_itemStatus(self):
 		editor = self.appModule.codeEditor
+		speechStopped = False
 
 		if not self.appModule.messageRead:
 			# See #9739's edit note.
 			self.appModule.messageRead = True
+
+			# See below
+			speechStopped = True
 			speech.cancelSpeech()
 
 			if editor:
@@ -600,7 +607,11 @@ class IntellisenseMenuItem(UIA.UIA):
 
 		if self.highlighted:
 			if self.appModule.intellisenseItem != self:
-				speech.cancelSpeech()
+				if not speechStopped:
+					# Sometimes the message is read, but speech is stopped
+					# again, so we must use this flag to ensure the help text
+					# is read before the item
+					speech.cancelSpeech()
 
 				if (not self.appModule.intellisenseItem 
 					and not self.appModule.messageRead):
