@@ -3,8 +3,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2009-2018 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
-import sys
-from typing import List
+
+from typing import List, Union
 
 import bdDetect
 import braille
@@ -12,7 +12,7 @@ from logHandler import log
 import inputCore
 import brailleInput
 import hwIo
-from hwIo import intToByte, boolToByte, getByte
+from hwIo import intToByte, boolToByte, Serial
 from globalCommands import SCRCAT_BRAILLE
 import ui
 from baseObject import ScriptableObject
@@ -40,6 +40,7 @@ ALVA_RTC_MAX_YEAR = 3000
 ALVA_MODEL_BC640 = 0x40
 ALVA_MODEL_BC680 = 0x80
 ALVA_MODEL_CONVERTER = 0x99
+ESCAPE = b"\x1b"
 
 ALVA_MODEL_IDS = {
 	ALVA_MODEL_BC640: "BC640",
@@ -102,6 +103,7 @@ ALVA_KEYS = {
 }
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "alva"
 	# Translators: The name of a braille display.
 	description = _("Optelec ALVA 6 series/protocol converter")
@@ -125,18 +127,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		oldNumCells = self.numCells
 		if self.isHid:
 			displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
-			if ord(displaySettings[ALVA_DISPLAY_SETTINGS_STATUS_CELL_SIDE_POS]) > 1:
+			if displaySettings[ALVA_DISPLAY_SETTINGS_STATUS_CELL_SIDE_POS] > 1:
 				# #8106: The ALVA BC680 is known to return a malformed feature report for the first issued request.
 				# Therefore, request another display settings report
 				displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
-			self.numCells = ord(displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS])
-			timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
+			self.numCells = displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS]
+			timeBytes: bytes = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
 			try:
-				self._handleTime(timeStr)
+				self._handleTime(timeBytes)
 			except:
 				log.debugWarning("Getting time from ALVA display failed", exc_info=True)
 			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
-			self._rawKeyboardInput = bool(ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK)
+			self._rawKeyboardInput = bool(keySettings & ALVA_KEY_RAW_INPUT_MASK)
 		else:
 			# Get cell count
 			self._ser6SendMessage(b"E", b"?")
@@ -208,34 +210,36 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _ser6SendMessage(self, cmd: bytes, value: bytes = b"") -> None:
 		if not isinstance(value, bytes):
 			raise TypeError("Expected param 'value' to have type 'bytes'")
-		self._dev.write(b"".join(["\x1b", cmd, value]))
+		self._dev.write(b"".join([ESCAPE, cmd, value]))
 
 	def _ser6OnReceive(self, data: bytes):
+		""" Callback for L{self._dev} when it is L{hwIo.Serial}
 		"""
-		@type data: bytes
-		"""
-		if data != b"\x1b":  # Escape
+		if data != ESCAPE:
 			return
-		cmd = self._dev.read(1)
-		value: bytes = self._dev.read(ALVA_SER_CMD_LENGTHS[cmd])
+		cmd: bytes = self._dev.read(1)
+		commandLen = ALVA_SER_CMD_LENGTHS[cmd]
+		value: bytes = self._dev.read(commandLen)
 
 		if cmd == b"K":  # Input
 			self._handleInput(group=value[0], number=value[1])
 		elif cmd == b"E":  # Braille cell count
-			self.numCells = ord(value)  # this command only gets one byte
+			assert commandLen == 1
+			self.numCells = ord(value)
 		elif cmd == b"?":  # Device ID
+			assert commandLen == 1
 			self._deviceId = ord(value)  # this command only gets one byte
 		elif cmd == b"r":  # Raw keyboard messages enable/disable
-			self._rawKeyboardInput = bool(ord(value))  # this command only gets one byte
+			assert commandLen == 1
+			self._rawKeyboardInput = bool(ord(value))
 		elif cmd == b"H":  # Time
 			# Handling time for serial displays does not block initialization if it fails.
 			self._handleTime(value)
 
 	def _hidOnReceive(self, data: bytes):
+		"""Callback for L{self._dev} when it is L{hwIo.Hid}
 		"""
-		@type data: bytes
-		"""
-		reportID = data[0]
+		reportID: bytes = data[0:1]
 		if reportID == ALVA_KEY_REPORT:
 			self._handleInput(
 				data[ALVA_KEY_REPORT_KEY_GROUP_POS],
@@ -243,10 +247,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			)
 
 	def _handleInput(self, group: int, number: int) -> None:
-		"""
-		@type group: int
-		@type number: int
-		"""
 		if group == ALVA_SPECIAL_KEYS_GROUP:
 			# ALVA displays communicate setting changes as input messages.
 			if number == ALVA_SPECIAL_SETTINGS_CHANGED:
@@ -294,13 +294,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._ser6SendMessage(b"B", value)
 
 	def display(self, cells: List[int]):
-		"""
-		@type cells: [int, ...]
-		"""
 		# cells will already be padded up to numCells.
-		cellBytes = b"".join(
-			intToByte(cell) for cell in cells
-		)
+		cellBytes = bytes(cells)
 		if self.isHid:
 			self._hidDisplay(cellBytes)
 		else:
@@ -343,11 +338,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			dt.minute,
 			dt.second
 		]
-		timeStr = b"".join(intToByte(i) for i in timeList)
 		if self.isHid:
-			self._dev.setFeature(ALVA_RTC_REPORT + timeStr)
+			self._dev.setFeature(ALVA_RTC_REPORT + bytes(timeList))
 		else:
-			self._ser6SendMessage(b"H", timeStr)
+			self._ser6SendMessage(b"H", bytes(timeList))
 
 	def _get_hidKeyboardInput(self):
 		return not self._rawKeyboardInput

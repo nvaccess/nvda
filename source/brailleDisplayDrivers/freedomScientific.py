@@ -12,7 +12,7 @@ A c(lang) reference implementation is available in brltty.
 
 from io import BytesIO
 import itertools
-from typing import Union, List, Optional
+from typing import List, Optional
 
 import braille
 import inputCore
@@ -21,7 +21,7 @@ from logHandler import log
 import bdDetect
 import brailleInput
 import hwIo
-from hwIo import intToBytes
+from hwIo import intToByte
 import serial
 
 
@@ -190,8 +190,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._firmwareVersion: Optional[str] = None
 		self.translationTable = None
 		self.leftWizWheelActionCycle = itertools.cycle(self.wizWheelActions)
-		# Python 3: review required
-		# Not sure what the intent is here? To capture a callable option
 		action = next(self.leftWizWheelActionCycle)
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp", *action[1])
 		self.gestureMap.add("br(freedomScientific):leftWizWheelDown", *action[2])
@@ -257,19 +255,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendPacket(self, packetType, arg1=FS_BYTE_NULL, arg2=FS_BYTE_NULL, arg3=FS_BYTE_NULL, data=FS_DATA_EMPTY):
+	def _sendPacket(
+			self,
+			packetType: bytes,
+			arg1: bytes = FS_BYTE_NULL,
+			arg2: bytes = FS_BYTE_NULL,
+			arg3: bytes = FS_BYTE_NULL,
+			data: bytes = FS_DATA_EMPTY
+	):
 		"""Send a packet to the display
-
 		@param packetType: Type of packet (first byte), use one of the FS_PKT constants
-		@type packetType: bytes
 		@param arg1: First argument (second byte of packet)
-		@type arg1: bytes
 		@param arg2: Second argument (third byte of packet)
-		@type arg2: bytes
 		@param arg3: Third argument (fourth byte of packet)
-		@type arg3: bytes
-		@param data: Data to send if this is an extended packet, required checksum will be added automatically
-		@type data: bytes
+		@param data: Data to send if this is an extended packet, required checksum will
+			be added automatically
 		"""
 		def handleArg(arg: bytes) -> bytes:
 			if isinstance(arg, bytes):
@@ -280,12 +280,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		arg1 = handleArg(arg1)
 		arg2 = handleArg(arg2)
 		arg3 = handleArg(arg3)
-		packet = [packetType, arg1, arg2, arg3, data]
+		packet = b"".join([packetType, arg1, arg2, arg3, data])
 		if data:
-			packetBytes = b"".join(packet)
-			checksum = BrailleDisplayDriver._calculateChecksum(packetBytes)
-			packet.append(intToBytes(checksum))
-		self._dev.write(b"".join(packet))
+			checksum = BrailleDisplayDriver._calculateChecksum(packet)
+			packet += intToByte(checksum)
+		self._dev.write(packet)
 
 	def _onReceive(self, data: bytes):
 		"""Event handler when data from the display is received
@@ -494,8 +493,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.translationTable:
 			cells = _translate(cells, FOCUS_1_TRANSLATION_TABLE)
 		if not self._awaitingAck:
-			cellBytes = b"".join([intToBytes(x) for x in cells])
-			self._sendPacket(FS_PKT_WRITE, intToBytes(self.numCells), FS_BYTE_NULL, FS_BYTE_NULL, cellBytes)
+			self._sendPacket(
+				FS_PKT_WRITE,
+				intToByte(self.numCells),
+				FS_BYTE_NULL,
+				FS_BYTE_NULL,
+				bytes(cells)
+			)
 			self._pendingCells = []
 		else:
 			self._pendingCells = cells

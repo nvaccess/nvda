@@ -9,7 +9,7 @@ from typing import List, Tuple
 import inputCore
 import braille
 import hwPortUtils
-from hwIo import intToBytes
+from hwIo import intToByte
 from collections import OrderedDict
 from logHandler import log
 import serial
@@ -73,29 +73,28 @@ def eco_in_init(dev: serial.Serial) -> int:
 	msg: bytes = dev.read(9)
 	if len(msg) < 9:
 		return ecoTypes.TECO_80 # Needed to restart NVDA with Ecoplus
-	msgUnpacked: Tuple[int, ...] = struct.unpack(b'BBBBBBBBB', msg)
 	# Command message from EcoBraille is something like that:
 	# 0x10 0x02 TT AA BB CC DD 0x10 0x03
 	# where TT can be 0xF1 (identification message) or 0x88 (command pressed in the line)
 	# If TT = 0xF1, then the next byte (AA) give us the type of EcoBraille line (ECO 80, 40 or 20)
 	if (
-		(msgUnpacked[0] == 0x10)
-		and (msgUnpacked[1] == 0x02)
-		and (msgUnpacked[7] == 0x10)
-		and (msgUnpacked[8] == 0x03)
+		(msg[0] == 0x10)
+		and (msg[1] == 0x02)
+		and (msg[7] == 0x10)
+		and (msg[8] == 0x03)
 	):
-		if msgUnpacked[2] == 0xf1:  # Initial message
-			if msgUnpacked[3] == 0x80:
+		if msg[2] == 0xf1:  # Initial message
+			if msg[3] == 0x80:
 				return ecoTypes.TECO_80
-			if msgUnpacked[3] == 0x40:
+			if msg[3] == 0x40:
 				return ecoTypes.TECO_40
-			if msgUnpacked[3] == 0x20:
+			if msg[3] == 0x20:
 				return ecoTypes.TECO_20
 	return ecoTypes.TECO_80 # Needed for changing Braille Settings with Ecoplus
 
 def eco_in(dev: serial.Serial) -> int:
 	try:
-		msg: Tuple[int, ...] = struct.unpack(b'BBBBBBBBB', dev.read(9))
+		msg: bytes = dev.read(9)
 	except:
 		log.debug("unpacking error", exc_info=True)
 		return 0
@@ -114,7 +113,7 @@ def eco_in(dev: serial.Serial) -> int:
 	return 0
 
 
-output_dots_map = [
+output_dots_map: List[int] = [
 	0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70,
 	0x01, 0x11, 0x21, 0x31, 0x41, 0x51, 0x61, 0x71,
 	0x02, 0x12, 0x22, 0x32, 0x42, 0x52, 0x62, 0x72,
@@ -153,16 +152,11 @@ output_dots_map = [
 def eco_out(cells: List[int]) -> bytes:
 	# Messages sends to EcoBraille display are something like that:
 	# 0x10 0x02 0xBC message 0x10 0x03
-	ret: List[bytes] = [
-		b"\x10\x02\xBC",
-		b"\00" * 5,
-	]
+	ret = bytearray(b"\x10\x02\xBC")
+	ret.extend(b"\00" * 5)
 	# Leave status cells blank
-	for d in cells:
-		ret.append(intToBytes(
-			output_dots_map[d]
-		))
-	ret.append(b"\x10\x03")
+	ret.extend(output_dots_map[c] for c in cells)
+	ret.extend(b"\x10\x03")
 	return b"".join(ret)
 
 

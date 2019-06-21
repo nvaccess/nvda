@@ -8,7 +8,7 @@ from typing import List
 import serial
 import braille
 import hwIo
-from hwIo import intToBytes
+from hwIo import intToByte
 import time
 import inputCore
 from logHandler import log
@@ -79,7 +79,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		writeBytes: List[bytes] = [DISPLAY_TAG, ]
 		for cell in cells:
 			writeBytes.append(b"\x00")
-			writeBytes.append(intToBytes(cell))
+			writeBytes.append(intToByte(cell))
 		self._dev.write(b"".join(writeBytes))
 
 	gestureMap = inputCore.GlobalGestureMap({

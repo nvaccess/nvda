@@ -16,7 +16,7 @@ import inputCore
 from logHandler import log
 import brailleInput
 import hwIo
-from hwIo import intToBytes, boolToBytes
+from hwIo import intToByte, boolToByte
 from baseObject import AutoPropertyObject, ScriptableObject
 import wx
 import threading
@@ -55,6 +55,10 @@ EB_IRIS_TEST = b'T' # 0x54
 EB_IRIS_TEST_sub = b'L' # 0x4c
 EB_VISU = b'V' # 0x56
 EB_VISU_DOT = b'D' # 0x44
+
+# The eurobraille protocol uses real number characters as boolean values, so 0 (0x30) and 1 (0x31)
+EB_FALSE = b'0' # 0x30
+EB_TRUE = b'1' # 0x31
 
 KEYS_STICK = OrderedDict({
 	0x10000: "joystick1Up",
@@ -133,7 +137,7 @@ DEVICE_TYPES={
 
 def bytesToInt(byteData: bytes):
 	"""Converts bytes to its integral equivalent."""
-	return int(byteData.decode('hex'), 16)
+	return int.from_bytes(byteData, byteorder="big", signed=False)
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
@@ -196,9 +200,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Request device identification
 				self._sendPacket(EB_SYSTEM, EB_SYSTEM_IDENTITY)
 				# Make sure visualisation packets are disabled, as we ignore them anyway.
-				# py3 review: this is currently a zero char (0b110001 not 0b0).
-				# perhaps it should be b'\x00' == 0b0 instead?
-				self._sendPacket(EB_VISU, EB_VISU_DOT, b'0')
+				self._sendPacket(EB_VISU, EB_VISU_DOT, EB_FALSE)
 				# A device identification results in multiple packets.
 				# Make sure we've received everything before we continue
 				while self._dev.waitForRead(self.timeout*2):
@@ -331,12 +333,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _handleKeyPacket(self, group: bytes, data: bytes):
 		if group == EB_KEY_USB_HID_MODE:
-			self._hidKeyboardInput = boolToBytes(data)
+			assert data in [EB_TRUE, EB_FALSE]
+			self._hidKeyboardInput = EB_TRUE == data
 			return
 		if group == EB_KEY_QWERTY:
 			log.debug("Ignoring Iris AZERTY/QWERTY input")
 			return
-		if group == EB_KEY_INTERACTIVE and data[0] == EB_KEY_INTERACTIVE_REPETITION:
+		if group == EB_KEY_INTERACTIVE and data[0:1] == EB_KEY_INTERACTIVE_REPETITION:
 			log.debug("Ignoring routing key %d repetition" % (data[1] - 1))
 			return
 		arg = bytesToInt(data)
@@ -362,22 +365,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _sendPacket(self, packetType: bytes, packetSubType: bytes, packetData: bytes = b""):
 		packetSize = len(packetData)+4
-		packet = [
-			STX,
-			chr((packetSize >> 8) & 0xff),
-			chr(packetSize & 0xff),
-			packetType,
-			packetSubType,
-			packetData,
-			ETX
-		]
+		packetBytes = bytearray(
+			b"".join([
+				STX,
+				packetSize.to_bytes(2, "big", signed=False),
+				packetType,
+				packetSubType,
+				packetData,
+				ETX
+		]))
 		if self.receivesAckPackets:
 			with self._frameLock:
 				frame = self._frame
-				packet.insert(-1, intToBytes(frame))
-				self._awaitingFrameReceipts[frame] = packet
+				# Assumption: frame will only ever be 1 byte, otherwise consider byte order
+				packetBytes.insert(-1, frame)
+				self._awaitingFrameReceipts[frame] = packetBytes
 				self._frame = frame+1 if frame < 0x7F else 0x20
-		packetData = b"".join(packet)
+		packetData = bytes(packetBytes)
 		if self.isHid:
 			self._sendHidPacket(packetData)
 		else:
@@ -402,9 +406,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._sendPacket(
 			packetType=EB_BRAILLE_DISPLAY,
 			packetSubType=EB_BRAILLE_DISPLAY_STATIC,
-			packetData=b"".join([
-				intToBytes(cell) for cell in cells
-			])
+			packetData=bytes(cells)
 		)
 
 	def _get_hidKeyboardInput(self):
@@ -414,10 +416,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._sendPacket(
 			packetType=EB_KEY,
 			packetSubType=EB_KEY_USB_HID_MODE,
-			# py3 review: line was: =str(int(state))
-			# This would result in b'1' == 49 == 0b110001
-			# Instead the output will be b'\x01 == 0b1 (eg: unsigned int(1))
-			packetData=boolToBytes(state)
+			packetData=EB_TRUE if state else EB_FALSE
 		)
 		for i in range(3):
 			self._dev.waitForRead(self.timeout)

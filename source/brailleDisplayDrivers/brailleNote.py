@@ -10,9 +10,7 @@ QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and s
 See Brailliant B module for BrailleNote Touch support routines.
 """
 
-from collections import OrderedDict
-import itertools
-from typing import List
+from typing import List, Optional
 
 import serial
 import braille
@@ -21,7 +19,6 @@ import inputCore
 from logHandler import log
 import hwIo
 from hwIo import intToByte
-import bdDetect
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
@@ -53,8 +50,8 @@ QT_CTRL = 0x4
 QT_READ = 0x8 #Alt key
 
 ESCAPE = b'\x1b'
-DESCRIBE_TAG = ESCAPE+b"?"
-DISPLAY_TAG = ESCAPE+b"B"
+DESCRIBE_TAG = ESCAPE + b"?"
+DISPLAY_TAG = ESCAPE + b"B"
 
 # Dots
 DOT_1 = 0x1
@@ -170,8 +167,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.debug("Not a braillenote")
 		return False
 
-	def _onReceive(self, command):
-		command = ord(command)
+	def _onReceive(self, command: bytes):
+		assert len(command) == 1
+		command: int = ord(command)
 		if command == STATUS_TAG:
 			arg = self._serial.read(2)
 			self.numCells = arg[1]
@@ -182,13 +180,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 		# #5993: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
 		if command == QT_MOD_TAG:
-			key = self._serial.read(2)[-1]
-			arg2 = _qtKeys.get(ord(key), key)
+			commandKey: int = self._serial.read(2)[-1]
+			arg2 = _qtKeys.get(commandKey, str(commandKey))
 		else:
 			arg2 = None
-		self._dispatch(command, ord(arg), arg2 if arg2 is not None else None)
+		self._dispatch(command, ord(arg), arg2)
 
-	def _dispatch(self, command, arg, arg2=None):
+	def _dispatch(
+			self,
+			command: int,
+			arg: int,
+			arg2: Optional[str] = None
+	):
 		space = False
 		if command == THUMB_KEYS_TAG:
 			gesture = InputGesture(keys=arg)
@@ -253,7 +256,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys=None, dots=None, space=False, routing=None, wheel=None, qtMod=None, qtData=None):
+	def __init__(
+			self,
+			keys: Optional[int] = None,
+			dots: Optional[int] = None,
+			space: bool = False,
+			routing: Optional[int] = None,
+			wheel: Optional[int] = None,
+			qtMod: Optional[int] = None,
+			qtData:Optional[str] = None
+	):
 		super(braille.BrailleDisplayGesture, self).__init__()
 		# Denotes if we're dealing with a QT model.
 		self.qt = qtMod is not None
@@ -273,7 +285,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.routingIndex = routing
 			names.add('routing')
 		elif qtMod is not None:
-			names.update(_qtKeyNames[1 << i] for i in range(4)
-				if (1 << i) & qtMod)
+			names.update(
+				_qtKeyNames[1 << i] for i in range(4)
+				if (1 << i) & qtMod
+			)
 			names.add(qtData)
 		self.id = "+".join(names)

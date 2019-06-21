@@ -14,7 +14,7 @@ from io import BytesIO
 import serial # pylint: disable=E0401
 import weakref
 import hwIo
-from hwIo import intToBytes
+from hwIo import intToByte
 import braille
 import brailleInput
 import inputCore
@@ -645,7 +645,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def sendExtendedPacket(self, packetType: bytes, data: bytes = b""):
 		packetBytes: bytes = b"".join([
-			intToBytes(len(data) + len(packetType)),
+			intToByte(len(data) + len(packetType)),
 			packetType,
 			data,
 			b"\x16"
@@ -662,7 +662,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# the data block itself and a terminating null character.
 		for offset in range(0, len(packet), maxBlockSize):
 			block = packet[offset:offset+maxBlockSize]
-			hidPacket = HT_HID_RPT_InData + intToBytes(len(block)) + block + b"\x00"
+			hidPacket = HT_HID_RPT_InData + intToByte(len(block)) + block + b"\x00"
 			self._dev.write(hidPacket)
 
 	def _handleKeyRelease(self):

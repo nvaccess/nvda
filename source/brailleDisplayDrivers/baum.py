@@ -5,10 +5,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
 
-import time
-from collections import OrderedDict
 from io import BytesIO
-from typing import Union
+from typing import Union, List, Optional
 
 import braille
 from hwIo import intToByte, boolToByte
@@ -72,7 +70,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._deviceID = None
+		self._deviceID: Optional[str] = None
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
@@ -157,16 +155,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			arg = arg.replace(ESCAPE, ESCAPE * 2)
 			data = b"".join([
-				b"\x1b",
+				ESCAPE,
 				command,
 				arg
 			])
 			self._dev.write(data)
 
-	def _onReceive(self, data):
-		"""
-		:type data: bytes
-		"""
+	def _onReceive(self, data: bytes):
 		if self.isHid:
 			# data contains the entire packet.
 			stream = BytesIO(data)
@@ -187,18 +182,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			arg += stream.read(2)
 		self._handleResponse(command, arg)
 
-	def _handleResponse(self, command, arg):
-		"""
-		:type command: bytes
-		:type arg: bytes
-		"""
+	def _handleResponse(self, command: bytes, arg: bytes):
 		if command == BAUM_CELL_COUNT:
 			# Assumption: BAUM_CELL_COUNT command has a single byte unsigned argument.
 			# Value range (0-255)
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
 			# Short ids can be padded with either nulls or spaces.
-			self._deviceID = arg.rstrip(b"\0 ")
+			arg = arg.rstrip(b"\0 ")
+			# Assumption: all device IDs can be decoded with latin-1.
+			# If not, we wish to know about it, allow decode to raise.
+			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in KEY_NAMES:
 			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
 			if arg < self._keysDown.get(command, 0):
@@ -231,14 +225,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
 
-	def display(self, cells):
-		"""
-		:type cells: [int, ...]
-		"""
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		arg = b"".join([
-			intToByte(cell) for cell in cells
-		])
+		arg = bytes(cells)
 		self._sendRequest(BAUM_DISPLAY_DATA, arg)
 
 	gestureMap = inputCore.GlobalGestureMap({

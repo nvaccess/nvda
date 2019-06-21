@@ -328,7 +328,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		elif mode == 0x01: # Braille input or function key
 			if not self._model:
 				return
-			_keys = sum(packet[4+i] << (i*8) for i in range(4))
+			_keys = int.from_bytes(packet[4:8], "little", signed=False)
 			keys = set()
 			for keyHex in self._model.keys:
 				if _keys & keyHex:

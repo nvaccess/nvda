@@ -7,7 +7,7 @@
 
 import itertools
 import os
-from typing import Iterable, Union
+from typing import Iterable, Union, Tuple, List, Optional
 
 import driverHandler
 import pkgutil
@@ -326,12 +326,11 @@ def _getDisplayDriver(moduleName, caseSensitive=True):
 		else:
 			raise initialException
 
-def getDisplayList(excludeNegativeChecks=True):
+def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
 	@return: list of tuples with driver names and descriptions.
-	@rtype: [(str,unicode)]
 	"""
 	displayList = []
 	# The display that should be placed at the end of the list.
@@ -1521,14 +1520,12 @@ def getFocusRegions(obj, review=False):
 		region2.update()
 		yield region2
 
-def formatCellsForLog(cells):
+def formatCellsForLog(cells: List[int]) -> str:
 	"""Formats a sequence of braille cells so that it is suitable for logging.
 	The output contains the dot numbers for each cell, with each cell separated by a space.
 	A C{-} indicates an empty cell.
 	@param cells: The cells to format.
-	@type cells: sequence of int
 	@return: The formatted cells.
-	@rtype: str
 	"""
 	# optimisation: This gets called a lot, so needs to be as efficient as possible.
 	# List comprehensions without function calls are faster than loops.
@@ -1554,7 +1551,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
-		self.display = None  # BrailleDisplayDriver
+		self.display: Optional[BrailleDisplayDriver] = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
@@ -2109,6 +2106,8 @@ RENAMED_DRIVERS = {
 	"syncBraille":"hims",
 	"alvaBC6":"alva"
 }
+
+handler: BrailleHandler
 
 def initialize():
 	global handler
