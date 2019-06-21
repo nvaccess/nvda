@@ -3,6 +3,73 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2 =
+Glavne karakteristike ove verzije uključuju automatsko prepoznavanje brajevih redova kompanije Freedom Scientific , eksperimentalno podešavanje u naprednim podešavanjima koje zaustavlja pomeranje sistemskog fokusa u režimu pretraživanja (što može doneti ubrzanja u radu ), opcija povećanja brzine za Windows OneCore sintetizator kako bi se dostigao veoma brz govor, i puno drugih ispravljenih grešaka.
+
+== Nove karakteristike ==
+- Dijalog za pretragu sada uključuje istoriju poslednjih 20 upita. (#8482)
+ - Istorija pretrage se briše kada izađete iz programa NVDA ili ga ponovo pokrenete.
+- Podrška za program Miranda NG radi sa novijim verzijama klijenta. (#9053) 
+- Sada možete onemogućiti režim pretraživanja onemogućavanjem nove opcije "Omogući režim pretraživanja kada se stranica učita" u podešavanjima režima pretraživanja programa NVDA. (#8716) 
+ - Napomena da kada je ova opcija onemogućena, možete ručno omogućiti režim pretraživanja komandom NVDA plus razmak.
+- Sada možete filtrirati simbole u dijalogu za izgovor znakova interpunkcije i simbola, što radi slično filtriranju u dijalozima za listu elemenata ili ulazne komande. (#5761)
+- Nova komanda je dodata za menjanje jedinice rezolucije teksta (koliko teksta će biti pročitano kada se miš pomera), ona nema podrazumevanu prečicu. (#9056)
+- windows OneCore sintetizator govora sada ima opciju povećanja brzine, koja dozvoljava znatno brži govor. (#7498)
+- Opcija povećanja brzine se sada može podesiti iz kruga menjanja podešavanja sintetizatora za sve podržane sintetizatore. (Trenutno eSpeak-NG i  Windows OneCore). (#8934)
+- Profili podešavanja se sada mogu ručno aktivirati prečicama. (#4209)
+ - Prečica se mora podesiti u dijalogu "ulazne komande".
+- U programu  Eclipse, dodata podrška za automatsko dopunjavanje u uređivaču koda. (#5667)
+ - Takođe, Javadoc informacije se mogu pročitati iz uređivača kada su dostupne korišćenjem komande NVDA+d.
+- Dodata eksperimentalna opcija u panel naprednih podešavanja koja sprečava da sistemski fokus prati kursor u režimu pretraživanja   (automatski postavi sistemski fokus na elemente koji se mogu fokusirati). (#2039) 
+ - Iako možda ovo nije odgovarajuća opcija za sve sajtove, ovo može popraviti sledeće probleme: 
+ - Efekat vraćanja fokusa: NVDA ponekad poništava poslednju prečicu režima pretraživanja vraćanjem na prethodnu lokaciju.
+ - Polja za unos preuzimaju sistemski fokus kada se krećete strelicama na nekim sajtovima.
+ - Prečice režima pretraživanja sporo odgovaraju.
+- Za podržane brajeve redove, podešavanja drajvera se mogu promeniti iz kategorije brajevih podešavanja dijaloga NVDA podešavanja. (#7452)
+- Brajevi redovi kompanije Freedom Scientific su sada podržani od strane automatskog prepoznavanja brajevih redova. (#7727)
+
+
+== Promene ==
+- Jačina sintetizatora se sada smanjuje za 5 umesto 10 procenata kada se koristi krug sintetizatora. (#6754)
+- Pojašnjen tekst u upravljaču dodataka kada je NVDA pokrenut uz opciju --disable-addons. (#9473)
+- Ažurirani Emoji   znakovi iz baze Unicode Common Locale  na verziju  35.0. (#9445)
+- Ažuriran liblouis brajev prevodilac na verziju 3.9.0. (#9439)
+- Kada je automatski prepoznat brajev red povezan putem  Bluetooth veze, NVDA će nastaviti pretragu za USB redove podržane od strane istog drajvera i prebaciće se na USB vezu ako postane dostupna. (#8853)
+
+
+== Ispravljene greške ==
+- NVDA se više ne ruši kada je folder dodatka prazan. (#7686)
+- LTR i  RTL znakovi se više ne izgovaraju u toku navigacije slovo po slovo ili prikazuju na brajevom redu kada  se pristupa prozoru  za svojstva. (#8361)
+- Kada skačete po poljima za unos u brzoj navigaciji režima pretraživanja, celo polje za unos se izgovara umesto izgovaranja samo prvog reda. (#9388)
+- NVDA neće više gubiti govor nakon izlaska iz Windows 10 Mail aplikacije. (#9341)
+- NVDA više neće imati grešku u pokretanju kada su regionalna podešavanja podešena na region nepoznat za NVDA, kao što je Engleski (Holandija). (#8726)
+- Kada je režim pretraživanja omogućen u programu  Microsoft Excel i prebacite se na pretraživač u režimu fokusiranja i obrnuto, stanje režima pretraživanja se sada ispravno prijavljuje. (#8846)
+- NVDA sada ispravno prijavljuje red ispod miša u programu Notepad++ i drugim uređivačima bazirani na tehnologiji Scintilla. (#5450)
+- U Web aplikaciji Google Docs (i drugim Web uređivačima), brajev red neće više neispravno prikazivati "lst end" pre kursora u sredini stavke liste. (#9477)
+- U Windows 10 ažuriranju iz maja 2019, NVDA više neće izgovarati puno obaveštenja o menjanju jačine hardverskim tasterima ako istraživač datoteka ima fokus. (#9466)
+- Učitavanje dijaloga za izgovor simbola i znakova interpunkcije je sada znatno brže ako se koriste rečnici sa preko 1000 unosa. (#8790)
+- U  Scintilla kontrolama kao što je Notepad++, NVDA može da pročita ispravan red kada je odvajanje reči uključeno. (#9424)
+- U programu  Microsoft Excel, lokacija ćelije se izgovara nakon što se promeni komandom šift enter ili šift numeričko enter. (#9499)
+- U programu  Visual Studio 2017 i novijim, u prozoru istraživača objekata, izabran objekat u stablu objekata ili izabrana kategorija se sada ispravno prijavljuje. (#9311)
+- Dodaci čija se imena razlikuju samo u veličini slova više neće biti posmatrani kao posebni dodaci. (#9334)
+- Za  Windows OneCore Glasove, brzina koja je podešena u programu NVDA više nije određena brzinom podešenom u Windows 10 podešavanjima govora. (#7498)
+- Dnevnik se sada može otvoriti prečicom NVDA+F1 kada nema informacija za programere o trenutnom navigacionom objektu. (#8613)
+- Ponovo je moguće koristiti komande za kretanje kroz tabele u  Google Docs, u programima Firefox i Chrome. (#9494)
+- Bumper tasteri sada rade ispravno na Freedom Scientific brajevim redovima. (#8849)
+- Kada se čita prvi znak dokumenta u programu Notepad++ 7.7 X64, NVDA više ne prestaje sa radom do 10 sekundi. (#9609)
+
+
+== Promene za programere ==
+Ove promene nisu prevedene. Za više informacija, pogledajte[Englesku verziju ovog dokumenta ../en/changes.html].
+
+
+= 2019.1.1 =
+Ova manja verzija ispravlja sledeće greške:
+- NVDA više ne izaziva rušenje programa Excel 2007 ili odbija da prijavi da li ćelija ima formule. (#9431)
+- Google Chrome se više ne ruši prilikom interakcije sa određenim listama. (#9364)
+- Greška je ispravljena koja je sprečavala kopiranje korisničkih podešavanja u profil sistemskih podešavanja. (#9448)
+- U programu Microsoft Excel, NVDA ponovo koristi prevedenu poruku kada prijavljuje lokacije spojenih ćelija. (#9471)
+
 = 2019.1 =
 Glavne karakteristike ove verzije uključuju poboljšanja u brzini kada koristite programe Microsoft word i Excel, poboljšanja u stabilnosti i sigurnosti kao što su podrška za dodatke koji mogu označiti informacije o kompatibilnosti sa različitim verzijama programa NVDA, i brojne druge ispravljene greške.
 
