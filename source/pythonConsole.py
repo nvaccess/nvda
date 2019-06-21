@@ -102,6 +102,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		# Can't use super here because stupid code.InteractiveConsole doesn't sub-class object. Grrr!
 		code.InteractiveConsole.__init__(self, locals=self.namespace, **kwargs)
 		self.prompt = ">>>"
+		self.lastResult = None
 
 	def _set_prompt(self, prompt):
 		self._prompt = prompt
@@ -121,8 +122,14 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		sys.stdout = sys.stderr = self
 		# Prevent this from messing with the gettext "_" builtin.
 		saved_ = __builtin__._
+		self.lastResult = None
 		more = code.InteractiveConsole.push(self, line)
 		sys.stdout, sys.stderr = stdout, stderr
+		if __builtin__._ is not saved_:
+			self.lastResult = __builtin__._
+			# Preserve the namespace if gettext has explicitly been pushed there 
+			if "_" not in self.namespace or self.namespace["_"] is not saved_:
+				self.namespace["_"] = __builtin__._
 		__builtin__._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
