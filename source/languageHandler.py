@@ -8,10 +8,7 @@
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-try:
-	import __builtin__ as builtins # Python 2.7 import
-except ImportError:
-	import builtins # Python 3 import
+import __builtin__
 import os
 import sys
 import ctypes
@@ -195,7 +192,7 @@ def setLanguage(lang):
 		curLang="en"
 	trans.install(unicode=True)
 	# Install our pgettext function.
-	builtins.__dict__["pgettext"] = makePgettext(trans)
+	__builtin__.__dict__["pgettext"] = makePgettext(trans)
 
 def getLanguage():
 	return curLang

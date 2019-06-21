@@ -3,6 +3,78 @@ Ce este nou în NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2 =
+Caracteristicile principale ale acestei versiuni includ autodetectarea afișajelor braille de la Freedom Scientific, o setare de test inclusă în panoul de setări avansate care  face ca modul de navigare să nu mai miște focalizarea de unul singur, (această setare poate aduce îmbunătățiri), o opțiune de amplificare a vitezei pentru sintetizatorul Windows OneCore pentru ca mărirea vitezei vocilor să fie mai accentuată și multe alte defecte rezolvate.
+
+== Noi Funcționalități ==
+- Dialogul de căutare include acum istoricul ultimelor 20 de căutări. (#8482)
+ - Istoricul căutărilor este șters atunci când NVDA este oprit sau repornit.
+- Suportul NVDA pentru Miranda NG funcționează acum și cu versiuni mai noi ale aplicației. (#9053)
+- Puteți dezactiva implicit modul de navigare dezactivând noua opțiune numită „Activează modul de navigare la încărcarea paginii” din setările modului de navigare NVDA. (#8716)
+ - Rețineți că, chiar și atunci când această opțiune este dezactivată, puteți activa manual modul de navigare apăsând NVDA+spațiu.
+- Puteți filtra simbolurile din dialogul punctuație/pronunțare simboluri ca și cum ați filtra obiecte din lista de elemente și din dialogul gesturilor de intrare. (#5761)
+- S-a adăugat o comandă care modifică rezoluția unității de text a mausului (cât de mult text va fi citit la mișcarea mausului), nu are atribuit un gest implicit. (#9056)
+- Sintetizatorul Windows OneCore are cum o opțiune de amplificare a vitezei vocilor, ceea ce înseamnă că viteza acestora se poate mări semnificativ. (#7498)
+- Această opțiune poate fi setată din setările sintetizatorului pentru sintetizatoarele cu care este compatibilă la ora actuală, eSpeak-NG și Windows OneCore). (#8934)
+- Acum, profilurile de configurare pot fi activate manual cu gesturi. (#4209)
+  - Gesturile trebuie să fie configurate în dialogul lor de inntrare.
+- În Eclipse, s-a adăugat suportul pentru autocompletarea din editorul de coduri. (#5667)
+ - În plus, informațiile Javadoc, dacă există, pot fi citite din editor utilizându-se comanda NVDA+d.
+- S-a adăugat o opțiune de test în panoul setărilor avansate care vă dă posibilitatea să opriți focalizarea sistemului să urmărească cursorul modului de Navigare (Setează automat focalizarea sistemului la elementele focalizabile). (#2039) Totuși, s-ar putea să nu funcționeze pe toate sit-urile web, s-ar putea să rezolve: 
+ - Efectul benzii de cauciuc: NVDA anulează sporadic apăsarea ultimei combinații de taste a modului de navigare sărind la locația precedentă.
+ - Casetele de editare „fură” focalizarea sistemului la deplasarea printre ele cu săgeată jos pe anumite site-uri web.
+ - Combinațiile de taste ale modului de navigare răspund greu.
+- Pentru driverele afișajelor braille care le suportă, setările de driver pot fi modificate din categoria setărilor braille, aflată în fereastra de dialog a setărilor NVDA. (#7452)
+- Afișajele braille de la Freedom Scientific sunt suportate acum de autodetectarea afișajelor braille. (#7727)
+
+
+== Modificări ==
+- Volumul sintetizatorului este mărit și micșorat cu 5 în loc de 10 la utilizarea inelului de setări. (#6754)
+- Textul din administratorul de suplimente este acum mai clar atunci când NVDA este lansat cu insigna --disable-addons. (#9473)
+- S-a actualizat adnotările emoticoanelor Depozitului de Date Comune Locale Unicode la versiunea 35.0. (#9445)
+- S-a actualizat traducătorul braille liblouis la versiunea 3.9.0. (#9439)
+- Combinația de taste pentru câmpul de filtrare din lista de elemente a modului de navigare s-a modificat la alt+y. (#8728)
+- Dacă un afișaj braille autodetectat este conectat prin Bluetooth, NVDA va continua să caute afișaje USB suportate de același driver și să treacă la o conexiune USB dacă devine disponibilă. (#8853)
+
+
+== Defecte rezolvate ==
+- NVDA nu mai dă crash-uri dacă un folder de suplimente este gol. (#7686)
+- Mărcile LTR și RTL nu mai sunt afișate în braille sau pe pronunțare de caracter la accesarea ferestrei de proprietăți. (#8361)
+- Când se sare la câmpuri formular cu navigarea rapidă a modului de navigare, întregul câmp formular este anunțat, nu doar prima linie. (#9388)
+- NVDA nu mai devine silențios când aplicația Mail din Windows 10 se închide. (#9341)
+- NVDA nu mai dă rateuri la pornire atunci când setările regionale ale utilizatorului au configurată o limbă pe care NVDA nu o cunoaște, un bun exemplu fiind Engleza din Țările de Jos. (#8726)
+- Când modul de navigare este activ în Microsoft Excel, iar dumneavoastră treceți la un navigator din modul de focalizare sau vice versa, starea modului de navigare este raportată acum corespunzător. (#8846)
+- Acum, NVDA raportează corespunzător rândul de la cursorul mausului în Notepad++ și în alte editoare bazate pe Scintilla. (#5450)
+- În Google Docs și în alte editoare bazate pe web, nu se mai afișează incorect în braille „lst end” înaintea cursorului din mijlocul unui element de listă. (#9477)
+- În actualizarea din mai 2019 a Windows 10, NVDA nu mai citește multe notificări de volum dacă acesta se modifică cu butoane hardware când File Explorer are focalizare. (#9466)
+- Încărcarea ferestrei de dialog a punctuației și pronunțării simbolurilor este acum mult mai rapidă când se utilizează dicționare de simboluri care conțin peste 1000 de intrări. (#8790)
+- În editoarele Scintila precum Notepad++, NVDA poate citi rândul corect atunci când wordwrap-ul este activvat. (#9424)
+- În Microsoft Excel, locația celulei este anunțată după ce se schimbă ca urmare a acționării comenzilor shift+enter sau shift+enter de pe blocul numeric. (#9499)
+- În Visual Studio 2017 și mai nou, în fereastra de explorare a obiectelor, elementul selectat din arborele obiectelor sau din arborele membrilor cu categorii este raportat corect. (#9311)
+- Suplimentele cu numele a căror diferență este făcută de majuscule, nu mai sunt tratate ca suplimente separate. (#9334)
+- Pentru vocile Windows OneCore, viteza setată în NVDA nu mai este afectată de cea setată în configurările de vorbire ale Windows 10. (#7498)
+- Jurnalul NVDA poate fi deschis cu NVDA+F1 dacă nu există informații de la dezvoltatori cu privire la obiectul navigator curent. (#8613)
+- Iarăși e posibilă folosirea comenzile NVDA de navigare în tabel în Google Docs, Firefox și Chrome. (#9494)
+- Acum, tastele barei de protecție funcționează corect pe afișajele braille de la Freedom Scientific. (#8849)
+- La citirea primului caracter al unui document în Notepad++ 7.7 X64, NVDA nu se mai blochează pentru un timp maxim de 10 secunde. (#9609)
+
+
+== Modificări pentru Dezvoltatori ==
+- Puteți seta proprietatea "disableBrowseModeByDefault" în modulele de aplicație pentru a lăsa modul de navigare dezactivat în mod implicit. (#8846)
+- Stilul extins al unei ferestre este expus utilizându-se proprietatea `extendedWindowStyle` pe obiectele ferestrei și pe derivatele lor. (#9136)
+- Sa actualizat pachetul comtypes la 1.1.7. (#9440, #8522)
+- Când se folosește comanda informației de raportare a modulului, ordinea informațiilor se modifică pentru ca modulul să fie prezentat mai întâi. (#7338)
+- S-a adăugat un exemplu care să demonstreze utilizarea nvdaControllerClient.dll din C#. (#9600)
+
+
+= 2019.1.1 ==
+Această versiune minoră aduce în atenția utilizatorilor următoarele erori rezolvate:
+- NVDA nu mai face ca Excel 2007 să dea crash sau să refuze să raporteze o celulă care conține o formulă. (#9431)
+- Google Chrome nu mai dă crash-uri la interacțiunea cu anumite listbox-uri. (#9364)
+- A fost rezolvat un bug care împiedica copierea unei configurații de utilizator în profilul configurației de sistem. (#9448)
+- În Microsoft Excel, NVDA utilizează din nou mesajele localizate la raportarea locației celulelor unite. (#9471)
+
+
 = 2019.1 =
 Caracteristicile principale ale acestei versiuni includ îmbunătățiri de performanță la accesarea Microsoft Word și Microsoft Excel, îmbunătățiri de stabilitate și securitate precum suportul pentru suplimente cu informații despre compatibilitatea versiunii și multe alte defecte rezolvate.
 

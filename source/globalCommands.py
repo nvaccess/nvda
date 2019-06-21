@@ -32,6 +32,7 @@ import winKernel
 import treeInterceptorHandler
 import browseMode
 import scriptHandler
+from scriptHandler import script
 import ui
 import braille
 import brailleInput
@@ -983,8 +984,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1014,8 +1016,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1041,8 +1044,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_previousWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_WORD)
+			info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -1071,8 +1075,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_WORD)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_WORD)
+			info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
@@ -1087,8 +1092,9 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_startOfLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
-		info.collapse()
+		if info._expandCollapseBeforeReview:
+			info.expand(textInfos.UNIT_LINE)
+			info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		ui.reviewMessage(_("Left"))
@@ -1101,8 +1107,9 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(textInfos.UNIT_CHARACTER)
-		charInfo.collapse()
+		if charInfo._expandCollapseBeforeReview:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
@@ -1158,8 +1165,9 @@ class GlobalCommands(ScriptableObject):
 		lineInfo=api.getReviewPosition().copy()
 		lineInfo.expand(textInfos.UNIT_LINE)
 		charInfo=api.getReviewPosition().copy()
-		charInfo.expand(textInfos.UNIT_CHARACTER)
-		charInfo.collapse()
+		if charInfo._expandCollapseBeforeReview:
+			charInfo.expand(textInfos.UNIT_CHARACTER)
+			charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
@@ -1187,6 +1195,42 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 	script_review_endOfLine.category=SCRCAT_TEXTREVIEW
+
+	def _getCurrentLanguageForTextInfo(self, info):
+		curLanguage = None
+		if config.conf['speech']['autoLanguageSwitching']:
+			for field in info.getTextWithFields({}):
+				if isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
+					curLanguage = field.field.get('language')
+		if curLanguage is None:
+			curLanguage = speech.getCurrentLanguage()
+		return curLanguage
+
+	@script(
+		# Translators: Input help mode message for Review Current Symbol command.
+		description=_("Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"),
+		category=SCRCAT_TEXTREVIEW,
+	)
+	def script_review_currentSymbol(self,gesture):
+		info=api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		text = info.text
+		expandedSymbol = characterProcessing.processSpeechSymbol(curLanguage, text)
+		if expandedSymbol == text:
+			# Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+			ui.message(_("No symbol replacement"))
+			return
+		repeats=scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(expandedSymbol)
+		else:
+			# Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+			message = _("Character: {}\nReplacement: {}").format(text, expandedSymbol)
+			languageDescription = languageHandler.getLanguageDescription(curLanguage)
+			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+			title = _("Expanded symbol ({})").format(languageDescription)
+			ui.browseableMessage(message, title)
 
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
@@ -1568,6 +1612,20 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle focus moves navigator object command.
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
+
+	def script_toggleAutoFocusFocusableElements(self,gesture):
+		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements off")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=False
+		else:
+			# Translators: presented when toggled.
+			state = _("Automatically set system focus to focusable elements on")
+			config.conf["virtualBuffers"]["autoFocusFocusableElements"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle auto focus focusable elements command.
+	script_toggleAutoFocusFocusableElements.__doc__=_("Toggles on and off automatic movement of the system focus due to browse mode commands") 
+	script_toggleAutoFocusFocusableElements.category=inputCore.SCRCAT_BROWSEMODE
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
@@ -2386,6 +2444,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+5": "toggleReportDynamicContentChanges",
 		"kb:NVDA+6": "toggleCaretMovesReviewCursor",
 		"kb:NVDA+7": "toggleFocusMovesNavigatorObject",
+		"kb:NVDA+8": "toggleAutoFocusFocusableElements",
 		"kb:NVDA+control+t": "braille_toggleTether",
 
 		# Synth settings ring
@@ -2447,17 +2506,17 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		if gui.shouldConfigProfileTriggersBeSuspended():
 			# Translators: a message indicating that configuration profiles can't be activated using gestures,
 			# due to profile activation being suspended.
-			state = _("Can't change the active configuration profile while an NVDA dialog is open")
+			state = _("Can't change the active profile while an NVDA dialog is open")
 		elif config.conf.profiles[-1].name == name:
 			config.conf.manualActivateProfile(None)
 			# Translators: a message when a configuration profile is manually deactivated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually deactivated").format(profile=name)
+			state = _("{profile} profile deactivated").format(profile=name)
 		else:
 			config.conf.manualActivateProfile(name)
 			# Translators: a message when a configuration profile is manually activated.
 			# {profile} is replaced with the profile's name.
-			state = _("Configuration profile {profile} manually activated").format(profile=name)
+			state = _("{profile} profile activated").format(profile=name)
 		ui.message(state)
 
 	@classmethod

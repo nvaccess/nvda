@@ -24,6 +24,36 @@ from logHandler import log
 import bdDetect
 import time
 import datetime
+from ctypes import windll
+import windowUtils
+from driverHandler import BooleanDriverSetting
+import wx
+
+class InvisibleDriverWindow(windowUtils.CustomWindow):
+	className = u"Handy_Tech_Server"
+	HT_SLEEP = 100
+	HT_INCREMENT = 1
+	HT_DECREMENT = 0
+	def __init__(self, driver):
+		super(InvisibleDriverWindow, self).__init__(u"Handy Tech Server")
+		# Register shared window message.
+		# Note: There is no corresponding unregister function.
+		# Still this does no harm if done repeatedly.
+		self.window_message=windll.user32.RegisterWindowMessageW(u"Handy_Tech_Server")
+		self.driver = weakref.ref(driver, lambda(r): self.destroy())
+
+	def windowProc(self, hwnd, msg, wParam, lParam):
+		if msg == self.window_message:
+			if wParam == self.HT_SLEEP and lParam == self.HT_INCREMENT:
+				d = self.driver()
+				if d is not None:
+					d.go_to_sleep()
+			elif wParam == self.HT_SLEEP and lParam == self.HT_DECREMENT:
+				d = self.driver()
+				if d is not None:
+					d.wake_up()
+			return 0 # success, bypass default window procedure
+
 
 BAUD_RATE = 19200
 PARITY = serial.PARITY_ODD
@@ -211,13 +241,19 @@ class AtcMixin(object):
 		self._display.atc = True
 
 
-class TimeSyncMixin(object):
-	"""Functionality for displays that support time synchronization."""
+class TimeSyncFirmnessMixin(object):
+	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
+
+	supportedSettings=(
+		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2, useConfig=False),
+	)
 
 	def postInit(self):
-		super(TimeSyncMixin, self).postInit()
+		super(TimeSyncFirmnessMixin, self).postInit()
 		log.debug("Request current display time")
 		self._display.sendExtendedPacket(HT_EXTPKT_GET_RTC)
+		log.debug("Request current dot firmness")
+		self._display.sendExtendedPacket(HT_EXTPKT_GET_FIRMNESS)
 
 	def handleTime(self, timeStr):
 		ords = map(ord, timeStr)
@@ -350,7 +386,7 @@ class EasyBraille(OldProtocolMixin, Model):
 	genericName = name = "Easy Braille"
 
 
-class ActiveBraille(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveBraille(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_BRAILLE
 	numCells = 40
 	genericName = name = 'Active Braille'
@@ -363,13 +399,13 @@ class ConnectBraille(TripleActionKeysMixin, Model):
 	name = "Connect Braille"
 
 
-class Actilino(TimeSyncMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
+class Actilino(TimeSyncFirmnessMixin, AtcMixin, JoystickMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTILINO
 	numCells = 16
 	genericName = name = "Actilino"
 
 
-class ActiveStar40(TimeSyncMixin, AtcMixin, TripleActionKeysMixin, Model):
+class ActiveStar40(TimeSyncFirmnessMixin, AtcMixin, TripleActionKeysMixin, Model):
 	deviceId = MODEL_ACTIVE_STAR_40
 	numCells = 40
 	name = "Active Star 40"
@@ -528,19 +564,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
+		# Create the message window on the ui thread.
+		wx.CallAfter(self.create_message_window)
 		self.numCells = 0
 		self._model = None
 		self._ignoreKeyReleases = False
 		self._keysDown = set()
 		self.brailleInput = False
+		self._dotFirmness = 1
 		self._hidSerialBuffer = b""
 		self._atc = False
+		self._sleepcounter = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.KEY_HID
 			self.isHidSerial = portId in USB_IDS_HID_CONVERTER
+			self.port = port
 			try:
 				if self.isHidSerial:
 					# This is either the standalone HID adapter cable for older displays,
@@ -573,10 +614,55 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.close()
 
 		else:
+			# Make sure this is called on the ui thread
+			wx.CallAfter(self.destroy_message_window)
 			raise RuntimeError("No Handy Tech display found")
+
+	def create_message_window(self):
+		try:
+			self._sleepcounter = 0
+			self._messageWindow = InvisibleDriverWindow(self)
+		except WindowsError:
+			log.debugWarning("", exc_info=True)
+
+	def destroy_message_window(self):
+		try:
+			self._messageWindow.destroy()
+		except WindowsError:
+			log.debugWarning("", exc_info=True)
+
+	def go_to_sleep(self):
+		self._sleepcounter += 1
+		if self._dev is not None:
+			# Must sleep before and after closing to ensure the device can be reconnected.
+			time.sleep(self.timeout)
+			self._dev.close()
+			self._dev = None
+			time.sleep(self.timeout)
+
+	def wake_up(self):
+		if self._sleepcounter > 0:
+			self._sleepcounter -= 1
+		if self._sleepcounter > 0: # Still not zero after decrementing
+			return
+		# Might throw if device no longer exists.
+		# We leave it to autodetection to grab it when it reappears.
+		if self.isHidSerial:
+			# This is either the standalone HID adapter cable for older displays,
+			# or an older display with a HID - serial adapter built in
+			self._dev = hwIo.Hid(self.port, onReceive=self._hidSerialOnReceive)
+			# Send a flush to open the serial channel
+			self._dev.write(HT_HID_RPT_InCommand + HT_HID_CMD_FlushBuffers)
+		elif self.isHid:
+			self._dev = hwIo.Hid(self.port, onReceive=self._hidOnReceive)
+		else:
+			self._dev = hwIo.Serial(self.port, baudrate=BAUD_RATE, parity=PARITY,
+				timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._serialOnReceive)
 
 	def terminate(self):
 		try:
+			# Make sure this is called on the ui thread.
+			wx.CallAfter(self.destroy_message_window)
 			super(BrailleDisplayDriver, self).terminate()
 		finally:
 			# We must sleep before closing the  connection as not doing this can leave the display in a bad state where it can not be re-initialized.
@@ -587,6 +673,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# We also must sleep after closing, as it sometimes takes some time for the device to disconnect.
 			# This has been observed for Active Braille displays.
 			time.sleep(self.timeout)
+
+	def _get_supportedSettings(self):
+		settings = [
+			braille.BrailleDisplayDriver.BrailleInputSetting(),
+		]
+		if self._model:
+			# Add the per model supported settings to the list.
+			for cls in self._model.__class__.__mro__:
+				if hasattr(cls, "supportedSettings"):
+					settings.extend(cls.supportedSettings)
+		return settings
 
 	def _get_atc(self):
 		return self._atc
@@ -601,7 +698,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._atc = state
 
+	def _get_dotFirmness(self):
+		return self._dotFirmness
+
+	def _set_dotFirmness(self, value):
+		if self._dotFirmness is value:
+			return
+		if isinstance(self._model,TimeSyncFirmnessMixin):
+			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, value)
+		else:
+			log.debugWarning("Changing dot firmness setting for unsupported device %s"%self._model.name)
+		# Regardless whether this setting is supported or not, we want to safe its state.
+		self._dotFirmness = value
+
 	def sendPacket(self, packetType, data=""):
+		if self._sleepcounter > 0:
+			return
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		if self.isHid:
@@ -610,6 +722,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.write(packetType + data)
 
 	def sendExtendedPacket(self, packetType, data=""):
+		if self._sleepcounter > 0:
+			log.debug("Packet discarded as driver was requested to sleep")
+			return
 		if type(data) == bool or type(data) == int:
 			data = chr(data)
 		packet = b"{length}{extType}{data}\x16".format(
@@ -737,8 +852,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				pass
-			elif extPacketType == HT_EXTPKT_GET_RTC and isinstance(self._model, TimeSyncMixin):
-				self._model.handleTime(packet[1:])
+			elif isinstance(self._model, TimeSyncFirmnessMixin):
+				if extPacketType == HT_EXTPKT_GET_RTC:
+					self._model.handleTime(packet[1:])
+				elif extPacketType == HT_EXTPKT_GET_FIRMNESS:
+					self._dotFirmness = ord(packet[1])
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
