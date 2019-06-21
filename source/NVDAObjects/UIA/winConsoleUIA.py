@@ -236,7 +236,7 @@ class WinConsoleUIA(Terminal):
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
-	_caretMovementTimeout = 2
+	_caretMovementTimeoutMultiplier = 2
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
