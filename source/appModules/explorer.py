@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee
+#Copyright (C) 2006-2019 NV Access Limited, Joseph Lee, Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -184,7 +185,7 @@ class ReadOnlyEditBox(IAccessible):
 
 	def _get_windowText(self):
 		windowText = super(ReadOnlyEditBox, self).windowText
-		if windowText is not None and controlTypes.STATE_READONLY in self.states:
+		if windowText is not None:
 			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return windowText
 
@@ -219,7 +220,7 @@ class AppModule(appModuleHandler.AppModule):
 					clsList.insert(0, NotificationArea)
 			return 
 
-		if windowClass == "Edit":
+		if windowClass == "Edit" and controlTypes.STATE_READONLY in obj.states:
 			clsList.insert(0, ReadOnlyEditBox)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
