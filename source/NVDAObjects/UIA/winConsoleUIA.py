@@ -197,6 +197,11 @@ class WinConsoleUIA(Terminal):
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
 
+	def initOverlayClass(self):
+		# Bound consoles by default to maintain feature parity with legacy.
+		if self.uniqueID not in globalVars.reviewBoundsStates:
+			self.reviewBounded = True
+
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
 		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
@@ -271,12 +276,5 @@ class WinConsoleUIA(Terminal):
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
 		clsList.append(WinConsoleUIA)
-		# Bound review in consoles by default to maintain feature parity
-		# with legacy support.
-		# There may be a better way to do this: I tried overriding __init__
-		# on the console class itself, but the console's version never
-		# got called.
-		if obj.uniqueID not in globalVars.reviewBoundsStates:
-			obj.reviewBounded = True
 	elif obj.UIAElement.cachedAutomationId == "Console Window":
 		clsList.append(consoleUIAWindow)

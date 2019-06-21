@@ -12,7 +12,7 @@ import ui
 import controlTypes
 import globalVars
 
-class TextContainerObject(AutoPropertyObject):
+class TextContainerObject(ScriptableObject):
 	"""
 	An object that contains text which can be accessed via a call to a makeTextInfo method.
 	E.g. NVDAObjects, BrowseModeDocument TreeInterceptors.
