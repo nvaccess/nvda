@@ -163,25 +163,30 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
 
 	def _getTextRange(self,start,end):
-		bufLen=(end-start)+1
-		textRange=TextRangeStruct()
-		textRange.chrg.cpMin=start
-		textRange.chrg.cpMax=end
-		processHandle=self.obj.processHandle
-		internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		bufLen = (end - start) + 1
+		textRange = TextRangeStruct()
+		textRange.chrg.cpMin = start
+		textRange.chrg.cpMax = end
+		processHandle = self.obj.processHandle
+		internalBuf = winKernel.virtualAllocEx(processHandle, None, bufLen, winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 		try:
-			textRange.lpstrText=internalBuf
-			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			textRange.lpstrText = internalBuf
+			internalTextRange = winKernel.virtualAllocEx(processHandle, None, ctypes.sizeof(textRange), winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 			try:
-				winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-				watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
+				winKernel.writeProcessMemory(processHandle, internalTextRange, ctypes.byref(textRange), ctypes.sizeof(textRange), None)
+				numBytes = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETTEXTRANGE, 0, internalTextRange)
 			finally:
-				winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			buf=ctypes.create_string_buffer(bufLen)
-			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
+				winKernel.virtualFreeEx(processHandle, internalTextRange, 0, winKernel.MEM_RELEASE)
+			buf = ctypes.create_string_buffer(bufLen)
+			winKernel.readProcessMemory(processHandle, internalBuf, buf, bufLen, None)
 		finally:
-			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		return buf.value.decode(self.encoding,errors="replace")
+			winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
+		textBytes = buf.raw[:numBytes]
+		if not any(textBytes):
+			# textBytes is empty or only contains null characters.
+			# If this is a document with only null characters in it, there's not much we can do about this.
+			return ""
+		return textBytes.decode(self.encoding, errors="surrogateescape")
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)

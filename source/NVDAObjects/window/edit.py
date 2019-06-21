@@ -67,13 +67,7 @@ class CharRangeStruct(ctypes.Structure):
 		('cpMax',ctypes.c_long),
 	]
 
-class TextRangeUStruct(ctypes.Structure):
-	_fields_=[
-		('chrg',CharRangeStruct),
-		('lpstrText',ctypes.c_wchar_p),
-	]
-
-class TextRangeAStruct(ctypes.Structure):
+class TextRangeStruct(ctypes.Structure):
 	_fields_=[
 		('chrg',CharRangeStruct),
 		('lpstrText',ctypes.c_char_p),
@@ -368,7 +362,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			bufLen = ((end - start) + 1) * 2
 			# Even though this can return unicode text, we use the ANSI version of the structure.
 			# Using the unicode structure isn't strictly necessary and saves us some confusion
-			textRange = TextRangeAStruct()
+			textRange = TextRangeStruct()
 			textRange.chrg.cpMin = start
 			textRange.chrg.cpMax = end
 			processHandle = self.obj.processHandle
@@ -384,26 +378,33 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 					numChars = watchdog.cancellableSendMessage(self.obj.windowHandle, EM_GETTEXTRANGE, 0, internalTextRange)
 				finally:
 					winKernel.virtualFreeEx(processHandle, internalTextRange, 0, winKernel.MEM_RELEASE)
-				buf = (ctypes.c_byte * bufLen)()
+				buf = ctypes.create_string_buffer(bufLen)
 				# Copy the text in the text range to our own buffer.
 				winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			finally:
 				winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
-			# Find out the byte size for the characters in the buffer.
+			# Find out the byte size for the characters in the buffer
+			# in order to see how many bytes we have to decode.
 			if (
 				# The window is unicode, the text range contains multi byte characters.
 				self.obj.isWindowUnicode
 				# Or the window reports being ANSI but the buffer seems to contain unicode characters.
-				# ANSI strings are terminated with one NULL terminated character.
-				# As pointed out above, numChars contains the number of characters without the null terminator.
-				# Therefore, if the string we got isn't null terminated at numCHars or numChars + 1,
+				# As pointed out above, numChars contains the number of characters.
+				# Therefore, if the string we got contains any non null characters from numChars to the buffer's end,
 				# the buffer definitely contains multibyte characters.
-				or (numChars > 1 and (buf[numChars] != 0 or buf[numChars + 1] != 0))
+				or (numChars > 1 and any(map(ord, buf[numChars:])))
 			):
-				text=ctypes.cast(buf,ctypes.c_wchar_p).value
+				numBytes = numChars * 2
+				encoding = self._WCHAR_ENCODING
 			else:
+				numBytes = numChars
 				encoding=locale.getlocale()[1]
-				text=ctypes.cast(buf,ctypes.c_char_p).value.decode(encoding,errors="replace")
+			textBytes: bytes = buf.raw[:numBytes]
+			try:
+				text = textBytes.decode(encoding, errors="strict")
+			except UnicodeDecodeError:
+				log.exception("Error decoding text in edit control, probably wrong encoding assumed")
+				text = textBytes.decode(encoding, errors="replace")
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.
