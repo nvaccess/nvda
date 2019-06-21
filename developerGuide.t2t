@@ -771,7 +771,11 @@ You can navigate through the history of previously entered lines using the up an
 Output (responses from the interpreter) will be spoken when enter is pressed.
 The f6 key toggles between the input and output controls.
 
-Closing the console window simply hides it.
+The result of the last executed command is stored in the "_" global variable.
+This shadows the gettext function which is stored as a built-in with the same name.
+It can be unshadowed by executing "del _" and avoided altogether by executing "_ = _".
+
+Closing the console window (with escape or alt+F4) simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
 ++ Namespace ++[PythonConsoleNamespace]
