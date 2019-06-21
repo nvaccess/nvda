@@ -351,7 +351,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			# ForWM_GETTEXTLENGTH documentation, see
 			# https://docs.microsoft.com/en-us/windows/desktop/winmsg/wm-gettextlength
-			# It tetermines the length, in characters, of the text associated with a window.
+			# It determines the length, in characters, of the text associated with a window.
 			# Py3 review: investigation with Python 2 NVDA revealed that
 			# adding 1 to this created an off by one error.
 			# Tested using Notepad
