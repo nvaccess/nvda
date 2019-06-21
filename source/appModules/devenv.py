@@ -100,6 +100,7 @@ class AppModule(appModuleHandler.AppModule):
 	codeEditor = None
 
 	messageRead = False
+	speechStopped = False
 
 	def _get_major(self):
 		return int(self.productVersion.split(".", 2)[0])
@@ -126,13 +127,17 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ObjectsTreeItem)
 
 		if self.major >= 15:
-			try:
-				if (obj.role == controlTypes.ROLE_EDITABLETEXT and
-					obj.parent.parent.parent.parent.parent.UIAElement.CachedClassName == "DocumentGroup"):
+			if (obj.role == controlTypes.ROLE_EDITABLETEXT
+				and isinstance(obj, UIA.UIA)
+				and obj.UIAElement.CachedClassName == "WpfTextView"):
+				fourthParent = obj.parent.parent.parent.parent
+				fiftParent = fourthParent.parent
+				if (isinstance(fourthParent, UIA.UIA)
+					and fourthParent.UIAElement.CachedClassName == "BreakpointSettingsControl"):
 					clsList.insert(0, CodeEditor)
-			except:
-				# The check can reach the desktop in some *strange* occasions
-				pass
+				elif (isinstance(fiftParent, UIA.UIA)
+					and fiftParent.UIAElement.CachedClassName == "DocumentGroup"):
+					clsList.insert(0, CodeEditor)
 
 			if (obj.role == controlTypes.ROLE_MENUITEM
 				and isinstance(obj, UIA.UIA)
@@ -206,7 +211,8 @@ class AppModule(appModuleHandler.AppModule):
 		# The only purpose is to play the sound of suggestions closed when we
 		# go out from the editor.
 		if not isinstance(obj, CodeEditor) and self.intellisenseItem:
-			self.codeEditor.event_suggestionsClosed()
+			if self.codeEditor:
+				self.codeEditor.event_suggestionsClosed()
 
 			# Cleanup of references, we don't need them anymore
 			self.intellisenseItem = None
@@ -214,6 +220,7 @@ class AppModule(appModuleHandler.AppModule):
 
 			# Set messageRead flag to false
 			self.messageRead = False
+			self.speechStopped = False
 
 		nextHandler()
 
@@ -586,18 +593,17 @@ class IntellisenseMenuItem(UIA.UIA):
 		return "[HIGHLIGHTED]=True" in itemStatus
 
 	def event_UIA_itemStatus(self):
-		editor = self.appModule.codeEditor
-		speechStopped = False
+		editor = api.getFocusObject()
 
 		if not self.appModule.messageRead:
 			# See #9739's edit note.
 			self.appModule.messageRead = True
 
 			# See below
-			speechStopped = True
+			self.appModule.speechStopped = True
 			speech.cancelSpeech()
 
-			if editor:
+			if isinstance(editor, CodeEditor):
 				editor.event_suggestionsOpened()
 			try:
 				ui.message(self.parent.next.next.name)
@@ -607,7 +613,7 @@ class IntellisenseMenuItem(UIA.UIA):
 
 		if self.highlighted:
 			if self.appModule.intellisenseItem != self:
-				if not speechStopped:
+				if not self.appModule.speechStopped:
 					# Sometimes the message is read, but speech is stopped
 					# again, so we must use this flag to ensure the help text
 					# is read before the item
@@ -621,7 +627,7 @@ class IntellisenseMenuItem(UIA.UIA):
 					self.appModule.messageRead = True
 
 					# Same here, fire suggestionsOpened and speak help text
-					if editor:
+					if isinstance(editor, CodeEditor):
 						editor.event_suggestionsOpened()
 
 					try:
@@ -637,6 +643,11 @@ class IntellisenseMenuItem(UIA.UIA):
 
 			# We need to track this item, for the time when another is highlighted
 			self.appModule.intellisenseItem = self
+			self.appModule.speechStopped = False
+
+	def event_UIA_elementSelected(self):
+		if not self.highlighted:
+			self.event_UIA_itemStatus()
 
 class CodeEditor(EditableTextWithSuggestions, UIA.WpfTextView):
 
