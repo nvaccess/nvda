@@ -45,7 +45,7 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
-	# UIA event of candidate window interfere with MSAA events.
+	# UIA events of candidate window interfere with MSAA events.
 	"Microsoft.IME.CandidateWindow.View",
 "SysTreeView32",
 "WuDuiListView",
