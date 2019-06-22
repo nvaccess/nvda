@@ -147,10 +147,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	detectFormattingAfterCursorMaybeSlow: bool = True
 	#: Use uniscribe to calculate word offsets etc.
 	useUniscribe: bool = True
-	#: The encoding used for wide characters
-	_WCHAR_ENCODING: str = "utf_16_le"
 	#: The encoding internal to the underlying text info implementation.
-	encoding: Optional[str] = _WCHAR_ENCODING
+	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
@@ -281,7 +279,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		@rtype: str
 		"""
 		text=self._getStoryText()
-		if self.encoding == self._WCHAR_ENCODING:
+		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
 			start, end = offsetConverter.wideToStrOffsets(start, end)
 		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
@@ -304,7 +302,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
-		if self.encoding == self._WCHAR_ENCODING:
+		if self.encoding == textUtils.WCHAR_ENCODING:
 			lineStart,lineEnd=self._getLineOffsets(offset)
 			lineText=self._getTextRange(lineStart,lineEnd)
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
@@ -317,7 +315,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return offset, offset + 1
 
 	def _getWordOffsets(self,offset):
-		if self.encoding not in (self._WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
+		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
 			raise NotImplementedError
 		lineStart,lineEnd=self._getLineOffsets(offset)
 		lineText=self._getTextRange(lineStart,lineEnd)
@@ -332,13 +330,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			if NVDAHelper.localLib.calculateWordOffsets(lineText,len(lineText),offset-lineStart,ctypes.byref(start),ctypes.byref(end)):
 				start = start.value
 				end = end.value
-				if self.encoding != self._WCHAR_ENCODING:
+				if self.encoding != textUtils.WCHAR_ENCODING:
 					# We need to convert the uniscribe based offsets to str offsets.
 					offsetConverter = textUtils.WideStringOffsetConverter(lineText)
 					start, end = offsetConverter.wideToStrOffsets(start, end)
 				return (start, end)
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
-		if self.encoding == self._WCHAR_ENCODING:
+		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
 			relOffset = offset - lineStart
 			relStrOffset = offsetConverter.wideToStrOffsets(relOffset, relOffset)[0]
@@ -355,7 +353,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _getLineOffsets(self,offset):
 		text=self._getStoryText()
-		if self.encoding == self._WCHAR_ENCODING:
+		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
 			strOffset = offsetConverter.wideToStrOffsets(offset, offset)[0]
 			strStart=findStartOfLine(text, strOffset)

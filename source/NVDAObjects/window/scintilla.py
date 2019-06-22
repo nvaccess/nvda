@@ -14,6 +14,7 @@ import locale
 import watchdog
 import eventHandler
 import locationHelper
+import textUtils
 
 # Window messages
 SCI_POSITIONFROMPOINT=2022
@@ -181,12 +182,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			winKernel.readProcessMemory(processHandle, internalBuf, buf, bufLen, None)
 		finally:
 			winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
-		textBytes = buf.raw[:numBytes]
-		if not any(textBytes):
-			# textBytes is empty or only contains null characters.
-			# If this is a document with only null characters in it, there's not much we can do about this.
-			return ""
-		return textBytes.decode(self.encoding, errors="surrogateescape")
+		return textUtils.getTextFromStringBuffer(buf, numChars=numBytes, encoding=self.encoding, errorsFallback="surrogateescape")
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)

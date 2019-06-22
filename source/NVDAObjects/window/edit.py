@@ -32,6 +32,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 import watchdog
 import locationHelper
+import textUtils
 
 selOffsetsAtLastCaretEvent=None
 
@@ -383,28 +384,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			finally:
 				winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
-			# Find out the byte size for the characters in the buffer
-			# in order to see how many bytes we have to decode.
+			# Find out which encoding to use to decode the bytes in the buffer.
 			if (
 				# The window is unicode, the text range contains multi byte characters.
 				self.obj.isWindowUnicode
-				# Or the window reports being ANSI but the buffer seems to contain unicode characters.
-				# As pointed out above, numChars contains the number of characters.
-				# Therefore, if the string we got contains any non null characters from numChars to the buffer's end,
-				# the buffer definitely contains multibyte characters.
-				or (numChars > 1 and any(map(ord, buf[numChars:])))
 			):
-				numBytes = numChars * 2
-				encoding = self._WCHAR_ENCODING
+				encoding = textUtils.WCHAR_ENCODING
 			else:
-				numBytes = numChars
-				encoding=locale.getlocale()[1]
-			textBytes: bytes = buf.raw[:numBytes]
-			try:
-				text = textBytes.decode(encoding, errors="strict")
-			except UnicodeDecodeError:
-				log.exception("Error decoding text in edit control, probably wrong encoding assumed")
-				text = textBytes.decode(encoding, errors="replace")
+				# De encoding will be determined by L{textUtils.getTextFromStringBuffer}
+				encoding = None
+			text = textUtils.getTextFromStringBuffer(buf, numChars, encoding)
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.

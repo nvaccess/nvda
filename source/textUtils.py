@@ -12,12 +12,16 @@ import encodings
 import sys
 import ctypes
 from collections.abc import ByteString
-from typing import Tuple
+from typing import Tuple, Optional
+from _ctypes import Array
+import locale
+from logHandler import log
 
 HIGH_SURROGATE_FIRST = u"\uD800"
 HIGH_SURROGATE_LAST = u"\uDBFF"
 LOW_SURROGATE_FIRST = u"\uDC00"
 LOW_SURROGATE_LAST = u"\uDFFF"
+WCHAR_ENCODING = "utf_16_le"
 
 class WideStringOffsetConverter:
 	R"""
@@ -38,7 +42,7 @@ class WideStringOffsetConverter:
 	this character internally consists of two characters: \ud83d and \ude02.
 	"""
 
-	_encoding: str = "utf_16_le"
+	_encoding: str = WCHAR_ENCODING
 	_bytesPerIndex: int = ctypes.sizeof(ctypes.c_wchar)
 
 	def __init__(self, text: str):
@@ -175,3 +179,45 @@ class WideStringOffsetConverter:
 			# Compensate for the case where we stretched our offsets earlier
 			strEnd -= (correctedBytesEnd - bytesEnd) // self._bytesPerIndex
 		return (strStart, strEnd)
+
+def getTextFromStringBuffer(
+	buf: Array, # No way to type hint ctypes.c_char_Array
+	numChars: int,
+	encoding: Optional[str] = None,
+	errorsFallback: str = "replace"
+):
+	"""
+	Gets a string from a ctypes c_char_Array, decoded using the specified L{encoding}.
+	If L{encoding} is C{None}, the buffer is inspected on whether it contains single byte or multi byte characters.
+	As a first attempt, the bytes are encoded using the surrogatepass error handler.
+	This handler behaves like strict for all encodings without surrogates,
+	while making sure that surrogates are properly decoded when using UTF-16.
+	If that fails, the exception is logged and the bytes are decoded
+	according to the L{errorsFallback} error handler.
+	"""
+	if encoding is None:
+		# If the buffer we got contains any non null characters from numChars to the buffer's end,
+		# the buffer definitely contains multibyte characters.
+		if numChars > 1 and any(map(ord, buf[numChars:])):
+			encoding = WCHAR_ENCODING
+		else:
+			encoding = locale.getlocale()[1]
+	else:
+		encoding = encodings.normalize_encoding(encoding).lower()
+	if encoding.startswith("utf_16"):
+		numBytes = numChars * 2
+	elif encoding.startswith("utf_32"):
+		numBytes = numChars * 4
+	else: # All other encodings are single byte.
+		numBytes = numChars
+	rawText: bytes = buf.raw[:numBytes]
+	if not any(rawText):
+		# rawText is empty or only contains null characters.
+		# If this is a range with only null characters in it, there's not much we can do about this.
+		return ""
+	try:
+		text = rawText.decode(encoding, errors="surrogatepass")
+	except UnicodeDecodeError:
+		log.debugWarning("Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf)
+		text = rawText.decode(encoding, errors=errorsFallback)
+	return text
