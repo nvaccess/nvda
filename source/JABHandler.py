@@ -19,6 +19,7 @@ import eventHandler
 import controlTypes
 import NVDAObjects.JAB
 import core
+import textutils
 
 #Some utility functions to help with function defines
 
@@ -390,9 +391,10 @@ class JABContext(object):
 		length=((end+1)-start)
 		if length<=0:
 			return u""
-		text=create_unicode_buffer(length+1)
-		bridgeDll.getAccessibleTextRange(self.vmID,self.accContext,start,end,text,length)
-		return text.value
+		# Use a string buffer, as from an unicode buffer, we can't get the raw data.
+		buf = create_string_buffer((length +1) * 2)
+		bridgeDll.getAccessibleTextRange(self.vmID, self.accContext, start, end, buf, length)
+		return textUtils.getTextFromStringBuffer(buf, numChars=length, encoding=textUtils.WCHAR_ENCODING)
 
 	def getAccessibleTextLineBounds(self,index):
 		index=max(index,0)
