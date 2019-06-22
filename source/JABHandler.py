@@ -19,7 +19,7 @@ import eventHandler
 import controlTypes
 import NVDAObjects.JAB
 import core
-import textutils
+import textUtils
 
 #Some utility functions to help with function defines
 
