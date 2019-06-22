@@ -317,28 +317,30 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getWordOffsets(self,offset):
 		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
 			raise NotImplementedError
-		lineStart,lineEnd=self._getLineOffsets(offset)
-		lineText=self._getTextRange(lineStart,lineEnd)
-		#Convert NULL and non-breaking space to space to make sure that words will break on them
-		lineText=lineText.translate({0:u' ',0xa0:u' '})
+		lineStart, lineEnd = self._getLineOffsets(offset)
+		relOffset = offset - lineStart
+		lineText = self._getTextRange(lineStart,lineEnd)
+		# Convert NULL and non-breaking space to space to make sure that words will break on them
+		lineText = lineText.translate({0:u' ',0xa0:u' '})
 		if self.useUniscribe:
-			start=ctypes.c_int()
-			end=ctypes.c_int()
-			#uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
-			#Inject two alphanumeric characters at the end to fix this 
-			lineText+="xx"
-			if NVDAHelper.localLib.calculateWordOffsets(lineText,len(lineText),offset-lineStart,ctypes.byref(start),ctypes.byref(end)):
-				start = start.value
-				end = end.value
+			relStart=ctypes.c_int()
+			relEnd=ctypes.c_int()
+			# uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
+			# Inject two alphanumeric characters at the end to fix this 
+			lineText += "xx"
+			# We can't rely on len(lineText) to calculate the length of the lin.
+			lineLength = (lineEnd - lineStart) + 2
+			if NVDAHelper.localLib.calculateWordOffsets(lineText, lineLength, relOffset, ctypes.byref(relStart), ctypes.byref(relEnd)):
+				relStart = relStart.value
+				relEnd = relEnd.value
 				if self.encoding != textUtils.WCHAR_ENCODING:
 					# We need to convert the uniscribe based offsets to str offsets.
 					offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-					start, end = offsetConverter.wideToStrOffsets(start, end)
-				return (start, end)
+					relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
+				return (relStart + lineStart , relEnd + lineStart)
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
-			relOffset = offset - lineStart
 			relStrOffset = offsetConverter.wideToStrOffsets(relOffset, relOffset)[0]
 			relStrStart = findStartOfWord(lineText, relStrOffset)
 			relStrEnd = findEndOfWord(lineText, relStrOffset)
