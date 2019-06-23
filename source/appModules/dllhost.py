@@ -11,6 +11,7 @@ This simply imports a proper class from the explorer app module, and maps it to 
 
 import appModuleHandler
 from .explorer import ReadOnlyEditBox
+import controlTypes
 
 class AppModule(appModuleHandler.AppModule):
 
