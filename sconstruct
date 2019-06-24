@@ -264,7 +264,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	action.append(buildCmd)
 
 	# Python3 has started signing its main python dll.
-	# However, Pytexe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
+	# However, Py2exe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
 	# Therefore, copy a fresh version  of the dll one more time once py2exe has completed.
 	action.append(Copy(target[0],pydll))
 
