@@ -7,12 +7,12 @@ import ctypes
 import _ctypes
 
 # A version of ctypes.WINFUNCTYPE 
-# that produces a WinFunctionType class whos instance will convert COMError into a CallCancelled exception when called as a function.
+# that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
 old_WINFUNCTYPE=ctypes.WINFUNCTYPE
 def new_WINFUNCTYPE(restype,*argtypes,**kwargs):
 	cls=old_WINFUNCTYPE(restype,*argtypes,**kwargs)
 	class WinFunctionType(cls):
-		# We must manually pull the manditory class variables from the super class,
+		# We must manually pull the mandatory class variables from the super class,
 		# as the metaclass of _ctypes.CFuncPtr seems to expect these on the outermost subclass.
 		_argtypes_=cls._argtypes_
 		_restype_=cls._restype_
