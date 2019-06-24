@@ -1,0 +1,9 @@
+# Manually grab pyGetWindow 0.0.4 as latest release cannot be installed on Python 2.7.
+# See https://github.com/asweigart/PyGetWindow/issues/9
+pygetwindow==0.0.4
+# Latest version of PyAutoGui requires PyGetWindow=0.0.5 which cannot be installed - see above
+# Therefore install last working version
+pyautogui==0.9.43
+nose
+robotframework
+robotremoteserver

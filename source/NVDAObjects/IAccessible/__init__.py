@@ -10,7 +10,6 @@ import ctypes
 import os
 import re
 import itertools
-import importlib
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
@@ -33,7 +32,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-import core
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
 
@@ -440,8 +438,7 @@ the NVDAObject for IAccessible
 			if classString and classString.find('.')>0:
 				modString,classString=os.path.splitext(classString)
 				classString=classString[1:]
-				# #8712: Python 3 wants a dot (.) when loading a module from the same folder via relative imports, and this is done via package argument.
-				mod=importlib.import_module("NVDAObjects.IAccessible.%s"%modString, package="NVDAObjects.IAccessible")
+				mod=__import__(modString,globals(),locals(),[])
 				newCls=getattr(mod,classString)
 			elif classString:
 				newCls=globals()[classString]
@@ -452,20 +449,25 @@ the NVDAObject for IAccessible
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName=="_WwG":
-			from .winword import WordDocument 
+			from winword import WordDocument 
 			clsList.append(WordDocument)
 		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO"):
 			if self.windowControlID==18:
-				from .winword import SpellCheckErrorField
+				from winword import SpellCheckErrorField
 				clsList.append(SpellCheckErrorField)
 			else:
-				from .winword import WordDocument_WwN
+				from winword import WordDocument_WwN
 				clsList.append(WordDocument_WwN)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
-		if windowClassName.lower().startswith('mscandui'):
+		if (
+			windowClassName.lower().startswith('mscandui')
+			or windowClassName in (
+				"Microsoft.IME.CandidateWindow.View",
+				"Microsoft.IME.UIManager.CandidateWindow.Host"
+		)):
 			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
@@ -1935,28 +1937,9 @@ class IENotificationBar(Dialog,IAccessible):
 				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
 			child=child.simpleNext
 
-class Desktop(IAccessible):
-	"""
-	An IAccessible overlay class for the Desktop (root of all windows on the system).
-	"""
-
-	# In the past, The Desktop NVDAObject was just a Window, not IAccessible.
-	# But now with the introduction of Virtual Desktops in Windows 10, Desktops can have names, thus why IAccessible is used.
-	# But, we still want to maintain compatibility with the existing tree structure, thus its role is still Window, and it has no parent, next or previous objects.
-	role=controlTypes.ROLE_WINDOW
-	parent=None
-	next=None
-	previous=None
-
-	def event_nameChange(self):
-		# Instruct eventHandler to detect and handle a possible desktop name change, if it has not already.
-		# It is slightly delayed just in case a focus event is already going to occur, which will handle the name change itself.
-		core.callLater(250,eventHandler.handlePossibleDesktopNameChange)
-
 ###class mappings
 
 _staticMap={
-	("#32769",oleacc.ROLE_SYSTEM_CLIENT):"Desktop",
 	("ReBarWindow32",oleacc.ROLE_SYSTEM_CLIENT):"ReBarWindow32Client",
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
@@ -2029,4 +2012,5 @@ _staticMap={
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
     ("MsoCommandBar",oleacc.ROLE_SYSTEM_LISTITEM):"msOffice.CommandBarListItem",
+	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
 }

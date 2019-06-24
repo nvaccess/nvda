@@ -5,8 +5,6 @@
 #Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
 
 import threading
-import winVersion
-import ui
 import queueHandler
 import api
 import speech
@@ -26,22 +24,6 @@ _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
 # Needed to ensure updates are atomic, as these might be updated from multiple threads simultaneously.
 _pendingEventCountsLock=threading.RLock()
-_lastDesktopName=None
-
-def handlePossibleDesktopNameChange():
-	"""
-	Reports the new virtual desktop name if changed.
-	On Windows versions lower than Windows 10, this function does nothing.
-	"""
-	global _lastDesktopName
-	# Desktop switch reporting can only be supported on Windows 10 May 2019 Update and above,
-	# As previous Windows builds could experience delays and incorrect desktop names.
-	if winVersion.winVersion>=(10,0,18334):
-		import UIAHandler
-		newName=UIAHandler.handler.rootElement.currentName
-		if newName!=_lastDesktopName:
-			ui.message(newName)
-			_lastDesktopName=newName
 
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
@@ -190,7 +172,6 @@ def doPreGainFocus(obj,sleepMode=False):
 				newForeground=obj
 		api.setForegroundObject(newForeground)
 		executeEvent('foreground',newForeground)
-	handlePossibleDesktopNameChange()
 	if sleepMode: return True
 	#Fire focus entered events for all new ancestors of the focus if this is a gainFocus event
 	for parent in globalVars.focusAncestors[globalVars.focusDifferenceLevel:]:
