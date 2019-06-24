@@ -14,7 +14,7 @@ from io import BytesIO
 import serial # pylint: disable=E0401
 import weakref
 import hwIo
-from hwIo import intToByte
+from hwIo import intToByte, boolToByte
 import braille
 import brailleInput
 import inputCore
@@ -205,7 +205,7 @@ class OldProtocolMixin(object):
 		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
 		followed by the cells. No model ID or length are included.
 		"""
-		self._display.sendPacket(HT_PKT_BRAILLE, bytes(cell for cell in cells))
+		self._display.sendPacket(HT_PKT_BRAILLE, bytes(cells))
 
 
 class AtcMixin(object):
@@ -618,7 +618,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self._atc is state:
 			return
 		if isinstance(self._model,AtcMixin):
-			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, state)
+			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, boolToByte(state))
 		else:
 			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
 		# Regardless whether this setting is supported or not, we want to safe its state.
@@ -631,7 +631,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self._dotFirmness is value:
 			return
 		if isinstance(self._model,TimeSyncFirmnessMixin):
-			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, value)
+			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, intToByte(value))
 		else:
 			log.debugWarning("Changing dot firmness setting for unsupported device %s"%self._model.name)
 		# Regardless whether this setting is supported or not, we want to safe its state.
@@ -757,7 +757,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			packet: bytes = stream.read(packet_length)
 			terminator: bytes = stream.read(1)
 			assert terminator == b"\x16"	# Extended packets are terminated with \x16
-			extPacketType = packet[0]
+			extPacketType = packet[0:1]
 			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
 				if packet[1:2] == HT_PKT_ACK:
