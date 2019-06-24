@@ -140,9 +140,12 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 	def _getPropertyViaCache(self,getterMethod=None):
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
+		missing=False
 		try:
 			val=self._propertyCache[getterMethod]
 		except KeyError:
+			missing=True
+		if missing:
 			val=getterMethod(self)
 			self._propertyCache[getterMethod]=val
 		return val

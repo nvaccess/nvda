@@ -19,6 +19,7 @@ import winKernel
 from logHandler import log
 import globalVars
 import core
+from core import CallCancelled
 import NVDAHelper
 
 #settings
@@ -45,10 +46,6 @@ _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
 _watcherThread=None
 _cancelCallEvent = None
-
-class CallCancelled(Exception):
-	"""Raised when a call is cancelled.
-	"""
 
 def alive():
 	"""Inform the watchdog that the core is alive.
@@ -196,13 +193,6 @@ def _notifySendMessageCancelled():
 			raise CallCancelled
 	sys.setprofile(sendMessageCallCanceller)
 
-RPC_E_CALL_CANCELED = -2147418110
-_orig_COMError_init = comtypes.COMError.__init__
-def _COMError_init(self, hresult, text, details):
-	if hresult == RPC_E_CALL_CANCELED:
-		raise CallCancelled
-	_orig_COMError_init(self, hresult, text, details)
-
 def initialize():
 	"""Initialize the watchdog.
 	"""
@@ -218,8 +208,6 @@ def initialize():
 		"cancelCallEvent")
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
-	# Monkey patch comtypes to specially handle cancelled COM calls.
-	comtypes.COMError.__init__ = _COMError_init
 	_watcherThread=threading.Thread(target=_watcher)
 	alive()
 	_watcherThread.start()
@@ -232,7 +220,6 @@ def terminate():
 		return
 	isRunning=False
 	oledll.ole32.CoDisableCallCancellation(None)
-	comtypes.COMError.__init__ = _orig_COMError_init
 	# Wake up the watcher so it knows to finish.
 	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
 		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
