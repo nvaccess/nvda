@@ -151,7 +151,7 @@ test_script:
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
      Set-AppveyorBuildVariable "unitTestsXml" $unitTestsXml
- - py -m nose --with-xunit --xunit-file="%unitTestsXml%" ./tests/unit
+ - py -m nose -svd --with-xunit --xunit-file="%unitTestsXml%" ./tests/unit
  - appveyor PushArtifact "%unitTestsXml%"
  - ps: |
      $wc = New-Object 'System.Net.WebClient'
