@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -21,6 +21,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "dllmain.h"
 #include "apiHook.h"
 #include "displayModel.h"
+#include "gdiUtils.h"
 #include <common/log.h>
 #include "nvdaControllerInternal.h"
 #include <common/lock.h>
@@ -142,35 +143,6 @@ inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 		displayModelsByMemoryDC.release();
 	}
 	return model;
-}
-
-/**
- * converts given points from dc coordinates to screen coordinates. 
- * @param hdc a handle to a device context
- * @param points a pointer to the points you wish to convert.
- * @param count the number of points you want to convert.
- */
-void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative) {
-	//Convert to logical points to device points 
-	//Includes origins and scaling for window and viewport, and also world transformation 
-	LPtoDP(hdc,points,count);
-	if(relative) {
-		//Do what we did with the points, but with 0,0, and then subtract that from all points
-		POINT origPoint={0,0};
-		LPtoDP(hdc,&origPoint,1);
-		for(int i=0;i<count;++i) {
-			points[i].x-=origPoint.x;
-			points[i].y-=origPoint.y;
-		}
-	} else { //absolute
-		//LptoDp does not take the final DC origin in to account, so plus that to all points here to make them completely screen absolute
-		POINT dcOrgPoint;
-		GetDCOrgEx(hdc,&dcOrgPoint);
-		for(int i=0;i<count;++i) {
-			points[i].x+=dcOrgPoint.x;
-			points[i].y+=dcOrgPoint.y;
-		}
-	}
 }
 
 //see SynPdf at http://synopse.info
@@ -367,7 +339,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		clearRect=*lprc;
 		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2,false);
 		//Also if opaquing is requested, clear this rectangle in the given display model
-		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
+		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect,FALSE,hdc);
 	}
 	//If there is no string given, then we don't need to go further
 	if(!lpString||cbCount<=0) return;
@@ -477,9 +449,9 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Clear a space for the text in the model, though take clipping in to account
 	RECT tempRect;
 	if(lprc&&(fuOptions&ETO_CLIPPED)&&IntersectRect(&tempRect,&textRect,&clearRect)) {
-		model->clearRectangle(tempRect,TRUE);
+		model->clearRectangle(tempRect,TRUE,hdc);
 	} else {
-		model->clearRectangle(textRect,TRUE);
+		model->clearRectangle(textRect,TRUE,hdc);
 	}
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
@@ -611,13 +583,16 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 	model->release();
 	return res;
 }
-
+bool inFillRect = false;
 //FillRect hook function
 typedef int(WINAPI *FillRect_funcType)(HDC,const RECT*,HBRUSH);
 FillRect_funcType real_FillRect=NULL;
 int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
+	//Set inFillRect to true, so we can avoid recursive display model clearing.
+	inFillRect = true;
 	//Call the real FillRectangle
 	int res=real_FillRect(hdc,lprc,hBrush);
+	inFillRect = false;
 	//IfThe fill was successull we can go on.
 	if(res==0||lprc==NULL) return res;
 	//Try and get a displayModel for this DC, and if we can, then record the original text for these glyphs
@@ -625,7 +600,7 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	if(!model) return res;
 	RECT rect=*lprc;
 	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
-	model->clearRectangle(rect);
+	model->clearRectangle(rect,FALSE,hdc);
 	model->release();
 	return res;
 }
@@ -680,12 +655,14 @@ BOOL WINAPI fake_PatBlt(HDC hdc, int nxLeft, int nxTop, int nWidth, int nHeight,
 	BOOL res=real_PatBlt(hdc,nxLeft,nxTop,nWidth,nHeight,dwRop);
 	//IfPatBlt was successfull we can go on
 	if(res==0) return res;
+	//The FillRect function is known to execute PatBlt as part of its job
+	if(inFillRect) return res;
 	//Try and get a displayModel for this DC, and if we can, then record the original text for these glyphs
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	RECT rect={nxLeft,nxTop,nxLeft+nWidth,nxTop+nHeight};
 	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
-	model->clearRectangle(rect);
+	model->clearRectangle(rect,FALSE,hdc);
 	model->release();
 	return res;
 }
@@ -845,7 +822,7 @@ void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int 
 		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
 	}
 	if(clearDest) {
-		destModel->clearRectangle(destRect);
+		destModel->clearRectangle(destRect,FALSE,hdcDest);
 	}
 	//release models and return
 	if(srcModel) srcModel->release();

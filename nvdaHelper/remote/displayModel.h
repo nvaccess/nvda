@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2019 NV Access Limited, Babbage B.V.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -111,9 +111,10 @@ class displayModel_t: public LockableAutoFreeObject  {
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.
  * @param rect the rectangle to clear.
- * @param clearForText if true then  the part of any chunk  covered by the rectangle will definitly be removed to make way for text. If False  chunks will only be removed/mutated if the rectangle starts at or outside of, the chunk and overlaps it, or covers the chunk's baseline. 
+ * @param clearForText if true then  the part of any chunk  covered by the rectangle will definitly be removed to make way for text. If False  chunks will only be removed/mutated if the rectangle starts at or outside of, the chunk and overlaps it, or covers the chunk's baseline.
+ * @param clipRgnHdc handle for the dc to find out the clipping region.
  */
-	void clearRectangle(const RECT& rect, BOOL clearForText=FALSE);
+	void clearRectangle(const RECT& rect, BOOL clearForText=FALSE, HDC clipRgnHdc=NULL);
 
 /**
  * Removes all content from this display model.

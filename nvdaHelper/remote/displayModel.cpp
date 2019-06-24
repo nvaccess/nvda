@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2019 NV Access Limited, Julien Nabet, Babbage B.V.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -20,6 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <algorithm>
 #include <common/xml.h>
 #include "nvdaControllerInternal.h"
+#include "gdiUtils.h"
 #include <common/log.h>
 #include "displayModel.h"
 
@@ -66,7 +67,12 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	}
 }
 
-displayModel_t::displayModel_t(HWND w): LockableAutoFreeObject(), chunksByYX(), hwnd(w), focusRect(NULL)  {
+displayModel_t::displayModel_t( HWND w):
+	LockableAutoFreeObject(),
+	chunksByYX(),
+	hwnd(w),
+	focusRect(NULL
+)  {
 	LOG_DEBUG(L"created instance at "<<this);
 }
 
@@ -139,15 +145,24 @@ void displayModel_t::clearAll() {
 	setFocusRect(NULL);
 }
 
-void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
+void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText, HDC clipRgnHdc) {
 	LOG_DEBUG(L"Clearing rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom);
 	set<displayModelChunk_t*> chunksForInsertion;
 	displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();
 	RECT tempRect;
 	//If the rectangle we are clearing completely covers any current focus rectangle, then get rid of the focus rectangle.
-	if(focusRect&&IntersectRect(&tempRect,&rect,focusRect)&&EqualRect(&tempRect,focusRect)) {
+	if(
+		// A focus rectangle is currently set.
+		focusRect
+		// Either we don't check for clipping or the focus rectangle is part of the clipping region.
+		&&!(clipRgnHdc!=NULL&&RectVisible(clipRgnHdc,focusRect)==FALSE)
+		// The focus rectangle falls completely within the rectangle to clear.
+		&&IntersectRect(&tempRect,&rect,focusRect)
+		&&EqualRect(&tempRect,focusRect)
+	) {
 		setFocusRect(NULL);
 	}
+	RECT tempLogicalRect;
 	while(i!=chunksByYX.end()) {
 		displayModelChunksByPointMap_t::iterator nextI=i;
 		++nextI; 
@@ -155,6 +170,18 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 		int baseline=i->first.first;
 		if(IntersectRect(&tempRect,&rect,&(chunk->rect))) {
 			//The clearing rectangle intercects the chunk's rectangle in some way.
+			if(clipRgnHdc != NULL) {
+				tempLogicalRect = tempRect;
+				dcPointsToScreenPoints(clipRgnHdc,(LPPOINT)&tempLogicalRect,2,false);
+				//RectVisible is very poorly documentated on the web.
+				//It can return -1 for an invalid hdc, which is not documented,
+				//and is able to return several other integers, while we expect a BOOL.
+				if(RectVisible(clipRgnHdc,&tempLogicalRect)==FALSE) {
+					//This rectangle is no part of the clipping region, leave it alone.
+					i=nextI;
+					continue;
+				}
+			}
 			if(tempRect.bottom<=baseline) {
 				//The clearing rectangle some how covers the chunk below its baseline.
 				//If we're clearing to make room for text, or the clearing rectangle starts from the very top of the chunk

@@ -130,6 +130,7 @@ libs = [
 # MinHook doesn't support ARM64, which means we can't support displayModel on ARM64.
 if env["TARGET_ARCH"] != 'arm64':
 	source.extend((
+		"gdiUtils.cpp",
 		"gdiHooks.cpp",
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
