@@ -8,7 +8,7 @@
 """Default highlighter based on GDI Plus."""
 
 import vision
-from vision.constants import Role
+from vision.constants import Role, Context
 from vision.util import *
 from windowUtils import CustomWindow
 import wx
@@ -27,10 +27,6 @@ import winGDI
 import weakref
 from colors import RGB
 import core
-
-# Highlighter specific context
-#: Context for overlapping focus and navigator objects
-CONTEXT_FOCUS_NAVIGATOR = "focusNavigatorOverlap"
 
 class HighlightStyle(
 	namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
@@ -57,35 +53,40 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
-	supportedContexts = (CONTEXT_FOCUS, CONTEXT_NAVIGATOR, CONTEXT_BROWSEMODE)
+	supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 	_ContextStyles = {
-		CONTEXT_FOCUS: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleDash, 5),
-		CONTEXT_NAVIGATOR: HighlightStyle(RGB(0xff, 0x02, 0x66), 5, winGDI.DashStyleSolid, 5),
-		CONTEXT_FOCUS_NAVIGATOR: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleSolid, 5),
-		CONTEXT_BROWSEMODE: HighlightStyle(RGB(0xff, 0xde, 0x03), 2, winGDI.DashStyleSolid, 2),
+		Context.FOCUS: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleDash, 5),
+		Context.NAVIGATOR: HighlightStyle(RGB(0xff, 0x02, 0x66), 5, winGDI.DashStyleSolid, 5),
+		Context.FOCUS_NAVIGATOR: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleSolid, 5),
+		Context.BROWSEMODE: HighlightStyle(RGB(0xff, 0xde, 0x03), 2, winGDI.DashStyleSolid, 2),
 	}
 	refreshInterval = 100
 
 	# Default settings for parameters
 	highlightFocus = True
-	highlightNavigatorObj = True
+	highlightNavigator = True
 	highlightBrowseMode = True
 
 	_contextOptionLabelsWithAccelerators = {
 		# Translators: shown for a highlighter setting that toggles
 		# highlighting the system focus.
-		CONTEXT_FOCUS: _("Highlight system fo&cus"),
+		Context.FOCUS: _("Highlight system fo&cus"),
 		# Translators: shown for a highlighter setting that toggles
 		# highlighting the browse mode cursor.
-		CONTEXT_BROWSEMODE: _("Highlight browse &mode cursor"),
+		Context.BROWSEMODE: _("Highlight browse &mode cursor"),
 		# Translators: shown for a highlighter setting that toggles
 		# highlighting the navigator object.
-		CONTEXT_NAVIGATOR: _("Highlight navigator &object"),
+		Context.NAVIGATOR: _("Highlight navigator &object"),
 	}
 
 	@classmethod
 	def check(cls):
 		return True
+
+	def registerEventExtensionPoints(self, extensionPoints):
+		extensionPoints.post_focusChange.register(self.handleFocusChange)
+		extensionPoints.post_reviewMove.register(self.handleReviewMove)
+		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
 
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
@@ -125,7 +126,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 
 	def _get_supportedSettings(self):
 		settings = []
-		for context in self.supportedHighlightContexts:
+		for context in self.supportedContexts:
 			settings.append(driverHandler.BooleanDriverSetting(
 				'highlight%s' % (context[0].upper() + context[1:]),
 				self._contextOptionLabelsWithAccelerators[context],
@@ -133,21 +134,23 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			))
 		return settings
 
-	def updateContextRect(self, context, rect=None, obj=None):
+	def updateContextRect(self, context, rect=None):
 		"""Updates the position rectangle of the highlight for the specified context.
-		If rect and obj are C{None}, the position is retrieved from the object associated with the context.
-		Otherwise, either L{obj} or L{rect} should be provided.
+		If rect is specified, the method directly writes the rectangle to the contextToRectMap.
+		Otherwise, it will call L{getContextRect}
 		"""
 		if context not in self.enabledContexts:
 			return
-		if rect is not None and obj is not None:
-			raise ValueError("Only one of rect or obj should be provided")
 		if rect is None:
 			try:
-				rect= getContextRect(context, obj)
-			except (LookupError, NotImplementedError):
+				rect= getContextRect(context)
+			except (LookupError, NotImplementedError, RuntimeError):
 				rect = None
 		self.contextToRectMap[context] = rect
+
+	def handleFocusChange(self, obj):
+		rect = getObjectRectangle(obj)
+		self.updateContextRect(Context.FOCUS, rect=rect)
 
 	def refresh(self):
 		"""Refreshes the screen positions of the enabled highlights.
@@ -244,14 +247,14 @@ class HighlightWindow(CustomWindow):
 			rect = highlighter.contextToRectMap.get(context)
 			if not rect:
 				continue
-			elif context == CONTEXT_NAVIGATOR and contextRects.get(CONTEXT_FOCUS) == rect:
+			elif context == Context.NAVIGATOR and contextRects.get(Context.FOCUS) == rect:
 				# When the focus overlaps the navigator object, which is usually the case,
 				# show a different highlight style.
 				# Focus is in contextRects, do not show the standalone focus highlight.
-				contextRects.pop(CONTEXT_FOCUS)
+				contextRects.pop(Context.FOCUS)
 				# Navigator object might be in contextRects as well
-				contextRects.pop(CONTEXT_NAVIGATOR, None)
-				context = CONTEXT_FOCUS_NAVIGATOR
+				contextRects.pop(Context.NAVIGATOR, None)
+				context = Context.FOCUS_NAVIGATOR
 			contextRects[context] = rect
 		if not contextRects:
 			return

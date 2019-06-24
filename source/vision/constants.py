@@ -9,7 +9,7 @@
 
 class Role:
 	"""
-	Several roles a vision enhancement provider could fulfill.
+	A role that could fulfilled by a vision enhancement provider.
 	"""
 	# This should be a string enum when Python 3 arrives.
 	MAGNIFIER = "magnifier"
@@ -27,3 +27,11 @@ Role.DESCRIPTIONS = {
 	Role.COLORENHANCER: _("Color enhancer"),
 }
 
+class Context:
+	focus = "focus"
+	NAVIGATOR = "navigator"
+	FOCUS_NAVIGATOR = "focusNavigator"
+	CARET = "caret"
+	BROWSEMODE = "browseMode"
+	REVIEW = "review"
+	MOUSE = "mouse"
