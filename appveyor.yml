@@ -148,26 +148,29 @@ before_test:
 
 test_script:
  - ps: |
-     $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
-     Push-AppveyorArtifact $unitTestsXml
+     Set-AppveyorBuildVariable "unitTestsXml" $unitTestsXml
+ - py -m nose --with-xunit --xunit-file="%unitTestsXml%" ./tests/unit
+ - appveyor PushArtifact "%unitTestsXml%"
+ - ps: |
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $env:unitTestsXml)
+
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
+     Set-AppveyorBuildVariable "testOutput" $testOutput
      $systemTestOutput = (Resolve-Path "$testOutput\system")
-     $testSource = "./tests/system"
-     py -m robot --loglevel DEBUG -d $systemTestOutput -x systemTests.xml -v whichNVDA:installed -P "$testSource/libraries" "$testSource"
-     Compress-Archive -Path "$systemTestOutput\*" -DestinationPath "$testOutput\systemTestResult.zip"
-     Push-AppveyorArtifact "$testOutput\systemTestResult.zip"
-     if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+     Set-AppveyorBuildVariable "systemTestOutput" $systemTestOutput
+     $systemTestSource = "./tests/system"
+     Set-AppveyorBuildVariable "systemTestSource" $systemTestSource
+ - py -m robot --loglevel DEBUG -d "%systemTestOutput%" -x systemTests.xml -v whichNVDA:installed -P "%systemTestSource%/libraries" "%systemTestSource%"
+ - ps: Compress-Archive -Path "$env:systemTestOutput\*" -DestinationPath "$env:testOutput\systemTestResult.zip"
+ - appveyor PushArtifact "%testOutput%\systemTestResult.zip"
+ - ps: |
      $wc = New-Object 'System.Net.WebClient'
-     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
-     if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+     $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$env:systemTestOutput\systemTests.xml"))
+     
 
 artifacts:
  - path: output\*
