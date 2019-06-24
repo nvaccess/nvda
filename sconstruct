@@ -17,6 +17,7 @@ import os
 import time
 from glob import glob
 import sourceEnv
+from py2exe.dllfinder import pydll
 import importlib.util
 
 def recursiveCopy(env,targetDir,sourceDir):
@@ -261,6 +262,11 @@ def NVDADistGenerator(target, source, env, for_signature):
 		buildCmd.append("--enable-uiAccess")
 
 	action.append(buildCmd)
+
+	# Python3 has started signing its main python dll.
+	# However, Pytexe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
+	# Therefore, copy a fresh version  of the dll one more time once py2exe has completed.
+	action.append(Copy(target[0],pydll))
 
 	if certFile:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":
