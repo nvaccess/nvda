@@ -9,7 +9,7 @@ package. This allows us to share utility methods between the global plugin and t
 """
 import globalPluginHandler
 import threading
-from systemTestUtils import _blockUntilConditionMet
+from .systemTestUtils import _blockUntilConditionMet
 from logHandler import log
 from time import clock as _timer
 
