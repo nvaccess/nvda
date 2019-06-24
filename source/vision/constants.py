@@ -16,7 +16,7 @@ class Role:
 	HIGHLIGHTER = "highlighter"
 	COLORENHANCER = "colorEnhancer"
 
-Role.DESCRIPTIONS = {
+ROLE_DESCRIPTIONS = {
 	# Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
 	Role.MAGNIFIER: _("Magnifier"),
 	# Translators: The name for a vision enhancement provider that highlights important areas on screen,
@@ -28,7 +28,7 @@ Role.DESCRIPTIONS = {
 }
 
 class Context:
-	focus = "focus"
+	FOCUS = "focus"
 	NAVIGATOR = "navigator"
 	FOCUS_NAVIGATOR = "focusNavigator"
 	CARET = "caret"

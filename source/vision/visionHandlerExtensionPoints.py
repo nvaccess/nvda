@@ -22,3 +22,4 @@ class EventExtensionPoints:
 		self.post_browseModeMove = Action()
 		self.post_reviewMove = Action()
 		self.post_mouseMove = Action()
+		self.post_coreCycle = Action()

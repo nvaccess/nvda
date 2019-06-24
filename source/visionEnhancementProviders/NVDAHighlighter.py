@@ -27,6 +27,7 @@ import winGDI
 import weakref
 from colors import RGB
 import core
+import driverHandler
 
 class HighlightStyle(
 	namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
@@ -90,6 +91,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 
 	def __init__(self):
 		super(VisionEnhancementProvider, self).__init__()
+		self.contextToRectMap = {}
 		winGDI.gdiPlusInitialize()
 		self.window = None
 		self._highlighterThread = threading.Thread(target=self._run)
@@ -104,10 +106,11 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			#self._highlighterThread.join()
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
+		self.contextToRectMap.clear()
 		super(VisionEnhancementProvider, self).terminate()
 
 	def _run(self):
-		if _isDebug():
+		if vision._isDebug():
 			log.debug("Starting NVDAHighlighter thread")
 		window = self.window = HighlightWindow(self)
 		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
@@ -115,7 +118,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		while winUser.getMessage(byref(msg), None, 0, 0):
 			winUser.user32.TranslateMessage(byref(msg))
 			winUser.user32.DispatchMessageW(byref(msg))
-		if _isDebug():
+		if vision._isDebug():
 			log.debug("Quit message received on NVDAHighlighter thread")
 		if self.timer:
 			self.timer.terminate()
@@ -134,7 +137,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			))
 		return settings
 
-	def updateContextRect(self, context, rect=None):
+	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.
 		If rect is specified, the method directly writes the rectangle to the contextToRectMap.
 		Otherwise, it will call L{getContextRect}
@@ -143,14 +146,24 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			return
 		if rect is None:
 			try:
-				rect= getContextRect(context)
+				rect= getContextRect(context, obj=obj)
 			except (LookupError, NotImplementedError, RuntimeError):
 				rect = None
 		self.contextToRectMap[context] = rect
 
 	def handleFocusChange(self, obj):
-		rect = getObjectRectangle(obj)
-		self.updateContextRect(Context.FOCUS, rect=rect)
+		self.updateContextRect(context=Context.FOCUS, obj=obj)
+		if not api.isObjectInActiveTreeInterceptor(obj):
+			self.contextToRectMap.pop(Context.BROWSEMODE, None)
+		else:
+			self.handleBrowseModeMove()
+
+	def handleReviewMove(self, context):
+		if context in (Context.NAVIGATOR, Context.REVIEW):
+			self.updateContextRect(context=Context.NAVIGATOR)
+
+	def handleBrowseModeMove(self):
+		self.updateContextRect(context=Context.BROWSEMODE)
 
 	def refresh(self):
 		"""Refreshes the screen positions of the enabled highlights.
@@ -180,7 +193,7 @@ class HighlightWindow(CustomWindow):
 		return wClass
 
 	def updateLocationForDisplays(self):
-		if _isDebug():
+		if vision._isDebug():
 			log.debug("Updating NVDAHighlighter window location for displays")
 		displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
 		screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
@@ -202,7 +215,7 @@ class HighlightWindow(CustomWindow):
 		winUser.user32.ShowWindow(self.handle, winUser.SW_SHOWNA)
 
 	def __init__(self, highlighter):
-		if _isDebug():
+		if vision._isDebug():
 			log.debug("initializing NVDAHighlighter window")
 		super(HighlightWindow, self).__init__(
 			windowName=self.windowName,
@@ -243,7 +256,7 @@ class HighlightWindow(CustomWindow):
 			winUser.user32.PostQuitMessage(0)
 			return
 		contextRects = {}
-		for context in highlighter.enabledHighlightContexts:
+		for context in highlighter.enabledContexts:
 			rect = highlighter.contextToRectMap.get(context)
 			if not rect:
 				continue

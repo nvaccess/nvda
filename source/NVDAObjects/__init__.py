@@ -1053,7 +1053,7 @@ This code is executed if a gain focus event is received by this object.
 		if not (braille.handler.shouldAutoTether and isFocus):
 			braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
 		if not isFocus:
-			vision.handler.handleReviewMove(context=vision.CONTEXT_NAVIGATOR)
+			vision.handler.handleReviewMove(context=vision.Context.NAVIGATOR)
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():

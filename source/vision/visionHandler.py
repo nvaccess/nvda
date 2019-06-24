@@ -19,6 +19,7 @@ import weakref
 from logHandler import log
 import wx
 from collections import defaultdict
+import copy
 
 def getProviderClass(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
@@ -49,19 +50,19 @@ class VisionHandler(AutoPropertyObject):
 	def __init__(self):
 		self.lastReviewMoveContext = None
 		self.lastCaretObjRef = None
-		self.extensionPoints = EventExtensionPoints()
 		self.providers = dict()
-		for providerName in config.conf['vision']['providers']:
-			# Some providers, such as the highlighter, rely on wx being fully initialized,
-			# e.g. when they use an overlay window which parent is NVDA's main frame.
-			wx.CallAfter(self.initializeProvider, providerName)
+		self.extensionPoints = EventExtensionPoints()
+		# Handle first initialization of the handler as a config profile switch.
+		# However, execute this on the main thread, which makes sure that
+		# the gui is fully initialized before providers are initialized that might rely on it.
+		wx.CallAfter(self.handleConfigProfileSwitch)
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
 	def terminateProvider(self, providerName):
 		providerInstance =self.providers.pop(providerName, None)
 		if not providerInstance:
 			log.warning("Tried to terminate uninitialized provider %s" % providerName)
-			return 
+			return False
 		try:
 			providerInstance.terminate()
 		except:
@@ -69,11 +70,22 @@ class VisionHandler(AutoPropertyObject):
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
 			log.error("Error while terminating vision provider %s" % providerName, exc_info=True)
-			return
+			return False
+		# Copy the configured providers before mutating the list
+		configuredProviders = config.conf['vision']['providers'][:]
 		try:
-			config.conf['vision']['providers'].remove(providerCls.name)
+			configuredProviders.remove(providerName)
+			config.conf['vision']['providers'] = configuredProviders
 		except ValueError:
 			pass
+		# Recreate our extension points instance
+		self.extensionPoints =  EventExtensionPoints()
+		for providerInst in self.providers.values():
+			try:
+				providerInst.registerEventExtensionPoints(self.extensionPoints)
+			except:
+				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
+		return True
 
 	def initializeProvider(self, providerName, temporary=False):
 		"""
@@ -120,7 +132,7 @@ class VisionHandler(AutoPropertyObject):
 				return False
 		providerInst.initSettings()
 		if not temporary and providerCls.name not in config.conf['vision']['providers']:
-			config.conf['vision']['providers'].append(providerCls.name)
+			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerCls.name]
 		self.providers[providerName] = providerInst
 		try:
 			self.initialFocus()
@@ -139,8 +151,8 @@ class VisionHandler(AutoPropertyObject):
 			instance.terminate()
 		self.providers.clear()
 
-	def handleUpdate(self, obj, attribute):
-		self.extensionPoints.post_objectUpdate.notify(obj=obj, attribute=attribute)
+	def handleUpdate(self, obj, property):
+		self.extensionPoints.post_objectUpdate.notify(obj=obj, property=property)
 
 	def handleForeground(self, obj):
 		self.extensionPoints.post_foregroundChange.notify(obj=obj)
@@ -153,50 +165,30 @@ class VisionHandler(AutoPropertyObject):
 			self.handleCaretMove(obj)
 
 	def handleCaretMove(self, obj):
-		if not self.enabled:
-			return
-		self.lastCaretObjRef = weakref.ref(obj)
-
-	def handlePendingCaretUpdate(self):
-		if not callable(self.lastCaretObjRef):
-			# No caret change
-			return
-		obj = self.lastCaretObjRef()
-		if not obj:
-			# The caret object died
-			self.lastCaretObjRef = None
-			return
 		if api.isCursorManager(obj):
-			self.extensionPoints.post_browseModeMove(obj=obj)
+			self.extensionPoints.post_browseModeMove.notify(obj=obj)
 		else:
-			self.extensionPoints.post_caretMove(obj=obj)
+			self.extensionPoints.post_caretMove.notify(obj=obj)
 
-	def handleReviewMove(self, context=CONTEXT_REVIEW):
-		if not self.enabled:
-			return
-		self.lastReviewMoveContext = context
-
-	def handlePendingReviewUpdate(self):
-		if self.lastReviewMoveContext is None:
-			# No review change.
-			return
-		lastReviewMoveContext = self.lastReviewMoveContext
-		self.lastReviewMoveContext = None
-		self.extensionPoints.post_reviewMove(obj=obj, context=lastReviewMoveContext)
+	def handleReviewMove(self, context=Context.REVIEW):
+		self.extensionPoints.post_reviewMove.notify(context=context)
 
 	def handleMouseMove(self, obj, x, y):
 		# For now, mouse moves execute once per core cycle.
-		self.extensionPoints.post_mouseMove(obj=obj, x=x, y=y)
+		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
 	def handleConfigProfileSwitch(self):
-		for role in ROLE_DESCRIPTIONS.keys():
-			newProviderName = config.conf['vision'][role]
-			curProvider = getattr(self, role)
-			if not curProvider or newProviderName != curProvider.name:
-				self.setProvider(newProviderName, (role,))
+		configuredProviders = set(config.conf['vision']['providers'])
+		curProviders = set(self.providers)
+		rovidersToInitialize = configuredProviders - curProviders
+		providersToTerminate =  curProviders - configuredProviders
+		for provider in providersToTerminate:
+			self.terminateProvider(provider)
+		for provider in rovidersToInitialize:
+			self.initializeProvider(provider)
 
 	def initialFocus(self):
-		if not self.enabled or not api.getDesktopObject():
-			# No active providers or focus/review hasn't yet been initialised.
+		if not api.getDesktopObject():
+			# focus/review hasn't yet been initialised.
 			return
 		self.handleGainFocus(api.getFocusObject())

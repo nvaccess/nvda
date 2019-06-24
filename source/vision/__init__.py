@@ -26,8 +26,8 @@ def initialize():
 def pumpAll():
 	"""Runs tasks at the end of each core cycle."""
 	# Note that a pending review update has to be executed before a pending caret update.
-	handler.handlePendingReviewUpdate()
-	handler.handlePendingCaretUpdate()
+	if handler and handler.extensionPoints:
+		handler.extensionPoints.post_coreCycle.notify()
 
 def terminate():
 	global handler

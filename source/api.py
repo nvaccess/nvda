@@ -198,11 +198,11 @@ def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False,isM
 	if not (braille.handler.shouldAutoTether and isCaret):
 		braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
 	if isCaret:
-		visionContext = vision.CONTEXT_CARET
+		visionContext = vision.Context.CARET
 	elif isMouse:
-		visionContext = vision.CONTEXT_MOUSE
+		visionContext = vision.Context.MOUSE
 	else:
-		visionContext = vision.CONTEXT_REVIEW
+		visionContext = vision.Context.REVIEW
 	vision.handler.handleReviewMove(context=visionContext)
 
 def getNavigatorObject():
@@ -374,6 +374,11 @@ def filterFileName(name):
 		name=name.replace(c,'_')
 	return name
 
+def isNVDAObject(obj):
+	"""Returns whether the supplied object is a L{NVDAObjects.NVDAObject}"""
+	return isinstance(obj, NVDAObjects.NVDAObject)
+
+
 def isCursorManager(obj):
 	"""Returns whether the supplied object is a L{cursorManager.CursorManager}"""
 	return isinstance(obj, cursorManager.CursorManager)
@@ -381,6 +386,17 @@ def isCursorManager(obj):
 def isTreeInterceptor(obj):
 	"""Returns whether the supplied object is a L{treeInterceptorHandler.TreeInterceptor}"""
 	return isinstance(obj, treeInterceptorHandler.TreeInterceptor)
+
+def isObjectInActiveTreeInterceptor(obj):
+	"""
+	Returns whether the supplied L{NVDAObjects.NVDAObject} is in an active L{treeInterceptorHandler.TreeInterceptor},
+	i.e. a tree interceptor that is not in pass through mode.
+	"""
+	return bool(
+		isinstance(obj, NVDAObjects.NVDAObject)
+		and obj.treeInterceptor
+		and obj.treeInterceptor.passThrough
+	)
 
 def getCaretObject():
 	"""Gets the object which contains the caret.
