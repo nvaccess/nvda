@@ -1,6 +1,6 @@
 #logHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Rui Batista, Joseph Lee
+#Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -139,7 +139,7 @@ class Logger(logging.Logger):
 			msg += ("\nStack trace:\n"
 				+ stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip()))
 
-		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
+		res = super()._log(level, msg, args, exc_info, extra)
 
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
@@ -259,9 +259,11 @@ def redirectStdout(logger):
 	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
 
+# Register our logging class as the class for all loggers.
+logging.setLoggerClass(Logger)
 #: The singleton logger instance.
 #: @type: L{Logger}
-log = Logger("nvda")
+log = logging.getLogger("nvda")
 
 def _getDefaultLogFilePath():
 	if getattr(sys, "frozen", None):
