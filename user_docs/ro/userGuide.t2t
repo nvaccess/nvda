@@ -470,7 +470,16 @@ Cu toate că un dispozitiv fizic de maus sau un trackpad ar trebui folosit pentr
 
 + Modul de navigare +[ModNavigare]
 Documente complexe ce pot fi doar citite, cum ar fi paginile web, sunt examinate în NVDA folosind „Modul navigare”.
-Acestea includ documente în Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mesaje HTML în Microsoft Outlook, Google Chrome, Adobe Reader și Adobe Flash.
+Acesta include documente în următoarele aplicații:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- mesaje HTML în Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Foxit Reader
+- Cărți suportate în Amazon Kindle pentru PC
+-
 Modul navigare este disponibil opțional și pentru documentele Microsoft Word.
 
 În modul navigare, conținutul documentului este disponibili într-o reprezentare uniformă, navigabilă cu tastele pentru cursor ca și cum ar fi un text normal dintr-un document.
@@ -491,7 +500,7 @@ Adițional, puteți forța modul formular manual, după care va rămâne activat
 | Comută între modurile navigare/formular | NVDA+spațiu | Schimbă între modul formular și modul navigare |
 | Iese din modul formular | Escape | schimbă înapoi în modul navigare dacă anterior s-a trecut automat în modul formular |
 | Împrospătează document în mod navigare | NVDA+F5 | Reîncarcă documentul curent (util dacă anumite părți par să lipsească din document, Indisponibil în Microsoft Word sau Outlook.) |
-| Găsește | NVDA+control+f | Afișează o fereastră de dialog în care puteți scrie un text pentru a fi găsit în documentul curent |
+| Găsește | NVDA+control+f | Afișează o fereastră de dialog în care puteți scrie un text pentru a fi găsit în documentul curent. Vedeți [căutarea textului #SearchingForText] pentru mai multe informații. |
 | Găsește următor | NVDA+f3 | Găsește apariția următoare în document a textului care a fost căutat anterior |
 | Găsește anterior | NVDA+shift+f3 | Găsește apariția anterioară în document a textului care a fost căutat anterior |
 | deschide descriere amplă | NVDA+d | Deschide o fereastră nouă ce conține o descriere amplă a elementului pe care sunteți, în caz că acesta are o astfel de descriere. |
@@ -548,6 +557,22 @@ Odată ce ați ales un element, puteți folosi butoanele din fereastra de dialog
 %kc:beginInclude
 || Nume | Tastă | Descriere |
 | Lista elementelor în modul navigare | NVDA+f7 | Afișează lista diferitelor tipuri de elemente din documentul curent |
+%kc:endInclude
+
+++ Căutarea textului ++[SearchingForText]
+Această fereastră de dialog vă dă posibilitatea să căutați termeni în documentul curent.
+În câmpul „Tastați textul pe care doriți să-l căutați”, textul de căutat poate fi introdus.
+Cât timp vă aflați în câmpul de text, puteți folosi și săgețile sus și jos pentru a selecta termeni pe care i-ați căutat în trecut.
+Caseta de bifat „Sensibil la majuscule” face ca funcția de căutare să considere diferite literele cu majusculă față de cele fără majusculă.
+De exemplu, dacă această casetă de bifat este activă, puteți căuta „NV Access”, nu „nv access”.
+Diferența în cauză nu va fi salvată în istoricul căutărilor.
+Când NVDA este repornit, istoricul căutărilor este șters.
+Utilizați următoarele combinații de taste pentru a căuta:
+%kc:beginInclude
+|| Nume | Tastă | Descriere |
+| Caută text | NVDA+control+f | Deschide fereastra de căutare |
+| Caută următor | NVDA+f3 | Caută următoarea apariție a termenului căutat |
+| Caută anterior | NVDA+shift+f3 | Caută apariția precedentă a termenului căutat |
 %kc:endInclude
 
 ++ Obiecte încorporate ++[ImbeddedObjects]
@@ -1475,7 +1500,7 @@ De notat că anumite metode de introducere mai vechi, cum ar fi ChangJie chinez
 
 ==== Raportează schimbări ale șirului de compoziție ====[InputCompositionCompositionStringChanges]
 După ce informațiile de citire sau precompoziție au fost combinate într-un simbol pictografic, majoritatea metodelor de introducere pun acest simbol într-un șir de compoziție pentru stocare temporară împreună cu alte simboluri combinate, înainte de a fi introduse în document.
-Acestă opțiune vă permite să alegeți dacă NVDA ar trebui sau nu să raporteze simboluri noi pe măsură ce apar în șirul de compoziție.
+Această opțiune vă permite să alegeți dacă NVDA ar trebui sau nu să raporteze simboluri noi pe măsură ce apar în șirul de compoziție.
 Opțiunea este activată implicit. 
 
 +++ Mod de navigare (NVDA+control+b) +++[BrowseModeSettings]
@@ -1491,7 +1516,15 @@ Acest câmp stabilește numărul de rânduri deplasate când apăsați Page Up s
 ==== Folosește aspectul ecranului ====[BrowseModeSettingsScreenLayout]
 Tastă: NVDA+v
 
-Această opțiune vă permite să specificați dacă conținutul din modul navigare ar trebui să pună câmpuri de tip legătură și alte câmpuri pe un rând propriu, sau dacă să le păstreze în corpul textului așa cum este prezentat vizual. Dacă opțiunea aceasta este activată, atunci obiectele vor rămâne așa cum sunt prezentate, dar dacă este dezactivată, câmpurile vor fi puse pe propriul lor rând.
+Această opțiune vă permite să specificați dacă conținutul din modul navigare ar trebui să pună câmpuri de tip legătură și alte câmpuri pe un rând propriu, sau dacă să le păstreze în corpul textului așa cum este prezentat vizual.
+Dacă opțiunea aceasta este activată, atunci obiectele vor rămâne așa cum sunt prezentate, dar dacă este dezactivată, câmpurile vor fi puse pe propriul lor rând.
+
+==== Activează modul de navigare la încărcarea paginii ====[BrowseModeSettingsEnableOnPageLoad]
+Această casetă de bifat reprezintă setarea prin care modul de navigare se activează automat sau nu la încărcarea unei pagini.
+Dacă setarea este inactivă, modul de nabigare poate fi activat manual în pagini sau în documente în care acesta este suportat.
+Consultați [secțiunea modului de navigare #BrowseMode] pentru o listă a aplicațiilor suportate de acesta.
+Țineți cont de faptul că această opțiune nu se aplică în situația în care modul de navigare este întotdeauna opțional, un bun exemplu fiind Microsoft Word.
+Această setare este activă în mod implicit
 
 ==== „Rostește tot” automat la încărcarea paginii ====[BrowseModeSettingsAutoSayAll]
 Această casetă de bifat activează citirea automată a întregii pagini după ce a fost încărcată în modul navigare.
@@ -1739,7 +1772,7 @@ NVDA vă permite asta prin folosirea configurării de profiluri.
 Un profil de configurare conține doar acele opțiuni care sunt schimbate în timp ce profilul este modificat.
 Majoritatea opțiunilor pot fi modificate în configurarea profilurilor, mai puțin cele din categoria „General” a [dialogului setărilor NVDA #NVDASettings], care sunt aplicate pentru întreaga aplicație NVDA.
 
-Profilurile configurate pot fi activate manual.
+Profilurile configurate pot fi activate manual și dintr-o fereastră de dialog, și folosindu-se gesturi personalizate adăugate.
 De asemenea, pot fi și activate automat pentru acțiuni ca schimbarea la o aplicație anume.
 
 +++ Idei fundamentale de administrare +++[ProfilesBasicManagement]
@@ -1803,6 +1836,14 @@ Pentru a edita profilul asociat cu Rostește tot, trebuie să [activați manual 
 Uneori este util să dezactivați temporar declanșatoarele.
 De exemplu, v-ati putea dori să modificați un profil activat manual sau configurația normală fără ca profilurile declanșate să intervină.
 Puteți face asta bifând opțiunea „Dezactivează temporar toate declanșatoarele” din fereastra Profilelor de configurare.
+
++++ Activarea unui profil cu ajutorul utilizării gesturilor de intrare +++[ConfigProfileGestures]
+Puteți să atribuiți fiecărui profil pe care îl adăugați unul sau mai multe gesturi de intrare pentru a-l activa.
+Configurarea profilurilor nu are gesturi atribuite în mod implicit.
+Puteți adăuga gesturi pentru a activa un profil din dialogul [Gesturi de intrare #InputGestures].
+Fiecare profil are propria intrare sub categoria de configurare a profilurilor.
+Dacă veți redenumi un profil, orice gest pe care l-ați adăugat înainte va fi disponibil.
+Ștergerea unui profil va duce evident și la ștergerea gestului asociat cu el.
 
 ++ Locația fișierelor de configurație ++[LocationOfConfigurationFiles]
 Versiunile portabile NVDA păstrează toate setările și suplimentele specifice într-un dosar numit „userConfig” din dosarul de bază al NVDA.
