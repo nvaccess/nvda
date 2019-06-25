@@ -84,10 +84,6 @@ class EditableText(TextContainerObject,ScriptableObject):
 			if eventHandler.isPendingEvents("gainFocus"):
 				log.debug("Focus event. Elapsed: %d ms" % elapsed)
 				return (True,None)
-			# Some controls implement a caret event
-			if eventHandler.isPendingEvents("caret"):
-				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-				return (True, newInfo)
 			# If the focus changes after this point, fetching the caret may fail,
 			# but we still want to stay in this loop.
 			try:
