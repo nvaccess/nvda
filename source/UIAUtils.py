@@ -218,4 +218,4 @@ it is retrieved from config).
 		return True
 	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
 	# It does not implement caret/selection, and probably has no new text events.
-	return isWin10(1809)
+	return isWin10(1803)

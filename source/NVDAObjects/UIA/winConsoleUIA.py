@@ -13,7 +13,6 @@ import textInfos
 import UIAHandler
 
 from scriptHandler import script
-from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
 from ..window import Window
@@ -27,9 +26,7 @@ class consoleUIATextInfo(UIATextInfo):
 	_expandCollapseBeforeReview = False
 
 	def collapse(self,end=False):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self).collapse(end=end)
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
@@ -146,9 +143,7 @@ class consoleUIATextInfo(UIATextInfo):
 			return super(consoleUIATextInfo, self).expand(unit)
 
 	def _get_isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self)._get_isCollapsed()
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
