@@ -532,7 +532,7 @@ def initTranslation():
 	# FIXME: shall we retrieve the caller module object explicitly?
 	try:
 		callerFrame = inspect.currentframe().f_back
-		callerFrame.f_globals['_'] = translations.ugettext
+		callerFrame.f_globals['_'] = translations.gettext
 		# Install our pgettext function.
 		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
 	finally:
