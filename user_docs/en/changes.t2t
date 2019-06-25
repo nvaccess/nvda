@@ -23,9 +23,11 @@ What's New in NVDA
 == Changes for Developers ==
 - Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
 - The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)
-
-
-= 2019.2 =
+- The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)
+ - Note that this shadows the gettext translation function also called "_". To access the translation function: del _
+ 
+ 
+ = 2019.2 =
 Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
 == New Features ==
