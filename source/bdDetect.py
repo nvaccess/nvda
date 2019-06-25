@@ -534,6 +534,8 @@ addUsbDevices("handyTech", KEY_HID, {
 	"VID_1FE4&PID_0087", # Basic Braille 80
 	"VID_1FE4&PID_008B", # Basic Braille 160
 	"VID_1FE4&PID_008C", # Basic Braille 84
+	"VID_1FE4&PID_0093", # Basic Braille Plus 32
+	"VID_1FE4&PID_0094", # Basic Braille Plus 40
 	"VID_1FE4&PID_0061", # Actilino
 	"VID_1FE4&PID_0064", # Active Star 40
 })
@@ -550,6 +552,7 @@ addBluetoothDevices("handyTech", lambda m: any(m.id.startswith(prefix) for prefi
 	"Active Braille AB",
 	"Active Star AS",
 	"Basic Braille BB",
+	"Basic Braille Plus BP",
 	"Braille Star 40 BS",
 	"Braillino BL",
 	"Braille Wave BW",

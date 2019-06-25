@@ -3,11 +3,11 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
-
 = 2019.2 =
+Os destaques desta versão incluem a detecção automática de linhas braille da Freedom Scientific, uma configuração experimental no painel Avançado para impedir que o modo de navegação mova automaticamente o foco (que pode fornecer melhorias de desempenho), uma opção de aumento ""[especial]"" de velocidade para o sintetizador Windows OneCore atingir velocidades muito rápidas e muitas outras correções de falhas.
 
 == Novas Características ==
-- A caixa de diálogo procurar agora inclui um histórico das últimas 20 pesquisas. (#8482)
+- A caixa de diálogo localizar agora inclui um histórico das últimas 20 pesquisas. (#8482)
  - O histórico de pesquisa é apagado quando o NVDA sai ou reinicia.
 - O suporte do NVDA ao Miranda NG funciona com versões mais recentes do cliente. (#9053)
 - Você pode desativar o modo de navegação por padrão, desativando a nova opção "Ativar o modo de navegação no carregamento da página" nas configurações do modo de navegação do NVDA. (#8716)
@@ -24,7 +24,8 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
  - Efeito elástico: o NVDA esporadicamente desfaz o último pressionamento de tecla do modo de navegação ao pular para o local anterior.
  - As caixas de edição roubam o foco do sistema quando são exibidas em alguns sites.
  - Teclas do modo de navegação demoram a responder.
-- Para drivers de linha braille que o suportam, as configurações do driver agora podem ser alteradas a partir da categoria de configurações de braille na caixa de diálogo de configurações do NVDA. (#7452)
+- Para drivers de linha braille que o suportam, as configurações do driver agora podem ser alteradas a partir da categoria de configurações de braille no diálogo de configurações do NVDA. (#7452)
+- As linhas braille da Freedom Scientific agora são suportadas pela detecção automática de linha braille. (#7727)
 
 
 == Alterações ==
@@ -33,6 +34,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Anotações emoji atualizadas do Repositório de Dados de Localidade Comum Unicode ""[Common Locale Data Repository]"" para a versão 35.0. (#9445)
 - Atualizado o transcritor braille liblouis para a versão 3.9.0. (#9439)
 - A tecla de atalho para o campo de filtro na lista de elementos no modo de navegação foi alterada para alt+y. (#8728)
+- Quando uma linha braille detectada automaticamente é conectada via Bluetooth, o NVDA continuará procurando por linhas USB suportadas pelo mesmo driver e alternará para uma conexão USB se disponível. (#8853)
 
 
 == Correção de Falhas ==
@@ -40,7 +42,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - As marcas LTR ""[da esquerda para a direita]"" e RTL ""[da direita para a esquerda]"" não são mais relatadas em braile ou fala por caractere ao acessar a janela de propriedades. (#8361)
 - Ao pular para campos de formulário com navegação rápida no Modo de Navegação, o campo inteiro do formulário agora é anunciado, e não apenas a primeira linha. (#9388)
 - O NVDA não ficará mais em silêncio após sair do aplicativo Email do Windows 10. (#9341)
-- O NVDA não falha mais em iniciar quando as configurações regionais dos usuários estão definidas para uma localidade desconhecida para o NVDA, como Inglês (Holanda). (#8726)
+- O NVDA não falha mais ao iniciar quando as configurações regionais dos usuários estão definidas para uma localidade desconhecida para o NVDA, como Inglês (Holanda). (#8726)
 - Quando o modo de navegação está habilitado no Microsoft Excel e você alterna para um navegador no modo de foco ou vice-versa, o estado do modo de navegação agora é relatado apropriadamente. (#8846)
 - O NVDA agora relata corretamente a linha no cursor do mouse no Notepad++ e outros editores baseados em Scintilla. (#5450)
 - No Google Docs (e outros editores web-baseados), o braille não mostra mais algumas vezes "fim de lst" antes do cursor no meio de um item de lista. (#9477)
@@ -53,6 +55,8 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - Para vozes Windows OneCore, a velocidade definida no NVDA não é mais afetada pela velocidade definida em Configurações de fala do Windows 10. (#7498)
 - O log ""[registro de eventos]"" agora pode ser aberto com NVDA+F1 quando não houver informações de desenvolvedor para o objeto atual de navegação. (#8613)
 - É novamente possível usar os comandos de navegação de tabelas do NvDA no Google Docs, no Firefox e no Chrome. (#9494)
+- As teclas balanceadoras ""[bumper]"" agora funcionam corretamente nas linhas braille da Freedom Scientific. (#8849)
+- Ao ler o primeiro caractere dum documento no Notepad++ 7.7 X64, o NVDA não congela mais por até dez segundos. (#9609)
 
 
 == Alterações para Desenvolvedores ==
@@ -60,6 +64,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 - O estilo janela estendida ""[extended window style]"" de uma janela agora é exposto usando a propriedade `extendedWindowStyle` nos objetos Window ""[Janela]"" e seus derivados. (#9136)
 - Atualizado o pacote comtypes para a versão 1.1.7. (#9440, #8522)
 - Ao usar o comando info do módulo de relatório ""[report]"", a ordem das informações foi alterada para apresentar o módulo primeiro. (#7338)
+- Adicionado um exemplo para demonstrar o uso de nvdaControllerClient.dll por C#. (#9600)
 
 
 = 2019.1.1 =
@@ -71,7 +76,7 @@ Esta versão pontual corrige os seguintes erros:
 
 
 = 2019.1 =
-Os destaques desta versão incluem melhorias de desempenho ao acessar o Microsoft Word e Excel, estabilidade e melhorias de segurança, como suporte para complementos com informações de compatibilidade de versão e muitas outras correções de bugs.
+Os destaques desta versão incluem melhorias de desempenho ao acessar o Microsoft Word e Excel, estabilidade e melhorias de segurança, como suporte para complementos com informações de compatibilidade de versão e muitas outras correções de falhas.
 
 Por favor, note que a partir desta versão do NVDA, appModules ""[módulos de aplicativos]"" personalizados, globalPlugins ""[plug-ins globais]"", controladores ""[drivers]"" de linha braille e controladores ""[drivers]"" de sintetizador não serão mais automaticamente carregados a partir do diretório de configuração do usuário do NVDA.
 Em vez disso, eles devem ser instalados como parte de um complemento do NVDA. Para aqueles que desenvolvem código para um complemento, o código para teste pode ser colocado em um novo diretório de rascunho/trabalho ""[scratchpad]"" do desenvolvedor no diretório de configuração do usuário do NVDA, se a opção de Rascunho/Trabalho do Desenvolvedor estiver ativada no novo painel de configurações Avançadas do NVDA.
@@ -154,7 +159,7 @@ Essa versão corrige uma falha na inicialização se o idioma da interface do us
 
 
 = 2018.4 =
-Os destaques desta versão incluem melhorias de desempenho em versões recentes do Mozilla Firefox, anúncio de emojis com todos os sintetizadores, informação do status de resposta/encaminhamento no Outlook, informação da distância do cursor até a borda de uma página do Microsoft Word e muitas correções de bugs.
+Os destaques desta versão incluem melhorias de desempenho em versões recentes do Mozilla Firefox, anúncio de emojis com todos os sintetizadores, informação do status de resposta/encaminhamento no Outlook, informação da distância do cursor até a borda de uma página do Microsoft Word e muitas correções de falhas.
 
 == Novas Características ==
 - Novas tabelas braille: Chinês (China, Mandarim), grau 1 e grau 2. (#5553)
@@ -206,7 +211,7 @@ Esta é uma versão menor para contornar uma falha no Google Chrome ao navegar n
 
 
 = 2018.3.1 =
-Esta é uma versão menor para corrigir um bug crítico no NVDA que causou falhas nas versões de 32 bit do Mozilla Firefox. (#8759)
+Esta é uma versão menor para corrigir uma falha crítica no NVDA que causou falhas nas versões de 32 bit do Mozilla Firefox. (#8759)
 
 
 = 2018.3 =

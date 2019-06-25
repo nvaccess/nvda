@@ -1297,7 +1297,7 @@ Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot val
 
 NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti skannaamalla järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita.
 Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
-Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiin liittämistä.
+Vaihtoehtoina ovat "Automaattinen" (joka määrää NVDA:n käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä "sarjaportti", mikäli pistenäyttö tukee sarjaporttiliitäntää.
 
 Tämä vaihtoehto ei ole käytettävissä, jos pistenäyttö tukee vain automaattista portintunnistusta.
 
@@ -2034,8 +2034,8 @@ Tämä syntetisaattori ei tue [tavaustoimintoa #SpeechSettingsUseSpelling].
 + Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
-++ Taustalla tapahtuvaa automaattista tunnistusta tukevat näytöt ++[AutomaticDetection]
-NVDA:n on mahdollista tunnistaa useita pistenäyttöjä automaattisesti taustalla joko USB:tä tai bluetoothia käyttäen.
+++ Automaattista tunnistusta tukevat pistenäytöt ++[AutomaticDetection]
+NVDA:n on mahdollista tunnistaa useita pistenäyttöjä automaattisesti joko USB:tä tai bluetoothia käyttäen.
 Automaattinen tunnistus otetaan käyttöön valitsemalla käytettäväksi pistenäytöksi Automaattinen NVDA:n [Pistekirjoituksen asetukset -valintaikkunasta. #BrailleSettings]
 Tämä vaihtoehto on oletusarvoisesti valittuna.
 
@@ -2053,15 +2053,13 @@ Seuraavat näytöt tukevat automaattista tunnistusta.
 ++ Freedom Scientific Focus/PAC Mate ++[FreedomScientificFocus]
 Kaikkia [Freedom Scientificin https://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
 Näiden näyttöjen käyttämiseksi on asennettava ajurit.
-Mikäli sinulla ei vielä ole niitä, voit ladata ne osoitteesta https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
-Ajuri tukee kaikkia Freedom Scientificin Focus- ja Pacmate-pistenäyttöjä, vaikka sivulla mainitaankin vain Focus 40 Blue.
-Jos käytät 64-bittistä Windowsia ja ajurit on jo asennettu jonkin toisen ruudunlukuohjelman mukana, edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ohjelmistoissa ei välttämättä ole kaikkia NVDA:n tarvitsemia tiedostoja.
+Ne voi ladata osoitteesta https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Ajurit tukevat kaikkia Freedom Scientificin Focus- ja Pacmate-pistenäyttöjä, vaikka sivulla mainitaankin vain Focus 40 Blue.
 
 NVDA tunnistaa oletusarvoisesti pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:n tai bluetoothin kautta.
-Yhteystyypin rajoittamiseksi voit kuitenkin myös itse valita USB-portin tai bluetoothin näytön asetuksia määritettäessä.
-Tästä voi olla hyötyä, jos haluat yhdistää Focus-näytön  NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
-
-Nämä näytöt eivät vielä tue NVDA:n automaattista taustalla tapahtuvaa pistenäytön tunnistusta.
+Näytön asetuksia määritettäessä voidaan kuitenkin myös itse valita USB-portti tai bluetooth yhteystyypin rajoittamiseksi.
+Tästä voi olla hyötyä, jos Focus-näyttö halutaan yhdistää NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
+Myös NVDA:n automaattinen pistenäytön tunnistus tunnistaa tämän näytön USB:tä tai bluetoothia käytettäessä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.

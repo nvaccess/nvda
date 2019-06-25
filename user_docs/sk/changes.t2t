@@ -3,6 +3,70 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2 =
+Prednosti tejto verzie zahŕňajú automatickú detekciu braillovských riadkov od spoločnosti Freedom Scientific, pridanú experimentálnu možnosť vypnúť aktualizáciu  fokusu v režime prehliadania (čím sa môže zrýchliť prehliadanie), možnosť znásobenia rýchlosti pri hlasoch Onecore a ďalšie užitočné funkcie.
+
+== Nové vlastnosti ==
+- Dialóg s hľadaním textu odteraz obsahuje históriu 20 naposledy hľadaných reťazcov. (#8482)
+ - História hľadania sa vymaže po ukončení alebo reštarte NVDA.
+- Podpora pre klienta Miranda NG funguje aj s novšími verziami aplikácie Miranda. (#9053)
+- Odteraz je možné NVDA nastaviť tak, aby sa neaktivoval režim prehliadania automaticky po načítaní dokumentu alebo aplikácie. Nastavenie hľadajte v kategórii Režim prehliadania. (#8716)
+ - Aj v tomto prípade je možné aktivovať režim prehliadania ručne skratkou NVDA+medzera.
+- V dialógu Výslovnosť interpunkčných a špeciálnych symbolov môžete odteraz filtrovať znaky aj pomocou editačného poľa tak, ako ste zvyknutí v zozname prvkov a klávesových skratiek. (#5761)
+- Odteraz si môžete definovať klávesovú skratku, ktorá bude prepínať, koľko textu prečíta NVDA pri pohybe kurzorom myši. Skratka predvolene nie je definovaná, treba ju nastaviť v dialógu Klávesové skratky. (#9056)
+- Pridaná podpora znásobenia tempa pre hlasy Windows onecore. Hlasy je odteraz možné nastaviť, aby hovorili rýchlejšie. (#7498)
+- Znásobenie tempa je odteraz možné vypnúť a zapnúť aj klávesovými skratkami v kruhu nastavení hlasového výstupu. Túto možnosť v súčasnosti podporuje hlas eSpeak a Hlasy Onecore. (#8934)
+- Každému konfiguračnému profilu môžete odteraz priradiť klávesovú skratku. (#4209)
+ - Skratku nastavíte v dialógu Klávesové skratky.
+- Pridaná podpora pre automatické dopĺňanie v editore kódu Eclipse. (#5667)
+ - Navyše je odteraz možné prečítať informáciu Javadoc po stlačení skratky NVDA+d.
+- V časti Pokročilé nastavenia pribudlo nastavenie Automaticky presúvať fokus na zamerané prvky. Ak je vypnuté, systémový fokus nesleduje pohyb kurzora v režime prehliadania. (#2039) Neodporúčame vypnúť túto možnosť pri všetkých webových stránkach, ale môže to pomôcť vyriešiť nasledujúce problémy:
+ - Ak NVDA po stlačení skratky najprv prejde na požadovaný objekt, a potom sa vráti naspäť na pôvodné miesto.
+ - Pri pohybe cez editačné polia sa stratí systémový fokus.
+ - Skratky v režime prehliadania reagujú pomaly.
+- Pri  vybraných braillovských riadkoch je odteraz možné meniť nastavenia ovládača priamo v nastaveniach NVDA. (#7452)
+- Odteraz funguje automatická detekcia aj pre Braillovské riadky od Freedom Scientific. (#7727)
+
+
+== Zmeny ==
+- Pri zmene hlasitosti cez kruh nastavení hlasového výstupu sa posúva úroveň po 5 a nie po 10. (#6754)
+- Upravený text, ktorý sa zobrazí v správcovi doplnkov, ak je NVDA spustené s vypnutými doplnkami. (#9473)
+- Aktualizovaná databáza  Unicode Common na verziu  35.0. (#9445)
+- Aktualizovaná sada tabuliek liblouis na verziu 3.9.0. (#9439)
+- Zjednotené klávesové skratky pre editačné pole Filter. V Slovenskej verzii sa teraz všade používa alt+E, v Anglickej alt+y. (#8728)
+- Ak je automaticky detegovaný braillovský riadok cez Bluetooth, NVDA bude pokračovať v hľadaní ďalších riadkov cez USB. Ak taký riadok nájde, automaticky pripojí tento riadok. (#8853)
+
+
+== Opravy ==
+- NVDA viac nezamrzne, ak je priečinok s doplnkami prázdny. (#7686)
+- Značky LTR a RTL sa viac nezobrazujú vo vlastnostiach súboru pri zobrazení na braillovskom riadku alebo pri prezeraní po znakoch. (#8361)
+- Pri skoku na prvok formulára je odteraz oznámený celý prvok, nie len prvý riadok. (#9388)
+- Opravená chyba, ktorá spôsobovala, že pri ukončení aplikácie Pošta vo Windows 10 NVDA prestalo rozprávať. (#9341)
+- NVDA sa odteraz spustí aj v prípade, ak je jazyk systému nastavený na jazyk, ktorý je pre NVDA neznámi, napríklad Angličtina (Holandsko). (#8726)
+- NVDA správne oznamuje stav režimu prehliadania, ak aktivujete režim prehliadania v programe Excel, prepnete sa do internetového prehliadača a vrátite sa späť do Excelu. (#8846)
+- NVDA správne oznamuje riadky zamerané myšou v aplikácii Notepad++  a iných editoroch využívajúcich Scintilla rozhranie. (#5450)
+- V aplikácii Google dokumenty a iných webových editoroch sa viac na braillovských riadkoch nezobrazuje koniec zoznamu pred kurzorom uprostred zoznamu. (#9477)
+- NVDA odteraz neopakuje notifikáciu o zmene hlasitosti, ak je spustená  aktualizácia Windows 10 z mája 2019, máte   otvorené okno správcu súborov a meníte hlasitosť pomocou hardwarových tlačidiel. (#9466)
+- Zrýchlené načítanie dialógu na úpravu výslovnosti symbolov, ak zoznam symbolov obsahuje viac ako 1000 položiek. (#8790)
+- V rozhraní Scintilla (ako napríklad Notepad++) NVDA dokáže správne čítať riadok aj vtedy, ak je zapnuté zalamovanie riadkov. (#9424)
+- Ak sa zmení pozícia bunky v tabuľke MS Excel pri použití skratiek shift+enter alebo shift+numerický enter, NVDA túto zmenu ohlási. (#9499)
+- Odteraz je správne oznamovaný objekt v strome objektov alebo členov s kategóriami v zozname objektov v aplikácii Visual Studio od verzie 2017. (#9311)
+- Pri rozpoznávaní doplnkov NVDA viac nerozlišuje malé a veľké písmená. (#9334)
+- Nastavenie rýchlosti hlasu Onecore v systéme Windows viac neovplyvňuje nastavenie v NVDA. (#7498)
+- Odteraz je možné otvoriť log NVDA skratkou NVDA+F1 aj vtedy, ak zameraný objekt neobsahuje informáciu pre vývojárov. (#8613)
+- Odteraz je opäť možné použiť skratky na navigáciu po tabuľkách v Google dokumentoch v prehliadačoch Firefox a Chrome. (#9494)
+- Všetky tlačidlá opäť správne fungujú na braillovských riadkoch od Freedom Scientific. (#8849)
+- NVDA viac nezamrzne, ak presuniete kurzor na prvý znak v dokumente Notepad++ 7.7 X64. (#9609)
+
+
+= 2019.1.1 =
+V tejto verzii boli opravené nasledujúce chyby:
+- Opravená chyba, ktorá spôsobila pád aplikácie MS Excel alebo nesprávne oznamovanie buniek v tabuľke, ak boli použité vzorce. (#9431)
+- Opravená chyba, ktorá spôsobovala pád Google chrome pri niektorých zoznamových rámikoch. (#9364)
+- Opravená chyba, ktorá spôsobovala nemožnosť skopírovať nastavenia NVDA do systémového priečinka. (#9448)
+- Opravená chyba, ktorá spôsobovala, že v aplikácii MS Excel NVDA oznamovalo umiestnenie a názvy zlúčených buniek v Angličtine. (#9471)
+
+
 = 2019.1 =
 Prednosti tejto verzie zahŕňajú vylepšenia pri používaní aplikácií Word a Excel, úpravy týkajúce sa stability a bezpečnosti, keďže sa vyžaduje väčšia kontrola kompatibility doplnkov a pár ďalších vylepšení.
 
