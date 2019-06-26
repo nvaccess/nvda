@@ -123,14 +123,14 @@ def checkForUpdate(auto=False):
 		params.update(extraParams)
 	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
-		res = urllib.urlopen(url)
+		res = urllib.request.urlopen(url)
 	except IOError as e:
 		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
-			res = urllib.urlopen(url)
+			res = urllib.request.urlopen(url)
 		else:
 			raise
 	if res.code != 200:
