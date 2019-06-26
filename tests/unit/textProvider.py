@@ -18,7 +18,7 @@ class BasicTextInfo(NVDAObjectTextInfo):
 	useUniscribe = False
 	# Most of our code use UTF-16 as internal encoding.
 	# Mimic this behavior, so we can also implicitly test textUtils module code
-	encoding = NVDAObjectTextInfo._WCHAR_ENCODING
+	encoding = textUtils.WCHAR_ENCODING
 
 	def _getStoryLength(self):
 		# NVDAObjectTextInfo will just return the str length of the story text,.
