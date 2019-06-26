@@ -24,7 +24,9 @@ import inspect
 import threading
 import time
 import pickle
-import urllib
+# #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
+import urllib.request
+import urllib.parse
 import tempfile
 import hashlib
 import ctypes.wintypes
