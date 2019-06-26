@@ -7,15 +7,22 @@
 
 """NVDA core"""
 
-# Do this first to initialise comtypes.client.gen_dir and the comtypes.gen search path.
+RPC_E_CALL_CANCELED = -2147418110
+
+class CallCancelled(Exception):
+	"""Raised when a call is cancelled.
+	"""
+
+# Apply several monky patches to comtypes
+import comtypesMonkeyPatches
+
+# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
+# and Append our comInterfaces directory to the comtypes.gen search path.
+import comtypes
 import comtypes.client
-# Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
-
-#Apply several monky patches to comtypes
-import comtypesMonkeyPatches
 
 import sys
 import winVersion
