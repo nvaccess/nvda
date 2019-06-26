@@ -200,7 +200,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				if self.isBulk:
 					# onReceiveSize based on max packet size according to USB endpoint information.
-					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, writeSize=0, onReceiveSize=64)
+					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
 			except EnvironmentError:

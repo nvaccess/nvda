@@ -14,7 +14,7 @@ import sys
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import DWORD, USHORT
-from typing import Optional, Any, Union
+from typing import Optional, Any, Union, Tuple
 
 import serial
 from serial.win32 import MAXDWORD, OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
@@ -39,26 +39,20 @@ class IoBase(object):
 			fileHandle: Union[ctypes.wintypes.HANDLE, Any],
 			onReceive: callable(bytes),
 			writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
-			onReceiveSize: int = 1,
-			writeSize: Optional[int] = None
+			onReceiveSize: int = 1
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
 			If L{writeFileHandle} is specified, this is only for input.
 			The serial implementation uses a _port_handle member for this argument.
 		@param onReceive: A callable taking the received data as its only argument.
-		@type onReceive: callable(bytes)
 		@param writeFileHandle: A handle to an open output device opened for overlapped I/O.
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
-		@param writeSize: The size of the buffer for writes,
-			C{None} to use the length of the data written.
-		@param writeSize: int or None
 		"""
 		self._file = fileHandle
 		self._writeFile = writeFileHandle if writeFileHandle is not None else fileHandle
 		self._onReceive = onReceive
 		self._readSize = onReceiveSize
-		self._writeSize = writeSize
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
 		self._recvEvt = winKernel.createEvent()
@@ -73,14 +67,12 @@ class IoBase(object):
 		self._initApc = init
 		braille._BgThread.queueApc(init)
 
-	def waitForRead(self, timeout):
+	def waitForRead(self, timeout:Union[int, float]) -> bool:
 		"""Wait for a chunk of data to be received and processed.
 		This will return after L{onReceive} has been called or when the timeout elapses.
 		@param timeout: The maximum time to wait in seconds.
-		@type timeout: int or float
 		@return: C{True} if received data was processed before the timeout,
 			C{False} if not.
-		@rtype: bool
 		"""
 		timeout= int(timeout*1000)
 		while True:
@@ -97,15 +89,21 @@ class IoBase(object):
 					log.debug("Waiting interrupted by completed i/o")
 				timeout -= int((time.time()-curTime)*1000)
 
+	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
+		""" Private helper method to allow derived classes to prepare buffers in different ways"""
+		size = len(data)
+		return (
+			size,
+			ctypes.create_string_buffer(data) # this will append a null char, which is intentional
+		)
+
 	def write(self, data: bytes):
 		if not isinstance(data, bytes):
 			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
 			log.debug("Write: %r" % data)
-		size = self._writeSize or len(data)
-		# usage of self._writeSize could result in a size mismatch with data?
-		if size != len(data):
-			log.debugWarning(u"Mismatch in buffer size writing to braille device.")
+
+		size, data = self._prepareWriteBuffer(data)
 		if not ctypes.windll.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
 				if _isDebug():
@@ -293,11 +291,28 @@ class Hid(IoBase):
 				% (caps.InputReportByteLength, caps.OutputReportByteLength,
 					caps.FeatureReportByteLength))
 		self._featureSize = caps.FeatureReportByteLength
+		self._writeSize = caps.OutputReportByteLength
 		# Reading any less than caps.InputReportByteLength is an error.
-		# On Windows 7, writing any less than caps.OutputReportByteLength is also an error.
 		super(Hid, self).__init__(handle, onReceive,
-			onReceiveSize=caps.InputReportByteLength,
-			writeSize=caps.OutputReportByteLength)
+			onReceiveSize=caps.InputReportByteLength
+		)
+
+	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
+		""" For HID devices, the buffer to be written must match the
+		OutputReportByteLength fetched from HIDP_CAPS, to ensure this is the case
+		we create a buffer of that size. We also check that data is not bigger than
+		the write size, which we do not currently support. If it becomes necessary to
+		support this, we could split the data and send it several chunks.
+		"""
+		# On Windows 7, writing any less than caps.OutputReportByteLength is also an error.
+		# See also: http://www.onarm.com/forum/20152/
+		if len(data) > self._writeSize:
+			log.error(u"Attempting to send a buffer larger than supported.")
+			raise RuntimeError("Unable to send buffer of: %d", len(data))
+		return (
+			self._writeSize,
+			ctypes.create_string_buffer(data, self._writeSize)
+		)
 
 	def getFeature(self, reportId: bytes) -> bytes:
 		"""Get a feature report from this device.
@@ -365,8 +380,7 @@ class Bulk(IoBase):
 	def __init__(
 			self, path: str, epIn: int, epOut: int,
 			onReceive: callable(bytes),
-			onReceiveSize: int = 1,
-			writeSize: Optional[int] = None
+			onReceiveSize: int = 1
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -391,8 +405,7 @@ class Bulk(IoBase):
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 		super(Bulk, self).__init__(readHandle, onReceive,
-			writeFileHandle=writeHandle, onReceiveSize=onReceiveSize,
-			writeSize=writeSize)
+			writeFileHandle=writeHandle, onReceiveSize=onReceiveSize)
 
 	def close(self):
 		super(Bulk, self).close()
