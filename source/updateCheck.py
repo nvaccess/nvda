@@ -121,7 +121,7 @@ def checkForUpdate(auto=False):
 			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
+	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
 		res = urllib.urlopen(url)
 	except IOError as e:
