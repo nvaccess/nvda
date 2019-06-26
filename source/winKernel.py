@@ -83,7 +83,7 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 		If C{True}, the timer is a manual-reset notification timer.
 	@type manualReset: bool
 	@param name: Defaults to C{None}, the timer object is created without a name.
-	@type name: unicode
+	@type name: str
 	"""
 	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
 	if res==0:

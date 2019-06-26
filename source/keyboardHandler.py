@@ -197,10 +197,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
-		from NVDAObjects.UIA.winConsoleUIA import winConsoleUIA
+		from NVDAObjects.UIA.winConsoleUIA import WinConsoleUIA
 		if (
 			# This is only possible in Windows 10 RS2 and above
-			winVersion.isAtLeastWin10(1703)
+			winVersion.isWin10(1703)
 			# And we only want to do this if the gesture did not result in an executed action 
 			and not gestureExecuted 
 			# and not if this gesture is a modifier key
@@ -212,7 +212,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# or the focus is within a UWP app, where WM_CHAR never gets sent 
 				or focus.windowClassName.startswith('Windows.UI.Core')
 				#Or this is a UIA console window, where WM_CHAR messages are doubled
-				or isinstance(focus, winConsoleUIA)
+				or isinstance(focus, WinConsoleUIA)
 			)
 		):
 			keyStates=(ctypes.c_byte*256)()
@@ -395,16 +395,16 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return name
 
 		if 32 < self.vkCode < 128:
-			return unichr(self.vkCode).lower()
+			return chr(self.vkCode).lower()
 		if self.vkCode == vkCodes.VK_PACKET:
 			# Unicode character from non-keyboard input.
-			return unichr(self.scanCode)
+			return chr(self.scanCode)
 		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
 			if vkChar == 43: # "+"
 				# A gesture identifier can't include "+" except as a separator.
 				return "plus"
-			return unichr(vkChar).lower()
+			return chr(vkChar).lower()
 
 		if self.vkCode == 0xFF:
 			# #3468: This key is unknown to Windows.

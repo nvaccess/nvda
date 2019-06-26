@@ -35,7 +35,6 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 
 REASON_QUICKNAV = "quickNav"
 
@@ -93,7 +92,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(with_metaclass(ABCMeta, object)):
+class QuickNavItem(object, metaclass=ABCMeta):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -1025,7 +1024,7 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			# Search the list.
 			# We have to implement this ourselves, as tree views don't accept space as a search character.
-			char = unichr(evt.UnicodeKey).lower()
+			char = chr(evt.UnicodeKey).lower()
 			# IF the same character is typed twice, do the same search.
 			if self._searchText != char:
 				self._searchText += char
@@ -1648,7 +1647,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		docConstId = self.documentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
-		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
+		if isinstance(docConstId, str):
+			protocols=("http", "https", "ftp", "ftps", "file")
+			protocol=docConstId.split("://", 1)[0]
+			return protocol in protocols
+		return False
+
 
 	def _getInitialCaretPos(self):
 		"""Retrieve the initial position of the caret after the buffer has been loaded.

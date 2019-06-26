@@ -192,7 +192,7 @@ def CreateStdAccessibleProxy(hwnd,className,objectID,interface=IAccessible):
 	@param hwnd: the handle of the window this accessible object should represent.
 	@type hwnd: int
 	@param className: the window class name to use.
-	@type className: basestring
+	@type className: str
 	@param objectID: an OBJID_* constant or custom value stating the specific object in the window.
 	@type objectID: int
 	@param interface: the requested COM interface for this object. Defaults to IAccessible.

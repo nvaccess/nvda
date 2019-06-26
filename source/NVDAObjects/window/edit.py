@@ -257,7 +257,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["font-name"]=charFormat.szFaceName
 		if formatConfig["reportFontSize"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
+			# Font size is supposed to be an integral value
+			formatField["font-size"]="%spt"%(charFormat.yHeight//20)
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
@@ -372,7 +373,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
-				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+				encoding=locale.getlocale()[1]
+				text=ctypes.cast(buf,ctypes.c_char_p).value.decode(encoding,errors="replace")
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.

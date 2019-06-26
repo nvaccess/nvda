@@ -70,7 +70,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	@param includeExt: C{True} to include the extension of the application's executable filename, C{False} to exclude it.
 	@type window: bool
 	@returns: application name
-	@rtype: unicode or str
+	@rtype: str
 	"""
 	if processID==NVDAProcessID:
 		return "nvda.exe" if includeExt else "nvda"
@@ -78,7 +78,7 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	FProcessEntry32 = processEntry32W()
 	FProcessEntry32.dwSize = ctypes.sizeof(processEntry32W)
 	ContinueLoop = winKernel.kernel32.Process32FirstW(FSnapshotHandle, ctypes.byref(FProcessEntry32))
-	appName = unicode()
+	appName = str()
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
 			appName = FProcessEntry32.szExeFile
@@ -93,8 +93,6 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
 	try:
-		# Python 2.x can't properly handle unicode module names, so convert them.
-		# #8768 (Py3 review required): no longer the case in Python 3.
 		mod = importlib.import_module("appModules.%s" % appName, package="appModules")
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
@@ -162,23 +160,21 @@ def fetchAppModule(processID,appName):
 	@param processID: process ID for it to be associated with
 	@type processID: integer
 	@param appName: the application name for which an appModule should be found.
-	@type appName: unicode or str
+	@type appName: str
 	@returns: the appModule, or None if not found
 	@rtype: AppModule
 	"""  
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
-	# Python 2.x can't properly handle unicode module names, so convert them.
-	modName = appName.encode("mbcs")
+	modName = appName
 
 	if doesAppModuleExist(modName):
 		try:
 			return importlib.import_module("appModules.%s" % modName, package="appModules").AppModule(processID, appName)
 		except:
 			log.error("error in appModule %r"%modName, exc_info=True)
-			# We can't present a message which isn't unicode, so use appName, not modName.
 			# Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
-			ui.message(_("Error in appModule %s")%appName)
+			ui.message(_("Error in appModule %s")%modName)
 
 	# Use the base AppModule.
 	return AppModule(processID, appName)
@@ -456,7 +452,7 @@ class AppModule(baseObject.ScriptableObject):
 		This should only be called if instructed by a developer.
 		"""
 		path = os.path.join(tempfile.gettempdir(),
-			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID)).decode("mbcs")
+			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID))
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle, path)
 		print("Dump path: %s" % path)

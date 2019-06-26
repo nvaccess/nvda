@@ -5,6 +5,10 @@ What's New in NVDA
 
 = threshold release =
 
+== Bug Fixes ==
+- Emoji and other 32 bit unicode characters now take less space on a braille display when they are shown as hexadecimal values. (#6695)
+
+
 == Changes for Developers ==
  - Updated pySerial to version 3.4
 - the validate module is now only available from configobj. Code should now do from configobj import validate rather than import validate.

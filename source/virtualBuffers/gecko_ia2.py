@@ -207,23 +207,18 @@ class Gecko_ia2(VirtualBuffer):
 				break
 			except:
 				log.debugWarning("doAction failed")
-			if controlTypes.STATE_OFFSCREEN in obj.states or controlTypes.STATE_INVISIBLE in obj.states:
+			if obj.hasIrrelevantLocation:
+				# This check covers invisible, off screen and a None location
+				log.debugWarning("No relevant location for object")
 				obj = obj.parent
 				continue
-			try:
-				l, t, w, h = obj.location
-			except TypeError:
-				log.debugWarning("No location for object")
-				obj = obj.parent
-				continue
-			if not w or not h:
+			location = obj.location
+			if not location.width or not location.height:
 				obj = obj.parent
 				continue
 			log.debugWarning("Clicking with mouse")
-			x = l + w / 2
-			y = t + h / 2
 			oldX, oldY = winUser.getCursorPos()
-			winUser.setCursorPos(x, y)
+			winUser.setCursorPos(*location.center)
 			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
 			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			winUser.setCursorPos(oldX, oldY)

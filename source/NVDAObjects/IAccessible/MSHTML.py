@@ -156,7 +156,7 @@ def getZoomFactorsFromHTMLDocument(HTMLDocument):
 	except (COMError,NameError,AttributeError,TypeError):
 		log.debugWarning("unable to fetch DPI factors")
 		return (1,1)
-	return (devX/logX,devY/logY)
+	return (devX // logX, devY // logY)
 
 def IAccessibleFromHTMLNode(HTMLNode):
 	try:
@@ -483,7 +483,7 @@ class MSHTML(IAccessible):
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(p.x/xFactor,p.y/yFactor)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x // xFactor, p.y // yFactor)
 			except:
 				HTMLNode=None
 			if not HTMLNode:
@@ -670,7 +670,7 @@ class MSHTML(IAccessible):
 			title=self.HTMLAttributes['title']
 			# #2121: MSHTML sometimes returns a node for the title attribute.
 			# This doesn't make any sense, so ignore it.
-			if title and isinstance(title,basestring):
+			if title and isinstance(title,str):
 				return title
 			return ""
 		return super(MSHTML,self).name

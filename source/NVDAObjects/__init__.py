@@ -7,7 +7,6 @@
 
 """Module that contains the base NVDA object type"""
 
-from six import with_metaclass
 import time
 import re
 import weakref
@@ -147,7 +146,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContainerObject,baseObject.ScriptableObject)):
+class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -320,6 +319,11 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 			return False
 		return self._isEqual(other)
  
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		"""The opposite to L{NVDAObject.__eq__}
 		"""
@@ -387,7 +391,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_name(self):
 		"""The name or label of this object (example: the text of a button).
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -408,13 +412,13 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
-		@rtype: basestring
+		@rtype: str
 		"""   
 		return ""
 
 	def _get_description(self):
 		"""The description or help text of this object.
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -432,7 +436,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		@param index: the optional 0-based index of the wanted action.
 		@type index: int
 		@return: the action's name
-		@rtype: basestring
+		@rtype: str
 		"""
 		raise NotImplementedError
  
@@ -448,7 +452,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_keyboardShortcut(self):
 		"""The shortcut key that activates this object(example: alt+t).
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -1098,7 +1102,7 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=u" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, basestring) and len(x) > 0 and not x.isspace())
+			self._basicText=u" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace())
 			if len(self._basicText)==0:
 				self._basicText=u""
 		else:
@@ -1120,13 +1124,13 @@ This code is executed if a gain focus event is received by this object.
 		If the string is too long to be useful, it will be truncated.
 		This string should be included as returned. There is no need to call repr.
 		@param string: The string to format.
-		@type string: nbasestring
+		@type string: str
 		@param truncateLen: The length at which to truncate the string.
 		@type truncateLen: int
 		@return: The formatted string.
-		@rtype: basestring
+		@rtype: str
 		"""
-		if isinstance(string, basestring) and len(string) > truncateLen:
+		if isinstance(string, str) and len(string) > truncateLen:
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
@@ -1238,7 +1242,7 @@ This code is executed if a gain focus event is received by this object.
 		raise NotImplementedError
 
 	#: The language/locale of this object.
-	#: @type: basestring
+	#: @type: str
 	language = None
 
 	def _get__hasNavigableText(self):

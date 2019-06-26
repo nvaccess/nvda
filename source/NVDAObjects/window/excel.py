@@ -5,7 +5,6 @@
 #See the file COPYING for more details.
 
 import abc
-from six import with_metaclass
 import ctypes
 from comtypes import COMError, BSTR
 import comtypes.automation
@@ -1085,7 +1084,7 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	def label(self):
 		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.formula)
 
-class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
+class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	cellInfoFlags=NVCELLINFOFLAG_ADDRESS|NVCELLINFOFLAG_COORDS
 
 	@abc.abstractproperty
@@ -1538,7 +1537,7 @@ class ExcelDropdown(Window):
 				background=item.field.get('background-color',None)
 				if (background,foreground)==self._highlightColors:
 					states.add(controlTypes.STATE_SELECTED)
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
 				children.append(obj)
 				index+=1

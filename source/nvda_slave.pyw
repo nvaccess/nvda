@@ -12,9 +12,9 @@ import gettext
 import locale
 #Localization settings
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install()
 except:
-	gettext.install('nvda',unicode=True)
+	gettext.install('nvda')
 
 import sys
 import os
@@ -53,7 +53,7 @@ def main():
 				None,winUser.SW_SHOWNORMAL)
 		elif action=="setNvdaSystemConfig":
 			import config
-			config._setSystemConfig(args[0].decode('mbcs'))
+			config._setSystemConfig(args[0])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
@@ -69,7 +69,7 @@ def main():
 			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
 		elif action == "addons_installAddonPackage":
 			try:
-				addonPath=unicode(args[0], "mbcs")
+				addonPath=args[0]
 			except IndexError:
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib

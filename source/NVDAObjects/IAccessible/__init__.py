@@ -15,6 +15,7 @@ from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
 import textInfos.offsets
+from textInfos.offsets import HIGH_SURROGATE_FIRST, HIGH_SURROGATE_LAST, LOW_SURROGATE_FIRST, LOW_SURROGATE_LAST
 import colors
 import time
 import displayModel
@@ -254,9 +255,14 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+		if HIGH_SURROGATE_FIRST <= text <= HIGH_SURROGATE_LAST or LOW_SURROGATE_FIRST <= text <= LOW_SURROGATE_LAST:
+			# #8953: Some IA2 implementations, including Gecko and Chromium,
+			# erroneously report one offset for surrogates.
+			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
+		return start, end
 
 	def _getWordOffsets(self,offset):
 		try:
@@ -326,7 +332,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			items = [self.text]
 		offset = self._startOffset
 		for item in items:
-			if not isinstance(item, basestring):
+			if not isinstance(item, str):
 				# This is a field.
 				yield item
 				continue
@@ -474,7 +480,7 @@ the NVDAObject for IAccessible
 		if ((windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2))
 				or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow")):
 			maybeFlash = True
-		elif windowClassName == "Internet Explorer_Server" and self.event_objectID > 0:
+		elif windowClassName == "Internet Explorer_Server" and self.event_objectID is not None and self.event_objectID > 0:
 			# #2454: In Windows 8 IE, Flash is exposed in the same HWND as web content.
 			from .MSHTML import MSHTML
 			# This is only possibly Flash if it isn't MSHTML.
@@ -741,14 +747,14 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,basestring) and not res.isspace() else None
+		return res if isinstance(res,str) and not res.isspace() else None
 
 	def _get_value(self):
 		try:
 			res=self.IAccessibleObject.accValue(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,basestring) and not res.isspace() else None
+		return res if isinstance(res,str) and not res.isspace() else None
 
 	def _get_actionCount(self):
 		if hasattr(self,'IAccessibleActionObject'):
@@ -824,7 +830,7 @@ the NVDAObject for IAccessible
 			superRole=super(IAccessible,self).role
 			if superRole!=controlTypes.ROLE_WINDOW:
 					return superRole
-		if isinstance(IARole,basestring):
+		if isinstance(IARole,str):
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
 		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
@@ -904,7 +910,7 @@ the NVDAObject for IAccessible
 	def _get_description(self):
 		if self.hasEncodedAccDescription:
 			d=self.decodedAccDescription
-			if isinstance(d,basestring):
+			if isinstance(d,str):
 				return d
 			else:
 				return ""
@@ -912,14 +918,14 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accDescription(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,basestring) and not res.isspace() else None
+		return res if isinstance(res,str) and not res.isspace() else None
 
 	def _get_keyboardShortcut(self):
 		try:
 			res=self.IAccessibleObject.accKeyboardShortcut(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		return res if isinstance(res,basestring) and not res.isspace() else None
+		return res if isinstance(res,str) and not res.isspace() else None
 
 	def _get_childCount(self):
 		if self.IAccessibleChildID!=0:
@@ -1379,7 +1385,7 @@ the NVDAObject for IAccessible
 				pass
 		if self.hasEncodedAccDescription:
 			d=self.decodedAccDescription
-			if d and not isinstance(d,basestring):
+			if d and not isinstance(d,str):
 				groupdict=d.groupdict()
 				return {x:int(y) for x,y in groupdict.items() if y is not None}
 		if self.allowIAccessibleChildIDAndChildCountForPositionInfo and self.IAccessibleChildID>0:

@@ -525,10 +525,6 @@ IDRETRY=4
 IDCANCEL=3
 
 def MessageBox(hwnd, text, caption, type):
-	if isinstance(text, bytes):
-		text = text.decode('mbcs')
-	if isinstance(caption, bytes):
-		caption = caption.decode('mbcs')
 	res = user32.MessageBoxW(hwnd, text, caption, type)
 	if res == 0:
 		raise WinError()
@@ -656,7 +652,7 @@ def setClipboardData(format,data):
 	# For now only unicode is a supported format
 	if format!=CF_UNICODETEXT:
 		raise ValueError("Unsupported format")
-	text=unicode(data)
+	text = data
 	# Allocate global memory
 	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE,(len(text)+1)*2)
 	# Acquire a lock to the global memory receiving a local memory address

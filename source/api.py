@@ -257,11 +257,8 @@ def createStateList(states):
 def moveMouseToNVDAObject(obj):
 	"""Moves the mouse to the given NVDA object's position""" 
 	location=obj.location
-	if location and (len(location)==4):
-		(left,top,width,height)=location
-		x=(left+left+width)/2
-		y=(top+top+height)/2
-		winUser.setCursorPos(x,y)
+	if location:
+		winUser.setCursorPos(*location.center)
 
 def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
@@ -285,7 +282,7 @@ def copyToClip(text):
 @param text: the text which will be copied to the clipboard
 @type text: string
 """
-	if not isinstance(text,basestring) or len(text)==0:
+	if not isinstance(text,str) or len(text)==0:
 		return False
 	import gui
 	with winUser.openClipboard(gui.mainFrame.Handle):
@@ -335,7 +332,7 @@ def getStatusBarText(obj):
 	text = obj.name or ""
 	if text:
 		text += " "
-	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
+	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, str) and not chunk.isspace())
 
 def filterFileName(name):
 	"""Replaces invalid characters in a given string to make a windows compatible file name.

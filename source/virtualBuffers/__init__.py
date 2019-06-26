@@ -44,7 +44,7 @@ VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 
-class VBufStorage_findMatch_word(unicode):
+class VBufStorage_findMatch_word(str):
 	pass
 VBufStorage_findMatch_notEmpty = object()
 
@@ -57,7 +57,8 @@ FINDBYATTRIBS_ESCAPE_TABLE = {
 # Symbols that must be escaped for a regular expression.
 FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
-	escape = lambda text: unicode(text).translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression. 
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
@@ -67,7 +68,7 @@ def _prepareForFindByAttributes(attribs):
 	# so first build the list of requested attributes.
 	for option in attribs:
 		for name in option:
-			reqAttrs.append(unicode(name))
+			reqAttrs.append(name)
 	# Now build the regular expression.
 	for option in attribs:
 		optRegexp = []
@@ -436,7 +437,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			if log.isEnabledFor(log.DEBUG):
 				startTime = time.time()
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(
+				self.rootNVDAObject.appModule.helperLocalBindingHandle,
+				self.rootDocHandle,self.rootID,
+				self.backendName
+			)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:
@@ -477,7 +482,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def isNVDAObjectPartOfLayoutTable(self,obj):
 		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
-		ID=unicode(ID)
+		ID=str(ID)
 		info=self.makeTextInfo(obj)
 		info.collapse()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -682,7 +687,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def getControlFieldForNVDAObject(self, obj):
 		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
-		objId = unicode(objId)
+		objId = str(objId)
 		info = self.makeTextInfo(obj)
 		info.collapse()
 		info.expand(textInfos.UNIT_CHARACTER)

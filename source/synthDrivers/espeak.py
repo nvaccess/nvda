@@ -72,7 +72,6 @@ class SynthDriver(SynthDriver):
 	}
 
 	def _processText(self, text):
-		text = unicode(text)
 		# We need to make several replacements.
 		return text.translate({
 			0x1: None, # used for embedded commands
@@ -90,7 +89,7 @@ class SynthDriver(SynthDriver):
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.
 		for item in speechSequence:
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				textList.append(self._processText(item))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)
@@ -123,7 +122,7 @@ class SynthDriver(SynthDriver):
 					textList.append(' %s="%d%%"'%(attr,val))
 				textList.append(">")
 			elif isinstance(item,speech.PhonemeCommand):
-				# We can't use unicode.translate because we want to reject unknown characters.
+				# We can't use str.translate because we want to reject unknown characters.
 				try:
 					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
 					# There needs to be a space after the phoneme command.
@@ -199,11 +198,11 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
-			l=v.languages[1:]
+			l=_espeak.decodeEspeakString(v.languages[1:])
 			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
-			name=v.name.decode("UTF-8")
+			name=_espeak.decodeEspeakString(v.name)
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
-			identifier=os.path.basename(v.identifier).lower()
+			identifier=os.path.basename(_espeak.decodeEspeakString(v.identifier)).lower()
 			voices[identifier]=VoiceInfo(identifier,name,l)
 		return voices
 
@@ -214,7 +213,7 @@ class SynthDriver(SynthDriver):
 		if not curVoice:
 			return ""
 		# #5783: For backwards compatibility, voice identifies should always be lowercase
-		return curVoice.identifier.split('+')[0].lower()
+		return _espeak.decodeEspeakString(curVoice.identifier).split('+')[0].lower()
 
 	def _set_voice(self, identifier):
 		if not identifier:

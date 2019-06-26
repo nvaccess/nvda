@@ -16,7 +16,7 @@ class XMLTextParser(object):
 			data=attrs.get('value',None)
 			if data is not None:
 				try:
-					data=unichr(int(data))
+					data=chr(int(data))
 				except ValueError:
 					data=u'\ufffd'
 				self._CharacterDataHandler(data)
@@ -50,14 +50,14 @@ class XMLTextParser(object):
 
 	def _CharacterDataHandler(self,data):
 		cmdList=self._commandList
-		if cmdList and isinstance(cmdList[-1],basestring):
+		if cmdList and isinstance(cmdList[-1],str):
 			cmdList[-1]+=data
 		else:
 			cmdList.append(data)
 
 	def parse(self,XMLText):
 		try:
-			self.parser.Parse(XMLText.encode('utf-8'))
+			self.parser.Parse(XMLText)
 		except:
 			log.error("XML: %s"%XMLText,exc_info=True)
 		return self._commandList

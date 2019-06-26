@@ -63,8 +63,6 @@ def formatVersionForGUI(year, major, minor):
 	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
 
 
-# ticket:3763#comment:19: name must be str, not unicode.
-# Otherwise, py2exe will break.
 name="NVDA"
 version_year=2019
 version_major=4

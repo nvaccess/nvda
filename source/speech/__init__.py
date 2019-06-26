@@ -138,7 +138,7 @@ def spellTextInfo(info,useCharacterDescriptions=False,priority=None):
 		return
 	curLanguage=None
 	for field in info.getTextWithFields({}):
-		if isinstance(field,basestring):
+		if isinstance(field,str):
 			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions,priority=priority)
 		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
 			curLanguage=field.field.get('language')
@@ -430,9 +430,9 @@ RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOT
 def splitTextIndentation(text):
 	"""Splits indentation from the rest of the text.
 	@param text: The text to split.
-	@type text: basestring
+	@type text: str
 	@return: Tuple of indentation and content.
-	@rtype: (basestring, basestring)
+	@rtype: (str, str)
 	"""
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
@@ -443,11 +443,11 @@ IDT_MAX_SPACES = 72
 def getIndentationSpeech(indentation, formatConfig):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
-	@type indentation: unicode
+	@type indentation: str
 	@param formatConfig: The configuration to use.
 	@type formatConfig: dict
 	@return: The phrase to be spoken.
-	@rtype: unicode
+	@rtype: str
 	"""
 	speechIndentConfig = formatConfig["reportLineIndentation"]
 	toneIndentConfig = formatConfig["reportLineIndentationWithTones"] and speechMode == speechMode_talk
@@ -502,7 +502,7 @@ def speak(speechSequence, symbolLevel=None, priority=None):
 	import speechViewer
 	if speechViewer.isActive:
 		for item in speechSequence:
-			if isinstance(item, basestring):
+			if isinstance(item, str):
 				speechViewer.appendText(item)
 	global beenCanceled
 	if speechMode==speechMode_off:
@@ -528,7 +528,7 @@ def speak(speechSequence, symbolLevel=None, priority=None):
 			curLanguage=item.lang
 			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
 				curLanguage=defaultLanguage
-		elif isinstance(item,basestring):
+		elif isinstance(item,str):
 			if not item: continue
 			if autoLanguageSwitching and curLanguage!=prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
@@ -553,7 +553,7 @@ def speak(speechSequence, symbolLevel=None, priority=None):
 			inCharacterMode=item.state
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
-		if isinstance(item,basestring):
+		if isinstance(item,str):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)
 			if not inCharacterMode:
 				speechSequence[index]+=CHUNK_SEPARATOR
@@ -884,7 +884,7 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 
 	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
 		if not onlyCache:
-			if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
+			if onlyInitialFields or any(isinstance(x,str) for x in speechSequence):
 				speak(speechSequence,priority=priority)
 			if not onlyInitialFields: 
 				speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None,priority=priority)
@@ -906,7 +906,7 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 	allIndentation=""
 	indentationDone=False
 	for command in textWithFields:
-		if isinstance(command,basestring):
+		if isinstance(command,str):
 			# Text should break a run of clickables
 			inClickable=False
 			if reportIndentation and not indentationDone:
@@ -985,7 +985,7 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 	# Don't add this text if it is blank.
 	relativeBlank=True
 	for x in relativeSpeechSequence:
-		if isinstance(x,basestring) and not isBlank(x):
+		if isinstance(x,str) and not isBlank(x):
 			relativeBlank=False
 			break
 	if not relativeBlank:
@@ -1067,8 +1067,11 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		# Don't update the oldTableID if no tableID was given.
 		if tableID and not sameTable:
 			oldTableID = tableID
-		rowSpan = propertyValues.get("rowSpan")
-		columnSpan = propertyValues.get("columnSpan")
+		# When fetching row and column span
+		# default the values to 1 to make further checks a lot simpler.
+		# After all, a table cell that has no rowspan implemented is assumed to span one row.
+		rowSpan = propertyValues.get("rowSpan") or 1
+		columnSpan = propertyValues.get("columnSpan") or 1
 		if rowNumber and (not sameTable or rowNumber != oldRowNumber or rowSpan != oldRowSpan):
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
@@ -1412,9 +1415,9 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 		backgroundColor2=attrs.get("background-color2")
 		oldBackgroundColor2=attrsCache.get("background-color2") if attrsCache is not None else None
 		bgColorChanged=backgroundColor!=oldBackgroundColor or backgroundColor2!=oldBackgroundColor2
-		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)
+		bgColorText=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else backgroundColor
 		if backgroundColor2:
-			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else unicode(backgroundColor2)
+			bg2Name=backgroundColor2.name if isinstance(backgroundColor2,colors.RGB) else backgroundColor2
 			# Translators: Reported when there are two background colors.
 			# This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 			# {color1} will be replaced with the first background color.
@@ -1425,12 +1428,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{color} on {backgroundColor}").format(
-				color=color.name if isinstance(color,colors.RGB) else unicode(color),
+				color=color.name if isinstance(color,colors.RGB) else color,
 				backgroundColor=bgColorText))
 		elif color and color!=oldColor:
 			# Translators: Reported when the text color changes (but not the background color).
 			# {color} will be replaced with the text color.
-			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
+			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else color))
 		elif backgroundColor and bgColorChanged:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
@@ -1772,7 +1775,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 		#And place the final incomplete phrase in pendingSpeechSequence
 		for index in range(len(speechSequence)-1,-1,-1): 
 			item=speechSequence[index]
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				m=re_last_pause.match(item)
 				if m:
 					before,after=m.groups()

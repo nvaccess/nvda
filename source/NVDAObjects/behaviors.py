@@ -51,8 +51,8 @@ class ProgressBar(NVDAObject):
 			left,top,width,height=self.location
 		except:
 			left=top=width=height=0
-		x=left+(width/2)
-		y=top+(height/2)
+		x = left + (width // 2)
+		y = top+ (height // 2)
 		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
 			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)
@@ -288,7 +288,7 @@ class LiveText(NVDAObject):
 				newLines = self._getTextLines()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
 					outLines = self._calculateNewText(newLines, oldLines)
-					if len(outLines) == 1 and len(outLines[0]) == 1:
+					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
 						# so ignore it.

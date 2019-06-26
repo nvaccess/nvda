@@ -1434,7 +1434,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 		# We only want the ancestors of the buffer's root NVDAObject.
 		if obj != api.getFocusObject():
 			# Search backwards through the focus ancestors to find the index of obj.
-			for index, ancestor in itertools.izip(range(len(ancestors) - 1, 0, -1), reversed(ancestors)):
+			for index, ancestor in zip(range(len(ancestors) - 1, 0, -1), reversed(ancestors)):
 				if obj == ancestor:
 					ancestorsEnd = index
 					break
@@ -1446,7 +1446,7 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 		# Also, we don't ever want to fetch ancestor 0 (the desktop).
 		newAncestorsStart = max(min(_cachedFocusAncestorsEnd, ancestorsEnd), 1)
 		# Search backwards through the old regions to find the last common region.
-		for index, region in itertools.izip(range(len(oldFocusRegions) - 1, -1, -1), reversed(oldFocusRegions)):
+		for index, region in zip(range(len(oldFocusRegions) - 1, -1, -1), reversed(oldFocusRegions)):
 			ancestorIndex = getattr(region, "_focusAncestorIndex", None)
 			if ancestorIndex is None:
 				continue

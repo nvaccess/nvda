@@ -88,11 +88,15 @@ def comparePreviousInstall():
 	if not path or not os.path.isdir(path):
 		return None
 	try:
-		return cmp(
-			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
-			os.path.getmtime("nvda_slave.exe"))
+		oldTime=os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
+		newTime=os.path.getmtime("nvda_slave.exe")
 	except OSError:
 		return None
+	# cmp no longer exists in Python3.
+	# Per the Python3 What's New docs:
+	# cmp can be replaced with (a>b)-(a<b).
+	# In other words, False and True coerce to 0 and 1 respectively.
+	return (oldTime>newTime)-(oldTime<newTime)
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -358,7 +362,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
-		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
+		MoveFileEx=windll.kernel32.MoveFileExW
 		MoveFileEx("\\\\?\\"+tempPath,None,4)
 		return
 	try:

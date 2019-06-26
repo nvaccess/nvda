@@ -14,7 +14,8 @@ import itertools
 import collections
 import pkgutil
 import shutil
-from six.moves import cStringIO as StringIO, cPickle
+from io import StringIO
+import pickle
 from six import string_types
 import globalVars
 import zipfile
@@ -49,7 +50,7 @@ def loadState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "rb") as f:
-			state = cPickle.load(f)
+			state = pickle.load(f)
 		if "disabledAddons" not in state:
 			state["disabledAddons"] = set()
 		if "pendingDisableSet" not in state:
@@ -71,7 +72,7 @@ def saveState():
 	try:
 		# #9038: Python 3 requires binary format when working with pickles.
 		with open(statePath, "wb") as f:
-			cPickle.dump(state, f)
+			pickle.dump(state, f)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -363,7 +364,6 @@ class Addon(AddonBase):
 		if not os.path.isdir(extension_path):
 			# This addon does not have extension points for this package
 			return
-		# Python 2.x doesn't properly handle unicode import paths, so convert them before adding.
 		converted_path = self._getPathForInclusionInPackage(package)
 		package.__path__.insert(0, converted_path)
 		self._extendedPackages.add(package)
@@ -422,7 +422,7 @@ class Addon(AddonBase):
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
-		return extension_path.encode("mbcs")
+		return extension_path
 
 	def loadModule(self, name):
 		""" loads a python module from the addon directory
@@ -474,9 +474,9 @@ class Addon(AddonBase):
 		An add-on can specify a default documentation file name
 		via the docFileName parameter in its manifest.
 		@param fileName: The requested file name or C{None} for the add-on's default.
-		@type fileName: basestring
+		@type fileName: str
 		@return: The path to the requested file or C{None} if it wasn't found.
-		@rtype: basestring
+		@rtype: str
 		"""
 		if not fileName:
 			fileName = self.manifest["docFileName"]
@@ -507,7 +507,7 @@ def getCodeAddon(obj=None, frameDist=1):
 	if obj is None:
 		obj = sys._getframe(frameDist)
 	fileName  = inspect.getfile(obj)
-	dir= unicode(os.path.abspath(os.path.dirname(fileName)), "mbcs")
+	dir= os.path.abspath(os.path.dirname(fileName))
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
 	for p in _getDefaultAddonPaths():
@@ -532,7 +532,7 @@ def initTranslation():
 	# FIXME: shall we retrieve the caller module object explicitly?
 	try:
 		callerFrame = inspect.currentframe().f_back
-		callerFrame.f_globals['_'] = translations.ugettext
+		callerFrame.f_globals['_'] = translations.gettext
 		# Install our pgettext function.
 		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
 	finally:
@@ -558,7 +558,7 @@ class AddonBundle(AddonBase):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
-		self._path = bundlePath if isinstance(bundlePath, unicode) else unicode(bundlePath, "mbcs")
+		self._path = bundlePath
 		# Read manifest:
 		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:
@@ -581,7 +581,7 @@ class AddonBundle(AddonBase):
 		"""
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for info in z.infolist():
-				if isinstance(info.filename, str):
+				if isinstance(info.filename, bytes):
 					# #2505: Handle non-Unicode file names.
 					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.

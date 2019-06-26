@@ -275,7 +275,7 @@ class SynthDriver(driverHandler.Driver):
 			if item is None:
 				# No more items.
 				break
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				# Merge the text between commands into a single chunk.
 				text+=item
 			elif isinstance(item,speech.IndexCommand):

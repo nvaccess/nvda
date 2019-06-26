@@ -52,7 +52,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager,IAccessible):
 
 	def _get_value(self):
 		value=super(OldMSNHistory,self).value
-		if not isinstance(value,basestring):
+		if not isinstance(value,str):
 			value=""
 		return value
 
