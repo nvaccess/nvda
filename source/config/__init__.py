@@ -338,6 +338,9 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	if not subdir:
 		subdir = module.__name__
 	fullPath=os.path.join(getScratchpadDir(),subdir)
+	# Ensure this directory exists otherwise pkgutil.iter_importers may emit None for missing paths.
+	if not os.path.isdir(fullPath):
+		os.makedirs(fullPath)
 	# Insert this path at the beginning  of the module's search paths.
 	# The module's search paths may not be a mutable  list, so replace it with a new one 
 	pathList=[fullPath]
