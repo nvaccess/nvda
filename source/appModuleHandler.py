@@ -156,7 +156,7 @@ def doesAppModuleExist(name):
 	# #9797: when invoked from system tests, importers list isn't initialized (attribute error on a None object), thus assume no app module exists.
 	if _importers is None:
 		return False
-	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
+	return any(importer.find_module("appModules.%s" % name) for importer in _importers if importer is not None)
 
 def fetchAppModule(processID,appName):
 	"""Returns an appModule found in the appModules directory, for the given application name.
