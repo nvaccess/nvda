@@ -84,7 +84,6 @@ def stringToBool(string):
 parser=NoConsoleOptionParser()
 quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
-quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
 parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
@@ -145,12 +144,15 @@ except:
 	oldAppWindowHandle=0
 if not winUser.isWindow(oldAppWindowHandle):
 	oldAppWindowHandle=0
-if oldAppWindowHandle and (globalVars.appArgs.quit or globalVars.appArgs.replace):
+if oldAppWindowHandle:
+	if globalVars.appArgs.check_running:
+		# NVDA is running.
+		sys.exit(0)
 	try:
 		terminateRunningNVDA(oldAppWindowHandle)
 	except:
 		sys.exit(1)
-if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.replace):
+if globalVars.appArgs.quit:
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
