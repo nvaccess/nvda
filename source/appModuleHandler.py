@@ -153,9 +153,6 @@ def cleanup():
 			log.exception("Error terminating app module %r" % deadMod)
 
 def doesAppModuleExist(name):
-	# #9797: when invoked from system tests, importers list isn't initialized (attribute error on a None object), thus assume no app module exists.
-	if _importers is None:
-		return False
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
 
 def fetchAppModule(processID,appName):
