@@ -14,7 +14,7 @@ import sys
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import DWORD, USHORT
-from typing import Optional, Any, Union, Tuple
+from typing import Optional, Any, Union, Tuple, Callable
 
 import serial
 from serial.win32 import MAXDWORD, OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
@@ -37,7 +37,7 @@ class IoBase(object):
 	def __init__(
 			self,
 			fileHandle: Union[ctypes.wintypes.HANDLE, Any],
-			onReceive: callable(bytes),
+			onReceive: Callable[[bytes], None],
 			writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
 			onReceiveSize: int = 1
 	):
@@ -166,15 +166,17 @@ class Serial(IoBase):
 	This extends pyserial to call a callback when data is received.
 	"""
 
-	def __init__(self, *args, **kwargs):
+	def __init__(
+		self,
+		*args,
+		onReceive: Callable[[bytes], None],
+		**kwargs):
 		"""Constructor.
 		Pass the arguments you would normally pass to L{serial.Serial}.
-		There is also one additional keyword argument.
+		There is also one additional required keyword argument.
 		@param onReceive: A callable taking a byte of received data as its only argument.
 			This callable can then call C{read} to get additional data if desired.
-		@type onReceive: callable(bytes)
 		"""
-		onReceive = kwargs.pop("onReceive")
 		self._ser = None
 		self.port = args[0] if len(args) >= 1 else kwargs["port"]
 		if _isDebug():
@@ -258,7 +260,7 @@ class Hid(IoBase):
 	"""
 	_featureSize: int
 
-	def __init__(self, path: str, onReceive: callable(bytes), exclusive: bool = True):
+	def __init__(self, path: str, onReceive: Callable[[bytes], None], exclusive: bool = True):
 		"""Constructor.
 		@param path: The device path.
 			This can be retrieved using L{hwPortUtils.listHidDevices}.
@@ -379,7 +381,7 @@ class Bulk(IoBase):
 
 	def __init__(
 			self, path: str, epIn: int, epOut: int,
-			onReceive: callable(bytes),
+			onReceive: Callable[[bytes], None],
 			onReceiveSize: int = 1
 	):
 		"""Constructor.
