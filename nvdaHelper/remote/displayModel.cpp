@@ -172,8 +172,8 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText, HDC cli
 			//The clearing rectangle intercects the chunk's rectangle in some way.
 			if(clipRgnHdc != NULL) {
 				tempLogicalRect = tempRect;
-				dcPointsToScreenPoints(clipRgnHdc,(LPPOINT)&tempLogicalRect,2,false);
-				//RectVisible is very poorly documentated on the web.
+				screenPointsToDCPoints(clipRgnHdc,(LPPOINT)&tempLogicalRect,2);
+				//RectVisible is very poorly documented on the web.
 				//It can return -1 for an invalid hdc, which is not documented,
 				//and is able to return several other integers, while we expect a BOOL.
 				if(RectVisible(clipRgnHdc,&tempLogicalRect)==FALSE) {
