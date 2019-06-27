@@ -138,17 +138,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		:type command: bytes
 		:type arg: bytes | bool | int
 		"""
-		typeErrorString = "Expected param '{}' to be of type '{}'"
+		typeErrorString = "Expected param '{}' to be of type '{}', got '{}'"
 		if not isinstance(arg, bytes):
 			if isinstance(arg, bool):
 				arg = boolToByte(arg)
-			if isinstance(arg, int):
+			elif isinstance(arg, int):
 				arg = intToByte(arg)
 			else:
-				raise TypeError(typeErrorString.format("arg", "bytes, bool, or int"))
+				raise TypeError(typeErrorString.format("arg", "bytes, bool, or int", type(arg).__name__))
 
 		if not isinstance(command, bytes):
-			raise TypeError(typeErrorString.format("command", "bytes"))
+			raise TypeError(typeErrorString.format("command", "bytes", type(command).__name__))
 
 		if self.isHid:
 			self._dev.write(command + arg)
