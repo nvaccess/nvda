@@ -27,6 +27,8 @@ import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
+from keyboardHandler import KeyboardInputGesture
+
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -369,6 +371,14 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if info.isCollapsed:
 			# Translators: Reported when there is no text selected (for copying).
 			ui.message(_("No selection"))
+			if (
+				isinstance(gesture, KeyboardInputGesture)
+				and gesture.identifiers[-1] in (
+					"kb:control+c",
+					"kb:control+insert",
+				)
+			):
+				gesture.send()
 			return
 		if info.copyToClipboard():
 			# Translators: Message presented when text has been copied to clipboard.
