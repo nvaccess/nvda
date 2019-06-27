@@ -190,7 +190,7 @@ class Model(AutoPropertyObject):
 		This is the modern protocol, which uses an extended packet to send braille
 		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
 		"""
-		cellBytes: bytes = bytes(cell for cell in cells)
+		cellBytes: bytes = bytes(cells)
 		self._display.sendExtendedPacket(
 			HT_EXTPKT_BRAILLE,
 			cellBytes
@@ -254,7 +254,7 @@ class TimeSyncFirmnessMixin(object):
 	def syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
 		# Setting the time uses a swapped byte order for the year.
-		timeList = [
+		timeList: List[int] = [
 			dt.year & 0xFF, dt.year >> 8,
 			dt.month, dt.day,
 			dt.hour, dt.minute, dt.second

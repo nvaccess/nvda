@@ -60,7 +60,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 			# Prepare a blank line
 			totalCells: int = HEDO_MOBIL_CELL_COUNT + HEDO_MOBIL_STATUS_CELL_COUNT
-			cells: bytes = HEDO_MOBIL_INIT + bytearray(totalCells)
+			cells: bytes = HEDO_MOBIL_INIT + bytes(totalCells)
 
 			# Send the blank line twice
 			self._ser.write(cells)
@@ -95,8 +95,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# every transmitted line consists of the preamble HEDO_MOBIL_INIT, the statusCells and the Cells
-		statusPadding = bytearray(HEDO_MOBIL_STATUS_CELL_COUNT)
-		cellBytes: bytes = HEDO_MOBIL_INIT + statusPadding + bytearray(cells)
+		statusPadding = bytes(HEDO_MOBIL_STATUS_CELL_COUNT)
+		cellBytes: bytes = HEDO_MOBIL_INIT + statusPadding + bytes(cells)
 
 		# cells are already padded up numCells
 		# thus the expected length of the line is 1 + HEDO_MOBIL_STATUS_CELL_COUNT + HEDO_MOBIL_CELL_COUNT

@@ -17,7 +17,7 @@ from ctypes.wintypes import DWORD, USHORT
 from typing import Optional, Any, Union, Tuple, Callable
 
 import serial
-from serial.win32 import MAXDWORD, OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
+from serial.win32 import OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
 import winKernel
 import braille
 from logHandler import log
@@ -36,7 +36,7 @@ class IoBase(object):
 
 	def __init__(
 			self,
-			fileHandle: Union[ctypes.wintypes.HANDLE, Any],
+			fileHandle: Union[ctypes.wintypes.HANDLE],
 			onReceive: Callable[[bytes], None],
 			writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
 			onReceiveSize: int = 1
@@ -223,14 +223,14 @@ class Serial(IoBase):
 		timeouts = COMMTIMEOUTS()
 		if timeout is not None:
 			if timeout == 0:
-				timeouts.ReadIntervalTimeout = win32.MAXDWORD
+				timeouts.ReadIntervalTimeout = serial.win32.MAXDWORD
 			else:
 				timeouts.ReadTotalTimeoutConstant = max(int(timeout * 1000), 1)
 		if timeout != 0 and self._ser._inter_byte_timeout is not None:
 			timeouts.ReadIntervalTimeout = max(int(self._ser._inter_byte_timeout * 1000), 1)
 		if self._ser._write_timeout is not None:
 			if self._ser._write_timeout == 0:
-				timeouts.WriteTotalTimeoutConstant = win32.MAXDWORD
+				timeouts.WriteTotalTimeoutConstant = serial.win32.MAXDWORD
 			else:
 				timeouts.WriteTotalTimeoutConstant = max(int(self._ser._write_timeout * 1000), 1)
 		SetCommTimeouts(self._ser._port_handle, ctypes.byref(timeouts))

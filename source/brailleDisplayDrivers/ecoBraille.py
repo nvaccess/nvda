@@ -157,7 +157,7 @@ def eco_out(cells: List[int]) -> bytes:
 	# Leave status cells blank
 	ret.extend(output_dots_map[c] for c in cells)
 	ret.extend(b"\x10\x03")
-	return b"".join(ret)
+	return bytes(ret)
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):

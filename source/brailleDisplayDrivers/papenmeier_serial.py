@@ -9,7 +9,7 @@
 
 from collections import OrderedDict
 import time
-from typing import List, Union
+from typing import List, Optional
 
 import wx
 import braille
@@ -17,7 +17,6 @@ import hwPortUtils
 from logHandler import log
 from baseObject import ScriptableObject
 import inputCore
-import struct
 import serial
 
 #Control Flow
@@ -30,19 +29,19 @@ TIMEOUT = 0.5
 def brl_auto_id() -> bytes:
 	"""send auto id command to braille display"""
 	#send a bad packet to the braille display
-	return bytes([STX, ord('S'), 0x0, 0x0, 0x0, 0x0, ETX])
+	return bytes([STX, ord(b'S'), 0x0, 0x0, 0x0, 0x0, ETX])
 
 def brl_out(offset: int, data: List[int]) -> bytes:
-	"""send data to braille display"""
+	"""send data to braille display
+		@param offset: Must be positive.
+	"""
 	d2 = len(data)+7
 	ret = bytearray([
 		STX,
-		ord('S'),
-		offset // 256,
-		offset % 256,
-		0,
-		d2 % 256,
+		ord(b'S')
 	])
+	ret.extend(offset.to_bytes(2, "big", signed=False))
+	ret.extend(d2.to_bytes(2, "big", signed=False))
 	ret.extend(data)
 	ret.append(ETX)
 	return bytes(ret)
@@ -98,7 +97,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				else: time.sleep(0.03)
 				displaytype = brl_poll(self._dev)
 				dic = -1
-				if len(displaytype) == 10 and displaytype[0] == STX and displaytype[1] == ord('I'):
+				if len(displaytype) == 10 and displaytype[0] == STX and displaytype[1] == ord(b'I'):
 					dic = displaytype[2]
 					self._eab = (baud == 38400)
 				if(dic == -1):
@@ -182,7 +181,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"""if a button was pressed an input gesture is executed"""
 		if(self._dev!=None):
 			data = brl_poll(self._dev)
-			if len(data) == 10 and data[1] == ord('K'):
+			if len(data) == 10 and data[1] == ord(b'K'):
 				pos = data[2] * 256 + data[3]
 				pos = (pos-768)/3
 				pressed = data[6]
@@ -255,9 +254,9 @@ class InputGesture(braille.BrailleDisplayGesture):
 	
 	def __init__(
 			self,
-			keyindex: Union[int, None],
-			pressed: Union[int, None],
-			keys: Union[int, None],
+			keyindex: Optional[int],
+			pressed: Optional[int],
+			keys: Optional[int],
 			driver: BrailleDisplayDriver
 	):
 		super(InputGesture, self).__init__()

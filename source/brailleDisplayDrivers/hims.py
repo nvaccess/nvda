@@ -241,7 +241,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _sendCellCountRequest(self):
 		log.debug("Sending cell count request...")
-		self._sendPacket(b"\xfb", b"\x01", bytes(32))
+		self._sendPacket(b"\xfb", b"\x01", bytes(32)) # send 32 null bytes
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
 		log.debug("Considering sending identification requests for device %s"%str(match))
@@ -386,9 +386,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	):
 		d1Len = len(data1)
 		d2Len = len(data2)
-		packetLength = 2 + 1 + 1 + 2 + d1Len + 1 + 1 + 2 + d2Len + 1 + 4 + 1 + 2
 		# Construct the packet
-		packet = [
+		packet: List[bytes] = [
 			# Packet start
 			packetType * 2,
 			# Mode
@@ -417,11 +416,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Packet end
 			b"\xfd"*2,
 		]
-		packetB = bytearray(packet)
+		packetB = bytearray(b"".join(packet))
 		checksum: int = 0xff & sum(packetB)
 		packetB[-2] = checksum
 
+		# check that the packet is the size we expect:
+		ptLen = len(packetType)
+		assert(ptLen == 1)
+		mLen = len(mode)
+		assert(mLen == 1)
+		packetLength = ptLen*2 + mLen + 1 + 2 + d1Len + 1 + 1 + 2 + d2Len + 1 + 4 + 1 + 2
 		assert(len(packetB) == packetLength)
+
 		self._dev.write(bytes(packetB))
 
 	def terminate(self):

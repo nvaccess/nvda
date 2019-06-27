@@ -194,7 +194,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If not, we wish to know about it, allow decode to raise.
 			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in KEY_NAMES:
-			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
+			arg = sum(byte << offset * 8 for offset, byte in enumerate(arg))
 			if arg < self._keysDown.get(command, 0):
 				# Release.
 				if not self._ignoreKeyReleases:

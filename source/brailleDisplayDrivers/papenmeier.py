@@ -7,7 +7,7 @@
 #minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 
 import time
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Optional
 
 import wx
 import braille
@@ -104,7 +104,7 @@ def brl_poll(dev: serial.Serial) -> bytes:
 	if dev.inWaiting() > 3:
 		status = bytearray(dev.read(4))
 		if status[0] == STX:  # first char must be an STX
-			if status[1] in [ord('K'), ord('L')]:
+			if status[1] in [ord(b'K'), ord(b'L')]:
 				length = 2 * (((status[2] - 0x50) << 4) + status[3] - 0x50) + 1
 			else:
 				length = 6
@@ -432,7 +432,7 @@ connection could not be established"""
 
 def brl_decode_trio(keys: bytes)->List[int]:
 	"""decode routing keys on Trio"""
-	if keys[0] == ord('K'):  # KEYSTATE CHANGED EVENT on Trio, not Braille keys
+	if keys[0] == ord(b'K'):  # KEYSTATE CHANGED EVENT on Trio, not Braille keys
 		keys = keys[3:]
 		i = 0
 		j = []
@@ -526,7 +526,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 	"""Input gesture for papenmeier displays"""
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys: Union[bytes, int, None], driver: BrailleDisplayDriver):
+	def __init__(self, keys: Optional[Union[bytes, int]], driver: BrailleDisplayDriver):
 		"""create an input gesture and decode keys"""
 		super(InputGesture, self).__init__()
 		self.id=''
@@ -544,7 +544,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				keyboardHandler.injectRawKeyboardInput(press,scancode,ext)
 				return
 			#get dots
-			z = ord('0')
+			z = ord(b'0')
 			b = keys[4] - z
 			c = keys[5] - z
 			d = keys[6] - z

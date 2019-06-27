@@ -224,13 +224,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if cmd == b"K":  # Input
 			self._handleInput(group=value[0], number=value[1])
 		elif cmd == b"E":  # Braille cell count
-			assert commandLen == 1
 			self.numCells = ord(value)
 		elif cmd == b"?":  # Device ID
-			assert commandLen == 1
 			self._deviceId = ord(value)  # this command only gets one byte
 		elif cmd == b"r":  # Raw keyboard messages enable/disable
-			assert commandLen == 1
 			self._rawKeyboardInput = bool(ord(value))
 		elif cmd == b"H":  # Time
 			# Handling time for serial displays does not block initialization if it fails.
@@ -330,7 +327,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
-		timeList = [
+		timeList: List[int] = [
 			dt.year & 0xFF, dt.year >> 8,
 			dt.month,
 			dt.day,

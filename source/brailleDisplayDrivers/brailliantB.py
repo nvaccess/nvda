@@ -79,7 +79,7 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-	_dev: hwIo.IoBase
+	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
 	description = _("HumanWare Brailliant BI/B series / BrailleNote Touch")
@@ -130,10 +130,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initAttempt(self):
 		if self.isHid:
 			try:
-				data = self._dev.getFeature(HR_CAPS)
+				data: bytes = self._dev.getFeature(HR_CAPS)
 			except WindowsError:
 				return # Fail!
-			self.numCells = ord(data[24])
+			self.numCells = data[24]
 		else:
 			# This will cause the display to return the number of cells.
 			# The _serOnReceive callback will see this and set self.numCells.
@@ -151,9 +151,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _serSendMessage(self, msgId: bytes, payload: Union[bytes, int, bool] = b""):
 		if not isinstance(payload, bytes):
 			if isinstance(payload, int):
-				payload = intToByte(payload)
+				payload: bytes = intToByte(payload)
 			elif isinstance(payload, bool):
-				payload = boolToByte(payload)
+				payload: bytes = boolToByte(payload)
 			else:
 				raise TypeError("Expected arg 'payload' to be of type 'bytes, int, or bool'")
 		data = b''.join([

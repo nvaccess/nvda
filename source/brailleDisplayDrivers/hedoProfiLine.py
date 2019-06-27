@@ -82,7 +82,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 			# Prepare a blank line
 			totalCells: int = HEDO_CELL_COUNT + HEDO_CELL_COUNT
-			cells: bytes = HEDO_INIT + bytearray(totalCells)
+			cells: bytes = HEDO_INIT + bytes(totalCells)
 
 			# Send the blank line twice
 			self._ser.write(cells)
@@ -119,9 +119,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# every transmitted line consists of the preamble HEDO_INIT, the statusCells and the Cells
 
 		# add padding so total length is 1 + numberOfStatusCells + numberOfRegularCells
-		cellPadding = bytearray(HEDO_CELL_COUNT - len(cells))
-		statusPadding = bytearray(HEDO_STATUS_CELL_COUNT)
-		cellBytes: bytes = HEDO_INIT + statusPadding + bytearray(cells) + cellPadding
+		cellPadding: bytes = bytes(HEDO_CELL_COUNT - len(cells))
+		statusPadding: bytes = bytes(HEDO_STATUS_CELL_COUNT)
+		cellBytes: bytes = HEDO_INIT + statusPadding + bytes(cells) + cellPadding
 
 		self._ser.write(cellBytes)
 

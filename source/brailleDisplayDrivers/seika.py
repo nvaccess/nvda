@@ -96,34 +96,30 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.close()
 
 	def display(self, cells: List[int]):
-		cellBytes = bytes(cell for cell in cells)
 		# every transmitted line consists of the preamble SEIKA_SENDHEADER and the Cells
 		if self.numCells==80:
 			lineBytes = b"".join([
 				b"\xff\xff\x73\x38\x30\x00\x00\x00",
-				cellBytes
+				bytes(cells)
 			])
 		else:
 			lineBytes = b"".join([
 				self.s40,
 				b"\0",
-				cellBytes
+				bytes(cells)
 			])
 		self._ser.write(lineBytes)
 
 	def handleResponses(self):
 		if not self._ser.in_waiting:
 			return
-		chars = [0, 0]
 		key = 0
 		keys = set()
 		maxCellRead = self.numCells // 4  # for 80 maxCellRead is 20, for 40 cell maxCellRead is 10
-		chars[0]: int = ord(self._ser.read(1))
-		chars[1]: int = ord(self._ser.read(1))
+		chars: bytes = self._ser.read(2)
 		keytyp=1
 		if not chars[0] & 0x60: # a cursorrouting block is expected
-			char = self._ser.read(maxCellRead)
-			chars = [ord(c) for c in char]
+			chars: bytes = self._ser.read(maxCellRead)
 			keytyp=2
 		# log.info("Seika K {c}".format(c=chars))
 		if keytyp == 1: # normal key
