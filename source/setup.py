@@ -198,11 +198,13 @@ setup(
 			"serial.socket_connection",
 			# netbios (from pywin32) is optionally used by Python3's uuid module.
 			# This is not needed.
+			# We also need to exclude win32wnet explicitly.
 			"netbios",
+			"win32wnet"
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
-			],
+		],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		"includes": [
 			"nvdaBuiltin",
