@@ -188,8 +188,8 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_locationText(self):
 		return self.innerTextInfo.locationText
 
-	def copyToClipboard(self):
-		return self.innerTextInfo.copyToClipboard()
+	def copyToClipboard(self, notify=False):
+		return self.innerTextInfo.copyToClipboard(notify)
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)

@@ -490,13 +490,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
 		return convertToCrlf(self.text)
 
-	def copyToClipboard(self):
+	def copyToClipboard(self, notify=False):
 		"""Copy the content of this instance to the clipboard.
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
+		@param notify: whether to emit a confirmation message
+		@type notify: boolean
 		"""
 		import api
-		return api.copyToClip(self.clipboardText)
+		return api.copyToClip(self.clipboardText, notify)
 
 	def getTextInChunks(self, unit):
 		"""Retrieve the text of this instance in chunks of a given unit.

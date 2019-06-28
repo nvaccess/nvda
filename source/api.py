@@ -26,6 +26,7 @@ import watchdog
 import appModuleHandler
 import cursorManager
 from typing import Any
+import speech
 
 #User functions
 
@@ -292,21 +293,44 @@ def processPendingEvents(processEventQueue=True):
 	if processEventQueue:
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
-def copyToClip(text):
+
+def copyToClip(text, notify=False):
 	"""Copies the given text to the windows clipboard.
 @returns: True if it succeeds, False otherwise.
 @rtype: boolean
 @param text: the text which will be copied to the clipboard
 @type text: string
+@param notify: whether to emit a confirmation message
+@type notify: boolean
 """
 	if not isinstance(text,str) or len(text)==0:
 		return False
 	import gui
-	with winUser.openClipboard(gui.mainFrame.Handle):
-		winUser.emptyClipboard()
-		winUser.setClipboardData(winUser.CF_UNICODETEXT,text)
-	got=getClipData()
-	return got == text
+	try:
+		with winUser.openClipboard(gui.mainFrame.Handle):
+			winUser.emptyClipboard()
+			winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
+		got = getClipData()
+	except ctypes.WinError:
+		if notify:
+			# Translators: Presented when unable to copy to the clipboard
+			# because of an error.
+			ui.message(_("Unable to copy"))
+		return False
+	if got == text:
+		if notify:
+			# Translators: Announced when a text has been copied to clipboard.
+			# %s is replaced by the copied text.
+			speech.speakMessage(_("Copied to clipboard: %s" % text))
+			# Translators: Displayed in braille when a text has been copied to clipboard.
+			# %s is replaced by the copied text.
+			braille.handler.message(_("Copied: %s" % text))
+		return True
+	if notify:
+		# Translators: Presented when the clipboard content did not match what was just copied.
+		ui.message(_("Unable to copy"))
+	return False
+
 
 def getClipData():
 	"""Receives text from the windows clipboard.
