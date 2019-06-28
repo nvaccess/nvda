@@ -196,7 +196,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debugWarning("Unknown message: id {id!r}, payload {payload!r}".format(id=msgId, payload=payload))
 
 	def _hidOnReceive(self, data: bytes):
-		rId = data[0]
+		# Indexing bytes gives an int, where slicing gives a byte, so 0:1 will return a bytes of length 1
+		rId: bytes = data[0:1]
 		if rId == HR_KEYS:
 			keys = data[1:].split(b"\x00", 1)[0]
 			keys = {keyInt for keyInt in keys}

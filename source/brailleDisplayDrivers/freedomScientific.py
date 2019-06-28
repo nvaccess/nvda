@@ -208,7 +208,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						epIn=1,
 						epOut=0,
 						onReceive=self._onReceive,
-						writeSize=0,
 						onReceiveSize=56
 					)
 				else:
