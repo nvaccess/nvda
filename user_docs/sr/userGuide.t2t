@@ -1,4 +1,4 @@
-NVDA NVDA_VERSION korisničko uputstvo
+ NVDA_VERSION korisničko uputstvo
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -472,7 +472,18 @@ Iako bi trebalo koristiti fizički miš za navigaciju sa mišem, NVDA ima nekoli
 
 + Režim pretraživanja +[BrowseMode]
 Veći dokumenti koji su samo za čitanje kao što su Web stranice se pregledaju koristeći režim pretraživanja programa NVDA.
-Ovo uključuje dokumente u programima Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML poruke u Microsoft Outlook, Google Chrome, Adobe Reader i Adobe Flash.
+Ovo uključuje dokumente u sledećim aplikacijama:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML poruke u programu Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Podržane knjige u programu  Amazon Kindle za  PC
+-
 Režim pretraživanja je takođe dostupan u Microsoft Word dokumentima.
 
 U režimu pretraživanja, tekst je predstavljen jednostavnije tako da možete da se krećete standardnim komandama kursora kao da koristite standardan tekstualni dokument.
@@ -493,7 +504,7 @@ Takođe, možete ručno ući u režim fokusiranja, kada će on ostati omogućen 
 | Prebacivanje režima| NVDA+razmak | Prebacuje se između režima fokusiranja i režima pretraživanja|
 | Izlaz iz režima fokusiranja| escape | Vraća se u režim pretraživanja ako ste automatski ušli u režim fokusiranja|
 | Osvežava dokument režima pretraživanja| NVDA+f5 | Ponavlja učitavanje trenutnog dokumenta(korisno ako određen sadržaj nedostaje u dokumentu. nije dostupno u programima Microsoft Word i Outlook.) |
-| Pronađi | NVDA+control+f | Otvara dijalog u kome možete da upišete tekst koji želite da pronađete u dokumentu|
+| Pronađi | NVDA+control+f | Otvara dijalog u kome možete da upišete tekst koji želite da pronađete u dokumentu. Pogledajte sekciju [pretraga teksta #SearchingForText] za dodatne informacije. |
 | Pronađi sledeće| NVDA+f3 | Pretražuje sledeću pojavu teksta koji ste prethodno pretražili u dokumentu|
 | Pronađi prethodno | NVDA+šift+f3 | Pretražuje prethodnu pojavu teksta koju ste pronašli u dokumentu|
 | Otvara duži opis| NVDA+d | Otvara novi prozor koji sadrži duži opis elementa ako element ima duži opis. | 
@@ -550,6 +561,22 @@ Nakon što izaberete stavku, možete koristiti dva dugmeta u dijalogu da dođete
 %kc:beginInclude
 || Ime | Komanda | Opis |
 | Lista elemenata u režimu pretraživanja | NVDA+f7 | Prikazuje listu različitih vrsta elemenata u dokumentu|
+%kc:endInclude
+
+++ Pretraga teksta ++[SearchingForText]
+Ovaj dijalog vam dozvoljava da pretražujete termine u trenutnom dokumentu.
+U polje "upišite tekst koji želite da pronađete", tekst koji treba da bude pronađen se može upisati.
+Dok ste na ovom tekstualnom polju, možete takođe koristiti strelice gore i dole za izbor prethodnih tekstova.
+Izborno polje  "osetljivo na velika i mala slova" uzima u obzir veličinu slova u tekstu.
+Na primer, sa uz opciju "osetljivo na velika i mala slova" možete pronaći "NV Access" ali ne "nv access".
+Razlike u veličini slova se neće čuvati u istoriji pretrage.
+Kada se NVDA ponovo pokrene, lista prethodno pretraživanih termina se briše.
+Koristite sledeće tastere za izvršavanje pretraga:
+%kc:beginInclude
+|| Ime | Komanda | Opis |
+| Pronađi tekst| NVDA+control+f | Otvara dijalog za pretragu|
+| Pronađi sledeće | NVDA+f3 | Traži sledeće pojavljivanje trenutnog termina pretrage|
+| Pronađi prethodno | NVDA+shift+f3 | Pretražuje prethodno pojavljivanje trenutnog termina pretrage|
 %kc:endInclude
 
 ++ Umetnuti objekti ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Kada je omogućeno, NVDA će izgovoriti tekst ispod miša, dok ga pomerate po ek
 Ako je NVDA podešen da izgovori tekst ispod miša dok ga pomerate, ova opcija vam dozvoljava da izaberete koliko teksta će biti izgovoreno.
 Opcije su znak, reč, red i pasus.
 
+Kako biste menjali jedinicu rezolucije teksta bilo gde, molimo podesite prilagođenu prečicu korišćenjem dijaloga [ulazne komande#InputGestures].
+
 ==== Prijavi funkciju kada miš uđe u objekat ====[MouseSettingsRole]
 Ako je ovo izborno polje označeno, NVDA će izgovoriti funkciju(vrstu) objekta dok pomerate miš.
 
@@ -1503,7 +1532,15 @@ Ovo polje podešava za koliko redova ćete se pomeriti tasterima page up i page 
 ==== Koristi izgled ekrana  ====[BrowseModeSettingsScreenLayout]
 Komanda: NVDA+v
 
-Ova opcija kontroliše da li u režimu pretraživanja sadržaj kao što su linkovi i druga polja treba da bude u posebnom redu, ili u tekstu onako kako se vizuelno pojavljuju na ekranu. Ako je opcija omogućena sadržaj će ostati onakav kakav se vizuelno prikazuje, ali ako je onemogućena polja će biti u posebnim redovima.
+Ova opcija kontroliše da li u režimu pretraživanja sadržaj kao što su linkovi i druga polja treba da bude u posebnom redu, ili u tekstu onako kako se vizuelno pojavljuju na ekranu.
+Ako je opcija omogućena sadržaj će ostati onakav kakav se vizuelno prikazuje, ali ako je onemogućena polja će biti u posebnim redovima.
+
+==== Omogući režim pretraživanja kada se stranica učita ====[BrowseModeSettingsEnableOnPageLoad]
+Ovo izborno polje kontroliše da li će se režim pretraživanja aktivirati učitavanjem stranica.
+Kada je ova opcija onemogućena, režim pretraživanja se ručno može aktivirati na stranicama ili u dokumentima u kojima je režim pretraživanja podržan.
+Pogledajte deo [režim pretraživanja#BrowseMode] za listu aplikacija podržanih od strane režima pretraživanja.
+Napomena da se ova opcija ne primenjuje u situacijama u kojima je režim pretraživanja uvek ručno aktiviran, na primer u programu Microsoft Word.
+Ova opcija je omogućena po podrazumevanim podešavanjima.
 
 ==== Automatski Izgovori sve režim kada se učita stranica ====[BrowseModeSettingsAutoSayAll]
 Ovo izborno polje uključuje i isključuje automatsko čitanje stranice u režimu pretraživanja kada se učita.
@@ -1633,6 +1670,16 @@ Ovo uključuje sam Microsoft Word, kao i pregledač poruka i pisanje poruka u pr
 Ali, moguće je da postoje određene informacije koje ili nisu pružene, ili su neispravne u određenim verzijama aplikacije Microsoft Office, što znači da se na ovu UI automation podršku ne može uvek u potpunosti osloniti.
 I dalje ne preporučujemo većini korisnika da ovo uključe, ali preporučujemo korisnicima aplikacije Office 2016/365 da testiraju ovu opciju i pruže dodatne informacije.
 
+==== Automatski postavi sistemski fokus na elemente koji se mogu fokusirati u režimu pretraživanja ====[BrowseModeSettingsAutoFocusFocusableElements]
+Komanda: NVDA+8
+
+Omogućena po podrazumevanim podešavanjima, ova opcija vam omogućava da izaberete da li će sistemski fokus automatski biti postavljen na elemente koji se mogu fokusirati (linkovi, polja za unos, i tako dalje.) u toku navigacije kroz sadržaj kursorom režima pretraživanja.
+Ako je omogućena, predstavlja podrazumevano ponašanje  programa NVDA od verzije 2019.1 i starijim.
+Onemogućavanje ove opcije neće automatski fokusirati ove elemente kada su izabrani kursorom režima pretraživanja.
+Ovo može izazvati brže pretraživanje i bolje iskustvo korišćenja režima pretraživanja.
+Fokus će ipak biti ažuriran kada se vrši interakcija sa elementom  (na primer aktiviranje dugmeta, označavanje izbornog polja).
+Ova funkcija je eksperimentalna od  NVDA 2019.2.
+
 ==== Vreme pomeranja kursora (u milisekundama) ====[AdvancedSettingsCaretMoveTimeout]
 Ova opcija vam dozvoljava da podesite vreme za koje će NVDA čekati na kursor  da se pomeri u kontrolama za uređivanje teksta.
 Ako primetite da NVDA neispravno prati kursor, na primer često je iza jednog znaka ili se redovi ponavljaju, možda će pomoći povećanje ove vrednosti.
@@ -1684,6 +1731,7 @@ Ovaj dijalog vam dozvoljava da promenite način na koji se znakovi interpunkcije
 
 Jezik na kome uređujete simbole će biti prikazan u naslovu dijaloga.
 Napomena da ovaj dijalog poštuje opciju"Koristi jezik glasa za izgovor znakova" koja se nalazi u[kategoriji govor #SpeechSettings] [dijaloga NVDA podešavanja #NVDASettings]; to jest koristi jezik glasa umesto jezika programa NVDA kada je ova opcija omogućena.
+Možete filtrirati simbole unosom simbola ili zamene za simbol u polje izdvoji po.
 
 Da promenite znak, prvo ga izaberite u listi simbola.
 
@@ -1751,7 +1799,7 @@ NVDA вам дозволјава да урадите ово користећи �
 Профил подешаванја садржи само она подешаванја која се менјају док је профил активан.
 Већина подешаванја се може променити у профилима подешаванја осим оних у kategoriji  општих подешаванја dijaloga [NVDA podešavanja #NVDASettings], која су применјена кроз цео НВДА.
 
-Профили подешаванја могу бити ручно активирани.
+Профили подешаванја могу бити ручно активирани iz dijaloga ili korišćenjem prilagođenih prečica.
 Они такође могу бити активирани користећи активаторе као што су прелазак на одређену апликацију.
 
 +++ Основно управлјанје +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Na primer, možda želite da uredite vaša standardna podešavanja bez aktivacij
 Ovo možete da uradite tako štoćete označiti izborno polje privremeno onemogući sve aktivatore u dijalogu profila podešavanja.
 
 Da biste uključili ili isključili aktivatore bilo gde da se nalazite, molimo podesite prilagođenu komandu korišćenjem [dijaloga ulazne komande#InputGestures].
+
++++ Aktiviranje profila korišćenjem ulaznih komandi +++[ConfigProfileGestures]
+Za svaki profil koji dodate, možete podesiti jednu ili više prečica kako biste ga aktivirali.
+Po podrazumevanim podešavanjima, profili podešavanja nemaju podešene prečice.
+Možete dodoati prečice za aktivaciju profila korišćenjem  [dijaloga ulazne komande #InputGestures].
+Svaki profil ima svoju stavku u kategoriji profili podešavanja.
+Kada promenite ime profila, sve prečice koje ste prethodno dodali će ostati dostupne.
+Uklanjanje profila će automatski obrisati prečice za taj profil.
 
 ++ Lokacija datoteka podešavanja ++[LocationOfConfigurationFiles]
 Prenosive kopije čuvaju sva podešavanja, sve prilagođene dodatke za aplikacije i drajvere u folderu userConfig, koji se nalazi u NVDA folderu.
@@ -1999,13 +2055,11 @@ Svi Focus i PAC Mate redovi firme[Freedom Scientific https://www.freedomscientif
 Morate instalirati drajvere za freedom scientific brajeve redove.
 Ako ih još uvek nemate, možete ih preuzeti sa adrese https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Iako se na ovoj stranici govori o focus blue brajevim redovima, drajveri podržavaju sve focus i Pac mate brajeve redove.
-Ako koristite 64 bitni sistem windows i neki drugi čitač ekrana je instalirao svoj drajver, možda ćete još uvek morati da instalirate drajvere sa ovog linka, jer neke datoteke, koje NVDA zahteva, možda nisu instalirane u sistemu kada su ti određeni drajveri instalirani.
 
 Po podrazumevanim podešavanjima, NVDA može automatski prepoznati i uspostaviti vezu sa ovim brajevim redovima ili preko USB ili preko bluetooth-a.
 Međutim, Kada se brajev red povezuje na računar, možete odrediti povezivanje preko "USB-a" ili "Bluetooth-a" da biste ograničili tip veze koji će se koristiti.
 Ovo može biti korisno ako želite koristiti brajev red povezan bluetoot vezom, ali ga još uvek želite puniti preko USB priključka vašeg računara.
-
-Ovi redovi još ne podržavaju automatsko prepoznavanje programa NVDA.
+Automatsko prepoznavanje brajevih redova programa NVDA će prepoznati ove redove putem USB ili Bluetooth veze.
 
 Sledeća lista prikazuje sve dostupne dodeljene prečice za NVDA.
 Molimo pogledajte dokumentaciju za više informacija o opisu tastera i o tome gde se nalaze.

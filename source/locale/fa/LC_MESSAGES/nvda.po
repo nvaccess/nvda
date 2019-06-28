@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 00:10+1000\n"
-"PO-Revision-Date: 2019-05-27 17:47+0330\n"
+"POT-Creation-Date: 2019-05-31 00:10+1000\n"
+"PO-Revision-Date: 2019-05-31 03:40+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -98,7 +98,7 @@ msgstr "خطای املایی: {text}"
 #. {text} will be replaced with the text of the spelling error.
 #, python-brace-format
 msgid "grammar: {text}"
-msgstr "خطای گرامری: {text}"
+msgstr "خطای دستوری: {text}"
 
 #. Translators: shown when an addon API version string is unknown
 #. Translators: The word for an unknown control type.
@@ -3931,7 +3931,7 @@ msgstr "اعلامِ اطلاعات را هنگامِ حرکتِ موس فعال
 #. For example, the full message might be "Mouse text unit resolution character"
 #, python-format
 msgid "Mouse text unit resolution %s"
-msgstr "تحلیلِ واحدِ متنیِ موس %s"
+msgstr "دقتِ واحدِ متنیِ موس %s"
 
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 msgid "Toggles how much text will be spoken when the mouse moves"
@@ -4498,8 +4498,7 @@ msgstr "محتوای پیمایشگرِ جاری را با OCRِ ویندوز ۱
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-msgid ""
-"Can't change the active configuration profile while an NVDA dialog is open"
+msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
 "نمیتوانم در حالی که پنجره‌ای از NVDA باز است، گروهِ پیکره‌بَندیِ فعال را تغییر "
 "بدهم."
@@ -4507,14 +4506,14 @@ msgstr ""
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually deactivated"
-msgstr "گروهِ پیکره‌بَندیِ {profile} دستی غیرفعال شد"
+msgid "{profile} profile deactivated"
+msgstr "گروهِ پیکره‌بَندیِ {profile} غیرفعال شد"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually activated"
-msgstr "گروهِ پیکره‌بَندیِ {profile} دستی فعال شد"
+msgid "{profile} profile activated"
+msgstr "گروهِ پیکره‌بَندیِ {profile} فعال شد"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -6879,7 +6878,7 @@ msgstr "نمایش دادن"
 
 #. Translators: Input help mode message for the 'read documentation script
 msgid "Tries to read documentation for the selected autocompletion item."
-msgstr "تلاش میکند راهنمای موردِ کامل‌کننده‌ی خودکار را بخواند."
+msgstr "تلاش میکند راهنمای موردِ تکمیلِ خودکارِ انتخاب‌شده را بخواند."
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
@@ -7483,7 +7482,8 @@ msgstr "تعویضِ حالتِ شبیه‌سازیِ صفحه‌کلیدِ HID"
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "سِریِ‍‍ Freedom Scientific Focus/PAC Mate"
 
-#. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+#. Translators: The name of a key on a braille display, that scrolls the display
+#. to show previous/next part of a long line.
 msgid "display scroll"
 msgstr "مرورِ صفحه‌ی نمایش"
 
@@ -8951,7 +8951,7 @@ msgstr "فعالسازیِ &دنبال کردنِ موس"
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
 msgid "Text &unit resolution:"
-msgstr "تحلیلِ &واحدِ متن"
+msgstr "دقتِ &واحدِ متن"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -9120,7 +9120,7 @@ msgstr "استفاده از &چیدمانِ صفحه (هرگاه پشتیبان�
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
 msgid "&Enable browse mode on page load"
-msgstr "&فعال کردنِ حالتِ مرور هنگامِ بارگزاریِ صفحه"
+msgstr "&فعال کردنِ حالتِ مرور در بارگذاریِ صفحه"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.

@@ -480,7 +480,18 @@ Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet geb
 
 + Bladermodus +[BrowseMode]
 In NVDA worden complexe alleen-lezen documenten zoals een webpagina weergegeven in bladermodus.
-Het gaat om documenten in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-berichten in Microsoft Outlook, Google Chrome, Adobe Reader en Adobe Flash.
+Het gaat om documenten van de volgende toepassingen:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML-meldingen in Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- ondersteunde boeken in Amazon Kindle voor PC
+-
 Bladermodus is ook optioneel beschikbaar voor Microsoft Word-documenten.
 
 In bladermodus wordt de inhoud van het document weergegeven als platte tekst waar u met de pijltoetsen doorheen kunt lopen alsof het een tekstdocument is.
@@ -501,7 +512,7 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 | Van modus wisselen | NVDA+spatiebalk | Wisselen tussen blader en focusmodus |
 | Focusmodus verlaten | escape | Naar de bladermodus teruggaan vanuit de automatisch ingeschakelde focusmodus |
 | Document vernieuwen | NVDA+f5 | Het document wordt opnieuw geladen (nuttig als er iets lijkt te ontbreken op de pagina. Niet beschikbaar in Microsoft Word en Outlook.) |
-| Zoeken | NVDA+control+f | Er wordt een venster geopend waarin u tekst kunt typen die in het huidige document moet worden opgezocht |
+| Zoeken | NVDA+control+f | Er wordt een venster geopend waarin u tekst kunt typen die in het huidige document moet worden opgezocht. Zie voor meer informatie, [zoeken naar tekst #SearchingForText]. |
 | Volgende zoeken | NVDA+f3 | Hiermee kunt u nagaan of tekst van een zoekopdracht verderop in het document nog vaker voorkomt. |
 | Vorige zoeken | NVDA+shift+f3 | Hiermee kunt u nagaan of de gezochte tekst eerder in het document voorkomt |
 | Uitgebreide beschrijving openen | NVDA+d | Er wordt een nieuw venster geopend met een uitgebreide beschrijving, voor zover aanwezig, van het element waarop u zich bevindt. |
@@ -558,6 +569,23 @@ Als u uw keuze eenmaal gemaakt hebt, kunt u met de aanwezige knoppen in het dial
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
 | Lijst met elementen | NVDA+f7 | Hiermee roept u de lijst met de verschillende elementtypes op die zich in het huidige document bevinden. |
+%kc:endInclude
+
+++ Naar tekst zoeken ++[SearchingForText]
+Door middel van dit dialoogvenster  kunt u naar termen zoeken in het huidige document.
+In het vak  "Typ de tekst waarnaar u wilt zoeken', kunt u de desbetreffende tekst invoeren.
+Wanneer u zich in het tekstinvoerveld bevindt, kunt u PijlOmhoog / PijlOmlaag gebruiken om eerder opgezochte termen te  selecteren.
+Door het selectievakje voor hoofdlettergevoeligheid in te schakelen zorgt u ervoor dat er onderscheid wordt gemaakt tussen hoofdletters en kleine letters bij het zoeken.
+Als dit selectievakje is ingeschakeld, zult u bijv. wel "NV Access" vinden maar vindt u "nv access" niet.
+Onderscheid tussen kleine letters en hoofdletters blijft niet bewaard in de zoekgeschiedenis.
+Wanneer NVDA opnieuw wordt gestart, wordt de lijst met termen die eerder werden gezocht gewist.
+
+Gebruik de volgende toetsen  voor zoekopdrachten:
+%kc:beginInclude
+|| Naam | Toets | Beschrijving |
+| tekst zoeken | NVDA+control+f | Zoekvenster wordt geopend |
+| Volgende zoeken | NVDA+f3 | Hiermee gaat u naar de volgende vindplaats van de huidige zoekterm. |
+| Vorige zoeken | NVDA+shift+f3 | Hiermee gaat u naar de vorige vindplaats van de huidige zoekterm.  |
 %kc:endInclude
 
 ++ Ingebedde objecten ++[ImbeddedObjects]
@@ -1359,6 +1387,8 @@ Door het selectievakje in te schakelen wordt de tekst gelezen die zich onder de 
 Als u ervoor gekozen hebt om de tekst onder de muis te laten uitspreken, kunt u hier instellen hoeveel tekst moet worden uitgesproken.
 U hebt de keuze uit karakter, woord, regel en alinea.
 
+Om op een willekeurige plek te wisselen van resolutieniveau   moet u een aangepaste invoerhandeling toekennen via het dialoogvenster Invoerhandelingen#InputGestures].
+
 ==== Rol melden als de muis binnen een object komt ====[MouseSettingsRole]
 Als dit selectievakje is ingeschakeld, zal NVDA de rol (van het type object weergeven bij verplaatsing van de muis binnen het object.
 
@@ -1513,7 +1543,15 @@ Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hi
 ==== Schermlay-out gebruiken ====[BrowseModeSettingsScreenLayout]
 Toets: NVDA+v
 
-Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
+Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. 
+Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
+
+==== Bladermodus inschakelen bij laden van pagina ====[BrowseModeSettingsEnableOnPageLoad]
+Met dit selectievakje kunt u bepalen of bladermodus automatisch wordt ingeschakeld bij het laden van een pagina.
+Als het selectievakje niet wordt aangevinkt,  kan bladermodus altijd nog handmatig worden geactiveerd op pagina's of in documenten die bladermodus ondersteunen.
+Raadpleeg de paragraaf [Bladermodus#BrowseMode] voor een lijst van applicaties die door bladermodus ondersteund worden.
+Merk op dat deze optie niet van toepassing is in situaties waar bladermodus altijd optioneel is, zoals in Microsoft Word.
+Deze optie staat standaard ingeschakeld.
 
 ==== Automatisch lezen zodra pagina geladen is ====[BrowseModeSettingsAutoSayAll]
 Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
@@ -1643,6 +1681,16 @@ Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10
 Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
 Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Office 2016/365 de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
 
+==== Systeemfocus automatisch instellen op focusgevoelige elementen in de Bladermodus ====[BrowseModeSettingsAutoFocusFocusableElements]
+Toets: NVDA+8
+
+Met deze optie, die standaard ingeschakeld staat, kunt u bepalen of de systeemfocus automatisch moet worden ingesteld op elementen die de systeemfocus kunnen krijgen (links, formuliervelden, etc.) wanneer u door de inhoud navigeert met de bladermoduscursor.
+Voor versie 2019.1 en eerder van NVDA geldt dit als het standaardgedrag indien de optie ingeschakeld is.
+Als deze optie uitgeschakeld is, krijgen focusgevoelige elementen niet automatisch de focus wanneer ze worden geselecteerd met de bladermoduscursor.
+Zo krijgt u mogelijk een snellere browse-ervaring en een betere reactiegevoeligheid in de bladermodus.
+De focus wordt even goed gericht op het specifieke element zodra er sprake is van interactie(bijvoorbeeld bij het indrukken van een knop, het aanvinken van een selectievakje.
+Deze functionaliteit is experimenteel vanaf NVDA 2019.2.
+
 ==== Reactievertraging invoercursor(in MS) ====[AdvancedSettingsCaretMoveTimeout]
 Met deze optie kunt u het aantal miliseconden instellen dat NVDA wacht voordat de invoercursor beschikbaar is voor het invoeren / bewerken van tekst.
 Als u ervaart dat NVDA de invoercursor niet juist lijkt te volgen, hij loopt bijv. altijd 1 teken achter of herhaalt steeds regels dan kunt u eens proberen deze waarde te verhogen.
@@ -1695,6 +1743,7 @@ Merk op dat voor de verwerking van symbolen en karakters in dit dialoogvenster w
 Dit houdt in dat, wanneer deze optie is ingeschakeld, de stemtaal wordt gebruikt in plaats van de algemene taalinstelling van NVDA.
 
 Selecteer eerst een symbool uit de symbolenlijst als u een symbool wilt aanpassen.
+U kunt de symbolen filteren door het symbool of een deel van de vervanging van het symbool in te voeren  in het vak bewerken op Filter.
 
 - In het veld "Vervangen door" kunt u de aangepaste tekst invoeren die uitgesproken moet
 worden in plaats van dit symbool.
@@ -1762,7 +1811,7 @@ Dit kunt u in NVDA doen met behulp van configuratieprofielen.
 Een configuratieprofiel bevat uitsluitend de instellingen die gewijzigd worden bij het bewerken van het profiel.
 De meeste instellingen kunnen in een configuratieprofiel worden aangepast behalve waar het gaat om instellingen die gelden voor NVDA in zijn geheel. Deze vindt u in de categorie Algemeen van het dialoogvenster [Instellingen van NVDA #NVDASettings].
 
-U kunt Configuratieprofielen handmatig activeren.
+U kunt Configuratieprofielen handmatig activeren, hetzij via een dialoog dan wel door persoonlijke, toegevoegde invoerhandelingen.
 Ze kunnen ook automatisch geactiveerd "worden met behulp van een zogenaamde "trigger". Het overschakelen naar een applicatie, bij voorbeeld, kan de "trigger" zijn die een bepaald configuratieprofiel activeert.
 
 +++ Basisbeheer +++[ProfilesBasicManagement]
@@ -1828,6 +1877,14 @@ U wilt bij voorbeeld een handmatig geactiveerd profiel of de normale configurati
 Dit kunt u doen door een vinkje te zetten in het selectievakje bij "Alle triggers tijdelijk uitschakelen" in het dialoogvenster Configuratieprofielen.
 
 Om vanaf een willekeurige plaats Triggers in of uit te schakelen wijst u een aangepaste invoerhandeling toe met behulp van het dialoogvenster [Invoerhandelingen #InputGestures].
+
++++ Een profiel activeren met behulp van invoerhandelingen +++[ConfigProfileGestures]
+Aan elk profiel dat u toevoegt, kunt u een of meer invoerhandelingen toekennen om het te  activeren.
+Standaard zijn aan configuratieprofielen geen invoerhandelingen toegekend.
+U kunt  handelingen toevoegen om een profiel te activeren  met behulp van het dialoogvenster Invoerhandelingen #InputGestures].
+Elk profiel heeft een eigen aanduiding in de categorie configuratieprofielen.
+Wanneer  u een  profiel hernoemt, blijven alle handelingen die u eerder bewerkte beschikbaar.
+Met het verwijderen van een profiel worden de daaraan verbonden handelingen ook verwijderd.
 
 ++ De Locatie van Configuratiebestanden ++[LocationOfConfigurationFiles]
 Als u een draagbare versie van NVDA hebt, worden alle instellingen en add-ons opgeslagen in een sub-map genaamd user config. Deze map bevindt zich in de NVDA hoofdmap.
@@ -2015,7 +2072,7 @@ De standaardinstelling is dat NVDA automatisch deze leesregels detecteert en via
 U kunt evenwel bij het configureren van de leesregel expliciet kiezen voor een "USB-" of "Bluetooth-poort" waarmee het te gebruiken verbindingstype wordt beperkt.
 Dit kan handig zijn als u de Focus leesregel met NVDA wilt verbinden via bluetooth en hem tegelijkertijd wilt opladen via de usb-aansluiting op uw computer.
 
-Deze leesregels hebben nog geen ondersteuning voor automatische herkenning in NVDA.
+De automatische  brailleleesregeldetectie van NVDA herkent de leesregel ook op basis van USB of Bluetooth.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)

@@ -13,6 +13,7 @@ What's New in NVDA
 == changes ==
 - Updated eSpeak-NG to commit 86e67a.
 - Updated liblouis braille translator to version 3.10.0. (#9678)
+- NVDA will now report the word 'selected' after saying what is selected. (#9028)
 
 
 == Bug Fixes ==
@@ -22,9 +23,12 @@ What's New in NVDA
 
 == Changes for Developers ==
 - Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
-
-
-= 2019.2 =
+- The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)
+- The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)
+ - Note that this shadows the gettext translation function also called "_". To access the translation function: del _
+ 
+ 
+ = 2019.2 =
 Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
 == New Features ==
@@ -78,6 +82,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 - The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 - When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
+- HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)
 
 
 == Changes for Developers ==

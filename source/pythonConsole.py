@@ -76,25 +76,13 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	def __init__(self, outputFunc, setPromptFunc, exitFunc, echoFunc=None, **kwargs):
 		self._output = outputFunc
 		self._echo = echoFunc
+		self._exit = exitFunc
 		self._setPrompt = setPromptFunc
 
 		#: The namespace available to the console. This can be updated externally.
 		#: @type: dict
-		# Populate with useful modules.
-		exitCmd = ExitConsoleCommand(exitFunc)
-		self.namespace = {
-			"help": HelpCommand(),
-			"exit": exitCmd,
-			"quit": exitCmd,
-			"sys": sys,
-			"os": os,
-			"wx": wx,
-			"log": log,
-			"api": api,
-			"queueHandler": queueHandler,
-			"speech": speech,
-			"braille": braille,
-		}
+		self.namespace = {}
+		self.initNamespace()
 		#: The variables last added to the namespace containing a snapshot of NVDA's state.
 		#: @type: dict
 		self._namespaceSnapshotVars = None
@@ -102,6 +90,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		# Can't use super here because stupid code.InteractiveConsole doesn't sub-class object. Grrr!
 		code.InteractiveConsole.__init__(self, locals=self.namespace, **kwargs)
 		self.prompt = ">>>"
+		self.lastResult = None
 
 	def _set_prompt(self, prompt):
 		self._prompt = prompt
@@ -121,11 +110,46 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		sys.stdout = sys.stderr = self
 		# Prevent this from messing with the gettext "_" builtin.
 		saved_ = __builtin__._
+		self.lastResult = None
 		more = code.InteractiveConsole.push(self, line)
 		sys.stdout, sys.stderr = stdout, stderr
+		if __builtin__._ is not saved_:
+			self.lastResult = __builtin__._
+			# Preserve the namespace if gettext has explicitly been pushed there 
+			if "_" not in self.namespace or self.namespace["_"] is not saved_:
+				self.namespace["_"] = __builtin__._
 		__builtin__._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
+
+	def initNamespace(self):
+		"""(Re-)Initialize the console namespace with useful globals.
+		"""
+		exitCmd = ExitConsoleCommand(self._exit)
+		import appModules
+		import config
+		import controlTypes
+		import globalPlugins
+		import textInfos
+		self.namespace.clear()
+		self.namespace.update({
+			"help": HelpCommand(),
+			"exit": exitCmd,
+			"quit": exitCmd,
+			"os": os,
+			"sys": sys,
+			"wx": wx,
+			"api": api,
+			"appModules": appModules,
+			"braille": braille,
+			"config": config,
+			"controlTypes": controlTypes,
+			"globalPlugins": globalPlugins,
+			"log": log,
+			"queueHandler": queueHandler,
+			"speech": speech,
+			"textInfos": textInfos,
+		})
 
 	def updateNamespaceSnapshotVars(self):
 		"""Update the console namespace with a snapshot of NVDA's current state.
