@@ -24,7 +24,9 @@ import inspect
 import threading
 import time
 import pickle
-import urllib
+# #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
+import urllib.request
+import urllib.parse
 import tempfile
 import hashlib
 import ctypes.wintypes
@@ -119,23 +121,24 @@ def checkForUpdate(auto=False):
 			"outputBrailleTable":config.conf['braille']['translationTable'] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
+	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
 	try:
-		res = urllib.urlopen(url)
+		res = urllib.request.urlopen(url)
 	except IOError as e:
 		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
-			res = urllib.urlopen(url)
+			res = urllib.request.urlopen(url)
 		else:
 			raise
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
 	for line in res:
-		line = line.rstrip()
+		# #9819: update description resource returns bytes, so make it Unicode.
+		line = line.decode("utf-8").rstrip()
 		try:
 			key, val = line.split(": ", 1)
 		except ValueError:
@@ -610,13 +613,12 @@ class UpdateDownloader(object):
 		self._guiExec(self._downloadSuccess)
 
 	def _download(self, url):
-		remote = urllib.urlopen(url)
-		if remote.code != 200:
-			raise RuntimeError("Download failed with code %d" % remote.code)
 		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
 		# cause huge read delays while downloading.
 		# Therefore, set a higher timeout.
-		remote.fp._sock.settimeout(120)
+		remote = urllib.request.urlopen(url, timeout=120)
+		if remote.code != 200:
+			raise RuntimeError("Download failed with code %d" % remote.code)
 		size = int(remote.headers["content-length"])
 		with open(self.destPath, "wb") as local:
 			if self.fileHash:
@@ -807,7 +809,7 @@ def _updateWindowsRootCertificates():
 	crypt = ctypes.windll.crypt32
 	# Get the server certificate.
 	sslCont = ssl._create_unverified_context()
-	u = urllib.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
+	u = urllib.request.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
 	cert = u.fp._sock.getpeercert(True)
 	u.close()
 	# Convert to a form usable by Windows.

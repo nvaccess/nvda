@@ -36,12 +36,12 @@ class GUID(ctypes.Structure):
 		('Data4', ctypes.c_ubyte*8),
 	)
 	def __str__(self):
-		return "{%08x-%04x-%04x-%s-%s}" % (
+		return u"{%08x-%04x-%04x-%s-%s}" % (
 			self.Data1,
 			self.Data2,
 			self.Data3,
-			''.join(["%02x" % d for d in self.Data4[:2]]),
-			''.join(["%02x" % d for d in self.Data4[2:]]),
+			u''.join([u"%02x" % d for d in self.Data4[:2]]),
+			u''.join([u"%02x" % d for d in self.Data4[2:]]),
 		)
 
 class SP_DEVINFO_DATA(ctypes.Structure):
@@ -70,7 +70,7 @@ PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
 PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
 
 class dummy(ctypes.Structure):
-	_fields_=(("d1", DWORD), ("d2", WCHAR))
+	_fields_=((u"d1", DWORD), (u"d2", WCHAR))
 	_pack_ = 1
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
