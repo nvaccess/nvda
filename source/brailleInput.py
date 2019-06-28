@@ -475,7 +475,6 @@ class BrailleInputGesture(inputCore.InputGesture):
 
 	@classmethod
 	def _makeDisplayText(cls, dots, space):
-		out = ""
 		if space and dots:
 			# Translators: Reported when braille space is pressed with dots in input help mode.
 			out = _("space with dot")
@@ -496,7 +495,6 @@ class BrailleInputGesture(inputCore.InputGesture):
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
-		assert isinstance(identifier, str)
 		# Translators: Used when describing keys on a braille keyboard.
 		source = _("braille keyboard")
 		if identifier == cls.GENERIC_ID_SPACE_DOTS:
