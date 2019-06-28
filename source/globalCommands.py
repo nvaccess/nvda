@@ -1540,6 +1540,42 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
 	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
 
+	@script(
+		# Translators: Input help mode message for a command to delimit then
+		# copy a fragment of the log to clipboard
+		description=_(
+			"Mark the current end of the log as the start of the fragment to be"
+			" copied to clipboard by pressing again."
+		),
+		category=SCRCAT_TOOLS,
+		gesture="kb:NVDA+control+shift+f1"
+	)
+	def script_log_markStartThenCopy(self, gesture):
+		if globalVars.appArgs.secure:
+			return
+		if log.fragmentStart is None:
+			if log.markFragmentStart():
+				# Translators: Message when marking the start of a fragment of the log file for later copy
+				# to clipboard
+				ui.message(_("Log fragment start position marked, press again to copy to clipboard"))
+			else:
+				# Translators: Message when failed to mark the start of a
+				# fragment of the log file for later copy to clipboard
+				ui.message(_("Unable to mark log position"))
+			return
+		text = log.getFragment()
+		if not text:
+			# Translators: Message when attempting to copy an empty fragment of the log file
+			ui.message(_("No new log entry to copy"))
+			return
+		if api.copyToClip(text):
+			# Translators: Message when a fragment of the log file has been
+			# copied to clipboard
+			ui.message(_("Log fragment copied to clipboard"))
+		else:
+			# Translators: Presented when unable to copy to the clipboard because of an error.
+			ui.message(_("Unable to copy"))
+
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
 		if outputMode=="both":
