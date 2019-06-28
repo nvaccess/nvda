@@ -1,8 +1,10 @@
 #winKernel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
 import contextlib
 import ctypes
