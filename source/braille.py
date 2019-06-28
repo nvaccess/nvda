@@ -5,9 +5,10 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2018 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau
 
-import sys
 import itertools
 import os
+from typing import Iterable, Union, Tuple, List, Optional
+
 import driverHandler
 import pkgutil
 import importlib
@@ -325,12 +326,11 @@ def _getDisplayDriver(moduleName, caseSensitive=True):
 		else:
 			raise initialException
 
-def getDisplayList(excludeNegativeChecks=True):
+def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
 	@return: list of tuples with driver names and descriptions.
-	@rtype: [(str,unicode)]
 	"""
 	displayList = []
 	# The display that should be placed at the end of the list.
@@ -810,7 +810,7 @@ class TextInfoRegion(Region):
 		# When true, we are inside a clickable field, and should therefore not report any more new clickable fields
 		inClickable=False
 		for command in info.getTextWithFields(formatConfig=formatConfig):
-			if isinstance(command, basestring):
+			if isinstance(command, str):
 				# Text should break a run of clickables
 				inClickable=False
 				self._isFormatFieldAtStart = False
@@ -1520,14 +1520,12 @@ def getFocusRegions(obj, review=False):
 		region2.update()
 		yield region2
 
-def formatCellsForLog(cells):
+def formatCellsForLog(cells: List[int]) -> str:
 	"""Formats a sequence of braille cells so that it is suitable for logging.
 	The output contains the dot numbers for each cell, with each cell separated by a space.
 	A C{-} indicates an empty cell.
 	@param cells: The cells to format.
-	@type cells: sequence of int
 	@return: The formatted cells.
-	@rtype: str
 	"""
 	# optimisation: This gets called a lot, so needs to be as efficient as possible.
 	# List comprehensions without function calls are faster than loops.
@@ -1553,7 +1551,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def __init__(self):
 		louisHelper.initialize()
-		self.display = None
+		self.display: Optional[BrailleDisplayDriver] = None
 		self.displaySize = 0
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
@@ -2109,6 +2107,8 @@ RENAMED_DRIVERS = {
 	"alvaBC6":"alva"
 }
 
+handler: BrailleHandler
+
 def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
@@ -2269,7 +2269,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		return ports
 
 	@classmethod
-	def _getAutoPorts(cls, usb=True, bluetooth=True):
+	def _getAutoPorts(cls, usb=True, bluetooth=True) -> Iterable[bdDetect.DeviceMatch]:
 		"""Returns possible ports to connect to using L{bdDetect} automatic detection data.
 		@param usb: Whether to search for USB devices.
 		@type usb: bool
@@ -2291,27 +2291,26 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			pass
 
 	@classmethod
-	def getManualPorts(cls):
+	def getManualPorts(cls) -> Iterable[str]:
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
 		@return: The name and description for each port.
-		@rtype: iterable of basestring, basestring
 		"""
 		raise NotImplementedError
 
 	@classmethod
-	def _getTryPorts(cls, port):
+	def _getTryPorts(
+			cls, port: Union[str, bdDetect.DeviceMatch]
+	) -> Iterable[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
 		@param port: the port to connect to.
-		@type port: one of basestring or L{bdDetect.DeviceMatch}
-		@return: The name and description for each port.
-		@rtype: iterable of basestring, basestring
+		@return: The name and description for each port
 		"""
 		if isinstance(port, bdDetect.DeviceMatch):
 			yield port
-		elif isinstance(port, basestring):
+		elif isinstance(port, str):
 			isUsb = port in (AUTOMATIC_PORT[0], USB_PORT[0])
 			isBluetooth = port in (AUTOMATIC_PORT[0], BLUETOOTH_PORT[0])
 			if not isUsb and not isBluetooth:

@@ -16,6 +16,8 @@ For drivers in add-ons, this must be done in a global plugin.
 import itertools
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
+from typing import Iterable
+
 import wx
 import hwPortUtils
 import braille
@@ -40,9 +42,9 @@ class DeviceMatch(
 ):
 	"""Represents a detected device.
 	@ivar id: The identifier of the device.
-	@type id: unicode
+	@type id: str
 	@ivar port: The port that can be used by a driver to communicate with a device.
-	@type port: unicode
+	@type port: str
 	@ivar deviceInfo: all known information about a device.
 	@type deviceInfo: dict
 	"""
@@ -86,7 +88,7 @@ def addUsbDevices(driver, type, ids):
 	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
 		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
-			% (driver, type, ", ".join(wrongIds)))
+			% (driver, type, u", ".join(malformedIds)))
 	devs = _getDriver(driver)
 	driverUsb = devs[type]
 	driverUsb.update(ids)
@@ -315,12 +317,11 @@ class Detector(object):
 		core.post_windowMessageReceipt.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 
-def getConnectedUsbDevicesForDriver(driver):
+def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any connected USB devices associated with a particular driver.
 	@param driver: The name of the driver.
 	@type driver: str
 	@return: Device information for each device.
-	@rtype: generator of L{DeviceMatch}
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	devs = _driverDevices[driver]
@@ -337,12 +338,11 @@ def getConnectedUsbDevicesForDriver(driver):
 			if match.type==type and match.id in ids:
 				yield match
 
-def getPossibleBluetoothDevicesForDriver(driver):
+def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
 	@param driver: The name of the driver.
 	@type driver: str
 	@return: Port information for each port.
-	@rtype: generator of L{DeviceMatch}
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	matchFunc = _driverDevices[driver][KEY_BLUETOOTH]
