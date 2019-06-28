@@ -522,8 +522,8 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 		try:
 			# #9825: behavior of os.rename(s) has changed in Python 3.
 			# See https://bugs.python.org/issue28356.
-			# Therefore use kernel32::MoveFileEx with write-through (0x8) and copy allowed (0x2) flags set.
-			winKernel.kernel32.MoveFileExW(self.destPath, finalDest, 0xa)
+			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+			winKernel.kernel32.MoveFileExW(self.destPath, finalDest, 0x2)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
 			gui.messageBox(
