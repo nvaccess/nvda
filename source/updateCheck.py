@@ -137,7 +137,8 @@ def checkForUpdate(auto=False):
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
 	for line in res:
-		line = line.rstrip()
+		# #9819: update description resource returns bytes, so make it Unicode.
+		line = line.decode("utf-8").rstrip()
 		try:
 			key, val = line.split(": ", 1)
 		except ValueError:
