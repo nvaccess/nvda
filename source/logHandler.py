@@ -94,11 +94,15 @@ def getCodePath(f):
 	return ".".join(x for x in (path,className,funcName) if x)
 
 # Function to strip the base path of our code from traceback text to improve readability.
-BASE_PATH = os.path.split(__file__)[0] + os.sep
-TB_BASE_PATH_PREFIX = '  File "'
-TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
-def stripBasePathFromTracebackText(text):
-	return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
+if getattr(sys, "frozen", None):
+	# We're running a py2exe build.
+	stripBasePathFromTracebackText = lambda text: text
+else:
+	BASE_PATH = os.path.split(__file__)[0] + os.sep
+	TB_BASE_PATH_PREFIX = '  File "'
+	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
+	def stripBasePathFromTracebackText(text):
+		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
 
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
