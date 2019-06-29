@@ -394,7 +394,7 @@ class JABContext(object):
 		# Use a string buffer, as from an unicode buffer, we can't get the raw data.
 		buf = create_string_buffer((length +1) * 2)
 		bridgeDll.getAccessibleTextRange(self.vmID, self.accContext, start, end, buf, length)
-		return textUtils.getTextFromStringBuffer(buf, numChars=length, encoding=textUtils.WCHAR_ENCODING)
+		return textUtils.getTextFromRawBytes(buf.raw, numChars=length, encoding=textUtils.WCHAR_ENCODING)
 
 	def getAccessibleTextLineBounds(self,index):
 		index=max(index,0)

@@ -182,7 +182,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			winKernel.readProcessMemory(processHandle, internalBuf, buf, bufLen, None)
 		finally:
 			winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
-		return textUtils.getTextFromStringBuffer(buf, numChars=numBytes, encoding=self.encoding, errorsFallback="surrogateescape")
+		return textUtils.getTextFromRawBytes(buf.raw, numChars=numBytes, encoding=self.encoding, errorsFallback="surrogateescape")
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)

@@ -328,7 +328,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			# uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
 			# Inject two alphanumeric characters at the end to fix this 
 			lineText += "xx"
-			# We can't rely on len(lineText) to calculate the length of the lin.
+			# We can't rely on len(lineText) to calculate the length of the line.
 			lineLength = (lineEnd - lineStart) + 2
 			if NVDAHelper.localLib.calculateWordOffsets(lineText, lineLength, relOffset, ctypes.byref(relStart), ctypes.byref(relEnd)):
 				relStart = relStart.value

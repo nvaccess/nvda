@@ -10,6 +10,10 @@
 import unittest
 from textUtils import WideStringOffsetConverter
 
+FACE_PALM = u"\U0001f926" # 🤦
+SMILE = u"\U0001f60a" # 😊
+THUMBS_UP = u"\U0001f44d" # 👍
+
 class TestStrToWideOffsets(unittest.TestCase):
 	"""
 	Tests that ensure that offsets in a string are properly converted to wide string offsets.
@@ -31,7 +35,7 @@ class TestStrToWideOffsets(unittest.TestCase):
 		self.assertEqual(converter.strToWideOffsets(3, 3), (3, 3))
 
 	def test_surrogatePairs(self):
-		converter = WideStringOffsetConverter(text=u"\U0001f926\U0001f60a\U0001f44d") # 🤦😊👍
+		converter = WideStringOffsetConverter(text=FACE_PALM + SMILE + THUMBS_UP)
 		self.assertEqual(converter.wideStringLength, 6)
 		self.assertEqual(converter.strToWideOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.strToWideOffsets(0, 1), (0, 2))
@@ -45,7 +49,7 @@ class TestStrToWideOffsets(unittest.TestCase):
 		self.assertEqual(converter.strToWideOffsets(3, 3), (6, 6))
 
 	def test_mixedSurrogatePairsAndNonSurrogates(self):
-		converter = WideStringOffsetConverter(text=u"a\U0001f926b") # a🤦b
+		converter = WideStringOffsetConverter(text=u"a" + FACE_PALM + u"b") # a🤦b
 		self.assertEqual(converter.wideStringLength, 4)
 		self.assertEqual(converter.strToWideOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.strToWideOffsets(0, 1), (0, 1))
@@ -63,7 +67,7 @@ class TestStrToWideOffsets(unittest.TestCase):
 		Tests surrogate pairs, non surrogates as well as
 		single surrogate characters (i.e. incomplete pairs)
 		"""
-		converter = WideStringOffsetConverter(text=u"a\ud83e\U0001f926\udd26b")
+		converter = WideStringOffsetConverter(text=u"a" + u"\ud83e" + FACE_PALM + u"\udd26" + u"b")
 		self.assertEqual(converter.wideStringLength, 6)
 		self.assertEqual(converter.strToWideOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.strToWideOffsets(0, 1), (0, 1))
@@ -108,7 +112,7 @@ class TestWideToStrOffsets(unittest.TestCase):
 		self.assertEqual(converter.wideToStrOffsets(3, 3), (3, 3))
 
 	def test_surrogatePairs(self):
-		converter = WideStringOffsetConverter(text=u"\U0001f926\U0001f60a\U0001f44d") # 🤦😊👍
+		converter = WideStringOffsetConverter(text=FACE_PALM + SMILE + THUMBS_UP)
 		self.assertEqual(converter.strLength, 3)
 		self.assertEqual(converter.wideToStrOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.wideToStrOffsets(0, 1), (0, 1))
@@ -140,7 +144,7 @@ class TestWideToStrOffsets(unittest.TestCase):
 		self.assertEqual(converter.wideToStrOffsets(6, 6), (3, 3))
 
 	def test_mixedSurrogatePairsAndNonSurrogates(self):
-		converter = WideStringOffsetConverter(text=u"a\U0001f926b") # a🤦b
+		converter = WideStringOffsetConverter(text=u"a" + FACE_PALM + u"b") # a🤦b
 		self.assertEqual(converter.strLength, 3)
 		self.assertEqual(converter.wideToStrOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.wideToStrOffsets(0, 1), (0, 1))
@@ -163,7 +167,7 @@ class TestWideToStrOffsets(unittest.TestCase):
 		Tests surrogate pairs, non surrogates as well as
 		single surrogate characters (i.e. incomplete pairs)
 		"""
-		converter = WideStringOffsetConverter(text=u"a\ud83e\U0001f926\udd26b")
+		converter = WideStringOffsetConverter(text=u"a" + u"\ud83e" + FACE_PALM + u"\udd26" + u"b")
 		self.assertEqual(converter.strLength, 5)
 		self.assertEqual(converter.wideToStrOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.wideToStrOffsets(0, 1), (0, 1))

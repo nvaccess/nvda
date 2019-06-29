@@ -61,7 +61,7 @@ def ReadConsoleOutputCharacter(handle,length,x,y):
 	numCharsRead=c_int()
 	if windll.kernel32.ReadConsoleOutputCharacterW(handle,buf,length,COORD(x,y),byref(numCharsRead))==0:
 		raise WinError()
-	return textUtils.getTextFromStringBuffer(buf, numChars=numCharsRead.value, encoding=textUtils.WCHAR_ENCODING)
+	return textUtils.getTextFromRawBytes(buf.raw, numChars=numCharsRead.value, encoding=textUtils.WCHAR_ENCODING)
 
 def ReadConsoleOutput(handle, length, rect):
 	BufType=CHAR_INFO*length

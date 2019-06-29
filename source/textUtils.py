@@ -14,7 +14,6 @@ import sys
 import ctypes
 from collections.abc import ByteString
 from typing import Tuple, Optional
-from _ctypes import Array
 import locale
 from logHandler import log
 
@@ -84,7 +83,7 @@ class WideStringOffsetConverter:
 		@raise ValueError: if strEnd < strStart
 		"""
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
-		if strStart == 0 and strEnd == 0:
+		if 0 == strEnd == strStart:
 			return (0, 0)
 		if strEnd < strStart:
 			raise ValueError(
@@ -138,7 +137,7 @@ class WideStringOffsetConverter:
 		@raise ValueError: if wideStringEnd < wideStringStart
 		"""
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
-		if wideStringStart == 0 and wideStringEnd == 0:
+		if 0 == wideStringEnd == wideStringStart:
 			return (0, 0)
 		if wideStringEnd < wideStringStart:
 			raise ValueError(
@@ -181,15 +180,16 @@ class WideStringOffsetConverter:
 			strEnd -= (correctedBytesEnd - bytesEnd) // self._bytesPerIndex
 		return (strStart, strEnd)
 
-def getTextFromStringBuffer(
-	buf: Array, # No way to type hint ctypes.c_char_Array
+def getTextFromRawBytes(
+	buf: bytes,
 	numChars: int,
 	encoding: Optional[str] = None,
 	errorsFallback: str = "replace"
 ):
 	"""
-	Gets a string from a ctypes c_char_Array, decoded using the specified L{encoding}.
-	If L{encoding} is C{None}, the buffer is inspected on whether it contains single byte or multi byte characters.
+	Gets a string from a raw bytes object, decoded using the specified L{encoding}.
+	In most cases, the bytes object is fetched by passing the raw attribute of a ctypes.c_char-Array to this function.
+	If L{encoding} is C{None}, the bytes object is inspected on whether it contains single byte or multi byte characters.
 	As a first attempt, the bytes are encoded using the surrogatepass error handler.
 	This handler behaves like strict for all encodings without surrogates,
 	while making sure that surrogates are properly decoded when using UTF-16.
@@ -198,8 +198,11 @@ def getTextFromStringBuffer(
 	"""
 	if encoding is None:
 		# If the buffer we got contains any non null characters from numChars to the buffer's end,
-		# the buffer definitely contains multibyte characters.
-		if numChars > 1 and any(map(ord, buf[numChars:])):
+		# the buffer most likely contains multibyte characters.
+		# Note that in theory, it could also be a multibyte character string
+		# with nulls taking up the second half of the string.
+		# Unfortunately, there isn't a good way to detect those cases.
+		if numChars > 1 and any(buf[numChars:]):
 			encoding = WCHAR_ENCODING
 		else:
 			encoding = locale.getlocale()[1]
@@ -211,7 +214,7 @@ def getTextFromStringBuffer(
 		numBytes = numChars * 4
 	else: # All other encodings are single byte.
 		numBytes = numChars
-	rawText: bytes = buf.raw[:numBytes]
+	rawText: bytes = buf[:numBytes]
 	if not any(rawText):
 		# rawText is empty or only contains null characters.
 		# If this is a range with only null characters in it, there's not much we can do about this.

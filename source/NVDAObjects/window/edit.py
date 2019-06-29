@@ -391,9 +391,9 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			):
 				encoding = textUtils.WCHAR_ENCODING
 			else:
-				# De encoding will be determined by L{textUtils.getTextFromStringBuffer}
+				# De encoding will be determined by L{textUtils.getTextFromRawBytes}
 				encoding = None
-			text = textUtils.getTextFromStringBuffer(buf, numChars, encoding)
+			text = textUtils.getTextFromRawBytes(buf.raw, numChars, encoding)
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.
