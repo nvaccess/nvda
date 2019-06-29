@@ -156,9 +156,11 @@ def UIAHeadingQuicknavIterator(itemType,document,position,direction="next"):
 		tempInfo=curPosition.copy()
 		tempInfo.expand(textInfos.UNIT_CHARACTER)
 		styleIDValue=getUIATextAttributeValueFromRange(tempInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=True)
-		if (UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9):
-			foundLevel=(styleIDValue-UIAHandler.StyleId_Heading1)+1
-			wantedLevel=int(itemType[7:]) if len(itemType)>7 else None
+		# #9842: styleIDValue can sometimes be a pointer to IUnknown.
+		# In Python 3, comparing an int with a pointer raises a TypeError.
+		if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
+			foundLevel = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
+			wantedLevel = int(itemType[7:]) if len(itemType) > 7 else None
 			if not wantedLevel or wantedLevel==foundLevel: 
 				if not firstLoop or not position:
 					tempInfo.expand(textInfos.UNIT_PARAGRAPH)

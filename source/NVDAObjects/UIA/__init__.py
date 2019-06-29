@@ -235,8 +235,10 @@ class UIATextInfo(textInfos.TextInfo):
 					formatField['link']=True
 		if formatConfig["reportHeadings"]:
 			styleIDValue=fetcher.getValue(UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
-				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
+			# #9842: styleIDValue can sometimes be a pointer to IUnknown.
+			# In Python 3, comparing an int with a pointer raises a TypeError.
+			if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
+				formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
 		if fetchAnnotationTypes:
 			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			# Some UIA implementations return a single value rather than a tuple.
