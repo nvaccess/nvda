@@ -42,6 +42,7 @@ from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
+import winKernel
 import fileUtils
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 
@@ -519,7 +520,10 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onPostponeButton(self, evt):
 		finalDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
 		try:
-			os.renames(self.destPath, finalDest)
+			# #9825: behavior of os.rename(s) has changed in Python 3.
+			# See https://bugs.python.org/issue28356.
+			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
 			gui.messageBox(
