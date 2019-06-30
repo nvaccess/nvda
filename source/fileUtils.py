@@ -1,8 +1,9 @@
 #fileUtils.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited, Bram Duvigneau
+#Copyright (C) 2017-2019 NV Access Limited, Bram Duvigneau
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
 import os
 import ctypes
 import ctypes.wintypes

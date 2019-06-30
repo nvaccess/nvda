@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Zahari Yurukov, Babbage B.V.
+#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
