@@ -22,6 +22,7 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
+import winKernel
 
 _wsh=None
 def _getWSH():
@@ -362,8 +363,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
-		MoveFileEx=windll.kernel32.MoveFileExW
-		MoveFileEx("\\\\?\\"+tempPath,None,4)
+		winKernel.moveFileEx("\\\\?\\"+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		return
 	try:
 		os.rename(tempPath,path)
@@ -387,7 +387,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		except (WindowsError,OSError):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
-		windll.kernel32.MoveFileExW(tempPath,None,4)
+		winKernel.moveFileEx(tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
