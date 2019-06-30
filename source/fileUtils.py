@@ -11,9 +11,7 @@ from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
 from logHandler import log
 from six import text_type
-
-#: Constant; flag for MoveFileEx(). If a file with the destination filename already exists, it is overwritten.
-MOVEFILE_REPLACE_EXISTING = 1
+import winKernel
 
 @contextmanager
 def FaultTolerantFile(name):
@@ -39,9 +37,7 @@ def FaultTolerantFile(name):
 		f.flush()
 		os.fsync(f)
 		f.close()
-		moveFileResult = ctypes.windll.kernel32.MoveFileExW(f.name, name, MOVEFILE_REPLACE_EXISTING)
-		if moveFileResult == 0:
-			raise ctypes.WinError()
+		winKernel.moveFileEx(f.name, name, winKernel.MOVEFILE_REPLACE_EXISTING)
 
 def getFileVersionInfo(name, *attributes):
 	"""Gets the specified file version info attributes from the provided file."""
