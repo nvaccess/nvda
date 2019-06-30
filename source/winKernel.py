@@ -385,3 +385,16 @@ class HGLOBAL(HANDLE):
 		Necessary if you pass this HGLOBAL to an API that takes ownership and therefore will handle freeing itself.
 		"""
 		self.value=None
+
+MOVEFILE_COPY_ALLOWED = 0x2
+MOVEFILE_CREATE_HARDLINK = 0x10
+MOVEFILE_DELAY_UNTIL_REBOOT = 0x4
+MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x20
+MOVEFILE_REPLACE_EXISTING = 0x1
+MOVEFILE_WRITE_THROUGH = 0x8
+
+def moveFileEx(lpExistingFileName, lpNewFileName, dwFlags):
+	moveFileResult=kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags)
+	if moveFileResult==0:
+		raise ctypes.WinError()
+	return moveFileResult
