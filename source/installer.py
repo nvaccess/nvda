@@ -364,7 +364,8 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
 		try:
-			winKernel.moveFileEx(r"\\?\"+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
+			# #9847: convert the path qualifier to Unicode so temp path can be appended correctly.
+			winKernel.moveFileEx(u"\\\\?\\"+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		except WinError:
 			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
 		return
