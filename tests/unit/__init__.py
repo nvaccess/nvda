@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -19,6 +19,7 @@ import sys
 
 import locale
 import gettext
+import wx
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
 gettext.install('nvda',unicode=True)
@@ -70,9 +71,12 @@ languageHandler.setLanguage("en")
 # NVDAObjects need appModuleHandler to be initialized.
 import appModuleHandler
 appModuleHandler.initialize()
+# Vision needs a wx app to be available.
+app = wx.App()
 # Anything which notifies of cursor updates requires braille and vision to be initialized.
 import vision
 vision.initialize()
+
 import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"
