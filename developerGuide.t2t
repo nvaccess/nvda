@@ -764,8 +764,8 @@ See [Snapshot Variables #PythonConsoleSnapshotVariables] for more details.
 -
 
 The console is similar to the standard interactive Python interpreter.
-Input is accepted one line at a time.
-The current line is processed when enter is pressed.
+Input is accepted one line at a time and processed when enter is pressed.
+Multiple lines can be pasted at once from the clipboard and will be processed one by one. 
 You can navigate through the history of previously entered lines using the up and down arrow keys.
 
 Output (responses from the interpreter) will be spoken when enter is pressed.
