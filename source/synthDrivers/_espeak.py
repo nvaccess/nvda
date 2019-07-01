@@ -371,15 +371,14 @@ def getVariantDict():
 			# In python 3, open assumes the default system encoding by default.
 			# This fails if Windows' "use Unicode UTF-8 for worldwide language support" option is enabled.
 			# The expected encoding is unknown, therefore use latin-1 to stay as close to Python 2 behavior as possible.
-			file=open(absFilePath, 'r', encoding="latin-1")
-			for line in file:
-				if line.startswith('name '):
-					temp=line.split(" ")
-					if len(temp) ==2:
-						name=temp[1].rstrip()
-						break
-				name=None
-			file.close()
+			with open(absFilePath, 'r', encoding="latin-1") as file:
+				for line in file:
+					if line.startswith('name '):
+						temp=line.split(" ")
+						if len(temp) ==2:
+							name=temp[1].rstrip()
+							break
+					name=None
 		if name is not None:
 			variantDict[fileName]=name
 	return variantDict
