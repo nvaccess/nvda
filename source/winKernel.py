@@ -394,5 +394,6 @@ MOVEFILE_REPLACE_EXISTING = 0x1
 MOVEFILE_WRITE_THROUGH = 0x8
 
 def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
+	# If MoveFileExW fails, Windows will raise appropriate errors.
 	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
 		raise ctypes.WinError()
