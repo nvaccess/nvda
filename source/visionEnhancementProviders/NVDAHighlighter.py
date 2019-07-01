@@ -33,7 +33,7 @@ class HighlightStyle(
 	namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
 ):
 	"""Represents the style of a highlight for a particular context.
-	@ivar color: THe color to use for the style
+	@ivar color: The color to use for the style
 	@type color: L{RGB}
 	@ivar width: The width of the lines to be drawn, in pixels.
 		A higher width reduces the inner dimentions of the rectangle.
@@ -44,7 +44,7 @@ class HighlightStyle(
 	@type style: int
 	@ivar margin: The number of pixels between the highlight's rectangle
 		and the rectangle of the object to be highlighted.
-		A higher margin increases both the inner and outer dimentions of the highlight's rectangle.
+		A higher margin stretches the highlight's rectangle.
 		This value may also be negative.
 	@type margin: int
 	"""

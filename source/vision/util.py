@@ -25,7 +25,7 @@ def getCaretRectangle(obj=None):
 		# Check whether there is a caret in the window.
 		# Note that, even windows that don't have navigable text could have a caret, such as in Excel.
 		try:
-			return RectLTRB.fromCompatibleType(getCaretRect(obj))
+			return locationHelper.RectLTRB.fromCompatibleType(getCaretRect(obj))
 		except RuntimeError:
 			if not obj._hasNavigableText:
 				raise LookupError
@@ -84,5 +84,5 @@ def getRectFromTextInfo(textInfo):
 		index = 0 if textInfo.obj.isTextSelectionAnchoredAtStart else -1
 		rect = rects[index].toLTRB()
 	else:
-		rect = RectLTRB.fromPoint(textInfo.pointAtStart)
+		rect = locationHelper.RectLTRB.fromPoint(textInfo.pointAtStart)
 	return rect
