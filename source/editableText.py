@@ -127,6 +127,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 				info = self.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
+		# Forget the word currently being typed as the user has moved the caret somewhere else.
+		speech.clearTypedWordBuffer()
 		review.handleCaretMove(info)
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
@@ -134,8 +136,6 @@ class EditableText(TextContainerObject,ScriptableObject):
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
-		# Forget the word currently being typed as the user is moving the caret somewhere else.
-		speech.clearTypedWordBuffer()
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
