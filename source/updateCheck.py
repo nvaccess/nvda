@@ -520,7 +520,7 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onPostponeButton(self, evt):
 		finalDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
 		try:
-			# #9825: behavior of os.rename(s) has changed in Python 3.
+			# #9825: behavior of os.rename(s) has changed in Python 3 (needed for file renames, possibly across drives in case of portable cop0y).
 			# See https://bugs.python.org/issue28356.
 			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
 			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
