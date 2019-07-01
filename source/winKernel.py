@@ -393,6 +393,6 @@ MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x20
 MOVEFILE_REPLACE_EXISTING = 0x1
 MOVEFILE_WRITE_THROUGH = 0x8
 
-def moveFileEx(lpExistingFileName, lpNewFileName, dwFlags):
+def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
 	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
 		raise ctypes.WinError()
