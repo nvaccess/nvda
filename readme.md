@@ -91,7 +91,7 @@ For reference, the following dependencies are included in Git submodules:
 ### Other Dependencies
 These dependencies are not included in Git submodules, but aren't needed by most people.
 
-* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.stack.nl/~dimitri/doxygen/download.html), version 1.7.3:
+* To generate developer documentation for nvdaHelper: [Doxygen version 1.7.3 Windows installer](https://sourceforge.net/projects/doxygen/files/rel-1.7.3/doxygen-1.7.3-setup.exe)
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
