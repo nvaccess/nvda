@@ -847,7 +847,7 @@ class AddonUpdateSettingsDialog(wx.Dialog):
 		noAddonUpdatesLabel = _("Do &not update add-ons:")
 		# Some add-ons come with pretty badly formatted summary text, so try catching them and exclude them from this list.
 		# #7105: this is Python 2 specific solution at the moment.
-		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel, nvdaControls.CustomCheckListBox, choices=[addon.manifest["summary"]) for addon in addonHandler.getAvailableAddons()])
+		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel, nvdaControls.CustomCheckListBox, choices=[addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()])
 		self.noAddonUpdates.SetCheckedStrings([addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()
 			if addon.name in addonHandler.state["noUpdates"]])
 		self.noAddonUpdates.SetSelection(0)
