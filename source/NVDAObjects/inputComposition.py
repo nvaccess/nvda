@@ -27,6 +27,7 @@ def calculateInsertedChars(oldComp,newComp):
 	return newComp[diffStart:diffEnd]
 
 class InputCompositionTextInfo(OffsetsTextInfo):
+	encoding = None
 
 	def _getSelectionOffsets(self):
 		return self.obj.readingSelectionOffsets if self.obj.isReading else self.obj.compositionSelectionOffsets

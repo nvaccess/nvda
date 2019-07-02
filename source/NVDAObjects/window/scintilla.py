@@ -14,6 +14,7 @@ import locale
 import watchdog
 import eventHandler
 import locationHelper
+import textUtils
 
 # Window messages
 SCI_POSITIONFROMPOINT=2022
@@ -67,6 +68,13 @@ class TextRangeStruct(ctypes.Structure):
 	]
 
 class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+	def _get_encoding(self):
+		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
+		if cp==SC_CP_UTF8:
+			return "utf-8"
+		else:
+			return locale.getlocale()[1]
 
 	def _getOffsetFromPoint(self,x,y):
 		x, y = winUser.ScreenToClient(self.obj.windowHandle, x, y)
@@ -156,30 +164,25 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETLINECOUNT,0,0)
 
 	def _getTextRange(self,start,end):
-		bufLen=(end-start)+1
-		textRange=TextRangeStruct()
-		textRange.chrg.cpMin=start
-		textRange.chrg.cpMax=end
-		processHandle=self.obj.processHandle
-		internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		bufLen = (end - start) + 1
+		textRange = TextRangeStruct()
+		textRange.chrg.cpMin = start
+		textRange.chrg.cpMax = end
+		processHandle = self.obj.processHandle
+		internalBuf = winKernel.virtualAllocEx(processHandle, None, bufLen, winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 		try:
-			textRange.lpstrText=internalBuf
-			internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			textRange.lpstrText = internalBuf
+			internalTextRange = winKernel.virtualAllocEx(processHandle, None, ctypes.sizeof(textRange), winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 			try:
-				winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-				watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETTEXTRANGE,0,internalTextRange)
+				winKernel.writeProcessMemory(processHandle, internalTextRange, ctypes.byref(textRange), ctypes.sizeof(textRange), None)
+				numBytes = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETTEXTRANGE, 0, internalTextRange)
 			finally:
-				winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-			buf=ctypes.create_string_buffer(bufLen)
-			winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
+				winKernel.virtualFreeEx(processHandle, internalTextRange, 0, winKernel.MEM_RELEASE)
+			buf = ctypes.create_string_buffer(bufLen)
+			winKernel.readProcessMemory(processHandle, internalBuf, buf, bufLen, None)
 		finally:
-			winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-		cp=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCODEPAGE,0,0)
-		if cp==SC_CP_UTF8:
-			encoding="utf-8"
-		else:
-			encoding=locale.getlocale()[1]
-		return buf.value.decode(encoding,errors="replace")
+			winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
+		return textUtils.getTextFromRawBytes(buf.raw, numChars=numBytes, encoding=self.encoding, errorsFallback="surrogateescape")
 
 	def _getWordOffsets(self,offset):
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,offset,0)
