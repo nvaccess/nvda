@@ -629,6 +629,8 @@ class ExcelBase(Window):
 			if obj.windowClassName=='EXCEL:':
 				break
 		if selection:
+			# If we are getting a dropdown for a selection,
+			# we want the selection to be presented as the direct ancestor of the dropdown.
 			obj.parent = selection
 		return obj
 
