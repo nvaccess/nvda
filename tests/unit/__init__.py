@@ -19,6 +19,7 @@ import sys
 
 import locale
 import gettext
+import sourceEnv
 import wx
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
