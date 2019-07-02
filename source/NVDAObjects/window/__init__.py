@@ -399,18 +399,19 @@ class DisplayModelEditableText(EditableText, Window):
 		# Don't report value changes for editable text fields.
 		pass
 
-class DisplayModelLiveText(LiveText, Window):
-	TextInfo = displayModel.EditableTextDisplayModelTextInfo
-
+class DisplayModelLiveTextWithoutTextInfo(LiveText, Window):
 	def startMonitoring(self):
 		# Force the window to be redrawn, as our display model might be out of date.
 		self.redraw()
 		displayModel.requestTextChangeNotifications(self, True)
-		super(DisplayModelLiveText, self).startMonitoring()
+		super(DisplayModelLiveTextWithoutTextInfo, self).startMonitoring()
 
 	def stopMonitoring(self):
-		super(DisplayModelLiveText, self).stopMonitoring()
+		super(DisplayModelLiveTextWithoutTextInfo, self).stopMonitoring()
 		displayModel.requestTextChangeNotifications(self, False)
+
+class DisplayModelLiveText(DisplayModelLiveTextWithoutTextInfo):
+	TextInfo = displayModel.EditableTextDisplayModelTextInfo
 
 windowClassMap={
 	"EDIT":"Edit",

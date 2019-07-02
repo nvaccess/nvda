@@ -9,9 +9,10 @@ import ui
 import config
 from ctypes import *
 from ctypes.wintypes import *
+from NVDAObjects.window import DisplayModelLiveTextWithoutTextInfo
 import winKernel
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
-from NVDAObjects.behaviors import Dialog
+from NVDAObjects.behaviors import Dialog, LiveTextHistoryMixin
 import appModuleHandler
 import speech
 import braille
@@ -22,7 +23,7 @@ import mouseHandler
 import oleacc
 from keyboardHandler import KeyboardInputGesture
 import watchdog
-
+from logHandler import log
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
 CLM_LAST=0x1100
@@ -84,8 +85,6 @@ class AppModule(appModuleHandler.AppModule):
 	MessageHistoryLength=3
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_WINDOW: 
-			return
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
 			try:
@@ -99,8 +98,12 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, mirandaIMHyperlink)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_PROPERTYPAGE:
 			clsList.insert(0, MPropertyPage)
-		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
-			clsList.insert(0, MirandaMessageViewerScrollbar)
+		#elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
+		#	clsList.insert(0, MirandaMessageViewerScrollbar)
+		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_WINDOW and 'RICHEDIT' in windowClass:
+			clsList.insert(0, MirandaMessageWindow)
+		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_TEXT and controlTypes.STATE_READONLY in obj.states:
+			clsList.insert(0, MirandaMessageLog)
 		elif windowClass == "ListBox" and obj.windowControlID == 0:
 			clsList.insert(0, DuplicateFocusListBox)
 
@@ -110,20 +113,6 @@ class AppModule(appModuleHandler.AppModule):
 		elif (obj.windowControlID in ANSILOGS) and (obj.windowClassName=="RichEdit20A"):
 			obj._isWindowUnicode=False
 
-	def script_readMessage(self,gesture):
-		num=int(gesture.mainKeyName[-1])
-		if len(self.lastMessages)>num-1:
-			ui.message(self.lastMessages[num-1])
-		else:
-			# Translators: This is presented to inform the user that no instant message has been received.
-			ui.message(_("No message yet"))
-	# Translators: The description of an NVDA command to view one of the recent messages.
-	script_readMessage.__doc__=_("Displays one of the recent messages")
-
-	def __init__(self, *args, **kwargs):
-		super(AppModule, self).__init__(*args, **kwargs)
-		for n in xrange(1, self.MessageHistoryLength + 1):
-			self.bindGesture("kb:NVDA+control+%s" % n, "readMessage")
 
 class mirandaIMContactList(IAccessible):
 
@@ -261,3 +250,24 @@ class DuplicateFocusListBox(IAccessible):
 		):
 			return False
 		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent
+
+
+class MirandaMessageWindow(IAccessible):
+	def _get_messageLog(self):
+		return None
+
+	def event_gainFocus(self):
+		try:
+			self.messageLog.startMonitoring()
+		except AttributeError:
+			pass
+
+	def event_loseFocus(self):
+		try:
+			self.messageLog.stopMonitoring()
+		except AttributeError:
+			pass
+
+
+class MirandaMessageLog(LiveTextHistoryMixin, DisplayModelLiveTextWithoutTextInfo):
+	pass

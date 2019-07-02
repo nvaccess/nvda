@@ -365,6 +365,38 @@ class Terminal(LiveText, EditableText):
 	def event_loseFocus(self):
 		self.stopMonitoring()
 
+class LiveTextHistoryMixin(object):
+	"""Adds a text history to LiveText objects. This is especially useful
+for implementing history in chat programs."""
+	_HISTSIZE = 10 #: The number of items to store in history at a time.
+	_history=[]
+	__gestures={"kb:NVDA+control+{}".format(i): "readHistoryItem" for i in range(_HISTSIZE)}
+
+	def script_readHistoryItem(self,gesture):
+		num=int(gesture.mainKeyName[-1])
+		try:
+			ui.message(self._history[(len(self._history) - num) % self._HISTSIZE])
+		except IndexError:
+			# Translators: This is presented to inform the user that
+			# no more items are available in the announcement history
+			# (such as for chat applications).
+			ui.message(_("No more"))
+	# Translators: The description of an NVDA command to view items in the
+	# history (such as in chat applications).
+	script_readHistoryItem.__doc__=_("Displays items in the history")
+	script_readHistoryItem.canPropagate = True
+
+	def _calculateNewText(self, newLines, oldLines):
+		res = super(LiveTextHistoryMixin, self)._calculateNewText(newLines, oldLines)
+		if not (len(res) == 1 and len(res[0].strip()) == 1):
+			# Update the history.
+			histstring = '\n'.join(res)
+			if histstring:
+				self._history.append(histstring)
+			if len(self._history) > self._HISTSIZE:
+				self._history.pop(0)
+		return res
+
 class CandidateItem(NVDAObject):
 
 	def getFormattedCandidateName(self,number,candidate):
