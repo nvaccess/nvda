@@ -85,13 +85,6 @@ def findScript(gesture):
 		if func:
 			return func
 
-	# Vision enhancement provider level
-	for provider in vision.handler.providers.values():
-		if isinstance(provider, baseObject.ScriptableObject):
-			func = _getObjScript(provider, gesture, globalMapScripts)
-			if func:
-				return func
-
 	# Global plugin level.
 	for plugin in globalPluginHandler.runningPlugins:
 		func = _getObjScript(plugin, gesture, globalMapScripts)
@@ -104,6 +97,19 @@ def findScript(gesture):
 		func = _getObjScript(app, gesture, globalMapScripts)
 		if func:
 			return func
+
+	# Braille display level
+	if isinstance(braille.handler.display, baseObject.ScriptableObject):
+		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
+		if func:
+			return func
+
+	# Vision enhancement provider level
+	for provider in vision.handler.providers.values():
+		if isinstance(provider, baseObject.ScriptableObject):
+			func = _getObjScript(provider, gesture, globalMapScripts)
+			if func:
+				return func
 
 	# Tree interceptor level.
 	treeInterceptor = focus.treeInterceptor
