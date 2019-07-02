@@ -200,7 +200,7 @@ setup(
 			# This is not needed.
 			# We also need to exclude win32wnet explicitly.
 			"netbios",
-			"win32wnet"
+			"win32wnet",
 			# winxptheme is optionally used by wx.lib.agw.aui.
 			# We don't need this.
 			"winxptheme",
