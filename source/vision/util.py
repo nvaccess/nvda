@@ -11,10 +11,10 @@ from .constants import Role, Context
 import api
 import locationHelper
 
-def getReviewRectangle():
+def getReviewRect():
 	return _getRectFromTextInfo(api.getReviewPosition())
 
-def getCaretRectangle(obj=None):
+def getCaretRect(obj=None):
 	if obj is None:
 		obj = api.getCaretObject()
 	if api.isObjectInActiveTreeInterceptor(obj):
@@ -40,11 +40,11 @@ def getCaretRectangle(obj=None):
 				raise LookupError
 		return _getRectFromTextInfo(caretInfo)
 
-def getMouseRectangle():
+def getMouseRect():
 	point = locationHelper.Point(*mouseHandler.curMousePos)
 	return locationHelper.RectLTRB.fromPoint(point)
 
-def getObjectRectangle(obj):
+def getObjectRect(obj):
 	if not api.isNVDAObject(obj):
 		raise TypeError("obj must be of type NVDAObject")
 	location = obj.location
@@ -55,23 +55,23 @@ def getObjectRectangle(obj):
 def getContextRect(context, obj=None):
 	"""Gets a rectangle for the specified context."""
 	if context == Context.FOCUS:
-		return getObjectRectangle(obj or api.getFocusObject())
+		return getObjectRect(obj or api.getFocusObject())
 	elif context == Context.NAVIGATOR:
-		return getObjectRectangle(obj or api.getNavigatorObject())
+		return getObjectRect(obj or api.getNavigatorObject())
 	elif context == Context.REVIEW:
-		return getReviewRectangle()
+		return getReviewRect()
 	elif context == Context.BROWSEMODE:
 		caret = obj or api.getCaretObject()
 		if api.isCursorManager(caret):
-			return getCaretRectangle(obj=caret)
+			return getCaretRect(obj=caret)
 		return None
 	elif context == Context.CARET:
 		caret = obj or api.getCaretObject()
 		if not api.isCursorManager(caret):
-			return getCaretRectangle(obj=caret)
+			return getCaretRect(obj=caret)
 		return None
 	elif context == Context.MOUSE:
-		return getMouseRectangle()
+		return getMouseRect()
 
 def getRectFromTextInfo(textInfo):
 	if textInfo.isCollapsed:

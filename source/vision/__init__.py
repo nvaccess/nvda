@@ -33,12 +33,13 @@ def terminate():
 	handler.terminate()
 	handler = None
 
-def getProviderList(excludeNegativeChecks=True):
+def getProviderList(onlyStartable=True):
 	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
-	@param excludeNegativeChecks: excludes all providers for which the check method returns C{False}.
-	@type excludeNegativeChecks: bool
-	@return: list of tuples with provider names, descriptions, and supported roles.
-	@rtype: [(str,str,[ROLE_*])]
+	@param onlyStartable: excludes all providers for which the check method returns C{False}.
+	@type onlyStartable: bool
+	@return: list of tuples with provider names, provider descriptions, and supported roles.
+		See L{constants.Role} for the available constants.
+	@rtype: [(str,unicode,str])]
 	"""
 	providerList = []
 	for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
@@ -56,7 +57,7 @@ def getProviderList(excludeNegativeChecks=True):
 			)
 			continue
 		try:
-			if not excludeNegativeChecks or provider.check():
+			if not onlyStartable or provider.check():
 				providerList.append((
 					provider.name,
 					provider.description,
@@ -68,6 +69,7 @@ def getProviderList(excludeNegativeChecks=True):
 			# Purposely catch everything else as we don't want one failing provider
 			# make it impossible to list all the others.
 			log.error("", exc_info=True)
+	# Sort the providers alphabetically by name.
 	providerList.sort(key=lambda d: d[1].lower())
 	return providerList
 

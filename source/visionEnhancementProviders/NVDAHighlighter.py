@@ -9,7 +9,7 @@
 
 import vision
 from vision.constants import Role, Context
-from vision.util import *
+from vision.util import getContextRect
 from windowUtils import CustomWindow
 import wx
 import gui
@@ -20,7 +20,6 @@ import winUser
 from logHandler import log
 from mouseHandler import getTotalWidthAndHeightAndMinimumPosition
 from locationHelper import RectLTWH
-import config
 from collections import namedtuple
 import threading
 import winGDI
@@ -36,8 +35,8 @@ class HighlightStyle(
 	@ivar color: The color to use for the style
 	@type color: L{RGB}
 	@ivar width: The width of the lines to be drawn, in pixels.
-		A higher width reduces the inner dimentions of the rectangle.
-		Therefore, if you need to increase the outer dimentions of the rectangle, you need to increase the margin as well.
+		A higher width reduces the inner dimensions of the rectangle.
+		Therefore, if you need to increase the outer dimensions of the rectangle, you need to increase the margin as well.
 	@type width: int
 	@ivar style: The style of the lines to be drawn;
 		One of the C{winGDI.DashStyle*} enumeration constants.
@@ -48,18 +47,26 @@ class HighlightStyle(
 		This value may also be negative.
 	@type margin: int
 	"""
-	__slots__ = ()
+
+BLUE = RGB(0x03, 0x36, 0xFF)
+PINK = RGB(0xFF, 0x02, 0x66)
+YELLOW = RGB(0xFF, 0xDE, 0x03)
+DASH_BLUE =  HighlightStyle(BLUE, 5, winGDI.DashStyleDash, 5)
+SOLID_PINK = HighlightStyle(PINK, 5, winGDI.DashStyleSolid, 5)
+SOLID_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleSolid, 5)
+SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
 
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
 	description = _("NVDA Highlighter")
+	supportedRoles = frozenset([Role.HIGHLIGHTER])
 	supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
 	_ContextStyles = {
-		Context.FOCUS: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleDash, 5),
-		Context.NAVIGATOR: HighlightStyle(RGB(0xff, 0x02, 0x66), 5, winGDI.DashStyleSolid, 5),
-		Context.FOCUS_NAVIGATOR: HighlightStyle(RGB(0x03, 0x36, 0xff), 5, winGDI.DashStyleSolid, 5),
-		Context.BROWSEMODE: HighlightStyle(RGB(0xff, 0xde, 0x03), 2, winGDI.DashStyleSolid, 2),
+		Context.FOCUS: DASH_BLUE,
+		Context.NAVIGATOR: SOLID_PINK,
+		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
+		Context.BROWSEMODE: SOLID_YELLOW,
 	}
 	refreshInterval = 100
 

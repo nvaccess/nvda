@@ -7,14 +7,7 @@
 """Module within the vision framework that contains the base vision enhancement provider class.
 """
 
-from .constants import *
 import driverHandler
-import api
-import weakref
-from logHandler import log
-import NVDAObjects
-import textInfos
-from locationHelper import RectLTRB
 from abc import abstractmethod
 
 class VisionEnhancementProvider(driverHandler.Driver):
@@ -31,7 +24,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 
 	def reinitialize(self):
 		"""Reinitializes a vision enhancement provider, reusing the same instance.
-		The base method simply calls terminate and __init__ consecutively.
+		This base implementation simply calls terminate and __init__ consecutively.
 		"""
 		self.terminate()
 		self.__init__()
@@ -41,6 +34,9 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		"""
 		Called at provider initialization time, this method should register the provider
 		to the several event extension points that it is interested in.
+		This method should only register itself with the extension points,
+		and should refrain from doing anything else,
+		as it might be called again several times between initialization and termination.
 		@param extensionPoints: An object containing available extension points as attributes.
 		@type extensionPoints: L{visionHandlerExtensionPoints.EventExtensionPoints}
 		"""

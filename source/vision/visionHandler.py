@@ -5,21 +5,20 @@
 #Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Module containing the vision handler.
+The vision handler is the core of the vision framework.
+See the documentation of L{VisionHandler} for more details about what it does.
 """
 
 from .constants import *
 from .providerBase import VisionEnhancementProvider
 from .visionHandlerExtensionPoints import EventExtensionPoints
 import pkgutil
-import importlib
 from baseObject import AutoPropertyObject
 import api
 import config
-import weakref
 from logHandler import log
+import visionEnhancementProviders
 import wx
-from collections import defaultdict
-import copy
 
 def getProviderClass(moduleName, caseSensitive=True):
 	"""Returns a registered provider class with the specified moduleName."""
@@ -28,7 +27,7 @@ def getProviderClass(moduleName, caseSensitive=True):
 			"visionEnhancementProviders.%s" % moduleName,
 			globals(),
 			locals(),
-			("visionEnhancementProviders",)
+			["visionEnhancementProviders"]
 		).VisionEnhancementProvider
 	except ImportError as initialException:
 		if caseSensitive:
@@ -46,19 +45,39 @@ def getProviderClass(moduleName, caseSensitive=True):
 			raise initialException
 
 class VisionHandler(AutoPropertyObject):
+	"""The singleton vision handler is the core of the vision framework.
+	It performs the following tasks:
+
+		* It keeps track of active vision enhancement providers in the L{providers} dictionary.
+		* It processes initialization and termnation of  providers.
+		* It receives certain events from the core of NVDA,
+			delegating them to the appropriate extension points.
+	"""
 
 	def __init__(self):
-		self.lastReviewMoveContext = None
-		self.lastCaretObjRef = None
 		self.providers = dict()
 		self.extensionPoints = EventExtensionPoints()
-		# Handle first initialization of the handler as a config profile switch.
-		# However, execute this on the main thread, which makes sure that
-		# the gui is fully initialized before providers are initialized that might rely on it.
-		wx.CallAfter(self.handleConfigProfileSwitch)
+		wx.CallAfter(self.postGuiInit)
+
+	def postGuiInit(self):
+		"""Handles first initialization of the handler as a config profile switch.
+		This is executed on the main thread by L{__init__} using a {wx.CallAfter} call.
+		This ensures that the gui is fully initialized before providers are initialized that might rely on it.
+		"""
+		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
 	def terminateProvider(self, providerName):
+		"""Terminates a currently active provider.
+		@param providerName: The provider to terminate.
+		@type providerName: str
+		@returns: Whether termination succeeded or failed.
+			When termnation fails, return False so the caller knows that something failed.
+			Yet, the provider wil lbe removed from the providers dictionary,
+			so its instance goes out of scope and wil lbe garbage collected.
+		@rtype: bool
+		"""
+		# Remove the provider from the providers dictionary.
 		providerInstance =self.providers.pop(providerName, None)
 		if not providerInstance:
 			log.warning("Tried to terminate uninitialized provider %s" % providerName)
@@ -71,14 +90,16 @@ class VisionHandler(AutoPropertyObject):
 			# therefore it is unknown what to expect.
 			log.error("Error while terminating vision provider %s" % providerName, exc_info=True)
 			return False
-		# Copy the configured providers before mutating the list
+		# Copy the configured providers before mutating the list.
+		# If we don't, configobj won't be aware of changes the list.
 		configuredProviders = config.conf['vision']['providers'][:]
 		try:
 			configuredProviders.remove(providerName)
 			config.conf['vision']['providers'] = configuredProviders
 		except ValueError:
 			pass
-		# Recreate our extension points instance
+		# As we cant rely on providers to de-register themselves from extension points when terminating them,
+		# Re-create our extension points instance and ask active providers to reregister.
 		self.extensionPoints =  EventExtensionPoints()
 		for providerInst in self.providers.values():
 			try:

@@ -28,6 +28,10 @@ ROLE_DESCRIPTIONS = {
 }
 
 class Context:
+	"""context for events received by providers.
+	Typically this informs of the cause of the event.
+	For example, L{focus} is used when an event is trigggered by the focus object or a focus change.
+	"""
 	FOCUS = "focus"
 	NAVIGATOR = "navigator"
 	FOCUS_NAVIGATOR = "focusNavigator"
