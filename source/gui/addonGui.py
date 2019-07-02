@@ -540,7 +540,7 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 
 	prevAddon = None
 	for addon in addonHandler.getAvailableAddons():
-		if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
+		if not addon.isPendingRemove and bundle.name.lower()==addon.manifest['name'].lower():
 			prevAddon=addon
 			break
 	summary=bundle.manifest["summary"]
@@ -572,7 +572,6 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 			wx.YES|wx.NO|wx.ICON_WARNING
 		) != wx.YES:
 				return False
-		prevAddon.requestRemove()
 
 	from contextlib import contextmanager
 
@@ -609,6 +608,8 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 		with doneAndDestroy(progressDialog):
 			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
+			if prevAddon:
+				prevAddon.requestRemove()
 			return True
 	except:
 		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)

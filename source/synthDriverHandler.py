@@ -3,12 +3,10 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat
+#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee, Arnold Loubriat, Leonard de Ruijter
 
-from copy import deepcopy
 import os
 import pkgutil
-import importlib
 import config
 import baseObject
 import winVersion
@@ -18,6 +16,9 @@ from  synthSettingsRing import SynthSettingsRing
 import languageHandler
 import speechDictHandler
 import synthDrivers
+import driverHandler
+import warnings
+from driverHandler import StringParameterInfo # Backwards compatibility
 
 _curSynth=None
 _audioOutputDevice=None
@@ -31,14 +32,13 @@ def changeVoice(synth, voice):
 	if voice:
 		synth.voice = voice
 	c=config.conf["speech"][synth.name]
-	c.spec=synth.getConfigSpec()
 	#start or update the synthSettingsRing
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
+	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -71,19 +71,8 @@ def getSynth():
 	return _curSynth
 
 def getSynthInstance(name):
-	newSynth=_getSynthDriver(name)()
-	if config.conf["speech"].isSet(name):
-		newSynth.loadSettings()
-	else:
-		# Create the new section.
-		config.conf["speech"][name]={}
-		if newSynth.isSupported("voice"):
-			voice=newSynth.voice
-		else:
-			voice=None
-		# We need to call changeVoice here so that required initialisation can be performed.
-		changeVoice(newSynth,voice)
-		newSynth.saveSettings() #save defaults
+	newSynth = _getSynthDriver(name)()
+	newSynth.initSettings()
 	return newSynth
 
 # The synthDrivers that should be used by default.
@@ -139,73 +128,45 @@ def handlePostConfigProfileSwitch():
 		return
 	_curSynth.loadSettings(onlyChanged=True)
 
-class SynthSetting(object):
-	"""Represents a synthesizer setting such as voice or variant.
+class SynthSetting(driverHandler.DriverSetting):
+	"""@Deprecated: use L{driverHandler.DriverSetting} instead.
 	"""
-	#: Configuration specification of this particular setting for config file validator.
-	#: @type: str
-	configSpec="string(default=None)"
 
 	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,displayName=None):
-		"""
-		@param name: internal name of the setting
-		@type name: str
-		@param displayNameWithAccelerator: the localized string shown in voice settings dialog
-		@type displayNameWithAccelerator: str
-		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
-		@type displayName: str
-		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
-		@type availableInSynthSettingsRing: bool
-		"""
-		self.name=name
-		self.displayNameWithAccelerator=displayNameWithAccelerator
-		if not displayName:
-			# Strip accelerator from displayNameWithAccelerator.
-			displayName=displayNameWithAccelerator.replace("&","")
-		self.displayName=displayName
-		self.availableInSynthSettingsRing=availableInSynthSettingsRing
+		warnings.warn("synthDriverHandler.SynthSetting is deprecated. Use driverHandler.DriverSetting instead",
+			DeprecationWarning, stacklevel=3)
+		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+		self.name = name
 
-class NumericSynthSetting(SynthSetting):
-	"""Represents a numeric synthesizer setting such as rate, volume or pitch."""
-	configSpec="integer(default=50,min=0,max=100)"
+class NumericSynthSetting(driverHandler.NumericDriverSetting):
+	"""@Deprecated: use L{driverHandler.NumericDriverSetting} instead.
+	"""
 
 	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10,displayName=None):
-		"""
-		@param minStep: Specifies the minimum step between valid values for each numeric setting. For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
-		@type minStep: int
-		@param normalStep: Specifies the step between values that a user will normally prefer. This is used in the settings ring.
-		@type normalStep: int
-		@param largeStep: Specifies the step between values if a large adjustment is desired. This is used for pageUp/pageDown on sliders in the Voice Settings dialog.
-		@type largeStep: int
-		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
-		"""
-		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
-		self.minStep=minStep
-		self.normalStep=max(normalStep,minStep)
-		self.largeStep=max(largeStep,self.normalStep)
+		warnings.warn("synthDriverHandler.NumericSynthSetting is deprecated. Use driverHandler.NumericDriverSetting instead",
+			DeprecationWarning, stacklevel=3)
+		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
+		self.name = name
 
-class BooleanSynthSetting(SynthSetting):
-	"""Represents a boolean synthesiser setting such as rate boost.
+class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
+	"""@Deprecated: use L{driverHandler.BooleanDriverSetting} instead.
 	"""
-	configSpec = "boolean(default=False)"
 
-	def __init__(self, name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None):
-		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
+	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
+		displayName=None, defaultVal=False):
+		warnings.warn("synthDriverHandler.BooleanSynthSetting is deprecated. Use driverHandler.BooleanDriverSetting instead",
+			DeprecationWarning, stacklevel=3)
+		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName,defaultVal=defaultVal)
+		self.name = name
 
-class SynthDriver(baseObject.AutoPropertyObject):
+class SynthDriver(driverHandler.Driver):
 	"""Abstract base synthesizer driver.
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
 	
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
 	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
-	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
-	There are factory functions to create L{SynthSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
-	Each setting is retrieved and set using attributes named after the setting;
-	e.g. the L{voice} attribute is used for the L{voice} setting.
-	These will usually be properties.
+	There are factory functions to create L{driverHandler.DriverSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
 	The L{lastIndex} attribute should also be provided.
-	@ivar supportedSettings: The settings supported by the synthesiser.
-	@type supportedSettings: list or tuple of L{SynthSetting}
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
@@ -226,18 +187,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@type lastIndex: int
 	"""
 
-	#: The name of the synth; must be the original module file name.
-	#: @type: str
-	name = ""
-	#: A description of the synth.
-	#: @type: str
-	description = ""
+	_configSection = "speech"
 
 	@classmethod
 	def LanguageSetting(cls):
 		"""Factory function for creating a language setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return SynthSetting("language",_("&Language"),
+		return driverHandler.DriverSetting("language",_("&Language"),availableInSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Language'))
 
@@ -245,14 +201,14 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return SynthSetting("voice",_("&Voice"),
+		return driverHandler.DriverSetting("voice",_("&Voice"),availableInSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Voice'))
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return SynthSetting("variant",_("V&ariant"),
+		return driverHandler.DriverSetting("variant",_("V&ariant"),availableInSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Variant'))
 
@@ -260,21 +216,31 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep,
+		return driverHandler.NumericDriverSetting("rate",_("&Rate"),minStep=minStep,availableInSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Rate'))
+	@classmethod
+	def RateBoostSetting(cls):
+		"""Factory function for creating rate boost setting."""
+		# Translators: This is the name of the rate boost voice toggle
+		# which further increases the speaking rate when enabled.
+		return driverHandler.BooleanDriverSetting("rateBoost",_("Rate boos&t"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Rate boost'),
+		availableInSettingsRing=True)
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,
+		return driverHandler.NumericDriverSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,availableInSettingsRing=True,
+
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Volume'))
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("pitch",_("&Pitch"),minStep=minStep,
+		return driverHandler.NumericDriverSetting("pitch",_("&Pitch"),minStep=minStep,availableInSettingsRing=True,
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Pitch'))
 
@@ -282,33 +248,9 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("inflection",_("&Inflection"),minStep=minStep,
-# Translators: Label for a setting in synth settings ring.
+		return driverHandler.NumericDriverSetting("inflection",_("&Inflection"),minStep=minStep,availableInSettingsRing=True,
+		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Inflection'))
-
-	@classmethod
-	def check(cls):
-		"""Determine whether this synth is available.
-		The synth will be excluded from the list of available synths if this method returns C{False}.
-		For example, if this synth requires installation and it is not installed, C{False} should be returned.
-		@return: C{True} if this synth is available, C{False} if not.
-		@rtype: bool
-		"""
-		return False
-
-	def __init__(self):
-		"""Initialize this synth driver.
-		This method can also set default settings for the synthesizer.
-		@raise Exception: If an error occurs.
-		@postcondition: This driver can be used.
-		"""
-
-	def terminate(self):
-		"""Terminate this synth driver.
-		This should be used for any required clean up.
-		@precondition: L{initialize} has been called.
-		@postcondition: This driver can no longer be used.
-		"""
 
 	def speak(self,speechSequence):
 		"""
@@ -437,20 +379,11 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@rtype: OrderedDict
 		"""
 		raise NotImplementedError
- 
+
 	def _get_availableVariants(self):
 		if not hasattr(self,'_availableVariants'):
 			self._availableVariants=self._getAvailableVariants()
 		return self._availableVariants
-
-	def _get_supportedSettings(self):
-		raise NotImplementedError
-
-	def getConfigSpec(self):
-		spec=deepcopy(config.confspec["speech"]["__many__"])
-		for setting in self.supportedSettings:
-			spec[setting.name]=setting.configSpec
-		return spec
 
 	def _get_inflection(self):
 		return 0
@@ -465,45 +398,31 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		"""
 		pass
 
-	@classmethod
-	def _paramToPercent(cls, current, min, max):
-		"""Convert a raw parameter value to a percentage given the current, minimum and maximum raw values.
-		@param current: The current value.
-		@type current: int
-		@param min: The minimum value.
-		@type current: int
-		@param max: The maximum value.
-		@type max: int
-		"""
-		return int(round(float(current - min) / (max - min) * 100))
-
-	@classmethod
-	def _percentToParam(cls, percent, min, max):
-		"""Convert a percentage to a raw parameter value given the current percentage and the minimum and maximum raw parameter values.
-		@param percent: The current percentage.
-		@type percent: int
-		@param min: The minimum raw parameter value.
-		@type min: int
-		@param max: The maximum raw parameter value.
-		@type max: int
-		"""
-		return int(round(float(percent) / 100 * (max - min) + min))
-
-	def isSupported(self,settingName):
-		"""Checks whether given setting is supported by the synthesizer.
-		@rtype: l{bool}
-		"""
-		for s in self.supportedSettings:
-			if s.name==settingName: return True
-		return False
-
-	def saveSettings(self):
-		conf=config.conf["speech"][self.name]
+	def initSettings(self):
+		firstLoad = not config.conf[self._configSection].isSet(self.name)
+		if firstLoad:
+			# Create the new section.
+			config.conf[self._configSection][self.name] = {}
+		# Make sure the config spec is up to date, so the config validator does its work.
+		config.conf[self._configSection][self.name].spec.update(self.getConfigSpec())
+		# Make sure the instance has attributes for every setting
 		for setting in self.supportedSettings:
-			conf[setting.name]=getattr(self,setting.name)
+			if not hasattr(self, setting.id):
+				setattr(self, setting.id, setting.defaultVal)
+		if firstLoad:
+			if self.isSupported("voice"):
+				voice=self.voice
+			else:
+				voice=None
+			# We need to call changeVoice here so that required initialisation can be performed.
+			changeVoice(self,voice)
+			self.saveSettings() #save defaults
+		else:
+			self.loadSettings()
 
 	def loadSettings(self, onlyChanged=False):
-		c=config.conf["speech"][self.name]
+		# Method override due to specific logic needed when changing a voice.
+		c=config.conf[self._configSection][self.name]
 		if self.isSupported("voice"):
 			voice=c.get("voice",None)
 			if not onlyChanged or self.voice!=voice:
@@ -518,50 +437,47 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		elif not onlyChanged:
 			changeVoice(self,None)
 		for s in self.supportedSettings:
-			if s.name=="voice" or c[s.name] is None:
+			if s.id == "voice" or c[s.id] is None:
 				continue
-			val=c[s.name]
-			if onlyChanged and getattr(self,s.name)==val:
+			val=c[s.id]
+			if onlyChanged and getattr(self,s.id)==val:
 				continue
-			setattr(self,s.name,val)
+			setattr(self,s.id, val)
+		log.debug(
+			(
+				"Loaded changed settings for SynthDriver {}"
+				if onlyChanged else
+				"Loaded settings for SynthDriver {}"
+			).format(self.name))
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
 			#Choose first as an initial one
 			for i,s in enumerate(self.supportedSettings): 
-				if s.availableInSynthSettingsRing: return i
+				if s.availableInSettingsRing: return i
 			return None
 		for i,s in enumerate(self.supportedSettings):
-			if s.name=="rate": return i
+			if s.id == "rate": return i
 		return None
 
-class StringParameterInfo(object):
-	"""
-	The base class used to represent a value of a string synth setting.
-	"""
-
-	def __init__(self,ID,name):
-		#: The unique identifier of the value.
-		#: @type: str
-		self.ID=ID
-		#: The name of the value, visible to the user.
-		#: @type: str
-		self.name=name
-
-class VoiceInfo(StringParameterInfo):
+class VoiceInfo(driverHandler.StringParameterInfo):
 	"""Provides information about a single synthesizer voice.
 	"""
 
-	def __init__(self,ID,name,language=None):
-		#: The ID of the language this voice speaks, or None if not known or the synth implements language separate from voices
+	def __init__(self, id, displayName, language=None):
+		"""
+		@param language: The ID of the language this voice speaks,
+			C{None} if not known or the synth implements language separate from voices.
+		@type language: str
+		"""
 		self.language=language
-		super(VoiceInfo,self).__init__(ID,name)
+		super(VoiceInfo,self).__init__(id, displayName)
 
-class LanguageInfo(StringParameterInfo):
+class LanguageInfo(driverHandler.StringParameterInfo):
 	"""Holds information for a particular language"""
 
-	def __init__(self,ID):
+	def __init__(self, id):
 		"""Given a language ID (locale name) the description is automatically calculated."""
-		name=languageHandler.getLanguageDescription(ID)
-		super(LanguageInfo,self).__init__(ID,name)
+		displayName = languageHandler.getLanguageDescription(id)
+		super(LanguageInfo,self).__init__(id, displayName)
 
