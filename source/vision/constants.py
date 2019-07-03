@@ -33,6 +33,7 @@ class Context:
 	For example, L{focus} is used when an event is trigggered by the focus object or a focus change.
 	"""
 	FOCUS = "focus"
+	FOREGROUND = "foreground"
 	NAVIGATOR = "navigator"
 	FOCUS_NAVIGATOR = "focusNavigator"
 	CARET = "caret"
