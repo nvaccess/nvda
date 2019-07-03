@@ -6,7 +6,7 @@ What's New in NVDA
 = threshold release =
 
 == Changes for Developers ==
- - Updated pySerial to version 3.4
+- Updated pySerial to version 3.4
 - the validate module is now only available from configobj. Code should now do from configobj import validate rather than import validate.
 - textInfos.Point and textInfos.Rect are removed and replaced by locationHelper.Point and locationHelper.RectLTRB, respectively 
 - braille.BrailleHandler._get/set_tether have been removed. use getTether and setTether respectively.
@@ -20,7 +20,7 @@ What's New in NVDA
 - SynthDriver classes should no longer expose index via the lastIndex property. Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.
 - SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.
 - SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.
- 
+
 
 = 2019.3 =
 
