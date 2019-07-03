@@ -364,8 +364,11 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
 		try:
-			# #9847: convert the path qualifier to Unicode so temp path can be appended correctly due to issues seen when appending unicode to raw strings for certain strings.
-			winKernel.moveFileEx(u"\\\\?\\"+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
+			# Use escapes in a unicode string instead of raw.
+			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
+			pathQualifier=u"\\\\?\\"
+			# #9847: Move file to None to delete it.
+			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		except WinError:
 			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
 		return
