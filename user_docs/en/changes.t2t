@@ -7,12 +7,12 @@ What's New in NVDA
 
 == Changes for Developers ==
 - Updated NVDA source code to Python 3.7. (#7105)
-- Updated pySerial to version 3.4
+- Updated pySerial to version 3.4.
 - the validate module is now only available from configobj. Code should now do from configobj import validate rather than import validate.
-- textInfos.Point and textInfos.Rect are removed and replaced by locationHelper.Point and locationHelper.RectLTRB, respectively 
+- textInfos.Point and textInfos.Rect are removed and replaced by locationHelper.Point and locationHelper.RectLTRB, respectively.
 - braille.BrailleHandler._get/set_tether have been removed. use getTether and setTether respectively.
-- config.getConfigDirs has been removed
-- config.ConfigManager.getConfigValidationParameter is removed. A bug in getConfigValidation has been fixed in order for it being able to fully replace getConfigValidationParameter
+- config.getConfigDirs has been removed.
+- config.ConfigManager.getConfigValidationParameter is removed. A bug in getConfigValidation has been fixed in order for it being able to fully replace getConfigValidationParameter.
 - inputCore.InputGesture.logIdentifier property has been removed. Now use inputCore.InputGesture.identifiers[0] instead.
 - As NVDA no longer depends on pyWin32, modules such as win32api and win32con are no longer available to add-ons. win32api calls can be replaced with direct calls to win32 dll functions via ctypes, and win32con constants should be defined at the top of your files. (#9639)
 - The "async" argument in nvwave.playWaveFile has been renamed to "asynchronous". Add-ons that relied on this name should be modified to use the new argument name. (#8607)
