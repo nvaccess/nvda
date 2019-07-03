@@ -29,7 +29,7 @@ as there are built-in gesture bindings for braille input.
 """
 
 #: Table to use if the input table configuration is invalid.
-FALLBACK_TABLE = "en-us-comp8.ctb"
+FALLBACK_TABLE = "en-ueb-g1.ctb"
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
