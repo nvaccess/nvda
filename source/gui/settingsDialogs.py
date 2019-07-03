@@ -2053,7 +2053,7 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a combo box for selecting the
 		# active console implementation in the advanced settings panel.
-		# Choices are automatic, prefer UIA, and force legacy.
+		# Choices are automatic, prefer UIA, and legacy.
 		consoleComboText = _("Windows C&onsole support:")
 		consoleChoices=[
 			#Translators: A choice in a combo box in the advanced settings
@@ -2066,7 +2066,7 @@ class AdvancedPanelControls(wx.Panel):
 			#Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA use its legacy Windoes Console support
 			# in all cases.
-			_("Force legacy")
+			_("Legacy")
 		]
 		#: The possible console config values, in the order they appear
 		#: in the combo box.
