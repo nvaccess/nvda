@@ -28,8 +28,6 @@ Normally, all that is required is to create and execute a L{BrailleInputGesture}
 as there are built-in gesture bindings for braille input.
 """
 
-#: Table to use if the input table configuration is invalid.
-FALLBACK_TABLE = "en-us-comp8.ctb"
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
@@ -56,16 +54,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def __init__(self):
 		super(BrailleInputHandler,self).__init__()
-		# #6140: Migrate to new table names as smoothly as possible.
-		tableName = config.conf["braille"]["inputTable"]
-		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
-		if newTableName:
-			tableName = config.conf["braille"]["inputTable"] = newTableName
-		try:
-			self._table = brailleTables.getTable(tableName)
-		except LookupError:
-			log.error("Invalid table: %s" % tableName)
-			self._table = brailleTables.getTable(FALLBACK_TABLE)
+		self._table: Optional(brailleTables.BrailleTable) = None
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
@@ -90,6 +79,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		self._uncontSentTime = None
 		#: The modifiers currently being held virtually to be part of the next braille input gesture.
 		self.currentModifiers = set()
+		self.handlePostConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
 	# Provided by auto property: L{_get_table} and L{_set_table}
@@ -135,8 +125,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
 			mode |=  louis.partialTrans
 		self.bufferText = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
-			"braille-patterns.cti"],
+			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=mode)[0]
 		newText = self.bufferText[oldTextLen:]
 		if newText:
@@ -185,8 +174,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
-			"braille-patterns.cti"],
+			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=louis.dotsIO | louis.noUndefinedDots | louis.partialTrans)[0]
 		self.bufferText = text
 		return oldText
@@ -427,13 +415,26 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.flushBuffer()
 
 	def handlePostConfigProfileSwitch(self):
+		# #6140: Migrate to new table names as smoothly as possible.
+		tableName = config.conf["braille"]["inputTable"]
+		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
+		if newTableName:
+			tableName = config.conf["braille"]["inputTable"] = newTableName
 		table = config.conf["braille"]["inputTable"]
-		if table != self._table.fileName:
-			self._table = brailleTables.getTable(table)
+		if not self._table or table != self._table.fileName:
+			try:
+				self._table = brailleTables.getTable(tableName)
+			except LookupError:
+				log.error(
+					f"Invalid input table ({tableName}), "
+					f"falling back to default ({brailleTables.FALLBACK_TABLE_NAME})."
+				)
+				self._table = brailleTables.getFallbackTable()
 
 
 #: The singleton BrailleInputHandler instance.
 handler: Optional[BrailleInputHandler] = None
+
 
 def initialize():
 	global handler

@@ -2689,15 +2689,15 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		outTables = [table for table in tables if table.output]
-		self.outTableNames = [table.fileName for table in outTables]
-		outTableChoices = [table.displayName for table in outTables]
+		self.outTables = [table for table in tables if table.output]
+		outTableChoices = [table.displayName for table in self.outTables]
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		try:
-			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			# selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			selection = self.outTables.index(braille.handler.table)
 			self.outTableList.SetSelection(selection)
 		except:
-			pass
+			log.exception()
 		if gui._isDebug():
 			log.debug("Loading output tables completed, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -2710,7 +2710,7 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 			selection = self.inTables.index(brailleInput.handler.table)
 			self.inTableList.SetSelection(selection)
 		except:
-			pass
+			log.exception()
 		if gui._isDebug():
 			log.debug("Loading input tables completed, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -2825,7 +2825,7 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		DriverSettingsMixin.onSave(self)
-		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
+		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
 		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
