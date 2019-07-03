@@ -153,6 +153,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		import controlTypes
 		import globalPlugins
 		import textInfos
+		import vision
 		self.namespace.clear()
 		self.namespace.update({
 			"help": HelpCommand(),
@@ -171,6 +172,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"queueHandler": queueHandler,
 			"speech": speech,
 			"textInfos": textInfos,
+			"vision": vision,
 		})
 
 	def updateNamespaceSnapshotVars(self):
