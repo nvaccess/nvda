@@ -31,6 +31,7 @@ class AppModule(appModuleHandler.AppModule):
 			ui.message(self.msgs[num-1])
 		except IndexError:
 			ui.message(_("No message yet"))
+	# Translators: A gesture description.
 	script_readMessage.__doc__=_("Displays one of the recent messages")
 
 
