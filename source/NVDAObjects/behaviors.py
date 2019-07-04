@@ -380,7 +380,7 @@ for implementing history in chat programs."""
 			# Translators: This is presented to inform the user that
 			# no more items are available in the announcement history
 			# (such as for chat applications).
-			ui.message(_("No more"))
+			ui.message(_("No more items"))
 	# Translators: The description of an NVDA command to view items in the
 	# history (such as in chat applications).
 	script_readHistoryItem.__doc__=_("Displays items in the history")

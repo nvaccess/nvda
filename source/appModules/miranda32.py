@@ -76,14 +76,8 @@ CLM_GETSTATUSMSG=CLM_FIRST+105
 
 #other constants
 ANSILOGS=(1001,1006)
-MESSAGEVIEWERS=(1001,1005,3011,5005)
 
 class AppModule(appModuleHandler.AppModule):
-	lastTextLengths={}
-	lastMessages=[]
-	# Must not be > 9.
-	MessageHistoryLength=3
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		if windowClass == "CListControl":
@@ -98,8 +92,6 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, mirandaIMHyperlink)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_PROPERTYPAGE:
 			clsList.insert(0, MPropertyPage)
-		#elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_SCROLLBAR and obj.windowControlID in MESSAGEVIEWERS:
-		#	clsList.insert(0, MirandaMessageViewerScrollbar)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_WINDOW and 'RICHEDIT' in windowClass:
 			clsList.insert(0, MirandaMessageWindow)
 		elif isinstance(obj, IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_TEXT and controlTypes.STATE_READONLY in obj.states:
@@ -221,20 +213,6 @@ class MPropertyPage(Dialog,IAccessible):
 		return name
 
 
-class MirandaMessageViewerScrollbar(IAccessible):
-	def event_valueChange(self):
-		curTextLength=len(self.windowText)
-		if self.windowHandle not in self.appModule.lastTextLengths:
-			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
-		elif self.appModule.lastTextLengths[self.windowHandle]<curTextLength:
-			message=self.windowText[self.appModule.lastTextLengths[self.windowHandle]:]
-			self.appModule.lastMessages.insert(0,message)
-			self.appModule.lastMessages=self.appModule.lastMessages[:self.appModule.MessageHistoryLength]
-			if config.conf["presentation"]["reportDynamicContentChanges"]:
-				ui.message(message)
-			self.appModule.lastTextLengths[self.windowHandle]=curTextLength
-		super(MirandaMessageViewerScrollbar,self).event_valueChange()
-
 class DuplicateFocusListBox(IAccessible):
 	"""A list box which annoyingly fires focus events every second, even when a menu is open.
 	"""
@@ -254,6 +232,11 @@ class DuplicateFocusListBox(IAccessible):
 
 class MirandaMessageWindow(IAccessible):
 	def _get_messageLog(self):
+		# Todo: this part of the implementation is broken, but this is roughly
+		# what I'm going for here.
+		for child in self.children:
+			if isinstance(child, MirandaMessageLog):
+				return child
 		return None
 
 	def event_gainFocus(self):
