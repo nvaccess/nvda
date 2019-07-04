@@ -52,7 +52,7 @@ class EventExtensionPoints:
 	#: For example, a magnifier can track the magnified area of the screen to the new caret position.
 	#: Handlers are strongly encouraged to cache the new caret position,
 	#: and handle the pending caret update at the end of every core cycle using L{post_coreCycle},
-	#: unless tehy delegate caret change handling to a separate thread.
+	#: unless they delegate caret change handling to a separate thread.
 	#: Handlers are called with one argument.
 	#: @param obj: The object in which the caret position changed.
 	#: @type obj: L{NVDAObjects.NVDAObject}
@@ -63,7 +63,7 @@ class EventExtensionPoints:
 	#: For example, a magnifier can track the magnified area of the screen to the new virtual caret position.
 	#: Handlers are strongly encouraged to cache the new virtual caret position,
 	#: and handle the pending update at the end of every core cycle using L{post_coreCycle},
-	#: unless tehy delegate virtual caret change handling to a separate thread.
+	#: unless they delegate virtual caret change handling to a separate thread.
 	#: Handlers are called with one argument.
 	#: @param obj: The cursor manager that changed it virtual caret position.
 	#: @type obj: L{cursorManager.CursorManager}
@@ -75,7 +75,7 @@ class EventExtensionPoints:
 	#: or the exact location of the review cursor within the object.
 	#: Handlers are strongly encouraged to cache the last context that triggered the change,
 	#: and handle the pending review position change at the end of every core cycle using L{post_coreCycle},
-	#: unless tehy delegate review position change handling to a separate thread.
+	#: unless they delegate review position change handling to a separate thread.
 	#: Handlers are called with one argument.
 	#: @param context: The context that triggered the review position change.
 	#: @type context: One of the constants on L{vision.constants.Context}
