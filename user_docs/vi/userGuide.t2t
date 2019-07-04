@@ -15,7 +15,7 @@ Cung cấp các phản hồi qua bộ đọc và qua màn hình nổi để giú
 NVDA được phát triển bởi công ty [NV Access https://www.nvaccess.org/], với sự đóng góp và hỗ trợ từ cộng đồng.
 
 ++ Các tính năng chung ++[GeneralFeatures]
-NVDA cho phép người khiếm thị tương tác và sử dụng máy tính với hệ điều hành Windows và các ứng dụng khác.
+NVDA cho phép người mù và nhìn kém tương tác và sử dụng máy tính với hệ điều hành Windows và các ứng dụng khác.
 
 Một số tính năng nổi bật bao gồm:
 - Hỗ trợ tương tác với các ứng dụng phổ biến như các trình duyệt web, chương trình thư điện tử (e-mail), chương trình trò chuyện (chat) và các bộ ứng dụng văn phòng
@@ -62,11 +62,11 @@ Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình mi�
 
 + Yêu Cầu Hệ Thống +[SystemRequirements]
 - Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 7, Windows 8, Windows 8.1,  Windows 10 và các bản máy chủ từ bản Windows Server 2008 R2.
- - Đối với Windows 7, NVDA yêu cầu bản SP1 hoặc cao hơn.
- - Đối với bản  Windows Server 2008 R2, NVDA yêu cầu bản SP 1 hoặc cao hơn.
+ - Đối với Windows 7, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
+ - Đối với Windows Server 2008 R2, NVDA yêu cầu bản Service Pack 1 hoặc cao hơn.
  - Bộ nhớ RAM: 256 mb hoặc cao hơn
 - Tốc độ bộ vi xử lý: 1.0 ghz hoặc cao hơn
-- Yêu cầu ít nhất 90 MB không gian lưu trữ ổ cứng
+- Khoảng 90 MB không gian lưu trữ ổ cứng
 -
 
 + Tải và cài đặt NVDA +[GettingAndSettingUpNVDA]
@@ -98,13 +98,13 @@ Bên cạnh việc không thể tự khởi động cùng Windows và chạy ở
 -
 
 ++ Cài đặt NVDA ++[InstallingNVDA]
-Nếu cài đặt từ gói NVDA bạn tải về thì bạn có thể chọn nút "Cài đặt" NVDA.
-Nếu bạn cài từ bản chạy trực tiếp thì bạn có thể chọn mục "Cài đặt NVDA" từ thực đơn "Công cụ" của NVDA.
+Nếu cài đặt trực tiếp từ gói NVDA đã tải về thì bạn có thể chọn nút "Cài đặt" NVDA.
+Nếu đã đóng hộp thoại này hay muốn cài đặt từ bản chạy trực tiếp thì bạn có thể chọn mục "Cài đặt NVDA" từ thực đơn "Công cụ" của NVDA.
 
-Hộp thoại cài đặt xuất hiện sẽ thông báo cho bạn là NVDA sẽ được cài đặt mới hoặc nâng cấp phiên bản NVDA đang có trên máy của bạn.
+Hộp thoại cài đặt xuất hiện  sẽ cho bạn biết rằng NVDA được cài mới hoặc nâng cấp phiên bản đã cài đặt trước đó.
 Chọn nút "Tiếp tục" sẽ bắt đầu cài đặt NVDA.
 Có một số tùy chọn cho việc cài đặt sẽ được giải thích trong phần dưới.
-Sau khi việc cài đặt kết thúc, sẽ có một thông báo về việc cài đặt đã thành công.
+Sau khi cài đặt hoàn tất, sẽ có một thông báo rằng quá trình này đã  thành công.
 Chọn nút OK để khởi động lại bản NVDA vừa cài đặt.
 
 +++ Cảnh báo các add-on không tương thích +++[InstallWithIncompatibleAddons]
@@ -113,27 +113,27 @@ Trước khi bấm nút tiếp tục, bạn cần phải chọn vào hộp kiể
 Cũng có một nút bấm để bạn xem qua các add-on sẽ bị tắt.
 Xem phần [hộp thoại các add-on không tương thích #incompatibleAddonsManager] để biết thêm thông tin về nút này.
 
-+++ Chạy NVDA tại màn hình đăng nhập của Windows +++[StartAtWindowsLogon]
-Tùy chọn này cho phép NVDA có thể chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
++++ Sử dụng NVDA ở màn hình đăng nhập Windows +++[StartAtWindowsLogon]
+Tùy chọn này cho phép NVDA chạy  hoặc không chạy tự động tại màn hình đăng nhập của Windows, trước khi bạn nhập mật khẩu.
 Tùy chọn này cũng áp dụng cho màn hình User Account và các màn hình bảo vệ khác.
 Tùy chọn này mặc định được bật cho các bản cài đặt mới.
 
-+++ Tạo biểu tượng trên Desktop (ctrl+alt+n) +++[CreateDesktopShortcut]
-Tùy chọn này sẽ tạo biểu tượng NVDA trên màn hình Desktop để bạn có thể khởi động NVDA từ biểu tượng này.
-Nếu biểu tượng được tạo thì nó sẽ được gán một phím tắt là Ctrl + alt + n, khi bấm tổ hợp phím này thì NVDA sẽ được gọi chạy.
++++ Tạo biểu tượng trên Desktop và phím tắt (Ctrl + alt + n) +++[CreateDesktopShortcut]
+Tùy chọn này sẽ tạo biểu tượng NVDA trên màn hình Desktop để bạn có thể khởi động NVDA từ biểu tượng đó.
+Nếu  được tạo, biểu tượng này cũng được gán phím tắt Ctrl + alt + n, cho phép bạn gọi chạy NVDA bất cứ lúc nào.
 
-+++ Sao chép cấu hình từ bản chạy trực tiếp tới thư mục cấu hình người dùng hiện tại +++[CopyPortableConfigurationToCurrentUserAccount]
++++ Chép thư mục cấu hình bản chạy trực tiếp vào thu mục người dùng hiện tại +++[CopyPortableConfigurationToCurrentUserAccount]
 Tùy chọn này sẽ chép thư mục cấu hình của bản NVDA chạy trực tiếp sang thư mục cấu hình của người dùng hiện tại (cho bản cài đặt).
 Nó sẽ không chép tới thư mục cấu hình của các tài khoản người dùng khác trên máy hay tới phần cấu hình hệ thống liên quan đến việc cho phép chạy ở màn hình đăng nhập của Windows cũng như các màn hình bảo vệ.
 Tùy chọn này chỉ có trong quá trình cài đặt NVDA từ bản chạy trực tiếp.
 
 ++ Tạo bản NVDA chạy trực tiếp ++[CreatingAPortableCopy]
-Nếu bạn chạy bản NVDA chạy trực tiếp từ gói bạn tải về thì bạn có thể chọn nút Tạo bản chạy trực tiếp (Create portable copy).
-Nếu bạn đang sử dụng NVDA được cài đặt trên máy thì bạn có thể tạo bản chạy trực tiếp bằng cách chọn mục "Tạo bản chạy trực tiếp" từ thực đơn "Công cụ" của NVDA.
+Nếu bạn chạy NVDA trực tiếp từ gói bạn tải về thì bạn có thể chọn nút Tạo bản chạy trực tiếp (Create portable copy).
+Nếu bạn đang sử dụng NVDA được cài đặt trên máy, hãy chọn  mục Tạo bản chạy trực tiếp từ thực đơn Công cụ của NVDA.
 
 Một hộp thoại sẽ xuất hiện cho phép bạn chọn nơi sẽ tạo bản chạy trực tiếp.
 Đó có thể là một thư mục trên ổ đĩa cứng, trên ổ USB hay một phương tiện lưu trữ bất kỳ.
-Trên cửa sổ này, bạn cũng có thể chọn tùy chọn chép thư mục cấu hình của người dùng hiện tại sang phiên bản chạy trực tiếp.
+ Ở đây cũng có tùy chọn chép thư mục cấu hình của người dùng hiện tại sang phiên bản chạy trực tiếp.
 Tùy chọn này chỉ có khi bạn tạo bản chạy trực tiếp từ bản NVDA đã cài đặt trên máy, không tồn tại khi tạo bản chạy trực tiếp từ gói cài đặt.
 Sau đó, bấm nút "Tiếp tục" để tiến hành tạo bản NVDA chạy trực tiếp.
 Khi hoàn tất, sẽ có một thông báo xác nhận là việc tạo bản chạy trực tiếp đã thành công.
@@ -142,9 +142,9 @@ Bấm Đồng ý để đóng cửa sổ đó.
 + Bắt đầu với NVDA +[GettingStartedWithNVDA]
 
 ++ Khởi động NVDA ++[LaunchingNVDA]
-Nếu đã cài NVDA thì bạn có thể khởi động nó bằng cách bấm tổ hợp phím ctrl + alt + n hoặc từ menu start.
+Nếu đã cài NVDA thì bạn có thể khởi động nó bằng cách bấm tổ hợp phím ctrl + alt + n, hoặc chọn NVDA từ thực đơn NVDA trong Programs  trên menu start.
 Thêm vào đó, bạn có thể gõ nvda vào hộp thoại Run và bấm enter.
-Bạn cũng có thể đưa thêm vào một số [tùy chọn của dòng lệnh #CommandLineOptions] khi chạy NVDA chẳng hạn như khởi động lại NVDA (-r), thoát (-q), vô hiệu hóa add-ons (--disable-addons)
+Bạn cũng có thể đưa thêm vào một số [tùy chọn của dòng lệnh #CommandLineOptions] khi chạy NVDA chẳng hạn như khởi động lại NVDA (-r), thoát (-q), vô hiệu hóa add-ons (--disable-addons), v...v...
 
 Đối với bản cài đặt, mặc định, NVDA lưu các cấu hình người dùng trong thư mục roaming application data của người dùng hiện tại (ví dụ: "C:\Users\<user>\AppData\Roaming").
 Hiện đã có thể thay đổi để NVDA tải và sử dụng cấu hình từ thư mục local application data.
@@ -152,7 +152,7 @@ Hãy tham khảo thêm phần [các tham số hệ thống #SystemWideParameters
 
 Để khởi động bản NVDA chạy trực tiếp thì bạn tìm đến thư mục của bản chạy, sau đó tìm tập tin nvda.exe và bấm Enter hay nhấp đôi chuột trái lên nó.
 
-Khi NVDA khởi động, bạn sẽ nghe thấy những nốt nhạc cao dần thông báo là NVDA đang khởi động.
+Khi NVDA khởi động, bạn sẽ nghe thấy những nốt nhạc cao dần thông báo là NVDA đang được gọi chạy.
 Tùy thuộc vào tốc độ xử lý trên máy của bạn hay thiết bị lưu trữ bản chạy trực tiếp mà việc khởi động NVDA có thể mất một khoảng thời gian nhỏ.
 Nếu phải chờ lâu thì NVDA sẽ thông báo "Đang khởi động NVDA. Vui lòng chờ...".
 
@@ -160,27 +160,27 @@ Nếu bạn không nghe thấy các dấu hiệu trên hoặc nghe thấy âm th
 Xin vui lòng xem thêm trên trang web của NVDA để biết thông tin về cách báo lỗi.
 
 +++ Hộp thoại chào mừng +++[WelcomeDialog]
-Ở lần đầu tiên khởi động, NVDA sẽ có một cửa sổ cung cấp cho bạn thông tin cơ bản về các phím bổ trợ NVDA và thực đơn.
+Ở lần khởi động đầu tiên, sẽ có một hộp thoại cung cấp cho bạn thông tin cơ bản về các phím bổ trợ NVDA và thực đơn.
 (Vui lòng tham khảo chủ đề này ở những phần sau)
 Hộp thoại cũn bao gồm một hộp xổ và ba hộp kiểm.
 Hộp xổ dùng để chọn kiểu bàn phím.
 Hộp kiểm đầu tiên cho phép bạn chọn phím khóa hoa làm phím bổ trợ NVDA.
-Hộp kiểm thứ hai cho phép NVDA khởi động cùng Windows và nó chỉ dành cho bản cài đặt.
-Hộp kiểm thứ ba cho phép bạn hiển thị cửa sổ chào mừng này mỗi khi khởi động NVDA.
+Hộp kiểm thứ hai cho phép NVDA khởi động cùng Windows và chỉ có trong bản cài đặt trên máy.
+Hộp kiểm thứ ba cho phép bạn hiển thị hộp thoại chào mừng này mỗi khi khởi động NVDA.
 
 ++ Giới thiệu về các lệnh bàn phím của NVDA ++[AboutNVDAKeyboardCommands]
 
 +++ phím bổ trợ NVDA +++[TheNVDAModifierKey]
-Các phím tắt trong NVDA thường là một tổ hợp phím với sự kết hợp của phím bổ trợ NVDA với một hay nhiều phím khác.
+Các phím tắt trong NVDA thường là một tổ hợp phím với sự kết hợp của một phím gọi là phím bổ trợ NVDA với một hay nhiều phím khác.
 ngoại trừ trường hợp duyệt nội dung trong kiểu bàn phím Desktop sử dụng các phím số bên bàn phím số và một vài trường hợp ngoại lệ khác.
 
-NVDA cho phép bạn có thể chọn phím Insert bên bàn phím số, Insert mở rộng hay phím Khóa hoa là phím bổ trợ cho NVDA.
+NVDA cho phép bạn chọn phím Insert bên bàn phím số, Insert mở rộng hay phím Khóa hoa là phím bổ trợ cho NVDA.
 Mặc định thì cả hai phím Insert đều được chọn là phím bổ trợ cho NVDA.
 
-Nếu bạn muốn phím bổ trợ hoạt động theo đúng chức năng của nó(ví dụ phím Khóa hoa) thì bạn bấm nhanh hai lần phím đó 
+Nếu muốn phím bổ trợ hoạt động theo đúng chức năng của nó(ví dụ phím Khóa hoa) thì bạn bấm nhanh hai lần phím đó 
 
 +++ Kiểu bàn phím +++[KeyboardLayouts]
-Hiện tại, NVDA có 2 kiểu phím tắt(hay còn gọi là kiểu bàn phím): Đó là kiểu bàn phím Desktop và Laptop.
+Hiện tại, NVDA có 2 kiểu phím tắt(hay còn gọi là kiểu bàn phím): là kiểu bàn phím Desktop và Laptop.
 Mặc định, NVDA được thiết lập theo kiểu bàn phím Desktop nhưng bạn có thể chuyển sang kiểu Laptop bằng cách chọn mục đó trong phân loại bàn phím trong hộp thoại [Cấu hình NVDA #NVDASettings], được tìm thấy trong  thực đơn tùy chọn  của NVDA.
 
 Kiểu bàn phím Desktop sẽ sử dụng các phím bên bàn phím số và yêu cầu tắt phím Khóa số (NumLock).
