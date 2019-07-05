@@ -1,8 +1,10 @@
 #winKernel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
 import contextlib
 import ctypes
@@ -383,3 +385,15 @@ class HGLOBAL(HANDLE):
 		Necessary if you pass this HGLOBAL to an API that takes ownership and therefore will handle freeing itself.
 		"""
 		self.value=None
+
+MOVEFILE_COPY_ALLOWED = 0x2
+MOVEFILE_CREATE_HARDLINK = 0x10
+MOVEFILE_DELAY_UNTIL_REBOOT = 0x4
+MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x20
+MOVEFILE_REPLACE_EXISTING = 0x1
+MOVEFILE_WRITE_THROUGH = 0x8
+
+def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
+	# If MoveFileExW fails, Windows will raise appropriate errors.
+	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
+		raise ctypes.WinError()

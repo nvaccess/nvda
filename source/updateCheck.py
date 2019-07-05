@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Zahari Yurukov, Babbage B.V.
+#Copyright (C) 2012-2019 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -42,6 +42,7 @@ from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
 import winUser
+import winKernel
 import fileUtils
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 
@@ -519,7 +520,11 @@ class UpdateAskInstallDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onPostponeButton(self, evt):
 		finalDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
 		try:
-			os.renames(self.destPath, finalDest)
+			# #9825: behavior of os.rename(s) has changed (see https://bugs.python.org/issue28356).
+			# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
+			# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
+			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 		except:
 			log.debugWarning("Unable to rename the file from {} to {}".format(self.destPath, finalDest), exc_info=True)
 			gui.messageBox(
