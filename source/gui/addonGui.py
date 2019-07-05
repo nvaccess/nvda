@@ -892,7 +892,7 @@ class AddonUpdatesDialog(wx.Dialog):
 			self.addonsList.Bind(wx.EVT_CHECKLISTBOX, self.onAddonsChecked)
 			# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 			self.addonsList.InsertColumn(0,_("Package"),width=150)
-			# Translators: The label for a column in add-ons list used to identify currently instlaled version.
+			# Translators: The label for a column in add-ons list used to identify currently installed version.
 			self.addonsList.InsertColumn(1,_("Current version"),width=50)
 			# Translators: The label for a column in add-ons list used to identify the new add-on version.
 			self.addonsList.InsertColumn(2,_("New version"),width=50)
