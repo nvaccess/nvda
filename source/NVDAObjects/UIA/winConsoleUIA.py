@@ -17,6 +17,7 @@ from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
 from ..window import Window
+import textUtils
 
 
 class consoleUIATextInfo(UIATextInfo):
@@ -192,16 +193,22 @@ class consoleUIATextInfo(UIATextInfo):
 		# not more than two alphanumeric chars in a row.
 		# Inject two alphanumeric characters at the end to fix this.
 		lineText += "xx"
-		NVDAHelper.localLib.calculateWordOffsets(
+		# We can't rely on len(lineText) to calculate the length of the line.
+		offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+		wideStringOffset = offsetConverter.strToWideOffsets(offset, offset)[0]
+		if not NVDAHelper.localLib.calculateWordOffsets(
 			lineText,
-			len(lineText),
-			offset,
+			offsetConverter.wideStringLength,
+			wideStringOffset,
 			ctypes.byref(start),
 			ctypes.byref(end)
-		)
+		):
+			log.error("Calculating word offsets with uniscribe failed")
+			return (offset, offset + 1)
+		wordStart, wordEnd = offsetConverter.wideToStrOffsets(start.value, end.value)
 		return (
-			start.value,
-			min(end.value, max(1, len(lineText) - 2))
+			wordStart,
+			min(wordEnd, max(1, len(lineText) - 2))
 		)
 
 	def __ne__(self,other):
