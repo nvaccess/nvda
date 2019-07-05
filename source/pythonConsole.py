@@ -105,7 +105,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self.namespace = {}
 		self.initNamespace()
 		#: The variables last added to the namespace containing a snapshot of NVDA's state.
-		#: @type: dict
+		#: @type: Optional[dict]
 		self._namespaceSnapshotVars = None
 
 		super().__init__(locals=self.namespace, **kwargs)
@@ -134,11 +134,11 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self.lastResult = None
 		more = super().push(line)
 		sys.stdout, sys.stderr = stdout, stderr
-		if __builtin__._ is not saved_:
-			self.lastResult = __builtin__._
+		if builtins._ is not saved_:
+			self.lastResult = builtins._
 			# Preserve the namespace if gettext has explicitly been pushed there 
 			if "_" not in self.namespace or self.namespace["_"] is not saved_:
-				self.namespace["_"] = __builtin__._
+				self.namespace["_"] = builtins._
 		builtins._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
@@ -347,7 +347,7 @@ class ConsoleUI(wx.Frame):
 				longestCompLen = compLen
 		# Find the longest common prefix.
 		for prefixLen in range(longestCompLen, 0, -1):
-			prefix = comp[:prefixLen]
+			prefix = longestComp[:prefixLen]
 			for comp in completions:
 				if not comp.startswith(prefix):
 					break

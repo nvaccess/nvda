@@ -29,21 +29,24 @@ from ctypes import windll
 import windowUtils
 
 import wx
-from typing import List
+from typing import List, Any, Union, Optional
+
+
 class InvisibleDriverWindow(windowUtils.CustomWindow):
 	className = u"Handy_Tech_Server"
 	HT_SLEEP = 100
 	HT_INCREMENT = 1
 	HT_DECREMENT = 0
-	def __init__(self, driver):
+
+	def __init__(self, driver: Any):
 		super(InvisibleDriverWindow, self).__init__(u"Handy Tech Server")
 		# Register shared window message.
 		# Note: There is no corresponding unregister function.
 		# Still this does no harm if done repeatedly.
 		self.window_message=windll.user32.RegisterWindowMessageW(u"Handy_Tech_Server")
-		self.driver = weakref.ref(driver, lambda(r): self.destroy())
+		self.driver = weakref.ref(driver, lambda r: self.destroy())
 
-	def windowProc(self, hwnd, msg, wParam, lParam):
+	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
 		if msg == self.window_message:
 			if wParam == self.HT_SLEEP and lParam == self.HT_INCREMENT:
 				d = self.driver()
@@ -53,7 +56,7 @@ class InvisibleDriverWindow(windowUtils.CustomWindow):
 				d = self.driver()
 				if d is not None:
 					d.wake_up()
-			return 0 # success, bypass default window procedure
+			return 0  # success, bypass default window procedure
 
 
 BAUD_RATE = 19200
@@ -564,6 +567,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
+
+	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
