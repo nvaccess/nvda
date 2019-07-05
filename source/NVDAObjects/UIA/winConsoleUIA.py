@@ -21,19 +21,25 @@ from ..window import Window
 
 class consoleUIATextInfo(UIATextInfo):
 	#: At least on Windows 10 1903, expanding then collapsing the text info
-	#: causes review to get stuck, so disable it.
+	#: caused review to get stuck, so disable it.
+	#: There may be no need to disable this anymore, but doing so doesn't seem
+	#: to do much good either.
 	_expandCollapseBeforeReview = False
 
-	def __init__(self, obj, position, _rangeObj=None):
-		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
-		if position == textInfos.POSITION_CARET and isWin10(1903, atLeast=False):
-			# The UIA implementation in 1903 causes the caret to be
-			# off-by-one, so move it one position to the right
-			# to compensate.
-			self._rangeObj.MoveEndpointByUnit(
+	def collapse(self,end=False):
+		"""Works around a UIA bug on Windows 10 1903 and later."""
+		if not isWin10(1903):
+			return super(consoleUIATextInfo, self).collapse(end=end)
+		# When collapsing, consoles seem to incorrectly push the start of the
+		# textRange back one character.
+		# Correct this by bringing the start back up to where the end is.
+		oldInfo=self.copy()
+		super(consoleUIATextInfo,self).collapse()
+		if not end:
+			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
-				UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-				1
+				oldInfo._rangeObj,
+				UIAHandler.TextPatternRangeEndpoint_Start
 			)
 
 	def move(self, unit, direction, endPoint=None):
@@ -139,6 +145,17 @@ class consoleUIATextInfo(UIATextInfo):
 		else:
 			return super(consoleUIATextInfo, self).expand(unit)
 
+	def _get_isCollapsed(self):
+		"""Works around a UIA bug on Windows 10 1903 and later."""
+		if not isWin10(1903):
+			return super(consoleUIATextInfo, self)._get_isCollapsed()
+		# Even when a console textRange's start and end have been moved to the
+		# same position, the console incorrectly reports the end as being
+		# past the start.
+		# Therefore to decide if the textRange is collapsed,
+		# Check if it has no text.
+		return not bool(self._rangeObj.getText(1))
+
 	def _getCurrentOffsetInThisLine(self, lineInfo):
 		"""
 		Given a caret textInfo expanded to line, returns the index into the
@@ -187,6 +204,10 @@ class consoleUIATextInfo(UIATextInfo):
 			min(end.value, max(1, len(lineText) - 2))
 		)
 
+	def __ne__(self,other):
+		"""Support more accurate caret move detection."""
+		return not self==other
+
 
 class consoleUIAWindow(Window):
 	def _get_focusRedirect(self):
@@ -215,6 +236,8 @@ class WinConsoleUIA(Terminal):
 	#: Whether the console got new text lines in its last update.
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
+	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
+	_caretMovementTimeoutMultiplier = 1.5
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText

@@ -2,6 +2,69 @@ Qué bi ha de Nuevo en o NVDA
 
 
 %!includeconf: ../changes.t2tconf
+= 2019.2 =
+Lo resinyable d'ista versión inclui la detección automatica de linias braille de Freedom Scientific, una opción experimental en o panel Abanzau pa aturar lo modo de navegación dende lo movimiento automatico d'o foco (lo qual podría fer milloras de rendimiento), una opción d'alzau brusco pa lo sintetizador Windows OneCore pa aconseguir velocidatz muito rapedas, y muitas atras correccions de fallos.
+
+== Nuevas Caracteristicas ==
+- Lo dialogo de busca agora inclui un historial con as zaguers 20 buscas. (#8482)
+ - Lo historial de busca se borra quan se reenchegue lo NVDA u se'n salga.
+- Lo suporte d'o NVDA pa lo Miranda NG marcha con as versions mas recients d'o client. (#9053) 
+- Agora puetz desenchegar lo modo de navegación de traza predeterminada desenchegando la nueva opción d'"enchegar lo modo de navegación en cargar la pachina" en a configuración d'o modo de navegación d'o NVDA. (#8716) 
+ - Tiene en cuenta que en que ixa opción siga desenchegada, encara puetz activar lo modo de navegación manualment pretando NVDA+espacio.
+- Agora puetz tresminar simbolos en o quadro de dialogo de pronuncia de puntuación y simbolos, de traza parellana a como marcha lo tresminau en a lista d'elementos y en o quadro de dialogo de cenyos de dentrada. (#5761)
+- S'ha anyadiu una orden pa cambiar la resolución d'a unidat de texto d'o churi (quánto texto se charrará en mover-se lo churi), no se le ha asignau un cenyo predeterminau. (#9056)
+- Lo sintetizador OneCore d'o Windows tien agora una opción d'aumento de velocidat, que permite una fabla significativament mas rapeda. (#7498)
+- Agora La opción de charrar a escape ye configurable dende l'aniello d'achustes de sintetizador pa sintetizadors de voz compatibles. (Actualment lo eSpeak-NG y lo Windows OneCore). (#8934)
+- Los perfils de configuración agora se pueden enchegar manualment con cenyos. (#4209)
+ - Lo cenyo s'ha de configurar en o quadro de dialogo de "cenyos de dentrada".
+- En lo Eclipse s'ha adhibiu suporte pa lo autocompletau en l'editor de codigo. (#5667)
+ - Amás, la información d'o Javadoc puede leyer-se dende lo editor quan ye present fendo servir NVDA+d.
+- S'ha adhibiu una opción experimental en o panel de configuración abanzada que te permite aturar lo foco d'o sistema pa que no siga a lo cursor d'o modo de navegación (calar automaticament lo foco d'o sistema en os elementos enfocables). (#2039) Encara que puede no estar adequau desactivar ixo en totz los puestos web, ixo podría apanyar: 
+ - Lo efecto de goma elastica: Lo NVDA desfá esporadicament la zaguer pretada de tecla d'o modo de navegación brincando t'a ubicación anterior.
+ - Los quadros d'edición sacan lo foco d'o sistema quan se mueva a traviés d'ells en qualques puestos web.
+ - Las pretadas de teclas d'o modo de navegación son lentas de respuesta.
+- Pa los controladors de linia braille que l'admitan, agora se puede cambiar las opcions d'o controlador dende la categoría d'opcions braille en o quadro de dialogo d'opcions d'o NVDA. (#7452)
+- Agora las linias braille de Freedom Scientific admiten la detección automatica de linias braille. (#7727)
+
+
+== Cambios ==
+- Lo volumen d'o sintetizador s'agrandeix y s'achiqueix de 5 en 5 en cuenta de 10  en 10 en emplegar l'aniello d'opcions. (#6754)
+- S'ha aclariu lo texto en l'administrador de complementos en rancar lo NVDA con l'indicador --disable-addons. (#9473)
+- S'ha esviellau las anotacions d'emoticonos Unicode Common Locale Data Repository t'a versión 35.0. (#9445)
+- S'ha esviellau lo transcriptor de braille liblouis t'a versión 3.9.0. (#9439)
+- En anglés, la tecla d'acceso directo pa lo campo de tresminar en a lista d'elementos en o modo de navegación ha cambiau ta alt+y. (#8728)
+- En connectar una linia braille autodetectada a traviés d'o Bluetooth, lo NVDA seguirá mirando linias USB compatibles con o mesmo controlador y cambiará ta una connexión USB si ye disponible. (#8853)
+
+
+== corrección d'errors ==
+- Lo NVDA ya no se bloca en que bell directorio de complementos siga laso. (#7686)
+- Las marcas LTR y RTL ya no s'anuncian en Braille u en voz por caracters quan s'accede t'a finestra de propiedatz. (#8361)
+- Quan se brinque t'os campos de formulario con a navegación rapeda d'o modo de navegación, agora s'anuncia tot lo campo de formulario en cuenta de nomás la primera linia. (#9388)
+- Lo NVDA ya no se silenciará dimpués de salir de l'aplicación Windows 10 Mail. (#9341)
+- Lo NVDA ya no falla en enchegar-se quan los achustes rechionals d'os usuarios s'estableixcan en una ubicación desconoixida pa lo NVDA, como por eixemplo inglés (Países Baixos). (#8726)
+- Quan lo modo de navegación siga enchegau en o Microsoft Excel y se cambie ta bell navegador en o modo de foco u viceversa, lo estau d'o modo de navegación agora se notifica adequadament. (#8846)
+- Lo NVDA agora anuncia correctament la linia en o cursor d'o churi en o Notepad++ y atros editors basaus en o Scintilla. (#5450)
+- En o Google Docs (y atros editors basaus en web), lo braille ya no amuestra a veces de traza incorrecta "lst end" antis d'o cursor en meyo d'un elemento d'a lista. (#9477)
+- En l'actualización de mayo de 2019 d'o Windows 10, lo NVDA ya no diz muitas notificacions de volumen si se cambia lo volumen con os botons de hardware quan lo Explorador de fichers tienga lo foco. (#9466)
+- La carga d'o dialogo de pronuncia de cenyos de puntuación y simbolos agora ye muito mas rapeda quan s'utilice diccionarios de simbolos que contiengan mas d'1.000 dentradas. (#8790)
+- En os controls d'o Scintilla como lo Notepad++, lo NVDA puede leyer la linia correcta quan l'achuste de linia siga enchegau. (#9424)
+- En o Microsoft Excel, la ubicación d'a celda s'anuncia dimpués que cambie a causa d'os cenyos mayus+intro u mayus+intro d'o teclau numerico. (#9499)
+- Dende lo Visual Studio 2017 en adebant, en a finestra d'o Explorador d'obchectos, l'elemento trigau en l'arbol d'obchectos u en l'arbol de miembros con categorías agora s'anuncia correctament. (#9311)
+- Los complementos con nombres que nomás difieran en as mayusclas ya no se tractan como complementos deseparaus. (#9334)
+- En o caso d'as voces d'o Windows OneCore, la velocidat establida en o NVDA ya no se veye afectada por la velocidat establida en a configuración de voz d'o Windows 10. (#7498)
+- Lo rechistro se puede ubrir agora con NVDA+F1 quan no bi ha información d'o desembolicador pa l'obchecto de navegador actual. (#8613)
+- Tamién ye posible fer servir los comandos de navegación de tabla d'o NVDA en o Google Docs, en o Firefox y en o Chrome. (#9494)
+- Las teclas frontals agora funcionan correctament en as linias braille de Freedom Scientific. (#8849)
+- En leyer lo primer caracter d'un documento en o Notepad++ 7.7 X64, lo NVDA ya no se conchela entre un maximo de diez segundos. (#9609)
+
+
+== Cambios pa los Desembolicadors ==
+- Agora puetz configurar la propiedat "disableBrowseModeByDefault" en os modulos de l'aplicación pa que deixe lo modo de navegación desenchegau por defecto. (#8846)
+- Lo estilo extendiu de finestra d'una finestra  agora s'exposa utilizando la propiedat `extendedWindowStyle` en obchectos finestra y los suyos derivaus. (#9136)
+- S'ha esviellau lo paquet comtypes ta 1.1.7. (#9440, #8522)
+- En emplegar lo comando report module info, l'orden d'a información s'ha cambiau pa presentar lo modulo en primeras. (#7338)
+- S'ha anyadiu un eixemplo pa contrimostrar l'uso de nvdaControllerClient.dll dende C#. (#9600)
+
 
 = 2019.1 =
 Lo resinyable d'ista versión inclui la rialización de milloras en acceder to Microsoft word y t'o Excel, milloras d'estabilidat y de seguranza tals como l'admisión de complementos con información de compatibilidat de versión, y muitas atras correccions d'errors.
