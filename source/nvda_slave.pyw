@@ -48,7 +48,7 @@ def main():
 			import shellapi
 			import winUser
 			shellapi.ShellExecute(0,None,
-				r"%s\nvda.exe"%sys.exec_prefix,
+				r"%s\nvda.exe"%sys.prefix,
 				subprocess.list2cmdline(args),
 				None,winUser.SW_SHOWNORMAL)
 		elif action=="setNvdaSystemConfig":
