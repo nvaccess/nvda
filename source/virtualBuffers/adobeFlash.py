@@ -36,7 +36,7 @@ class AdobeFlash(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeFlash,self).__init__(rootNVDAObject,backendName="adobeFlash")
-		self.isWindowless = rootNVDAObject.event_objectID > 0
+		self.isWindowless = rootNVDAObject.event_objectID is not None and rootNVDAObject.event_objectID > 0
 
 	def __contains__(self,obj):
 		if self.isWindowless:

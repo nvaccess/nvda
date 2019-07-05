@@ -58,9 +58,9 @@ class AcrobatNode(IAccessible):
 			log.debugWarning("Could not get IServiceProvider")
 			return
 
-		if self.event_objectID > 0:
+		if self.event_objectID is not None and self.event_objectID > 0:
 			self.accID = self.event_objectID
-		elif self.event_childID > 0:
+		elif self.event_childID is not None and self.event_childID > 0:
 			self.accID = self.event_childID
 		else:
 			try:
