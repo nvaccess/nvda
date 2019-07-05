@@ -48,6 +48,7 @@ import weakref
 import time
 import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixin
+import warnings
 
 class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
@@ -3371,3 +3372,11 @@ class InputGesturesDialog(SettingsDialog):
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
+
+class VoiceSettingsSlider(nvdaControls.EnhancedInputSlider):
+	"""@Deprecated: use L{gui.NVDAControls.EnhancedInputSlider} instead."""
+
+	def __init__(self,*args, **kwargs):
+		warnings.warn("gui.settingsDialogs.VoiceSettingsSlider is deprecated. Use gui.NVDAControls.EnhancedInputSlider instead",
+			DeprecationWarning, stacklevel=2)
+		super(VoiceSettingsSlider,self).__init__(*args,**kwargs)

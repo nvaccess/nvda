@@ -48,6 +48,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
+	_caretMovementTimeoutMultiplier = 1
+	
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
@@ -69,6 +71,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		else:
 			# This function's arguments are in seconds, but we want ms.
 			timeoutMs = timeout * 1000
+		timeoutMs *= self._caretMovementTimeoutMultiplier
 		# time.sleep accepts seconds, so retryInterval is in seconds.
 		# Convert to integer ms to avoid floating point precision errors when adding to elapsed.
 		retryMs = int(retryInterval * 1000)

@@ -472,7 +472,18 @@ Aj napriek tomu, že sa na tento druh navigácie bežne používa myš alebo tra
 
 + Režim prehliadania +[BrowseMode]
 Súhrnnejšie dokumenty, ako napríklad web stránky, nám NVDA dokáže zobraziť v TZV. režime prehliadania.
-Toto zahŕňa dokumenty v programoch Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML správy v programe Microsoft Outlook, Google Chrome, Adobe Reader a Adobe Flash.
+Toto zahŕňa dokumenty v programoch:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML správy v programe Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Podporované knihy v aplikácii Amazon Kindle pre  PC
+-
 Režim prehliadania môžete aktivovať aj v dokumentoch programu Microsoft Word.
 
 V režime prehliadania je obsah dokumentu usporiadaný plošne, takže na navigáciu je možné použiť bežné navigačné príkazy ako v prípade textových dokumentov.
@@ -493,7 +504,7 @@ Nakoniec je možné režim fokusu vynútiť, v takom prípade ostane aktívny, a
 | Prepnúť režimy fokusu / prehliadania | NVDA+medzera | Prepína medzi režimom fokusu a režimom prehliadania |
 | Ukončiť režim fokusu | escape | Prepína do režimu prehliadania, ak bol režim fokusu aktivovaný automaticky |
 | Obnoviť dokument v režime prehliadania | NVDA+f5 | Obnoví obsah aktuálneho dokumentu (užitočné ak časť obsahu nebola správne načítaná. Nie je dostupné v programoch Microsoft Word a Outlook.) |
-| Hľadať | NVDA+ctrl+f | Zobrazí dialóg, ktorý umožní vyhľadávanie textu v aktuálnom dokumente |
+| Hľadať | NVDA+ctrl+f | Zobrazí dialóg, ktorý umožní vyhľadávanie textu v aktuálnom dokumente. Podrobnosti sú popísané v časti [Hľadanie textu #SearchingForText].|
 | Hľadať ďalej | NVDA+f3 | Vyhľadá nasledujúci výskyt textu v aktívnom dokumente, ktorý Ste už hľadali |
 | Hľadať späť | NVDA+shift+f3 | Vyhľadá predchádzajúci výskyt textu v aktívnom dokumente, ktorý Ste už hľadali |
 | Otvoriť dlhý popis | NVDA+d | Otvorí nové okno s popisom pre prvok, ak ho zameraný prvok obsahuje. |
@@ -550,6 +561,22 @@ Tlačidlami prejsť na alebo aktivovať vykonávame akcie pre prvky vybraté v z
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Zoznam prvkov v režime prehliadania | NVDA+f7 | Zobrazí dialóg so zoznamom   prvkov aktuálneho dokumentu |
+%kc:endInclude
+
+++ Hľadanie textu ++[SearchingForText]
+Tento dialóg vám umožní vyhľadávať reťazce v aktuálnom dokumente.
+Text na vyhľadanie zadajte do editačného poľa "Napíšte text, ktorý chcete vyhľadať".
+V tomto editačnom poli môžete šípkami hore a dole vybrať reťazce, ktoré ste už vyhľadávali.
+Ak chcete, aby sa pri hľadaní zohľadňovali aj malé a veľké písmená, začiarknite políčko "Rozlišovať malé a veľké písmená".
+Ak začiarknete toto políčko a vyhľadáte reťazec "NV Access", NVDA vyhľadá len vtento reťazec a vynechá napríklad výskyt "nv access".
+Do histórie hľadania sa neukladá, či ste hľadali reťazec s vypnutým alebo zapnutým rozlišovaním malých a veľkých písmen.
+História hľadania sa automaticky vymaže po reštarte NVDA.
+Na vyhľadávanie môžete použiť nasledujúce klávesové skratky:
+%kc:beginInclude
+|| Názov | Klávesová skratka | Popis |
+| Vyhľadať text | NVDA+ctrl+f | Otvorí dialóg s moľžnosťami hľadania |
+| Vyhľadať nasledujúci výskyt | NVDA+f3 | Vyhľadá nasledujúci výskyt hľadaného reťazca od aktuálnej pozície kurzora |
+| Vyhľadať predchádzajúce | NVDA+shift+f3 | Vyhľadá predchádzajúci výskyt reťazca od aktuálnej pozície kurzora |
 %kc:endInclude
 
 ++ Vnorené objekty ++[ImbeddedObjects]
@@ -1348,9 +1375,11 @@ Klávesová skratka: NVDA+n
 
 Ak je možnosť povolená, NVDA bude oznamovať text cez ktorý prechádza kurzor myši. Takto môžete nájsť položky na obrazovke za pomoci myši a nemusíte použiť objektovú navigáciu.
 
-==== Jednotka oznamovania pri zameraní textu ====[MouseSettingsTextUnit]
+ ====[MouseSettingsTextUnit]
 Ak je začiarknutá voľba Oznamovať text pod kurzorom myši, toto nastavenie určuje aké množstvo textu bude oznamované.
 Je možno vyberať z: znak, slovo, riadok alebo odsek.
+
+Ak potrebujete často meniť jednotku pri zameraní textu, môžete tejto funkcii priradiť klávesovú skratku v dialógu [Klávesové skratky#InputGestures].
 
 ==== Oznamovať typ prvku pri zameraní kurzorom myši ====[MouseSettingsRole]
 Ak je toto začiarkavacie políčko začiarknuté, NVDA bude oznamovať typ objektu pri prechode myšou cez tento objekt.
@@ -1503,7 +1532,15 @@ Toto nastavenie určuje o koľko riadkov sa má NVDA posunúť pri pohybe po stl
 ==== Zachovať vzhľad ako na obrazovke ====[BrowseModeSettingsScreenLayout]
 Klávesová skratka: NVDA+v
 
-Umožňuje nastaviť zalamovanie obsahu dokumentu v režime prehliadania. Ak je táto voľba zapnutá, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke. Naopak ak je toto vypnuté, odkazy a tiež ďalšie prvky budú zobrazené na samostatnom riadku.
+Umožňuje nastaviť zalamovanie obsahu dokumentu v režime prehliadania. Ak je táto voľba zapnutá, všetky prvky budú zobrazené tak, ako sú rozmiestnené na obrazovke. 
+Ak je toto nastavenie vypnuté, odkazy a tiež ďalšie prvky budú zobrazené na samostatnom riadku.
+
+==== Po načítaní stránky  automaticky aktivovať režim prehliadania ====[BrowseModeSettingsEnableOnPageLoad]
+Určuje, či sa má po načítaní dokumentu automaticky aktivovať režim prehliadania.
+Ak je táto možnosť vypnutá, stále môžete v podporovaných dokumentoch a prvkoch aktivovať režim prehliadania ručne.
+Podporované aplikácie sú popísané v časti [Režim prehliadania#BrowseMode].
+Toto nastavenie neovplyvňuje aplikácie, v ktorých je režim prehliadania voliteľný, napríklad Microsoft Word.
+Predvolene je toto nastavenie začiarknuté.
 
 ==== Automaticky spustiť plynulé čítanie po načítaní stránky ====[BrowseModeSettingsAutoSayAll]
 Toto začiarkavacie políčko prepína automatické plynulé čítanie po načítaní stránky v režime prehliadania.
@@ -1633,6 +1670,16 @@ Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows 10 majú podporu
 Niektoré informácie sú však nedostatočne prezentované, alebo sú prezentované nesprávne, takže nemôžeme UI automation odporúčať vo všetkých prípadoch.
 Väčšine používateľov neodporúčame používať UI automation. Zároveň privítame odozvu od používateľov Office 2016/365, ktorí sú ochotný otestovať UI automation.
 
+==== Automaticky presúvať fokus na zamerané prvky ====[BrowseModeSettingsAutoFocusFocusableElements]
+Klávesová skratka: NVDA+8
+
+Táto možnosť je predvolene zapnutá. Určuje, či sa má systémový fokus presúvať na prvky, ktoré je možné zamerať a prejdete na ne kurzorom v režime prehliadania (napríklad odkazy, prvky formulárov a podobne).
+Ak je toto zapnuté, NVDA sa bude správať tak, ako ste boli zvyknutí do verzie 2019.1.
+Ak vypnete túto možnosť, prvky nebudú mať automaticky fokus.
+Toto môže zrýchlyť prehliadanie dokumentov v režime prehliadania.
+Fokus sa automaticky presunie na prvok až vtedy, keď s ním budete pracovať (aktivovanie tlačidla, začiarknutie políčka a pod).
+Táto funkcia je experimentálne zaradená od verzie NVDA 2019.2.
+
 ==== Počkať pred pohybom systémového kurzora (v milisekundách) ====[AdvancedSettingsCaretMoveTimeout]
 Tu môžete nastaviť časový úsek, ktorý NVDA počká pred pohybom systémového kurzora (bodu vloženia).
 Ak zistíte, že NVDA nesprávne sleduje kurzor, napríklad je o znak pozadu alebo opakuje riadky, môže vám pomôcť zvýšiť tento časový úsek.
@@ -1686,6 +1733,7 @@ V názve okna sa zobrazuje jazyk, ktorého symboly upravujete.
 Tento dialóg rešpektuje nastavenie "pri spracovaní textu sa riadiť hlasovým výstupom", ktoré je v kategórii  [Nastavenia hlasu #speechSettings] v dialógu [Nastavenia #NVDASettings]. Ak je toto políčko začiarknuté, upravujete nastavenie pre jazyk hlasu a nie jazyk NVDA.
 
 Ak si želáte upraviť symbol, musíte ho najprv vybrať v zozname symbolov.
+Zoznam symbolov môžete filtrovať, ak zadáte symbol alebo jeho nahradenie do políčka filtrovať.
 
 - Do poľa nahradiť s môžete vpísať text, ktorý sa má vysloviť vždy, keď bude NVDA čítať tento symbol.
 - Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný.
@@ -1751,7 +1799,7 @@ NVDA vám umožňuje urobiť takéto nastavenia pomocou konfiguračných profilo
 Konfiguračný profil obsahuje len tie nastavenia, ktoré zmeníte, keď je profil aktívny.
 Zmeniť môžete všetky nastavenia okrem tých, ktoré sú v kategórii všeobecné v dialógu [Nastavenia #NVDASettings], lebo tie sa týkajú NVDA ako celku.
 
-Konfiguračné profily môžete aktivovať ručne.
+Konfiguračné profily môžete aktivovať ručne z dialógu alebo pomocou klávesovej skratky.
 Môžu ich však aktivovať aj rôzne udalosti, ako napríklad prepnutie sa do určitej aplikácie.
 
 +++ Základné nastavenie +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Môžete napríklad chcieť upraviť aktívny profil alebo normálne nastavenia 
 toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v dialógu konfiguračné profily.
 
 Ak chcete dočasne zakázať udalosti klávesovou skratkou, môžete ju nastaviť v dialógu [Klávesové skratky #InputGestures].
+
++++ Aktivovanie profilu klávesovou skratkou +++[ConfigProfileGestures]
+Pre každý vytvorený profil môžete vytvoriť jednu alebo viacero klávesových skratiek.
+Predvolene NVDA nevytvára žiadne klávesové skratky pre profily.
+Klávesové skratky k profilu priradíte v dialógu [Klávesové skratky #InputGestures].
+Každý profil má samostatnú vetvu v strome Konfiguračné profily.
+Klávesové skratky sa zachovajú aj vtedy, ak profil premenujete.
+Ak odstránite profil, automaticky sa odstráni aj klávesová skratka.
 
 ++ Umiestnenie súborov s nastaveniami ++[LocationOfConfigurationFiles]
 Prenosné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a braillovských výstupov v podpriečinku userConfig v priečinku NVDA.
@@ -1999,13 +2055,11 @@ Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [F
 Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače braillovských riadkov Freedom scientific.
 Ak ich ešte nemáte, môžete ich stiahnuť zo stránky https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Aj keď na stránke sa píše len o riadku Focus Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
-Ak máte nainštalovanú 64 bitovú edíciu Windows a používate aj iný čítač obrazovky, budete pravdepodobne musieť tiež nainštalovať ovládač, pretože potrebné súbory sa nemuseli nainštalovať počas inštalácie iného čítača.
 
 NVDA sa dokáže predvolene k týmto zobrazovačom pripojiť cez USB alebo Bluetooth rozhranie.
 Môžete však samy určiť typ pripojenia a obmedziť ho len na pripojenie cez "USB" alebo "bluetooth".
 Toto je užitočné, ak chcete nabiť riadok cez USb, ale chcete ho používať cez Bluetooth.
-
-NVDA sa v súčasnosti nedokáže automaticky pripájať k týmto riadkom.
+NVDA dokáže automaticky rozpoznať tieto riadky, ak sú pripojené cez USB alebo Bluetooth.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.

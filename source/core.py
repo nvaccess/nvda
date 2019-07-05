@@ -13,7 +13,8 @@ class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
 	"""
 
-# Apply several monky patches to comtypes
+# Apply several monkey patches to comtypes
+# noinspection PyUnresolvedReferences
 import comtypesMonkeyPatches
 
 # Initialise comtypes.client.gen_dir and the comtypes.gen search path 

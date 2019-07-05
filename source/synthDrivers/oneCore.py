@@ -117,13 +117,8 @@ class SynthDriver(SynthDriver):
 
 	@classmethod
 	def check(cls):
-		if not hasattr(sys, "frozen"):
-			# #3793: Source copies don't report the correct version on Windows 10 because Python isn't manifested for higher versions.
-			# We want this driver to work for source copies on Windows 10, so just return True here.
-			# If this isn't in fact Windows 10, it will fail when constructed, which is okay.
-			return True
-		# For binary copies, only present this as an available synth if this is Windows 10.
-		return winVersion.winVersion.major >= 10
+		# Only present this as an available synth if this is Windows 10.
+		return winVersion.isWin10()
 
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()

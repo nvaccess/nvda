@@ -15,7 +15,7 @@ from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
 import textInfos.offsets
-from textInfos.offsets import HIGH_SURROGATE_FIRST, HIGH_SURROGATE_LAST, LOW_SURROGATE_FIRST, LOW_SURROGATE_LAST
+from textUtils import HIGH_SURROGATE_FIRST, HIGH_SURROGATE_LAST, LOW_SURROGATE_FIRST, LOW_SURROGATE_LAST
 import colors
 import time
 import displayModel
@@ -117,6 +117,9 @@ def normalizeIA2TextFormatField(formatField):
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=False
+
+	def _get_encoding(self):
+		return super().encoding
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
@@ -470,7 +473,12 @@ the NVDAObject for IAccessible
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
-		if windowClassName.lower().startswith('mscandui'):
+		if (
+			windowClassName.lower().startswith('mscandui')
+			or windowClassName in (
+				"Microsoft.IME.CandidateWindow.View",
+				"Microsoft.IME.UIManager.CandidateWindow.Host"
+		)):
 			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:

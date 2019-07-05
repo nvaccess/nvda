@@ -10,6 +10,7 @@ import contextlib
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
+from textUtils import WCHAR_ENCODING
 
 #dll handles
 user32=windll.user32
@@ -653,12 +654,12 @@ def setClipboardData(format,data):
 	if format!=CF_UNICODETEXT:
 		raise ValueError("Unsupported format")
 	text = data
+	bufLen = len(text.encode(WCHAR_ENCODING, errors="surrogatepass")) + 2
 	# Allocate global memory
-	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE,(len(text)+1)*2)
+	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE, bufLen)
 	# Acquire a lock to the global memory receiving a local memory address
 	with h.lock() as addr:
 		# Write the text into the allocated memory
-		bufLen=len(text)+1
 		buf=(c_wchar*bufLen).from_address(addr)
 		buf.value=text
 	# Set the clipboard data with the global memory

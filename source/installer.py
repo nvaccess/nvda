@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -22,6 +22,7 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
+import winKernel
 
 _wsh=None
 def _getWSH():
@@ -362,8 +363,14 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
-		MoveFileEx=windll.kernel32.MoveFileExW
-		MoveFileEx("\\\\?\\"+tempPath,None,4)
+		try:
+			# Use escapes in a unicode string instead of raw.
+			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
+			pathQualifier=u"\\\\?\\"
+			# #9847: Move file to None to delete it.
+			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
+		except WinError:
+			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
 		return
 	try:
 		os.rename(tempPath,path)
@@ -387,7 +394,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		except (WindowsError,OSError):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
-		windll.kernel32.MoveFileExW(tempPath,None,4)
+		winKernel.moveFileEx(tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
