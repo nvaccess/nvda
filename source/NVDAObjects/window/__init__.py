@@ -16,7 +16,7 @@ import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
-from NVDAObjects.behaviors import EditableText, LiveText
+from NVDAObjects.behaviors import EditableText, LiveText, DisplayModelTextMonitor
 import watchdog
 from locationHelper import RectLTWH
 
@@ -399,18 +399,8 @@ class DisplayModelEditableText(EditableText, Window):
 		# Don't report value changes for editable text fields.
 		pass
 
-class DisplayModelLiveTextWithoutTextInfo(LiveText, Window):
-	def startMonitoring(self):
-		# Force the window to be redrawn, as our display model might be out of date.
-		self.redraw()
-		displayModel.requestTextChangeNotifications(self, True)
-		super(DisplayModelLiveTextWithoutTextInfo, self).startMonitoring()
 
-	def stopMonitoring(self):
-		super(DisplayModelLiveTextWithoutTextInfo, self).stopMonitoring()
-		displayModel.requestTextChangeNotifications(self, False)
-
-class DisplayModelLiveText(DisplayModelLiveTextWithoutTextInfo):
+class DisplayModelLiveText(DisplayModelTextMonitor, LiveText):
 	TextInfo = displayModel.EditableTextDisplayModelTextInfo
 
 windowClassMap={

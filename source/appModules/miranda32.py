@@ -9,7 +9,7 @@ import ui
 import config
 from ctypes import *
 from ctypes.wintypes import *
-from NVDAObjects.window import DisplayModelLiveTextWithoutTextInfo
+from NVDAObjects.behaviors import DisplayModelTextMonitor, LiveText
 import winKernel
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog, LiveTextHistoryMixin
@@ -252,5 +252,5 @@ class MirandaMessageWindow(IAccessible):
 			pass
 
 
-class MirandaMessageLog(LiveTextHistoryMixin, DisplayModelLiveTextWithoutTextInfo):
+class MirandaMessageLog(LiveTextHistoryMixin, DisplayModelTextMonitor, LiveText):
 	pass
