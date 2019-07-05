@@ -369,7 +369,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 			pathQualifier=u"\\\\?\\"
 			# #9847: Move file to None to delete it.
 			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		except WinError:
+		except OSError:
 			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
 		return
 	try:
