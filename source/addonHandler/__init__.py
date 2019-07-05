@@ -170,7 +170,7 @@ def checkForAddonUpdates():
 	data = json.dumps(curAddons)
 	# Pseudocode:
 	"""try:
-		res = urllib.open(someURL, data)
+		res = urllib.request.open(someURL, data)
 		# Check SSL and what not.
 		res = json.loads(res)"""
 	res = json.loads(data)
