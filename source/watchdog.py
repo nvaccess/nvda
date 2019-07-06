@@ -153,7 +153,6 @@ def _crashHandler(exceptionInfo):
 	# Write a minidump.
 	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
 	try:
-		# #9038 (Py3 review required): file() function is gone, replaced by open().
 		with open(dumpPath, "w") as mdf:
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)

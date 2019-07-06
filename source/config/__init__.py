@@ -35,6 +35,7 @@ import winKernel
 import extensionPoints
 from . import profileUpgrader
 from .configSpec import confspec
+from typing import Optional, List
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -369,28 +370,27 @@ class ConfigManager(object):
 	def __init__(self):
 		self.spec = confspec
 		#: All loaded profiles by name.
-		self._profileCache = {}
+		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
 		#: The active profiles.
-		self.profiles = []
+		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
-		#: @type: bool
-		self.profileTriggersEnabled = True
-		self.validator = Validator()
-		self.rootSection = None
-		self._shouldHandleProfileSwitch = True
-		self._pendingHandleProfileSwitch = False
-		self._suspendedTriggers = None
+		self.profileTriggersEnabled: bool = True
+		self.validator: Validator = Validator()
+		self.rootSection: Optional[AggregatedSection] = None
+		self._shouldHandleProfileSwitch: bool = True
+		self._pendingHandleProfileSwitch: bool = False
+		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
 		# Never save the config if running securely or if running from the launcher.
 		# When running from the launcher we don't save settings because the user may decide not to
 		# install this version, and these settings may not be compatible with the already
 		# installed version. See #7688
-		self._shouldWriteProfile = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
+		self._shouldWriteProfile: bool = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
-		self.triggersToProfiles = None
+		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
 		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
-		self._dirtyProfiles = set()
+		self._dirtyProfiles: Set[str] = set()
 
 	def _handleProfileSwitch(self, shouldNotify=True):
 		if not self._shouldHandleProfileSwitch:
@@ -587,7 +587,6 @@ class ConfigManager(object):
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
 		# Just create an empty file to make sure we can.
-		# #9038 (Py3 review required): open and then immediatley close the file.
 		open(fn, "w").close()
 		# Register a script for the new profile.
 		# Import late to avoid circular import.
@@ -636,9 +635,7 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 		if self._suspendedTriggers:
 			# Remove any suspended triggers referring to this profile.
-			# #9067 (Py3 review required): originally called dict.keys (note that triggers is a dictionary).
-			# Therefore wrap this inside a list call unless it can be simplified further.
-			for trigger in list(self._suspendedTriggers.keys()):
+			for trigger in self._suspendedTriggers:
 				if trigger._profile == delProfile:
 					del self._suspendedTriggers[trigger]
 

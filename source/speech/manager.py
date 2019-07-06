@@ -39,8 +39,6 @@ class ParamChangeTracker(object):
 		@return: List of parameter change commands.
 		@type: list of L{SynthParamCommand}
 		"""
-		# #9067 (Py3 review required): commands is a dictionary and will be consulted when speaking speech sequences.
-		# Therefore wrap this inside a list call.
 		return list(self._commands.values())
 
 class _ManagerPriorityQueue(object):

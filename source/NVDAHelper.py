@@ -427,7 +427,6 @@ class RemoteLoader64(object):
 		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
 		winKernel.closeHandle(pipeReadOrig)
 		# stdout/stderr of the loader process should go to nul.
-		# #9038 (Py3 review required): File() function is gone, replaced by open().
 		with open("nul", "w") as nul:
 			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
