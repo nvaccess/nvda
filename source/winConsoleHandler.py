@@ -16,6 +16,11 @@ import textInfos
 import api
 import config
 
+"""
+Handler for NVDA's legacy Windows Console support,
+used in situations where UIA isn't available.
+"""
+
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100
 

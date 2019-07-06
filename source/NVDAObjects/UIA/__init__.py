@@ -863,6 +863,13 @@ class UIA(Window):
 		except ValueError:
 			pass
 
+		# Support Windows Console's UIA interface
+		if (
+			self.windowClassName == "ConsoleWindowClass"
+			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
+		):
+			from . import winConsoleUIA
+			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
