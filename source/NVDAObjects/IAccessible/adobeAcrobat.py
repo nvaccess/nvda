@@ -82,10 +82,12 @@ class AcrobatNode(IAccessible):
 				pass
 
 	def _get_role(self):
-		try:
-			return normalizeStdName(self.pdDomNode.GetStdName())[0]
-		except (AttributeError, LookupError, COMError):
-			pass
+		stdName = self.pdDomNode.GetStdName()
+		if stdName is not None:
+			try:
+				return normalizeStdName(stdName)[0]
+			except (AttributeError, LookupError, COMError):
+				pass
 
 		role = super(AcrobatNode, self).role
 		if role == controlTypes.ROLE_PANE:
