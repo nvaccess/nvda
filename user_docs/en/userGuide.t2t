@@ -173,8 +173,11 @@ The second specifies whether NVDA should start automatically after you log on to
 The third lets you control if this Welcome dialog should appear each time NVDA starts.
 
 +++ Data usage statistics dialog +++[UsageStatsDialog]
-Since NVDA 2018.3, NV Access asks the NVDA users to provide usage data in order to develop NVDA in the way that is convenient to most users. When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA. You can read more info about the data gathered by NV Access in Chapter 11 below.
-Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA. However, you can enable or disable the data gathering process manually in the general settings of NVDA. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics #GeneralSettingsGatherUsageStats].
+Since NVDA 2018.3, NV Access asks the NVDA users to provide usage data in order to develop NVDA in the way that is convenient to most users.
+When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA. You can read more info about the data gathered by NV Access in [this section #GeneralSettingsGatherUsageStats].
+
+Note: pressing "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
+However, you can enable or disable the data gathering process manually in the [general settings #GeneralSettings] of NVDA by checking or unchecking the option called "Allow the NVDA project to gather NVDA usage statistics".
 
 ++ About NVDA keyboard commands ++[AboutNVDAKeyboardCommands]
 
@@ -670,7 +673,6 @@ In order to fit as much information as possible on a braille display, the follow
 | gra | graphic |
 | grp | grouping |
 | hN | heading at level n, e.g. h1, h2. |
-| ntfc | notification |
 | lmk | landmark |
 | lnk | link |
 | vlnk | visited link |
@@ -679,6 +681,7 @@ In order to fit as much information as possible on a braille display, the follow
 | mnubar | menu bar |
 | mnubtn | menu button |
 | mnuitem | menu item |
+| ntfc | notification |
 | pnl | panel |
 | prgbar | progress bar |
 | rbtn | radio button |
@@ -1045,7 +1048,6 @@ Apart from the mandatory information required to check for updates, the followin
 - Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
 - Name of the current Braille display in use (including the name of the add-on the driver comes from)
 - The current output Braille table (if Braille is in use)
-
 
 This information greatly aides NV Access to prioritize future development of NVDA.
 
