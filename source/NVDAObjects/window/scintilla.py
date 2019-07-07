@@ -119,14 +119,15 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			#To get font name, We need to allocate memory with in Scintilla's process, and then copy it out
-			fontNameBuf=ctypes.create_string_buffer(32)
+			fontNameLength=32
+			fontNameBuf=ctypes.create_string_buffer(fontNameLength)
 			internalBuf=winKernel.virtualAllocEx(self.obj.processHandle,None,len(fontNameBuf),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
 				watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETFONT,style, internalBuf)
 				winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
 			finally:
 				winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			formatField["font-name"]=fontNameBuf.value
+			formatField["font-name"]=textUtils.getTextFromRawBytes(fontNameBuf.raw,numChars=fontNameLength)
 		if formatConfig["reportFontSize"]:
 			formatField["font-size"]="%spt"%watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
 		if formatConfig["reportLineNumber"]:
