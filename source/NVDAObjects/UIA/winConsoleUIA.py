@@ -185,6 +185,7 @@ class consoleUIATextInfo(UIATextInfo):
 		)
 
 	def __ne__(self,other):
+		"""Support more accurate caret move detection."""
 		return not self==other
 
 
@@ -218,7 +219,7 @@ class WinConsoleUIA(Terminal):
 	#: Bound consoles by default to maintain feature parity with legacy.
 	_defaultReviewBounds = True
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
-	_caretMovementTimeoutMultiplier = 2
+	_caretMovementTimeoutMultiplier = 1.5
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText

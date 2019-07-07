@@ -472,7 +472,18 @@ Nawigacja myszą powinna odbywać się przy użyciu fizycznej myszy lub trackpad
 
 + Tryb czytania +[BrowseMode]
 Złożone dokumenty przeznaczone tylko do odczytywania, na przykład strony internetowe, przedstawiane są w NVDA w trybie czytania.
-Dotyczy to dokumentów wyświetlanych w programach Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, wiadomości HTML w Microsoft Outlook, Google Chrome, Adobe Reader i Adobe Flash.
+Dotyczy to dokumentów wyświetlanych w następujących aplikacjach:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- HTML messages in Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Supported books in Amazon Kindle for PC
+-
 Tryb czytania jest również opcjonalnie dostępny dla dokumentów w programie Microsoft Word. 
 
 W trybie czytania treść dokumentu jest udostępniana w płaskiej reprezentacji, po której można się przemieszczać z użyciem klawiszy kursora tak jak w zwykłych dokumentach tekstowych.
@@ -493,7 +504,7 @@ Dodatkowo możesz wymusić tryb formularza, który pozostanie wówczas aktywny d
 | Przełącz tryb czytania | NVDA+Spacja | Przełącza pomiędzy trybem formularza i trybem czytania |
 | Wyjście z trybu formularza | Escape | Przełącza się na tryb czytania, jeśli wcześniej tryb formularza włączył się automatycznie |
 | Odśwież zawartość dokumentu | NVDA+F5 | Odświeża aktualny dokument w trybie przeglądania. (przydatne w przypadku, gdy niektórych treści brakuje na stronie. Niedostępne w Microsoft Word i Outlook.) |
-| Znajdź | NVDA+Ctrl+F | Pojawia się okno dialogowe, w którym można wpisać tekst, aby przeszukać aktualny dokument |
+| Znajdź | NVDA+Ctrl+F | Pojawia się okno dialogowe, w którym można wpisać tekst, aby przeszukać aktualny dokument. Więcej informacji w rozdziale [Wyszukiwanie tekstu #SearchingForText]. |
 | Znajdź następny | NVDA+F3 | Znajduje w dokumencie następne wystąpienie wyszukiwanego wcześniej tekstu |
 | Znajdź poprzedni | NVDA+Shift+F3 | Znajduje w dokumencie poprzednie wystąpienie wyszukiwanego wcześniej tekstu |
 | Otwórz długi opis | NVDA+d | Otwiera nowe okno zawierające długi opis elementu, na którym się znajdujesz (jeśli dla tego elementu długi opis został zdefiniowany) | 
@@ -550,6 +561,22 @@ Możesz użyć przycisków znajdujących się w okienku, aby przejść do wybran
 %kc:beginInclude
 || Działanie | Skrót klawiszowy | Opis |
 | Wyświetl listę elementów w trybie przeglądania | NVDA+F7 | Wyświetla listę różnych typów elementów znajdujących się w bieżącym dokumencie |
+%kc:endInclude
+
+++ Wyszukiwanie tekstu ++[SearchingForText]
+To okno pozwala przeszukiwać bieżący dokument.
+W polu "Wpisz szukany tekst", można wprowadzić tekst do wyszukania.
+W tym polu można również używać strzałek w górę i w dół aby wybrać poprzednio wyszukiwane teksty.
+Pole wyboru "Uwzględniaj wielkość liter"  sprawia, że wyszukiwanie będzie rozróżniać wielkość liter.
+Dla przykładu, po zaznaczeniu tego pola możesz znaleźć "NV Access", ale nie "nv access".
+Historia wyszukiwania nie zapamiętuje użytego stanu przełącznika rozróżniania wielkości liter.
+Gdy NVDA zostanie uruchomione ponownie, lista poprzednich wyszukiwań zostanie wyczyszczona.
+Użyj poniższych klawiszy skrótów dla przeprowadzenia wyszukiwania:
+%kc:beginInclude
+|| Polecenie | Klawisz skrótu | Opis |
+| Znajdź tekst | NVDA+control+f | Otwiera okno wyszukiwania |
+| Znajdź następny | NVDA+f3 | Poszukuje następnego wystąpienia ostatnio poszukiwanego tekstu |
+| Znajdź poprzedni | NVDA+shift+f3 | Poszukuje poprzedniego wystąpienia ostatnio wyszukiwanego tekstu |
 %kc:endInclude
 
 ++ Obiekty zagnieżdżone ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Jeśli zaznaczysz to pole, NVDA będzie czytać tekst znajdujący się aktualnie
 Jeśli śledzenie myszy jest włączone, ta opcja pozwala dokładnie określić ile tekstu znajdującego się aktualnie pod wskaźnikiem myszy zostanie wypowiedziane.
 Dostępne opcje to znak, słowo, wiersz i akapit.
 
+Aby przełączyć ten parametr z dowolnego miejsca, proszę przypisać własne zdarzenie wejścia używając [Okna zdarzenia wejścia #InputGestures].
+
 ==== Podaj typ obiektu wskazanego myszą ====[MouseSettingsRole]
 Jeśli zaznaczysz to pole, NVDA będzie informować o rodzaju obiektu wskazywanego myszą (np. przycisk, lista, pasek przewijania).
 
@@ -1504,6 +1533,14 @@ Ustala ilość linii, które zostaną przeskoczone po wciśnięciu Page up lub P
 Skrót Klawiszowy: NVDA+v
 
 Ta opcja pozwala określić, czy zawartość oglądana w trybie czytania, taka jak linki i inne pola, powinna trafiać do osobnych linii, czy też powinna zostać utrzymana w układzie zbliżonym do wizualnego rozmieszczenia elementów na ekranie. 
+Jeśli włączona, elementy będą rozmieszczone tak jak są wyświetlane wizualnie, a po jej wyłączeniu, każdy będzie umieszczany w nowej linii.
+
+==== Włącz tryb czytania podczas wczytywania strony ====[BrowseModeSettingsEnableOnPageLoad]
+Ten przełącznik określa, czy tryb czytania powinien być automatycznie włączany podczas ładowania strony.
+Jeśli wyłączone, tryb czytania może być aktywowany ręcznie na stronach lub w dokumentach, które wspierają ten tryb.
+Zobacz [rozdział o trybie czytania #BrowseMode] zawierający listę aplikacji obsługujących tryb czytania.
+Ta opcja nie ma zastosowania do sytuacji, w których tryb czytania jest zawsze opcjonalny np. w Microsoft Word.
+Opcja jest domyślnie włączona.
 
 ==== automatycznie czytaj wszystko przy wczytywaniu strony ====[BrowseModeSettingsAutoSayAll]
 Ta opcja przełącza automatyczne odczytywanie strony po jej załadowaniu w trybie czytania.
@@ -1633,6 +1670,16 @@ Obejmuje to sam edytor Microsoft Word oraz okna przeglądania i tworzenia wiadom
 Mogą jednak istnieć informacje, które nie są wcale dostarczane, albo są dostarczane nieprawidłowo  w niektórych wersjach Microsoft Office,  co znaczy, że na obsłudze UI Automation nie zawsze można polegać.
 Wciąż nie zalecamy domyślnego włączania tej funkcji przez większość użytkowników, ale mile widziane będą testy i uwagi od użytkowników Office 2016/365.
 
+==== Automatycznie ustaw kursor systemowy na elementach interaktywnych w trybie czytania ====[BrowseModeSettingsAutoFocusFocusableElements]
+Key: NVDA+8
+
+Domyślnie włączona, opcja pozwala określić, czy fokus systemowy ma być automatycznie ustawianych na elementach, które mogą go otrzymać (linki, pola formularzy etc.) podczas nawigacji po treści w trybie czytania.
+Jeśli włączona, określa to domyślne zachowanie NVDA w wersji 2019.1 i starszych.
+Wyłączenie tej opcji sprawi, że fokus systemowy nie będzie automatycznie  ustawiany na elementach pod kursorem trybu czytania.
+Może to przyśpieszyć wczytywanie dokumentów i poprawić responsywność w trybie czytania.
+Fokus będzie przenoszony na element w momencie wykonania na nim interakcji (np. naciśnięcie przycisku, zaznaczenie pola wyboru).
+Ta funkcjonalność jest eksperymentalna w wersji NVDA 2019.2.
+
 ==== Szybkość śledzenia przemieszczania się po polach edycji (w milisekundach) ====[AdvancedSettingsCaretMoveTimeout]
 Pozwala skonfigurować ilość milisekund, którą  NVDA będzie czekało przed przesunięciem kursora w polach edycji.
 Jeśli zauważysz, że NVDA nieprawidłowo śledzi kursor, np.  jest zawsze znak za kursorem lub powtarza linie, możesz próbować zwiększyć tę wartość.
@@ -1686,6 +1733,7 @@ Język, którego wymowa jest edytowana, będzie wyświetlony w tytule okna dialo
 Uwaga: to okno uwzględnia opcję "Ufaj językowi głosu przetwarzając znaki i symbole" znajdującą się w [kategorii głos #SpeechSettings]w oknie [Preferencji NVDA #NVDASettings]; tj. gdy ta opcja jest włączona, używa języka głosu zamiast globalnego języka NVDA.
 
 Aby zmienić symbol, najpierw zaznacz go na liście. 
+Możesz filtrować symbole wprowadzając symbol lub część zastępującego tekstu w polu edycji sortuj według.
 
 - Pole zamień określa tekst, który powinien być wypowiadany zamiast tego znaku. 
 - Używając listy poziom, można regulować najniższy poziom interpunkcji, na którym dany znak będzie wypowiadany. 
@@ -1751,7 +1799,7 @@ NVDA pozwala to osiągnąć za pomocą profili konfiguracyjnych.
 Profil konfiguracyjny zawiera tylko te ustawienia, które zostały zmienione podczas edycji profilu.
 Większość ustawień może być zmieniona w profilach konfiguracyjnych, wyłączając ustawienia znajdujące się w kategorii ogólne w oknie [Preferencji NVDA #NVDASettings], które mają zastosowanie do całego programu.
 
-Profile konfiguracyjne mogą być aktywowane ręcznie.
+Profile konfiguracyjne mogą być aktywowane ręcznie przy użyciu okna, lub własnego zdarzenia wejścia.
 Mogą być również aktywowane automatycznie przez wyzwalacze, takie jak przejście do określonej aplikacji.
 
 +++ Podstawowe zarządzanie +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Dla przykładu: możesz chcieć edytować profil aktywowany ręcznie,  albo plik
 Możesz to osiągnąć przez oznaczenie pola wyboru Tymczasowo wyłącz wszystkie wyzwalacze w oknie dialogowym profili konfiguracji.
 
 Aby możliwe było wyłączenie wyzwalaczy z każdego miejsca, należy zdefiniować własne zdarzenie wejścia przy użyciu [okna zdarzeń wejścia #InputGestures].
+
++++ Aktywacja profilu przy użyciu zdarzeń wejścia +++[ConfigProfileGestures]
+Do każdego dodanego profilu można przypisać jedno lub wiele zdarzeń wejścia,  które będą go aktywować.
+Domyślnie, profile konfiguracji nie mają przypisanych zdarzeń wejścia.
+Możesz dodać zdarzenie wejścia aktywujące profil przy użyciu [okna zdarzenia wejścia #InputGestures].
+Każdy profil posiada odpowiadający mu wpis w kategorii profile konfiguracji.
+Po zmianie nazwy profilu, aktywujące go zdarzenia wejścia będą nadal działać.
+Usunięcie profilu automatycznie usunie zdarzenia wejścia przypisane do jego aktywacji.
 
 ++ Lokalizacja plików konfiguracyjnych ++[LocationOfConfigurationFiles]
 Wszystkie ustawienia wersji przenośnej NVDA, folder appModules oraz niestandardowe sterowniki znajdują się w katalogu o nazwie userConfig w folderze głównym NVDA.
@@ -1999,13 +2055,11 @@ Wszystkie monitory Focus i PAC Mate firmy [Freedom Scientific https://www.freedo
 Niezbędne są sterowniki brajlowskie Freedom Scientific zainstalowane w systemie.
 Jeśli nie zostały one jeszcze zainstalowane, to należy je pobrać ze strony: https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Na podanej stronie wymieniony jest tylko sterownik monitora Focus Blue, ale obsługuje on wszystkie monitory Freedom Scientific i Pacmate.
-Jeśli używasz 64-bitowego Windowsa i sterowniki zostały zainstalowane przez inny program czytający ekran, prawdopodobnie i tak będziesz musiał zainstalować sterowniki z tego linku, ponieważ pliki wymagane przez NVDA nie zostały prawdopodobnie zainstalowane przez inny program czytający ekran.
 
 Domyślnie NVDA może wykryć i podłączyć się do tych monitorów przez USB lub bluetooth.
 Konfigurując monitor, możesz wymusić połączenie "USB" or "Bluetooth" aby ograniczyć używany typ połączenia.
 Może to być przydatne, jeśli chcesz połączyć się z monitorem Focus przez bluetooth, ale móc jednocześnie ładować urządzenie z komputera przez port USB.
-
-Te linijki nie są jeszcze obsługiwane przez funkcję NVDA automatycznego wykrywania linijki brajlowskiej.
+Automatyczne wykrywanie linijek brajlowskich przez NVDA  będzie wykrywać urządzenia podłączone przez USB lub Bluetooth.
 
 Poniżej znajdują się klawisze skrótów NVDA dla tego monitora.
 Zajrzyj do dokumentacji monitora, aby dowiedzieć się gdzie znajdują się opisywane klawisze.

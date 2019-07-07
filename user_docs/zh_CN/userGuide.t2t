@@ -1494,8 +1494,8 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
  
 ==== 自动朗读所有可用的候选 ====[InputCompositionReportAllCandidates]
 此选项默认情况下启用，允许您选择是否在候选列表出现时或他的页面被滚动时，自动朗读所有候选列表上的可见候选。
-对于如新仓颉或無蝦米等中文笔画输入法而言，拥有此选项是非常实用的。您可以迅速地听到所有的标点和编号，并正确的作出选择。
-然而，对于中国的新注音输入法等拼音输入法而言，关闭此选项可能更为实用。当所有候选听起来都相同的时候，您必须使用光标键在候选列表之中逐一进行浏览，从而在每个字符的字符描述中获取更多的信息。
+对于如新仓颉或無蝦米等中文笔画输入法而言，这个功能很实用。您可以迅速地听到所有的候选词和编号，方便作出选择。
+通常使用拼音输入法的时候，关闭此选项可能更为实用。当所有候选听起来都相同的时候，您必须使用光标键在候选列表之中逐一进行浏览，从而在每个字符的字符描述中获取更多的信息。
 
 ==== 朗读选中的候选 ====[InputCompositionAnnounceSelectedCandidate]
 此选项默认情况下启用，允许您选择，在候选列表出现时或在选择的候选发生变动时，是否朗读选择的候选。
@@ -1536,10 +1536,10 @@ NVDA设置对话框中的“鼠标设置”分类允许NVDA跟踪鼠标，用嘟
 如果此选项被关闭，每个不同的区域就会独立成为一行。
 
 ==== 页面加载完成后启用浏览模式 ====[BrowseModeSettingsEnableOnPageLoad]
-This checkbox toggles whether browse mode should be automatically enabled when loading a page.
-When this option is disabled, browse mode can still be manually activated on pages or in documents where browse mode is supported.
-See the [Browse Mode section #BrowseMode] for a list of applications supported by browse mode.
-Note that this option does not apply to situations where browse mode is always optional, e.g. in Microsoft Word.
+此复选框用于切换加载页面时是否应自动启用浏览模式。
+禁用此选项后，仍可在页面或支持浏览模式的文档中手动激活浏览模式。
+有关浏览模式支持的应用程序列表，请参阅[浏览模式#BrowseMode]部分。
+请注意，此选项不适用于浏览模式始终是可选的情况，例如 在Microsoft Word中，浏览模式总是需要手动开启，不受这个选项影响。
 这个选项默认情况下是开启的。
 
 ==== 页面加载完成后朗读所有内容 ====[BrowseModeSettingsAutoSayAll]

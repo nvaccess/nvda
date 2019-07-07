@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-07 00:10+1000\n"
+"POT-Creation-Date: 2019-06-21 00:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -580,7 +580,7 @@ msgstr "s{columnNumber}"
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "Ende von %s"
+msgstr "%s zuende"
 
 #. Translators: The label for a braille setting indicating that braille should be
 #. tethered to focus or review cursor automatically.
@@ -597,7 +597,7 @@ msgstr "An NVDA-Cursor"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
-msgstr "Punktstärke"
+msgstr "Pu&nktstärke"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Braille inp&ut"
@@ -4510,23 +4510,23 @@ msgstr ""
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Zeigt den Dialog für Konfigurationsprofile von NVDA an."
+msgstr "Zeigt den Dialog der Konfigurationsprofile von NVDA an."
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 msgid "Configuration profile triggers disabled"
-msgstr "Profilauslöser deaktiviert"
+msgstr "Auslöser deaktiviert"
 
 #. Translators: The message announced when re-enabling all configuration profile triggers.
 msgid "Configuration profile triggers enabled"
-msgstr "Profielauslöser aktiviert"
+msgstr "Auslöser aktiviert"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 msgid ""
 "Toggles disabling of all configuration profile triggers. Disabling remains "
 "in effect until NVDA is restarted"
 msgstr ""
-"Schaltet die Deaktivierung aller Profilauslöser um. Die Deaktivierung bleibt "
-"wirksam, bis NVDA neu gestartet wird"
+"Schaltet die Deaktivierung aller Auslöser für die Konfigurationsprofile um. "
+"Die Deaktivierung bleibt wirksam, bis NVDA neu gestartet wird"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -4539,7 +4539,7 @@ msgstr "Interagiert mit mathematischen Inhalten."
 
 #. Translators: Reported when Windows 10 OCR is not available.
 msgid "Windows 10 OCR not available"
-msgstr "Die Windows 10-OCR ist nicht verfügbar"
+msgstr "Die Windows 10-Texterkennung ist nicht verfügbar"
 
 #. Translators: Describes a command.
 msgid ""
@@ -4552,7 +4552,7 @@ msgstr ""
 #. due to profile activation being suspended.
 msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"Das aktive Profil konnte nicht geändert werden, während ein NVDA-Dialog "
+"Das aktive Profil konnte nicht geändert werden, solange ein NVDA-Dialog noch "
 "geöffnet ist."
 
 #. Translators: a message when a configuration profile is manually deactivated.
@@ -4572,7 +4572,7 @@ msgstr "Profil {profile} aktiviert"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "Schaltet das Konfigurationsprofil {profile} um."
+msgstr "Schaltet das Konfigurationsprofil für {profile} um."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4592,7 +4592,7 @@ msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "Webseite von NVDA"
+msgstr "NVDA-Homepage"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -4680,7 +4680,7 @@ msgstr "E-Mail"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 msgid "media player"
-msgstr "Medienwiedergabe"
+msgstr "Media Player"
 
 #. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
 msgid "custom application 1"
@@ -4751,7 +4751,7 @@ msgstr "Entfernen"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "Nummernblock entf"
+msgstr "Nummernblock Entfernen"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -4827,7 +4827,7 @@ msgstr "Nummernblock Schrägstrich"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "Nummernblock Sternchen"
+msgstr "Nummernblock Stern"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
@@ -4963,11 +4963,11 @@ msgstr "ausgeschaltet"
 #. For example, in English, this might produce "laptop keyboard".
 #, python-format
 msgid "%s keyboard"
-msgstr "Tastaturschema %s"
+msgstr "Tastatur-Layout für %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
 msgid "keyboard, all layouts"
-msgstr "alle Tastaturschemata"
+msgstr "Alle Tastatur-Layouts"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -6708,7 +6708,7 @@ msgstr ""
 #. Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 #. available, will be disabled after installation.
 msgid "I understand that these incompatible add-ons will be disabled"
-msgstr "Mir ist bewusst, dass inkompatible Erweiterungen deaktiviert werden"
+msgstr "Bestätigen, dass inkompatible Erweiterungen deaktiviert werden"
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6804,13 +6804,13 @@ msgid ""
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
-"Damit NVDA weiter bestehen kann, brauchen wir Ihre Hilfe.\n"
-"Dieses Projekt lebt in erster Linie von Ihren Spenden. Indem Sie spenden, "
-"können Sie die Weiterentwicklung von NVDA sicherstellen.\n"
-"Selbst wenn Sie nur 10 Euro für jede heruntergeladene Version spenden, "
-"können wir alle laufenden Kosten decken.\n"
-"Ihre Spenden gehen hierbei an NV-Access, eine gemeinnützige Organisation, "
-"die NVDA weiterentwickelt.\n"
+"Wir brauchen Ihre Hilfe, um die NVDA weiter zu verbessern.\n"
+"Dieses Projekt stützt sich in erster Linie auf Spenden und Zuschüsse. Mit "
+"Ihrer Spende tragen Sie dazu bei, die Vollzeit-Entwicklung zu finanzieren.\n"
+"Wenn auch nur 10 Euro für jeden Download gespendet werden, können wir alle "
+"laufenden Kosten des Projekts decken.\n"
+"Alle Spenden gehen an NV Access, die gemeinnützige Organisation, die NVDA "
+"entwickelt.\n"
 "Vielen Dank für Ihre Unterstützung."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -6833,12 +6833,10 @@ msgid "&Done"
 msgstr "&Fertig"
 
 msgid "NonVisual Desktop Access"
-msgstr "Nonvisual Desktop Access"
+msgstr "NonVisual Desktop Access"
 
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr ""
-"NonVisual Desktop Access (NVDA) ist ein freier Screen Reader für Microsoft "
-"Windows."
+msgstr "Ein kostenloser und quelloffener Screenreader für Microsoft Windows"
 
 #, python-brace-format
 msgid "Copyright (C) {years} NVDA Contributors"
@@ -6909,9 +6907,9 @@ msgid ""
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"Die Eckpositionen des Objekts sind {left:.1f} Prozent vom linken,  {top:.1f} "
+"Die Eckpositionen des Objekts sind {left:.1f} Prozent vom linken, {top:.1f} "
 "Prozent vom oberen, {width:.1f} Prozent vom rechten und {height:.1f} Prozent "
-"vom unteren Bildschirmrand entfernt."
+"vom unteren Bildschirmrand entfernt"
 
 #. Translators: a message announcing a candidate's character and description.
 #, python-brace-format
@@ -6963,7 +6961,7 @@ msgstr ""
 
 #. Translators: When the help popup cannot be found for the selected autocompletion item
 msgid "Cann't find the documentation window."
-msgstr "Das Dokumentfenster konnte nicht gefunden werden."
+msgstr "Das Dokumentfenster konnte nicht gefunden werden"
 
 #. Translators: The title of Start menu/screen in your language (only the word start).
 msgid "Start"
@@ -6971,12 +6969,12 @@ msgstr "Start"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
-msgstr "Es wird gerade kein Titel wiedergegeben."
+msgstr "Es wird gerade kein Titel wiedergegeben"
 
 #. Translators: The description of an NVDA command for reading the remaining time of the currently playing track in Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr ""
-"Spricht die Restdauer des aktuell wiedergegebenen Titels, falls einer "
+"Nennt die verbleibende Dauer des aktuell wiedergegebenen Titels, falls einer "
 "abgespielt wird."
 
 #. Translators: The description of an NVDA command for reading the elapsed time of the currently playing track in Foobar 2000.
@@ -7172,7 +7170,7 @@ msgstr "Besprechungsanfrage"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "Keine Anmerkungen für Übersetzer."
+msgstr "Keine Anmerkungen für Übersetzer"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
@@ -7186,13 +7184,13 @@ msgstr "Zeigt Anmerkungen für Übersetzer an."
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "Kein Kommentar-Fenster gefunden."
+msgstr "Kein Kommentar-Fenster gefunden"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 msgid "No comment."
-msgstr "Kein Kommentar."
+msgstr "Kein Kommentar"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
@@ -7433,7 +7431,7 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"Schaltet zwischen den Notizen des Sprechers und dem eigentlichen "
+"Schaltet zwischen den Notizen frü den Sprecher und dem eigentlichen "
 "Folieninhalt um. Dies wirkt sich nicht auf die sichtbaren Inhalte aus, "
 "sondern hat lediglich Einfluss auf die von NVDA dargestellten Inhalte."
 
@@ -7461,7 +7459,7 @@ msgstr "Leere Folie"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
-msgstr "Auf PowerPoint warten..."
+msgstr "Auf Microsoft PowerPoint warten..."
 
 #. Translators: The name of the NVDA command category for Skype specific commands.
 msgid "Skype"
@@ -7888,7 +7886,7 @@ msgstr "&Hilfe"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "Konfigurations&profile..."
+msgstr "Konfigurationsprofile..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -7970,7 +7968,7 @@ msgstr "Optionen"
 #. Translators: This is the label for a combobox in the
 #. keyboard settings panel.
 msgid "&Keyboard layout:"
-msgstr "&Tastaturschema"
+msgstr "&Tastatur-Layout:"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
@@ -8059,16 +8057,16 @@ msgid ""
 "Do you wish to allow NV Access to periodically collect this data in order to "
 "improve NVDA?"
 msgstr ""
-"Um NVDA in Zukunft zu verbessern, möchte NV Access Nutzungsdaten von "
-"laufenden Kopien von NVDA sammeln.\n"
+"Um NVDA in Zukunft zu verbessern, möchte NV Access Nutzungsdaten von NVDA "
+"sammeln.\n"
 "\n"
 "Zu den Daten gehören Betriebssystem-, NVDA-Version, Sprache, Herkunftsland "
 "sowie bestimmte NVDA-Konfigurationen wie aktuelle Sprachausgabe, aktuelle "
 "Braillezeile und die verwendete Braille-Tabelle. Es wird weder gesprochene "
 "noch Braille-Inhalte jemals an NV Access gesendet.  Eine aktuelle Liste "
 "aller gesammelten Daten finden Sie im Benutzerhandbuch.\n"
-"Möchten Sie NV Access Limited erlauben, diese Daten regelmäßig zu sammeln, "
-"um NVDA zu verbessern?"
+"Möchten Sie NV Access erlauben, diese Daten regelmäßig zu sammeln, um NVDA "
+"zu verbessern?"
 
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
@@ -8097,7 +8095,7 @@ msgstr "NVDA neu starten"
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "&Mehr Informationen..."
+msgstr "I&nfo"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -8147,10 +8145,9 @@ msgid ""
 "disabled state, and install or uninstall add-ons. Changes will not take "
 "effect until after NVDA is restarted."
 msgstr ""
-"NVDA wurde mit deaktivierten Erweiterungen gestartet. Sie können den "
-"aktivierten / deaktivierten Zustand ändern und Erweiterungen installieren "
-"oder deinstallieren. Änderungen werden erst nach dem Neustart von NVDA "
-"wirksam."
+"NVDA wurde mit deaktivierten Erweiterungen gestartet. Sie können den Status "
+"ändern und Erweiterungen installieren oder deinstallieren. Änderungen werden "
+"erst nach dem Neustart von NVDA wirksam."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -8191,7 +8188,7 @@ msgstr "&Entfernen"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "Erweiterungen &herunterladen..."
+msgstr "Weitere Erweiterungen herunterladen..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -8212,11 +8209,13 @@ msgstr "NVDA-Erweiterungspaket (*.{ext})"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Möchten Sie die Erweiterung wirklich aus NVDA entfernen?"
+msgstr ""
+"Sind Sie sicher, dass Sie die ausgewählte Erweiterung aus NVDA entfernen "
+"möchten?"
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Addon.
 msgid "Remove Add-on"
-msgstr "Erweiterung entfernen"
+msgstr "&Entfernen"
 
 #. Translators: The status shown for an addon when it's not considered compatible with this version of NVDA.
 msgid "Incompatible"
@@ -8248,7 +8247,7 @@ msgstr "Nach Neustart aktiviert"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "&Erweiterung Aktivieren"
+msgstr "&Aktivieren"
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #, python-brace-format
@@ -8273,23 +8272,23 @@ msgstr ""
 #. add-on with this one.
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 msgid "Add-on Installation"
-msgstr "Erweiterung installieren"
+msgstr "Installieren"
 
 #, python-brace-format
 msgid ""
 "You are about to install version {newVersion} of {summary}, which appears to "
 "be already installed. Would you still like to update?"
 msgstr ""
-"Die Version {newVersion} der Erweiterung {summary} ist bereits installiert. "
-"Möchten Sie die vorhandene Version dennoch aktualisieren?"
+"Sie sind dabei, die Version {newVersion} von {summary} zu installieren, die "
+"bereits installiert zu sein scheint. Möchten Sie sie trotzdem aktualisieren?"
 
 #, python-brace-format
 msgid ""
 "A version of this add-on is already installed. Would you like to update "
 "{summary} version {curVersion} to version {newVersion}?"
 msgstr ""
-"Die Erweiterung {summary} ist bereits installiert. Möchten Sie die "
-"vorhandene Version {curVersion} auf Version {newVersion} aktualisieren?"
+"Eine Version dieser Erweiterung ist bereits installiert. Möchten Sie die "
+"{summary} Version {curVersion} auf die Version {newVersion} aktualisieren?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -8382,7 +8381,7 @@ msgstr ""
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
-msgstr "Konfigurationsprofile"
+msgstr "Konfigurationen verwalten"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
@@ -10432,7 +10431,7 @@ msgstr "Eintrag"
 #. Translators: Message to be spoken to report Series Color
 #, python-brace-format
 msgid "Series color: {colorName} "
-msgstr "Serienfarbe:  {colorName} "
+msgstr "Serien-Farbe: {colorName} "
 
 #. Translators: A type of element in a Microsoft Office chart.
 msgid "Display Unit Label"
@@ -10605,7 +10604,8 @@ msgstr "Wert {valueAxisData}"
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr ""
-" Anteil {fractionValue:.2f} Prozent Abschnitt {pointIndex} von {pointCount}"
+" Anteil {fractionValue:.2f} Prozent in Abschnitt {pointIndex} von "
+"{pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -10730,12 +10730,12 @@ msgstr "Zeichnungsbereich"
 #, python-brace-format
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
-"Legennden-Eintrag für Serie {seriesName} {seriesIndex} von {seriesCount}"
+"Eintrag der Legende für Serie {seriesName} {seriesIndex} von {seriesCount}"
 
 #. Translators: the legend entry for a chart in Microsoft Office
 #, python-brace-format
 msgid "Legend entry {legendEntryIndex} of {legendEntryCount}"
-msgstr "Legennden-Eintrag {legendEntryIndex} von {legendEntryCount}"
+msgstr "Eintrag der Legende {legendEntryIndex} von {legendEntryCount}"
 
 #. Translators: Details about a legend key for a series in a Microsoft office chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
@@ -10743,13 +10743,13 @@ msgstr "Legennden-Eintrag {legendEntryIndex} von {legendEntryCount}"
 #, python-brace-format
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
 msgstr ""
-"Legennden-Schlüssel für Serie {seriesName} {seriesIndex} von {seriesCount}"
+"Schlüssel der Legende für Serie {seriesName} {seriesIndex} von {seriesCount}"
 
 #. Translators: The default color of text when a color has not been set by the author.
 #. Translators: The default background color  when a color has not been set by the author.
 #. Translators: the default (automatic) color in Microsoft Word
 msgid "default color"
-msgstr "Standardfarbe"
+msgstr "Standard-Farbe"
 
 #. Translators: The color of text cannot be detected.
 #. Translators: The background color cannot be detected.
@@ -10780,31 +10780,31 @@ msgstr "Diagonale Linie (invertiert)"
 #. 12.5% gray
 #, no-python-format
 msgid "12.5% gray"
-msgstr "12,5 % grau"
+msgstr "12,5 Prozent grau"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 25% gray
 #, no-python-format
 msgid "25% gray"
-msgstr "25 % grau"
+msgstr "25 Prozent grau"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 50% gray
 #, no-python-format
 msgid "50% gray"
-msgstr "50 % grau"
+msgstr "50 Prozent grau"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 75% gray
 #, no-python-format
 msgid "75% gray"
-msgstr "75 % grau"
+msgstr "75 Prozent grau"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. 6.25% gray
 #, no-python-format
 msgid "6.25% gray"
-msgstr "6,25 % grau"
+msgstr "6,25 Prozent grau"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Grid
@@ -10919,22 +10919,23 @@ msgstr "Die Zelle {address} wurde aus der Spaltenüberschrift entfernt"
 #, python-brace-format
 msgid "Cannot find {address}    in column headers"
 msgstr ""
-"Die Zelle {address} kann in der Spaltenüberschrift nicht gefunden werden"
+"Die Zelle {address} konnte in der Spaltenüberschrift nicht gefunden werden"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"Wenn Sie diese Tastenkombination drücken, wird die aktuelle Zelle als Beginn "
-"der Spaltenüberschrift für alle Zellen unterhalb und rechts von dieser Zelle "
-"innerhalb dieser Region festgelegt. Drücken Sie die Tastenkombination "
-"zweimal, um die Zuweisung zu löschen."
+"Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Zelle als "
+"Beginn der Spaltenüberschrift für alle Zellen unterhalb und rechts von "
+"dieser Zelle innerhalb dieser Region festgelegt. Drücken Sie die "
+"Tastenkombination zweimal, um die Zuweisung wieder zu entfernen."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
 msgid "Set {address} as start of row headers"
-msgstr "Die Zelle {address} wurde als Beginn der Zeilenbeschriftung festgelegt"
+msgstr ""
+"Die Zelle {address} wurde als Beginn der Zeilen-Beschriftung festgelegt"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #, python-brace-format
@@ -10959,10 +10960,10 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Wenn Sie diese Tastenkombination drücken, wird die aktuelle Zelle als Beginn "
-"der Zeilenbeschriftung für alle Zellen unterhalb und rechts von dieser Zelle "
-"innerhalb dieser Region festgelegt. Drücken Sie die Tastenkombination "
-"zweimal, um die Zuweisung zu löschen."
+"Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Zelle als "
+"Beginn der Zeilenbeschriftung für alle Zellen unterhalb und rechts von "
+"dieser Zelle innerhalb dieser Region festgelegt. Drücken Sie die "
+"Tastenkombination zweimal, um die Zuweisung wieder zu entfernen."
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #, python-brace-format
@@ -10971,11 +10972,11 @@ msgstr "Tabelle {0}, {1}"
 
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
-msgstr "Die Eingabemeldung lautet  {title}: {message}"
+msgstr "Die Eingabemeldung lautet {title}: {message}"
 
 #, python-brace-format
 msgid "Input Message is {message}"
-msgstr "Die Eingabemeldung lautet  {message}"
+msgstr "Die Eingabemeldung lautet {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"

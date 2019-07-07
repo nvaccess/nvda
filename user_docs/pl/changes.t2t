@@ -2,6 +2,73 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2019.2 =
+Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowskich Freedom Scientific, eksperymentalne ustawienie zaawansowane wyłączenia podążania fokusu systemowego za kursorem trybu czytania (co może poprawić wydajność), możliwość podkręcania szybkości głosów mobilnych Windows,  oraz wiele poprawek.
+
+== Nowości ==
+- Okno Znajdź zawiera historię ostatnich 20 wyszukiwań. (#8482)
+ - Historia wyszukiwania jest czyszczona po zamknięciu lub ponownym uruchomieniu NVDA.
+- Wsparcie NVDA dla Miranda NG działa z nowszymi wersjami klienta. (#9053) 
+- Można domyślnie wyłączyć tryb czytania poprzez odznaczenie nowej opcji "Włącz tryb czytania podczas wczytywania strony"  w ustawieniach trybu czytania NVDA. (#8716) 
+ - Zauważ, że gdy opcja jest wyłączona, możesz włączać tryb czytania ręcznie, naciskając NVDA+spacja.
+- Można filtrować symbole w oknie słowników wymowy i interpunkcji, działa to podobnie jak filtr na liście elementów trybu czytania czy oknie zdarzeń wejścia. (#5761)
+- Dodana komenda zmiany rozdzielczości tekstu pod wskaźnikiem myszy (jak wiele tekstu zostanie wypowiedziane po ruchu myszy), nie posiada domyślnego przypisanego zdarzenia wejścia. (#9056)
+- Syntezator głosów mobilnych Windows obsługuje podkręcanie prędkości mowy, co pozwala uzyskać znacząco szybszą mowę. (#7498)
+- Opcja podkręcania szybkości jest konfigurowalna przez funkcję szybkiej zmiany ustawień syntezatora, jeżeli jest obsługiwana przez używany syntezator. (Obecnie eSpeak-NG and Głosy mobilne Windows). (#8934)
+- Profile konfiguracji mogą być ręcznie aktywowane zdarzeniami wejścia, np. klawiszami skrótu. (#4209)
+ - Zdarzenie musi być skonfigurowane w oknie "Zdarzenia wejścia".
+- W Eclipse, dodana obsługa autouzupełniania w edytorze kodu. (#5667)
+ - Dodatkowo, informacja Javadoc może być odczytana, jeśli jest obecna, przy użyciu NVDA+d.
+- Dodana eksperymentalna opcja w ustawieniach zaawansowanych, pozwalająca wyłączyć podążanie fokusa systemowego za  kursorem trybu czytania (automatycznie ustawiaj fokus na elementach interaktywnych). (#2039) O ile wyłączanie tego może nie mieć sensu  dla wielu stron, to jednak może to rozwiązać: 
+ - Efekt gumki: NVDA cofa ostatnią komendę trybu czytania i wraca do poprzedniego położenia.
+ - Pola edycji na niektórych stronah przechwytujące fokus przy próbie wyjścia z nich.
+ - Klawisze trybu czytania reagujące z opóźnieniem.
+- Dla sterowników linijek, które to obsługują, ustawienia sterownika mogą być zmieniane w oknie ustawień brajlowskich NVDA. (#7452)
+- Linijki Freedom Scientific mogą być automatycznie wykrywane. (#7727)
+
+
+== Zmiany ==
+- Głośność syntezy jest teraz zwiększana i zmniejszana o 5 zamiast o 10 w mechanizmie szybkiej zmiany parametrów syntezatora. (#6754)
+- Poprawione objaśnienie w managerze dodatków  pojawiające się po uruchomieniu NVDA z przełącznikiem --disable-addons. (#9473)
+- Zaktualizowane opisy znaków Unicode emoji do wersji 35.0. (#9445)
+- Translator brajlowski liblouis zaktualizowany do wersji 3.9.0. (#9439)
+- Klawisz skrótu pola filtru na liście elementów  trybu czytania, został zmieniony n a alt+g. (#8728)
+- Gdy automatycznie wykryta linijka brajlowska  jest podłączona przez Bluetooth, NVDA będzie poszukiwał linijki podłączonej przez USB, a obsługiwanej przy użyciu tego samego sterownika,   i przełączy się na połączenie USB, gdy stanie się dostępne. (#8853)
+
+
+== Poprawki błędów ==
+- NVDA nie zawiesza się, gdy folder dodatków jest pusty. (#7686)
+- Znaczniki kierunku tekstu LTR i RTL nie są od teraz zgłaszane  w brajlu lub przy czytaniu znak po znaku  w oknie właściwości. (#8361)
+- Po przejściu do pola formularza przy pomocy szybkiej nawigacji trybu czytania, całe pole jest oznajmiane, a nie tylko pierwsza linia. (#9388)
+- NVDA nie będzie się już uciszać po wyjściu z aplikacji Poczta systemu Windows 10. (#9341)
+- Rozwiązane problemy uruchamiania NVDA , gdy język regionalnych ustawień użytkownika   nie jest rozpoznawany przez NVDA np. angielski (holandia). (#8726)
+- Gdy tryb czytania jest włączony w Microsoft Excel i przełączysz się do przeglądarki w trybie formularzy lub odwrotnie, stan trybu czytania jest prawidłowo zgłaszany. (#8846)
+- NVDA  prawidłowo zgłasza linię pod myszą w Notepad++  i innych edytorach bazujących na Scintilla. (#5450)
+- W dokumentach Google Docs (i innych edytorach opartych na przeglądarce internetowej), brajl nie pokazuje teraz czasami nieprawidłowo znacznika końca listy przed kursorem  w środku elementu listy. (#9477)
+- W aktualizacji z maja 2019 Windows 10 , NVDA nie odczytuje wielu powiadomień o głośności, gdy głośność jest zmieniana fizycznymi przyciskami  a fokus znajduje się na eksploratorze plików. (#9466)
+- Otwieranie okien słowników wymowy lub interpunkcji jest teraz dużo szybsze gdy słowniki zawierają ponad 1000 wpisów. (#8790)
+- w kontrolkach Scintilla  takich jak Notepad++, NVDA odczytuje prawidłową linię przy włączonym zawijaniu wierszy. (#9424)
+- W Microsoft Excel, położenie komórki jest oznajmiane po jego zmianie przez shift+enter lub shift+numpadEnter. (#9499)
+- W Visual Studio 2017 i nowszych, w oknie eksploratora obiektów, element zaznaczony w drzewie obiektów lub drzewie elementów z kategoriami, jest prawidłowo odczytywany. (#9311)
+- Wtyczki o takich samych nazwach, różniących się tylko wielkością liter, nie są od teraz traktowane jako różne dodatki. (#9334)
+- Dla głosów mobilnych Windows, prędkość ustawiona w NVDA  nie jest modyfikowana przez prędkość z ustawień mowy Windows 10. (#7498)
+- Podgląd logów NVDA może być otwarty przy użyciu NVDA+F1 również wtedy, gdy nie można uzyskać informacji dla programistów z aktualnego obiektu  nawigatora. (#8613)
+- Możliwe jest ponowne używanie komend NVDA nawigacji po tabelach w Google Docs w Firefox i Chrome. (#9494)
+- Klawisze ochraniające  działają prawidłowo na linijkach Freedom Scientific. (#8849)
+- Po odczytaniu pierwszego znaku dokumentu  w Notepad++ 7.7 X64, NVDA nie zawiesza się na czas do 10 sekund. (#9609)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2019.1.1 =
+To wydanie poprawia następujące błędy:
+- Excel 2007 : naprawione zawieszania programu powodowane przez NVDA, albo brak informacji, że komórka zawiera formułę. (#9431)
+- Google Chrome  nie zawiesza się podczas interakcji z niektórymi listami. (#9364)
+- Poprawka błędu, który powodował  brak możliwości skopiowania konfiguracji użytkownika do profilu systemowego. (#9448)
+- W Microsoft Excel, NVDA ponownie używa przetłumaczonej informacji  przy zgłaszaniu połączonych komórek. (#9471)
+
 
 = 2019.1 =
 Najważniejsze zmiany w tej wersji to poprawki wydajności w Microsoft word i Excel, poprawki stabilności i bezpieczeństwa np. obsługa dodatków z informacjami o kompatybilności, oraz wiele innych.

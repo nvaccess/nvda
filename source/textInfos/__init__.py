@@ -218,6 +218,8 @@ class Bookmark(baseObject.AutoPropertyObject):
 		if isinstance(other,Bookmark) and self.infoClass==other.infoClass and self.data==other.data:
 			return True
 
+	def __ne__(self,other):
+		return not self==other
 
 #Unit constants
 UNIT_CHARACTER="character"
