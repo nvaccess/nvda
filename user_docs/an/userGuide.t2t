@@ -472,8 +472,19 @@ Si bien un churi fisico u un trackpad se podrían emplegar pa navegar con o chur
 
 + Modo de navegación +[BrowseMode]
 Os documentos complexos de nomás lectura, tals como as pachinas Web, son representaus en o NVDA con un modo de navegación. 
-Ixo inclui documentos en o Mozilla Firefox, o Microsoft Internet Explorer, o Mozilla Thunderbird, os mensaches HTML d'o Microsoft Outlook, o Google Chrome, l'Adobe Reader y l'Adobe Flash.
-O modo de navegación tamién ye disponible opcionalment t'os documentos d'o Microsoft Word.
+Ixo inclui documentos en as siguients aplicacions:
+- Lo Mozilla Firefox
+- Lo Microsoft Internet Explorer
+- Lo Mozilla Thunderbird
+- Los mensaches en HTML d'o Microsoft Outlook
+- Lo Google Chrome
+- Lo Microsoft Edge
+- L'Adobe Reader
+- Lo Foxit Reader
+- L'Adobe Flash.
+- Los libros suportaus en l'Amazon Kindle pa PC 
+-
+Lo modo de navegación tamién ye disponible opcionalment t'os documentos d'o Microsoft Word.
 
 En o modo de navegación, o conteniu d'o documento se fa disponible por meyo d'una representación plana de conteniu tal como una pachina Web, por o qual te puetz mover con as teclas de cursor. 
 Todas as teclas d'ordens d'o [cursor d'o sistema #SystemCaret] d'o NVDA funcionarán en iste modo; p. eix.: leyer-lo tot, anunciar o formato, ordens de navegación de tabla, etc.
@@ -493,7 +504,7 @@ Amás, puetz forzar manualment o modo de foco, dimpués remanirá efectivo dica 
 | Commutar os modos de navegación/foco | NVDA+espacio | Commuta entre o modo de foco y o modo de navegación |
 | Salir d'o modo de foco | escape | Cambea t'o modo de navegación si o modo de foco anteriorment heba cambiau automaticament |
 | Refrescar o documento en o modo de navegación | NVDA+f5 | Recarga o conteniu d'o documento actual (util si bells contenius pareixen estar desapareixius d'o documento. No disponible en o Microsoft Word y l'Outlook) |
-| Mirar | NVDA+control+f | Desplega un dialogo en que puetz tecliar bell texto pa trobar en  o documento actual |
+| Mirar | NVDA+control+f | Desplega un dialogo en que puetz tecliar bell texto pa trobar en  o documento actual. Mira-te [mirar texto #SearchingForText] pa mas información. |
 | Mirar a siguient | NVDA+f3 | Troba la siguient  ocurrencia d'o texto en o documento que mirés anteriorment |
 | Mirar l'anterior | NVDA+mayus+f3 | Troba la ocurrencia anterior d'o texto en o documento que mirés anteriorment |
 | ubrir a descripción luenga | NVDA+d d| Ubre una finestra nueva que contién una descripción luenga ta l'elemento sobre o qual sigas si en tien una. | 
@@ -541,15 +552,31 @@ Si quiers fer servir-ne sin deixar d'estar capable de fer servir as teclas de cu
 Pa enchegar u desenchegar a navegación d'una sola letra en o documento actual preta NVDA+mayus+espacio.
 %kc:endInclude
 
-++ A Lista d'Elementos ++[ElementsList]
-A lista d'elementos proporciona acceso a una lista de quantos vinclos, capiters, campos de formulario,  botons u zonas en a pachina. 
+++ La Lista d'Elementos ++[ElementsList]
+La lista d'elementos proporciona acceso ta una lista de quantos vinclos, capiters, campos de formulario,  botons u zonas en a pachina. 
 Por eixemplo en os navegadors web a lista d'elementos puet incluir vinclos, capiters u zonas.
-Os botons d'opción te permiten cambiar entre as diferents menas d'elementos. 
+Los botons d'opción te permiten cambiar entre las diferents menas d'elementos. 
 Se Proporciona tamién un campo d'edición en o dialogo o qual te permite filtrar a lista t'aduyar-te a buscar un elemento en particular en a pachina. 
 Una vez haigas trigau un elemento, puetz emplegar os botons proporcionaus en o dialogo ta mover-te-ne ta, u activar, ixe elemento.
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
 | Lista d'elementos d'o modo de navegación | NVDA+f7 | Desplega a lista d'elementos que contién vinclos, capiters y zonas ARIA d'o documento actual |
+%kc:endInclude
+
+++ Mirar texto ++[SearchingForText]
+Iste dialogo te permite mirar termins en o documento actual.
+En o campo "Tecleya lo texto que deseyes trobar", puede calar-se-bi lo texto pa trobar.
+Mientras sigas en o campo de texto, tamién puetz emplegar las flechas alto y abaixo pa trigar los termins miraus dinantis.
+La caixeta de verificación "sensible a las mayusclas" fa que la busca considere letras en mayusclas y en minusclas de modo diferent.
+Por eixemplo, con "sensible a las mayusclas" trigada puetz trobar "NV Access" pero no pas "nv access".
+No s'alzará las diferencias de caso en l'historico de buscas.
+En que se reenchegue lo NVDA, la lista d'os termins miraus dinantis se lasa.
+Fe servir las siguients teclas pa rializar  buscas:
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Mirar texto | NVDA+control+f | Ubre lo dialogo de mirar  |
+| Mirar lo siguient | NVDA+f3 | Mira la siguient ocurrencia d'o termin actual mirau |
+| Mirar l'anterior | NVDA+mayus+f3 | Mira la ocurrencia anterior d'o termin actual mirau |
 %kc:endInclude
 
 ++ Obchectos Integraus ++[ImbeddedObjects]
@@ -1352,6 +1379,8 @@ Quan ye marcada significa que lo NVDA anunciará lo texto actualment baixo lo pu
 Si lo NVDA ye configurau pa anunciar lo texto baixo lo churi seguntes lo muevas, ista opción te permite de trigar exactament quánto texto será charrau. 
 Las opcions son caracter, parola, linia y paragrafo.
 
+Pa cambiar la unidat de resolución de texto dende qualsiquier puesto, por favor asigna un cenyo personalizau fendo servir lo [dialogo de cenyos de dentrada #InputGestures].
+
 ==== Anunciar lo paper quan o churi dentre en l'Obchecto ====[MouseSettingsRole]
 Si ista caixeta de verificación ye marcada, lo NVDA anunciará lo paper (mena) d'obchecto en que lo churi se i mueva adintro d'ell.
 
@@ -1503,7 +1532,15 @@ Iste campo achusta a cantidat de linias que moverás quan pretes Abance de pachi
 ==== Fer servir o disenyo de pantalla ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
-Ista opción te permite d'especificar si o conteniu en o modo de navegación habría de colocar cosas tals como vinclos y atros campos en a suya propia linia, u si habría de conservar-los en o fluixo de texto seguntes en siga amostrau visualment. Si a opción ye activada, allora as cosetas remanirán seguntes sigan amostradas visualment, pero si ye desactivada, allora os campos serán colocaus en a suya propia linia.
+Ista opción te permite especificar si lo conteniu en o modo de navegación ha de calar cosas tals como vinclos y atros campos cadagún en a suya propia linia, u si ha de conservar-los en o fluixo de texto seguntes s'amuestre visualment.
+Si la opción ye enchegada, allora las cosas remanirán seguntes s'amuestren visualment, pero si ye desenchegada, allora los campos serán colocaus en a suya propia linia.
+
+==== Enchegar lo modo de navegación en cargar la Pachina ====[BrowseModeSettingsEnableOnPageLoad]
+Ista caixeta de verificación cambia si s'ha d'enchegar automaticament lo modo de navegación en cargar una pachina.
+Quan ista opción siga desenchegada, lo modo de navegación agún puede enchegar-se manualment en pachinas u en documentos en do s'admita lo modo de navegación.
+Mira-te la [sección d'o modo de navegación #BrowseMode] pa una lista d'as aplicacions admitidas por lo modo de navegación.
+Tiene en cuenta que ista opción no s'aplica a situacions en qe lo modo de navegación siga siempre opcional, por eixemplo, en o Microsoft Word.
+Ista opción ye enchegada por defecto.
 
 ==== Charrar-lo Tot Automaticament en Cargar a Pachina ====[BrowseModeSettingsAutoSayAll]
 Ista caixeta de verificación commuta a verbalización automatica d'una pachina dimpués de cargar-la en o modo de navegación.
@@ -1633,6 +1670,16 @@ Ixo incluye lo mesmo Microsoft Word, y tamién lo visor de mensaches y la redacc
 Manimenos, puet haber-bi bella información que no siga exposada u que siga exposada incorrectament en qualques versions d'o Microsoft Office, lo que significa que no siempre se puet confidar en iste suporte de l'UI automation.
 Encara no recomendamos que la mayoría d'os usuarios activen ista opción de traza predeterminada, encara que convidamos a los usuarios de l'Office 2016/365 a que preben ista función y nos ninvien los suyos comentarios.
 
+==== Meter Automaticament lo Foco d'o Sistema en os Elementos enfocables en o Modo de navegación ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tecla: NVDA+8
+
+Enchegada por defecto, ista opción te permite trigar si lo foco d'o sistema ha de meter-se automaticament en os elementos que puedan tener-lo (vinclos, campos de formulario, etc.) quan se navegue por lo conteniu con o cursor d'o modo de navegación.
+Si s'enchega ixo represienta lo comportamiento predeterminau d'o NVDA como la versión 2019.1 y anteriors.
+En desenchegando ista opción no s'enfocará automaticament los elementos enfocables quan se triguen con o cursor d'o modo de navegación.
+Isto podría resultar en una millor experiencia de navegación y una millor respuesta en o modo de navegación.
+Lo foco encara s'actualizará ta l'elemento en particular quan interactugues con ell (por eixemplo, pretando un botón, marcando una caixeta de verificación).
+Ixa funcionalidat ye experimental a partir d'o NVDA 2019.2.
+
 ==== Tiempo d'aspera pa lo movimiento d'o cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Ista opción te permite configurar lo numero de milisegundos que lo NVDA asperará a que lo cursor (punto d'inserción) se mueva en os controls de texto editables.
 Si veyes que lo NVDA aparenta estar seguindo incorrectament lo cursor, por eixemplo, pareixe estar siempre un caracter per dezaga u repetindo linias, alavez puetz intentar aumentar ista valor.
@@ -1654,7 +1701,7 @@ son:
 - Temporal: Las reglas en iste diccionario afectan a todas las voces en lo NVDA, pero nomás pa la sesión actual. Istas reglas son temporals y se perderán si se reenchega lo NVDA
 -
 
-Te fa falta d'asignar cenyos personalizaus fendo servir lo [dialogo de cenyos de dentrada #InputGestures] si deseyas ubrir bel'un d-istos dialogsos de diccionario dende qualsiquier puesto.
+Te fa falta asignar cenyos personalizaus fendo servir lo [dialogo de cenyos de dentrada #InputGestures] si deseyas ubrir bel'un d-istos dialogsos de diccionario dende qualsiquier puesto.
 
 Totz los dialogos de diccionario contienen una lista de reglas que serán utilizadas pa procesar a voz. 
 Lo dialogo tamién contién os botons Adhibir, Editar y Eliminar.
@@ -1663,7 +1710,7 @@ Pa adhibir un nuevo regle a lo diccionario, preta o botón Adhibir, y replena os
 Allora berás o tuyo nuevo regle en a lista de regles. 
 Asinasmesmo pa asegurar-te que o tuyo regle ye actualment alzau, asegura-te de pretar Acceptar pa salir completament d'o dialogo de diccionario Una vez haigas finalizau d'adhibir/editar regles.
 
-Los regles pa los diccionarios de voz d'o NVDA te permiten de cambiar una cadena de caracters por unatra. 
+Los regles pa los diccionarios de voz d'o NVDA te permiten cambiar una cadena de caracters por unatra. 
 Por eixemplo, si quereses tener lo NVDA decindo a parola mixín cada vez que hese de decir a parola can. 
 En o dialogo d'adhibir un regle, o modo mas facil de fer isto ye tecliar a parola can en o campo Patrón, y a parola mixín en o campo de substitución. 
 podrías tamién querer tecliar una descripción d'o regle en o campo Comentario (bella cosa como: cambiar can por mixín).
@@ -1686,8 +1733,9 @@ L'idioma que se ye editando a suya pronuncia  de simbolos s'amostrará en o tito
 Tiene en cuenta que iste dialogo respecta la opción "Confidar en l'idioma d'a voz en procesar simbolos y caracters" que se troba en a [categoría de voz #SpeechSettings] d'o dialogo d'[opcions d'o NVDA #NVDASettings] ye decir, fa servir l'idioma d'a voz en cuenta d'a opción de l'idioma global d'o NVDA quan ixa opción siga habilitada.
 
 Pa cambiar un simbolo, en primeras selecciona-lo en a lísta de Simbolos.
+Puetz tresminar los simbolos ficando lo simbolo u una parti d'a suya substitución en o quadro d'edición de tresminar por.
 
-- O campo Reemplazar te permite de cambiar o texto que habría de charrar-se en cuenta d'iste simbolo.
+- Lo campo de reemplazar te permite cambiar lo texto que habría de charrar-se en cuenta d'iste simbolo.
 - Fendo servir lo campo de libel puetz achustar lo libel mas baixo d'o simbolo tal como ixe simbolo habría de charrar-se.
 - Lo campo de ninviar lo simbolo rial t'o sintetizador especifica quan habría de ninviar-se t'o sintetizador lo simbolo (en contraste con a suya substitución) .
 Ixo ye util si lo simbolo causa que lo sintetizador se pause u cambie la entonación d'a voz.
@@ -1744,15 +1792,15 @@ As siguients teclas d'ordens d'o NVDA tamién son utils:
 %kc:endInclude
 
 ++ Perfils de Configuración ++[ConfigurationProfiles]
-A veces, ye posible que deseyes de tener diferents configuracions pa diferents situacions.
-Por eixemplo, ye posible que deseyes de tener l'anunciau de sangría habilitau mientras yes editando u l'anunciau d'os atributos d'a fuent activau mientras yes correchindo.
-Lo NVDA te permite de fer ixo fendo servir perfils de configuración.
+A veces, ye posible que deseyes tener diferents configuracions pa diferents situacions.
+Por eixemplo, ye posible que deseyes tener l'anunciau de sangría habilitau mientras yes editando u l'anunciau d'os atributos d'a fuent activau mientras yes correchindo.
+Lo NVDA te permite fer ixo fendo servir perfils de configuración.
 
 Un perfil de configuración contién nomás las opcions que se cambian mientras que lo perfil ye estando editau.
 La mayoría d'as opcions se pueden cambiar en os perfils de configuración difueras d'ixas que sigan en a categoría cheneral d'o dialogo d'[opcions d'o NVDA #NVDASettings] , que s'aplican a la totalidat d'o NVDA.
 
-Los perfils de configuración pueden estar enchegaus manualment.
-Tamién se pueden enchegar de traza automatica a causa de disparadors tals como lo cambeo ta una aplicación en particular.
+Los perfils de configuración pueden enchegar-sen manualment, ya siga dende un quadro de dialogo u fendo servir cenyos anyadius personalizaus.
+Tamién se pueden enchegar de traza automatica a causa de disparadors tals como lo cambio ta una aplicación en particular.
 
 +++ Maneyo Basico +++[ProfilesBasicManagement]
 Maneyas os perfils de configuración seleccionando "Perfils de Configuración" en o menú NVDA.
@@ -1817,6 +1865,14 @@ Por eixemplo, podrías deseyar editar un perfil enchegau manualment u la configu
 Puetz fer ixo marcando a caixeta de verificación de desactivar temporalment totz os disparadors en o quadro de dialogo  d'os perfils de configuración.
 
 Pa activar u desactivar los disparadors dende qualsiquier puesto, por favor asigna un cenyo personalizau utilizando lo [dialogo de cenyos de dentrada #InputGestures].
+
++++ Activar un perfil fendo servir cenyos de dentrada +++[ConfigProfileGestures]
+Pa cada perfil que anyadas, podrás asignar uno u mas cenyos de dentrada pa activar-lo.
+Por defecto, los perfils de configuración no tienen cenyos de dentrada asignaus.
+Puetz anyadir cenyos pa activar un perfil fendo servir lo [dialogo de cenyos de dentrada #InputGestures].
+Cada perfil tiene la suya propia dentrada en a categoría de perfils de configuración.
+Quan renombres un perfil, qualsiquier cenyo que anyadises con anterioridad encara será disponible.
+Borrar un perfil eliminará automaticament lo cenyo asociau con ell.
 
 ++ Ubicación d'os Fichers de Configuración++[LocationOfConfigurationFiles]
 As versions portatils d'o NVDA almagazenan todas as suyas opcions y complementos en un directorio clamau userConfig, que se troba en o directorio d'o NVDA.
@@ -1999,13 +2055,11 @@ Todas las linias Focus y PAC Mate de [Freedom Scientific https://www.freedomscie
 Te fará falta os controladors de linias braille de Freedom Scientific instalaus en o tuyo sistema.
 Si no los tiens encara, puetz obtener-los dende https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Encara que ista pachina no mencione que a pantalla Focus 40 Blue, o controlador suporta todas as pantallas Focus y Pacmate de Freedom Scientific.
-Si o tuyo sistema executa un Windows de 64 bits y os controladors ya s'instaloron por unatro lector de pantalla, posiblement encara amenesterás instalar os controladors dende iste vinclo, ya que os fichers que requiere NVDA posiblement no estioron instalaus por l'atro lector de pantalla.
 
 Predeterminadament, lo NVDA puet detectar automaticament y connectar-se a istas linias tanto a traviés d'USB como de bluetooth.
 Manimenos, quan se configura a linia, puetz seleccionar explicitament os puertos "USB" u "Bluetooth" ta restrinchir a mena de connexión a emplegar.
 Isto podría estar util si quiers connectar la linia focus a lo NVDA emplegando bluetooth, y encara podrías cargar-la emplegando a enerchía de l'USB dende o tuyo ordinador.
-
-Istas linias encara no suportan la funcionalidat de detección automatica en segundo plan d'o NVDA.
+La detección automatica de linias braille d'o NVDA tamién reconoixerá la linia por USB u por Bluetooth.
 
 Contino va las asociacions de teclas pa ista linia con o NVDA.
 Por favor mira-te la documentación d'a linia pa descriptcions de do puet trobar-se istas teclas.

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-24 00:10+1000\n"
-"PO-Revision-Date: 2019-05-23 17:05+0100\n"
+"POT-Creation-Date: 2019-05-31 00:10+1000\n"
+"PO-Revision-Date: 2019-05-30 16:35+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -4534,23 +4534,22 @@ msgstr "Prepoznaje sadržaj objekta nawigatora sa Windows 10 ocr"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
-msgid ""
-"Can't change the active configuration profile while an NVDA dialog is open"
+msgid "Can't change the active profile while an NVDA dialog is open"
 msgstr ""
-"Konfiguracijski profil se ne može promijeniti dok je otvoren drugi NVDA "
+"Konfiguracijski profil se ne može promijeniti sve dok je otvoren drugi NVDA "
 "dijaloški okvir"
 
 #. Translators: a message when a configuration profile is manually deactivated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually deactivated"
-msgstr "Konfiguracijski profil {profile} je ručno deaktiviran"
+msgid "{profile} profile deactivated"
+msgstr "{profile} deaktiviran"
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
-msgid "Configuration profile {profile} manually activated"
-msgstr "Konfiguracijski profil {profile} je ručno aktiviran"
+msgid "{profile} profile activated"
+msgstr "{profile} aktiviran"
 
 #. Translators: The description shown in input help for a script that
 #. activates or deactivates a config profile.
@@ -7520,7 +7519,8 @@ msgstr "Uključuje ili isključuje HID tipkovničku simulaciju"
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Freedom Scientific Focus/PAC Mate serija"
 
-#. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
+#. Translators: The name of a key on a braille display, that scrolls the display
+#. to show previous/next part of a long line.
 msgid "display scroll"
 msgstr "klizanje prikaza"
 
