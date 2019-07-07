@@ -3,6 +3,71 @@ Novità in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.2 =
+Le novità più interessanti di questa versione riguardano il rilevamento automatico dei Display Braille Freedom Scientific, una nuova impostazione sperimentale situata nella scheda avanzate che impedisce al focus di spostarsi assieme al cursore virtuale durante la navigazione (il che può migliorare moltissimo la velocità di gestione delle pagine web), una nuova funzione chiamata "aumento velocità" nelle voci Windows OneCore in Windows10 che consente al sintetizzatore di leggere molto più rapidamente, e molti altri bug risolti.
+
+
+== Novità ==
+- La finestra di dialogo "trova", che si attiva con NVDA-CTRL-F in modalità navigazione, ora mantiene la cronologia delle ultime 20 ricerche. (#8482)
+ - La cronologia delle ricerche viene cancellata quando NVDA si chiude o si riavvia.
+- Il supporto per Miranda NG funziona di nuovo con le ultime versioni del client. (#9053) 
+- Una nuova opzione permette di disattivare la modalità navigazione per impostazioni predefinite,  smarcando la casella di controllo "abilita modalità navigazione al caricamento delle pagine", situata in impostazioni > modalità navigazione. (#8716) 
+ - Si noti che quando questa opzione è disabilitata, è sempre possibile abilitare la modalità di navigazione manualmente premendo NVDA + spazio.
+- È ora possibile filtrare i simboli nella finestra di dialogo pronuncia punteggiatura/simboli, in modo analogo a come funziona il filtro nell'elenco elementi e nella finestra gesti di immissione. (#5761)
+- è stato aggiunto un comando per modificare al volo la quantità di testo letta al passaggio del mouse. Non è stato associato ad alcun tasto rapido, quindi nel caso serva, bisogna provvedere nella finestra tasti e gesti di immissione. (#9056)
+- La finestra di impostazioni Sintetizzatore OneCore ha una nuova opzione chiamata aumento velocità, se attivata la sintesi vocale parlerà in maniera molto più rapida. (#7498)
+- La funzione di aumento velocità delle sintesi OneCore è controllabile anche dalle impostazioni al volo del sintetizzatore. Attualmente questo parametro è modificabile solo con le sintesi Espeak-NG e Windows Onecore. (#8934)
+- I profili di configurazione possono essere attivati manualmente servendosi di gesti o tasti rapidi. (#4209)
+ - Naturalmente bisogna configurare un gesto appropriato nella finestra gesti e tasti di immissione.
+- In Eclipse, è stato introdotto il supporto all'autocompletamento nell'editor del codice. (#5667)
+ - In aggiunta, Le informazioni Javadoc possono essere lette dall'editor quando presenti utilizzando NVDA+d.
+- Aggiunta una nuova impostazione sperimentale situata nella scheda avanzate che impedisce al focus di spostarsi assieme al cursore virtuale durante la navigazione; la funzione si chiama "sposta automaticamente il focus durante la navigazione", (#2039). Benché la disattivazione di questa casella di controllo potrebbe non essere indicata per tutti i siti web, quando funziona va a risolvere parecchi problemi, tra i quali:
+ - Effetto elastico: NVDA talvolta ritorna alla posizione precedente invece di eseguire il comando di navigazione indicato.
+ - Difficoltà di passare tra le caselle editazione in alcuni siti con il focus che si attiva di colpo quando non richiesto.
+ - Lentezza in risposta dei tasti di navigazione.
+- Per quei driver di Display Braille che lo supportano, la finestra delle impostazioni braille può contenere opzioni aggiuntive relative solo a quel driver, per esempio la resistenza del punto. (#7452)
+- Il rilevamento automatico Display Braille ora riconosce anche le barre della Freedom Scientific. (#7727)
+
+
+== Cambiamenti ==
+- Il volume della voce aumenta o diminuisce di 5 anziché di 10 quando lo si modifica con le impostazioni al volo del sintetizzatore. (#6754)
+- è stato reso più chiaro il testo che appare nel gestore componenti aggiuntivi quando NVDA viene eseguito con l'opzione --disable-addons. (#9473)
+- Aggiornate le annotazioni emoji di Unicode Common Locale Repository Data alla versione 35.0. (#9445)
+- Aggiornato liblouis braille translator alla versione 3.9.0. (#9439)
+- Il tasto di scelta rapida per il campo filtro nell'elenco elementi in modalità navigazione è stato modificato in alt + y. (#8728)
+- Quando un display braille rilevato automaticamente viene collegato tramite Bluetooth, NVDA continuerà a cercare display USB supportati dallo stesso driver e passerà a una connessione USB se disponibile. (#8853)
+
+
+== Bug Corretti ==
+- NVDA non crasha più se una cartella di componenti aggiuntivi è vuota. (#7686)
+- Non vengono più riportati in braille o tramite percentuale con la voce i segni di marcatura da sinistra a destra e da destra a sinistra quando si accede alla finestra delle proprietà. (#8361)
+- Quando si utilizza un tasto rapido per andare direttamente ad un form in modalità navigazione, viene annunciato l'intero campo del form anziché soltanto la prima riga. (#9388)
+- NVDA non rimarrà più in silenzio dopo essere uscito dall'app Posta di Windows 10. (#9341)
+- NVDA non avrà più problemi ad avviarsi quando  le impostazioni regionali dell'utente sono impostate in una lingua che NVDA non conosce, ad esempio Inglese (Paesi Bassi). (#8726)
+- Quando la modalità di navigazione è abilitata in Microsoft Excel e si passa a un browser in modalità focus o viceversa, lo stato della modalità di navigazione viene ora segnalato in modo appropriato. (#8846)
+- NVDA ora annuncia correttamente la riga sulla quale si trova il mouse in Notepad++ e altri editor basati su Scintilla. (#5450)
+- In Google Docs (e altri editor web), non viene più mostrata in Braille prima del cursore la dicitura "lst end" nel mezzo di un elenco elementi. (#9477)
+- In Windows10 Aggiornamento Maggio 2019, NVDA non annuncerà più notifiche di continuo inerenti il cambio del volume quando effettuato con tasti fisici, con l'app Esplora File in primo piano. (#9466)
+- è stato reso molto più rapido il caricamento della finestra di dialogo pronuncia/punteggiatura simboli anche nel caso in cui si utilizzi un dizionario simboli contenente più di 1000 valori. (#8790)
+- Nei controlli Scintilla come in Notepad++, NVDA leggerà la riga esatta anche quando la funzione a capo automatico è attiva. (#9424)
+- In Microsoft Excel, viene annunciata la posizione della cella quando modificata dai tasti Shift+Enter o Shift+NumPadEnter. (#9499)
+- In Visual Studio 2017 e successivi, nella finestra esplora oggetti, viene annunciato correttamente l'oggetto selezionato nell'albero degli oggetti o nell'albero dei membri con le categorie. (#9311)
+- Due componenti aggiuntivi con lo stesso nome ma con differenze nelle maiuscole non saranno più trattati come addon diversi. (#9334)
+- Per le voci Windows OneCore, la velocità impostata in NVDA non è più influenzata dalla velocità impostata nelle impostazioni vocali di Windows 10. (#7498)
+- Ora il log può essere aperto con NVDA +F1 anche quando non vi sono informazioni per gli sviluppatori relative al navigatore ad oggetti. (#8613)
+- è di nuovo possibile servirsi dei comandi di navigazione tabella di NVDA in Google Docs, Firefox e Chrome. (#9494)
+- I tasti bumper funzionano di nuovo correttamente per i Display Braille di Freedom Scientific. (#8849)
+- Quando si legge il primo carattere di un documento in Notepad++ 7.7 X64, NVDA non si blocca più per un tempo massimo di dieci secondi. (#9609)
+
+
+== Changes for Developers ==
+- You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
+- The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)
+- Updated comtypes package to 1.1.7. (#9440, #8522)
+- When using the report module info command, the order of information has changed to present the module first. (#7338)
+- Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+
+
 = 2019.1 =
 Le novità principali di questa versione si possono riassumere in un grosso miglioramento delle prestazioni quando si accede a Microsoft Word ed Excel, miglioramenti di stabilità e sicurezza come il supporto per i componenti aggiuntivi con informazioni sulla compatibilità della versione e molte altre correzioni di bug.
 

@@ -45,6 +45,8 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
+	# UIA events of candidate window interfere with MSAA events.
+	"Microsoft.IME.CandidateWindow.View",
 "SysTreeView32",
 "WuDuiListView",
 "ComboBox",
@@ -150,7 +152,7 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
-if winVersion.isAtLeastWin10():
+if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
 
 ignoreWinEventsMap = {
