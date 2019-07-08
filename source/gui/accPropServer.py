@@ -5,9 +5,11 @@
 #See the file COPYING for more details.
 
 """Implementation of IAccProcServer, so that customization of a wx control can be done very fast."""
+from ctypes.wintypes import BOOL
+from typing import Optional, Tuple, Any
 
 from logHandler import log
-from  comtypes.automation import VT_EMPTY
+from comtypes.automation import VT_EMPTY, S_OK
 from  comtypes import COMObject, GUID
 from comInterfaces.Accessibility import IAccPropServer, ANNO_CONTAINER, ANNO_THIS
 from abc import ABCMeta, abstractmethod, abstractproperty
@@ -35,10 +37,8 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 	# https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx
 	HAS_PROP = 1  # TRUE - Constant for `BOOL* pfHasProp` out param of `IAccPropServer::GetPropValue` method
 	DOES_NOT_HAVE_PROP = 0  # FALSE - Constant for `BOOL* pfHasProp` out param of `IAccPropServer::GetPropValue` method
-	# When returning `DOES_NOT_HAVE_PROP` or FALSE as the pfHasProp part of the return of `IAccPropServer::GetPropValue`
-	# method, then `pvarValue` return value must be `VT_EMPTY`.
-	# Consider using `NO_RETURN_VALUE`
-	NO_RETURN_VALUE = (VT_EMPTY, DOES_NOT_HAVE_PROP)
+
+	S_OK = 0
 
 	# An array with the GUIDs of the properties that an AccPropServer should override
 	properties_GUIDPTR = []
@@ -78,8 +78,9 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 		control.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyControl, source=control)
 
 	@abstractmethod
-	def _getPropValue(self, pIDString, dwIDStringLen, idProp):
-		"""use this method to implement GetPropValue. It  is wrapped by the callback GetPropValue to handle exceptions.
+	def _getPropValue(self, pIDString: str, dwIDStringLen: int, idProp: GUID) -> Optional[Tuple[BOOL, Any]]:
+		""" Use this method to implement GetPropValue.
+		It is wrapped by the callback GetPropValue to handle exceptions, and ensure valid return types.
 		For instructions on implementing accPropServers, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx .
 		For instructions specifically about this method, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx .
 		@param pIDString: Contains a string that identifies the property being requested.
@@ -90,24 +91,53 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 			to extract the HWND/idObject/idChild from the identity string.
 			Note that, while one IAccPropServer implementation can annotate
 			multiple accessible elements, it is still bound to one wx.Control.
-		@type pIDString: str
 		@param dwIDStringLen: Specifies the length of the identity string specified by the pIDString parameter.
-		@type dwIDStringLen: int
-		@param idProp: Specifies a GUID indicating the desired property.
-		@type idProp: One of the oleacc.PROPID_* GUIDS
-		@return A tuple of the out params for the `IAccPropServer::GetPropValue` method: `VARIANT* pvarValue` and `BOOL*
-		pfHasProp`. When the pfHasProp part is FALSE / self.DOES_NOT_HAVE_PROP, then the pvarValue part must be VT_EMPTY.
-		Consider using self.NO_RETURN_VALUE instead. Returning (VT_EMPTY, HAS_PROP) IS valid, meaning the property exists
-		but is empty.
+		@param idProp: Specifies a GUID indicating the desired property. One of the values from oleacc.PROPID_*
+		@return Use L{self._hasProp} to return correct values or return None if unable to supply the property.
 		"""
 		raise NotImplementedError
 
-	def GetPropValue(self, pIDString, dwIDStringLen, idProp):
+	def _hasProp(self, value: Any) -> Optional[Tuple[BOOL, Any]]:
+		"""Constructs a tuple for the `IAccPropServer::GetPropValue` method, two elements:
+			1. `VARIANT pvarValue`
+			2. `BOOL pfHasProp` (either self.HAS_PROP or self.DOES_NOT_HAVE_PROP)"""
+		return value, self.HAS_PROP
+
+	def GetPropValue(
+			self, this, # unused "this" used to indicate to comTypes we want a low level implementation
+			pIDString: str,
+			dwIDStringLen: int,
+			idProp: GUID,
+			pvarValue,
+			pfGotProp
+	) -> int:
+		""" Exposed method to get a prop value.
+		see L{_getPropValue} for more details of args.
+		Uses a low-level approach, because comtypes tries to clear the VARIANT even though it is an out param.
+		When the pfHasProp part is FALSE / self.DOES_NOT_HAVE_PROP, then the pvarValue.vt part must be VT_EMPTY.
+		@type pvarValue: POINTER[VARIANT]
+		@type pfGotProp: POINTER[BOOL]
+		"""
+		# Set values in case we return early.
+		pfGotProp[0] = self.DOES_NOT_HAVE_PROP
+		pvarValue[0].vt = VT_EMPTY
 		try:
-			return self._getPropValue(pIDString, dwIDStringLen, idProp)
-		except Exception:
+			ret = self._getPropValue(pIDString, dwIDStringLen, idProp)
+			if ret is None:
+				return S_OK
+			elif len(ret) != 2:
+				raise RuntimeError("_getPropValue implementation must return None or two element tuple")
+		except Exception as e:
 			log.exception()
-			return self.NO_RETURN_VALUE
+			return S_OK
+		if ret[1] != self.HAS_PROP:
+			return S_OK
+		pfGotProp[0] = self.HAS_PROP
+		try:
+			pvarValue[0] = ret[0]
+		except Exception as e:
+			log.exception()
+		return S_OK
 
 	def _onDestroyControl(self, evt):
 		evt.Skip()  # Allow other handlers to process this event.
