@@ -17,10 +17,6 @@ from typing import Tuple, Optional
 import locale
 from logHandler import log
 
-HIGH_SURROGATE_FIRST = u"\uD800"
-HIGH_SURROGATE_LAST = u"\uDBFF"
-LOW_SURROGATE_FIRST = u"\uDC00"
-LOW_SURROGATE_LAST = u"\uDFFF"
 WCHAR_ENCODING = "utf_16_le"
 
 class WideStringOffsetConverter:
@@ -169,9 +165,9 @@ class WideStringOffsetConverter:
 		# They take one offset in the resulting string, so our offsets are off by one.
 		if (
 			precedingStr
-			and HIGH_SURROGATE_FIRST <= precedingStr[-1] <= HIGH_SURROGATE_LAST
+			and isHighSurrogate(precedingStr[-1])
 			and decodedRange
-			and LOW_SURROGATE_FIRST <= decodedRange[0] <= LOW_SURROGATE_LAST
+			and isLowSurrogate(decodedRange[0])
 		):
 			strStart -= 1
 			strEnd -= 1
@@ -225,3 +221,17 @@ def getTextFromRawBytes(
 		log.debugWarning("Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf)
 		text = rawText.decode(encoding, errors=errorsFallback)
 	return text
+
+HIGH_SURROGATE_FIRST = u"\uD800"
+HIGH_SURROGATE_LAST = u"\uDBFF"
+
+def isHighSurrogate(ch: str) -> bool:
+	"""Returns if the given character is a high surrogate UTF-16 character."""
+	return HIGH_SURROGATE_FIRST <= ch <= HIGH_SURROGATE_LAST
+
+LOW_SURROGATE_FIRST = u"\uDC00"
+LOW_SURROGATE_LAST = u"\uDFFF"
+
+def isLowSurrogate(ch: str) -> bool:
+	"""Returns if the given character is a low surrogate UTF-16 character."""
+	return LOW_SURROGATE_FIRST <= ch <= LOW_SURROGATE_LAST
