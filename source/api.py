@@ -26,6 +26,7 @@ import vision
 import watchdog
 import appModuleHandler
 import cursorManager
+from typing import Any
 
 #User functions
 
@@ -374,20 +375,19 @@ def filterFileName(name):
 		name=name.replace(c,'_')
 	return name
 
-def isNVDAObject(obj):
+def isNVDAObject(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{NVDAObjects.NVDAObject}"""
 	return isinstance(obj, NVDAObjects.NVDAObject)
 
-
-def isCursorManager(obj):
+def isCursorManager(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{cursorManager.CursorManager}"""
 	return isinstance(obj, cursorManager.CursorManager)
 
-def isTreeInterceptor(obj):
+def isTreeInterceptor(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{treeInterceptorHandler.TreeInterceptor}"""
 	return isinstance(obj, treeInterceptorHandler.TreeInterceptor)
 
-def isObjectInActiveTreeInterceptor(obj):
+def isObjectInActiveTreeInterceptor(obj: NVDAObjects.NVDAObject) -> bool:
 	"""
 	Returns whether the supplied L{NVDAObjects.NVDAObject} is in an active L{treeInterceptorHandler.TreeInterceptor},
 	i.e. a tree interceptor that is not in pass through mode.

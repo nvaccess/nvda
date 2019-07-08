@@ -12,6 +12,7 @@ See the documentation of L{VisionHandler} for more details about what it does.
 from .constants import *
 from .providerBase import VisionEnhancementProvider
 from .visionHandlerExtensionPoints import EventExtensionPoints
+import importlib
 import pkgutil
 from baseObject import AutoPropertyObject
 import api
@@ -19,15 +20,17 @@ import config
 from logHandler import log
 import visionEnhancementProviders
 import wx
+from typing import Type, Dict, List
 
-def getProviderClass(moduleName, caseSensitive=True):
+def getProviderClass(
+	moduleName: str,
+	caseSensitive: bool = True
+) -> Type[VisionEnhancementProvider]:
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
-		return __import__(
+		return importlib.import_module(
 			"visionEnhancementProviders.%s" % moduleName,
-			globals(),
-			locals(),
-			["visionEnhancementProviders"]
+			package="visionEnhancementProviders"
 		).VisionEnhancementProvider
 	except ImportError as initialException:
 		if caseSensitive:
@@ -35,11 +38,9 @@ def getProviderClass(moduleName, caseSensitive=True):
 		for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
 			if name.startswith('_') or name.lower() != moduleName.lower():
 				continue
-			return __import__(
+			return importlib.import_module(
 				"visionEnhancementProviders.%s" % name,
-				globals(),
-				locals(),
-				("visionEnhancementProviders",)
+				package="visionEnhancementProviders"
 			).VisionEnhancementProvider
 		else:
 			raise initialException
@@ -55,11 +56,11 @@ class VisionHandler(AutoPropertyObject):
 	"""
 
 	def __init__(self):
-		self.providers = dict()
-		self.extensionPoints = EventExtensionPoints()
+		self.providers: Dict[str, VisionEnhancementProvider] = dict()
+		self.extensionPoints: EventExtensionPoints = EventExtensionPoints()
 		wx.CallAfter(self.postGuiInit)
 
-	def postGuiInit(self):
+	def postGuiInit(self) -> None:
 		"""Handles first initialization of the handler as a config profile switch.
 		This is executed on the main thread by L{__init__} using a {wx.CallAfter} call.
 		This ensures that the gui is fully initialized before providers are initialized that might rely on it.
@@ -67,15 +68,13 @@ class VisionHandler(AutoPropertyObject):
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	def terminateProvider(self, providerName):
+	def terminateProvider(self, providerName: str) -> bool:
 		"""Terminates a currently active provider.
 		@param providerName: The provider to terminate.
-		@type providerName: str
 		@returns: Whether termination succeeded or failed.
 			When termnation fails, return False so the caller knows that something failed.
 			Yet, the provider wil lbe removed from the providers dictionary,
 			so its instance goes out of scope and wil lbe garbage collected.
-		@rtype: bool
 		"""
 		# Remove the provider from the providers dictionary.
 		providerInstance =self.providers.pop(providerName, None)
@@ -92,7 +91,7 @@ class VisionHandler(AutoPropertyObject):
 			return False
 		# Copy the configured providers before mutating the list.
 		# If we don't, configobj won't be aware of changes the list.
-		configuredProviders = config.conf['vision']['providers'][:]
+		configuredProviders: List = config.conf['vision']['providers'][:]
 		try:
 			configuredProviders.remove(providerName)
 			config.conf['vision']['providers'] = configuredProviders
@@ -108,20 +107,19 @@ class VisionHandler(AutoPropertyObject):
 				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
 		return True
 
-	def initializeProvider(self, providerName, temporary=False):
+	def initializeProvider(self, providerName: str, temporary: bool = False) -> bool:
 		"""
 		Enables and activates the supplied provider.
 		@param providerName: The name of the registered provider.
-		@type providerName: str
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
-		@type temporary: bool
 		@returns: Whether initializing the requested provider succeeded.
-		@rtype: bool
 		"""
+		providerCls = None
 		providerInst = self.providers.pop(providerName, None)
 		if providerInst is not None:
+			providerCls = type(providerInst)
 			try:
 				providerInst.reinitialize()
 			except:
@@ -165,40 +163,40 @@ class VisionHandler(AutoPropertyObject):
 			log.debugWarning("Error in initial focus after provider load", exc_info=True)
 		return True
 
-	def terminate(self):
+	def terminate(self) -> None:
 		self.extensionPoints = None
 		config.post_configProfileSwitch.unregister(self.handleConfigProfileSwitch)
 		for instance in self.providers.values():
 			instance.terminate()
 		self.providers.clear()
 
-	def handleUpdate(self, obj, property):
+	def handleUpdate(self, obj, property: str) -> None:
 		self.extensionPoints.post_objectUpdate.notify(obj=obj, property=property)
 
-	def handleForeground(self, obj):
+	def handleForeground(self, obj) -> None:
 		self.extensionPoints.post_foregroundChange.notify(obj=obj)
 
-	def handleGainFocus(self, obj):
+	def handleGainFocus(self, obj) -> None:
 		self.extensionPoints.post_focusChange.notify(obj=obj)
 		hasNavigableText = getattr(obj, "_hasNavigableText", False)
 		if hasNavigableText:
 			# This object most likely has a caret.
 			self.handleCaretMove(obj)
 
-	def handleCaretMove(self, obj):
+	def handleCaretMove(self, obj) -> None:
 		if api.isCursorManager(obj):
 			self.extensionPoints.post_browseModeMove.notify(obj=obj)
 		else:
 			self.extensionPoints.post_caretMove.notify(obj=obj)
 
-	def handleReviewMove(self, context=Context.REVIEW):
+	def handleReviewMove(self, context: Context = Context.REVIEW) -> None:
 		self.extensionPoints.post_reviewMove.notify(context=context)
 
-	def handleMouseMove(self, obj, x, y):
+	def handleMouseMove(self, obj, x: int, y: int) -> None:
 		# For now, mouse moves execute once per core cycle.
 		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
-	def handleConfigProfileSwitch(self):
+	def handleConfigProfileSwitch(self) -> None:
 		configuredProviders = set(config.conf['vision']['providers'])
 		curProviders = set(self.providers)
 		rovidersToInitialize = configuredProviders - curProviders
@@ -208,7 +206,7 @@ class VisionHandler(AutoPropertyObject):
 		for provider in rovidersToInitialize:
 			self.initializeProvider(provider)
 
-	def initialFocus(self):
+	def initialFocus(self) -> None:
 		if not api.getDesktopObject():
 			# focus/review hasn't yet been initialised.
 			return

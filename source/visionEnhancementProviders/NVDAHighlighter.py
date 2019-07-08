@@ -202,7 +202,7 @@ class HighlightWindow(CustomWindow):
 	def updateLocationForDisplays(self):
 		if vision._isDebug():
 			log.debug("Updating NVDAHighlighter window location for displays")
-		displays = [ wx.Display(i).GetGeometry() for i in xrange(wx.Display.GetCount()) ]
+		displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
 		screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 		# Hack: Windows has a "feature" that will stop desktop shortcut hotkeys from working when a window is full screen.
 		# Removing one line of pixels from the bottom of the screen will fix this.

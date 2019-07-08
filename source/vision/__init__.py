@@ -17,6 +17,7 @@ import pkgutil
 import visionEnhancementProviders
 import config
 from logHandler import log
+from typing import List, Tuple
 
 def initialize():
 	global handler
@@ -33,13 +34,13 @@ def terminate():
 	handler.terminate()
 	handler = None
 
-def getProviderList(onlyStartable=True):
+def getProviderList(
+	onlyStartable: bool = True
+) -> List[Tuple[str, str, List[Role]]]:
 	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
 	@param onlyStartable: excludes all providers for which the check method returns C{False}.
-	@type onlyStartable: bool
 	@return: list of tuples with provider names, provider descriptions, and supported roles.
-		See L{constants.Role} for the available constants.
-	@rtype: [(str,unicode,str])]
+		See L{constants.Role} for the available roles.
 	"""
 	providerList = []
 	for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
@@ -73,5 +74,5 @@ def getProviderList(onlyStartable=True):
 	providerList.sort(key=lambda d: d[1].lower())
 	return providerList
 
-def _isDebug():
+def _isDebug() -> bool:
 	return config.conf["debugLog"]["vision"]

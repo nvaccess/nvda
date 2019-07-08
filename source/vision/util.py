@@ -10,11 +10,15 @@
 from .constants import Role, Context
 import api
 import locationHelper
+from documentBase import TextContainerObject
+from NVDAObjects import NVDAObject
+from typing import Optional
+import textInfos
 
-def getReviewRect():
+def getReviewRect() -> locationHelper.RectLTRB:
 	return _getRectFromTextInfo(api.getReviewPosition())
 
-def getCaretRect(obj=None):
+def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.RectLTRB:
 	if obj is None:
 		obj = api.getCaretObject()
 	if api.isObjectInActiveTreeInterceptor(obj):
@@ -40,11 +44,11 @@ def getCaretRect(obj=None):
 				raise LookupError
 		return _getRectFromTextInfo(caretInfo)
 
-def getMouseRect():
+def getMouseRect() -> locationHelper.RectLTRB:
 	point = locationHelper.Point(*mouseHandler.curMousePos)
 	return locationHelper.RectLTRB.fromPoint(point)
 
-def getObjectRect(obj):
+def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 	if not api.isNVDAObject(obj):
 		raise TypeError("obj must be of type NVDAObject")
 	location = obj.location
@@ -52,7 +56,10 @@ def getObjectRect(obj):
 		raise LookupError
 	return location.toLTRB()
 
-def getContextRect(context, obj=None):
+def getContextRect(
+	context: Context,
+	obj: Optional[TextContainerObject] = None
+) -> Optional[locationHelper.RectLTRB]:
 	"""Gets a rectangle for the specified context."""
 	if context == Context.FOCUS:
 		return getObjectRect(obj or api.getFocusObject())
@@ -73,7 +80,7 @@ def getContextRect(context, obj=None):
 	elif context == Context.MOUSE:
 		return getMouseRect()
 
-def getRectFromTextInfo(textInfo):
+def getRectFromTextInfo(textInfo: textInfos.TextInfo) -> locationHelper.RectLTRB:
 	if textInfo.isCollapsed:
 		textInfo.expand(textInfos.UNIT_CHARACTER)
 	try:

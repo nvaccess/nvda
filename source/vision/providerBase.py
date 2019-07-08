@@ -9,6 +9,9 @@
 
 import driverHandler
 from abc import abstractmethod
+from .constants import Role
+from .visionHandlerExtensionPoints import EventExtensionPoints
+from typing import FrozenSet
 
 class VisionEnhancementProvider(driverHandler.Driver):
 	"""A class for vision enhancement providers.
@@ -20,7 +23,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 	#: The roles supported by this provider.
 	#: This attribute is currently not used,
 	#: but might be later for presentational purposes.
-	supportedRoles = frozenset()
+	supportedRoles: FrozenSet[Role] = frozenset()
 
 	def reinitialize(self):
 		"""Reinitializes a vision enhancement provider, reusing the same instance.
@@ -30,7 +33,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		self.__init__()
 
 	@abstractmethod
-	def registerEventExtensionPoints(self, extensionPoints):
+	def registerEventExtensionPoints(self, extensionPoints: EventExtensionPoints):
 		"""
 		Called at provider initialization time, this method should register the provider
 		to the several event extension points that it is interested in.
@@ -38,6 +41,5 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		and should refrain from doing anything else,
 		as it might be called again several times between initialization and termination.
 		@param extensionPoints: An object containing available extension points as attributes.
-		@type extensionPoints: L{visionHandlerExtensionPoints.EventExtensionPoints}
 		"""
 		pass
