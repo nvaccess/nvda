@@ -16,7 +16,7 @@ from typing import Optional
 import textInfos
 
 def getReviewRect() -> locationHelper.RectLTRB:
-	return _getRectFromTextInfo(api.getReviewPosition())
+	return getRectFromTextInfo(api.getReviewPosition())
 
 def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.RectLTRB:
 	if obj is None:
@@ -42,7 +42,7 @@ def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.Re
 			except (NotImplementedError, RuntimeError):
 				# There is nothing to do here
 				raise LookupError
-		return _getRectFromTextInfo(caretInfo)
+		return getRectFromTextInfo(caretInfo)
 
 def getMouseRect() -> locationHelper.RectLTRB:
 	point = locationHelper.Point(*mouseHandler.curMousePos)
