@@ -9,8 +9,9 @@ Consult the documentation of L{EventExtensionPoints} for more details.
 """
 
 from extensionPoints import Action
+from dataclasses import dataclass, field
 
-# Python 3 conversion note: convert this to a dataclass.
+@dataclass(repr=False, frozen=True)
 class EventExtensionPoints:
 	"""Data class containing extension points that will be used to notify 
 	vision enhancement providers about occuring events, particularly for NVDA Objects.
@@ -30,14 +31,14 @@ class EventExtensionPoints:
 	#: @type obj: L{NVDAObjects.NVDAObject}
 	#: @param property: The object's property that changed, e.g. "name" or "description".
 	#: @type property: str
-	post_objectUpdate = None
+	post_objectUpdate: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the focused NVDAObject has changed.
 	#: This allows a vision enhancement provider to take an action when the focus changed.
 	#: For example, a magnifier can track the magnified area of the screen to this object.
 	#: Handlers are called with one argument.
 	#: @param obj: The object that received focus.
 	#: @type obj: L{NVDAObjects.NVDAObject}
-	post_focusChange = None
+	post_focusChange: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the foreground NVDAObject has changed.
 	#: This allows a vision enhancement provider to take an action
 	#: when another window takes the foreground.
@@ -45,7 +46,7 @@ class EventExtensionPoints:
 	#: Handlers are called with one argument.
 	#: @param obj: The object that became the foreground object.
 	#: @type obj: L{NVDAObjects.NVDAObject}
-	post_foregroundChange = None
+	post_foregroundChange: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when a physical caret has moved.
 	#: This allows a vision enhancement provider to take an action
 	#: when the caret moves in a window.
@@ -56,7 +57,7 @@ class EventExtensionPoints:
 	#: Handlers are called with one argument.
 	#: @param obj: The object in which the caret position changed.
 	#: @type obj: L{NVDAObjects.NVDAObject}
-	ost_caretMove = None
+	post_caretMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when a virtual caret has moved.
 	#: This allows a vision enhancement provider to take an action
 	#: when the virtual caret moves in a browse mode document.
@@ -67,7 +68,7 @@ class EventExtensionPoints:
 	#: Handlers are called with one argument.
 	#: @param obj: The cursor manager that changed it virtual caret position.
 	#: @type obj: L{cursorManager.CursorManager}
-	post_browseModeMove = None
+	post_browseModeMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the position of the review cursor has changed.
 	#: This allows a vision enhancement provider to take an action
 	#: when the review position has changed.
@@ -78,9 +79,8 @@ class EventExtensionPoints:
 	#: unless they delegate review position change handling to a separate thread.
 	#: Handlers are called with one argument.
 	#: @param context: The context that triggered the review position change.
-	#: @type context: One of the constants on L{vision.constants.Context}
-	# Python 3 conversion note: the type of "context" will change when this becomes an enum.
-	post_reviewMove = None
+	#: @type context: L{vision.constants.Context}
+	post_reviewMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider when the mouse has moved.
 	#: This allows a vision enhancement provider to take an action for mouse moves.
 	#: For example, a magnifier can track the magnified area of the screen to the position of the mouse.
@@ -89,21 +89,11 @@ class EventExtensionPoints:
 	#: Handlers are called with one argument.
 	#: @param obj: The object that received focus.
 	#: @type obj: L{NVDAObjects.NVDAObject}
-	post_mouseMove = None
+	post_mouseMove: Action = field(default_factory=Action, init=False)
 	#: Notifies a vision enhancement provider at the end of every core cycle.
 	#: This allows a vision enhancement provider to rate limit certain actions.
 	#: For example, many caret updates could take place during one core cycle.
 	#: Especially if handling a caret update takes some time,
 	#: handling only one of them is enough.
 	#: Handlers are called without arguments.
-	post_coreCycle = None
-
-	def __init__(self):
-		self.post_objectUpdate = Action()
-		self.post_focusChange = Action()
-		self.post_foregroundChange = Action()
-		self.post_caretMove = Action()
-		self.post_browseModeMove = Action()
-		self.post_reviewMove = Action()
-		self.post_mouseMove = Action()
-		self.post_coreCycle = Action()
+	post_coreCycle: Action = field(default_factory=Action, init=False)
