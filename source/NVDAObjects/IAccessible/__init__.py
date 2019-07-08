@@ -462,8 +462,13 @@ the NVDAObject for IAccessible
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
-		if windowClassName.lower().startswith('mscandui'):
-			import mscandui
+		if (
+			windowClassName.lower().startswith('mscandui')
+			or windowClassName in (
+				"Microsoft.IME.CandidateWindow.View",
+				"Microsoft.IME.UIManager.CandidateWindow.Host"
+		)):
+			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
@@ -2007,4 +2012,5 @@ _staticMap={
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
     ("MsoCommandBar",oleacc.ROLE_SYSTEM_LISTITEM):"msOffice.CommandBarListItem",
+	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
 }

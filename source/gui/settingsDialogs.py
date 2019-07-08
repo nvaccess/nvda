@@ -48,6 +48,7 @@ import weakref
 import time
 import keyLabels
 from dpiScalingHelper import DpiScalingHelperMixin
+import warnings
 
 class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
 	"""A settings dialog.
@@ -2052,11 +2053,18 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Force UI Automation in the Windows Console")
+		label = _("Use UI Automation to access the Windows Console when available")
 		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
 		self.ConsoleUIACheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
 		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
 		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Speak &passwords in UIA consoles (may improve performance)")
+		self.winConsoleSpeakPasswordsCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["UIA"]["winConsoleSpeakPasswords"])
+		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleSpeakPasswords"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2143,6 +2151,7 @@ class AdvancedPanelControls(wx.Panel):
 			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
 			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
 			self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue=='UIA') and
+			self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue and
 			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
 			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
 			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
@@ -2153,6 +2162,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue=='UIA')
+		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -2166,6 +2176,7 @@ class AdvancedPanelControls(wx.Panel):
 			config.conf['UIA']['winConsoleImplementation'] = "UIA"
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
+		config.conf["UIA"]["winConsoleSpeakPasswords"]=self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
@@ -3351,3 +3362,11 @@ class InputGesturesDialog(SettingsDialog):
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
+
+class VoiceSettingsSlider(nvdaControls.EnhancedInputSlider):
+	"""@Deprecated: use L{gui.NVDAControls.EnhancedInputSlider} instead."""
+
+	def __init__(self,*args, **kwargs):
+		warnings.warn("gui.settingsDialogs.VoiceSettingsSlider is deprecated. Use gui.NVDAControls.EnhancedInputSlider instead",
+			DeprecationWarning, stacklevel=2)
+		super(VoiceSettingsSlider,self).__init__(*args,**kwargs)

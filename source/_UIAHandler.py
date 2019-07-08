@@ -45,6 +45,8 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
+	# UIA events of candidate window interfere with MSAA events.
+	"Microsoft.IME.CandidateWindow.View",
 "SysTreeView32",
 "WuDuiListView",
 "ComboBox",
@@ -150,7 +152,7 @@ UIAEventIdsToNVDAEventNames={
 }
 
 autoSelectDetectionAvailable = False
-if winVersion.isAtLeastWin10():
+if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames.update({
 		UIA_Text_TextChangedEventId:"textChange",
 		UIA_Text_TextSelectionChangedEventId:"caret",
