@@ -112,7 +112,7 @@ class consoleUIATextInfo(UIATextInfo):
 			self._rangeObj.CompareEndPoints(
 				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
 				UIAHandler.TextPatternRangeEndpoint_Start) < 0
-			or self._rangeObj.CompareEndPoints(
+			or not self.obj.maximized and self._rangeObj.CompareEndPoints(
 				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
 				UIAHandler.TextPatternRangeEndpoint_End) >= 0):
 			self._rangeObj = oldRange
@@ -238,6 +238,9 @@ class WinConsoleUIA(Terminal):
 	_hasNewLines = False
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
+	#: Stores whether this console has ever been maximized
+	# (maximization breaks GetVisibleRanges).
+	_maximized = False
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
@@ -290,8 +293,23 @@ class WinConsoleUIA(Terminal):
 		self._queuedChars = []
 		speech.curWordChars = []
 
+	def _get_maximized(self):
+		res = bool(self.parent.UIAWindowPattern.CurrentWindowVisualState)
+		if res:
+			self._maximized = True
+		return self._maximized or res
+
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
+		# Since GetVisibleRanges seems to be broken for at least Win10 1903
+		# we can only do this if the window isn't maximized.
+		if self.maximized:
+			return (
+				self.makeTextInfo(textInfos.POSITION_ALL)
+				._rangeObj.getText(-1)
+				.strip()
+				.split("\r\n")
+			)
 		ptr = self.UIATextPattern.GetVisibleRanges()
 		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
 		return res

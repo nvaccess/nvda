@@ -993,6 +993,10 @@ class UIA(Window):
 		self.UIATextEditPattern=self._getUIAPattern(UIAHandler.UIA_TextEditPatternId,UIAHandler.IUIAutomationTextEditPattern,cache=False)
 		return self.UIATextEditPattern
 
+	def _get_UIAWindowPattern(self):
+		self.UIAWindowPattern=self._getUIAPattern(UIAHandler.UIA_WindowPatternId,UIAHandler.IUIAutomationWindowPattern)
+		return self.UIAWindowPattern
+
 	def _get_UIALegacyIAccessiblePattern(self):
 		self.UIALegacyIAccessiblePattern=self._getUIAPattern(UIAHandler.UIA_LegacyIAccessiblePatternId,UIAHandler.IUIAutomationLegacyIAccessiblePattern)
 		return self.UIALegacyIAccessiblePattern
