@@ -7,9 +7,11 @@
 """Constants for the vision framework.
 """
 
-class Role:
+from enum import Enum
+
+class Role(str, Enum):
 	"""
-	A role that could fulfilled by a vision enhancement provider.
+	A role that could be fulfilled by a vision enhancement provider.
 	"""
 	# This should be a string enum when Python 3 arrives.
 	MAGNIFIER = "magnifier"
@@ -27,8 +29,8 @@ ROLE_DESCRIPTIONS = {
 	Role.COLORENHANCER: _("Color enhancer"),
 }
 
-class Context:
-	"""context for events received by providers.
+class Context(str, Enum):
+	"""Context for events received by providers.
 	Typically this informs of the cause of the event.
 	For example, L{focus} is used when an event is triggered by the focus object or a focus change.
 	"""
