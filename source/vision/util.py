@@ -50,7 +50,7 @@ def getMouseRect() -> locationHelper.RectLTRB:
 
 def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 	if not api.isNVDAObject(obj):
-		raise TypeError("obj must be of type NVDAObject")
+		raise TypeError("obj must be of type NVDAObject, %s not supported" % type(obj).__name__)
 	location = obj.location
 	if not location:
 		raise LookupError
