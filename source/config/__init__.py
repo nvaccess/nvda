@@ -9,7 +9,7 @@
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
 In addition, this module provides three actions: profile switch notifier, an action to be performed when NVDA saves settings, and action to be performed when NVDA is asked to reload configuration from disk or reset settings to factory defaults.
 For the latter two actions, one can perform actions prior to and/or after they take place.
-""" 
+"""
 
 import globalVars
 import winreg
@@ -17,12 +17,11 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
-from io import StringIO
 import itertools
 import contextlib
 from copy import deepcopy
 from collections import OrderedDict
-from configobj import ConfigObj, ConfigObjError
+from configobj import ConfigObj
 from configobj.validate import Validator
 from logHandler import log
 import logging
@@ -263,6 +262,7 @@ def setSystemConfigToCurrentConfig():
 	else:
 		res=execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
 		if res==2:
+			import installer
 			raise installer.RetriableFailure
 		elif res!=0:
 			raise RuntimeError("Slave failure")

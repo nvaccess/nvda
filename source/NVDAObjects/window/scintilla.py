@@ -1,3 +1,8 @@
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V.
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import ctypes
 import IAccessibleHandler
 import speech
@@ -121,7 +126,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 				winKernel.readProcessMemory(self.obj.processHandle,internalBuf,fontNameBuf,len(fontNameBuf),None)
 			finally:
 				winKernel.virtualFreeEx(self.obj.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			formatField["font-name"]=fontNameBuf.value
+			formatField["font-name"]=fontNameBuf.value.decode("utf-8")
 		if formatConfig["reportFontSize"]:
 			formatField["font-size"]="%spt"%watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_STYLEGETSIZE,style,0)
 		if formatConfig["reportLineNumber"]:
