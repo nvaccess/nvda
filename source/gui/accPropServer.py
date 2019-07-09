@@ -6,16 +6,19 @@
 
 """Implementation of IAccProcServer, so that customization of a wx control can be done very fast."""
 from ctypes.wintypes import BOOL
-from typing import Optional, Tuple, Any, Union
+from typing import Optional, Tuple, Any, Union, Callable
 
 from logHandler import log
-from comtypes.automation import VT_EMPTY, S_OK, VARIANT, POINTER, c_int, c_double
-from  comtypes import COMObject, GUID
+from comtypes.automation import S_OK, VARIANT, POINTER, c_int, c_double, _oleaut32
+from comtypes import COMObject, GUID
 from comInterfaces.Accessibility import IAccPropServer, ANNO_CONTAINER, ANNO_THIS
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractmethod
 import weakref
 import winUser
 import wx
+
+_VariantInit: Callable[[POINTER(VARIANT),], None] = _oleaut32.VariantInit
+_VariantInit.argtypes = (POINTER(VARIANT),)
 
 AcceptedGetPropTypes = Union[
 		bool,
@@ -136,7 +139,7 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 		try:
 			# Preset values for "no prop value", in case we return early.
 			pfGotProp.contents.value = self.DOES_NOT_HAVE_PROP
-			pvarValue.contents.vt = VT_EMPTY
+			_VariantInit(pvarValue)
 
 			ret = self._getPropValue(pIDString, dwIDStringLen, idProp)
 			if ret is None:
