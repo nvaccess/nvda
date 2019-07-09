@@ -6,16 +6,25 @@
 
 """Implementation of IAccProcServer, so that customization of a wx control can be done very fast."""
 from ctypes.wintypes import BOOL
-from typing import Optional, Tuple, Any
+from typing import Optional, Tuple, Any, Union
 
 from logHandler import log
-from comtypes.automation import VT_EMPTY, S_OK
+from comtypes.automation import VT_EMPTY, S_OK, VARIANT, POINTER, c_int, c_double
 from  comtypes import COMObject, GUID
 from comInterfaces.Accessibility import IAccPropServer, ANNO_CONTAINER, ANNO_THIS
 from abc import ABCMeta, abstractmethod, abstractproperty
 import weakref
 import winUser
 import wx
+
+AcceptedGetPropTypes = Union[
+		bool,
+		int, c_int,
+		float, c_double,
+		str,
+		VARIANT,
+		# And others: L{comtpyes.automation.tagVariant._set_value}
+	]
 
 class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 	"""Base class for implementing a COM interface for a hwnd based AccPropServer\
@@ -37,8 +46,6 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 	# https://msdn.microsoft.com/en-us/library/windows/desktop/dd318495(v=vs.85).aspx
 	HAS_PROP = 1  # TRUE - Constant for `BOOL* pfHasProp` out param of `IAccPropServer::GetPropValue` method
 	DOES_NOT_HAVE_PROP = 0  # FALSE - Constant for `BOOL* pfHasProp` out param of `IAccPropServer::GetPropValue` method
-
-	S_OK = 0
 
 	# An array with the GUIDs of the properties that an AccPropServer should override
 	properties_GUIDPTR = []
@@ -78,7 +85,12 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 		control.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyControl, source=control)
 
 	@abstractmethod
-	def _getPropValue(self, pIDString: str, dwIDStringLen: int, idProp: GUID) -> Optional[Tuple[BOOL, Any]]:
+	def _getPropValue(
+			self,
+			pIDString: str,
+			dwIDStringLen: int,
+			idProp: GUID
+	) -> Optional[Tuple[BOOL, AcceptedGetPropTypes]]:
 		""" Use this method to implement GetPropValue.
 		It is wrapped by the callback GetPropValue to handle exceptions, and ensure valid return types.
 		For instructions on implementing accPropServers, see https://msdn.microsoft.com/en-us/library/windows/desktop/dd373681(v=vs.85).aspx .
@@ -97,7 +109,10 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 		"""
 		raise NotImplementedError
 
-	def _hasProp(self, value: Any) -> Optional[Tuple[BOOL, Any]]:
+	def _hasProp(
+			self,
+			value: AcceptedGetPropTypes
+	) -> Optional[Tuple[BOOL, AcceptedGetPropTypes]]:
 		"""Constructs a tuple for the `IAccPropServer::GetPropValue` method, two elements:
 			1. `VARIANT pvarValue`
 			2. `BOOL pfHasProp` (either self.HAS_PROP or self.DOES_NOT_HAVE_PROP)"""
@@ -108,34 +123,36 @@ class IAccPropServer_Impl(COMObject, metaclass=ABCMeta):
 			pIDString: str,
 			dwIDStringLen: int,
 			idProp: GUID,
-			pvarValue,
-			pfGotProp
+			pvarValue: POINTER(VARIANT),
+			pfGotProp: POINTER(BOOL)
 	) -> int:
 		""" Exposed method to get a prop value.
 		see L{_getPropValue} for more details of args.
 		Uses a low-level approach, because comtypes tries to clear the VARIANT even though it is an out param.
 		When the pfHasProp part is FALSE / self.DOES_NOT_HAVE_PROP, then the pvarValue.vt part must be VT_EMPTY.
-		@type pvarValue: POINTER[VARIANT]
-		@type pfGotProp: POINTER[BOOL]
 		"""
-		# Set values in case we return early.
-		pfGotProp[0] = self.DOES_NOT_HAVE_PROP
-		pvarValue[0].vt = VT_EMPTY
+		# ensure exceptions don't leave this function. They will get get swallowed by the caller.
+		# instead catch and log exceptions.
 		try:
+			# Preset values for "no prop value", in case we return early.
+			pfGotProp.contents.value = self.DOES_NOT_HAVE_PROP
+			pvarValue.contents.vt = VT_EMPTY
+
 			ret = self._getPropValue(pIDString, dwIDStringLen, idProp)
 			if ret is None:
+				# We don't have the prop value, return early.
 				return S_OK
 			elif len(ret) != 2:
+				# We don't have the prop value, internal error.
 				raise RuntimeError("_getPropValue implementation must return None or two element tuple")
-		except Exception as e:
-			log.exception()
-			return S_OK
-		if ret[1] != self.HAS_PROP:
-			return S_OK
-		pfGotProp[0] = self.HAS_PROP
-		try:
-			pvarValue[0] = ret[0]
-		except Exception as e:
+			elif ret[1] != self.HAS_PROP:
+				# We don't have the prop value, return early.
+				return S_OK
+
+			# we do have the prop value
+			pfGotProp.contents.value = self.HAS_PROP
+			pvarValue.contents.value = ret[0]
+		except Exception as e: # catch and log all exceptions so they are not swallowed by caller.
 			log.exception()
 		return S_OK
 
