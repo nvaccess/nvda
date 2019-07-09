@@ -85,7 +85,7 @@ class AcrobatNode(IAccessible):
 		try:
 			return normalizeStdName(self.pdDomNode.GetStdName())[0]
 		except (AttributeError, LookupError, COMError, TypeError):
-			pass
+			log.debugWarning("Could not get role for AcrobatNode using normalizeStdName", exc_info=True)
 
 		role = super(AcrobatNode, self).role
 		if role == controlTypes.ROLE_PANE:
