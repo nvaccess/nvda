@@ -39,7 +39,7 @@ stdNamesToRoles = {
 }
 
 def normalizeStdName(stdName):
-	if "H1" <= stdName <= "H6":
+	if stdName and "H1" <= stdName <= "H6":
 		return controlTypes.ROLE_HEADING, stdName[1]
 
 	try:
@@ -84,8 +84,8 @@ class AcrobatNode(IAccessible):
 	def _get_role(self):
 		try:
 			return normalizeStdName(self.pdDomNode.GetStdName())[0]
-		except (AttributeError, LookupError, COMError, TypeError):
-			log.debugWarning("Could not get role for AcrobatNode using normalizeStdName", exc_info=True)
+		except (AttributeError, LookupError, COMError):
+			pass
 
 		role = super(AcrobatNode, self).role
 		if role == controlTypes.ROLE_PANE:
