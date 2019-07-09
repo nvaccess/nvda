@@ -26,7 +26,7 @@ class XMLTextParser(object):
 					data=chr(int(data))
 				except ValueError:
 					data=u'\ufffd'
-				self._CharacterDataHandler(data)
+				self._CharacterDataHandler(data, processBufferedSurrogates=isLowSurrogate(data))
 			return
 		elif tagName=='control':
 			newAttrs=textInfos.ControlField(attrs)
@@ -59,7 +59,7 @@ class XMLTextParser(object):
 		cmdList=self._commandList
 		if cmdList and isinstance(cmdList[-1],str):
 			cmdList[-1] += data
-			if isLowSurrogate(data):
+			if processBufferedSurrogates:
 				cmdList[-1] = cmdList[-1].encode(WCHAR_ENCODING, errors="surrogatepass").decode(WCHAR_ENCODING)
 		else:
 			cmdList.append(data)
