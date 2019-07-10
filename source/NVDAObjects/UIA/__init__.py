@@ -423,12 +423,12 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return field
 
-	def _getTextFromUIARange(self,range):
+	def _getTextFromUIARange(self, textRange):
 		"""
 		Fetches plain text from the given UI Automation text range.
 		Just calls getText(-1). This only exists to be overridden for filtering.
 		"""
-		return range.getText(-1)
+		return textRange.getText(-1)
 
 	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
 		"""
@@ -652,7 +652,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		return self._getTextFromUIARange(self._rangeObj)
 
-	def _getBoundingRectsFromUIARange(self,range):
+	def _getBoundingRectsFromUIARange(self, textRange):
 		"""
 		Fetches per line bounding rectangles from the given UI Automation text range.
 		Note that if the range object doesn't cover a whole line (e.g. a character),
@@ -660,7 +660,7 @@ class UIATextInfo(textInfos.TextInfo):
 		@rtype: [locationHelper.RectLTWH]
 		"""
 		rects = []
-		rectArray = range.GetBoundingRectangles()
+		rectArray = textRange.GetBoundingRectangles()
 		if not rectArray:
 			return rects
 		rectIndexes = range(0, len(rectArray), 4)

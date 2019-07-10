@@ -281,9 +281,9 @@ class WordDocument(IAccessible,EditableTextWithoutAutoSelectDetection,WordDocume
 				commentReference=field.field.get('comment')
 				if commentReference:
 					offset=int(commentReference)
-					range=self.WinwordDocumentObject.range(offset,offset+1)
+					textRange=self.WinwordDocumentObject.range(offset, offset + 1)
 					try:
-						text=range.comments[1].range.text
+						text = textRange.comments[1].range.text
 					except COMError:
 						break
 					if text:
