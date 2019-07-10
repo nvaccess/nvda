@@ -23,7 +23,7 @@ import braille
 URL_MK_UNIFORM = 1
 
 # Dialog box properties
-DIALOG_OPTIONS = "dialogWidth:350px;dialogHeight:140px;resizable:yes;center:yes;help:no"
+DIALOG_OPTIONS = "resizable:yes;help:no"
 
 #dwDialogFlags for ShowHTMLDialogEx from mshtmhst.h
 HTMLDLG_NOUI = 0x0010 
