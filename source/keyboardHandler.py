@@ -197,7 +197,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process 
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus=api.getFocusObject()
-		from NVDAObjects.UIA.winConsoleUIA import WinConsoleUIA
+		from NVDAObjects.behaviors import TerminalKeyboardSupport
 		if (
 			# This is only possible in Windows 10 RS2 and above
 			winVersion.isWin10(1703)
@@ -212,7 +212,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# or the focus is within a UWP app, where WM_CHAR never gets sent 
 				or focus.windowClassName.startswith('Windows.UI.Core')
 				#Or this is a UIA console window, where WM_CHAR messages are doubled
-				or isinstance(focus, WinConsoleUIA)
+				or isinstance(focus, TerminalKeyboardSupport)
 			)
 		):
 			keyStates=(ctypes.c_byte*256)()

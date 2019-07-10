@@ -2,13 +2,13 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2014 NV Access Limited
+#Copyright (C) 2010-2019 NV Access Limited, Bill Dengler
 
 """App module for PuTTY
 """
 
 import oleacc
-from NVDAObjects.behaviors import Terminal
+from NVDAObjects.behaviors import Terminal, TerminalKeyboardSupport
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
@@ -23,4 +23,4 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
 				pass
-			clsList[0:0] = (Terminal, DisplayModelLiveText)
+			clsList[0:0] = (TerminalKeyboardSupport, Terminal, DisplayModelLiveText)
