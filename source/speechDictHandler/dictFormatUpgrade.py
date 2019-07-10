@@ -103,11 +103,7 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 def _doEspeakDictUpgrade():
 	synthName = "espeak"
 	def getNextVoice():
-		# #9067 (Py3 review required): originally called dict.items.
-		# Therefore wrap this inside a list call.
-		for ID, oldNewTuple in list(espeakNameChanges.items()):
-			oldName = oldNewTuple[0]
-			newName = oldNewTuple[1]
+		for ID, (oldName, newName) in espeakNameChanges.items():
 			yield (
 					createVoiceDictFileName(synthName, oldName),
 					createVoiceDictFileName(synthName, newName)

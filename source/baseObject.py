@@ -157,10 +157,9 @@ class AutoPropertyObject(object, metaclass=AutoPropertyType):
 	def invalidateCaches(cls):
 		"""Invalidate the caches for all current instances.
 		"""
-		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
+		# We use a list here, as invalidating the cache on an object may cause instances to disappear,
 		# which would in turn cause an exception due to the dictionary changing size during iteration.
-		# #9067 (Py3 review required): because of this, wrap this in a list, as dict.keys() in Python 3 returns iterators.
-		for instance in list(cls.__instances.keys()):
+		for instance in list(cls.__instances):
 			instance.invalidateCache()
 
 class ScriptableType(AutoPropertyType):

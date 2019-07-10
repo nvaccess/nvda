@@ -170,9 +170,7 @@ class WavePlayer(object):
 			wfx.nChannels = self.channels
 			wfx.nSamplesPerSec = self.samplesPerSec
 			wfx.wBitsPerSample = self.bitsPerSample
-			# #9641 (Py3 review required): wfx.nBlockAlign = ctypes.wintypes.WORD == ctypes.ushort == int.
-			# Thus use floor division so we can obtain an integer.
-			wfx.nBlockAlign = self.bitsPerSample // 8 * self.channels
+			wfx.nBlockAlign: int = self.bitsPerSample // 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
 			with self._global_waveout_lock:

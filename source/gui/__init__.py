@@ -152,13 +152,9 @@ class MainFrame(wx.Frame):
 
 	def showGui(self):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
-		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
-		left, top, width, height = api.getDesktopObject().location
-		# #9641 (Py3 review required): pixel coordinates are integers, not floats.
-		# Thus perform a floor division.
-		x = width // 2
-		y = height // 2
-		winUser.setCursorPos(x, y)
+		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
+		location = api.getDesktopObject().location
+		winUser.setCursorPos(*location.center)
 		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 

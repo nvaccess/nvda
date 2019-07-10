@@ -1296,7 +1296,6 @@ the NVDAObject for IAccessible
 		# For our purposes, we can treat both S_OK and S_FALSE as success.
 		if res!=S_OK and res!=S_FALSE:
 			raise COMError(res,None,None)
-		# Py3 review required: sys.maxint is gone in Python 2, replaced by sys.maxsize.
 		return numItemsFetched.value if numItemsFetched.value<=maxCount else sys.maxsize
 
 	def getSelectedItemsCount(self,maxCount):
@@ -1383,8 +1382,7 @@ the NVDAObject for IAccessible
 					del info['indexInGroup']
 					del info['similarItemsInGroup']
 				# 0 means not applicable, so remove it.
-				# #9067 (Py3 review required): originally this called dict.items, which returns iterators in Python 3.
-				# Therefore wrap this inside a list call.
+				# Wrap the call of items inside a list call, as the dictionary changes during iteration.
 				for key, val in list(info.items()):
 					if not val:
 						del info[key]
