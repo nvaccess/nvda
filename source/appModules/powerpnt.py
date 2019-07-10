@@ -1081,7 +1081,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		else:
 			info = self.selection
 			if not info.isCollapsed:
-				speech.speakSelectedText(info.text)
+				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)

@@ -210,7 +210,7 @@ class GlobalCommands(ScriptableObject):
 		if not info or info.isCollapsed:
 			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakSelectedText(info.text)
+			speech.speakTextSelected(info.text)
 	# Translators: Input help mode message for report current selection command.
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
