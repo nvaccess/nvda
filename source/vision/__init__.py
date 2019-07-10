@@ -58,14 +58,14 @@ def getProviderList(
 			)
 			continue
 		try:
-			if not onlyStartable or provider.check():
+			if not onlyStartable or provider.canStart():
 				providerList.append((
 					provider.name,
 					provider.description,
 					list(provider.supportedRoles)
 				))
 			else:
-				log.debugWarning("Vision enhancement provider %s reports as unavailable, excluding" % provider.name)
+				log.debugWarning("Vision enhancement provider %s reports as unable to start, excluding" % provider.name)
 		except:
 			# Purposely catch everything else as we don't want one failing provider
 			# make it impossible to list all the others.

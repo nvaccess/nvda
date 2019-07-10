@@ -88,7 +88,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	}
 
 	@classmethod
-	def check(cls):
+	def canStart(cls) -> bool:
 		return True
 
 	def registerEventExtensionPoints(self, extensionPoints):

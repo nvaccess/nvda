@@ -43,3 +43,13 @@ class VisionEnhancementProvider(driverHandler.Driver):
 		@param extensionPoints: An object containing available extension points as attributes.
 		"""
 		pass
+
+	@classmethod
+	@abstractmethod
+	def canStart(cls) -> bool:
+		"""Returns whether this provider is able to start."""
+		return False
+
+	@classmethod
+	def check(cls) -> bool:
+		return cls.canStart()

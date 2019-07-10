@@ -130,6 +130,9 @@ class VisionHandler(AutoPropertyObject):
 				return False
 		else:
 			providerCls = getProviderClass(providerName)
+			if not providerCls.canStart():
+				log.error("Trying to initialize provider %s which reported being unable to start" % providerName)
+				return False
 			# Initialize the provider.
 			try:
 				providerInst = providerCls()
