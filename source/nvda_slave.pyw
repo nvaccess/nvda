@@ -91,7 +91,7 @@ def main():
 				comHelper._lresultFromGetActiveObject(args[0], bool(int(args[1]))))
 			sys.__stdout__.flush()
 			try:
-				raw_input()
+				input()
 			except EOFError:
 				pass
 		else:
