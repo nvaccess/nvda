@@ -15,7 +15,7 @@ from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
 import textInfos.offsets
-from textUtils import HIGH_SURROGATE_FIRST, HIGH_SURROGATE_LAST, LOW_SURROGATE_FIRST, LOW_SURROGATE_LAST
+import textUtils
 import colors
 import time
 import displayModel
@@ -261,7 +261,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start,end,text = self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
-		if HIGH_SURROGATE_FIRST <= text <= HIGH_SURROGATE_LAST or LOW_SURROGATE_FIRST <= text <= LOW_SURROGATE_LAST:
+		if textUtils.isHighSurrogate(text) or textUtils.isLowSurrogate(text):
 			# #8953: Some IA2 implementations, including Gecko and Chromium,
 			# erroneously report one offset for surrogates.
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
@@ -1296,7 +1296,6 @@ the NVDAObject for IAccessible
 		# For our purposes, we can treat both S_OK and S_FALSE as success.
 		if res!=S_OK and res!=S_FALSE:
 			raise COMError(res,None,None)
-		# Py3 review required: sys.maxint is gone in Python 2, replaced by sys.maxsize.
 		return numItemsFetched.value if numItemsFetched.value<=maxCount else sys.maxsize
 
 	def getSelectedItemsCount(self,maxCount):
@@ -1383,8 +1382,7 @@ the NVDAObject for IAccessible
 					del info['indexInGroup']
 					del info['similarItemsInGroup']
 				# 0 means not applicable, so remove it.
-				# #9067 (Py3 review required): originally this called dict.items, which returns iterators in Python 3.
-				# Therefore wrap this inside a list call.
+				# Wrap the call of items inside a list call, as the dictionary changes during iteration.
 				for key, val in list(info.items()):
 					if not val:
 						del info[key]

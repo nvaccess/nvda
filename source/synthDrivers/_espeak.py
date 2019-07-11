@@ -193,10 +193,8 @@ class BgThread(threading.Thread):
 				log.error("Error running function from queue", exc_info=True)
 			bgQueue.task_done()
 
-def _execWhenDone(func, *args, **kwargs):
+def _execWhenDone(func, *args, mustBeAsync=False, **kwargs):
 	global bgQueue
-	# This can't be a kwarg in the function definition because it will consume the first non-keywor dargument which is meant for func.
-	mustBeAsync = kwargs.pop("mustBeAsync", False)
 	if mustBeAsync or bgQueue.unfinished_tasks != 0:
 		# Either this operation must be asynchronous or There is still an operation in progress.
 		# Therefore, run this asynchronously in the background thread.
@@ -366,16 +364,23 @@ def getVariantDict():
 	# Translators: name of the default espeak varient.
 	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):
-		if os.path.isfile("%s\\%s"%(dir,fileName)):
-			file=codecs.open("%s\\%s"%(dir,fileName))
-			for line in file:
-				if line.startswith('name '):
-					temp=line.split(" ")
-					if len(temp) ==2:
-						name=temp[1].rstrip()
-						break
-				name=None
-			file.close()
+		absFilePath = os.path.join(dir, fileName)
+		if os.path.isfile(absFilePath):
+			# In python 3, open assumes the default system encoding by default.
+			# This fails if Windows' "use Unicode UTF-8 for worldwide language support" option is enabled.
+			# The expected encoding is unknown, therefore use latin-1 to stay as close to Python 2 behavior as possible.
+			try:
+				with open(absFilePath, 'r', encoding="latin-1") as file:
+					for line in file:
+						if line.startswith('name '):
+							temp=line.split(" ")
+							if len(temp) ==2:
+								name=temp[1].rstrip()
+								break
+					name=None
+			except:
+				log.error("Couldn't parse espeak variant file %s" % fileName, exc_info=True)
+				continue
 		if name is not None:
 			variantDict[fileName]=name
 	return variantDict

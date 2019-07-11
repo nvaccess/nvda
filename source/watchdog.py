@@ -153,8 +153,9 @@ def _crashHandler(exceptionInfo):
 	# Write a minidump.
 	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
 	try:
-		# #9038 (Py3 review required): file() function is gone, replaced by open().
-		with open(dumpPath, "w") as mdf:
+		# Though we aren't using pythonic functions to write to the dump file,
+		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
+		with open(dumpPath, "wb") as mdf:
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
@@ -252,7 +253,7 @@ class CancellableCallThread(threading.Thread):
 		self._executionDoneEvent = ctypes.windll.kernel32.CreateEventW(None, False, False, None)
 		self.isUsable = True
 
-	def execute(self, func, args, kwargs, pumpMessages=True):
+	def execute(self, func, *args, pumpMessages=True, **kwargs):
 		# Don't even bother making the call if the core is already dead.
 		if isAttemptingRecovery:
 			raise CallCancelled
@@ -298,7 +299,7 @@ class CancellableCallThread(threading.Thread):
 		ctypes.windll.kernel32.CloseHandle(self._executionDoneEvent)
 
 cancellableCallThread = None
-def cancellableExecute(func, *args, **kwargs):
+def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 	"""Execute a function in the main thread, making it cancellable.
 	@param func: The function to execute.
 	@type func: callable
@@ -309,7 +310,6 @@ def cancellableExecute(func, *args, **kwargs):
 	@raise CallCancelled: If the call was cancelled.
 	"""
 	global cancellableCallThread
-	pumpMessages = kwargs.pop("ccPumpMessages", True)
 	if not isRunning or _suspended or not isinstance(threading.currentThread(), threading._MainThread):
 		# Watchdog is not running or this is a background thread,
 		# so just execute the call.
@@ -319,7 +319,7 @@ def cancellableExecute(func, *args, **kwargs):
 		# Create a new one.
 		cancellableCallThread = CancellableCallThread()
 		cancellableCallThread.start()
-	return cancellableCallThread.execute(func, args, kwargs, pumpMessages=pumpMessages)
+	return cancellableCallThread.execute(func, *args, pumpMessages=ccPumpMessages, **kwargs)
 
 def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	"""Send a window message, making the call cancellable.

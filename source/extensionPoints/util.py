@@ -111,9 +111,7 @@ class HandlerRegistrar(object):
 		"""Generator of registered handler functions.
 		This should be used when you want to call the handlers.
 		"""
-		# #9067 (py3 review required): handlers is an ordered dictionary.
-		# Therefore wrap this inside a list call.
-		for weak in list(self._handlers.values()):
+		for weak in self._handlers.values():
 			handler = weak()
 			if not handler:
 				continue # Died.

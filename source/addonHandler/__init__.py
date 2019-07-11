@@ -283,13 +283,13 @@ class Addon(AddonBase):
 		self.path = os.path.abspath(path)
 		self._extendedPackages = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
-		with open(manifest_path) as f:
+		with open(manifest_path, 'r', encoding="utf_8") as f:
 			translatedInput = None
 			for translatedPath in _translatedManifestPaths():
 				p = os.path.join(self.path, translatedPath)
 				if os.path.exists(p):
 					log.debug("Using manifest translation from %s", p)
-					translatedInput = open(p, 'r')
+					translatedInput = open(p, 'r', encoding="utf_8")
 					break
 			self.manifest = AddonManifest(f, translatedInput)
 
@@ -517,9 +517,7 @@ def getCodeAddon(obj=None, frameDist=1):
 		raise AddonError("Code does not belong to an addon package.")
 	curdir = dir
 	while curdir not in _getDefaultAddonPaths():
-		# #9067 (Py3 review required): originally called dict.keys.
-		# Therefore wrap this inside a list call.
-		if curdir in list(_availableAddons.keys()):
+		if curdir in _availableAddons:
 			return _availableAddons[curdir]
 		curdir = os.path.abspath(os.path.join(curdir, ".."))
 	# Not found!
@@ -564,11 +562,18 @@ class AddonBundle(AddonBase):
 		with zipfile.ZipFile(self._path, 'r') as z:
 			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
+					# ZipFile.open opens every file in binary mode.
+					# decoding is handled by configobj.
 					translatedInput = z.open(translationPath, 'r')
 					break
 				except KeyError:
 					pass
-			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME), translatedInput=translatedInput)
+			self._manifest = AddonManifest(
+				# ZipFile.open opens every file in binary mode.
+				# decoding is handled by configobj.
+				z.open(MANIFEST_FILENAME, 'r'),
+				translatedInput=translatedInput
+			)
 			if self.manifest.errors is not None:
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
@@ -609,7 +614,7 @@ def createAddonBundleFromPath(path, destDir=None):
 	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
 	if not os.path.isfile(manifest_path):
 		raise AddonError("Can't find %s manifest file." % manifest_path)
-	with open(manifest_path) as f:
+	with open(manifest_path, 'r', encoding="utf_8") as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)

@@ -836,9 +836,7 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	# #9067 (Py3 review required): originally, this calls dict.keys, which in Python 2 returns a list and Python 3 assumes iterators.
-	# Therefore wrap this around a list call.
-	for eventType in list(winEventIDsToNVDAEventNames.keys()):
+	for eventType in winEventIDsToNVDAEventNames:
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)
@@ -997,12 +995,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	# #9078 (Py3 review required after 9078): consider enumeration.
-	# Py2: for i in xrange(len(text)):
-	# Py3: for i in range(len(text)):
-	# Suggested: for i, t inenumerate(text):
-	for i in range(len(text)):
-		t=text[i]
+	for i, t in enumerate(text):
 		if ord(t)==0xFFFC:
 			try:
 				childTextObject=hypertextObject.hyperlink(hypertextObject.hyperlinkIndex(i+startOffset)).QueryInterface(IAccessible)

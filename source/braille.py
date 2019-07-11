@@ -480,8 +480,11 @@ def getBrailleTextForProperties(**propertyValues):
 	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
-	rowSpan = propertyValues.get("rowSpan")
-	columnSpan = propertyValues.get("columnSpan")
+	# When fetching row and column span
+	# default the values to 1 to make further checks a lot simpler.
+	# After all, a table cell that has no rowspan implemented is assumed to span one row.
+	rowSpan = propertyValues.get("rowSpan") or 1
+	columnSpan = propertyValues.get("columnSpan") or 1
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None and not roleText:
 		if role == controlTypes.ROLE_HEADING and level:

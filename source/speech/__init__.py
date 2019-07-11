@@ -230,7 +230,6 @@ def speakObjectProperties(obj, reason=controlTypes.REASON_QUERY, priority=None, 
 	#Fetch the values for all wanted properties
 	newPropertyValues={}
 	positionInfo=None
-	# #9067 (Py3 review required): allowed properties is a keyword dictionary.
 	for name,value in allowedProperties.items():
 		if name=="includeTableCellCoords":
 			# This is verbosity info.
@@ -1642,7 +1641,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 				_("no first line indent"),
 			),
 		}
-		# #9067 (Py3 review required): see above for definition of indent labels.
 		for attr,(label,noVal) in indentLabels.items():
 			newVal=attrs.get(attr)
 			oldVal=attrsCache.get(attr) if attrsCache else None

@@ -107,9 +107,7 @@ borderStyleAndWeightLabels={
 
 def getCellBorderStyleDescription(bordersObj,reportBorderColor=False):
 	d=OrderedDict()
-	# #9067 (Py3 review required): originally called dict.keys.
-	# Therefore wrap this inside list call.
-	for pos in list(bordersIndexLabels.keys()):
+	for pos in bordersIndexLabels:
 		border=bordersObj[pos]
 		if border.lineStyle != xlLineStyleNone:
 			style=border.lineStyle
@@ -152,9 +150,7 @@ def getCellBorderStyleDescription(bordersObj,reportBorderColor=False):
 		s.append(_("{desc} up-right and down-right diagonal lines").format(desc=d.get(xlDiagonalUp)))
 		del d[xlDiagonalUp]
 		del d[xlDiagonalDown]
-	# #9067 (Py3 review required): Originally called dict.items.
-	# Therefore wrap this inside a list call.
-	for pos,desc in list(d.items()):
+	for pos,desc in d.items():
 		# Translators: border styles in Microsoft Excel.
 		s.append(_("{desc} {position}").format(
 			desc=desc,

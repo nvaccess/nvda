@@ -1139,7 +1139,7 @@ def findExtraIAccessibleOverlayClasses(obj, clsList):
 		clsList.append(MSAATextLeaf)
 		return
 
-	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:
+	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID is not None and obj.event_objectID > 0:
 		clsList.append(PluginWindow)
 	elif iaRole == oleacc.ROLE_SYSTEM_CLIENT and obj.event_objectID == winUser.OBJID_CLIENT:
 		clsList.append(RootClient)
