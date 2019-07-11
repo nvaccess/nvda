@@ -4,6 +4,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
 
+import config
+
 from winVersion import isWin10
 
 from . import IAccessible
@@ -14,7 +16,7 @@ class WinConsole(WinConsole, IAccessible):
 	pass
 
 def findExtraOverlayClasses(obj, clsList):
-	if isWin10(1703):
+	if isWin10(1703) and config.conf['terminals']['keyboardSupportInLegacy']:
 		from NVDAObjects.behaviors import TerminalKeyboardSupport
 		clsList.append(TerminalKeyboardSupport)
 	clsList.append(WinConsole)

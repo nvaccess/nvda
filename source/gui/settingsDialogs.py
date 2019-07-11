@@ -2068,6 +2068,21 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Terminal programs")
+		terminalsGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(terminalsGroup)
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use the new &keyboard support in legacy Windows consoles")
+		self.keyboardSupportInLegacyCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Browse mode")
 		browseModeGroup = guiHelper.BoxSizerHelper(
 			parent=self,
@@ -2152,6 +2167,7 @@ class AdvancedPanelControls(wx.Panel):
 			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
 			self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue=='UIA') and
 			self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue and
+			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
 			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
 			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
 			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
@@ -2163,6 +2179,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue=='UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -2177,6 +2194,7 @@ class AdvancedPanelControls(wx.Panel):
 		else:
 			config.conf['UIA']['winConsoleImplementation'] = "auto"
 		config.conf["UIA"]["winConsoleSpeakPasswords"]=self.winConsoleSpeakPasswordsCheckBox.IsChecked()
+		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
