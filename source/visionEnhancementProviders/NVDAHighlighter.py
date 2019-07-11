@@ -88,6 +88,17 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	}
 
 	@classmethod
+	def _get_supportedSettings(cls):
+		return [
+			driverHandler.BooleanDriverSetting(
+				'highlight%s' % (context[0].upper() + context[1:]),
+				cls._contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			)
+			for context in cls.supportedContexts
+		]
+
+	@classmethod
 	def canStart(cls) -> bool:
 		return True
 
@@ -133,16 +144,6 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		if self.window:
 			self.window.destroy()
 			self.window = None
-
-	def _get_supportedSettings(self):
-		settings = []
-		for context in self.supportedContexts:
-			settings.append(driverHandler.BooleanDriverSetting(
-				'highlight%s' % (context[0].upper() + context[1:]),
-				self._contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
-			))
-		return settings
 
 	def updateContextRect(self, context, rect=None, obj=None):
 		"""Updates the position rectangle of the highlight for the specified context.

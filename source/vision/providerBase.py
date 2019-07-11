@@ -19,6 +19,7 @@ class VisionEnhancementProvider(driverHandler.Driver):
 
 	_configSection = "vision"
 	cachePropertiesByDefault = True
+	#: Override of supportedSettings to be a class property.
 	supportedSettings = ()
 	#: The roles supported by this provider.
 	#: This attribute is currently not used,
