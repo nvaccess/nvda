@@ -3,6 +3,7 @@ Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo C
 
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
+
 = 2019.2 =
 Os destaques desta versão incluem a detecção automática de linhas braille da Freedom Scientific, uma configuração experimental no painel Avançado para impedir que o modo de navegação mova automaticamente o foco (que pode fornecer melhorias de desempenho), uma opção de aumento ""[especial]"" de velocidade para o sintetizador Windows OneCore atingir velocidades muito rápidas e muitas outras correções de falhas.
 
@@ -26,6 +27,9 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
  - Teclas do modo de navegação demoram a responder.
 - Para drivers de linha braille que o suportam, as configurações do driver agora podem ser alteradas a partir da categoria de configurações de braille no diálogo de configurações do NVDA. (#7452)
 - As linhas braille da Freedom Scientific agora são suportadas pela detecção automática de linha braille. (#7727)
+- Adicionado um comando para mostrar a substituição do símbolo sob o cursor de exploração. (#9286)
+- Adicionada uma opção experimental ao painel Configurações Avançadas que permite que você experimente uma nova reescrita em andamento, do suporte do NVDA ao Console do Windows usando a API de Microsoft UI Automation API ""[Interface de Programação de Aplicativos de Automação da Interface do Usuário da Microsoft]"". (#9614)
+- No Console Python, o campo de entrada agora suporta a colagem de várias linhas da área de transferência. (#9776)
 
 
 == Alterações ==
@@ -35,6 +39,10 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 - Atualizado o transcritor braille liblouis para a versão 3.9.0. (#9439)
 - A tecla de atalho para o campo de filtro na lista de elementos no modo de navegação foi alterada para alt+y. (#8728)
 - Quando uma linha braille detectada automaticamente é conectada via Bluetooth, o NVDA continuará procurando por linhas USB suportadas pelo mesmo driver e alternará para uma conexão USB se disponível. (#8853)
+- eSpeak-NG atualizado para commit 67324cc.
+- Atualizado o transcritor braille liblouis para a versão 3.10.0. (#9439, #9678)
+- O NVDA agora informará a palavra 'selecionado' depois de dizer o que foi selecionado. (#9028)
+- No código do Microsoft Visual Studio, o modo de navegação está desativado por padrão. (#9828)
 
 
 == Correção de Falhas ==
@@ -58,6 +66,8 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 - As teclas balanceadoras ""[bumper]"" agora funcionam corretamente nas linhas braille da Freedom Scientific. (#8849)
 - Ao ler o primeiro caractere dum documento no Notepad++ 7.7 X64, o NVDA não congela mais por até dez segundos. (#9609)
 - HTCom agora pode ser usado com uma Linha braille Handy Tech em combinação com o NVDA. (#9691)
+- No Mozilla Firefox, as atualizações em uma região ativa ""[conteúdo dinâmico]"" não serão mais informadas se a região ativa estiver em uma guia em segundo plano. (#1318)
+- Diálogo Modo de navegação do NVDA não deixa de funcionar se a caixa de diálogo Sobre do NVDA estiver atualmente aberta em segundo plano. (#8566)
 
 
 == Alterações para Desenvolvedores ==
@@ -66,6 +76,10 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 - Atualizado o pacote comtypes para a versão 1.1.7. (#9440, #8522)
 - Ao usar o comando info do módulo de relatório ""[report]"", a ordem das informações foi alterada para apresentar o módulo primeiro. (#7338)
 - Adicionado um exemplo para demonstrar o uso de nvdaControllerClient.dll por C#. (#9600)
+- Adicionado uma nova função isWin10 ao módulo winVersion que retorna se esta cópia do NVDA está sendo executada (pelo menos) na versão de lançamento fornecida do Windows 10 (como 1903). (#9761)
+- O console do Python NVDA agora contém módulos mais úteis em seu namespace (como appModules, globalPlugins, config e textInfos). (#9789)
+- O resultado do último comando executado no console do Python NVDA agora está acessível a partir da variável _ (sublinha). (#9782)
+ - Observe que isso faz com que a função de conversão gettext também seja chamada por "_". Para acessar a função de tradução: del _
 
 
 = 2019.1.1 =
@@ -535,7 +549,7 @@ Os destaques desta versão incluem a entrada de braille abreviado, suporte para 
 - Por padrão, NVDA agora mostra apenas as partes das informações de contexto que mudaram numa linha braille quando um objeto obtém foco. (#217)
  - Anteriormente, sempre mostrou tanta informação de contexto quanto possível, independentemente de antes já ter visto as mesmas informações de contexto.
  - Você pode reverter para o comportamento antigo alterando a nova configuração "Apresentação do contexto do foco" na caixa de diálogo Opções de Braille para "Sempre preencher a linha".
-- Ao usar Braille, o cursor pode ser configurado para ter uma forma diferente quando seguindo foco ou revisão. (#7122)
+- Ao usar Braille, o cursor pode ser configurado para ter uma forma diferente quando seguindo foco ou exploração. (#7122)
 - O logotipo NVDA foi atualizado. O logotipo NVDA atualizado é uma mistura estilizada das letras NVDA em branco, em um fundo púrpura sólido. Isso garante que ele será visível em qualquer fundo colorido e usará o púrpura do logotipo NV Access. (#7446)
 
 
