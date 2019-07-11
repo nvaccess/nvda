@@ -19,7 +19,6 @@ import sys
 
 import locale
 import gettext
-import wx
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
 gettext.install('nvda',unicode=True)
@@ -33,6 +32,8 @@ SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
 import sourceEnv
+
+import wx
 
 # Set options normally taken from the command line.
 import globalVars
