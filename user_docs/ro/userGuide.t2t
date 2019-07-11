@@ -397,7 +397,7 @@ Următoarele comenzi din taste sunt disponibile pentru examinarea textului:
 | Mută la sfârșitul rândului din descriere | shift+numpad3 | NVDA+end | fără | Mută cursorul de examinare la sfârșitul rândului curent din text |
 | Citește tot din descriere | numpadPlus | NVDA+shift+a | glisează brusc jos cu 3 degete (mod text) | Citește din poziția curentă a cursorului de examinare, deplasându-l pe măsură ce înaintează |
 | Selectează apoi copiază de la cursorul de examinare | NVDA+f9 | NVDA+f9 | fără | Începe procesul de selectare și copiere de la poziția curentă a cursorului de examinare. Operația propriu-zisă nu este efectuată până nu specificați către NVDA unde se află limita finală a textului |
-| Selectează apoi copiază la cursorul de examinare | NVDA+f10 | NVDA+f10 | fără | La prima apăsare, se slectează textul începând cu poziția marcată anterior, până la și inclusiv poziția curentă a cursorului de examinare. După apăsarea a doua oară a acestei taste, textul va fi copiat în planșeta Windows |
+| Selectează apoi copiază la cursorul de examinare | NVDA+f10 | NVDA+f10 | fără | La prima apăsare, se selectează textul începând cu poziția marcată anterior, până la și inclusiv poziția curentă a cursorului de examinare. După apăsarea a doua oară a acestei taste, textul va fi copiat în planșeta Windows |
 | Raportează formatul textului | NVDA+f | NVDA+f | fără | Anunță formatul textului unde se află cursorul de examinare |
 %kc:endInclude
 
@@ -1636,7 +1636,7 @@ Butonul restaurează valorile implicite ale setărilor, chiar dacă caseta de co
 După modificarea setărilor, s-ar putea să vă doriți să reveniți la valorile implicite.
 De asemenea, acesta poate fi cazul în care nu sunteți sigur că setările au fost modificate.
 
-==== Activează încărcarea codului personalizat din directorul Scratchpad pentru Dezvoltatori ====
+==== Activează încărcarea codului personalizat din directorul Scratchpad pentru Dezvoltatori ====[AdvancedSettingsEnableScratchpad]
 Când dezvoltați suplimente pentru NVDA, vă este util să testați codul, întrucât îl scrieți.
 Când e activată, această opțiune îi permite NVDA-ului să încarce appModule-uri personalizate, globalPlugin-uri, brailleDisplayDrivere și synthDrivere, dintr-un folder special Scratchpad pentru dezvoltatori în cel al configurației de utilizator NVDA.
 Înainte, NVDA încărca codul personalizat direct din dosarul configurației utilizatorului NVDA fără niciun mod în care asta să poată fi dezactivată.
@@ -1650,9 +1650,25 @@ El este activat doar dacă NVDA este setat să activeze încărcarea codului per
 ==== Utilizează UI automation pentru a accesa controalele de document Microsoft Word când sunt disponibile ====[AdvancedSettingsUseUiaForWord]
 Când această opțiune este activată, NVDA va încerca să utilizeze API-ul de accesibilitate Microsoft UI Automation pentru a obține informații de la controalele de document Microsoft Word.
 Este inclus însuși Microsoft Word, vizualizatorul și compozitorul de mesaje Microsoft Outlook.
-Pentru versiunile cele mai recente ale Microsoft Office 2016/365 care rulează pe Windows 10, suportul UI Automation este suficient de complet încât să ofere accesul la documentele Microsoft Word în mod aproape egal în care o face suportul NVDA pentru Microsoft Word, adăugând avantajul capacității de reacție major îmbunătățite.
+Pentru versiunile cele mai recente ale Microsoft Office 2016/365 care rulează pe Windows 10, suportul UI Automation este suficient de capabil încât să ofere accesul la documentele Microsoft Word în mod aproape egal în care o face suportul NVDA pentru Microsoft Word, adăugând avantajul capacității de reacție, îmbunătățită semnificativ.
 Cu toate acestea, pot exista informații care să nu fie expuse sau expuse incorect, în cel mai bun caz, în unele versiuni ale Microsoft Office, ceea ce înseamnă că acest suport UI automation nu poate fi întotdeauna fiabil.
 Încă nu recomandăm majorității utilizatorilor s-o activeze în mod implicit, deși îi invităm pe cei ai Office 2016/365 să o testeze și să ne ofere o recenzie.
+
+==== Forțează UI Automation în Consola Windows====[AdvancedSettingsConsoleUIA]
+Dacă această opțiune este activă, NVDA va utiliza o nouă versiune în dezvoltare a suportului său pentru Consola Windows, care profită de [îmbunătățirile de accesibilitate făcute de Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Această caracteristică se află în faza de testare și este incompletă, deci utilizarea acesteia nu este recomandată încă. Totuși, odată ce aceasta va funcționa perfect, se anticipează că acest nou suport va deveni implicit, îmbunătățind performanța și stabilitatea NVDA în consolele de comandă ale Windows.
+
+==== Spune parolele în consolele UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Această setare controlează dacă caracterele sunt pronunțate prin [pronunțarea caracterelor tastate #KeyboardSettingsSpeakTypedCharacters] sau prin [pronunțarea cuvintelor tastate #KeyboardSettingsSpeakTypedWords] în situația în care ecranul nu se actualizează (un bun exemplu fiind cazul în care se interacționează cu un câmp de parolă) în consola Windows cu suportul activat pentru UI automation. Din motive de securitate, această setare ar trebui să fie lăsată dezactivată. Totuși, s-ar putea să vreți să o activați dacă întâmpinați probleme de performanță sau de instabilitate cu raportarea caracterului și/sau cuvântului tastat cât timp folosiți suportul NVDA experimental pentru consolă.
+
+==== Setează automat focalizarea sistemului la elementele focalizabile din modul de navigare ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tastă: NVDA+8
+
+Activă în mod implicit, această opțiune vă dă posibilitatea de a decide dacă focalizarea sistemului ar trebui să fie setată automat la elemente care pot avea efecte asupra ei (link-uri, câmpuri formular, etcetera) la navigarea prin conținut cu cursorul modului de navigare. 
+Dacă este activă, aceasta va reprezenta comportamentul implicit al NVDA din versiunea 2019.1 și din cele anterioare.
+Dezactivarea acestei opțiuni nu va avea drept consecință focalizarea automată a elementelor focalizabile atunci când acestea sunt selectate cu cursorul modului de navigare.
+Aceasta poate avea drept consecință o experiență de navigare mai rapidă și o reacție mai bună în modul de navigare.
+Focalizarea va continua să se actualizeze la elementul particular atunci când se interacționează cu el (apăsarea unui buton și activarea unei casete de bifat pot fi luate ca exemplu).
+Această funcționalitate este experimentală ca și NVDA 2019.2.
 
 ==== Timpul de expirare a deplasării cursorului de scriere al sistemului )în milisecunde) ====[AdvancedSettingsCaretMoveTimeout]
 Această opțiune vă permite să configurați numărul de milisecunde în care NVDA să aștepte ca cursorul de scriere (punct de inserare) să se deplaseze în câmpurile de editare.
