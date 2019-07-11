@@ -192,11 +192,13 @@ class HighlightWindow(CustomWindow):
 	windowName = u"NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
 	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
+	transparentBrush = winGDI.gdi32.CreateSolidBrush(COLORREF(0))
 
 	@classmethod
 	def _get__wClass(cls):
 		wClass = super(HighlightWindow, cls)._wClass
 		wClass.style = winUser.CS_HREDRAW | winUser.CS_VREDRAW
+		wClass.hbrBackground = cls.transparentBrush
 		return wClass
 
 	def updateLocationForDisplays(self):
@@ -232,7 +234,6 @@ class HighlightWindow(CustomWindow):
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
-		self.transparentBrush = winGDI.gdi32.CreateSolidBrush(COLORREF(0))
 		winUser.SetLayeredWindowAttributes(self.handle, None, self.transparency, winUser.LWA_ALPHA | winUser.LWA_COLORKEY)
 		self.updateLocationForDisplays()
 		if not winUser.user32.UpdateWindow(self.handle):
@@ -278,9 +279,7 @@ class HighlightWindow(CustomWindow):
 			contextRects[context] = rect
 		if not contextRects:
 			return
-		windowRect = winUser.getClientRect(self.handle)
 		with winUser.paint(self.handle) as hdc:
-			winUser.user32.FillRect(hdc, byref(windowRect), self.transparentBrush)
 			with winGDI.GDIPlusGraphicsContext(hdc) as graphicsContext:
 				for context, rect in contextRects.items():
 					HighlightStyle = highlighter._ContextStyles[context]
