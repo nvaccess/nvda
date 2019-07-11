@@ -76,6 +76,7 @@ class VisionHandler(AutoPropertyObject):
 			Yet, the provider wil lbe removed from the providers dictionary,
 			so its instance goes out of scope and wil lbe garbage collected.
 		"""
+		success = True
 		# Remove the provider from the providers dictionary.
 		providerInstance =self.providers.pop(providerName, None)
 		if not providerInstance:
@@ -88,7 +89,7 @@ class VisionHandler(AutoPropertyObject):
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
 			log.error("Error while terminating vision provider %s" % providerName, exc_info=True)
-			return False
+			success = False
 		# Copy the configured providers before mutating the list.
 		# If we don't, configobj won't be aware of changes the list.
 		configuredProviders: List = config.conf['vision']['providers'][:]
@@ -105,7 +106,7 @@ class VisionHandler(AutoPropertyObject):
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except:
 				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
-		return True
+		return success
 
 	def initializeProvider(self, providerName: str, temporary: bool = False) -> bool:
 		"""
