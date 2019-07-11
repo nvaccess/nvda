@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2019.2 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin pistenäyttöjen automaattinen tunnistus, Lisäasetukset-paneelin kokeellinen asetus, jolla selaustila ei siirrä kohdistusta automaattisesti (mikä saattaa parantaa suorituskykyä), nopeudenlisäysasetus Windows OneCore -syntetisaattorille hyvin suurten nopeuksien saavuttamiseksi, sekä useita muita ohjelmavirheiden korjauksia.
 
 == Uudet ominaisuudet ==
 - Etsi-valintaikkuna sisältää nyt 20 viimeisimmän haun historian. (#8482)
@@ -24,6 +25,7 @@
  - Kohdistus siirtyy joillakin verkkosivuilla väkisin muokkauskenttiin, kun niiden välillä siirrytään Nuoli alas -näppäimellä.
  - Hidas reagointi selaustilan näppäinkomentoihin.
 - Tuettujen pistenäyttöajureiden asetuksia on nyt mahdollista muuttaa NVDA:n asetusvalintaikkunan Pistekirjoitus-kategoriasta. (#7452)
+- Pistenäyttöjen automaattinen tunnistus tukee nyt Freedom Scientificin pistenäyttöjä. (#7727)
 
 
 == Muutokset ==
@@ -50,8 +52,10 @@
 - Objects Explorer -ikkunan valittu kohde ilmoitetaan nyt asianmukaisesti kategorioita sisältävissä olio- ja alkiopuunäkymissä Visual Studio 2017:ssä ja uudemmissa. (#9311)
 - Lisäosia, joiden nimet eroavat toisistaan vain kirjainkoon osalta, ei enää käsitellä erillisinä. (#9334)
 - Windows 10:n teksti puheeksi -asetuksissa määritetty nopeus ei enää vaikuta Windows OneCore -ääniä käytettäessä NVDA:ssa määritettyyn nopeuteen. (#7498)
-- Loki voidaan nyt avata painamalla NVDA+F1, kun nykyiselle navigointiobjektille ei ole saatavilla kehittäjätietoja. (#8613)
+- Lokin voi nyt avata painamalla NVDA+F1, kun nykyisestä navigointiobjektista ei ole saatavilla kehittäjätietoja. (#8613)
 - NVDA:n taulukkonavigointikomentojen käyttäminen on jälleen mahdollista Google Docsissa, Firefoxissa ja Chromessa. (#9494)
+- Freedom Scientific -pistenäyttöjen vieritysnäppäimet toimivat nyt asianmukaisesti. (#8849)
+- NVDA ei enää hyydy enimmillään 10 sekunnin ajaksi luettaessa asiakirjan ensimmäistä merkkiä 64-bittisessä Notepad++ 7.7:ssä. (#9609)
 
 
 == Muutokset kehittäjille ==
