@@ -1003,7 +1003,7 @@ class AggregatedSection(object):
 				keys.add(key)
 				yield key
 
-	def iteritems(self):
+	def items(self):
 		for key in self:
 			try:
 				yield (key, self[key])
@@ -1012,14 +1012,14 @@ class AggregatedSection(object):
 				pass
 
 	def copy(self):
-		return dict(self.iteritems())
+		return dict(self.items())
 
 	def dict(self):
 		"""Return a deepcopy of self as a dictionary.
 		Adapted from L{configobj.Section.dict}.
 		"""
 		newdict = {}
-		for key, value in self.iteritems():
+		for key, value in self.items():
 			if isinstance(value, AggregatedSection):
 				value = value.dict()
 			elif isinstance(value, list):

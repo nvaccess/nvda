@@ -193,10 +193,8 @@ class BgThread(threading.Thread):
 				log.error("Error running function from queue", exc_info=True)
 			bgQueue.task_done()
 
-def _execWhenDone(func, *args, **kwargs):
+def _execWhenDone(func, *args, mustBeAsync=False, **kwargs):
 	global bgQueue
-	# This can't be a kwarg in the function definition because it will consume the first non-keywor dargument which is meant for func.
-	mustBeAsync = kwargs.pop("mustBeAsync", False)
 	if mustBeAsync or bgQueue.unfinished_tasks != 0:
 		# Either this operation must be asynchronous or There is still an operation in progress.
 		# Therefore, run this asynchronously in the background thread.

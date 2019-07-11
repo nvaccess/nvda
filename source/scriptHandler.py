@@ -7,6 +7,7 @@
 import time
 import weakref
 import inspect
+import types
 import config
 import speech
 import sayAllHandler
@@ -264,9 +265,8 @@ def script(
 	if gestures is None:
 		gestures = []
 	def script_decorator(decoratedScript):
-		# Scripts are unbound instance methods in python 2 and functions in python 3.
-		# Therefore, we use inspect.isroutine to check whether a script is either a function or instance method.
-		if not inspect.isroutine(decoratedScript):
+		# Decoratable scripts are functions, not bound instance methods.
+		if not isinstance(decoratedScript, types.FunctionType):
 			log.warning(
 				"Using the script decorator is unsupported for %r" % decoratedScript,
 				stack_info=True
