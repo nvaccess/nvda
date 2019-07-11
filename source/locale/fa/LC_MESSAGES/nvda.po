@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
-"PO-Revision-Date: 2019-05-31 03:40+0330\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-09 00:19+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@groups.io>\n"
 "Language: fa\n"
@@ -1759,12 +1759,6 @@ msgstr "بخشِ %s"
 msgid "lmk %s"
 msgstr "بخش %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s انتخاب شد"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "توضیحِ طولانی ندارد"
@@ -3119,10 +3113,6 @@ msgstr "دکمه‌ی راستِ موس پایین نگهداشته شد"
 msgid "Locks or unlocks the right mouse button"
 msgstr "دکمه‌ی راستِ موس را پایین نگه‌میدارد یا رها میکند"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s انتخاب شد"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3802,6 +3792,30 @@ msgid ""
 msgstr ""
 "مکان‌نمای بازبینی را روی آخِرین نویسه‌ی خطِّ جاریِ موجود در پِیمایِشگر برده، آن را "
 "میخوانَد."
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"نمادی را که مکان‌نمای بازبینی روی آن قرار دارد اعلام میکند. اگر دو بار فشرده "
+"شود، نماد و متنی که برای خواندنِ آن به کار میرود را نشان میدهد."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "جایگزینی برای نماد نیست"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"نویسه: {}\n"
+"جایگزین: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "نمادِ گسترش‌یافته ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6045,15 +6059,24 @@ msgstr "cap %s"
 msgid "no indent"
 msgstr "بدونِ تورفتگی"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s انتخاب شد"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s انتخاب شد"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d نویسه"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s انتخاب شد"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9382,6 +9405,17 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"استفاده از UI Automation برای دستیابی به میزِ فرمانِ ویندوز در صورت موجود بودن"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "خواندنِ &گذرواژه‌ها در میزهای فرمانِ UIA (ممکن است اجرا را بهبود بخشد)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "تنظیمِ خودکارِ &فکوسِ سیستم روی سازه‌های فکوس‌پذیر"
 
@@ -11221,6 +11255,9 @@ msgstr "فاصله‌ی خطّیِ دوبرابر"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "فاصله‌ی یِکُنیم خطّی"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s انتخاب شد"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "برنامه‌ی در حالِ اجرا، %s است "
