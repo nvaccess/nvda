@@ -4,9 +4,17 @@
 #See the file COPYING for more details.
 #Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
 
+from winVersion import isWin10
+
 from . import IAccessible
 from ..window.winConsole import WinConsole
 
 class WinConsole(WinConsole, IAccessible):
 	"The legacy console implementation for situations where UIA isn't supported."
 	pass
+
+def findExtraOverlayClasses(obj, clsList):
+	if isWin10(1703):
+		from NVDAObjects.behaviors import TerminalKeyboardSupport
+		clsList.append(TerminalKeyboardSupport)
+	clsList.append(WinConsole)

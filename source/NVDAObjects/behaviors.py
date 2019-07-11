@@ -369,6 +369,8 @@ class Terminal(LiveText, EditableText):
 
 class TerminalKeyboardSupport(Terminal):
 	"""Provides typed character support for console applications on Windows 10 1703 and later."""
+	#: Whether this object reliably sends textChange events.
+	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
 	_queuedChars = []
@@ -398,15 +400,14 @@ class TerminalKeyboardSupport(Terminal):
 				or config.conf['keyboard']['speakTypedWords']
 			)
 			and not config.conf['UIA']['winConsoleSpeakPasswords']
+			and self._supportsTextChange
 		):
 			self._queuedChars.append(ch)
 		else:
 			super(TerminalKeyboardSupport, self).event_typedCharacter(ch)
 
 	def event_textChange(self):
-		while self._queuedChars:
-			ch = self._queuedChars.pop(0)
-			super(TerminalKeyboardSupport, self).event_typedCharacter(ch)
+		self._dispatchQueue()
 		super(TerminalKeyboardSupport, self).event_textChange()
 
 	@script(gestures=[
@@ -433,6 +434,12 @@ class TerminalKeyboardSupport(Terminal):
 			!= self._findNonBlankIndices(oldLines)
 		)
 		return super(TerminalKeyboardSupport, self)._calculateNewText(newLines, oldLines)
+
+	def _dispatchQueue(self):
+		"""Sends queued typedCharacter events through to NVDA."""
+		while self._queuedChars:
+			ch = self._queuedChars.pop(0)
+			super(TerminalKeyboardSupport, self).event_typedCharacter(ch)
 
 	def _findNonBlankIndices(self, lines):
 		"""
