@@ -2,6 +2,7 @@
 
 
 %!includeconf: ../changes.t2tconf
+
 = 2019.2 =
 Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowskich Freedom Scientific, eksperymentalne ustawienie zaawansowane wyłączenia podążania fokusu systemowego za kursorem trybu czytania (co może poprawić wydajność), możliwość podkręcania szybkości głosów mobilnych Windows,  oraz wiele poprawek.
 
@@ -25,15 +26,21 @@ Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowsk
  - Klawisze trybu czytania reagujące z opóźnieniem.
 - Dla sterowników linijek, które to obsługują, ustawienia sterownika mogą być zmieniane w oknie ustawień brajlowskich NVDA. (#7452)
 - Linijki Freedom Scientific mogą być automatycznie wykrywane. (#7727)
+- Dodana komenda pokazywania zamiany dla symbolu pod kursorem przeglądu. (#9286)
+- Dodana opcja w ustawieniach zaawansowanych pozwalająca  wypróbować nowy, będący jeszcze w fazie rozwoju,  sposób obsługi konsoli Windows przy użyciu Microsoft UI Automation API. (#9614)
+- W konsoli Pythona pole edycyjne obsługuje wklejanie wielu linii ze schowka. (#9776)
 
 
 == Zmiany ==
 - Głośność syntezy jest teraz zwiększana i zmniejszana o 5 zamiast o 10 w mechanizmie szybkiej zmiany parametrów syntezatora. (#6754)
 - Poprawione objaśnienie w managerze dodatków  pojawiające się po uruchomieniu NVDA z przełącznikiem --disable-addons. (#9473)
 - Zaktualizowane opisy znaków Unicode emoji do wersji 35.0. (#9445)
-- Translator brajlowski liblouis zaktualizowany do wersji 3.9.0. (#9439)
-- Klawisz skrótu pola filtru na liście elementów  trybu czytania, został zmieniony n a alt+g. (#8728)
+- Klawisz skrótu pola filtru na liście elementów  trybu czytania, został zmieniony na alt+g. (#8728)
 - Gdy automatycznie wykryta linijka brajlowska  jest podłączona przez Bluetooth, NVDA będzie poszukiwał linijki podłączonej przez USB, a obsługiwanej przy użyciu tego samego sterownika,   i przełączy się na połączenie USB, gdy stanie się dostępne. (#8853)
+- eSpeak-NG zaktualizowany do commitu 67324cc.
+- Translator brajlowski liblouis zaktualizowany do wersji 3.10.0. (#9439, #9678)
+- NVDA wypowie słowo 'zaznaczone' po odczytaniu co jest zaznaczone. (#9028)
+- W kodzie Microsoft Visual Studio, tryb czytania jest domyślnie wyłączony. (#9828)
 
 
 == Poprawki błędów ==
@@ -57,6 +64,8 @@ Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowsk
 - Klawisze ochraniające  działają prawidłowo na linijkach Freedom Scientific. (#8849)
 - Po odczytaniu pierwszego znaku dokumentu  w Notepad++ 7.7 X64, NVDA nie zawiesza się na czas do 10 sekund. (#9609)
 - HTCom może teraz być używany z linijką brajlowską Handy Tech  w kombinacji z NVDA. (#9691)
+- W Mozilla Firefox, aktualizacje obszarów dynamicznych nie są odczytywane  jeśli obszar znajduje się w zakładce będącej aktualnie w tle. (#1318)
+- Poprawiona praca okna "Znajdź" w trybie czytania NVDA,  które nie funkcjonowało, gdy otwarte było w tle okno "O programie" NVDA. (#8566)
 
 
 == Zmiany dla programistów ==

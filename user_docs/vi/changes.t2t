@@ -2,6 +2,7 @@
 
 
 %!includeconf: ../changes.t2tconf
+
 = 2019.2 =
 Các cải tiến của bản phát hành này bao gồm tự nhận các màn hình chữ nổi của Freedom Scientific, một thiết lập thử nghiệm trong bảng cài đặt nâng cao để dừng việc tự di chuyển focus trong chế độ duyệt (có thể cải thiện tốc độ vận hành), tùy chọn tăng tốc độ đọc cho bộ đọc Windows OneCore nhằm đọc bằng tốc độ rất nhanh, và sửa nhiều lỗi khác.
 
@@ -11,7 +12,7 @@ Các cải tiến của bản phát hành này bao gồm tự nhận các màn h
 - Hỗ trợ của NVDA cho Miranda NG hoạt động được với các phiên bản mới hơn của chương trình. (#9053) 
 - Giờ bạn có thể mặc định tắt chế độ duyệt bằng cách vô hiệu hóa tùy chọn  mới có tên "Bật chế độ duyệt khi tải trang" trong cài đặt chế độ duyệt của NVDA. (#8716) 
  - Lưu ý rằng khi tùy chọn này bị vô hiệu, bạn vẫn có thể bật chế độ duyệt thủ công bằng cách bấm NVDA+khoảng trắng.
-- Giờ bạn có thể lọc các kí hiệu trong hộp thoại phát âm kí hiệu/dấu câu, tương tự như cách mà bộ lọc hoạt động trong các hộp thoại danh sách các thành phần và quản lý cử chỉ. (#5761)
+- Giờ bạn có thể lọc các kí hiệu trong hộp thoại phát âm kí hiệu/dấu câu, tương tự như cách mà bộ lọc hoạt động trong các hộp thoại danh sách các thành phần và quản lý thao tác. (#5761)
 - Đã thêm một lệnh để thay đổi đơn vị văn bản của chuột (đơn vị văn bản sẽ được đọc khi di chuyển chuột), nó chưa được  gán thao tác mặc định. (#9056)
 - Bộ đọc windows OneCore giờ đây có tùy chọn  tăng tốc độ đọc, cho phép tăng tốc độ nhanh một cách đáng kể. (#7498)
 - Tùy chọn tăng tốc độ đọc giờ đây có thể cấu hình từ thiết lập nhanh cho các bộ đọc được hỗ trợ. (hiện tại là các bộ đọc eSpeak-NG và Windows OneCore). (#8934)
@@ -19,21 +20,27 @@ Các cải tiến của bản phát hành này bao gồm tự nhận các màn h
  - Thao tác phải được cấu hình trong hộp thoại "Quản lý thao tác".
 - Trong Eclipse, đã thêm hỗ trợ cho tính năng tự hoàn tất trong trình biên tập mã nguồn (code editor). (#5667)
  - Thêm nữa, có thể đọc các thông tin của Javadoc từ trình biên tập  khi nó xuất hiện bằng cách bấm NVDA+d.
-- Thêm tùy chọn thử nghiệm trong bảng thiết lập nâng cao cho phép bạn tắt con trỏ  hệ thống tự đi theo con trỏ duyệt (Tự đưa con trỏ &hệ thống đến các thành phần có thể có focus). (#2039) dù việc tắt nó trên tất cả các trang web có thể không khả thi, điều này cũng có thể khắc phục: 
+- Thêm tùy chọn thử nghiệm trong bảng thiết lập nâng cao cho phép bạn tắt con trỏ  hệ thống tự đi theo con trỏ duyệt (Tự đưa con trỏ hệ thống đến các thành phần có thể có focus). (#2039) dù việc tắt nó trên tất cả các trang web có thể không khả thi, điều này cũng có thể khắc phục: 
  - Hiệu ứng Rubber band: NVDA thỉnh thoảng hoàn tác phím tắt sau cùng của chế độ duyệt bằng cách đi đến vị trí trước.
  - Các ô nhập liệu chiếm quyền con trỏ hệ thống khi bấm mũi tên xuống qua chúng trên các trang web.
  - Các phím tắt trong chế độ duyệt phản hồi chậm.
 - Với các trình điều khiển màn hình nổi được hỗ trợ, các thiết lập trình điều khiển giờ đây có thể thay đổi từ phân loại chữ nổi trong hộp thoại cấu hình NVDA. (#7452) 
 - Các màn hình chữ nổi của Freedom Scientific giờ đã được hỗ trợ bởi tính năng tự nhận màn hình nổi. (#7727)
+- Thêm vào một lệnh để hiển thị nội dung thay thế cho kí hiệu dưới con trỏ duyệt. (#9286)
+- Thêm một tùy chọn thử nghiệm vào bản cài đặt nâng cao, cho phép bạn dùng thử tính năng mới, đang được thực hiện để hỗ trợ cho Windows Console với NVDA, sử dụng Microsoft UI Automation API. (#9614)
+- Trong Python Console, phần nhập liệu giờ đã hỗ trợ dán nhiều dòng từ bộ nhớ tạm. (#9776)
 
 
 == Các thay đổi ==
 - Âm lượng bộ đọc giờ đây tăng và giảm 5 thay vì 10 khi dùng thiết lập tham số nhanh. (#6754)
 - Nội dung trong trình quản lý add-on đã được làm rõ hơn khi  NVDA được gọi chạy với tùy chọn --disable-addons. (#9473)
 - Đã cập nhật dữ liệu chú thích biểu tượng cảm xúc Unicode Common Locale Data Repository  lên phiên bản 35.0. (#9445)
-- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.9.0. (#9439)
-- Khi một màn hình chữ nổi dạng tự dò tìm được kết nối qua Bluetooth, NVDA sẽ tiếp tục tìm kiếm các màn hình USB được hỗ trợ bởi cùng trình điều khiển và chuyển sang kết nối USB nếu có. (#8853)
 - Giao diện tiếng Anh: phím nóng cho bộ lọc danh sách các thành phần trong chế độ duyệt đã đổi thành alt+y. (#8728)
+- Khi một màn hình chữ nổi dạng tự dò tìm được kết nối qua Bluetooth, NVDA sẽ tiếp tục tìm kiếm các màn hình USB được hỗ trợ bởi cùng trình điều khiển và chuyển sang kết nối USB nếu có. (#8853)
+- Đã cập nhật eSpeak-NG lên commit 67324cc.
+- Đã cập nhật thư viện phiên dịch chữ nổi liblouis lên phiên bản 3.10.0. (#9439, #9678)
+- NVDA giờ đây sẽ đọc từ 'đã chọn' sau khi đọc hết nội dung mà người dùng đã chọn.(#9028, #9909)
+- Trong Microsoft Visual Studio Code, chế độ duyệt giờ đây mặc định bị tắt. (#9828)
 
 
 == Sửa lỗi ==
@@ -56,7 +63,9 @@ Các cải tiến của bản phát hành này bao gồm tự nhận các màn h
 - Lại có thể dùng được các lệnh điều hướng trong bảng của NVDA trong Google Docs, trong Firefox và Chrome. (#9494)
 - Các phím bumper giờ đây đã hoạt động chính xác trên các màn hình chữ nổi của Freedom Scientific. (#8849)
 - Khi đọc kí tự đầu tiên của một tài liệu trong Notepad++ 7.7 X64, NVDA không còn bị đóng băng trong tối đa 10 giây. (#9609)
-- HTCom giờ đây có thể sử dụng với một màn hình nổi Handy Tech  kết hợp với NVDA. (#9691)
+- HTCom giờ đây có thể sử dụng với một màn hình nổi Handy Tech kết hợp với NVDA. (#9691)
+- Trong Mozilla Firefox, các cập nhật đến live region không còn được đọc khi nó ở trong thẻ chạy ngầm. (#1318)
+- Hộp thoại tìm kiếm trong chế độ duyệt của NVDA không còn tình trạng không hoạt động khi hộp thoại giới thiệu NVDA đang được mở. (#8566)
 
 
 == Các thay đổi cho nhà phát triển ==

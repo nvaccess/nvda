@@ -401,6 +401,7 @@ As seguintes teclas de atalho estão disponíveis para a exploração de texto:
 | Selecionar e Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | nenhum | Inicia o processo de seleção e cópia do texto a partir da posição atual do cursor de exploração. A ação real não é executada até que você informe ao NVDA onde o fim do intervalo de texto está |
 | Selecionar e Copiar até o cursor de exploração | NVDA+f10 | NVDA+f10 | nenhum | Na primeira vez que pressionar, o texto é selecionado a partir do marcador de início de posição previamente definido até e incluindo a posição atual do cursor de exploração. Depois de pressionar esta tecla uma segunda vez, o texto será copiado para a área de transferência do Windows |
 | Informar formatação de texto | NVDA+f | NVDA+f | nenhum | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente. Pressionando duas vezes, exibe a informação em modo de navegação |
+| Informa a substituição do símbolo atual | Nenhum | Nenhum | nenhum | Fala o símbolo onde o cursor de revisão está posicionado. Pressionado duas vezes, mostra o símbolo e o texto usado para falar no modo de navegação. |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o numlock esteja desativado para que possam desempenhar suas funções adequadamente.
@@ -1670,6 +1671,12 @@ Isso implica no próprio Microsoft Word, e também o visualizador de mensagens e
 No entanto, pode haver algumas informações que não são expostas ou expostas incorretamente em algumas versões do Microsoft Office, o que significa que esse suporte de UI automation nem sempre pode ser invocado.
 Ainda não recomendamos que a maioria dos usuários ative isso por padrão, embora acolhemos os usuários do Office 2016/365 para testar esse recurso e fornecer retroinformação ""[feedback]"".
 
+==== Use UI Automation [Automação da Interface do Usuário] para acessar o Console do Windows quando disponível ====[AdvancedSettingsConsoleUIA]
+Quando esta opção estiver ativada, o NVDA usará uma nova versão em andamento do seu suporte para o Console Windows, que aproveita as [melhorias de acessibilidade feitas pela Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esse recurso é altamente experimental e ainda está incompleto, portanto, seu uso ainda não é recomendado. No entanto, uma vez concluído, espera-se que este novo suporte se torne o padrão, melhorando o desempenho e a estabilidade do NVDA nos consoles de comando do Windows.
+
+==== Falar senhas em consoles UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+essa configuração controla se os caracteres são falados por [falar caracteres digitados #KeyboardSettingsSpeakTypedCharacters] ou [falar palavras digitadas #KeyboardSettingsSpeakTypedWords] em situações em que a tela não é atualizada (como digitação de senha) no Console do Windows com suporte a UI automation ""[Automação da Interface do Usuário]"" ativada. Por motivos de segurança, essa configuração deve ser desativada. No entanto, você pode habilitá-la se você tiver problemas de desempenho ou instabilidade com caracteres digitados e/ou informando palavras enquanto estiver usando o novo suporte experimental para console do NVDA.
+
 ==== Definir automaticamente o foco do sistema para elementos que podem ser focalizados no Modo de Navegação ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tecla: NVDA+8
 
@@ -1889,6 +1896,7 @@ Para alterar a configuração do NVDA nas telas de logon/UAC, configure o NVDA c
 
 ++ Visualizador do Log ++[LogViewer]
 O visualizador de eventos registrados ""[log]"" encontra-se no submenu Ferramentas do Menu do NVDA e permite-lhe ver todas as saídas de eventos que têm ocorrido até agora desde que iniciou o NVDA pela última vez.
+Usando NVDA+F1 abrirá o visualizador de logs e exibirá informações de desenvolvedor sobre o objeto atual do navegador.
 
 Além de ler o conteúdo, este também pode salvar uma cópia do arquivo de log, ou atualizar o visualizador de forma a apresentar a saída mais recente desde que o Visualizador de Log foi aberto.
 Estas ações encontram-se disponíveis no menu Log do visualizador.
