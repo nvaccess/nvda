@@ -12,7 +12,7 @@ NVDA更新日志
 - The find dialog now includes a history of the last 20 searches. (#8482)
  - The search history is cleared when NVDA exits or restarts.
 - 支持新版本 Miranda NG。 (#9053)
- - NVDA's Miranda NG support  works with newer versions of the client. (#9053)
+- NVDA's Miranda NG support  works with newer versions of the client. (#9053)
 - 可以在NVDA浏览模式设置对话框内取消勾选“页面加载时启用浏览模式”复选框，以关闭浏览模式默认自动启用。 (#8716)
  - 注意：关闭这个功能之后仍然可以用NVDA加空格键手动启用浏览模式。
 - You can now disable browse mode by default by disabling the new "Enable browse mode on page load" option in NVDA's browse mode settings. (#8716) 
@@ -34,8 +34,8 @@ NVDA更新日志
 - In Eclipse, added support for autocompletion in code editor. (#5667)
  - Additionally, Javadoc information can be read from the editor when it is present by using NVDA+d.
 - 在高级设置面板中增加了一个实验选项，用于防止系统焦点随浏览模式光标移动而移动（自动把焦点跳转到可聚焦的元素上）。 (#2039) 尽管这个选项并不适合在所有网页中禁用，但这能够修复以下问题：
- - Rubber效应： NVDA在使用跳转到上一个位置的快捷键时，偶尔会撤消上次的浏览模式的快捷键。
- - 在某些网站上使用下光标浏览时，编辑框会窃取系统焦点。
+ - NVDA在使用跳转到上一个位置的快捷键时，偶尔会撤消上次的浏览模式的快捷键。
+ - 在某些网站上使用下光标浏览时，编辑框会获取系统焦点。
  - 浏览模式快捷键响应速度缓慢。
 - Added an experimental option to the Advanced Settings panel that allows you to stop the system focus from following the browse mode cursor (Automatically set system focus to focusable elements). (#2039) Although this may not be suitable to turn off for all websites, this may fix: 
  - Rubber band effect: NVDA sporadically undoes the last browse mode keystroke by jumping to the previous location.
@@ -45,6 +45,10 @@ NVDA更新日志
 - For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
 - 点显器自动检测现在支持 Freedom Scientific系列点显器。 (#7727)
 - Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
+- 在高级设置面板中添加了一个实验选项，允许用户通过 Microsoft UI Automation 接口使用Windows 控制台的部分。 (#9614)
+- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
+- 在 Python 控制台中，文本框现在支持从剪贴板粘贴多行内容。 (#9776)
+- In the Python Console, the input field now supports pasting multiple lines from the clipboard. (#9776)
 
 
 == 修改 ==
@@ -54,12 +58,19 @@ NVDA更新日志
 - Clarified the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
 - 更新 Unicode 通用语言解释库的表情注释至35.0版本。 (#9445)
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
-- 更新 liblouis 盲文翻译器至3.9.0版本。 (#9439)
-- Updated liblouis braille translator to version 3.9.0. (#9439)
 - 浏览模式元素列表的查找快捷键更改为alt+y。 (#8728)
 - The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
 - 当一台自动检测点显器通过蓝牙连接至电脑，NVDA将会持续搜索同一驱动所支持的USB点显器，并且在其可用时立刻切换到USB连接。 (#8853)
 - When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)
+- 更新eSpeak-NG版本到67324cc
+- Updated eSpeak-NG to commit 67324cc.
+- 更新 liblouis 盲文翻译器至3.10.0版本。 (#9439, #9678)
+- Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
+- NVDA will now report the word 'selected' after saying what is selected. (#9028)
+- 现在NVDA会再朗读已选文本之后 报告“已选择”。 (#9028)
+- NVDA will now report the word 'selected' after saying what is selected. (#9028)
+- 在 Microsoft Visual Studio Code中，浏览模式默认关闭。 (#9828)
+- In Microsoft Visual Studio Code, browse mode is now off by default. (#9828)
 
 
 == 错误修复 ==
@@ -103,15 +114,22 @@ NVDA更新日志
 - When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
 - HTCom现在可以合Handy Tech盲文点显器以即NVDA配合使用。 (#9691)
 - HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)
+- 在 Mozilla Firefox，如果活动区域处于背景标签中，活动区域更新不在被读出。 (#1318)
+- In Mozilla Firefox, updates to a live region are no longer reported if the live region is in a background tab. (#1318)
+- 当 NVDA 关于对话框处于打开状态时， NVDA 的浏览模式查找窗口不再失效。 (#8566)
+- NVDA's browse mode Find dialog no longer fails to function if NVDA's About dialog is currently open in the background. (#8566)
 
 
 == 插件以及NVDA核心开发者需要了解的变动 ==
-- You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
 - You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
 - The extended window style of a window is now exposed using the `extendedWindowStyle` property on Window objects and their derivatives. (#9136)
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
+- The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)
+- The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)
+
 
 
 = 2019.1.1 =
