@@ -363,6 +363,7 @@ class Terminal(LiveText, EditableText):
 		self.startMonitoring()
 
 	def event_loseFocus(self):
+		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
 
 class CandidateItem(NVDAObject):
