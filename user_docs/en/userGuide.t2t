@@ -59,7 +59,7 @@ NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 NVDA is covered by the GNU General Public License (Version 2).
 You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
 This applies to both original and modified copies of this software, plus any derivative works.
-For further details, you can [view the full licence. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+For further details, you can [view the full license. https://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +[SystemRequirements]
 - Operating Systems: all 32-bit and 64-bit editions of Windows 7, Windows 8, Windows 8.1, Windows 10, and all Server Operating Systems starting from Windows Server 2008 R2.
@@ -71,7 +71,7 @@ For further details, you can [view the full licence. https://www.gnu.org/license
 -
 
 + Getting and Setting Up NVDA +[GettingAndSettingUpNVDA]
-If you have not yet got a copy of NVDA, you can download it from [NVAccess NVDA_URL].
+If you have not yet got a copy of NVDA, you can download it from [NVAccess website NVDA_URL].
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
@@ -1164,14 +1164,14 @@ To toggle Unicode Consortium data inclusion from anywhere, please assign a custo
 This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
 For no pitch change you would use 0.
+Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well.
+In case pitch change for capitals is not supported, consider [Say "cap" before capitals #SpeechSettingsSayCapBefore] and/or [ Beep for capitals #SpeechSettingsBeepForCaps] instead.
 
 ==== Say "cap" before capitals ====[SpeechSettingsSayCapBefore]
 This setting is a checkbox that, when checked, tells NVDA to say the word "cap" before any capital letter when spoken as an individual character such as when spelling.
-Usually, NVDA raises the pitch slightly for any capital letter, but some synthesizers may not support this well, so perhaps this option may be preferred alternative for some users.
 
 ==== Beep for capitals ====[SpeechSettingsBeepForCaps]
 If this checkbox is checked, NVDA will make a small beep each time it encounters a capitalized character by itself.
-Like the "say cap for capitals" checkbox, this is useful for Synthesizers that can't change their pitch for capital letters.
 
 ==== Use spelling functionality if supported ====[SpeechSettingsUseSpelling]
 Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
@@ -1708,7 +1708,7 @@ You can configure reporting of:
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
 ==== Report formatting changes after the cursor ====[DocumentFormattingDetectFormatAfterCursor]
-If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it - even if doing this may slow down NVDA's performance.
+If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it reports it, even if doing this may slow down NVDA's performance.
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
 
@@ -1740,7 +1740,7 @@ Only make changes to these settings if you are sure you know what you are doing 
 In order to make changes to the advanced settings, the controls must be enabled by confirming, with the checkbox, that you understand the risks of modifying these settings
 
 ==== Restoring the default settings ====[AdvancedSettingsRestoringDefaults]
-The button restores the default values for the settings - even if the confirmation checkbox is not ticked.
+The button restores the default values for the settings, even if the confirmation checkbox is not ticked.
 After changing settings you may wish to revert to the default values.
 This may also be the case if you are unsure if the settings have been changed.
 
@@ -1756,7 +1756,7 @@ This button opens the directory where you can place custom code while developing
 This button is only enabled if NVDA is configured to enable loading custom code from the Developer Scratchpad Directory.
 
 ==== Use UI automation to access Microsoft Word document controls when available ====[AdvancedSettingsUseUiaForWord]
-When this option is enabled, NVDA will try to use  the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
+When this option is enabled, NVDA will try to use the Microsoft UI Automation accessibility API in order to fetch information from Microsoft Word document controls.
 This includes Microsoft Word itself, and also the Microsoft Outlook message viewer and composer.
  For the most recent versions of Microsoft Office 2016/365 running on windows 10, UI Automation support is complete enough to provide access to Microsoft Word documents almost equal to NVDA's existing Microsoft Word support, with the added advantage that responsiveness is majorly increased.
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
