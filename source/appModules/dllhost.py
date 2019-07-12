@@ -10,6 +10,7 @@ This simply imports a proper class from the explorer app module, and maps it to 
 """
 
 import appModuleHandler
+import controlTypes
 from .explorer import ReadOnlyEditBox
 
 class AppModule(appModuleHandler.AppModule):

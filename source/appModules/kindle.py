@@ -137,8 +137,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		# so retrieve and report the selection from Kindle.
 		# we can't just use self.makeTextInfo, as that will use our fake selection.
 		realSel = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION)
-		# Translators: Announces selected text. %s is replaced with the text.
-		speech.speakSelectionMessage(_("selected %s"), realSel.text)
+		speech.speakSelectedText(realSel.text)
 		# Remove our virtual selection and move the caret to the active end.
 		fakeSel.innerTextInfo = realSel
 		fakeSel.collapse(end=not self._lastSelectionMovedStart)
