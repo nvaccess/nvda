@@ -203,7 +203,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				break
 		raise LookupError
 
-	def scrollIntoView(self, alignToTop=True):
+	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
 		try:
 			obj = self._getNVDAObjectFromOffset(
 				self._startOffset if alignToTop else self._endOffset
@@ -211,7 +211,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		except LookupError:
 			raise NotImplementedError
 		position = textInfos.POSITION_FIRST if alignToTop else textInfos.POSITION_LAST
-		obj.makeTextInfo(position).scrollIntoView(alignToTop)
+		obj.makeTextInfo(position).scrollIntoView(alignToTop, onlyWhenInvisible)
 
 	def __init__(self,obj,position):
 		self.obj=obj

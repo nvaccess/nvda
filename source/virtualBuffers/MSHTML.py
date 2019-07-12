@@ -31,6 +31,7 @@ FORMATSTATE_EMPH=16
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+		"# OnlyWhenInvisible is ignored here as it has serious performance implications.
 		try:
 			obj = self._getNVDAObjectFromOffset(
 				self._startOffset if alignToTop else self._endOffset

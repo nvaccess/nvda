@@ -54,7 +54,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		except LookupError:
 			return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
-	def scrollIntoView(self, alignToTop=True):
+	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
 		try:
 			obj, relOffset = self._getNVDAObjectWithIA2TextOffsetFromOffset(
 				self._startOffset if alignToTop else self._endOffset
@@ -62,7 +62,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		except LookupError:
 			raise NotImplementedError
 		position = textInfos.offsets.Offsets(relOffset, relOffset)
-		obj.makeTextInfo(position).scrollIntoView(alignToTop)
+		obj.makeTextInfo(position).scrollIntoView(alignToTop, onlyWhenInvisible)
 
 	def _normalizeControlField(self,attrs):
 		for attr in ("table-rownumber-presentational","table-columnnumber-presentational","table-rowcount-presentational","table-columncount-presentational"):
