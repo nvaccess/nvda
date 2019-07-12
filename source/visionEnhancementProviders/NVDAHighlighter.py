@@ -55,137 +55,6 @@ SOLID_PINK = HighlightStyle(PINK, 5, winGDI.DashStyleSolid, 5)
 SOLID_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleSolid, 5)
 SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
 
-class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
-	name = "NVDAHighlighter"
-	# Translators: Description for NVDA's built-in screen highlighter.
-	description = _("NVDA Highlighter")
-	supportedRoles = frozenset([Role.HIGHLIGHTER])
-	supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
-	_ContextStyles = {
-		Context.FOCUS: DASH_BLUE,
-		Context.NAVIGATOR: SOLID_PINK,
-		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
-		Context.BROWSEMODE: SOLID_YELLOW,
-	}
-	refreshInterval = 100
-
-	# Default settings for parameters
-	highlightFocus = True
-	highlightNavigator = True
-	highlightBrowseMode = True
-
-	_contextOptionLabelsWithAccelerators = {
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the system focus.
-		Context.FOCUS: _("Highlight system fo&cus"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the browse mode cursor.
-		Context.BROWSEMODE: _("Highlight browse &mode cursor"),
-		# Translators: shown for a highlighter setting that toggles
-		# highlighting the navigator object.
-		Context.NAVIGATOR: _("Highlight navigator &object"),
-	}
-
-	@classmethod
-	def _get_supportedSettings(cls):
-		return [
-			driverHandler.BooleanDriverSetting(
-				'highlight%s' % (context[0].upper() + context[1:]),
-				cls._contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
-			)
-			for context in cls.supportedContexts
-		]
-
-	@classmethod
-	def canStart(cls) -> bool:
-		return True
-
-	def registerEventExtensionPoints(self, extensionPoints):
-		extensionPoints.post_focusChange.register(self.handleFocusChange)
-		extensionPoints.post_reviewMove.register(self.handleReviewMove)
-		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
-
-	def __init__(self):
-		super(VisionEnhancementProvider, self).__init__()
-		self.contextToRectMap = {}
-		winGDI.gdiPlusInitialize()
-		self.window = None
-		self._highlighterThread = threading.Thread(target=self._run)
-		self._highlighterThread.daemon = True
-		self._highlighterThread.start()
-
-	def terminate(self):
-		if self._highlighterThread:
-			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
-				raise WinError()
-			# Joining the thread here somehow stops the quit message from arriving.
-			#self._highlighterThread.join()
-			self._highlighterThread = None
-		winGDI.gdiPlusTerminate()
-		self.contextToRectMap.clear()
-		super(VisionEnhancementProvider, self).terminate()
-
-	def _run(self):
-		if vision._isDebug():
-			log.debug("Starting NVDAHighlighter thread")
-		window = self.window = HighlightWindow(self)
-		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
-		msg = MSG()
-		while winUser.getMessage(byref(msg), None, 0, 0):
-			winUser.user32.TranslateMessage(byref(msg))
-			winUser.user32.DispatchMessageW(byref(msg))
-		if vision._isDebug():
-			log.debug("Quit message received on NVDAHighlighter thread")
-		if self.timer:
-			self.timer.terminate()
-			self.timer = None
-		if self.window:
-			self.window.destroy()
-			self.window = None
-
-	def updateContextRect(self, context, rect=None, obj=None):
-		"""Updates the position rectangle of the highlight for the specified context.
-		If rect is specified, the method directly writes the rectangle to the contextToRectMap.
-		Otherwise, it will call L{getContextRect}
-		"""
-		if context not in self.enabledContexts:
-			return
-		if rect is None:
-			try:
-				rect= getContextRect(context, obj=obj)
-			except (LookupError, NotImplementedError, RuntimeError):
-				rect = None
-		self.contextToRectMap[context] = rect
-
-	def handleFocusChange(self, obj):
-		self.updateContextRect(context=Context.FOCUS, obj=obj)
-		if not api.isObjectInActiveTreeInterceptor(obj):
-			self.contextToRectMap.pop(Context.BROWSEMODE, None)
-		else:
-			self.handleBrowseModeMove()
-
-	def handleReviewMove(self, context):
-		if context in (Context.NAVIGATOR, Context.REVIEW):
-			self.updateContextRect(context=Context.NAVIGATOR)
-
-	def handleBrowseModeMove(self):
-		self.updateContextRect(context=Context.BROWSEMODE)
-
-	def refresh(self):
-		"""Refreshes the screen positions of the enabled highlights.
-		"""
-		if self.window:
-			self.window.refresh()
-
-	def _get_enabledContexts(self):
-		"""Gets the contexts for which the highlighter is enabled.
-		"""
-		return tuple(
-			context for context in self.supportedContexts
-			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
-		)
-
 class HighlightWindow(CustomWindow):
 	transparency = 0xff
 	className = u"NVDAHighlighter"
@@ -304,3 +173,135 @@ class HighlightWindow(CustomWindow):
 
 	def refresh(self):
 		winUser.user32.InvalidateRect(self.handle, None, True)
+
+class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
+	name = "NVDAHighlighter"
+	# Translators: Description for NVDA's built-in screen highlighter.
+	description = _("NVDA Highlighter")
+	supportedRoles = frozenset([Role.HIGHLIGHTER])
+	supportedContexts = (Context.FOCUS, Context.NAVIGATOR, Context.BROWSEMODE)
+	_ContextStyles = {
+		Context.FOCUS: DASH_BLUE,
+		Context.NAVIGATOR: SOLID_PINK,
+		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
+		Context.BROWSEMODE: SOLID_YELLOW,
+	}
+	refreshInterval = 100
+	customWindowClass = HighlightWindow
+
+	# Default settings for parameters
+	highlightFocus = True
+	highlightNavigator = True
+	highlightBrowseMode = True
+
+	_contextOptionLabelsWithAccelerators = {
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the system focus.
+		Context.FOCUS: _("Highlight system fo&cus"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the browse mode cursor.
+		Context.BROWSEMODE: _("Highlight browse &mode cursor"),
+		# Translators: shown for a highlighter setting that toggles
+		# highlighting the navigator object.
+		Context.NAVIGATOR: _("Highlight navigator &object"),
+	}
+
+	@classmethod
+	def _get_supportedSettings(cls):
+		return [
+			driverHandler.BooleanDriverSetting(
+				'highlight%s' % (context[0].upper() + context[1:]),
+				cls._contextOptionLabelsWithAccelerators[context],
+				defaultVal=True
+			)
+			for context in cls.supportedContexts
+		]
+
+	@classmethod
+	def canStart(cls) -> bool:
+		return True
+
+	def registerEventExtensionPoints(self, extensionPoints):
+		extensionPoints.post_focusChange.register(self.handleFocusChange)
+		extensionPoints.post_reviewMove.register(self.handleReviewMove)
+		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
+
+	def __init__(self):
+		super(VisionEnhancementProvider, self).__init__()
+		self.contextToRectMap = {}
+		winGDI.gdiPlusInitialize()
+		self.window = None
+		self._highlighterThread = threading.Thread(target=self._run)
+		self._highlighterThread.daemon = True
+		self._highlighterThread.start()
+
+	def terminate(self):
+		if self._highlighterThread:
+			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
+				raise WinError()
+			# Joining the thread here somehow stops the quit message from arriving.
+			#self._highlighterThread.join()
+			self._highlighterThread = None
+		winGDI.gdiPlusTerminate()
+		self.contextToRectMap.clear()
+		super(VisionEnhancementProvider, self).terminate()
+
+	def _run(self):
+		if vision._isDebug():
+			log.debug("Starting NVDAHighlighter thread")
+		window = self.window = self.customWindowClass(self)
+		self.timer = winUser.WinTimer(window.handle, 0, self.refreshInterval, None)
+		msg = MSG()
+		while winUser.getMessage(byref(msg), None, 0, 0):
+			winUser.user32.TranslateMessage(byref(msg))
+			winUser.user32.DispatchMessageW(byref(msg))
+		if vision._isDebug():
+			log.debug("Quit message received on NVDAHighlighter thread")
+		if self.timer:
+			self.timer.terminate()
+			self.timer = None
+		if self.window:
+			self.window.destroy()
+			self.window = None
+
+	def updateContextRect(self, context, rect=None, obj=None):
+		"""Updates the position rectangle of the highlight for the specified context.
+		If rect is specified, the method directly writes the rectangle to the contextToRectMap.
+		Otherwise, it will call L{getContextRect}
+		"""
+		if context not in self.enabledContexts:
+			return
+		if rect is None:
+			try:
+				rect= getContextRect(context, obj=obj)
+			except (LookupError, NotImplementedError, RuntimeError):
+				rect = None
+		self.contextToRectMap[context] = rect
+
+	def handleFocusChange(self, obj):
+		self.updateContextRect(context=Context.FOCUS, obj=obj)
+		if not api.isObjectInActiveTreeInterceptor(obj):
+			self.contextToRectMap.pop(Context.BROWSEMODE, None)
+		else:
+			self.handleBrowseModeMove()
+
+	def handleReviewMove(self, context):
+		if context in (Context.NAVIGATOR, Context.REVIEW):
+			self.updateContextRect(context=Context.NAVIGATOR)
+
+	def handleBrowseModeMove(self):
+		self.updateContextRect(context=Context.BROWSEMODE)
+
+	def refresh(self):
+		"""Refreshes the screen positions of the enabled highlights.
+		"""
+		if self.window:
+			self.window.refresh()
+
+	def _get_enabledContexts(self):
+		"""Gets the contexts for which the highlighter is enabled.
+		"""
+		return tuple(
+			context for context in self.supportedContexts
+			if getattr(self, 'highlight%s' % (context[0].upper() + context[1:]))
+		)
