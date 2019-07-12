@@ -2,19 +2,9 @@
 
 ### Dependencies
 
-The system tests depend on the following:
+To install all required packages move to the root directory of this repo and execute:
 
-- Robot Framework
-- Robot Remote Server
-- PyAutoGui
-
-Which can be installed with `pip`:
-
-```
-pip install robotframework
-pip install robotremoteserver
-pip install pyautogui
-```
+`python -m pip install -r tests/system/requirements.txt`
 
 ### Running the tests
 

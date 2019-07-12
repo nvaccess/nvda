@@ -5,6 +5,8 @@
 #Copyright (C) 2012-2017 NV Access Limited, Babbage B.V.
 
 import time
+from typing import List, Union
+
 import serial
 import braille
 import inputCore
@@ -12,6 +14,7 @@ from logHandler import log
 import brailleInput
 import bdDetect
 import hwIo
+from hwIo import intToByte, boolToByte
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200
@@ -21,18 +24,18 @@ INIT_ATTEMPTS = 3
 INIT_RETRY_DELAY = 0.2
 
 # Serial
-HEADER = "\x1b"
-MSG_INIT = "\x00"
-MSG_INIT_RESP = "\x01"
-MSG_DISPLAY = "\x02"
-MSG_KEY_DOWN = "\x05"
-MSG_KEY_UP = "\x06"
+HEADER = b"\x1b"
+MSG_INIT = b"\x00"
+MSG_INIT_RESP = b"\x01"
+MSG_DISPLAY = b"\x02"
+MSG_KEY_DOWN = b"\x05"
+MSG_KEY_UP = b"\x06"
 
 # HID
-HR_CAPS = "\x01"
-HR_KEYS = "\x04"
-HR_BRAILLE = "\x05"
-HR_POWEROFF = "\x07"
+HR_CAPS = b"\x01"
+HR_KEYS = b"\x04"
+HR_BRAILLE = b"\x05"
+HR_POWEROFF = b"\x07"
 
 KEY_NAMES = {
 	1: "power", # Brailliant BI 32, 40 and 80.
@@ -76,6 +79,7 @@ DOT8_KEY = 9
 SPACE_KEY = 10
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
 	description = _("HumanWare Brailliant BI/B series / BrailleNote Touch")
@@ -103,7 +107,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# The Brailliant can fail to init if you try immediately after connecting.
 			time.sleep(DELAY_AFTER_CONNECT)
 			# Sometimes, a few attempts are needed to init successfully.
-			for attempt in xrange(INIT_ATTEMPTS):
+			for attempt in range(INIT_ATTEMPTS):
 				if attempt > 0: # Not the first attempt
 					time.sleep(INIT_RETRY_DELAY) # Delay before next attempt.
 				self._initAttempt()
@@ -126,10 +130,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _initAttempt(self):
 		if self.isHid:
 			try:
-				data = self._dev.getFeature(HR_CAPS)
+				data: bytes = self._dev.getFeature(HR_CAPS)
 			except WindowsError:
 				return # Fail!
-			self.numCells = ord(data[24])
+			self.numCells = data[24]
 		else:
 			# This will cause the display to return the number of cells.
 			# The _serOnReceive callback will see this and set self.numCells.
@@ -144,14 +148,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _serSendMessage(self, msgId, payload=""):
-		if isinstance(payload, (int, bool)):
-			payload = chr(payload)
-		self._dev.write("{header}{id}{length}{payload}".format(
-			header=HEADER, id=msgId,
-			length=chr(len(payload)), payload=payload))
+	def _serSendMessage(self, msgId: bytes, payload: Union[bytes, int, bool] = b""):
+		if not isinstance(payload, bytes):
+			if isinstance(payload, int):
+				payload: bytes = intToByte(payload)
+			elif isinstance(payload, bool):
+				payload: bytes = boolToByte(payload)
+			else:
+				raise TypeError("Expected arg 'payload' to be of type 'bytes, int, or bool'")
+		data = b''.join([
+			HEADER,
+			msgId,
+			intToByte(len(payload)),
+			payload
+		])
+		self._dev.write(data)
 
-	def _serOnReceive(self, data):
+	def _serOnReceive(self, data: bytes):
 		if data != HEADER:
 			log.debugWarning("Ignoring byte before header: %r" % data)
 			return
@@ -160,13 +173,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		payload = self._dev.read(length)
 		self._serHandleResponse(msgId, payload)
 
-	def _serHandleResponse(self, msgId, payload):
+	def _serHandleResponse(self, msgId: bytes, payload: bytes):
 		if msgId == MSG_INIT_RESP:
-			if ord(payload[0]) != 0:
+			if payload[0] != 0:
 				# Communication not allowed.
 				log.debugWarning("Display at %r reports communication not allowed" % self._dev.port)
 				return
-			self.numCells = ord(payload[2])
+			self.numCells = payload[2]
 
 		elif msgId == MSG_KEY_DOWN:
 			payload = ord(payload)
@@ -182,11 +195,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			log.debugWarning("Unknown message: id {id!r}, payload {payload!r}".format(id=msgId, payload=payload))
 
-	def _hidOnReceive(self, data):
-		rId = data[0]
+	def _hidOnReceive(self, data: bytes):
+		# Indexing bytes gives an int, where slicing gives a byte, so 0:1 will return a bytes of length 1
+		rId: bytes = data[0:1]
 		if rId == HR_KEYS:
-			keys = data[1:].split("\0", 1)[0]
-			keys = {ord(key) for key in keys}
+			keys = data[1:].split(b"\x00", 1)[0]
+			keys = {keyInt for keyInt in keys}
 			if len(keys) > len(self._keysDown):
 				# Press. This begins a new key combination.
 				self._ignoreKeyReleases = False
@@ -210,18 +224,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# so they should be ignored.
 		self._ignoreKeyReleases = True
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		cells = "".join(chr(cell) for cell in cells)
+		cellBytes = b"".join(intToByte(cell) for cell in cells)
 		if self.isHid:
-			outputReport=("{id}"
-				"\x01\x00" # Module 1, offset 0
-				"{length}{cells}"
-			.format(id=HR_BRAILLE, length=chr(self.numCells), cells=cells))
-			#: Humanware HID devices require the use of HidD_SetOutputReport when sending data to the device via HID, as WriteFile seems to block forever or fail to reach the device at all.
+			outputReport: bytes = b"".join([
+				HR_BRAILLE,  # id
+				b"\x01\x00",  # Module 1, offset 0
+				intToByte(self.numCells),  # length
+				cellBytes
+			])
+			#: Humanware HID devices require the use of HidD_SetOutputReport when
+			# sending data to the device via HID, as WriteFile seems to block forever
+			# or fail to reach the device at all.
 			self._dev.setOutputReport(outputReport)
 		else:
-			self._serSendMessage(MSG_DISPLAY, cells)
+			self._serSendMessage(MSG_DISPLAY, cellBytes)
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {

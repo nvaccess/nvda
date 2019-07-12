@@ -6,10 +6,7 @@
 
 import os
 import sys
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import msvcrt
 import versionInfo
 import winKernel
@@ -148,7 +145,7 @@ def handleInputCompositionEnd(result):
 	import speech
 	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
-	from NVDAObjects.behaviors import CandidateItem
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	focus=api.getFocusObject()
 	result=result.lstrip(u'\u3000 ')
 	curInputComposition=None
@@ -162,6 +159,22 @@ def handleInputCompositionEnd(result):
 		#Candidate list is still up
 		curInputComposition=focus.parent
 		focus.parent=focus.parent.parent
+	if isinstance(focus, ModernCandidateUICandidateItem):
+		# Correct focus for ModernCandidateUICandidateItem
+		# Find the InputComposition object and
+		# correct focus to its parent
+		if isinstance(focus.container, InputComposition):
+			curInputComposition=focus.container
+			newFocus=curInputComposition.parent
+		else:
+			# Sometimes InputCompositon object is gone
+			# Correct to container of CandidateItem
+			newFocus=focus.container
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",newFocus)
+		speech.speechMode=oldSpeechMode
+
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
@@ -197,13 +210,15 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
 	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	if selectionStart==-1:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
 		return 0
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-	else:
+	# Eliminate InputCompositionStart events from Microsoft Pinyin to avoid reading composition string instead of candidates
+	elif not isinstance(focus,ModernCandidateUICandidateItem):
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
@@ -286,7 +301,7 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 		if msg:
 			textList.append(msg)
 	else:
-		for x in xrange(32):
+		for x in range(32):
 			x=2**x
 			msgs=inputConversionModeMessages.get(x)
 			if not msgs: continue
@@ -412,7 +427,9 @@ class RemoteLoader64(object):
 		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
 		winKernel.closeHandle(pipeReadOrig)
 		# stdout/stderr of the loader process should go to nul.
-		with file("nul", "w") as nul:
+		# Though we aren't using pythonic functions to write to nul,
+		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
+		with open("nul", "wb") as nul:
 			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
 		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)

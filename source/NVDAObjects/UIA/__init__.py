@@ -30,7 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions
 import braille
-from locationHelper import RectLTWH
+import locationHelper
 import ui
 
 class UIATextInfo(textInfos.TextInfo):
@@ -235,8 +235,10 @@ class UIATextInfo(textInfos.TextInfo):
 					formatField['link']=True
 		if formatConfig["reportHeadings"]:
 			styleIDValue=fetcher.getValue(UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
-			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
-				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
+			# #9842: styleIDValue can sometimes be a pointer to IUnknown.
+			# In Python 3, comparing an int with a pointer raises a TypeError.
+			if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
+				formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
 		if fetchAnnotationTypes:
 			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
 			# Some UIA implementations return a single value rather than a tuple.
@@ -308,10 +310,9 @@ class UIATextInfo(textInfos.TextInfo):
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
-		elif isinstance(position,textInfos.Point):
+		elif isinstance(position,locationHelper.Point):
 			#rangeFromPoint used to cause a freeze in UIA client library!
-			p=POINT(position.x,position.y)
-			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
+			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
 		else:
@@ -321,6 +322,11 @@ class UIATextInfo(textInfos.TextInfo):
 		if self is other: return True
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
+
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
 
 	def _get_NVDAObjectAtStart(self):
 		e=self.UIAElementAtStart
@@ -570,7 +576,7 @@ class UIATextInfo(textInfos.TextInfo):
 			lastChildEndDelta=0
 			documentTextPattern=self.obj.UIATextPattern
 			rootElementControlType=rootElement.cachedControlType
-			for index in xrange(childCount):
+			for index in range(childCount):
 				childElement=childElements.getElement(index)
 				if not childElement or UIAHandler.handler.clientObject.compareElements(childElement,enclosingElement):
 					log.debug("NULL childElement. Skipping")
@@ -657,8 +663,8 @@ class UIATextInfo(textInfos.TextInfo):
 		rectArray = range.GetBoundingRectangles()
 		if not rectArray:
 			return rects
-		rectIndexes = xrange(0, len(rectArray), 4)
-		rectGen = (RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
+		rectIndexes = range(0, len(rectArray), 4)
+		rectGen = (locationHelper.RectLTWH.fromFloatCollection(*rectArray[i:i+4]) for i in rectIndexes)
 		rects.extend(rectGen)
 		return rects
 
@@ -858,6 +864,13 @@ class UIA(Window):
 		except ValueError:
 			pass
 
+		# Support Windows Console's UIA interface
+		if (
+			self.windowClassName == "ConsoleWindowClass"
+			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
+		):
+			from . import winConsoleUIA
+			winConsoleUIA.findExtraOverlayClasses(self, clsList)
 		# Add editableText support if UIA supports a text pattern
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
@@ -1032,11 +1045,11 @@ class UIA(Window):
 		info.append("UIA className: %s"%ret)
 		patternsAvailable = []
 		patternAvailableConsts = dict(
-			(const, name) for name, const in UIAHandler.__dict__.iteritems()
+			(const, name) for name, const in UIAHandler.__dict__.items()
 			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
 		)
 		self._prefetchUIACacheForPropertyIDs(list(patternAvailableConsts))
-		for const, name in patternAvailableConsts.iteritems():
+		for const, name in patternAvailableConsts.items():
 			try:
 				res = self._getUIACacheablePropertyValue(const)
 			except COMError:
@@ -1253,7 +1266,7 @@ class UIA(Window):
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
 			return children
-		for index in xrange(cachedChildren.length):
+		for index in range(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			windowHandle=self.windowHandle
 			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
@@ -1277,7 +1290,7 @@ class UIA(Window):
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		textList=[]
-		for i in xrange(val.length):
+		for i in range(val.length):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
@@ -1305,7 +1318,7 @@ class UIA(Window):
 			raise NotImplementedError
 		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		textList=[]
-		for i in xrange(val.length):
+		for i in range(val.length):
 			e=val.getElement(i)
 			if UIAHandler.handler.clientObject.compareElements(e,self.UIAElement):
 				continue
@@ -1345,7 +1358,7 @@ class UIA(Window):
 		if r is None:
 			return
 		# r is a tuple of floats representing left, top, width and height.
-		return RectLTWH.fromFloatCollection(*r)
+		return locationHelper.RectLTWH.fromFloatCollection(*r)
 
 	def _get_value(self):
 		val=self._getUIACacheablePropertyValue(UIAHandler.UIA_RangeValueValuePropertyId,True)
@@ -1432,7 +1445,7 @@ class UIA(Window):
 			return None
 		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
 		objList=[]
-		for index in xrange(a.length):
+		for index in range(a.length):
 			e=a.getElement(index)
 			e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 			obj=UIA(UIAElement=e)
@@ -1691,7 +1704,7 @@ class PlaceholderNetUITWMenuItem(UIA):
 	def _get_focusRedirect(self):
 		# Locate the containing menu and focus that instead.
 		parent=self.parent
-		for count in xrange(4):
+		for count in range(4):
 			if not parent:
 				return
 			if parent.role==controlTypes.ROLE_POPUPMENU:

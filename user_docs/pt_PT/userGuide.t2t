@@ -472,7 +472,18 @@ Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar
 
 + Modo de Navegação +[BrowseMode]
 Os documentos complexos, só de leitura, tais como páginas de Internet, são apresentados pelo NVDA, através da utilização do modo de navegação.
-Isto inclui os documentos no Mozilla Firefox, Microsoft Internet Explorer, Microsoft Edge, Mozilla Thunderbird, mensagens em HTML do Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+Isso inclui documentos nas seguintes aplicações:
+- Microsoft Edge;
+- Microsoft Internet Explorer;
+- Google Chrome;
+- Mozilla Firefox;
+- Mozilla Thunderbird;
+- mensagens HTML no Microsoft Outlook;
+- Adobe Reader;
+- Foxit Reader;
+- Adobe Flash;
+- Livros suportados no Amazon Kindle para PC.
+-
 O modo de navegação também está disponível como opção para o Microsoft Word e Excel.
 
 No modo de navegação, o conteúdo do documento está disponível numa representação plana e pode ser navegado com as teclas de cursor, como se se tratasse de um documento de texto normal.
@@ -483,7 +494,7 @@ Por vezes, necessitará de interagir directamente com os controlos, nestes docum
 Por exemplo, terá que fazer isto para campos de texto editável e para listas, de forma que possa escrever e usar as teclas de cursor para trabalhar com o controlo.
 Fá-lo-á mudando para o modo de foco, em que quase todas as teclas serão passadas para o referido controlo.
 Quando estiver no modo de navegação, o NVDA passará automaticamente para o modo de foco, se andar com o Tab ou clicar num controlo particular que o exija.
-Analogamente, Ao circular com o Tab ou clicar num controlo, que não necessite do modo de foco, voltará para o modo de navegação.
+Análogamente, ao circular com o Tab ou clicar num controlo, que não necessite do modo de foco, voltará para o modo de navegação.
 Também pode pressionar Enter, ou Espaço, para passar para o modo de foco, em controlos que o requeiram.
 Pressionando Escape, volta para o modo de navegação.
 Adicionalmente, poderá forçar, manualmente, o modo de foco e o mesmo continuará em efeito até que decida desactivá-lo.
@@ -493,7 +504,7 @@ Adicionalmente, poderá forçar, manualmente, o modo de foco e o mesmo continuar
 | Alternar entre os modos de Foco e de Navegação | NVDA+Espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | Escape | Volta para o modo de navegação, se o modo de foco foi activado manualmente ou automaticamente |
 | Actualizar o Documento no Modo de Navegação | NVDA+F5 | Recarrega o conteúdo do documento actual (muito útil se determinado conteúdo está em falta no documento. Não disponível no Microsoft Word e Outlook.) |
-| Localizar | NVDA+Ctrl+F | Abre uma janela, onde pode escrever texto a ser localizado no documento actual |
+| Localizar | NVDA+Ctrl+F | Abre uma janela, onde pode escrever texto a ser localizado no documento actual. Para mais informações, consulte [Pesquisa de texto #SearchingForText]. |
 | Localizar seguinte | NVDA+F3 | Localiza a próxima ocorrência de texto que já localizou no documento |
 | Localizar anterior | NVDA+Shift+F3 | Localiza a ocorrência de texto anterior que já localizou no documento |
 | Abrir descrição longa | NVDA+d | Abre uma nova janela, contendo uma descrição longa para o objecto, se esta existir. |
@@ -549,7 +560,23 @@ Um campo de edição também se encontra disponível na caixa de diálogo, permi
 Uma vez escolhido um item, pode utilizar os botões fornecidos no diálogo, para se mover para, ou activar, esse item.
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
-| Lista de elementos do Modo de Navegação | NVDA+F7 | Chama a lista de elementos que contém links, títulos e marcas, no documento actual |
+| Lista de elementos do Modo de Navegação | NVDA+F7 | Activa a lista de elementos que contém links, títulos e marcas, no documento actual |
+%kc:endInclude
+
+++ Localizar texto ++[SearchingForText]
+Este diálogo permite procurar palavras ou expressões no documento atual.
+No campo "Localizar", introduza o texto a pesquisar.
+No campo de edição, pode usar as setas para cima ou para baixo para selecionar os termos pesquisados anteriormente.
+A caixa de verificação "Maiúsculas/minúsculas" faz com que a pesquisa considere as letras maiúsculas diferentes das minúsculas.
+Por exemplo, com a opção "Maiúsculas/minúsculas" marcada, pode encontrar "NV Access", mas não "nv access".
+Diferenças de capitalização não serão guardadas no histórico de pesquisas.
+Quando o NVDA é reiniciado, a lista do histórico é apagada.
+Use os seguintes comandos para pesquisar:
+%kc:beginInclude
+|| Nome | Comando de Teclado | Descrição |
+| Localizar | NVDA+Ctrl+F | Abre uma janela, onde pode escrever texto a ser localizado no documento actual. |
+| Localizar seguinte | NVDA+F3 | Localiza a próxima ocorrência de texto que já localizou no documento |
+| Localizar anterior | NVDA+Shift+F3 | Localiza a ocorrência de texto anterior que já localizou no documento |
 %kc:endInclude
 
 ++ Objectos Embutidos ++[ImbeddedObjects]
@@ -1060,7 +1087,7 @@ Esta opção está desactivada, por padrão.
 
 %kc:setting
 ==== Nível de Pontuação / Símbolo ====[SpeechSettingsSymbolLevel]
-Tecla: NVDA+P
+Comando: NVDA+P
 
 Esta opção permite-lhe escolher que pontuações e outros símbolos deverão ser anunciados como palavras.
 Por exemplo: quando definido para todo, todos os símbolos serão anunciados como palavras, ou seja, um ponto será mesmo anunciado como ponto.
@@ -1121,7 +1148,7 @@ Esta opção permite-lhe escolher a placa de som que o NVDA indicará ao sinteti
 
 %kc:setting
 ==== Modo de Diminuição do Volume ====[SelectSynthesizerDuckingMode]
-Tecla: NVDA+shift+d
+Comando: NVDA+shift+d
 
 No Windows 8 e superiores, esta opção permite definir se o NVDA deve diminuir o volume das outras aplicações, enquanto o NVDA está a falar ou sempre que o NVDA está em execução.
 - Sem diminuição: O NVDA nunca diminuirá os sons de outros programas. 
@@ -1158,7 +1185,7 @@ A tabela seleccionada será usada para converter texto em Braille, para ser most
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
 ==== Tabela de Escrita ====[BrailleInputTable][BrailleSettingsInputTable]
-Em complemento da opção anterior, o próximo controlo é a caixa combinada "Tabela de escrita".
+Em extra da opção anterior, o próximo controlo é a caixa combinada "Tabela de escrita".
 A tabela escolhida será usada para converter o Braille introduzido, através do teclado Braille da sua linha, em texto.
 Pode mover-se de tabela Braille em tabela Braille, na lista, utilizando as Setas.
 
@@ -1197,7 +1224,7 @@ Esta opção indica ao NVDA para mostrar, na linha Braille, as mensagens até o 
 
 %kc:setting
 ==== Braille Segue ====[BrailleTether]
-Tecla: NVDA+Ctrl+T
+Comando: NVDA+Ctrl+T
 
 Esta opção permite-lhe escolher se a linha Braille seguirá o foco do sistema, ou se segue o objecto de navegação / cursor de revisão ou ambos.
 Se seleccionar Automaticamente, o NVDA, por padrão, seguirá o foco do sistema.
@@ -1296,13 +1323,13 @@ Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla, antes 
 
 %kc:setting
 ==== Anunciar Caracteres Escritos ====[KeyboardSettingsSpeakTypedCharacters]
-Tecla: NVDA+2
+Comando: NVDA+2
 
 Quando activada, o NVDA irá anunciar todos os caracteres que escrever no teclado.
 
 %kc:setting
 ==== Anunciar Palavras Escritas ====[KeyboardSettingsSpeakTypedWords]
-Tecla: NVDA+3
+Comando: NVDA+3
 
 Quando activada, o NVDA anunciará todas as palavras que escrever com o teclado.
 
@@ -1322,7 +1349,7 @@ Portanto, é bastante útil ser avisado disto.
 
 %kc:setting
 ==== Anunciar Teclas de Comando ====[KeyboardSettingsSpeakCommandKeys]
-Tecla: NVDA+4
+Comando: NVDA+4
 
 Se activada, o NVDA irá anunciar todas as teclas, que não sejam caracteres ou pontuações, que pressione no teclado. Isto inclui Control mais uma letra ou as setas direccionais.
 
@@ -1344,13 +1371,15 @@ O ponteiro do rato muda de forma, no Windows, para transmitir determinada inform
 
 %kc:setting
 ==== Activar seguimento do rato ====[MouseSettingsTracking]
-Tecla: NVDA+M
+Comando: NVDA+M
 
 Quando activada, o NVDA irá anunciar o texto actualmente sob o ponteiro do rato, enquanto o movimenta ao longo do ecrã. Isto permite que encontre coisas no ecrã, movendo fisicamente o rato, em vez de tentar encontrá-las através da navegação por objectos.
 
 ==== Unidade de Leitura de Texto ====[MouseSettingsTextUnit]
 Se o NVDA estiver configurado para anunciar o texto sob o ponteiro do rato, à medida que o vai movendo, esta opção permite-lhe escolher exactamente a quantidade de texto que será anunciada.
 As opções são "caracter", "palavra", "linha" e "parágrafo".
+
+Para alternar a "Unidade de leitura de texto" em qualquer local, por favor atribua um comando personalizado através do diálogo [Definir comandos #InputGestures].
 
 ==== Anunciar Tipo de Controlo, Quando O Rato Entrar No Objecto ====[MouseSettingsRole]
 Se esta caixa de verificação estiver marcada, o NVDA anunciará o tipo de controlo do objecto, quando o rato se mover sobre ele. 
@@ -1384,13 +1413,13 @@ Esta secção contém as seguintes opções:
 
 %kc:setting
 ==== Seguir Foco do Sistema ====[ReviewCursorFollowFocus]
-Tecla: NVDA+7
+Comando: NVDA+7
 
 Se esta opção estiver activa, o cursor de revisão será sempre colocado no mesmo objecto que o foco do sistema, quando o foco mudar.
 
 %kc:setting
 ==== Seguir o Cursor do Sistema ====[ReviewCursorFollowCaret]
-Tecla: NVDA+6
+Comando: NVDA+6
 
 Quando activada, o cursor de revisão será movido automaticamente para a posição do cursor do sistema, de cada vez que este se movimentar.
 
@@ -1431,7 +1460,7 @@ Desmarque esta caixa de verificação, se não precisar de ouvir a descrição a
 
 %kc:setting
 ==== Anúncio da barra de progresso ====[ObjectPresentationProgressBarOutput]
-Tecla: NVDA+u
+Comando: NVDA+u
 
 Esta opção controla o modo como o NVDA anuncia a evolução das barras de progresso.
 
@@ -1448,7 +1477,7 @@ Se minimizar, ou deixar de ter o foco na janela que possui uma barra de progress
 
 %kc:setting
 ==== Anunciar mudanças em Conteúdo Dinâmico ====[ObjectPresentationReportDynamicContent]
-Tecla: NVDA+5
+Comando: NVDA+5
 
 Alterna entre ligar e desligar o anúncio de novo conteúdo, especificamente em objectos como terminais ou histórico, em programas de chat.
 
@@ -1501,10 +1530,18 @@ Este campo define a quantidade de linhas que se irá mover, pressionando Page Up
 
 %kc:setting
 ==== Utilizar a Disposição no ecrã ====[BrowseModeSettingsScreenLayout]
-Tecla: NVDA+V
+Comando: NVDA+V
 
-Esta opção permite especificar se o conteúdo no Buffer Virtual deve posicionar os elementos como os links e outros campos numa linha individual, ou se se deve conservá-los dentro do texto, tal como é mostrado visualmente. Se a opção estiver activa, então os elementos ficarão como aparecem visualmente, Mas se estiver inactiva, os campos serão colocados um em cada linha.
+Esta opção permite especificar se o conteúdo no Buffer Virtual deve posicionar os elementos como os links e outros campos numa linha individual, ou se deve conservá-los dentro do texto, tal como é mostrado visualmente.
+Se a opção estiver activa, então os elementos ficarão como aparecem visualmente, Mas se estiver inactiva, os campos serão colocados um em cada linha.
 
+==== Activar o modo de navegação no carregamento de páginas ====[BrowseModeSettingsEnableOnPageLoad]
+Esta caixa de verificação permite alternar se o modo de navegação é activado automaticamente ao carregar uma página.
+Com esta opção desactivada, o modo de navegação pode ser activado manualmente em páginas ou documentos em que o modo de navegação seja suportado.
+Consulte a secção [Modo de navegação #BrowseMode] para ver a lista das aplicações suportadas pelo Modo de navegação.
+Note que esta opção não se aplica às situações onde o modo de navegação é sempre opcional, como por exemplo no Microsoft Word.
+Esta opção está activada por padrão.
+ 
 ==== Ler continuamente ao carregar a página ====[BrowseModeSettingsAutoSayAll]
 Esta caixa de verificação alterna entre activar ou não a leitura contínua de uma página, após ser carregada no modo de navegação.
 Esta opção está activada, por padrão.
@@ -1607,22 +1644,22 @@ Esta caixa combinada permite seleccionar qual o idioma a ser usado no reconhecim
 Aviso! As configurações desta secção são para utilizadores avançados e podem fazer com que o NVDA não funcione correctamente se configurado de maneira errada.
 Apenas faça alterações nestas configurações se tiver a certeza de que sabe o que está a fazer ou se foi especificamente instruído por um desenvolvedor do NVDA ou por alguém com conhecimentos bastantes e em quem confie.
 
-==== Alterar as configurações avançadas ==== [AdvancedSettingsMakingChanges]
-Para fazer alterações nas configurações avançadas, deve activar os controlos, confirmando, com a caixa de verificação, que entende os riscos de modificar essas configurações.
+==== Fazer alterações às configurações avançadas ====[AdvancedSettingsMakingChanges]
+Para poder fazer alterações às configurações avançadas tem de ativar as várias opções confirmando que percebe os riscos do que pretende fazer. Para isso, marque a caixa de verificação "Compreendo que se alterar estas configurações o NVDA pode funcionar incorrectamente".
 
-==== Restaurar as configurações padrão ==== [AdvancedSettingsRestoringDefaults]
-O botão "Restaurar padrões", mesmo que a caixa de verificação de confirmação não esteja marcada, restaura as configurações avançadas para os valores padrão.
+==== Restaurar padrões das configurações ====[AdvancedSettingsRestoringDefaults]
+O botão "Restaurar padrões" restaura as configurações, mesmo que a caixa de verificação anterior não esteja marcada.
 Depois de alterar as configurações, pode querer reverter para os valores padrão.
-Também pode usar este botão se não tiver a certeza que as configurações foram alteradas.
+Também pode ser o caso de não ter a certeza que as configurações foram alteradas.
 
-==== Activar o carregamento de código personalizado a partir do diretório Scratchpad ==== [AdvancedSettingsEnableScratchpad]
+==== Activar o carregamento de código personalizado a partir do diretório Scratchpad ====[AdvancedSettingsEnableScratchpad]
 Ao desenvolver add-ons para o NVDA, é útil poder testar o código à medida que você o escreve.
 Esta opção, quando activada, permite que o NVDA carregue appModules, globalPlugins, brailleDisplayDrivers e synthDrivers personalizados, a partir de um diretório especial, scratchpad, no diretório de configurações do utilizador do NVDA.
 Anteriormente, o NVDA carregava código personalizado diretamente do diretório de configurações do utilizador, sem a possibilidade de desactivá-lo.
 Esta opção está desactivada por padrão, para garantir que nenhum código não testado seja executado no NVDA sem o conhecimento explícito do utilizador.
 Se deseja distribuir código personalizado para outras pessoas, você deve empacotá-lo como um extra do NVDA.
  
-==== Abrir Diretório do Scratchpad do Desenvolvedor ==== [AdvancedSettingsOpenScratchpadDir]
+==== Abrir Diretório do Scratchpad do Desenvolvedor ====[AdvancedSettingsOpenScratchpadDir]
  Este botão abre o diretório onde você pode colocar um código personalizado enquanto o desenvolve.
  Este botão só é ativado se o NVDA estiver configurado para ativar o carregamento de código personalizado a partir do Diretório do Scratchpad do Desenvolvedor.
   
@@ -1633,6 +1670,16 @@ Para as versões mais recentes do Microsoft Office, 2016/365, em execução no W
 No entanto, em algumas versões do Microsoft Office, pode haver algumas informações que não são expostas, ou o são incorrectamente, pelo que o suporte UI Automation nem sempre deve ser activado.
 Ainda não é recomendável, para a maioria dos utilizadores, activar esta opção por padrão, embora seja aceitável que os utilizadores do Office 2016/365 queiram testar este recurso e fornecer feedback.
  
+==== Definir automaticamente o foco do sistema para os elementos focáveis em modo de navegação ====[BrowseModeSettingsAutoFocusFocusableElements]
+Comando: NVDA+8
+
+Activada por padrão, esta opção permite escolher se o foco do sistema deve ser definido para elementos que o podem receber (links, campos de formulário, etc.) ao navegar com o cursor do modo de navegação.
+Se activada , representa o comportamento normal do NVDA até à versão 2019.1.
+Se desactivar esta opção, os elementos focáveis não receberão o foco do sistema quando seleccionados pelo cursor do modo de navegação.
+Isto pode resultar numa navegação mais rápida e melhor resposta no modo de navegação.
+O foco ainda será actualizado para um elemento específico ao interagir com ele (por exemplo, pressionar um botão, marcar uma caixa de verificação).
+Esta funcionalidade é experimental a partir da versão 2019.2 do NVDA.
+
 ==== Tempo limite dos movimentos do cursor (em ms) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opção permite configurar quantos milissegundos o NVDA irá aguardar até que o cursor (ponto de inserção) se mova nos controlos de texto editáveis.
 Se o NVDA parecer estar a seguir incorrectamente o cursor de inserção, por exemplo parecer sempre um caractere atrasado ou repetir linhas, pode tentar aumentar este valor. 
@@ -1686,6 +1733,7 @@ O idioma, para o qual a pronúncia de símbolos está a ser editada, será mostr
 Note que este diálogo respeita a opção "Usar o idioma da voz ao processar caracteres e símbolos" encontrada na [secção Voz #SpeechSettings] do diálogo de configurações, ou seja, usa o idioma da voz em vez da definição global do idioma do NVDA, quando esta opção está marcada.
 
 Para mudar um símbolo, seleccione-o, primeiro, na lista de símbolos.
+Pode filtrar os símbolos inserindo o símbolo ou uma parte da expressão de substituição do símbolo no campo de edição "Filtrar por".
 
 - O campo "Substituir por" permite-lhe alterar o texto que deve ser falado em vez do símbolo.
 - Usando o campo "Nível" pode definir o nível a partir do qual o símbolo deve ser falado.
@@ -1751,7 +1799,7 @@ O NVDA permite esta funcionalidade através dos Perfis de Configuração.
 Os perfis de configuração contêm apenas as configurações que foram alteradas durante a sua edição.
 Todas as configurações podem ser alteradas, nos perfis de configuração, à excepção das constantes da secção "Gerais" do diálogo de "configurações", as quais se aplicam globalmente ao NVDA.
 
-Os perfis de configuração podem ser activados manualmente.
+Os perfis de configuração podem ser activados manualmente, através do diálogo "Perfis de Configuração" ou de um comando.
 Também podem ser activados automaticamente, através de Accionadores, tais como mudança para uma aplicação.
 
 +++ Gestão Básica +++[ProfilesBasicManagement]
@@ -1817,6 +1865,14 @@ Por exemplo, pode querer editar um perfil activado manualmente ou a configuraç�
 Pode fazer isto marcando a caixa de verificação "Desactivar temporariamente todos os Accionadores".
 
 Pode definir um comando, no diálogo [Definir comandos #InputGestures], para desactivar todos os accionadores em qualquer altura.
+
++++ Activar um perfil usando comandos +++[ConfigProfileGestures]
+Para cada perfil adicionado, pode atribuir um ou mais comandos  para o activar.
+Por padrão, os perfis de configuração não possuem comandos atribuídos.
+Pode adicionar comandos para activar um perfil através do diálogo ["Definir comandos" #InputGestures].
+Cada perfil tem uma entrada na categoria de perfis de configuração.
+Quando renomeia um perfil, qualquer comando que tenha sido definido anteriormente continuará disponível.
+Quando remove um perfil excluirá automaticamente os comandos associados a ele.
 
 ++ Localização dos Ficheiros de Configuração ++[LocationOfConfigurationFiles]
 As versões portáteis do NVDA armazenam todas as configurações e extras numa pasta denominada "userConfig", que se pode encontrar no directório do NVDA.
@@ -1891,9 +1947,9 @@ O gestor tem também um botão "fechar" para que o diálogo seja fechado.
 Se instalou, removeu ou alterou o estado de algum extra, o NVDA pedirá para reiniciar, para que as suas modificações possam ter efeito.
 
 Alguns extras mais antigos podem já não ser compatíveis com a versão do NVDA que possui.
-Ao usar uma versão mais antiga do NVDA, alguns novos complementos podem não ser compatíveis.
+Ao usar uma versão mais antiga do NVDA, alguns novos extras podem não ser compatíveis.
 A tentativa de instalar um extra incompatível resultará em um erro explicando porque o extra é considerado incompatível.
-Para inspecionar esses complementos incompatíveis, você pode usar o botão "ver extras incompatíveis" para abrir o gestor de extras incompatíveis.
+Para inspecionar esses extras incompatíveis, você pode usar o botão "ver extras incompatíveis" para abrir o gestor de extras incompatíveis.
 
 Para aceder ao Gestor de Extras, a partir de qualquer local, por favor associe-lhe um comando através da opção [Definir comandos #InputGestures].
 
@@ -1902,12 +1958,14 @@ O Gestor de extras Incompatíveis, que pode aceder através do botão "ver extra
 Os extras são considerados incompatíveis quando não foram actualizados para funcionar com alterações significativas no NVDA ou quando dependem de um recurso não disponível na versão do NVDA que está a usar.
 O gestor de extras incompatíveis tem uma mensagem curta para explicar sua finalidade, bem como a versão do NVDA.
 Os extras incompatíveis são apresentados numa lista com as seguintes colunas:
-Pacote, o nome do extra;
-Versão, a versão do extra
-Razão, uma explicação de porque o extra é considerado incompatível
+- Pacote, o nome do extra;
+- Versão, a versão do extra
+- Razão, uma explicação de porque o extra é considerado incompatível
+-
 
 O Gerenciador de extras Incompatíveis também possui um botão "Sobre o extra...".
 Este botão abre um diálogo contendo informações do extra, para conhecer os detalhes completos do extra, o que é útil ao entrar em contato com o autor do extra.
+
 
 ++ Consola de Python ++[PythonConsole]
 A Consola de Python do NVDA encontra-se dentro das Ferramentas do Menu do NVDA. É uma ferramenta de programação muito útil para depuração, inspecção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
@@ -1997,13 +2055,11 @@ Todas as linhas Focus e PM da [Freedom Scientific https://www.freedomscientific.
 Necessitará dos drivers das linhas Braille da Freedom Scientific instalados no seu sistema.
 Se ainda não os tem, pode obtê-los em https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Apesar desta página apenas mencionar as linhas Focus Blue, os drivers suportam todas as linhas da Freedom Scientific.
-Se o seu sistema está a correr um Windows de 64 bits e os drivers já foram instalados, por outro leitor de ecrã, irá, provavelmente, necessitar de os reinstalar a partir deste link, visto que, com alguma probabilidade, os ficheiros necessários ao NVDA ainda não foram instalados.
 
 Por padrão, o NVDA detecta e liga-se, automaticamente, a estas linhas, quer via USB, quer por Bluetooth.
 No entanto, ao configurar a linha, pode seleccionar, explicitamente, as portas "USB" ou "Bluetooth", para restringir o tipo de ligação a ser usado.
 Isto pode ser útil, se quiser ligar a linha Focus ao NVDA, usando Bluetooth, mas sendo possível carregá-la pela porta USB do seu computador.
-
-Estas linhas ainda não suportam a detecção automática em segundo plano do NVDA.
+A detecção automática de linhas Braille do NVDA reconhece as linhas via USB ou Bluetooth.
 
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor, consulte a documentação desta linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -2833,10 +2889,12 @@ Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 | -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc |
 | -s | --secure | Modo seguro (desactiva a consola do Python) |
 | None | --disable-addons | Os extras serão desacttivados |
-| None | --debug-logging | Activa o nível de registo para Depuração apenas para a próxima execução. Esta definição substitui qualquer outra definição para o nível de registo ( ""--loglevel"", -l) argumento. |
+| None | --debug-logging | Activa o nível de registo para Depuração apenas para a próxima execução. Esta definição substitui qualquer outra definição para o nível de registo ( ""--loglevel"", -l) argumento dado, incluindo sem registo. |
+| None | --no-logging | Desactiva totalmente o registo ao usar o NVDA. Esta configuração pode ser sobreescrita se um nível de registo ( ""--loglevel"", -l) for especificado from pela linha de comando ou se o registo em depuração estiver activado. |
 | None | --no-sr-flag  | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
-| None | --install | Silenciosamente installa o NVDA e inicia a cópia instalada |
+| None | --install | Installa o NVDA e inicia a cópia instalada |
 | None | --install-silent | Instala o NVDA silenciosamente e não inicia a cópia instalada |
+| None | --enable-start-on-logon=True|False | Ao instalar, activa o [Iniciar o NVDA no ecrã de boas-vindas #StartAtWindowsLogon] |
 | None | --create-portable | Cria uma cópia portátil do NVDA iniciando a cópia criada. Requer que --portable-path seja especificado |
 | None | --create-portable-silent | Cria uma cópia portátil do NVDA sem iniciar a cópia criada. Requer que --portable-path seja especificado |
 | None | --portable-path=PORTABLEPATH | O caminho da pasta onde a cópia portátil vai ser criada |
@@ -2854,6 +2912,6 @@ Os seguintes valores podem ser configurados nestas chaves:
 | serviceDebug | DWORD | 0 (padrão) para desactivar, 1 para activar | Se activo, desactiva o modo seguro em janelas do Ambiente seguro do windows, permitindo o uso da Consola de Python e Visualizador de registo. Devido às graves implicações de segurança, o uso desta opção é fortemente desaconselhado! |
 
 + Mais Informações +
-Se necessitar de mais informações ou assistência sobre o NVDA, por favor, visite a página Internet do NVDA em NVDA_URL.
+Se necessitar de mais informações ou suporte ao o NVDA, por favor, visite a página Internet do NVDA em NVDA_URL.
 Aqui poderá encontrar documentação adicional, bem como suporte técnico e recursos da comunidade.
-Este site também fornece informações referentes ao desenvolvimento do NVDA.
+Estas páginas também fornecem informações referentes ao desenvolvimento do NVDA.

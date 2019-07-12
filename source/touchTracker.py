@@ -200,14 +200,14 @@ class TrackerManager(object):
 		numFingers=len(childTrackers)
 		if numFingers==0: return
 		if numFingers==1: return childTrackers[0]
-		avgX=sum(t.x for t in childTrackers)/numFingers
-		avgY=sum(t.y for t in childTrackers)/numFingers
+		avgX: int = sum(t.x for t in childTrackers) // numFingers
+		avgY: int = sum(t.y for t in childTrackers) // numFingers
 		tracker=MultiTouchTracker(action_hold,avgX,avgY,childTrackers[0].startTime,time.time(),numFingers)
 		tracker.childTrackers=childTrackers
 		return tracker
 
 	def makePreheldTrackerForTracker(self,tracker):
-		curHoverSet={x for x in self.singleTouchTrackersByID.itervalues() if x.action==action_hover}
+		curHoverSet={x for x in self.singleTouchTrackersByID.values() if x.action==action_hover}
 		excludeHoverSet={x for x in tracker.iterAllRawSingleTouchTrackers() if x.action==action_hover}
 		return self.makePreheldTrackerFromSingleTouchTrackers(curHoverSet-excludeHoverSet)
 
@@ -257,8 +257,8 @@ class TrackerManager(object):
 			childTrackers.extend(oldTracker.childTrackers) if oldTracker.numFingers>1 else childTrackers.append(oldTracker)
 			childTrackers.extend(newTracker.childTrackers) if newTracker.numFingers>1 else childTrackers.append(newTracker)
 			numFingers=oldTracker.numFingers+newTracker.numFingers
-			avgX=sum(t.x for t in childTrackers)/numFingers
-			avgY=sum(t.y for t in childTrackers)/numFingers
+			avgX: int =sum(t.x for t in childTrackers) // numFingers
+			avgY: int = sum(t.y for t in childTrackers) // numFingers
 			mergedTracker=MultiTouchTracker(newTracker.action,avgX,avgY,oldTracker.startTime,newTracker.endTime,numFingers,newTracker.actionCount,pluralTimeout=newTracker.pluralTimeout)
 			mergedTracker.childTrackers=childTrackers
 		elif self.numUnknownTrackers==0 and newTracker.pluralTimeout is not None and newTracker.startTime>=oldTracker.endTime and newTracker.startTime<oldTracker.pluralTimeout and newTracker.action==oldTracker.action and oldTracker.numFingers==newTracker.numFingers:
@@ -280,7 +280,7 @@ class TrackerManager(object):
 		"""Queues the given tracker, replacing old trackers with a multiFingered plural action where possible"""
 		#Reverse iterate through the existing queued trackers comparing the given tracker to each of them
 		#as L{emitTrackers} constantly dequeues, the queue only contains trackers newer than multiTouchTimeout, though may contain more if there are still unknown singleTouchTrackers around.
-		for index in xrange(len(self.multiTouchTrackers)):
+		for index in range(len(self.multiTouchTrackers)):
 			index=len(self.multiTouchTrackers)-1-index
 			delayedTracker=self.multiTouchTrackers[index]
 			mergedTracker=self.makeMergedTrackerIfPossible(delayedTracker,tracker)
@@ -333,7 +333,7 @@ class TrackerManager(object):
 			# yield hover downs for any new hovers
 			# But only once  there are no more trackers in the queue waiting to timeout (E.g. a hold for a tapAndHold)
 			if len(self.multiTouchTrackers)==0:
-				for singleTouchTracker in self.singleTouchTrackersByID.itervalues():
+				for singleTouchTracker in self.singleTouchTrackersByID.values():
 					if singleTouchTracker.action==action_hover and singleTouchTracker not in self.curHoverStack:
 						self.curHoverStack.append(singleTouchTracker)
 						tracker=MultiTouchTracker(action_hoverDown,singleTouchTracker.x,singleTouchTracker.y,singleTouchTracker.startTime,time.time())

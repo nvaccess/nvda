@@ -48,7 +48,7 @@ def reloadGlobalPlugins():
 	global globalPlugins
 	terminate()
 	del globalPlugins
-	mods=[k for k,v in sys.modules.iteritems() if k.startswith("globalPlugins") and v is not None]
+	mods=[k for k,v in sys.modules.items() if k.startswith("globalPlugins") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import globalPlugins
