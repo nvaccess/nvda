@@ -140,8 +140,8 @@ class WordDocumentTextInfo(UIATextInfo):
 			field['value']=field.pop('description',None) or obj.description or field.pop('name',None) or obj.name
 		return field
 
-	def _getTextFromUIARange(self,range):
-		t=super(WordDocumentTextInfo,self)._getTextFromUIARange(range)
+	def _getTextFromUIARange(self, textRange):
+		t=super(WordDocumentTextInfo,self)._getTextFromUIARange(textRange)
 		if t:
 			# HTML emails expose a lot of vertical tab chars in their text
 			# Really better as carage returns

@@ -472,12 +472,13 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getFormatFieldAtRange(self,range,formatConfig):
+	def _getFormatFieldAtRange(self, textRange, formatConfig):
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
 		if formatConfig["reportAlignment"]:
-			if not paraFormatObj: paraFormatObj=range.para
+			if not paraFormatObj:
+				paraFormatObj = textRange.para
 			alignment=paraFormatObj.alignment
 			if alignment==comInterfaces.tom.tomAlignLeft:
 				formatField["text-align"]="left"
@@ -488,15 +489,18 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			elif alignment==comInterfaces.tom.tomAlignJustify:
 				formatField["text-align"]="justify"
 		if formatConfig["reportLineNumber"]:
-			formatField["line-number"]=range.getIndex(comInterfaces.tom.tomLine)
+			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			formatField["font-name"]=fontObj.name
 		if formatConfig["reportFontSize"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			formatField["font-size"]="%spt"%fontObj.size
 		if formatConfig["reportFontAttributes"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			formatField["bold"]=bool(fontObj.bold)
 			formatField["italic"]=bool(fontObj.italic)
 			formatField["underline"]=bool(fontObj.underline)
@@ -506,11 +510,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			elif fontObj.subscript:
 				formatField["text-position"]="sub"
 		if formatConfig["reportLinks"]:
-			linkRange=range.Duplicate
+			linkRange = textRange.Duplicate
 			linkRange.Collapse(comInterfaces.tom.tomStart)
 			formatField["link"]=linkRange.Expand(comInterfaces.tom.tomLink)>0
 		if formatConfig["reportColor"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			fgColor=fontObj.foreColor
 			if fgColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The default color of text when a color has not been set by the author. 
@@ -531,7 +536,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['background-color']=_("Unknown color")
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
-		if not fontObj: fontObj=range.font
+		if not fontObj:
+			fontObj = textRange.font
 		try:
 			langId = fontObj.languageID
 			if langId:
@@ -541,10 +547,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		return formatField
 
-	def _expandFormatRange(self,range,formatConfig):
+	def _expandFormatRange(self, textRange, formatConfig):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end
-		chunkRange=range.duplicate
+		chunkRange = textRange.duplicate
 		if formatConfig["reportLineNumber"]:
 			chunkRange.expand(comInterfaces.tom.tomLine)
 		else:
@@ -555,12 +561,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			startLimit=chunkStart
 		if endLimit>chunkEnd:
 			endLimit=chunkEnd
-		#range.moveEnd(comInterfaces.tom.tomCharFormat,1)
-		range.expand(comInterfaces.tom.tomCharFormat)
-		if range.end>endLimit:
-			range.end=endLimit
-		if range.start<startLimit:
-			range.start=startLimit
+		#textRange.moveEnd(comInterfaces.tom.tomCharFormat,1)
+		textRange.expand(comInterfaces.tom.tomCharFormat)
+		if textRange.end > endLimit:
+			textRange.end = endLimit
+		if textRange.start < startLimit:
+			textRange.start = startLimit
 
 	def _getEmbeddedObjectLabel(self,embedRangeObj):
 		label=None
@@ -661,22 +667,22 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		range=self._rangeObj.duplicate
-		range.collapse(True)
+		textRange=self._rangeObj.duplicate
+		textRange.collapse(True)
 		if not formatConfig["detectFormatAfterCursor"]:
-			range.expand(comInterfaces.tom.tomCharacter)
-			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)),
+			textRange.expand(comInterfaces.tom.tomCharacter)
+			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)),
 				self._getTextAtRange(self._rangeObj)]
 		commandList=[]
 		endLimit=self._rangeObj.end
-		while range.end<endLimit:
-			self._expandFormatRange(range,formatConfig)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			commandList.append(self._getTextAtRange(range))
-			end=range.end
-			range.start=end
+		while textRange.end<endLimit:
+			self._expandFormatRange(textRange, formatConfig)
+			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)))
+			commandList.append(self._getTextAtRange(textRange))
+			end = textRange.end
+			textRange.start = end
 			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
-			if range.end<end:
+			if textRange.end < end:
 				break
 		return commandList
 

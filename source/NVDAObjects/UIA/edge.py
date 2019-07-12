@@ -80,10 +80,10 @@ class EdgeTextInfo(UIATextInfo):
 				if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
 					return element
 				try:
-					range=self.obj.UIATextPattern.rangeFromChild(element)
+					textRange=self.obj.UIATextPattern.rangeFromChild(element)
 				except COMError:
 					return
-				text=range.getText(-1)
+				text = textRange.getText(-1)
 				if not text or text.isspace():
 					return element
 			element=walker.getParentElementBuildCache(element,cacheRequest)
@@ -94,15 +94,15 @@ class EdgeTextInfo(UIATextInfo):
 		if not element:
 			return
 		try:
-			range=self.obj.UIATextPattern.rangeFromChild(element)
+			textRange=self.obj.UIATextPattern.rangeFromChild(element)
 		except COMError:
 			return
 		if not back:
-			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,range,UIAHandler.TextPatternRangeEndpoint_End)
-			range.move(UIAHandler.TextUnit_Character,-1)
+			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start, textRange, UIAHandler.TextPatternRangeEndpoint_End)
+			textRange.move(UIAHandler.TextUnit_Character, -1)
 		else:
-			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,range,UIAHandler.TextPatternRangeEndpoint_Start)
-		self._rangeObj=range
+			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End, textRange, UIAHandler.TextPatternRangeEndpoint_Start)
+		self._rangeObj=textRange
 
 	def _collapsedMove(self,unit,direction,skipReplacedContent):
 		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
@@ -413,13 +413,13 @@ class EdgeNode(UIA):
 	_TextInfo=EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
 
 	def getNormalizedUIATextRangeFromElement(self,UIAElement):
-		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
-		if not range or not self._edgeIsPreGapRemoval:
-			return range
+		textRange = super().getNormalizedUIATextRangeFromElement(UIAElement)
+		if not textRange or not self._edgeIsPreGapRemoval:
+			return textRange
 		#Move the start of a UIA text range past any element start character stops
-		lastCharInfo=EdgeTextInfo_preGapRemoval(self,None,_rangeObj=range)
-		lastCharInfo._rangeObj=range
-		charInfo=lastCharInfo.copy()
+		lastCharInfo = EdgeTextInfo_preGapRemoval(self,None, _rangeObj=textRange)
+		lastCharInfo._rangeObj = textRange
+		charInfo = lastCharInfo.copy()
 		charInfo.collapse()
 		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
 			charInfo.setEndPoint(lastCharInfo,"startToStart")
@@ -427,7 +427,7 @@ class EdgeNode(UIA):
 				break
 			lastCharInfo.setEndPoint(charInfo,"startToEnd")
 			charInfo.collapse(True)
-		return range
+		return textRange
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
