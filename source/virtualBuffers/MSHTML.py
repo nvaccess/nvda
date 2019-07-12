@@ -39,7 +39,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			raise NotImplementedError
 		if not obj.HTMLNode:
 			raise NotImplementedError
-		obj._scrollHTMLNodeIntoView(obj.HTMLNode, True)
+		obj._scrollHTMLNodeIntoView(obj.HTMLNode, alignToTop)
 
 	def _normalizeFormatField(self, attrs):
 		formatState=attrs.get('formatState',"0")
