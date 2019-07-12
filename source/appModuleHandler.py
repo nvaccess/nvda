@@ -500,6 +500,7 @@ class AppModule(baseObject.ScriptableObject):
 		The following strings are returned:
 		* x86: 32-bit x86 app on 32-bit or 64-bit Windows.
 		* AMD64: x64 app on x64 or ARM64 Windows.
+		* ARM: 32-bit ARM app on ARM64 Windows.
 		* ARM64: 64-bit ARM app on ARM64 Windows.
 		@rtype: str
 		"""
