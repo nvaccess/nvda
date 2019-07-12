@@ -61,7 +61,8 @@ class HighlightWindow(CustomWindow):
 	windowName = u"NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
 	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
-	transparentBrush = winGDI.gdi32.CreateSolidBrush(COLORREF(0))
+	transparentColor = 0 # Black
+	transparentBrush = winGDI.gdi32.CreateSolidBrush(COLORREF(transparentColor))
 
 	@classmethod
 	def _get__wClass(cls):
@@ -103,7 +104,7 @@ class HighlightWindow(CustomWindow):
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
-		winUser.SetLayeredWindowAttributes(self.handle, None, self.transparency, winUser.LWA_ALPHA | winUser.LWA_COLORKEY)
+		winUser.SetLayeredWindowAttributes(self.handle, self.transparentColor, self.transparency, winUser.LWA_ALPHA | winUser.LWA_COLORKEY)
 		self.updateLocationForDisplays()
 		if not winUser.user32.UpdateWindow(self.handle):
 			raise WinError()
