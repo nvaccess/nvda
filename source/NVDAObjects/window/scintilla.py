@@ -14,7 +14,7 @@ import locale
 import watchdog
 import eventHandler
 
-#Window messages
+# Window messages
 SCI_POSITIONFROMPOINT=2022
 SCI_POINTXFROMPOSITION=2164
 SCI_POINTYFROMPOSITION=2165
@@ -48,6 +48,8 @@ SCI_GETCODEPAGE=2137
 SCI_POSITIONAFTER=2418
 
 #constants
+#: Represents an invalid position within a document.
+INVALID_POSITION=-1
 STYLE_DEFAULT=32
 SC_CP_UTF8=65001
 
@@ -70,10 +72,11 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMPOINT,x,y)
 
 	def _getPointFromOffset(self,offset):
-		point=textInfos.Point(
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-		watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+		x, y = winUser.ClientToScreen(self.obj.windowHandle,
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
 		)
+		point=textInfos.Point(x, y)
 		if point.x is not None and point.y is not None:
 			return point
 		else:
@@ -192,13 +195,13 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETWRAPMODE,None,None)!=SC_WRAP_NONE:
 			# Lines in Scintilla refer to document lines, not wrapped lines.
 			# There's no way to retrieve wrapped lines, so use screen coordinates.
-			y=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
-			top,left,width,height=self.obj.location
-			start = self._getOffsetFromPoint(0,y)
-			end=self._getOffsetFromPoint(width,y)
+			y = self._getPointFromOffset(offset).y
+			location=self.obj.location
+			start = self._getOffsetFromPoint(location.left, y)
+			end=self._getOffsetFromPoint(location.right, y)
 			# If this line wraps to the next line,
 			# end is the first offset of the next line.
-			if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,end)==y:
+			if self._getPointFromOffset(end).y==y:
 				# This is the end of the document line.
 				# Include the EOL characters in the returned offsets.
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,end,None)
@@ -217,7 +220,8 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)
 		start=offset
 		tempOffset=offset-1
-		while True:
+		
+		while tempOffset > INVALID_POSITION:
 			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,tempOffset,0)
 			if start<end:
 				break

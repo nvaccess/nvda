@@ -1,6 +1,11 @@
 from ctypes import *
 from ctypes.wintypes import *
 
+"""
+Lower level utility functions and constants for NVDA's
+legacy Windows console support, for situations where UIA isn't available.
+"""
+
 CONSOLE_REAL_OUTPUT_HANDLE=-2
 
 class COORD(Structure):

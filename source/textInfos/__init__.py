@@ -235,6 +235,8 @@ UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
 UNIT_OFFSET="offset"
 
+MOUSE_TEXT_RESOLUTION_UNITS = (UNIT_CHARACTER,UNIT_WORD,UNIT_LINE,UNIT_PARAGRAPH)
+
 unitLabels={
 	UNIT_CHARACTER:_("character"),
 	UNIT_WORD:_("word"),
@@ -261,6 +263,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""
+
+	#: whether this textInfo should be expanded then collapsed around its enclosing unit before review.
+	#: This can be problematic for some implementations.
+	_expandCollapseBeforeReview = True
 
 	def __init__(self,obj,position):
 		"""Constructor.
