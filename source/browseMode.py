@@ -105,8 +105,8 @@ class QuickNavItem(object, metaclass=ABCMeta):
 	def __init__(self,itemType,document):
 		"""
 		@param itemType: the type that was searched for (e.g. link, heading, table etc)
-		@ type itemType: string
-		@ param document: the browse mode document this item is a part of.
+		@type itemType: string
+		@param document: the browse mode document this item is a part of.
 		@type document: L{BrowseModeTreeInterceptor}
 		"""
 		self.itemType=itemType
@@ -385,7 +385,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@param itemType: the type being searched for (e.g. link, heading, table etc)
 		@type itemType: string
 		@param direction: the direction in which to search (next, previous, up)
-		@ type direction: string
+		@type direction: string
 		@param pos: the position in the document from where to start the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
 		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
