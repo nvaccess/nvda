@@ -367,8 +367,9 @@ class Terminal(LiveText, EditableText):
 		self.stopMonitoring()
 
 
-class TerminalKeyboardSupport(Terminal):
-	"""Provides typed character support for console applications on Windows 10 1703 and later."""
+class TerminalKeyboardSupport(object):
+	"""Provides typed character support for console applications on Windows 10 1703 and later.
+	@note: objects must also inherit from the Terminal class."""
 	#: Whether this object reliably sends textChange events.
 	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
