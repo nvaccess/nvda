@@ -8,7 +8,7 @@
 """
 
 import oleacc
-from NVDAObjects.behaviors import Terminal, TerminalKeyboardSupport
+from NVDAObjects.behaviors import TerminalWithKeyboardSupport
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
@@ -23,4 +23,4 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
 				pass
-			clsList[0:0] = (TerminalKeyboardSupport, Terminal, DisplayModelLiveText)
+			clsList[0:0] = (TerminalWithKeyboardSupport, DisplayModelLiveText)
