@@ -369,7 +369,7 @@ class Terminal(LiveText, EditableText):
 
 class TerminalWithKeyboardSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
-	console applications on Windows 10 1703 and later."""
+	console applications on Windows 10 1607 and later."""
 	#: Whether this object reliably sends textChange events.
 	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
