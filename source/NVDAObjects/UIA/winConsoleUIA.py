@@ -294,7 +294,7 @@ class WinConsoleUIA(Terminal):
 		speech.curWordChars = []
 
 	def _get_maximized(self):
-		res = bool(self.parent.UIAWindowPattern.CurrentWindowVisualState)
+		res = self.parent.UIAWindowPattern.CurrentWindowVisualState == UIAHandler.WindowVisualState_Maximized
 		if res:
 			self._maximized = True
 		return self._maximized or res
