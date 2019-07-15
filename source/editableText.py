@@ -36,6 +36,9 @@ class EditableText(TextContainerObject,ScriptableObject):
 		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
 	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
 	@type hasContentChangedSinceLastSelection: bool
+	@ivar listenForCaretEventsWhenDetectingCaretMovement: Trust caret events when
+		finding out whether the caret position has changed after pressing a caret movement gesture.
+	@type listenForCaretEventsWhenDetectingCaretMovement: bool
 	"""
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
@@ -49,7 +52,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
 	_caretMovementTimeoutMultiplier = 1
-	
+
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
@@ -90,7 +93,15 @@ class EditableText(TextContainerObject,ScriptableObject):
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 			except (RuntimeError,NotImplementedError):
 				newInfo = None
-			# Caret events are unreliable in some controls.
+			else:
+				# Caret events are unreliable in some controls.
+				# Only use them if we consider them safe to rely on for a particular control.
+				if (
+					eventHandler.isPendingEvents("caret")
+					and getattr(self, "listenForCaretEventsWhenDetectingCaretMovement", True)
+				):
+					log.debug("Caret move detected using event. Elapsed: %d ms" % elapsed)
+					return (True,newInfo)
 			# Try to detect with bookmarks.
 			newBookmark = None
 			if newInfo:

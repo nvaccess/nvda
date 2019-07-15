@@ -725,6 +725,7 @@ class UIATextInfo(textInfos.TextInfo):
 	updateCaret = updateSelection
 
 class UIA(Window):
+	caretEventsAreReliable = True
 
 	def _get__coreCycleUIAPropertyCacheElementCache(self):
 		"""
