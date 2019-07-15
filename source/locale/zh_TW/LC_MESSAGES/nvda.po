@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:10+1000\n"
-"PO-Revision-Date: 2019-06-22 22:36+0800\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-05 23:48+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: NVDA-Taiwan Volunteers Team\n"
 "Language: zh_TW\n"
@@ -598,11 +598,11 @@ msgstr "檢閱游標"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Dot firm&ness"
-msgstr "凸點強度 (&N)"
+msgstr "凸點強度(&N)"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "Braille inp&ut"
-msgstr "點字輸入 (&U)"
+msgstr "點字輸入(&U)"
 
 #. Translators: Label for a setting in braille settings dialog.
 msgid "&HID keyboard input simulation"
@@ -1744,7 +1744,7 @@ msgstr "種類："
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "Filter b&y:"
-msgstr "篩選 (&Y)："
+msgstr "篩選(&Y)："
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1764,12 +1764,6 @@ msgstr "%s 地標"
 #, python-format
 msgid "lmk %s"
 msgstr "地標%s"
-
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s，已選取"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -3120,10 +3114,6 @@ msgstr "滑鼠右鍵鎖定"
 msgid "Locks or unlocks the right mouse button"
 msgstr "將滑鼠右鍵鎖定或解鎖"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s，已選取"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3781,6 +3771,27 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "檢閱游標移到行尾的字元，並讀出"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+#, fuzzy
+msgid "No symbol replacement"
+msgstr "代替文字"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -5554,7 +5565,7 @@ msgstr "直線圖說文字 3 (無框線)"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "shape"
 msgid "Line inverse"
-msgstr "行距 (&L)"
+msgstr "行距(&L)"
 
 #. Translators: a shape name from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5899,7 +5910,7 @@ msgstr "下一項"
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 msgctxt "action"
 msgid "Help"
-msgstr "說明 (&H)"
+msgstr "說明(&H)"
 
 #. Translators: an action button label from Microsoft Office.
 #. See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
@@ -5971,15 +5982,24 @@ msgstr "大寫%s"
 msgid "no indent"
 msgstr "沒有縮排"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s，已選取"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s  已選取"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d 個字元"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s  已選取"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -6395,7 +6415,7 @@ msgstr "速度"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "加快語速 (&T)"
+msgstr "加快語速(&T)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -6596,7 +6616,7 @@ msgstr "下載更新(&D)"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 msgid "Remind me &later"
-msgstr "稍後再提醒我 (&L)"
+msgstr "稍後再提醒我(&L)"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
@@ -6673,17 +6693,17 @@ msgstr "請贊助"
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 msgid "&Donate"
-msgstr "請贊助 (&D)"
+msgstr "請贊助(&D)"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
 msgid "&Not now"
-msgstr "現在不要 (&N)"
+msgstr "現在不要(&N)"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
 msgid "&Done"
-msgstr "完成 (&D)"
+msgstr "完成(&D)"
 
 msgid "NonVisual Desktop Access"
 msgstr "非視覺桌面存取應用程式"
@@ -7560,7 +7580,7 @@ msgstr "COM註冊修復工具完成"
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 msgid "&Settings..."
-msgstr "設定 (&S)..."
+msgstr "設定(&S)..."
 
 #. Translators: The description for the menu item to open NVDA Settings dialog.
 msgid "NVDA settings"
@@ -7568,7 +7588,7 @@ msgstr "NVDA設定"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
-msgstr "通用語音字庫 (&D)..."
+msgstr "通用語音字庫(&D)..."
 
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
@@ -7577,7 +7597,7 @@ msgstr "可新增讀音項目至通用語音字庫的對話框"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "特定語音字庫 (&V)..."
+msgstr "特定語音字庫(&V)..."
 
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
@@ -7586,7 +7606,7 @@ msgstr "可新增讀音項目至特定語音字庫的對話框"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
-msgstr "暫存語音字庫 (&T)..."
+msgstr "暫存語音字庫(&T)..."
 
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
@@ -7595,19 +7615,19 @@ msgstr "可新增讀音項目至暫存語音字庫的對話框"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "讀音字庫 (&D)"
+msgstr "讀音字庫(&D)"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "標點符號/特殊符號讀音 (&P)..."
+msgstr "標點符號/特殊符號讀音(&P)..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "輸入手勢 (&N)..."
+msgstr "輸入手勢(&N)..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "偏好設定 (&P)"
+msgstr "偏好設定(&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -7615,7 +7635,7 @@ msgstr "檢視事件記錄(&V)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "檢視報讀內容 (&S)"
+msgstr "檢視報讀內容(&S)"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -7623,15 +7643,15 @@ msgstr "Python主控台"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "管理附加元件 (&A)..."
+msgstr "管理附加元件(&A)..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
-msgstr "建立可攜式版 (&C)..."
+msgstr "建立可攜式版(&C)..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
-msgstr "安裝 NVDA (&I)..."
+msgstr "安裝 NVDA(&I)..."
 
 #. Translators: The label for the menu item to run the COM registration fix tool
 msgid "Run COM Registration Fixing tool..."
@@ -7643,22 +7663,22 @@ msgstr "重新載入外掛程式"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
-msgstr "工具 (&T)"
+msgstr "工具(&T)"
 
 #. Translators: The label of a menu item to open NVDA user guide.
 msgid "&User Guide"
-msgstr "用戶指南 (&U)"
+msgstr "用戶指南(&U)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "指令快速參考表 (&Q)"
+msgstr "指令快速參考表(&Q)"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
-msgstr "新版資訊 (&N)"
+msgstr "新版資訊(&N)"
 
 msgid "NVDA &web site"
-msgstr "NVDA 官網 (&W)"
+msgstr "NVDA 官網(&W)"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -7666,31 +7686,31 @@ msgstr "授權(&I)"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
-msgstr "貢獻者 (&O)"
+msgstr "貢獻者(&O)"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog..."
-msgstr "歡迎視窗 (&L)..."
+msgstr "歡迎視窗(&L)..."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "檢查更新 (&C)..."
+msgstr "檢查更新(&C)..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "關於 (&A)..."
+msgstr "關於(&A)..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "說明 (&H)"
+msgstr "說明(&H)"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "組態設定 (&C)..."
+msgstr "組態設定(&C)..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "還原設定 (&R)"
+msgstr "還原設定(&R)"
 
 msgid "Reset all settings to saved state"
 msgstr "回復所有設定到已儲存的狀態"
@@ -7698,14 +7718,14 @@ msgstr "回復所有設定到已儲存的狀態"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "回復設定至出廠預設值 (&R)"
+msgstr "回復設定至出廠預設值(&R)"
 
 msgid "Reset all settings to default state"
 msgstr "回復所有設定到預設狀態"
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
-msgstr "儲存設定 (&S)"
+msgstr "儲存設定(&S)"
 
 msgid "Write the current configuration to nvda.ini"
 msgstr "將現在的設定寫入 nvda.ini 檔案內"
@@ -7723,7 +7743,7 @@ msgid "Execute a previously downloaded NVDA update"
 msgstr "執行先前已下載的NVDA更新版本"
 
 msgid "E&xit"
-msgstr "結束 (&X)"
+msgstr "結束(&X)"
 
 #. Translators: The title of the dialog to exit NVDA
 msgid "Exit NVDA"
@@ -7768,12 +7788,12 @@ msgstr "鍵盤配置(&K):"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "將 Caps Lock 鍵設為 NVDA 鍵 (&U)"
+msgstr "將 Caps Lock 鍵設為 NVDA 鍵(&U)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "登入 Windows 後自動啟動 NVDA (&A)"
+msgstr "登入 Windows 後自動啟動 NVDA(&A)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 msgid "&Show this dialog when NVDA starts"
@@ -7785,19 +7805,19 @@ msgstr "授權協議"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
-msgstr "我同意 (&A)"
+msgstr "我同意(&A)"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 msgid "&Install NVDA on this computer"
-msgstr "安裝NVDA 在這台電腦 (&I)"
+msgstr "安裝NVDA 在這台電腦(&I)"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
-msgstr "建立可攜式版 (&P)"
+msgstr "建立可攜式版(&P)"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr "繼續執行 (&C)"
+msgstr "繼續執行(&C)"
 
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
@@ -7809,7 +7829,7 @@ msgstr ""
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "您想要做什麼？ (&d)"
+msgstr "您想要做什麼？(&d)"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -7865,13 +7885,13 @@ msgstr ""
 #. Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 #. the add-on
 msgid "&Yes"
-msgstr "是 (&Y)"
+msgstr "是(&Y)"
 
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the addon installation warning dialog which allows the user to decide not to
 #. install the add-on
 msgid "&No"
-msgstr "否 (&N)"
+msgstr "否(&N)"
 
 msgid ""
 "Changes were made to add-ons. You must restart NVDA for these changes to "
@@ -7886,7 +7906,7 @@ msgstr "重新啟動NVDA"
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "關於附加元件 (&A)..."
+msgstr "關於附加元件(&A)..."
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
@@ -7962,11 +7982,11 @@ msgstr "作者"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "附加元件說明 (&H)"
+msgstr "附加元件說明(&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Disable add-on"
-msgstr "停用附加元件 (&D)"
+msgstr "停用附加元件(&D)"
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -7974,15 +7994,15 @@ msgstr "停用附加元件 (&D)"
 #. Translators: The label for a button in speech dictionaries dialog to remove existing entries.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
-msgstr "移除 (&R)"
+msgstr "移除(&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "取得附加元件 (&G)..."
+msgstr "取得附加元件(&G)..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
-msgstr "安裝 (&I)..."
+msgstr "安裝(&I)..."
 
 #. Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 msgid "&View incompatible add-ons..."
@@ -8035,7 +8055,7 @@ msgstr "重新啟動後啟用"
 
 #. Translators: The label for a button in Add-ons Manager dialog to enable or disable the selected add-on.
 msgid "&Enable add-on"
-msgstr "啟用附加元件 (&E)"
+msgstr "啟用附加元件(&E)"
 
 #. Translators: The message displayed when the add-on cannot be disabled.
 #, python-brace-format
@@ -8161,25 +8181,25 @@ msgstr "組態設定"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
-msgstr "新增 (&N)"
+msgstr "新增(&N)"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
-msgstr "重新命名 (&R)"
+msgstr "重新命名(&R)"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "刪除 (&D)"
+msgstr "刪除(&D)"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "觸發器 (&T)..."
+msgstr "觸發器(&T)..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "暫時停用所有的觸發器 (&I)"
+msgstr "暫時停用所有的觸發器(&I)"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -8410,7 +8430,7 @@ msgstr "保留現有桌面捷徑(&K)"
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "建立桌面圖示及其快速鍵 (control+alt+n) (&D)"
+msgstr "建立桌面圖示及其快速鍵 (control+alt+n)(&D)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
@@ -8433,7 +8453,7 @@ msgstr ""
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr "進行一個不建議的程式安裝 (&P)"
+msgstr "進行一個不建議的程式安裝(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -8448,7 +8468,7 @@ msgstr "若要建立可攜式版NVDA，請選擇路徑及其他選項後按繼�
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "可攜版目錄 (&D)"
+msgstr "可攜版目錄(&D)"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
@@ -8465,7 +8485,7 @@ msgstr "複製目前的使用者設定檔(&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "&Start the new portable copy after creation"
-msgstr "建立完成後以新的可攜式版執行 (&S)"
+msgstr "建立完成後以新的可攜式版執行(&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -8538,7 +8558,7 @@ msgstr "套用"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 msgid "&Categories:"
-msgstr "類別 (&C)："
+msgstr "類別(&C)："
 
 #. Translators: This is the label for the general settings panel.
 msgid "General"
@@ -8574,7 +8594,7 @@ msgstr "關閉時儲存設定(&S)"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
-msgstr "關閉NVDA時顯示對話框選項 (&W)"
+msgstr "關閉NVDA時顯示對話框選項(&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -8597,7 +8617,7 @@ msgstr "將目前儲存的設定套用到登入或其他安全畫面(需要系�
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "自動檢查 NVDA的更新 (&U)"
+msgstr "自動檢查 NVDA的更新(&U)"
 
 #. Translators: The label of a checkbox in general settings to toggle startup notifications
 #. for a pending NVDA update.
@@ -8668,14 +8688,14 @@ msgstr "稍後重新啟動(&L)"
 
 #. Translators: A label for the synthesizer on the speech panel.
 msgid "&Synthesizer"
-msgstr "語音合成器 (&S)"
+msgstr "語音合成器(&S)"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
 msgid "C&hange..."
-msgstr "變更 (&H)..."
+msgstr "變更(&H)..."
 
 #. Translators: This is the label for the synthesizer selection dialog
 msgid "Select Synthesizer"
@@ -8765,7 +8785,7 @@ msgstr "鍵盤"
 #. Translators: This is the label for a list of checkboxes
 #. controlling which keys are NVDA modifier keys.
 msgid "&Select NVDA Modifier Keys"
-msgstr "選擇 NVDA 鍵 (&S)"
+msgstr "選擇 NVDA 鍵(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8805,7 +8825,7 @@ msgstr "讀出指令鍵(&K)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 msgid "Play sound for &spelling errors while typing"
-msgstr "打字拼錯字時 播放音效 (&S)"
+msgstr "打字拼錯字時 播放音效(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -8934,7 +8954,7 @@ msgstr "讀出工具提示(&T)"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
 msgid "Report &notifications"
-msgstr "讀出通知 (&N)"
+msgstr "讀出通知(&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings panel.
@@ -8998,7 +9018,7 @@ msgstr "使用螢幕配置(當有支援時)"
 #. Translators: The label for a checkbox in browse mode settings to
 #. enable browse mode on page load.
 msgid "&Enable browse mode on page load"
-msgstr "頁面載入時啟用瀏覽模式 (&E)"
+msgstr "頁面載入時啟用瀏覽模式(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9048,32 +9068,32 @@ msgstr "字型"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Font name"
-msgstr "字型名稱 (&F)"
+msgstr "字型名稱(&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Font &size"
-msgstr "字型大小 (&S)"
+msgstr "字型大小(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Font attri&butes"
-msgstr "字型屬性 (&B)"
+msgstr "字型屬性(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "E&mphasis"
-msgstr "強調標記 (&M)"
+msgstr "強調標記(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "St&yle"
-msgstr "樣式 (&Y)"
+msgstr "樣式(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Colors"
-msgstr "色彩 (&C)"
+msgstr "色彩(&C)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9083,17 +9103,17 @@ msgstr "文件資訊"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Co&mments"
-msgstr "註解 (&M)"
+msgstr "註解(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Editor revisions"
-msgstr "修訂 (&E)"
+msgstr "修訂(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Spelling e&rrors"
-msgstr "拼錯字 (&R)"
+msgstr "拼錯字(&R)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9103,17 +9123,17 @@ msgstr "頁碼及段落間距"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Pages"
-msgstr "頁碼 (&P)"
+msgstr "頁碼(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Line &numbers"
-msgstr "行號 (&N)"
+msgstr "行號(&N)"
 
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "讀出行縮排 (&I)："
+msgstr "讀出行縮排(&I)："
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
@@ -9137,17 +9157,17 @@ msgstr "語音及提示音"
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "&Paragraph indentation"
-msgstr "段落縮排 (&P)"
+msgstr "段落縮排(&P)"
 
 #. Translators: This message is presented in the document formatting settings panelue
 #. If this option is selected, NVDA will report line spacing if available.
 msgid "&Line spacing"
-msgstr "行距 (&L)"
+msgstr "行距(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Alignment"
-msgstr "對齊 (&A)"
+msgstr "對齊(&A)"
 
 #. Translators: This is the label for a group of document formatting options in the
 #. document formatting settings panel
@@ -9157,17 +9177,17 @@ msgstr "表格資訊"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Tables"
-msgstr "表格 (&T)"
+msgstr "表格(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Row/column h&eaders"
-msgstr "列及欄標題 (&E)"
+msgstr "列及欄標題(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Cell c&oordinates"
-msgstr "儲存格座標 (&O)"
+msgstr "儲存格座標(&O)"
 
 #. Translators: This is the label for a combobox in the
 #. document formatting settings panel.
@@ -9192,22 +9212,22 @@ msgstr "元件"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Lists"
-msgstr "清單 (&L)"
+msgstr "清單(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Block &quotes"
-msgstr "引述 (&Q)"
+msgstr "引述(&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Fra&mes"
-msgstr "頁框 (&M)"
+msgstr "頁框(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "&Clickable"
-msgstr "可點擊 (&C)"
+msgstr "可點擊(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -9221,7 +9241,7 @@ msgstr "觸控互動"
 #. Translators: This is the label for a checkbox in the
 #. touch interaction settings panel.
 msgid "&Touch typing mode"
-msgstr "觸控打字模式 (&T)"
+msgstr "觸控打字模式(&T)"
 
 #. Translators: The title of the Windows 10 OCR panel.
 msgid "Windows 10 OCR"
@@ -9258,8 +9278,19 @@ msgstr "使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支�
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+#, fuzzy
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr "使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支援)(&W)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr "自動將系統焦點移至可聚焦項目 (&F)"
+msgstr "自動將系統焦點移至可聚焦項目(&F)"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9313,11 +9344,11 @@ msgstr "任意字(&A)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Whole &word"
-msgstr "完整的單字 (&W)"
+msgstr "完整的單字(&W)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Regular &expression"
-msgstr "正規表達 (&E)"
+msgstr "正規表達(&E)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -9393,7 +9424,7 @@ msgstr "新增字庫項目"
 
 #. Translators: A label for the braille display on the braille panel.
 msgid "Braille &display"
-msgstr "點顯器 (&D)"
+msgstr "點顯器(&D)"
 
 #. Translators: This is the label for the braille display selection dialog.
 msgid "Select Braille Display"
@@ -9428,7 +9459,7 @@ msgstr "將游標所指的文字展開成完整的電腦點字(&X)"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
 msgid "&Show cursor"
-msgstr "顯示游標 (&S)"
+msgstr "顯示游標(&S)"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
 msgid "Blink cursor"
@@ -9440,11 +9471,11 @@ msgstr "點字游標跳動頻率 (以毫秒計)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 msgid "Cursor shape for &focus:"
-msgstr "焦點游標樣式 (&F):"
+msgstr "焦點游標樣式(&F):"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
 msgid "Cursor shape for &review:"
-msgstr "檢閱游標樣式 (&R):"
+msgstr "檢閱游標樣式(&R):"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message &timeout (sec)"
@@ -9456,7 +9487,7 @@ msgstr "持續顯示訊息"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Tether B&raille:"
-msgstr "點字游標跟隨 (&R)："
+msgstr "點字游標跟隨(&R)："
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -9495,7 +9526,7 @@ msgstr "符號讀音 (%s)"
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr "篩選 (&F)"
+msgstr "篩選(&F)"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -9524,11 +9555,11 @@ msgstr "等級(&L)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr "送出實際的符號到語音合成 (&S)"
+msgstr "送出實際的符號到語音合成(&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
-msgstr "移除 (&M)"
+msgstr "移除(&M)"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 #, python-format
@@ -9542,7 +9573,7 @@ msgstr "輸入手勢"
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
 msgid "&Filter by:"
-msgstr "篩選 (&F):"
+msgstr "篩選(&F):"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -9723,12 +9754,12 @@ msgstr "啟用"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "標記 (&A)"
+msgstr "標記(&A)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Errors"
-msgstr "拼錯字 (&E)"
+msgstr "拼錯字(&E)"
 
 #. Translators: The label shown for an insertion change
 #, python-brace-format
@@ -10568,22 +10599,22 @@ msgstr "列出在此試算表中各種類型的元件"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Charts"
-msgstr "圖表 (&C)"
+msgstr "圖表(&C)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "C&omments"
-msgstr "註解 (&O)"
+msgstr "註解(&O)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Fo&rmulas"
-msgstr "公式 (&R)"
+msgstr "公式(&R)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Sheets"
-msgstr "工作表 (&S)"
+msgstr "工作表(&S)"
 
 #. Translators: Used to express an address range in excel.
 #, python-brace-format
@@ -11083,6 +11114,9 @@ msgstr "2倍行高"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行高"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s，已選取"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "目前執行的應用程式檔名是%s"

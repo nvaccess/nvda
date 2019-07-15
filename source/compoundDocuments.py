@@ -446,7 +446,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
 			else:
-				speech.speakSelectedText(info.text)
+				speech.speakPreselectedText(info.text)
 			braille.handler.handleGainFocus(self)
 			self.initAutoSelectDetection()
 
