@@ -274,8 +274,8 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			return
 		if rect is None:
 			try:
-				rect= getContextRect(context, obj=obj)
-			except (LookupError, NotImplementedError, RuntimeError):
+				rect = getContextRect(context, obj=obj)
+			except (LookupError, NotImplementedError, RuntimeError, TypeError):
 				rect = None
 		self.contextToRectMap[context] = rect
 
@@ -287,7 +287,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			self.handleBrowseModeMove()
 
 	def handleReviewMove(self, context):
-				self.updateContextRect(context=Context.NAVIGATOR)
+		self.updateContextRect(context=Context.NAVIGATOR)
 
 	def handleBrowseModeMove(self, obj=None):
 		self.updateContextRect(context=Context.BROWSEMODE)
