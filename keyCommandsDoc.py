@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2015 NV Access Limited, Mesar Hameed
+#Copyright (C) 2010-2019 NV Access Limited, Mesar Hameed, Takuya Nishimoto
 
 """Utilities related to NVDA Key Commands documents.
 """
@@ -213,7 +213,7 @@ class KeyCommandsMaker(object):
 		self._headings.append(m)
 		self._kcLastHeadingLevel = min(self._kcLastHeadingLevel, level - 1)
 
-	RE_SETTING_SINGLE_KEY = re.compile(ur"^[^|]+?[:：]\s*(.+?)\s*$")
+	RE_SETTING_SINGLE_KEY = re.compile(r"^[^|]+?[:：]\s*(.+?)\s*$")
 	def _handleSetting(self):
 		if not self._settingsHeaderRow:
 			raise KeyCommandsError("%d, setting command cannot be used before settingsSection command" % self._lineNum)
@@ -237,7 +237,7 @@ class KeyCommandsMaker(object):
 		# The next few lines should be table rows for each layout.
 		# Alternatively, if the key is common to all layouts, there will be a single line of text specifying the key after a colon.
 		keys = []
-		for layout in xrange(self._settingsNumLayouts):
+		for layout in range(self._settingsNumLayouts):
 			line = next(self._ug).strip()
 			self._lineNum += 1
 			m = self.RE_SETTING_SINGLE_KEY.match(line)
@@ -254,7 +254,7 @@ class KeyCommandsMaker(object):
 		if 1 == len(keys) < self._settingsNumLayouts:
 			# The key has only been specified once, so it is the same in all layouts.
 			key = keys[0]
-			keys[1:] = (key for layout in xrange(self._settingsNumLayouts - 1))
+			keys[1:] = (key for layout in range(self._settingsNumLayouts - 1))
 
 		# There should now be a blank line.
 		line = next(self._ug).strip()

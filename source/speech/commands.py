@@ -7,7 +7,6 @@
 """Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
  
 from abc import ABCMeta, abstractmethod
-from six import with_metaclass
 import config
 import languageHandler
 from synthDriverHandler import getSynth
@@ -214,11 +213,11 @@ class PhonemeCommand(SynthCommand):
 	def __init__(self, ipa, text=None):
 		"""
 		@param ipa: Unicode IPA characters.
-		@type ipa: unicode
+		@type ipa: str
 		@param text: Text to speak if the synthesizer does not support
 			some or all of the specified IPA characters,
 			C{None} to ignore this command instead.
-		@type text: unicode
+		@type text: str
 		"""
 		self.ipa = ipa
 		self.text = text
@@ -229,7 +228,7 @@ class PhonemeCommand(SynthCommand):
 			out += ", text=%r" % self.text
 		return out + ")"
 
-class BaseCallbackCommand(with_metaclass(ABCMeta, SpeechCommand)):
+class BaseCallbackCommand(SpeechCommand, metaclass=ABCMeta):
 	"""Base class for commands which cause a function to be called when speech reaches them.
 	This class should not be instantiated directly.
 	It is designed to be subclassed to provide specific functionality;

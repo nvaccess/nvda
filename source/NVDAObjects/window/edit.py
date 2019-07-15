@@ -32,6 +32,7 @@ from ..behaviors import EditableTextWithAutoSelectDetection
 import braille
 import watchdog
 import locationHelper
+import textUtils
 
 selOffsetsAtLastCaretEvent=None
 
@@ -67,13 +68,7 @@ class CharRangeStruct(ctypes.Structure):
 		('cpMax',ctypes.c_long),
 	]
 
-class TextRangeUStruct(ctypes.Structure):
-	_fields_=[
-		('chrg',CharRangeStruct),
-		('lpstrText',ctypes.c_wchar_p),
-	]
-
-class TextRangeAStruct(ctypes.Structure):
+class TextRangeStruct(ctypes.Structure):
 	_fields_=[
 		('chrg',CharRangeStruct),
 		('lpstrText',ctypes.c_char_p),
@@ -130,6 +125,10 @@ class getTextExStruct(ctypes.Structure):
 	]
 
 class getTextLengthExStruct(ctypes.Structure):
+	"""
+	For documentation, see:
+	https://docs.microsoft.com/en-us/windows/desktop/api/richedit/ns-richedit-_gettextlengthex
+	"""
 	_fields_=[
 		('flags',ctypes.wintypes.DWORD),
 		('codepage',ctypes.c_uint),
@@ -257,7 +256,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["font-name"]=charFormat.szFaceName
 		if formatConfig["reportFontSize"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
-			formatField["font-size"]="%spt"%(charFormat.yHeight/20)
+			# Font size is supposed to be an integral value
+			formatField["font-size"]="%spt"%(charFormat.yHeight//20)
 		if formatConfig["reportFontAttributes"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
@@ -321,7 +321,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryText(self):
 		if controlTypes.STATE_PROTECTED in self.obj.states:
-			return u'*'*(self._getStoryLength()-1)
+			return u'*' * (self._getStoryLength() - 1)
 		return self.obj.windowText
 
 	def _getStoryLength(self):
@@ -339,47 +339,68 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				textLen=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETTEXTLENGTHEX,internalInfo,0)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+			# Py3 review: investigation with Python 2 NVDA revealed that
+			# adding 1 to this creates an off by one error.
+			# Tested using Wordpad, enforcing EditTextInfo as the textInfo implementation.
 			return textLen+1
 		else:
+			# ForWM_GETTEXTLENGTH documentation, see
+			# https://docs.microsoft.com/en-us/windows/desktop/winmsg/wm-gettextlength
+			# It determines the length, in characters, of the text associated with a window.
+			# Py3 review: investigation with Python 2 NVDA revealed that
+			# adding 1 to this created an off by one error.
+			# Tested using Notepad
 			return watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)+1
 
 	def _getLineCount(self):
 		return self.obj.windowTextLineCount
 
 	def _getTextRange(self,start,end):
-		if self.obj.editAPIVersion>=2:
-			bufLen=((end-start)+1)*2
-			if self.obj.isWindowUnicode:
-				textRange=TextRangeUStruct()
-			else:
-				textRange=TextRangeAStruct()
-			textRange.chrg.cpMin=start
-			textRange.chrg.cpMax=end
-			processHandle=self.obj.processHandle
-			internalBuf=winKernel.virtualAllocEx(processHandle,None,bufLen,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		if self.obj.editAPIVersion >= 2:
+			# Calculate a buffer size that is twice the size of the text range and a NULL terminating character.
+			# As unicode characters are two bytes in size,
+			# this ensures that our buffer can hold both ANSI and unicode character strings.
+			bufLen = ((end - start) + 1) * 2
+			# Even though this can return unicode text, we use the ANSI version of the structure.
+			# Using the unicode structure isn't strictly necessary and saves us some confusion
+			textRange = TextRangeStruct()
+			textRange.chrg.cpMin = start
+			textRange.chrg.cpMax = end
+			processHandle = self.obj.processHandle
+			internalBuf = winKernel.virtualAllocEx(processHandle, None, bufLen, winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 			try:
-				textRange.lpstrText=internalBuf
-				internalTextRange=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(textRange),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+				textRange.lpstrText = internalBuf
+				internalTextRange = winKernel.virtualAllocEx(processHandle, None, ctypes.sizeof(textRange), winKernel.MEM_COMMIT, winKernel.PAGE_READWRITE)
 				try:
-					winKernel.writeProcessMemory(processHandle,internalTextRange,ctypes.byref(textRange),ctypes.sizeof(textRange),None)
-					res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETTEXTRANGE,0,internalTextRange)
+					winKernel.writeProcessMemory(processHandle, internalTextRange, ctypes.byref(textRange), ctypes.sizeof(textRange), None)
+					# EM_GETTEXTRANGE returns the number of characters copied,
+					# not including the terminating null character.
+					# See https://docs.microsoft.com/en-us/windows/desktop/controls/em-gettextrange
+					numChars = watchdog.cancellableSendMessage(self.obj.windowHandle, EM_GETTEXTRANGE, 0, internalTextRange)
 				finally:
-					winKernel.virtualFreeEx(processHandle,internalTextRange,0,winKernel.MEM_RELEASE)
-				buf=(ctypes.c_byte*bufLen)()
+					winKernel.virtualFreeEx(processHandle, internalTextRange, 0, winKernel.MEM_RELEASE)
+				buf = ctypes.create_string_buffer(bufLen)
+				# Copy the text in the text range to our own buffer.
 				winKernel.readProcessMemory(processHandle,internalBuf,buf,bufLen,None)
 			finally:
-				winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
-			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
-				text=ctypes.cast(buf,ctypes.c_wchar_p).value
+				winKernel.virtualFreeEx(processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
+			# Find out which encoding to use to decode the bytes in the buffer.
+			if (
+				# The window is unicode, the text range contains multi byte characters.
+				self.obj.isWindowUnicode
+			):
+				encoding = textUtils.WCHAR_ENCODING
 			else:
-				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+				# De encoding will be determined by L{textUtils.getTextFromRawBytes}
+				encoding = None
+			text = textUtils.getTextFromRawBytes(buf.raw, numChars, encoding)
 			# #4095: Some protected richEdit controls do not hide their password characters.
 			# We do this specifically.
 			# Note that protected standard edit controls get characters hidden in _getStoryText.
 			if text and controlTypes.STATE_PROTECTED in self.obj.states:
 				text=u'*'*len(text)
 		else:
-			text=self._getStoryText()[start:end]
+			text = super(EditTextInfo, self)._getTextRange(start, end)
 		return text
 
 	def _getWordOffsets(self,offset):
@@ -395,7 +416,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return offset,offset+1
 			else:
 				return super(EditTextInfo,self)._getWordOffsets(offset)
-
 
 	def _getLineNumFromOffset(self,offset):
 		if self.obj.editAPIVersion>=1:
@@ -452,12 +472,13 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getFormatFieldAtRange(self,range,formatConfig):
+	def _getFormatFieldAtRange(self, textRange, formatConfig):
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
 		if formatConfig["reportAlignment"]:
-			if not paraFormatObj: paraFormatObj=range.para
+			if not paraFormatObj:
+				paraFormatObj = textRange.para
 			alignment=paraFormatObj.alignment
 			if alignment==comInterfaces.tom.tomAlignLeft:
 				formatField["text-align"]="left"
@@ -468,15 +489,18 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			elif alignment==comInterfaces.tom.tomAlignJustify:
 				formatField["text-align"]="justify"
 		if formatConfig["reportLineNumber"]:
-			formatField["line-number"]=range.getIndex(comInterfaces.tom.tomLine)
+			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			formatField["font-name"]=fontObj.name
 		if formatConfig["reportFontSize"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			formatField["font-size"]="%spt"%fontObj.size
 		if formatConfig["reportFontAttributes"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			formatField["bold"]=bool(fontObj.bold)
 			formatField["italic"]=bool(fontObj.italic)
 			formatField["underline"]=bool(fontObj.underline)
@@ -486,11 +510,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			elif fontObj.subscript:
 				formatField["text-position"]="sub"
 		if formatConfig["reportLinks"]:
-			linkRange=range.Duplicate
+			linkRange = textRange.Duplicate
 			linkRange.Collapse(comInterfaces.tom.tomStart)
 			formatField["link"]=linkRange.Expand(comInterfaces.tom.tomLink)>0
 		if formatConfig["reportColor"]:
-			if not fontObj: fontObj=range.font
+			if not fontObj:
+				fontObj = textRange.font
 			fgColor=fontObj.foreColor
 			if fgColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The default color of text when a color has not been set by the author. 
@@ -511,7 +536,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['background-color']=_("Unknown color")
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
-		if not fontObj: fontObj=range.font
+		if not fontObj:
+			fontObj = textRange.font
 		try:
 			langId = fontObj.languageID
 			if langId:
@@ -521,10 +547,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		return formatField
 
-	def _expandFormatRange(self,range,formatConfig):
+	def _expandFormatRange(self, textRange, formatConfig):
 		startLimit=self._rangeObj.start
 		endLimit=self._rangeObj.end
-		chunkRange=range.duplicate
+		chunkRange = textRange.duplicate
 		if formatConfig["reportLineNumber"]:
 			chunkRange.expand(comInterfaces.tom.tomLine)
 		else:
@@ -535,12 +561,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			startLimit=chunkStart
 		if endLimit>chunkEnd:
 			endLimit=chunkEnd
-		#range.moveEnd(comInterfaces.tom.tomCharFormat,1)
-		range.expand(comInterfaces.tom.tomCharFormat)
-		if range.end>endLimit:
-			range.end=endLimit
-		if range.start<startLimit:
-			range.start=startLimit
+		#textRange.moveEnd(comInterfaces.tom.tomCharFormat,1)
+		textRange.expand(comInterfaces.tom.tomCharFormat)
+		if textRange.end > endLimit:
+			textRange.end = endLimit
+		if textRange.start < startLimit:
+			textRange.start = startLimit
 
 	def _getEmbeddedObjectLabel(self,embedRangeObj):
 		label=None
@@ -599,7 +625,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			return u'*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
-		for offset in xrange(len(bufText)):
+		for offset in range(len(bufText)):
 			if ord(bufText[offset])==0xfffc:
 				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
 				embedRangeObj.setRange(start+offset,start+offset+1)
@@ -641,22 +667,22 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		range=self._rangeObj.duplicate
-		range.collapse(True)
+		textRange=self._rangeObj.duplicate
+		textRange.collapse(True)
 		if not formatConfig["detectFormatAfterCursor"]:
-			range.expand(comInterfaces.tom.tomCharacter)
-			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)),
+			textRange.expand(comInterfaces.tom.tomCharacter)
+			return [textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)),
 				self._getTextAtRange(self._rangeObj)]
 		commandList=[]
 		endLimit=self._rangeObj.end
-		while range.end<endLimit:
-			self._expandFormatRange(range,formatConfig)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			commandList.append(self._getTextAtRange(range))
-			end=range.end
-			range.start=end
+		while textRange.end<endLimit:
+			self._expandFormatRange(textRange, formatConfig)
+			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(textRange, formatConfig)))
+			commandList.append(self._getTextAtRange(textRange))
+			end = textRange.end
+			textRange.start = end
 			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
-			if range.end<end:
+			if textRange.end < end:
 				break
 		return commandList
 

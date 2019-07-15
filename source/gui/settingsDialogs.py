@@ -5,8 +5,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import logging
 from abc import abstractmethod
-from six import with_metaclass
 import os
 import copy
 import re
@@ -47,9 +47,9 @@ import winVersion
 import weakref
 import time
 import keyLabels
-from dpiScalingHelper import DpiScalingHelperMixin
+from .dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
+class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -76,6 +76,7 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
+		# We are iterating over instanceItems only once, so it can safely be an iterator.
 		instanceItems = SettingsDialog._instances.items()
 		instancesOfSameClass = (
 			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
@@ -240,7 +241,7 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHelperMixin)):
+class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -589,12 +590,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			evt.Skip()
 
 	def _doSave(self):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
 	def onOk(self,evt):
@@ -603,12 +604,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		except ValueError:
 			log.debugWarning("", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
@@ -784,7 +785,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
+		config.conf["general"]["loggingLevel"]=logging.getLevelName(logLevel)
 		logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
@@ -1071,7 +1072,9 @@ class DriverSettingsMixin(object):
 		setattr(
 			self,
 			"_%ss"%setting.id,
-			getattr(self.driver,"available%ss"%setting.id.capitalize()).values()
+			# Settings are stored as an ordered dict.
+			# Therefore wrap this inside a list call.
+			list(getattr(self.driver,"available%ss"%setting.id.capitalize()).values())
 		)
 		l=getattr(self,"_%ss"%setting.id)
 		labeledControl=guiHelper.LabeledControlHelper(
@@ -1109,7 +1112,7 @@ class DriverSettingsMixin(object):
 	def updateDriverSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		#firstly check already created options
-		for name,sizer in self.sizerDict.iteritems():
+		for name,sizer in self.sizerDict.items():
 			if name == changedSetting:
 				# Changing a setting shouldn't cause that setting itself to disappear.
 				continue
@@ -2334,7 +2337,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 class DictionaryDialog(SettingsDialog):
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -2569,7 +2572,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if displayName != "auto":
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
-				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
 				pass
 		if self.possiblePorts:
@@ -2896,7 +2899,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		self.filteredSymbols = self.symbols = [
-			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()
+			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()
 		]
 		self.pendingRemovals = {}
 
@@ -3142,7 +3145,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def onOk(self, evt):
 		self.onSymbolEdited()
 		self.editingItem = None
-		for symbol in self.pendingRemovals.itervalues():
+		for symbol in self.pendingRemovals.values():
 			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
 			if not symbol.replacement:
@@ -3259,7 +3262,7 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		data = self.tree.GetItemData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, basestring)
+		isGesture = isinstance(data, str)
 		self.addButton.Enabled = isCommand or isGesture
 		self.removeButton.Enabled = isGesture
 

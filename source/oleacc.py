@@ -8,7 +8,7 @@ import winKernel
 import winUser
 # Include functions from oleacc.dll in the module namespace.
 m=comtypes.client.GetModule('oleacc.dll')
-globals().update((key, val) for key, val in m.__dict__.iteritems() if not key.startswith("_"))
+globals().update((key, val) for key, val in m.__dict__.items() if not key.startswith("_"))
 
 NAVDIR_MIN=0
 NAVDIR_UP=1
@@ -192,7 +192,7 @@ def CreateStdAccessibleProxy(hwnd,className,objectID,interface=IAccessible):
 	@param hwnd: the handle of the window this accessible object should represent.
 	@type hwnd: int
 	@param className: the window class name to use.
-	@type className: basestring
+	@type className: str
 	@param objectID: an OBJID_* constant or custom value stating the specific object in the window.
 	@type objectID: int
 	@param interface: the requested COM interface for this object. Defaults to IAccessible.

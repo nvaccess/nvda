@@ -244,17 +244,14 @@ class WinConsoleUIA(Terminal):
 		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
 			return
 		if self._hasNewLines:
-			# Clear the typed word buffer for new text lines.
-			# This will need to be changed once #8110 is merged.
-			speech.curWordChars = []
+			# Clear the queued characters buffer for new text lines.
 			self._queuedChars = []
 		super(WinConsoleUIA, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
 			# Clear the typed word buffer for tab completion.
-			# This will need to be changed once #8110 is merged.
-			speech.curWordChars = []
+			speech.clearTypedWordBuffer()
 		if (
 			(
 				config.conf['keyboard']['speakTypedCharacters']
@@ -288,7 +285,7 @@ class WinConsoleUIA(Terminal):
 		"""
 		gesture.send()
 		self._queuedChars = []
-		speech.curWordChars = []
+		speech.clearTypedWordBuffer()
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA

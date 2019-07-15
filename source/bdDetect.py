@@ -16,6 +16,8 @@ For drivers in add-ons, this must be done in a global plugin.
 import itertools
 from collections import namedtuple, defaultdict, OrderedDict
 import threading
+from typing import Iterable
+
 import wx
 import hwPortUtils
 import braille
@@ -26,7 +28,6 @@ import ctypes
 from logHandler import log
 import config
 import time
-import thread
 import appModuleHandler
 from baseObject import AutoPropertyObject
 import re
@@ -41,9 +42,9 @@ class DeviceMatch(
 ):
 	"""Represents a detected device.
 	@ivar id: The identifier of the device.
-	@type id: unicode
+	@type id: str
 	@ivar port: The port that can be used by a driver to communicate with a device.
-	@type port: unicode
+	@type port: str
 	@ivar deviceInfo: all known information about a device.
 	@type deviceInfo: dict
 	"""
@@ -84,10 +85,10 @@ def addUsbDevices(driver, type, ids):
 	@type ids: set of str
 	@raise ValueError: When one of the provided IDs is malformed.
 	"""
-	malformedIds = [id for id in ids if not isinstance(id, basestring) or not USB_ID_REGEX.match(id)]
+	malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
 	if malformedIds:
 		raise ValueError("Invalid IDs provided for driver %s, type %s: %s"
-			% (driver, type, ", ".join(wrongIds)))
+			% (driver, type, u", ".join(malformedIds)))
 	devs = _getDriver(driver)
 	driverUsb = devs[type]
 	driverUsb.update(ids)
@@ -118,8 +119,8 @@ def getDriversForConnectedUsbDevices():
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		for driver, devs in _driverDevices.iteritems():
-			for type, ids in devs.iteritems():
+		for driver, devs in _driverDevices.items():
+			for type, ids in devs.items():
 				if match.type==type and match.id in ids:
 					yield driver, match
 
@@ -136,7 +137,7 @@ def getDriversForPossibleBluetoothDevices():
 			for port in deviceInfoFetcher.hidDevices if port["provider"]=="bluetooth"),
 	)
 	for match in btDevs:
-		for driver, devs in _driverDevices.iteritems():
+		for driver, devs in _driverDevices.items():
 			matchFunc = devs[KEY_BLUETOOTH]
 			if not callable(matchFunc):
 				continue
@@ -316,12 +317,11 @@ class Detector(object):
 		core.post_windowMessageReceipt.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 
-def getConnectedUsbDevicesForDriver(driver):
+def getConnectedUsbDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any connected USB devices associated with a particular driver.
 	@param driver: The name of the driver.
 	@type driver: str
 	@return: Device information for each device.
-	@rtype: generator of L{DeviceMatch}
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	devs = _driverDevices[driver]
@@ -334,16 +334,15 @@ def getConnectedUsbDevicesForDriver(driver):
 			for port in deviceInfoFetcher.comPorts if "usbID" in port)
 	)
 	for match in usbDevs:
-		for type, ids in devs.iteritems():
+		for type, ids in devs.items():
 			if match.type==type and match.id in ids:
 				yield match
 
-def getPossibleBluetoothDevicesForDriver(driver):
+def getPossibleBluetoothDevicesForDriver(driver) -> Iterable[DeviceMatch]:
 	"""Get any possible Bluetooth devices associated with a particular driver.
 	@param driver: The name of the driver.
 	@type driver: str
 	@return: Port information for each port.
-	@rtype: generator of L{DeviceMatch}
 	@raise LookupError: If there is no detection data for this driver.
 	"""
 	matchFunc = _driverDevices[driver][KEY_BLUETOOTH]

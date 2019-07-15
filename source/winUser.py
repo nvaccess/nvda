@@ -10,6 +10,7 @@ import contextlib
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
+from textUtils import WCHAR_ENCODING
 
 #dll handles
 user32=windll.user32
@@ -525,10 +526,6 @@ IDRETRY=4
 IDCANCEL=3
 
 def MessageBox(hwnd, text, caption, type):
-	if isinstance(text, bytes):
-		text = text.decode('mbcs')
-	if isinstance(caption, bytes):
-		caption = caption.decode('mbcs')
 	res = user32.MessageBoxW(hwnd, text, caption, type)
 	if res == 0:
 		raise WinError()
@@ -656,13 +653,13 @@ def setClipboardData(format,data):
 	# For now only unicode is a supported format
 	if format!=CF_UNICODETEXT:
 		raise ValueError("Unsupported format")
-	text=unicode(data)
+	text = data
+	bufLen = len(text.encode(WCHAR_ENCODING, errors="surrogatepass")) + 2
 	# Allocate global memory
-	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE,(len(text)+1)*2)
+	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE, bufLen)
 	# Acquire a lock to the global memory receiving a local memory address
 	with h.lock() as addr:
 		# Write the text into the allocated memory
-		bufLen=len(text)+1
 		buf=(c_wchar*bufLen).from_address(addr)
 		buf.value=text
 	# Set the clipboard data with the global memory

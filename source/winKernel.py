@@ -1,8 +1,10 @@
 #winKernel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+
+"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
 
 import contextlib
 import ctypes
@@ -38,10 +40,10 @@ LOCALE_NAME_USER_DEFAULT=None
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
 # Wait return types
-WAIT_ABANDONED = 0x00000080L
-WAIT_IO_COMPLETION = 0x000000c0L
-WAIT_OBJECT_0 = 0x00000000L
-WAIT_TIMEOUT = 0x00000102L
+WAIT_ABANDONED = 0x00000080
+WAIT_IO_COMPLETION = 0x000000c0
+WAIT_OBJECT_0 = 0x00000000
+WAIT_TIMEOUT = 0x00000102
 WAIT_FAILED = 0xffffffff
 # Image file machine constants
 IMAGE_FILE_MACHINE_UNKNOWN = 0
@@ -83,7 +85,7 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 		If C{True}, the timer is a manual-reset notification timer.
 	@type manualReset: bool
 	@param name: Defaults to C{None}, the timer object is created without a name.
-	@type name: unicode
+	@type name: str
 	"""
 	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
 	if res==0:
@@ -383,3 +385,15 @@ class HGLOBAL(HANDLE):
 		Necessary if you pass this HGLOBAL to an API that takes ownership and therefore will handle freeing itself.
 		"""
 		self.value=None
+
+MOVEFILE_COPY_ALLOWED = 0x2
+MOVEFILE_CREATE_HARDLINK = 0x10
+MOVEFILE_DELAY_UNTIL_REBOOT = 0x4
+MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x20
+MOVEFILE_REPLACE_EXISTING = 0x1
+MOVEFILE_WRITE_THROUGH = 0x8
+
+def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
+	# If MoveFileExW fails, Windows will raise appropriate errors.
+	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
+		raise ctypes.WinError()

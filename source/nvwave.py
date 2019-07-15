@@ -117,7 +117,7 @@ class WavePlayer(object):
 		@param bitsPerSample: The number of bits per sample.
 		@type bitsPerSample: int
 		@param outputDevice: The device ID or name of the audio output device to use.
-		@type outputDevice: int or basestring
+		@type outputDevice: int or str
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
@@ -130,7 +130,7 @@ class WavePlayer(object):
 		self.channels=channels
 		self.samplesPerSec=samplesPerSec
 		self.bitsPerSample=bitsPerSample
-		if isinstance(outputDevice, basestring):
+		if isinstance(outputDevice, str):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
 		if wantDucking:
@@ -146,7 +146,7 @@ class WavePlayer(object):
 			BITS_PER_BYTE = 8
 			MS_PER_SEC = 1000
 			self._minBufferSize = samplesPerSec * channels * (bitsPerSample / BITS_PER_BYTE) / MS_PER_SEC * self.MIN_BUFFER_MS
-			self._buffer = ""
+			self._buffer = b""
 		else:
 			self._minBufferSize = None
 		#: Function to call when the previous chunk of audio has finished playing.
@@ -170,7 +170,7 @@ class WavePlayer(object):
 			wfx.nChannels = self.channels
 			wfx.nSamplesPerSec = self.samplesPerSec
 			wfx.wBitsPerSample = self.bitsPerSample
-			wfx.nBlockAlign = self.bitsPerSample / 8 * self.channels
+			wfx.nBlockAlign: int = self.bitsPerSample // 8 * self.channels
 			wfx.nAvgBytesPerSec = self.samplesPerSec * wfx.nBlockAlign
 			waveout = HWAVEOUT(0)
 			with self._global_waveout_lock:
@@ -196,7 +196,7 @@ class WavePlayer(object):
 		# so we can accurately call onDone at the end of this chunk.
 		if onDone or len(self._buffer) > self._minBufferSize:
 			self._feedUnbuffered(self._buffer, onDone=onDone)
-			self._buffer = ""
+			self._buffer = b""
 
 	def _feedUnbuffered(self, data, onDone=None):
 		if self._audioDucker and not self._audioDucker.enable():
@@ -212,7 +212,7 @@ class WavePlayer(object):
 				try:
 					with self._global_waveout_lock:
 						winmm.waveOutWrite(self._waveout, LPWAVEHDR(whdr), sizeof(WAVEHDR))
-				except WindowsError, e:
+				except WindowsError as e:
 					self.close()
 					raise e
 			self.sync()
@@ -275,7 +275,7 @@ class WavePlayer(object):
 			return self._idleUnbuffered()
 		if self._buffer:
 			self._feedUnbuffered(self._buffer)
-			self._buffer = ""
+			self._buffer = b""
 		return self._idleUnbuffered()
 
 	def _idleUnbuffered(self):
@@ -293,7 +293,7 @@ class WavePlayer(object):
 		"""
 		if self._audioDucker: self._audioDucker.disable()
 		if self._minBufferSize:
-			self._buffer = ""
+			self._buffer = b""
 		with self._waveout_lock:
 			if not self._waveout:
 				return
@@ -332,7 +332,7 @@ class WavePlayer(object):
 
 def _getOutputDevices():
 	caps = WAVEOUTCAPS()
-	for devID in xrange(-1, winmm.waveOutGetNumDevs()):
+	for devID in range(-1, winmm.waveOutGetNumDevs()):
 		try:
 			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
 			yield devID, caps.szPname

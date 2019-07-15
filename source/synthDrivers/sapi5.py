@@ -13,10 +13,7 @@ import os
 from ctypes import *
 import comtypes.client
 from comtypes import COMError
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import audioDucking
 import NVDAHelper
 import globalVars
@@ -37,9 +34,9 @@ class FunctionHooker(object):
 	def __init__(self,targetDll,importDll,funcName,newFunction):
 		hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(targetDll,importDll,funcName,newFunction)
 		if hook:
-			print "hooked %s"%funcName
+			log.debug("hooked %s"%funcName)
 		else:
-			print "could not hook %s"%funcName
+			log.debug("could not hook %s"%funcName)
 			raise RuntimeError("could not hook %s"%funcName)
 
 	def __del__(self):
@@ -147,7 +144,7 @@ class SynthDriver(SynthDriver):
 		v=self._getVoiceTokens()
 		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
 		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
-		for i in xrange(len(v)):
+		for i in range(len(v)):
 			try:
 				ID=v[i].Id
 				name=v[i].GetDescription()
@@ -184,7 +181,7 @@ class SynthDriver(SynthDriver):
 			return None
 
 	def _percentToRate(self, percent):
-		return (percent - 50) / 5
+		return (percent - 50) // 5
 
 	def _set_rate(self,rate):
 		self.tts.Rate = self._percentToRate(rate)
@@ -220,7 +217,7 @@ class SynthDriver(SynthDriver):
 		tokens = self._getVoiceTokens()
 		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
 		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
-		for i in xrange(len(tokens)):
+		for i in range(len(tokens)):
 			voice=tokens[i]
 			if value==voice.Id:
 				break
@@ -230,7 +227,7 @@ class SynthDriver(SynthDriver):
 		self._initTts(voice=voice)
 
 	def _percentToPitch(self, percent):
-		return percent / 2 - 25
+		return percent // 2 - 25
 
 	IPA_TO_SAPI = {
 		u"θ": u"th",
@@ -272,9 +269,9 @@ class SynthDriver(SynthDriver):
 			for tag in reversed(openedTags):
 				textList.append("</%s>" % tag)
 			del openedTags[:]
-			for tag, attrs in tags.iteritems():
+			for tag, attrs in tags.items():
 				textList.append("<%s" % tag)
-				for attr, val in attrs.iteritems():
+				for attr, val in attrs.items():
 					textList.append(' %s="%s"' % (attr, val))
 				textList.append(">")
 				openedTags.append(tag)
@@ -287,7 +284,7 @@ class SynthDriver(SynthDriver):
 		volume = self.volume
 
 		for item in speechSequence:
-			if isinstance(item, basestring):
+			if isinstance(item, str):
 				outputTags()
 				textList.append(item.replace("<", "&lt;"))
 			elif isinstance(item, speech.IndexCommand):

@@ -11,13 +11,10 @@ import os
 import sys
 from collections import OrderedDict
 import ctypes
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import wave
-import cStringIO
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
+import io
 from logHandler import log
 import config
 import nvwave
@@ -120,13 +117,8 @@ class SynthDriver(SynthDriver):
 
 	@classmethod
 	def check(cls):
-		if not hasattr(sys, "frozen"):
-			# #3793: Source copies don't report the correct version on Windows 10 because Python isn't manifested for higher versions.
-			# We want this driver to work for source copies on Windows 10, so just return True here.
-			# If this isn't in fact Windows 10, it will fail when constructed, which is okay.
-			return True
-		# For binary copies, only present this as an available synth if this is Windows 10.
-		return winVersion.winVersion.major >= 10
+		# Only present this as an available synth if this is Windows 10.
+		return winVersion.isWin10()
 
 	def _get_supportsProsodyOptions(self):
 		self.supportsProsodyOptions = self._dll.ocSpeech_supportsProsodyOptions()
@@ -207,7 +199,7 @@ class SynthDriver(SynthDriver):
 		if self.supportsProsodyOptions:
 			# In this case however, we must keep any parameter changes.
 			self._queuedSpeech = [item for item in self._queuedSpeech
-				if not isinstance(item, basestring)]
+				if not isinstance(item, str)]
 		else:
 			self._queuedSpeech = []
 		if self._player:
@@ -329,7 +321,7 @@ class SynthDriver(SynthDriver):
 			self._processQueue()
 			return
 		# This gets called in a background thread.
-		stream = cStringIO.StringIO(ctypes.string_at(bytes, len))
+		stream = io.BytesIO(ctypes.string_at(bytes, len))
 		wav = wave.open(stream, "r")
 		self._maybeInitPlayer(wav)
 		data = wav.readframes(wav.getnframes())
@@ -349,7 +341,7 @@ class SynthDriver(SynthDriver):
 			# pos is a time offset in 100-nanosecond units.
 			# Convert this to a byte offset.
 			# Order the equation so we don't have to do floating point.
-			pos = pos * self._bytesPerSec / HUNDRED_NS_PER_SEC
+			pos = pos * self._bytesPerSec // HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
 			self._player.feed(data[prevPos:pos],
 				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
@@ -406,7 +398,7 @@ class SynthDriver(SynthDriver):
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not langDataPath or not isinstance(langDataPath[0], basestring):
+		if not langDataPath or not isinstance(langDataPath[0], str):
 			log.debugWarning("Invalid langDataPath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(langDataPath[0])):
@@ -417,7 +409,7 @@ class SynthDriver(SynthDriver):
 		except WindowsError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
-		if not voicePath or not isinstance(voicePath[0],basestring):
+		if not voicePath or not isinstance(voicePath[0],str):
 			log.debugWarning("Invalid voicePath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(voicePath[0] + '.apm')):
@@ -431,7 +423,7 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self, id):
 		voices = self.availableVoices
 		# Try setting the requested voice
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			if voice.id == id:
 				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
 				return
@@ -449,16 +441,16 @@ class SynthDriver(SynthDriver):
 		voices = self.availableVoices
 		# Try matching to NVDA language
 		fullLanguage=languageHandler.getWindowsLanguage()
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			if voice.language==fullLanguage:
 				return voice.id
 		baseLanguage=fullLanguage.split('_')[0]
 		if baseLanguage!=fullLanguage:
-			for voice in voices.itervalues():
+			for voice in voices.values():
 				if voice.language.startswith(baseLanguage):
 					return voice.id
 		# Just use the first available
-		for voice in voices.itervalues():
+		for voice in voices.values():
 			return voice.id
 		raise RuntimeError("No voices available")
 

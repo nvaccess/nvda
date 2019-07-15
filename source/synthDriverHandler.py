@@ -7,6 +7,7 @@
 
 import os
 import pkgutil
+import importlib
 import config
 import baseObject
 import winVersion
@@ -38,7 +39,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -274,7 +275,7 @@ class SynthDriver(driverHandler.Driver):
 			if item is None:
 				# No more items.
 				break
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				# Merge the text between commands into a single chunk.
 				text+=item
 			elif isinstance(item,speech.IndexCommand):
