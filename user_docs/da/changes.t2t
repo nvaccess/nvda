@@ -26,15 +26,21 @@ Af forbedringer i denne version af NVDA kan nævnes automatisk detektion af punk
  - Tastetryk i gennemsynstilstand responderer langsomt.
 - For punktdisplays der understøtter dette, kan driverindstillinger nu ændres fra NVDAs dialog med punktindstillinger. (#7452)
 - Freedom Scientific punktdisplays er nu omfattet af automatisk detektion, når disse punktdisplays forbindes med computeren.
+- Tilføjet en kommando der viser erstatningen for symbolet under læsemarkøren. (#9286)
+- Implementeret en avanceret indstilling, der lader dig bruge Microsoft UI Automation API ved læsning af Windows konsolvinduer. (#9614)
+- Python-konsollen lader dig nu indsætte flere linjer fra udklipsholderen. (#9776)
 
 
 == Ændringer ==
 - Talesyntesens lydstyrke øges og falder nu med 5% i stedet for 10%, når du bruger ringen af talesynteseindstillinger. (#6754)
 - Gjorde teksten mere forståelig i dialogen til styring af tilføjelsesprogrammer, når NVDA startes med kommandoparametret --disable-addons. (#9473)
 - Opdaterede Unicode Common Locale Data Repository emoji til version 35.0. (#9445)
-- Opdaterede liblouis-punktoversættelse til version 3.9.0. (#9439)
 - Tastaturkommandoen for at gå til filtreringsfeltet i elementlisten i gennemsynstilstand er Alt+E. (#8728)
 - Når et punktdisplay der understøtter automatisk detektion forbindes via Blutooth, vil NVDA kontinuerligt søge efter den tilsvarende driver til opkobling af samme display via USB og forbinde til dette via USB, hvis denne opkoblingsmulighed bliver tilgængelig. (#8853)
+- Opdaterede eSpeak-NG til commit 67324cc.
+- Opdaterede LibLouis punktoversættelse til version 3.10.0. (#9439, #9678)
+- NVDA vil nu annoncerer "valgt" efter det aktuelt valgte emne er oplyst. (#9028)
+- I Microsoft Visual Studio Code vil gennemsynstilstand være slået fra som standard. (#9828)
 
 
 == Fejlrettelser ==
@@ -57,6 +63,9 @@ Af forbedringer i denne version af NVDA kan nævnes automatisk detektion af punk
 - Det er nu igen muligt at benytte tabelnavigationskommandoer i Google Docs, Firefox og Google Chrome. (#9494)
 - Bumper-tasterne virker nu igen korrekt på punktdisplays fra Freedom Scientific. (#8849)
 - Når det første tegn læses i et dokument i Notepad++ 7.7 X64, vil NVDA ikke længere fryse i 10 sekunder. (#9609)
+- HTCom kan nu bruges med et Handy Tech punktdisplay sammen med NVDA. (#9691)
+- NVDA vil ikke længere oplyse ændringer til dynamiske indholdsområder, når du bruger Mozilla Firefox og en fane med dynamisk indhold befinder sig i baggrunden. (#1318)
+- NVDAs dialogboks til søgning af tekst i gennemsynstilstand vil nu korrekt vises, når  NVDAs dialogboks "Om" er åben i baggrunden. (#8566)
 
 
 == Ændringer for udviklere ==

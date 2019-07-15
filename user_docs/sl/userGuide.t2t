@@ -401,6 +401,7 @@ Za pregled besedila so na voljo naslednji ukazi:
 | Izbor in preslikava od pregledne utripalke | NVDA+f9 | NVDA+f9 | brez | začetek izbora in preslikave besedila od trenutnega položaja pregledne utripalke. Aktualno dejanje se ne bo izvedlo, dokler ne boste NVDA sporočili, kje se konča območje besedila |
 | Izbor in preslikava do pregledne utripalke | NVDA+f10 | NVDA+f10 | brez | Ob prvem pritisku se označi območje od zaznamka, ki zaznamuje začetek besedila do vključno trenutnega položaja pregledne utripalke.ob drugem pritisku, se vsebina preslika v odložišče Oken |
 | Sporoči oblikovanje besedila | NVDA+f | NVDA+f | brez | Poroča o oblikovanju besedila, nad katerim je trenutno postavljena pregledna utripalka. Dvojni pritisk informacijo predstavi v brskalniškem delovanju. |
+| Sporoči zamenjavo trenutnega simbola | Ni določeno | Ni določeno | ni določeno | Izgovori simbol, kjer je postavljena pregledna utripalka. Dvojni pritisk pokaže simbol in besedilo za izgovorjavo tega v brskalniškem delovanju. |
 %kc:endInclude
 
 Pomnite: številski del mora biti izključen, da bodo številke na tem delu pravilno delovale.
@@ -1670,6 +1671,12 @@ Za najbolj posodobljene različice Microsoft Offica 2016/365, ki tečejo v windo
 Toda, lahko obstaja tudi nekaj informacij, ki bodisi se ne morejo osvetljiti ali so osvetljene napačno v nekaj različicah Microsoft Offica, kar pomeni, da se na to UI (UV) automation podporo ne moremo vselej zanesti.
 Tako mi še ne priporočamo, da bi večina uporabnikov to možnost imela privzeto vklopljeno, čeprav s hvaležnostjo pozdravljamo uporabnike Offica 2016/365, da testirajo to zmožnost in sporočijo povratne informacije.
 
+==== Uporabi UI (UV) Automation za dostop do Okenske Konzole, ko je na voljo ====[AdvancedSettingsConsoleUIA]
+Ko je ta možnost vključena, bo NVDA uporabljala novo (še v izgradnji) različico njene podpore Okenski Konzoli, ki izkorišča prednosti [izboljšav dostopnosti narejene pri Microsoftu https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ta zmožnost je res še v zelo zgodnji preizkusni fazi in je še nedokončana, tako njena uporaba še ni priporočljiva. Toda enkrat, ko bo končana, si obetamo, da bo ta nova podpora postala privzeta in tako izboljšala učinkovitost NVDA in njeno stabilnost v Okenskih ukaznih konzolah.
+
+==== Izgovori gesla v UIA konzolah ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ta nastavitev nadzira ali se znaki izgovarjajo prek možnosti [izgovori natipkane znake #KeyboardSettingsSpeakTypedCharacters] ali [izgovori natipkane besede #KeyboardSettingsSpeakTypedWords] v situacijah, ko se ekran ne posodablja (kot je vnos gesla) v Okenski Konzoli z UI (UV) automation podporo, ki je vključena. Zaradi varnostnih zadržkov bi morali to nastavitev pustiti onemogočeno. Toda, lahko boste želeli to omogočiti, če boste zaznavali težave z učinkovitostjo ali nestabilno delovanje ob vključenih možnostih sporočanja tipkanih znakov in/ali besed med tem uporabo nove preizkusne NVDA podpore konzoli.
+
 ==== Samodejno postavi sistemsko žarišče na elemente, ki so lahko v žarišču v Brskalniškem Delovanju ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tipka: NVDA+8
 
@@ -1889,6 +1896,7 @@ Za spremembo delovanja NVDA na prijavnem/NUR zaslonih nastavite NVDA, kot želit
 
 ++ Pregledovalnik Dnevnika ++[LogViewer]
 Pregledovalnik dnevnika, ki se nahaja v Orodjih v meniju NVDA, vam omogoča ogled vseh zabeleženih dogodkov v dnevnik od zadnjega zagona NVDA pa do trenutka, ko ste začeli pregledovati dnevnik.
+Uporaba ukaza NVDA+F1 bo odprla pregledovalnik dnevnika in prikazala informacije za razvijalce o trenutnem predmetu krmiljenja.
 
 Poleg branja vsebine, lahko kopijo dnevnika lahko tudi shranite ali osvežite dnevnik, tako da vam prikaže zadnje vnose od tedaj, ko ste dnevnik odprli.
 Ukazi so na voljo v meniju Pregledovalnika dnevnika.
