@@ -37,7 +37,7 @@ import speech
 import braille
 import gui
 from gui import guiHelper
-from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
+from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons, autoAddonUpdateCheck
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
@@ -288,7 +288,7 @@ class AutoUpdateChecker(UpdateChecker):
 			# #3208: unless NVDA Core needs to check for an update right now, give add-ons a chance to check for updates.
 			# But not when running as a Windows Store application.
 			if not config.isAppX and secsTillNext > 0 and config.conf["update"]["addonUpdateAtStartup"]:
-				wx.CallAfter(addonHandler.autoAddonUpdateCheck)
+				wx.CallAfter(autoAddonUpdateCheck)
 		self._checkTimer.Start(secsTillNext * 1000, True)
 
 	def terminate(self):
