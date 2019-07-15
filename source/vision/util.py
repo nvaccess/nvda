@@ -33,16 +33,16 @@ def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.Re
 		except RuntimeError:
 			if not obj._hasNavigableText:
 				raise LookupError
+	try:
+		caretInfo = obj.makeTextInfo(textInfos.POSITION_CARET)
+	except (NotImplementedError, RuntimeError):
+		# Try a selection
 		try:
-			caretInfo = obj.makeTextInfo(textInfos.POSITION_CARET)
+			caretInfo = obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except (NotImplementedError, RuntimeError):
-			# Try a selection
-			try:
-				caretInfo = obj.makeTextInfo(textInfos.POSITION_SELECTION)
-			except (NotImplementedError, RuntimeError):
-				# There is nothing to do here
-				raise LookupError
-		return getRectFromTextInfo(caretInfo)
+			# There is nothing to do here
+			raise LookupError
+	return getRectFromTextInfo(caretInfo)
 
 def getMouseRect() -> locationHelper.RectLTRB:
 	point = locationHelper.Point(*mouseHandler.curMousePos)

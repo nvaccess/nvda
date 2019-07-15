@@ -290,7 +290,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		if context in (Context.NAVIGATOR, Context.REVIEW):
 			self.updateContextRect(context=Context.NAVIGATOR)
 
-	def handleBrowseModeMove(self):
+	def handleBrowseModeMove(self, obj=None):
 		self.updateContextRect(context=Context.BROWSEMODE)
 
 	def refresh(self):
