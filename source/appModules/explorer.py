@@ -67,18 +67,6 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 			return True
 		return False
 
-
-class ClassicStartMenu(Window):
-	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
-	# Translators: The title of Start menu/screen in your language (only the word start).
-	name = _("Start")
-
-	def event_gainFocus(self):
-		# In Windows XP, the Start button will get focus first, so silence this.
-		speech.cancelSpeech()
-		super(ClassicStartMenu, self).event_gainFocus()
-
-
 class NotificationArea(IAccessible):
 	"""The Windows notification area, a.k.a. system tray.
 	"""
@@ -200,14 +188,7 @@ class AppModule(appModuleHandler.AppModule):
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "ToolbarWindow32":
-			if role == controlTypes.ROLE_POPUPMENU:
-				parent = obj.parent
-				if parent and parent.windowClassName == "SysPager" and obj.windowStyle & 0x80:
-					clsList.insert(0, ClassicStartMenu)
-			else:
-				# Check whether this is the notification area, a.k.a. system tray.
-				if isinstance(obj.parent, ClassicStartMenu):
-					return # This can't be a notification area
+			if role != controlTypes.ROLE_POPUPMENU:
 				try:
 					# The toolbar's immediate parent is its window object, so we need to go one further.
 					toolbarParent = obj.parent.parent
@@ -281,7 +262,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 
 		if windowClass == "DV2ControlHost" and role == controlTypes.ROLE_PANE:
-			# Windows Vista/7 start menu.
+			# Windows 7 start menu.
 			obj.presentationType=obj.presType_content
 			obj.isPresentableFocusAncestor = True
 			# In Windows 7, the description of this pane is extremely verbose help text, so nuke it.

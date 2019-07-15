@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: https://www.nvaccess.org/
-#Copyright 2011-2017 NV Access Limited, Joseph Lee
+#Copyright 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -28,7 +28,7 @@ signExec=env['signExec'] if env['certFile'] else None
 RE_AC_INIT = re.compile(r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)")
 def getLouisVersion():
 	# Get the version from configure.ac.
-	with file(louisRootDir.File("configure.ac").abspath) as f:
+	with open(louisRootDir.File("configure.ac").abspath) as f:
 		for line in f:
 			m = RE_AC_INIT.match(line)
 			if m:
@@ -54,7 +54,7 @@ env.Append(CPPDEFINES=[
 	# variants that start with an '_'. This removes those deprecation warnings. */
 	"_CRT_NONSTDC_NO_DEPRECATE",
 	("PACKAGE_VERSION", r'\"%s\"' % getLouisVersion()),
-	("UNICODE_BITS", 16),
+	"WIDECHARS_ARE_UCS4",
 	# Tell liblouis.h that we're exporting liblouis dll functions, not importing them.
 	"_EXPORTING",
 ])
@@ -64,7 +64,7 @@ env.Prepend(CPPPATH=[".", louisSourceDir])
 env['CPPDEFINES'].remove("UNICODE")
 
 liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
-	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned short int"})
+	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned int"})
 
 sourceFiles = [
 	"compileTranslationTable.c",

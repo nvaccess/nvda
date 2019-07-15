@@ -1,6 +1,6 @@
 #logHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Rui Batista, Joseph Lee
+#Copyright (C) 2007-2019 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,8 +12,6 @@ import sys
 import warnings
 from encodings import utf_8
 import logging
-# #7105: Python 3 split the following into two dictionaries.
-from logging import _levelNames as levelNames
 import inspect
 import winsound
 import traceback
@@ -78,29 +76,27 @@ def getCodePath(f):
 				if not member:
 					continue
 				memberType=type(member)
-				if memberType is FunctionType and member.func_code is f.f_code:
+				if memberType is FunctionType and member.__code__ is f.f_code:
 					# the function was found as a standard method
 					className=cls.__name__
-				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.func_code is f.f_code:
+				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.__code__ is f.f_code:
 					# function was found as a class method
 					className=cls.__name__
 				elif memberType is property:
-					if type(member.fget) is FunctionType and member.fget.func_code is f.f_code:
+					if type(member.fget) is FunctionType and member.fget.__code__ is f.f_code:
 						# The function was found as a property getter
 						className=cls.__name__
-					elif type(member.fset) is FunctionType and member.fset.func_code is f.f_code:
+					elif type(member.fset) is FunctionType and member.fset.__code__ is f.f_code:
 						# the function was found as a property setter
 						className=cls.__name__
 				if className:
 					break
-	return ".".join([x for x in path,className,funcName if x])
+	return ".".join(x for x in (path,className,funcName) if x)
 
 # Function to strip the base path of our code from traceback text to improve readability.
 if getattr(sys, "frozen", None):
 	# We're running a py2exe build.
-	# The base path already seems to be stripped in this case, so do nothing.
-	def stripBasePathFromTracebackText(text):
-		return text
+	stripBasePathFromTracebackText = lambda text: text
 else:
 	BASE_PATH = os.path.split(__file__)[0] + os.sep
 	TB_BASE_PATH_PREFIX = '  File "'
@@ -147,7 +143,7 @@ class Logger(logging.Logger):
 			msg += ("\nStack trace:\n"
 				+ stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip()))
 
-		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
+		res = super()._log(level, msg, args, exc_info, extra)
 
 		if activateLogViewer:
 			# Make the log text we just wrote appear in the log viewer.
@@ -175,8 +171,7 @@ class Logger(logging.Logger):
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
-		import watchdog
-		from watchdog import RPC_E_CALL_CANCELED
+		from core import CallCancelled, RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
@@ -184,7 +179,7 @@ class Logger(logging.Logger):
 		if (
 			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, EPT_S_NOT_REGISTERED, RPC_E_CALL_CANCELED))
 			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, CO_E_OBJNOTCONNECTED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
-			or isinstance(exc, watchdog.CallCancelled)
+			or isinstance(exc, CallCancelled)
 		):
 			level = self.DEBUGWARNING
 		else:
@@ -212,18 +207,7 @@ class RemoteHandler(logging.Handler):
 		except WindowsError:
 			pass
 
-class FileHandler(logging.StreamHandler):
-
-	def __init__(self, filename, mode):
-		# We need to open the file in text mode to get CRLF line endings.
-		# Therefore, we can't use codecs.open(), as it insists on binary mode. See PythonIssue:691291.
-		# We know that \r and \n are safe in UTF-8, so PythonIssue:691291 doesn't matter here.
-		logging.StreamHandler.__init__(self, utf_8.StreamWriter(file(filename, mode)))
-
-	def close(self):
-		self.flush()
-		self.stream.close()
-		logging.StreamHandler.close(self)
+class FileHandler(logging.FileHandler):
 
 	def handle(self,record):
 		# Only play the error sound if this is a test version.
@@ -239,18 +223,9 @@ class FileHandler(logging.StreamHandler):
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
 				pass
-		return logging.StreamHandler.handle(self,record)
+		return super().handle(record)
 
 class Formatter(logging.Formatter):
-
-	def format(self, record):
-		s = logging.Formatter.format(self, record)
-		if isinstance(s, str):
-			# Log text must be unicode.
-			# The string is probably encoded according to our thread locale, so use mbcs.
-			# If there are any errors, just replace the character, as there's nothing else we can do.
-			s = unicode(s, "mbcs", "replace")
-		return s
 
 	def formatException(self, ex):
 		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
@@ -288,9 +263,11 @@ def redirectStdout(logger):
 	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
 
+# Register our logging class as the class for all loggers.
+logging.setLoggerClass(Logger)
 #: The singleton logger instance.
 #: @type: L{Logger}
-log = Logger("nvda")
+log = logging.getLogger("nvda")
 
 def _getDefaultLogFilePath():
 	if getattr(sys, "frozen", None):
@@ -339,8 +316,7 @@ def initialize(shouldDoRemoteLogging=False):
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
 				pass # Probably log does not exist, don't care.
-			# Our FileHandler always outputs in UTF-8.
-			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
+			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w",encoding="utf-8")
 	else:
 		logHandler = RemoteHandler()
 		logFormatter = Formatter("%(codepath)s:\n%(message)s")
@@ -360,11 +336,12 @@ def setLogLevelFromConfig():
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]
-	level = levelNames.get(levelName)
+	# logging.getLevelName can give you a level number if given a name.
+	level = logging.getLevelName(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).
 	# Setting a log level to something other than options found in the GUI is unsupported.
 	if level not in (log.DEBUG, log.IO, log.DEBUGWARNING, log.INFO, log.OFF):
 		log.warning("invalid setting for logging level: %s" % levelName)
 		level = log.INFO
-		config.conf["general"]["loggingLevel"] = levelNames[log.INFO]
+		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.setLevel(level)

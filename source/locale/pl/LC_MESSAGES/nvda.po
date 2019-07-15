@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:10+1000\n"
-"PO-Revision-Date: 2019-06-04 13:23+0100\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-06 21:02+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team: killer@tyflonet.com\n"
 "Language: pl_PL\n"
@@ -1760,12 +1760,6 @@ msgstr "%s punkt orientacyjny"
 msgid "lmk %s"
 msgstr "⠇⠍⠅ %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "zaznaczone %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Brak długiego opisu"
@@ -3122,10 +3116,6 @@ msgstr "Prawy zablokowany"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Blokuje lub zwalnia prawy przycisk myszy"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s zaznaczone"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3813,6 +3803,30 @@ msgstr ""
 "Przenosi punkt przeglądu do ostatniego znaku aktualnej linii obiektu "
 "nawigatora i wypowiada ten znak"
 
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Wymawia symbol pod kursorem przeglądu. Gdy polecenie jest naciśnięte "
+"dwukrotnie, symbol i jego wymowa zostaną wyświetlone w trybie czytania. "
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Nie ma zamiany symbolu"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Symbol: {}\n"
+"Zamiana: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Wymowa symbolu dla języka({})"
+
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
 msgstr "Tryb komunikacji bez mowy"
@@ -4049,19 +4063,18 @@ msgstr "Włącza i wyłącza przesuwanie obiektu nawigatora podczas ruchów foku
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements off"
-msgstr ""
-"Automatycznie ustaw kursor systemowy na elementach interaktywnych nie"
+msgstr "Automatycznie ustaw kursor systemowy na elementach interaktywnych nie"
 
 #. Translators: presented when toggled.
 msgid "Automatically set system focus to focusable elements on"
-msgstr ""
-"Automatycznie ustaw kursor systemowy na elementach interaktywnych tak"
+msgstr "Automatycznie ustaw kursor systemowy na elementach interaktywnych tak"
 
 #. Translators: Input help mode message for toggle auto focus focusable elements command.
 msgid ""
 "Toggles on and off automatic movement of the system focus due to browse mode "
 "commands"
-msgstr "Przełącza przesuwanie fokusa systemowego  w  wyniku komend trybu czytania."
+msgstr ""
+"Przełącza przesuwanie fokusa systemowego  w  wyniku komend trybu czytania."
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
@@ -6059,15 +6072,24 @@ msgstr "duże %s"
 msgid "no indent"
 msgstr "brak wcięcia"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "zaznaczone %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s zaznaczone"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znaków"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s zaznaczone"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9403,6 +9425,16 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr "Używaj UI Automation dla wiersza poleceń jeżeli jest dostępne"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Wymawiaj &hasła w konsolach UIA (może zwiększyć wydajnosć)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Automatycznie ustaw kursor systemowy na elementach &interaktywnych"
 
@@ -11254,6 +11286,9 @@ msgstr "Interlinia podwójna"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interlinia 1.5"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s zaznaczone"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Bieżąca aplikacja to %s"

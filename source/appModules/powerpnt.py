@@ -244,7 +244,7 @@ def getBulletText(ppBulletFormat):
 	if t==ppBulletNumbered:
 		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
-		return unichr(ppBulletFormat.character)
+		return chr(ppBulletFormat.character)
 
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
@@ -1081,7 +1081,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		else:
 			info = self.selection
 			if not info.isCollapsed:
-				speech.speakSelectedText(info.text)
+				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
