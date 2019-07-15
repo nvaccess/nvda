@@ -1937,6 +1937,12 @@ class GlobalCommands(ScriptableObject):
 	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be selected or copied")
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
+	@script(
+		# Translators: Input help mode message for move review cursor to marked start position for a select or copy command
+		description=_("Move the review cursor to the position marked as the start of text to be selected or copied"),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+shift+F9",
+	)
 	def script_review_moveToStartMarkedForCopy(self, gesture):
 		pos = api.getReviewPosition()
 		if not getattr(pos.obj, "_copyStartMarker", None):
@@ -1948,9 +1954,6 @@ class GlobalCommands(ScriptableObject):
 		startMarker.collapse()
 		startMarker.expand(textInfos.UNIT_CHARACTER)
 		speech.speakTextInfo(startMarker, unit=textInfos.UNIT_CHARACTER, reason=controlTypes.REASON_CARET)
-	# Translators: Input help mode message for move review cursor to marked start position for a select or copy command
-	script_review_moveToStartMarkedForCopy.__doc__ = _("Move the review cursor to the position marked as the start of text to be selected or copied")
-	script_review_moveToStartMarkedForCopy.category=SCRCAT_TEXTREVIEW
 
 	def script_review_copy(self, gesture):
 		pos = api.getReviewPosition().copy()
@@ -2395,7 +2398,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+a": "review_sayAll",
 		"ts(text):3finger_flickDown":"review_sayAll",
 		"kb:NVDA+f9": "review_markStartForCopy",
-		"kb:NVDA+shift+f9": "review_moveToStartMarkedForCopy",
 		"kb:NVDA+f10": "review_copy",
 
 		# Flat review
