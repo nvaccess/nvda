@@ -954,7 +954,7 @@ class MSHTML(IAccessible):
 
 	def _get_table(self):
 		if self.role not in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW) or not self.HTMLNode:
-			raise NotImplementedError
+			return None
 		HTMLNode=self.HTMLNode
 		while HTMLNode:
 			nodeName=HTMLNode.nodeName
@@ -962,7 +962,7 @@ class MSHTML(IAccessible):
 				nodeName=nodeName.upper()
 			if nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
 			HTMLNode=HTMLNode.parentNode
-		raise NotImplementedError
+		return None
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
