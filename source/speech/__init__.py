@@ -390,7 +390,7 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
 				# if there is selected text, then there is a value and we do not report placeholder
-				speakPreselectedText(info.text)
+				speakPreselectedText(info.text, priority=priority)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
@@ -557,7 +557,7 @@ def speak(speechSequence, symbolLevel=None, priority=None):
 				speechSequence[index]+=CHUNK_SEPARATOR
 	_manager.speak(speechSequence, priority)
 
-def speakPreselectedText(text):
+def speakPreselectedText(text, priority=None):
 	""" Helper method to announce that a newly focused control already has
 	text selected. This method is in contrast with L{speakTextSelected}.
 	The method will speak the word "selected" with the provided text appended.
@@ -571,9 +571,9 @@ def speakPreselectedText(text):
 	# Translators: This is spoken to indicate that some text is already selected.
 	# 'selected' preceding text is intentional.
 	# For example 'selected hello world'
-	speakSelectionMessage(_("selected %s"), text)
+	speakSelectionMessage(_("selected %s"), text, priority)
 
-def speakTextSelected(text):
+def speakTextSelected(text, priority=None):
 	""" Helper method to announce that the user has caused text to be selected.
 	This method is in contrast with L{speakPreselectedText}.
 	The method will speak the provided text with the word "selected" appended.
@@ -645,12 +645,12 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				speakTextSelected(text)
+				speakTextSelected(text, priority=priority)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
-			speakTextSelected(text)
+			speakTextSelected(text, priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
