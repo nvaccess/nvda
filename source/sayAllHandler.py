@@ -125,7 +125,7 @@ class _TextReader(object):
 			return
 		bookmark = self.reader.bookmark
 		# Expand to the current line.
-		# We use move end rather than expand
+		# We use move end rather than expand⠀
 		# because the user might start in the middle of a line
 		# and we don't want to read from the start of the line in that case.
 		# For lines after the first, it's also more efficient because
@@ -168,14 +168,17 @@ class _TextReader(object):
 				# The first buffered line has now started speaking.
 				self.numBufferedLines -= 1
 
-	def lineReached(self, obj, bookmark, state):
-		# We've just started speaking this line, so move the cursor there.
-		state.updateObj()
+	def _bookmarkReached(self, obj, bookmark):
 		updater = obj.makeTextInfo(bookmark)
 		if self.cursor == CURSOR_CARET:
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
+
+	def lineReached(self, obj, bookmark, state):
+		# We've just started speaking this line, so move the cursor there.
+		state.updateObj()
+		self._bookmarkReached(obj, bookmark)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()
