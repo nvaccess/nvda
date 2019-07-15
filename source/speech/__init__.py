@@ -390,7 +390,7 @@ def speakObject(obj, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
 				# if there is selected text, then there is a value and we do not report placeholder
-				speakSelectedText(info.text, priority=priority)
+				speakPreselectedText(info.text, priority=priority)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				_speakPlaceholderIfEmpty(info, obj, reason,priority=priority)
@@ -557,11 +557,33 @@ def speak(speechSequence, symbolLevel=None, priority=None):
 				speechSequence[index]+=CHUNK_SEPARATOR
 	_manager.speak(speechSequence, priority)
 
-def speakSelectedText(text, priority=None):
-	""" Helper method to speak the provided text with the word "selected" appended.
-	Implemented using L{speakSelectionMessage}, which allows for speaking text with an arbitrary attached message.
+def speakPreselectedText(text, priority=None):
+	""" Helper method to announce that a newly focused control already has
+	text selected. This method is in contrast with L{speakTextSelected}.
+	The method will speak the word "selected" with the provided text appended.
+	The announcement order is different from L{speakTextSelected} in order to
+	inform a user that the newly focused control has content that is selected,
+	which they may unintentionally overwrite.
+
+	@remarks: Implemented using L{speakSelectionMessage}, which allows for
+		speaking text with an arbitrary attached message.
 	"""
-	# Translators: This is spoken to indicate what has been selected. for example 'hello world selected'
+	# Translators: This is spoken to indicate that some text is already selected.
+	# 'selected' preceding text is intentional.
+	# For example 'selected hello world'
+	speakSelectionMessage(_("selected %s"), text, priority)
+
+def speakTextSelected(text, priority=None):
+	""" Helper method to announce that the user has caused text to be selected.
+	This method is in contrast with L{speakPreselectedText}.
+	The method will speak the provided text with the word "selected" appended.
+
+	@remarks: Implemented using L{speakSelectionMessage}, which allows for
+		speaking text with an arbitrary attached message.
+	"""
+	# Translators: This is spoken to indicate what has just been selected.
+	# The text preceding 'selected' is intentional.
+	# For example 'hello world selected'
 	speakSelectionMessage(_("%s selected"), text, priority)
 
 def speakSelectionMessage(message,text,priority=None):
@@ -623,12 +645,12 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				speakSelectedText(text, priority=priority)
+				speakTextSelected(text, priority=priority)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
-			speakSelectedText(text, priority=priority)
+			speakTextSelected(text, priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
