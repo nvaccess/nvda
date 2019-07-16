@@ -1672,7 +1672,8 @@ However, There may be some information which is either not exposed, or exposed i
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
 ==== Windows Console support ====[AdvancedSettingsConsoleUIA]
-This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux. It does not affect the modern Windows Terminal.
+This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
+It does not affect the modern Windows Terminal.
 In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
 In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
 The Windows Console support combo box has three options:
