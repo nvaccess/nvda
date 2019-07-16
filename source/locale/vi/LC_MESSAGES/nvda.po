@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vietnamese Language for NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:10+1000\n"
-"PO-Revision-Date: 2019-06-16 21:25+0700\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-10 13:44+0700\n"
 "Last-Translator: Dang Manh Cuong <dangmanhcuong@gmail.com>\n"
 "Language-Team: Sao Mai Center for the Blind <danghoaiphuc@gmail.com>\n"
 "Language: vi_VN\n"
@@ -1760,12 +1760,6 @@ msgstr "Cột mốc %s"
 msgid "lmk %s"
 msgstr "lmk %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "đã chọn %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Không có mô tả"
@@ -3120,10 +3114,6 @@ msgstr "Khóa nút chuột phải"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Khóa hoặc mở khóa nút chuột phải"
 
-#, python-format
-msgid "Selected %s"
-msgstr "Đã chọn %s"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3801,6 +3791,30 @@ msgid ""
 msgstr ""
 "Đưa con trỏ duyệt đến ký tự cuối cùng trên dòng hiện tại của đối tượng điều "
 "hướng và đọc ký tự đó"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Thông báo kí hiệu tại vị trí con trỏ duyệt. Bấm hai lần để xem kí hiệu và "
+"văn bản thay thế khi đọc nó ở chế độ duyệt"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Không có kí hiệu thay thế"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Kí tự: {}\n"
+"Replacement: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Kí hiệu đã mở rộng ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6026,15 +6040,24 @@ msgstr "%s hoa"
 msgid "no indent"
 msgstr "không thụt lề"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "đã chọn %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "đã chọn %s"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d ký tự"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "đã chọn %s"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -8457,7 +8480,7 @@ msgstr "Cập nhật NVDA thành công. "
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "Vui lòng chọn OK để bắt đầu chạy bản cài đặt."
+msgstr "Vui lòng bấm Đồng Ý để bắt đầu chạy bản cài đặt."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -8497,12 +8520,12 @@ msgstr "&Giữ lại biểu tượng trên màn hình Desktop"
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "Tạo biểu tượng trên màn hình &Desktop và tạo phím tắt (Ctrl + alt + n)"
+msgstr "Tạo biểu tượng trên &Desktop và phím tắt (Ctrl + alt + n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
 msgstr ""
-"Chép &thư mục cấu hình bản chạy trực tiếp vào thu mục người dùng hiện tại"
+"Chép &thư mục cấu hình bản chạy trực tiếp vào thư mục người dùng hiện tại"
 
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
@@ -8816,7 +8839,7 @@ msgstr "Tự động chuyển giọng theo vùng miền (nếu có hỗ trợ)"
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
-msgstr "&Mức độ thông báo dấu câu và ký hiệu:"
+msgstr "&Mức độ đọc dấu câu và ký hiệu:"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
@@ -8923,7 +8946,7 @@ msgstr "Thông báo khi &di chuyển chuột"
 #. Translators: This is the label for a combobox in the
 #. mouse settings panel.
 msgid "Text &unit resolution:"
-msgstr "Đơ&n vị nội dung được đọc tại vị trí chuột:"
+msgstr "Đơ&n vị nội dung tại vị trí chuột:"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -9068,11 +9091,11 @@ msgstr "Thông báo thay đổi nội &dung động"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings panel.
 msgid "Play a sound when &auto-suggestions appear"
-msgstr "Phát âm thanh khi có gợi ý tự động"
+msgstr "Phát âm thanh khi có gợi ý &tự động"
 
 #. Translators: This is the label for the browse mode settings panel.
 msgid "Browse Mode"
-msgstr "Chế độ duyệt tài liệu"
+msgstr "Chế độ duyệt"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings panel.
@@ -9117,7 +9140,7 @@ msgstr "Tự động chuyển sang chế độ focus khi di chuyển con trỏ n
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 msgid "Audio indication of focus and browse modes"
-msgstr "Phát âm thanh khi thay đổi giữa chế độ nhập và chế độ duyệt"
+msgstr "Phát âm thanh khi thay đổi giữa chế độ focus và chế độ duyệt"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -9208,7 +9231,7 @@ msgstr "Số &dòng"
 #. Translators: This is the label for a combobox controlling the reporting of line indentation in the
 #. Document  Formatting  dialog (possible choices are Off, Speech, Tones, or Both.
 msgid "Line &indentation reporting:"
-msgstr "Thông báo thụt lề dòng:"
+msgstr "Thông báo &thụt lề dòng:"
 
 #. Translators: A choice in a combo box in the document formatting dialog  to report No  line Indentation.
 #. Translators: This is the label for a combobox in the
@@ -9352,6 +9375,16 @@ msgid ""
 msgstr ""
 "Sử dụng UI Automation để truy cập các điều khiển của &tài liệu Microsoft "
 "Word khi có thể"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr "Sử dụng UI Automation để truy cập Windows Console khi có thể"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Nói &mật khẩu trong UIA consoles (có thể cải thiện vận hành)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -11197,6 +11230,9 @@ msgstr "Phân cách dòng đôi"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Phân cách dòng 1.5"
+
+#~ msgid "Selected %s"
+#~ msgstr "Đã chọn %s"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Ứng dụng đang chạy là %s"

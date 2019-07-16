@@ -21,20 +21,25 @@ Caracteristicile principale ale acestei versiuni includ autodetectarea afișajel
 - În Eclipse, s-a adăugat suportul pentru autocompletarea din editorul de coduri. (#5667)
  - În plus, informațiile Javadoc, dacă există, pot fi citite din editor utilizându-se comanda NVDA+d.
 - S-a adăugat o opțiune de test în panoul setărilor avansate care vă dă posibilitatea să opriți focalizarea sistemului să urmărească cursorul modului de Navigare (Setează automat focalizarea sistemului la elementele focalizabile). (#2039) Totuși, s-ar putea să nu funcționeze pe toate sit-urile web, s-ar putea să rezolve: 
- - Efectul benzii de cauciuc: NVDA anulează sporadic apăsarea ultimei combinații de taste a modului de navigare sărind la locația precedentă.
+ - Efectul benzii elastice: NVDA anulează sporadic apăsarea ultimei combinații de taste a modului de navigare sărind la locația precedentă.
  - Casetele de editare „fură” focalizarea sistemului la deplasarea printre ele cu săgeată jos pe anumite site-uri web.
  - Combinațiile de taste ale modului de navigare răspund greu.
 - Pentru driverele afișajelor braille care le suportă, setările de driver pot fi modificate din categoria setărilor braille, aflată în fereastra de dialog a setărilor NVDA. (#7452)
 - Afișajele braille de la Freedom Scientific sunt suportate acum de autodetectarea afișajelor braille. (#7727)
+- S-a adăugat o comandă care afișează înlocuirea pentru simbolul de sub cursorul de examinare. (#9286)
+- În Consola Python, câmpul de editare suportă acum lipirea rândurilor multiple de pe planșetă. (#9776)
 
 
 == Modificări ==
 - Volumul sintetizatorului este mărit și micșorat cu 5 în loc de 10 la utilizarea inelului de setări. (#6754)
 - Textul din administratorul de suplimente este acum mai clar atunci când NVDA este lansat cu insigna --disable-addons. (#9473)
-- S-a actualizat adnotările emoticoanelor Depozitului de Date Comune Locale Unicode la versiunea 35.0. (#9445)
+- Combinația de taste pentru câmpul de filtrare din lista de elemente din modul de navigare a fost modificată la alt+y. (#8728)
+- S-au actualizat adnotările emoticoanelor Depozitului de Date Comune Locale Unicode la versiunea 35.0. (#9445)
+- S-a actualizat Espeak-NG la commit-ul 67324cc.
 - S-a actualizat traducătorul braille liblouis la versiunea 3.9.0. (#9439)
-- Combinația de taste pentru câmpul de filtrare din lista de elemente a modului de navigare s-a modificat la alt+y. (#8728)
 - Dacă un afișaj braille autodetectat este conectat prin Bluetooth, NVDA va continua să caute afișaje USB suportate de același driver și să treacă la o conexiune USB dacă devine disponibilă. (#8853)
+- NVDA nu va mai spune cuvântul „selectat” după ce spune ce a fost selectat. (#9028)
+- În Microsoft Visual Studio Code, modul de navigare este dezactivat în mod implicit. (#9828)
 
 
 == Defecte rezolvate ==
@@ -57,6 +62,9 @@ Caracteristicile principale ale acestei versiuni includ autodetectarea afișajel
 - Iarăși e posibilă folosirea comenzile NVDA de navigare în tabel în Google Docs, Firefox și Chrome. (#9494)
 - Acum, tastele barei de protecție funcționează corect pe afișajele braille de la Freedom Scientific. (#8849)
 - La citirea primului caracter al unui document în Notepad++ 7.7 X64, NVDA nu se mai blochează pentru un timp maxim de 10 secunde. (#9609)
+- Acum, HTCom poate fi folosit cu un afișaj braille Handy Tech în combinație cu NVDA. (#9691)
+- În Mozilla Firefox, actualizările la o regiune live nu mai sunt raportate dacă acea regiune live se află într-o filă de fundal. (#1318)
+- Dialogul de căutare al modului de navigare NVDA funcționează fără probleme chiar și atunci când fereastra de dialog care conține detalii despre NVDA este deschisă la un moment dat în fundal. (#8566)
 
 
 == Modificări pentru Dezvoltatori ==
@@ -65,9 +73,13 @@ Caracteristicile principale ale acestei versiuni includ autodetectarea afișajel
 - Sa actualizat pachetul comtypes la 1.1.7. (#9440, #8522)
 - Când se folosește comanda informației de raportare a modulului, ordinea informațiilor se modifică pentru ca modulul să fie prezentat mai întâi. (#7338)
 - S-a adăugat un exemplu care să demonstreze utilizarea nvdaControllerClient.dll din C#. (#9600)
+- Sa adăugat o nouă funcție isWin10 la modulul winVersion, care indică dacă această copie de NVDA rulează sau nu (cel puțin) versiunile furnizate de Windows 10 (cum ar fi 1903). (#9761)
+- Consola NVDA Python conține acum multe module utile în namespace-ul ei (cum ar fi appModules, globalPlugins, config și textInfos). (#9789)
+- Rezultatul ultimei comenzi executată în consola NVDA Python este accesibil din variabila _ (line). (#9782)
+ - Țineți cont de faptul că acesta umbrește funcția de traducere gettext, numită și „_”. Pentru a accesa funcția de traducere: del _
 
 
-= 2019.1.1 ==
+= 2019.1.1 =
 Această versiune minoră aduce în atenția utilizatorilor următoarele erori rezolvate:
 - NVDA nu mai face ca Excel 2007 să dea crash sau să refuze să raporteze o celulă care conține o formulă. (#9431)
 - Google Chrome nu mai dă crash-uri la interacțiunea cu anumite listbox-uri. (#9364)

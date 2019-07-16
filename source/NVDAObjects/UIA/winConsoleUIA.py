@@ -34,7 +34,7 @@ class consoleUIATextInfo(UIATextInfo):
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
 		oldInfo=self.copy()
-		super(consoleUIATextInfo,self).collapse()
+		super(consoleUIATextInfo,self).collapse(end=end)
 		if not end:
 			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
