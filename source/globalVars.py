@@ -18,6 +18,7 @@
 @type navigatorObject: L{NVDAObjects.NVDAObject}
 @var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
 @type navigatorTracksFocus: boolean
+@var maximizedUIAConsoles: stores state for maximized consoles, see #9899
 """
  
 startTime=0
@@ -38,3 +39,4 @@ appArgsExtra=None
 settingsRing = None
 speechDictionaryProcessing=True
 exitCode=0
+maximizedUIAConsoles = []

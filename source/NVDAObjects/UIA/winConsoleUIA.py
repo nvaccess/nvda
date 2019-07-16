@@ -6,6 +6,7 @@
 
 import config
 import ctypes
+import globalVars
 import NVDAHelper
 import speech
 import time
@@ -238,9 +239,6 @@ class WinConsoleUIA(Terminal):
 	_hasNewLines = False
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
-	#: Stores whether this console has ever been maximized
-	# (maximization breaks GetVisibleRanges).
-	_maximized = False
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
@@ -294,10 +292,15 @@ class WinConsoleUIA(Terminal):
 		speech.curWordChars = []
 
 	def _get_maximized(self):
-		res = self.parent.UIAWindowPattern.CurrentWindowVisualState == UIAHandler.WindowVisualState_Maximized
-		if res:
-			self._maximized = True
-		return self._maximized or res
+		res = self.UIAElement.getRuntimeId() in globalVars.maximizedUIAConsoles
+		if (
+			self.parent.UIAWindowPattern.CurrentWindowVisualState
+			== UIAHandler.WindowVisualState_Maximized
+			and not res
+		):
+			globalVars.maximizedUIAConsoles.append(self.UIAElement.getRuntimeId())
+			return True
+		return res
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
