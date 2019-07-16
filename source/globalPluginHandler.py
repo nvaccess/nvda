@@ -6,7 +6,6 @@
 
 import sys
 import pkgutil
-import importlib
 import config
 import baseObject
 from logHandler import log
@@ -20,7 +19,7 @@ def listPlugins():
 		if name.startswith("_"):
 			continue
 		try:
-			plugin = importlib.import_module("globalPlugins.%s" % name, package="globalPlugins").GlobalPlugin
+			plugin = __import__("globalPlugins.%s" % name, globals(), locals(), ("globalPlugins",)).GlobalPlugin
 		except:
 			log.error("Error importing global plugin %s" % name, exc_info=True)
 			continue

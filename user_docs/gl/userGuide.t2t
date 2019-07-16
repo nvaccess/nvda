@@ -401,6 +401,7 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Selecionar logo Copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | none | Comeza a seleción logo procesa a copia dende a posición actual do cursor de revisión. A acción actual non se leva a cabo ata que digas ao NVDA onde está o final do rango de texto |
 | Seleccionar logo Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | none | Na primeira pulsación, o texto seleciónase dende enriba da posición previamente fixada coma a marca de comezo e incluindo a posición actual do cursor de revisión. Logo de premer esta tecla unha segunda vez, o texto copiarase ao portapapeis de Windows |
 | Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión. Premendo dúas veces amosa a información en modo exploración |
+| Anunciar reemplazo de símbolo actual | Non | Non | non | Fala o símbolo onde estea colocado o cursor de revisión. Premido dúas veces, amosa o símbolo e o texto usado para falalo no modo exploración. |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum sexa desactivada para funcionar apropriadamente.
@@ -472,7 +473,18 @@ Se ben se poderían usar un rato físico ou un trackpad para navegar co rato, NV
 
 + Modo Navegación +[BrowseMode]
 Os documentos complexos de só lectura, como páxinas web, son representados no NVDA cun Modo Navegación. 
-Esto inclúe documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensaxes HTML en Microsoft Outlook,Google Chrome, Adobe Reader e Adobe Flash.
+Esto inclúe documentos nas seguintes aplicacións:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Mmensaxes HTML en Microsoft Outlook
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash.
+- Libros admitidos en Amazon Kindle for PC
+-
 O modo Exploración tamén está dispoñible opcionalmente para documentos de Microsoft Word.
 
 No Modo Navegación, o contido do documento faise dispoñible mediante unha representación chan de contido como unha páxina Web, polo que te podes mover cas teclas de cursor. 
@@ -493,7 +505,7 @@ Ademáis, podes forzar manualmente o modo foco, despois permanecerá efectivo at
 | Conmutar modos Navegación/foco | NVDA+espazo | Conmuta entre modo foco e modo navegación |
 | Saír de modo foco | escape | Cambia a modo navegación se o modo foco anteriormente estaba cambiado automáticamente |
 | Refrescar documento en modo Navegación | NVDA+f5 | Recarga o contido do documento actual (útil se certos contidos parecen estar desaparecidos da páxina. Non dispoñible en Microsoft Word e Outlook) |
-| Procurar | NVDA+control+f | Desprega un diálogo no que podes teclear algún texto a atopar no  documento actual |
+| Procurar | NVDA+control+f | Desprega un diálogo no que podes teclear algún texto a atopar no  documento actual. Consulta [procurar texto #SearchingForText] para máis información. |
 | Procurar seguinte | NVDA+f3 | Atopa a seguinte  ocurrencia do texto no documento que buscaches anteriormente |
 | Procurar anterior | NVDA+shift+f3 | Atopa a ocurrencia anterior do texto no documento buscado anteriormente |
 | abrir descripción longa | NVDA+d | Abre unha ventá nova contendo unha descripción longa para o elemento sobre o que estea se ten unha. | 
@@ -523,7 +535,7 @@ A seguintes teclas elas soas saltan ao seguinte campo, ca tecla shift saltan ao 
 - s: separador
 - m: marco
 - g: gráfico
-- d: ponto de referencia
+- d: rexión
 - o: obxecto empotrado (reproductor de audio e vídeo, aplicación, diálogo, etc.)
 - 1 a 6: cabeceiras da 1 á 6 respectivamente
 - a: anotación (comentario, revisión do editor, etc.)
@@ -543,13 +555,29 @@ Para activar ou desactivar a navegación cunha soa letra para o documento actual
 
 ++ A Lista de Elementos ++[ElementsList]
 A lista de elementos proporciona acceso a unha lista de varios tipos de elementos no documento segundo sexa apropriado para a aplicación.
-Por exemplo, nos navegadores web, a lista de elementos pode listar ligas, cabeceiras, campos de formulario, botóns ou pontos de referencia.
+Por exemplo, nos navegadores web, a listaxe de elementos pode listar ligas, cabeceiras, campos de formulario, botóns ou rexións.
 Os botóns de opción permítenche cambiar entre os diferentes tipos de elementos.
 Proporciónase tamén un campo de edición no diálogo o que che permite filtrar a lista para axudarche a buscar un elemento en particular na páxina. 
 Unha vez escollas un elemento, podes utilizar os botóns proporcionados no diálogo para moverte cara, ou activar, ese elemento.
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Lista de elementos do Modo Navegación | NVDA+f7 | Lista  varios tipos de elementos no documento actual |
+%kc:endInclude
+
+++ Procurar texto ++[SearchingForText]
+Este diálogo permíteche buscar termos no documento actual.
+No campo "Teclear o texto que desexes atopar", pode introducirse o texto a procurar.
+Mentres esteas no campo de texto, tamén podes usar as frechas arriba e abaixo para selecionar os termos procurados anteriormente.
+A caixa de verificación "Sensible ás maiúsculas" fai que a busca considere letras en maiúsculas e en minúsculas de xeito diferente.
+Por exemplo, con "Sensible ás maiúsculas" selecionada podes atopar "NV Access" pero non "nv access".
+Non se gardarán as diferencias de caso no histórico de buscas.
+Cando se reinicie o NVDA, a listaxe dos termos buscados anteriormente valdéirase.
+Usa as seguintes teclas para realizar buscas:
+%kc:beginInclude
+|| Nome | Tecla | Descripción |
+| Procurar texto | NVDA+control+f | Abre o diálogo procurar |
+| Procurar seguinte | NVDA+f3 | Busca a seguinte ocurrencia do termo buscado actual |
+| Procurar anterior | NVDA+shift+f3 | Busca a ocurrencia anterior do termo buscado actual |
 %kc:endInclude
 
 ++ Obxectos Empotrados ++[ImbeddedObjects]
@@ -611,8 +639,8 @@ Por favor consulta a seción [Pantallas Braille soportadas  #SupportedBrailleDis
 Esta seción tamén contén información sobre que pantallas son compatibles coa función de detección automática de pantallas braille do NVDA.
 Podes configurar o braille usando a [categoría Opcións de Braille #BrailleSettings] do diálogo [Opcións do NVDA #NVDASettings].
 
-++ Abreviaturas de tipos de Control, estado e pontos de referencia ++[BrailleAbbreviations]
-Co fin de ter a maior cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así como os pontos de referencia.
+++ Abreviaturas de tipos de Control, estado e rexións ++[BrailleAbbreviations]
+Co fin de ter a maior cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado así como as rexións.
 
 || Abreviatura | Tipo de Control |
 | apl | aplicación |
@@ -635,7 +663,7 @@ Co fin de ter a maior cantidade de información posible nunha pantalla braille, 
 | grp | grupo |
 | enN | cabeceira de nivel n, ex.: h1, h2. |
 | axd | grobo de axuda |
-| pdr | ponto de referencia |
+| rex | rexión |
 | lig | liga |
 | ligv | liga visitada |
 | lst | listaxe |
@@ -688,8 +716,8 @@ Os seguintes indicadores de estado  tamén están definidos:
 | ordeado desc | amosado cando un obxecto se ordea descendentemente |
 | submnu | amosado cando un obxecto ten un despregable (normalmente un submenú) |
 
-Finalmente, definíronse as seguintes abreviaturas para potos de referencia:
-|| Abreviatura | Ponto de referencia |
+Finalmente, definíronse as seguintes abreviaturas para rexións:
+|| Abreviatura | Rexión |
 | tlo | título |
 | cinf | info de contido |
 | cmpl | complementario |
@@ -1352,6 +1380,8 @@ Cando está marcada significa que NVDA anunciará o texto actualmente baixo o pu
 Se NVDA está configurado para anunciar o texto baixo o rato segundo se mova, esta opción permíteche escoller  exactamente canto texto será falado. 
 As opcións son caracter, palabra, liña e parágrafo.
 
+Para cambiar a unidade de resolución de texto dende calquera sitio, por favor asigna un xesto personalizado usando o [Diálogo Xestos de entrada #InputGestures].
+
 ==== Anunciar rol cando o rato entra nos Obxectos ====[MouseSettingsRole]
 Se esta caixa de verificación está marcada, NVDA anunciará o rol (tipo) de obxecto cando o rato se mova dentro del.
 
@@ -1502,7 +1532,15 @@ Este campo axusta a cantidade de liñas que moverás cando premas Avance de páx
 ==== Utilizar deseño de pantalla ====[BrowseModeSettingsScreenLayout]
 Tecla: NVDA+v
 
-Esta opción permíteche especificar se o contido no modo navegación debería colocar cousas como ligas e outros campos na súa propria liña, ou se debería conservalos no fluxo de texto segundo sexa amosado visualmente. Se a opción está activada, entón as cousas permanecerán segundo sexan amosadas visualmente, pero se está desactivada, entón os campos serán colocados na súa propria liña.
+Esta opción permíteche especificar se o contido no modo navegación debería colocar cousas como ligas e outros campos na súa propria liña, ou se debería conservalos no fluxo de texto segundo sexa amosado visualmente.
+Se a opción está activada, entón as cousas permanecerán segundo sexan amosadas visualmente, pero se está desactivada, entón os campos serán colocados na súa propria liña.
+
+==== Habilitar modo Exploración ao cargar Páxina ====[BrowseModeSettingsEnableOnPageLoad]
+Esta caixa de verificación conmuta se se debería habilitar automáticamente o modo exploración ao cargar unha páxina.
+Cando esta opción estea deshabilitada, o modo exploración aínda pode activarse manualmente en páxinas ou en documentos onde se admita o modo exploración.
+Consulta a [Seción modo Exploración #BrowseMode] para unha listaxe das aplicacións admitidas polo modo Exploración.
+Ten en conta que esta opción non se aplica a situacións onde o modo exploración sexa sempre opcional, por exemplo, en Microsoft Word.
+Esta opción está habilitada por defecto.
 
 ==== Falar Todo Automáticamente ao Cargar a Páxina ====[BrowseModeSettingsAutoSayAll]
 Esta caixa de verificación conmuta a fala automática dunha páxina despois de cargala en modo navegación.
@@ -1569,7 +1607,7 @@ Podes configurar o anunciado de:
  - Ligas
  - Listas
  - Citas
- - Pontos de referencia
+ - Rexións
  - Marcos
  - Admite clic
  -
@@ -1633,6 +1671,22 @@ Esto inclúe ao mesmo Microsoft Word, e tamén o visor de mensajes e o composito
 Sen embargo, pode haber algunha información que non estea exposta ou que estea incorrectamente exposta nalgunhas versións de Microsoft Office, o que significa que non sempre se pode confiar neste soporte da UI automation.
 Aínda non recomendamos que a maioría dos usuarios activen esta opción de xeito predeterminado, aínda que invitamos aos usuarios de Office 2016/365 a que proben esta función e que nos envíen os seus comentarios.
 
+==== Usar UI Automation para acesar á Consola de Windows cando estea dispoñible ====[AdvancedSettingsConsoleUIA]
+Cando esta opción estea activada, o NVDA usará unha versión nova de traballo en curso do seu soporte para a Consola de Windows que aproveita as ventallas das [melloras de accesibilidade feitas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica é altamente experimental e aínda incompreta, así que o seu uso aínda non está recomendado. Sen embargo, unha vez compretado, pénsase que este novo soporte se convirta  no predeterminado, mellorando o rendemento e a estabilidade do NVDA nas consolas de ordes de Windows.
+
+==== Falar contrasinais en Consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opción controla se se falan os caracteres por [falar caracteres ao se escreber #KeyboardSettingsSpeakTypedCharacters] ou [falar palabras ao se escreber #KeyboardSettingsSpeakTypedWords] en situacións onde a pantalla non se actualice (coma entrada de contrasinal) na Consola de Windows co soporte UI automation activado. Por razóns de seguridade, esta opción debería deixarse deshabilitada. Sen embargo, é posible que desexes habilitala se experimentas problemas de rendemento ou de inestabilidade co anuncio de caracteres e/ou palabras ao se escreber mentres usas o novo soporte experimental do NVDA para a Consola.
+
+==== Poñer Automáticamente o Foco do Sistema nos Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
+Tecla: NVDA+8
+
+Habilitada por defecto, esta opción permíteche escoller se o foco do sistema debería poñerse automáticamente nos elementos que podan telo (ligas, campos de formulario, etc.) cando se navegue polo contido co cursor do modo exploración.
+Se se habilita, esto representa o comportamento predeterminado do NVDA como a versión 2019.1 e anteriores.
+Deshabilitando esta opción non se enfocarán automáticamente os elementos enfocables cando se selecionen co cursor do modo exploración.
+Esto podería resultar nunha mellor experiencia de navegación e unha mellor resposta no modo exploración.
+O foco aínda se actualizará ao elemento en particular cando interactúes con el (por exemplo, premendo un botón, marcando unha caixa de verificación).
+Esta funcionalidade é experimental a partires do NVDA 2019.2.
+
 ==== Tempo de espera para o movemento do cursor (en MS) ====[AdvancedSettingsCaretMoveTimeout]
 Esta opción permíteche configurar o número de milésimas de segundo que o NVDA esperará a que o cursor (ponto de inserción) se mova nos controis de texto editables.
 Se ves que o NVDA semella estar seguindo incorrectamente o cursor, por exemplo, parece estar sempre un carácter por detrás ou repetindo liñas, entón podes tentar aumentar este valor.
@@ -1686,6 +1740,7 @@ A lingua cuia pronuncia de símbolo vai a seren editada amosarase No título do 
 Ten en conta que este diálogo respeta a opción "Confiar na lingua da voz ao se procesar símbolos e caracteres" que se atopa na [Categoría Voz #SpeechSettings] do diálogo [Opcións do NVDA #NVDASettings] é dicir, usa a lingua da voz en lugar da opción da lingua global do NVDA cando esta opción estea habilitada.
 
 Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
+Podes filtrar os símbolos introducindo o símbolo ou unha parte da súa sustitución no cuadro de edición Filtrar por.
 
 - O campo Reemprazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
 - Utilizando o campo Nível, podes axustar o nivel máis baixo do símbolo ao que este símbolo debería se falar.
@@ -1751,7 +1806,7 @@ O NVDA permíteche facer esto utilizando perfiles de configuración.
 Un perfil de configuración contén só as opcións que se cambian mentres que o perfil estea a ser editado.
 A maioría das opcións pódense cambiar nos perfís de configuración con excepción de aquelas que estean na categoría Xeral da caixa de diálogo [Opcións do NVDA #NVDASettings, as que se aplican á totalidade do NVDA.
 
-Os perfiles de configuración pódense activar manualmente.
+Os perfís de configuración pódense activar manualmente, sexa dende unha caixa de diálogo ou usando xestos engadidos persoalizados.
 Tamén se poden activar de forma automática debido aos disparadores como o cambio a unha aplicación en particular.
 
 +++ Manexo Básico +++[ProfilesBasicManagement]
@@ -1818,6 +1873,14 @@ Podes facer esto marcando a caixa de verificación Desactivar Temporalmente Todo
 
 Para activar ou desactivar os disparadores dende calquera sitio, por favor asigna un xesto personalizado usando o [Diálogo Xestos de Entrada #InputGestures].
 
++++ Activar un perfil usando xestos de entrada +++[ConfigProfileGestures]
+Para cada perfil que engadas, poderás asignar un ou máis xestos de entrada para activalo.
+Por defecto, os perfís de configuración non teñen xestos de entrada asignados.
+Podes engadir xestos para activar un perfil usando o [diálogo Xestos de Entrada #InputGestures].
+Cada perfil ten a súa propria entrada na categoría perfís de configuración.
+Cando renomees un perfil, calquera xesto que engadiras con anterioridade aínda estará dispoñible.
+Borrar un perfil eliminará automáticamente o xesto asociado con él.
+
 ++ Ubicación dos Ficheiros de Configuración++[LocationOfConfigurationFiles]
 As versións portátiles do NVDA almacenan todas as súas opcións e complementos nun directorio chamado userConfig, que se atopa no directorio de NVDA.
 
@@ -1833,6 +1896,7 @@ Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA
 
 ++ Visualizador do Rexistro ++[LogViewer]
 O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
+Usando NVDA+F1 abrirase o visualizador do rexistro e amosarase a información do desenvolvedor sobre o navegador de obxectos actual.
 
 Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
 Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
@@ -1998,13 +2062,11 @@ Todas as pantallas Focus e PAC Mate de [Freedom Scientific https://www.freedomsc
 Necesitarás os controladores de pantallas braille de Freedom Scientific instalados no teu sistema.
 Se non os tes aínda, podes obtelos dende https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Aíndaque esta páxina só mencione a pantalla Focus 40 Blue, o controlador soporta todas as pantallas Focus e Pacmate de Freedom Scientific.
-Se o teu sistema executa un Windows de 64 bit e os controladores xa se instalaron por outro lector de pantalla, posiblemente aínda necesitarás instalar os controladores dende esta liga, posto que os ficheiros que require NVDA posiblemente non foron instalados polo outro lector de pantalla.
 
 Predeterminadamente, NVDA pode detectar automáticamente e conectarse a estas pantallas tanto a través do USB como do bluetooth.
 Non obstante, cando se configura a pantalla, podes seleccionar explícitamente os portos "USB" ou "Bluetooth" para restrinxir o tipo de conexión a utilizar.
 Esto podería ser útil se queres conectar a pantalla focus ao NVDA utilizando bluetooth, e todavía poderías cargala utilizando a enerxía do USB dende o teu ordenador.
-
-Estas pantallas aínda non admiten a funcionalidade de detección automática do NVDA.
+A deteción automática de pantallas braille do NVDA tamén recoñecerá a pantalla en USB ou en Bluetooth.
 
 Seguidamente van as asociacións de teclas para esta pantalla co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
