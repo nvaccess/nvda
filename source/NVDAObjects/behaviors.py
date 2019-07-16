@@ -367,7 +367,7 @@ class Terminal(LiveText, EditableText):
 		self.stopMonitoring()
 
 
-class TerminalWithKeyboardSupport(Terminal):
+class TerminalWithoutTypedCharDetection(Terminal):
 	"""A Terminal object that also provides typed character support for
 	console applications on Windows 10 1607 and later."""
 	#: Whether this object reliably sends textChange events.
@@ -395,7 +395,7 @@ class TerminalWithKeyboardSupport(Terminal):
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
 			self._queuedChars = []
-		super(TerminalWithKeyboardSupport, self)._reportNewText(line)
+		super(TerminalWithoutTypedCharDetection, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
@@ -415,11 +415,11 @@ class TerminalWithKeyboardSupport(Terminal):
 		):
 			self._queuedChars.append(ch)
 		else:
-			super(TerminalWithKeyboardSupport, self).event_typedCharacter(ch)
+			super(TerminalWithoutTypedCharDetection, self).event_typedCharacter(ch)
 
 	def event_textChange(self):
 		self._dispatchQueue()
-		super(TerminalWithKeyboardSupport, self).event_textChange()
+		super(TerminalWithoutTypedCharDetection, self).event_textChange()
 
 	@script(gestures=[
 		"kb:enter",
@@ -444,13 +444,13 @@ class TerminalWithKeyboardSupport(Terminal):
 			self._findNonBlankIndices(newLines)
 			!= self._findNonBlankIndices(oldLines)
 		)
-		return super(TerminalWithKeyboardSupport, self)._calculateNewText(newLines, oldLines)
+		return super(TerminalWithoutTypedCharDetection, self)._calculateNewText(newLines, oldLines)
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
 		while self._queuedChars:
 			ch = self._queuedChars.pop(0)
-			super(TerminalWithKeyboardSupport, self).event_typedCharacter(ch)
+			super(TerminalWithoutTypedCharDetection, self).event_typedCharacter(ch)
 
 	def _findNonBlankIndices(self, lines):
 		"""

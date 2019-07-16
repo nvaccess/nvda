@@ -6,7 +6,7 @@
 
 import winConsoleHandler
 from . import Window
-from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection, TerminalWithKeyboardSupport
+from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection, TerminalWithoutTypedCharDetection
 import api
 import core
 
@@ -21,7 +21,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	def initOverlayClass(self):
 		# Legacy consoles take quite a while to send textChange events.
 		# This significantly impacts typing performance, so don't queue chars.
-		if isinstance(self, TerminalWithKeyboardSupport):
+		if isinstance(self, TerminalWithoutTypedCharDetection):
 			self._supportsTextChange = False
 
 	def _get_TextInfo(self):
