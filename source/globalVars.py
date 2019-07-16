@@ -18,6 +18,7 @@
 @type navigatorObject: L{NVDAObjects.NVDAObject}
 @var navigatorTracksFocus: if true, the navigator object will follow the focus as it changes
 @type navigatorTracksFocus: boolean
+@var reviewBounded: Whether the review cursor is bounded to the currently visible text.
 """
  
 startTime=0
@@ -32,6 +33,7 @@ mouseOldY=None
 navigatorObject=None
 reviewPosition=None
 reviewPositionObj=None
+reviewBounded = True
 lastProgressValue=0
 appArgs=None
 appArgsExtra=None

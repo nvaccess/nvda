@@ -936,13 +936,16 @@ class GlobalCommands(ScriptableObject):
 		"""
 		newInfo = info.copy()
 		res = newInfo.move(unit, direction, endPoint=endPoint)
-		if newInfo.obj.reviewBounded and newInfo.isOffscreen:
-			return (info, 0)
+		try:
+			if globalVars.reviewBounded and newInfo.isOffscreen:
+				return (info, 0)
+		except NotImplementedError:
+			pass
 		return (newInfo, res)
 
 	def script_review_top(self,gesture):
 		obj = api.getReviewPosition().obj
-		pos = textInfos.POSITION_FIRSTVISIBLE if obj.reviewBounded else textInfos.POSITION_FIRST
+		pos = textInfos.POSITION_FIRSTVISIBLE if globalVars.reviewBounded else textInfos.POSITION_FIRST
 		info = obj.makeTextInfo(pos)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -1004,7 +1007,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_bottom(self,gesture):
 		obj = api.getReviewPosition().obj
-		pos = textInfos.POSITION_LASTVISIBLE if obj.reviewBounded else textInfos.POSITION_LAST
+		pos = textInfos.POSITION_LASTVISIBLE if globalVars.reviewBounded else textInfos.POSITION_LAST
 		info = obj.makeTextInfo(pos)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -2258,6 +2261,37 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
 
+	def script_toggleReviewBounds(self, gesture):
+		rp = api.getReviewPosition()
+		outOfBounds = None
+		try:
+			outOfBounds = rp.isOffscreen
+		except NotImplementedError:
+			ui.message(
+				# Translators: Reported when review bound configuration isn't supported for this object.
+				_(u"Not supported here"))
+		else:
+			globalVars.reviewBounded = not globalVars.reviewBounded
+			if globalVars.reviewBounded:
+				ui.message(
+					# Translators: Reported when review is constrained to this
+					# object's visible text.
+					_(u"Bounded review")
+				)
+				if outOfBounds:
+					api.setReviewPosition(
+						api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_CARET))
+			else:
+				ui.message(
+					# Translators: Reported when review is unconstrained, so all
+					# of this object's text can be read.
+					_(u"Unbounded review")
+				)
+
+	# Translators: A gesture description.
+	script_toggleReviewBounds.__doc__ = _(u"Toggles whether review is constrained to the currently visible text")
+	script_toggleReviewBounds.category=SCRCAT_TEXTREVIEW
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -2369,6 +2403,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+numpad1": "reviewMode_previous",
 		"kb(laptop):NVDA+pageDown": "reviewMode_previous",
 		"ts(object):2finger_flickDown": "reviewMode_previous",
+		"kb:NVDA+o": "toggleReviewBounds",
 
 		# Mouse
 		"kb:numpadDivide": "leftMouseClick",

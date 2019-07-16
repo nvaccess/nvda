@@ -21,7 +21,17 @@ class TextContainerObject(ScriptableObject):
 		raise NotImplementedError
  
 	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
+		try:
+			return self.TextInfo(self,position)
+		except NotImplementedError as e:
+			if position == textInfos.POSITION_FIRSTVISIBLE:
+				# Fall back to POSITION_FIRST
+				return self.makeTextInfo(textInfos.POSITION_FIRST)
+			elif position == textInfos.POSITION_LASTVISIBLE:
+				# Fall back to POSITION_LAST
+				return self.makeTextInfo(textInfos.POSITION_LAST)
+			else:
+				raise e
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
