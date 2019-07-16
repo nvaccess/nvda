@@ -378,10 +378,17 @@ class TerminalWithKeyboardSupport(Terminal):
 	#: Whether the console got new text lines in its last update.
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
+	#: Whether the last typed character is a tab.
+	#: If so, we should temporarily disable filtering as completions may
+	#: be short.
+	_hasTab = False
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
-		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
+		if (
+			not self._hasTab
+			and len(line.strip()) < max(len(speech.curWordChars) + 1, 3)
+		):
 			return
 		if self._hasNewLines:
 			# Clear the typed word buffer for new text lines.
@@ -392,9 +399,12 @@ class TerminalWithKeyboardSupport(Terminal):
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
+			self._hasTab = True
 			# Clear the typed word buffer for tab completion.
 			# This will need to be changed once #8110 is merged.
 			speech.curWordChars = []
+		else:
+			self._hasTab = False
 		if (
 			(
 				config.conf['keyboard']['speakTypedCharacters']
