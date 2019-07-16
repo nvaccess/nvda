@@ -30,6 +30,9 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from .commands import *
+from typing import Optional, Callable, Any
+from functools import partial
+from types import GeneratorType
 
 speechMode_off=0
 speechMode_beeps=1
@@ -766,8 +769,25 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 	except (NotImplementedError, LookupError):
 		return
 
-def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=controlTypes.REASON_QUERY, _prefixSpeechCommand=None, onlyInitialFields=False, suppressBlanks=False,priority=None):
+re_white_space = re.compile(r"(\s+|$)", re.DOTALL)
+
+class _TextCommand(str):
+	"""str subclass to distinguish normal text from field text when processing text info speech."""
+
+def speakTextInfo(
+	info,
+	useCache=True,
+	formatConfig=None,
+	unit=None,
+	reason=controlTypes.REASON_QUERY,
+	_prefixSpeechCommand=None,
+	_whiteSpaceReachedCallback: Optional[Callable[[Any], None]] = None,
+	onlyInitialFields=False,
+	suppressBlanks=False,
+	priority=None
+):
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
+	processWhiteSPace: bool = _whiteSpaceReachedCallback is not None
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -943,9 +963,9 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 					indentationDone=True
 			if command:
 				if inTextChunk:
-					relativeSpeechSequence[-1]+=command
+					relativeSpeechSequence[-1] = _TextCommand(relativeSpeechSequence[-1] + command)
 				else:
-					relativeSpeechSequence.append(command)
+					relativeSpeechSequence.append(_TextCommand(command))
 					inTextChunk=True
 		elif isinstance(command,textInfos.FieldCommand):
 			newLanguage=None
@@ -1007,16 +1027,44 @@ def speakTextInfo(info, useCache=True, formatConfig=None, unit=None, reason=cont
 		else:
 			speechSequence.append(indentationSpeech)
 		if speakTextInfoState: speakTextInfoState.indentationCache=allIndentation
-	# Don't add this text if it is blank.
-	relativeBlank=True
-	for x in relativeSpeechSequence:
-		if isinstance(x,str) and not isBlank(x):
-			relativeBlank=False
-			break
-	if not relativeBlank:
-		speechSequence.extend(relativeSpeechSequence)
+	# only add this text if it is not blank.
+	notBlank = any(
+		not isBlank(x) for x in relativeSpeechSequence
+		if isinstance(x,str)
+	)
+	if notBlank:
 		isTextBlank=False
-
+		if not processWhiteSPace:
+			speechSequence.extend(relativeSpeechSequence)
+		else:
+			# Add appropriate white space bookmarks
+			whiteSpaceTracker = info.copy()
+			whiteSpaceTracker.collapse()
+			for index, command in list(enumerate(relativeSpeechSequence)):
+				if not isinstance(command, _TextCommand):
+					continue
+				curCommandSequence = []
+				endOfWhiteSpaceIndexes = [m.end() for m in re_white_space.finditer(command)]
+				start = 0
+				for end in endOfWhiteSpaceIndexes:
+					text = command[start:end]
+					curCommandSequence.append(text)
+					whiteSpaceTracker.move(textInfos.UNIT_CHARACTER, len(text))
+					if whiteSpaceTracker.compareEndPoints(info, "startToEnd") > 0:
+						break
+					bookmark = whiteSpaceTracker.bookmark
+					cb = partial(_whiteSpaceReachedCallback, bookmark=bookmark)
+					curCommandSequence.append(CallbackCommand(cb))
+					# The whiteSpaceTracker shouldn't move past the end of the info we're speaking.
+					start = end
+				relativeSpeechSequence[index] = curCommandSequence
+			expandedRelativeSpeechSequence = []
+			for x in relativeSpeechSequence:
+				if isinstance(x, list):
+					expandedRelativeSpeechSequence.extend(x)
+				else:
+					expandedRelativeSpeechSequence.append(x)
+			speechSequence.extend(expandedRelativeSpeechSequence)
 	#Finally get speech text for any fields left in new controlFieldStack that are common with the old controlFieldStack (for closing), if extra detail is not requested
 	if autoLanguageSwitching and lastLanguage is not None:
 		speechSequence.append(LangChangeCommand(None))

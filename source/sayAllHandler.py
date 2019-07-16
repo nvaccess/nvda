@@ -1,5 +1,6 @@
+# sayAllHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2017 NV Access Limited
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +13,8 @@ import controlTypes
 import api
 import textInfos
 import queueHandler
+from functools import partial
+import time
 
 CURSOR_CARET = 0
 CURSOR_REVIEW = 1
@@ -99,6 +102,8 @@ class _TextReader(object):
 	11. If there is another page, L{turnPage} calls L{nextLine}.
 	"""
 	MAX_BUFFERED_LINES = 10
+	_lastEndOfWhiteSpaceReachedTime = 0
+	MIN_TIME_BETWEEN_WHITE_SPACE_UPDATES = 0.5
 
 	def __init__(self, cursor):
 		self.cursor = cursor
@@ -125,7 +130,7 @@ class _TextReader(object):
 			return
 		bookmark = self.reader.bookmark
 		# Expand to the current line.
-		# We use move end rather than expand⠀
+		# We use move end rather than expand
 		# because the user might start in the middle of a line
 		# and we don't want to read from the start of the line in that case.
 		# For lines after the first, it's also more efficient because
@@ -142,9 +147,19 @@ class _TextReader(object):
 			return
 		# Call lineReached when we start speaking this line.
 		# lineReached will move the cursor and trigger reading of the next line.
-		cb = speech.CallbackCommand(lambda obj=self.reader.obj, state=self.speakTextInfoState.copy(): self.lineReached(obj,bookmark, state))
+		cb = speech.CallbackCommand(partial(
+			self.lineReached,
+			obj=self.reader.obj,
+			bookmark=bookmark,
+			state=self.speakTextInfoState.copy()
+		))
 		spoke = speech.speakTextInfo(self.reader, unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=cb,
+			_whiteSpaceReachedCallback=(
+				self.endOfWhiteSpaceReached
+				if config.conf["speech"]["increaseSayAllCaretUpdates"]
+				else None
+			),
 			useCache=self.speakTextInfoState)
 		# Collapse to the end of this line, ready to read the next.
 		try:
@@ -174,6 +189,13 @@ class _TextReader(object):
 			updater.updateCaret()
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
+
+	def endOfWhiteSpaceReached(self, bookmark):
+		curTime = time.time()
+		if (self._lastEndOfWhiteSpaceReachedTime + self.MIN_TIME_BETWEEN_WHITE_SPACE_UPDATES) > curTime:
+			return
+		self._lastEndOfWhiteSpaceReachedTime = curTime
+		self._bookmarkReached(self.reader.obj, bookmark)
 
 	def lineReached(self, obj, bookmark, state):
 		# We've just started speaking this line, so move the cursor there.
