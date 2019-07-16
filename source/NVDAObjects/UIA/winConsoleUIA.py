@@ -209,9 +209,6 @@ class WinConsoleUIA(Terminal):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	#: Bound review in consoles by default to maintain feature parity
-	#: with legacy
-	reviewBounded = True
 	_TextInfo = consoleUIATextInfo
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
@@ -219,8 +216,6 @@ class WinConsoleUIA(Terminal):
 	#: Whether the console got new text lines in its last update.
 	#: Used to determine if typed character/word buffers should be flushed.
 	_hasNewLines = False
-	#: Bound consoles by default to maintain feature parity with legacy.
-	_defaultReviewBounds = True
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
