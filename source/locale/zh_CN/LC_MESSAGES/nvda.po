@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-21 00:10+1000\n"
-"PO-Revision-Date: 2019-06-21 21:00+0800\n"
-"Last-Translator: Larry Wang <larry.wang.801@gmail.com>\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-05 08:40+0800\n"
+"Last-Translator: dingpengyu <dingpengyu06@gmail.com>\n"
 "Language-Team: NVDASimplified Chinese team All volunteers <Copyright (C) "
 "2010-2019>\n"
 "Language: zh_CN\n"
@@ -1768,12 +1768,6 @@ msgstr "%s 路标"
 msgid "lmk %s"
 msgstr "地标 %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s，已选择"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "无长描述"
@@ -3119,10 +3113,6 @@ msgstr "按下鼠标右键"
 msgid "Locks or unlocks the right mouse button"
 msgstr "按下或松开鼠标右键"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s，已选择"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3773,6 +3763,28 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "将浏览光标移动到正在查看对象行尾的字符，并将其读出"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr "朗读浏览光标所在的符号。连续按两次，显示在浏览模式下读出的符号和文本"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "没有符号可替换"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"字符: {}\n"
+"替换: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "扩展符号 ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -5960,15 +5972,24 @@ msgstr "大写%s"
 msgid "no indent"
 msgstr "没有缩进"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s，已选择"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s，已选择"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d 个字符"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s，已选择"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9234,6 +9255,16 @@ msgstr "在Word调用UI Automation接口 (&u)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr "在 Windows控制台 调用 UI Automation 接口 (&u)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "在Windows控制台读出密码 可提高性能(&S)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "将焦点自动跳转到可聚焦元素(&F)"
 
@@ -11055,6 +11086,9 @@ msgstr "双倍行间距"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5倍行间距"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s，已选择"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "当前运行的程序为 %s"
