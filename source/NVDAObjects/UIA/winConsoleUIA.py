@@ -209,6 +209,9 @@ class WinConsoleUIA(Terminal):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
+	#: Bound review in consoles by default to maintain feature parity
+	#: with legacy
+	reviewBounded = True
 	_TextInfo = consoleUIATextInfo
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.

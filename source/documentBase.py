@@ -10,7 +10,6 @@ import textInfos
 import speech
 import ui
 import controlTypes
-import globalVars
 
 class TextContainerObject(ScriptableObject):
 	"""
@@ -30,16 +29,6 @@ class TextContainerObject(ScriptableObject):
 	def _set_selection(self,info):
 		info.updateSelection()
 
-	#: The default state for an object's review bounds.
-	_defaultReviewBounds = False
-
-	def _get_reviewBounded(self):
-		return globalVars.reviewBoundsStates.get(self.uniqueID, self._defaultReviewBounds)
-
-	def _set_reviewBounded(self, state):
-		if not self.uniqueID:
-			raise NotImplementedError
-		globalVars.reviewBoundsStates[self.uniqueID] = state
 
 class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	"""
@@ -217,3 +206,5 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
 	}
+
+
