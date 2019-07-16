@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
-"PO-Revision-Date: 2019-06-06 06:55+0800\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-06 21:42+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1761,12 +1761,6 @@ msgstr "%s ориентир"
 msgid "lmk %s"
 msgstr "|ор %s|"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "Выделено %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Нет подробного описания"
@@ -3129,10 +3123,6 @@ msgstr "Правая кнопка мыши зажата"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Зажимает или отпускает правую кнопку мыши"
 
-#, python-format
-msgid "Selected %s"
-msgstr "Выделено %s"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3820,6 +3810,30 @@ msgid ""
 msgstr ""
 "Перемещает просмотровый курсор на последний символ текущей строки объекта "
 "навигатора и читает его"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Сообщает символ в текущей позиции просмотрового курсора. При двойном нажатии "
+"представляет заменяющий его текст в режиме обзора"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Нет замены для символа"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Символ: {}\n"
+"Замена: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Информация о символе ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6092,15 +6106,24 @@ msgstr "большая %s"
 msgid "no indent"
 msgstr "нет отступа"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "Выделено %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s выделено"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d символов"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s выделено"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9473,6 +9496,17 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Использовать UI Automation для доступа к Windows Console (если возможно)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Читать &пароли в UIA-консолях (может улучшить производительность)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Автоматически устанавливать системный &фокус на фокусируемые элементы"
 
@@ -11336,3 +11370,6 @@ msgstr "Двойной междустрочный интервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторный междустрочный интервал"
+
+#~ msgid "Selected %s"
+#~ msgstr "Выделено %s"

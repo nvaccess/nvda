@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
-"PO-Revision-Date: 2019-05-30 16:35+0100\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-04 18:12+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -1763,12 +1763,6 @@ msgstr "%s orijentir"
 msgid "lmk %s"
 msgstr "orj %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "odabrano %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Nema dugog opisa"
@@ -3125,10 +3119,6 @@ msgstr "desna tipka miša zaključana"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Zaključava ili otključava desnu tipku miša"
 
-#, python-format
-msgid "Selected %s"
-msgstr "odabrano %s"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3827,6 +3817,30 @@ msgid ""
 msgstr ""
 "Premiješta pregledni kursor na zadnji znak u redku gdje je isti smješten u "
 "trenutnom objektu navigatora te ga izgovara"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Izgovara znak pod preglednim kursorom. Kada se pritisne dva put, pokazuje "
+"znak i tekst koji se koristi za izgovor istog u načinu pregleda."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Nema zamjene za znak"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Znak: {}\n"
+"Zamjena: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Izgovor znaka na jeziku ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6081,15 +6095,24 @@ msgstr "veliko %s"
 msgid "no indent"
 msgstr "nema uvlake"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "odabrano %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s označeno"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d znakova"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s označeno"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9443,6 +9466,18 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Koristi UI Automation za pristup Windows naredbenom retku kada je to moguće"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Izgovaraj &lozinke U UIA naradbenim retcima (može unaprediti odzivljivost)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Automatski postavi &fokus sustava na stavke koje se mogu fokusirati"
 
@@ -11288,6 +11323,9 @@ msgstr "Dvostruki prored"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 prored"
+
+#~ msgid "Selected %s"
+#~ msgstr "odabrano %s"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Trenutna aktivna aplikacija je %s"

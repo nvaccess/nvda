@@ -401,6 +401,7 @@ Sljedeći prečaci su dostupne za pregled teksta:
 | označi a potom kopiraj sa preglednog kursora | insert+f9 | insert+f9 | nema | označava a potom započinje proces kopiranja od trenutne pozicije preglednog kursora. trenutna akcija se ne izvodi sve dok ne kažete NVDA gdje se nalazi kraj niza znakova |
 | označi a potom kopiraj na pregledni kursor | insert+f10 | insert+f10 | nema | prilikom prvog pritiska, tekst je označen od pozicije od koje je označen početni marker uključujući trenutnu poziciju preglednog kursora. Poslije drugog pritiska iste prečice, tekst će biti kopiran u windowsow međuspremnik |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi Prilikom pritiska prečaca dva puta brzo, informacija se prikazuje u načinu pregleda. |
+| Iygovori trenutnu zamjenu simbola | Nema | Nema | Nema | Izgovara simbol na kojem se nalazi pregledni kursor. Kada se pritisne dvaput, pokazuje simbol i tekst koji ga opisuje u načinu pregleda. |
 %kc:endInclude
 
 Bilješka: tipke na numeričkoj tipkovnici zahtjevaju isključen numerički blok da bi ispravno radile.
@@ -1670,6 +1671,12 @@ Ovo uključuje Microsoft Word, te sastavljač i preglednik poruka u Microsoft Ou
 Međutim, postoje neke informacije koje se ne mogu dohvatiti koristeći ovu podršku, stoga se na nju ne možemo potpuno pouzdati.
 Još uvijek ne preporučujemo uključivanje ove opcije za stalno korištenje, ali pozivamo korisnike Microsoft Office 2016/365 da testiraju ovu značajku, te da šalju povratne informacije.
 
+==== Koristi UI Automation za pristup windows naredbenim retcima kada je to moguće ====[AdvancedSettingsConsoleUIA]
+Kada je ova opcija omogućena, NVDA će koristiti novu podrškuza windowsowe naredbene retke koja iskorištava [unapređenja pristupačnosti koje je razvio Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova je značajka eksperimentalna te je stoga nepotpuna, stoga njeno korištenje se ne preporučuje. Međutim, jednom kada postane dovršena, podrazumijeva se da će ta podrška biti podrazumjevana, unapređujući tako performanse i stabilnost NVDA u windowsovim naredbenim retcima.
+
+==== Izgovaraj lozinke u UIA naredbenim retcima ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ova opcija kontrolira izgovor znakova opcijama [čitaj upisane znakove #KeyboardSettingsSpeakTypedCharacters] ili [čitaj upisane riječi #KeyboardSettingsSpeakTypedWords] u slučaju kada se zaslon ne osvježava (poput upisa lozinke) u windowsovom naredbenom retku s uključenom podrškom za UI automation. Radi sigurnosti, ova opcija bi trebala biti isključena. Međutim, možda biste htjeli uključiti ovu opciju ako se susrećete sa problamima performansi sa uključenim izgovorom znakova ili riječi Prilikom korištenja NVDA nove podrške za windowsowe naredbene retke.
+
 ==== Automatski postavi fokus na stavku koja može biti fokusirana u načinu pregleda ====[BrowseModeSettingsAutoFocusFocusableElements]
 Prečac: NVDA+8
 
@@ -1889,6 +1896,7 @@ To change NVDA's configuration on the logon/UAC screens, configure NVDA as you w
 
 ++ Preglednik zapisnika ++[LogViewer]
 Preglednik zapisnika koji se nalazi u NVDA izborniku omogućuje vam pregled događaja od vremena kad ste zadnji put pokrenuli NVDA.
+Koristeći kombinaciju tipaka NVDA+F1 itvorit će se preglednik zapisnika te će se prikazati informacija o trenutnom objektu navigatora.
 
 Osim čitanja sadržaja, možete također spremiti kopiju log datoteke ili osvježiti preglednik tako da se prikazuju zadnji događaji.
 Ove su opcije dostupne u izborniku zapisnik preglednika zapisnika.

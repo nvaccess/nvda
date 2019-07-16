@@ -401,6 +401,7 @@ Las siguientes órdenes están disponibles para revisión de texto:
 | Seleccionar después Copiar desde cursor de revisión | NVDA+f9 | NVDA+f9 | none | Comienza la selección después procesa la copia desde la posición actual del cursor de revisión. La acción actual no se lleva a cabo hasta que digas a NVDA dónde está el final del rango de texto |
 | Seleccionar después copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | none | En la primera pulsación, el texto se selecciona desde encima de la posición previamente fijada como marca de comienzo e incluyendo la posición actual del cursor de revisión. Después de pulsar esta tecla una segunda vez, el texto se copiará al portapapeles de Windows |
 | Anunciar formato del texto | NVDA+f | NVDA+f | no | Informa del formato del texto donde esté situado actualmente el cursor de revisión. Pulsando dos veces muestra la información en modo exploración |
+| Anunciar reemplazo de símbolo actual | No | No | no | Verbaliza el símbolo donde esté colocado el cursor de revisión. Pulsado dos veces, muestra el símbolo y el texto utilizado para verbalizarlo en modo exploración. |
 %kc:endInclude
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desactivada para funcionar apropiadamente.
@@ -534,7 +535,7 @@ Las siguientes teclas por sí mismas saltan al siguiente campo, con la tecla shi
 - s: separador
 - m: marco
 - g: gráfico
-- d: punto de referencia
+- d: región
 - o: objeto integrado (reproductor de audio y vídeo, aplicación, diálogo, etc.)
 - 1 a 6: encabezados de 1 a 6 respectivamente
 - a: anotación (comentario, revisión del editor, etc.)
@@ -554,7 +555,7 @@ Para activar o desactivar la navegación con una sola letra para el documento ac
 
 ++ La Lista de Elementos ++[ElementsList]
 La lista de elementos proporciona acceso a una lista de varios tipos de elementos en el documento según sea apropiado para la aplicación.
-Por ejemplo, en navegadores web, la lista de elementos puede listar enlaces, encabezados, campos de formulario, botones o puntos de referencia.
+Por ejemplo, en navegadores web, la lista de elementos puede enumerar enlaces, encabezados, campos de formulario, botones o regiones.
 Los botones de opción te permiten cambiar entre los diferentes tipos de elementos.
 Se Proporciona también un campo de edición en el diálogo el cual te permite filtrar la lista para ayudarte a buscar un elemento en particular en la página. 
 Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
@@ -638,8 +639,8 @@ Por favor consulta la sección [Pantallas Braille admitidas  #SupportedBrailleDi
 Esta sección también contiene información sobre qué pantallas son compatibles con la función de detección automática de pantallas braille de NVDA.
 Puedes configurar el braille utilizando la [categoría Opciones de Braille #BrailleSettings] del diálogo [Opciones de NVDA #NVDASettings].
 
-++ Abreviaturas de tipos de Control, estado y puntos de referencia ++[BrailleAbbreviations]
-Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como los puntos de referencia.
+++ Abreviaturas de tipos de Control, estado y regiones ++[BrailleAbbreviations]
+Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado así como las regiones.
 
 || Abreviatura | Tipo de Control |
 | apl | aplicación |
@@ -662,7 +663,7 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 | grp | grupo |
 | enN | encabezado de nivel n, por ejemplo: h1, h2. |
 | ayd | globo de ayuda |
-| pdr | punto de referencia |
+| reg | región |
 | enl | enlace |
 | enlv | enlace visitado |
 | lst | lista |
@@ -715,8 +716,8 @@ Los siguientes indicadores de estado  también están definidos:
 | ordenado desc | mostrado cuando un objeto se ordena descendentemente |
 | submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
 
-Finalmente, se definieron las siguientes abreviaturas para puntos de referencia:
-|| Abreviatura | Punto de referencia |
+Finalmente, se definieron las siguientes abreviaturas para regiones:
+|| Abreviatura | Región |
 | tlo | título |
 | cinf | info de contenido |
 | cmpl | complementario |
@@ -1606,7 +1607,7 @@ Puedes configurar el anunciado de:
  - Enlaces
  - Listas
  - Citas
- - Puntos de referencia
+ - Regiones
  - Marcos
  - Cliqueable
  -
@@ -1669,6 +1670,12 @@ Esto incluye el mismo Microsoft Word, y también el visor de mensajes y el compo
 
 Sin embargo, puede haber alguna información que no esté expuesta o que esté incorrectamente expuesta en algunas versiones de Microsoft Office, lo que significa que no siempre se puede confiar en este soporte de la UI automation.
 Todavía no recomendamos que la mayoría de los usuarios activen esta opción de forma predeterminada, aunque invitamos a los usuarios de Office 2016/365 a que prueben esta función y nos envíen sus comentarios.
+
+==== Utilizar UI Automation para acceder a la Consola de Windows cuando esté disponible ====[AdvancedSettingsConsoleUIA]
+Cuando esta opción esté activada, NVDA utilizará una versión nueva de trabajo en curso de su soporte para la Consola de Windows que aprovecha las ventajas de las [mejoras de accesibilidad hechas por Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Esta característica es altamente experimental y todavía incompleta, así que su uso aún no está recomendado. Sin embargo, una vez completado, se prevé que este nuevo soporte se convierta  en el predeterminado, mejorando el rendimiento y la estabilidad de NVDA en las consolas de órdenes de Windows.
+
+==== Verbalizar contraseñas en consolas UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Esta opción controla si se verbalizan los caracteres por [verbalizar caracteres al escribir #KeyboardSettingsSpeakTypedCharacters] o [verbalizar palabras al escribir #KeyboardSettingsSpeakTypedWords] en situaciones donde la pantalla no se actualice (tales como entrada de contraseña) en la Consola de Windows con el soporte UI automation activado. Por razones de seguridad, esta opción debería dejarse deshabilitada. Sin embargo, es posible que desees habilitarla si experimentas problemas de rendimiento o de inestabilidad con el anuncio de caracteres y/o palabras al escribir mientras utilizas el nuevo soporte experimental de NVDA para la Consola.
 
 ==== Poner Automáticamente el Foco del Sistema en los Elementos enfocables en Modo Exploración ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tecla: NVDA+8
@@ -1889,7 +1896,7 @@ Para cambiar cómo se configura NVDA en las pantallas de inicio de sesión/UAC, 
 
 ++ Visualizador del Registro ++[LogViewer]
 El visualizador del Registro, encontrado en Herramientas en el menú NVDA, te permite ver toda la salida que haya ocurrido hasta ahora desde cuando iniciaste NVDA por última vez.
-
+Utilizando NVDA+F1 se abrirá el visualizador del registro y se mostrará la información del desarrollador sobre el navegador de objetos actual.
 Además de leer el contenido, también puedes guardar una copia del fichero de registro, o refrescar el visualizador tal que se muestre la salida más reciente desde que el visualizador de registro fue abierto.
 Estas acciones están disponibles en el menú de visualizador de Registro.
 
