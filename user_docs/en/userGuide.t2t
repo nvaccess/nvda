@@ -1677,6 +1677,12 @@ When this option is enabled, NVDA will use a new, work in progress version of it
 ==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
 This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
 
+==== Use the new keyboard support in legacy Windows consoles when available ====[AdvancedSettingsKeyboardSupportInLegacy]
+This option causes NVDA to use   a new method for detecting typed characters in legacy Windows consoles.
+This new support is in use by default from Windows 10 version 1607 until 1803, or on newer Windows 10 releases when UI Automation is unavailable or disabled.
+While this new support improves performance and prevents some console output from being spelled out, it does not suppress typed passwords and may be incompatible with some terminal programs.
+In untrusted environments, it is good practice to temporarily disable "speak typed characters" and "speak typed words" when entering passwords with this new functionality in use.
+
 ==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8
 
