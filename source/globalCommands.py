@@ -934,6 +934,12 @@ class GlobalCommands(ScriptableObject):
 		Nondestructively moves a textInfo and returns a (newInfo, res) tuple.
 		Res is 0 and the original C{textInfo} is returned if the move would be out of bounds.
 		"""
+		try:
+			if info.isOffscreen:
+				res = info.move(unit, direction, endPoint=endPoint)
+				return (info, res)
+		except NotImplementedError:
+			pass
 		newInfo = info.copy()
 		res = newInfo.move(unit, direction, endPoint=endPoint)
 		try:
