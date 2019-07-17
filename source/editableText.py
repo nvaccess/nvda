@@ -46,7 +46,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 	#: When announcing new line text: should the entire line be announced, or just text after the caret?
 	announceEntireNewLine=False
 
-	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
+	#: The minimum amount of time that should elapse before checking if the word under the caret has changed
+	_hasCaretMoved_minWordTimeoutMs=30
+
+	#: The maximum amount of time that may elapse before we no longer rely on caret events to detect movement.
+	_useEvents_maxTimeoutMs = 10
 
 	_caretMovementTimeoutMultiplier = 1
 
@@ -92,8 +96,10 @@ class EditableText(TextContainerObject,ScriptableObject):
 				newInfo = None
 			else:
 				# Caret events are unreliable in some controls.
-				# Only use them if we consider them safe to rely on for a particular control.
+				# Only use them if we consider them safe to rely on for a particular control,
+				# and only if they arrive within 20 mili seconds after causing the event to occur.
 				if (
+					elapsed <= self._useEvents_maxTimeoutMs and
 					self.caretMovementDetectionUsesEvents and
 					(eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
 				):
@@ -157,8 +163,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
 
 	def _get_caretMovementDetectionUsesEvents(self) -> bool:
-		"""Returns whether or not to trust caret events when
+		"""Returns whether or not to rely on caret and textChange events when
 		finding out whether the caret position has changed after pressing a caret movement gesture.
+		Note that if L{_useEvents_maxTimeoutMs} is elapsed,
+		relying on events is no longer reliable in most situations.
+		Therefore, any event should occur before that timeout elapses.
 		"""
 		# This class is a mixin that usually comes before other relevant classes in the mro.
 		# Therefore, try to call super first, and if that fails, return the default (C{True}.
