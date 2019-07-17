@@ -5,11 +5,15 @@
 #Copyright (C) 2006-2019 NV Access Limited
 
 """Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
- 
+
 from abc import ABCMeta, abstractmethod
 import config
 import languageHandler
 from synthDriverHandler import getSynth
+from inspect import signature
+from functools import partial
+from types import FunctionType, MethodType
+from typing import Union
 
 class SpeechCommand(object):
 	"""The base class for objects that can be inserted between strings of text to perform actions, change voice parameters, etc.
@@ -36,7 +40,8 @@ class IndexCommand(SynthCommand):
 		@param index: the value of this index
 		@type index: integer
 		"""
-		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))
+		if not isinstance(index,int):
+			raise TypeError("index must be int, not %s"%type(index))
 		self.index=index
 
 	def __repr__(self):
@@ -245,6 +250,8 @@ class BaseCallbackCommand(SpeechCommand, metaclass=ABCMeta):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 		"""
 
+SUPPORTED_CALLBACK_TYPES = (FunctionType, MethodType, partial)
+
 class CallbackCommand(BaseCallbackCommand):
 	"""
 	Call a function when speech reaches this point.
@@ -253,11 +260,26 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback):
+	def __init__(self, callback: Union[SUPPORTED_CALLBACK_TYPES]):
+		if not isinstance(callback, SUPPORTED_CALLBACK_TYPES):
+			raise TypeError(
+				"callback must be one of %s, not %s"
+				% (", ".join(SUPPORTED_CALLBACK_TYPES), type(callback))
+			)
 		self._callback = callback
 
 	def run(self,*args, **kwargs):
 		return self._callback(*args,**kwargs)
+
+	def __repr__(self):
+		if isinstance(self._callback, partial):
+			callBackName = "partial[{}]".format(self._callback.func.__qualname__)
+		else:
+			callBackName = self._callback.__qualname__
+		return "CallbackCommand({name}{signature})".format(
+			name=callBackName,
+			signature=str(signature(self._callback))
+		)
 
 class BeepCommand(BaseCallbackCommand):
 	"""Produce a beep.
