@@ -36,9 +36,6 @@ class EditableText(TextContainerObject,ScriptableObject):
 		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
 	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
 	@type hasContentChangedSinceLastSelection: bool
-	@ivar listenForCaretEventsWhenDetectingCaretMovement: Trust caret events when
-		finding out whether the caret position has changed after pressing a caret movement gesture.
-	@type listenForCaretEventsWhenDetectingCaretMovement: bool
 	"""
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
@@ -96,10 +93,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			else:
 				# Caret events are unreliable in some controls.
 				# Only use them if we consider them safe to rely on for a particular control.
-				if (
-					eventHandler.isPendingEvents("caret")
-					and getattr(self, "listenForCaretEventsWhenDetectingCaretMovement", True)
-				):
+				if eventHandler.isPendingEvents("caret") and self.caretMovementDetectionUsesEvents:
 					log.debug("Caret move detected using event. Elapsed: %d ms" % elapsed)
 					return (True,newInfo)
 			# Try to detect with bookmarks.
@@ -158,6 +152,17 @@ class EditableText(TextContainerObject,ScriptableObject):
 		if not caretMoved and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
+
+	def _get_caretMovementDetectionUsesEvents(self) -> bool:
+		"""Returns whether or not to trust caret events when
+		finding out whether the caret position has changed after pressing a caret movement gesture.
+		"""
+		# This class is a mixin that usually comes before other relevant classes in the mro.
+		# Therefore, try to call super first, and if that fails, return the default (C{True}.
+		try:
+			return super().caretMovementDetectionUsesEvents
+		except AttributeError:
+			return True
 
 	def script_caret_newLine(self,gesture):
 		try:

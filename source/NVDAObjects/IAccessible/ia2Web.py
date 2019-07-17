@@ -20,7 +20,7 @@ from .ia2TextMozilla import MozillaCompoundTextInfo
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
-	listenForCaretEventsWhenDetectingCaretMovement = False
+	caretMovementDetectionUsesEvents = False
 
 	def _get_positionInfo(self):
 		info=super(Ia2Web,self).positionInfo

@@ -229,6 +229,9 @@ class WinConsoleUIA(Terminal):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
+	#: When listening for caret events, backspacing quickly causes
+	#: the last character of the prompt to be occasionally reported.
+	caretMovementDetectionUsesEvents = False
 	_TextInfo = consoleUIATextInfo
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
