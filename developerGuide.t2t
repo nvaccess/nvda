@@ -438,7 +438,9 @@ The following keyword arguments can be used when applying the script decorator:
 Though the script decorator makes the script definition process a lot easier, there are more ways of binding gestures and setting script properties.
 For example, a special "__gestures" Python dictionary can be defined as a class variable on an App Module, Global Plugin or NVDA Object.
 This dictionary should contain gesture identifier strings pointing to the name of the requested script, without the "script_" prefix.
-You can also specify a description of the script in the function's docstring.
+You can also specify a description of the script in the function's "__doc__" attribute.
+However, beware not to include an inline docstring at the start of the function if you do not set the "__doc__" attribute, as it would render the description not translatable.
+The script decorator does not suffer from this limitation, so you are encouraged to provide inline docstrings as needed when using it.
 Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script function to a string containing the name of the category.
 
 ++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
