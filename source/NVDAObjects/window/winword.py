@@ -17,7 +17,7 @@ import colorsys
 import sayAllHandler
 import eventHandler
 import braille
-import scriptHandler
+from scriptHandler import script
 import languageHandler
 import ui
 import NVDAHelper
@@ -1360,10 +1360,15 @@ class WordDocument(Window):
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
 
+	@script(
+		gestures=["kb:tab", "kb:shift+tab"]
+	)
 	def script_tab(self,gesture):
-		# A script for the tab key which:
-		# * if in a table, announces the newly selected cell or new cell where the caret is, or 
-		# * If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
+		"""
+		A script for the tab key which:
+		 * if in a table, announces the newly selected cell or new cell where the caret is, or 
+		 * If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
+		"""
 		gesture.send()
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
@@ -1462,8 +1467,6 @@ class WordDocument(Window):
 		"kb:control+1":"changeLineSpacing",
 		"kb:control+2":"changeLineSpacing",
 		"kb:control+5":"changeLineSpacing",
-		"kb:tab": "tab",
-		"kb:shift+tab": "tab",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
