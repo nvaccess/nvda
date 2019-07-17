@@ -186,7 +186,7 @@ class _TextReader(object):
 	def _bookmarkReached(self, obj, bookmark):
 		updater = obj.makeTextInfo(bookmark)
 		if self.cursor == CURSOR_CARET:
-			updater.updateCaret()
+			obj.selection = updater
 		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
 
