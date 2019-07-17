@@ -1361,11 +1361,9 @@ class WordDocument(Window):
 		ui.message(_("{size:g} point font").format(size=val))
 
 	def script_tab(self,gesture):
-		"""
-		A script for the tab key which:
-		* if in a table, announces the newly selected cell or new cell where the caret is, or 
-		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
-		"""
+		# A script for the tab key which:
+		# * if in a table, announces the newly selected cell or new cell where the caret is, or 
+		# * If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		gesture.send()
 		selectionObj=self.WinwordSelectionObject
 		inTable=selectionObj.tables.count>0 if selectionObj else False
@@ -1384,7 +1382,6 @@ class WordDocument(Window):
 			if selectionObj.paragraphs[1].range.start==selectionObj.start:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
-	script_tab.__doc__ = None  # See issue #9943
 
 	def getLocalizedMeasurementTextForPointSize(self,offset):
 		options=self.WinwordApplicationObject.options
