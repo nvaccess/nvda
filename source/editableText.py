@@ -93,7 +93,10 @@ class EditableText(TextContainerObject,ScriptableObject):
 			else:
 				# Caret events are unreliable in some controls.
 				# Only use them if we consider them safe to rely on for a particular control.
-				if eventHandler.isPendingEvents("caret") and self.caretMovementDetectionUsesEvents:
+				if (
+					self.caretMovementDetectionUsesEvents and
+					(eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
+				):
 					log.debug("Caret move detected using event. Elapsed: %d ms" % elapsed)
 					return (True,newInfo)
 			# Try to detect with bookmarks.
