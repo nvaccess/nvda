@@ -401,6 +401,7 @@ Sledeće komande su dostupne za pregled teksta:
 | Izaberi a zatim kopiraj iz preglednog kursora| NVDA+f9 | NVDA+f9 | Nema komande | Počinje izbor teksta koji treba da se kopira iz preglednog kursora. Kopiranje nije odrađeno dok ne kažete programu NVDA gde se nalazi kraj vašeg odabira|
 | Izaberi a zatim kopiraj pregledni kursor| NVDA+f10 | NVDA+f10 | Nema komande | Ako se pritisne jednom, tekst od početnog markera pa sve do kraja uključujući i trenutnu poziciju preglednog kursora je odabran. Nakon što se ova komanda pritisne drugi put, tekst se kopira u Windows privremenu memoriju|
 | Prijavi formatiranje teksta| NVDA+f | NVDA+f | Nema komande | Prijavljuje informacije o formatiranju teksta na poziciji preglednog kursora. Ako se pritisne dva puta informacije se prikazuju u režimu pretraživanja|
+| Prijavi zamenu za trenutni simbol| nema | Nema | Nema | Izgovara simbol na poziciji preglednog kursora. Ako se pritisne 2 puta, prikazuje simbol i tekst koji se izgovara u režimu pretraživanja. |
 %kc:endInclude
 
 Napomena: Tasteri sa numeričke tastature zahtevaju da taster numlock bude isključen kako bi ispravno radili.
@@ -1670,6 +1671,12 @@ Ovo uključuje sam Microsoft Word, kao i pregledač poruka i pisanje poruka u pr
 Ali, moguće je da postoje određene informacije koje ili nisu pružene, ili su neispravne u određenim verzijama aplikacije Microsoft Office, što znači da se na ovu UI automation podršku ne može uvek u potpunosti osloniti.
 I dalje ne preporučujemo većini korisnika da ovo uključe, ali preporučujemo korisnicima aplikacije Office 2016/365 da testiraju ovu opciju i pruže dodatne informacije.
 
+==== Koristi UI Automation za pristup Windows konzolama kada je dostupan====[AdvancedSettingsConsoleUIA]
+Kada je ova opcija omogućena, NVDA će koristiti novu, eksperimentalnu podršku za Windows konzole koja koristi nova [poboljšanja u pristupačnosti od strane Microsofta https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ova opcija je još uvek eksperimentalna i nije kompletna, tako da njeno korišćenje još nije preporučeno. Ali, kada se završi, ova podrška će verovatno postati podrazumevana, što će poboljšati stabilnost i brzinu programa NVDA u Windows konzoli.
+
+==== Izgovaraj lozinke u UIA konzolama====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ovo podešavanje kontroliše da li se izgovaraju znakovi prema podešavanjima [izgovori ukucane znakove#KeyboardSettingsSpeakTypedCharacters] ili [izgovori ukucane reči#KeyboardSettingsSpeakTypedWords] u situacijama u kojima se ekran ne ažurira (kao što su unosi lozinki) u Windows konzolama korišćenjem UI Automation podrške. Zbog bezbednosti, ovo podešavanje bi trebalo da ostane onemogućeno. Ali, možda ćete želeti da ga omogućite ako primetite usporavanja kada upisujete znakove ili reči i koristite novu podršku za konzole.
+
 ==== Automatski postavi sistemski fokus na elemente koji se mogu fokusirati u režimu pretraživanja ====[BrowseModeSettingsAutoFocusFocusableElements]
 Komanda: NVDA+8
 
@@ -1889,6 +1896,7 @@ Da promenite NVDA podešavanja na bezbednim ekranima, podesite NVDA onako kako �
 
 ++ Pregled dnevnika ++[LogViewer]
 Pregled dnevnika, koji se nalazi u alatima u NVDA meniju, vam dozvoljava da pročitate svo evidentiranje u dnevniku od momenta kada pokrenete program do pokretanja ove alatke.
+Korišćenje prečice NVDA plus f1 će otvoriti dnevnik i prikazati informacije za programere o trenutnom navigacionom objektu..
 
 Pored čitanja sadržaja, možete takođe sačuvati kopiju datoteke dnevnika, ili da osvežite pregled tako da prikazuje najnovije informacije.
 Ove radnje su dostupne iz menija dnevnika.

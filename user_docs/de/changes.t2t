@@ -4,12 +4,12 @@ Was ist neu in NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2019.2 =
-Zu den Highlights dieser Version gehören die automatische Erkennung von Freedom Scientific Braillezeilen, eine experimentelle Einstellung im erweiterten Bedienfeld, um den Lesemodus vom automatisch bewegten Fokus auszuschließen (was zu Leistungssteigerungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
+Zu den Highlights dieser Version gehören die automatische Erkennung von Freedom Scientific Braillezeilen, eine experimentelle Einstellung in DEN erweiterten Einstellungen, um die automatische Bewegung des systemfokus beim Verwenden des Lesemodus zu deaktivieren (was unter Umständen zu Leistungssteigerungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
 
 == Neue Funktionen ==
 - Der NVDA-spezifische Suchdialog enthält nun einen Verlauf der letzten 20 Sucheinträge. (#8482)
  - Der Suchverlauf wird gelöscht, wenn NVDA beendet oder neu gestartet wird.
-- Die Unterstützung für Miranda NG von NVDA arbeitet mit neueren Versionen des Clients. (#9053)
+- NVDA unterstützt nun auch neuere Versionen des Miranda NG Clients. (#9053)
 - Sie können den Lesemodus nun standardmäßig deaktivieren, wenn eine Webseite geladen wird. Deaktivieren Sie dazu die neue Option "Lesemodus beim Laden von Webseiten verwenden" in den Lesemodus-Einstellungen im Einstellunfsfenster von NVDA. (#8716)
  - Beachten Sie, dass Sie den Lesemodus mit NVDA+Leertaste manuell aktivieren können, auch wenn diese Option deaktiviert ist.
 - Sie können nun Symbole im Dialogfeld "Aussprache von Symbolen und Satzzeichen" filtern, ähnlich wie das Filtern in der Elementliste und im Dialogfeld "Eingaben". (#5761)
@@ -64,7 +64,7 @@ Zu den Highlights dieser Version gehören die automatische Erkennung von Freedom
 - Die Kipptasten funktionieren nun korrekt bei den Braillezeilen von Freedom Scientific. (#8849)
 - Beim Lesen des ersten Zeichens eines Dokuments in Notepad++ 7.7 x64 friert NVDA nicht mehr ein. (#9609)
 - In Mozilla Firefox werden Aktualisierungen einer aktiven Region nicht mehr gemeldet, wenn sich die aktive Region in einer Registerkarte im Hintergrund befindet. (#1318)
-- Der NVDA-spezifische Suchmodus funktioniert nicht mehr, wenn der Info-Dialog von NVDA im Hintergrund geöffnet ist. (#8566)
+- Der NVDA-spezifische Suchmodus funktioniert nun wieder, auch wenn der Info-Dialog von NVDA im Hintergrund geöffnet ist. (#8566)
 - HTCom kann nun mit einer HandyTech Braillezeile in Kombination mit NVDA benutzt werden. (#9691)
 
 

@@ -6,7 +6,6 @@ Wat is Nieuw in NVDA
 = 2019.2 =
 Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific brailleleesregels, een expirimentele functie in de geavanceerde instellingencategorie waardoor de bladermodus de focus niet langer automatisch verplaatst (wat mogelijk prestatieverbeteringen oplevert), toevoeging van de optie snelheidsboost voor de Windows OneCore synthesizer voor het gebruiken van zeer snelle spraak, en vele andere oplossingen voor problemen.
 
-
 == Nieuwe Functies ==
 - Het dialoogvenster Zoeken bevat nu een geschiedenis van de laatste 20 zoekopdrachten. (#8482)
  - De zoekgeschiedenis wordt gewist wanneer NVDA wordt afgesloten of opnieuw wordt gestart.
@@ -21,20 +20,26 @@ Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific br
  - De invoerhandeling moet worden ingesteld in het dialoogvenster "Invoerhandelingen".
 - In Eclipse, ondersteuning toegevoegd voor automatische aanvullingen in de code editor. (#5667)
  - Bovendien kan Javadoc-informatie worden gelezen vanuit de editor wanneer deze aanwezig is door NVDA + d te gebruiken.
-- Een experimentele optie toegevoegd aan het paneel met Geavanceerde instellingen waarmee u kunt voorkomen dat de systeemfocus de bladermoduscursor volgt (Systeemfocus automatisch verplaatsen naar focusbare elementen). (#2039) Hoewel dit misschien niet geschikt is om voor alle websites uit te schakelen , kan dit mogelijk de volgende problemen oplossen: 
+- Er is een experimentele optie toegevoegd aan het paneel met Geavanceerde instellingen waarmee u kunt voorkomen dat de systeemfocus de bladermoduscursor volgt (Systeemfocus automatisch verplaatsen naar focusbare elementen). (#2039) Hoewel dit misschien niet geschikt is om voor alle websites uit te schakelen , kan dit mogelijk de volgende problemen oplossen: 
  - Rubberen band effect: NVDA maakt de laatste toetsaanslag binnen de bladermodus sporadisch ongedaan door naar de vorige locatie te springen.
  - Invoervelden die de systeemfocus stelen wanneer u op sommige websites door deze invoervelden loopt.
  - De toetsaanslagen in de bladermodus reageren traag.
 - Voor ondersteunde brailleleesregels kunnen de instellingen van de driver nu gewijzigd worden vanuit de categorie braillein NVDA's instellingenvenster. (#7452)
 - Automatische detectie van Freedom Scientific brailleleesregels wordt nu ondersteund. (#7727)
+- Er is een commando toegevoegd om de vervanging weer te geven van het symbool onder de leescursor. (#9286)
+- Er is een experimentele optie toegevoegd aan het paneel met Geavanceerde instellingen die u in staat stel om een nieuwe, in ontwikkeling zijnde herschreven implementatie te proberen van NVDA's Windows Console ondersteuning die gebruik maakt van de Microsoft UI Automation API. (#9614)
+- In the Python Console ondersteunt het invoerveld nu het plakken van meerdere regels vanaf het klembord. (#9776)
 
 
 == Veranderingen ==
 - Synthesizervolume wordt nu verhoogd en verlaagd met 5 in plaats van 10 bij gebruik van de instellingenring. (#6754)
 - De tekst in add-onbeheer verduidelijkt wanneer NVDA wordt gestart met de --disable-addons parameter. (#9473)
 - Unicode Common Locale Data Repository (uitspraak van emoji) bnbijgewerkt naar versie 35.0. (#9445)
-- Liblouis braillevertaler bijgewerkt naar versie 3.9.0. (#9439)
 - Wanneer een automatisch gedetecteerde brailleleesregel via Bluetooth verbonden is, zal NVDA blijven zoeken naar USB-leesregels die door dezelfde driver worden aangestuurd en overschakelen naar een USB-verbinding als deze beschikbaar komt. (#8853)
+- eSpeak-NG is bijgewerkt naar commit 67324cc.
+- Liblouis braillevertaler bijgewerkt naar versie 3.10.0. (#9439, #9678)
+- NVDA meldt het woord 'geselecteerd' nu na de zojuist door de gebruiker geselecteerde tekst. (#9028, #9909)
+- In Microsoft Visual Studio Code is de bladermodus nu standaard uitgeschakeld. (#9828)
 
 
 == Opgeloste Problemen ==
@@ -57,6 +62,9 @@ Hoogtepunten in deze versie zijn automatische detectie van Freedom Scientific br
 - Het is opnieuw mogelijk om NVDA's tabelnavigatiecommando's te gebruiken in Google Docs, in Firefox en Chrome. (#9494)
 - De bumpertoetsen op Freedom Scientific brailleleesregels werken nu correct. (#8849)
 - Bij het lezen van het eerste teken van een document in Notepad++ 7.7 X64 zal NVDA niet langer tot wel tien seconden bevriezen. (#9609)
+- HTCom kan nu gebruikt worden met een Handy Tech brailleleesregel in combinatie met NVDA. (#9691)
+- In Mozilla Firefox worden updates in een live region niet langer gemeld wanneer de live region zich in een achtergrondtablad bevindt. (#1318)
+- Het zoekvenster van de NVDA bladermodus functioneert nu ook wanneer het Over dialoogvenster momenteel in de achtergrond is geopend. (#8566)
 
 
 == Veranderingen voor ontwikkelaars ==
@@ -64,7 +72,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 = 2019.1.1 =
-In deze kleine versie van NVDA zijn de volgende problemen opgelost:
+In deze versie van NVDA zijn de volgende problemen opgelost:
 - NVDA veroorzaakt niet langer een crash van Excel 2007 en weigert niet langer om te melden wanneer een cel een formule heeft. (#9431)
 - Google Chrome crasht niet langer bij interactie met bepaalde keuzelijsten. (#9364)
 - Er is een probleem opgelost waardoor de gebruikersconfiguratie mogelijk niet naar het systeemconfiguratieprofiel kon worden gekopieerd. (#9448)
@@ -190,11 +198,11 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 = 2018.3.2 =
-Dit is een kleine versie die een probleem oplost dat een crash in Google Chrome veroorzaakte bij het navigeren tussen tweets op www.twitter.com. (#8777)
+Deze versie lost een probleem op dat een crash in Google Chrome veroorzaakte bij het navigeren tussen tweets op www.twitter.com. (#8777)
 
 
 = 2018.3.1 =
-Dit is een kleine versie die een kritiek probleem oplost in NVDA dat ervoor zorgde dat 32-bit versies van Mozilla Firefox konden crashen. (#8759)
+Deze versie lost een kritiek probleem op in NVDA dat ervoor zorgde dat 32-bit versies van Mozilla Firefox konden crashen. (#8759)
 
 
 = 2018.3 =

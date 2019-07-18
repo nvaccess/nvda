@@ -27,14 +27,20 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje brajevih r
  - Prečice režima pretraživanja sporo odgovaraju.
 - Za podržane brajeve redove, podešavanja drajvera se mogu promeniti iz kategorije brajevih podešavanja dijaloga NVDA podešavanja. (#7452)
 - Brajevi redovi kompanije Freedom Scientific su sada podržani od strane automatskog prepoznavanja brajevih redova. (#7727)
+- Dodata komanda za prikazivanje izgovorene zamene za simbol na trenutnoj poziciji preglednog kursora. (#9286)
+- Dodata eksperimentalna opcija u panel sa naprednim podešavanjima koja vam  dozvoljava da probate novu, napisanu iz početka NVDA podršku za Windows konzole korišćenjem Microsoft UI Automation API-a. (#9614)
+- U Python konzoli, polje za unos sada podržava lepljenje više redova iz privremene memorije. (#9776)
 
 
 == Promene ==
 - Jačina sintetizatora se sada smanjuje za 5 umesto 10 procenata kada se koristi krug sintetizatora. (#6754)
 - Pojašnjen tekst u upravljaču dodataka kada je NVDA pokrenut uz opciju --disable-addons. (#9473)
 - Ažurirani Emoji   znakovi iz baze Unicode Common Locale  na verziju  35.0. (#9445)
-- Ažuriran liblouis brajev prevodilac na verziju 3.9.0. (#9439)
 - Kada je automatski prepoznat brajev red povezan putem  Bluetooth veze, NVDA će nastaviti pretragu za USB redove podržane od strane istog drajvera i prebaciće se na USB vezu ako postane dostupna. (#8853)
+- Ažuriran  eSpeak-NG na verziju 67324cc.
+- Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
+- NVDA će sada izgovoriti reč 'izabrano' nakon izgovaranja teksta koji je korisnik izabrao. (#9028, #9909)
+- U programu Microsoft Visual Studio Code, režim pretraživanja je podrazumevano isključen. (#9828)
 
 
 == Ispravljene greške ==
@@ -58,6 +64,8 @@ Glavne karakteristike ove verzije uključuju automatsko prepoznavanje brajevih r
 - Bumper tasteri sada rade ispravno na Freedom Scientific brajevim redovima. (#8849)
 - Kada se čita prvi znak dokumenta u programu Notepad++ 7.7 X64, NVDA više ne prestaje sa radom do 10 sekundi. (#9609)
 - HTCom se može koristiti sa Handy Tech brajevim redom u kombinaciji sa NVDA. (#9691)
+- U programu  Mozilla Firefox, ažuriranja za live region se više ne prijavljuju ako je live region u kartici koja je u pozadini. (#1318)
+- NVDA dijalog za pretragu u režimu pretraživanja više neće neispravno funkcionisati ako je dijalog o programu NVDA otvoren u pozadini. (#8566)
 
 
 == Promene za programere ==

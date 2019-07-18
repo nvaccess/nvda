@@ -47,14 +47,14 @@ NVDA更新日志
 - Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
 - 在高级设置面板中添加了一个实验选项，允许用户通过 Microsoft UI Automation 接口使用Windows 控制台的部分。 (#9614)
 - Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
-- 在 Python 控制台中，文本框现在支持从剪贴板粘贴多行内容。 (#9776)
+- 在 Python 控制台中，输入区现在支持从剪贴板粘贴多行内容。 (#9776)
 - In the Python Console, the input field now supports pasting multiple lines from the clipboard. (#9776)
 
 
 == 修改 ==
 - 当使用快捷键调整音量时，每按一次的音量变化从10变为5。 (#6754)
 - Synthesizer volume is now increased and decreased by 5 instead of 10 when using the settings ring. (#6754)
-- 当NVDA追加“--disable-addons”命令行参数启动时，插件管理器的文字显示更加准确。 (#9473)
+- 当NVDA带“--disable-addons”命令行参数启动时，插件管理器的文字显示更加准确。 (#9473)
 - Clarified the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
 - 更新 Unicode 通用语言解释库的表情注释至35.0版本。 (#9445)
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
@@ -66,9 +66,9 @@ NVDA更新日志
 - Updated eSpeak-NG to commit 67324cc.
 - 更新 liblouis 盲文翻译器至3.10.0版本。 (#9439, #9678)
 - Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
-- NVDA will now report the word 'selected' after saying what is selected. (#9028)
-- 现在NVDA会再朗读已选文本之后 报告“已选择”。 (#9028)
-- NVDA will now report the word 'selected' after saying what is selected. (#9028)
+- 朗读选中文本操作时NVDA会 先读选中文本再读“已选择”。 (#9028, #9909)
+- NVDA will now report the word 'selected' after saying what is selected. (#9028, #9909))
+
 - 在 Microsoft Visual Studio Code中，浏览模式默认关闭。 (#9828)
 - In Microsoft Visual Studio Code, browse mode is now off by default. (#9828)
 
