@@ -401,6 +401,7 @@ Do przeglądania tekstu są dostępne następujące polecenia:
 | Zaznacz i skopiuj od kursora przeglądu | NVDA+F9 | NVDA+F9 | Brak | Rozpoczyna proces zaznacz i kopiuj na aktualnej pozycji kursora przeglądu. Akcja nie jest wykonana do momentu wskazania NVDA miejsca końca zakresu tekstu |
 | Zaznacz i kopiuj do kursora przeglądu | NVDA+F10 | NVDA+F10 | Brak | Po jednokrotnym naciśnięciu, tekst jest zaznaczany od pozycji poprzednio ustawionej znacznikiem początku do aktualnej pozycji kursora przeglądu włącznie. Po naciśnięciu tego klawisza po raz drugi, tekst zostanie skopiowany do schowka systemowego |
 | Informacje o formatowaniu | NVDa+f | NVDA+F | Brak | Odczytuje informacje o formatowaniu tekstu pod kursorem. Podwójne naciśnięcie prezentuje informację w trybie czytania. |
+| Zgłoś zamiennik aktualnego symbolu | Brak | Brak | Brak | Wypowiada symbol na pozycji kursora przeglądu. Naciśnięty dwukrotnie, pokazuje w trybie czytania symbol i tekst użyty do jego wypowiedzenia. |
 %kc:endInclude
 
 UWAGA: Aby skróty na klawiaturze numerycznej działały poprawnie, należy wyłączyć klawisz Num Lock.
@@ -1670,6 +1671,12 @@ Obejmuje to sam edytor Microsoft Word oraz okna przeglądania i tworzenia wiadom
 Mogą jednak istnieć informacje, które nie są wcale dostarczane, albo są dostarczane nieprawidłowo  w niektórych wersjach Microsoft Office,  co znaczy, że na obsłudze UI Automation nie zawsze można polegać.
 Wciąż nie zalecamy domyślnego włączania tej funkcji przez większość użytkowników, ale mile widziane będą testy i uwagi od użytkowników Office 2016/365.
 
+==== Używaj UI Automation w konsoli Windows jeśli dostępne ====[AdvancedSettingsConsoleUIA]
+Gdy włączone, NVDA będzie używać nowej i obecnie rozwijanej wersji wsparcia dla konsoli Windows, wykorzystującej  [poprawki dostępności wdrożone przez Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Ta funkcja jest wysoce eksperymentalna i wciąż niekompletna, więc jej używanie nie jest obecnie zalecane. Jakkolwiek po doprowadzeniu do kompletności przewidywane jest, że ten tryb wsparcia stanie się domyślny,  poprawiając wydajność i stabilność NVDA w konsoli wiersza poleceń Windows.
+
+==== Wypowiadaj hasła w konsolach UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+To ustawienie określa, czy znaki są wypowiadane po włączeniu [wypowiadaj pisane znaki  #KeyboardSettingsSpeakTypedCharacters] lub [Mów wpisywane słowa #KeyboardSettingsSpeakTypedWords] w sytuacjach, gdy ekran nie jest aktualizowany (takich jak wprowadzanie haseł) w konsolach Windows z włączonym wsparciem UI automation. Ze względów bezpieczeństwa, to ustawienie powinno zostać wyłączone. można je włączyć w przypadku pojawienia się problemów wydajności lub niestabilności podczas wpisywania znaków i/lub słów przy pracy w konsoli Windows z włączonym wsparciem UIA.
+
 ==== Automatycznie ustaw kursor systemowy na elementach interaktywnych w trybie czytania ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8
 
@@ -1889,6 +1896,7 @@ Aby zmienić konfigurację NVDA na ekranie logowania, ustaw najpierw żądaną k
 
 ++ Podgląd logu ++[LogViewer]
 Podgląd logów znajduje się w menu Narzędzia, i umożliwia przeglądanie zapisu wszystkich wewnętrznych zdarzeń programu, które wystąpiły od ostatniego uruchomienia NVDA.
+Naciśnięcie NVDA+F1 otworzy podgląd logów i wyświetli informacje dla programistów o aktualnym obiekcie nawigatora.
 
 Oprócz czytania treści, można także zapisać kopię pliku dziennika lub odświeżyć podgląd, żeby pokazać najbardziej aktualne informacje.
 Polecenia te są dostępne w menu Log.
