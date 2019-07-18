@@ -4,7 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2019.2 =
-Les améliorations principales de cette version consistent en l'ajout de l'auto-détection des afficheurs Braille Freedom Scientific, de l'ajout d'un paramètre expérimental dans les paramètres avancés pour empêcher le mode navigation de se déplacer automatiquement vers le curseur (ce qui peut améliorer les performances), une option pour trippler le débit du synthétiseur Windows OneCore, et plein d'autres correctifs.
+Les améliorations principales de cette version consistent en l'ajout de l'auto-détection des afficheurs Braille Freedom Scientific, de l'ajout d'un réglage expérimental aux paramètres avancés pour empêcher le mode navigation de se déplacer automatiquement vers le curseur (ce qui peut améliorer les performances), une option pour trippler le débit du synthétiseur Windows OneCore, et plein d'autres correctifs.
 
 == Nouvelles Fonctionnalités ==
 - Le dialogue de recherche inclut maintenant un historique des 20 dernières recherches. (#8482)
@@ -17,7 +17,7 @@ Les améliorations principales de cette version consistent en l'ajout de l'auto-
 - Le synthétiseur Windows OneCore dispose désormais d'une option d'augmentation du débit qui permet une parole beaucoup plus rapide. (#7498)
 - L'option Tripler le Débit est maintenant configurable à partir de la boucle Paramètres Synthétiseur pour les synthétiseurs vocaux pris en charge. (Présentement, eSpeak-NG et Windows OneCore). (#8934)
 - Les profils de configuration peuvent maintenant être activés manuellement avec des gestes. (#4209)
- - Le geste doit être configuré à l'aide du dialogue " Gestes de commandes ".
+ - Les gestes doivent être configurés à l'aide du dialogue " Gestes de commandes ".
 - Dans Eclipse, ajout du support pour l'auto-complétion dans l'éditeur de code. (#5667)
  - De plus, les informations Javadoc peuvent être lues à partir de l'éditeur quand il est présent à l'aide de NVDA + d.
 - Ajout d'une option expérimentale au panneau Paramètres Avancés permettant d'empêcher le focus système de suivre le curseur du mode navigation (Mettre automatiquement le focus système sur les éléments pouvant être focalisés). (#2039) Bien que cette option ne puisse pas être désactivée pour tous les sites Web, cela peut également résoudre :
@@ -27,22 +27,26 @@ Les améliorations principales de cette version consistent en l'ajout de l'auto-
 - Pour les pilotes d'afficheurs braille qui le supportent, les paramètres du pilote peuvent maintenant être modifiés à partir de la catégorie paramètres braille dans le dialogue des paramètres de NVDA. (#7452)
 - Les afficheurs Braille de Freedom Scientific sont maintenant supportés par l'auto-détection des afficheurs Braille. (#7727)
 - Ajout d'une commande pour afficher le remplacement du symbole sous le curseur de revue. (#9286)
-- Ajout d'une option dans les paramètres avancés qui permet d'utiliser une nouveauté en cours de développement, la réécriture du support de la console Windows par NVDA en utilisant l'API UI Automation de Microsoft. (#9614)
+- Ajout d'une option dans les paramètres avancés vous permettant d'utiliser une fonction en cours de développement, la réécriture du support de la console Windows par NVDA en utilisant l'API UI Automation de Microsoft. (#9614)
+- Dans la console Python, le champ de saisie prend désormais en charge le collage de plusieurs lignes à partir du presse-papiers. (#9776)
 
 
 == Changements ==
 - Le volume des synthèses est maintenant augmenté et diminué de 5 incréments au lieu de 10 dans la boucle paramètres du synthétiseur. (#6754)
 - Clarification du texte dans le gestionnaire des extensions lors du lancement de NVDA avec l'argument --disable-addons. (#9473)
 - Mise à jour des annotations emoji du référentiel de données locales communes Unicode vers la version 35.0. (#9445)
-- Mise à jour du traducteur braille liblouis vers la version 3.9.0. (#9439)
-- Le raccourci clavier pour le champ de filtrage dans la liste des éléments en mode navigation a été remplacé par alt + y. (#8728)
-- Lorsqu'un afficheur Braille pris en charge par l'auto-détection est connecté via Bluetooth, NVDA arrête temporairement la recherche des afficheurs Braille connectés en USB pour le même pilote et rebascule sur l'USB lorsqu'il est à nouveau disponible. (#8853)
+- Le raccourci clavier du champ de filtrage dans la liste des éléments en mode navigation a été remplacé par alt + y. (#8728)
+- Lorsqu'un afficheur braille auto-détecté est connecté via Bluetooth, NVDA continuera à rechercher les afficheurs USB pris en charge par le même pilote et passera à une connexion USB si elle devient disponible. (#8853)
+- Mise à jour de eSpeak-NG à la révision 67324cc.
+- Mise à jour du traducteur braille liblouis à la version 3.10.0. (#9439, #9678)
+- NVDA dira maintenant le mot " sélectionné " après avoir annoncé le texte qu'un utilisateur vient de sélectionner (#9028, #9909).
+- Dans Microsoft Visual Studio Code, le mode navigation est maintenant désactivé par défaut. (#9828)
 
 
 == Corrections de Bogues ==
 - NVDA ne plante plus lorsqu'un répertoire d'extensions est vide. (#7686)
 - Les marques LTR et RTL ne sont signalées ni en braille ni par épellation lors de l'accès à la fenêtre des propriétés. (#8361)
-- Quand on se déplace entre les formulaires avec la navigation rapide en mode Navigation, le formulaire entier est maintenant annoncé plutôt que la première ligne seulement. (#9388)
+- Lorsqu'on se déplace entre les formulaires avec la navigation rapide en mode Navigation, le formulaire entier est maintenant annoncé plutôt que la première ligne seulement. (#9388)
 - NVDA ne restera plus silencieux quand on quitte l'application Windows 10 Mail. (#9341)
 - NVDA n'échoue plus au démarrage lorsque les paramètres régionaux utilisateur sont définis sur une langue inconnue de NVDA, telle que l'anglais (Pays-Bas). (#8726)
 - Quand le mode navigation est activé dans Microsoft Excel et que l'on passe en mode formulaire ou inversement, l'état du mode navigation est désormais correctement signalé. (#8846)
@@ -57,9 +61,11 @@ Les améliorations principales de cette version consistent en l'ajout de l'auto-
 - Pour les voix Windows OneCore, le débit défini dans NVDA n'est plus affecté par celui défini dans les paramètres vocaux de Windows 10. (#7498)
 - Le journal peut maintenant être ouvert avec NVDA + F1 en l'absence d'informations développeur pour l'objet navigateur courant. (#8613)
 - Il est à nouveau possible d'utiliser les commandes de navigation NVDA dans les tableaux de Google Docs, Firefox et Chrome. (#9494)
-- Les touches "bumper" fonctionnent maintenant correctement sur les afficheurs Braille Freedom Scientific. (#8849)
+- Les touches " bumper " fonctionnent maintenant correctement sur les afficheurs Braille Freedom Scientific. (#8849)
 - Lors de la lecture du premier caractère d'un document dans Notepad++ 7.7 X64, NVDA ne se bloque plus pendant 10 secondes. (#9609)
-- HTCom peut maintenant être utilisé sur un afficheur Braille Handy Tech en association avec NVDA. (#9691)
+- HTCom peut maintenant être utilisé avec un afficheur Braille Handy Tech en association avec NVDA. (#9691)
+- Dans Mozilla Firefox, les mises à jour d'une région active ne sont plus signalées si la région active est dans un onglet en arrière-plan. (#1318)
+- Le dialogue de recherche du mode navigation de NVDA n'échoue plus si le dialogue À propos de NVDA est ouvert au même moment en arrière-plan. (#8566)
 
 
 == Changements pour les développeurs ==
