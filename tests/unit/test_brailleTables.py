@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Unit tests for the brailleTables module.
 """
@@ -26,5 +26,5 @@ class TestFBrailleTables(unittest.TestCase):
 	def test_renamedTableExistence(self):
 		"""Tests whether all defined renamed tables are part of the actual list of tables."""
 		tableNames = [table.fileName for table in brailleTables.listTables()]
-		for name in brailleTables.RENAMED_TABLES.itervalues():
+		for name in brailleTables.RENAMED_TABLES.values():
 			self.assertIn(name, tableNames)

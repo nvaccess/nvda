@@ -7,6 +7,7 @@
 
 import os
 import pkgutil
+import importlib
 import config
 import baseObject
 import winVersion
@@ -15,9 +16,9 @@ from logHandler import log
 from  synthSettingsRing import SynthSettingsRing
 import languageHandler
 import speechDictHandler
+import extensionPoints
 import synthDrivers
 import driverHandler
-import warnings
 from driverHandler import StringParameterInfo # Backwards compatibility
 
 _curSynth=None
@@ -38,7 +39,7 @@ def changeVoice(synth, voice):
 	speechDictHandler.loadVoiceDict(synth)
 
 def _getSynthDriver(name):
-	return __import__("synthDrivers.%s" % name, globals(), locals(), ("synthDrivers",)).SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
 
 def getSynthList():
 	synthList=[]
@@ -121,43 +122,22 @@ def setSynth(name,isFallback=False):
 				setSynth(newName,isFallback=True)
 		return False
 
-def handlePostConfigProfileSwitch():
+def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
+	"""
+	Switches synthesizers and or applies new voice settings to the synth due to a config profile switch.
+	@var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first. This is what happens by default. 
+	However, Speech itself may call this with false internally if this is a config profile switch within a currently processing speech sequence. 
+	@type resetSpeechIfNeeded: bool
+	"""
 	conf = config.conf["speech"]
 	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
+		if resetSpeechIfNeeded:
+			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
+			import speech
+			speech.cancelSpeech()
 		setSynth(conf["synth"])
 		return
 	_curSynth.loadSettings(onlyChanged=True)
-
-class SynthSetting(driverHandler.DriverSetting):
-	"""@Deprecated: use L{driverHandler.DriverSetting} instead.
-	"""
-
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,displayName=None):
-		warnings.warn("synthDriverHandler.SynthSetting is deprecated. Use driverHandler.DriverSetting instead",
-			DeprecationWarning, stacklevel=3)
-		super(SynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName)
-		self.name = name
-
-class NumericSynthSetting(driverHandler.NumericDriverSetting):
-	"""@Deprecated: use L{driverHandler.NumericDriverSetting} instead.
-	"""
-
-	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10,displayName=None):
-		warnings.warn("synthDriverHandler.NumericSynthSetting is deprecated. Use driverHandler.NumericDriverSetting instead",
-			DeprecationWarning, stacklevel=3)
-		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,minStep=minStep,normalStep=normalStep,largeStep=largeStep,displayName=displayName)
-		self.name = name
-
-class BooleanSynthSetting(driverHandler.BooleanDriverSetting):
-	"""@Deprecated: use L{driverHandler.BooleanDriverSetting} instead.
-	"""
-
-	def __init__(self, name, displayNameWithAccelerator, availableInSynthSettingsRing=False,
-		displayName=None, defaultVal=False):
-		warnings.warn("synthDriverHandler.BooleanSynthSetting is deprecated. Use driverHandler.BooleanDriverSetting instead",
-			DeprecationWarning, stacklevel=3)
-		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSettingsRing=availableInSynthSettingsRing,displayName=displayName,defaultVal=defaultVal)
-		self.name = name
 
 class SynthDriver(driverHandler.Driver):
 	"""Abstract base synthesizer driver.
@@ -165,8 +145,18 @@ class SynthDriver(driverHandler.Driver):
 	
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
 	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
+	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
 	There are factory functions to create L{driverHandler.DriverSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
-	The L{lastIndex} attribute should also be provided.
+	Each setting is retrieved and set using attributes named after the setting;
+	e.g. the L{voice} attribute is used for the L{voice} setting.
+	These will usually be properties.
+	L{supportedCommands} should specify what synth commands the synthesizer supports.
+	At a minimum, L{speech.IndexCommand} must be supported.
+	L{PitchCommand} must also be supported if you want capital pitch change to work;
+	support for the pitch setting is not sufficient.
+	L{supportedNotifications} should specify what notifications the synthesizer provides.
+	Currently, the available notifications are L{synthIndexReached} and L{synthDoneSpeaking}.
+	Both of these must be supported.
 	@ivar voice: Unique string identifying the current voice.
 	@type voice: str
 	@ivar availableVoices: The available voices.
@@ -183,10 +173,20 @@ class SynthDriver(driverHandler.Driver):
 	@type availableVariants: OrderedDict of [L{VoiceInfo} keyed by VoiceInfo's ID
 	@ivar inflection: The current inflection; ranges between 0 and 100.
 	@type inflection: int
-	@ivar lastIndex: The index of the chunk of text which was last spoken or C{None} if no index.
-	@type lastIndex: int
 	"""
 
+	#: The name of the synth; must be the original module file name.
+	#: @type: str
+	name = ""
+	#: A description of the synth.
+	#: @type: str
+	description = ""
+	#: The speech commands supported by the synth.
+	#: @type: set of L{speech.SynthCommand} subclasses.
+	supportedCommands = frozenset()
+	#: The notifications provided by the synth.
+	#: @type: set of L{extensionPoints.Action} instances
+	supportedNotifications = frozenset()
 	_configSection = "speech"
 
 	@classmethod
@@ -256,8 +256,8 @@ class SynthDriver(driverHandler.Driver):
 		"""
 		Speaks the given sequence of text and speech commands.
 		This base implementation will fallback to making use of the old speakText and speakCharacter methods. But new synths should override this method to support its full functionality.
-		@param speechSequence: a list of text strings and SpeechCommand objects (such as index and parameter changes).
-		@type speechSequence: list of string and L{speechCommand}
+		@param speechSequence: a list of text strings and SynthCommand objects (such as index and parameter changes).
+		@type speechSequence: list of string and L{SynthCommand}
 		"""
 		import speech
 		lastIndex=None
@@ -275,48 +275,17 @@ class SynthDriver(driverHandler.Driver):
 			if item is None:
 				# No more items.
 				break
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				# Merge the text between commands into a single chunk.
 				text+=item
 			elif isinstance(item,speech.IndexCommand):
 				lastIndex=item.index
 			elif isinstance(item,speech.CharacterModeCommand):
 				origSpeakFunc=self.speakCharacter if item.state else self.speakText
-			elif isinstance(item,speech.SpeechCommand):
-				log.debugWarning("Unknown speech command: %s"%item)
+			elif isinstance(item,speech.SynthCommand):
+				log.debugWarning("Unknown synth command: %s"%item)
 			else:
 				log.error("Unknown item in speech sequence: %s"%item)
-
-	def speakText(self, text, index=None):
-		"""Speak some text.
-		This method is deprecated. Instead implement speak.
-		@param text: The chunk of text to speak.
-		@type text: str
-		@param index: An index (bookmark) to associate with this chunk of text, C{None} if no index.
-		@type index: int
-		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
-		"""
-		raise NotImplementedError
-
-	def speakCharacter(self, character, index=None):
-		"""Speak some character.
-		This method is deprecated. Instead implement speak.
-		@param character: The character to speak.
-		@type character: str
-		@param index: An index (bookmark) to associate with this chunk of speech, C{None} if no index.
-		@type index: int
-		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
-		"""
-		self.speakText(character,index)
-
-	def _get_lastIndex(self):
-		"""Obtain the index of the chunk of text which was last spoken.
-		When the synth speaks text associated with a particular index, this method should return that index.
-		That is, this property should update for each chunk of text spoken by the synth.
-		@return: The index or C{None} if no index.
-		@rtype: int
-		"""
-		return None
 
 	def cancel(self):
 		"""Silence speech immediately.
@@ -481,3 +450,12 @@ class LanguageInfo(driverHandler.StringParameterInfo):
 		displayName = languageHandler.getLanguageDescription(id)
 		super(LanguageInfo,self).__init__(id, displayName)
 
+#: Notifies when a synthesizer reaches an index during speech.
+#: Handlers are called with these keyword arguments:
+#: synth: The L{SynthDriver} which reached the index.
+#: index: The number of the index which has just been reached.
+synthIndexReached = extensionPoints.Action()
+#: Notifies when a synthesizer finishes speaking.
+#: Handlers are called with one keyword argument:
+#: synth: The L{SynthDriver} which reached the index.
+synthDoneSpeaking = extensionPoints.Action()

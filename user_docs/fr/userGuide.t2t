@@ -401,6 +401,7 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Sélectionner puis copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à sélectionner puis copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas tant qu'on n'a pas indiqué la fin du texte à copier |
 | Sélectionner puis copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Au premier appui, le texte est sélectionné depuis la position préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Au second appui, le texte est copié dans le presse-papiers de Windows. |
 | Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue. Un double appui affiche l'information en mode navigation |
+| Annonce le remplacement du symbole courant | Aucun | Aucun | aucun | Dit le symbole à la position du curseur de revue. Un double appui montre le symbole et le texte utilisé pour le remplacer en mode navigation. |
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -1670,6 +1671,12 @@ Ceci inclut Microsoft Word lui-même, et aussi l'afficheur et le composeur de me
 Cependant, il peut exister certaines informations qui ne sont pas exposées, ou exposées incorrectement sous certaines versions de Microsoft Office, ce qui signifie qu'on ne peut pas toujours se fier à ce support UI automation.
 Nous ne recommandons pas encore à la majorité des utilisateurs d'activer cette option par défaut, bien que nous encouragions les utilisateurs d'Office 2016/365 à tester cette fonctionnalité et à nous faire des retours d'expérience.
 
+==== Utiliser UI Automation pour accéder à la Console Windows quand c'est possible ====[AdvancedSettingsConsoleUIA]
+Quand cette option est activée, NVDA utilise une nouvelle version, en cours de développement, du support de la Console Windows qui tire avantage des [améliorations d'accessibilité faites par Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Cette fonctionnalité est hautement expérimentale et encore incomplète, son utilisation n'est donc pas encore recommandée. Cependant, une fois terminée, il est prévu que ce nouveau support deviendra le défaut, améliorant les performances et la stabilité de NVDA dans les consoles de commande Windows.
+
+==== Dire les mots de passe dans les consoles UIA ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Ce paramètre contrôle si les caractères sont annoncés par [écho clavier par caractère #KeyboardSettingsSpeakTypedCharacters] ou [écho clavier par mot #KeyboardSettingsSpeakTypedWords] dans les situations où l'écran ne se met pas à jour (comme les champs de saisie de mot de passe) dans la console Windows avec le support UI automation activé. Pour des raisons de sécurité, ce paramètre devrait resté désactivé. Cependant, vous pouvez souhaiter l'activer si vous expérimentez des problèmes de performances ou des instabilités avec l'écho par caractère et/ou l'écho par mot en utilisant le nouveau support expérimental de la console.
+
 ==== Positionner automatiquement le focus système aux éléments susceptibles d'être mis en focus en mode navigation ====[BrowseModeSettingsAutoFocusFocusableElements]
 Touche : NVDA+8
 
@@ -1889,6 +1896,7 @@ Pour modifier cette configuration, configurez NVDA à votre convenance, sauvegar
 
 ++ Visionneuse du Journal ++[LogViewer]
 La visionneuse du journal, située dans "Outils" du menu NVDA, vous permet de consulter tous les événements enregistrés depuis votre dernier démarrage de NVDA.
+Un appui sur NVDA+F1 ouvre la visionneuse du journal et affiche des informations pour le développeur à propos de l'objet navigateur courant.
 
 En plus de lire le contenu, vous pouvez également sauvegarder une copie du journal ou réactualiser la visionneuse de manière à voir les événements les plus récents. 
 Ces actions sont disponibles dans le menu de la visionneuse.
