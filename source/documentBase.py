@@ -32,6 +32,9 @@ class TextContainerObject(AutoPropertyObject):
 	def _get_caret(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET)
 
+	def _set_caret(self,info):
+		info.updateCaret()
+
 class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	"""
 	A document that supports standard table navigiation comments (E.g. control+alt+arrows to move between table cells).

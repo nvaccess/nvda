@@ -706,12 +706,7 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_Start
 		else:
 			target=UIAHandler.TextPatternRangeEndpoint_End
-		diff = self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
-		if diff<0:
-			diff=-1
-		elif diff>0:
-			diff=1
-		return diff
+		return self._rangeObj.CompareEndpoints(src,other._rangeObj,target)
 
 	def setEndPoint(self,other,which):
 		if which.startswith('start'):
