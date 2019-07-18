@@ -49,7 +49,22 @@ class EditableText(TextContainerObject,ScriptableObject):
 	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
 
 	_caretMovementTimeoutMultiplier = 1
-	
+
+	#: Contains a bookmark to the caret object, cached for one core cycle
+	_cachedCaretBookMark = None
+
+	def invalidateCache(self):
+		super().invalidateCache()
+		self._cachedCaretBookMark = None
+
+	def getScript(self, gesture):
+		script = super().getScript(gesture)
+		if script:
+			return script
+		if gesture.isCharacter:
+			self._cachedCaretBookmark = self.caret.bookmark
+		return None
+
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
