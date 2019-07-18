@@ -723,14 +723,13 @@ def speakTypedCharacters(ch):
 		speakSpelling(realChar)
 
 def speakPreviousWord(wordSeparator=None):
-	global curWordChars
 	word = bufferedWord = "".join(curWordChars)
 	typingIsProtected = api.isTypingProtected()
 	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
 	if not (log.isEnabledFor(log.IO) or (
 		config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected
 	) or reportSpellingError):
-		curWordChars = []
+		clearTypedWordBuffer()
 		return
 	try:
 		obj = api.getCaretObject()
@@ -741,7 +740,7 @@ def speakPreviousWord(wordSeparator=None):
 	# Editable caret cases inherrit from EditableText.
 	from editableText import EditableText
 	if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
-		curWordChars = []
+		clearTypedWordBuffer()
 		return
 	speakUsingTextInfo = False
 	for attempt in xrange(3):
@@ -768,7 +767,7 @@ def speakPreviousWord(wordSeparator=None):
 				speakUsingTextInfo = True
 				break
 			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r after attempt %d"%(bufferedWord, info.text, attempt+1))
-	curWordChars = []
+	clearTypedWordBuffer()
 	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
 	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
