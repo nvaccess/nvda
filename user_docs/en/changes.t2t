@@ -24,6 +24,7 @@ What's New in NVDA
 - SynthDriver classes should no longer expose index via the lastIndex property. Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.
 - SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.
 - SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.
+- The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
  
 
  = 2019.2 =
