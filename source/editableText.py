@@ -189,7 +189,6 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"""
 		bookmark = self._cachedCaretBookmark
 		if not bookmark:
-			log.error("noooo")
 			return (None, None)
 		self._clearCachedCaretBookmark()
 		caretMoved, caretInfo = self._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.02)
