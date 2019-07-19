@@ -748,32 +748,21 @@ def speakPreviousWord(wordSeparator):
 		return 
 	speakUsingTextInfo = wordFound is True
 	if speakUsingTextInfo:
-		# Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
-		# Additionally, the TextInfo may contain one or more characters after the caret.
-		# Checking whether the stripped TextInfo text ends with the buffer is far from perfect, but works in most cases.
-		if not wordInfo.text.rstrip().endswith(bufferedWord):
-			pass
-			speakUsingTextInfo = False
-			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r"%(bufferedWord, wordInfo.text))
-		else:
-			word = wordInfo.text
+		word = wordInfo.text
 	clearTypedWordBuffer()
 	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
 	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-		if speakUsingTextInfo:
-			speakTextInfo(wordInfo, unit=textInfos.UNIT_WORD, reason=controlTypes.REASON_CARET)
-		else:
-			speakText(word)
-	if word != bufferedWord and reportSpellingError:
-		for command in info.getTextWithFields():
-			if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
-				break
-		else:
-			# No error.
-			return
-		import nvwave
-		nvwave.playWaveFile(r"waves\textError.wav")
+		speakText(word)
+		if speakUsingTextInfo and reportSpellingError:
+			for command in wordInfo.getTextWithFields():
+				if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
+					break
+			else:
+				# No error.
+				return
+			import nvwave
+			nvwave.playWaveFile(r"waves\textError.wav")
 
 class SpeakTextInfoState(object):
 	"""Caches the state of speakTextInfo such as the current controlField stack, current formatfield and indentation."""
