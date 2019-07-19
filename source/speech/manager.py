@@ -336,12 +336,15 @@ class SpeechManager(object):
 			return False, False
 		for seqIndex, seq in enumerate(self._curPriQueue.pendingSequences):
 			lastCommand = seq[-1] if isinstance(seq, list) else None
-			if isinstance(lastCommand, IndexCommand) and index >= lastCommand.index:
-				endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
-				if endOfUtterance:
-					# Remove the EndUtteranceCommand as well.
-					seqIndex += 1
-				break # Found it!
+			if isinstance(lastCommand, IndexCommand):
+				if index > lastCommand.index:
+					log.debugWarning(f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled")
+				elif index == lastCommand.index:
+					endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
+					if endOfUtterance:
+						# Remove the EndUtteranceCommand as well.
+						seqIndex += 1
+					break # Found it!
 		else:
 			# Unknown index. Probably from a previous utterance which was cancelled.
 			return False, False
