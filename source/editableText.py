@@ -23,6 +23,8 @@ from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
 from logHandler import log
+from typing import Tuple, Optional
+import queueHandler
 
 class EditableText(TextContainerObject,ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
@@ -50,20 +52,24 @@ class EditableText(TextContainerObject,ScriptableObject):
 
 	_caretMovementTimeoutMultiplier = 1
 
-	#: Contains a bookmark to the caret object, cached for one core cycle
-	_cachedCaretBookMark = None
-
-	def invalidateCache(self):
-		super().invalidateCache()
-		self._cachedCaretBookMark = None
+	#: A cached bookmark for the caret.
+	#: This is cached until L{hasNewWordBeenTyped} clears it
+	_cachedCaretBookmark = None
 
 	def getScript(self, gesture):
 		script = super().getScript(gesture)
 		if script:
 			return script
 		if gesture.isCharacter:
-			self._cachedCaretBookmark = self.caret.bookmark
+			return self.script_preTypedCharacter
 		return None
+
+	def script_preTypedCharacter(self, gesture):
+		try:
+			self._cachedCaretBookmark = self.caret.bookmark
+		except (LookupError, RuntimeError):
+			pass # Will still be None
+		gesture.send()
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
@@ -144,6 +150,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 				return
 		# Forget the word currently being typed as the user has moved the caret somewhere else.
 		speech.clearTypedWordBuffer()
+		# Also clear our latest cachetd caret bookmark
+		self._clearCachedCaretBookmark()
 		review.handleCaretMove(info)
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
@@ -163,21 +171,53 @@ class EditableText(TextContainerObject,ScriptableObject):
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
 
+	def _clearCachedCaretBookmark(self):
+		self._cachedCaretBookmark = None
+
+	def hasNewWordBeenTyped(self, wordSeparator: str) -> Tuple[Optional[bool], textInfos.TextInfo]:
+		"""
+		Returns whether a new word has been typed during this core cycle.
+		It relies on self._cachedCaretBookmark, which is cleared after every core cycle.
+		@param wordSeparator: The word seperator that has just been typed.
+		@returns: a tuple containing the following two values:
+			1. Whether a new word has been typed. This could be:
+				* False if a caret move has been detected, but no word has been typed.
+				* True if a caret move has been detected and a new word has been typed.
+				* None if no caret move could be detected.
+			2. If the caret has moved and a new word has been typed, a TextInfo
+				expanded to the word that has just been typed.
+		"""
+		bookmark = self._cachedCaretBookmark
+		if not bookmark:
+			log.error("noooo")
+			return (None, None)
+		self._clearCachedCaretBookmark()
+		caretMoved, caretInfo = self._hasCaretMoved(bookmark, retryInterval=0.005, timeout=0.03)
+		if not caretMoved:
+			return (None, None)
+		wordInfo = self.makeTextInfo(bookmark)
+		# The bookmark is positioned after the end of the word.
+		# Therefore, we need to move it one character backwards.
+		wordInfo.move(textInfos.UNIT_CHARACTER, -1)
+		wordInfo.expand(textInfos.UNIT_WORD)
+		diff = wordInfo.compareEndPoints(caretInfo,"endToStart")
+		if diff >= 0 and not wordSeparator.isspace():
+			# This is no word boundary.
+			return (False, None)
+		elif wordInfo.text.isspace():
+			# There is only space, which is not considered a word.
+			# For example, this can occur in Notepad++ when auto indentation is on.
+			log.debug("Word before caret contains only spaces")
+			return (None, None)
+		return (True, wordInfo)
+
 	def script_caret_newLine(self,gesture):
-		# #8065: We want to rely on text info to speak the word
-		# that has been typed before pressing enter.
-		# Therefore, speak the typed character/word before executing the actual gesture.
-		speech.speakTypedCharacters(unichr(gesture.vkCode))
-		# speech.speakTypedCharacters will be executed by event_typedCharacter as well.
-		# Therefore, suppress speaking of the next typed character
-		speech._suppressSpeakTypedCharacters(1)
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			gesture.send()
+		# Going to a new line should also speak the last word using textInfo.
+		# Note that calling script_preTypedCharacter also executes the gesture, which is fine.
+		self.script_preTypedCharacter(gesture)
+		bookmark = self._cachedCaretBookmark
+		if not bookmark:
 			return
-		bookmark=info.bookmark
-		gesture.send()
 		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
 		if not caretMoved or not newInfo:
 			return

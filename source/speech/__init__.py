@@ -722,7 +722,7 @@ def speakTypedCharacters(ch):
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
-def speakPreviousWord(wordSeparator=None):
+def speakPreviousWord(wordSeparator):
 	word = bufferedWord = "".join(curWordChars)
 	typingIsProtected = api.isTypingProtected()
 	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
@@ -742,37 +742,27 @@ def speakPreviousWord(wordSeparator=None):
 	if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
 		clearTypedWordBuffer()
 		return
-	speakUsingTextInfo = False
-	for attempt in xrange(3):
-		if attempt > 0: # Not the first attempt
-			time.sleep(0.05)
-		try:
-			info = obj.makeTextInfo(textInfos.POSITION_CARET)
-			if not info.findWordBeforeCaret(wordSeparator):
-				curWordChars.append(wordSeparator)
-				return 
-		except (RuntimeError, LookupError):
-			log.debugWarning("Couldn't rely on TextInfo for word echo", exc_info=True)
-			break
-		except:
-			# Focus probably moved.
-			log.debugWarning("Error fetching previous word before caret", exc_info=True)
-			break
+	wordFound, wordInfo = obj.hasNewWordBeenTyped(wordSeparator)
+	if wordFound is False:
+		curWordChars.append(wordSeparator)
+		return 
+	speakUsingTextInfo = wordFound is True
+	if speakUsingTextInfo:
+		# Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
+		# Additionally, the TextInfo may contain one or more characters after the caret.
+		# Checking whether the stripped TextInfo text ends with the buffer is far from perfect, but works in most cases.
+		if not wordInfo.text.rstrip().endswith(bufferedWord):
+			pass
+			speakUsingTextInfo = False
+			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r"%(bufferedWord, wordInfo.text))
 		else:
-			# #8065: Sometimes (as observed in Firefox), findWordBeforeCaret moves to the wrong word.
-			# Additionally, the TextInfo may contain one or more characters after the caret.
-			# Checking whether the stripped TextInfo text ends with the buffer is far from perfect, but works in most cases.
-			if info.text.rstrip().endswith(bufferedWord):
-				word = info.text
-				speakUsingTextInfo = True
-				break
-			log.debugWarning("Typed word in buffer %r does not match word in TextInfo %r after attempt %d"%(bufferedWord, info.text, attempt+1))
+			word = wordInfo.text
 	clearTypedWordBuffer()
 	if log.isEnabledFor(log.IO):
 		log.io("typed word: %s"%word)
 	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 		if speakUsingTextInfo:
-			speakTextInfo(info, unit=textInfos.UNIT_WORD, reason=controlTypes.REASON_CARET)
+			speakTextInfo(wordInfo, unit=textInfos.UNIT_WORD, reason=controlTypes.REASON_CARET)
 		else:
 			speakText(word)
 	if word != bufferedWord and reportSpellingError:

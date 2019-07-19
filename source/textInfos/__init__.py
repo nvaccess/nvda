@@ -414,56 +414,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 		""" 
 		raise NotImplementedError
 
-	def findWordBeforeCaret(self, wordSeparator=None):
-		"""
-		Locates the word before the caret and positions this TextInfo object at the start.
-		This requires this TextInfo object to be created at the caret position.
-		@param wordSeparator: The word separator that is expected to be one position before the caret.
-			C{None} if the word separator can be ignored.
-		@type wordSeparator: str
-		@returns: C{True} if a word with word separator is found before the caret, C{False} if the word before the caret is not yet complete.
-		@rtype: bool
-		@raise LookupError: If no word can be found before the caret (i.e. when there is no word or the caret is inside a word).
-		"""
-		if self.basePosition != POSITION_CARET:
-			raise RuntimeError("This function should only be called for TextInfos positioned at the caret")
-		# cache the caret position
-		caret = self.copy()
-		# This gets called for characters which might end a word; e.g. space.
-		# After such a character is typed, the caret is one position behind that character.
-		# So, the character before the caret usually is the word end.
-		# The one before that is the last character of the word, which is what we want.
-		res = self.move(UNIT_CHARACTER, -2)
-		if res == 0:
-			# Trying to look up a word before the caret, but there is none.
-			raise LookupError("No word before caret")
-		self.expand(UNIT_WORD)
-		diff = self.compareEndPoints(caret,"endToStart")
-		if diff >= 0 and wordSeparator and not wordSeparator.isspace():
-			# This is no word boundary.
-			return False
-		if wordSeparator == "\r" and self.text == "\n":
-			# #8065: In most programs (e.g. Wordpad, Word, pressing enter produces a single carriage return character.
-			# In Notepad however, enter produces crlf.
-			# This can't yet be unit tested as long as the unit testing framework doesn't use NVDAHelper/Uniscribe
-			self.move(UNIT_CHARACTER, 1, endPoint="end")
-		# When CRLF was just typed,
-		# we are positioned at the CR rather than on the end of the word.
-		# This is also the case when the current text is equal to the word separator,
-		# e.g. when using the US International keyboard layout:
-		# https://support.microsoft.com/en-us/help/306560/how-to-use-the-united-states-international-keyboard-layout-in-windows
-		# In this case, when typing don't, Windows supresses passing the apostrophe until the t is pressed.
-		if self.text in (wordSeparator, "\r\n"):
-			# We need to move te start endpoint an additional -1 character.
-			if self.move(UNIT_CHARACTER, -1) == 0:
-				raise LookupError("No word before word separator or CRLF")
-			self.expand(UNIT_WORD)
-		elif self.text.isspace():
-			# There is only space, which is not considered a word.
-			# For example, this can occur in Notepad++ when auto indentation is on.
-			raise LookupError("Word before caret contains only spaces")
-		return True
-
 	def _get_NVDAObjectAtStart(self):
 		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
