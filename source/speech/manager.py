@@ -338,7 +338,10 @@ class SpeechManager(object):
 			lastCommand = seq[-1] if isinstance(seq, list) else None
 			if isinstance(lastCommand, IndexCommand):
 				if index > lastCommand.index:
-					log.debugWarning("Reached speech index %d, but index %d never handled" % (index, lastCommand.index))
+					log.debugWarning(
+						"Reached speech index {index :d}, but index {lastCommand.index :d} never handled"
+						.format(index=index, lastCommand=lastCommand)
+					)
 				elif index == lastCommand.index:
 					endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
 					if endOfUtterance:
