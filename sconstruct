@@ -145,7 +145,6 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 Export('outFilePrefix')
 outputDir=Dir(env['outputDir'])
 Export('outputDir')
-devDocsOutputDir=outputDir.Dir('devDocs')
 
 # An action to sign an executable with certFile.
 # we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
@@ -236,13 +235,6 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	env.SideEffect('_txt2tags',htmlFile)
 	# All of our t2t files require build.t2tConf.
 	env.Depends(htmlFile,t2tBuildConf)
-#And also build the developer guide -- which must be moved at some point
-htmlFile=env.txt2tags('developerGuide.t2t')
-env.Depends(htmlFile,t2tBuildConf)
-env.SideEffect('_txt2tags',htmlFile)
-devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
-env.Alias("developerGuide",devGuide)
-
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
@@ -419,24 +411,7 @@ def makePot(target, source, env):
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
 
-devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
-devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
-env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
-env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
-
-#devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
-#	"cd", sourceDir.path, "&&",
-#	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
-#	"--output", "${TARGET.abspath}",
-#	"--quiet", "--html", "--include-log", "--no-frames",
-#	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
-#	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-#	"config", "contentRecog", "extensionPoints", "globalPlugins", "gui", "mathPres", "NVDAObjects",
-#	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
-#]])
-
-#env.Alias('devDocs', [devGuide, devDocs_nvda])
-#env.Clean('devDocs', [devGuide, devDocs_nvda])
+env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
