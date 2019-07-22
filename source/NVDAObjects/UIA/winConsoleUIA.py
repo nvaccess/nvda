@@ -13,6 +13,7 @@ import textInfos
 import UIAHandler
 
 from scriptHandler import script
+from UIAUtils import isTextRangeOffscreen
 from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import Terminal
@@ -50,8 +51,6 @@ class consoleUIATextInfo(UIATextInfo):
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 			visiLength = visiRanges.length
 			if visiLength > 0:
-				firstVisiRange = visiRanges.GetElement(0)
-				lastVisiRange = visiRanges.GetElement(visiLength - 1)
 				oldRange = self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
@@ -108,13 +107,11 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
-		if oldRange and (
-			self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_Start) < 0
-			or self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End) >= 0):
+		if (
+			oldRange
+			and isTextRangeOffscreen(self._rangeObj, visiRanges)
+			and not isTextRangeOffscreen(oldRange, visiRanges)
+		):
 			self._rangeObj = oldRange
 			return 0
 		return res
