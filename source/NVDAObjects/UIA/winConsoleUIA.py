@@ -12,6 +12,7 @@ import time
 import textInfos
 import UIAHandler
 
+from comtypes import COMError
 from scriptHandler import script
 from UIAUtils import isTextRangeOffscreen
 from winVersion import isWin10
@@ -108,7 +109,6 @@ class consoleUIATextInfo(UIATextInfo):
 					lineInfo.expand(textInfos.UNIT_LINE)
 					offset = self._getCurrentOffsetInThisLine(lineInfo)
 				# Finally using the new offset,
-
 				# Calculate the current word offsets and move to the start of
 				# this word if we are not already there.
 				start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
@@ -122,13 +122,16 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
-		if (
-			oldRange
-			and isTextRangeOffscreen(self._rangeObj, visiRanges)
-			and not isTextRangeOffscreen(oldRange, visiRanges)
-		):
-			self._rangeObj = oldRange
-			return 0
+		try:
+			if (
+				oldRange
+				and isTextRangeOffscreen(self._rangeObj, visiRanges)
+				and not isTextRangeOffscreen(oldRange, visiRanges)
+			):
+				self._rangeObj = oldRange
+				return 0
+		except COMError, RuntimeError:
+			pass
 		return res
 
 	def expand(self, unit):
