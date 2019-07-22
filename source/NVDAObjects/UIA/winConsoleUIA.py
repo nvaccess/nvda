@@ -312,9 +312,12 @@ class WinConsoleUIA(Terminal):
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
-		ptr = self.UIATextPattern.GetVisibleRanges()
-		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
-		return res
+		return (
+			self.makeTextInfo(textInfos.POSITION_ALL)
+			._rangeObj.getText(-1)
+			.rstrip()
+			.split("\r\n")
+		)
 
 	def _calculateNewText(self, newLines, oldLines):
 		self._hasNewLines = (
