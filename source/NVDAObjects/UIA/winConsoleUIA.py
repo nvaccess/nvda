@@ -27,6 +27,21 @@ class consoleUIATextInfo(UIATextInfo):
 	#: to do much good either.
 	_expandCollapseBeforeReview = False
 
+	def __init__(self,obj,position,_rangeObj=None):
+		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
+		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
+		# visible ranges to fix review top/bottom scripts.
+		if position==textInfos.POSITION_FIRST:
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			firstVisiRange = visiRanges.GetElement(0)
+			self._rangeObj = firstVisiRange
+			self.collapse()
+		elif position==textInfos.POSITION_LAST:
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+			self._rangeObj = lastVisiRange
+			self.collapse(True)
+
 	def collapse(self,end=False):
 		"""Works around a UIA bug on Windows 10 1903 and later."""
 		if not isWin10(1903):
