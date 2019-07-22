@@ -185,9 +185,8 @@ def isTextRangeOffscreen(range, visiRanges):
 			UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
 			UIAHandler.TextPatternRangeEndpoint_End) >= 0
 	else:
-		# Visible ranges not available, so fail gracefully.
-		log.warning("UIA visible ranges not available.")
-		return True
+		# Visible ranges not available.
+		raise RuntimeError("Visible ranges array is empty or invalid.")
 
 
 class UIATextRangeAttributeValueFetcher(object):
