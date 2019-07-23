@@ -31,16 +31,29 @@ SPAS_RUN=3
 
 class FunctionHooker(object):
 
-	def __init__(self,targetDll,importDll,funcName,newFunction):
-		hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(targetDll,importDll,funcName,newFunction)
-		if hook:
-			log.debug("hooked %s"%funcName)
+	def __init__(
+		self,
+		targetDll: str,
+		importDll: str,
+		funcName: str,
+		newFunction # result of ctypes.WINFUNCTYPE
+	):
+		# dllImportTableHooks_hookSingle expects byte strings.
+		self._hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(
+			targetDll.encode(),
+			importDll.encode(),
+			funcName.encode(),
+			newFunction
+		)
+		if self._hook:
+			log.debug(f"Hooked {funcName}")
 		else:
-			log.debug("could not hook %s"%funcName)
-			raise RuntimeError("could not hook %s"%funcName)
+			log.error(f"Could not hook {funcName}")
+			raise RuntimeError(f"Could not hook {funcName}")
 
 	def __del__(self):
-		NVDAHelper.localLib.dllImportTableHooks_unhookSingle(self._hook)
+		if self._hook:
+			NVDAHelper.localLib.dllImportTableHooks_unhookSingle(self._hook)
 
 _duckersByHandle={}
 
