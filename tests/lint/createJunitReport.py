@@ -4,7 +4,6 @@
 #See the file COPYING for more details.
 #Copyright (C) 2019 NV Access Limited
 import os
-import sys
 from sys import argv
 
 NO_ERROR = r'''<?xml version="1.0" encoding="UTF-8"?>
@@ -42,18 +41,23 @@ def makeJunitXML(inFileName, outFileName):
 	with open(outFileName, 'wt', encoding='UTF-8') as out:
 		out.write(outContents)
 
+def main():
+	try:
+		if len(argv) != 3:
+			raise RuntimeError(
+				f"{argv[0]} expects two arguments: flake8_output_file_name junit_file_name"
+			)
+		scriptName, flake8OutputFileName, junitFileName = argv
+		if not os.path.isfile(flake8OutputFileName):
+			raise RuntimeError(
+				f"Flake8_output_file does not exist at {flake8OutputFileName}"
+			)
+		makeJunitXML(flake8OutputFileName, junitFileName)
+	except Exception as e:
+		print(e)
+		raise e
 
-try:
-	if len(argv) != 3:
-		raise RuntimeError(
-			f"{argv[0]} expects two arguments: flake8_output_file_name junit_file_name"
-		)
-	scriptName, flake8OutputFileName, junitFileName = argv
-	if not os.path.isfile(flake8OutputFileName):
-		raise RuntimeError(
-			f"Flake8_output_file does not exist at {flake8OutputFileName}"
-		)
-	makeJunitXML(flake8OutputFileName, junitFileName)
-except Exception as e:
-	print(e)
-	sys.exit(-1)
+
+if __name__ == "__main__":
+	# execute only if run as a script
+	main()
