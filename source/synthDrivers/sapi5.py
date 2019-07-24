@@ -40,12 +40,16 @@ class FunctionHooker(object):
 		newFunction # result of ctypes.WINFUNCTYPE
 	):
 		# dllImportTableHooks_hookSingle expects byte strings.
-		self._hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(
-			targetDll.encode(),
-			importDll.encode(),
-			funcName.encode(),
-			newFunction
-		)
+		try:
+			self._hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(
+				targetDll.encode("mbcs"),
+				importDll.encode("mbcs"),
+				funcName.encode("mbcs"),
+				newFunction
+			)
+		except UnicodeEncodeError:
+			log.error("Error encoding FunctionHooker input parameters", exc_info=True)
+			self._hook = None
 		if self._hook:
 			log.debug(f"Hooked {funcName}")
 		else:
