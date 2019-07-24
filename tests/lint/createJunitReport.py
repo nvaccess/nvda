@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2019 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2019 NV Access Limited
 import os
 from sys import argv
 
@@ -40,6 +40,7 @@ def makeJunitXML(inFileName, outFileName):
 
 	with open(outFileName, 'wt', encoding='UTF-8') as out:
 		out.write(outContents)
+
 
 def main():
 	try:

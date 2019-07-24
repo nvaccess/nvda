@@ -169,7 +169,7 @@ test_script:
       git diff -u FETCH_HEAD...HEAD > $prDiff
       $flake8Config = "$lintSource\flake8.ini"
       $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -m flake8 --disable-noqa --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      type "$prDiff" | py -m flake8 --disable-noqa --diff --output-file="$flake8Output" --tee --config="$flake8Config --exit-zero"
       if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
@@ -177,6 +177,7 @@ test_script:
       Push-AppveyorArtifact $junitXML
       $wc = New-Object 'System.Net.WebClient'
       $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
+      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
     }
  - ps: |
      $testOutput = (Resolve-Path .\testOutput\)

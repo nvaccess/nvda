@@ -15,16 +15,30 @@
 import os
 import sys
 
+import SCons
+
 Import("env")
 
 # Add system path to get access to git.
-externalEnv = Environment(ENV = {'PATH' : os.environ['PATH']})
+externalEnv = Environment(
+	ENV = {'PATH' : os.environ['PATH']}
+)
+
+baseBranch = env.get("base")
+if not baseBranch:
+	errorMessage = (
+		"Lint can not complete without base branch."
+		"Try: 'scons lint base=origin/master'"
+		"Consider executing this on the command line or via your IDE: "
+		"\t git diff -u baseRef...HEAD | py -3 -m flake8 --diff --config='tests/lint/flake8.ini'"
+	)
+	raise SCons.SConf.SConfError(errorMessage)
 
 # Create a unified diff. Written to file for ease of manual inspection
 diffTarget = externalEnv.Command(
 	"current.diff",
 	None,
-	[["git", "diff", "-u", "HEAD", ">", '$TARGET']]
+	[["git", "diff", "-u", f"{baseBranch}...HEAD", ">", '$TARGET']]
 )
 
 # Pipe diff to flake8 for linting.
@@ -37,7 +51,8 @@ lintTarget = externalEnv.Command(
 		'--diff',  # accept a unified diff from stdin
 		'--output-file=$TARGET',  # output to a file to allow easier inspection
 		'--tee',  # also output to stdout, so results appear in scons output
-		'--config="tests/lint/flake8.ini"'  # use config file of complex options
+		'--config="tests/lint/flake8.ini"',  # use config file of complex options
+		'--exit-zero',  # even if there are errors, don't stop the build.
 	]]
 )
 
