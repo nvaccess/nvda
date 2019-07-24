@@ -201,8 +201,11 @@ def _setInitialFocus():
 
 def main():
 	"""NVDA's core main loop.
-This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and sets up the core pump, which checks the queues and executes functions when requested. Finally, it starts the wx main loop.
-"""
+	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
+	Then it initialises the wx application object and sets up the core pump,
+	which checks the queues and executes functions when requested.
+	Finally, it starts the wx main loop.
+	"""
 	log.debug("Core starting")
 
 	ctypes.windll.user32.SetProcessDPIAware()
@@ -224,6 +227,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		except:
 			pass
 	logHandler.setLogLevelFromConfig()
+	log.debug("Initializing tones")
+	import tones
+	tones.initialize()
 	try:
 		lang = config.conf["general"]["language"]
 		import languageHandler
@@ -535,6 +541,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if updateCheck:
 		_terminate(updateCheck)
 
+	# Terminate tones early.
+	import tones
+	_terminate(tones)
 	_terminate(watchdog)
 	_terminate(globalPluginHandler, name="global plugin handler")
 	_terminate(gui)
