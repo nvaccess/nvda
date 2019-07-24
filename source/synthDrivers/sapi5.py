@@ -109,10 +109,18 @@ class SapiSink(object):
 		self.synthRef = weakref.ref(synth)
 
 	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
-		synthIndexReached.notify(synth=self.synthRef(), index=bookmarkId)
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called Bookmark method on SapiSink while driver is dead")
+			return
+		synthIndexReached.notify(synth=synth, index=bookmarkId)
 
 	def EndStream(self, streamNum, pos):
-		synthDoneSpeaking.notify(synth=self.synthRef())
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called Bookmark method on EndStream while driver is dead")
+			return
+		synthDoneSpeaking.notify(synth=synth)
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
