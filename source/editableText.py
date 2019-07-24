@@ -97,7 +97,8 @@ class EditableText(TextContainerObject,ScriptableObject):
 			else:
 				# Caret events are unreliable in some controls.
 				# Only use them if we consider them safe to rely on for a particular control,
-				# and only if they arrive within 20 mili seconds after causing the event to occur.
+				# and only if they arrive within C{_useEvents_maxTimeoutMs} mili seconds
+				# after causing the event to occur.
 				if (
 					elapsed <= self._useEvents_maxTimeoutMs and
 					self.caretMovementDetectionUsesEvents and
