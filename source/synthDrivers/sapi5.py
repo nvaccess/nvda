@@ -22,6 +22,7 @@ from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthD
 import config
 import nvwave
 from logHandler import log
+import weakref
 
 # SPAudioState enumeration
 SPAS_CLOSED=0
@@ -101,13 +102,13 @@ class SapiSink(object):
 	"""
 
 	def __init__(self, synth):
-		self.synth = synth
+		self.synthRef = weakref.ref(synth)
 
 	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
-		synthIndexReached.notify(synth=self.synth, index=bookmarkId)
+		synthIndexReached.notify(synth=self.synthRef(), index=bookmarkId)
 
 	def EndStream(self, streamNum, pos):
-		synthDoneSpeaking.notify(synth=self.synth)
+		synthDoneSpeaking.notify(synth=self.synthRef())
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
