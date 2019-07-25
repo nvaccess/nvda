@@ -199,11 +199,11 @@ def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False,isM
 	if not (braille.handler.shouldAutoTether and isCaret):
 		braille.handler.handleReviewMove(shouldAutoTether=not isCaret)
 	if isCaret:
-		visionContext = vision.Context.CARET
+		visionContext = vision.constants.Context.CARET
 	elif isMouse:
-		visionContext = vision.Context.MOUSE
+		visionContext = vision.constants.Context.MOUSE
 	else:
-		visionContext = vision.Context.REVIEW
+		visionContext = vision.constants.Context.REVIEW
 	vision.handler.handleReviewMove(context=visionContext)
 
 def getNavigatorObject():

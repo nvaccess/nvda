@@ -1,13 +1,14 @@
-#vision/constants.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# vision/constants.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Constants for the vision framework.
 """
 
 from enum import Enum
+
 
 class Role(str, Enum):
 	"""
@@ -17,6 +18,7 @@ class Role(str, Enum):
 	MAGNIFIER = "magnifier"
 	HIGHLIGHTER = "highlighter"
 	COLORENHANCER = "colorEnhancer"
+
 
 ROLE_DESCRIPTIONS = {
 	# Translators: The name for a vision enhancement provider that magnifies (a part of) the screen.
@@ -28,6 +30,7 @@ ROLE_DESCRIPTIONS = {
 	# (i.e. color inversion, gray scale coloring, etc.)
 	Role.COLORENHANCER: _("Color enhancer"),
 }
+
 
 class Context(str, Enum):
 	"""Context for events received by providers.

@@ -1,25 +1,28 @@
-#vision/visionHandlerExtensionPoints.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# vision/visionHandlerExtensionPoints.py
+# A  part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Module containing extension points for vision enhancement providers.
+
 Consult the documentation of L{EventExtensionPoints} for more details.
 """
 
 from extensionPoints import Action
 from dataclasses import dataclass, field
 
+
 @dataclass(repr=False, frozen=True)
 class EventExtensionPoints:
-	"""Data class containing extension points that will be used to notify 
+	"""Data class containing extension points that will be used to notify
 	vision enhancement providers about occuring events, particularly for NVDA Objects.
 	Though an instance of this class is created when initializing the vision handler,
 	it should never be accessed from the vision handler directly.
 	Instead, vision enhancement providers should implement a "registerEventExtensionPoints" method,
-	taking an instance of this class as the only argument, performing registration to the extension points it is interested in.
-	For an example, see the vision.NVDAHighlighter module.
+	taking an instance of this class as the only argument,
+	performing registration to the extension points it is interested in.
+	For an example, see the L{visionEnhancementProviders.NVDAHighlighter} module.
 	"""
 	#: Notifies a vision enhancement provider when an object property has changed.
 	#: This allows a vision enhancement provider to take an action

@@ -1,8 +1,8 @@
-#vision/providerBase.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# vision/providerBase.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Module within the vision framework that contains the base vision enhancement provider class.
 """
@@ -12,6 +12,7 @@ from abc import abstractmethod
 from .constants import Role
 from .visionHandlerExtensionPoints import EventExtensionPoints
 from typing import FrozenSet
+
 
 class VisionEnhancementProvider(driverHandler.Driver):
 	"""A class for vision enhancement providers.

@@ -1,8 +1,8 @@
-#visionEnhancementProviders/NVDAHighlighter.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
+# visionEnhancementProviders/NVDAHighlighter.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
 
@@ -13,7 +13,7 @@ from windowUtils import CustomWindow
 import wx
 import gui
 import api
-from ctypes import pointer, byref, WinError
+from ctypes import byref, WinError
 from ctypes.wintypes import COLORREF, MSG
 import winUser
 from logHandler import log
@@ -27,6 +27,7 @@ from colors import RGB
 import core
 import driverHandler
 
+
 class HighlightStyle(
 	namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
 ):
@@ -35,7 +36,8 @@ class HighlightStyle(
 	@type color: L{RGB}
 	@ivar width: The width of the lines to be drawn, in pixels.
 		A higher width reduces the inner dimensions of the rectangle.
-		Therefore, if you need to increase the outer dimensions of the rectangle, you need to increase the margin as well.
+		Therefore, if you need to increase the outer dimensions of the rectangle,
+		you need to increase the margin as well.
 	@type width: int
 	@ivar style: The style of the lines to be drawn;
 		One of the C{winGDI.DashStyle*} enumeration constants.
@@ -47,13 +49,15 @@ class HighlightStyle(
 	@type margin: int
 	"""
 
+
 BLUE = RGB(0x03, 0x36, 0xFF)
 PINK = RGB(0xFF, 0x02, 0x66)
 YELLOW = RGB(0xFF, 0xDE, 0x03)
-DASH_BLUE =  HighlightStyle(BLUE, 5, winGDI.DashStyleDash, 5)
+DASH_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleDash, 5)
 SOLID_PINK = HighlightStyle(PINK, 5, winGDI.DashStyleSolid, 5)
 SOLID_BLUE = HighlightStyle(BLUE, 5, winGDI.DashStyleSolid, 5)
 SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
+
 
 class HighlightWindow(CustomWindow):
 	transparency = 0xff
@@ -61,7 +65,7 @@ class HighlightWindow(CustomWindow):
 	windowName = u"NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
 	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
-	transparentColor = 0 # Black
+	transparentColor = 0  # Black
 	transparentBrush = winGDI.gdi32.CreateSolidBrush(COLORREF(transparentColor))
 
 	@classmethod
@@ -74,14 +78,15 @@ class HighlightWindow(CustomWindow):
 	def updateLocationForDisplays(self):
 		if vision._isDebug():
 			log.debug("Updating NVDAHighlighter window location for displays")
-		displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
+		displays = [wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount())]
 		screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
-		# Hack: Windows has a "feature" that will stop desktop shortcut hotkeys from working when a window is full screen.
+		# Hack: Windows has a "feature" that will stop desktop shortcut hotkeys from working
+		# when a window is full screen.
 		# Removing one line of pixels from the bottom of the screen will fix this.
 		left = minPos.x
 		top = minPos.y
 		width = screenWidth
-		height = screenHeight-1
+		height = screenHeight - 1
 		self.location = RectLTWH(left, top, width, height)
 		winUser.user32.ShowWindow(self.handle, winUser.SW_HIDE)
 		if not winUser.user32.SetWindowPos(
@@ -104,7 +109,11 @@ class HighlightWindow(CustomWindow):
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
-		winUser.SetLayeredWindowAttributes(self.handle, self.transparentColor, self.transparency, winUser.LWA_ALPHA | winUser.LWA_COLORKEY)
+		winUser.SetLayeredWindowAttributes(
+			self.handle,
+			self.transparentColor,
+			self.transparency,
+			winUser.LWA_ALPHA | winUser.LWA_COLORKEY)
 		self.updateLocationForDisplays()
 		if not winUser.user32.UpdateWindow(self.handle):
 			raise WinError()
@@ -175,6 +184,7 @@ class HighlightWindow(CustomWindow):
 	def refresh(self):
 		winUser.user32.InvalidateRect(self.handle, None, True)
 
+
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "NVDAHighlighter"
 	# Translators: Description for NVDA's built-in screen highlighter.
@@ -186,7 +196,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
-	}
+		}
 	refreshInterval = 100
 	customWindowClass = HighlightWindow
 
@@ -205,7 +215,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		# Translators: shown for a highlighter setting that toggles
 		# highlighting the navigator object.
 		Context.NAVIGATOR: _("Highlight navigator &object"),
-	}
+		}
 
 	@classmethod
 	def _get_supportedSettings(cls):
@@ -241,7 +251,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
 			# Joining the thread here somehow stops the quit message from arriving.
-			#self._highlighterThread.join()
+			# self._highlighterThread.join()
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()

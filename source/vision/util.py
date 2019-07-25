@@ -1,22 +1,24 @@
-#vision/util.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# vision/util.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
-"""Utility functions for vision enhancement providers.
-"""
+"""Utility functions for vision enhancement providers."""
 
-from .constants import Role, Context
+from .constants import Context
 import api
 import locationHelper
 from documentBase import TextContainerObject
 from NVDAObjects import NVDAObject
 from typing import Optional
 import textInfos
+import mouseHandler
+
 
 def getReviewRect() -> locationHelper.RectLTRB:
 	return getRectFromTextInfo(api.getReviewPosition())
+
 
 def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.RectLTRB:
 	if obj is None:
@@ -44,9 +46,11 @@ def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.Re
 			raise LookupError
 	return getRectFromTextInfo(caretInfo)
 
+
 def getMouseRect() -> locationHelper.RectLTRB:
 	point = locationHelper.Point(*mouseHandler.curMousePos)
 	return locationHelper.RectLTRB.fromPoint(point)
+
 
 def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 	if not api.isNVDAObject(obj):
@@ -55,6 +59,7 @@ def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 	if not location:
 		raise LookupError
 	return location.toLTRB()
+
 
 def getContextRect(
 	context: Context,
@@ -79,6 +84,7 @@ def getContextRect(
 		return None
 	elif context == Context.MOUSE:
 		return getMouseRect()
+
 
 def getRectFromTextInfo(textInfo: textInfos.TextInfo) -> locationHelper.RectLTRB:
 	if textInfo.isCollapsed:

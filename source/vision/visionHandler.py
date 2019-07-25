@@ -1,15 +1,16 @@
-#vision/visionHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# vision/visionHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Module containing the vision handler.
+
 The vision handler is the core of the vision framework.
 See the documentation of L{VisionHandler} for more details about what it does.
 """
 
-from .constants import *
+from .constants import Context
 from .providerBase import VisionEnhancementProvider
 from .visionHandlerExtensionPoints import EventExtensionPoints
 import importlib
@@ -21,6 +22,7 @@ from logHandler import log
 import visionEnhancementProviders
 import wx
 from typing import Type, Dict, List
+
 
 def getProviderClass(
 	moduleName: str,
@@ -44,6 +46,7 @@ def getProviderClass(
 			).VisionEnhancementProvider
 		else:
 			raise initialException
+
 
 class VisionHandler(AutoPropertyObject):
 	"""The singleton vision handler is the core of the vision framework.
@@ -78,13 +81,13 @@ class VisionHandler(AutoPropertyObject):
 		"""
 		success = True
 		# Remove the provider from the providers dictionary.
-		providerInstance =self.providers.pop(providerName, None)
+		providerInstance = self.providers.pop(providerName, None)
 		if not providerInstance:
 			log.warning("Tried to terminate uninitialized provider %s" % providerName)
 			return False
 		try:
 			providerInstance.terminate()
-		except:
+		except Exception:
 			# Purposely catch everything.
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
@@ -100,11 +103,11 @@ class VisionHandler(AutoPropertyObject):
 			pass
 		# As we cant rely on providers to de-register themselves from extension points when terminating them,
 		# Re-create our extension points instance and ask active providers to reregister.
-		self.extensionPoints =  EventExtensionPoints()
+		self.extensionPoints = EventExtensionPoints()
 		for providerInst in self.providers.values():
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
-			except:
+			except Exception:
 				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
 		return success
 
@@ -123,7 +126,7 @@ class VisionHandler(AutoPropertyObject):
 			providerCls = type(providerInst)
 			try:
 				providerInst.reinitialize()
-			except:
+			except Exception:
 				# Purposely catch everything.
 				# A provider can raise whatever exception,
 				# therefore it is unknown what to expect.
@@ -137,7 +140,7 @@ class VisionHandler(AutoPropertyObject):
 			# Initialize the provider.
 			try:
 				providerInst = providerCls()
-			except:
+			except Exception:
 				# Purposely catch everything.
 				# A provider can raise whatever exception,
 				# therefore it is unknown what to expect.
@@ -146,12 +149,12 @@ class VisionHandler(AutoPropertyObject):
 			# Register extension points.
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
-			except:
-				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
+			except Exception:
+				log.error(f"Error while registering to extension points for provider {providerName}", exc_info=True)
 				try:
 					providerInst.terminate()
-				except:
-					pass
+				except Exception:
+					log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
 				return False
 		providerInst.initSettings()
 		if not temporary and providerCls.name not in config.conf['vision']['providers']:
