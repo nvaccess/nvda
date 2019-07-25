@@ -26,15 +26,21 @@ Prednosti tejto verzie zahŕňajú automatickú detekciu braillovských riadkov 
  - Skratky v režime prehliadania reagujú pomaly.
 - Pri  vybraných braillovských riadkoch je odteraz možné meniť nastavenia ovládača priamo v nastaveniach NVDA. (#7452)
 - Odteraz funguje automatická detekcia aj pre Braillovské riadky od Freedom Scientific. (#7727)
+- Pridaná funkcia na zobrazenie nahradenia symbolu. (#9286)
+- V pokročilých nastaveniach pridaná možnosť zapnúť experimentálnu podporu pre príkazové riadky Windows v režime UI Automation. (#9614)
+- Do textového poľa v Python konzole je odteraz možné naraz vložiť viac riadkov kódu. (#9776)
 
 
 == Zmeny ==
 - Pri zmene hlasitosti cez kruh nastavení hlasového výstupu sa posúva úroveň po 5 a nie po 10. (#6754)
 - Upravený text, ktorý sa zobrazí v správcovi doplnkov, ak je NVDA spustené s vypnutými doplnkami. (#9473)
 - Aktualizovaná databáza  Unicode Common na verziu  35.0. (#9445)
-- Aktualizovaná sada tabuliek liblouis na verziu 3.9.0. (#9439)
+- Aktualizovaná sada tabuliek liblouis na verziu 3.10.0. (#9439, #9678)
+- Aktualizovaný hlasový výstup  eSpeak-NG na verziu 67324cc.
 - Zjednotené klávesové skratky pre editačné pole Filter. V Slovenskej verzii sa teraz všade používa alt+E, v Anglickej alt+y. (#8728)
 - Ak je automaticky detegovaný braillovský riadok cez Bluetooth, NVDA bude pokračovať v hľadaní ďalších riadkov cez USB. Ak taký riadok nájde, automaticky pripojí tento riadok. (#8853)
+- NVDA odteraz oznamuje  najprv vybratý text a až potom hlásenie "vybraté". (#9028, #9909)
+- V   Microsoft Visual Studio Code je predvolene vypnutý režim prehliadania. (#9828)
 
 
 == Opravy ==
@@ -57,6 +63,9 @@ Prednosti tejto verzie zahŕňajú automatickú detekciu braillovských riadkov 
 - Odteraz je opäť možné použiť skratky na navigáciu po tabuľkách v Google dokumentoch v prehliadačoch Firefox a Chrome. (#9494)
 - Všetky tlačidlá opäť správne fungujú na braillovských riadkoch od Freedom Scientific. (#8849)
 - NVDA viac nezamrzne, ak presuniete kurzor na prvý znak v dokumente Notepad++ 7.7 X64. (#9609)
+- HTCom je možné používať s braillovskými riadkami od Handy Tech v kombinácii s NVDA. (#9691)
+- V prehliadači Mozilla Firefox NVDA neoznamuje zmeny  v  live regione, ak sa aktualizuje na neaktívnej záložke. (#1318)
+- Vyhľadávanie v režime prehliadania funguje aj vtedy, ak je otvorený dialóg s informáciami o NVDA. (#8566)
 
 
 = 2019.1.1 =

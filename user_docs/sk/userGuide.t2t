@@ -401,6 +401,7 @@ Na navigáciu v texte je možné použiť nasledovné príkazy:
 | Začiatok bloku kopírovania prezeracím kurzorom | NVDA+f9 | NVDA+f9 | Nie je | Označí aktuálnu pozíciu ako začiatok výberu a bloku na kopírovanie do schránky. Kopírovanie sa neuskutoční kým neurčíte koniec bloku kopírovania. |
 | Koniec bloku kopírovania prezeracím kurzorom | NVDA+f10 | NVDA+f10 | Nie je | Po prvom stlačení označí text  od označeného miesta po aktuálnu pozíciu prezeracieho kurzora. Po dvojitom stlačení skopíruje text od značky po aktuálnu pozíciu  do schránky Windows. |
 | formátovanie textu | NVDA+f | NVDA+f | Nie je | Oznámi formátovanie textu na pozícii prezeracieho kurzora. Po dvojitom stlačení zobrazí informáciu v režime prehliadania.|
+| Prečítať výslovnosť symbolu | Nie je | Nie je | Nie je | Prečíta symbol pod prezeracím kurzorom. Dvojité stlačenie zobrazí dialóg, v ktorom je možné prečítať si textový popis symbolu v režime prehliadania.|
 %kc:endInclude
 
 Všimnite si: Pri týchto operáciách musí byť numerický blok vypnutý.
@@ -1670,6 +1671,12 @@ Aktuálne verzie MS Office 2016/365 bežiace v systéme Windows 10 majú podporu
 Niektoré informácie sú však nedostatočne prezentované, alebo sú prezentované nesprávne, takže nemôžeme UI automation odporúčať vo všetkých prípadoch.
 Väčšine používateľov neodporúčame používať UI automation. Zároveň privítame odozvu od používateľov Office 2016/365, ktorí sú ochotný otestovať UI automation.
 
+==== Na zobrazenie príkazového riadka používať UI Automation, ak je dostupné====[AdvancedSettingsConsoleUIA]
+Ak začiarknete túto možnosť, NVDA bude používať novú, zatiaľ rozpracovanú verziu sprístupnenia pre Windows príkazové riadky. Tá vychádza  z [Vylepšení prístupnosti implementovaných spoločnosťou Microsoft (Anglicky) https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Táto funkcia je experimentálna a nie je dokončená, preto ju zatiaľ neodporúčame používať. Po jej dokončení a implementovaní však nahradí doterajšiu podporu prístupnosti pre príkazové riadky.
+
+==== Hovoriť heslá v UIA prostredí ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Toto nastavenie určuje, či bude NVDA oznamovať [napísané znaky #KeyboardSettingsSpeakTypedCharacters] alebo  [napísané slová #KeyboardSettingsSpeakTypedWords] v situáciách, keď sa obsah na obrazovke neaktualizuje (napríklad pri písaní hesiel) pri písaní v príkazovom riadku v prostredí UIA. Z bezpečnostných dôvodov odporúčame toto nastavenie ponechať vypnuté. Ak však máte problémy s čítaním napísaných znakov alebo slov pri používaní novej UIA podpori pre príkazové riadky, toto nastavenie môže zlepšiť stabilitu.
+
 ==== Automaticky presúvať fokus na zamerané prvky ====[BrowseModeSettingsAutoFocusFocusableElements]
 Klávesová skratka: NVDA+8
 
@@ -1889,6 +1896,7 @@ Ak chcete zmeniť konfiguráciu NVDA pre prihlasovaciu obrazovku, nakonfigurujte
 
 ++ Zobraziť log ++[LogViewer]
 Zobrazovač logu, ktorý je možné spustiť z podmenu nástroje, dokáže zobraziť všetok zápis do súboru log, ktorý sa zaznamenal od posledného štartu NVDA.
+Skratkou NVDA+F1 otvoríte zobrazovač logu a do logu sa zapíšu informácie o aktuálnom navigačnom objekte.
 
 Okrem čítania obsahu, je možné obsah logu uložiť do súboru, či obnoviť obsah, aby obsahoval aj záznamy zapísané po otvorení okna zobrazovač logu.
 Tieto možnosti sú dostupné z aplikačnej ponuky okna zobrazovač logu.
