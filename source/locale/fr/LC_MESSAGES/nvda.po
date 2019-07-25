@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-11 23:26+1000\n"
-"PO-Revision-Date: 2019-07-04 16:21+0200\n"
+"POT-Creation-Date: 2019-07-19 00:10+1000\n"
+"PO-Revision-Date: 2019-07-24 12:34+0200\n"
 "Last-Translator: Corentin BACQUÉ-CAZENAVE <corentin@progaccess33.net>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
-msgstr "Bureau Sécurisé"
+msgstr "Bureau sécurisé"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
@@ -3844,15 +3844,15 @@ msgstr "Symbole étendu ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
-msgstr "Mode de parole désactivé"
+msgstr "Parole désactivée"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "Speech mode beeps"
-msgstr "Mode de parole bips"
+msgstr "Bips (pas de voix)"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "Speech mode talk"
-msgstr "Mode de parole parole"
+msgstr "Parole activée"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3860,9 +3860,10 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Boucler entre les modes muet, bip et parole. En Mode muet, NVDA ne dit rien. "
-"En mode bip, NVDA émet des bips au lieu de parler. En mode parole, NVDA "
-"parle normalement"
+"Boucler entre \"Parole désactivée\", \"Bips (pas de voix)\" et \"Parole "
+"activée\". En Mode \"Parole désactivée\", NVDA ne dit rien. En mode \"Bips "
+"(pas de voix)\", NVDA émet des bips au lieu de parler. En mode \"Parole "
+"activée\", NVDA parle normalement."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -4107,7 +4108,7 @@ msgstr "Pas de batterie"
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
 msgid "%d percent"
-msgstr "%d pour cent. "
+msgstr "%d pour cent."
 
 #. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 msgid "AC power on"
@@ -7794,7 +7795,7 @@ msgstr "Console &Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons..."
-msgstr "Gérer les e&xtensions..."
+msgstr "&Gérer les extensions..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create portable copy..."
