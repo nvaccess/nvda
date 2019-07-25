@@ -172,7 +172,7 @@ test_script:
       type "$prDiff" | py -m flake8 --disable-noqa --diff --output-file="$flake8Output" --tee --config="$flake8Config"
       if($LastExitCode -ne 0) {
        $errorCode=$LastExitCode
-       Add-AppveyorMessage "Flake8 errors found in diff."
+       Add-AppveyorMessage "PR introduces Flake8 errors"
       }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
