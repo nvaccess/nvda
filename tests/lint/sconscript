@@ -24,8 +24,9 @@ externalEnv = Environment(
 	ENV = {'PATH' : os.environ['PATH']}
 )
 
+doLint = env.get("doLint")
 baseBranch = env.get("base")
-if not baseBranch:
+if doLint and not baseBranch:
 	errorMessage = (
 		"Lint can not complete without base branch."
 		"Try: 'scons lint base=origin/master'"
