@@ -3,6 +3,47 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import ctypes
+import _ctypes
+
+# A version of ctypes.WINFUNCTYPE 
+# that produces a WinFunctionType class whose instance will convert COMError into a CallCancelled exception when called as a function.
+old_WINFUNCTYPE=ctypes.WINFUNCTYPE
+def new_WINFUNCTYPE(restype,*argtypes,**kwargs):
+	cls=old_WINFUNCTYPE(restype,*argtypes,**kwargs)
+	class WinFunctionType(cls):
+		# We must manually pull the mandatory class variables from the super class,
+		# as the metaclass of _ctypes.CFuncPtr seems to expect these on the outermost subclass.
+		_argtypes_=cls._argtypes_
+		_restype_=cls._restype_
+		_flags_=cls._flags_
+		def __call__(self,*args,**kwargs):
+			try:
+				return super().__call__(*args,**kwargs)
+			except _ctypes.COMError as e:
+				from core import CallCancelled, RPC_E_CALL_CANCELED
+				if e.args[0]==RPC_E_CALL_CANCELED:
+					# As this is a cancelled COM call,
+					# raise CallCancelled instead of the original COMError.
+					# Also raising from None gives a cleaner traceback,
+					# Hiding the fact we were already in an except block.
+					raise CallCancelled("COM call cancelled") from None
+				# Otherwise, just continue the original COMError exception up the stack.
+				raise
+	return WinFunctionType
+
+# While importing comtypes,
+# Replace WINFUNCTYPE in ctypes with our own version,
+# So that comtypes will use this in all its COM method calls. 
+# As comtypes imports WINFUNCTYPE from ctypes by name,
+# We only need to replace it for the duration of importing comtypes, 
+# as it will then have it for ever.
+ctypes.WINFUNCTYPE=new_WINFUNCTYPE
+try:
+	import comtypes
+finally:
+	ctypes.WINFUNCTYPE=old_WINFUNCTYPE
+
 from logHandler import log
 
 from comtypes import COMError

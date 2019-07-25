@@ -39,7 +39,7 @@ stdNamesToRoles = {
 }
 
 def normalizeStdName(stdName):
-	if "H1" <= stdName <= "H6":
+	if stdName and "H1" <= stdName <= "H6":
 		return controlTypes.ROLE_HEADING, stdName[1]
 
 	try:
@@ -58,9 +58,9 @@ class AcrobatNode(IAccessible):
 			log.debugWarning("Could not get IServiceProvider")
 			return
 
-		if self.event_objectID > 0:
+		if self.event_objectID is not None and self.event_objectID > 0:
 			self.accID = self.event_objectID
-		elif self.event_childID > 0:
+		elif self.event_childID is not None and self.event_childID > 0:
 			self.accID = self.event_childID
 		else:
 			try:
@@ -118,7 +118,7 @@ class AcrobatNode(IAccessible):
 		if val:
 			yield val
 		else:
-			for childNum in xrange(node.GetChildCount()):
+			for childNum in range(node.GetChildCount()):
 				try:
 					subNode = node.GetChild(childNum).QueryInterface(IPDDomElement)
 				except COMError:
@@ -129,7 +129,7 @@ class AcrobatNode(IAccessible):
 
 	def _get_mathMl(self):
 		# There could be other stuff before the math element. Ug.
-		for childNum in xrange(self.pdDomNode.GetChildCount()):
+		for childNum in range(self.pdDomNode.GetChildCount()):
 			try:
 				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
 			except COMError:

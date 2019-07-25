@@ -21,6 +21,7 @@ import watchdog
 from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
+import textUtils
 
 def wcharToInt(c):
 	i=ord(c)
@@ -42,22 +43,22 @@ def normalizeRtlString(s):
 			d=unicodedata.decomposition(c)
 			d=d.split(' ') if d else None
 			if d and len(d)==2 and d[0] in ('<initial>','<medial>','<final>','<isolated>'):
-				c=unichr(int(d[1],16))
+				c=chr(int(d[1],16))
 		l.append(c)
 	return u"".join(l)
 
 def yieldListRange(l,start,stop):
-	for x in xrange(start,stop):
+	for x in range(start,stop):
 		yield l[x]
 
 def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,endOffset):
 	windowStartIndex=startIndex
 	lastEndOffset=windowStartOffset=startOffset
 	lastHwnd=None
-	for index in xrange(startIndex,endIndex+1):
+	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
-		if isinstance(item,basestring):
-			lastEndOffset+=len(item)
+		if isinstance(item,str):
+			lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 		else:
 			hwnd=item.field['hwnd'] if item else None
 			if lastHwnd is not None and hwnd!=lastHwnd:
@@ -71,11 +72,11 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	curFormatField=None 
 	overallDirection=0 # The general reading direction calculated based on the amount of rtl vs ltr text there is
 	# Detect the direction for fields with an unknown reading direction, and calculate an over all direction for the entire passage
-	for index in xrange(startIndex,endIndex):
+	for index in range(startIndex,endIndex):
 		item=commandList[index]
 		if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 			curFormatField=item.field
-		elif isinstance(item,basestring):
+		elif isinstance(item,str):
 			direction=curFormatField['direction']
 			if direction==0:
 				curFormatField['direction']=direction=detectStringDirection(item)
@@ -91,7 +92,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	if overallDirection==0: overallDirection=1
 	# following the calculated over all reading direction of the passage, correct all weak/neutral fields to have the same reading direction as the field preceeding them 
 	lastDirection=overallDirection
-	for index in xrange(startIndex,endIndex):
+	for index in range(startIndex,endIndex):
 		if overallDirection<0: index=endIndex-index-1
 		item=commandList[index]
 		if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
@@ -106,10 +107,10 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	runStartOffset=None
 	if overallDirection<0:
 		reorderList=[]
-	for index in xrange(startIndex,endIndex+1):
+	for index in range(startIndex,endIndex+1):
 		item=commandList[index] if index<endIndex else None
-		if isinstance(item,basestring):
-			lastEndOffset+=len(item)
+		if isinstance(item,str):
+			lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 		elif not item or (isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField)):
 			direction=item.field['direction'] if item else None
 			if direction is None or (direction!=runDirection): 
@@ -120,10 +121,10 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						#Reverse rects
 						rects[runStartOffset:lastEndOffset]=rects[lastEndOffset-1:runStartOffset-1 if runStartOffset>0 else None:-1]
 						rectsStart=runStartOffset
-						for i in xrange(runStartIndex,index,2):
+						for i in range(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
-							rectsEnd=rectsStart+len(text)
+							rectsEnd = rectsStart + textUtils.WideStringOffsetConverter(text).wideStringLength
 							commandList[i+1]=command
 							shouldReverseText=command.field.get('shouldReverseText',True)
 							commandList[i]=normalizeRtlString(text[::-1] if shouldReverseText else text)
@@ -243,8 +244,8 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					inHighlightChunk=True
 					if startOffset is None:
 						startOffset=curOffset
-				elif isinstance(item,basestring):
-					curOffset+=len(item)
+				elif isinstance(item,str):
+					curOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 					if inHighlightChunk:
 						endOffset=curOffset
 				else:
@@ -254,7 +255,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		raise LookupError
 
 	def __init__(self, obj, position,limitRect=None):
-		if isinstance(position, textInfos.Rect):
+		if isinstance(position, RectLTRB):
 			limitRect=position
 			position=textInfos.POSITION_ALL
 		if limitRect is not None:
@@ -293,10 +294,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineStartIndex=0
 		lineBaseline=None
 		lineEndOffsets=[]
-		for index in xrange(len(commandList)):
+		for index in range(len(commandList)):
 			item=commandList[index]
-			if isinstance(item,basestring):
-				lastEndOffset+=len(item)
+			if isinstance(item,str):
+				lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
 					curFormatField=item.field
@@ -309,7 +310,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						processWindowChunksInLine(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
 						#Convert the whitespace at the end of the line into a line feed
 						item=commandList[index-1]
-						if isinstance(item,basestring) and len(item)==1 and item.isspace():
+						if (
+							isinstance(item,str)
+							# Since we're searching for white space, it is safe to
+							# do this opperation on the length of the pythonic string
+							and len(item)==1
+							and item.isspace()
+						):
 							commandList[index-1]=u'\n'
 						lineEndOffsets.append(lastEndOffset)
 					if baseline is not None:
@@ -327,8 +334,8 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 				baseline=item.field['baseline']
 				direction=item.field['direction']
-			elif isinstance(item,basestring):
-				endOffset=lastEndOffset+len(item)
+			elif isinstance(item,str):
+				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).wideStringLength
 				for rect in rects[lastEndOffset:endOffset]:
 					yield rect,baseline,direction
 				lastEndOffset=endOffset
@@ -340,10 +347,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Strip  unwanted commands and text from the start and the end to honour the requested offsets
 		lastEndOffset=0
 		startIndex=endIndex=relStart=relEnd=None
-		for index in xrange(len(storyFields)):
+		for index in range(len(storyFields)):
 			item=storyFields[index]
-			if isinstance(item,basestring):
-				endOffset=lastEndOffset+len(item)
+			if isinstance(item,str):
+				endOffset = lastEndOffset + textUtils.WideStringOffsetConverter(item).wideStringLength
 				if lastEndOffset<=start<endOffset:
 					startIndex=index-1
 					relStart=start-lastEndOffset
@@ -366,7 +373,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return commandList
 
 	def _getStoryText(self):
-		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,basestring))
+		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,str))
 
 	def _getStoryLength(self):
 		lineEndOffsets=self._storyFieldsAndRects[2]
@@ -377,7 +384,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	useUniscribe=False
 
 	def _getTextRange(self, start, end):
-		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,basestring))
+		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,str))
 
 	def getTextWithFields(self,formatConfig=None):
 		start=self._startOffset
@@ -414,10 +421,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Enumerate the character rectangles
 		a=enumerate(self._storyFieldsAndRects[1])
 		#Convert calculate center points for all the rectangles
-		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
-		#Calculate distances from all center points to the given x and y
-		#But place the distance before the character offset, to make sorting by distance easier
-		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
+		b = ((charOffset, rect.center) for charOffset, rect in a)
+		# Calculate distances from all center points to the given x and y
+		# But place the distance before the character offset, to make sorting by distance easier
+		c = ((math.sqrt(abs(x - center.x) ** 2 + abs(y - center.y) ** 2), charOffset) for charOffset, center in b)
 		#produce a static list of distances and character offsets, sorted by distance 
 		d=sorted(c)
 		#Return the lowest offset with the shortest distance
@@ -446,9 +453,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		if not l:
 			log.debugWarning("object has no location")
 			raise LookupError
-		x=l[0]+(l[2]/2)
-		y=l[1]+(l[3]/2)
-		offset=self._getClosestOffsetFromPoint(x,y)
+		offset=self._getClosestOffsetFromPoint(*l.center)
 		return offset,offset
 
 	def _getLineOffsets(self,offset):
@@ -569,9 +574,9 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		rects=self._storyFieldsAndRects[1]
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
-		left,top,right,bottom=rects[offset]
-		x=left #+(right-left)/2
-		y=top+(bottom-top)/2
+		rect = rects[offset]
+		x = rect.left
+		y= rect.center.y
 		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)

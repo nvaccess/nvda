@@ -44,20 +44,21 @@ VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 
-class VBufStorage_findMatch_word(unicode):
+class VBufStorage_findMatch_word(str):
 	pass
 VBufStorage_findMatch_notEmpty = object()
 
 FINDBYATTRIBS_ESCAPE_TABLE = {
 	# Symbols that are escaped in the attributes string.
-	ord(u":"): ur"\\:",
-	ord(u";"): ur"\\;",
+	ord(u":"): r"\\:",
+	ord(u";"): r"\\;",
 	ord(u"\\"): u"\\\\\\\\",
 }
 # Symbols that must be escaped for a regular expression.
 FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
-	escape = lambda text: unicode(text).translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression. 
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
@@ -67,7 +68,7 @@ def _prepareForFindByAttributes(attribs):
 	# so first build the list of requested attributes.
 	for option in attribs:
 		for name in option:
-			reqAttrs.append(unicode(name))
+			reqAttrs.append(name)
 	# Now build the regular expression.
 	for option in attribs:
 		optRegexp = []
@@ -266,7 +267,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		if not text:
 			return ""
 		commandList=XMLFormatting.XMLTextParser().parse(text)
-		for index in xrange(len(commandList)):
+		for index in range(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
 				field=commandList[index].field
 				if isinstance(field,textInfos.ControlField):
@@ -436,7 +437,11 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			if log.isEnabledFor(log.DEBUG):
 				startTime = time.time()
-			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(self.rootNVDAObject.appModule.helperLocalBindingHandle,self.rootDocHandle,self.rootID,unicode(self.backendName))
+			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(
+				self.rootNVDAObject.appModule.helperLocalBindingHandle,
+				self.rootDocHandle,self.rootID,
+				self.backendName
+			)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
 		except:
@@ -477,7 +482,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def isNVDAObjectPartOfLayoutTable(self,obj):
 		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
-		ID=unicode(ID)
+		ID=str(ID)
 		info=self.makeTextInfo(obj)
 		info.collapse()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -642,14 +647,14 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			else:
 				raise LookupError
 
-	def _isSuitableNotLinkBlock(self,range):
-		return (range._endOffset-range._startOffset)>=self.NOT_LINK_BLOCK_MIN_LEN
+	def _isSuitableNotLinkBlock(self, textRange):
+		return (textRange._endOffset - textRange._startOffset) >= self.NOT_LINK_BLOCK_MIN_LEN
 
-	def getEnclosingContainerRange(self,range):
+	def getEnclosingContainerRange(self, textRange):
 		formatConfig=config.conf['documentFormatting'].copy()
 		formatConfig.update({"reportBlockQuotes":True,"reportTables":True,"reportLists":True,"reportFrames":True})
 		controlFields=[]
-		for cmd in range.getTextWithFields():
+		for cmd in textRange.getTextWithFields():
 			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
 				break
 			controlFields.append(cmd.field)
@@ -662,7 +667,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not containerField: return None
 		docHandle=int(containerField['controlIdentifier_docHandle'])
 		ID=int(containerField['controlIdentifier_ID'])
-		offsets=range._getOffsetsFromFieldIdentifier(docHandle,ID)
+		offsets = textRange._getOffsetsFromFieldIdentifier(docHandle,ID)
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
 	@classmethod
@@ -682,7 +687,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	def getControlFieldForNVDAObject(self, obj):
 		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
-		objId = unicode(objId)
+		objId = str(objId)
 		info = self.makeTextInfo(obj)
 		info.collapse()
 		info.expand(textInfos.UNIT_CHARACTER)

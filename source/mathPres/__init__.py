@@ -29,16 +29,16 @@ class MathPresentationProvider(object):
 	def getSpeechForMathMl(self, mathMl):
 		"""Get speech output for specified MathML markup.
 		@param mathMl: The MathML markup.
-		@type mathMl: basestring
+		@type mathMl: str
 		@return: A speech sequence.
-		@rtype: list of unicode and/or L{speech.SpeechCommand}
+		@rtype: list of str and/or L{speech.SpeechCommand}
 		"""
 		raise NotImplementedError
 
 	def getBrailleForMathMl(self, mathMl):
 		"""Get braille output for specified MathML markup.
 		@param mathMl: The MathML markup.
-		@type mathMl: basestring
+		@type mathMl: str
 		@return: A string of Unicode braille.
 		@rtype: unicode
 		"""
@@ -136,7 +136,7 @@ def getMathMlFromTextInfo(pos):
 	@param pos: The TextInfo in question.
 	@type pos: L{textInfos.TextInfo}
 	@return: The MathML or C{None} if there is no math.
-	@rtype: basestring
+	@rtype: str
 	"""
 	pos = pos.copy()
 	pos.expand(textInfos.UNIT_CHARACTER)
@@ -172,7 +172,7 @@ RE_MATH_LANG = re.compile(r"""<math.*? xml:lang=["']([^"']+)["'].*?>""")
 def getLanguageFromMath(mathMl):
 	"""Get the language specified in a math tag.
 	@return: The language or C{None} if unspeicifed.
-	@rtype: basestring
+	@rtype: str
 	"""
 	m = RE_MATH_LANG.search(mathMl)
 	if m:
