@@ -401,6 +401,7 @@ Metni incelerken, aşağıdaki komutlar kullanılabilir:
 | İnceleme imlecinin bulunduğu yerden kopyalama ve seçme işlemini başlatma | NVDA+f9 | NVDA+f9 | yok | inceleme imlecinin pozisyonundan itibaren metni seçmeye ya da kopyalamaya başlar. NVDA'ya metnin sonunu belirtmeden işlem gerçekleşmez |
 | İnceleme imlecinin bulunduğu yere kadar seçme ve kopyalama | NVDA+f10 | NVDA+f10 | yok | metnin başladığı yer olarak ayarlanan noktadan, inceleme imlecinin mevcut konumuna kadar olan metni seçer. İki kez basılırsa, metin panoya kopyalanır |
 | Metin biçimini söyle | NVDA+f | NVDA+f | yok | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir. İki kez basılırsa, biçim bilgisi tarama kipinde gösterilir |
+| Mevcut sembol için belirlenmiş okunuşu seslendir | None | None | none | inceleme imlecinin bulunduğu konumdaki sembolü söyler. Pressed twice, shows the symbol and the text used to speak it in browse mode. |
 %kc:endInclude
 
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -1663,6 +1664,12 @@ Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyic
 Ancak, Microsoft Office'in bazı sürümlerinde ya açığa çıkmamış ya da yanlış açıklanmış bazı bilgiler olabilir; bu, bu UI otomasyon desteğinin her zaman güvenilemeyeceği anlamına gelir.
 Kullanıcıların çoğunun varsayılan olarak bunu açmasını önermiyoruz, ancak Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız.
 
+==== Mevcutsa, Windows Konsoluna erişmek için UI Otomasyonu kullanın ====[AdvancedSettingsConsoleUIA]
+Bu seçenek etkinse, NVDA, [Microsoft tarafından yapılan erişilebilirlik geliştirmelerinden yararlanan, Windows Konsolu için desteğinin devam eden yeni bir sürümünü kullanacak https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Bu özellik oldukça deneyseldir ve hala eksiktir, bu nedenle kullanımı henüz önerilmez. Ancak, tamamlandığında, bu yeni desteğin varsayılan olacağı ve NVDA'nın Windows komut konsollarındaki performansını ve istikrarını artıracağı tahmin edilmektedir.
+
+==== UIA konsollarında şifreleri seslendir ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Bu ayar, karakterlerin seslendirilip seslendirilmeyeceğini  kontrol eder [yazılan karakterleri seslendir #KeyboardSettingsSpeakTypedCharacters] veya [yazılan sözcükleri seslendir #KeyboardSettingsSpeakTypedWords] UI otomasyon desteğinin etkin olduğu Windows Konsolunda ekranın güncellenmediği durumlarda (şifre girişi gibi). Güvenlik nedeniyle bu ayar devre dışı bırakılmalıdır. Bununla birlikte, NVDA'nın yeni deneysel konsol desteğini kullanırken performans sorunları veya yazılan karakter ve / veya kelime seslendirilmesi ile ilgili kararsızlık yaşamanız durumunda bunu etkinleştirmek isteyebilirsiniz.
+
 ==== Tarama kipinde sistem odağını otomatik olarak odaklanabilir öğelere taşı ====[BrowseModeSettingsAutoFocusFocusableElements]
 Kısayol: NVDA+8
 
@@ -1882,6 +1889,7 @@ NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değişti
 
 ++ Log Görüntüleyicisi ++[LogViewer]
 Araçlar menüsü altında bulunan Log dosyasını göster öğesi, NVDA'yı en son başlattığınızdan şimdiye kadar gerçekleşen tüm NVDA oturum açma çıktılarını görmenizi sağlar.
+NVDA + F1 basıldığında, günlük görüntüleyici açılır ve mevcut nesne hakkındaki geliştirici bilgileri görüntülenir.
 
 İçeriği okuyabilmenin yanısıra, Kayıt dosyasının bir kopyasını farklı kaydedebilir ya da log dosyası açık olduğundan bu yana En son çıktı görüntüsünü görebilmek için ekranı güncelleyebilirsiniz.
 Bu işlemler görüntüleyicinin Log menüsünde bulunmaktadır.
