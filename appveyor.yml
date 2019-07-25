@@ -169,8 +169,11 @@ test_script:
       git diff -U0 FETCH_HEAD...HEAD > $prDiff
       $flake8Config = "$lintSource\flake8.ini"
       $flake8Output = "$lintOutput\PR-Flake8.txt"
-      type "$prDiff" | py -m flake8 --exit-zero --disable-noqa --diff --output-file="$flake8Output" --tee --config="$flake8Config"
-      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
+      type "$prDiff" | py -m flake8 --disable-noqa --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      if($LastExitCode -ne 0) {
+       $errorCode=$LastExitCode
+       Add-AppveyorMessage "There are lint errors"
+      }
       Push-AppveyorArtifact $flake8Output
       $junitXML = "$lintOutput\PR-Flake8.xml"
       py "$lintSource\createJunitReport.py" "$flake8Output" "$junitXML"
@@ -191,9 +194,10 @@ test_script:
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
-artifacts:
- - path: output\*
- - path: output\*\*
+on_finish:
+ - ps: |
+      Get-ChildItem output\*   | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+      Get-ChildItem output\*\* | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy_script:
  - ps: |
