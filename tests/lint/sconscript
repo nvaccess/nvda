@@ -31,7 +31,7 @@ if doLint and not baseBranch:
 		"Lint can not complete without base branch."
 		"Try: 'scons lint base=origin/master'"
 		"Consider executing this on the command line or via your IDE: "
-		"\t git diff -u baseRef...HEAD | py -3 -m flake8 --diff --config='tests/lint/flake8.ini'"
+		"\t git diff -U0 baseRef...HEAD | py -3 -m flake8 --diff --config='tests/lint/flake8.ini'"
 	)
 	raise SCons.SConf.SConfError(errorMessage)
 

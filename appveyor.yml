@@ -166,7 +166,7 @@ test_script:
       $lintSource = (Resolve-Path .\tests\lint\)
       git fetch -q origin $env:APPVEYOR_REPO_BRANCH
       $prDiff = "$lintOutput\prDiff.patch"
-      git diff -u FETCH_HEAD...HEAD > $prDiff
+      git diff -U0 FETCH_HEAD...HEAD > $prDiff
       $flake8Config = "$lintSource\flake8.ini"
       $flake8Output = "$lintOutput\PR-Flake8.txt"
       type "$prDiff" | py -m flake8 --exit-zero --disable-noqa --diff --output-file="$flake8Output" --tee --config="$flake8Config"
