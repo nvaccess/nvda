@@ -3,8 +3,32 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+
+== Uudet ominaisuudet ==
+- Lisätty komento tarkastelukohdistimen kohdalla olevan symbolin korvauksen näyttämiseen. (#9286)
+- Lisäasetukset-paneeliin lisätty kokeellinen asetus, jolla voi testata uutta NVDA:777777n työn alla olevaa Microsoft UI Automation -rajapintaa käyttävää komentokehotteen tukea. (#9614)
+- Python-konsolin syöttökenttä tukee nyt usean rivin liittämistä leikepöydältä. (#9776)
+
+
+== Muutokset ==
+- eSpeak-NG PÄIVITETTY muutoksella 67324cc.
+- Liblouis-piste kirjoituskääntäjä päivitetty versioksi 3.10.0. (#9439, #9678)
+- NVDA sanoo nyt "valittu" ilmoitettuaan ensin käyttäjän valitseman tekstin. (#9028, #9909)
+- Selaustila on oletusarvoisesti poissa käytöstä Microsoft Visual Studio Codessa. (#9828)
+
+
+== Korjatut ohjelmavirheet ==
+- Taustavälilehdellä olevan Aktiivisen alueen päivityksiä ei enää puhuta Mozilla Firefoxissa. (#1318)
+- Selaustilan Etsi-valintaikkuna ei enää lakkaa toimimasta, jos NVDA:n Tietoja-valintaikkuna on avoimena taustalla. (#8566)
+
+
+== Muutokset kehittäjille ==
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta. ../en/changes.html]
+
+
 = 2019.2 =
-Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin pistenäyttöjen automaattinen tunnistus, Lisäasetukset-paneelin kokeellinen asetus, jolla selaustila ei siirrä kohdistusta automaattisesti (mikä saattaa parantaa suorituskykyä), nopeudenlisäysasetus Windows OneCore -syntetisaattorille hyvin suurten nopeuksien saavuttamiseksi, sekä useita muita ohjelmavirheiden korjauksia.
+Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin pistenäyttöjen automaattinen tunnistus, Lisäasetukset-paneelin kokeellinen asetus, jolla selaustila ei siirrä kohdistusta automaattisesti (mikä saattaa parantaa suorituskykyä), nopeudenlisäysasetus Windows OneCore -syntetisaattorille hyvin suurten nopeuksien saavuttamiseksi, sekä useita ohjelmavirheiden korjauksia.
 
 == Uudet ominaisuudet ==
 - Etsi-valintaikkuna sisältää nyt 20 viimeisimmän haun historian. (#8482)
@@ -55,8 +79,8 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat Freedom Scientificin p
 - Lokin voi nyt avata painamalla NVDA+F1, kun nykyisestä navigointiobjektista ei ole saatavilla kehittäjätietoja. (#8613)
 - NVDA:n taulukkonavigointikomentojen käyttäminen on jälleen mahdollista Google Docsissa, Firefoxissa ja Chromessa. (#9494)
 - Freedom Scientific -pistenäyttöjen vieritysnäppäimet toimivat nyt asianmukaisesti. (#8849)
-- NVDA ei enää hyydy enimmillään 10 sekunnin ajaksi luettaessa asiakirjan ensimmäistä merkkiä 64-bittisessä Notepad++ 7.7:ssä. (#9609)
-- HTComia voi nyt käyttää NVDA:ssa Handy Tech -pistenäytön kanssa. (#9691)
+- NVDA ei enää hjyydy enimillään 10 sekunniksi luettaessa asiakirjan ensimmäistä merkkiä 64-bittisessä Notepad++ 7.7:ssä. (#9609)
+- NVDA:ssa voidaan nyt käyttää HTComia Handy Tech -pistenäytön kanssa. (#9691)
 
 
 == Muutokset kehittäjille ==
