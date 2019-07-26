@@ -40,7 +40,7 @@ from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
-from textInfos import Point
+import locationHelper
 
 #Word constants
 
@@ -482,7 +482,7 @@ class WinWordCollectionQuicknavIterator(object):
 		items=self.collectionFromRange(self.rangeObj)
 		itemCount=items.count
 		isFirst=True
-		for index in xrange(1,itemCount+1):
+		for index in range(1,itemCount+1):
 			if self.direction=="previous":
 				index=itemCount-(index-1)
 			collectionItem=items[index]
@@ -514,7 +514,7 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			return any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) )
+			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
 		return t == FIELD_TYPE_HYPERLINK
 
 
@@ -617,7 +617,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return
 		tempRange.expand(wdParagraph)
 		fields=tempRange.fields
-		for field in (fields.item(i) for i in xrange(1, fields.count+1)):
+		for field in (fields.item(i) for i in range(1, fields.count+1)):
 			if field.type != FIELD_TYPE_REF:
 				continue
 			fResult = field.result
@@ -632,7 +632,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			if not any( fieldText[i] == '\\h' for i in xrange(2, len(fieldText)) ):
+			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue
 			bookmarkKey = fieldText[1] # we want the _Ref12345 part
@@ -662,7 +662,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if _rangeObj:
 			self._rangeObj=_rangeObj.Duplicate
 			return
-		if isinstance(position,textInfos.Point):
+		if isinstance(position, locationHelper.Point):
 			try:
 				self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
 			except COMError:
@@ -702,7 +702,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		startOffset=self._rangeObj.start
 		endOffset=self._rangeObj.end
 		text=BSTR()
-		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
+		# #9067: format config flags map is a dictionary.
+		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.items() if formatConfig.get(x,False))
 		if self.shouldIncludeLayoutTables:
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		if self.obj.ignoreEditorRevisions:
@@ -721,7 +722,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
 					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
-			elif index>0 and isinstance(item,basestring) and item.isspace():
+			elif index>0 and isinstance(item,str) and item.isspace():
 				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
 				lastItem=commandList[index-1]
 				if isinstance(lastItem,textInfos.FieldCommand) and isinstance(lastItem.field,textInfos.FormatField):
@@ -1019,7 +1020,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise LookupError
 		if not any((left.value, top.value, width.value, height.value)):
 			raise LookupError
-		return Point(left.value, top.value)
+		return locationHelper.Point(left.value, top.value)
 
 	def updateCaret(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
@@ -1034,9 +1035,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			import mathType
 		except:
 			raise LookupError("MathType not installed")
-		range = self._rangeObj.Duplicate
-		range.Start = int(field["shapeoffset"])
-		obj = range.InlineShapes[0].OLEFormat
+		rangeObj = self._rangeObj.Duplicate
+		rangeObj.Start = int(field["shapeoffset"])
+		obj = rangeObj.InlineShapes[0].OLEFormat
 		try:
 			return mathType.getMathMl(obj)
 		except:

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+#Copyright (C) 2017-2019 NV Access Limited
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -21,7 +21,7 @@ import locale
 import gettext
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')
-gettext.install('nvda',unicode=True)
+gettext.install('nvda')
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,7 +40,7 @@ class AppArgs:
 	# Ideally, this would be an in-memory, default configuration.
 	# However, config currently requires a path.
 	# We use the unit test directory, since we want a clean config.
-	configPath = UNIT_DIR.decode("mbcs")
+	configPath = UNIT_DIR
 	secure = False
 	disableAddons = True
 	launcher = False
@@ -80,7 +80,7 @@ braille.initialize()
 braille.handler.displaySize=40
 braille.handler.enabled = True
 # The focus and navigator objects need to be initialized to something.
-from objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
+from .objectProvider import PlaceholderNVDAObject,NVDAObjectWithRole
 phObj = PlaceholderNVDAObject()
 import api
 api.setFocusObject(phObj)
@@ -90,5 +90,5 @@ api.setDesktopObject(phObj)
 # Stub speech functions to make them no-ops.
 # Eventually, these should keep track of calls so we can make assertions.
 import speech
-speech.speak = lambda speechSequence, symbolLevel=None: None
-speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False: None
+speech.speak = lambda speechSequence, symbolLevel=None, priority=None: None
+speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False, priority=None: None

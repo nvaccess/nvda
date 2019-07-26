@@ -63,8 +63,7 @@ def _findDepPath(depFileName, searchPaths):
 # relative to the python path
 requiredPythonImportsForSystemTestSpyPackage = [
 	r"robotremoteserver",
-	r"SimpleXMLRPCServer",
-	r"xmlrpclib",
+	r"xmlrpc",
 ]
 
 def _createNvdaSpyPackage():

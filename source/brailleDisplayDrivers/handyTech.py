@@ -10,10 +10,11 @@ Braille display driver for Handy Tech braille displays.
 """
 
 from collections import OrderedDict
-from cStringIO import StringIO
+from io import BytesIO
 import serial # pylint: disable=E0401
 import weakref
 import hwIo
+from hwIo import intToByte, boolToByte
 import braille
 import brailleInput
 import inputCore
@@ -26,23 +27,26 @@ import time
 import datetime
 from ctypes import windll
 import windowUtils
-from driverHandler import BooleanDriverSetting
+
 import wx
+from typing import List, Any, Union, Optional
+
 
 class InvisibleDriverWindow(windowUtils.CustomWindow):
 	className = u"Handy_Tech_Server"
 	HT_SLEEP = 100
 	HT_INCREMENT = 1
 	HT_DECREMENT = 0
-	def __init__(self, driver):
+
+	def __init__(self, driver: Any):
 		super(InvisibleDriverWindow, self).__init__(u"Handy Tech Server")
 		# Register shared window message.
 		# Note: There is no corresponding unregister function.
 		# Still this does no harm if done repeatedly.
 		self.window_message=windll.user32.RegisterWindowMessageW(u"Handy_Tech_Server")
-		self.driver = weakref.ref(driver, lambda(r): self.destroy())
+		self.driver = weakref.ref(driver, lambda r: self.destroy())
 
-	def windowProc(self, hwnd, msg, wParam, lParam):
+	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
 		if msg == self.window_message:
 			if wParam == self.HT_SLEEP and lParam == self.HT_INCREMENT:
 				d = self.driver()
@@ -52,7 +56,7 @@ class InvisibleDriverWindow(windowUtils.CustomWindow):
 				d = self.driver()
 				if d is not None:
 					d.wake_up()
-			return 0 # success, bypass default window procedure
+			return 0  # success, bypass default window procedure
 
 
 BAUD_RATE = 19200
@@ -211,25 +215,28 @@ class Model(AutoPropertyObject):
 			0x1E: "n9",
 		})
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		"""Display cells on the braille display
 
 		This is the modern protocol, which uses an extended packet to send braille
 		cells. Some displays use an older, simpler protocol. See OldProtocolMixin.
 		"""
-		self._display.sendExtendedPacket(HT_EXTPKT_BRAILLE,
-			"".join(chr(cell) for cell in cells))
+		cellBytes: bytes = bytes(cells)
+		self._display.sendExtendedPacket(
+			HT_EXTPKT_BRAILLE,
+			cellBytes
+		)
 
 class OldProtocolMixin(object):
 	"Mixin for displays using an older protocol to send braille cells and handle input"
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		"""Write cells to the display according to the old protocol
 
 		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
-		followed by the cells. No model ID or lenghth are included.
+		followed by the cells. No model ID or length are included.
 		"""
-		self._display.sendPacket(HT_PKT_BRAILLE, b"".join(chr(cell) for cell in cells))
+		self._display.sendPacket(HT_PKT_BRAILLE, bytes(cells))
 
 
 class AtcMixin(object):
@@ -255,19 +262,18 @@ class TimeSyncFirmnessMixin(object):
 		log.debug("Request current dot firmness")
 		self._display.sendExtendedPacket(HT_EXTPKT_GET_FIRMNESS)
 
-	def handleTime(self, timeStr):
-		ords = map(ord, timeStr)
+	def handleTime(self, timeBytes: bytes):
 		try:
 			displayDateTime = datetime.datetime(
-				year=ords[0] << 8 | ords[1],
-				month=ords[2],
-				day=ords[3],
-				hour=ords[4],
-				minute=ords[5],
-				second=ords[6]
+				year=timeBytes[0] << 8 | timeBytes[1],
+				month=timeBytes[2],
+				day=timeBytes[3],
+				hour=timeBytes[4],
+				minute=timeBytes[5],
+				second=timeBytes[6]
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of Handy Tech display: %r"%timeStr)
+			log.debugWarning("Invalid time/date of Handy Tech display: %r" % timeBytes)
 			return
 		localDateTime = datetime.datetime.today()
 		if abs((displayDateTime - localDateTime).total_seconds()) >= 5:
@@ -276,16 +282,16 @@ class TimeSyncFirmnessMixin(object):
 		else:
 			log.debug("Time in sync. Display time %s"%displayDateTime.isoformat())
 
-	def syncTime(self, dt):
+	def syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
 		# Setting the time uses a swapped byte order for the year.
-		timeList = [
+		timeList: List[int] = [
 			dt.year & 0xFF, dt.year >> 8,
 			dt.month, dt.day,
 			dt.hour, dt.minute, dt.second
 		]
-		timeStr = b"".join(map(chr, timeList))
-		self._display.sendExtendedPacket(HT_EXTPKT_SET_RTC, timeStr)
+		timeBytes = bytes(timeList)
+		self._display.sendExtendedPacket(HT_EXTPKT_SET_RTC, timeBytes)
 
 
 class TripleActionKeysMixin(AutoPropertyObject):
@@ -344,7 +350,7 @@ class StatusCellMixin(AutoPropertyObject):
 		})
 		return keys
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		"""Display braille on the display with empty status cells
 
 		Some displays (e.g. Modular series) have 4 status cells.
@@ -440,7 +446,7 @@ class BasicBraille(Model):
 		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
 
 
-def basicBrailleFactory(numCells, deviceId):
+def basicBrailleFactory(numCells: int, deviceId: bytes):
 	return type("BasicBraille{cells}".format(cells=numCells), (BasicBraille,), {
 		"deviceId": deviceId,
 		"numCells": numCells,
@@ -562,6 +568,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
+	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
+
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		# Create the message window on the ui thread.
@@ -599,7 +607,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				continue
 
 			self.sendPacket(HT_PKT_RESET)
-			for _i in xrange(3):
+			for _i in range(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(self.timeout)
 				if self.numCells and self._model:
@@ -692,7 +700,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self._atc is state:
 			return
 		if isinstance(self._model,AtcMixin):
-			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, state)
+			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, boolToByte(state))
 		else:
 			log.debugWarning("Changing ATC setting for unsupported device %s"%self._model.name)
 		# Regardless whether this setting is supported or not, we want to safe its state.
@@ -705,45 +713,43 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self._dotFirmness is value:
 			return
 		if isinstance(self._model,TimeSyncFirmnessMixin):
-			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, value)
+			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, intToByte(value))
 		else:
 			log.debugWarning("Changing dot firmness setting for unsupported device %s"%self._model.name)
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._dotFirmness = value
 
-	def sendPacket(self, packetType, data=""):
+	def sendPacket(self, packetType: bytes, data:bytes = b""):
 		if self._sleepcounter > 0:
 			return
-		if type(data) == bool or type(data) == int:
-			data = chr(data)
 		if self.isHid:
 			self._sendHidPacket(packetType+data)
 		else:
 			self._dev.write(packetType + data)
 
-	def sendExtendedPacket(self, packetType, data=""):
+	def sendExtendedPacket(self, packetType: bytes, data: bytes = b""):
 		if self._sleepcounter > 0:
 			log.debug("Packet discarded as driver was requested to sleep")
 			return
-		if type(data) == bool or type(data) == int:
-			data = chr(data)
-		packet = b"{length}{extType}{data}\x16".format(
-			extType=packetType, data=data,
-			length=chr(len(data) + len(packetType))
-		)
+		packetBytes: bytes = b"".join([
+			intToByte(len(data) + len(packetType)),
+			packetType,
+			data,
+			b"\x16"
+		])
 		if self._model:
-			packet = self._model.deviceId + packet
-		self.sendPacket(HT_PKT_EXTENDED, packet)
+			packetBytes = self._model.deviceId + packetBytes
+		self.sendPacket(HT_PKT_EXTENDED, packetBytes)
 
-	def _sendHidPacket(self, packet):
+	def _sendHidPacket(self, packet: bytes):
 		assert self.isHid
 		maxBlockSize = self._dev._writeSize-3
 		# When the packet length exceeds C{writeSize}, the packet is split up into several packets.
 		# They contain C{HT_HID_RPT_InData}, the length of the data block,
 		# the data block itself and a terminating null character.
-		for offset in xrange(0, len(packet), maxBlockSize):
+		for offset in range(0, len(packet), maxBlockSize):
 			block = packet[offset:offset+maxBlockSize]
-			hidPacket = HT_HID_RPT_InData + chr(len(block)) + block + b"\x00"
+			hidPacket = HT_HID_RPT_InData + intToByte(len(block)) + block + b"\x00"
 			self._dev.write(hidPacket)
 
 	def _handleKeyRelease(self):
@@ -762,29 +768,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	# pylint: disable=R0912
 	# Pylint complains about many branches, might be worth refactoring
-	def _hidOnReceive(self, data):
+	def _hidOnReceive(self, data: bytes):
 		# data contains the entire packet.
-		stream = StringIO(data)
-		htPacketType = data[2]
+		stream = BytesIO(data)
+		htPacketType = data[2:3]
 		# Skip the header, so reading the stream will only give the rest of the data
 		stream.seek(3)
 		self._handleInputStream(htPacketType, stream)
 
-	def _hidSerialOnReceive(self, data):
+	def _hidSerialOnReceive(self, data: bytes):
 		# The HID serial converter wraps one or two bytes into a single HID packet
-		hidLength = ord(data[1])
+		hidLength = data[1]
 		self._hidSerialBuffer+=data[2:(2+hidLength)]
 		self._processHidSerialBuffer()
 
 	def _processHidSerialBuffer(self):
 		while self._hidSerialBuffer:
 			currentBufferLength=len(self._hidSerialBuffer)
-			htPacketType = self._hidSerialBuffer[0]
+			htPacketType: bytes = self._hidSerialBuffer[0:1]
 			if htPacketType!=HT_PKT_EXTENDED:
 				packetLength = 2 if htPacketType==HT_PKT_OK else 1
 				if currentBufferLength>=packetLength:
-					stream = StringIO(self._hidSerialBuffer[:packetLength])
-					self._hidSerialBuffer = self._hidSerialBuffer[packetLength:]
+					stream = BytesIO(self._hidSerialBuffer[:packetLength])
+					self._hidSerialBuffer: bytes = self._hidSerialBuffer[packetLength:]
 				else:
 					# The packet is not yet complete
 					return
@@ -792,30 +798,30 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Check whether our packet is complete
 				# Extended packets are at least 5 bytes in size.
 				# The second byte is the model, the third byte is the data length, excluding the terminator
-				packet_length = ord(self._hidSerialBuffer[2])+4
+				packet_length = self._hidSerialBuffer[2]+4
 				if len(self._hidSerialBuffer)<packet_length:
 					# The packet is not yet complete
 					return
 				# We have a complete packet.
 				# We also isolate it from another packet that could have landed in the buffer,
-				stream = StringIO(self._hidSerialBuffer[:packet_length])
-				self._hidSerialBuffer = self._hidSerialBuffer[packet_length:]
+				stream = BytesIO(self._hidSerialBuffer[:packet_length])
+				self._hidSerialBuffer: bytes = self._hidSerialBuffer[packet_length:]
 				if len(self._hidSerialBuffer)==packet_length:
-					assert self._hidSerialBuffer.endswith("\x16"), "Extended packet termionator expected"
+					assert self._hidSerialBuffer.endswith(b"\x16"), "Extended packet terminator expected"
 			else:
 				# The packet is not yet complete
 				return
 			stream.seek(1)
 			self._handleInputStream(htPacketType, stream)
 
-	def _serialOnReceive(self, data):
+	def _serialOnReceive(self, data: bytes):
 		self._handleInputStream(data, self._dev)
 
-	def _handleInputStream(self, htPacketType, stream):
+	def _handleInputStream(self, htPacketType: bytes, stream):
 		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
-			modelId = stream.read(1)
+			modelId: bytes = stream.read(1)
 			if not self._model:
-				if not modelId in MODELS:
+				if modelId not in MODELS:
 					log.debugWarning("Unknown model: %r" % modelId)
 					raise RuntimeError(
 						"The model with ID %r is not supported by this driver" % modelId)
@@ -835,18 +841,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debugWarning("NAK received!")
 		elif htPacketType == HT_PKT_EXTENDED:
 			packet_length = ord(stream.read(1))
-			packet = stream.read(packet_length)
-			terminator = stream.read(1)
+			packet: bytes = stream.read(packet_length)
+			terminator: bytes = stream.read(1)
 			assert terminator == b"\x16"	# Extended packets are terminated with \x16
-			extPacketType = packet[0]
+			extPacketType = packet[0:1]
 			if extPacketType == HT_EXTPKT_CONFIRMATION:
 				# Confirmation of a command.
-				if packet[1] == HT_PKT_ACK:
+				if packet[1:2] == HT_PKT_ACK:
 					self._handleAck()
-				elif packet[1] == HT_PKT_NAK:
+				elif packet[1:2] == HT_PKT_NAK:
 					log.debugWarning("NAK received!")
 			elif extPacketType == HT_EXTPKT_KEY:
-				self._handleInput(ord(packet[1]))
+				self._handleInput(packet[1])
 			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
@@ -856,21 +862,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				if extPacketType == HT_EXTPKT_GET_RTC:
 					self._model.handleTime(packet[1:])
 				elif extPacketType == HT_EXTPKT_GET_FIRMNESS:
-					self._dotFirmness = ord(packet[1])
+					self._dotFirmness = packet[1]
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning("Unhandled extended packet of type %r: %r" %
 					(extPacketType, packet))
 		else:
 			serPacketOrd = ord(htPacketType)
-			if isinstance(self._model, OldProtocolMixin) and serPacketOrd&~KEY_RELEASE_MASK < HT_PKT_EXTENDED:
+			if isinstance(self._model, OldProtocolMixin) and serPacketOrd&~KEY_RELEASE_MASK < ord(HT_PKT_EXTENDED):
 				self._handleInput(serPacketOrd)
 			else:
 				# Unknown packet type, log it
 				log.debugWarning("Unhandled packet of type %r" % htPacketType)
 
 
-	def _handleInput(self, key):
+	def _handleInput(self, key: int):
 		release = (key & KEY_RELEASE_MASK) != 0
 		if release:
 			key ^= KEY_RELEASE_MASK
@@ -883,7 +889,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._keysDown.add(key)
 
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
 		self._model.display(cells)
 

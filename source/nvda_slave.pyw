@@ -12,11 +12,9 @@ import gettext
 import locale
 #Localization settings
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
+	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install()
 except:
-	gettext.install('nvda',unicode=True)
-
-import pythonMonkeyPatches
+	gettext.install('nvda')
 
 import sys
 import os
@@ -50,12 +48,12 @@ def main():
 			import shellapi
 			import winUser
 			shellapi.ShellExecute(0,None,
-				ur"%s\nvda.exe"%sys.exec_prefix.decode("mbcs"),
-				subprocess.list2cmdline(args).decode("mbcs"),
+				r"%s\nvda.exe"%sys.prefix,
+				subprocess.list2cmdline(args),
 				None,winUser.SW_SHOWNORMAL)
 		elif action=="setNvdaSystemConfig":
 			import config
-			config._setSystemConfig(args[0].decode('mbcs'))
+			config._setSystemConfig(args[0])
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
@@ -71,7 +69,7 @@ def main():
 			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
 		elif action == "addons_installAddonPackage":
 			try:
-				addonPath=unicode(args[0], "mbcs")
+				addonPath=args[0]
 			except IndexError:
 				raise ValueError("Addon path was not provided.")
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
@@ -93,7 +91,7 @@ def main():
 				comHelper._lresultFromGetActiveObject(args[0], bool(int(args[1]))))
 			sys.__stdout__.flush()
 			try:
-				raw_input()
+				input()
 			except EOFError:
 				pass
 		else:
@@ -102,7 +100,7 @@ def main():
 	except installer.RetriableFailure:
 		logHandler.log.error("Task failed, try again",exc_info=True)
 		sys.exit(2)
-	except Exception, e:
+	except Exception as e:
 		logHandler.log.error("slave error",exc_info=True)
 		sys.exit(1)
 

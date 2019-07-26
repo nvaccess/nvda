@@ -4,10 +4,10 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2010-2018 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau
+from typing import List
 
 import serial
-from cStringIO import StringIO
-import os
+from io import BytesIO
 import hwIo
 import braille
 from logHandler import log
@@ -15,7 +15,6 @@ from collections import OrderedDict
 import inputCore
 import brailleInput
 from baseObject import AutoPropertyObject
-import weakref
 import time
 import bdDetect
 
@@ -25,8 +24,8 @@ PARITY = serial.PARITY_NONE
 class Model(AutoPropertyObject):
 	"""Extend from this base class to define model specific behavior."""
 	#: Two bytes device identifier, used in the protocol to identify the device
-	#: @type: string
-	deviceId = ""
+	#: @type: bytes
+	deviceId = b""
 	#: A generic name that identifies the model/series, used in gesture identifiers
 	#: @type: string
 	name = ""
@@ -89,7 +88,7 @@ class BrailleSense(Model):
 		return keys
 
 class BrailleEdge(Model):
-	deviceId="\x42\x45" # BE
+	deviceId = b"\x42\x45" # BE
 	name = "Braille Edge"
 	usbId = "VID_045E&PID_930B"
 	bluetoothPrefix = "BrailleEDGE"
@@ -121,10 +120,10 @@ class BrailleSense2S(BrailleSense):
 	"""Braille Sense with one scroll key on both sides.
 	Also referred to as Braille Sense Classic."""
 	name = "Braille Sense Classic"
-	deviceId="\x42\x53" # BS
+	deviceId = b"\x42\x53" # BS
 
 class BrailleSense4S(BrailleSense):
-	deviceId="\x4c\x58" # LX
+	deviceId = b"\x4c\x58" # LX
 
 class SmartBeetle(BrailleSense4S):
 	"""Subclass for Smart Beetle device, which has the same identifier as the Braille Sense with 4 scroll keys.
@@ -146,13 +145,13 @@ class SmartBeetle(BrailleSense4S):
 		return keys
 
 class BrailleSenseQ(BrailleSense4S):
-	deviceId="\x51\x58" # QX
+	deviceId = b"\x51\x58" # QX
 	name = "Braille Sense QWERTY"
 	numCells = 32
 
 class BrailleSenseQX(BrailleSenseQ):
 	"""Special identifier to support QWERTY input"""
-	deviceId="\x53\x58" # SX
+	deviceId = b"\x53\x58" # SX
 
 class SyncBraille(Model):
 	name = "SyncBraille"
@@ -201,13 +200,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				if self.isBulk:
 					# onReceiveSize based on max packet size according to USB endpoint information.
-					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, writeSize=0, onReceiveSize=64)
+					self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
 				else:
 					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._onReceive)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
-			for i in xrange(3):
+			for i in range(3):
 				self._sendCellCountRequest()
 				# Wait for an expected response.
 				if self.isBulk:
@@ -235,29 +234,39 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			raise RuntimeError("No Hims display found")
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		self._sendPacket("\xfc","\x01","".join(chr(cell) for cell in cells))
+		cellBytes = bytes(cells)
+		self._sendPacket(b"\xfc", b"\x01", cellBytes)
 
 	def _sendCellCountRequest(self):
 		log.debug("Sending cell count request...")
-		self._sendPacket("\xfb","\x01","\x00"*32)
+		self._sendPacket(b"\xfb", b"\x01", bytes(32)) # send 32 null bytes
 
-	def _sendIdentificationRequests(self, match):
+	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
 		log.debug("Considering sending identification requests for device %s"%str(match))
 		if match.type==bdDetect.KEY_CUSTOM: # USB Bulk
-			map=[modelTuple for modelTuple in modelMap if modelTuple[1].usbId==match.id]
+			matchedModelsMap = [
+				modelTuple for modelTuple in modelMap if(
+					modelTuple[1].usbId == match.id
+				)
+			]
 		elif "bluetoothName" in match.deviceInfo: # Bluetooth
-			map=[modelTuple for modelTuple in modelMap if modelTuple[1].bluetoothPrefix and match.id.startswith(modelTuple[1].bluetoothPrefix)]
+			matchedModelsMap = [
+				modelTuple for modelTuple in modelMap if(
+					modelTuple[1].bluetoothPrefix
+					and match.id.startswith(modelTuple[1].bluetoothPrefix)
+				)
+			]
 		else: # The only serial device we support which is not bluetooth, is a Sync Braille
 			self._model = SyncBraille()
 			log.debug("Use %s as model without sending an additional identification request"%self._model.name)
 			return
-		if not map:
+		if not matchedModelsMap:
 			log.debugWarning("The provided device match to send identification requests didn't yield any results")
-			map = modelMap
-		if len(map)==1:
-			modelCls = map[0][1]
+			matchedModelsMap = modelMap
+		if len(matchedModelsMap) == 1:
+			modelCls = matchedModelsMap[0][1]
 			numCells = self.numCells or modelCls.numCells
 			if numCells:
 				# There is only one model matching the criteria, and we have the proper number of cells.
@@ -267,18 +276,27 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self.numCells = numCells
 				return
 		self._model = None
-		for id, cls in map:
-			log.debug("Sending request for id %r"%id)
-			self._dev.write("\x1c{id}\x1f".format(id=id))
+		for modelId, cls in matchedModelsMap:
+			log.debug("Sending request for id %r" % modelId)
+
+			self._dev.write(b"".join([
+				b"\x1c",
+				modelId,
+				b"\x1f"
+			]))
 			self._dev.waitForRead(self.timeout)
 			if self._model:
 				log.debug("%s model has been set"%self._model.name)
 				break
 
-	def _handleIdentification(self, id):
+	def _handleIdentification(self, recvId: bytes):
 		modelCls = None
-		models=[modelCls for modelId,modelCls in modelMap if modelId==id]
-		log.debug("Identification received, id %s"%id)
+		models = [
+			modelCls for modelId, modelCls in modelMap if(
+				modelId == recvId
+			)
+		]
+		log.debug("Identification received, id %s" % recvId)
 		if not models:
 			raise ValueError("Device identification ID unknown in model map")
 		if len(models)==1:
@@ -299,18 +317,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if modelCls:
 			self._model = modelCls()
 
-	def _handlePacket(self, packet):
-		mode=packet[1]
-		if mode=="\x00": # Cursor routing
-			routingIndex = ord(packet[3])
+	def _handlePacket(self, packet: bytes):
+		mode = packet[1]
+		if mode == 0x00: # Cursor routing
+			routingIndex = packet[3]
 			try:
 				inputCore.manager.executeGesture(RoutingInputGesture(routingIndex))
 			except inputCore.NoInputGestureAction:
 				pass
-		elif mode=="\x01": # Braille input or function key
+		elif mode == 0x01: # Braille input or function key
 			if not self._model:
 				return
-			_keys = sum(ord(packet[4+i])<<(i*8) for i in xrange(4))
+			_keys = int.from_bytes(packet[4:8], "little", signed=False)
 			keys = set()
 			for keyHex in self._model.keys:
 				if _keys & keyHex:
@@ -326,76 +344,91 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys))
 			except inputCore.NoInputGestureAction:
 				pass
-		elif mode=="\x02": # Cell count
-			self.numCells=ord(packet[3])
+		elif mode == 0x02: # Cell count
+			self.numCells = packet[3]
 
-	def _onReceive(self, data):
+	def _onReceive(self, data: bytes):
 		if self.isBulk:
 			# data contains the entire packet.
-			stream = StringIO(data)
-			firstByte=data[0]
+			stream = BytesIO(data)
+			firstByte:bytes = data[0:1]
 			stream.seek(1)
 		else:
 			firstByte = data
 			# data only contained the first byte. Read the rest from the device.
 			stream = self._dev
-		if firstByte=="\x1c":
+		if firstByte == b"\x1c":
 			# A device is identifying itself
-			deviceId=stream.read(2)
+			deviceId: bytes = stream.read(2)
 			# When a device identifies itself, the packets ends with 0x1f
-			assert stream.read(1) == "\x1f"
+			assert stream.read(1) == b"\x1f"
 			self._handleIdentification(deviceId)
-		elif firstByte=="\xfa":
+		elif firstByte == b"\xfa":
 			# Command packets are ten bytes long
-			packet=firstByte+stream.read(9)
-			assert packet[2] == "\x01" # Fixed value
-			checksum=packet[8]
-			assert packet[9] == "\xfb" # Command End
-			assert(chr(sum(ord(c) for c in packet[0:8]+packet[9])&0xff)==checksum)
+			packet = firstByte + stream.read(9)
+			assert packet[2] == 0x01 # Fixed value
+			CHECKSUM_INDEX = 8
+			checksum: int = packet[CHECKSUM_INDEX]
+			assert packet[9] == 0xfb # Command End
+			calcCheckSum: int = 0xff & sum(
+				c for index, c in enumerate(packet) if(
+					index != CHECKSUM_INDEX)
+			)
+			assert(calcCheckSum == checksum)
 			self._handlePacket(packet)
 		else:
 			log.debug("Unknown first byte received: 0x%x"%ord(firstByte))
 			return
 
-	def _sendPacket(self, type, mode, data1, data2=""):
-		packetLength = 2 + 1 + 1 + 2 + len(data1) + 1 + 1 + 2 + len(data2) + 1 + 4 + 1 + 2
+	def _sendPacket(
+			self, packetType: bytes, mode: bytes,
+			data1: bytes, data2: bytes = b""
+	):
+		d1Len = len(data1)
+		d2Len = len(data2)
 		# Construct the packet
-		packet=[
+		packet: List[bytes] = [
 			# Packet start
-			type*2,
+			packetType * 2,
 			# Mode
 			mode, # Always "\x01" according to the spec
 			# Data block 1 start
-			"\xf0",
+			b"\xf0",
 			# Data block 1 length
-			chr((len(data1)>>0)&0xff),
-			chr((len(data1)>>8)&0xff),
+			d1Len.to_bytes(2, "little", signed=False),
 			# Data block 1
 			data1,
 			# Data block 1 end
-			"\xf1",
+			b"\xf1",
 			# Data block 2 is currently not used, but it is part of the spec
 			# Data block 2 start
-			"\xf2",
+			b"\xf2",
 			# Data block 1 length
-			chr((len(data2)>>0)&0xff),
-			chr((len(data2)>>8)&0xff),
+			d2Len.to_bytes(2, "little", signed=False),
 			# Data block 2
 			data2,
 			# Data block 2 end
-			"\xf3",
+			b"\xf3",
 			# Reserved bytes
-			"\x00"*4,
+			b"\x00"*4,
 			# Reserved space for checksum
-			"\x00",
+			b"\x00",
 			# Packet end
-			"\xfd"*2,
+			b"\xfd"*2,
 		]
-		packetStrWithoutCheksum="".join(s for s in packet)
-		packet[-2]=chr(sum(ord(c) for c in packetStrWithoutCheksum)&0xff)
-		packetStrWithCheksum="".join(s for s in packet)
-		assert(len(packetStrWithCheksum)==packetLength)
-		self._dev.write(packetStrWithCheksum)
+		packetB = bytearray(b"".join(packet))
+		checksum: int = 0xff & sum(packetB)
+		packetB[-2] = checksum
+
+		# check that the packet is the size we expect:
+		ptLen = len(packetType)
+		assert(ptLen == 1)
+		mLen = len(mode)
+		assert(mLen == 1)
+		packetLength = ptLen*2 + mLen + 1 + 2 + d1Len + 1 + 1 + 2 + d2Len + 1 + 4 + 1 + 2
+		assert(len(packetB) == packetLength)
+
+		self._dev.write(bytes(packetB))
 
 	def terminate(self):
 		try:
