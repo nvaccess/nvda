@@ -1034,9 +1034,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			import mathType
 		except:
 			raise LookupError("MathType not installed")
-		range = self._rangeObj.Duplicate
-		range.Start = int(field["shapeoffset"])
-		obj = range.InlineShapes[0].OLEFormat
+		rangeObj = self._rangeObj.Duplicate
+		rangeObj.Start = int(field["shapeoffset"])
+		obj = rangeObj.InlineShapes[0].OLEFormat
 		try:
 			return mathType.getMathMl(obj)
 		except:

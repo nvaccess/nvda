@@ -260,7 +260,7 @@ class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 def showInstallGui():
 	gui.mainFrame.prePopup()
 	previous = installer.comparePreviousInstall()
-	if previous > 0:
+	if previous is not None and previous > 0:
 		# The existing installation is newer, which means this will be a downgrade.
 		d = InstallingOverNewerVersionDialog()
 		with d:

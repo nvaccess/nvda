@@ -377,7 +377,7 @@ def getVariantDict():
 							if len(temp) ==2:
 								name=temp[1].rstrip()
 								break
-					name=None
+						name=None
 			except:
 				log.error("Couldn't parse espeak variant file %s" % fileName, exc_info=True)
 				continue

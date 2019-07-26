@@ -647,14 +647,14 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			else:
 				raise LookupError
 
-	def _isSuitableNotLinkBlock(self,range):
-		return (range._endOffset-range._startOffset)>=self.NOT_LINK_BLOCK_MIN_LEN
+	def _isSuitableNotLinkBlock(self, textRange):
+		return (textRange._endOffset - textRange._startOffset) >= self.NOT_LINK_BLOCK_MIN_LEN
 
-	def getEnclosingContainerRange(self,range):
+	def getEnclosingContainerRange(self, textRange):
 		formatConfig=config.conf['documentFormatting'].copy()
 		formatConfig.update({"reportBlockQuotes":True,"reportTables":True,"reportLists":True,"reportFrames":True})
 		controlFields=[]
-		for cmd in range.getTextWithFields():
+		for cmd in textRange.getTextWithFields():
 			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
 				break
 			controlFields.append(cmd.field)
@@ -667,7 +667,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		if not containerField: return None
 		docHandle=int(containerField['controlIdentifier_docHandle'])
 		ID=int(containerField['controlIdentifier_ID'])
-		offsets=range._getOffsetsFromFieldIdentifier(docHandle,ID)
+		offsets = textRange._getOffsetsFromFieldIdentifier(docHandle,ID)
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
 	@classmethod

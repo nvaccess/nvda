@@ -1220,7 +1220,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 				info = self.selection
 				if not info.isCollapsed:
-					speech.speakSelectedText(info.text)
+					speech.speakPreselectedText(info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
@@ -1668,14 +1668,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				pass
 		return None
 
-	def getEnclosingContainerRange(self,range):
-		range=range.copy()
-		range.collapse()
+	def getEnclosingContainerRange(self, textRange):
+		textRange = textRange.copy()
+		textRange.collapse()
 		try:
-			item = next(self._iterNodesByType("container", "up", range))
+			item = next(self._iterNodesByType("container", "up", textRange))
 		except (NotImplementedError,StopIteration):
 			try:
-				item = next(self._iterNodesByType("landmark", "up", range))
+				item = next(self._iterNodesByType("landmark", "up", textRange))
 			except (NotImplementedError,StopIteration):
 				return
 		return item.textInfo
@@ -1724,8 +1724,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
-	def _isSuitableNotLinkBlock(self,range):
-		return len(range.text)>=self.NOT_LINK_BLOCK_MIN_LEN
+	def _isSuitableNotLinkBlock(self, textRange):
+		return len(textRange.text) >= self.NOT_LINK_BLOCK_MIN_LEN
 
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		links = self._iterNodesByType("link", direction=direction, pos=pos)
@@ -1735,15 +1735,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item2 = next(links)
 			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
 			if direction=="previous":
-				range=item1.textInfo.copy()
-				range.collapse()
-				range.setEndPoint(item2.textInfo,"startToEnd")
+				textRange=item1.textInfo.copy()
+				textRange.collapse()
+				textRange.setEndPoint(item2.textInfo,"startToEnd")
 			else:
-				range=item2.textInfo.copy()
-				range.collapse()
-				range.setEndPoint(item1.textInfo,"startToEnd")
-			if self._isSuitableNotLinkBlock(range):
-				yield TextInfoQuickNavItem("notLinkBlock",self,range)
+				textRange=item2.textInfo.copy()
+				textRange.collapse()
+				textRange.setEndPoint(item1.textInfo,"startToEnd")
+			if self._isSuitableNotLinkBlock(textRange):
+				yield TextInfoQuickNavItem("notLinkBlock", self, textRange)
 			item1=item2
 
 	__gestures={

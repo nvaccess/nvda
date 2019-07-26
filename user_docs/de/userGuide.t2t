@@ -15,7 +15,7 @@ Es bietet Feedback via synthetischer Sprache und Braille. Dabei erhalten Blinde 
 Entwickelt wird NVDA von [NV Access https://www.nvaccess.org/] und allen Mitwirkenden aus der Community.
 
 ++ Allgemeine Leistungsmerkmale ++[GeneralFeatures]
-NVDA ermöglicht den blinden und sehbehinderten Menschen das Arbeiten mit den Windows-Betriebssystemen und zahlreichen Anwendungen von Drittanbietern.
+NVDA ermöglicht den Blinden und Sehbehinderten das Arbeiten mit den Windows-Betriebssystemen und zahlreichen Anwendungen von Drittanbietern.
 
 Zu den wichtigsten Funktionen gehören:
 - Unterstützung der am weitesten verbreiteten Anwendungen einschließlich Web-Browser, E-Mail-Clients, Programme für Internet-Chats und Office-Pakete.
@@ -34,7 +34,7 @@ Zu den wichtigsten Funktionen gehören:
 -
 
 ++ Internationalisierung ++[Internationalization]
-Jeder Mensch auf der Welt sollte den gleichen Zugang zur Information und zu moderner Technologie erhalten, unabängig von seiner Sprache.
+Auf der Welt sollten alle den gleichen Zugang zur Information und zu moderner Technologie erhalten, unabängig von seiner Sprache.
 NVDA wurde neben Englisch bislang in 54 weiteren Sprachen übersetzt, darunter sind: Afrikaans (Südafrika), Albanisch, Amharisch, Arabisch, Aragonesisch, Bulgarisch, Birmanisch, Chinesisch (traditionell und vereinfacht), Tschechisch, Dänisch, Deutsch (Deutschland), Deutsch (Schweiz), Persisch, Finnisch, Französisch, Galizisch, Georgisch, Griechisch, Hebräisch, Hindi (Nordindien), Irisch, Isländisch, Italienisch, Japanisch, Kanadisch, Katalanisch, Kirgisisch, Koreanisch, Kroatisch, Litauisch, mazedonisch, Mongolisch, Nepalesisch, Niederländisch, Norwegisch, Polnisch, Portugiesisch (Portugal), Portugiesisch (Brasilien), Pandschabi (Indien), Rumänisch, Russisch, Serbisch, Slowakisch, Slowenisch, Spanisch (Spanien), Spanisch (Kolumbien), Schwedisch, Tamilisch, Thai, Ungarisch, Türkisch, Ukrainisch sowie Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++[SpeechSynthesizerSupport]
@@ -65,12 +65,12 @@ Für weitere Informationen können Sie entweder die [englischsprachige https://w
  - Für Windows 7 wird mindestens Service Pack 1 benötigt.
  - Für Windows Server 2008 R2 wird mindestens Service Pack 1 benötigt.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
-- Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
-- Mindestens 90 Megabyte Festplattenspeicher.
+- Prozessorgeschwindigkeit: 1,0 GHz oder schneller.
+- Mindestens 90 MB Festplattenspeicher.
 -
 
 + NVDA beziehen und einrichten +[GettingAndSettingUpNVDA]
-Falls noch nicht geschehen, können Sie NVDA von [www.nvaaccess.org NVDA_URL] herunterladen.
+Falls noch nicht geschehen, können Sie NVDA von [dieser Website NVDA_URL] herunterladen.
 
 Im Download-Bereich finden Sie einen Link, um die neueste Version herunterzuladen.
 
@@ -78,11 +78,11 @@ Wenn Sie die soeben heruntergeladene Datei ausführen, wird eine temporäre Kopi
 Außerdem werden Sie gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder einfach die Ausführung der temporären Kopie fortsetzen wollen.
 
 Falls Sie vorhaben, NVDA auf diesem Computer dauerhaft einzusetzen, werden Sie es vermutlich installieren wollen.
-Eine solche fest installierte Version von NVDA hat gegenüber einer portablen Version Vorteile wie den automatischen Start nach der Anmeldung, die Erstellung von Verknüpfungen auf dem Desktop und im Startmenü, die Fähigkeit die Windows-Anmeldung und Windows Sicherheitsdialoge auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
-Mit Hilfe einer installierten Kopie können Sie auch jederzeit eine portable Version erstellen.
+Eine solche installierte Version von NVDA hat gegenüber einer portablen Version Vorteile wie den automatischen Start nach der Anmeldung, die Erstellung von Verknüpfungen auf dem Desktop und im Startmenü, die Fähigkeit die Windows-Anmeldung und Windows Sicherheitsdialoge auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
+Mit Hilfe einer installierten Version können Sie auch jederzeit eine portable Version erstellen.
 
 Falls Sie NVDA auf einem USB-Stick oder einem anderen beschreibbarem Medium mitnehmen möchten, können Sie eine portable Version erstellen.
-Diese Version kann jederzeit auf einem Computer fest installiert werden.
+Diese Version kann jederzeit auf einem Computer installiert werden.
 Wenn Sie NVDA jedoch auf ein schreibgeschütztes Medium, wie etwa einer CD kopieren wollen, sollten Sie die heruntergeladene Paketdatei brennen.
 Die Ausführung einer portablen Version direkt von einem schreibgeschützten Medium wird momentan noch nicht unterstützt.
 
@@ -401,6 +401,7 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Vom NVDA-Cursor markieren und kopieren | NVDA+F9 | NVDA+F9 | Keine | Setzt eine Startmarke an der aktuellen Position des NVDA-Cursors ab, der markiert oder kopiert werden soll. Die Aktion (Markieren/Kopieren) wird nicht ausgeführt, bis Sie NVDA den Textende mitgeteilt haben. |
 | Bis zum NVDA-Cursor markieren und kopieren | NVDA+F10 | NVDA+F10 | Keine | Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Wird die Tastenkombination zweimal gedrückt, so kopiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors in die Zwischenablage |
 | Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. Bei zweimaligen Drücken der Tastenkombination wird die Ausgabe im Lesemodus dargestellt. |
+| Ansage des aktuellen Symbol-Ersatzes | Keine | Keine | Keine | Spricht das Symbol, an dem sich dem Cursor befindet. Zweimal gedrückt, zeigt das Symbol und den Text an, mit dem es im Lesemodus gesprochen wird. |
 %kc:endInclude
 
 Hinweis: Um die Tasten des Nummernblocks benutzen zu können, muss dieser deaktiviert sein!
@@ -664,12 +665,12 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | hlf | Hilfesprechblase |
 | smk | Sprungmarke |
 | lnk | Link |
-| lst | Liste |
 | bl | Besuchter Link |
+| lst | Liste |
 | mnü | Menü |
 | mnülst | Menüleiste |
 | mnüsltr | Menüschalter |
-| mne | Menüeintrag |
+| mnüe | Menüeintrag |
 | strg | Steuerung |
 | fortschritt | Fortschrittsanzeige |
 | as | Auswahlschalter |
@@ -682,10 +683,10 @@ Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende 
 | rN | Reihe N in einer Tabelle, z. B. R1, R2. |
 | ea | Eingabeaufforderung |
 | wl | Werkzeugleiste |
-| mhlf | Minihilfe |
+| mh | Minihilfe |
+| ba | Baumansicht |
 | gldsltr | Gliederungsschalter |
 | bae | Eintrag einer Baumstruktur |
-| ba | Baumansicht |
 | en | Ein Eintrag in einer Baumansicht in der Ebene N |
 | fst | Fenster |
 | ``⠤⠤⠤⠤⠤`` | Trennlinie |
@@ -695,9 +696,9 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | ... | Wird angezeigt, wenn ein Objekt automatische Vervollständigung unterstützt. |
 | ⢎⣿⡱ | Wird angezeigt, wenn ein Schalter gedrückt wurde |
 | ⢎⣀⡱ | Wird angezeigt, wenn ein Schalter nicht gedrückt wurde |
-| ⣏⣀⣹ | Wird angezeigt, wenn ein Objekt (z. B. ein Kontrollkästchen) nicht aktiviert ist. |
 | ⣏⣿⣹ | Wird angezeigt, wenn ein Objekt (z. B. ein Kontrollfeld) aktiviert ist. |
 | ⣏⣸⣹ | Wird angezeigt, wenn ein Objekt (z. B. ein Kontrollfeld) teilweise aktiviert ist. |
+| ⣏⣀⣹ | Wird angezeigt, wenn ein Objekt (z. B. ein Kontrollkästchen) nicht aktiviert ist. |
 | - | Wird bei Objekten (z. B. Baumeinträgen) angezeigt, die reduziert werden können. |
 | + | Wird bei Objekten (z. B. Baumeinträgen) angezeigt, die erweitert werden können. |
 | *** | wird angezeigt, wenn das Objekt geschützt ist |
@@ -709,10 +710,10 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | mz | Wird angezeigt, wenn Sie in das aktuelle Eingabefeld mehrere Zeilen Text eingeben können |
 | erf | Wird angezeigt, wenn in dem aktuellen Eingabefeld eine Eingabe erforderlich ist |
 | sef | Wird bei Objekten (z. B. Eingabefeldern) angezeigt, die schreibgeschützt sind. |
-| {x} | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
-| { } | Wird angezeigt, wenn der aktuelle Listeneintrag nicht ausgewählt ist |
-| <aufsteigend sortiert> | Wird angezeigt, wenn die aktuelle Liste aufsteigend sortiert ist|
-| <absteigend sortiert> | Wird angezeigt, wenn die aktuelle Liste absteigend sortiert ist |
+| (x) | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
+| ( ) | Wird angezeigt, wenn das aktuelle Objekt nicht ausgewählt ist |
+| auf sortiert | Wird angezeigt, wenn die aktuelle Liste aufsteigend sortiert ist|
+| ab sortiert | Wird angezeigt, wenn die aktuelle Liste absteigend sortiert ist |
 | -> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
 
 Die folgenden Abkürzungen werden für Sprungmarken verwendet:
@@ -1127,7 +1128,7 @@ diese Option erlaubt es der Sprachausgabe zwischen diesen beiden Fällen zu unte
 Die meisten Sprachausgaben unterstützen dies.
 
 Diese Option sollte im Allgemeinen aktiviert sein.
-Es gibt jedoch einige Microsoft sapi-Sprachausgaben, bei denen dies nicht korrekt implementiert ist und die sich eigenwillig verhalten, wenn diese Option aktiviert ist.
+Es gibt jedoch einige SAPI-Sprachausgaben von Microsoft, bei denen dies nicht korrekt implementiert ist und die sich eigenwillig verhalten, wenn diese Option aktiviert ist.
 Wenn Sie Probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die Option zu deaktivieren. 
 
 +++ Sprachausgabe auswählen (NVDA+Strg+S) +++[SelectSynthesizer]
@@ -1152,7 +1153,7 @@ Tastenkombination: NVDA+Umschalt+D
 
 In Windows 8 und höher kann diese Option die Systemlautstärke automatisch immer dann reduzieren, wenn NVDA spricht oder die ganze Zeit, wenn NVDA ausgeführt wird.
 - Nie: die Lautstärke anderer Audioquellen wird nicht reduziert. 
-- Beim Sprechen und Wiedergeben von NVDA-Signaltönen: NVDA wird die Lautstärke anderer Audioquellen nur dann reduzieren, wenn es spricht oder Töne ausgibt. Diese Option funktioniert nicht bei allen Sprachausgaben. 
+- während des Sprechens und bei Wiedergabe der Signaltöne: NVDA wird die Lautstärke anderer Audioquellen nur dann reduzieren, wenn es spricht oder Töne ausgibt. Diese Option funktioniert nicht bei allen Sprachausgaben. 
 - Immer: Die Lautstärke anderer Audioquellen wird immer reduziert, solange NVDA ausgeführt wird.
 -
 
@@ -1256,20 +1257,20 @@ Ein Beispiel: Wenn Sie einen Listeneintrag fokussieren, ist dieser ein Teil eine
 Diese Liste könnte ein Teil eines Dialogs oder ähnlichem sein.
 Weitere Informationen über die Objekthierarchie finden Sie im Abschnitt über [Objektnavigation #ObjectNavigation].
 
-Bei der Einstellung "bei Änderungen" wird die Kontextinformation nur dann angezeigt, wenn sich der Kontext ändert.
+Bei der Einstellung "Fülle Zeile bei Kontext-Änderungen" wird die Kontextinformation nur dann angezeigt, wenn sich der Kontext ändert.
 Für das obige Beispiel bedeutet das, dass NVDA zunächst so viel Information wie möglich auf der Braillezeile anzeigt, sobald ein Listeneintrag den Fokus erhalten hat.
 Sollte noch Platz auf der Braillezeile vorhanden sein, so wird außerdem der Name der Liste angezeigt.
 Wenn Sie sich mit den Pfeiltasten durch die Liste bewegen, wird angenommen, dass Sie wissen, dass Sie sich innerhalb einer Liste befinden.
 Dies bedeutet, dass nur noch die Listeneinträge auf der Braillezeile angezeigt werden.
 Um die Kontextinformationen anzuzeigen können Sie die Braillezeile rückwärtsscrollen.
 
-Bei der Einstellung "immer" wird NVDA immer so viel Kontextinformation wie möglich auf der Braillezeile anzeigen, selbst wenn Sie diese Information schon vorher bekommen haben.
+Bei der Einstellung "immer Zeile auffüllen" wird NVDA immer so viel Kontextinformation wie möglich auf der Braillezeile anzeigen, selbst wenn Sie diese Information schon vorher bekommen haben.
 Dies hat den Vorteil, dass immer so viel Information wie möglich auf der Braillezeile angezeigt wird.
 Andererseits kann es zu einer "springenden Anzeige" kommen, wenn sich die Position des fokussierten Objekts auf der Braillezeile ständig ändert.
 Dies kann beim Navigieren durch lange Listen zu Problemen führen, weil Sie mit Ihrem Finger immer wieder den Anfang des Eintrags aufsuchen müssen.
 Dies ist das Standardverhalten von NVDA 2017.2 und älter.
 
-Bei der Einstellung "nur beim scrollen" wird NVDA niemals automatisch Kontextinformationen anzeigen.
+Bei der Einstellung "nur beim zurückscrollen" wird NVDA niemals automatisch Kontextinformationen anzeigen.
 Für das obige Beispiel bedeutet dies, dass NVDA immer nur den aktuellen Listeneintrag anzeigt.
 Wenn Sie dennoch Kontextinformationen (wie z. B. den Namen der Liste) angezeigt bekommen möchten, müssen Sie die Braillezeile rückwärtsscrollen.
 
@@ -1668,7 +1669,13 @@ Wenn diese Option aktiviert ist, versucht NVDA über die API-Schnittstelle der M
 Dazu gehört in Microsoft Word selbst aber auch der Microsoft Outlook Message Viewer und Composer.
  Für die neuesten Versionen von Microsoft Office 2016 / 365 unter Windows 10 ist die Unterstützung der Benutzeroberfläche vollständig genug, um den Zugriff auf Microsoft Word-Dokumente zu ermöglichen, die nahezu der bestehenden Microsoft Word-Unterstützung von NVDA entsprechen, mit dem zusätzlichen Vorteil, dass die Reaktionsfähigkeit erheblich gesteigert wird.
 Es kann jedoch einige Informationen geben, die in einigen Versionen von Microsoft Office entweder nicht oder falsch angezeigt werden, so dass man sich nicht immer auf diese Unterstützung der Benutzeroberflächenautomatisierung verlassen kann.
-Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben.
+Wir empfehlen noch nicht diese Funktion standardmäßig zu aktivieren. Allerdings ist ausdrücklich erwünscht, dass Benutzer von Office 2016 / 365 diese Funktion testen und Rückmeldung geben können.
+
+==== Benutzeroberflächenautomatisierung verwenden, um auf die Windows-Konsole zuzugreifen, falls verfügbar ====[AdvancedSettingsConsoleUIA]
+Wenn diese Option aktiviert ist, verwendet NVDA eine neue, noch nicht abgeschlossene Version der Unterstützung für Windows-Konsole, die die Vorteile von der [Verbesserungen der Barrierefreiheit durch Microsoft (englisch) https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/] nutzt. Diese Funktion ist sehr experimentell und noch unvollständig, so dass ihre Verwendung noch nicht empfohlen wird. Nach Fertigstellung wird jedoch erwartet, dass diese neue Unterstützung zum Standard wird, was die Leistung und Stabilität von NVDA in Windows-Konsolen verbessert.
+
+==== Passwörter in Konsolen der Benutzeroberflächenautomatisierung ansagen ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Diese Einstellung steuert, ob Zeichen durch [eingegebene Zeichen ansagen #KeyboardSettingsSpeakTypedCharacters] oder [eingegebene Wörter ansagen #KeyboardSettingsSpeakTypedWords] gesprochen werden, wenn der Bildschirm in der Windows-Konsole bei aktivierter Automatisierungsunterstützung der Benutzeroberflächenautomatisierung nicht aktualisiert wird (z. B. Passworteingabe). Aus Sicherheitsgründen sollte diese Einstellung deaktiviert bleiben. Sie können es jedoch aktivieren, wenn Sie bei der Verwendung der neuen experimentellen Konsolen-Unterstützung von NVDA Leistungsprobleme oder Instabilität bei der Eingabe von Zeichen und/oder Wörtern feststellen.
 
 ==== Automatisches Bewegen des System-Fokus auf hervorhebbare Elemente im Lesemodus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tastenkombination: NVDA+8
@@ -1734,6 +1741,7 @@ Außerdem wird die Option "Beim Sprechen von Zeichen und Symbolen die Sprache de
 
 Um die Aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
 Sie können die Symbole auch filtern, indem Sie das Symbol oder einen Teil der Ersetzung des Symbols in das Bearbeitungsfeld "Filter nach" eingeben.
+
 - Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
 - Im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen.
 - Im Konbinationsfeld "Aktuelles Symbol an Sprachausgabe senden" kann eingestellt werden, ob das Symbol anstelle seines Ersatztextes an die Sprachausgabe gesendet werden soll.
@@ -1742,7 +1750,7 @@ Beispielsweise pausiert die Sprachausgabe nach einem Komma.
 Dieses Konbinationsfeld enthält drei Optionen:
  - Niemals: das Sonderzeichen wird niemals an die Sprachausgabe gesendet.
  - Immer: Das Symbol wird immer an die Sprachausgabe gesendet.
- - Nur unterhalb der Symbolebene: Das Sonderzeichen wird nur an die Sprachausgabe gesendet, wenn die momentan eingestellte Symbolebene niedriger ist, als im Konbinationsfeld "Stufe" (siehe oben)
+ - Unterhalb der Symbolebene: Das Sonderzeichen wird nur an die Sprachausgabe gesendet, wenn die momentan eingestellte Symbolebene niedriger ist, als im Konbinationsfeld "Stufe" (siehe oben)
  Beispielsweise kann ein Symbol bei einer höheren Stufe ohne Pausieren gesprochen werden, während die Sprachausgabe bei einer niedrigeren Stufe pausiert.
  -
 -
@@ -1888,6 +1896,7 @@ Um NVDA im Anmeldebildschirm und auch in den Sicherheitsmeldungen der Benutzerko
 
 ++ Der Protokollbetrachter ++[LogViewer]
 Den Protokollbetrachter finden Sie im NVDA-Menü unter "Extras". Dieses Werkzeug gibt Ihnen die Möglichkeit, alles was seit dem Start von NVDA intern abläuft, einzusehen.
+Mit NVDA+F1 wird der Log-Viewer geöffnet und Entwickler-Informationen über das aktuelle Navigator-Objekt angezeigt.
 
 Den Protokollinhalt können Sie auch abspeichern oder den Betrachter aktualisieren, so dass lediglich die Einträge angezeigt werden, die seit dem Aufruf des Protokollbetrachters aufgelistet sind.
 Diese Optionen sind entsprechend im Menü "Protokoll" des Betrachters verfügbar.
@@ -1978,36 +1987,36 @@ Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Spracha
 eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter [https://github.com/nvaccess/nvda/wiki/ExtraVoices].
 
 ++ eSpeak NG ++[eSpeakNG]
-Die in NVDA fest integrierte [eSpeak NG https://github.com/espeak-ng/espeak-ng],]-Sprachausgabe erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
+Die in NVDA fest integrierte Sprachausgabe [eSpeak NG https://github.com/espeak-ng/espeak-ng] erfordert keine speziellen Treiber oder andere extra installierten Komponenten.
 Beim Starten von NVDA wird sie als Standard verwendet.
 Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen mit einem USB-Stick ohne weiteres betrieben werden kann.
 
 Jede Stimme, die mit eSpeak NG ausgeliefert wird, spricht eine andere Sprache.
-Somit werden rund 43 unterschiedliche Sprachen unterstützt.
+Somit werden über 43 unterschiedliche Sprachen unterstützt.
 
 Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert werden kann.
 
-++ Microsoft Speech API Version 4 (SAPI 4.0) ++[SAPI4]
+++ Microsoft Speech API-Version 4 (SAPI 4.0) ++[SAPI4]
 SAPI 4 ist ein älterer Microsoft-Standard für SoftwareSprachausgaben.
 NVDA unterstützt noch die alte Schnittstelle, für all jene, die bereits SAPI 4 Sprachausgaben installiert haben.
 Die Treiber hierfür werden von Microsoft schon lange nicht mehr zum Download angeboten.
 
 Wenn diese Sprachausgabe mit NVDA verwendet wird, finden Sie die Stimmen aller SAPI 4 Engines in der Kategorie [Stimme und Sprachausgabe #SpeechSettings] oder im [Sprachausgaben-Einstellungsring #SynthSettingsRing].
 
-++ Microsoft Speech API Version 5 (SAPI 5.x) ++[SAPI5]
+++ Microsoft Speech API-Version 5 (SAPI 5.x) ++[SAPI5]
 SAPI 5 ist ein Microsoft-Standard für SoftwareSprachausgaben.
 Viele Sprachausgaben, die diesem Standard entsprechen, können von verschiedenen Firmen käuflich erworben oder von Internetseiten kostenlos heruntergeladen werden. Ihr System wird wahrscheinlich bereits mindestens eine SAPI5-Stimme vorinstalliert haben.
 Wenn Sie diese Sprachausgaben mit NVDA benutzen möchten, werden in der Kategorie [Stimme und Sprachausgabe #SpeechSettings] oder dem [Einstellungsring der Sprachausgaben #SynthSettingsRing] alle Stimmen von der SAPI5-Engine aufgelistet, die auf Ihrem System gefunden werden können.
 
-++ Microsoft Speech Plattform ++[MicrosoftSpeechPlatform]
-Die "Microsoft Speech Plattform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen.
+++ Microsoft Speech Platform ++[MicrosoftSpeechPlatform]
+Die "Microsoft Speech Platform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen.
 Diese Stimmen können auch in NVDA eingebunden werden.
 
 Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten installieren:
 - Microsoft Speech Platform - Server Runtime (Version 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Plattform - Server Runtime Sprachen (Version 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Server Runtime Sprachen (Version 11), x86: https://www.microsoft.com/download/en/details.aspx?id=27224
  - Diese Webseite enthält viele Dateien für Sprachein- und -ausgabe.
- Suchen Sie sich die tts-Dateien passend zu der von Ihnen gewünschten Sprache heraus.
+ Suchen Sie sich die TTS-Dateien passend zu der von Ihnen gewünschten Sprache heraus.
  Beispiel: Die Datei MSSpeech_TTS_de-DE_Hedda.msi ist eine deutsche Stimme.
  -
 -
@@ -2018,7 +2027,7 @@ Diese Stimmen sind in vielen Sprachen verfügbar. Sie sind außerdem sehr viel r
 
 Im [Artikel vom Microsoft Support-Center https://support.microsoft.com/de-de/help/22797/windows-10-narrator-tts-voices] finden Sie eine Beschreibung, wie Sie zusätzliche Stimmen und Sprachen installieren können.
 
-Bitte bedenken Sie dabei, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
+Bitte bedenken Sie, dass die höheren Sprechgeschwindigkeiten, die im Narrator eingestellt werden können, in NVDA nicht zur Verfügung stehen.
 Eine Änderung der Sprechgeschwindigkeit in Windows hat außerdem Einfluss auf die Sprechgeschwindigkeit in NVDA.
 Dieses Problem kann nur durch Änderungen in Windows behoben werden.
 Wir hoffen, dass dies im Rahmen einer Aktualisierung von Windows geschehen wird.
@@ -2058,7 +2067,6 @@ Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, wer
 Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per USB oder per Bluetooth verbunden ist.
 Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als Anschluss entweder USB oder Bluetooth auswählen.
 Dies kann sinnvoll sein, wenn Sie z. B. eine Focus-Braillezeile per Bluetooth mit NVDA verbinden wollen, aber dennoch den USB-Anschluss Ihres Rechners zum Laden der Zeile verwenden.
-
 Die automatische Braillezeilenerkennung von NVDA erkennt auch die Anzeige auf USB oder Bluetooth.
 
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
@@ -2914,72 +2922,4 @@ Die folgenden Werte können geändert werden:
 + Weitere Informationen +[FurtherInformation]
 Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die englische Internetseite unter NVDA_URL.
 Dort finden Sie auch neben der Community und dem Technischen Support auch die zusätzlichen Dokumentationen.
-Diese Seite stellt auch die Informationen zur Weiterentwicklung von NVDA bereit.
-
-+ Anhang +
-
-++ Hinweise zu Java ++
-Da es sich bei NVDA um eine 32-Bit-Anwendung handelt, müssen auch 32-Bit-Versionen der Java-Laufzeitumgebung (Java Runtime Enviroment) installiert werden. Seit Java 7 Update 6 ist die Zugänglichkeitsschnittstelle (Access Bridge) fester Bestandteil von Java und muss lediglich aktiviert werden, nachdem die Installation von Java abgeschlossen ist.
-+ Installieren Sie zuerst die 32-Bit-Version der Java-Laufzeitumgebung.
-+ Aktivieren Sie die Java-Zugänglichkeitsschnittstelle wie unten beschrieben.
-+ Starten Sie anschließend NVDA neu, damit die neuen Bibliotheken geladen werden.
-+ Um zu testen, ob Java und Java Access Bridge funktionieren, können Sie die Java-Systemsteuerung unter dem Eintrag Java (32-Bit) in der Systemsteuerung aufrufen. Wenn jetzt alle Dialogelemente richtig angezeigt werden, sind Java und Java Access Bridge korrekt installiert.
-+
-
-+++ Aktivieren der Java-Zugänglichkeitsschnittstelle unter Windows XP +++
-Unter Windows XP müssen Sie die Kommandozeile verwenden, um die Zugänglichkeitsschnittstelle für Java zu aktivieren. Öffnen Sie dazu eine Eingabeaufforderung, navigieren Sie in das Verzeichnis, in dem sie Java installiert haben üblicherweise in "C:\Programme\Java\JRE<Version>\Bin" und geben Sie den folgenden Befehl ein:
-
-```
-jabswitch -enable
-```
-
-Wenn Sie eine Meldung wie "The Java Access Bridge has been enabled" erhalten haben, wurde die Zugänglichkeitsschnittstelle erfolgreich aktiviert. Wiederholen Sie die Ausführung dieses Befehls für jeden Benutzer Ihres Rechners, der die Zugänglichkeitsschnittstellen benötigt.
-
-+++ Aktivieren der Zugänglichkeitsschnittstellen unter Windows Vista und neuer +++
-Unter Windows Vista und neuer können Sie das Center für erleichterte Bedienung verwenden, um die java-Zugänglichkeitsschnittstellen zu aktivieren. gehen Sie dazu folgendermaßen vor:
-+ Drücken Sie Win+U, um das Center für erleichterte Bedienung zu öffnen.
-+ Wählen Sie den Link "Computer ohne einen Bildschirm verwenden".
-+ Aktivieren Sie im Abschnitt "Andere Programme" das Kontrollkästchen "Oracle Java Access Bridge" und schließen sie das Dialogfeld mit "OK".
-+ Schließen Sie das Fenster des Centers für erleichterte Bedienung.
-+
-
-Wiederholen Sie die obigen Schritte für jeden Benutzer, der die Java-Zugänglichkeitsschnittstellen benötigt.
-
-
-++ Mit der Tastaturmaus von Windows navigieren ++
-Eine Alternative zur Verwendung einer Maus stellt die Tastaturmaus dar. 
-Damit ist es einfacher, die Maus entlang der Koordinatenachsen zu bewegen. Die Tastaturmaus kann mit Alt+Umschalt+NumLock ein- und auch wieder ausgeschaltet werden.
-
-Wenn allerdings die Tastenkombination Alt+Umschalt (rechts) benutzt wird, kann es zum Konflikt mit der Umschaltung für die Tastatursprache kommen. Daher kann es vorkommen, dass nach dem Betätigen der Tastenkombination die Tastatursprache auf US-Englisch umgestellt ist. Um sie wieder auf Deutsch zurückzustellen, betätigen Sie die Tastenkombination ein weiteres Mal.
-
-Nach dem Drücken der Tastenkombination Alt+Umschalt+NumLock erscheint eine Meldung, die darüber informiert, dass nach der Bestätigung von "OK" die Tastaturmaus aktiviert ist.
-
-Über den Schalter "Einstellungen" kann das Dialogfeld "Eingabehilfen" mit der Registerkarte "Tastaturmaus" geöffnet werden, in dem noch weitere Einstellungen vorgenommen werden können.
-
-Bei aktivierter Tastaturmaus dienen folgende Tasten zum Navigieren der Maus in die angegebene Richtung:
-
-- Num 7: Zur Oberen linken Ecke
-- Num 8: Nach oben
-- Num 9: Zur Oberen rechten Ecke
-- Num 4: Nach links
-- Num 6: Nach rechts
-- Num 1: Zur Unteren linken Ecke
-- Num 2: Nach unten
-- Num 3: Zur Unteren rechten Ecke
--
-
-Mit der Steuerungstaste können Sie die Bewegungen des Mauszeigers beschleunigen und mit der Umschalttaste dazu diese verlangsamen.
-
-Um die Ausgabe via Braillezeile zu erhalten, müssen folgende Voraussetzungen gegeben sein:
-- Sie müssen im Dialog Mauseinstellungen die Option "Mausverfolgung einschalten" aktivieren.
-- Die Braillezeile muss an die Anzeige (den Navigator) gekoppelt sein.
-- Im Dialog NVDA-Cursor muss die Option "Mauszeiger verfolgen" eingeschaltet sein.
--
-
-
-+++ Klicken mit Hilfe der Tastaturmaus von Windows +++
-Generell gilt, dass Sie bei aktivierter Tastaturmaus die Tasten 5 und Plus (+) des Nummernblocks verwenden können, um eine bestimmte Maustaste einmal oder doppelt auszulösen. Um festzulegen, welche Maustasten Sie auslösen, verwenden Sie die folgenden Tasten:
-- Drücken Sie Num Schrägstrich, um mit den Tasten 5 oder Plus die linke Maustaste zu simulieren.
-- Drücken Sie Num Stern, um mit den Tasten 5 oder Plus beide Maustasten zu simulieren.
-- Drücken Sie Num Minus, um mit den Tasten 5 oder Plus die rechte Maustaste zu simulieren.
--
+Diese Website bietet auch Informationen und Ressourcen zur NVDA-Entwicklung.

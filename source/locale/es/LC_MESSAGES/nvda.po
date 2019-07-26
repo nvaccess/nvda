@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
-"PO-Revision-Date: 2019-05-30 22:19+0100\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-04 19:46+0100\n"
 "Last-Translator: José Manuel Delicado <jmdaweb@hotmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -1634,19 +1634,19 @@ msgstr "sin más texto antes de un bloque de enlaces"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr "se mueve al siguiente punto de referencia"
+msgstr "se mueve a la siguiente región"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr "sin siguiente punto de referencia"
+msgstr "sin siguiente región"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr "se mueve al punto de referencia anterior"
+msgstr "se mueve a la región anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
-msgstr "sin punto de referencia anterior"
+msgstr "sin región anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
@@ -1725,7 +1725,7 @@ msgstr "&Botones"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
 msgid "Lan&dmarks"
-msgstr "&Puntos de Referencia"
+msgstr "&Regiones"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
@@ -1753,18 +1753,12 @@ msgstr "&Moverse a"
 
 #, python-format
 msgid "%s landmark"
-msgstr "punto de referencia %s"
+msgstr "región %s"
 
 #. Translators: This is brailled to indicate a landmark (example output: lmk main).
 #, python-format
 msgid "lmk %s"
-msgstr "pdr %s"
-
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s seleccionado"
+msgstr "reg %s"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -3129,10 +3123,6 @@ msgstr "Bloquear botón derecho del ratón"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Bloquea o desbloquea el botón derecho del ratón"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s Seleccionado"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3493,15 +3483,15 @@ msgstr "Activa y desactiva el anunciado de citas"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "anunciar puntos de referencia desactivado"
+msgstr "anunciar regiones desactivado"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "anunciar puntos de referencia activado"
+msgstr "anunciar regiones activado"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "Activa y desactiva el anunciado de puntos de referencia"
+msgstr "Activa y desactiva el anunciado de regiones"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3840,6 +3830,31 @@ msgid ""
 msgstr ""
 "Mueve el cursor de revisión al último carácter de la línea donde se sitúe en "
 "el navegador de objetos actual y lo verbaliza"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Anuncia el símbolo donde esté colocado el cursor de revisión. Presionado dos "
+"veces, muestra el símbolo y el texto utilizado para verbalizarlo en el modo "
+"exploración"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Sin símbolo para reemplazar"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Carácter: {}\n"
+"Reemplazo: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Símbolo expandido ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6106,15 +6121,24 @@ msgstr "mayus %s"
 msgid "no indent"
 msgstr "Sin sangría"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s seleccionado"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s seleccionado"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d caracteres"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s seleccionado"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9493,6 +9517,18 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Utilizar UI Automation para acceder a la Consola de Windows cuando esté "
+"disponible"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Verbalizar &contraseñas en consolas UIA (podrá mejorar el rendimiento)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Poner automáticamente el &foco del sistema en los elementos enfocables"
 
@@ -11355,6 +11391,9 @@ msgstr "Espaciado de línea doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "espaciado de línea a 1.5"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s Seleccionado"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Actualmente la aplicación en ejecución es %s"

@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:10+1000\n"
-"PO-Revision-Date: 2019-06-13 18:18+0200\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"POT-Creation-Date: 2019-07-11 23:26+1000\n"
+"PO-Revision-Date: 2019-07-04 16:21+0200\n"
+"Last-Translator: Corentin BACQUÉ-CAZENAVE <corentin@progaccess33.net>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -1763,12 +1763,6 @@ msgstr "région %s"
 msgid "lmk %s"
 msgstr "rgn %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "sélectionné %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Pas de description longue"
@@ -3125,10 +3119,6 @@ msgstr "Verrouiller le bouton droit de la souris"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Verrouiller ou déverrouiller le bouton droit de la souris"
 
-#, python-format
-msgid "Selected %s"
-msgstr "Sélectionné %s"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3827,6 +3817,30 @@ msgid ""
 msgstr ""
 "Amener le curseur de revue au dernier caractère de la ligne sur laquelle il "
 "se trouve dans l'objet navigateur courant et le lire"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Annonce le caractère sur lequel le curseur de revue est positionné. Deux "
+"appuis: afficher le caractère et sa prononciation pendant la navigation"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Aucun symbole de remplacement"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Caractère: {}\n"
+"Remplacement: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Symbole étendu ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6089,15 +6103,24 @@ msgstr "%s majuscule"
 msgid "no indent"
 msgstr "pas de retrait"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "sélectionné %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s sélectionné"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d caractères"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s sélectionné"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9474,6 +9497,19 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Utiliser UI Automation pour accéder à la console Windows quand disponible"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr ""
+"Annoncer les mots de &passe dans les consoles UIA (peut améliorer les "
+"performances)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr ""
 "Positionnement automatique du &focus système aux éléments susceptibles "
@@ -11332,3 +11368,6 @@ msgstr "Interligne double"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Interligne 1.5"
+
+#~ msgid "Selected %s"
+#~ msgstr "Sélectionné %s"

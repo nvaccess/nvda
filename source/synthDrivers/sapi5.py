@@ -22,6 +22,7 @@ from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthD
 import config
 import nvwave
 from logHandler import log
+import weakref
 
 # SPAudioState enumeration
 SPAS_CLOSED=0
@@ -31,16 +32,33 @@ SPAS_RUN=3
 
 class FunctionHooker(object):
 
-	def __init__(self,targetDll,importDll,funcName,newFunction):
-		hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(targetDll,importDll,funcName,newFunction)
-		if hook:
-			log.debug("hooked %s"%funcName)
+	def __init__(
+		self,
+		targetDll: str,
+		importDll: str,
+		funcName: str,
+		newFunction # result of ctypes.WINFUNCTYPE
+	):
+		# dllImportTableHooks_hookSingle expects byte strings.
+		try:
+			self._hook=NVDAHelper.localLib.dllImportTableHooks_hookSingle(
+				targetDll.encode("mbcs"),
+				importDll.encode("mbcs"),
+				funcName.encode("mbcs"),
+				newFunction
+			)
+		except UnicodeEncodeError:
+			log.error("Error encoding FunctionHooker input parameters", exc_info=True)
+			self._hook = None
+		if self._hook:
+			log.debug(f"Hooked {funcName}")
 		else:
-			log.debug("could not hook %s"%funcName)
-			raise RuntimeError("could not hook %s"%funcName)
+			log.error(f"Could not hook {funcName}")
+			raise RuntimeError(f"Could not hook {funcName}")
 
 	def __del__(self):
-		NVDAHelper.localLib.dllImportTableHooks_unhookSingle(self._hook)
+		if self._hook:
+			NVDAHelper.localLib.dllImportTableHooks_unhookSingle(self._hook)
 
 _duckersByHandle={}
 
@@ -88,13 +106,21 @@ class SapiSink(object):
 	"""
 
 	def __init__(self, synth):
-		self.synth = synth
+		self.synthRef = weakref.ref(synth)
 
 	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
-		synthIndexReached.notify(synth=self.synth, index=bookmarkId)
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called Bookmark method on SapiSink while driver is dead")
+			return
+		synthIndexReached.notify(synth=synth, index=bookmarkId)
 
 	def EndStream(self, streamNum, pos):
-		synthDoneSpeaking.notify(synth=self.synth)
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called Bookmark method on EndStream while driver is dead")
+			return
+		synthDoneSpeaking.notify(synth=synth)
 
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())

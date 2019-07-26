@@ -1081,7 +1081,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		else:
 			info = self.selection
 			if not info.isCollapsed:
-				speech.speakSelectedText(info.text)
+				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
@@ -1257,7 +1257,10 @@ class AppModule(appModuleHandler.AppModule):
 		self.hasTriedPpAppSwitch=True
 		#Make sure NVDA detects and reports focus on the waiting dialog
 		api.processPendingEvents()
-		comtypes.client.PumpEvents(1)
+		try:
+			comtypes.client.PumpEvents(1)
+		except WindowsError:
+			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
 
