@@ -2,19 +2,22 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2010 James Teh <jamie@jantrid.net>
+#Copyright (C) 2008-2019 NV Access Limited, Babbage B.V>
 
 import time
 import wx
 import braille
 from logHandler import log
 import inputCore
+from typing import List
 try:
 	import brlapi
-	BRLAPI_CMD_KEYS = dict((code, name[8:].lower())
-		for name, code in brlapi.__dict__.iteritems() if name.startswith("KEY_CMD_"))
+	BRLAPI_CMD_KEYS = {
+		code: name[8:].lower()
+		for name, code in vars(brlapi).items() if name.startswith("KEY_CMD_")
+	}
 except ImportError:
-	pass
+	brlapi = None
 
 KEY_CHECK_INTERVAL = 50
 
@@ -26,12 +29,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		try:
-			brlapi
-			return True
-		except NameError:
-			pass
-		return False
+		return bool(brlapi)
 
 	def __init__(self):
 		super(BrailleDisplayDriver, self).__init__()
@@ -41,7 +39,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)
 		# BRLTTY simulates key presses for braille typing keys, so let BRLTTY handle them.
 		# NVDA may eventually implement this itself, but there's no reason to deny BRLTTY users this functionality in the meantime.
-		self._con.ignoreKeys(brlapi.rangeType_type, (long(brlapi.KEY_TYPE_SYM),))
+		self._con.ignoreKeys(brlapi.rangeType_type, (brlapi.KEY_TYPE_SYM,))
 
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
@@ -61,12 +59,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _get_numCells(self):
 		return self._con.displaySize[0]
 
-	def display(self, cells):
-		cells = "".join(chr(cell) for cell in cells)
+	def display(self, cells: List[int]):
+		cells = bytes(cells)
 		# HACK: Temporarily work around a bug which causes brltty to freeze if data is written while there are key presses waiting.
 		# Simply consume and act upon any waiting key presses.
 		self._handleKeyPresses()
 		self._con.writeDots(cells)
+
+	def _get_driverName(self):
+		return self._con.driverName.decode()
 
 	def _handleKeyPresses(self):
 		while True:
@@ -86,7 +87,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		argument = key["argument"]
 		if keyType == brlapi.KEY_TYPE_CMD:
 			try:
-				inputCore.manager.executeGesture(InputGesture(command, argument))
+				inputCore.manager.executeGesture(
+					InputGesture(self.driverName, command, argument)
+				)
 			except inputCore.NoInputGestureAction:
 				pass
 
@@ -104,8 +107,9 @@ class InputGesture(braille.BrailleDisplayGesture):
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, command, argument):
+	def __init__(self, model, command, argument):
 		super(InputGesture, self).__init__()
+		self.model = model
 		self.id = BRLAPI_CMD_KEYS[command]
 		if command == brlapi.KEY_CMD_ROUTE:
 			self.routingIndex = argument

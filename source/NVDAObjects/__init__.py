@@ -7,7 +7,6 @@
 
 """Module that contains the base NVDA object type"""
 
-from six import with_metaclass
 import time
 import re
 import weakref
@@ -28,6 +27,7 @@ import treeInterceptorHandler
 import braille
 import globalPluginHandler
 import brailleInput
+import locationHelper
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
@@ -35,6 +35,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""
 
 	locationText=None
+	# Do not use encoded text.
+	encoding = None
 
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
@@ -44,10 +46,6 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getStoryLength(self):
 		return len(self._getStoryText())
-
-	def _getTextRange(self,start,end):
-		text=self._getStoryText()
-		return text[start:end]
 
 	def _get_boundingRects(self):
 		if self.obj.hasIrrelevantLocation:
@@ -98,7 +96,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 
 		# Determine the bases for the new class.
 		bases=[]
-		for index in xrange(len(clsList)):
+		for index in range(len(clsList)):
 			# A class doesn't need to be a base if it is already implicitly included by being a superclass of a previous base.
 			if index==0 or not issubclass(clsList[index-1],clsList[index]):
 				bases.append(clsList[index])
@@ -146,7 +144,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContainerObject,baseObject.ScriptableObject)):
+class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, metaclass=DynamicNVDAObjectType):
 	"""NVDA's representation of a single control/widget.
 	Every widget, regardless of how it is exposed by an application or the operating system, is represented by a single NVDAObject instance.
 	This allows NVDA to work with all widgets in a uniform way.
@@ -319,6 +317,11 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 			return False
 		return self._isEqual(other)
  
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		"""The opposite to L{NVDAObject.__eq__}
 		"""
@@ -386,7 +389,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_name(self):
 		"""The name or label of this object (example: the text of a button).
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -407,13 +410,13 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_value(self):
 		"""The value of this object (example: the current percentage of a scrollbar, the selected option in a combo box).
-		@rtype: basestring
+		@rtype: str
 		"""   
 		return ""
 
 	def _get_description(self):
 		"""The description or help text of this object.
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -431,7 +434,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 		@param index: the optional 0-based index of the wanted action.
 		@type index: int
 		@return: the action's name
-		@rtype: basestring
+		@rtype: str
 		"""
 		raise NotImplementedError
  
@@ -447,7 +450,7 @@ class NVDAObject(with_metaclass(DynamicNVDAObjectType, documentBase.TextContaine
 
 	def _get_keyboardShortcut(self):
 		"""The shortcut key that activates this object(example: alt+t).
-		@rtype: basestring
+		@rtype: str
 		"""
 		return ""
 
@@ -989,7 +992,7 @@ Tries to force this object to take the focus.
 			speechWasCanceled=False
 		self._mouseEntered=True
 		try:
-			info=self.makeTextInfo(textInfos.Point(x,y))
+			info=self.makeTextInfo(locationHelper.Point(x,y))
 		except NotImplementedError:
 			info=NVDAObjectTextInfo(self,textInfos.POSITION_FIRST)
 		except LookupError:
@@ -1030,6 +1033,10 @@ This code is executed if a gain focus event is received by this object.
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
 		brailleInput.handler.handleGainFocus(self)
+
+	def event_loseFocus(self):
+		# Forget the word currently being typed as focus is moving to a new control. 
+		speech.clearTypedWordBuffer()
 
 	def event_foreground(self):
 		"""Called when the foreground window changes.
@@ -1093,7 +1100,7 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=u" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+			self._basicText=u" ".join(x for x in (self.name, self.value, self.description) if isinstance(x, str) and len(x) > 0 and not x.isspace())
 			if len(self._basicText)==0:
 				self._basicText=u""
 		else:
@@ -1115,13 +1122,13 @@ This code is executed if a gain focus event is received by this object.
 		If the string is too long to be useful, it will be truncated.
 		This string should be included as returned. There is no need to call repr.
 		@param string: The string to format.
-		@type string: nbasestring
+		@type string: str
 		@param truncateLen: The length at which to truncate the string.
 		@type truncateLen: int
 		@return: The formatted string.
-		@rtype: basestring
+		@rtype: str
 		"""
-		if isinstance(string, basestring) and len(string) > truncateLen:
+		if isinstance(string, str) and len(string) > truncateLen:
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
@@ -1139,7 +1146,7 @@ This code is executed if a gain focus event is received by this object.
 		info.append("name: %s" % ret)
 		try:
 			ret = self.role
-			for name, const in controlTypes.__dict__.iteritems():
+			for name, const in controlTypes.__dict__.items():
 				if name.startswith("ROLE_") and ret == const:
 					ret = name
 					break
@@ -1147,7 +1154,7 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("role: %s" % ret)
 		try:
-			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.iteritems() if name.startswith("STATE_"))
+			stateConsts = dict((const, name) for name, const in controlTypes.__dict__.items() if name.startswith("STATE_"))
 			ret = ", ".join(
 				stateConsts.get(state) or str(state)
 				for state in self.states)
@@ -1233,7 +1240,7 @@ This code is executed if a gain focus event is received by this object.
 		raise NotImplementedError
 
 	#: The language/locale of this object.
-	#: @type: basestring
+	#: @type: str
 	language = None
 
 	def _get__hasNavigableText(self):

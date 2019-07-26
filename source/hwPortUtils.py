@@ -9,10 +9,7 @@
 import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import winKernel
 from winKernel import SYSTEMTIME
 import config
@@ -39,12 +36,12 @@ class GUID(ctypes.Structure):
 		('Data4', ctypes.c_ubyte*8),
 	)
 	def __str__(self):
-		return "{%08x-%04x-%04x-%s-%s}" % (
+		return u"{%08x-%04x-%04x-%s-%s}" % (
 			self.Data1,
 			self.Data2,
 			self.Data3,
-			''.join(["%02x" % d for d in self.Data4[:2]]),
-			''.join(["%02x" % d for d in self.Data4[2:]]),
+			u''.join([u"%02x" % d for d in self.Data4[:2]]),
+			u''.join([u"%02x" % d for d in self.Data4[2:]]),
 		)
 
 class SP_DEVINFO_DATA(ctypes.Structure):
@@ -73,7 +70,7 @@ PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
 PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
 
 class dummy(ctypes.Structure):
-	_fields_=(("d1", DWORD), ("d2", WCHAR))
+	_fields_=((u"d1", DWORD), (u"d2", WCHAR))
 	_pack_ = 1
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
@@ -107,7 +104,7 @@ CM_Get_Device_ID.restype = DWORD
 CR_SUCCESS = 0
 MAX_DEVICE_ID_LEN = 200
 
-GUID_CLASS_COMPORT = GUID(0x86e0d1e0L, 0x8089, 0x11d0,
+GUID_CLASS_COMPORT = GUID(0x86e0d1e0, 0x8089, 0x11d0,
 	(ctypes.c_ubyte*8)(0x9c, 0xe4, 0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73))
 GUID_DEVINTERFACE_USB_DEVICE = GUID(0xA5DCBF10, 0x6530, 0x11D2,
 	(0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED))
@@ -140,7 +137,7 @@ def listComPorts(onlyAvailable=True):
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(ctypes.byref(GUID_CLASS_COMPORT), None, NULL, flags)
 	try:
-		for dwIndex in xrange(256):
+		for dwIndex in range(256):
 			entry = {}
 			did = SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
@@ -350,7 +347,7 @@ def listUsbDevices(onlyAvailable=True):
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(GUID_DEVINTERFACE_USB_DEVICE, None, NULL, flags)
 	try:
-		for dwIndex in xrange(256):
+		for dwIndex in range(256):
 			did = SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
 
@@ -497,7 +494,7 @@ def listHidDevices(onlyAvailable=True):
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(_hidGuid, None, NULL, flags)
 	try:
-		for dwIndex in xrange(256):
+		for dwIndex in range(256):
 			did = SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
 

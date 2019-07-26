@@ -29,7 +29,7 @@ def createCLDRAnnotationsDict(sources, dest):
 	assert cldrDict, "cldrDict is empty"
 	with codecs.open(dest, "w", "utf_8_sig", errors="replace") as dictFile:
 		dictFile.write(u"symbols:\r\n")
-		for pattern, description in cldrDict.iteritems():
+		for pattern, description in cldrDict.items():
 			dictFile.write(u"{pattern}\t{description}\tsome\r\n".format(
 				pattern=pattern,
 				description=description
@@ -119,7 +119,7 @@ NVDAToCLDRLocales = {
 
 annotationsDir = env.Dir("include/cldr-emoji-annotation/annotations")
 annotationsDerivedDir = env.Dir("include/cldr-emoji-annotation/annotationsDerived")
-for destLocale, sourceLocales in NVDAToCLDRLocales.iteritems():
+for destLocale, sourceLocales in NVDAToCLDRLocales.items():
 	cldrSources = []
 	# First add all annotations, then the derived ones.
 	for sourceLocale in sourceLocales:

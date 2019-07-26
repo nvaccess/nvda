@@ -401,6 +401,7 @@ Følgende tastekommandoer er tilgængelige for gennemsyn af tekst:
 | Vælg og derefter kopier fra læsemarkør | NVDA+f9 | NVDA+f9 | Ingen | Begynder vælge og kopiere processen fra læsemarkørens aktuelle position. Den faktiske handling finder ikke sted, før du fortæller NVDA, hvor udvælgelsen af teksten afsluttes. |
 | Vælg og kopier til læsemarkør | NVDA+f10 | NVDA+f10 | Ingen | Ved et tryk, vil tekst blive valgt fra den tidligere startmarkør, som er blevet sat, til og med læsemarkørens aktuelle position. Når du trykker på denne tast to gange, bliver teksten kopieret til Windows udklipsholderen. |
 | Sig tekstformatering | NVDA+f | NVDA+f | Ingen | Annoncerer formateringen af teksten ved læsemarkørens position. Trykkes dette to gange vil informationen blive vist i gennemsynstilstand |
+| Rapportér aktuelle symbolerstatning | Ingen | Ingen | Ingen | Oplyser symbolet for læsemarkørens aktuelle position. Ved to tryk vises symbolet og tekste der bruges til at udtale symbolet i gennemsynstilstand. |
 %kc:endInclude
 
 Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Numlock-tasten være slået fra.
@@ -1670,6 +1671,12 @@ For de seneste versioner af Microsoft Office 2016/365 kørende på windows 10 er
 Vær dog opmærksom på, at dette også kan betyde at noget information ikke er synligt, eller vises forkert, hvilket betyder at denne understøttelse ikke altid kan forekomme pålidelig.
 Vi anbefaler ikke at størstedelen af brugere slår denne indstilling til, men vi ønsker gerne henvendelser fra brugere af Office 2016/365.
 
+==== Benyt UI Automation i Windows Console når tilgængelig ====[AdvancedSettingsConsoleUIA]
+Når denne indstiling er slået til, vil NVDA benytte en nyere metode til oplæsning og håndtering af konsolvinduer ved at udnytte [tilgængelighedsforbedringer udviklet af Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Denne funktion er dog eksperimentel, og det anbefales ikke, at de fleste bruger denne. Når arbejdet på denne funktion er fuldendt, vil den tilsyneladende blive standardadfærden i fremtiden. Denne funktion øger ydeevnen og stabiliteten under læsning af Windows-konsolvinduer.
+
++==== Udtal adgangskoder i UIA-konsoller ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Denne funktion bestemmer om tegn udtales ved brug af indstillingen [sig indtastede tegn #KeyboardSettingsSpeakTypedCharacters] eller [sig indtastede ord #KeyboardSettingsSpeakTypedWords]. Dette kan evt. være nyttigt i situationer hvor skærmen ikke opdateres (som ved indtastning af adgangskoder i konsolvinduer). Dette bruger UIA. Vi anbefaler at denne funktion forbliver deaktiveret. I nogle tilfælde kan denne indstilling dog være nyttig, især hvis du oplever at NVDA opfører sig uhensigtsmæssigt og virker ustabil ved indtastning af tegn under brugen af UIAutomation.
+
 ==== Placer automatisk systemfokus på fokuserbare elementer i gennemsynstilstand ====[BrowseModeSettingsAutoFocusFocusableElements]
 Tast: NVDA+8
 
@@ -1889,6 +1896,7 @@ Hvis du vil ændre indstillingerne, som NVDA benytter på logon-skærmen eller s
 
 ++ Logviser ++[LogViewer]
 Logvisning, der findes under Værktøjer i NVDA-menuen, giver mulighed for at gennemse al output, der indtil nu og fra NVDA blev startet er blevet gemt i loggen.
+Brug NVDA+F1 til at åbne logvisning samt vise udviklerinformation for det aktuelle navigatorobjekt.
 
 Udover muligheden for at gennemse indholdet, er det også muligt at gemme en kopi af logfilen eller genopfriske viseren, så det seneste output fra logvisningen blev startet er den, der vises.
 Disse funktioner kan findes under viserens Log-menu.

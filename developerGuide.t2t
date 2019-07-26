@@ -796,6 +796,15 @@ These variables are:
 - brlRegions: The braille regions from the active braille buffer
 -
 
+++ Tab completion ++
+The input control supports tab-completion of variables and member attributes names.
+Hit the tab key once to complete the current input if there is one single candidate.
+If there is more than one, hit the tab key a second time to open a menu listing all matching possibilities.
+By default, only "public" member attributes are listed.
+That is, if the input is "nav.", attribute names with no leading underscore are proposed.
+If the input is "nav._", attribute names with a single leading underscore are proposed.
+Similarly, if the input is "nav.__", attribute names with two leading underscores are proposed.
+
 + Remote Python Console +
 A remote Python console is available for situations where remote debugging of NVDA is useful.
 It is similar to the [local Python console #PythonConsole] discussed above, but is accessed via TCP.
