@@ -205,6 +205,21 @@ def removeOldProgramFiles(destPath):
 	if os.path.isfile(fn):
 		tryRemoveFile(fn)
 
+	# #9960: If compiled python files from older versions aren't removed correctly,
+	# this could cause strange errors when Python tries to create tracebacks
+	# in a newer version of NVDA.
+	for curDestDir,subDirs,files in os.walk(destPath):
+		for f in files:
+			if f.endswith((".pyc", ".pyo")):
+				# This also removes compiled files from system config,
+				# but that is fine.
+				path=os.path.join(curDestDir, f)
+				log.debug(f"Removing old byte compiled python file: {path!r}")
+				try:
+					tryRemoveFile(path)
+				except RetriableFailure:
+					log.warning(f"Couldn't remove file: {path!r}")
+
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,

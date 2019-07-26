@@ -31,7 +31,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 	This does not handle the selection change keys.
 	To have selection changes reported, the object must notify of selection changes.
 	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
-	
+
 	If the object notifies of selection changes, the following should be done:
 		* When the object gains focus, L{initAutoSelectDetection} must be called.
 		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
@@ -48,7 +48,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 	#: When announcing new line text: should the entire line be announced, or just text after the caret?
 	announceEntireNewLine=False
 
-	_hasCaretMoved_minWordTimeoutMs=30 #: The minimum amount of time that should elapse before checking if the word under the caret has changed
+	#: The minimum amount of time that should elapse before checking if the word under the caret has changed
+	_hasCaretMoved_minWordTimeoutMs=30
+
+	#: The maximum amount of time that may elapse before we no longer rely on caret events to detect movement.
+	_useEvents_maxTimeoutMs = 10
 
 	_caretMovementTimeoutMultiplier = 1
 
@@ -68,7 +72,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		try:
 			self._cachedCaretBookmark = self.caret.bookmark
 		except (LookupError, RuntimeError):
-			pass # Will still be None
+			pass  # Will still be None
 		gesture.send()
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
@@ -77,7 +81,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
 		@type bookmark: bookmark
 		@param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
-		@type retryInterval: float 
+		@type retryInterval: float
 		@param timeout: the over all amount of time in seconds the method should wait before giving up completely,
 			C{None} to use the value from the configuration.
 		@type timeout: float
@@ -111,7 +115,18 @@ class EditableText(TextContainerObject,ScriptableObject):
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 			except (RuntimeError,NotImplementedError):
 				newInfo = None
-			# Caret events are unreliable in some controls.
+			else:
+				# Caret events are unreliable in some controls.
+				# Only use them if we consider them safe to rely on for a particular control,
+				# and only if they arrive within C{_useEvents_maxTimeoutMs} mili seconds
+				# after causing the event to occur.
+				if (
+					elapsed <= self._useEvents_maxTimeoutMs and
+					self.caretMovementDetectionUsesEvents and
+					(eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
+				):
+					log.debug("Caret move detected using event. Elapsed: %d ms" % elapsed)
+					return (True,newInfo)
 			# Try to detect with bookmarks.
 			newBookmark = None
 			if newInfo:
@@ -166,7 +181,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			return
 		bookmark=info.bookmark
 		gesture.send()
-		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
+		caretMoved,newInfo=self._hasCaretMoved(bookmark)
 		if not caretMoved and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
@@ -199,7 +214,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		# Therefore, we need to move it one character backwards.
 		wordInfo.move(textInfos.UNIT_CHARACTER, -1)
 		wordInfo.expand(textInfos.UNIT_WORD)
-		diff = wordInfo.compareEndPoints(caretInfo,"endToStart")
+		diff = wordInfo.compareEndPoints(caretInfo, "endToStart")
 		if diff >= 0 and not wordSeparator.isspace():
 			# This is no word boundary.
 			return (False, None)
@@ -210,6 +225,20 @@ class EditableText(TextContainerObject,ScriptableObject):
 			return (None, None)
 		return (True, wordInfo)
 
+	def _get_caretMovementDetectionUsesEvents(self) -> bool:
+		"""Returns whether or not to rely on caret and textChange events when
+		finding out whether the caret position has changed after pressing a caret movement gesture.
+		Note that if L{_useEvents_maxTimeoutMs} is elapsed,
+		relying on events is no longer reliable in most situations.
+		Therefore, any event should occur before that timeout elapses.
+		"""
+		# This class is a mixin that usually comes before other relevant classes in the mro.
+		# Therefore, try to call super first, and if that fails, return the default (C{True}.
+		try:
+			return super().caretMovementDetectionUsesEvents
+		except AttributeError:
+			return True
+
 	def script_caret_newLine(self,gesture):
 		# Going to a new line should also speak the last word using textInfo.
 		# Note that calling script_preTypedCharacter also executes the gesture, which is fine.
@@ -217,7 +246,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		bookmark = self._cachedCaretBookmark
 		if not bookmark:
 			return
-		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
+		caretMoved,newInfo=self._hasCaretMoved(bookmark)
 		if not caretMoved or not newInfo:
 			return
 		# newInfo.copy should be good enough here, but in MS Word we get strange results.
@@ -226,7 +255,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		except (RuntimeError,NotImplementedError):
 			return
 		lineInfo.expand(textInfos.UNIT_LINE)
-		if not self.announceEntireNewLine: 
+		if not self.announceEntireNewLine:
 			lineInfo.setEndPoint(newInfo,"endToStart")
 		if lineInfo.isCollapsed:
 			lineInfo.expand(textInfos.UNIT_CHARACTER)
