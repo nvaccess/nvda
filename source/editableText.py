@@ -81,7 +81,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
 		@type bookmark: bookmark
 		@param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
-		@type retryInterval: float
+		@type retryInterval: float 
 		@param timeout: the over all amount of time in seconds the method should wait before giving up completely,
 			C{None} to use the value from the configuration.
 		@type timeout: float
@@ -181,7 +181,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			return
 		bookmark=info.bookmark
 		gesture.send()
-		caretMoved,newInfo=self._hasCaretMoved(bookmark)
+		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
 		if not caretMoved and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
@@ -246,7 +246,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		bookmark = self._cachedCaretBookmark
 		if not bookmark:
 			return
-		caretMoved,newInfo=self._hasCaretMoved(bookmark)
+		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
 		if not caretMoved or not newInfo:
 			return
 		# newInfo.copy should be good enough here, but in MS Word we get strange results.
@@ -255,7 +255,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 		except (RuntimeError,NotImplementedError):
 			return
 		lineInfo.expand(textInfos.UNIT_LINE)
-		if not self.announceEntireNewLine:
+		if not self.announceEntireNewLine: 
 			lineInfo.setEndPoint(newInfo,"endToStart")
 		if lineInfo.isCollapsed:
 			lineInfo.expand(textInfos.UNIT_CHARACTER)
