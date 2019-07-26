@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: https://www.nvaccess.org/
-#Copyright 2010-2017 NV Access Limited.
+#Copyright 2010-2019 NV Access Limited, Babbage B.V.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -15,9 +15,10 @@
 import sys
 import os
 import time
-import _winreg
 from glob import glob
 import sourceEnv
+from py2exe.dllfinder import pydll
+import importlib.util
 
 def recursiveCopy(env,targetDir,sourceDir):
 	targets=[]
@@ -35,7 +36,7 @@ def recursiveCopy(env,targetDir,sourceDir):
 
 # Import NVDA's versionInfo module.
 import gettext
-gettext.install("nvda", unicode=True)
+gettext.install("nvda")
 sys.path.append("source")
 import versionInfo
 del sys.path[-1]
@@ -72,14 +73,21 @@ vars.Add("certPassword", "The password for the private key in the signing certif
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
-vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
+vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in range(60)]))
 if "tests" in COMMAND_LINE_TARGETS:
 	vars.Add("unitTests", "A list of unit tests to run", "")
 if "systemTests" in COMMAND_LINE_TARGETS:
 	vars.Add("filter", "A filter for the name of the system test(s) to run. Wildcards accepted.", "")
 
 #Base environment for this and sub sconscripts
-env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettextTool","t2t",keyCommandsDocTool,'doxygen','recursiveInstall'])
+env = Environment(variables=vars,HOST_ARCH='x86',tools=[
+	"textfile",
+	"gettextTool",
+	"t2t"
+	,keyCommandsDocTool,
+	"doxygen",
+	"recursiveInstall"
+])
 
 # speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
@@ -139,7 +147,7 @@ def signExec(target,source,env):
 	#sys.exit(1)
 	# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
 	res=0
-	for count in xrange(3):
+	for count in range(3):
 		res=env.Execute([signExecCmd+[target[0].abspath]])
 		if not res:
 			return 0 # success
@@ -228,31 +236,46 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# We don't do this using normal scons mechanisms because we want it to be cleaned up immediately after this builder
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
 	updateVersionType = env["updateVersionType"] or None
-	action = [lambda target, source, env: file(buildVersionFn, "w").write(
-		'version = {version!r}\r\n'
-		'publisher = {publisher!r}\r\n'
-		'updateVersionType = {updateVersionType!r}\r\n'
-		'version_build = {version_build!r}\r\n'
-		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build))]
+	# Any '\n' characters written are translated to the system default line separator, os.linesep.
+	action = [lambda target, source, env: open(buildVersionFn, "w", encoding="utf-8").write(
+		'version = {version!r}\n'
+		'publisher = {publisher!r}\n'
+		'updateVersionType = {updateVersionType!r}\n'
+		'version_build = {version_build!r}\n'
+		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build)
+	)
+	# In Python 3 write returns the number of characters written,
+	# which scons treats as an error code.	
+	and None]
 
 	buildCmd = ["cd", source[0].path, "&&",
 		sys.executable]
 	if release:
 		buildCmd.append("-O")
-	buildCmd.extend(("setup.py", "build", "--build-base", buildDir.abspath,
+	# Issue errors about str(bytes_instance), str(bytearray_instance)
+	buildCmd.append("-bb")
+	buildCmd.extend(("setup.py", "-vv", "build", "--build-base", buildDir.abspath,
 		"py2exe", "--dist-dir", target[0].abspath))
 	if release:
 		buildCmd.append("-O1")
-	action.append(buildCmd)
-
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
+
+	action.append(buildCmd)
+
+	# Python3 has started signing its main python dll.
+	# However, Py2exe currently tries to add a string resource to it, invalidating the signature and possibly currupting the certificate.
+	# Therefore, copy a fresh version  of the dll one more time once py2exe has completed.
+	action.append(Copy(target[0],pydll))
+
 	if certFile:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
-	for ext in "", "c", "o":
-		action.append(Delete(buildVersionFn + ext))
+	action.extend((
+		Delete(buildVersionFn),
+		Delete(importlib.util.cache_from_source(buildVersionFn))
+	))
 
 	return action
 env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
@@ -353,7 +376,7 @@ def makePot(target, source, env):
 	# Tweak the headers.
 	potFn = str(target[0])
 	tmpFn = "%s.tmp" % potFn
-	with file(potFn, "rt") as inp, file(tmpFn, "wt") as out:
+	with open(potFn, "rt") as inp, open(tmpFn, "wt") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
 				line = "# %s\n" % versionInfo.copyright
@@ -371,19 +394,19 @@ devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHe
 env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
 env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
 
-devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
-	"cd", sourceDir.path, "&&",
-	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
-	"--output", "${TARGET.abspath}",
-	"--quiet", "--html", "--include-log", "--no-frames",
-	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
-	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
-	"config", "contentRecog", "extensionPoints", "globalPlugins", "gui", "mathPres", "NVDAObjects",
-	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
-]])
+#devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
+#	"cd", sourceDir.path, "&&",
+#	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
+#	"--output", "${TARGET.abspath}",
+#	"--quiet", "--html", "--include-log", "--no-frames",
+#	"--name", "NVDA", "--url", "https://www.nvaccess.org/",
+#	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
+#	"config", "contentRecog", "extensionPoints", "globalPlugins", "gui", "mathPres", "NVDAObjects",
+#	"speechDictHandler", "synthDrivers", "textInfos", "virtualBuffers",
+#]])
 
-env.Alias('devDocs', [devGuide, devDocs_nvda])
-env.Clean('devDocs', [devGuide, devDocs_nvda])
+#env.Alias('devDocs', [devGuide, devDocs_nvda])
+#env.Clean('devDocs', [devGuide, devDocs_nvda])
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.

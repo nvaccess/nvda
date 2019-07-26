@@ -30,7 +30,6 @@ def isUwpOcrAvailable():
 def isWin10(version=1507, atLeast=True):
 	"""
 	Returns True if NVDA is running on the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
-	@note: this function will always return False for source copies of NVDA due to a Python bug.
 	@param version: a release version of Windows 10 (such as 1903).
 	@param atLeast: return True if NVDA is running on at least this Windows 10 build (i.e. this version or higher).
 	"""

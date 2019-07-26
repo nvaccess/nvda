@@ -216,7 +216,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			)
 		):
 			keyStates=(ctypes.c_byte*256)()
-			for k in xrange(256):
+			for k in range(256):
 				keyStates[k]=ctypes.windll.user32.GetKeyState(k)
 			charBuf=ctypes.create_unicode_buffer(5)
 			hkl=ctypes.windll.user32.GetKeyboardLayout(focus.windowThreadID)
@@ -395,16 +395,16 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return name
 
 		if 32 < self.vkCode < 128:
-			return unichr(self.vkCode).lower()
+			return chr(self.vkCode).lower()
 		if self.vkCode == vkCodes.VK_PACKET:
 			# Unicode character from non-keyboard input.
-			return unichr(self.scanCode)
+			return chr(self.scanCode)
 		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
 			if vkChar == 43: # "+"
 				# A gesture identifier can't include "+" except as a separator.
 				return "plus"
-			return unichr(vkChar).lower()
+			return chr(vkChar).lower()
 
 		if self.vkCode == 0xFF:
 			# #3468: This key is unknown to Windows.

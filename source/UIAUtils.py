@@ -19,7 +19,7 @@ def createUIAMultiPropertyCondition(*dicts):
 	outerOrList=[]
 	for dict in dicts:
 		andList=[]
-		for key,values in dict.iteritems():
+		for key,values in dict.items():
 			innerOrList=[]
 			if not isinstance(values,(list,set)):
 				values=[values]
@@ -84,12 +84,12 @@ class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 	pass
 
-def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
+def getUIATextAttributeValueFromRange(rangeObj,attrib,ignoreMixedValues=False):
 	"""
 	Wraps IUIAutomationTextRange::getAttributeValue, returning UIAutomation's reservedNotSupportedValue on COMError, and raising UIAMixedAttributeError if a mixed value would be returned and ignoreMixedValues is False.
 	"""
 	try:
-		val=range.GetAttributeValue(attrib)
+		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
 	if val==UIAHandler.handler.ReservedMixedAttributeValue:
@@ -195,7 +195,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
 		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
 		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
-		self.IDsToValues={IDs[x]:values[x] for x in xrange(len(IDs))}
+		self.IDsToValues={IDs[x]:values[x] for x in range(len(IDs))}
 
 	def getValue(self,ID,ignoreMixedValues=False):
 		val=self.IDsToValues[ID]

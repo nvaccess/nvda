@@ -21,7 +21,7 @@ def getLanguages():
 	@return: A list of language codes suitable to be passed to L{UwpOcr}'s constructor.
 		These need to be normalized with L{languageHandler.normalizeLanguage}
 		for use as NVDA language codes.
-	@rtype: list of unicode
+	@rtype: list of str
 	"""
 	dll = NVDAHelper.getHelperLocalWin10Dll()
 	dll.uwpOcr_getLanguages.restype = NVDAHelper.bstrReturn
