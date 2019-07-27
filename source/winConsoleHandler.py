@@ -146,7 +146,14 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 		x=winUser.GET_X_LPARAM(objectID)
 		y=winUser.GET_Y_LPARAM(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
-		if not isinstance(consoleObject, TerminalWithKeyboardSupport) and x<consoleScreenBufferInfo.dwCursorPosition.x and (y==consoleScreenBufferInfo.dwCursorPosition.y or y==consoleScreenBufferInfo.dwCursorPosition.y+1):  
+		if (
+			not isinstance(consoleObject, TerminalWithKeyboardSupport)
+			and x < consoleScreenBufferInfo.dwCursorPosition.x
+			and (
+				y == consoleScreenBufferInfo.dwCursorPosition.y
+				or y == consoleScreenBufferInfo.dwCursorPosition.y+1
+			)
+		):
 			eventHandler.queueEvent("typedCharacter",consoleObject,ch=unichr(winUser.LOWORD(childID)))
 
 def initialize():

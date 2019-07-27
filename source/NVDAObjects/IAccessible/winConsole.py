@@ -9,9 +9,9 @@ import config
 from winVersion import isWin10
 
 from . import IAccessible
-from ..window.winConsole import WinConsole as LegacyWinConsole
+from ..window.winConsole import WinConsole as WinConsoleWindow
 
-class WinConsole(LegacyWinConsole, IAccessible):
+class WinConsole(WinConsoleWindow, IAccessible):
 	"The legacy console implementation for situations where UIA isn't supported."
 	pass
 
