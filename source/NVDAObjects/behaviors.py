@@ -52,8 +52,8 @@ class ProgressBar(NVDAObject):
 			left,top,width,height=self.location
 		except:
 			left=top=width=height=0
-		x=left+(width/2)
-		y=top+(height/2)
+		x = left + (width // 2)
+		y = top+ (height // 2)
 		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
 			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)
@@ -78,7 +78,7 @@ class Dialog(NVDAObject):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		for index in xrange(childCount):
+		for index in range(childCount):
 			child=children[index]
 			childStates=child.states
 			childRole=child.role
@@ -324,7 +324,7 @@ class LiveText(NVDAObject):
 				textLen = len(text)
 				prevTextLen = len(prevText)
 				# Find the first character that differs between the two lines.
-				for pos in xrange(min(textLen, prevTextLen)):
+				for pos in range(min(textLen, prevTextLen)):
 					if text[pos] != prevText[pos]:
 						start = pos
 						break
@@ -337,7 +337,7 @@ class LiveText(NVDAObject):
 					# The lines are different lengths, so assume the rest of the line changed.
 					end = textLen
 				else:
-					for pos in xrange(textLen - 1, start - 1, -1):
+					for pos in range(textLen - 1, start - 1, -1):
 						if text[pos] != prevText[pos]:
 							end = pos + 1
 							break
@@ -364,6 +364,7 @@ class Terminal(LiveText, EditableText):
 		self.startMonitoring()
 
 	def event_loseFocus(self):
+		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
 
 
@@ -392,8 +393,7 @@ class TerminalWithKeyboardSupport(Terminal):
 			return
 		if self._hasNewLines:
 			# Clear the typed word buffer for new text lines.
-			# This will need to be changed once #8110 is merged.
-			speech.curWordChars = []
+			speech.clearTypedWordBuffer()
 			self._queuedChars = []
 		super(TerminalWithKeyboardSupport, self)._reportNewText(line)
 
@@ -401,8 +401,7 @@ class TerminalWithKeyboardSupport(Terminal):
 		if ch == '\t':
 			self._hasTab = True
 			# Clear the typed word buffer for tab completion.
-			# This will need to be changed once #8110 is merged.
-			speech.curWordChars = []
+			speech.clearTypedWordBuffer()
 		else:
 			self._hasTab = False
 		if (
@@ -437,7 +436,7 @@ class TerminalWithKeyboardSupport(Terminal):
 		"""
 		gesture.send()
 		self._queuedChars = []
-		speech.curWordChars = []
+		speech.clearTypedWordBuffer()
 
 	def _calculateNewText(self, newLines, oldLines):
 		self._hasNewLines = (
@@ -649,7 +648,7 @@ class RowWithoutCellObjects(NVDAObject):
 		return self._makeCell(1)
 
 	def _get_children(self):
-		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
+		return [self._makeCell(column) for column in range(1, self.childCount + 1)]
 
 	def getChild(self, index):
 		return self._makeCell(index + 1)

@@ -9,6 +9,8 @@ from . import Window
 from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection, TerminalWithKeyboardSupport
 import api
 import core
+from scriptHandler import script
+import speech
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	"""
@@ -76,6 +78,23 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				winConsoleHandler.connectConsole(self)
 				self.startMonitoring()
 		core.callLater(200,reconnect)
+
+	@script(gestures=[
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:tab",
+		"kb:control+c",
+		"kb:control+d",
+		"kb:control+pause"
+	])
+	def script_flush_queuedChars(self, gesture):
+		"""
+		Flushes the typed word buffer if present.
+		Since these gestures clear the current word/line, we should flush the
+		current words buffer to avoid erroneously reporting words that already have been processed.
+		"""
+		gesture.send()
+		speech.clearTypedWordBuffer()
 
 	__gestures={
 		"kb:alt+f4":"close",

@@ -3,6 +3,8 @@ version: "{branch}-{build}"
 
 branches:
  only:
+  - threshold
+  - threshold_py3_staging
   - master
   - beta
   - rc
@@ -11,7 +13,7 @@ branches:
   - /release-.*/
   
 environment:
- PY_PYTHON: 2.7-32
+ PY_PYTHON: 3.7-32
  encFileKey:
   secure: ekOvuyywHuDdGZmRmoj+b3jfrq39A2xlx4RD5ZUGd/8=
  mozillaSymsAuthToken:
@@ -149,7 +151,7 @@ test_script:
      $errorCode=0
      $outDir = (Resolve-Path .\testOutput\unit\)
      $unitTestsXml = "$outDir\unitTests.xml"
-     py -m nose --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
+     py -m nose -sv --with-xunit --xunit-file="$unitTestsXml" ./tests/unit
      if($LastExitCode -ne 0) { $errorCode=$LastExitCode }
      Push-AppveyorArtifact $unitTestsXml
      $wc = New-Object 'System.Net.WebClient'

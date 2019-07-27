@@ -10,7 +10,8 @@
 # hedo MobilLine USB, a product from hedo Reha-Technik GmbH
 # see www.hedo.de for more details
 
-import time
+from typing import List
+
 import wx
 import serial
 import braille
@@ -22,8 +23,8 @@ HEDO_MOBIL_USBID = "VID_0403&PID_DE58"
 HEDO_MOBIL_TIMEOUT = 0.2
 HEDO_MOBIL_BAUDRATE = 9600
 HEDO_MOBIL_READ_INTERVAL = 50
-HEDO_MOBIL_ACK = 0x30
-HEDO_MOBIL_INIT = 0x01
+HEDO_MOBIL_ACK = b"\x30"
+HEDO_MOBIL_INIT = b"\x01"
 HEDO_MOBIL_CR_BEGIN = 0x40
 HEDO_MOBIL_CR_END = 0x67
 HEDO_MOBIL_CELL_COUNT = 40
@@ -58,7 +59,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 
 			# Prepare a blank line
-			cells = chr(HEDO_MOBIL_INIT) + chr(0) * (HEDO_MOBIL_CELL_COUNT + HEDO_MOBIL_STATUS_CELL_COUNT)
+			totalCells: int = HEDO_MOBIL_CELL_COUNT + HEDO_MOBIL_STATUS_CELL_COUNT
+			cells: bytes = HEDO_MOBIL_INIT + bytes(totalCells)
 
 			# Send the blank line twice
 			self._ser.write(cells)
@@ -67,8 +69,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.flush()
 
 			# Read out the input buffer
-			ackS = self._ser.read(2)
-			if chr(HEDO_MOBIL_ACK) in ackS:
+			ackS: bytes = self._ser.read(2)
+			if HEDO_MOBIL_ACK in ackS:
 				log.info("Found hedo MobilLine connected via {port}".format(port=port))
 				break
 
@@ -91,30 +93,32 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If we don't, we won't be able to re-open it later.
 			self._ser.close()
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# every transmitted line consists of the preamble HEDO_MOBIL_INIT, the statusCells and the Cells
-		line = chr(HEDO_MOBIL_INIT) + chr(0) * HEDO_MOBIL_STATUS_CELL_COUNT + "".join(chr(cell) for cell in cells)
+		statusPadding = bytes(HEDO_MOBIL_STATUS_CELL_COUNT)
+		cellBytes: bytes = HEDO_MOBIL_INIT + statusPadding + bytes(cells)
+
 		# cells are already padded up numCells
 		# thus the expected length of the line is 1 + HEDO_MOBIL_STATUS_CELL_COUNT + HEDO_MOBIL_CELL_COUNT
 		# ... just how it should be
-		self._ser.write(line)
+		self._ser.write(cellBytes)
 
 	def handleResponses(self, wait=False):
-		while wait or self._ser.inWaiting():
-			data = self._ser.read(1)
+		while wait or self._ser.in_waiting:
+			data: bytes = self._ser.read(1)
 			if data:
 				# do not handle acknowledge bytes
-				if data != chr(HEDO_MOBIL_ACK):
+				if data != HEDO_MOBIL_ACK:
 					self.handleData(ord(data))
 			wait = False
 
-	def handleData(self, data):
-		if data >= HEDO_MOBIL_CR_BEGIN and data <= HEDO_MOBIL_CR_END:
+	def handleData(self, data: int):
+		if HEDO_MOBIL_CR_BEGIN <= data <= HEDO_MOBIL_CR_END:
 			# Routing key is pressed
 			try:
 				inputCore.manager.executeGesture(InputGestureRouting(data - HEDO_MOBIL_CR_BEGIN))
 			except inputCore.NoInputGestureAction:
-				log.debug("No Action for routing index " + index)
+				log.debug("No Action for routing index: %d", data)
 				pass
 			return
 

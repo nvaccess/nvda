@@ -3,6 +3,31 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2019.3 =
+
+== Bug Fixes ==
+- Emoji and other 32 bit unicode characters now take less space on a braille display when they are shown as hexadecimal values. (#6695)
+- In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
+
+
+== Changes for Developers ==
+ - Updated pySerial to version 3.4
+- the validate module is now only available from configobj. Code should now do from configobj import validate rather than import validate.
+- textInfos.Point and textInfos.Rect are removed and replaced by locationHelper.Point and locationHelper.RectLTRB, respectively 
+- braille.BrailleHandler._get/set_tether have been removed. use getTether and setTether respectively.
+- config.getConfigDirs has been removed
+- config.ConfigManager.getConfigValidationParameter is removed. A bug in getConfigValidation has been fixed in order for it being able to fully replace getConfigValidationParameter
+- inputCore.InputGesture.logIdentifier property has been removed. Now use inputCore.InputGesture.identifiers[0] instead.
+- As NVDA no longer depends on pyWin32, modules such as win32api and win32con are no longer available to add-ons. win32api calls can be replaced with direct calls to win32 dll functions via ctypes, and win32con constants should be defined at the top of your files. (#9639)
+- The "async" argument in nvwave.playWaveFile has been renamed to "asynchronous". Add-ons that relied on this name should be modified to use the new argument name. (#8607)
+- speakText and speakCharacter methods on synthDriver objects are no longer supported. this functionality is handled by SynthDriver.speak.
+- SynthSetting classes in synthDriverHandler have been removed. Now use driverHandler.DriverSetting classes instead.
+- SynthDriver classes should no longer expose index via the lastIndex property. Instead, they should notify the synthDriverHandler.synthIndexReached action with the index, once all previous audio has finished playing before that index.
+- SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.
+- SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.
+- The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
+ 
+
  = 2019.2 =
 Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 

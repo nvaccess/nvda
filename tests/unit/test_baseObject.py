@@ -2,13 +2,13 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
 import unittest
 from baseObject import AutoPropertyObject, ScriptableObject
-from objectProvider import PlaceholderNVDAObject
+from .objectProvider import PlaceholderNVDAObject
 from scriptHandler import script
 from abc import abstractmethod
 
@@ -137,14 +137,14 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 	"""
 
 	def test_abstractProperty(self):
-		self.assertRaisesRegexp(TypeError,
+		self.assertRaisesRegex(TypeError,
 			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty "
 			"with abstract methods x",
 			AutoPropertyObjectWithAbstractProperty
 		)
 
 	def test_subclassedAbstractProperty(self):
-		self.assertRaisesRegexp(TypeError,
+		self.assertRaisesRegex(TypeError,
 			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
 			"with abstract methods x",
 			SubclassedAutoPropertyObjectWithAbstractProperty

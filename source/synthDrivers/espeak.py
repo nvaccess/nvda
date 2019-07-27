@@ -8,10 +8,9 @@
 import os
 from collections import OrderedDict
 from . import _espeak
-import Queue
 import threading
 import languageHandler
-from synthDriverHandler import SynthDriver,VoiceInfo
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import speech
 from logHandler import log
 from driverHandler import BooleanDriverSetting
@@ -29,13 +28,24 @@ class SynthDriver(SynthDriver):
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),
 	)
+	supportedCommands = {
+		speech.IndexCommand,
+		speech.CharacterModeCommand,
+		speech.LangChangeCommand,
+		speech.BreakCommand,
+		speech.PitchCommand,
+		speech.RateCommand,
+		speech.VolumeCommand,
+		speech.PhonemeCommand,
+	}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
 
 	@classmethod
 	def check(cls):
 		return True
 
 	def __init__(self):
-		_espeak.initialize()
+		_espeak.initialize(self._onIndexReached)
 		log.info("Using eSpeak NG version %s" % _espeak.info())
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
@@ -62,7 +72,6 @@ class SynthDriver(SynthDriver):
 	}
 
 	def _processText(self, text):
-		text = unicode(text)
 		# We need to make several replacements.
 		return text.translate({
 			0x1: None, # used for embedded commands
@@ -80,7 +89,7 @@ class SynthDriver(SynthDriver):
 		# <voice><prosody></voice></prosody>.
 		# However, eSpeak doesn't seem to mind.
 		for item in speechSequence:
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				textList.append(self._processText(item))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)
@@ -109,11 +118,11 @@ class SynthDriver(SynthDriver):
 				if not prosody:
 					continue
 				textList.append("<prosody")
-				for attr,val in prosody.iteritems():
+				for attr,val in prosody.items():
 					textList.append(' %s="%d%%"'%(attr,val))
 				textList.append(">")
 			elif isinstance(item,speech.PhonemeCommand):
-				# We can't use unicode.translate because we want to reject unknown characters.
+				# We can't use str.translate because we want to reject unknown characters.
 				try:
 					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
 					# There needs to be a space after the phoneme command.
@@ -123,8 +132,6 @@ class SynthDriver(SynthDriver):
 					log.debugWarning("Unknown character in IPA string: %s"%item.ipa)
 					if item.text:
 						textList.append(self._processText(item.text))
-			elif isinstance(item,speech.SpeechCommand):
-				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
 		# Close any open tags.
@@ -191,11 +198,11 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
-			l=v.languages[1:]
+			l=_espeak.decodeEspeakString(v.languages[1:])
 			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
-			name=v.name.decode("UTF-8")
+			name=_espeak.decodeEspeakString(v.name)
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
-			identifier=os.path.basename(v.identifier).lower()
+			identifier=os.path.basename(_espeak.decodeEspeakString(v.identifier)).lower()
 			voices[identifier]=VoiceInfo(identifier,name,l)
 		return voices
 
@@ -206,7 +213,7 @@ class SynthDriver(SynthDriver):
 		if not curVoice:
 			return ""
 		# #5783: For backwards compatibility, voice identifies should always be lowercase
-		return curVoice.identifier.split('+')[0].lower()
+		return _espeak.decodeEspeakString(curVoice.identifier).split('+')[0].lower()
 
 	def _set_voice(self, identifier):
 		if not identifier:
@@ -223,8 +230,11 @@ class SynthDriver(SynthDriver):
 			raise
 		self._language=super(SynthDriver,self).language
 
-	def _get_lastIndex(self):
-		return _espeak.lastIndex
+	def _onIndexReached(self, index):
+		if index is not None:
+			synthIndexReached.notify(synth=self, index=index)
+		else:
+			synthDoneSpeaking.notify(synth=self)
 
 	def terminate(self):
 		_espeak.terminate()
@@ -237,4 +247,4 @@ class SynthDriver(SynthDriver):
 		_espeak.setVoiceAndVariant(variant=self._variant)
 
 	def _getAvailableVariants(self):
-		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.iteritems())
+		return OrderedDict((ID,VoiceInfo(ID, name)) for ID, name in self._variantDict.items())
