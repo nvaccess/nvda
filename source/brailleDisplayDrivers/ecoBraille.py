@@ -4,10 +4,12 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2014-2015 ONCE-CIDAT <cidat.id@once.es>
+from typing import List, Tuple
 
 import inputCore
 import braille
 import hwPortUtils
+from hwIo import intToByte
 from collections import OrderedDict
 from logHandler import log
 import serial
@@ -67,41 +69,52 @@ class ecoTypes:
 	TECO_40 = 40
 	TECO_80 = 80
 
-def eco_in_init(dev):
-	msg = dev.read(9)
-	if (len(msg) < 9):
+def eco_in_init(dev: serial.Serial) -> int:
+	msg: bytes = dev.read(9)
+	if len(msg) < 9:
 		return ecoTypes.TECO_80 # Needed to restart NVDA with Ecoplus
-	msg = struct.unpack('BBBBBBBBB', msg)
 	# Command message from EcoBraille is something like that:
 	# 0x10 0x02 TT AA BB CC DD 0x10 0x03
 	# where TT can be 0xF1 (identification message) or 0x88 (command pressed in the line)
 	# If TT = 0xF1, then the next byte (AA) give us the type of EcoBraille line (ECO 80, 40 or 20)
-	if (msg[0] == 0x10) and (msg[1] == 0x02) and (msg[7] == 0x10) and (msg[8] == 0x03):
-		if msg[2] == 0xf1: # Initial message
-			if (msg[3] == 0x80):
+	if (
+		(msg[0] == 0x10)
+		and (msg[1] == 0x02)
+		and (msg[7] == 0x10)
+		and (msg[8] == 0x03)
+	):
+		if msg[2] == 0xf1:  # Initial message
+			if msg[3] == 0x80:
 				return ecoTypes.TECO_80
-			if (msg[3] == 0x40):
+			if msg[3] == 0x40:
 				return ecoTypes.TECO_40
-			if (msg[3] == 0x20):
+			if msg[3] == 0x20:
 				return ecoTypes.TECO_20
 	return ecoTypes.TECO_80 # Needed for changing Braille Settings with Ecoplus
 
-def eco_in(dev):
-	msg = dev.read(9)
+def eco_in(dev: serial.Serial) -> int:
 	try:
-		msg = struct.unpack('BBBBBBBBB', msg)
+		msg: bytes = dev.read(9)
 	except:
+		log.debug("unpacking error", exc_info=True)
 		return 0
 	# Command message from EcoBraille is something like that:
 	# 0x10 0x02 TT AA BB CC DD 0x10 0x03
 	# where TT can be 0xF1 (identification message) or 0x88 (command pressed in the line)
 	# If TT = 0x88 then AA, BB, CC and DD give us the command pressed in the braille line
-	if (msg[0] == 0x10) and (msg[1] == 0x02) and (msg[7] == 0x10) and (msg[8] == 0x03):
-		if msg[2] == 0x88: # command pressed message
-			return (msg[3] << 24) | (msg[4] << 16) | (msg[5] << 8) | msg[6]
+	if(
+			(msg[0] == 0x10)
+			and (msg[1] == 0x02)
+			and (msg[7] == 0x10)
+			and (msg[8] == 0x03)
+			and (msg[2] == 0x88)  # command pressed message
+	):
+		return (msg[3] << 24) | (msg[4] << 16) | (msg[5] << 8) | msg[6]
 	return 0
 
-output_dots_map=[0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70,
+
+output_dots_map: List[int] = [
+	0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70,
 	0x01, 0x11, 0x21, 0x31, 0x41, 0x51, 0x61, 0x71,
 	0x02, 0x12, 0x22, 0x32, 0x42, 0x52, 0x62, 0x72,
 	0x03, 0x13, 0x23, 0x33, 0x43, 0x53, 0x63, 0x73,
@@ -132,19 +145,20 @@ output_dots_map=[0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70,
 	0x8C, 0x9C, 0xAC, 0xBC, 0xCC, 0xDC, 0xEC, 0xFC,
 	0x8D, 0x9D, 0xAD, 0xBD, 0xCD, 0xDD, 0xED, 0xFD,
 	0x8E, 0x9E, 0xAE, 0xBE, 0xCE, 0xDE, 0xEE, 0xFE,
-	0x8F, 0x9F, 0xAF, 0xBF, 0xCF, 0xDF, 0xEF, 0xFF]
+	0x8F, 0x9F, 0xAF, 0xBF, 0xCF, 0xDF, 0xEF, 0xFF
+]
 
-def eco_out(cells):
+
+def eco_out(cells: List[int]) -> bytes:
 	# Messages sends to EcoBraille display are something like that:
 	# 0x10 0x02 0xBC message 0x10 0x03
-	ret = []
-	ret.append(struct.pack('BBB', 0x10, 0x02, 0xBC))
+	ret = bytearray(b"\x10\x02\xBC")
+	ret.extend(b"\00" * 5)
 	# Leave status cells blank
-	ret.append(struct.pack('BBBBB', 0x00, 0x00, 0x00, 0x00, 0x00))
-	for d in cells:
-		ret.append(struct.pack('B', output_dots_map[d]))
-	ret.append(struct.pack('BB', 0x10, 0x03))
-	return "".join(ret)
+	ret.extend(output_dots_map[c] for c in cells)
+	ret.extend(b"\x10\x03")
+	return bytes(ret)
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	""" EcoBraille display driver.
@@ -167,17 +181,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def __init__(self, port):
 		super(BrailleDisplayDriver, self).__init__()
-		self._port = (port)
+		self._port = port
 		# Try to open port
 		self._dev = serial.Serial(self._port, baudrate = 19200,  bytesize = serial.EIGHTBITS, parity = serial.PARITY_NONE, stopbits = serial.STOPBITS_ONE)
 		# Use a longer timeout when waiting for initialisation.
-		self._dev.timeout = self._dev.writeTimeout = 2.7
-		self._ecoType  = eco_in_init(self._dev)
+		self._dev.timeout = self._dev.write_timeout = 2.7
+		self._ecoType = eco_in_init(self._dev)
 		# Use a shorter timeout hereafter.
-		self._dev.timeout = self._dev.writeTimeout = TIMEOUT
+		self._dev.timeout = self._dev.write_timeout = TIMEOUT
 		# Always send the protocol answer.
-		self._dev.write("\x61\x10\x02\xf1\x57\x57\x57\x10\x03")
-		self._dev.write("\x10\x02\xbc\x00\x00\x00\x00\x00\x10\x03")
+		self._dev.write(b"\x61\x10\x02\xf1\x57\x57\x57\x10\x03")
+		self._dev.write(b"\x10\x02\xbc\x00\x00\x00\x00\x00\x10\x03")
 		# Start keyCheckTimer.
 		self._readTimer = wx.PyTimer(self._handleResponses)
 		self._readTimer.Start(READ_INTERVAL)
@@ -185,7 +199,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
 		try:
-			self._dev.write("\x61\x10\x02\xf1\x57\x57\x57\x10\x03")
+			self._dev.write(b"\x61\x10\x02\xf1\x57\x57\x57\x10\x03")
 			self._readTimer.Stop()
 			self._readTimer = None
 		finally:
@@ -195,22 +209,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _get_numCells(self):
 		return self._ecoType
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		try:
 			self._dev.write(eco_out(cells))
 		except:
-			pass
+			log.debug("error writing to the display", exc_info=True)
 
 	def _handleResponses(self):
-		if self._dev.inWaiting():
+		if self._dev.in_waiting:
 			command = eco_in(self._dev)
 			if command:
 				try:
 					self._handleResponse(command)
 				except KeyError:
-					pass
+					log.debug("error handling responses", exc_info=True)
 
-	def _handleResponse(self, command):
+	def _handleResponse(self, command: int):
 		if command in (ECO_KEY_STATUS1, ECO_KEY_STATUS2, ECO_KEY_STATUS3, ECO_KEY_STATUS4):
 			# Nothing to do with the status cells
 			return 0
@@ -250,12 +264,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		}
 	})
 
+
 class InputGestureKeys(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
 		super(InputGestureKeys, self).__init__()
 		self.id = keyNames[keys]
+
 
 class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name

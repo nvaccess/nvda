@@ -240,7 +240,7 @@ class JAB(Window):
 		if not bindings or bindings.keyBindingsCount<1: 
 			return None
 		shortcutsList=[]
-		for index in xrange(bindings.keyBindingsCount):
+		for index in range(bindings.keyBindingsCount):
 			binding=bindings.keyBindingInfo[index]
 			# We don't support these modifiers
 			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
@@ -284,7 +284,7 @@ class JAB(Window):
 		stateString=self.JABStates
 		stateStrings=stateString.split(',')
 		for state in stateStrings:
-			if JABStatesToNVDAStates.has_key(state):
+			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
 		if "visible" not in stateStrings:
 			stateSet.add(controlTypes.STATE_INVISIBLE)
@@ -431,7 +431,7 @@ class JAB(Window):
 
 	def _get_children(self):
 		children=[]
-		for index in xrange(self._JABAccContextInfo.childrenCount):
+		for index in range(self._JABAccContextInfo.childrenCount):
 			jabContext=self.jabContext.getAccessibleChildFromContext(index)
 			if jabContext:
 				obj=JAB(jabContext=jabContext)
@@ -599,7 +599,7 @@ class TableCell(JAB):
 		if headerTableInfo and headerTableInfo.jabTable:
 			textList=[]
 			row=self.rowNumber-1
-			for col in xrange(headerTableInfo.columnCount):
+			for col in range(headerTableInfo.columnCount):
 				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
 				if cellInfo and cellInfo.jabContext:
 					obj=JAB(jabContext=cellInfo.jabContext)
@@ -617,7 +617,7 @@ class TableCell(JAB):
 		if headerTableInfo and headerTableInfo.jabTable:
 			textList=[]
 			col=self.columnNumber-1
-			for row in xrange(headerTableInfo.rowCount):
+			for row in range(headerTableInfo.rowCount):
 				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
 				if cellInfo and cellInfo.jabContext:
 					obj=JAB(jabContext=cellInfo.jabContext)

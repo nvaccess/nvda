@@ -290,9 +290,8 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		l, t, w, h = obj.location
 		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,
-			POINT(l + (w / 2), t + (h / 2)))
+			obj.location.center.toPOINT())
 
 handler=None
 

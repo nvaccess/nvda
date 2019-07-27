@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited
+#Copyright (C) 2006-2019 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,14 +18,16 @@ def _updateVersionFromVCS():
 	# The root of the Git working tree will be the parent of this module's directory.
 	gitDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".git")
 	try:
-		head = file(os.path.join(gitDir, "HEAD"), "r").read().rstrip()
+		with open(os.path.join(gitDir, "HEAD"), "r") as f:
+			head = f.read().rstrip()
 		if not head.startswith("ref: "):
 			# Detached head.
 			version = "source-DETACHED-%s" % head[:7]
 			return
 		# Strip the "ref: " prefix to get the ref.
 		ref = head[5:]
-		commit = file(os.path.join(gitDir, ref), "r").read().rstrip()
+		with open(os.path.join(gitDir, ref), "r") as f:
+			commit = f.read().rstrip()
 		version = "source-%s-%s" % (
 			os.path.basename(ref),
 			commit[:7])
@@ -61,11 +63,9 @@ def formatVersionForGUI(year, major, minor):
 	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
 
 
-# ticket:3763#comment:19: name must be str, not unicode.
-# Otherwise, py2exe will break.
 name="NVDA"
 version_year=2019
-version_major=2
+version_major=3
 version_minor=0
 version_build=0
 version=_formatDevVersionString()

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited
+#Copyright (C) 2008-2019 NV Access Limited, Leonard de Ruijter
 
 import watchdog
 
@@ -10,7 +10,7 @@ import watchdog
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
 
-import __builtin__
+import builtins
 import os
 import code
 import codeop
@@ -105,11 +105,10 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self.namespace = {}
 		self.initNamespace()
 		#: The variables last added to the namespace containing a snapshot of NVDA's state.
-		#: @type: dict
+		#: @type: Optional[dict]
 		self._namespaceSnapshotVars = None
 
-		# Can't use super here because stupid code.InteractiveConsole doesn't sub-class object. Grrr!
-		code.InteractiveConsole.__init__(self, locals=self.namespace, **kwargs)
+		super().__init__(locals=self.namespace, **kwargs)
 		self.compile = CommandCompiler()
 		self.prompt = ">>>"
 		self.lastResult = None
@@ -131,18 +130,30 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		stdout, stderr = sys.stdout, sys.stderr
 		sys.stdout = sys.stderr = self
 		# Prevent this from messing with the gettext "_" builtin.
-		saved_ = __builtin__._
+		saved_ = builtins._
 		self.lastResult = None
-		more = code.InteractiveConsole.push(self, line)
+		more = super().push(line)
 		sys.stdout, sys.stderr = stdout, stderr
-		if __builtin__._ is not saved_:
-			self.lastResult = __builtin__._
+		if builtins._ is not saved_:
+			self.lastResult = builtins._
 			# Preserve the namespace if gettext has explicitly been pushed there 
 			if "_" not in self.namespace or self.namespace["_"] is not saved_:
-				self.namespace["_"] = __builtin__._
-		__builtin__._ = saved_
+				self.namespace["_"] = builtins._
+		builtins._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
+
+	def showsyntaxerror(self, filename=None):
+		excepthook = sys.excepthook
+		sys.excepthook = sys.__excepthook__
+		super().showsyntaxerror(filename=filename)
+		sys.excepthook = excepthook
+
+	def showtraceback(self):
+		excepthook = sys.excepthook
+		sys.excepthook = sys.__excepthook__
+		super().showtraceback()
+		sys.excepthook = excepthook
 
 	def initNamespace(self):
 		"""(Re-)Initialize the console namespace with useful globals.
@@ -335,8 +346,8 @@ class ConsoleUI(wx.Frame):
 				longestComp = comp
 				longestCompLen = compLen
 		# Find the longest common prefix.
-		for prefixLen in xrange(longestCompLen, 0, -1):
-			prefix = comp[:prefixLen]
+		for prefixLen in range(longestCompLen, 0, -1):
+			prefix = longestComp[:prefixLen]
 			for comp in completions:
 				if not comp.startswith(prefix):
 					break
