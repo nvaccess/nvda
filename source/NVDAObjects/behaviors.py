@@ -51,8 +51,8 @@ class ProgressBar(NVDAObject):
 			left,top,width,height=self.location
 		except:
 			left=top=width=height=0
-		x=left+(width/2)
-		y=top+(height/2)
+		x = left + (width // 2)
+		y = top+ (height // 2)
 		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
 			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)
@@ -77,7 +77,7 @@ class Dialog(NVDAObject):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		for index in xrange(childCount):
+		for index in range(childCount):
 			child=children[index]
 			childStates=child.states
 			childRole=child.role
@@ -85,7 +85,17 @@ class Dialog(NVDAObject):
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_UNKNOWN):
+			if childRole in (
+					controlTypes.ROLE_PROPERTYPAGE,
+					controlTypes.ROLE_PANE,
+					controlTypes.ROLE_PANEL,
+					controlTypes.ROLE_WINDOW,
+					controlTypes.ROLE_GROUPING,
+					controlTypes.ROLE_PARAGRAPH,
+					controlTypes.ROLE_SECTION,
+					controlTypes.ROLE_TEXTFRAME,
+					controlTypes.ROLE_UNKNOWN
+			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
 				childText=cls.getDialogText(child,not isinstance(child,Dialog))
@@ -278,7 +288,7 @@ class LiveText(NVDAObject):
 				newLines = self._getTextLines()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
 					outLines = self._calculateNewText(newLines, oldLines)
-					if len(outLines) == 1 and len(outLines[0]) == 1:
+					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
 						# so ignore it.
@@ -313,7 +323,7 @@ class LiveText(NVDAObject):
 				textLen = len(text)
 				prevTextLen = len(prevText)
 				# Find the first character that differs between the two lines.
-				for pos in xrange(min(textLen, prevTextLen)):
+				for pos in range(min(textLen, prevTextLen)):
 					if text[pos] != prevText[pos]:
 						start = pos
 						break
@@ -326,7 +336,7 @@ class LiveText(NVDAObject):
 					# The lines are different lengths, so assume the rest of the line changed.
 					end = textLen
 				else:
-					for pos in xrange(textLen - 1, start - 1, -1):
+					for pos in range(textLen - 1, start - 1, -1):
 						if text[pos] != prevText[pos]:
 							end = pos + 1
 							break
@@ -353,6 +363,7 @@ class Terminal(LiveText, EditableText):
 		self.startMonitoring()
 
 	def event_loseFocus(self):
+		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
 
 class CandidateItem(NVDAObject):
@@ -544,7 +555,7 @@ class RowWithoutCellObjects(NVDAObject):
 		return self._makeCell(1)
 
 	def _get_children(self):
-		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
+		return [self._makeCell(column) for column in range(1, self.childCount + 1)]
 
 	def getChild(self, index):
 		return self._makeCell(index + 1)

@@ -2,13 +2,14 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+#Copyright (C) 2017-2019 NV Access Limited, Leonard de Ruijter
 
 """Unit tests for the extensionPoints module.
 """
 
 import unittest
 import extensionPoints
+from functools import partial
 
 class ExampleClass(object):
 	def method(self):
@@ -142,6 +143,22 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 		extensionPoints.callWithSupportedKwargs(h.handlerMethod, 'a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
 
+	def test_instanceMethodHandlerTakesParams_givenRequiredKwarg(self):
+		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
+		Handler takes a required keyword argument.
+		callWithSupportedKwargs given a keyword arg with a matching name.
+		Handler should get required kwarg.
+		"""
+		calledKwargs = {}
+
+		class handlerClass():
+			def handlerMethod(self, *, a):
+				calledKwargs['a'] = a
+
+		h = handlerClass()
+		extensionPoints.callWithSupportedKwargs(h.handlerMethod, a='a value')
+		self.assertEqual(calledKwargs, {'a': 'a value'})
+
 	def test_instanceMethodHandlerTakesParams_givenMatchingNameKwarg(self):
 		"""Test to ensure that a instance method handler gets the correct arguments, including implicit "self"
 		Handler takes a parameter.
@@ -241,7 +258,6 @@ class TestCallWithSupportedKwargs(unittest.TestCase):
 			gotParams['a'] = a
 		with self.assertRaises(TypeError):
 			extensionPoints.callWithSupportedKwargs(handler, b='b value')
-
 
 	def test_handlerTakesTwoParamsWithoutDefaults_NotEnoughPositionalsGiven_exceptionRaised(self):
 		""" Tests that handlers that when a handler expects params which are not provided, then the function is not called.
@@ -448,6 +464,22 @@ class TestAction(unittest.TestCase):
 		self.action.notify(a='a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
 
+	def test_partialHandler(self):
+		""" Test that a L{functools.partial} can be used as a handler.
+		Note: the partial must be kept alive, since register uses a weak reference to it.
+		"""
+
+		calledKwargs = {}
+
+		def handler(a, b):
+			calledKwargs['a'] = a
+			calledKwargs['b'] = b
+
+		p = partial(handler, a=1)
+		self.action.register(p)
+		self.action.notify(b='a value')
+		self.assertEqual(calledKwargs, {'a': 1, 'b': 'a value'})
+
 	def test_handlerException(self):
 		"""Test that a handler which raises an exception doesn't affect later handlers.
 		"""
@@ -488,6 +520,17 @@ class TestAction(unittest.TestCase):
 		"""
 		calledKwargs = {}
 		def handler(a=0):
+			calledKwargs["a"] = a
+
+		self.action.register(handler)
+		self.action.notify(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithRequiredKwarg(self):
+		""" Test that a handler that accepts required keyword arguments receives arguments
+		"""
+		calledKwargs = {}
+		def handler(*, a):
 			calledKwargs["a"] = a
 
 		self.action.register(handler)
@@ -593,6 +636,19 @@ class TestFilter(unittest.TestCase):
 		calledKwargs = {}
 
 		def handler(value, a=0):
+			calledKwargs['value'] = value
+			calledKwargs["a"] = a
+
+		self.filter.register(handler)
+		self.filter.apply("some value", a=1)
+		self.assertEqual(calledKwargs, {"value": "some value", "a": 1})
+
+	def test_handlerParamsWithRequiredKwarg(self):
+		""" Test that a handler that accepts required keyword arguments receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(value, *, a):
 			calledKwargs['value'] = value
 			calledKwargs["a"] = a
 
@@ -708,6 +764,18 @@ class TestDecider(unittest.TestCase):
 		calledKwargs = {}
 
 		def handler(a=0):
+			calledKwargs["a"] = a
+
+		self.decider.register(handler)
+		self.decider.decide(a=1)
+		self.assertEqual(calledKwargs, {"a": 1})
+
+	def test_handlerParamsWithRequiredKwarg(self):
+		""" Test that a handler that accepts required keyword arguments receives arguments
+		"""
+		calledKwargs = {}
+
+		def handler(*, a):
 			calledKwargs["a"] = a
 
 		self.decider.register(handler)

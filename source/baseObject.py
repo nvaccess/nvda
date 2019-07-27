@@ -9,31 +9,43 @@
 
 import weakref
 from logHandler import log
+from abc import ABCMeta, abstractproperty
 
 class Getter(object):
 
-	def __init__(self,fget):
+	def __init__(self,fget, abstract=False):
 		self.fget=fget
+		if abstract:
+			if isinstance(fget, classmethod):
+				log.warning("Abstract class properties are not supported.")
+				self._abstract = False
+			else:
+				self._abstract = self.__isabstractmethod__=abstract
 
 	def __get__(self,instance,owner):
-		if not instance:
+		if isinstance(self.fget, classmethod):
+			return self.fget.__get__(instance, owner)()
+		elif not instance:
 			return self
 		return self.fget(instance)
 
 	def setter(self,func):
-		return property(fget=self._func,fset=func)
+		return (abstractproperty if self._abstract else property)(fget=self.fget,fset=func)
 
 	def deleter(self,func):
-		return property(fget=self._func,fdel=func)
+		return (abstractproperty if self._abstract else property)(fget=self.fget,fdel=func)
 
 class CachingGetter(Getter):
 
 	def __get__(self, instance, owner):
-		if not instance:
+		if isinstance(self.fget, classmethod):
+			log.warning("Class properties do not support caching")
+			return self.fget.__get__(instance, owner)()
+		elif not instance:
 			return self
 		return instance._getPropertyViaCache(self.fget)
 
-class AutoPropertyType(type):
+class AutoPropertyType(ABCMeta):
 
 	def __init__(self,name,bases,dict):
 		super(AutoPropertyType,self).__init__(name,bases,dict)
@@ -44,6 +56,10 @@ class AutoPropertyType(type):
 		except KeyError:
 			cacheByDefault=any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
 
+		# Create a set containing properties that are marked as abstract.
+		newAbstractProps=set()
+		# Create a set containing properties that were, but are no longer abstract.
+		oldAbstractProps=set()
 		# given _get_myVal, _set_myVal, and _del_myVal: "myVal" would be output 3 times
 		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
 		props={x[5:] for x in dict.keys() if x[0:5] in ('_get_','_set_','_del_')}
@@ -52,7 +68,7 @@ class AutoPropertyType(type):
 			s=dict.get('_set_%s'%x,None)
 			d=dict.get('_del_%s'%x,None)
 			if x in dict:
-				methodsString=",".join([str(i) for i in g,s,d if i])
+				methodsString=",".join(str(i) for i in (g,s,d) if i)
 				raise TypeError("%s is already a class attribute, cannot create descriptor with methods %s"%(x,methodsString))
 			if not g:
 				# There's a setter or deleter, but no getter.
@@ -70,24 +86,39 @@ class AutoPropertyType(type):
 					if cache is not None:
 						break
 				else:
-					cache=cacheByDefault
+					cache=cacheByDefault if not isinstance(g, classmethod) else False
 
-			if g and not s and not d:
-				setattr(self,x,(CachingGetter if cache else Getter)(g))
+			abstract=dict.get('_abstract_%s'%x,False)
+			if g and not (s or d):
+				attr = (CachingGetter if cache else Getter)(g,abstract)
 			else:
-				setattr(self,x,property(fget=g,fset=s,fdel=d))
+				attr = (abstractproperty if abstract else property)(fget=g,fset=s,fdel=d)
+			if abstract:
+				newAbstractProps.add(x)
+			elif x in self.__abstractmethods__:
+				oldAbstractProps.add(x)
+			setattr(self,x, attr)
 
-class AutoPropertyObject(object):
-	"""A class that dynamicly supports properties, by looking up _get_* and _set_* methods at runtime.
+		if newAbstractProps or oldAbstractProps:
+			# The __abstractmethods__ set is frozen, therefore we ought to override it.
+			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
+
+class AutoPropertyObject(object, metaclass=AutoPropertyType):
+	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
+	_del_x will make a property x with a deleter that is executed when deleting its value.
 	If there is a _get_x but no _set_x then setting x will override the property completely.
 	Properties can also be cached for the duration of one core pump cycle.
-	This is useful if the same property is likely to be fetched multiple times in one cycle. For example, several NVDAObject properties are fetched by both braille and speech.
-	Setting _cache_x to C{True} specifies that x should be cached. Setting it to C{False} specifies that it should not be cached.
+	This is useful if the same property is likely to be fetched multiple times in one cycle.
+	For example, several NVDAObject properties are fetched by both braille and speech.
+	Setting _cache_x to C{True} specifies that x should be cached.
+	Setting it to C{False} specifies that it should not be cached.
 	If _cache_x is not set, L{cachePropertiesByDefault} is used.
+	Properties can also be made abstract.
+	Setting _abstract_x to C{True} specifies that x should be abstract.
+	Setting it to C{False} specifies that it should not be abstract.
 	"""
-	__metaclass__=AutoPropertyType
 
 	#: Tracks the instances of this class; used by L{invalidateCaches}.
 	#: @type: weakref.WeakKeyDictionary
@@ -109,9 +140,12 @@ class AutoPropertyObject(object):
 	def _getPropertyViaCache(self,getterMethod=None):
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
+		missing=False
 		try:
 			val=self._propertyCache[getterMethod]
 		except KeyError:
+			missing=True
+		if missing:
 			val=getterMethod(self)
 			self._propertyCache[getterMethod]=val
 		return val
@@ -123,9 +157,9 @@ class AutoPropertyObject(object):
 	def invalidateCaches(cls):
 		"""Invalidate the caches for all current instances.
 		"""
-		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
+		# We use a list here, as invalidating the cache on an object may cause instances to disappear,
 		# which would in turn cause an exception due to the dictionary changing size during iteration.
-		for instance in cls.__instances.keys():
+		for instance in list(cls.__instances):
 			instance.invalidateCache()
 
 class ScriptableType(AutoPropertyType):
@@ -141,8 +175,7 @@ class ScriptableType(AutoPropertyType):
 			# This class currently has no gestures dictionary,
 			# because no custom __gestures dictionary has been defined.
 			gestures = {}
-		# Python 3 incompatible.
-		for name, script in dict.iteritems():
+		for name, script in dict.items():
 			if not name.startswith('script_'):
 				continue
 			scriptName = name[len("script_"):]
@@ -153,7 +186,7 @@ class ScriptableType(AutoPropertyType):
 			setattr(cls, gesturesDictName, gestures)
 		return cls
 
-class ScriptableObject(AutoPropertyObject):
+class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
 	Scripts are methods named with a prefix of C{script_}; e.g. C{script_foo}.
@@ -165,10 +198,8 @@ class ScriptableObject(AutoPropertyObject):
 		e.g. in the Input Gestures dialog.
 		This can be overridden for individual scripts
 		by setting a C{category} attribute on the script method.
-	@type scriptCategory: basestring
+	@type scriptCategory: str
 	"""
-
-	__metaclass__ = ScriptableType
 
 	def __init__(self):
 		#: Maps input gestures to script functions.
@@ -231,7 +262,7 @@ class ScriptableObject(AutoPropertyObject):
 		@param gestureMap: A mapping of gesture identifiers to script names.
 		@type gestureMap: dict of str to str
 		"""
-		for gestureIdentifier, scriptName in gestureMap.iteritems():
+		for gestureIdentifier, scriptName in gestureMap.items():
 			if scriptName:
 				try:
 					self.bindGesture(gestureIdentifier, scriptName)

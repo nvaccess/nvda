@@ -33,6 +33,7 @@ from NVDAObjects.IAccessible.winword import WordDocument, WordDocumentTreeInterc
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation, Dialog
 from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 
 PR_LAST_VERB_EXECUTED=0x10810003
 VERB_REPLYTOSENDER=102
@@ -107,7 +108,10 @@ class AppModule(appModuleHandler.AppModule):
 		self._hasTriedoutlookAppSwitch=True
 		#Make sure NVDA detects and reports focus on the waiting dialog
 		api.processPendingEvents()
-		comtypes.client.PumpEvents(1)
+		try:
+			comtypes.client.PumpEvents(1)
+		except WindowsError:
+			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
 
@@ -133,7 +137,15 @@ class AppModule(appModuleHandler.AppModule):
 		return outlookVersion
 
 	def isBadUIAWindow(self,hwnd):
-		if winUser.getClassName(hwnd) in ("WeekViewWnd","DayViewWnd"):
+		windowClass=winUser.getClassName(hwnd)
+		# #2816: Outlook versions before 2016 auto complete does not fire enough UIA events, IAccessible is better.
+		if windowClass=="NetUIHWND":
+			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
+			if winUser.getClassName(parentHwnd)=="Net UI Tool Window":
+				versionMajor=int(self.productVersion.split('.')[0])
+				if versionMajor<16:
+					return True
+		if windowClass in ("WeekViewWnd","DayViewWnd"):
 			return True
 		return False
 
@@ -156,9 +168,18 @@ class AppModule(appModuleHandler.AppModule):
 			obj.role=controlTypes.ROLE_LISTITEM
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		# Currently all our custom classes are IAccessible
+		if UIAWordDocument in clsList:
+			# Overlay class for Outlook message viewer when UI Automation for MS Word is enabled.
+			clsList.insert(0,OutlookUIAWordDocument)
 		if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
 			clsList.insert(0,UIAGridRow)
+		role=obj.role
+		windowClassName=obj.windowClassName
+		# AutoComplete listItems.
+		# This class is abstract enough to  support both UIA and MSAA
+		if role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
+			clsList.insert(0,AutoCompleteListItem)
+		#  all   remaining classes are IAccessible
 		if not isinstance(obj,IAccessible):
 			return
 		# Outlook uses dialogs for many forms such as appointment / meeting creation. In these cases, there is no sane dialog caption that can be calculated as the dialog inly contains controls.
@@ -169,8 +190,6 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(Dialog)
 		if WordDocument in clsList:
 			clsList.insert(0,OutlookWordDocument)
-		role=obj.role
-		windowClassName=obj.windowClassName
 		states=obj.states
 		controlID=obj.windowControlID
 		# Support the date picker in Outlook Meeting / Appointment creation forms 
@@ -180,16 +199,17 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,DatePickerCell)
 		elif windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
 			clsList.insert(0,REListBox20W_CheckBox)
-		elif role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
-			clsList.insert(0,AutoCompleteListItem)
 		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
 			clsList.insert(0, AddressBookEntry)
 			return
 		if (windowClassName=="SUPERGRID" and controlID==4704) or (windowClassName=="rctrl_renwnd32" and controlID==109):
 			outlookVersion=self.outlookVersion
-			if outlookVersion and outlookVersion<=9:
-				clsList.insert(0, MessageList_pre2003)
-			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
+			if (
+				outlookVersion
+				and outlookVersion > 9
+				and obj.event_objectID==winUser.OBJID_CLIENT
+				and obj.event_childID==0
+			):
 				clsList.insert(0,SuperGridClient2010)
 		if (windowClassName == "AfxWndW" and controlID==109) or (windowClassName in ("WeekViewWnd","DayViewWnd")):
 			clsList.insert(0,CalendarView)
@@ -231,67 +251,6 @@ class SuperGridClient2010(IAccessible):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		obj.parent=self.parent
 		eventHandler.executeEvent("gainFocus",obj)
-
-class MessageList_pre2003(IAccessible):
-
-	def _get_name(self):
-		if hasattr(self,'curMessageItem'):
-			return self.curMessageItem.msg.parent.name
-
-	def _get_role(self):
-		return controlTypes.ROLE_LIST
-
-	def _get_firstChild(self):
-		return getattr(self,"curMessageItem",None)
-
-	def _get_children(self):
-		child=getattr(self,"curMessageItem",None)
-		if child:
-			return [child]
-		else:
-			return []
-
-	def event_gainFocus(self):
-		try:
-			msg=self.nativeOm.ActiveExplorer().selection[0]
-		except:
-			msg=None
-			pass
-		if msg:
-			self.curMessageItem=MessageItem(self,msg)
-		super(MessageList_pre2003,self).event_gainFocus()
-		if msg:
-			eventHandler.executeEvent("gainFocus",self.curMessageItem)
-
-	def script_moveByMessage(self,gesture):
-		if hasattr(self,'curMessageItem'):
-			oldEntryID=self.curMessageItem.msg.entryID
-		else:
-			oldEntryID=None
-		gesture.send()
-		try:
-			msg=self.nativeOm.ActiveExplorer().selection[0]
-		except:
-			msg=None
-			pass
-		if msg:
-			messageItem=MessageItem(self,msg)
-			newEntryID=messageItem.msg.entryID
-			if newEntryID!=oldEntryID:
-				self.curMessageItem=messageItem
-				eventHandler.executeEvent("gainFocus",messageItem)
-
-	__moveByMessageGestures = (
-		"kb:downArrow",
-		"kb:upArrow",
-		"kb:home",
-		"kb:end",
-		"kb:delete",
-	)
-
-	def initOverlayClass(self):
-		for gesture in self.__moveByMessageGestures:
-			self.bindGesture(gesture, "moveByMessage")
 
 class MessageItem(Window):
 
@@ -335,14 +294,18 @@ class AddressBookEntry(IAccessible):
 		for gesture in self.__moveByEntryGestures:
 			self.bindGesture(gesture, "moveByEntry")
 
-class AutoCompleteListItem(IAccessible):
+class AutoCompleteListItem(Window):
 
 	def event_stateChange(self):
 		states=self.states
 		focus=api.getFocusObject()
 		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
 			speech.cancelSpeech()
-			ui.message(self.name)
+			text=self.name
+			# Some newer versions of Outlook don't put the contact as the name of the listItem, rather it is on the parent 
+			if not text:
+				text=self.parent.name
+			ui.message(text)
 
 class CalendarView(IAccessible):
 	"""Support for announcing time slots and appointments in Outlook Calendar.
@@ -485,7 +448,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# This is unexpected here.
 			log.debugWarning("Unable to get relevant children for UIAGridRow", stack_info=True)
 			return super(UIAGridRow, self).name
-		for index in xrange(cachedChildren.length):
+		for index in range(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			UIAControlType=e.cachedControlType
 			UIAClassName=e.cachedClassName
@@ -515,7 +478,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				columnHeaderItems=None
 			if columnHeaderItems:
 				columnHeaderItems=columnHeaderItems.QueryInterface(UIAHandler.IUIAutomationElementArray)
-				for index in xrange(columnHeaderItems.length):
+				for index in range(columnHeaderItems.length):
 					columnHeaderItem=columnHeaderItems.getElement(index)
 					columnHeaderTextList.append(columnHeaderItem.currentName)
 			columnHeaderText=" ".join(columnHeaderTextList)
@@ -611,6 +574,19 @@ class OutlookWordDocument(WordDocument):
 
 	ignoreEditorRevisions=True
 	ignorePageNumbers=True # This includes page sections, and page columns. None of which are appropriate for outlook.
+
+class OutlookUIAWordDocument(UIAWordDocument):
+	""" Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
+
+	def _get_isReadonlyViewer(self):
+		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
+		try:
+			return self.appModule.nativeOm.activeInspector().currentItem.sent
+		except (COMError,NameError,AttributeError):
+			return False
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return self.isReadonlyViewer
 
 class DatePickerButton(IAccessible):
 	# Value is a duplicate of name so get rid of it

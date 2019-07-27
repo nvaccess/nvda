@@ -3,61 +3,185 @@ NVDA 변경 이력
 
 %!includeconf: ../changes.t2tconf
 
-= 2018.3 =
-이번 버전의 주 기능들: 점자디스플레이 자동 인식 및 연결, 이모지 패널과 같은 최신 윈도우 10 입력 기능 지원, 수많은 버그 수정 등입니다.
+= 2019.1 =
+이 릴리스에는 Microsoft Word와 Excel에 액세스할 때 성능 향상, 버전 호환성 정보가 포함된 추가 기능 지원 및 기타 버그 수정과 같은 안정성 및 보안 향상 등입니다.
+
+NVDA의 이번 버전 부터 custom appModules, globalPlugins, 점자 디스플레이 드라이버 및 신디사이저 드라이버는 더 이상 NVDA 사용자 커스텀 디렉토리에서 자동으로 로드되지 않습니다.
+오히려 이것들은 NVDA 추가 기능의 일부로 설치되어야합니다. 추가 기능 코드를 개발하는 개발자는 NVDA의 새로운 고급 설정 패널에서 개발자 스크래치 패드 옵션이 켜져있는 경우 NVDA 사용자 커스텀 디렉토리의 새로운 개발자 스크래치 패드 디렉토리에 테스트 코드를 넣을 수 있습니다.
+이러한 변경 사항은 커스텀 코드의 호환성을 보장하기 위해 필요하므로 이 코드가 최신 릴리스와 호환되지 않을 때 NVDA가 중단되지 않습니다.
+이에 대한 자세한 내용과 추가 기능의 버전 관리 방법에 대한 자세한 내용은 변경 목록을 참조하십시오.
 
 == 새로 추가된 기능 ==
-- 파이어폭스와 크롬 사용시 페이지 컨텐츠내 문법 오류(컨텐츠가 오류 출력 지원시)가 인식되도록 함. (#8280)
-- 크롬 사용시 웹페이지 컨텐츠 삽입 또는 삭제 내용이 출력되도록 함. (#8558)
-- 브레일노트 QT 및 Apex scroll wheel 지원 추가. (#5992, #5993)
-- Foobar2000에서 현재 재생 시간 및 전체 재생 시간 확인 명령 추가(핫키는 할당되어 잇지 않음). (#6596)
-- 음성 엔진에 상관없이 Mac command key 기호(⌘)가 컨텐츠 읽을시 출력되도록 함. (#8366)
-- aria-roledescription 속성이 적용된 기타 요소 롤이 모든 웹브라우저에서 인식되도록 함. (#8448)
-- 점자 표기법: 체코어 8점 점자, 중앙 쿠르드어, 에스페란토어, 헝가리어, 스웨덴어 8점 컴퓨터 점자 추가. (#8226, #8437)
-- 점자디스플레이 자동 인식 기능 추가. (#1271)
- - 현재 본 기능을 지원하는 디스플레이: ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille 및 HumanWare BrailleNote and Brailliant BI/B.
- - 점자디스플레이 목록 대화상자에서 "자동 연결" 옵션을 사용하여 본 기능을 사용할 수 있음.
- - 자세한 내용은 사용설명서를 참고바람.
-- 최신 윈도우 10 버전에서 추가된 현대식 입력 기능 지원 추가(이모지 패널(Fall Creators Update), 음성 입력(Fall Creators Update), 하드웨어 입력 추천 단어 목록(April 2018 Update),, 클라우드 클립보드 붙여넣기(October 2018 Update) 등). (#7273)
-- 파이어폭스 63 사용시 ARIA로 처리된 인용 문구(role blockquote) 탐색 지원 추가. (#8577)
+- 새로운 점자 테이블: 아프리칸스어, 아랍어 8 점 컴퓨터 점자, 아랍어 grade 2, 스페인어 grade 2. (#4435, #9186)
+- NVDA의 마우스 설정에 옵션을 추가하여 NVDA가 다른 응용 프로그램에서 마우스를 제어하는 상황을 처리하도록 함. (#8452) 
+ - TeamViewer 또는 다른 원격 제어 소프트웨어를 사용하여 원격으로 시스템을 제어 할 때 NVDA가 마우스를 추적 할 수 있습니다.
+- `--enable-start-on-logon` 명령줄 매개 변수를 추가하여 NVDA 세트 NVDA의 자동 설치를 Windows 로그온 시 시작할지 여부를 구성할 수 있습니다. 로그온할 때 시작하려면 true를, 로그온할 때 시작하지 않으려면 false를 지정합니다. --enable-start-on-logon 인수가 전혀 지정되지 않은 경우 이전 설치에서 시작하지 않도록 이미 구성되어 있지 않은 한 NVDA는 로그온 시 기본적으로 시작됩니다. (#8574)
+- 일반 설정 패널에서 로깅 수준을 "사용 안 함"으로 설정하여 NVDA의 로깅 기능을 비활성화할 수 있음. (#8516)
+- LibreOffice 및 Apache OpenOffice spreadsheet에 수식이 있으면 알림. (#860)
+- In Mozilla Firefox and Google Chrome, browse mode now reports the selected item in list boxes and trees.
+ - This works in Firefox 66 and later.
+ - This does not work for certain list boxes (HTML select controls) in Chrome.
+- ARM64 (예 : Qualcomm Snapdragon) 프로세서가 장착 된 컴퓨터에서 Mozilla Firefox와 같은 응용 프로그램에 대한 초기 지원 (#9216)
+- 새로운 고급 설정 범주가 Microsoft UI 자동화 API를 통해 NVDA의 Microsoft Word에 대한 새로운 지원을 시도하는 옵션을 포함하여 NVDA의 설정 대화 상자에 추가됨. (#9200)
+- Windows 디스크 관리의 그래픽 보기 지원 추가. (#1486)
+- Handy Tech Connect Braille 및 Basic Braille 84 지원 추가. (#9249)
 
 
 == 변경된 기능 ==
-- 일반 설정내 언어 목록이 가나다순으로 정렬되어 표시되도록 함(이전에는 ISO 639 코드순으로 정렬됨). (#7284)
-- Freedom Scientific 점자디스플레이 사용시 alt+shift+tab 및 windows+tab 명령을 실행할 수 있는 핫키 추가. (#7387)
-- ALVA BC680 및 protocol converter 디스플레이 사용시 왼쪽 및 오른쪽 smart pad, thumb 및 etouch 키에 각기 다른 명령을 할당할 수 있음. (#8230)
-- ALVA BC6 디스플레이 사용시 sp2+sp3을 눌러 현재 시각 및 날짜를 확인할 수 있도록 변경(Windows 키 입력은 sp1+sp2로 변경함). (#8230)
-- NVDA 2018.3 설치후 NVDA 실행할때 추후 자동 업데이트 확인시 NV Access에 사용 통계 데이터 전송에 참여할 것인지를 묻는 대화상자가 뜨도록 함. (#8217)
-- NVDA 업데이트 확인시 만약 NV Access에 사용 통계 정보 전송에 응했다면 현재 사용중인 음성 엔진 이름과 점자디스플레이 이름이 송신되도록 함(본 데이타는 추후 개발 계획에 반영될 수 있음). (#8217)
+- Updated liblouis braille translator to version 3.8.0. (#9013)
+- Add-on authors now can enforce a minimum required NVDA version for their add-ons. NVDA will refuse to install or load an add-on whose minimum required NVDA version is higher than the current NVDA version. (#6275)
+- Add-on authors can now specify the last version of NVDA the add-on has been tested against. If an add-on has been only tested against a  version of NVDA lower than the current version, then NVDA will refuse to install or load the add-on. (#6275)
+- This version of NVDA will allow installing and loading of add-ons  that do not yet contain Minimum and Last Tested NVDA version information, but upgrading to future versions of NVDA (E.g. 2019.2) may automatically cause these older add-ons to be disabled.
+- The move mouse to navigator object command is now available in Microsoft Word as well as for UIA controls, particularly Microsoft Edge. (#7916, #8371)
+- Reporting of text under the mouse has been improved within Microsoft Edge and other UIA applications. (#8370)
+- When NVDA is started with the `--portable-path` command line parameter, the provided path is automatically filled in when trying to create a portable copy of NVDA using the NVDA menu. (#8623)
+- Updated the path to the Norwegian braille table to reflect the standard from the year 2015. (#9170)
+- When navigating by paragraph (control+up or down arrows) or navigating by table cell (control+alt+arrows), the existence of spelling errors will no longer be announced, even if NVDA is configured to announce these automatically. This is because paragraphs and table cells can be quite large, and detecting spelling errors in some applications can be very costly. (#9217)
+- NVDA no longer automatically loads custom appModules, globalPlugins and braille and synth drivers from the NVDA user configuration directory. This code should be instead packaged as an add-on with correct version information, ensuring that incompatible code is not run with current versions of NVDA. (#9238)
+ - For developers who need to test code as it is being developed,  enable NVDA's developer scratchpad directory in the Advanced category of NVDA settings, and place your code in the 'scratchpad' directory found in the NVDA user configuration directory when this option is enabled.
+
+
+== 버그 수정 ==
+- When using OneCore speech synthesizer on Windows 10 April 2018 Update and later, large chunks of silence are no longer inserted between speech utterances. (#8985)
+- When moving by character in plain text controls (such as Notepad) or browse mode, 32 bit emoji characters consisting of two UTF-16 code points (such as 🤦) will now read properly. (#8782)
+- Improved restart confirmation dialog after changing NVDA's interface language. The text and the button labels are now more concise and less confusing. (#6416)
+- If a 3rd party speech synthesizer fails to load, NVDA will fall back to Windows OneCore speech synthesizer on Windows 10, rather than espeak. (#9025)
+- Removed the "Welcome Dialog" entry in the NVDA menu while on secure screens. (#8520)
+- When tabbing or using quick navigation in browse mode, legends on tab panels are now reported more consistently. (#709)
+- NVDA will now announce selection changes for certain time pickers such as in the Alarms and Clock app in Windows 10. (#5231)
+- In Windows 10's Action Center, NVDA will announce status messages when toggling quick actions such as brightness and focus assist. (#8954)
+- In action Center in Windows 10 October 2018 Update and earlier, NVDA will recognize brightness quick action control as a button instead of a toggle button. (#8845)
+- NVDA will again track cursor and announce deleted characters in the Microsoft Excel  go to and find edit fields. (#9042)
+- Fixed a rare browse mode crash in Firefox. (#9152)
+- NVDA no longer fails to report the focus for some controls in the Microsoft Office 2016 ribbon when collapsed.
+- NVDA no longer fails to report the suggested contact when entering addresses in new messages in Outlook 2016. (#8502)
+- The last few cursor routing keys on 80 cell eurobraille displays no longer route the cursor to a position at or just after the start of the braille line. (#9160)
+- Fixed table navigation in threaded view in Mozilla Thunderbird. (#8396)
+- In Mozilla Firefox and Google Chrome, switching to focus mode now works correctly for certain list boxes and trees (where the list box/tree is not itself focusable but its items are) . (#3573, #9157)
+- Browse mode is now correctly turned on by default when reading messages in Outlook 2016/365 if using NVDA's experimental UI Automation support for Word Documents. (#9188)
+- NVDA is now less likely to freeze in such a way that the only way to escape is signing out from your current windows session. (#6291)
+- In Windows 10 October 2018 Update and later, when opening cloud clipboard history with clipboard empty, NVDA will announce clipboard status. (#9103)
+- In Windows 10 October 2018 Update and later, when searching for emojis in emoji panel, NVDA will announce top search result. (#9105)
+- NVDA no longer freezes in the main window of Oracle VirtualBox 5.2 and above. (#9202)
+- Responsiveness in Microsoft Word when navigating by line, paragraph or table cell may be significantly improved in some documents. A reminder that for best performance, set Microsoft Word to Draft view with alt+w,e after opening a document. (#9217) 
+- In Mozilla Firefox and Google Chrome, empty alerts are no longer reported. (#5657)
+- Significant performance improvements when navigating cells in Microsoft Excel, particularly when the spreadsheet contains comments and or validation dropdown lists. (#7348)
+- It should be no longer necessary to turn off in-cell editing in Microsoft Excel's options to access the cell edit control with NVDA in Excel 2016/365. (#8146).
+- Fixed a freeze in Firefox sometimes seen when quick navigating by landmarks, if the Enhanced Aria add-on is in use. (#8980)
+
+
+== Changes for Developers ==
+
+= 2018.4.1 =
+이번 버전에서는 NVDA의 사용자 인터페이스 언어가 아라곤어로 설정된 경우 NVDA 시작 시 충돌 문제가 수정되었습니다. (#9089)
+
+
+= 2018.4 =
+이번 버전의 주 기능들: 최신 파이어폭스 버전에서의 탐색 속도 향상; 모든 음성 엔진에서의 이모지 출력 기능; Outlook 사용 시 답장/전달 여부 확인; Microsoft Word에서의 페이지 좌측 상단으로부터의 커서 위치 확인 및 수많은 버그 수정 등입니다.
+
+== 새로 추가된 기능 ==
+- 점자 표기법: 중국어(중국 간체) 1종 및 2종 점자 추가. (#5553)
+- Microsoft Outlook 메시지 목록 탐색 시 메시지 답장 및 전달 여부가 표시되도록 함. (#6911)
+- Unicode Common Locale Data Repository(CLDR)에 등록된 글자(특히 이모지와 특정 글자)에 대한 풀이 출력 기능 추가. (#6523)
+- Microsoft Word 사용시 NVDA+numpadDelete를 눌러 페이지 상단 좌측으로부터의 커서 위치를 확인할 수 있음. (#1939)
+- Google 스프레드시트에서 점자 모드 사용 시 포커스를 각 셀로 옮길때마다 "선택됨"이 출력되지 않도록 함. (#8879)
+- Foxit Reader 및 Foxit Phantom PDF 지원 추가. (#8944)
+- DBeaver database tool 지원 추가. (#8905)
+
+
+== 변경된 기능 ==
+- 객체 알림 설정에 있는 "Report help balloons"를 "Report notifications"로 변경하여 윈도우 8 이상에서의 토스트 알림도 포함하도록 함(한국어 번역에서는 이전 이름 그대로 사용). (#5789)
+- 키보드 설정에서 NVDA 기능키 체크박스들을 하나의 목록으로 통합함.
+- 특정 윈도우 버전 사용 시 알림 영역 내 시계 정보 출력 시 불필요한 정보가 출력되지 않도록 함. (#4364)
+- 리브루이 점자 변환기 3.7.0 버전 사용. (#8697)
+- eSpeak NG commit 919f3240cbb 사용.
+
+
+== 버그 수정 ==
+- Outlook 2016/365 사용 시 메시지 flag 및 category가 출력되도록 함. (#8603)
+- NVDA 언어가 키르키즈스탄어, 몽골어 또는 마세도니아어로 설정된 경우 NVDA 시작 시 윈도우에서의 언어 미지원 메시지가 뜨지 않도록 함. (#8064)
+- 파이어폭스, 크롬 및 Acrobat DC 사용 중 마우스를 탐색 객체로 옮길 시 현재 브라우즈 모드 위치로 마우스가 제대로 옮겨지도록 함. (#6460)
+- 파이어폭스, 크롬 및 Internet Explorer에서의 콤보박스 조작 정확도가 향상됨. (#8664)
+- 일본어판 윈도우 XP 또는 비스타 사용 시 운영 체제 요구사항 관련 메시지가 제대로 출력되도록 함. (#8771)
+- 파이어폭스를 통한 대형 페이지(특히 자동 컨텐츠 변경이 많은 페이지) 탐색 속도가 향상됨. (#8678)
+- 점자 디스플레이 사용 시 문서 서식에서 해제된 서식 정보가 출력되지 않도록 함. (#7615)
+- UI Automation 사용 시 여러 앱이 특정 작업(특히 여러개의 오디오 파일을 변환할 때) 도중 파일 탐색기와 같은 앱에서 포커스 추적이 다운되던 문제 수정. (#7345)
+- 웹 브라우저에서 ARIA 메뉴에서 Escape 키를 누를 때 메뉴가 키를 인식하도록 함(이전에는 무조건 포커스 모드를 빠져나갔음). (#3215)
+- 최신 업데이트된 Gmail 웹 인터페이스 사용 시 메시지 내용을 읽던 중 한 글자 명령을 사용 시 포커스된 요소를 출력한 후 메시지 내용이 반복되어 출력되던 문제 수정. (#8887)
+- NVDA 업데이트 후 파이어폭스나 크롬이 다운되거나 현재 탐색중인 페이지의 컨텐츠 변경 내용이 제대로 출력되지 않던 문제 수정. (#7641) 
+- 브라우즈 모드 사용 시 클릭 가능한 요소를 만났을 때 클릭 가능 상태가 여러번 출력되던 문제 수정. (#7430)
+- baum Vario 40 점자 디스플레이 사용 시 점자 입력 명령이 실행되지 않던 문제 수정. (#8894)
+- 파이어폭스에서 Google 프레젠테이션 사용 시 포커스를 옮길 때마다 선택된 내용이 불필요하게 출력되던 문제 수정. (#8964)
+
+
+== 개발자를 위한 내용 ==
+개발자를 위한 내용에 대해서는 영어판 changes.html 문서를 참조하세요.
+
+
+= 2018.3.2 =
+본 버전에서는 크롬을 사용하여 www.twitter.com 탐색시 발생하던 오류 문제를 수정했습니다. (#8777)
+
+
+= 2018.3.1 =
+본 버전에서는 파이어폭스 32비트 사용중 파이어폭스가 다운되던 문제를 수정하였습니다. (#8759)
+
+
+= 2018.3 =
+이번 버전의 주 기능들: 점자 디스플레이 자동 인식 및 연결, 이모지 패널과 같은 최신 윈도우 10 입력 기능 지원, 수많은 버그 수정 등입니다.
+
+== 새로 추가된 기능 ==
+- 파이어폭스와 크롬 사용 시 페이지 컨텐츠 내 문법 오류(컨텐츠가 오류 출력 지원 시)가 인식되도록 함. (#8280)
+- 크롬 사용 시 웹페이지 컨텐츠 삽입 또는 삭제 내용이 출력되도록 함. (#8558)
+- 브레일노트 QT 및 Apex scroll wheel 지원 추가. (#5992, #5993)
+- Foobar2000에서 현재 재생 시간 및 전체 재생 시간 확인 명령 추가(핫키는 할당되어 있지 않음). (#6596)
+- 음성 엔진에 상관없이 Mac command key 기호(⌘)가 컨텐츠 읽을 시 출력되도록 함. (#8366)
+- aria-roledescription 속성이 적용된 기타 요소 역할이 모든 웹브라우저에서 인식되도록 함. (#8448)
+- 점자 표기법: 체코어 8점 점자, 중앙 쿠르드어, 에스페란토어, 헝가리어, 스웨덴어 8점 컴퓨터 점자 추가. (#8226, #8437)
+- 점자 디스플레이 자동 인식 기능 추가. (#1271)
+ - 현재 본 기능을 지원하는 디스플레이: ALVA, Baum/HumanWare/APH/Orbit, Eurobraille, Handy Tech, Hims, SuperBraille 및 HumanWare BrailleNote and Brailliant BI/B.
+ - 점자 디스플레이 목록 대화상자에서 "자동 연결" 옵션을 사용하여 본 기능을 사용할 수 있음.
+ - 자세한 내용은 사용설명서를 참고바람.
+- 최신 윈도우 10 버전에서 추가된 현대식 입력 기능 지원 추가(이모지 패널(Fall Creators Update), 음성 입력(Fall Creators Update), 하드웨어 입력 추천 단어 목록(April 2018 Update),, 클라우드 클립보드 붙여넣기(October 2018 Update) 등). (#7273)
+- 파이어폭스 63 사용 시 ARIA로 처리된 인용 문구(blockquote 역할) 탐색 지원 추가. (#8577)
+
+
+== 변경된 기능 ==
+- 일반 설정 내 언어 목록이 가나다순으로 정렬되어 표시되도록 함(이전에는 ISO 639 코드순으로 정렬됨). (#7284)
+- Freedom Scientific 점자 디스플레이 사용 시 alt+shift+tab 및 windows+tab 명령을 실행할 수 있는 핫키 추가. (#7387)
+- ALVA BC680 및 protocol converter 디스플레이 사용 시 왼쪽 및 오른쪽 smart pad, thumb 및 etouch 키에 각기 다른 명령을 할당할 수 있음. (#8230)
+- ALVA BC6 디스플레이 사용 시 sp2+sp3을 눌러 현재 시각 및 날짜를 확인할 수 있도록 변경(Windows 키 입력은 sp1+sp2로 변경함). (#8230)
+- NVDA 2018.3 설치 후 NVDA 실행할 때 추후 자동 업데이트 확인 시 NV Access에 사용 통계 데이터 전송에 참여할 것인지를 묻는 대화상자가 표시되도록 함. (#8217)
+- NVDA 업데이트 확인 시 만약 NV Access에 사용 통계 정보 전송을 허용했다면 현재 사용중인 음성 엔진 이름과 점자 디스플레이 이름이 전송되도록 함(본 데이타는 추후 개발 계획에 반영될 수 있음). (#8217)
 - 리브루이 점자 변환기 3.6.0 버전 사용. (#8365)
 - 러시아어 8점 점자표 경로 변경. (#8446)
 - eSpeak NG 1.49.3dev commit 910f4c2 사용. (#8561)
 
 
 == 버그 수정 ==
-- 크롬 사용시 컨텐츠로 인식되지 못한 컨트롤 레이블이 브라우즈 모드에서 인식되도록 함. (#4773)
-- Zoom 사용시 음숙어 및 새 메시지와 같은 알림 컨텐츠 인식 추가. (#7754)
-- 브라우즈 모드 사용중 점자 포커스 내용 설정 변경시 점자가 브라우즈 모드 커서를 따라가지 못하던 문제 수정. (#7741)
-- ALVA BC680 디스플레이 연결시 초기 연결에 가끔 실패하던 문제 수정. (#8106)
-- ALVA BC6 디스플레이 사용시 sp2+sp3 키를 조합한 키를 눌러 내부 명령 실행시 시스템 키 입력 명령이 실행되지 않도록 함. (#8230)
-- ALVA BC6 디스플레이 사용시 sp2를 눌러 alt 키 실행 명령이 작동하지 않던 문제 수정. (#8360)
+- 크롬 사용 시 컨텐츠로 인식되지 못한 컨트롤 레이블이 브라우즈 모드에서 인식되도록 함. (#4773)
+- Zoom 클라이언트 사용 시 음숙어 및 새 메시지와 같은 알림 컨텐츠 인식 추가. (#7754)
+- 브라우즈 모드 사용 중 점자 포커스 내용 설정 변경 시 점자가 브라우즈 모드 커서를 따라가지 못하던 문제 수정. (#7741)
+- ALVA BC680 디스플레이 연결 시 초기 연결에 가끔 실패하던 문제 수정. (#8106)
+- ALVA BC6 디스플레이 사용 시 sp2+sp3 키를 조합한 키를 눌러 내부 명령 실행 시 시스템 키 입력 명령이 실행되지 않도록 함. (#8230)
+- ALVA BC6 디스플레이 사용 시 sp2를 눌러 alt 키 실행 명령이 작동하지 않던 문제 수정. (#8360)
 - NVDA가 불필요한 키보드 배열 변경 정보를 출력하던 문제 수정. (#7383, #8419)
-- 메못장과 같은 텍스트 컨트롤에서 65535자 이상의 컨텐츠를 불러왔을때 마우스 추적 정확도가 저하되던 문제 수정. (#8397)
-- 윈도우 10 및 머던 앱 사용시 더 많은 대화상자가 인식되도록 함. (#8405)
-- 윈도우 10 October 2018 Update 및 Server 2019 이상 사용시 사용하던 앱이 다운되었거나 수많은 이벤트를 보낼때 시스템 포커스 추적이 먹통되던 문제 수정. (#7345, #8535)
+- 메못장과 같은 텍스트 컨트롤에서 65535자 이상의 컨텐츠를 불러왔을 때 마우스 추적 정확도가 저하되던 문제 수정. (#8397)
+- 윈도우 10 및 모던 앱 사용 시 더 많은 대화상자가 인식되도록 함. (#8405)
+- 윈도우 10 October 2018 Update 및 Server 2019 이상 사용 시 사용하던 앱이 다운되었거나 수많은 이벤트를 보낼 때 시스템 포커스 추적이 먹통되던 문제 수정. (#7345, #8535)
 - 상태 표시줄 내용이 없을때 내용 탐색 및 복사 명령 실행시 오류 메시지가 출력되도록 함. (#7789)
-- 이전에 반 체크된 컨트롤을 해제한 후 다른 컨트롤을 탐색하다가 이전 컨트롤을 탐색시 현재 체크 상태가 음성으로 제대로 출력되지 않던 문제 수정. (#6946)
-- 윈도우 7 사용시 NVDA 일반 설정내 언어 목록에서 버마어가 누락되었던 문제 수정. (#8544)
-- Microsoft Edge 사용시 읽기 모드 사용 및 페이지 열기 진행 정보와 같은 알림 정보가 출력되도록 함. (#8423)
-- 웹브라우저에서 목록 탐색시 웹 개발자가 목록 레이블을 지정했을때 목록 레이블이 출력되도록 함. (#7652)
-- 특정 점자디스플레이에 명령 핫키를 할당할때 선택된 디스플레이에 핫키가 할당되었음을 표시하도록 함(이전에는 현재 사용중인 디스플레이에 할당되었다고 출력함). (#8108)
+- 이전에 일부 선택된 컨트롤을 해제한 후 다른 컨트롤을 탐색하다가 이전 컨트롤을 탐색 시 현재 선택 상태가 음성으로 제대로 출력되지 않던 문제 수정. (#6946)
+- 윈도우 7 사용 시 NVDA 일반 설정 내 언어 목록에서 버마어가 누락되었던 문제 수정. (#8544)
+- Microsoft Edge 사용 시 읽기 모드 사용 및 페이지 열기 진행 정보와 같은 알림 정보가 출력되도록 함. (#8423)
+- 웹브라우저에서 목록 탐색 시 웹 개발자가 목록 레이블을 지정했을때 목록 레이블이 출력되도록 함. (#7652)
+- 특정 점자 디스플레이에 명령 핫키를 할당할 때 선택된 디스플레이에 핫키가 할당되었음을 표시하도록 함(이전에는 현재 사용중인 디스플레이에 할당되었다고 출력함). (#8108)
 - Media Player Classic 64비트 버전 지원 추가. (#6066)
 - 마이크로소프트 워드에서의 UIA 관련 기능 향상:
  - 다른 다중 편집창과 마찬가지로 점자 커서가 문서 시작에 위치할때 줄 시작 위치 글자가 디스플레이의 맨 왼쪽에 출력되도록 함. (#8406)
- - 문서로 전환시 불필요한 포커스 정보가 음성이나 점자로 출력되던 문제 수정. (#8407)
- - 문서내 목록을 점자로 읽을시 라우팅 명령이 제대로 작동하지 않던 문제 수정. (#7971)
+ - 문서로 전 환시 불필요한 포커스 정보가 음성이나 점자로 출력되던 문제 수정. (#8407)
+ - 문서 내 목록을 점자로 읽을 시 라우팅 명령이 제대로 작동하지 않던 문제 수정. (#7971)
  - 새로 삽입된 bullet/항목 숫자가 음성과 점자로 제대로 출력되도록 함. (#7970)
 - 윈도우 10 1803 이상에서 "세계 언어 지원을 위해 Unicode UTF-8 사용" 기능이 선택된 경우 추가 기능을 설치할 수 없던 문제 수정. (#8599)
+- iTunes 12.9 지원 관련 여러 문제 수정. (#8744)
 
 
 == 개발자를 위한 내용 ==

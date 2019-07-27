@@ -113,18 +113,14 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 template<typename TableType> inline void fillTableCounts(VBufStorage_controlFieldNode_t* node, IAccessible2* pacc, TableType* paccTable) {
 	wostringstream s;
 	long count = 0;
-	// Fetch row and column counts and add them as two sets of attributes on this vbuf node.
-	// The first set: table-physicalrowcount and table-physicalcolumncount represent the physical topology of the table and can be used programmatically to understand table limits.
-	// The second set: table-rowcount and table-columncount are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
+	// Fetch row and column counts and add them as attributes on this vbuf node.
 	if (paccTable->get_nRows(&count) == S_OK) {
 		s << count;
-		node->addAttribute(L"table-physicalrowcount", s.str());
 		node->addAttribute(L"table-rowcount", s.str());
 		s.str(L"");
 	}
 	if (paccTable->get_nColumns(&count) == S_OK) {
 		s << count;
-		node->addAttribute(L"table-physicalcolumncount", s.str());
 		node->addAttribute(L"table-columncount", s.str());
 	}
 }
@@ -151,16 +147,11 @@ inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAcc
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
 	// Fetch row and column extents and add them as attributes on this node.
-	// for rowNumber and columnNumber, store these as two sets of attributes.
-	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
-	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTable->get_rowColumnExtentsAtIndex(cellIndex, &row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
-		node->addAttribute(L"table-physicalrownumber", s.str());
 		node->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
 		s << column + 1;
-		node->addAttribute(L"table-physicalcolumnnumber", s.str());
 		node->addAttribute(L"table-columnnumber", s.str());
 		if (columnExtents > 1) {
 			s.str(L"");
@@ -215,16 +206,11 @@ inline void GeckoVBufBackend_t::fillTableCellInfo_IATable2(VBufStorage_controlFi
 	long row, column, rowExtents, columnExtents;
 	boolean isSelected;
 	// Fetch row and column extents and add them as attributes on this node.
-	// for rowNumber and columnNumber, store these as two sets of attributes.
-	// The first set: table-physicalrownumber and table-physicalcolumnnumber represent the physical topology of the table and can be used programmatically to fetch other table cells with IAccessibleTable etc.
-	// The second set: table-rownumber and table-columnnumber are duplicates of the physical ones, however may be overridden later on in fillVBuf with ARIA attributes. They are what is reported to the user.
 	if (paccTableCell->get_rowColumnExtents(&row, &column, &rowExtents, &columnExtents, &isSelected) == S_OK) {
 		s << row + 1;
-		node->addAttribute(L"table-physicalrownumber", s.str());
 		node->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
 		s << column + 1;
-		node->addAttribute(L"table-physicalcolumnnumber", s.str());
 		node->addAttribute(L"table-columnnumber", s.str());
 		if (columnExtents > 1) {
 			s.str(L"");
@@ -330,6 +316,57 @@ long getChildCount(const bool isAriaHidden, IAccessible2 * const pacc){
 bool hasAriaHiddenAttribute(const map<wstring,wstring>& IA2AttribsMap){
 	const auto IA2AttribsMapIt = IA2AttribsMap.find(L"hidden");
 	return (IA2AttribsMapIt != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true");
+}
+
+/**
+ * Get the selected item or the first item if no item is selected.
+ */
+CComPtr<IAccessible2> GeckoVBufBackend_t::getSelectedItem(
+	IAccessible2* container, const map<wstring, wstring>& attribs
+) {
+	if (this->toolkitName.compare(L"Chrome") == 0) {
+		// #9364: Google Chrome crashes when fetching the currently selected item from some listboxes.
+		// Specifically when calling IEnumVARIANT::next.
+		// Due to this, and other issues around incorrect focus state setting, it is best to disable fetching of currently selected item in listboxes in Chrome all together.
+		return nullptr;
+	}
+
+	CComVariant selection;
+	HRESULT hr = container->get_accSelection(&selection);
+	if (FAILED(hr)) {
+		LOG_DEBUGWARNING(L"accSelection failed with " << hr);
+		return nullptr;
+	}
+
+	if (selection.vt == VT_DISPATCH) {
+		// Single selected item, so just return it.
+		return CComQIPtr<IAccessible2>(selection.pdispVal);
+	}
+
+	if (selection.vt == VT_UNKNOWN) {
+		// One or more selected items in an IEnumVARIANT.
+		auto enumVar = CComQIPtr<IEnumVARIANT>(selection.punkVal);
+		if (!enumVar) {
+			return nullptr;
+		}
+		// We only care about the first selected item.
+		CComVariant items[1];
+		if (FAILED(enumVar->Next(1, items, nullptr))) {
+			return nullptr;
+		}
+		if (items[0].vt != VT_DISPATCH) {
+			return nullptr;
+		}
+		return CComQIPtr<IAccessible2>(items[0].pdispVal);
+	}
+
+	// No selection, so return the first child.
+	CComPtr<IDispatch> child;
+	if (SUCCEEDED(container->get_accChild(CComVariant(1), &child))) {
+		return CComQIPtr<IAccessible2>(child);
+	}
+
+	return nullptr;
 }
 
 const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
@@ -618,17 +655,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether to render children, including text content.
 	// Note that we may still render the name, value, etc. even if we don't render children.
 	bool renderChildren = true;
+	// Whether this is a selection container for which only the selected item should be rendered;
+	// currently, list boxes and trees.
+	bool renderSelectedItemOnly = false;
 	if (isAriaHidden) {
 		// aria-hidden
 		isVisible = false;
 	} else {
 		// If a node has children, it's visible.
 		isVisible = width > 0 && height > 0 || childCount > 0;
+		if ((role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+			|| role == ROLE_SYSTEM_OUTLINE
+		) {
+			renderSelectedItemOnly = true;
+		}
 		if (IA2TextIsUnneededSpace
 			|| role == ROLE_SYSTEM_COMBOBOX
-			|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+			|| renderSelectedItemOnly
 			|| isEmbeddedApp
-			|| role == ROLE_SYSTEM_OUTLINE
 			|| role == ROLE_SYSTEM_EQUATION
 			|| (nameIsContent && nameIsExplicit)
 		) {
@@ -757,21 +801,29 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 
 	// Add some presentational table attributes
-	// Note these are only for reporting, the physical table attributes (table-physicalrownumber etc) for aiding in navigation etc are added  later on.
-	// propagate table-rownumber down to the cell as Gecko only includes it on the row itself
-	if(parentPresentationalRowNumber) 
-		parentNode->addAttribute(L"table-rownumber",parentPresentationalRowNumber);
+	// Note these are only for reporting, the physical table attributes (table-rownumber etc) for aiding in navigation etc are added  later on.
+	// propagate table-rownumber-presentational down to the cell as Gecko only includes it on the row itself
+	if(parentPresentationalRowNumber) {
+		parentNode->addAttribute(L"table-rownumber-presentational",parentPresentationalRowNumber);
+	}
 	const wchar_t* presentationalRowNumber=NULL;
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex")) != IA2AttribsMap.end()) {
-		parentNode->addAttribute(L"table-rownumber",IA2AttribsMapIt->second);
+	IA2AttribsMapIt = IA2AttribsMap.find(L"rowindex");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-rownumber-presentational",IA2AttribsMapIt->second);
 		presentationalRowNumber=IA2AttribsMapIt->second.c_str();
 	}
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colindex")) != IA2AttribsMap.end())
-		parentNode->addAttribute(L"table-columnnumber",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount")) != IA2AttribsMap.end())
-		parentNode->addAttribute(L"table-rowcount",IA2AttribsMapIt->second);
-	if((IA2AttribsMapIt = IA2AttribsMap.find(L"colcount")) != IA2AttribsMap.end())
-		parentNode->addAttribute(L"table-columncount",IA2AttribsMapIt->second);
+	IA2AttribsMapIt = IA2AttribsMap.find(L"colindex");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-columnnumber-presentational",IA2AttribsMapIt->second);
+	}
+	IA2AttribsMapIt = IA2AttribsMap.find(L"rowcount");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-rowcount-presentational",IA2AttribsMapIt->second);
+	}
+	IA2AttribsMapIt = IA2AttribsMap.find(L"colcount");
+	if(IA2AttribsMapIt != IA2AttribsMap.end()) {
+		parentNode->addAttribute(L"table-columncount-presentational",IA2AttribsMapIt->second);
+	}
 
 	BSTR value=NULL;
 	if(pacc->get_accValue(varChild,&value)==S_OK) {
@@ -854,8 +906,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					chunkStart=i+1;
 					// In Gecko, hyperlinks correspond to embedded object chars,
 					// so there's no need to call IAHyperlink::hyperlinkIndex.
-					IAccessibleHyperlinkPtr link = move(linkGetter->next());
-					IAccessible2Ptr childPacc = link;
+					CComPtr<IAccessibleHyperlink> link = linkGetter->next();
+					CComQIPtr<IAccessible2> childPacc = link;
 					if(!childPacc) {
 						continue;
 					}
@@ -898,6 +950,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				VariantClear(&(varChildren[i]));
 			}
 			free(varChildren);
+
+		} else if (renderSelectedItemOnly) {
+			CComPtr<IAccessible2> item = this->getSelectedItem(pacc, IA2AttribsMap);
+			if (item) {
+				if (tempNode = this->fillVBuf(item, buffer, parentNode, previousNode,
+					paccTable, paccTable2, tableID, presentationalRowNumber,
+					ignoreInteractiveUnlabelledGraphics)
+				) {
+					previousNode=tempNode;
+					// The container itself might not always fire selection events.
+					// Therefore, we rely on a stateChange event on the item (since
+					// these fire for both selection and unselection) and have the item
+					// re-render its parent.
+					static_cast<VBufStorage_controlFieldNode_t*>(tempNode)->requiresParentUpdate = true;
+				} else {
+					LOG_DEBUG(L"Error in calling fillVBuf");
+				}
+			}
 
 		} else {
 			// There were no children to render.
@@ -1037,6 +1107,9 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_DESCRIPTIONCHANGE:
 		case EVENT_OBJECT_STATECHANGE:
+		case EVENT_OBJECT_SELECTIONADD:
+		case EVENT_OBJECT_SELECTIONREMOVE:
+		case EVENT_OBJECT_SELECTIONWITHIN:
 		case IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:
 		break;
 		default:

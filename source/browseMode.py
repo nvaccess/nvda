@@ -34,6 +34,7 @@ import inputCore
 import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
+from abc import ABCMeta, abstractmethod
 
 REASON_QUICKNAV = "quickNav"
 
@@ -91,7 +92,7 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 			continue
 		curValues.append((it,newVal))
 
-class QuickNavItem(object):
+class QuickNavItem(object, metaclass=ABCMeta):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
 	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
@@ -108,6 +109,7 @@ class QuickNavItem(object):
 		self.itemType=itemType
 		self.document=document
 
+	@abstractmethod
 	def isChild(self,parent):
 		"""
 		Is this item a child of the given parent?
@@ -119,6 +121,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def report(self,readUnit=None):
 		"""
 		Reports the contents of this item.
@@ -127,6 +130,7 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def moveTo(self):
 		"""
 		Moves the browse mode caret or focus to this item.
@@ -179,6 +183,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def report(self,readUnit=None):
 		info=self.textInfo
+		# If we are dealing with a form field, ensure we don't read the whole content if it's an editable text.
+		if self.itemType == "formField":
+			if self.obj.role == controlTypes.ROLE_EDITABLETEXT:
+				readUnit = textInfos.UNIT_LINE
 		if readUnit:
 			fieldInfo = info.copy()
 			info.collapse()
@@ -189,7 +197,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
 
 	def activate(self):
-		self.textInfo.obj._activatePosition(self.textInfo)
+		self.textInfo.obj._activatePosition(info=self.textInfo)
 
 	def moveTo(self):
 		info=self.textInfo.copy()
@@ -253,10 +261,18 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
 
+	def event_treeInterceptor_gainFocus(self):
+		"""Triggered when this browse mode interceptor gains focus.
+		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
+		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
+		"""
+		reportPassThrough(self)
+
 	ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES = frozenset({
 		controlTypes.ROLE_COMBOBOX,
 		controlTypes.ROLE_EDITABLETEXT,
 		controlTypes.ROLE_LIST,
+		controlTypes.ROLE_LISTITEM,
 		controlTypes.ROLE_SLIDER,
 		controlTypes.ROLE_TABCONTROL,
 		controlTypes.ROLE_MENUBAR,
@@ -449,7 +465,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except NotImplementedError:
 			log.debugWarning("doAction not implemented")
 
-	def _activatePosition(self,obj=None):
+	def _activatePosition(self, obj=None):
 		if not obj:
 			obj=self.currentNVDAObject
 			if not obj:
@@ -472,9 +488,29 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			self._activateNVDAObject(obj)
 
 	def script_activatePosition(self,gesture):
-		self._activatePosition()
+		if  config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._activatePosition()
+		else:
+			self._focusLastFocusableObject(activatePosition=True)
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
+
+	def _focusLastFocusableObject(self, activatePosition=False):
+		obj = self._lastFocusableObj
+		if not obj:
+			return
+		if obj!=self.rootNVDAObject and self._shouldSetFocusToObj(obj) and obj!= api.getFocusObject():
+			obj.setFocus()
+			speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+		if activatePosition:
+			self._activatePosition(obj=obj)
+
+	def script_passThrough(self,gesture):
+		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._focusLastFocusableObject()
+		gesture.send()
+	# Translators: the description for the passThrough script on browseMode documents.
+	script_passThrough.__doc__ = _("Passes gesture through to the application")
 
 	def script_disablePassThrough(self, gesture):
 		if not self.passThrough or self.disableAutoPassThrough:
@@ -495,6 +531,17 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:space": "activatePosition",
 		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 		"kb:escape": "disablePassThrough",
+		"kb:control+enter": "passThrough",
+		"kb:control+numpadEnter": "passThrough",
+		"kb:shift+enter": "passThrough",
+		"kb:shift+numpadEnter": "passThrough",
+		"kb:control+shift+enter": "passThrough",
+		"kb:control+shift+numpadEnter": "passThrough",
+		"kb:alt+enter": "passThrough",
+		"kb:alt+numpadEnter": "passThrough",
+		"kb:applications": "passThrough",
+		"kb:shift+applications": "passThrough",
+		"kb:shift+f10": "passThrough",
 	}
 
 # Add quick navigation scripts.
@@ -607,8 +654,7 @@ qn("formField", key="f",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	prevDoc=_("moves to the previous form field"),
 	# Translators: Message presented when the browse mode element is not found.
-	prevError=_("no previous form field"),
-	readUnit=textInfos.UNIT_LINE)
+	prevError=_("no previous form field"))
 qn("list", key="l",
 	# Translators: Input help message for a quick navigation command in browse mode.
 	nextDoc=_("moves to the next list"),
@@ -809,7 +855,7 @@ class ElementsListDialog(wx.Dialog):
 
 		# Translators: The label of an editable text field to filter the elements
 		# in the browse mode Elements List dialog.
-		filterText = _("Filt&er by:")
+		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
 		self.filterEdit = labeledCtrl.control
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
@@ -978,7 +1024,7 @@ class ElementsListDialog(wx.Dialog):
 		else:
 			# Search the list.
 			# We have to implement this ourselves, as tree views don't accept space as a search character.
-			char = unichr(evt.UnicodeKey).lower()
+			char = chr(evt.UnicodeKey).lower()
 			# IF the same character is typed twice, do the same search.
 			if self._searchText != char:
 				self._searchText += char
@@ -1112,6 +1158,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		self._lastProgrammaticScrollTime = None
 		self.documentConstantIdentifier = self.documentConstantIdentifier
 		self._lastFocusObj = None
+		self._lastFocusableObj = None
 		self._hadFirstGainFocus = False
 		self._enteringFromOutside = True
 		# We need to cache this because it will be unavailable once the document dies.
@@ -1133,10 +1180,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		return self.makeTextInfo(textInfos.POSITION_CARET).NVDAObjectAtStart
 
 	def event_treeInterceptor_gainFocus(self):
-		"""Triggered when this browse mode document gains focus.
-		This event is only fired upon entering this treeInterceptor when it was not the current treeInterceptor before.
-		This is different to L{event_gainFocus}, which is fired when an object inside this treeInterceptor gains focus, even if that object is in the same treeInterceptor.
-		"""
 		doSayAll=False
 		hadFirstGainFocus=self._hadFirstGainFocus
 		if not hadFirstGainFocus:
@@ -1177,7 +1220,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 						speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 				info = self.selection
 				if not info.isCollapsed:
-					speech.speakSelectionMessage(_("selected %s"), info.text)
+					speech.speakPreselectedText(info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
@@ -1197,13 +1240,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		"""
 		raise NotImplementedError
 
-	def _activatePosition(self, info=None):
-		obj=None
+	def _activatePosition(self, obj=None, info=None):
 		if info:
 			obj=info.NVDAObjectAtStart
 			if not obj:
 				return
-		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj)
+		super(BrowseModeDocumentTreeInterceptor,self)._activatePosition(obj=obj)
 
 	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
 		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
@@ -1219,6 +1261,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		if reason == controlTypes.REASON_FOCUS:
 			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
+			self._lastFocusableObj = None
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
@@ -1228,38 +1271,20 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
+			followBrowseModeFocus= config.conf["virtualBuffers"]["autoFocusFocusableElements"]
 			if obj==self.rootNVDAObject:
 				return
-			# Set focus to this object, if
-			if (
-				# We actually found an object to set focus to.
-				focusObj
-				# And there are no future focus events already queued:
-				# If there were then setting focus here would be a waste of time as the focus would be replaced anyway.
-				and not eventHandler.isPendingEvents("gainFocus")
-				# And this object is not the root of the document:
-				# Setting focus to the document itself is not what the user would ever expect.
-				and focusObj!=self.rootNVDAObject 
-				# This object does not already have focus
-				and focusObj != api.getFocusObject() 
-				# And Only if this browseMode implementation actually wants to set focus to this kind of object:
-				# For instance, we may wish to set focus to a button, but not a div (if it does not have a tabindex).
-				and self._shouldSetFocusToObj(focusObj)
-			):
-				self.setFocusToObj(focusObj)
+			if followBrowseModeFocus:
+				if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
+					focusObj.setFocus()
+			else:
+				self._lastFocusableObj = focusObj
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
-
-	def setFocusToObj(self,obj):
-		"""
-		Sets focus to the given object in this browseMode document.
-		"""
-		self._lastFocusObj=obj
-		obj.setFocus()
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -1309,6 +1334,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 	currentExpandedControl=None #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 	def script_collapseOrExpandControl(self, gesture):
+		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
+			self._focusLastFocusableObject()
 		oldFocus = api.getFocusObject()
 		oldFocusStates = oldFocus.states
 		gesture.send()
@@ -1415,7 +1442,6 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
-		lastFocusObj=self._lastFocusObj
 		enteringFromOutside=self._enteringFromOutside
 		self._enteringFromOutside=False
 		if not self.isReady:
@@ -1459,23 +1485,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
-		try:
-			lastFocusInfo=self.makeTextInfo(lastFocusObj) if lastFocusObj else None
-		except LookupError:
-			lastFocusInfo=None
 		#We only want to update the caret and speak the field if we're not in the same one as before
-		if (
-			# We always want to report and update if this is the very first focus event.
-			not self._hadFirstGainFocus
-			# We should alrways report and update if the last focus no longer exists (I.e. it no longer has a position in the document):
-			or not lastFocusInfo 
-			# We should report and update if The new focus starts at a different position to the last focus
-			or focusInfo.compareEndPoints(lastFocusInfo,"startToStart")!=0
-			# We should report and update if the new focus ends after the last focus:
-			# It is either at an entirely different position, or it is wider.
-			or focusInfo.compareEndPoints(lastFocusInfo,"endToEnd")>0
-		):
-			# The newly focused node is not due to the caret moving.
+		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
+		caretInfo.expand(textInfos.UNIT_CHARACTER)
+		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
+			# The virtual caret is not within the focus node.
 			oldPassThrough=self.passThrough
 			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
 			if not oldPassThrough and (passThrough or sayAllHandler.isRunning()):
@@ -1503,6 +1518,13 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
+				if (
+					not config.conf["virtualBuffers"]["autoFocusFocusableElements"]
+					and self._lastFocusableObj
+					and obj == self._lastFocusableObj
+					and obj is not self._lastFocusableObj
+				):
+					speech.speakObject(self._lastFocusableObj,controlTypes.REASON_CHANGE)
 			else:
 				self._replayFocusEnteredEvents()
 				return nextHandler()
@@ -1546,6 +1568,26 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		return False
 
+	def _isNVDAObjectInApplication_noWalk(self, obj):
+		"""Determine whether a given object is within an application without walking ancestors.
+		The base implementation simply checks whether the object has an application role.
+		Subclasses can override this if they can provide a definite answer without needing to walk.
+		For example, for virtual buffers, if the object is in the buffer,
+		it definitely isn't in an application.
+		L{_isNVDAObjectInApplication} calls this and walks to the next ancestor if C{None} is returned.
+		@return: C{True} if definitely in an application,
+			C{False} if definitely not in an application,
+			C{None} if this can't be determined without walking ancestors.
+		"""
+		if (
+			# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
+			obj.role in self.APPLICATION_ROLES 
+			# Anything inside a combo box should be treated as being outside a browseMode document.
+			or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
+		):
+			return True
+		return None
+
 	def _isNVDAObjectInApplication(self, obj):
 		"""Determine whether a given object is within an application.
 		The object is considered to be within an application if it or one of its ancestors has an application role.
@@ -1576,13 +1618,10 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				# We found a cached result.
 				return doResult(inApp)
 			objs.append(obj)
-			if (
-				# roles such as application and dialog should be treated as being within a "application" and therefore outside of the browseMode document. 
-				obj.role in self.APPLICATION_ROLES 
-				# Anything inside a combo box should be treated as being outside a browseMode document.
-				or (obj.container and obj.container.role==controlTypes.ROLE_COMBOBOX)
-			):
-				return doResult(True)
+			inApp = self._isNVDAObjectInApplication_noWalk(obj)
+			if inApp is not None:
+				return doResult(inApp)
+			# We must walk ancestors.
 			# Cache container.
 			container = obj.container
 			obj.container = container
@@ -1608,7 +1647,12 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		docConstId = self.documentConstantIdentifier
 		# Return True if the URL indicates that this is probably a web browser document.
 		# We do this check because we don't want to remember caret positions for email messages, etc.
-		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
+		if isinstance(docConstId, str):
+			protocols=("http", "https", "ftp", "ftps", "file")
+			protocol=docConstId.split("://", 1)[0]
+			return protocol in protocols
+		return False
+
 
 	def _getInitialCaretPos(self):
 		"""Retrieve the initial position of the caret after the buffer has been loaded.
@@ -1624,14 +1668,14 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 				pass
 		return None
 
-	def getEnclosingContainerRange(self,range):
-		range=range.copy()
-		range.collapse()
+	def getEnclosingContainerRange(self, textRange):
+		textRange = textRange.copy()
+		textRange.collapse()
 		try:
-			item = next(self._iterNodesByType("container", "up", range))
+			item = next(self._iterNodesByType("container", "up", textRange))
 		except (NotImplementedError,StopIteration):
 			try:
-				item = next(self._iterNodesByType("landmark", "up", range))
+				item = next(self._iterNodesByType("landmark", "up", textRange))
 			except (NotImplementedError,StopIteration):
 				return
 		return item.textInfo
@@ -1680,8 +1724,8 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
 	NOT_LINK_BLOCK_MIN_LEN = 30
-	def _isSuitableNotLinkBlock(self,range):
-		return len(range.text)>=self.NOT_LINK_BLOCK_MIN_LEN
+	def _isSuitableNotLinkBlock(self, textRange):
+		return len(textRange.text) >= self.NOT_LINK_BLOCK_MIN_LEN
 
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		links = self._iterNodesByType("link", direction=direction, pos=pos)
@@ -1691,15 +1735,15 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 			item2 = next(links)
 			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
 			if direction=="previous":
-				range=item1.textInfo.copy()
-				range.collapse()
-				range.setEndPoint(item2.textInfo,"startToEnd")
+				textRange=item1.textInfo.copy()
+				textRange.collapse()
+				textRange.setEndPoint(item2.textInfo,"startToEnd")
 			else:
-				range=item2.textInfo.copy()
-				range.collapse()
-				range.setEndPoint(item1.textInfo,"startToEnd")
-			if self._isSuitableNotLinkBlock(range):
-				yield TextInfoQuickNavItem("notLinkBlock",self,range)
+				textRange=item2.textInfo.copy()
+				textRange.collapse()
+				textRange.setEndPoint(item1.textInfo,"startToEnd")
+			if self._isSuitableNotLinkBlock(textRange):
+				yield TextInfoQuickNavItem("notLinkBlock", self, textRange)
 			item1=item2
 
 	__gestures={

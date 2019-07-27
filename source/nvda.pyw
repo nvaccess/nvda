@@ -19,22 +19,17 @@ else:
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	os.chdir(os.path.normpath(os.path.dirname(__file__)))
 
-import pythonMonkeyPatches
-
 import ctypes
 import locale
 import gettext
 
-#Localization settings
-locale.setlocale(locale.LC_ALL,'')
 try:
-	gettext.translation('nvda',localedir='locale',languages=[locale.getlocale()[0]]).install(True)
+	gettext.translation('nvda',localedir='locale',languages=[locale.getdefaultlocale()[0]]).install(True)
 except:
-	gettext.install('nvda',unicode=True)
+	gettext.install('nvda')
 
 import time
 import argparse
-import win32con
 import globalVars
 import config
 import logHandler
@@ -59,14 +54,14 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 	def print_help(self, file=None):
 		"""Shows help in a standard Windows message dialog"""
-		winUser.MessageBox(0, unicode(self.format_help()), u"Help", 0)
+		winUser.MessageBox(0, self.format_help(), u"Help", 0)
 
 	def error(self, message):
 		"""Shows an error in a standard Windows message dialog, and then exits NVDA"""
 		out = ""
 		out = self.format_usage()
 		out += "\nerror: %s" % message
-		winUser.MessageBox(0, unicode(out), u"Error", 0)
+		winUser.MessageBox(0, out, u"Error", 0)
 		sys.exit(2)
 
 globalVars.startTime=time.time()
@@ -77,9 +72,13 @@ if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
-def decodeMbcs(string):
-	"""Decode a multi-byte character set string"""
-	return string.decode("mbcs")
+def stringToBool(string):
+	"""Wrapper for configobj.validate.is_boolean to raise the proper exception for wrong values."""
+	from configobj.validate import is_boolean, ValidateError
+	try:
+		return is_boolean(string)
+	except ValidateError as e:
+		raise argparse.ArgumentTypeError(e.message)
 
 #Process option arguments
 parser=NoConsoleOptionParser()
@@ -87,21 +86,24 @@ quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
 quitGroup.add_argument('-r','--replace',action="store_true",dest='replace',default=False,help="Quit already running copy of NVDA and start this one")
 parser.add_argument('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
-parser.add_argument('-f','--log-file',dest='logFileName',type=decodeMbcs,help="The file where log messages should be written to")
-parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10,20,30,40,50],help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning")
-parser.add_argument('-c','--config-path',dest='configPath',default=None,type=decodeMbcs,help="The path where all settings for NVDA are stored")
+parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
+parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
+parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
-parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given.")
+parser.add_argument('--debug-logging',action="store_true",dest='debugLogging',default=False,help="Enable debug level logging just for this run. This setting will override any other log level (--loglevel, -l) argument given, as well as no logging option.")
+parser.add_argument('--no-logging',action="store_true",dest='noLogging',default=False,help="Disable logging completely for this run. This setting can be overwritten with other log level (--loglevel, -l) switch or if debug logging is specified.")
 parser.add_argument('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
 installGroup = parser.add_mutually_exclusive_group()
 installGroup.add_argument('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
 installGroup.add_argument('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
 installGroup.add_argument('--create-portable',action="store_true",dest='createPortable',default=False,help="Creates a portable copy of NVDA (starting the new copy after installation)")
 installGroup.add_argument('--create-portable-silent',action="store_true",dest='createPortableSilent',default=False,help="Creates a portable copy of NVDA silently (does not start the new copy after installation).")
-parser.add_argument('--portable-path',dest='portablePath',default=None,type=decodeMbcs,help="The path where a portable copy will be created")
+parser.add_argument('--portable-path',dest='portablePath',default=None,type=str,help="The path where a portable copy will be created")
 parser.add_argument('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
+parser.add_argument('--enable-start-on-logon',metavar="True|False",type=stringToBool,dest='enableStartOnLogon',default=None,
+	help="When installing, enable NVDA's start on the logon screen")
 # This option currently doesn't actually do anything.
 # It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
 # the downgraded copy won't be started in non-secure mode on secure desktops.
@@ -113,7 +115,7 @@ parser.add_argument('--ease-of-access',action="store_true",dest='easeOfAccess',d
 
 def terminateRunningNVDA(window):
 	processID,threadID=winUser.getWindowThreadProcessID(window)
-	winUser.PostMessage(window,win32con.WM_QUIT,0,0)
+	winUser.PostMessage(window,winUser.WM_QUIT,0,0)
 	h=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 	if not h:
 		# The process is already dead.
@@ -171,12 +173,9 @@ if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 
 isSecureDesktop = desktopName == "Winlogon"
 if isSecureDesktop:
+	import winreg
 	try:
-		import _winreg as winreg # Python 2.7 import
-	except ImportError:
-		import winreg # Python 3 import
-	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NVDA")
 		if not winreg.QueryValueEx(k, u"serviceDebug")[0]:
 			globalVars.appArgs.secure = True
 	except WindowsError:
@@ -189,12 +188,17 @@ if isSecureDesktop:
 #import pychecker.checker
 
 #Initial logging and logging code
+# #8516: because config manager isn't ready yet, we must let start and exit messages be logged unless disabled via --no-logging switch.
+# However, do log things if debug logging or log level other than 0 (not set) is requested from command line switches.
 
 logLevel=globalVars.appArgs.logLevel
-if logLevel<=0:
-	logLevel=log.INFO
-if globalVars.appArgs.debugLogging:
-	logLevel=log.DEBUG
+if globalVars.appArgs.noLogging and (not globalVars.appArgs.debugLogging and logLevel == 0):
+	logLevel = log.OFF
+else:
+	if logLevel<=0:
+		logLevel=log.INFO
+	if globalVars.appArgs.debugLogging:
+		logLevel=log.DEBUG
 logHandler.initialize()
 logHandler.log.setLevel(logLevel)
 if logLevel is log.DEBUG:
@@ -205,7 +209,7 @@ log.debug("Debug level logging enabled")
 if globalVars.appArgs.changeScreenReaderFlag:
 	winUser.setSystemScreenReaderFlag(True)
 #Accept wm_quit from other processes, even if running with higher privilages
-if not ctypes.windll.user32.ChangeWindowMessageFilter(win32con.WM_QUIT,1):
+if not ctypes.windll.user32.ChangeWindowMessageFilter(winUser.WM_QUIT,1):
 	raise WinError()
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)

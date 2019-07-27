@@ -20,6 +20,7 @@ import ui
 from logHandler import log
 import config
 import versionInfo
+import addonAPIVersion
 import speech
 import queueHandler
 import core
@@ -35,17 +36,13 @@ import api
 from . import guiHelper
 import winVersion
 
-# Temporary: #8599: add cp65001 codec
-#            #7105: upgrading to python 3 should fix this issue. See https://bugs.python.org/issue13216
-codecs.register(lambda name: codecs.lookup('utf-8') if name == 'cp65001' else None)
-
 try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
 
 ### Constants
-NVDA_PATH = os.getcwdu()
+NVDA_PATH = os.getcwd()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
 DONATE_URL = "http://www.nvaccess.org/donate/"
 
@@ -151,11 +148,9 @@ class MainFrame(wx.Frame):
 
 	def showGui(self):
 		# The menu pops up at the location of the mouse, which means it pops up at an unpredictable location.
-		# Therefore, move the mouse to the centre of the screen so that the menu will always pop up there.
-		left, top, width, height = api.getDesktopObject().location
-		x = width / 2
-		y = height / 2
-		winUser.setCursorPos(x, y)
+		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
+		location = api.getDesktopObject().location
+		winUser.setCursorPos(*location.center)
 		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
@@ -213,7 +208,19 @@ class MainFrame(wx.Frame):
 
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
-			updateCheck.executeUpdate()
+			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
+			from addonHandler import getIncompatibleAddons
+			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
+				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
+					parent=gui.mainFrame,
+					destPath=destPath,
+					version=version,
+					apiVersion=apiVersion,
+					backCompatTo=backCompatToAPIVersion
+				)
+				gui.runScriptModalDialog(confirmUpdateDialog)
+			else:
+				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
 		try:
@@ -316,7 +323,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from addonGui import AddonsDialog
+		from .addonGui import AddonsDialog
 		d=AddonsDialog(gui.mainFrame)
 		d.Show()
 		self.postPopup()
@@ -375,7 +382,7 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from configProfiles import ProfilesDialog
+		from .configProfiles import ProfilesDialog
 		ProfilesDialog(gui.mainFrame).Show()
 		self.postPopup()
 
@@ -469,10 +476,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to view NVDA Contributors list document.
 			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
-		# Translators: The label for the menu item to open NVDA Welcome Dialog.
-		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
-		menu_help.AppendSeparator()
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+			menu_help.AppendSeparator()
 		if updateCheck:
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
 			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
@@ -540,6 +547,13 @@ def initialize():
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
+	for instance, state in gui.SettingsDialog._instances.items():
+		if state is gui.SettingsDialog._DIALOG_DESTROYED_STATE:
+			log.error(
+				"Destroyed but not deleted instance of settings dialog exists: {!r}".format(instance)
+			)
+		else:
+			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
 	global mainFrame
 	# This is called after the main loop exits because WM_QUIT exits the main loop
 	# without destroying all objects correctly and we need to support WM_QUIT.
@@ -634,7 +648,15 @@ class WelcomeDialog(wx.Dialog):
 		mainSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 		welcomeTextDetail = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE_DETAIL)
 		mainSizer.Add(welcomeTextDetail,border=20,flag=wx.EXPAND|wx.LEFT|wx.RIGHT)
-		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Options")), wx.VERTICAL)
+
+		optionsSizer = wx.StaticBoxSizer(
+			wx.StaticBox(
+				self,
+				# Translators: The label for a group box containing the NVDA welcome dialog options.
+				label=_("Options")
+			),
+			wx.VERTICAL
+		)
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=optionsSizer)
 		# Translators: The label of a combobox in the Welcome dialog.
 		kbdLabelText = _("&Keyboard layout:")
@@ -845,7 +867,19 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
 		elif action == 4:
 			if updateCheck:
-				updateCheck.executeUpdate()
+				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
+				from addonHandler import getIncompatibleAddons
+				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
+					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
+						parent=gui.mainFrame,
+						destPath=destPath,
+						version=version,
+						apiVersion=apiVersion,
+						backCompatTo=backCompatTo
+					)
+					confirmUpdateDialog.ShowModal()
+				else:
+					updateCheck.executePendingUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):

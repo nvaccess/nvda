@@ -7,19 +7,27 @@
 
 """NVDA core"""
 
-# Do this first to initialise comtypes.client.gen_dir and the comtypes.gen search path.
+RPC_E_CALL_CANCELED = -2147418110
+
+class CallCancelled(Exception):
+	"""Raised when a call is cancelled.
+	"""
+
+# Apply several monkey patches to comtypes
+# noinspection PyUnresolvedReferences
+import comtypesMonkeyPatches
+
+# Initialise comtypes.client.gen_dir and the comtypes.gen search path 
+# and Append our comInterfaces directory to the comtypes.gen search path.
+import comtypes
 import comtypes.client
-# Append our comInterfaces directory to the comtypes.gen search path.
 import comtypes.gen
 import comInterfaces
 comtypes.gen.__path__.append(comInterfaces.__path__[0])
 
-#Apply several monky patches to comtypes
-import comtypesMonkeyPatches
-
 import sys
 import winVersion
-import thread
+import threading
 import nvwave
 import os
 import time
@@ -28,7 +36,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-import extensionPoints
 
 import extensionPoints
 
@@ -38,7 +45,7 @@ postNvdaStartup = extensionPoints.Action()
 PUMP_MAX_DELAY = 10
 
 #: The thread identifier of the main thread.
-mainThreadId = thread.get_ident()
+mainThreadId = threading.get_ident()
 
 #: Notifies when a window message has been received by NVDA.
 #: This allows components to perform an action when several system events occur,
@@ -83,17 +90,18 @@ def doStartupDialogs():
 		import updateCheck
 	except RuntimeError:
 		updateCheck=None
-	if updateCheck and not config.conf['update']['askedAllowUsageStats']:
-		# a callback to save config after the usage stats question dialog has been answered.
-		def onResult(ID):
-			import wx
-			if ID in (wx.ID_YES,wx.ID_NO):
-				try:
-					config.conf.save()
-				except:
-					pass
-		# Ask the user if usage stats can be collected.
-		gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
+	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+		if updateCheck and not config.conf['update']['askedAllowUsageStats']:
+			# a callback to save config after the usage stats question dialog has been answered.
+			def onResult(ID):
+				import wx
+				if ID in (wx.ID_YES,wx.ID_NO):
+					try:
+						config.conf.save()
+					except:
+						pass
+			# Ask the user if usage stats can be collected.
+			gui.runScriptModalDialog(gui.AskAllowUsageStatsDialog(None),onResult)
 
 def restart(disableAddons=False, debugLogging=False):
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -125,8 +133,8 @@ def restart(disableAddons=False, debugLogging=False):
 	except ValueError:
 		pass
 	shellapi.ShellExecute(None, None,
-		sys.executable.decode("mbcs"),
-		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
+		sys.executable,
+		subprocess.list2cmdline(sys.argv + options),
 		None,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
 		winUser.SW_SHOWNORMAL)
@@ -206,6 +214,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
+	if config.conf['development']['enableScratchpadDir']:
+		log.info("Developer Scratchpad mode enabled")
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
@@ -253,7 +263,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	# wxPython 4 no longer has either of these constants (despite the documentation saying so), some add-ons may rely on
 	# them so we add it back into wx. https://wxpython.org/Phoenix/docs/html/wx.Window.html#wx.Window.Centre
 	wx.CENTER_ON_SCREEN = wx.CENTRE_ON_SCREEN = 0x2
-	log.info("Using wx version %s"%wx.version())
+	import six
+	log.info("Using wx version %s with six version %s"%(wx.version(), six.__version__))
 	class App(wx.App):
 		def OnAssert(self,file,line,cond,msg):
 			message="{file}, line {line}:\nassert {cond}: {msg}".format(file=file,line=line,cond=cond,msg=msg)
@@ -272,7 +283,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.cancelSpeech()
 		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
-				nvwave.playWaveFile("waves\\exit.wav",async=False)
+				nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
 			except:
 				pass
 		log.info("Windows session ending")
@@ -301,7 +312,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
-		#Just define these constants here, so we don't have to import win32con
+		# Windows constants for power / display changes
 		WM_POWERBROADCAST = 0x218
 		WM_DISPLAYCHANGE = 0x7e
 		PBT_APMPOWERSTATUSCHANGE = 0xA
@@ -373,7 +384,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
 				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
 
-	messageWindow = MessageWindow(unicode(versionInfo.name))
+	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
@@ -382,11 +393,13 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if not wxLang and '_' in lang:
 		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
-		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
+		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwd(),"locale"))
 	# #8064: Wx might know the language, but may not actually contain a translation database for that language.
 	# If we try to initialize this language, wx will show a warning dialog.
-	# Therefore treat this situation like wx not knowing the language at all.
-	if not locale.IsAvailable(wxLang.Language):
+	# #9089: some languages (such as Aragonese) do not have language info, causing language getter to fail.
+	# In this case, wxLang is already set to None.
+	# Therefore treat these situations like wx not knowing the language at all.
+	if wxLang and not locale.IsAvailable(wxLang.Language):
 		wxLang=None
 	if wxLang:
 		try:
@@ -413,7 +426,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	except:
 		log.error("Error initializing Java Access Bridge support", exc_info=True)
 	import winConsoleHandler
-	log.debug("Initializing winConsole support")
+	log.debug("Initializing legacy winConsole support")
 	winConsoleHandler.initialize()
 	import UIAHandler
 	log.debug("Initializing UIA support")
@@ -538,7 +551,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(treeInterceptorHandler)
 	_terminate(IAccessibleHandler, name="IAccessible support")
 	_terminate(UIAHandler, name="UIA support")
-	_terminate(winConsoleHandler, name="winConsole support")
+	_terminate(winConsoleHandler, name="Legacy winConsole support")
 	_terminate(JABHandler, name="Java Access Bridge support")
 	_terminate(appModuleHandler, name="app module handler")
 	_terminate(NVDAHelper)
@@ -553,7 +566,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
-			nvwave.playWaveFile("waves\\exit.wav",async=False)
+			nvwave.playWaveFile("waves\\exit.wav",asynchronous=False)
 		except:
 			pass
 	# #5189: Destroy the message window as late as possible
@@ -580,7 +593,7 @@ def requestPump():
 	if not _pump or _isPumpPending:
 		return
 	_isPumpPending = True
-	if thread.get_ident() == mainThreadId:
+	if threading.get_ident() == mainThreadId:
 		_pump.Start(PUMP_MAX_DELAY, True)
 		return
 	# This isn't the main thread. wx timers cannot be run outside the main thread.
@@ -595,7 +608,7 @@ def callLater(delay, callable, *args, **kwargs):
 	This function can be safely called from any thread.
 	"""
 	import wx
-	if thread.get_ident() == mainThreadId:
+	if threading.get_ident() == mainThreadId:
 		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
 	else:
 		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)

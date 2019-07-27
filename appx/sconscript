@@ -1,3 +1,17 @@
+###
+#This file is a part of the NVDA project.
+#URL: https://www.nvaccess.org/
+#Copyright 2018-2019 NV Access Limited
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
 import subprocess
 import versionInfo
 
@@ -17,7 +31,7 @@ def getCertPublisher(env):
 		return env['publisher']
 	certPassword=env.get('certPassword','')
 	cmd=['certutil','-dump','-p',certPassword,File('#'+certFile).abspath.replace('/','\\')]
-	lines=subprocess.check_output(cmd).splitlines()
+	lines=subprocess.run(cmd,check=True,capture_output=True,text=True).stdout.splitlines()
 	linePrefix='Subject: '
 	for line in lines:
 		if line.startswith(linePrefix):
@@ -52,6 +66,7 @@ excludedDistFiles=[
 	'lib/minHook.dll',
 	'lib/NVDAHelperRemote.dll',
 	'lib64/',
+	'libArm64/',
 	'uninstall.exe',
 ]
 
