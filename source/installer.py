@@ -2,14 +2,11 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2017 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 
 from ctypes import *
 from ctypes.wintypes import *
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 import threading
 import time
 import os
@@ -25,6 +22,7 @@ from logHandler import log
 import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
+import winKernel
 
 _wsh=None
 def _getWSH():
@@ -77,7 +75,7 @@ def getStartMenuFolder(noDefault=False):
 
 def getInstallPath(noDefault=False):
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
 		return winreg.QueryValueEx(k,"UninstallDirectory")[0]
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
@@ -91,11 +89,15 @@ def comparePreviousInstall():
 	if not path or not os.path.isdir(path):
 		return None
 	try:
-		return cmp(
-			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
-			os.path.getmtime("nvda_slave.exe"))
+		oldTime=os.path.getmtime(os.path.join(path, "nvda_slave.exe"))
+		newTime=os.path.getmtime("nvda_slave.exe")
 	except OSError:
 		return None
+	# cmp no longer exists in Python3.
+	# Per the Python3 What's New docs:
+	# cmp can be replaced with (a>b)-(a<b).
+	# In other words, False and True coerce to 0 and 1 respectively.
+	return (oldTime>newTime)-(oldTime<newTime)
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -119,7 +121,7 @@ def getDocFilePath(fileName,installDir):
 				return tryPath
 
 def copyProgramFiles(destPath):
-	sourcePath=os.getcwdu()
+	sourcePath=os.getcwd()
 	detectUserConfig=True
 	detectNVDAExe=True
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
@@ -203,6 +205,21 @@ def removeOldProgramFiles(destPath):
 	if os.path.isfile(fn):
 		tryRemoveFile(fn)
 
+	# #9960: If compiled python files from older versions aren't removed correctly,
+	# this could cause strange errors when Python tries to create tracebacks
+	# in a newer version of NVDA.
+	for curDestDir,subDirs,files in os.walk(destPath):
+		for f in files:
+			if f.endswith((".pyc", ".pyo")):
+				# This also removes compiled files from system config,
+				# but that is fine.
+				path=os.path.join(curDestDir, f)
+				log.debug(f"Removing old byte compiled python file: {path!r}")
+				try:
+					tryRemoveFile(path)
+				except RetriableFailure:
+					log.warning(f"Couldn't remove file: {path!r}")
+
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
@@ -216,7 +233,7 @@ uninstallerRegInfo={
 
 def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen,configInLocalAppData=False):
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,winreg.KEY_WRITE) as k:
-		for name,value in uninstallerRegInfo.iteritems(): 
+		for name,value in uninstallerRegInfo.items(): 
 			winreg.SetValueEx(k,name,None,winreg.REG_SZ,value.format(installDir=installDir))
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
@@ -349,7 +366,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		os.rename(path,tempPath)
 	except (WindowsError,IOError):
 		raise RetriableFailure("Failed to rename file %s before  remove"%path)
-	for count in xrange(numRetries):
+	for count in range(numRetries):
 		try:
 			if os.path.isdir(tempPath):
 				shutil.rmtree(tempPath)
@@ -361,8 +378,14 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
-		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
-		MoveFileEx("\\\\?\\"+tempPath,None,4)
+		try:
+			# Use escapes in a unicode string instead of raw.
+			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
+			pathQualifier=u"\\\\?\\"
+			# #9847: Move file to None to delete it.
+			winKernel.moveFileEx(pathQualifier+tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
+		except WindowsError:
+			log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath, exc_info=True)
 		return
 	try:
 		os.rename(tempPath,path)
@@ -386,7 +409,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		except (WindowsError,OSError):
 			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
-		windll.kernel32.MoveFileExW(tempPath,None,4)
+		winKernel.moveFileEx(tempPath,None,winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
 			errorCode=GetLastError()
 			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))

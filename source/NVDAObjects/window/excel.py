@@ -5,9 +5,8 @@
 #See the file COPYING for more details.
 
 import abc
-from six import with_metaclass
 import ctypes
-from comtypes import COMError
+from comtypes import COMError, BSTR
 import comtypes.automation
 import wx
 import time
@@ -648,7 +647,7 @@ class ExcelBase(Window):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
 		elif isChartActive:
 			selection = self.excelWindowObject.ActiveChart
-			import _msOfficeChart
+			from . import _msOfficeChart
 			parent=ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=self.excelWindowObject.activeSheet)
 			obj = _msOfficeChart.OfficeChart( windowHandle=self.windowHandle , officeApplicationObject = self.excelWindowObject , officeChartObject = selection , initialDocument = parent)  
 		return obj
@@ -826,7 +825,7 @@ class ExcelWorksheet(ExcelBase):
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
-				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+				for headerRowNumber in range(info.rowNumber,info.rowNumber+info.rowSpan): 
 					headerCell=self.excelWorksheetObject.cells(headerRowNumber,cell.columnNumber)
 					# The header could be  merged cells. 
 					# if so, fetch text from the first in the merge as that always contains the content
@@ -836,7 +835,7 @@ class ExcelWorksheet(ExcelBase):
 						pass
 					textList.append(headerCell.text)
 			else:
-				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+				for headerColumnNumber in range(info.columnNumber,info.columnNumber+info.colSpan): 
 					headerCell=self.excelWorksheetObject.cells(cell.rowNumber,headerColumnNumber)
 					# The header could be  merged cells. 
 					# if so, fetch text from the first in the merge as that always contains the content
@@ -877,6 +876,8 @@ class ExcelWorksheet(ExcelBase):
 		"kb:shift+tab",
 		"kb:enter",
 		"kb:numpadEnter",
+		"kb:shift+enter",
+		"kb:shift+numpadEnter",
 		"kb:upArrow",
 		"kb:downArrow",
 		"kb:leftArrow",
@@ -1083,7 +1084,7 @@ class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	def label(self):
 		return "%s: %s"%(self.excelCellInfo.address.split('!')[-1],self.excelCellInfo.formula)
 
-class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
+class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 	cellInfoFlags=NVCELLINFOFLAG_ADDRESS|NVCELLINFOFLAG_COORDS
 
 	@abc.abstractproperty
@@ -1118,8 +1119,9 @@ class ExcelCellInfoQuicknavIterator(with_metaclass(abc.ABCMeta,object)):
 		count=collectionObject.count
 		cellInfos=(ExcelCellInfo*count)()
 		numCellsFetched=ctypes.c_long()
-		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,collectionObject._comobj,self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
-		for index in xrange(numCellsFetched.value):
+		address=collectionObject.address(True,True,xlA1,True)
+		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.document.appModule.helperLocalBindingHandle,self.document.windowHandle,BSTR(address),self.cellInfoFlags,count,cellInfos,ctypes.byref(numCellsFetched))
+		for index in range(numCellsFetched.value):
 			ci=cellInfos[index]
 			if not ci.address:
 				log.debugWarning("cellInfo at index %s has no address"%index)
@@ -1147,7 +1149,8 @@ class ExcelCell(ExcelBase):
 			return None
 		ci=ExcelCellInfo()
 		numCellsFetched=ctypes.c_long()
-		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,self.excelCellObject._comobj,NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
+		address=self.excelCellObject.address(True,True,xlA1,True)
+		res=NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(self.appModule.helperLocalBindingHandle,self.windowHandle,BSTR(address),NVCELLINFOFLAG_ALL,1,ctypes.byref(ci),ctypes.byref(numCellsFetched))
 		if res!=0 or numCellsFetched.value==0:
 			return None
 		return ci
@@ -1283,7 +1286,8 @@ class ExcelCell(ExcelBase):
 			rawAddress=self.excelCellObject.address(False,False,1,False)
 		coords=rawAddress.split('!')[-1].split(':')
 		if len(coords)==2:
-			return "%s through %s"%(coords[0],coords[1])
+			# Translators: Used to express an address range in excel.
+			return _("{start} through {end}").format(start=coords[0], end=coords[1])
 		else:
 			return coords[0]
 
@@ -1330,7 +1334,7 @@ class ExcelCell(ExcelBase):
 		if not cellInfo:
 			return states
 		stateBits=cellInfo.states
-		for k,v in vars(controlTypes).iteritems():
+		for k,v in vars(controlTypes).items():
 			if k.startswith('STATE_') and stateBits&v:
 				states.add(v)
 		return states
@@ -1533,7 +1537,7 @@ class ExcelDropdown(Window):
 				background=item.field.get('background-color',None)
 				if (background,foreground)==self._highlightColors:
 					states.add(controlTypes.STATE_SELECTED)
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
 				children.append(obj)
 				index+=1

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2018 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger
+#Copyright (C) 2012-2019 NV Access Limited, Beqa Gozalishvili, Joseph Lee, Babbage B.V., Ethan Holliger, Arnold Loubriat
 
 import os
 import weakref
@@ -157,16 +157,28 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		AddonsDialog._instance = weakref.ref(self)
 		# Translators: The title of the Addons Dialog
 		title = _("Add-ons Manager")
-		wx.Dialog.__init__(self, parent, title=title)
+		# Translators: The title of the Addons Dialog when add-ons are disabled
+		titleWhenAddonsAreDisabled = _("Add-ons Manager (add-ons disabled)")
+		wx.Dialog.__init__(
+			self,
+			parent,
+			title=title if not globalVars.appArgs.disableAddons else titleWhenAddonsAreDisabled
+		)
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		firstTextSizer = wx.BoxSizer(wx.VERTICAL)
 		listAndButtonsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=wx.BoxSizer(wx.HORIZONTAL))
 		if globalVars.appArgs.disableAddons:
-			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
-			label = _("All add-ons are currently disabled. To enable add-ons you must restart NVDA.")
-			firstTextSizer.Add(wx.StaticText(self, label=label))
+			# Translators: A message in the add-ons manager shown when add-ons are globally disabled.
+			label = _(
+				"NVDA was started with all add-ons disabled. "
+				"You may modify the enabled / disabled state, and install or uninstall add-ons. "
+				"Changes will not take effect until after NVDA is restarted."
+			)
+			addonsDisabledText = wx.StaticText(self, label=label)
+			addonsDisabledText.Wrap(self.scaleSize(670))
+			firstTextSizer.Add(addonsDisabledText)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel = _("Installed Add-ons")
 		firstTextSizer.Add(wx.StaticText(self, label=entriesLabel))
@@ -303,16 +315,29 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
 			statusList.append(_("Install"))
 		# in some cases an addon can be expected to be disabled after install, so we want "install" to take precedence here
-		elif globalVars.appArgs.disableAddons or addon.isDisabled:
+		# If add-ons are globally disabled, don't show this status.
+		elif addon.isDisabled and not globalVars.appArgs.disableAddons:
 			# Translators: The status shown for an addon when its currently suspended do to addons being disabled.
 			statusList.append(_("Disabled"))
 		if addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			statusList.append(_("Removed after restart"))
-		elif addon.isPendingDisable or (not addon.isPendingEnable and addon.isPendingInstall and addon.isDisabled):
+		elif addon.isPendingDisable or (
+				# yet to be installed, disabled after install
+				not addon.isPendingEnable and addon.isPendingInstall and addon.isDisabled
+			) or (
+				# addons globally disabled, disabled after restart
+				globalVars.appArgs.disableAddons and addon.isDisabled and not addon.isPendingEnable
+			):
 			# Translators: The status shown for an addon when it requires a restart to become disabled
 			statusList.append(_("Disabled after restart"))
-		elif addon.isPendingEnable or (addon.isPendingInstall and not addon.isDisabled):
+		elif addon.isPendingEnable or (
+				# yet to be installed, enabled after install
+				addon.isPendingInstall and not addon.isDisabled
+			) or (
+				# addons globally disabled, enabled after restart
+				globalVars.appArgs.disableAddons and not addon.isDisabled
+			):
 			# Translators: The status shown for an addon when it requires a restart to become enabled
 			statusList.append(_("Enabled after restart"))
 		return ", ".join(statusList)
@@ -378,7 +403,8 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		for addon in self.curAddons:
 			if (addon.isPendingInstall or addon.isPendingRemove
 				or addon.isDisabled and addon.isPendingEnable
-				or addon.isRunning and addon.isPendingDisable):
+				or addon.isRunning and addon.isPendingDisable
+				or not addon.isDisabled and addon.isPendingDisable):
 				needsRestart = True
 				break
 		if needsRestart:
@@ -465,7 +491,7 @@ def installAddon(parentWindow, addonPath):
 
 	prevAddon = None
 	for addon in addonHandler.getAvailableAddons():
-		if not addon.isPendingRemove and bundle.name==addon.manifest['name']:
+		if not addon.isPendingRemove and bundle.name.lower()==addon.manifest['name'].lower():
 			prevAddon=addon
 			break
 	if prevAddon:
@@ -496,7 +522,6 @@ def installAddon(parentWindow, addonPath):
 			wx.YES|wx.NO|wx.ICON_WARNING
 		) != wx.YES:
 				return False
-		prevAddon.requestRemove()
 
 	from contextlib import contextmanager
 
@@ -525,6 +550,8 @@ def installAddon(parentWindow, addonPath):
 		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 		with doneAndDestroy(progressDialog):
 			gui.ExecAndPump(addonHandler.installAddonBundle, bundle)
+			if prevAddon:
+				prevAddon.requestRemove()
 			return True
 	except:
 		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)

@@ -107,9 +107,16 @@ Bu iletişim kutusunda, aşağıda açıklanan birkaç seçenek daha bulunmaktad
  Kurulum bittiğinde, sürecin başarıyla tamamlandığını belirten bir mesajla karşılaşacaksınız.
  Bu noktada Tamam'a basmanız NVDA'nın kurulmuş olan kopyasını başlatacaktır.
  
++++ Uyumsuz eklentiler uyarısı +++[InstallWithIncompatibleAddons]
+Zaten yüklü olan eklentileriniz varsa, uyumsuz eklentilerin devre dışı bırakılacağı konusunda da bir uyarı olabilir.
+Devam düğmesine basmadan önce, bu eklentilerin devre dışı bırakılacağını anladığınızı doğrulamak için onay kutusunu kullanmanız gerekir.
+Devre dışı bırakılacak eklentileri incelemek için bir düğme de bulunacaktır.
+Bu düğme hakkında daha fazla yardım için [uyumsuz eklentiler iletişim kutusu bölümüne #incompatibleAddonsManager] bakın.
+
 +++ Windows Giriş Ekranında NVDA'yı Kullan +++[StartAtWindowsLogon]
 Bu seçenek NVDA'nın Windows giriş ekranında, parolanızı girmeden önce otomatik olarak başlayıp başlamayacağını belirlemenizi sağlar.
 Bu, kullanıcı hesabı denetimi (UAC) ekranı ve diğer güvenli ekranlar için de geçerlidir.
+Bu seçenek yeni kurulumlar için varsayılan olarak etkindir.
 
 +++ Masaüstünde Kısayol Oluştur (ctrl+alt+n) +++[CreateDesktopShortcut]
 Bu seçenek NVDA'nın başlatılması için bir masaüstü kısayolu oluşturmanızı sağlar. 
@@ -465,7 +472,18 @@ NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fa
 
 + Tarama Kipi +[BrowseMode]
 Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
- Bu, Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Google Chrome, Microsoft outlook HTML mesajları, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
+ Bu, aşağıdaki uygulamalardaki belgeleri içerir:
+- Mozilla Firefox
+- Microsoft Internet Explorer
+- Mozilla Thunderbird
+- Microsoft Outlook'da HTML mesajları
+- Google Chrome
+- Microsoft Edge
+- Adobe Reader
+- Foxit Reader
+- Adobe Flash
+- Amazon Kindle for PC içinde desteklenen kitaplar
+-
 Tarama kipi aynı zamanda Microsoft Word için karmaşık belgelerde dolaşılırken kullanılmak üzere opsiyonel olarak mevcuttur.
 
 Tarama kipi, web sayfası gibi bir içeriğin bir metin dosyası gibi sunulduğu bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
@@ -486,7 +504,7 @@ Tarama ve odak kipleri arasında manuel olarak da geçiş yapabilirsiniz ve Odak
 | Tarama ve odak kipleri arasında geçiş | NVDA+aralık çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
 | Odak kipinden çıkış | eskeyp | Odak kipine otomatik olarak geçildiyse, tarama kipine geri döner |
 | Tarama kipinde görüntülenen belgeyi güncelleme | NVDA+f5 | Geçerli belgeyi yeniden yükler. (İçeriğin bir kısmı eksik gibi görünüyorsa ya da ziyaret ettiğiniz sayfa sık aralıklarla güncelleniyorsa bu tuşları kullanmak yararlı olabilir.) |
-| Metin ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
+| Metin ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar Daha fazla bilgi için [metin arama #SearchingForText] bölümüne bakın. |
 | Sonrakini bul | NVDA+f3 | metni belgenin sonraki kısmında arar |
 | Öncekini bul | NVDA+şift+f3 | metni belgenin önceki kısmında arar |
 | uzun tarifi aç | NVDA+d | Eğer varsa, üzerinde bulunulan ögeyle ilgili uzun bir açıklamanın bulunduğu yeni bir pencere açar. | 
@@ -543,6 +561,22 @@ Seçim düğmeleri, bu öge türlerinden hangilerinin görüntüleneceğini beli
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
 | Tarama kipi öge listesi | NVDA+f7 | tarama kipinde görüntülenen belgedeki çeşitli ögelerin listesini gösterir |
+%kc:endInclude
+
+++ Metin arama ++[SearchingForText]
+Bu iletişim kutusu, geçerli belgedeki terimleri aramanızı sağlar.
+"Aramak istediğiniz metni yazın" alanına, bulunacak metin girilebilir.
+Metin alanındayken, daha önce aranan terimleri seçmek için yukarı ve aşağı okları da kullanabilirsiniz.
+"Büyük / küçük harfe duyarlı" onay kutusu, aramanın büyük ve küçük harfleri farklı düşünmesini sağlar.
+Örneğin, "Büyük / küçük harfe duyarlı" seçiliyken "NV Access" ifadesini bulabilirken, "nv access" ifadesini bulamazsınız.
+Büyük küçük harf duyarlılığı arama geçmişine kaydedilmez.
+NVDA yeniden başlatıldığında, önceki aranan terimlerin listesi temizlenir.
+Arama yapmak için aşağıdaki tuşları kullanın:
+%kc:beginInclude
+|| Ad | Kısayol | Açıklama |
+| Metin ara | NVDA+kontrol+f | Arama iletişim kutusunu açar |
+| Sonrakini ara | NVDA+f3 | Mevcut arama teriminin bir sonraki tekrarını arar  |
+| Öncekini ara | NVDA+shift+f3 | geçerli arama teriminin önceki tekrarını arar  |
 %kc:endInclude
 
 ++ Gömülü Nesneler ++[ImbeddedObjects]
@@ -941,7 +975,7 @@ Bu seçenek NVDA'ya O an windowsun ayarlandığı dili kullanmasını söylemekt
 
 Dili değiştirdiğinizde NVDA'nın yeniden başlatılması gerektiğini lütfen not edin.
 NVDA seçimi değiştirip kaydettiğinizde programı yeniden başlatmak isteyip istemediğinizi soaracaktır.
-Tamama bastığınızda NVDA yeniden başlayacaktır.
+Onaylama diyalogu belirdiğinde, yeni dili şimdi veya daha sonra kullanmak istiyorsanız, "şimdi yeniden başlat" veya "daha sonra yeniden başlat" seçeneğini seçin. "Daha sonra yeniden başlat" seçilirse, konfigürasyon kaydedilmelidir (manuel  veya çıkışta kaydet seçeneği kullanılarak).
 
 ==== Çıkışta Ayarları (konfigürasyonu) Kaydet ====[GeneralSettingsSaveConfig]
 Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarların kaydedilmesini söyler.
@@ -957,8 +991,16 @@ BU seçenek NVDA açılış ve kapanış sesinin çalınıp çalınmamasıyla il
 ==== Kayıt Tutma (logging) Seviyesi ====[GeneralSettingsLogLevel]
 Bu bir seçim kutusudur ve NVDA çalışırken ne kadar kayıt tutacağınızı ayarlamanızı sağlar.
 Genellikle kullanıcıların çok fazla kayıt tutulmasını istemeye ihtiyaçları yoktur.
-Ancak, Bug raporlaması için bilgi sağlamak isterseniz, bu yararlı bir seçenek olabilir.
+Bununla birlikte, bir hata raporunda bilgi sağlamak veya  günlük kaydını tamamen etkinleştirmek veya devre dışı bırakmak istiyorsanız, yararlı bir seçenek olabilir.
 
+Mevcut günlük tutma seviyeleri:
+- Devre dışı: Kısa bir başlangıç mesajı dışında, NVDA çalışırken hiçbir şeyi kaydetmez.
+- Bilgi: NVDA, başlangıç mesajları ve geliştiriciler için yararlı bilgiler gibi temel bilgileri kaydeder.
+- Hata ayıklama uyarısı: Ciddi hatalardan kaynaklanmayan uyarı mesajları kaydedilir.
+- Giriş çıkış: Klavye ve braille ekranlarından girdilerin yanı sıra konuşma ve braille çıktısı kaydedilecektir. Gizlilik konusunda endişeleriniz varsa, günlük düzeyini bu seçeneğe ayarlamayın.
+- Hata ayıklama: Bilgi, uyarı ve giriş / çıkış mesajlarına ek olarak, ek hata ayıklama mesajları kaydedilecektir. Giriş / çıkışlarda olduğu gibi, gizlilikten endişe duyuyorsanız, günlük kaydı seviyesini bu seçeneğe ayarlamamalısınız.
+-
+ 
 ==== NVDA'yı Windowsu açınca Otomatik Olarak Başlat ====[GeneralSettingsStartAfterLogOn]
 Bu seçenek etkinleştirilirse, Windowsta oturum açar açmaz NVDA otomatik olarak başlayacaktır.
 Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
@@ -1338,6 +1380,8 @@ Etkinleştirildiğinde, fare ile ekranda dolaşırken, NVDA, fare işaretinin al
 Eğer NVDA siz hareket ettikçe fare altındaki metni söyleyecek biçimde ayarlandıysa, bu seçenek, tam olarak ne kadar metnin söyleneceğini seçmenizi sağlar.
 Seçenekler, karakter, sözcük, satır ve paragraftır.
 
+Herhangi bir yerdeyken metin birim çözünürlüğünü değiştirmek için,   [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol atayın.
+
 ==== Fare altındaki nesne tiplerini Seslendir ====[MouseSettingsRole]
 Bu onay kutusu işaretlenirse, NVDA bir nesneye geldiğinde o nesnenin işlevini (türünü) belirtecektir.
 
@@ -1349,6 +1393,11 @@ Fare imleci sola ve sağa kaydırıldıkça bip sesi de aynı doğrultuda sola v
 ==== Seçili bölgelerde dolaşırken fare koordinat sesini yükselt ====[MouseSettingsBrightness]
 Eğer "fare hareket ettikçe ses çal" onay kutusu işaretliyse, bu onay kutusu işaretlendiğinde, sesli koordinatların miktarı ekranın parlaklığına göre kontrol edilir.
 yani seçili bir bölgede ses daha yüksek çıkar. Bu, varsayılan olarak işaretli değildir.
+
+==== Diğer uygulamalardan fare girişini yoksay ====[MouseSettingsHandleMouseControl]
+Bu seçenek, kullanıcının TeamViewer ve diğer uzaktan kontrol yazılımı gibi diğer uygulamalar tarafından oluşturulan fare olaylarını (fare hareketi ve düğme olayları dahil) yoksaymasını sağlar.
+Bu seçenek varsayılan olarak işaretli değildir.
+Bu seçeneği işaretlerseniz ve "Fare izlemeyi etkinleştir" seçeneği de etkinse, fare başka bir uygulama tarafından kullanılırken NVDA, farenin altında olanı seslendirmez.
 
 +++ Dokunmatik Etkileşim +++[TouchInteraction]
 Yalnızca dokunmatik ekranlı ve windows 8 ve sonraki işletim sistemlerinde bulunan Bu ayar kategorisi, NVDA'nın dokunmatik ekranlarla nasıl etkileşeceğini yapılandırmanızı sağlar.
@@ -1484,8 +1533,16 @@ Bu değer, önceki sayfa ve sonraki sayfa tuşlarıyla tarama kipinde gösterile
 ==== Destekleniyorsa Ekran Düzenini Kullan ====[BrowseModeSettingsScreenLayout]
 Kısayol tuşu: NVDA+v
 
-Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması seçenekleri arasında tercih yapmanızı sağlar. Etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
+Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin ayrı satırlarda gösterilmesi ya da ekranda görsel olarak nasıl görünüyorsa o biçimde aktarılması seçenekleri arasında tercih yapmanızı sağlar.
+Etkinleştirilirse, ekrandaki içerik, görsel olarak nasıl görünüyorsa öyle sergilenir. ancak devre dışı bırakılırsa, her alan ayrı satırlara yerleştirilir.
 
+==== Sayfa yüklendiğinde tarama kipini etkinleştir ====[BrowseModeSettingsEnableOnPageLoad]
+Bu onay kutusu, bir sayfayı yüklendiğinde göz tarama kipinin otomatik olarak etkinleştirilip etkinleştirilmeyeceğini belirler.
+Bu seçenek devre dışı bırakılsa bile, sayfalarda veya tarama kipinin desteklendiği belgelerde tarama kipi manuel olarak etkinleştirilebilir.
+tarama kipinin  desteklendiği uygulamaların listesi için [tarama kipi bölümüne #BrowseMode] bakın.
+Bu seçeneğin, tarama kipinin her zaman isteğe bağlı olduğu durumlar için geçerli olmadığını unutmayın; mesela Microsoft Word'de.
+Bu seçenek varsayılan olarak etkindir.
+ 
 ==== Sayfa yüklendiğinde Otomatik Olarak Hepsini Oku ====[BrowseModeSettingsAutoSayAll]
 Bu onay kutusu tarama kipinde yüklenen sayfanın otomatik olarak okunmaya başlanmasıyla ilgili ayarı değiştirir.
 Bu seçenek varsayılan olarak etkindir.
@@ -1584,6 +1641,47 @@ Kategori aşağıdaki seçenekleri içerir:
 ==== Tanıma dili ====[Win10OcrSettingsRecognitionLanguage]
 Bu seçim kutusu metin tanıma için kullanılacak dili seçmek içindir.
 
++++ Gelişmiş Ayarlar +++
+Uyarı! Bu kategorideki ayarlar ileri seviye kullanıcılar içindir ve yanlış şekilde yapılandırılmışsa NVDA'nın düzgün çalışmamasına neden olabilir.
+Bu ayarlarda yalnızca, ne yaptığınızı bildiğinizden eminseniz veya bir NVDA geliştiricisi tarafından özel olarak talimat verildiyse değişiklik yapın.
+
+==== Developer Scratchpad Dizini'nden özel kod yüklemeyi etkinleştir ====
+NVDA için eklentiler geliştirirken, kodu yazarken test edebilmek yararlı olabilir.
+Bu seçenek etkinleştirildiğinde, NVDA'nın NVDA kullanıcı yapılandırma dizininizdeki özel bir geliştirici scratchpad dizininden özel appModules, globalPlugins, brailleDisplayDrivers ve synthDrivers yüklemesini sağlar.
+Önceden NVDA, özel kodu doğrudan devre dışı bırakmanın bir yolu olmadan kullanıcı yapılandırma dizininden yüklerdi.
+Bu seçenek varsayılan olarak kapalıdır ve NVDA'da, kullanıcının açık bilgisi dışında hiçbir test edilmemiş kodun çalıştırılmadığından emin olunması istenmektedir.
+Özel kodu başkalarına dağıtmak istiyorsanız, onu bir NVDA eklentisi olarak paketlemelisiniz.
+
+==== Geliştirici Scratchpad Dizinini Aç ====
+Bu düğme, geliştirirken özel kod yerleştirebileceğiniz dizini açar.
+Bu düğme yalnızca NVDA, Geliştirici Scratchpad Dizininden özel kod yüklenmesini sağlayacak şekilde yapılandırılmışsa etkindir.
+ 
+==== Varsa Microsoft Word belge denetimlerine erişmek için UI otomasyonunu kullanın ====
+Bu seçenek etkinleştirildiğinde, NVDA Microsoft Word belge denetimlerinden bilgi almak için Microsoft UI Automation erişilebilirlik api'sini kullanmaya çalışacaktır.
+Buna, Microsoft Word’ün yanı sıra,  Microsoft Outlook mesaj görüntüleyicisi ve oluşturucusu dahildir.
+ Windows 10'da çalışan Microsoft Office 2016/365'in en yeni sürümleri için, UI Automation desteği, NVDA'nın mevcut Microsoft Word desteğine neredeyse eşit olan Microsoft Word belgelerine erişim sağlayacak kadar eksiksizdir ve yanıt verme kabiliyetinin büyük oranda artması avantajını sağlar.
+Ancak, Microsoft Office'in bazı sürümlerinde ya açığa çıkmamış ya da yanlış açıklanmış bazı bilgiler olabilir; bu, bu UI otomasyon desteğinin her zaman güvenilemeyeceği anlamına gelir.
+Kullanıcıların çoğunun varsayılan olarak bunu açmasını önermiyoruz, ancak Office 2016/365 kullanıcılarının bu özelliği test etmesini ve geri bildirimde bulunmasını memnuniyetle karşılarız.
+
+==== Tarama kipinde sistem odağını otomatik olarak odaklanabilir öğelere taşı ====[BrowseModeSettingsAutoFocusFocusableElements]
+Kısayol: NVDA+8
+
+Varsayılan olarak etkinleştirildiğinde, bu seçenek, tarama kipi imleci ile içerikte gezinirken, sistem odağının otomatik olarak odaklanılabilecek öğelere (bağlantılar, form alanları vb.) taşınıp taşınmayacağını belirlemenizi sağlar.
+Etkinleştirilirse, bu NVDA’nın 2019.1 ve önceki sürümlerindeki gibi sonuç verir.
+Bu seçeneği devre dışı bırakmak, tarama kipi imleci ile üzewrlerine gelindiğinde  sistem odağını odaklanabilir öğelerin üzerine  otomatik olarak taşımaz.
+Bu, tarama kipinde daha hızlı dolaşma ve daha iyi tepki deneyimi sunabilir.
+Sistem odağı Yine de, herhangi bir öğeyle  etkileşime girildiğinde güncellenecektir ve o öğe üzerine taşınacaktır (örneğin, bir düğmeye basıldığında, bir onay kutusu işaretlendiğinde).
+Bu işlev NVDA 2019.2'den itibaren deneyseldir.
+
+==== Düzenleme imleci hareketi zaman aşımı (MS cinsinden) ====
+Bu seçenek, NVDA'nın düzenleme imleci (ekleme noktası) düzenlenebilir metin kontrollerinde hareket etmesini bekleyeceği mili saniye sayısını ayarlamanızı sağlar.
+NVDA’nın, düzenleme imlecini yanlış şekilde takip ettiğini fark ederseniz, her zaman arkasında bir karakter gibi görünüyor veya satırları tekrarlıyor, o zaman bu değeri arttırmayı deneyebilirsiniz.
+
+==== Hata ayıklama kategorileri ====
+Bu listedeki onay kutuları, NVDA günlüğünde belirli hata ayıklama mesajı kategorilerini etkinleştirmenize izin verir.
+Bu mesajların kaydedilmesi performansın düşmesine ve büyük günlük dosyalarının oluşturulmasına  neden olabilir.
+Bunları yalnızca, bir NVDA geliştiricisi tarafından özellikle talimat verilmişse   açın. Örneğin Bir braille ekran sürücüsünün neden doğru çalışmadığını anlamaya çalışırken.
+
 ++ çeşitli Ayarlar ++[MiscSettings]
 [NVDA ayarları #NVDASettings] iletişim kutusunun yanında, NVDA Menüsündeki Tercihler altmenüsü aşağıda verilen çeşitli diğer öğeleri de içerir.
 
@@ -1628,6 +1726,7 @@ Noktalama/imla telaffuzu iletişim kutusunun başlığında, düzenlemenin hangi
 Bu iletişim kutusunun , NVDA ayarları iletişim kutusu altındaki [konuşma kategorisi #SpeechSettings] bulunan "Karakter ve sembolleri işlerken sentezleyici ve sesin diline güven" ayarını dikkate alacağını not edin; yani, bu seçenek işaretliyse, NVDA dili yerine seçili sentezleyicinin dili dikkate alınır.
 
 Önce semboller listesinden değişiklik yapmak istediğiniz sembol/işareti bulun.
+Sembolü veya sembolün  bir bölümünü, Filtreye göre düzenle kutusuna girerek sembolleri filtreleyebilirsiniz.
 
 - Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
 - Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
@@ -1693,7 +1792,7 @@ NVDA konfigürasyon profillerini kullanarak bunu yapmanıza olanak tanır.
 Bir konfigürasyon profili, sadece profil düzenlenirken değiştirilen ayarları kapsar.
 Konfigürasyon profillerinde, NVDA bütünlüğü için geçerli olan [NVDA ayarları #NVDASettings] iletişim kutusundaki Genel  kategorisindekiler hariç, çoğu ayar değiştirilebilir.
 
-Konfigürasyon profilleri elle aktif hale getirilebilir.
+Konfigürasyon profilleri iletişim kutusu üzerinden manuel olarak  ya da atanacak özel bir kısayol ile etkinleştirilebilir.
 Ayrıca, tetikleyuiciler vesilesiyle, örneğin belli bir uygulama açıldığında konfigürasyon profili otomatik olarak aktif hale getirilebilir.
 
 +++ Temel Yönetim +++[ProfilesBasicManagement]
@@ -1760,6 +1859,14 @@ Bunu, Konfigürasyon Profilleri iletişim kutusunda bulunan , Tüm tetikliyicele
 
 Tetikleyicilerin herhangi bir yerdeyken devre dışı bırakılması ya da tekrar etkinleştirilmesi için , [girdi hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol tuşu atayabilirsiniz.
 
++++ Girdi hareketlerini kullanarak bir profili etkinleştirme +++[ConfigProfileGestures]
+Eklediğiniz her profil için, etkinleştirmek üzere bir veya daha fazla girdi hareketi atayabilirsiniz.
+Varsayılan olarak, konfigürasyon profilleri için atanmış girdi hareketleri yoktur.
+[Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak Bir profili etkinleştirmek için girdi hareketi  ekleyebilirsiniz.
+Konfigürasyon profilleri kategorisi altında  her profil için bir  giriş vardır.
+Bir profili yeniden adlandırdığınızda, daha önce eklediğiniz herhangi bir hareket hala  kullanılabilir olacaktır.
+Profillerden birini kaldırmak, onunla ilişkilendirilen hareketleri de otomatik olarak siler.
+
 ++ Konfigürasyon Dosyalarının Konumu ++[LocationOfConfigurationFiles]
 NVDA taşınabilir sürümü, tüm ayarları, kişisel uygulama modüllerini ve kişisel sürücüleri NVDA dizininde bulunan ve UserConfig adı verilen dizinde saklamaktadır.
 
@@ -1825,17 +1932,33 @@ Bir eklentiyi devre dışı bırakmak için "eklentiyi devre dışı bırak" dü
 Daha önce devre dışı bırakılmış olan eklentiyi etkinleştirmek için "eklentiyi etkinleştir" düğmesine basın.
 Eklenti durumu etkin olarak gösteriliyorsa devre dışı bırakabilir; devre dışı ise tekrar etkinleştirebilirsiniz.
 Etkinleştir / devre dışı bırak düğmesine her basıldığında, NVDA yeniden başladığında ne olacağını belirtmek için eklenti statüsü değişir.
- Eklenti önceden devre dışı bırakılmışsa, durumu "yeniden başlatıldıktan sonra Etkin" olarak gösterilir. Eğer eklenti halihazırda etkinse, durumu "yeniden başlatıldıktan sonra devre dışı" olarak gösterilecektir.
+ Bu düğğmeye bastığınızda eklenti önceden devre dışı bırakılmışsa, durumu "yeniden başlatıldıktan sonra Etkin" olarak gösterilir.
+Eğer eklenti halihazırda etkinse, durumu "yeniden başlatıldıktan sonra devre dışı" olarak gösterilecektir.
 Eklenti kurduğunuzda ya da kaldırdığınızdaki gibi, değişikliklerin etkili olması için NVDA'yı yeniden başlatmanız gerekecektir.
 
 Yönetici, iletişim kutusunu kapatmak için kullanacağınız Kapat düğmesini de içerir.
 Bir eklenti kurduysanız, kaldırdıysanız ya da statüsünü değiştirdiyseniz, NVDA değişikliklerin etkili olması için yeniden başlatmak isteyip istemediğinizi soracaktır.
 
-Önceki sürümlerde NVDA'nın işlevlerini zenginleştiren çeşitli plug-in ya da sürücüleri NVDA konfigürasyon dizininde ilgili klasörlere kopyalayarak kullanmak mümkündü.
-NVDA 2012.2 versiyonu için de bu tür plug-in ve sürücüleri kullanabilmenize rağmen, manuel olarak kopyaladığınız bu plug-inler NVDA Eklenti Yöneticisi tarafından görüntülenmez.
-En iyisi, bulabilirseniz bu tür plug-inlerin yeni sisteme uygun olarak hazırlanmış hallerini kurup eski versiyonlarını konfigürasyon dizininden silmenizdir.
+Bazı eski eklentiler artık sahip olduğunuz NVDA sürümüyle uyumlu olmayabilir.
+NVDA'nın eski bir sürümünü kullanıyorsanız, bazı yeni eklentiler de uyumlu olmayabilir.
+Uyumsuz bir eklenti yüklemeye çalışmak, eklentinin neden uyumsuz olarak değerlendirildiğini açıklayan bir hataya neden olacaktır.
+Bu uyumsuz eklentileri incelemek için, Uyumsuz eklenti yöneticisini başlatmak için "Uyumsuz eklentileri görüntüle" düğmesini kullanabilirsiniz.
  
 Eklenti yöneticisine herhangi bir yerden ulaşmak için, lütfen [Girdi Hareketleri iletişim kutusunu #InputGestures] kullanarak özel bir kısayol belirleyin.
+
+++ Uyumsuz Eklenti Yöneticisi ++[incompatibleAddonsManager]
+Eklenti yöneticisindeki "uyumsuz eklentileri görüntüle" düğmeleriyle erişilebilen Uyumsuz Eklenti Yöneticisi, uyumsuz eklentileri ve bunların uyumsuz olarak değerlendirilmelerinin nedenini incelemenizi sağlar.
+Eklentiler, NVDA'da önemli değişikliklerle çalışmak üzere güncellenmediklerinde veya kullandığınız NVDA sürümünde bulunmayan bir özelliğe dayandıklarında uyumsuz olarak kabul edilir.
+Uyumsuz eklenti yöneticisi, amacını ve NVDA sürümünü açıklayan  kısa bir mesaj sunar.
+Uyumsuz eklentiler aşağıdaki sütunları içeren bir listede sunulur:
++ paket, eklentinin adı
++ versiyon, eklentinin sürümü
++ Uyumsuzluk sebebi, eklentinin neden uyumsuz olarak kabul edildiğinin bir açıklaması
++
+
+Uyumsuz eklenti yöneticisinde ayrıca "Eklentiler hakkında ..." düğmesi bulunur.
+Bu açılır pencere, eklentinin yazarı ile iletişime geçerken yardımcı olacak eklentinin tüm ayrıntılarını size sunacaktır.
+
 
 ++ Python Konsolu ++[PythonConsole]
 NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
@@ -1925,13 +2048,11 @@ USB veya bluetooth ile bağlandıklarında, [Freedom Scientific https://www.free
 Freedom Scientific Braille Ekran sürücülerinin sisteminizde yüklü olması gerekecektir.
 Eğer henüz bu sürücüler elinizde yoksa, bunları https://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp adresinden edinebilirsiniz.
 Bu sayfada Yalnızca Focus 40 Blue sürücülerinden bahsedilmesine karşın, bu sürücüler tüm Freedom Scientific ekranlarını desteklemektedir.
-Sisteminiz 64 bit Windows ise ve sürücüler başka bir ekran okuyucu tarafından yüklenmiş olsa bile, NVDA'nın ihtiyaç duyduğu dosyalar yüklenmiş olmayabileceği için muhtemelen bu bağlantıdaki sürücüleri ayrıca yüklemeniz gerekecektir.
 
 Varsayılan olarak, NVDA bu ekranları otomatik olarak bulup USB ya da bluetooth ile bağlanabilir.
 Öte yandan, ekranla ilgili ayarları yaparken, "USB" ya da "Bluetooth" portlarını seçerek bağlantı tipine kendiniz karar verebilirsiniz.
 Bu, örneğin ekranınıza bluetooth ile bağlanıp aynı zamanda USB üzerinden de cihazı şarj etmeye devam etmek istemeniz durumunda faydalı olabilir.
-
-Bu ekranlar henüz NVDA'nın otomatik arka plan braille görüntü algılama işlevini desteklememektedir.
+NVDA'nın otomatik braille ekran algılaması USB veya Bluetooth'la bağlı ekranı da tanıyacaktır.
 
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
@@ -2756,15 +2877,17 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -r | --replace | Mevcut NVDA kopyasını kapatıp belirtileni açar |
 | -k | --check-running | Çıkış kodu aracılığıyla NVDA'nın çalışıp çalışmadığını bildirir; çalışıyorsa 0, çalışmıyorsa 1 |
 | -f LOGFILENAME | --log-file=LOGFILENAME | Günlük mesajlarının tutulacağı dosya |
-| -l LOGLEVEL | --log-level=LOGLEVEL | Günlüğü tutulacak en düşük seviye (debug 10, bilgi 20, uyarı 30, hata 40, kritik 50), varsayılan uyarı'dır |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Günlüğü tutulacak en düşük seviye (debug 10, giriş çıkış 12, hata ayıklama uyarısı 15, bilgi 20, uyarı 30, hata 40, kritik 50, devre dışı 100), varsayılan, uyarı'dır |
 | -c CONFIGPATH | --config-path=CONFIGPATH | NVDA ile ilgili tüm ayarların kaydedileceği adres |
 | -m | --minimal | Ses, arayüz, başlangıç mesajı vb olmaz |
-| -s | --secure | Güvenli kip (Python konsolu devre dışı bırakır) |
+| -s | --secure | Güvenli kip (Python konsolu ve genellikle güvenli ekranlarda kullanılan kayıt özelliklerini devre dışı bırakır) |
 | None | --disable-addons | Eklentiler etkisizdir |
-| None | --debug-logging | hata ayıklama seviyesi günlüğünü etkinleştir sadece bu çalışma için. Bu ayar, herhangi bir diğer log düzeyini geçersiz kılar ( ""--loglevel"", -l) sağlanan değişken. |
+| None | --debug-logging | Yalnızca bu çalıştırma için hata ayıklama seviyesi günlüğünü etkinleştirin. Bu ayar, herhangi bir kayıt seçeneği de dahil olmak üzere verilen herhangi bir günlük seviyesi ("" --loglevel "", -l) argümanını geçersiz kılar. |
+| None | --no-logging | NVDA'yı kullanırken günlüğü tamamen devre dışı bırakın. Komut satırından bir günlük seviyesi ("" --loglevel "", -l) belirtilirse veya hata ayıklama günlüğü açıksa bu ayarın üzerine yazılabilir. |
 | None | --no-sr-flag | Global ekran okuyucu bayrağını devre dışı bırakmaz |
 | None | --install | NVDA'yı kurar (yeni kurulmuş kopyayı çalıştırarak) |
 | None | --install-silent | NVDA'yı sessizce kurar (yeni kurulmuş kopyayı başlatmaz) |
+| None | --enable-start-on-logon=True|False | Yüklerken, NVDA'nın [oturum açma ekranında başlamasını #StartAtWindowsLogon] etkinleştirir |
 | None | --create-portable | NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılır). --portable-path belirtilmesi gerekir |
 | None | --create-portable-silent | NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılmaz). --portable-path belirtilmesi gerekir |
 | None | --portable-path=PORTABLEPATH | taşınabilir kopyanın oluşturulacağı adres |
