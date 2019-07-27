@@ -130,7 +130,7 @@ class consoleUIATextInfo(UIATextInfo):
 			):
 				self._rangeObj = oldRange
 				return 0
-		except COMError, RuntimeError:
+		except (COMError, RuntimeError):
 			pass
 		return res
 
