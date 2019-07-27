@@ -11,7 +11,7 @@ import UIAHandler
 
 from winVersion import isWin10
 from . import UIATextInfo
-from ..behaviors import TerminalWithoutTypedCharDetection
+from ..behaviors import TerminalWithKeyboardSupport
 from ..window import Window
 
 
@@ -219,7 +219,7 @@ class consoleUIAWindow(Window):
 		return None
 
 
-class WinConsoleUIA(TerminalWithoutTypedCharDetection):
+class WinConsoleUIA(TerminalWithKeyboardSupport):
 	#: Disable the name as it won't be localized
 	name = ""
 	#: Only process text changes every 30 ms, in case the console is getting
