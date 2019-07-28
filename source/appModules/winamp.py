@@ -115,7 +115,11 @@ class winampPlaylistEditor(winampMainWindow):
 			winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
 		finally:
 			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
-		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
+		# file title is fetched in the current locale encoding.
+		# We need to decode it to unicode first. 
+		encoding=locale.getlocale()[1]
+		fileTitle=info.filetitle.decode(encoding,errors="replace")
+		return "%d.\t%s\t%s"%(curIndex+1,fileTitle,info.filelength)
 
 	def _get_role(self):
 		return controlTypes.ROLE_LISTITEM

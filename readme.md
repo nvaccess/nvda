@@ -35,7 +35,8 @@ The NVDA source depends on several other packages to run correctly.
 ### Installed Dependencies
 The following dependencies need to be installed on your system:
 
-* [Python](http://www.python.org/), version 2.7.15, 32 bit
+* [Python](http://www.python.org/), version 3.7, 32 bit
+	* Use latest minor version if possible.
 * Microsoft Visual Studio 2017 Community, Version 15.3 or later:
 	* Download from https://visualstudio.microsoft.com/downloads/
 	* When installing Visual Studio, you need to enable the following:
@@ -57,31 +58,32 @@ If you didn't pass the `--recursive` option to git clone, you will need to run `
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
 
-For reference, the following dependencies are included in Git submodules:
+For reference, the following run time dependencies are included in Git submodules:
 
 * [comtypes](https://github.com/enthought/comtypes), version 1.1.7
 * [wxPython](http://www.wxpython.org/), version 4.0.3
-* [Six](https://pypi.python.org/pypi/six), version 1.10.0, required by wxPython
-* [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit 86e67a
 * [Sonic](https://github.com/waywardgeek/sonic), commit 4f8c1d11
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), commit 21bbb176
 * [ConfigObj](https://github.com/DiffSK/configobj), commit 5b5de48
+* [Six](https://pypi.python.org/pypi/six), version 1.12.0, required by wxPython and ConfigObj
 * [liblouis](http://www.liblouis.org/), version 3.10.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/) Emoji Annotations, version 35.0
 * NVDA images and sounds
-* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * [Adobe Acrobat accessibility interface, version XI](http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * Adobe FlashAccessibility interface typelib
-* [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 3.0.4
-* brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
-* ALVA BC6 generic dll, version 3.0.4.1
+* brlapi Python bindings, version 0.7.0 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * lilli.dll, version 2.1.0.0
-* [pyserial](http://pypi.python.org/pypi/pyserial), version 2.7
+* [pySerial](http://pypi.python.org/pypi/pyserial), version 3.4
 * [Python interface to FTDI driver/chip](http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip)
-* [Py2Exe](http://sourceforge.net/projects/py2exe/), version 0.6.9
+
+Additionally, the following build time dependencies are included in Git submodules:
+
+* [Py2Exe](http://github.com/albertosottile/py2exe/), version 0.9.3.2 commit b372a8e
+* [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 224, required by py2exe
+* [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
+* [SCons](http://www.scons.org/), version 3.0.4
 * [Nulsoft Install System](http://nsis.sourceforge.net/), version 2.51
 * [NSIS UAC plug-in](http://nsis.sourceforge.net/UAC_plug-in), version 0.2.4, ansi
 * xgettext and msgfmt from [GNU gettext](http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
@@ -91,7 +93,7 @@ For reference, the following dependencies are included in Git submodules:
 ### Other Dependencies
 These dependencies are not included in Git submodules, but aren't needed by most people.
 
-* To generate developer documentation for nvdaHelper: [Doxygen version 1.7.3 Windows installer](https://sourceforge.net/projects/doxygen/files/rel-1.7.3/doxygen-1.7.3-setup.exe)
+* To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
@@ -161,13 +163,14 @@ scons launcher
 
 The archive will be placed in the output directory.
 
-To generate developer documentation, type:
+To generate the NVDA developer guide, type:
 
 ```
-scons devDocs
+scons developerGuide
 ```
 
-The developer docs will be placed in the `devDocs` folder in the output directory.
+The developer guide will be placed in the `devDocs` folder in the output directory.
+Note that the Python 3 sources of NVDA currently do not support building NVDA developer documentation using the `scons devDocs` command.
 
 To generate developer documentation for nvdaHelper (not included in the devDocs target):
 

@@ -5,7 +5,7 @@ Traduzido pela Equipa portuguesa do NVDA
 
 = 2019.2 =
 Os destaques desta versão incluem:
-- Ddetecção automática as linhas Braille da Freedom Scientific;
+- Ddetecção automática das linhas Braille da Freedom Scientific;
 - Uma opção experimental na secção Avançadas das configurações do NVDA para impedir que o modo de navegação mova o foco automaticamente (o que pode trazer melhorias de desempenho);
 - Uma opção de "Aumento de velocidade" para o sintetizador Windows OneCore Voices para que se possa utilizar velocidades muito rápidas;
 - Muitas outras correções de bugs.
@@ -60,6 +60,7 @@ Embora possa não ser adequado desactivar em todas as páginas, pode resolver:
 - É novamente possível usar os comandos de navegação de tabelas do NVDA no Google Docs, no Firefox e no Chrome. (#9494)
 - As teclas "bumper" das linhas Braille da Freedom Scientific já funcionam correctamente. (# 8849)
 - Ao ler o primeiro caractere de um documento, no Notepad ++ 7.7 X64, o NVDA já não congela por até dez segundos. (# 9609)
+- O HTCom já pode ser usado com uma linha Braille da Handy Tech em conjunto com o NVDA. (#9691)
 
 == Alterações para desenvolvedores ==
 - You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)

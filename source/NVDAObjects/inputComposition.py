@@ -14,11 +14,11 @@ def calculateInsertedChars(oldComp,newComp):
 	minLen=min(oldLen,newLen)
 	diffStart=0
 	diffEnd=newLen
-	for index in xrange(minLen):
+	for index in range(minLen):
 		if newComp[index]!=oldComp[index]:
 			break
 		diffStart=index+1
-	for index in xrange(minLen,0,-1):
+	for index in range(minLen,0,-1):
 		backIndex=index-minLen-1
 		if newComp[backIndex]!=oldComp[backIndex]:
 			break
@@ -27,6 +27,7 @@ def calculateInsertedChars(oldComp,newComp):
 	return newComp[diffStart:diffEnd]
 
 class InputCompositionTextInfo(OffsetsTextInfo):
+	encoding = None
 
 	def _getSelectionOffsets(self):
 		return self.obj.readingSelectionOffsets if self.obj.isReading else self.obj.compositionSelectionOffsets

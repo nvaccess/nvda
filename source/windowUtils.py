@@ -23,7 +23,7 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	@param controlID: The control ID of the window or C{None} if irrelevant.
 	@type controlID: int
 	@param className: The class name of the window or C{None} if irrelevant.
-	@type className: basestring
+	@type className: str
 	@return: The handle of the matching descendant window.
 	@rtype: int
 	@raise LookupError: if no matching window is found.
@@ -138,7 +138,7 @@ class CustomWindow(object):
 	"""
 
 	#: The class name of this window.
-	#: @type: unicode
+	#: @type: str
 	className = None
 
 	_hwndsToInstances = weakref.WeakValueDictionary()
@@ -147,9 +147,9 @@ class CustomWindow(object):
 		"""Constructor.
 		@raise WindowsError: If an error occurs.
 		"""
-		if not isinstance(self.className, unicode):
+		if not isinstance(self.className, str):
 			raise ValueError("className attribute must be a unicode string")
-		if windowName and not isinstance(windowName, unicode):
+		if windowName and not isinstance(windowName, str):
 			raise ValueError("windowName must be a unicode string")
 		self._wClass = WNDCLASSEXW(
 			cbSize=ctypes.sizeof(WNDCLASSEXW),

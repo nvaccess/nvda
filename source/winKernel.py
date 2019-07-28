@@ -1,9 +1,12 @@
 #winKernel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner, Mozilla Corporation, Babbage B.V., Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+"""Functions that wrap Windows API functions from kernel32.dll and advapi32.dll"""
+
+import contextlib
 import ctypes
 import ctypes.wintypes
 from ctypes import *
@@ -37,10 +40,10 @@ LOCALE_NAME_USER_DEFAULT=None
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
 # Wait return types
-WAIT_ABANDONED = 0x00000080L
-WAIT_IO_COMPLETION = 0x000000c0L
-WAIT_OBJECT_0 = 0x00000000L
-WAIT_TIMEOUT = 0x00000102L
+WAIT_ABANDONED = 0x00000080
+WAIT_IO_COMPLETION = 0x000000c0
+WAIT_OBJECT_0 = 0x00000000
+WAIT_TIMEOUT = 0x00000102
 WAIT_FAILED = 0xffffffff
 # Image file machine constants
 IMAGE_FILE_MACHINE_UNKNOWN = 0
@@ -82,7 +85,7 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 		If C{True}, the timer is a manual-reset notification timer.
 	@type manualReset: bool
 	@param name: Defaults to C{None}, the timer object is created without a name.
-	@type name: unicode
+	@type name: str
 	"""
 	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
 	if res==0:
@@ -329,3 +332,68 @@ def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desi
 
 PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
 THREAD_SET_CONTEXT = 16
+
+GMEM_MOVEABLE=2
+
+class HGLOBAL(HANDLE):
+	"""
+	A class for the HGLOBAL Windows handle type.
+	This class can auto-free the handle when it goes out of scope, 
+	and also contains a classmethod for alloc,
+	And a context manager compatible method for locking.
+	"""
+
+	def __init__(self,h,autoFree=True):
+		"""
+		@param h: the raw Windows HGLOBAL handle
+		@param autoFree: True by default, the handle will automatically be freed with GlobalFree 
+		when this object goes out of scope.
+		"""
+		super(HGLOBAL,self).__init__(h)
+		self._autoFree=autoFree
+
+	def __del__(self):
+		if self and self._autoFree:
+			windll.kernel32.GlobalFree(self)
+
+	@classmethod
+	def alloc(cls,flags,size):
+		"""
+		Allocates global memory with GlobalAlloc
+		providing it as an instance of this class.
+		This method Takes the same arguments as GlobalAlloc.
+		"""
+		h=windll.kernel32.GlobalAlloc(flags,size)
+		return cls(h)
+
+	@contextlib.contextmanager
+	def lock(self):
+		"""
+		Used as a context manager,
+		This method locks the global memory with GlobalLock,
+		providing the usable memory address to the body of the 'with' statement.
+		When the body completes, GlobalUnlock is automatically called.
+		"""
+		try:
+			yield windll.kernel32.GlobalLock(self)
+		finally:
+			windll.kernel32.GlobalUnlock(self)
+
+	def forget(self):
+		"""
+		Sets this HGLOBAL value to NULL, forgetting the existing value.
+		Necessary if you pass this HGLOBAL to an API that takes ownership and therefore will handle freeing itself.
+		"""
+		self.value=None
+
+MOVEFILE_COPY_ALLOWED = 0x2
+MOVEFILE_CREATE_HARDLINK = 0x10
+MOVEFILE_DELAY_UNTIL_REBOOT = 0x4
+MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x20
+MOVEFILE_REPLACE_EXISTING = 0x1
+MOVEFILE_WRITE_THROUGH = 0x8
+
+def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
+	# If MoveFileExW fails, Windows will raise appropriate errors.
+	if not kernel32.MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags):
+		raise ctypes.WinError()
