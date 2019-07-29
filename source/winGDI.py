@@ -87,9 +87,9 @@ UnitPixel = 2
 
 gdipToken = None
 def gdiPlusInitialize():
+	global gdipToken
 	if gdipToken:
 		return # Already initialized
-	global gdipToken
 	gdipToken = c_ulong()
 	startupInput = GdiplusStartupInput()
 	startupInput.GdiplusVersion = 1
@@ -97,9 +97,9 @@ def gdiPlusInitialize():
 	gdiplus.GdiplusStartup(byref(gdipToken), byref(startupInput), byref(startupOutput))
 
 def gdiPlusTerminate():
+	global gdipToken
 	if not gdipToken:
 		return # Not initialized
-	global gdipToken
 	gdiplus.GdiplusShutdown(gdipToken)
 	gdipToken = None
 
