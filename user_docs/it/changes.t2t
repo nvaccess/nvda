@@ -27,15 +27,21 @@ Le novità più interessanti di questa versione riguardano il rilevamento automa
  - Lentezza in risposta dei tasti di navigazione.
 - Per quei driver di Display Braille che lo supportano, la finestra delle impostazioni braille può contenere opzioni aggiuntive relative solo a quel driver, per esempio la resistenza del punto. (#7452)
 - Il rilevamento automatico Display Braille ora riconosce anche le barre della Freedom Scientific. (#7727)
+- Aggiunto un comando per visualizzare la sostituzione di un simbolo alla posizione del cursore di controllo. (#9286)
+- Aggiunta un'opzione sperimentale nella finestra impostazioni avanzate che consente di provare il nuovo supporto alla console di Windows servendosi delle UI Automation API. (#9614)
+- Nella console Python, è possibile incollare più righe nel campo di immissione. (#9776)
 
 
 == Cambiamenti ==
 - Il volume della voce aumenta o diminuisce di 5 anziché di 10 quando lo si modifica con le impostazioni al volo del sintetizzatore. (#6754)
 - è stato reso più chiaro il testo che appare nel gestore componenti aggiuntivi quando NVDA viene eseguito con l'opzione --disable-addons. (#9473)
-- Aggiornate le annotazioni emoji di Unicode Common Locale Repository Data alla versione 35.0. (#9445)
-- Aggiornato liblouis braille translator alla versione 3.9.0. (#9439)
 - Il tasto di scelta rapida per il campo filtro nell'elenco elementi in modalità navigazione è stato modificato in alt + y. (#8728)
 - Quando un display braille rilevato automaticamente viene collegato tramite Bluetooth, NVDA continuerà a cercare display USB supportati dallo stesso driver e passerà a una connessione USB se disponibile. (#8853)
+- Dopo che si è selezionato del testo, NVDA dirà:: "selezionato". (#9028)
+- In Microsoft Visual Studio Code, la modalità di navigazione è disattivata da impostazioni predefinite. (#9828)
+- Aggiornate le annotazioni emoji di Unicode Common Locale Repository Data alla versione 35.0. (#9445)
+- Aggiornato liblouis braille translator alla versione 3.9.0. (#9439)
+- Aggiornata eSpeak-NG alla commit 67324cc.
 
 
 == Bug Corretti ==
@@ -58,6 +64,9 @@ Le novità più interessanti di questa versione riguardano il rilevamento automa
 - è di nuovo possibile servirsi dei comandi di navigazione tabella di NVDA in Google Docs, Firefox e Chrome. (#9494)
 - I tasti bumper funzionano di nuovo correttamente per i Display Braille di Freedom Scientific. (#8849)
 - Quando si legge il primo carattere di un documento in Notepad++ 7.7 X64, NVDA non si blocca più per un tempo massimo di dieci secondi. (#9609)
+- Il software HtCom usato dai display Braille HandiTech funziona anche con NVDA. (#9691)
+- In Mozilla Firefox, non vengono più annunciati gli aggiornamenti di una live region se quest'ultima risulta in background. (#1318)
+- La finestra di dialogo Trova di NVDA ora è in grado di funzionare anche se la finestra "informazioni su" risulta aperta in background. (#8566)
 
 
 == Changes for Developers ==
@@ -66,6 +75,10 @@ Le novità più interessanti di questa versione riguardano il rilevamento automa
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
+- The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)
+- The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)
+ - Note that this shadows the gettext translation function also called "_". To access the translation function: del _
 
 
 = 2019.1 =

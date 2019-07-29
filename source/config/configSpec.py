@@ -4,7 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from cStringIO import StringIO
+from io import StringIO
 from configobj import ConfigObj
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and 

@@ -5,10 +5,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
 
-import time
-from collections import OrderedDict
-from cStringIO import StringIO
+from io import BytesIO
+from typing import Union, List, Optional
+
 import braille
+from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
 import brailleInput
@@ -18,21 +19,21 @@ import hwIo
 TIMEOUT = 0.2
 BAUD_RATE = 19200
 
-ESCAPE = "\x1b"
+ESCAPE = b"\x1b"
 
-BAUM_DISPLAY_DATA = "\x01"
-BAUM_CELL_COUNT = "\x01"
-BAUM_REQUEST_INFO = "\x02"
-BAUM_PROTOCOL_ONOFF = "\x15"
-BAUM_COMMUNICATION_CHANNEL = "\x16"
-BAUM_POWERDOWN = "\x17"
-BAUM_ROUTING_KEYS = "\x22"
-BAUM_DISPLAY_KEYS = "\x24"
-BAUM_ROUTING_KEY = "\x27"
-BAUM_BRAILLE_KEYS = "\x33"
-BAUM_JOYSTICK_KEYS = "\x34"
-BAUM_DEVICE_ID = "\x84"
-BAUM_SERIAL_NUMBER = "\x8A"
+BAUM_DISPLAY_DATA = b"\x01"
+BAUM_CELL_COUNT = b"\x01"
+BAUM_REQUEST_INFO = b"\x02"
+BAUM_PROTOCOL_ONOFF = b"\x15"
+BAUM_COMMUNICATION_CHANNEL = b"\x16"
+BAUM_POWERDOWN = b"\x17"
+BAUM_ROUTING_KEYS = b"\x22"
+BAUM_DISPLAY_KEYS = b"\x24"
+BAUM_ROUTING_KEY = b"\x27"
+BAUM_BRAILLE_KEYS = b"\x33"
+BAUM_JOYSTICK_KEYS = b"\x34"
+BAUM_DEVICE_ID = b"\x84"
+BAUM_SERIAL_NUMBER = b"\x8A"
 
 BAUM_RSP_LENGTHS = {
 	BAUM_CELL_COUNT: 1,
@@ -56,6 +57,7 @@ KEY_NAMES = {
 }
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+	_dev: hwIo.IoBase
 	name = "baum"
 	# Translators: Names of braille displays.
 	description = _("Baum/HumanWare/APH/Orbit braille displays")
@@ -68,7 +70,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._deviceID = None
+		self._deviceID: Optional[str] = None
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
@@ -100,7 +102,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
 				# Send again in case the display misses the first one.
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
-			for i in xrange(3):
+			for i in range(3):
 				# An expected response hasn't arrived yet, so wait for it.
 				self._dev.waitForRead(TIMEOUT)
 				if self.numCells and self._deviceID:
@@ -122,7 +124,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
 			try:
-				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, boolToByte(False))
 			except EnvironmentError:
 				# Some displays don't support BAUM_PROTOCOL_ONOFF.
 				pass
@@ -131,19 +133,38 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendRequest(self, command, arg=""):
-		if isinstance(arg, (int, bool)):
-			arg = chr(arg)
+	def _sendRequest(self, command: bytes, arg: Union[bytes, bool, int] = b""):
+		"""
+		:type command: bytes
+		:type arg: bytes | bool | int
+		"""
+		typeErrorString = "Expected param '{}' to be of type '{}', got '{}'"
+		if not isinstance(arg, bytes):
+			if isinstance(arg, bool):
+				arg = boolToByte(arg)
+			elif isinstance(arg, int):
+				arg = intToByte(arg)
+			else:
+				raise TypeError(typeErrorString.format("arg", "bytes, bool, or int", type(arg).__name__))
+
+		if not isinstance(command, bytes):
+			raise TypeError(typeErrorString.format("command", "bytes", type(command).__name__))
+
 		if self.isHid:
 			self._dev.write(command + arg)
 		else:
-			self._dev.write("\x1b{command}{arg}".format(command=command,
-				arg=arg.replace(ESCAPE, ESCAPE * 2)))
+			arg = arg.replace(ESCAPE, ESCAPE * 2)
+			data = b"".join([
+				ESCAPE,
+				command,
+				arg
+			])
+			self._dev.write(data)
 
-	def _onReceive(self, data):
+	def _onReceive(self, data: bytes):
 		if self.isHid:
 			# data contains the entire packet.
-			stream = StringIO(data)
+			stream = BytesIO(data)
 		else:
 			if data != ESCAPE:
 				log.debugWarning("Ignoring byte before escape: %r" % data)
@@ -161,14 +182,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			arg += stream.read(2)
 		self._handleResponse(command, arg)
 
-	def _handleResponse(self, command, arg):
+	def _handleResponse(self, command: bytes, arg: bytes):
 		if command == BAUM_CELL_COUNT:
+			# Assumption: BAUM_CELL_COUNT command has a single byte unsigned argument.
+			# Value range (0-255)
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
 			# Short ids can be padded with either nulls or spaces.
-			self._deviceID = arg.rstrip("\0 ")
+			arg = arg.rstrip(b"\0 ")
+			# Assumption: all device IDs can be decoded with latin-1.
+			# If not, we wish to know about it, allow decode to raise.
+			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in KEY_NAMES:
-			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
+			arg = sum(byte << offset * 8 for offset, byte in enumerate(arg))
 			if arg < self._keysDown.get(command, 0):
 				# Release.
 				if not self._ignoreKeyReleases:
@@ -199,9 +225,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		self._sendRequest(BAUM_DISPLAY_DATA, "".join(chr(cell) for cell in cells))
+		arg = bytes(cells)
+		self._sendRequest(BAUM_DISPLAY_DATA, arg)
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -231,14 +258,14 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keysDown = dict(keysDown)
 
 		self.keyNames = names = []
-		for group, groupKeysDown in keysDown.iteritems():
+		for group, groupKeysDown in keysDown.items():
 			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
 				# This is braille input.
 				# 0xfc covers command keys. The space bars are covered by 0x3.
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & 0x3
 			if group == BAUM_ROUTING_KEYS:
-				for index in xrange(braille.handler.display.numCells):
+				for index in range(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):
 						self.routingIndex = index
 						names.append("routing")

@@ -409,6 +409,7 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | Selecteer, kopieer dan vanaf leescursor | NVDA+f9 | NVDA+f9 | geen | Start het selectie- en daaropvolgend kopieerproces vanaf de huidige positie van de leescursor. De feitelijke actie wordt pas uitgevoerd zodra aan NVDA wordt doorgegeven waar het tekstgebied eindigt. |
 | Selecteer, kopieer dan tot leescursor | NVDA+f10 | NVDA+f10 | geen | Bij de eerste maal drukken wordt tekst geselecteerd vanaf het eerder ingestelde beginpunt tot einde inclusief de huidige positie van de leescursor. Nadat de toetscombinatie de 2de keer wordt ingedrukt wordt de tekst naar het klembord gekopieerd. |
 | Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt. Bij tweemaal drukken krijgt u de informatie in bladermodus. |
+| Actuele symboolvervanging melden| geen | geen | geen | Het symbool waarbij de leescursor zich bevindt wordt uitgesproken. Bij tweemaal drukken wordt het symbool en de voor het benoemen hiervan gebruikte tekst weergegeven in bladermodus. |
 %kc:endInclude
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
@@ -1681,6 +1682,12 @@ Voor de meest recente versies van Microsoft Office 2016/365 die onder windows 10
 Het kan echter voorkomen dat informatie of niet of onjuist wordt weergegeven in sommige versies van Microsoft Office, waardoor  men niet in alle gevallen kan vertrouwen op deze UI automation ondersteuning.
 Vooralsnog raden we de meeste gebruikers NIET aan dit standaard aan te zetten, al juichen we het toe dat gebruikers van Office 2016/365 de optie activeren om uit te proberen en ons  feedback te geven over hun ervaringen.
 
+==== UI Automation gebruiken in Windows-Console wanneer beschikbaar ====[AdvancedSettingsConsoleUIA]
+Wanneer deze optie ingeschakeld wordt zal NVDA gebruik maken van een nieuwe, nog in ontwikkeling zijnde  versie van de ondersteuning voor de Windows Console waarmee de toegankelijkheidsverbeteringen benut worden die Microsoft heeft doorgevoerd https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. Deze mogelijkheid is nog in een zeer experimenteel stadium  en is nog incompleet, dus gebruik ervan wordt nog niet aangeraden. De verwachting is evenwel dat, wanneer alles klaar is, deze nieuwe ondersteuningsfunctie de standaard wordt die de prestatie en stabiliteit van NVDA in Windows-opdrachtmodules zal verbeteren.
+
+==== Wachtwoorden uitspreken in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
+Met deze instelling bepaalt u Of tekens worden uitgesproken door getypte tekens uitspreken#KeyboardSettingsSpeakTypedCharacters] of door  getypte woorden uitspreken#KeyboardSettingsSpeakTypedWords] in situaties waar het scherm niet ververst wordtzoals bij de invoer van wachtwoorden in het Windows-consool terwijl ondersteuning voor UI automation (UIA) ingeschakeld is. Om veiligheidsredenen moet deze instelling uitgeschakeld blijven. Het kan echter voorkomen dat u de instelling toch zou willen inschakelen als het mis gaat met het uitsprken van getypte tekens / worden bij gebruik van de nieuwe, experimentele consoolondersteuning van NVDA.
+
 ==== Systeemfocus automatisch instellen op focusgevoelige elementen in de Bladermodus ====[BrowseModeSettingsAutoFocusFocusableElements]
 Toets: NVDA+8
 
@@ -1901,6 +1908,7 @@ Om de instellingen van NVDA voor het inlogscherm of de UAC-schermen (gebruikersa
 
 ++ Logboek weergeven++[LogViewer]
 Door Logboek weergeven te kiezen in het NVDA-menu onder Extra kunt u alles bekijken wat er in het logboek is vastgelegd vanaf het moment dat u NVDA de laatste keer startte tot het moment van openen van het logboek.
+Met de toetscombinatie NVDA+F1 opent u het logboekvenster en dit toont informatie voor ontwikkelaars over het huidige navigatorobject.
 
 U kunt niet alleen de inhoud van het logbestand lezen, maar er ook een kopie van opslaan of de inhoud van het scherm vernieuwen zodat ook de gegevens worden getoond die werden vastgelegd na openen van het logbestand.
 Dit kunt u doen via het Logboek-menu (alt+l).

@@ -84,7 +84,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 
 		Subclasses must implement this method.
 		@return: One or more identifiers which uniquely identify this gesture.
-		@rtype: list or tuple of basestring
+		@rtype: list or tuple of str
 		"""
 		raise NotImplementedError
 
@@ -95,14 +95,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		These normalized identifiers can be directly looked up in input gesture maps.
 		Subclasses should not override this method.
 		@return: One or more normalized identifiers which uniquely identify this gesture.
-		@rtype: list of basestring
+		@rtype: list of str
 		"""
 		return [normalizeGestureIdentifier(identifier) for identifier in self.identifiers]
-
-	def _get_logIdentifier(self):
-		"""@deprecated: Use L{InputGesture.identifiers}[0] instead.
-		"""
-		return self.identifiers[0]
 
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
@@ -172,9 +167,9 @@ class InputGesture(baseObject.AutoPropertyObject):
 		the gesture's source (e.g. "laptop keyboard")
 		and the specific gesture (e.g. "alt+tab").
 		@param identifier: The normalized gesture identifier in question.
-		@type identifier: basestring
+		@type identifier: str
 		@return: A tuple of (source, specificGesture).
-		@rtype: tuple of (basestring, basestring)
+		@rtype: tuple of (str, str)
 		@raise Exception: If no display text can be determined.
 		"""
 		raise NotImplementedError
@@ -196,7 +191,7 @@ class GlobalGestureMap(object):
 		#: @type: bool
 		self.lastUpdateContainedError = False
 		#: The file name for this gesture map, if any.
-		#: @type: basestring
+		#: @type: str
 		self.fileName = None
 		if entries:
 			self.update(entries)
@@ -248,7 +243,7 @@ class GlobalGestureMap(object):
 		self.fileName = filename
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
-		except (configobj.ConfigObjError,UnicodeDecodeError), e:
+		except (configobj.ConfigObjError,UnicodeDecodeError) as e:
 			log.warning("Error in gesture map '%s': %s"%(filename, e))
 			self.lastUpdateContainedError = True
 			return
@@ -273,19 +268,19 @@ class GlobalGestureMap(object):
 		@type entries: mapping of str to mapping
 		"""
 		self.lastUpdateContainedError = False
-		for locationName, location in entries.iteritems():
+		for locationName, location in entries.items():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
 				log.error("Invalid module/class specification: %s" % locationName)
 				self.lastUpdateContainedError = True
 				continue
-			for script, gestures in location.iteritems():
+			for script, gestures in location.items():
 				if script == "None":
 					script = None
 				if gestures == "":
 					gestures = ()
-				elif isinstance(gestures, basestring):
+				elif isinstance(gestures, str):
 					gestures = [gestures]
 				for gesture in gestures:
 					try:
@@ -358,7 +353,7 @@ class GlobalGestureMap(object):
 		out = configobj.ConfigObj(encoding="UTF-8")
 		out.filename = self.fileName
 
-		for gesture, scripts in self._map.iteritems():
+		for gesture, scripts in self._map.items():
 			for module, className, script in scripts:
 				key = "%s.%s" % (module, className)
 				try:
@@ -674,7 +669,7 @@ class _AllGestureMappingsRetriever(object):
 	def addObj(self, obj, isAncestor=False):
 		scripts = {}
 		for cls in obj.__class__.__mro__:
-			for scriptName, script in cls.__dict__.iteritems():
+			for scriptName, script in cls.__dict__.items():
 				if not scriptName.startswith("script_"):
 					continue
 				if isAncestor and not getattr(script, "canPropagate", False):
@@ -688,9 +683,9 @@ class _AllGestureMappingsRetriever(object):
 						continue
 					self.addResult(scriptInfo)
 				scripts[script] = scriptInfo
-		for gesture, script in obj._gestureMap.iteritems():
+		for gesture, script in obj._gestureMap.items():
 			try:
-				scriptInfo = scripts[script.__func__]
+				scriptInfo = scripts[script]
 			except KeyError:
 				continue
 			key = (scriptInfo.cls, gesture)
@@ -746,7 +741,7 @@ def registerGestureSource(source, gestureCls):
 	"br" will be used if it is registered.
 	This registration is used, for example, to get the display text for a gesture identifier.
 	@param source: The source prefix for associated gesture identifiers.
-	@type source: basestring
+	@type source: str
 	@param gestureCls: The input gesture class.
 	@type gestureCls: L{InputGesture}
 	"""
@@ -774,9 +769,9 @@ def getDisplayTextForGestureIdentifier(identifier):
 	the gesture's source (e.g. "laptop keyboard")
 	and the specific gesture (e.g. "alt+tab").
 	@param identifier: The normalized gesture identifier in question.
-	@type identifier: basestring
+	@type identifier: str
 	@return: A tuple of (source, specificGesture).
-	@rtype: tuple of (basestring, basestring)
+	@rtype: tuple of (str, str)
 	@raise LookupError: If no display text can be determined.
 	"""
 	gcls = _getGestureClsForIdentifier(identifier)

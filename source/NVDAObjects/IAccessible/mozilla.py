@@ -88,7 +88,7 @@ class Gecko1_9(Mozilla):
 
 	def _get_description(self):
 		rawDescription=super(Mozilla,self).description
-		if isinstance(rawDescription,basestring) and rawDescription.startswith('Description: '):
+		if isinstance(rawDescription,str) and rawDescription.startswith('Description: '):
 			return rawDescription[13:]
 		else:
 			return ""

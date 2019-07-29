@@ -6,9 +6,11 @@
 
 """Functions that wrap Windows API functions from user32.dll"""
 
+import contextlib
 from ctypes import *
 from ctypes.wintypes import *
-from contextlib import contextmanager
+import winKernel
+from textUtils import WCHAR_ENCODING
 
 #dll handles
 user32=windll.user32
@@ -104,6 +106,12 @@ LBS_HASSTRINGS=0x0040
 CBS_OWNERDRAWFIXED=0x0010
 CBS_OWNERDRAWVARIABLE=0x0020
 CBS_HASSTRINGS=0x00200
+WM_NULL=0
+WM_QUIT=18
+WM_COPYDATA=74
+WM_NOTIFY=78
+WM_DEVICECHANGE=537
+WM_USER=1024
 #PeekMessage
 PM_REMOVE=1
 PM_NOYIELD=2
@@ -572,10 +580,6 @@ IDRETRY=4
 IDCANCEL=3
 
 def MessageBox(hwnd, text, caption, type):
-	if isinstance(text, bytes):
-		text = text.decode('mbcs')
-	if isinstance(caption, bytes):
-		caption = caption.decode('mbcs')
 	res = user32.MessageBoxW(hwnd, text, caption, type)
 	if res == 0:
 		raise WinError()
@@ -664,6 +668,7 @@ def SendInput(inputs):
 	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))
 
+
 class PAINTSTRUCT(Structure):
 	_fields_ = [('hdc', c_int),
 		('fErase', c_int),
@@ -673,7 +678,8 @@ class PAINTSTRUCT(Structure):
 		('rgbReserved', c_char * 32)
 	]
 
-@contextmanager
+
+@contextlib.contextmanager
 def paint(hwnd, painStruct=None):
 	"""
 	Context manager that wraps BeginPaint and EndPaint.
@@ -691,6 +697,7 @@ def paint(hwnd, painStruct=None):
 		yield hdc
 	finally:
 		user32.EndPaint(hwnd, byref(paintStruct))
+
 
 class WinTimer(object):
 	"""Object that wraps the SetTimer function in user32.
@@ -722,3 +729,57 @@ class WinTimer(object):
 		"""
 		if not user32.KillTimer(self.hwnd, self.idEvent):
 			raise WinError()
+
+# Windows Clipboard format constants
+CF_UNICODETEXT = 13
+
+@contextlib.contextmanager
+def openClipboard(hwndOwner=None):
+	"""
+	A context manager version of OpenClipboard from user32. 
+	Use as the expression of a 'with' statement, and CloseClipboard will automatically be called at the end. 
+	"""
+	if not windll.user32.OpenClipboard(hwndOwner):
+		raise ctypes.WinError()
+	try:
+		yield
+	finally:
+		windll.user32.CloseClipboard()
+
+def emptyClipboard():
+	if not windll.user32.EmptyClipboard():
+		raise ctypes.WinError()
+
+def getClipboardData(format):
+	# We only support unicode text for now
+	if format!=CF_UNICODETEXT:
+		raise ValueError("Unsupported format")
+	# Fetch the data from the clipboard as a global memory handle
+	h=windll.user32.GetClipboardData(format)
+	if not h:
+		raise ctypes.WinError()
+	# Lock the global memory  while we fetch the unicode string
+	# But make sure not to free the memory accidentally -- it is not ours
+	h=winKernel.HGLOBAL(h,autoFree=False)
+	with h.lock() as addr:
+		# Read the string from the local memory address
+		return wstring_at(addr)
+
+def setClipboardData(format,data):
+	# For now only unicode is a supported format
+	if format!=CF_UNICODETEXT:
+		raise ValueError("Unsupported format")
+	text = data
+	bufLen = len(text.encode(WCHAR_ENCODING, errors="surrogatepass")) + 2
+	# Allocate global memory
+	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE, bufLen)
+	# Acquire a lock to the global memory receiving a local memory address
+	with h.lock() as addr:
+		# Write the text into the allocated memory
+		buf=(c_wchar*bufLen).from_address(addr)
+		buf.value=text
+	# Set the clipboard data with the global memory
+	if not windll.user32.SetClipboardData(format,h):
+		raise ctypes.WinError()
+	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
+	h.forget()
