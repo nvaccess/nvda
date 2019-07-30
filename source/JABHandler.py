@@ -1,14 +1,11 @@
 # -*- coding: UTF-8 -*-
 #javaAccessBridgeHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+#Copyright (C) 2007-2018 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-try:
-	import Queue as queue # Python 2.7 import
-except ImportError:
-	import queue # Python 3 import
+import queue
 from ctypes import *
 from ctypes.wintypes import *
 import time
@@ -22,6 +19,7 @@ import eventHandler
 import controlTypes
 import NVDAObjects.JAB
 import core
+import textUtils
 
 #Some utility functions to help with function defines
 
@@ -261,7 +259,7 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getAccessibleTextSelectionInfo',c_long,JOBJECT64,POINTER(AccessibleTextSelectionInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextAttributes',c_long,JOBJECT64,jint,POINTER(AccessibleTextAttributesInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextLineBounds',c_long,JOBJECT64,jint,POINTER(jint),POINTER(jint),errcheck=True)
-	_fixBridgeFunc(BOOL,'getAccessibleTextRange',c_long,JOBJECT64,jint,jint,POINTER(c_wchar),c_short,errcheck=True)
+	_fixBridgeFunc(BOOL,'getAccessibleTextRange',c_long,JOBJECT64,jint,jint,POINTER(c_char),c_short,errcheck=True)
 	_fixBridgeFunc(BOOL,'getCurrentAccessibleValueFromContext',c_long,JOBJECT64,POINTER(c_wchar),c_short,errcheck=True)
 	_fixBridgeFunc(BOOL,'selectTextRange',c_long,JOBJECT64,c_int,c_int,errcheck=True)
 	_fixBridgeFunc(BOOL,'getTextAttributesInRange',c_long,JOBJECT64,c_int,c_int,POINTER(AccessibleTextAttributesInfo),POINTER(c_short),errcheck=True)
@@ -350,6 +348,11 @@ class JABContext(object):
 		else:
 			return False
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,jabContext):
 		if self.vmID!=jabContext.vmID or not bridgeDll.isSameObject(self.vmID,self.accContext,jabContext.accContext):
 			return True
@@ -388,9 +391,10 @@ class JABContext(object):
 		length=((end+1)-start)
 		if length<=0:
 			return u""
-		text=create_unicode_buffer(length+1)
-		bridgeDll.getAccessibleTextRange(self.vmID,self.accContext,start,end,text,length)
-		return text.value
+		# Use a string buffer, as from an unicode buffer, we can't get the raw data.
+		buf = create_string_buffer((length +1) * 2)
+		bridgeDll.getAccessibleTextRange(self.vmID, self.accContext, start, end, buf, length)
+		return textUtils.getTextFromRawBytes(buf.raw, numChars=length, encoding=textUtils.WCHAR_ENCODING)
 
 	def getAccessibleTextLineBounds(self,index):
 		index=max(index,0)
@@ -716,7 +720,7 @@ def initialize():
 	if ChangeWindowMessageFilter:
 		if not ChangeWindowMessageFilter(winUser.WM_COPYDATA,1):
 			raise WinError()
-		for msg in xrange(winUser.WM_USER+1,65535):
+		for msg in range(winUser.WM_USER+1,65535):
 			if not ChangeWindowMessageFilter(msg,1):
 				raise WinError()
 	#Register java events

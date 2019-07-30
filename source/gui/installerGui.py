@@ -102,9 +102,9 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 		import addonHandler
-		self.version = buildVersion.getCurrentVersionTuple()
-		addonsWithoutKnownCompat = list(addonHandler.getAddonsWithoutKnownCompatibility(self.version))
-		shouldAskAboutAddons = any(addonsWithoutKnownCompat)
+		shouldAskAboutAddons = any(addonHandler.getIncompatibleAddons(
+			# the defaults from the installer are ok. We are testing against the running version.
+		))
 
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = gui.guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -120,19 +120,11 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		if shouldAskAboutAddons:
 			# Translators: A message in the installer to let the user know that some addons are not compatible.
 			msg+=_(
-				"\n\nHowever, your NVDA configuration contains add-ons that are not tested with this version of NVDA. "
-				"These add-ons will be disabled after installation. "
-				"If you rely on these add-ons, please review the list to manually enable them before installation."
+				"\n\n"
+				"However, your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
+				"These add-ons will be disabled after installation. If you rely on these add-ons, "
+				"please review the list to decide whether to continue with the installation"
 			)
-			from addonHandler import AddonCompatibilityState, compatValues
-			for a in addonsWithoutKnownCompat:
-				# now that the use is warned about the compatibility and so that the user is
-				# not prompted again after installation, we set the default compatibility
-				AddonCompatibilityState.setAddonCompatibility(
-					addon=a,
-					NVDAVersion=self.version,
-					compatibilityStateValue=compatValues.MANUALLY_SET_INCOMPATIBLE
-				)
 
 		text = sHelper.addItem(wx.StaticText(self, label=msg))
 		text.Wrap(self.scaleSize(self.textWrapWidth))
@@ -141,7 +133,7 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 					self,
 					# Translators: A message to confirm that the user understands that addons that have not been reviewed and made
 					# available, will be disabled after installation.
-					label=_("I understand that these untested add-ons will be disabled")
+					label=_("I understand that these incompatible add-ons will be disabled")
 				))
 			self.confirmationCheckbox.SetFocus()
 
@@ -220,10 +212,9 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		from gui import addonGui
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
-			NVDAVersion=self.version
+			# the defaults from the installer are fine. We are testing against the running version.
 		)
 		incompatibleAddons.ShowModal()
-		incompatibleAddons.Destroy()
 
 class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 	def __init__(self):
@@ -269,7 +260,7 @@ class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
 def showInstallGui():
 	gui.mainFrame.prePopup()
 	previous = installer.comparePreviousInstall()
-	if previous > 0:
+	if previous is not None and previous > 0:
 		# The existing installation is newer, which means this will be a downgrade.
 		d = InstallingOverNewerVersionDialog()
 		with d:
@@ -389,6 +380,6 @@ def doCreatePortable(portableDirectory,copyUserConfig=False,silent=False,startAf
 		if startAfterCreate:
 			# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
 			shellapi.ShellExecute(None, None,
-				os.path.join(os.path.abspath(unicode(portableDirectory)),'nvda.exe'),
+				os.path.join(os.path.abspath(portableDirectory),'nvda.exe'),
 				u"-r",
 				None, winUser.SW_SHOWNORMAL)
