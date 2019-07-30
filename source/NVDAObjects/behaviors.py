@@ -368,10 +368,16 @@ class Terminal(LiveText, EditableText):
 		self.stopMonitoring()
 
 
-class TerminalWithKeyboardSupport(Terminal):
+class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
-	console applications on Windows 10 1607 and later."""
-	#: Whether this object reliably sends textChange events.
+	console applications via keyboardHandler events.
+	This class relies on the toUnicodeEx Windows function, and in particular
+	the flag to preserve keyboard state available in Windows 10 1607
+	and later."""
+	#: Whether this object quickly and reliably sends textChange events
+	#: when its contents update.
+	#: Timely and reliable textChange events are required
+	#: to support password suppression.
 	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
@@ -395,7 +401,7 @@ class TerminalWithKeyboardSupport(Terminal):
 			# Clear the typed word buffer for new text lines.
 			speech.clearTypedWordBuffer()
 			self._queuedChars = []
-		super(TerminalWithKeyboardSupport, self)._reportNewText(line)
+		super(KeyboardHandlerBasedTypedCharSupport, self)._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
@@ -414,11 +420,11 @@ class TerminalWithKeyboardSupport(Terminal):
 		):
 			self._queuedChars.append(ch)
 		else:
-			super(TerminalWithKeyboardSupport, self).event_typedCharacter(ch)
+			super(KeyboardHandlerBasedTypedCharSupport, self).event_typedCharacter(ch)
 
 	def event_textChange(self):
 		self._dispatchQueue()
-		super(TerminalWithKeyboardSupport, self).event_textChange()
+		super(KeyboardHandlerBasedTypedCharSupport, self).event_textChange()
 
 	@script(gestures=[
 		"kb:enter",
@@ -443,13 +449,13 @@ class TerminalWithKeyboardSupport(Terminal):
 			self._findNonBlankIndices(newLines)
 			!= self._findNonBlankIndices(oldLines)
 		)
-		return super(TerminalWithKeyboardSupport, self)._calculateNewText(newLines, oldLines)
+		return super(KeyboardHandlerBasedTypedCharSupport, self)._calculateNewText(newLines, oldLines)
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
 		while self._queuedChars:
 			ch = self._queuedChars.pop(0)
-			super(TerminalWithKeyboardSupport, self).event_typedCharacter(ch)
+			super(KeyboardHandlerBasedTypedCharSupport, self).event_typedCharacter(ch)
 
 	def _findNonBlankIndices(self, lines):
 		"""

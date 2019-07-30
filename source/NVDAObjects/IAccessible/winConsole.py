@@ -17,6 +17,6 @@ class WinConsole(winConsole.WinConsole, IAccessible):
 
 def findExtraOverlayClasses(obj, clsList):
 	if isWin10(1607) and config.conf['terminals']['keyboardSupportInLegacy']:
-		from NVDAObjects.behaviors import TerminalWithKeyboardSupport
-		clsList.append(TerminalWithKeyboardSupport)
+		from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
+		clsList.append(KeyboardHandlerBasedTypedCharSupport)
 	clsList.append(WinConsole)
