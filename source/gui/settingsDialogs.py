@@ -732,8 +732,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			# Translators: A message to warn the user when attempting to copy current
 			# settings to system settings.
 			message = _(
-				_("The following add-ons were detected in your user settings directory:"\r\n%s.\r\nCopying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-				% ", ".join([addon.manifest['summary'] for addon in addonHandler.getRunningAddons()]))
+				_("The following add-ons were detected in your user settings directory:"
+				"%s."
+				"Copying these to the system profile could be a security risk. Do you still wish to copy your settings?" % ", ".join([addon.manifest['summary'] for addon in addonHandler.getRunningAddons()]))
 			)
 			# Translators: The title of the warning dialog displayed when trying to
 			# copy settings for use in secure screens.
@@ -749,7 +750,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			# to the system configuration (for use on Windows logon etc)
 			_("Please wait while settings are copied to the system configuration.")
 		)
->>>>>>> master
 		while True:
 			try:
 				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
