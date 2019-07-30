@@ -29,9 +29,8 @@ baseBranch = env.get("base")
 if doLint and not baseBranch:
 	errorMessage = (
 		"Lint can not complete without base branch. "
-		"Try: 'scons lint base=origin/master'. "
-		"Consider executing this on the command line or via your IDE: "
-		"\t git diff -U0 baseRef...HEAD | py -3 -m flake8 --diff --config='tests/lint/flake8.ini'"
+		"Try: 'scons lint base=origin/master' "
+		"See also /tests/lint/readme.md"
 	)
 	raise SCons.SConf.SConfError(errorMessage)
 
@@ -39,7 +38,7 @@ if doLint and not baseBranch:
 diffTarget = externalEnv.Command(
 	"current.diff",
 	None,
-	[["git", "diff", "-u", f"{baseBranch}...HEAD", ">", '$TARGET']]
+	[[sys.executable, "tests/lint/genDiff.py", baseBranch, '$TARGET']]
 )
 
 # Pipe diff to flake8 for linting.

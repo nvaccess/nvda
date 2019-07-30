@@ -49,3 +49,6 @@ def another(
 def extremlyLongFunctionName_blahblahblahblahblahblahblahblahblahblahblahlblahblahblahblahblahblahblahblahblahblahblahblahlblah(arg):  # noqa: E501 line too long (133 > 110 characters)
 	raise NotImplemented  # noqa: F901 'raise NotImplemented' should be 'raise NotImplementedError'
 	# noqa: W292 no newline at end of file
+
+
+print(_("a line I want to translate"))

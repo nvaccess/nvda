@@ -262,13 +262,7 @@ scons lint base=origin/master
 ```
 
 To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
-Consider using the following command line:
-```
-git diff -U0 baseRef...HEAD | py -3 -m flake8 --diff --config='tests/lint/flake8.ini
-```
-Where:
-- `baseRef` is the branch your changes are targeting
-- `tests\lint\flake8.ini` is the path to the NVDA Flake8 configuration file
+For more details, see `tests/lint/readme.md`
 
 ### System Tests
 You may also use scons to run the system tests, though this will still rely on having set up the dependencies (see `tests/system/readme.md`).
