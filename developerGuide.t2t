@@ -764,14 +764,18 @@ See [Snapshot Variables #PythonConsoleSnapshotVariables] for more details.
 -
 
 The console is similar to the standard interactive Python interpreter.
-Input is accepted one line at a time.
-The current line is processed when enter is pressed.
+Input is accepted one line at a time and processed when enter is pressed.
+Multiple lines can be pasted at once from the clipboard and will be processed one by one. 
 You can navigate through the history of previously entered lines using the up and down arrow keys.
 
 Output (responses from the interpreter) will be spoken when enter is pressed.
 The f6 key toggles between the input and output controls.
 
-Closing the console window simply hides it.
+The result of the last executed command is stored in the "_" global variable.
+This shadows the gettext function which is stored as a built-in with the same name.
+It can be unshadowed by executing "del _" and avoided altogether by executing "_ = _".
+
+Closing the console window (with escape or alt+F4) simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
 ++ Namespace ++[PythonConsoleNamespace]
@@ -791,6 +795,15 @@ These variables are:
 - mouse: The current mouse object
 - brlRegions: The braille regions from the active braille buffer
 -
+
+++ Tab completion ++
+The input control supports tab-completion of variables and member attributes names.
+Hit the tab key once to complete the current input if there is one single candidate.
+If there is more than one, hit the tab key a second time to open a menu listing all matching possibilities.
+By default, only "public" member attributes are listed.
+That is, if the input is "nav.", attribute names with no leading underscore are proposed.
+If the input is "nav._", attribute names with a single leading underscore are proposed.
+Similarly, if the input is "nav.__", attribute names with two leading underscores are proposed.
 
 + Remote Python Console +
 A remote Python console is available for situations where remote debugging of NVDA is useful.

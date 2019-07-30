@@ -5,7 +5,7 @@
 
 from ctypes import *
 from ctypes.wintypes import HWND, BOOL
-from comtypes import GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
+from comtypes import HRESULT, GUID, COMMETHOD, IUnknown, tagBIND_OPTS2
 from comtypes.persist import IPersist
 WSTRING = c_wchar_p
 

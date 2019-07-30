@@ -56,9 +56,7 @@ def listTables():
 	@return: A list of braille tables.
 	@rtype: list of L{BrailleTable}
 	"""
-	tables = _tables.values()
-	tables.sort(key=lambda table: table.displayName)
-	return tables
+	return sorted(_tables.values(), key=lambda table: table.displayName)
 
 #: Maps old table names to new table names for tables renamed in newer versions of liblouis.
 RENAMED_TABLES = {

@@ -25,7 +25,6 @@ import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
-
 from comtypes.gen.UIAutomationClient import *
 
 #Some newer UIA constants that could be missing
@@ -46,6 +45,8 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
+	# UIA events of candidate window interfere with MSAA events.
+	"Microsoft.IME.CandidateWindow.View",
 "SysTreeView32",
 "WuDuiListView",
 "ComboBox",
@@ -151,8 +152,14 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
 
-if winVersion.isAtLeastWin10():
+if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+
+ignoreWinEventsMap = {
+	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
+}
+for id in UIAEventIdsToNVDAEventNames.keys():
+	ignoreWinEventsMap[id] = [0]
 
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
@@ -190,22 +197,26 @@ class UIAHandler(COMObject):
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
 			pfm=self.clientObject.proxyFactoryMapping
-			for index in xrange(pfm.count):
+			for index in range(pfm.count):
 				e=pfm.getEntry(index)
-				for propertyID in UIAPropertyIdsToNVDAEventNames.keys():
-					# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
-					try:
-						oldWinEvents=e.getWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID)
-					except IndexError:
-						# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
-						oldWinEvents=None
-					if oldWinEvents:
-						# As winEvents were mapped, replace them with an empty list
-						e.setWinEventsForAutomationEvent(UIA_AutomationPropertyChangedEventId,propertyID,[])
-						# Changes to an enty are not automatically picked up.
-						# Therefore remove the entry and re-insert it.
-						pfm.removeEntry(index)
-						pfm.insertEntry(index,e)
+				entryChanged = False
+				for eventId, propertyIds in ignoreWinEventsMap.items():
+					for propertyId in propertyIds:
+						# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
+						try:
+							oldWinEvents=e.getWinEventsForAutomationEvent(eventId,propertyId)
+						except IndexError:
+							# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
+							oldWinEvents=None
+						if oldWinEvents:
+							# As winEvents were mapped, replace them with an empty list
+							e.setWinEventsForAutomationEvent(eventId,propertyId,[])
+							entryChanged = True
+				if entryChanged:
+					# Changes to an entry are not automatically picked up.
+					# Therefore remove the entry and re-insert it.
+					pfm.removeEntry(index)
+					pfm.insertEntry(index,e)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
 				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
@@ -237,8 +248,9 @@ class UIAHandler(COMObject):
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
-			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
+			# Use a list of keys as AddPropertyChangedEventHandler expects a sequence.
+			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,list(UIAPropertyIdsToNVDAEventNames))
+			for x in UIAEventIdsToNVDAEventNames.keys():
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if isinstance(self.clientObject, IUIAutomation5):

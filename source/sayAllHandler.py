@@ -1,188 +1,216 @@
-#sayAllHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2017 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import itertools
-import queueHandler
-import config
+import weakref
 import speech
-import textInfos
-import globalVars
-import api
-import tones
-import time
+import synthDriverHandler
+from logHandler import log
+import config
 import controlTypes
+import api
+import textInfos
+import queueHandler
 
-CURSOR_CARET=0
-CURSOR_REVIEW=1
+CURSOR_CARET = 0
+CURSOR_REVIEW = 1
 
-_generatorID = None
-lastSayAllMode=None
-
-def _startGenerator(generator):
-	global _generatorID
-	stop()
-	_generatorID = queueHandler.registerGeneratorObject(generator)
+lastSayAllMode = None
+#: The active say all manager.
+#: This is a weakref because the manager should be allowed to die once say all is complete.
+_activeSayAll = lambda: None # Return None when called like a dead weakref.
 
 def stop():
-	"""Stop say all if a say all is in progress.
-	"""
-	global _generatorID
-	if _generatorID is None:
-		return
-	queueHandler.cancelGeneratorObject(_generatorID)
-	_generatorID = None
+	active = _activeSayAll()
+	if active:
+		active.stop()
 
 def isRunning():
 	"""Determine whether say all is currently running.
 	@return: C{True} if say all is currently running, C{False} if not.
 	@rtype: bool
-	@note: If say all completes and there is no call to L{stop} (which is called from L{speech.cancelSpeech}), this will incorrectly return C{True}.
-		This should not matter, but is worth noting nevertheless.
 	"""
-	global _generatorID
-	return _generatorID is not None
+	return bool(_activeSayAll())
 
 def readObjects(obj):
-	_startGenerator(readObjectsHelper_generator(obj))
+	global _activeSayAll
+	reader = _ObjectsReader(obj)
+	_activeSayAll = weakref.ref(reader)
+	reader.next()
 
-def generateObjectSubtreeSpeech(obj,indexGen):
-	index=indexGen.next()
-	speech.speakObject(obj,reason=controlTypes.REASON_SAYALL,index=index)
-	yield obj,index
-	child=obj.simpleFirstChild
-	while child:
-		childSpeech=generateObjectSubtreeSpeech(child,indexGen)
-		for r in childSpeech:
-			yield r
-		child=child.simpleNext
+class _ObjectsReader(object):
 
-def readObjectsHelper_generator(obj):
-	lastSentIndex=0
-	lastReceivedIndex=0
-	speechGen=generateObjectSubtreeSpeech(obj,itertools.count())
-	objIndexMap={}
-	keepReading=True
-	while True:
-		# lastReceivedIndex might be None if other speech was interspersed with this say all.
-		# In this case, we want to send more text in case this was the last chunk spoken.
-		if lastReceivedIndex is None or (lastSentIndex-lastReceivedIndex)<=1:
-			if keepReading:
-				try:
-					o,lastSentIndex=speechGen.next()
-				except StopIteration:
-					keepReading=False
-					continue
-				objIndexMap[lastSentIndex]=o
-		receivedIndex=speech.getLastSpeechIndex()
-		if receivedIndex!=lastReceivedIndex and (lastReceivedIndex!=0 or receivedIndex!=None): 
-			lastReceivedIndex=receivedIndex
-			lastReceivedObj=objIndexMap.get(lastReceivedIndex)
-			if lastReceivedObj is not None:
-				api.setNavigatorObject(lastReceivedObj, isFocus=lastSayAllMode==CURSOR_CARET)
-			#Clear old objects from the map
-			for i in objIndexMap.keys():
-				if i<=lastReceivedIndex:
-					del objIndexMap[i]
-		while speech.isPaused:
-			yield
-		yield
+	def __init__(self, root):
+		self.walker = self.walk(root)
+		self.prevObj = None
+
+	def walk(self, obj):
+		yield obj
+		child=obj.simpleFirstChild
+		while child:
+			for descendant in self.walk(child):
+				yield descendant
+			child=child.simpleNext
+
+	def next(self):
+		if not self.walker:
+			# We were stopped.
+			return
+		if self.prevObj:
+			# We just started speaking this object, so move the navigator to it.
+			api.setNavigatorObject(self.prevObj, isFocus=lastSayAllMode==CURSOR_CARET)
+		# Move onto the next object.
+		self.prevObj = obj = next(self.walker, None)
+		if not obj:
+			return
+		# Call this method again when we start speaking this object.
+		callbackCommand = speech.CallbackCommand(self.next)
+		speech.speakObject(obj, reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=callbackCommand)
+
+	def stop(self):
+		self.walker = None
 
 def readText(cursor):
-	global lastSayAllMode
+	global lastSayAllMode, _activeSayAll
 	lastSayAllMode=cursor
-	_startGenerator(readTextHelper_generator(cursor))
+	reader = _TextReader(cursor)
+	_activeSayAll = weakref.ref(reader)
+	reader.nextLine()
 
-def readTextHelper_generator(cursor):
-	if cursor==CURSOR_CARET:
-		try:
-			reader=api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			return
-	else:
-		reader=api.getReviewPosition()
+class _TextReader(object):
+	"""Manages continuous reading of text.
+	This is intended for internal use only.
 
-	lastSentIndex=0
-	lastReceivedIndex=0
-	cursorIndexMap={}
-	keepReading=True
-	speakTextInfoState=speech.SpeakTextInfoState(reader.obj)
-	with SayAllProfileTrigger():
-		while True:
-			if not reader.obj:
-				# The object died, so we should too.
+	The high level flow of control is as follows:
+	1. The constructor sets things up.
+	2. L{nextLine} is called to read the first line.
+	3. When it speaks a line, L{nextLine} request that L{lineReached} be called
+		when we start speaking this line, providing the position and state at this point.
+	4. When we start speaking a line, L{lineReached} is called
+		and moves the cursor to that line.
+	5. L{lineReached} calls L{nextLine}.
+	6. If there are more lines, L{nextLine} works as per steps 3 and 4.
+	7. Otherwise, if the object doesn't support page turns, we're finished.
+	8. If the object does support page turns,
+		we request that L{turnPage} be called when speech is finished.
+	9. L{turnPage} tries to turn the page.
+	10. If there are no more pages, we're finished.
+	11. If there is another page, L{turnPage} calls L{nextLine}.
+	"""
+	MAX_BUFFERED_LINES = 10
+
+	def __init__(self, cursor):
+		self.cursor = cursor
+		self.trigger = SayAllProfileTrigger()
+		self.trigger.enter()
+		# Start at the cursor.
+		if cursor == CURSOR_CARET:
+			try:
+				self.reader = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+			except (NotImplementedError, RuntimeError):
 				return
-			# lastReceivedIndex might be None if other speech was interspersed with this say all.
-			# In this case, we want to send more text in case this was the last chunk spoken.
-			if lastReceivedIndex is None or (lastSentIndex-lastReceivedIndex)<=10:
-				if keepReading:
-					bookmark=reader.bookmark
-					index=lastSentIndex+1
-					delta=reader.move(textInfos.UNIT_READINGCHUNK,1,endPoint="end")
-					if delta<=0:
-						speech.speakWithoutPauses(None)
-						keepReading=False
-						continue
-					speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=controlTypes.REASON_SAYALL,index=index,useCache=speakTextInfoState)
-					lastSentIndex=index
-					cursorIndexMap[index]=(bookmark,speakTextInfoState.copy())
-					try:
-						reader.collapse(end=True)
-					except RuntimeError: #MS Word when range covers end of document
-						# Word specific: without this exception to indicate that further collapsing is not posible, say-all could enter an infinite loop.
-						speech.speakWithoutPauses(None)
-						keepReading=False
+		else:
+			self.reader = api.getReviewPosition()
+		self.speakTextInfoState = speech.SpeakTextInfoState(self.reader.obj)
+		self.numBufferedLines = 0
+
+	def nextLine(self):
+		if not self.reader:
+			# We were stopped.
+			return
+		if not self.reader.obj:
+			# The object died, so we should too.
+			self.finish()
+			return
+		bookmark = self.reader.bookmark
+		# Expand to the current line.
+		# We use move end rather than expand
+		# because the user might start in the middle of a line
+		# and we don't want to read from the start of the line in that case.
+		# For lines after the first, it's also more efficient because
+		# we're already at the start of the line, so there's no need to search backwards.
+		delta = self.reader.move(textInfos.UNIT_READINGCHUNK, 1, endPoint="end")
+		if delta <= 0:
+			# No more text.
+			if isinstance(self.reader.obj, textInfos.DocumentWithPageTurns):
+				# Once the last line finishes reading, try turning the page.
+				cb = speech.CallbackCommand(self.turnPage)
+				speech.speakWithoutPauses([cb, speech.EndUtteranceCommand()])
 			else:
-				# We'll wait for speech to catch up a bit before sending more text.
-				if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:
-					# There is a large chunk of pending speech
-					# Force speakWithoutPauses to send text to the synth so we can move on.
-					speech.speakWithoutPauses(None)
-			receivedIndex=speech.getLastSpeechIndex()
-			if receivedIndex!=lastReceivedIndex and (lastReceivedIndex!=0 or receivedIndex!=None): 
-				lastReceivedIndex=receivedIndex
-				bookmark,state=cursorIndexMap.get(receivedIndex,(None,None))
-				if state:
-					state.updateObj()
-				if bookmark is not None:
-					updater=reader.obj.makeTextInfo(bookmark)
-					if cursor==CURSOR_CARET:
-						updater.updateCaret()
-					if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
-						api.setReviewPosition(updater, isCaret=cursor==CURSOR_CARET)
-			elif not keepReading and lastReceivedIndex==lastSentIndex:
-				# All text has been sent to the synth.
-				# Turn the page and start again if the object supports it.
-				if isinstance(reader.obj,textInfos.DocumentWithPageTurns):
-					try:
-						reader.obj.turnPage()
-					except RuntimeError:
-						break
-					else:
-						reader=reader.obj.makeTextInfo(textInfos.POSITION_FIRST)
-						keepReading=True
-				else:
-					break
+				self.finish()
+			return
+		# Call lineReached when we start speaking this line.
+		# lineReached will move the cursor and trigger reading of the next line.
+		cb = speech.CallbackCommand(lambda obj=self.reader.obj, state=self.speakTextInfoState.copy(): self.lineReached(obj,bookmark, state))
+		spoke = speech.speakTextInfo(self.reader, unit=textInfos.UNIT_READINGCHUNK,
+			reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=cb,
+			useCache=self.speakTextInfoState)
+		# Collapse to the end of this line, ready to read the next.
+		try:
+			self.reader.collapse(end=True)
+		except RuntimeError:
+			# This occurs in Microsoft Word when the range covers the end of the document.
+			# without this exception to indicate that further collapsing is not possible, say all could enter an infinite loop.
+			self.finish()
+			return
+		if not spoke:
+			# This line didn't include a natural pause, so nothing was spoken.
+			self.numBufferedLines += 1
+			if self.numBufferedLines < self.MAX_BUFFERED_LINES:
+				# Move on to the next line.
+				# We queue this to allow the user a chance to stop say all.
+				queueHandler.queueFunction(queueHandler.eventQueue, self.nextLine)
+			else:
+				# We don't want to buffer too much.
+				# Force speech. lineReached will resume things when speech catches up.
+				speech.speakWithoutPauses(None)
+				# The first buffered line has now started speaking.
+				self.numBufferedLines -= 1
 
-			while speech.isPaused:
-				yield
-			yield
+	def lineReached(self, obj, bookmark, state):
+		# We've just started speaking this line, so move the cursor there.
+		state.updateObj()
+		updater = obj.makeTextInfo(bookmark)
+		if self.cursor == CURSOR_CARET:
+			updater.updateCaret()
+		if self.cursor != CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
+			api.setReviewPosition(updater, isCaret=self.cursor==CURSOR_CARET)
+		if self.numBufferedLines == 0:
+			# This was the last line spoken, so move on.
+			self.nextLine()
+		else:
+			self.numBufferedLines -= 1
 
-		# Wait until the synth has actually finished speaking.
-		# Otherwise, if there is a triggered profile with a different synth,
-		# we will switch too early and truncate speech (even up to several lines).
-		# Send another index and wait for it.
-		index=lastSentIndex+1
-		speech.speak([speech.IndexCommand(index)])
-		while speech.getLastSpeechIndex()<index:
-			yield
-			yield
-		# Some synths say they've handled the index slightly sooner than they actually have,
-		# so wait a bit longer.
-		for i in xrange(30):
-			yield
+	def turnPage(self):
+		try:
+			self.reader.obj.turnPage()
+		except RuntimeError:
+			# No more pages.
+			self.stop()
+			return
+		self.reader = self.reader.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		self.nextLine()
+
+	def finish(self):
+		# There is no more text.
+		# Call stop to clean up, but only after speech completely finishes.
+		# Otherwise, if a different synth is being used for say all,
+		# we might switch synths too early and truncate the final speech.
+		# We do this by putting a CallbackCommand at the start of a new utterance.
+		cb = speech.CallbackCommand(self.stop)
+		speech.speakWithoutPauses([speech.EndUtteranceCommand(), cb,
+			speech.EndUtteranceCommand()])
+
+	def stop(self):
+		if not self.reader:
+			return
+		self.reader = None
+		self.trigger.exit()
+		self.trigger = None
+
+	def __del__(self):
+		self.stop()
 
 class SayAllProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when say all is in progress.
