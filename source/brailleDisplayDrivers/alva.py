@@ -4,18 +4,18 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2018 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
 
-import serial
-import hwPortUtils
+from typing import List, Union
+
+import bdDetect
 import braille
 from logHandler import log
 import inputCore
 import brailleInput
 import hwIo
-from collections import OrderedDict
+from hwIo import intToByte, boolToByte, Serial
 from globalCommands import SCRCAT_BRAILLE
 import ui
 from baseObject import ScriptableObject
-import wx
 import time
 import datetime
 
@@ -28,6 +28,7 @@ ALVA_KEY_REPORT_KEY_POS = 1
 ALVA_KEY_REPORT_KEY_GROUP_POS = 2
 ALVA_KEY_RAW_INPUT_MASK = 0x30
 ALVA_DISPLAY_SETTINGS_REPORT = b"\x05"
+ALVA_DISPLAY_SETTINGS_STATUS_CELL_SIDE_POS = 2
 ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS = 6
 ALVA_KEY_SETTINGS_REPORT = b"\x06"
 ALVA_KEY_SETTINGS_POS = 1 # key settings are stored as bits in 1 byte
@@ -36,11 +37,15 @@ ALVA_RTC_STR_LENGTH = 7
 ALVA_RTC_MAX_DRIFT = 5
 ALVA_RTC_MIN_YEAR = 1900
 ALVA_RTC_MAX_YEAR = 3000
+ALVA_MODEL_BC640 = 0x40
+ALVA_MODEL_BC680 = 0x80
+ALVA_MODEL_CONVERTER = 0x99
+ESCAPE = b"\x1b"
 
 ALVA_MODEL_IDS = {
-	0x40: "BC640",
-	0x80: "BC680",
-	0x99: "ProtocolConverter",
+	ALVA_MODEL_BC640: "BC640",
+	ALVA_MODEL_BC680: "BC680",
+	ALVA_MODEL_CONVERTER: "ProtocolConverter",
 }
 
 ALVA_SER_CMD_LENGTHS = {
@@ -67,20 +72,28 @@ ALVA_SER_CMD_LENGTHS = {
 	b"K": 2, # Keys message
 }
 
+ALVA_THUMB_GROUP = 0x71
+ALVA_ETOUCH_GROUP = 0x72
+ALVA_SP_GROUP = 0x73
 ALVA_CR_GROUP = 0x74
 ALVA_FEATURE_PACK_GROUP = 0x78
 ALVA_SPECIAL_KEYS_GROUP = 0x01
 ALVA_SPECIAL_SETTINGS_CHANGED = 0x01
 
+DOUBLED_KEY_COUNTS = {
+	ALVA_THUMB_GROUP: 5,
+	ALVA_SP_GROUP: 9
+}
+
 ALVA_KEYS = {
 	# Thumb keys (FRONT_GROUP)
-	0x71: ("t1", "t2", "t3", "t4", "t5",
+	ALVA_THUMB_GROUP: ("t1", "t2", "t3", "t4", "t5",
 		# Only for BC680
 		"t1", "t2", "t3", "t4", "t5"),
 	# eTouch keys (ETOUCH_GROUP)
-	0x72: ("etouch1", "etouch2", "etouch3", "etouch4"),
+	ALVA_ETOUCH_GROUP: ("etouch1", "etouch2", "etouch3", "etouch4"),
 	# Smartpad keys (PDA_GROUP)
-	0x73: ("sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
+	ALVA_SP_GROUP: ("sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
 		# Only for BC680
 		"sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4"),
 	# Feature pack keys.
@@ -89,48 +102,20 @@ ALVA_KEYS = {
 		"control", "windows", "space", "alt", "enter"),
 }
 
-USB_IDS = {
-	"VID_0798&PID_0640", # BC640
-	"VID_0798&PID_0680", # BC680
-	"VID_0798&PID_0699", # USB protocol converter
-}
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+	_dev: Union[hwIo.Serial, hwIo.Hid]
 	name = "alva"
 	# Translators: The name of a braille display.
 	description = _("Optelec ALVA 6 series/protocol converter")
 	isThreadSafe = True
 	timeout = 0.2
+	supportedSettings = (
+		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),
+	)
 
 	@classmethod
-	def check(cls):
-		return True
-
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
-		try:
-			next(cls._getAutoPorts(comPorts))
-			ports.update((cls.AUTOMATIC_PORT,))
-		except StopIteration:
-			pass
-		for portInfo in comPorts:
-			if not portInfo.get("bluetoothName","").startswith("ALVA "):
-				continue
-			# Translators: Name of a bluetooth serial communications port.
-			ports[portInfo["port"]] = _("Bluetooth serial: {portName}").format(portName=portInfo["friendlyName"])
-		return ports
-
-	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		for portInfo in hwPortUtils.listHidDevices():
-			if portInfo.get("usbID","") in USB_IDS:
-				yield portInfo["devicePath"], "USB HID", portInfo["usbID"]
-		for portInfo in comPorts:
-			if not portInfo.get("bluetoothName","").startswith("ALVA "):
-				continue
-			yield portInfo["port"], "bluetooth", portInfo["bluetoothName"]
+	def getManualPorts(cls):
+		return braille.getSerialPorts(filterFunc=lambda info: info.get("bluetoothName","").startswith("ALVA "))
 
 	def _get_model(self):
 		if not self._deviceId:
@@ -142,18 +127,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		oldNumCells = self.numCells
 		if self.isHid:
 			displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
-			self.numCells = ord(displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS])
-			timeStr = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
+			if displaySettings[ALVA_DISPLAY_SETTINGS_STATUS_CELL_SIDE_POS] > 1:
+				# #8106: The ALVA BC680 is known to return a malformed feature report for the first issued request.
+				# Therefore, request another display settings report
+				displaySettings = self._dev.getFeature(ALVA_DISPLAY_SETTINGS_REPORT)
+			self.numCells = displaySettings[ALVA_DISPLAY_SETTINGS_CELL_COUNT_POS]
+			timeBytes: bytes = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
 			try:
-				self._handleTime(timeStr)
+				self._handleTime(timeBytes)
 			except:
 				log.debugWarning("Getting time from ALVA display failed", exc_info=True)
 			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
-			self._rawKeyboardInput = bool(ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK)
+			self._rawKeyboardInput = bool(keySettings & ALVA_KEY_RAW_INPUT_MASK)
 		else:
 			# Get cell count
 			self._ser6SendMessage(b"E", b"?")
-			for i in xrange(3):
+			for i in range(3):
 				self._dev.waitForRead(self.timeout)
 				if self.numCells: # Display responded
 					break
@@ -172,28 +161,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.numCells = 0
 		self._rawKeyboardInput = False
 		self._deviceId = None
-		if port == "auto":
-			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
-		else:
-			tryPorts = ((port, "bluetooth", "ALVA"),)
-		for port, portType, identifier in tryPorts:
-			self.isHid = portType == "USB HID"
+
+		for portType, portId, port, portInfo in self._getTryPorts(port):
+			self.isHid = portType == bdDetect.KEY_HID
 			# Try talking to the display.
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
-					self._deviceId = int(identifier[-2:],16)
+					self._deviceId = int(portId[-2:],16)
 				else:
 					self._dev = hwIo.Serial(port, timeout=self.timeout, writeTimeout=self.timeout, onReceive=self._ser6OnReceive)
 					# Get the device ID
 					self._ser6SendMessage(b"?", b"?")
-					for i in xrange(3):
+					for i in range(3):
 						self._dev.waitForRead(self.timeout)
 						if self._deviceId: # Display responded
 							break
 					else: # No response from display
 						continue
 			except EnvironmentError:
+				log.debugWarning("", exc_info=True)
 				continue
 			self._updateSettings()
 			if self.numCells:
@@ -204,7 +191,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._dev.close()
 
 		else:
-			raise RuntimeError("No display found")
+			raise RuntimeError("No ALVA display found")
 
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
@@ -220,44 +207,50 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# We must sleep after closing the COM port, as it takes some time for the device to disconnect.
 				time.sleep(self.timeout)
 
-	def _ser6SendMessage(self, cmd, value=""):
-		if isinstance(value, (int, bool)):
-			value = chr(value)
-		self._dev.write(b"\x1b{cmd}{value}".format(cmd=cmd, value=value,))
+	def _ser6SendMessage(self, cmd: bytes, value: bytes = b"") -> None:
+		if not isinstance(value, bytes):
+			raise TypeError("Expected param 'value' to have type 'bytes'")
+		self._dev.write(b"".join([ESCAPE, cmd, value]))
 
-	def _ser6OnReceive(self, data):
-		if data != b"\x1b": # Escape
+	def _ser6OnReceive(self, data: bytes):
+		""" Callback for L{self._dev} when it is L{hwIo.Serial}
+		"""
+		if data != ESCAPE:
 			return
-		cmd = self._dev.read(1)
-		value = self._dev.read(ALVA_SER_CMD_LENGTHS[cmd])
+		cmd: bytes = self._dev.read(1)
+		commandLen = ALVA_SER_CMD_LENGTHS[cmd]
+		value: bytes = self._dev.read(commandLen)
 
-		if cmd == b"K": # Input
-			self._handleInput(ord(value[0]), ord(value[1]))
-		elif cmd == b"E": # Braille cell count
+		if cmd == b"K":  # Input
+			self._handleInput(group=value[0], number=value[1])
+		elif cmd == b"E":  # Braille cell count
 			self.numCells = ord(value)
-		elif cmd == b"?": # Device ID
-			self._deviceId = ord(value)
-		elif cmd == b"r": # Raw keyboard messages enable/disable
+		elif cmd == b"?":  # Device ID
+			self._deviceId = ord(value)  # this command only gets one byte
+		elif cmd == b"r":  # Raw keyboard messages enable/disable
 			self._rawKeyboardInput = bool(ord(value))
-		elif cmd == b"H": # Time
+		elif cmd == b"H":  # Time
 			# Handling time for serial displays does not block initialization if it fails.
 			self._handleTime(value)
 
-	def _hidOnReceive(self, data):
-		reportID = data[0]
+	def _hidOnReceive(self, data: bytes):
+		"""Callback for L{self._dev} when it is L{hwIo.Hid}
+		"""
+		reportID: bytes = data[0:1]
 		if reportID == ALVA_KEY_REPORT:
-			self._handleInput(ord(data[ALVA_KEY_REPORT_KEY_GROUP_POS]), ord(data[ALVA_KEY_REPORT_KEY_POS]))
+			self._handleInput(
+				data[ALVA_KEY_REPORT_KEY_GROUP_POS],
+				data[ALVA_KEY_REPORT_KEY_POS]
+			)
 
-	def _handleInput(self, group, number):
+	def _handleInput(self, group: int, number: int) -> None:
 		if group == ALVA_SPECIAL_KEYS_GROUP:
 			# ALVA displays communicate setting changes as input messages.
 			if number == ALVA_SPECIAL_SETTINGS_CHANGED:
 				# Some internal settings have changed.
 				# For example, split point could have been set, in which case the number of cells changed.
 				# We must handle these properly.
-				# Call this on the main thread, to make sure that we can wait for reads when in non-HID mode.
-				# This can probably be changed when #1271 is implemented.
-				wx.CallAfter(self._updateSettings)
+				self._updateSettings()
 			return
 		isRelease = bool(group & ALVA_RELEASE_MASK)
 		group = group & ~ALVA_RELEASE_MASK
@@ -276,44 +269,54 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# This begins a new key combination.
 			self._ignoreKeyReleases = False
 
-	def _hidDisplay(self, cells):
-		for offset in xrange(0, len(cells), ALVA_BRAILLE_OUTPUT_MAX_SIZE):
-			cellsToWrite = cells[offset:offset+ALVA_BRAILLE_OUTPUT_MAX_SIZE]
-			self._dev.write("{id}{offset}{count}{cells}".format(
-				id=ALVA_BRAILLE_OUTPUT_REPORT,
-				offset=chr(offset),
-				count=chr(len(cellsToWrite)),
-				cells=cellsToWrite
-			))
+	def _hidDisplay(self, cellBytes: bytes) -> None:
+		for offset in range(0, len(cellBytes), ALVA_BRAILLE_OUTPUT_MAX_SIZE):
+			cellsToWrite = cellBytes[offset:offset+ALVA_BRAILLE_OUTPUT_MAX_SIZE]
+			data = b"".join([
+				ALVA_BRAILLE_OUTPUT_REPORT,
+				intToByte(offset),
+				intToByte(len(cellsToWrite)),
+				cellsToWrite
+			])
+			self._dev.write(data)
 
-	def _ser6Display(self, cells):
-		self._ser6SendMessage(b"B", chr(0)+chr(len(cells))+cells)
+	def _ser6Display(self, cellBytes: bytes) -> None:
+		if not isinstance(cellBytes, bytes):
+			raise TypeError("Expected param 'cells' to be of type 'bytes'")
+		value = b"".join([
+			b"\x00",
+			intToByte(len(cellBytes)),
+			cellBytes
+		])
+		self._ser6SendMessage(b"B", value)
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		cells = b"".join(map(chr, cells))
+		cellBytes = bytes(cells)
 		if self.isHid:
-			self._hidDisplay(cells)
+			self._hidDisplay(cellBytes)
 		else:
-			self._ser6Display(cells)
+			self._ser6Display(cellBytes)
 
-	def _handleTime(self, timeStr):
-		ords = map(ord, timeStr)
-		year=ords[0] | ords[1] << 8
+	def _handleTime(self, time: bytes):
+		"""
+		@type time: bytes
+		"""
+		year = time[0] | time[1] << 8
 		if not ALVA_RTC_MIN_YEAR <= year <= ALVA_RTC_MAX_YEAR:
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
 		try:
 			displayDateTime = datetime.datetime(
 				year=year,
-				month=ords[2],
-				day=ords[3],
-				hour=ords[4],
-				minute=ords[5],
-				second=ords[6]
+				month=time[2],
+				day=time[3],
+				hour=time[4],
+				minute=time[5],
+				second=time[6]
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of ALVA display: %r"%timeStr)
+			log.debugWarning("Invalid time/date of ALVA display: %r" % time)
 			return
 		localDateTime = datetime.datetime.today()
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
@@ -322,18 +325,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		else:
 			log.debug("Time not synchronized. Display time %s"%displayDateTime.isoformat())
 
-	def _syncTime(self, dt):
+	def _syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
-		timeList = [
+		timeList: List[int] = [
 			dt.year & 0xFF, dt.year >> 8,
-			dt.month, dt.day,
-			dt.hour, dt.minute, dt.second
+			dt.month,
+			dt.day,
+			dt.hour,
+			dt.minute,
+			dt.second
 		]
-		timeStr = b"".join(map(chr, timeList))
 		if self.isHid:
-			self._dev.setFeature(ALVA_RTC_REPORT + timeStr)
+			self._dev.setFeature(ALVA_RTC_REPORT + bytes(timeList))
 		else:
-			self._ser6SendMessage(b"H", timeStr)
+			self._ser6SendMessage(b"H", bytes(timeList))
 
 	def _get_hidKeyboardInput(self):
 		return not self._rawKeyboardInput
@@ -342,24 +347,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		rawState = not state
 		if self.isHid:
 			# Make sure the device settings are up to date.
-			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
+			keySettings: int = self._dev.getFeature(
+				ALVA_KEY_SETTINGS_REPORT
+			)[ALVA_KEY_SETTINGS_POS]
 			# Try to update the state
 			if rawState:
-				newKeySettings = chr(ord(keySettings) | ALVA_KEY_RAW_INPUT_MASK)
-			elif ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK:
-				newKeySettings = chr(ord(keySettings) ^ ALVA_KEY_RAW_INPUT_MASK)
+				newKeySettings = intToByte(keySettings | ALVA_KEY_RAW_INPUT_MASK)
+			elif keySettings & ALVA_KEY_RAW_INPUT_MASK:
+				newKeySettings = intToByte(keySettings ^ ALVA_KEY_RAW_INPUT_MASK)
 			else:
-				newKeySettings = keySettings
+				newKeySettings = intToByte(keySettings)
 			self._dev.setFeature(ALVA_KEY_SETTINGS_REPORT + newKeySettings)
 			# Check whether the state has been changed successfully.
 			# If not, this device does not support this feature.
-			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
+			keySettings: int = self._dev.getFeature(
+				ALVA_KEY_SETTINGS_REPORT
+			)[ALVA_KEY_SETTINGS_POS]
 			# Save the new state
-			self._rawKeyboardInput = bool(ord(keySettings) & ALVA_KEY_RAW_INPUT_MASK)
+			self._rawKeyboardInput = bool(keySettings & ALVA_KEY_RAW_INPUT_MASK)
 		else:
-			self._ser6SendMessage(b"r", rawState)
+			self._ser6SendMessage(
+				cmd=b"r",
+				value=boolToByte(rawState)
+			)
 			self._ser6SendMessage(b"r", b"?")
-			for i in xrange(3):
+			for i in range(3):
 				self._dev.waitForRead(self.timeout)
 				if rawState is self._rawKeyboardInput:
 					break
@@ -401,7 +413,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"title": ("br(alva):etouch2",),
 			"reportStatusLine": ("br(alva):etouch4",),
 			"kb:shift+tab": ("br(alva):sp1",),
-			"kb:alt": ("br(alva):sp2",),
+			"kb:alt": ("br(alva):sp2","br(alva):alt",),
 			"kb:escape": ("br(alva):sp3",),
 			"kb:tab": ("br(alva):sp4",),
 			"kb:upArrow": ("br(alva):spUp",),
@@ -409,17 +421,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"kb:leftArrow": ("br(alva):spLeft",),
 			"kb:rightArrow": ("br(alva):spRight",),
 			"kb:enter": ("br(alva):spEnter","br(alva):enter",),
-			"dateTime": ("br(alva):sp1+sp2",),
+			"dateTime": ("br(alva):sp2+sp3",),
 			"showGui": ("br(alva):sp1+sp3",),
 			"kb:windows+d": ("br(alva):sp1+sp4",),
 			"kb:windows+b": ("br(alva):sp3+sp4",),
-			"kb:windows": ("br(alva):sp2+sp3","br(alva):windows",),
+			"kb:windows": ("br(alva):sp1+sp2","br(alva):windows",),
 			"kb:alt+tab": ("br(alva):sp2+sp4",),
 			"kb:control+home": ("br(alva):t3+spUp",),
 			"kb:control+end": ("br(alva):t3+spDown",),
 			"kb:home": ("br(alva):t3+spLeft",),
 			"kb:end": ("br(alva):t3+spRight",),
-			"kb:alt": ("br(alva):alt",),
 			"kb:control": ("br(alva):control",),
 		}
 	})
@@ -429,27 +440,38 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, model, keys, brailleInput=False):
 		super(InputGesture, self).__init__()
+		isNoBC640 = model != ALVA_MODEL_IDS[ALVA_MODEL_BC640]
 		# Model identifiers should not contain spaces.
 		self.model = model.replace(" ", "")
 		assert(self.model.isalnum())
 		self.keyCodes = set(keys)
 		self.keyNames = names = []
+		secondaryNames = []
 		dots = 0
 		space = False
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
-					names.append("secondRouting")
+					keyName = "secondRouting"
 					self.routingIndex = number & ~ALVA_2ND_CR_MASK
 				else:
-					names.append("routing")
+					keyName = "routing"
 					self.routingIndex = number
+				names.append(keyName)
+				if isNoBC640:
+					secondaryNames.append(keyName)
 			else:
 				try:
-					names.append(ALVA_KEYS[group][number])
+					keyName = ALVA_KEYS[group][number]
 				except (KeyError, IndexError):
 					log.debugWarning("Unknown key with group %d and number %d" % (group, number))
-
+					return
+				names.append(keyName)
+				if isNoBC640:
+					doubledKeyCount = DOUBLED_KEY_COUNTS.get(group)
+					if doubledKeyCount:
+						keyName = ("r" if number >= doubledKeyCount else "l") + keyName
+					secondaryNames.append(keyName)
 			# Braille input
 			if brailleInput:
 				if group == ALVA_FEATURE_PACK_GROUP:
@@ -463,6 +485,15 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 					brailleInput = False
 
 		self.id = "+".join(names)
+		self.secondaryId = "+".join(secondaryNames) if isNoBC640 else self.id
 		if brailleInput:
 			self.dots = dots
 			self.space = space
+
+	def _get_identifiers(self):
+		ids = [
+			u"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
+			u"br({source}):{id}".format(source=self.source, id=self.id),
+		]
+		ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
+		return ids

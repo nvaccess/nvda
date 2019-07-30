@@ -2,14 +2,14 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited, Babbage B.V.
+#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 
 """Unit tests for the braille module.
 """
 
 import unittest
 import braille
-from objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
+from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole
 import controlTypes
 from config import conf
 import api

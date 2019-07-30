@@ -25,6 +25,7 @@ from globalCommands import SCRCAT_SYSTEMCARET
 from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
 import IAccessibleHandler
 import winUser
+import mouseHandler
 from logHandler import log
 import ui
 import config
@@ -122,10 +123,10 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				return
 			log.debug("Double clicking")
 			winUser.setCursorPos(p.x, p.y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			return
 
 		# The user makes a selection using browse mode virtual selection.
@@ -136,8 +137,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		# so retrieve and report the selection from Kindle.
 		# we can't just use self.makeTextInfo, as that will use our fake selection.
 		realSel = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION)
-		# Translators: Announces selected text. %s is replaced with the text.
-		speech.speakSelectionMessage(_("selected %s"), realSel.text)
+		speech.speakTextSelected(realSel.text)
 		# Remove our virtual selection and move the caret to the active end.
 		fakeSel.innerTextInfo = realSel
 		fakeSel.collapse(end=not self._lastSelectionMovedStart)
@@ -156,7 +156,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		"""Recursively iterate through all embedded objects in a given direction starting at a given hyperlink index.
 		"""
 		log.debug("Starting at hyperlink index %d" % startIndex)
-		for index in xrange(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
+		for index in range(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
 			hl = hypertext.hyperlink(index)
 			obj = IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
 			log.debug("Yielding object at index %d" % index)

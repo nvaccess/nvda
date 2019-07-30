@@ -8,7 +8,7 @@
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-import __builtin__
+import builtins
 import os
 import sys
 import ctypes
@@ -29,30 +29,20 @@ curLang="en"
 
 def localeNameToWindowsLCID(localeName):
 	"""Retreave the Windows locale identifier (LCID) for the given locale name
-	@param localeName: a string of 2letterLanguage_2letterCountry or or just 2letterLanguage
+	@param localeName: a string of 2letterLanguage_2letterCountry or just language (2letterLanguage or 3letterLanguage)
 	@type localeName: string
 	@returns: a Windows LCID or L{LCID_NONE} if it could not be retrieved.
 	@rtype: integer
 	""" 
-	#Windows Vista is able to convert locale names to LCIDs
-	func_LocaleNameToLCID=getattr(ctypes.windll.kernel32,'LocaleNameToLCID',None)
-	if func_LocaleNameToLCID is not None:
-		localeName=localeName.replace('_','-')
-		LCID=func_LocaleNameToLCID(unicode(localeName),0)
-		# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
-		# This was observed for Aragonese ("an").
-		# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
-		if LCID==LOCALE_CUSTOM_UNSPECIFIED:
-			LCID=LCID_NONE
-	else: #Windows doesn't have this functionality, manually search Python's windows_locale dictionary for the LCID
-		localeName=locale.normalize(localeName)
-		if '.' in localeName:
-			localeName=localeName.split('.')[0]
-		LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==localeName]
-		if len(LCList)>0:
-			LCID=LCList[0]
-		else:
-			LCID=LCID_NONE
+	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
+	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
+	localeName=localeName.replace('_','-')
+	LCID=ctypes.windll.kernel32.LocaleNameToLCID(localeName,0)
+	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
+	# This was observed for Aragonese ("an").
+	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
+	if LCID==LOCALE_CUSTOM_UNSPECIFIED:
+		LCID=LCID_NONE
 	return LCID
 
 def windowsLCIDToLocaleName(lcid):
@@ -83,18 +73,18 @@ def getLanguageDescription(language):
 			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
 		desc=buf.value
 	if not desc:
-		#Some hard-coded descriptions where we know the language fails on XP and so forth.
+		#Some hard-coded descriptions where we know the language fails on various configurations.
 		desc={
-			# Translators: The name of a language supported by NVDA.
-			"am":pgettext("languageName","Amharic"),
 			# Translators: The name of a language supported by NVDA.
 			"an":pgettext("languageName","Aragonese"),
 			# Translators: The name of a language supported by NVDA.
-			"ar":pgettext("languageName","Arabic"),
+			"ckb":pgettext("languageName","Central Kurdish"),
 			# Translators: The name of a language supported by NVDA.
-			"ne":pgettext("languageName","Nepali"),
+			"kmr":pgettext("languageName","Northern Kurdish"),
 			# Translators: The name of a language supported by NVDA.
-			"sr":pgettext("languageName","Serbian (Latin)"),
+			"my":pgettext("languageName","Burmese"),
+			# Translators: The name of a language supported by NVDA.
+			"so":pgettext("languageName","Somali"),
 		}.get(language,None)
 	return desc
 
@@ -118,7 +108,8 @@ def getAvailableLanguages(presentational=False):
 		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
-	langs = zip(locales,displayNames)
+	# Python 3: zip function changed from returning a list to an iterator, thus wrap this inside a list call.
+	langs = list(zip(locales,displayNames))
 	if presentational:
 		langs.sort(key=lambda lang: lang[1])
 	#include a 'user default, windows' language, which just represents the default language for this user account
@@ -130,20 +121,22 @@ def getAvailableLanguages(presentational=False):
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
-	but Python 2.7's gettext module doesn't support this,
+	but Python's gettext module doesn't support this,
 	so NVDA must provide its own implementation.
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
 		def pgettext(context, message):
-			message = unicode(message)
 			try:
 				# Look up the message with its context.
 				return translations._catalog[u"%s\x04%s" % (context, message)]
 			except KeyError:
 				return message
-	else:
+	elif isinstance(translations, gettext.NullTranslations):
+		# A language with out a translation catalog, such as English.
 		def pgettext(context, message):
-			return unicode(message)
+			return message
+	else:
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object"%translations)
 	return pgettext
 
 def getWindowsLanguage():
@@ -200,9 +193,10 @@ def setLanguage(lang):
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	trans.install(unicode=True)
+	trans.install()
 	# Install our pgettext function.
-	__builtin__.__dict__["pgettext"] = makePgettext(trans)
+	import builtins
+	builtins.pgettext = makePgettext(trans)
 
 def getLanguage():
 	return curLang

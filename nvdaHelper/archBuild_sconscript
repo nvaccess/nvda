@@ -34,7 +34,7 @@ def clsidStringToCLSIDDefine(clsidString):
 		"0x"+d[0:8],
 		"0x"+d[8:12],
 		"0x"+d[12:16],
-		"{%s}"%(",".join("0x"+d[x:x+2] for x in xrange(16,32,2)))
+		"{%s}"%(",".join("0x"+d[x:x+2] for x in range(16,32,2)))
 	)
 
 def COMProxyDllBuilder(env,target,source,proxyClsid):
@@ -105,15 +105,24 @@ if 'analyze' in debug:
 env.Append(CXXFLAGS=['/EHsc'])
 
 env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
+if TARGET_ARCH == "arm64":
+	subsystem = "/subsystem:windows,6.02"
+else:
+	subsystem = "/subsystem:windows,6.01"
 env.Append(
 	LINKFLAGS=[
 		'/incremental:no',
 		'/WX',
-		'/subsystem:windows,6.01',
+		subsystem,
 	]
 )
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
-env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
+if TARGET_ARCH == 'x86_64':
+	env.Append(MIDLFLAGS='/x64')
+elif TARGET_ARCH == 'arm64':
+	env.Append(MIDLFLAGS='/arm64')
+else:
+	env.Append(MIDLFLAGS='/win32')
 
 if not release: 
 	env.Append(CCFLAGS=['/Od'])
@@ -185,11 +194,12 @@ if signExec:
 	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
 
-minHookLib=env.SConscript('minHook/sconscript')
-Export('minHookLib')
-if signExec:
-	env.AddPostAction(minHookLib[0],[signExec])
-env.Install(libInstallDir,minHookLib)
+if TARGET_ARCH != 'arm64':
+	minHookLib=env.SConscript('minHook/sconscript')
+	Export('minHookLib')
+	if signExec:
+		env.AddPostAction(minHookLib[0],[signExec])
+	env.Install(libInstallDir,minHookLib)
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
@@ -197,44 +207,11 @@ if signExec:
 	env.AddPostAction(remoteLib[0],[signExec])
 env.Install(libInstallDir,remoteLib)
 
-if TARGET_ARCH=='x86_64':
+if TARGET_ARCH in ('x86_64', 'arm64'):
 	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
 	if signExec:
 		env.AddPostAction(remoteLoaderProgram,[signExec])
 	env.Install(libInstallDir,remoteLoaderProgram)
-
-vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
-Export('vbufBaseStaticLib')
-
-adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
-if signExec:
-	env.AddPostAction(adobeAcrobatVBufBackend[0],[signExec])
-env.Install(libInstallDir,adobeAcrobatVBufBackend)
-
-adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
-if signExec:
-	env.AddPostAction(adobeFlashVBufBackend[0],[signExec])
-env.Install(libInstallDir,adobeFlashVBufBackend)
-
-lotusNotesRichTextVBufBackend=env.SConscript('vbufBackends/lotusNotesRichText/sconscript')
-if signExec:
-	env.AddPostAction(lotusNotesRichTextVBufBackend[0],[signExec])
-env.Install(libInstallDir,lotusNotesRichTextVBufBackend)
-
-geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
-if signExec:
-	env.AddPostAction(geckoVBufBackend[0],[signExec])
-env.Install(libInstallDir,geckoVBufBackend)
-
-mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
-if signExec:
-	env.AddPostAction(mshtmlVBufBackend[0],[signExec])
-env.Install(libInstallDir,mshtmlVBufBackend)
-
-webKitVBufBackend=env.SConscript('vbufBackends/webKit/sconscript')
-if signExec:
-	env.AddPostAction(webKitVBufBackend[0],[signExec])
-env.Install(libInstallDir,webKitVBufBackend)
 
 if TARGET_ARCH=='x86':
 	env.SConscript('espeak/sconscript')

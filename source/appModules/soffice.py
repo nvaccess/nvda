@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2019 NV Access Limited, Bill Dengler
 
 from comtypes import COMError
 import IAccessibleHandler
@@ -216,7 +216,22 @@ class SymphonyTableCell(IAccessible):
 		states=super(SymphonyTableCell,self).states
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_EDITABLE)
+		if controlTypes.STATE_SELECTED not in states and {controlTypes.STATE_FOCUSED, controlTypes.STATE_SELECTABLE}.issubset(states):
+			# #8988: Cells in Libre Office do not have the selected state when a single cell is selected (i.e. has focus).
+			# Since #8898, the negative selected state is announced for table cells with the selectable state.
+			states.add(controlTypes.STATE_SELECTED)
+		if self.IA2Attributes.get('Formula'):
+			# #860: Recent versions of Calc expose has formula state via IAccessible 2.
+			states.add(controlTypes.STATE_HASFORMULA)
 		return states
+
+class SymphonyTable(IAccessible):
+
+	def getSelectedItemsCount(self,maxCount=2):
+		# #8988: Neither accSelection nor IAccessibleTable2 is implemented on the LibreOffice tables.
+		# Returning 1 will suppress redundant selected announcements,
+		# while having the drawback of never announcing selected for selected cells.
+		return 1
 
 class SymphonyParagraph(SymphonyText):
 	"""Removes redundant information that can be retreaved in other ways."""
@@ -231,6 +246,8 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
 			if role==controlTypes.ROLE_TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
+			elif role==controlTypes.ROLE_TABLE:
+				clsList.insert(0, SymphonyTable)
 			elif hasattr(obj, "IAccessibleTextObject"):
 				clsList.insert(0, SymphonyText)
 			if role==controlTypes.ROLE_PARAGRAPH:

@@ -7,6 +7,7 @@
 import time
 import weakref
 import inspect
+import types
 import config
 import speech
 import sayAllHandler
@@ -32,9 +33,6 @@ def _makeKbEmulateScript(scriptName):
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
 	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
-	if isinstance(scriptName, unicode):
-		# __name__ must be str; i.e. can't be unicode.
-		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
@@ -114,6 +112,11 @@ def findScript(gesture):
 		func = _getObjScript(obj, gesture, globalMapScripts)
 		if func and getattr(func, 'canPropagate', False):
 			return func
+
+	# Configuration profile activation scripts
+	func = _getObjScript(globalCommands.configProfileActivationCommands, gesture, globalMapScripts)
+	if func:
+		return func
 
 	# Global commands.
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
@@ -262,9 +265,8 @@ def script(
 	if gestures is None:
 		gestures = []
 	def script_decorator(decoratedScript):
-		# Scripts are unbound instance methods in python 2 and functions in python 3.
-		# Therefore, we use inspect.isroutine to check whether a script is either a function or instance method.
-		if not inspect.isroutine(decoratedScript):
+		# Decoratable scripts are functions, not bound instance methods.
+		if not isinstance(decoratedScript, types.FunctionType):
 			log.warning(
 				"Using the script decorator is unsupported for %r" % decoratedScript,
 				stack_info=True

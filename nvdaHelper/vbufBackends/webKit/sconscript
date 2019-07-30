@@ -14,24 +14,8 @@
 
 Import([
 	'env',
-	'vbufBaseStaticLib',
-	'ia2RPCStubs',
 ])
 
-webKitBackendLib=env.SharedLibrary(
-	target="VBufBackend_webKit",
-	source=[
-		env['projectResFile'],
-		"webKit.cpp",
-		env.Object('_ia2_i',ia2RPCStubs[3]),
-	],
-	LIBS=[
-		vbufBaseStaticLib,
-		"user32",
-		"kernel32",
-		"oleacc",
-		"oleaut32",
-	],
-)
+webKitBackendLib=env.Object("webKit.cpp")
 
 Return('webKitBackendLib')
