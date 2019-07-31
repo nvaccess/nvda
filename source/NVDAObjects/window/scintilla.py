@@ -1,5 +1,6 @@
+# -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V.
+#Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -42,6 +43,7 @@ SCI_LINEFROMPOSITION=2166
 SCI_POSITIONFROMLINE=2167
 SCI_LINELENGTH=2350
 SCI_GETSTYLEAT=2010
+SCI_GETCHARAT=2007
 SCI_STYLEGETFONT=2486
 SCI_STYLEGETSIZE=2485
 SCI_STYLEGETBOLD=2483
@@ -195,6 +197,12 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if end<=offset:
 			start=end
 			end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
+		# #8295: When calculating offsets with Scintilla messages spaces are considered to be words.
+		#Therefore check if character at offset is  a space, and if so calculate it again.
+		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCHARAT,end,0)==32:
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,end,0)
+		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCHARAT,start,0)==32:
+			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,start,0)
 		return [start,end]
 
 	def _getLineNumFromOffset(self,offset):
