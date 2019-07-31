@@ -8,10 +8,11 @@
 """
 
 import oleacc
-from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
+from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport, Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
+from winVersion import isWin10
 
 class AppModule(appModuleHandler.AppModule):
 	# Allow this to be overridden for derived applications.
@@ -23,4 +24,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
 				pass
-			clsList[0:0] = (KeyboardHandlerBasedTypedCharSupport, DisplayModelLiveText)
+			if isWin10(1607):
+				clsList[0:0] = (KeyboardHandlerBasedTypedCharSupport, DisplayModelLiveText)
+			else:
+				clsList[0:0] = (Terminal, DisplayModelLiveText)

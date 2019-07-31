@@ -371,6 +371,8 @@ class Terminal(LiveText, EditableText):
 class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
 	console applications via keyboardHandler events.
+	This approach is an alternative to monitoring the console output for
+	characters close to the caret, or injecting in-process with NVDAHelper.
 	This class relies on the toUnicodeEx Windows function, and in particular
 	the flag to preserve keyboard state available in Windows 10 1607
 	and later."""
