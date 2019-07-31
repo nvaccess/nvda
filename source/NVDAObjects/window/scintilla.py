@@ -61,6 +61,7 @@ SCI_POSITIONAFTER=2418
 INVALID_POSITION=-1
 STYLE_DEFAULT=32
 SC_CP_UTF8=65001
+space=32
 
 class CharacterRangeStruct(ctypes.Structure):
 	_fields_=[
@@ -199,9 +200,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,offset,0)
 		# #8295: When calculating offsets with Scintilla messages spaces are considered to be words.
 		#Therefore check if character at offset is  a space, and if so calculate it again.
-		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCHARAT,end,0)==32:
+		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCHARAT,end,0)==space:
 			end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDENDPOSITION,end,0)
-		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCHARAT,start,0)==32:
+		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETCHARAT,start,0)==space:
 			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_WORDSTARTPOSITION,start,0)
 		return [start,end]
 
