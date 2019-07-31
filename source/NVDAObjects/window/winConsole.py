@@ -79,6 +79,11 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				self.startMonitoring()
 		core.callLater(200,reconnect)
 
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
+
 	@script(gestures=[
 		"kb:enter",
 		"kb:numpadEnter",
