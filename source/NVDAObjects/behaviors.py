@@ -371,6 +371,9 @@ class Terminal(LiveText, EditableText):
 class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
 	console applications via keyboardHandler events.
+	These events are queued from NVDA"s global keyboard hook.
+	Therefore, an event is fired for every single character that is being typed,
+	even when a character is not written to the console (e.g. in read only console applications).
 	This approach is an alternative to monitoring the console output for
 	characters close to the caret, or injecting in-process with NVDAHelper.
 	This class relies on the toUnicodeEx Windows function, and in particular
