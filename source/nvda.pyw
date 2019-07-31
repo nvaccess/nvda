@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Babbage B.V., Joseph Lee, Łukasz Golonka
