@@ -371,7 +371,7 @@ class Terminal(LiveText, EditableText):
 class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	"""A Terminal object that also provides typed character support for
 	console applications via keyboardHandler events.
-	These events are queued from NVDA"s global keyboard hook.
+	These events are queued from NVDA's global keyboard hook.
 	Therefore, an event is fired for every single character that is being typed,
 	even when a character is not written to the console (e.g. in read only console applications).
 	This approach is an alternative to monitoring the console output for
@@ -387,26 +387,19 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
 	_queuedChars = []
-	#: Whether the console got new text lines in its last update.
-	#: Used to determine if typed character/word buffers should be flushed.
-	_hasNewLines = False
 	#: Whether the last typed character is a tab.
 	#: If so, we should temporarily disable filtering as completions may
 	#: be short.
 	_hasTab = False
 
 	def _reportNewText(self, line):
-		# Additional typed character filtering beyond that in LiveText
+		# Perform typed character filtering, as typed characters are handled with events.
 		if (
 			not self._hasTab
 			and len(line.strip()) < max(len(speech.curWordChars) + 1, 3)
 		):
 			return
-		if self._hasNewLines:
-			# Clear the typed word buffer for new text lines.
-			speech.clearTypedWordBuffer()
-			self._queuedChars = []
-		super(KeyboardHandlerBasedTypedCharSupport, self)._reportNewText(line)
+		super()._reportNewText(line)
 
 	def event_typedCharacter(self, ch):
 		if ch == '\t':
@@ -425,11 +418,11 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 		):
 			self._queuedChars.append(ch)
 		else:
-			super(KeyboardHandlerBasedTypedCharSupport, self).event_typedCharacter(ch)
+			super().event_typedCharacter(ch)
 
 	def event_textChange(self):
 		self._dispatchQueue()
-		super(KeyboardHandlerBasedTypedCharSupport, self).event_textChange()
+		super().event_textChange()
 
 	@script(gestures=[
 		"kb:enter",
@@ -445,22 +438,26 @@ class KeyboardHandlerBasedTypedCharSupport(Terminal):
 		Since these gestures clear the current word/line, we should flush the
 		queue to avoid erroneously reporting these chars.
 		"""
-		gesture.send()
 		self._queuedChars = []
 		speech.clearTypedWordBuffer()
+		gesture.send()
 
 	def _calculateNewText(self, newLines, oldLines):
-		self._hasNewLines = (
+		hasNewLines = (
 			self._findNonBlankIndices(newLines)
 			!= self._findNonBlankIndices(oldLines)
 		)
-		return super(KeyboardHandlerBasedTypedCharSupport, self)._calculateNewText(newLines, oldLines)
+		if hasNewLines:
+			# Clear the typed word buffer for new text lines.
+			speech.clearTypedWordBuffer()
+			self._queuedChars = []
+		return super()._calculateNewText(newLines, oldLines)
 
 	def _dispatchQueue(self):
 		"""Sends queued typedCharacter events through to NVDA."""
 		while self._queuedChars:
 			ch = self._queuedChars.pop(0)
-			super(KeyboardHandlerBasedTypedCharSupport, self).event_typedCharacter(ch)
+			super().event_typedCharacter(ch)
 
 	def _findNonBlankIndices(self, lines):
 		"""
