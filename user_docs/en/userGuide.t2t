@@ -944,7 +944,9 @@ When in the table view of added books:
 
 ++ Windows Console ++[WinConsole]
 NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
-The console window is of fixed size: as new text is written, previous text is removed to make space.
+The console window is of fixed size, typically much smaller than the buffer that holds the output.
+As new text is written, the content scroll upwards and previous text is no longer visible. 
+Text that is not visibly displayed in the window is not accessible with NVDA's text review commands.
 Therefore, it is necessary to scroll the console window to read earlier text.
 %kc:beginInclude
 The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
