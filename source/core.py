@@ -36,8 +36,6 @@ import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
-import versionInfo
-
 import extensionPoints
 
 # inform those who want to know that NVDA has finished starting up.
@@ -382,7 +380,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			else:
 				#Translators: Reported when the battery is no longer plugged in, and now is not charging.
 				ui.message(_("Not charging battery. %d percent") %sps.BatteryLifePercent)
-
+	import versionInfo
 	messageWindow = MessageWindow(versionInfo.name)
 
 	# initialize wxpython localization support
