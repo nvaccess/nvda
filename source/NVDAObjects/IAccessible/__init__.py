@@ -863,7 +863,7 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
 			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		if not hasattr(self.IAccessibleObject,'states'):
+		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States

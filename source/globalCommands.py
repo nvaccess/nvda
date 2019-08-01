@@ -1096,9 +1096,8 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_startOfLine(self,gesture):
 		info=api.getReviewPosition().copy()
-		if info._expandCollapseBeforeReview:
-			info.expand(textInfos.UNIT_LINE)
-			info.collapse()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		ui.reviewMessage(_("Left"))
