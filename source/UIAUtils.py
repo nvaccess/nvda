@@ -174,6 +174,23 @@ def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
 	c=CacheableUIAElementArray(c)
 	return c
 
+def isTextRangeOffscreen(textRange, visiRanges):
+	"""Given a UIA text range and a visible textRanges array (returned from obj.UIATextPattern.GetVisibleRanges), determines if the given textRange is not within the visible textRanges."""
+	visiLength = visiRanges.length
+	if visiLength > 0:
+		firstVisiRange = visiRanges.GetElement(0)
+		lastVisiRange = visiRanges.GetElement(visiLength - 1)
+		return textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_Start
+		) < 0 or textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_End) >= 0
+	else:
+		# Visible textRanges not available.
+		raise RuntimeError("Visible textRanges array is empty or invalid.")
+
+
 class UIATextRangeAttributeValueFetcher(object):
 
 	def __init__(self,textRange):
