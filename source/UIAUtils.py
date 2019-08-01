@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2019 NV Access Limited, Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2019 NV Access Limited, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import operator
 from comtypes import COMError
@@ -222,6 +222,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 			raise UIAMixedAttributeError
 		return val
 
+
 def shouldUseUIAConsole(setting=None):
 	"""Determines whether to use UIA in the Windows Console.
 @param setting: the config value to base this check on (if not provided,
@@ -233,6 +234,9 @@ it is retrieved from config).
 		return False
 	elif setting == "UIA":
 		return True
-	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
-	# It does not implement caret/selection, and probably has no new text events.
+	# #7497: Windows 10 Fall Creators Update has an incomplete UIA
+	# implementation for console windows, therefore for now we should
+	# ignore it.
+	# It does not implement caret/selection, and probably has no
+	# new text events.
 	return isWin10(1803)

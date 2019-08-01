@@ -46,11 +46,12 @@ def upgradeConfigFrom_1_to_2(profile):
 		del profile["braille"]["cursorShape"]
 		profile["braille"]["cursorShapeFocus"] = cursorShape
 
+
 def upgradeConfigFrom_2_to_3(profile):
 	# The winConsoleSpeakPasswords option has been moved to the terminals section of the config.
 	try:
 		speakPasswords = profile["UIA"]["winConsoleSpeakPasswords"]
-	except KeyError as e:
+	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("winConsoleSpeakPasswords not present, no action taken.")
 		pass

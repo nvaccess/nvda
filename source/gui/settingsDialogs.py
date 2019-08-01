@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#settingsDialogs.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# settingsDialogs.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import logging
 from abc import abstractmethod
@@ -2058,15 +2058,15 @@ class AdvancedPanelControls(wx.Panel):
 		# active console implementation in the advanced settings panel.
 		# Choices are automatic, prefer UIA, and legacy.
 		consoleComboText = _("Windows C&onsole support:")
-		consoleChoices=[
-			#Translators: A choice in a combo box in the advanced settings
+		consoleChoices = [
+			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA determine its Windows Console implementation
 			# automatically.
 			_("Automatic"),
-			#Translators: A choice in a combo box in the advanced settings
+			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA use UIA in the Windows Console when available.
 			_("Prefer UIA"),
-			#Translators: A choice in a combo box in the advanced settings
+			# Translators: A choice in a combo box in the advanced settings
 			# panel to have NVDA use its legacy Windoes Console support
 			# in all cases.
 			_("Legacy")
@@ -2103,7 +2103,7 @@ class AdvancedPanelControls(wx.Panel):
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
 		label = _("Speak &passwords in Windows Console (may improve performance)")
-		self.speakPasswordsCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.speakPasswordsCheckBox = terminalsGroup.addItem(wx.CheckBox(self, label=label))
 		self.speakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
 		self.speakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
 		self.enableConsolePasswordsCheckBox()
@@ -2218,7 +2218,7 @@ class AdvancedPanelControls(wx.Panel):
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
-		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue=='UIA')
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'UIA')
 		self.speakPasswordsCheckBox.SetValue(self.speakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
@@ -2234,7 +2234,7 @@ class AdvancedPanelControls(wx.Panel):
 		config.conf['UIA']['winConsoleImplementation'] = (
 			self.consoleVals[consoleChoice]
 		)
-		config.conf["terminals"]["speakPasswords"]=self.speakPasswordsCheckBox.IsChecked()
+		config.conf["terminals"]["speakPasswords"] = self.speakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
