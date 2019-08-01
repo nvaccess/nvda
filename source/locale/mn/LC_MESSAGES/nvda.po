@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mongolian Translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 00:10+1000\n"
-"PO-Revision-Date: 2019-06-19 12:45+0800\n"
+"POT-Creation-Date: 2019-07-26 00:10+1000\n"
+"PO-Revision-Date: 2019-07-30 02:56-0700\n"
 "Last-Translator: \n"
 "Language-Team: MongolianNVDATranslationTeam <mongoliannvdatranslation@gmail."
 "com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1764,12 +1764,6 @@ msgstr "%s чиглүүлэх"
 msgid "lmk %s"
 msgstr "чиг %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "идэвхжүүлсэн байна %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Урт тайлбаргүй"
@@ -3130,10 +3124,6 @@ msgstr "Хулганы баруун товч цоожтой байна"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Хулганы баруун товчыг цоожилж мөн түгжээгүй болгож хэрэглэнэ."
 
-#, python-format
-msgid "Selected %s"
-msgstr "Сонгогдсон %s"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3833,6 +3823,30 @@ msgid ""
 msgstr ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+#, fuzzy
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Reports formatting info for the current review cursor position within a "
+"document. If pressed twice, presents the information in browse mode"
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+#, fuzzy
+msgid "No symbol replacement"
+msgstr "Орлуулах"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6076,15 +6090,24 @@ msgstr "том %s"
 msgid "no indent"
 msgstr "догол мөр алга"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "идэвхжүүлсэн байна %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s идэвхжлээ"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d үсэг тэмдгүүд"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s идэвхжлээ"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -8205,7 +8228,7 @@ msgstr "&Add-on ажлуул"
 #. Translators: The message displayed when the add-on cannot be disabled.
 #, python-brace-format
 msgid "Could not disable the {description} add-on."
-msgstr ""
+msgstr "{description} хаагдсангүй"
 
 #. Translators: The message displayed when the add-on cannot be enabled.
 #, python-brace-format
@@ -9485,6 +9508,16 @@ msgstr ""
 #. Advanced settings panel.
 msgid ""
 "Use UI Automation to access Microsoft &Word document controls when available"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
 msgstr ""
 
 #. Translators: This is the label for a checkbox in the
@@ -11324,6 +11357,9 @@ msgstr "Давхар мөр хоорондын зай"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 мөр хоорондын зай"
+
+#~ msgid "Selected %s"
+#~ msgstr "Сонгогдсон %s"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "одоо ажиллаж буй програмууд %s"
