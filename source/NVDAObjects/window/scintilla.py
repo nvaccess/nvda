@@ -201,9 +201,9 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# #8295: When calculating offsets with Scintilla messages spaces are considered to be words.
 		# Therefore check if character at offset is  a space, and if so calculate it again.
 		if watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETCHARAT, end, 0) == space:
-			end=watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_WORDENDPOSITION, end, 0)
+			end = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_WORDENDPOSITION, end, 0)
 		if watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_GETCHARAT, start, 0) == space:
-			start=watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_WORDSTARTPOSITION, start, 0)
+			start = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_WORDSTARTPOSITION, start, 0)
 		return [start,end]
 
 	def _getLineNumFromOffset(self,offset):
