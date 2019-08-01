@@ -944,13 +944,15 @@ When in the table view of added books:
 
 ++ Windows Console ++[WinConsole]
 NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
+The console window is of fixed size: as new text is written, previous text is removed to make space.
+Therefore, it is necessary to scroll the console window to read earlier text.
 %kc:beginInclude
-The following Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
+The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
 || Name | Key | Description |
-| Scroll up | control+upArrow | Scrolls the console screen up, so earlier text can be read. |
-| Scroll down | control+downArrow | Scrolls the console screen down, so later text can be read. |
-| Scroll to start | control+home | Scrolls the console screen to the beginning of the buffer. |
-| Scroll to end | control+end | Scrolls the console screen to the end of the buffer. |
+| Scroll up | control+upArrow | Scrolls the console window up, so earlier text can be read. |
+| Scroll down | control+downArrow | Scrolls the console window down, so later text can be read. |
+| Scroll to start | control+home | Scrolls the console window to the beginning of the text. |
+| Scroll to end | control+end | Scrolls the console window to the end of the text. |
 %kc:endInclude
 
 + Configuring NVDA +[ConfiguringNVDA]
