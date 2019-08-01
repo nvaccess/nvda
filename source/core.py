@@ -1,10 +1,9 @@
 # -*- coding: UTF-8 -*-
-#core.py
-#A part of NonVisual Desktop Access (NVDA)
+# A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2019 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """NVDA core"""
 
