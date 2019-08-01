@@ -25,6 +25,7 @@ import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
+from logHandler import log
 
 # search history list constants
 SEARCH_HISTORY_MOST_RECENT_INDEX = 0
@@ -34,6 +35,16 @@ class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
+	def _onKeyPress(self, event):
+		# This handler is never called.
+		log.debug("event received")
+		keycode = event.GetKeyCode()
+
+		if event.AltDown and keycode == wx.WXK_DOWN and self.findTextField.Menu:
+			log.debug("down arrow")
+			self.findTextField.PopupMenu(self.findTextField.Menu)
+		event.Skip()
+
 	def __init__(self, parent, cursorManager, caseSensitivity, searchEntries):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
@@ -41,21 +52,45 @@ class FindDialog(wx.Dialog):
 		self.activeCursorManager = cursorManager
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-		findSizer = wx.BoxSizer(wx.HORIZONTAL)
+		findSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: Dialog text for NvDA's find command.
-		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
+		textToFind = wx.StaticText(self, label=_("Type the text you wish to find"))
 		findSizer.Add(textToFind)
-		self.findTextField = wx.ComboBox(self, wx.ID_ANY, choices = searchEntries,style=wx.CB_DROPDOWN)
+		self.findTextField = wx.SearchCtrl(
+			self,
+			size=(200, -1),
+			#style=wx.TE_PROCESS_ENTER # with this present tab to navigate does not work!
+		)
+		self.findTextField.Bind(wx.EVT_KEY_DOWN, self._onKeyPress)
 
-		# if there is a previous list of searched entries, make sure we present the last searched term  selected by default
 		if searchEntries:
-			self.findTextField.Select(SEARCH_HISTORY_MOST_RECENT_INDEX)
+			# if there is a previous list of searched entries, make sure we
+			# present the last searched term  selected by default
+			self.findTextField.SetValue(
+				searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX]
+			)
+			#item = menu.Append(-1, "Recent Searches")
+			#item.Enable(False)
+			menu = wx.Menu()
+			for entry in searchEntries:
+				menu.Append(-1, entry)
+			self.findTextField.SetMenu(menu)
+
 		findSizer.Add(self.findTextField)
-		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Case &sensitive"))
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
-		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
+		findSizer.Add(
+			self.caseSensitiveCheckBox,
+			border=10,
+			flag=wx.BOTTOM | wx.TOP
+		)
+
+		mainSizer.Add(
+			findSizer,
+			border=20,
+			flag=wx.LEFT | wx.RIGHT | wx.TOP
+		)
 
 		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
