@@ -158,7 +158,7 @@ if winVersion.isWin10():
 ignoreWinEventsMap = {
 	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
 }
-for id in UIAEventIdsToNVDAEventNames.iterkeys():
+for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
 
 class UIAHandler(COMObject):
@@ -197,10 +197,10 @@ class UIAHandler(COMObject):
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
 			pfm=self.clientObject.proxyFactoryMapping
-			for index in xrange(pfm.count):
+			for index in range(pfm.count):
 				e=pfm.getEntry(index)
 				entryChanged = False
-				for eventId, propertyIds in ignoreWinEventsMap.iteritems():
+				for eventId, propertyIds in ignoreWinEventsMap.items():
 					for propertyId in propertyIds:
 						# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
 						try:
@@ -248,8 +248,9 @@ class UIAHandler(COMObject):
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
-			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
+			# Use a list of keys as AddPropertyChangedEventHandler expects a sequence.
+			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,list(UIAPropertyIdsToNVDAEventNames))
+			for x in UIAEventIdsToNVDAEventNames.keys():
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if isinstance(self.clientObject, IUIAutomation5):

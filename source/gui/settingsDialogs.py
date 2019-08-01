@@ -5,8 +5,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import logging
 from abc import abstractmethod
-from six import with_metaclass
 import os
 import copy
 import re
@@ -48,10 +48,9 @@ import winVersion
 import weakref
 import time
 import keyLabels
-from dpiScalingHelper import DpiScalingHelperMixin
-import warnings
+from .dpiScalingHelper import DpiScalingHelperMixin
 
-class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingHelperMixin)):
+class SettingsDialog(wx.Dialog, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings dialog.
 	A settings dialog consists of one or more settings controls and OK and Cancel buttons and an optional Apply button.
 	Action may be taken in response to the OK, Cancel or Apply buttons.
@@ -78,6 +77,7 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
+		# We are iterating over instanceItems only once, so it can safely be an iterator.
 		instanceItems = SettingsDialog._instances.items()
 		instancesOfSameClass = (
 			(dlg, state) for dlg, state in instanceItems if isinstance(dlg, cls)
@@ -242,7 +242,7 @@ class SettingsDialog(with_metaclass(guiHelper.SIPABCMeta, wx.Dialog, DpiScalingH
 # redo the layout in whatever way makes sense for their particular content.
 _RWLayoutNeededEvent, EVT_RW_LAYOUT_NEEDED = wx.lib.newevent.NewCommandEvent()
 
-class SettingsPanel(with_metaclass(guiHelper.SIPABCMeta, wx.Panel, DpiScalingHelperMixin)):
+class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCMeta):
 	"""A settings panel, to be used in a multi category settings dialog.
 	A settings panel consists of one or more settings controls.
 	Action may be taken in response to the parent dialog's OK or Cancel buttons.
@@ -591,12 +591,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			evt.Skip()
 
 	def _doSave(self):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
 				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onSave()
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.postSave()
 
 	def onOk(self,evt):
@@ -605,12 +605,12 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		except ValueError:
 			log.debugWarning("", exc_info=True)
 			return
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onOk(evt)
 
 	def onCancel(self,evt):
-		for panel in self.catIdToInstanceMap.itervalues():
+		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
 			panel.Destroy()
 		super(MultiCategorySettingsDialog,self).onCancel(evt)
@@ -786,7 +786,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
-		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
+		config.conf["general"]["loggingLevel"]=logging.getLevelName(logLevel)
 		logHandler.setLogLevelFromConfig()
 		if self.startAfterLogonCheckBox.IsEnabled():
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
@@ -1073,7 +1073,9 @@ class DriverSettingsMixin(object):
 		setattr(
 			self,
 			"_%ss"%setting.id,
-			getattr(self.driver,"available%ss"%setting.id.capitalize()).values()
+			# Settings are stored as an ordered dict.
+			# Therefore wrap this inside a list call.
+			list(getattr(self.driver,"available%ss"%setting.id.capitalize()).values())
 		)
 		l=getattr(self,"_%ss"%setting.id)
 		labeledControl=guiHelper.LabeledControlHelper(
@@ -1111,7 +1113,7 @@ class DriverSettingsMixin(object):
 	def updateDriverSettings(self, changedSetting=None):
 		"""Creates, hides or updates existing GUI controls for all of supported settings."""
 		#firstly check already created options
-		for name,sizer in self.sizerDict.iteritems():
+		for name,sizer in self.sizerDict.items():
 			if name == changedSetting:
 				# Changing a setting shouldn't cause that setting itself to disappear.
 				continue
@@ -1225,8 +1227,8 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabelText=_("Capital pitch change percentage")
 		self.capPitchChangeEdit=settingsSizerHelper.addLabeledControl(capPitchChangeLabelText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=int(config.conf.getConfigValidationParameter(["speech", self.driver.name, "capPitchChange"], "min")),
-			max=int(config.conf.getConfigValidationParameter(["speech", self.driver.name, "capPitchChange"], "max")),
+			min=int(config.conf.getConfigValidation(("speech", self.driver.name, "capPitchChange")).kwargs["min"]),
+			max=int(config.conf.getConfigValidation(("speech", self.driver.name, "capPitchChange")).kwargs["max"]),
 			initial=config.conf["speech"][self.driver.name]["capPitchChange"])
 
 		# Translators: This is the label for a checkbox in the
@@ -2100,6 +2102,22 @@ class AdvancedPanelControls(wx.Panel):
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
+		label = _("Terminal programs")
+		terminalsGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(terminalsGroup)
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use the new t&yped character support in legacy Windows consoles when available")
+		self.keyboardSupportInLegacyCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.isWin10(1607))
+
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
 		label = _("Browse mode")
 		browseModeGroup = guiHelper.BoxSizerHelper(
 			parent=self,
@@ -2191,6 +2209,7 @@ class AdvancedPanelControls(wx.Panel):
 			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
 			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
 			self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue and
+			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
 			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
 			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
 			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
@@ -2202,6 +2221,7 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
 		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue=='UIA')
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -2216,6 +2236,7 @@ class AdvancedPanelControls(wx.Panel):
 			self.consoleVals[consoleChoice]
 		)
 		config.conf["UIA"]["winConsoleSpeakPasswords"]=self.winConsoleSpeakPasswordsCheckBox.IsChecked()
+		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):
@@ -2374,7 +2395,7 @@ class DictionaryEntryDialog(wx.Dialog):
 		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 class DictionaryDialog(SettingsDialog):
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -2609,7 +2630,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		if displayName != "auto":
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
-				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
 				pass
 		if self.possiblePorts:
@@ -2712,8 +2733,8 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		cursorBlinkRateLabelText = _("Cursor blink rate (ms)")
-		minBlinkRate = int(config.conf.getConfigValidationParameter(["braille", "cursorBlinkRate"], "min"))
-		maxBlinkRate = int(config.conf.getConfigValidationParameter(["braille", "cursorBlinkRate"], "max"))
+		minBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["min"])
+		maxBlinkRate = int(config.conf.getConfigValidation(("braille", "cursorBlinkRate")).kwargs["max"])
 		self.cursorBlinkRateEdit = sHelper.addLabeledControl(cursorBlinkRateLabelText, nvdaControls.SelectOnFocusSpinCtrl,
 			min=minBlinkRate, max=maxBlinkRate, initial=config.conf["braille"]["cursorBlinkRate"])
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue() :
@@ -2749,8 +2770,8 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		messageTimeoutText = _("Message &timeout (sec)")
 		self.messageTimeoutEdit = sHelper.addLabeledControl(messageTimeoutText, nvdaControls.SelectOnFocusSpinCtrl,
-			min=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "min")),
-			max=int(config.conf.getConfigValidationParameter(["braille", "messageTimeout"], "max")),
+			min=int(config.conf.getConfigValidation(("braille", "messageTimeout")).kwargs["min"]),
+			max=int(config.conf.getConfigValidation(("braille", "messageTimeout")).kwargs["max"]),
 			initial=config.conf["braille"]["messageTimeout"])
 
 		# Translators: The label for a setting in braille settings to display a message on the braille display indefinitely.
@@ -2770,7 +2791,7 @@ class BrailleSettingsSubPanel(DriverSettingsMixin, SettingsPanel):
 		tetherChoices = [x[1] for x in braille.handler.tetherValues]
 		self.tetherList = sHelper.addLabeledControl(tetherListText, wx.Choice, choices=tetherChoices)
 		tetherChoice=braille.handler.TETHER_AUTO if config.conf["braille"]["autoTether"] else config.conf["braille"]["tetherTo"]
-		selection = (x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice).next()
+		selection = next((x for x,y in enumerate(braille.handler.tetherValues) if y[0]==tetherChoice))
 		try:
 			self.tetherList.SetSelection(selection)
 		except:
@@ -2936,7 +2957,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		self.filteredSymbols = self.symbols = [
-			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()
+			copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.values()
 		]
 		self.pendingRemovals = {}
 
@@ -3182,7 +3203,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def onOk(self, evt):
 		self.onSymbolEdited()
 		self.editingItem = None
-		for symbol in self.pendingRemovals.itervalues():
+		for symbol in self.pendingRemovals.values():
 			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
 			if not symbol.replacement:
@@ -3299,7 +3320,7 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		data = self.tree.GetItemData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
-		isGesture = isinstance(data, basestring)
+		isGesture = isinstance(data, str)
 		self.addButton.Enabled = isCommand or isGesture
 		self.removeButton.Enabled = isGesture
 
@@ -3401,11 +3422,3 @@ class InputGesturesDialog(SettingsDialog):
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
-
-class VoiceSettingsSlider(nvdaControls.EnhancedInputSlider):
-	"""@Deprecated: use L{gui.NVDAControls.EnhancedInputSlider} instead."""
-
-	def __init__(self,*args, **kwargs):
-		warnings.warn("gui.settingsDialogs.VoiceSettingsSlider is deprecated. Use gui.NVDAControls.EnhancedInputSlider instead",
-			DeprecationWarning, stacklevel=2)
-		super(VoiceSettingsSlider,self).__init__(*args,**kwargs)

@@ -13,7 +13,8 @@
 # see www.seika-braille.com for more details
 # 18.08.2012 13:54
 
-import time
+from typing import List
+
 import wx
 import serial
 import braille
@@ -51,7 +52,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except serial.SerialException:
 				continue
 			log.debug("serial port open {port}".format(port=port))
-			self._ser.write("\xFF\xFF\x1C")
+			self._ser.write(b"\xFF\xFF\x1C")
 			self._ser.flush()
 			# Read out the input buffer
 			versionS = self._ser.read(13)
@@ -63,19 +64,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if versionS.startswith("seika3"):
 				log.info("Found Seika40 connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
-				self.s40 = "\xFF\xFF\x73\x65\x69\x6B\x61\x00"
+				self.s40 = b"\xFF\xFF\x73\x65\x69\x6B\x61\x00"
 				break
 			# is it a old Seika3?
 			log.debug("test if it is a old Seika3")
-			self._ser.write("\xFF\xFF\x0A")
+			self._ser.write(b"\xFF\xFF\x0A")
 			self._ser.flush()
 			# Read out the input buffer
 			versionS = self._ser.read(12)
 			log.debug("receive {p}".format(p=versionS))
-			if versionS.startswith("\x00\x05\x28\x08\x76\x35\x2E\x30\x01\x01\x01\x01") or versionS.startswith("\x00\x05\x28\x08\x73\x65\x69\x6b\x61\x00"):
+			if versionS.startswith((
+				b"\x00\x05\x28\x08\x76\x35\x2E\x30\x01\x01\x01\x01",
+				b"\x00\x05\x28\x08\x73\x65\x69\x6b\x61\x00"
+			)):
 				log.info("Found Seika3 old Version connected via {port} Version {versionS}".format(port=port, versionS=versionS))
 				self.numCells = 40
-				self.s40 = "\xFF\xFF\x04\x00\x63\x00\x50\x00"
+				self.s40 = b"\xFF\xFF\x04\x00\x63\x00\x50\x00"
 				break
 			self._ser.close()
 		else:
@@ -91,27 +95,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		finally:
 			self._ser.close()
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		# every transmitted line consists of the preamble SEIKA_SENDHEADER and the Cells
 		if self.numCells==80:
-			line = "\xff\xff\x73\x38\x30\x00\x00\x00"+"".join(chr(cell) for cell in cells)
+			lineBytes = b"".join([
+				b"\xff\xff\x73\x38\x30\x00\x00\x00",
+				bytes(cells)
+			])
 		else:
-			line = self.s40+"".join("\0"+chr(cell) for cell in cells)
-		self._ser.write(line)
+			lineBytes = b"".join([
+				self.s40,
+				b"\0",
+				bytes(cells)
+			])
+		self._ser.write(lineBytes)
 
 	def handleResponses(self):
-		if not self._ser.inWaiting():
+		if not self._ser.in_waiting:
 			return
-		chars = [0,0]
 		key = 0
-		keys= set()
-		max = self.numCells / 4 # for 80 max is 20, for 40 cell max is 10
-		chars[0] = ord(self._ser.read())
-		chars[1] = ord(self._ser.read())
+		keys = set()
+		maxCellRead = self.numCells // 4  # for 80 maxCellRead is 20, for 40 cell maxCellRead is 10
+		chars: bytes = self._ser.read(2)
 		keytyp=1
 		if not chars[0] & 0x60: # a cursorrouting block is expected
-			char = self._ser.read(max)
-			chars = [ord(c) for c in char]
+			chars: bytes = self._ser.read(maxCellRead)
 			keytyp=2
 		# log.info("Seika K {c}".format(c=chars))
 		if keytyp == 1: # normal key
@@ -139,7 +147,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				pass
 		else:
 			i = 0
-			k = max / 2
+			k = maxCellRead // 2
 			while i < k:
 				j = 0
 				while j < 8:

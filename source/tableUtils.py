@@ -8,7 +8,7 @@ class HeaderCellInfo(object):
 	def __init__(self,**kwargs):
 		self.rowSpan=self.colSpan=1
 		self.minColumnNumber=self.maxColumnNumber=self.minRowNumber=self.maxRowNumber=None
-		for  name,value in kwargs.iteritems():
+		for  name,value in kwargs.items():
 			setattr(self,name,value)
 
 class HeaderCellTracker(object):
