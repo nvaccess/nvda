@@ -2,11 +2,11 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2012 NV Access Limited
+#Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
 
 import winConsoleHandler
 from . import Window
-from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
+from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection, KeyboardHandlerBasedTypedCharSupport
 import api
 import core
 from scriptHandler import script
@@ -19,6 +19,12 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		Please consider using NVDAObjects.UIA.winConsoleUIA instead.
 	"""
 	STABILIZE_DELAY = 0.03
+
+	def initOverlayClass(self):
+		# Legacy consoles take quite a while to send textChange events.
+		# This significantly impacts typing performance, so don't queue chars.
+		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
+			self._supportsTextChange = False
 
 	def _get_TextInfo(self):
 		consoleObject=winConsoleHandler.consoleObject

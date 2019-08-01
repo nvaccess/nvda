@@ -76,6 +76,17 @@ vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you 
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in range(60)]))
 if "tests" in COMMAND_LINE_TARGETS:
 	vars.Add("unitTests", "A list of unit tests to run", "")
+if "lint" in COMMAND_LINE_TARGETS:
+	vars.Add(  # pass through variable that lint is requested
+		"doLint",
+		"internal use",
+		True
+	)
+	vars.Add(
+		"base",
+		"Lint is done only on a diff, specify the ref to use as base for the diff.",
+		None
+	)
 if "systemTests" in COMMAND_LINE_TARGETS:
 	vars.Add("filter", "A filter for the name of the system test(s) to run. Wildcards accepted.", "")
 
