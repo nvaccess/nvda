@@ -1,4 +1,5 @@
 #cursorManager.py
+#A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2018 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -26,15 +27,11 @@ from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
 
-# search history list constants
-SEARCH_HISTORY_MOST_RECENT_INDEX = 0
-SEARCH_HISTORY_LEAST_RECENT_INDEX = 19
-
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
-	def __init__(self, parent, cursorManager, caseSensitivity, searchEntries):
+	def __init__(self, parent, cursorManager, text, caseSensitivity):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
@@ -45,11 +42,8 @@ class FindDialog(wx.Dialog):
 		# Translators: Dialog text for NvDA's find command.
 		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
 		findSizer.Add(textToFind)
-		self.findTextField = wx.ComboBox(self, wx.ID_ANY, choices = searchEntries,style=wx.CB_DROPDOWN)
-
-		# if there is a previous list of searched entries, make sure we present the last searched term  selected by default
-		if searchEntries:
-			self.findTextField.Select(SEARCH_HISTORY_MOST_RECENT_INDEX)
+		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
+		self.findTextField.SetValue(text)
 		findSizer.Add(self.findTextField)
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
@@ -65,36 +59,8 @@ class FindDialog(wx.Dialog):
 		self.CentreOnScreen()
 		self.findTextField.SetFocus()
 
-	def updateSearchEntries(self, searchEntries, currentSearchTerm):
-		if not currentSearchTerm:
-			return
-		if not searchEntries:
-			searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
-			return
-		# we can not accept entries that differ only on text case
-		#because of a wxComboBox limitation on MS Windows
-		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
-		#notice also that python 2 does not offer caseFold functionality
-		# so lower is the best we can have for comparing strings
-		for index, item in enumerate(searchEntries):
-			if(item.lower() == currentSearchTerm.lower()):
-				# if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the 
-				# current search term becomes the first item of the list, so that it will appear selected by default when the dialog is
-				# shown again. If the current search term differs from the current item only in case letters, we will choose to store the
-				# new search as we can not store both.
-				searchEntries.pop(index)
-				searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
-				return
-		# not yet listed. Save it.
-		if len(searchEntries) > SEARCH_HISTORY_LEAST_RECENT_INDEX:
-			self._truncateSearchHistory(searchEntries)
-		searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
-		
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
-		# update the list of searched entries so that it can be exibited in the next find dialog call
-		self.updateSearchEntries(self.activeCursorManager._searchEntries, text)
-		
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
 		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
 		# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
@@ -103,9 +69,6 @@ class FindDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
-
-	def _truncateSearchHistory(self, entries):
-		del entries[SEARCH_HISTORY_LEAST_RECENT_INDEX:]
 
 class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""
@@ -123,13 +86,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	# Translators: the script category for browse mode
 	scriptCategory=SCRCAT_BROWSEMODE
 
+	_lastFindText=""
 	_lastCaseSensitivity=False
-	#  History of search terms.
-	# Sorted in most to least recently searched order.
-	# First, most recently searched item index: SEARCH_HISTORY_MOST_RECENT_INDEX
-	# Last, least recently searched item index: SEARCH_HISTORY_LEAST_RECENT_INDEX
-	# Items that differ only by case will only have one entry. 
-	_searchEntries = []
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -200,13 +158,14 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
+		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			d = FindDialog(gui.mainFrame, self, self._lastCaseSensitivity, self._searchEntries)
+			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
 			d.ShowModal()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
@@ -214,18 +173,18 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
 	def script_findNext(self,gesture):
-		if not self._searchEntries:
+		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX], caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._lastFindText, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
 	def script_findPrevious(self,gesture):
-		if not self._searchEntries:
+		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX], reverse=True, caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._lastFindText,reverse=True, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
