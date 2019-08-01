@@ -4,20 +4,16 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 Bill Dengler
 
-import config
 import ctypes
 import NVDAHelper
-import speech
-import time
 import textInfos
 import UIAHandler
 
 from comtypes import COMError
-from scriptHandler import script
 from UIAUtils import isTextRangeOffscreen
 from winVersion import isWin10
 from . import UIATextInfo
-from ..behaviors import Terminal
+from ..behaviors import KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
 
@@ -238,69 +234,20 @@ class consoleUIAWindow(Window):
 		return None
 
 
-class WinConsoleUIA(Terminal):
+class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Disable the name as it won't be localized
 	name = ""
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
-	#: A queue of typed characters, to be dispatched on C{textChange}.
-	#: This queue allows NVDA to suppress typed passwords when needed.
-	_queuedChars = []
-	#: Whether the console got new text lines in its last update.
-	#: Used to determine if typed character/word buffers should be flushed.
-	_hasNewLines = False
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
-	def _reportNewText(self, line):
-		# Additional typed character filtering beyond that in LiveText
-		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
-			return
-		if self._hasNewLines:
-			# Clear the queued characters buffer for new text lines.
-			self._queuedChars = []
-		super(WinConsoleUIA, self)._reportNewText(line)
-
-	def event_typedCharacter(self, ch):
-		if ch == '\t':
-			# Clear the typed word buffer for tab completion.
-			speech.clearTypedWordBuffer()
-		if (
-			(
-				config.conf['keyboard']['speakTypedCharacters']
-				or config.conf['keyboard']['speakTypedWords']
-			)
-			and not config.conf['UIA']['winConsoleSpeakPasswords']
-		):
-			self._queuedChars.append(ch)
-		else:
-			super(WinConsoleUIA, self).event_typedCharacter(ch)
-
-	def event_textChange(self):
-		while self._queuedChars:
-			ch = self._queuedChars.pop(0)
-			super(WinConsoleUIA, self).event_typedCharacter(ch)
-		super(WinConsoleUIA, self).event_textChange()
-
-	@script(gestures=[
-		"kb:enter",
-		"kb:numpadEnter",
-		"kb:tab",
-		"kb:control+c",
-		"kb:control+d",
-		"kb:control+pause"
-	])
-	def script_flush_queuedChars(self, gesture):
-		"""
-		Flushes the typed word buffer and queue of typedCharacter events if present.
-		Since these gestures clear the current word/line, we should flush the
-		queue to avoid erroneously reporting these chars.
-		"""
-		gesture.send()
-		self._queuedChars = []
-		speech.clearTypedWordBuffer()
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
@@ -311,19 +258,6 @@ class WinConsoleUIA(Terminal):
 			.split("\r\n")
 		)
 
-	def _calculateNewText(self, newLines, oldLines):
-		self._hasNewLines = (
-			self._findNonBlankIndices(newLines)
-			!= self._findNonBlankIndices(oldLines)
-		)
-		return super(WinConsoleUIA, self)._calculateNewText(newLines, oldLines)
-
-	def _findNonBlankIndices(self, lines):
-		"""
-		Given a list of strings, returns a list of indices where the strings
-		are not empty.
-		"""
-		return [index for index, line in enumerate(lines) if line]
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
