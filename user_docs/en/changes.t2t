@@ -3,10 +3,17 @@ What's New in NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= threshold release =
+= 2019.3 =
+
+== Changes ==
+- The user guide now describes how to use NVDA in the Windows Console. (#9957)
+
 
 == Bug Fixes ==
 - Emoji and other 32 bit unicode characters now take less space on a braille display when they are shown as hexadecimal values. (#6695)
+- In Windows 10, NVDA will announce tooltips from universal apps if NVDA is configured to report tooltips in object presentation dialog. (#8118)
+- On Windows 10 version 1607 and later, typed text is now reported in Mintty. (#1348)
+- On Windows 10 version 1607 and later, output in the Windows Console that appears close to the caret is no longer spelled out. (#513)
 
 
 == Changes for Developers ==
@@ -25,6 +32,7 @@ What's New in NVDA
 - SynthDriver classes must now notify the synthDriverHandler.synthDoneSpeaking action, once all audio from a SynthDriver.speak call has completed playing.
 - SynthDriver classes must support the speech.PitchCommand in their speak method, as changes in pitch for speak spelling now depends on this functionality.
 - The tab-completion in the Python console only suggests attributes starting with an underscore if the underscore is first typed. (#9918)
+- Flake8 linting tool has been integrated with SCons reflecting code requirements for Pull Requests. (#5918)
  
 
  = 2019.2 =

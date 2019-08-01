@@ -190,6 +190,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
 	winConsoleSpeakPasswords = boolean(default=false)
 
+[terminals]
+	keyboardSupportInLegacy = boolean(default=True)
+
 [update]
 	autoCheck = boolean(default=true)
 	startupNotification = boolean(default=true)
