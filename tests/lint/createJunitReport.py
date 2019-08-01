@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited
+
 import os
 from sys import argv
 

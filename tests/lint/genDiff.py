@@ -7,43 +7,33 @@
 import subprocess
 from typing import Tuple, List
 
-_baseBranchPlaceholder = "<baseBranch>"
-_mergeBaseCommand = [
+_mergeBaseCommand = " ".join([
 	"git",
 	# merge-base is used to limit changes to only those that are new
 	# on HEAD.
 	"merge-base",
-	_baseBranchPlaceholder,  # this is the target branch used in a PR
+	"{baseBranch}",  # this is the target branch used in a PR
 	"HEAD"
-]
-_mergeBasePlaceholder = "<mergeBase>"
-_diffCommand = [
+])
+_diffCommand = " ".join([
 	"git", "diff",
 	# Only include changed lines (no context) in the diff. Otherwise
 	# developers may end up getting warnings for code adjacent to code they
 	# touched. This could result in very large change sets in order to get a
 	# clean build.
-	"-U0", _mergeBasePlaceholder
+	"-U0",
 	# We don't use triple dot syntax ('...') because it will not
 	# report changes in your working tree.
-]
-
-
-def substitutePlaceholder(
-		command: List[str], placeHolder: str, value: str
-) -> List[str]:
-	newList = command.copy()
-	placeHolderIndex = newList.index(placeHolder)
-	newList[placeHolderIndex] = value
-	return newList
+	"{mergeBase}"
+])
 
 
 def getDiff(baseBranch: str) -> bytes:
-	mergeBaseCommand = substitutePlaceholder(_mergeBaseCommand, _baseBranchPlaceholder, baseBranch)
+	mergeBaseCommand = _mergeBaseCommand.format(baseBranch=baseBranch)
 	mergeBase: bytes = subprocess.check_output(mergeBaseCommand)
 	mergeBase: str = mergeBase.decode(encoding='ANSI').strip()
 
-	diffCommand = substitutePlaceholder(_diffCommand, _mergeBasePlaceholder, mergeBase)
+	diffCommand = _diffCommand.format(mergeBase=mergeBase)
 	diff: bytes = subprocess.check_output(diffCommand)
 	return diff
 
