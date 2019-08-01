@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2009-2019 NV Access Limited, Arnold Loubriat, Babbage B.V., Łukasz Golonka
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import ctypes
 import IAccessibleHandler
