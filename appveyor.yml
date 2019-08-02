@@ -196,8 +196,8 @@ test_script:
 
 on_finish:
  - ps: |
-      Get-ChildItem output\*   | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
-      Get-ChildItem output\*\* | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+    $root = Resolve-Path output\
+    [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1)}
 
 deploy_script:
  - ps: |
