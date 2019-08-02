@@ -1,12 +1,13 @@
 # -*- coding: UTF-8 -*-
-#addonHandler/__init__.py
+# addonHandler/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2012-2019 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V., Arnold Loubriat
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Manages add-ons
-The add-on handler provides a definition of an add-on bundle, as well as functions to install, remove, disable/enable, and update add-on bundles.
+The add-on handler provides a definition of an add-on bundle,
+as well as functions to install, remove, disable/enable, and update add-on bundles.
 See https://addons.nvda-project.org for more information on NVDA community add-ons.
 See the NVDA developer guide for more info on writing add-ons.
 """
@@ -25,7 +26,6 @@ import pickle
 from six import string_types
 import globalVars
 import zipfile
-import urllib
 import threading
 import wx
 # #3208 todo: tentatively use JSON for exchanging add-on update data.
@@ -77,7 +77,7 @@ def loadState():
 			"disabledAddons":set(),
 			"pendingEnableSet":set(),
 			"pendingDisableSet":set(),
-			"noUpdates":set(),
+			"noUpdates": set(),
 		}
 
 def saveState():
@@ -158,6 +158,7 @@ def disableAddonsIfAny():
 	state["pendingDisableSet"].clear()
 	state["pendingEnableSet"].clear()
 
+
 def checkForAddonUpdates():
 	# Prepare to receive a record of add-ons with update checking turned off.
 	if "noUpdates" not in state:
@@ -167,7 +168,8 @@ def checkForAddonUpdates():
 	for addon in getAvailableAddons():
 		name = addon.name
 		# Only check for updates for add-ons that can check for updates.
-		if name in state["noUpdates"]: continue
+		if name in state["noUpdates"]:
+			continue
 		manifest = addon.manifest
 		curVersion = manifest["version"]
 		curAddons[name] = {"summary": manifest["summary"], "version": curVersion}
@@ -185,10 +187,12 @@ def checkForAddonUpdates():
 		res[addon]["urls"] = None
 	return res
 
+
 def autoAddonUpdateCheck():
 	t = threading.Thread(target=_showAddonUpdateUI)
 	t.daemon = True
 	t.start()
+
 
 def _showAddonUpdateUI():
 	def _showAddonUpdateUICallback(info):
@@ -198,10 +202,7 @@ def _showAddonUpdateUI():
 		gui.mainFrame.prePopup()
 		AddonUpdatesDialog(gui.mainFrame, info).Show()
 		gui.mainFrame.postPopup()
-	try:
-		info = checkForAddonUpdates()
-	except:
-		info = None
+	info = checkForAddonUpdates()
 	if info is not None:
 		wx.CallAfter(_showAddonUpdateUICallback, info)
 
@@ -219,7 +220,7 @@ def initialize():
 	getAvailableAddons(refresh=True)
 	saveState()
 	# #3208 todo: Check for add-on updates unless NVDA itself is updating right now.
-	#checkForAddonUpdates()
+	# checkForAddonUpdates()
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
