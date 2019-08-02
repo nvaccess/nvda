@@ -728,9 +728,15 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# Translators: The label of a checkbox in general settings to toggle automatic checking for ad-on updates at startup.
-			item=self.autoCheckForAddonUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &add-on updates when NVDA starts"))
-			item.Value=config.conf["update"]["addonUpdateAtStartup"]
+			# Translators: The label of a checkbox in general settings
+			# to toggle automatic checking for ad-on updates at startup.
+			item = self.autoCheckForAddonUpdatesCheckBox = wx.CheckBox(
+				self,
+				# Translators: The label of a checkbox in general settings
+				# to toggle automatic checking for ad-on updates at startup.
+				label=_("Automatically check for &add-on updates when NVDA starts")
+			)
+			item.Value = config.conf["update"]["addonUpdateAtStartup"]
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
@@ -805,7 +811,7 @@ class GeneralSettingsPanel(SettingsPanel):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if updateCheck:
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
-			config.conf["update"]["addonUpdateAtStartup"]=self.autoCheckForAddonUpdatesCheckBox.IsChecked()
+			config.conf["update"]["addonUpdateAtStartup"] = self.autoCheckForAddonUpdatesCheckBox.IsChecked()
 			config.conf["update"]["allowUsageStats"]=self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()

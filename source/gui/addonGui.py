@@ -322,11 +322,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 	def onAddonUpdateCheck(self, evt):
 		# Hide Add-ons Manager window, otherwise the update result dialog will not be shown.
 		self.Hide()
-		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+		self._progressDialog = gui.IndeterminateProgressDialog(
+			gui.mainFrame,
 			# Translators: The title of the dialog presented while checking for add-on updates.
 			_("Add-on update check"),
 			# Translators: The message displayed while checking for add-on updates.
-			_("Checking for add-on updates..."))
+			_("Checking for add-on updates...")
+		)
 		t = threading.Thread(target=self.addonUpdateCheck)
 		t.daemon = True
 		t.start()
@@ -852,12 +854,17 @@ class AddonUpdateSettingsDialog(wx.Dialog):
 		# Some add-ons come with pretty badly formatted summary text,
 		# so try catching them and exclude them from this list.
 		# #7105: this is Python 2 specific solution at the moment.
-		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel,
+		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(
+			noAddonUpdatesLabel,
 			nvdaControls.CustomCheckListBox,
-			choices=[addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()])
-		self.noAddonUpdates.SetCheckedStrings([addon.manifest["summary"]
-			for addon in addonHandler.getAvailableAddons()
-			if addon.name in addonHandler.state["noUpdates"]])
+			choices=[addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()]
+		)
+		self.noAddonUpdates.SetCheckedStrings(
+			[
+				addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()
+				if addon.name in addonHandler.state["noUpdates"]
+			]
+		)
 		self.noAddonUpdates.SetSelection(0)
 
 		addonUpdateSettingsSizerHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
@@ -871,8 +878,12 @@ class AddonUpdateSettingsDialog(wx.Dialog):
 
 	def onOk(self, evt):
 		noAddonUpdateSummaries = self.noAddonUpdates.GetCheckedStrings()
-		addonHandler.state["noUpdates"] = set([addon.name for addon in addonHandler.getAvailableAddons()
-			if addon.manifest["summary"] in noAddonUpdateSummaries])
+		addonHandler.state["noUpdates"] = set(
+			[
+				addon.name for addon in addonHandler.getAvailableAddons()
+				if addon.manifest["summary"] in noAddonUpdateSummaries
+			]
+		)
 		# Prepare for disasters.
 		addonHandler.saveState()
 		self.Parent.addonsList.SetFocus()
@@ -896,8 +907,10 @@ class AddonUpdatesDialog(wx.Dialog):
 
 		if addonUpdateInfo:
 			entriesSizer = wx.BoxSizer(wx.VERTICAL)
-			self.addonsList = nvdaControls.AutoWidthColumnCheckListCtrl(self, -1,
-				style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(550, 350))
+			self.addonsList = nvdaControls.AutoWidthColumnCheckListCtrl(
+				self, -1,
+				style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(550, 350)
+			)
 			self.addonsList.Bind(wx.EVT_CHECKLISTBOX, self.onAddonsChecked)
 			# Translators: The label for a column in add-ons list
 			# used to identify add-on package name (example: package is OCR).
@@ -1017,14 +1030,16 @@ if updateCheck is not None:
 			# Use a timer because timers aren't re-entrant.
 			self._guiExecTimer = wx.PyTimer(self._guiExecNotify)
 			gui.mainFrame.prePopup()
-			# Translators: The title of the dialog displayed while downloading add-on update.
-			self._progressDialog = wx.ProgressDialog(_("Downloading Add-on Update"),
+			self._progressDialog = wx.ProgressDialog(
+				# Translators: The title of the dialog displayed while downloading add-on update.
+				_("Downloading Add-on Update"),
 				# Translators: The progress message indicating the name of the add-on being downloaded.
 				_("Downloading {name}").format(name=self.addonName),
 				# PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
 				# and waits for the user to press the Close button.
 				style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
-				parent=gui.mainFrame)
+				parent=gui.mainFrame
+			)
 			self._progressDialog.Raise()
 			t = threading.Thread(target=self._bg)
 			t.daemon = True
