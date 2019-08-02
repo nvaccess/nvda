@@ -23,6 +23,8 @@ environment:
 init:
  - ps: |
      # iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+     $pythonVersion = (py --version)
+     echo $pythonVersion
      if ($env:APPVEYOR_REPO_TAG_NAME -and $env:APPVEYOR_REPO_TAG_NAME.StartsWith("release-")) {
       # Strip "release-" prefix.
       $version = $env:APPVEYOR_REPO_TAG_NAME.Substring(8)
@@ -121,10 +123,11 @@ build_script:
 
 before_test:
  # install required packages
- - py -m pip install -r tests/system/requirements.txt
+ - py -m pip install -r tests/system/requirements.txt -r tests/lint/lintInstall/requirements.txt
  - mkdir testOutput
  - mkdir testOutput\unit
  - mkdir testOutput\system
+ - mkdir testOutput\lint
  - ps: |
      $errorCode=0
      $nvdaLauncherFile=".\output\nvda"
@@ -158,6 +161,28 @@ test_script:
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $unitTestsXml)
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
  - ps: |
+    if($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+      $lintOutput = (Resolve-Path .\testOutput\lint\)
+      $lintSource = (Resolve-Path .\tests\lint\)
+      git fetch -q origin $env:APPVEYOR_REPO_BRANCH
+      $prDiff = "$lintOutput\prDiff.patch"
+      git diff -U0 FETCH_HEAD...HEAD > $prDiff
+      $flake8Config = "$lintSource\flake8.ini"
+      $flake8Output = "$lintOutput\PR-Flake8.txt"
+      type "$prDiff" | py -m flake8 --diff --output-file="$flake8Output" --tee --config="$flake8Config"
+      if($LastExitCode -ne 0) {
+       $errorCode=$LastExitCode
+       Add-AppveyorMessage "PR introduces Flake8 errors"
+      }
+      Push-AppveyorArtifact $flake8Output
+      $junitXML = "$lintOutput\PR-Flake8.xml"
+      py "$lintSource\createJunitReport.py" "$flake8Output" "$junitXML"
+      Push-AppveyorArtifact $junitXML
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
+      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
+    }
+ - ps: |
      $testOutput = (Resolve-Path .\testOutput\)
      $systemTestOutput = (Resolve-Path "$testOutput\system")
      $testSource = "./tests/system"
@@ -169,9 +194,17 @@ test_script:
      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$systemTestOutput\systemTests.xml"))
      if($errorCode -ne 0) { $host.SetShouldExit($errorCode) }
 
-artifacts:
- - path: output\*
- - path: output\*\*
+on_finish:
+ - ps: |
+    $uploadFromFolder = "output\"
+    if( Test-Path $uploadFromFolder ){
+      $root = Resolve-Path .\
+      $output = Resolve-Path $uploadFromFolder
+      $paths = [IO.Directory]::GetFiles($output.Path, '*.*', 'AllDirectories')
+      $paths | % {
+        Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1)
+      }
+    }
 
 deploy_script:
  - ps: |
@@ -180,9 +213,9 @@ deploy_script:
       # Notify our server.
       $exe = Get-ChildItem -Name output\*.exe
       $hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
-      $apiVersion = (python -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))")
+      $apiVersion = (py -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))")
       echo apiversion: $apiVersion
-      $apiCompatTo = (python -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))")
+      $apiCompatTo = (py -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))")
       echo apiBackCompatTo: $apiCompatTo
       $data = @{
        jobId=$env:APPVEYOR_JOB_ID;
