@@ -19,10 +19,9 @@ import wx
 import core
 import config
 import gui
-import queueHandler
 try:
 	import updateCheck
-except:
+except RuntimeError:
 	updateCheck = None
 import addonHandler
 from addonHandler import addonVersionCheck
@@ -255,14 +254,15 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		# Translators: The label of a button in the Add-ons Manager to open the list of incompatible add-ons.
 		self.incompatAddonsButton = generalActions.addButton(self, label=_("&View incompatible add-ons..."))
 		self.incompatAddonsButton.Bind(wx.EVT_BUTTON, self.onIncompatAddonsShowClick)
-		# Translators: The label for a button in Add-ons Manager dialog to check for updated versions of installed add-ons.
-		self.updateCheckButton=generalActions.addButton(self,label=_("Check for add-on &updates..."))
+		# Translators: The label for a button in Add-ons Manager dialog
+		# to check for updated versions of installed add-ons.
+		self.updateCheckButton = generalActions.addButton(self, label=_("Check for add-on &updates..."))
 		self.updateCheckButton.Disable()
-		self.updateCheckButton.Bind(wx.EVT_BUTTON,self.onAddonUpdateCheck)
+		self.updateCheckButton.Bind(wx.EVT_BUTTON, self.onAddonUpdateCheck)
 		# Translators: The label for a button in Add-ons Manager dialog to configure add-on update options.
-		self.updateSettingsButton=generalActions.addButton(self,label=_("Ma&nage add-on update checks..."))
+		self.updateSettingsButton = generalActions.addButton(self, label=_("Ma&nage add-on update checks..."))
 		self.updateSettingsButton.Disable()
-		self.updateSettingsButton.Bind(wx.EVT_BUTTON,self.onAddonUpdateSettings)
+		self.updateSettingsButton.Bind(wx.EVT_BUTTON, self.onAddonUpdateSettings)
 
 		mainSizer.Add(
 			generalActions.sizer,
@@ -319,14 +319,14 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
 
-	def onAddonUpdateCheck(self,evt):
+	def onAddonUpdateCheck(self, evt):
 		# Hide Add-ons Manager window, otherwise the update result dialog will not be shown.
 		self.Hide()
 		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while checking for add-on updates.
-		_("Add-on update check"),
-		# Translators: The message displayed while checking for add-on updates.
-		_("Checking for add-on updates..."))
+			# Translators: The title of the dialog presented while checking for add-on updates.
+			_("Add-on update check"),
+			# Translators: The message displayed while checking for add-on updates.
+			_("Checking for add-on updates..."))
 		t = threading.Thread(target=self.addonUpdateCheck)
 		t.daemon = True
 		t.start()
@@ -337,7 +337,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self._progressDialog = None
 		wx.CallAfter(AddonUpdatesDialog, self, info, auto=False)
 
-	def onAddonUpdateSettings(self,evt):
+	def onAddonUpdateSettings(self, evt):
 		self.Disable()
 		AddonUpdateSettingsDialog(self).Show()
 
@@ -499,7 +499,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		self.enableDisableButton.SetLabel(_("&Enable add-on") if shouldDisable else _("&Disable add-on"))
 		self.refreshAddonsList(activeIndex=index)
 
-	def onGetAddonsClick(self,evt):
+	def onGetAddonsClick(self, evt):
 		ADDONS_URL = "https://addons.nvda-project.org"
 		os.startfile(ADDONS_URL)
 
@@ -509,10 +509,13 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 			# the defaults from the addon GUI are fine. We are testing against the running version.
 		).ShowModal()
 
+
 def installAddon(parentWindow, addonPath, freshInstall=True):
-	""" Installs the addon at path. Any error messages / warnings are presented to the user via a GUI message box.
+	""" Installs the addon at path.
+	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
-	The fresh install flag is used to show install dialog (true) and/or to manipulate enable/disable flag (false).
+	The fresh install flag is used to show install dialog (true)
+	and/or to manipulate enable/disable flag (false).
 	:return True on success or False on failure.
 	"""
 	try:
@@ -534,7 +537,8 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 	elif not addonVersionCheck.isAddonTested(bundle):
 		_showAddonTooOldDialog(parentWindow, bundle)
 		return False  # Exit early, addon is not up to date with the latest API version.
-	# Do not show install confirmation dialog if what we're doing is just updating a compatible add-on and the updated add-on is also compatible.
+	# Do not show install confirmation dialog if what we're doing is just updating a compatible add-on
+	# and the updated add-on is also compatible.
 	elif freshInstall and wx.YES != _showConfirmAddonInstallDialog(parentWindow, bundle):
 		return False  # Exit early, User changed their mind about installation.
 
@@ -543,7 +547,7 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 		if not addon.isPendingRemove and bundle.name.lower()==addon.manifest['name'].lower():
 			prevAddon=addon
 			break
-	summary=bundle.manifest["summary"]
+	summary = bundle.manifest["summary"]
 	# Skip this if an add-on is about to be updated after checking for updates.
 	if prevAddon and freshInstall:
 		curVersion=prevAddon.manifest["version"]
@@ -594,7 +598,7 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 		installAddonMessage = _("Please wait while the add-on is being installed.")
 	else:
 		# Translators: The title of the dialog presented while an Addon is being updated.
-		installAddonTitle = _("Updating {name}").format(name = summary)
+		installAddonTitle = _("Updating {name}").format(name=summary)
 		# Translators: The message displayed while an addon is being updated.
 		installAddonMessage = _("Please wait while the add-on is being updated.")
 	#  use a progress dialog so users know that something is happening.
@@ -615,10 +619,10 @@ def installAddon(parentWindow, addonPath, freshInstall=True):
 		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)
 		if freshInstall:
 			# Translators: The message displayed when an error occurs when installing an add-on package.
-			installErrorMessage = _("Failed to install add-on  from %s")%addonPath
+			installErrorMessage = _("Failed to install add-on  from %s") % addonPath
 		else:
 			# Translators: The message displayed when an error occurs when installing an add-on package.
-			installErrorMessage = _("Failed to update {name} add-on").format(name = self.addonName)
+			installErrorMessage = _("Failed to update {name} add-on").format(name=summary)
 		gui.messageBox(
 			installErrorMessage,
 			# Translators: The title of a dialog presented when an error occurs.
@@ -837,25 +841,29 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 
 class AddonUpdateSettingsDialog(wx.Dialog):
 
-	def __init__(self,parent):
+	def __init__(self, parent):
 		# Translators: The title of the add-on update settings dialog.
-		super(AddonUpdateSettingsDialog,self).__init__(parent,title=_("Add-on update settings"))
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		super(AddonUpdateSettingsDialog, self).__init__(parent, title=_("Add-on update settings"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		addonUpdateSettingsSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
 		# Translators: the label for a list of checkboxes for add-ons that should not be updated.
 		noAddonUpdatesLabel = _("Do &not update add-ons:")
-		# Some add-ons come with pretty badly formatted summary text, so try catching them and exclude them from this list.
+		# Some add-ons come with pretty badly formatted summary text,
+		# so try catching them and exclude them from this list.
 		# #7105: this is Python 2 specific solution at the moment.
-		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel, nvdaControls.CustomCheckListBox, choices=[addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()])
-		self.noAddonUpdates.SetCheckedStrings([addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()
+		self.noAddonUpdates = addonUpdateSettingsSizerHelper.addLabeledControl(noAddonUpdatesLabel,
+			nvdaControls.CustomCheckListBox,
+			choices=[addon.manifest["summary"] for addon in addonHandler.getAvailableAddons()])
+		self.noAddonUpdates.SetCheckedStrings([addon.manifest["summary"]
+			for addon in addonHandler.getAvailableAddons()
 			if addon.name in addonHandler.state["noUpdates"]])
 		self.noAddonUpdates.SetSelection(0)
 
 		addonUpdateSettingsSizerHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
-		mainSizer.Add(addonUpdateSettingsSizerHelper.sizer, border = gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		mainSizer.Add(addonUpdateSettingsSizerHelper.sizer, border=gui.guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
@@ -878,31 +886,35 @@ class AddonUpdateSettingsDialog(wx.Dialog):
 
 class AddonUpdatesDialog(wx.Dialog):
 
-	def __init__(self,parent, addonUpdateInfo, auto=True):
+	def __init__(self, parent, addonUpdateInfo, auto=True):
 		# Translators: The title of the add-on updates dialog.
-		super(AddonUpdatesDialog,self).__init__(parent,title=_("Add-on Updates"))
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		super(AddonUpdatesDialog, self).__init__(parent, title=_("Add-on Updates"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		addonsSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		self.addonUpdateInfo = addonUpdateInfo
 		self.auto = auto
 
 		if addonUpdateInfo:
-			entriesSizer=wx.BoxSizer(wx.VERTICAL)
-			self.addonsList=nvdaControls.AutoWidthColumnCheckListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+			entriesSizer = wx.BoxSizer(wx.VERTICAL)
+			self.addonsList = nvdaControls.AutoWidthColumnCheckListCtrl(self, -1,
+				style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(550, 350))
 			self.addonsList.Bind(wx.EVT_CHECKLISTBOX, self.onAddonsChecked)
-			# Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-			self.addonsList.InsertColumn(0,_("Package"),width=150)
-			# Translators: The label for a column in add-ons list used to identify currently installed version.
-			self.addonsList.InsertColumn(1,_("Current version"),width=50)
-			# Translators: The label for a column in add-ons list used to identify the new add-on version.
-			self.addonsList.InsertColumn(2,_("New version"),width=50)
-			entriesSizer.Add(self.addonsList,proportion=8)
+			# Translators: The label for a column in add-ons list
+			# used to identify add-on package name (example: package is OCR).
+			self.addonsList.InsertColumn(0, _("Package"), width=150)
+			# Translators: The label for a column in add-ons list
+			# used to identify currently installed version.
+			self.addonsList.InsertColumn(1, _("Current version"), width=50)
+			# Translators: The label for a column in add-ons list
+			# used to identify the new add-on version.
+			self.addonsList.InsertColumn(2, _("New version"), width=50)
+			entriesSizer.Add(self.addonsList, proportion=8)
 			for entry in sorted(addonUpdateInfo.keys()):
 				addon = addonUpdateInfo[entry]
 				self.addonsList.Append((addon['summary'], addon['curVersion'], addon['version']))
-				self.addonsList.CheckItem(self.addonsList.GetItemCount()-1)
+				self.addonsList.CheckItem(self.addonsList.GetItemCount() - 1)
 			self.addonsList.Select(0)
-			self.addonsList.SetItemState(0,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+			self.addonsList.SetItemState(0, wx.LIST_STATE_FOCUSED, wx.LIST_STATE_FOCUSED)
 			addonsSizerHelper.addItem(entriesSizer)
 		else:
 			# Translators: Message displayed when no add-on updates are available.
@@ -928,7 +940,10 @@ class AddonUpdatesDialog(wx.Dialog):
 		wx.CallAfter(self.Show)
 
 	def onAddonsChecked(self, evt):
-		self.updateButton.Enable() if any([self.addonsList.IsChecked(addon) for addon in range(self.addonsList.GetItemCount())]) else self.updateButton.Disable()
+		if any([self.addonsList.IsChecked(addon) for addon in range(self.addonsList.GetItemCount())]):
+			self.updateButton.Enable()
+		else:
+			self.updateButton.Disable()
 
 	def onUpdate(self, evt):
 		self.Destroy()
@@ -959,11 +974,14 @@ def updateAddonsGenerator(addons, auto=True):
 			AddonsDialog(gui.mainFrame).refreshAddonsList()
 			wx.CallLater(1, gui.mainFrame.onAddonsManagerCommand, None)
 		return
-	# #3208: Update (download and install) add-ons one after the other, done by retrieving the first item (as far as current add-ons container is concerned).
+	# #3208: Update (download and install) add-ons one after the other,
+	# done by retrieving the first item (as far as current add-ons container is concerned).
 	addonInfo = addons.pop(0)
-	downloader = AddonUpdateDownloader([addonInfo["urls"]], addonInfo["summary"], addonsToBeUpdated=addons, auto=auto)
+	downloader = AddonUpdateDownloader(
+		[addonInfo["urls"]], addonInfo["summary"], addonsToBeUpdated=addons, auto=auto)
 	downloader.start()
 	yield
+
 
 # Until update downloader is moved out of update check...
 if updateCheck is not None:
@@ -1002,7 +1020,7 @@ if updateCheck is not None:
 			# Translators: The title of the dialog displayed while downloading add-on update.
 			self._progressDialog = wx.ProgressDialog(_("Downloading Add-on Update"),
 				# Translators: The progress message indicating the name of the add-on being downloaded.
-				_("Downloading {name}").format(name = self.addonName),
+				_("Downloading {name}").format(name=self.addonName),
 				# PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
 				# and waits for the user to press the Close button.
 				style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
@@ -1016,7 +1034,7 @@ if updateCheck is not None:
 			self._stopped()
 			gui.messageBox(
 				# Translators: A message indicating that an error occurred while downloading an update to NVDA.
-				_("Error downloading update for {name}.").format(name = self.addonName),
+				_("Error downloading update for {name}.").format(name=self.addonName),
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
 			self.continueUpdatingAddons()
