@@ -26,6 +26,7 @@ import api
 import textInfos
 from logHandler import log
 from UIAUtils import *
+from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
