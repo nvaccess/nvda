@@ -196,8 +196,15 @@ test_script:
 
 on_finish:
  - ps: |
-    $root = Resolve-Path output\
-    [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1)}
+    $uploadFromFolder = "output\"
+    if( Test-Path $uploadFromFolder ){
+      $root = Resolve-Path .\
+      $output = Resolve-Path $uploadFromFolder
+      $paths = [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories')
+      $paths | % {
+        Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1)
+      }
+    }
 
 deploy_script:
  - ps: |
