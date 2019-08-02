@@ -2282,7 +2282,8 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
 		# gesture="kb:NVDA+shift+p",
-		category=SCRCAT_SPEECH,)
+		category=SCRCAT_SPEECH,
+	)
 	def script_toggleReportCLDR(self, gesture):
 		if config.conf["speech"]["includeCLDR"]:
 			# Translators: presented when the report CLDR is toggled.
