@@ -11,7 +11,6 @@ import UIAHandler
 
 from comtypes import COMError
 from UIAUtils import isTextRangeOffscreen
-from winVersion import isWin10
 from . import UIATextInfo
 from ..behaviors import KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
@@ -24,30 +23,28 @@ class consoleUIATextInfo(UIATextInfo):
 	#: to do much good either.
 	_expandCollapseBeforeReview = False
 
-	def __init__(self,obj,position,_rangeObj=None):
+	def __init__(self, obj, position, _rangeObj=None):
 		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
 		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
 		# visible ranges to fix review top/bottom scripts.
-		if position==textInfos.POSITION_FIRST:
+		if position == textInfos.POSITION_FIRST:
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 			firstVisiRange = visiRanges.GetElement(0)
 			self._rangeObj = firstVisiRange
 			self.collapse()
-		elif position==textInfos.POSITION_LAST:
+		elif position == textInfos.POSITION_LAST:
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
 			self._rangeObj = lastVisiRange
 			self.collapse(True)
 
-	def collapse(self,end=False):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self).collapse(end=end)
+	def collapse(self, end=False):
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
-		oldInfo=self.copy()
-		super(consoleUIATextInfo,self).collapse(end=end)
+		oldInfo = self.copy()
+		super(consoleUIATextInfo, self).collapse(end=end)
 		if not end:
 			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
@@ -157,9 +154,7 @@ class consoleUIATextInfo(UIATextInfo):
 			return super(consoleUIATextInfo, self).expand(unit)
 
 	def _get_isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self)._get_isCollapsed()
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
@@ -215,9 +210,9 @@ class consoleUIATextInfo(UIATextInfo):
 			min(end.value, max(1, len(lineText) - 2))
 		)
 
-	def __ne__(self,other):
+	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
-		return not self==other
+		return not self == other
 
 
 class consoleUIAWindow(Window):
