@@ -37,7 +37,8 @@ import speech
 import braille
 import gui
 from gui import guiHelper
-from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons, autoAddonUpdateCheck
+# Flake8:E402: this is due to #6275.
+from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons, autoAddonUpdateCheck # noqa
 from logHandler import log, isPathExternalToNVDA
 import config
 import shellapi
@@ -285,7 +286,8 @@ class AutoUpdateChecker(UpdateChecker):
 			secsSinceLast = max(time.time() - state["lastCheck"], 0)
 			# The maximum time till the next check is CHECK_INTERVAL.
 			secsTillNext = CHECK_INTERVAL - int(min(secsSinceLast, CHECK_INTERVAL))
-			# #3208: unless NVDA Core needs to check for an update right now, give add-ons a chance to check for updates.
+			# #3208: unless NVDA Core needs to check for an update right now,
+			# give add-ons a chance to check for updates.
 			# But not when running as a Windows Store application.
 			if not config.isAppX and secsTillNext > 0 and config.conf["update"]["addonUpdateAtStartup"]:
 				wx.CallAfter(autoAddonUpdateCheck)

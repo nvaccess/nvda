@@ -512,7 +512,9 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		).ShowModal()
 
 
-def installAddon(parentWindow, addonPath, freshInstall=True):
+# Flake8:C901: complex due to installer UI,
+# although at some point a way to separate the GUI from the installation routine should be done.
+def installAddon(parentWindow, addonPath, freshInstall=True): # noqa
 	""" Installs the addon at path.
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
