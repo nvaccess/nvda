@@ -306,7 +306,8 @@ def handleAppSwitch(oldMods, newMods):
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
 	App modules provide specific support for a single application.
-	Each app module should be a Python module or a package in the appModules package named according to the executable it supports;
+	Each app module should be a Python module or a package in the appModules package
+	named according to the executable it supports;
 	e.g. explorer.py for the explorer.exe application or firefox/__init__.py for firefox.exe.
 	It should containa  C{AppModule} class which inherits from this base class.
 	App modules can implement and bind gestures to scripts.
@@ -481,7 +482,8 @@ class AppModule(baseObject.ScriptableObject):
 	def _get_isWindowsStoreApp(self):
 		"""Whether this process is a Windows Store (immersive) process.
 		An immersive process is a Windows app that runs inside a Windows Runtime (WinRT) container.
-		These include Windows store apps on Windows 8 and 8.1, and Universal Windows Platform (UWP) apps on Windows 10.
+		These include Windows store apps on Windows 8 and 8.1,
+		and Universal Windows Platform (UWP) apps on Windows 10.
 		@rtype: bool
 		"""
 		if (winVersion.winVersion.major, winVersion.winVersion.minor) < (6, 2):
@@ -504,15 +506,17 @@ class AppModule(baseObject.ScriptableObject):
 		* ARM64: 64-bit ARM app on ARM64 Windows.
 		@rtype: str
 		"""
-		# For a detailed description, see https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants.
-		# The only value missing is ARM64 (AA64) because it is only applicable if ARM64 app is running on ARM64 machines.
-		archValues2ArchNames={
-			0x014c: "x86", # I386-32
-			0x8664: "AMD64", # X86-64
-			0x01c0: "ARM" # 32-bit ARM
+		# Details: https://docs.microsoft.com/en-us/windows/desktop/SysInfo/image-file-machine-constants
+		# The only value missing is ARM64 (AA64)
+		# because it is only applicable if ARM64 app is running on ARM64 machines.
+		archValues2ArchNames = {
+			0x014c: "x86",  # I386-32
+			0x8664: "AMD64",  # X86-64
+			0x01c0: "ARM"  # 32-bit ARM
 		}
 		# IsWow64Process2 can be used on Windows 10 Version 1511 (build 10586) and later.
-		# If this is a64-bit app running on 7 through 10 Version 1507 (build 10240), just assume this is an x64 (AMD64) app.
+		# Just assume this is an x64 (AMD64) app.
+		# if this is a64-bit app running on 7 through 10 Version 1507 (build 10240).
 		try:
 			# If a native app is running (such as x64 app on x64 machines), app architecture value is not set.
 			processMachine = ctypes.wintypes.USHORT()
