@@ -154,9 +154,9 @@ UIAEventIdsToNVDAEventNames={
 autoSelectDetectionAvailable = False
 if winVersion.isWin10():
 	UIAEventIdsToNVDAEventNames.update({
-		UIA_Text_TextChangedEventId:"textChange",
-		UIA_Text_TextSelectionChangedEventId:"caret",
-	})
+		UIA_Text_TextChangedEventId: "textChange",
+		UIA_Text_TextSelectionChangedEventId: "caret",
+		})
 	autoSelectDetectionAvailable = True
 
 ignoreWinEventsMap = {
@@ -277,7 +277,7 @@ class UIAHandler(COMObject):
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
-		focus=api.getFocusObject()
+		focus = api.getFocusObject()
 		import NVDAObjects.UIA
 		if (
 			isinstance(focus, NVDAObjects.UIA.UIA)
