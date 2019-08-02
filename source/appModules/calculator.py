@@ -1,8 +1,8 @@
-#appModules/calculator.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2019 NV Access Limited, Joseph Lee
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# appModules/calculator.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2019 NV Access Limited, Joseph Lee
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """App module for Windows 10 Calculator"""
 
@@ -13,6 +13,7 @@ import queueHandler
 import ui
 import scriptHandler
 
+
 class AppModule(appModuleHandler.AppModule):
 
 	_shouldAnnounceResult = False
@@ -21,7 +22,11 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_nameChange(self, obj, nextHandler):
 		# No, announce value changes immediately except for calculator results and expressions.
-		if isinstance(obj, UIA) and obj.UIAElement.cachedAutomationID not in ("CalculatorResults", "CalculatorExpression") and obj.name != self._resultsCache:
+		if (
+			isinstance(obj, UIA)
+			and obj.UIAElement.cachedAutomationID not in ("CalculatorResults", "CalculatorExpression")
+			and obj.name != self._resultsCache
+		):
 			# For unit conversion, UIA notification event presents much better messages.
 			# For date calculation, live region change event is also fired for difference between dates.
 			if obj.UIAElement.cachedAutomationID not in ("Value1", "Value2", "DateDiffAllUnitsResultLabel"):
@@ -36,24 +41,32 @@ class AppModule(appModuleHandler.AppModule):
 		# From May 2018 onwards, unit converter uses a different automation iD.
 		# Changed significantly in July 2018 thanks to UI redesign, and as a result, attribute error is raised.
 		try:
-			shouldAnnounceNotification = obj.previous.UIAElement.cachedAutomationID in ("numberPad", "UnitConverterRootGrid")
+			shouldAnnounceNotification = (
+				obj.previous.UIAElement.cachedAutomationID in
+				("numberPad", "UnitConverterRootGrid")
+			)
 		except AttributeError:
 			# Another UI redesign in 2019, causing attribute error when changing categories.
 			resultElement = api.getForegroundObject().children[1].lastChild
-			shouldAnnounceNotification = resultElement and resultElement.firstChild and resultElement.firstChild.UIAElement.cachedAutomationID != "CalculatorResults"
+			shouldAnnounceNotification = (
+				resultElement
+				and resultElement.firstChild
+				and resultElement.firstChild.UIAElement.cachedAutomationID != "CalculatorResults"
+			)
 		# Also, warn users if maximum digit count has been reached (a different activity ID than display updates).
 		if shouldAnnounceNotification or activityId == "MaxDigitsReached":
 			nextHandler()
 
 	# A list of native commands to handle calculator result announcement.
-	_calculatorResultGestures=("kb:enter", "kb:numpadEnter", "kb:escape")
+	_calculatorResultGestures = ("kb:enter", "kb:numpadEnter", "kb:escape")
 
 	@scriptHandler.script(gestures=_calculatorResultGestures)
 	def script_calculatorResult(self, gesture):
 		# To prevent double focus announcement, check where we are.
 		focus = api.getFocusObject()
 		gesture.send()
-		# In redstone, calculator result keeps firing name change, so tell it to do so if and only if enter has been pressed.
+		# In redstone, calculator result keeps firing name change,
+		# so tell it to do so if and only if enter has been pressed.
 		self._shouldAnnounceResult = True
 		# Hack: only announce display text when an actual calculator button (usually equals button) is pressed.
 		# In redstone, pressing enter does not move focus to equals button.
@@ -67,4 +80,4 @@ class AppModule(appModuleHandler.AppModule):
 					queueHandler.queueFunction(queueHandler.eventQueue, resultsScreen.firstChild.reportFocus)
 
 	# Without this, gesture binding fails even with script decorator deployed.
-	__gestures={}
+	__gestures = {}
