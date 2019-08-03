@@ -1,8 +1,8 @@
-#brailleViewer.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2014-2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# brailleViewer.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2014-2017 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 from typing import List
 
 import wx
@@ -22,17 +22,21 @@ _display = None
 # created - A boolean argument is given, True for created, False for destructed.
 postBrailleViewerToolToggledAction = extensionPoints.Action()
 
+
 def isBrailleDisplayCreated():
 	return bool(_display)
 
+
 def getBrailleViewerTool():
 	return _display
+
 
 def toggleBrailleViewerTool():
 	if isBrailleDisplayCreated():
 		destroyBrailleViewerTool()
 	else:
 		createBrailleViewerTool()
+
 
 def destroyBrailleViewerTool():
 	global _display
@@ -42,11 +46,14 @@ def destroyBrailleViewerTool():
 	_display = None
 	try:
 		d.terminate()
-	except:
+	except:  # noqa: E722 # Bare except
 		log.error("Error terminating braille viewer tool", exc_info=True)
 	postBrailleViewerToolToggledAction.notify(created=False)
 
+
 DEFAULT_NUM_CELLS = 40
+
+
 def createBrailleViewerTool():
 	if not gui.mainFrame:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")
@@ -64,15 +71,17 @@ def createBrailleViewerTool():
 		_display = BrailleViewerDriver(cells)
 	postBrailleViewerToolToggledAction.notify(created=True)
 
+
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 SPACE_CHARACTER = u" "
+
 
 # Inherit from wx.Frame because these windows show in the alt+tab menu (where miniFrame does not)
 # wx.Dialog causes a crash on destruction when multiple were created at the same time (speechViewer
 # may start at the same time)
 class BrailleViewerFrame(wx.Frame):
 
-	#Translators: The title of the NVDA Braille Viewer tool window.
+	# Translators: The title of the NVDA Braille Viewer tool window.
 	title = _("NVDA Braille Viewer")
 
 	def __init__(self, numCells, onDestroyed):
@@ -101,8 +110,8 @@ class BrailleViewerFrame(wx.Frame):
 		item.Font = self.setFont(item.Font)
 		mainSizer.Add(item, flag=wx.EXPAND)
 
-		# Translators: The label for a setting in the braille viewer that controls whether the braille viewer is shown at
-		# startup or not.
+		# Translators: The label for a setting in the braille viewer that controls
+		# whether the braille viewer is shown at startup or not.
 		showOnStartupCheckboxLabel = _("&Show Braille Viewer on Startup")
 		self.shouldShowOnStartupCheckBox = wx.CheckBox(
 			parent=self,
@@ -123,9 +132,9 @@ class BrailleViewerFrame(wx.Frame):
 		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
 		lengthsMatch = len(configSizes) == len(attachedSizes)
 		allSizesMatch = all(
-				confSize == attachedSize
-				for (confSize, attachedSize)
-				in zip(configSizes, attachedSizes)
+			confSize == attachedSize
+			for (confSize, attachedSize)
+			in zip(configSizes, attachedSizes)
 		)
 		return lengthsMatch and allSizesMatch
 
@@ -185,7 +194,7 @@ class BrailleViewerFrame(wx.Frame):
 
 class BrailleViewerDriver(BrailleDisplayDriver):
 	name = "brailleViewer"
-	#Translators: Description of the braille viewer tool
+	# Translators: Description of the braille viewer tool
 	description = _("Braille viewer")
 	numCells = DEFAULT_NUM_CELLS  # Overriden to match an active braille display
 	_brailleGui = None  # A BrailleViewer instance

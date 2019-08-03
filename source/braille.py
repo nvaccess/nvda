@@ -1571,7 +1571,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._tether = config.conf["braille"]["tetherTo"]
 		self._detectionEnabled = False
 		self._detector = None
-		self._rawText=u""
+		self._rawText = u""
 		import brailleViewer
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
@@ -1700,7 +1700,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				log.debugWarning("Couldn't initialize display driver for kwargs %r"%(kwargs,), exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
-	
+
 	def _onBrailleViewerChangedState(self, created):
 		import brailleViewer
 		if not created:

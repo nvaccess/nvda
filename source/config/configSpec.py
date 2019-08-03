@@ -15,7 +15,8 @@ latestSchemaVersion = 2
 
 #: The configuration specification string
 #: @type: String
-configSpecString = ("""# NVDA Configuration File
+configSpecString = f"""
+# NVDA Configuration File
 schemaVersion = integer(min=0, default={latestSchemaVersion})
 [general]
 	language = string(default="Windows")
@@ -108,7 +109,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
 	autoPositionWindow = boolean(default=True)
-	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	# Values for positioning the window.
+	# Defaults are not used.
+	# They should not be read if autoPositionWindow is True
 	x = integer()
 	y = integer()
 	width = integer()
@@ -118,7 +121,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [brailleViewer]
 	showBrailleViewerAtStartup = boolean(default=false)
 	autoPositionWindow = boolean(default=True)
-	# values for positioning the window. Defaults are not used. They should not be read if autoPositionWindow is True
+	# Values for positioning the window.
+	# Defaults are not used.
+	# They should not be read if autoPositionWindow is True
 	x = integer()
 	y = integer()
 	displays = string_list()
@@ -156,7 +161,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
-	#These settings affect what information is reported when you navigate to text where the formatting  or placement has changed
+	# These settings affect what information is reported when you navigate
+	# to text where the formatting  or placement has changed
 	detectFormatAfterCursor = boolean(default=false)
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
@@ -234,7 +240,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
-""").format(latestSchemaVersion=latestSchemaVersion)
+"""
 
 #: The configuration specification
 #: @type: ConfigObj

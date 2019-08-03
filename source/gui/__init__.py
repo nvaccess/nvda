@@ -117,7 +117,6 @@ class MainFrame(wx.Frame):
 				self.Hide()
 
 	def Destroy(self):
-		import brailleViewer
 		self.sysTrayIcon.Destroy()
 		super(MainFrame, self).Destroy()
 
@@ -445,7 +444,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
 		# Translators: The label for the menu item to toggle Braille Viewer.
-		item=self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Braille viewer"))
+		item = self.menu_tools_toggleBrailleViewer = menu_tools.AppendCheckItem(
+			wx.ID_ANY,
+			_("Braille viewer")
+		)
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
 		import brailleViewer
 		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
