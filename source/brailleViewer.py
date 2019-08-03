@@ -3,6 +3,7 @@
 #Copyright (C) 2014-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
+from typing import List
 
 import wx
 import gui
@@ -75,14 +76,13 @@ class BrailleViewerFrame(wx.Frame):
 	title = _("NVDA Braille Viewer")
 
 	def __init__(self, numCells, onDestroyed):
-		dialogPos=None
+		dialogPos = wx.DefaultPosition
 		if not config.conf["brailleViewer"]["autoPositionWindow"] and self.doDisplaysMatchConfig():
 			log.debug("Setting brailleViewer window position")
 			brailleViewSection = config.conf["brailleViewer"]
 			dialogPos = wx.Point(x=brailleViewSection["x"], y=brailleViewSection["y"])
 		super(BrailleViewerFrame, self).__init__(
-			parent=gui.mainFrame,
-			id=wx.ID_ANY,
+			gui.mainFrame,
 			title=self.title,
 			pos=dialogPos,
 			style=wx.CAPTION | wx.STAY_ON_TOP
@@ -121,7 +121,13 @@ class BrailleViewerFrame(wx.Frame):
 	def doDisplaysMatchConfig(self):
 		configSizes = config.conf["brailleViewer"]["displays"]
 		attachedSizes = self.getAttachedDisplaySizesAsStringArray()
-		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in xrange(len(configSizes)))
+		lengthsMatch = len(configSizes) == len(attachedSizes)
+		allSizesMatch = all(
+				confSize == attachedSize
+				for (confSize, attachedSize)
+				in zip(configSizes, attachedSizes)
+		)
+		return lengthsMatch and allSizesMatch
 
 	def updateValues(self, braille, text):
 		brailleEqual = self.lastBraille == braille
@@ -147,8 +153,14 @@ class BrailleViewerFrame(wx.Frame):
 		return font
 
 	def getAttachedDisplaySizesAsStringArray(self):
-		displays = ( wx.Display(i).GetGeometry().GetSize() for i in xrange(wx.Display.GetCount()) )
-		return [repr( (i.width, i.height) ) for i in displays]
+		displays = (
+			wx.Display(i).GetGeometry().GetSize()
+			for i in range(wx.Display.GetCount())
+		)
+		return [
+			repr((disp.width, disp.height))
+			for disp in displays
+		]
 
 	def savePositionInformation(self):
 		position = self.GetPosition()
@@ -200,14 +212,17 @@ class BrailleViewerDriver(BrailleDisplayDriver):
 		self._brailleGui = BrailleViewerFrame(self.numCells, self.onBrailleGuiDestroyed)
 		return self._brailleGui
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		if not self._setupBrailleGui():
 			return
-		brailleUnicodeChars = (unichr(BRAILLE_UNICODE_PATTERNS_START + cell) for cell in cells)
+		brailleUnicodeChars = (chr(BRAILLE_UNICODE_PATTERNS_START + cell) for cell in cells)
 		# replace braille "space" with regular space because the width of the braille space
 		# does not match the other braille characters, the result is better, but not perfect.
-		brailleSpace = unichr(BRAILLE_UNICODE_PATTERNS_START)
-		spaceReplaced = (cell.replace(brailleSpace, SPACE_CHARACTER) for cell in brailleUnicodeChars)
+		brailleSpace = chr(BRAILLE_UNICODE_PATTERNS_START)
+		spaceReplaced = (
+			cell.replace(brailleSpace, SPACE_CHARACTER)
+			for cell in brailleUnicodeChars
+		)
 		self._brailleGui.updateValues(u"".join(spaceReplaced), self.rawText)
 
 	def terminate(self):
