@@ -7,7 +7,7 @@
 """Utilities for working with MathType.
 """
 
-import _winreg as winreg
+import winreg
 import ctypes
 import mathPres
 

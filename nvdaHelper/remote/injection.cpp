@@ -167,17 +167,21 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	if(inprocWinEventHookID==0) {
 		LOG_ERROR(L"SetWinEventHook failed");
 	}
+#ifndef _M_ARM64
 	//Initialize API hooking
 	apiHook_initialize();
 	//Hook SetWindowsHookExA so that we can juggle hooks around a bit.
 	//Fixes #2411
 	real_SetWindowsHookExA=apiHook_hookFunction_safe("USER32.dll",SetWindowsHookExA,fake_SetWindowsHookExA);
 	//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
-if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
+	if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
+#endif // #ifndef _M_ARM64
 	//Initialize in-process subsystems
 	inProcess_initialize();
+#ifndef _M_ARM64
 	//Enable all registered API hooks
 	apiHook_enableHooks();
+#endif
 	//Initialize our rpc server interfaces and request registration with NVDA
 	rpcSrv_initialize();
 	//Notify injection_winEventCallback (who started our thread) that we're past initialization
@@ -207,8 +211,10 @@ if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32
 	#endif
 	//Terminate our RPC server interfaces
 	rpcSrv_terminate();
+#ifndef _M_ARM64
 	//Unregister and terminate API hooks
 	apiHook_terminate();
+#endif
 	//Terminate all in-process subsystems.
 	inProcess_terminate();
 	//Unregister any windows hooks registered so far
@@ -375,8 +381,10 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 				#ifndef NDEBUG
 				Beep(2500,75);
 				#endif
+#ifndef _M_ARM64
 				//Unregister and terminate API hooks
 				apiHook_terminate();
+#endif
 				//Unregister any current windows hooks
 				killRunningWindowsHooks();
 				//Unregister winEvents for this process

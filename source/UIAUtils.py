@@ -19,7 +19,7 @@ def createUIAMultiPropertyCondition(*dicts):
 	outerOrList=[]
 	for dict in dicts:
 		andList=[]
-		for key,values in dict.iteritems():
+		for key,values in dict.items():
 			innerOrList=[]
 			if not isinstance(values,(list,set)):
 				values=[values]
@@ -84,12 +84,12 @@ class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 	pass
 
-def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
+def getUIATextAttributeValueFromRange(rangeObj,attrib,ignoreMixedValues=False):
 	"""
 	Wraps IUIAutomationTextRange::getAttributeValue, returning UIAutomation's reservedNotSupportedValue on COMError, and raising UIAMixedAttributeError if a mixed value would be returned and ignoreMixedValues is False.
 	"""
 	try:
-		val=range.GetAttributeValue(attrib)
+		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
 	if val==UIAHandler.handler.ReservedMixedAttributeValue:
@@ -172,6 +172,23 @@ def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
 	c=CacheableUIAElementArray(c)
 	return c
 
+def isTextRangeOffscreen(textRange, visiRanges):
+	"""Given a UIA text range and a visible textRanges array (returned from obj.UIATextPattern.GetVisibleRanges), determines if the given textRange is not within the visible textRanges."""
+	visiLength = visiRanges.length
+	if visiLength > 0:
+		firstVisiRange = visiRanges.GetElement(0)
+		lastVisiRange = visiRanges.GetElement(visiLength - 1)
+		return textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_Start
+		) < 0 or textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_End) >= 0
+	else:
+		# Visible textRanges not available.
+		raise RuntimeError("Visible textRanges array is empty or invalid.")
+
+
 class UIATextRangeAttributeValueFetcher(object):
 
 	def __init__(self,textRange):
@@ -195,7 +212,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
 		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
 		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
-		self.IDsToValues={IDs[x]:values[x] for x in xrange(len(IDs))}
+		self.IDsToValues={IDs[x]:values[x] for x in range(len(IDs))}
 
 	def getValue(self,ID,ignoreMixedValues=False):
 		val=self.IDsToValues[ID]

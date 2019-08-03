@@ -1,6 +1,6 @@
 #_UIAHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright (C) 2011-2019 NV Access Limited, Joseph Lee, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ from comtypes import *
 import weakref
 import threading
 import time
+from collections import namedtuple
 import config
 import api
 import appModuleHandler
@@ -20,28 +21,15 @@ import controlTypes
 import NVDAHelper
 import winKernel
 import winUser
+import winVersion
 import eventHandler
 from logHandler import log
 import UIAUtils
-
 from comtypes.gen.UIAutomationClient import *
 
-#Some new win8 UIA constants that could be missing
-UIA_StyleIdAttributeId=40034
-UIA_AnnotationAnnotationTypeIdPropertyId=30113
-UIA_AnnotationTypesAttributeId=40031
-AnnotationType_SpellingError=60001
-UIA_AnnotationObjectsAttributeId=40032
-StyleId_Heading1=70001
-StyleId_Heading9=70009
+#Some newer UIA constants that could be missing
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
-UIA_FullDescriptionPropertyId=30159
-UIA_LevelPropertyId=30154
-UIA_PositionInSetPropertyId=30152
-UIA_SizeOfSetPropertyId=30153
-UIA_LocalizedLandmarkTypePropertyId=30158
-UIA_LandmarkTypePropertyId=30157
 
 HorizontalTextAlignment_Left=0
 HorizontalTextAlignment_Centered=1
@@ -57,23 +45,34 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
-	"SysTreeView32",
-	"WuDuiListView",
-	"ComboBox",
-	"msctls_progress32",
-	"Edit",
-	"CommonPlacesWrapperWndClass",
-	"SysMonthCal32",
-	"SUPERGRID", #Outlook 2010 message list
-	"RichEdit",
-	"RichEdit20",
-	"RICHEDIT50W",
-	"SysListView32",
-	"EXCEL7",
-	"Button",
-	# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
-	# It does not implement caret/selection, and probably has no new text events.
-	"ConsoleWindowClass",
+	# UIA events of candidate window interfere with MSAA events.
+	"Microsoft.IME.CandidateWindow.View",
+"SysTreeView32",
+"WuDuiListView",
+"ComboBox",
+"msctls_progress32",
+"Edit",
+"CommonPlacesWrapperWndClass",
+"SysMonthCal32",
+"SUPERGRID", #Outlook 2010 message list
+"RichEdit",
+"RichEdit20",
+"RICHEDIT50W",
+"SysListView32",
+"EXCEL7",
+"Button",
+# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
+"FoxitDocWnd",
+]
+
+# #8405: used to detect UIA dialogs prior to Windows 10 RS5.
+UIADialogClassNames=[
+	"#32770",
+	"NUIDialog",
+	"Credential Dialog Xaml Host", # UAC dialog in Anniversary Update and later
+	"Shell_Dialog",
+	"Shell_Flyout",
+	"Shell_SystemDialog", # Various dialogs in Windows 10 Settings app
 ]
 
 NVDAUnitsToUIAUnits={
@@ -135,11 +134,11 @@ UIAPropertyIdsToNVDAEventNames={
 	UIA_ValueValuePropertyId:"valueChange",
 	UIA_RangeValueValuePropertyId:"valueChange",
 	UIA_ControllerForPropertyId:"UIA_controllerFor",
+	UIA_ItemStatusPropertyId:"UIA_itemStatus",
 }
 
 UIAEventIdsToNVDAEventNames={
 	UIA_LiveRegionChangedEventId:"liveRegionChange",
-	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
@@ -152,6 +151,15 @@ UIAEventIdsToNVDAEventNames={
 	UIA_Window_WindowOpenedEventId:"UIA_window_windowOpen",
 	UIA_SystemAlertEventId:"UIA_systemAlert",
 }
+
+if winVersion.isWin10():
+	UIAEventIdsToNVDAEventNames[UIA_Text_TextChangedEventId] = "textChange"
+
+ignoreWinEventsMap = {
+	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
+}
+for id in UIAEventIdsToNVDAEventNames.keys():
+	ignoreWinEventsMap[id] = [0]
 
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler,IUIAutomationNotificationEventHandler]
@@ -186,14 +194,43 @@ class UIAHandler(COMObject):
 				isUIA8=True
 			except (COMError,WindowsError,NameError):
 				self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
+			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
+			pfm=self.clientObject.proxyFactoryMapping
+			for index in range(pfm.count):
+				e=pfm.getEntry(index)
+				entryChanged = False
+				for eventId, propertyIds in ignoreWinEventsMap.items():
+					for propertyId in propertyIds:
+						# Check if this proxy has mapped any winEvents to the UIA propertyChange event for this property ID 
+						try:
+							oldWinEvents=e.getWinEventsForAutomationEvent(eventId,propertyId)
+						except IndexError:
+							# comtypes does not seem to correctly handle a returned empty SAFEARRAY, raising IndexError
+							oldWinEvents=None
+						if oldWinEvents:
+							# As winEvents were mapped, replace them with an empty list
+							e.setWinEventsForAutomationEvent(eventId,propertyId,[])
+							entryChanged = True
+				if entryChanged:
+					# Changes to an entry are not automatically picked up.
+					# Therefore remove the entry and re-insert it.
+					pfm.removeEntry(index)
+					pfm.insertEntry(index,e)
 			if isUIA8:
 				# #8009: use appropriate interface based on highest supported interface.
-				for interface in (IUIAutomation5, IUIAutomation4, IUIAutomation3, IUIAutomation2):
+				# #8338: made easier by traversing interfaces supported on Windows 8 and later in reverse.
+				for interface in reversed(CUIAutomation8._com_interfaces_):
 					try:
 						self.clientObject=self.clientObject.QueryInterface(interface)
 						break
 					except COMError:
 						pass
+				# Windows 10 RS5 provides new performance features for UI Automation including event coalescing and connection recovery. 
+				# Enable all of these where available.
+				if isinstance(self.clientObject,IUIAutomation6):
+					self.clientObject.CoalesceEvents=CoalesceEventsOptions_Enabled
+					self.clientObject.ConnectionRecoveryBehavior=ConnectionRecoveryBehaviorOptions_Enabled
 			log.info("UIAutomation: %s"%self.clientObject.__class__.__mro__[1].__name__)
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
@@ -211,8 +248,9 @@ class UIAHandler(COMObject):
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
 			self.clientObject.AddFocusChangedEventHandler(self.baseCacheRequest,self)
-			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,UIAPropertyIdsToNVDAEventNames.keys())
-			for x in UIAEventIdsToNVDAEventNames.iterkeys():  
+			# Use a list of keys as AddPropertyChangedEventHandler expects a sequence.
+			self.clientObject.AddPropertyChangedEventHandler(self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self,list(UIAPropertyIdsToNVDAEventNames))
+			for x in UIAEventIdsToNVDAEventNames.keys():
 				self.clientObject.addAutomationEventHandler(x,self.rootElement,TreeScope_Subtree,self.baseCacheRequest,self)
 			# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 			if isinstance(self.clientObject, IUIAutomation5):
@@ -253,10 +291,15 @@ class UIAHandler(COMObject):
 			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
+	# The last UIAElement that received a UIA focus event
+	# This is updated no matter if this is a native element, the window is UIA blacklisted by NVDA, or  the element is proxied from MSAA 
+	lastFocusedUIAElement=None
+
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
+		self.lastFocusedUIAElement=sender
 		if not self.isNativeUIAElement(sender):
 			return
 		import NVDAObjects.UIA
@@ -305,7 +348,19 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
+		if not obj:
+			# Sometimes notification events can be fired on a UIAElement that has no windowHandle and does not connect through parents back to the desktop.
+			# There is nothing we can do with these.
+			return
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
+
+	def _isBadUIAWindowClassName(self, windowClass):
+		"Given a windowClassName, returns True if this is a known problematic UIA implementation."
+		# #7497: Windows 10 Fall Creators Update has an incomplete UIA implementation for console windows, therefore for now we should ignore it.
+		# It does not implement caret/selection, and probably has no new text events.
+		if windowClass == "ConsoleWindowClass" and config.conf['UIA']['winConsoleImplementation'] != "UIA":
+			return True
+		return windowClass in badUIAWindowClassNames
 
 	def _isUIAWindowHelper(self,hwnd):
 		# UIA in NVDA's process freezes in Windows 7 and below
@@ -323,14 +378,8 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isGoodUIAWindow(hwnd):
 			return True
 		# There are certain window classes that just had bad UIA implementations
-		if windowClass in badUIAWindowClassNames:
+		if self._isBadUIAWindowClassName(windowClass):
 			return False
-		if windowClass=="NetUIHWND":
-			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
-			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
-			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
-			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
-				return False
 		# allow the appModule for the window to also choose if this window is bad
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			return False
@@ -338,8 +387,18 @@ class UIAHandler(COMObject):
 		res=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 		if res:
 			# the window does support UIA natively, but
-			# Microsoft Word should not use UIA unless we can't inject or the user explicitly chose to use UIA with Microsoft word
-			if windowClass=="_WwG" and not (config.conf['UIA']['useInMSWordWhenAvailable'] or not appModule.helperLocalBindingHandle):
+			# MS Word documents now have a fairly usable UI Automation implementation. However,
+			# Builds of MS Office 2016 before build 9000 or so had bugs which we cannot work around.
+			# And even current builds of Office 2016 are still missing enough info from UIA that it is still impossible to switch to UIA completely.
+			# Therefore, if we can inject in-process, refuse to use UIA and instead fall back to the MS Word object model.
+			if (
+				# An MS Word document window 
+				windowClass=="_WwG" 
+				# Disabling is only useful if we can inject in-process (and use our older code)
+				and appModule.helperLocalBindingHandle 
+				# Allow the user to explisitly force UIA support for MS Word documents no matter the Office version 
+				and not config.conf['UIA']['useInMSWordWhenAvailable']
+			):
 				return False
 		return bool(res)
 

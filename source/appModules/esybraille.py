@@ -8,4 +8,4 @@
 This imports the esysuite appModule,
 """
 
-from esysuite import *
+from .esysuite import *

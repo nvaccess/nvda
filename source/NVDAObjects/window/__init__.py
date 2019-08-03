@@ -1,6 +1,6 @@
 #NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,11 +12,13 @@ import winUser
 from logHandler import log
 import controlTypes
 import api
+import config
 import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, LiveText
 import watchdog
+from locationHelper import RectLTWH
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -122,8 +124,6 @@ An NVDAObject for a window
 			from .scintilla import Scintilla as newCls
 		elif windowClassName in ("AkelEditW", "AkelEditA"):
 			from .akelEdit import AkelEdit as newCls
-		elif windowClassName=="ConsoleWindowClass":
-			from .winConsole import WinConsole as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:
@@ -192,7 +192,7 @@ An NVDAObject for a window
 	def _get_location(self):
 		r=ctypes.wintypes.RECT()
 		ctypes.windll.user32.GetWindowRect(self.windowHandle,ctypes.byref(r))
-		return (r.left,r.top,r.right-r.left,r.bottom-r.top)
+		return RectLTWH.fromCompatibleType(r)
 
 	def _get_displayText(self):
 		"""The text at this object's location according to the display model for this object's window."""
@@ -286,6 +286,9 @@ An NVDAObject for a window
 	def _get_windowStyle(self):
 		return winUser.getWindowStyle(self.windowHandle)
 
+	def _get_extendedWindowStyle(self):
+		return winUser.getExtendedWindowStyle(self.windowHandle)
+
 	def _get_isWindowUnicode(self):
 		if not hasattr(self,'_isWindowUnicode'):
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
@@ -356,6 +359,11 @@ An NVDAObject for a window
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("windowStyle: %s" % ret)
+		try:
+			ret = repr(self.extendedWindowStyle)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("extendedWindowStyle: %s" % ret)
 		try:
 			ret = repr(self.windowThreadID)
 		except Exception as e:

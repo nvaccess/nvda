@@ -44,6 +44,7 @@ class myDialog(class wx.Dialog):
 """
 import wx
 from wx.lib import scrolledpanel
+from abc import ABCMeta
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS=10
@@ -102,7 +103,7 @@ def associateElements( firstElement, secondElement):
 	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 		pairings used in the NVDA GUI.
 		Currently handles:
-			wx.StaticText and (wx.Choice, wx.TextCtrl or wx.Button) - Horizontal layout
+			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider or wx.Button) - Horizontal layout
 			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
 			wx.Button and wx.CheckBox - Horizontal layout
 			wx.TextCtrl and wx.Button - Horizontal layout
@@ -113,7 +114,10 @@ def associateElements( firstElement, secondElement):
 		raise NotImplementedError("AssociateElements as no implementation for LabeledControlHelper elements")
 
 	# staticText and (choice, textCtrl or button)
-	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.Choice, wx.TextCtrl, wx.SpinCtrl, wx.Button)):
+	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (
+		wx.Choice, wx.TextCtrl,
+		wx.SpinCtrl, wx.Button, wx.Slider
+	)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
@@ -151,6 +155,7 @@ class LabeledControlHelper(object):
 			@param labelText: The text to associate with a wx control.
 			@type labelText: string
 			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+			@type wxCtrlClass: class
 			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 		object.__init__(self)
@@ -300,4 +305,8 @@ class BoxSizerHelper(object):
 		self.addItem(toAdd, flag=wx.ALIGN_RIGHT)
 		self.dialogDismissButtonsAdded = True
 		return buttons
+
+class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
+	"""Meta class to be used for wx subclasses with abstract methods."""
+	pass
 

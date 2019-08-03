@@ -1,6 +1,6 @@
 #hwPortUtils.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2001-2016 Chris Liechti, NV Access Limited
+#Copyright (C) 2001-2018 Chris Liechti, NV Access Limited, Babbage B.V.
 # Based on serial scanner code by Chris Liechti from https://raw.githubusercontent.com/pyserial/pyserial/81167536e796cc2e13aa16abd17a14634dc3aed1/pyserial/examples/scanwin32.py
 
 """Utilities for working with hardware connection ports.
@@ -9,7 +9,7 @@
 import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD, USHORT
-import _winreg as winreg
+import winreg
 import winKernel
 from winKernel import SYSTEMTIME
 import config
@@ -36,12 +36,12 @@ class GUID(ctypes.Structure):
 		('Data4', ctypes.c_ubyte*8),
 	)
 	def __str__(self):
-		return "{%08x-%04x-%04x-%s-%s}" % (
+		return u"{%08x-%04x-%04x-%s-%s}" % (
 			self.Data1,
 			self.Data2,
 			self.Data3,
-			''.join(["%02x" % d for d in self.Data4[:2]]),
-			''.join(["%02x" % d for d in self.Data4[2:]]),
+			u''.join([u"%02x" % d for d in self.Data4[:2]]),
+			u''.join([u"%02x" % d for d in self.Data4[2:]]),
 		)
 
 class SP_DEVINFO_DATA(ctypes.Structure):
@@ -70,7 +70,7 @@ PSP_DEVICE_INTERFACE_DATA = ctypes.POINTER(SP_DEVICE_INTERFACE_DATA)
 PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
 
 class dummy(ctypes.Structure):
-	_fields_=(("d1", DWORD), ("d2", WCHAR))
+	_fields_=((u"d1", DWORD), (u"d2", WCHAR))
 	_pack_ = 1
 SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W = ctypes.sizeof(dummy)
 
@@ -94,7 +94,17 @@ SetupDiGetDeviceRegistryProperty = ctypes.windll.setupapi.SetupDiGetDeviceRegist
 SetupDiGetDeviceRegistryProperty.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, PDWORD, ctypes.c_void_p, DWORD, PDWORD)
 SetupDiGetDeviceRegistryProperty.restype = BOOL
 
-GUID_CLASS_COMPORT = GUID(0x86e0d1e0L, 0x8089, 0x11d0,
+SetupDiEnumDeviceInfo = ctypes.windll.setupapi.SetupDiEnumDeviceInfo
+SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
+SetupDiEnumDeviceInfo.restype = BOOL
+
+CM_Get_Device_ID = ctypes.windll.cfgmgr32.CM_Get_Device_IDW
+CM_Get_Device_ID.argtypes = (DWORD, ctypes.c_wchar_p, ULONG, ULONG)
+CM_Get_Device_ID.restype = DWORD
+CR_SUCCESS = 0
+MAX_DEVICE_ID_LEN = 200
+
+GUID_CLASS_COMPORT = GUID(0x86e0d1e0, 0x8089, 0x11d0,
 	(ctypes.c_ubyte*8)(0x9c, 0xe4, 0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73))
 GUID_DEVINTERFACE_USB_DEVICE = GUID(0xA5DCBF10, 0x6530, 0x11D2,
 	(0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED))
@@ -117,7 +127,7 @@ def listComPorts(onlyAvailable=True):
 	"""List com ports on the system.
 	@param onlyAvailable: Only return ports that are currently available.
 	@type onlyAvailable: bool
-	@return: Generates dicts including keys of port, friendlyName and hardwareID.
+	@return: Dicts including keys of port, friendlyName and hardwareID.
 	@rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
@@ -127,7 +137,7 @@ def listComPorts(onlyAvailable=True):
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(ctypes.byref(GUID_CLASS_COMPORT), None, NULL, flags)
 	try:
-		for dwIndex in xrange(256):
+		for dwIndex in range(256):
 			entry = {}
 			did = SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
@@ -221,6 +231,11 @@ def listComPorts(onlyAvailable=True):
 						entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
 					except:
 						pass
+				elif "USB" in hwID or "FTDIBUS" in hwID:
+					usbIDStart = hwID.find("VID_")
+					if usbIDStart==-1:
+						continue
+					usbID = entry['usbID'] = hwID[usbIDStart:usbIDStart+17] # VID_xxxx&PID_xxxx
 			finally:
 				ctypes.windll.advapi32.RegCloseKey(regKey)
 
@@ -322,8 +337,8 @@ def listUsbDevices(onlyAvailable=True):
 	"""List USB devices on the system.
 	@param onlyAvailable: Only return devices that are currently available.
 	@type onlyAvailable: bool
-	@return: The USB vendor and product IDs in the form "VID_xxxx&PID_xxxx"
-	@rtype: generator of unicode
+	@return: Generates dicts including keys of usbID (VID and PID), devicePath and hardwareID.
+	@rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
@@ -332,7 +347,7 @@ def listUsbDevices(onlyAvailable=True):
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(GUID_DEVINTERFACE_USB_DEVICE, None, NULL, flags)
 	try:
-		for dwIndex in xrange(256):
+		for dwIndex in range(256):
 			did = SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
 
@@ -393,9 +408,13 @@ def listUsbDevices(onlyAvailable=True):
 			else:
 				# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
 				usbId = buf.value[4:21] # VID_xxxx&PID_xxxx
+				info = {
+					"hardwareID": buf.value,
+					"usbID": usbId,
+					"devicePath": idd.DevicePath}
 				if _isDebug():
 					log.debug("%r" % usbId)
-				yield usbId
+				yield info
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
 	if _isDebug():
@@ -475,7 +494,7 @@ def listHidDevices(onlyAvailable=True):
 	buf = ctypes.create_unicode_buffer(1024)
 	g_hdi = SetupDiGetClassDevs(_hidGuid, None, NULL, flags)
 	try:
-		for dwIndex in xrange(256):
+		for dwIndex in range(256):
 			did = SP_DEVICE_INTERFACE_DATA()
 			did.cbSize = ctypes.sizeof(did)
 

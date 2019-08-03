@@ -13,7 +13,7 @@ from NVDAObjects.window import Window
 import winUser
 from NVDAObjects.IAccessible.sysListView32 import ListItem
 import displayModel
-import textInfos
+import locationHelper
 
 class TweetListItem(ListItem):
 
@@ -41,7 +41,7 @@ class TweetListItem(ListItem):
 			# so use display model.
 			left, top, width, height = self._getColumnLocationRaw(index)
 			content = displayModel.DisplayModelTextInfo(self,
-				textInfos.Rect(left, top, left + width, top + height)).text
+				locationHelper.RectLTRB(left, top, left + width, top + height)).text
 			if content:
 				return content
 		return super(TweetListItem, self)._getColumnContentRaw(index)

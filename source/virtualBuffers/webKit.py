@@ -9,6 +9,7 @@ from . import VirtualBuffer, VirtualBufferTextInfo, VBufRemote_nodeHandle_t
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
+import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
@@ -32,7 +33,7 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		if not role:
 			role = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole, controlTypes.ROLE_UNKNOWN)
 
-		states = set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1 << y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s' % x, 0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states = set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1 << y for y in range(32)] if int(attrs.get('IAccessible::state_%s' % x, 0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
 		attrs["role"] = role
 		attrs["states"] = states
@@ -116,12 +117,10 @@ class WebKit(VirtualBuffer):
 		if not l:
 			log.debugWarning("no location for field")
 			return
-		x=(l[0]+l[2]/2)
-		y=l[1]+(l[3]/2) 
 		oldX,oldY=winUser.getCursorPos()
-		winUser.setCursorPos(x,y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		winUser.setCursorPos(*l.center)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)
 
 	def _shouldSetFocusToObj(self,obj):
