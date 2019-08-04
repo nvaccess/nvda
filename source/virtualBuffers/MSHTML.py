@@ -57,7 +57,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if placeholder:
 			attrs['placeholder']=placeholder
 		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
+		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		#choose role
@@ -70,7 +70,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		roleText=attrs.get('HTMLAttrib::aria-roledescription')
 		if roleText:
 			attrs['roleText']=roleText
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.STATE_HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
