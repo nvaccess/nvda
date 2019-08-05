@@ -1713,6 +1713,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				raise RuntimeError("BrailleViewer and physical display sizes must match")
 			self.displaySize = self.viewerTool.numCells
 			self.enabled = True
+			self._updateDisplay()
 		log.debug("Braille Viewer enabled: {}".format(self.enabled))
 
 	def _updateDisplay(self):

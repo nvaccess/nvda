@@ -44,6 +44,7 @@ def destroyBrailleViewerTool():
 		return
 	d = _display
 	_display = None
+	d.savePositionInformation()
 	try:
 		d.terminate()
 	except:  # noqa: E722 # Bare except
@@ -60,7 +61,10 @@ def createBrailleViewerTool():
 	if not braille.handler:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
-	cells = DEFAULT_NUM_CELLS if not braille.handler.displaySize else braille.handler.displaySize
+	cells = DEFAULT_NUM_CELLS
+	if braille.handler.displaySize:
+		cells = braille.handler.displaySize
+
 	global _display
 	if _display:
 		d = _display
@@ -122,7 +126,7 @@ class BrailleViewerFrame(wx.Frame):
 
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
-		self.Show()
+		self.ShowWithoutActivating()
 
 	def onShouldShowOnStartupChanged(self, evt):
 		config.conf["brailleViewer"]["showBrailleViewerAtStartup"] = self.shouldShowOnStartupCheckBox.IsChecked()
@@ -139,6 +143,8 @@ class BrailleViewerFrame(wx.Frame):
 		return lengthsMatch and allSizesMatch
 
 	def updateValues(self, braille, text):
+		if self.HasFocus() or self.IsActive():
+			return
 		brailleEqual = self.lastBraille == braille
 		textEqual = self.lastText == text
 		if brailleEqual and textEqual:
@@ -180,6 +186,7 @@ class BrailleViewerFrame(wx.Frame):
 
 	def onClose(self, evt):
 		log.debug("braille viewer gui onClose")
+		self.savePositionInformation()
 		if not evt.CanVeto():
 			self.Destroy()
 			return
@@ -187,7 +194,6 @@ class BrailleViewerFrame(wx.Frame):
 
 	def onDestroy(self, evt):
 		log.debug("braille viewer gui destroyed")
-		self.savePositionInformation()
 		self._notifyOfDestroyed()
 		evt.Skip()
 
@@ -233,6 +239,10 @@ class BrailleViewerDriver(BrailleDisplayDriver):
 			for cell in brailleUnicodeChars
 		)
 		self._brailleGui.updateValues(u"".join(spaceReplaced), self.rawText)
+
+	def saveSettings(self):
+		# prevent base class driverHandler.saveSettings from running
+		pass
 
 	def terminate(self):
 		super(BrailleViewerDriver, self).terminate()

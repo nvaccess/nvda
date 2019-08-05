@@ -38,7 +38,7 @@ class SpeechViewerFrame(wx.Frame):
 		# set the check box as having focus, by default the textCtrl has focus which stops the speechviewer output (even if another window is in focus)
 		self.shouldShowOnStartupCheckBox.SetFocus()
 		self.SetSizer(sizer)
-		self.Show(True)
+		self.ShowWithoutActivating()
 
 	def onClose(self, evt):
 		if not evt.CanVeto():
