@@ -153,14 +153,20 @@ class consoleUIATextInfo(UIATextInfo):
 		else:
 			return super(consoleUIATextInfo, self).expand(unit)
 
-	def _get_isCollapsed(self):
+	def compareEndPoints(self, other, which):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
-		# Therefore to decide if the textRange is collapsed,
-		# Check if it has no text.
-		return not bool(self._rangeObj.getText(1))
+		# To work around this, compare to the start, not the end,
+		# when collapsed.
+		src, target = which.split("To")
+		if src == "end" and not self._rangeObj.GetText(1):
+			src = "Start"
+		if target == "End" and not other._rangeObj.GetText(1):
+			target = "Start"
+		which = f"{src}To{target}"
+		return super().compareEndPoints(other, which)
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
 		"""
