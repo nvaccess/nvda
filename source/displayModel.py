@@ -22,6 +22,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
+from typing import Dict, List, Union
 
 COLOR_HIGHLIGHT = 13
 COLOR_HIGHLIGHTTEXT = 14
@@ -235,21 +236,24 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		self.foregroundSelectionColor = colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(COLOR_HIGHLIGHTTEXT))
 		return self.foregroundSelectionColor
 
-	def _get_selectionCondition(self):
+	def _get_selectionCondition(self) -> List[Dict[str, Union[bool, List]]]:
 		"""The search condition for selections.
 
 		It is applied to a L{textInfos.FieldCommand} when searching for selected or highlighted text.
 		A condition is a list with dicts whose keys are control field attributes,
-		and whose values are a list of possible values for the attribute.
+		and whose values are either:
+			* A list of possible values for the attribute.
+			* A boolean value, indicating that the condition for the key matches
+			if the key is or is not in the field with whatever value.
 		The dicts are joined with 'or', the keys in each dict are joined with 'and',
 		and the values  for each key are joined with 'or'.
 		It is evaluated using L{textInfos.Field.evaluateCondition}.
 		"""
-		condition = dict()
+		defaultCondition = dict()
 		if self.backgroundSelectionColor is not None and self.foregroundSelectionColor is not None:
-			condition['color'] = [self.foregroundSelectionColor]
-			condition['background-color'] = [self.backgroundSelectionColor]
-		return condition
+			defaultCondition['color'] = [self.foregroundSelectionColor]
+			defaultCondition['background-color'] = [self.backgroundSelectionColor]
+		return [defaultCondition]
 
 	def _getSelectionOffsets(self):
 		condition = self.selectionCondition
