@@ -182,8 +182,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if(self._dev!=None):
 			data = brl_poll(self._dev)
 			if len(data) == 10 and data[1] == ord(b'K'):
-				pos = data[2] * 256 + data[3]
-				pos = (pos-768)/3
+				pos = (data[2] << 8) + data[3]
+				pos = (pos-768) // 3
 				pressed = data[6]
 				keys = data[8]
 				self._repeatcount = 0
