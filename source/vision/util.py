@@ -62,8 +62,8 @@ def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 
 
 def getContextRect(
-	context: Context,
-	obj: Optional[TextContainerObject] = None
+		context: Context,
+		obj: Optional[TextContainerObject] = None
 ) -> Optional[locationHelper.RectLTRB]:
 	"""Gets a rectangle for the specified context."""
 	if context == Context.FOCUS:

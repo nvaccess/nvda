@@ -182,10 +182,10 @@ def getReviewPosition():
 
 
 def setReviewPosition(
-	reviewPosition,
-	clearNavigatorObject=True,
-	isCaret=False,
-	isMouse=False
+		reviewPosition,
+		clearNavigatorObject=True,
+		isCaret=False,
+		isMouse=False
 ):
 	"""Sets a TextInfo instance as the review position.
 	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.

@@ -675,7 +675,8 @@ def SendInput(inputs):
 
 
 class PAINTSTRUCT(Structure):
-	_fields_ = [('hdc', c_int),
+	_fields_ = [
+		('hdc', c_int),
 		('fErase', c_int),
 		('rcPaint', RECT),
 		('fRestore', c_int),

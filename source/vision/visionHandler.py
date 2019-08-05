@@ -25,8 +25,8 @@ from typing import Type, Dict, List
 
 
 def getProviderClass(
-	moduleName: str,
-	caseSensitive: bool = True
+		moduleName: str,
+		caseSensitive: bool = True
 ) -> Type[VisionEnhancementProvider]:
 	"""Returns a registered provider class with the specified moduleName."""
 	try:

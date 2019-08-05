@@ -29,7 +29,7 @@ import driverHandler
 
 
 class HighlightStyle(
-	namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
+		namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
 ):
 	"""Represents the style of a highlight for a particular context.
 	@ivar color: The color to use for the style

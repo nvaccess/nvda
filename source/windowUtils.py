@@ -160,11 +160,11 @@ class CustomWindow(AutoPropertyObject):
 	_hwndsToInstances = weakref.WeakValueDictionary()
 
 	def __init__(
-		self,
-		windowName=None,
-		windowStyle=0,
-		extendedWindowStyle=0,
-		parent=None
+			self,
+			windowName=None,
+			windowStyle=0,
+			extendedWindowStyle=0,
+			parent=None
 	):
 		"""Constructor.
 		@param windowName: The name of the window.

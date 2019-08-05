@@ -39,7 +39,7 @@ def terminate():
 
 
 def getProviderList(
-	onlyStartable: bool = True
+		onlyStartable: bool = True
 ) -> List[Tuple[str, str, List[Role]]]:
 	"""Gets a list of available vision enhancement names with their descriptions as well as supported roles.
 	@param onlyStartable: excludes all providers for which the check method returns C{False}.
