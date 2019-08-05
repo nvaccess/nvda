@@ -672,7 +672,7 @@ class Excel7Window(ExcelBase):
 
 	def _get_focusRedirect(self):
 		selection=self._getSelection()
-		dropdown=self._getDropdown(selection=selection)
+		dropdown = self._getDropdown(selection=selection)
 		if dropdown:
 			return dropdown
 		if selection:

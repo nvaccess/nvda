@@ -1,8 +1,8 @@
-#tests/unit/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# tests/unit/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -16,6 +16,8 @@ Methods in test classes should have a C{test_} prefix.
 
 import os
 import sys
+import wx
+import vision
 
 import locale
 import gettext
@@ -32,8 +34,6 @@ SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
 import sourceEnv
-
-import wx
 
 # Set options normally taken from the command line.
 import globalVars
@@ -75,7 +75,6 @@ appModuleHandler.initialize()
 # Vision needs a wx app to be available.
 app = wx.App()
 # Anything which notifies of cursor updates requires braille and vision to be initialized.
-import vision
 vision.initialize()
 
 import braille

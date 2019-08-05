@@ -8,7 +8,9 @@
 
 import contextlib
 from ctypes import *
+from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
+from ctypes.wintypes import HWND, RECT, DWORD
 import winKernel
 from textUtils import WCHAR_ENCODING
 
@@ -51,15 +53,15 @@ class NMHdrStruct(Structure):
 
 class GUITHREADINFO(Structure):
 	_fields_=[
-		('cbSize',DWORD),
-		('flags',DWORD),
-		('hwndActive',HWND),
-		('hwndFocus',HWND),
-		('hwndCapture',HWND),
-		('hwndMenuOwner',HWND),
-		('hwndMoveSize',HWND),
-		('hwndCaret',HWND),
-		('rcCaret',RECT),
+		('cbSize', DWORD),
+		('flags', DWORD),
+		('hwndActive', HWND),
+		('hwndFocus', HWND),
+		('hwndCapture', HWND),
+		('hwndMenuOwner', HWND),
+		('hwndMoveSize', HWND),
+		('hwndCaret', HWND),
+		('rcCaret', RECT),
 	]
 
 #constants
@@ -133,10 +135,10 @@ GW_OWNER=4
 LWA_ALPHA = 2
 LWA_COLORKEY = 1
 #Window messages
-WM_NULL=0
-WM_COPYDATA=74
-WM_NOTIFY=78
-WM_USER=1024
+WM_NULL = 0
+WM_COPYDATA = 74
+WM_NOTIFY = 78
+WM_USER = 1024
 WM_QUIT = 18
 WM_DISPLAYCHANGE = 0x7e
 WM_GETTEXT=13
@@ -544,11 +546,14 @@ def getWindowStyle(hwnd):
 def getExtendedWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_EXSTYLE)
 
+
 def setExtendedWindowStyle(hwnd, exstyle):
-	return user32.SetWindowLongW(hwnd,GWL_EXSTYLE, exstyle)
+	return user32.SetWindowLongW(hwnd, GWL_EXSTYLE, exstyle)
+
 
 def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
 	return user32.SetLayeredWindowAttributes(hwnd, key, alpha, flags)
+
 
 def getPreviousWindow(hwnd):
 	try:

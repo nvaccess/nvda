@@ -67,7 +67,7 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 	def toCOLORREF(self) -> COLORREF:
 		"""Returns a COLORREF ctypes instance
 		"""
-		return COLORREF(self.red&0xff | ((self.green&0xff) << 8) | ((self.blue&0xff) << 16))
+		return COLORREF(self.red & 0xff | ((self.green & 0xff) << 8) | ((self.blue & 0xff) << 16))
 
 	def toGDIPlusARGB(self, alpha: int = 255) -> int:
 		"""Creates a GDI+ compatible ARGB color, using the specified alpha for the alpha component.
@@ -76,7 +76,7 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 			Defaults to 255 (opaque).
 		@type alpha: int
 		"""
-		return (alpha<<24) | (self.red<<16) | (self.green<<8) | self.blue
+		return (alpha << 24) | (self.red << 16) | (self.green << 8) | self.blue
 
 	@property
 	def name(self):

@@ -162,7 +162,7 @@ class VisionHandler(AutoPropertyObject):
 		self.providers[providerName] = providerInst
 		try:
 			self.initialFocus()
-		except:
+		except Exception:
 			# #8877: initialFocus might fail because NVDA tries to focus
 			# an object for which property fetching raises an exception.
 			# We should handle this more gracefully, since this is no reason
@@ -207,7 +207,7 @@ class VisionHandler(AutoPropertyObject):
 		configuredProviders = set(config.conf['vision']['providers'])
 		curProviders = set(self.providers)
 		rovidersToInitialize = configuredProviders - curProviders
-		providersToTerminate =  curProviders - configuredProviders
+		providersToTerminate = curProviders - configuredProviders
 		for provider in providersToTerminate:
 			self.terminateProvider(provider)
 		for provider in rovidersToInitialize:

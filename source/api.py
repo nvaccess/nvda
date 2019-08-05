@@ -180,7 +180,13 @@ def getReviewPosition():
 		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition,clearNavigatorObject=True,isCaret=False,isMouse=False):
+
+def setReviewPosition(
+	reviewPosition,
+	clearNavigatorObject=True,
+	isCaret=False,
+	isMouse=False
+):
 	"""Sets a TextInfo instance as the review position.
 	@param clearNavigatorObject: if  true, It sets the current navigator object to C{None}.
 		In that case, the next time the navigator object is asked for it fetches it from the review position.
@@ -357,21 +363,25 @@ def filterFileName(name):
 		name=name.replace(c,'_')
 	return name
 
+
 def isNVDAObject(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{NVDAObjects.NVDAObject}"""
 	return isinstance(obj, NVDAObjects.NVDAObject)
+
 
 def isCursorManager(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{cursorManager.CursorManager}"""
 	return isinstance(obj, cursorManager.CursorManager)
 
+
 def isTreeInterceptor(obj: Any) -> bool:
 	"""Returns whether the supplied object is a L{treeInterceptorHandler.TreeInterceptor}"""
 	return isinstance(obj, treeInterceptorHandler.TreeInterceptor)
 
+
 def isObjectInActiveTreeInterceptor(obj: NVDAObjects.NVDAObject) -> bool:
-	"""
-	Returns whether the supplied L{NVDAObjects.NVDAObject} is in an active L{treeInterceptorHandler.TreeInterceptor},
+	"""Returns whether the supplied L{NVDAObjects.NVDAObject} is
+	in an active L{treeInterceptorHandler.TreeInterceptor},
 	i.e. a tree interceptor that is not in pass through mode.
 	"""
 	return bool(
@@ -379,6 +389,7 @@ def isObjectInActiveTreeInterceptor(obj: NVDAObjects.NVDAObject) -> bool:
 		and obj.treeInterceptor
 		and not obj.treeInterceptor.passThrough
 	)
+
 
 def getCaretObject():
 	"""Gets the object which contains the caret.

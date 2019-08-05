@@ -12,8 +12,7 @@ import weakref
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT
 from logHandler import log
-from six import with_metaclass
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import abstractmethod
 from baseObject import AutoPropertyObject
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
@@ -132,7 +131,9 @@ def getWindowScalingFactor(window):
 
 
 appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
-class CustomWindow(with_metaclass(ABCMeta, AutoPropertyObject)):
+
+
+class CustomWindow(AutoPropertyObject):
 	"""Base class to enable simple implementation of custom windows.
 	Subclasses need only set L{className} and implement L{windowProc}.
 	Simply create an instance to create the window.
@@ -144,15 +145,15 @@ class CustomWindow(with_metaclass(ABCMeta, AutoPropertyObject)):
 	def _get__wClass(cls):
 		return WNDCLASSEXW(
 			cbSize=ctypes.sizeof(WNDCLASSEXW),
-			lpfnWndProc = cls._rawWindowProc,
-			hInstance = appInstance,
-			lpszClassName = cls.className,
+			lpfnWndProc=cls._rawWindowProc,
+			hInstance=appInstance,
+			lpszClassName=cls.className,
 		)
 
 	@classmethod
 	def _get_className(cls):
 		"""The class name of this window.
-		@rtype: unicode
+		@rtype: str
 		"""
 		return None
 
@@ -167,7 +168,7 @@ class CustomWindow(with_metaclass(ABCMeta, AutoPropertyObject)):
 	):
 		"""Constructor.
 		@param windowName: The name of the window.
-		@type windowName: unicode
+		@type windowName: str
 		@param windowStyle: The style of the window.
 			This is a combination of the C{winUser.WS_*} constants.
 		@type windowStyle: int

@@ -176,7 +176,7 @@ def resetConfiguration(factoryDefaults=False):
 	brailleInput.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
-	#Vision
+	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
 	log.debug("Reloading user and locale input gesture maps")

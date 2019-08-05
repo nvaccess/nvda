@@ -196,7 +196,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
 		Context.BROWSEMODE: SOLID_YELLOW,
-		}
+	}
 	refreshInterval = 100
 	customWindowClass = HighlightWindow
 
@@ -215,7 +215,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		# Translators: shown for a highlighter setting that toggles
 		# highlighting the navigator object.
 		Context.NAVIGATOR: _("Highlight navigator &object"),
-		}
+	}
 
 	@classmethod
 	def _get_supportedSettings(cls):
