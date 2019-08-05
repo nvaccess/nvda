@@ -787,7 +787,7 @@ def speakTextInfo(
 	priority=None
 ):
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
-	processWhiteSPace: bool = _whiteSpaceReachedCallback is not None
+	processWhiteSpace: bool = _whiteSpaceReachedCallback is not None
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
