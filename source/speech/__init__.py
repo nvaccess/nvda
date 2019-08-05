@@ -1034,7 +1034,7 @@ def speakTextInfo(
 	)
 	if notBlank:
 		isTextBlank=False
-		if not processWhiteSPace:
+		if not processWhiteSpace:
 			speechSequence.extend(relativeSpeechSequence)
 		else:
 			# Add appropriate white space bookmarks
