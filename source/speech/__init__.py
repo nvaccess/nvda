@@ -722,10 +722,14 @@ def speakTypedCharacters(ch):
 	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
 		speakSpelling(realChar)
 
+
 def speakPreviousWord(wordSeparator):
-	word = bufferedWord = "".join(curWordChars)
+	word = "".join(curWordChars)
 	typingIsProtected = api.isTypingProtected()
-	reportSpellingError = config.conf["documentFormatting"]["reportSpellingErrors"] and config.conf["keyboard"]["alertForSpellingErrors"]
+	reportSpellingError = (
+		config.conf["documentFormatting"]["reportSpellingErrors"]
+		and config.conf["keyboard"]["alertForSpellingErrors"]
+	)
 	if not (log.isEnabledFor(log.IO) or (
 		config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected
 	) or reportSpellingError):
@@ -733,36 +737,41 @@ def speakPreviousWord(wordSeparator):
 		return
 	try:
 		obj = api.getCaretObject()
-	except:
+	except Exception:
 		# No caret object, nothing to report
 		return
 	# The caret object can be an NVDAObject or a TreeInterceptor.
 	# Editable caret cases inherrit from EditableText.
 	from editableText import EditableText
-	if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj,"states",()):
+	if not isinstance(obj, EditableText) or controlTypes.STATE_READONLY in getattr(obj, "states", set()):
 		clearTypedWordBuffer()
 		return
 	wordFound, wordInfo = obj.hasNewWordBeenTyped(wordSeparator)
 	if wordFound is False:
 		curWordChars.append(wordSeparator)
-		return 
+		return
 	speakUsingTextInfo = wordFound is True
 	if speakUsingTextInfo:
 		word = wordInfo.text
 	clearTypedWordBuffer()
 	if log.isEnabledFor(log.IO):
-		log.io("typed word: %s"%word)
+		log.io(f"typed word: {word}")
 	if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 		speakText(word)
 		if speakUsingTextInfo and reportSpellingError:
 			for command in wordInfo.getTextWithFields():
-				if isinstance(command, textInfos.FieldCommand) and command.command == "formatChange" and command.field.get("invalid-spelling"):
+				if (
+					isinstance(command, textInfos.FieldCommand)
+					and command.command == "formatChange"
+					and command.field.get("invalid-spelling")
+				):
 					break
 			else:
 				# No error.
 				return
 			import nvwave
 			nvwave.playWaveFile(r"waves\textError.wav")
+
 
 class SpeakTextInfoState(object):
 	"""Caches the state of speakTextInfo such as the current controlField stack, current formatfield and indentation."""

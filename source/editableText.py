@@ -1,8 +1,8 @@
-#editableText.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
+# editableText.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Davy Kager
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -24,7 +24,6 @@ import textInfos
 import controlTypes
 from logHandler import log
 from typing import Tuple, Optional
-import queueHandler
 
 class EditableText(TextContainerObject,ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.

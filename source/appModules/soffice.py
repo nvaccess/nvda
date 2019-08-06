@@ -1,8 +1,8 @@
-#appModules/soffice.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited, Bill Dengler, Babbage B.V.
+# appModules/soffice.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Bill Dengler, Babbage B.V.
 
 from comtypes import COMError
 import IAccessibleHandler
@@ -78,7 +78,7 @@ class JAB_OOTableCell(JAB):
 			return 0
 
 class SymphonyTextInfo(IA2TextTextInfo):
-	useUniscribe=False
+	useUniscribe = False
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		obj = self.obj

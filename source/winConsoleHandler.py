@@ -165,7 +165,7 @@ def terminate():
 		disconnectConsole()
 
 class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
-	useUniscribe=False
+	useUniscribe = False
 
 	_cache_consoleScreenBufferInfo=True
 	def _get_consoleScreenBufferInfo(self):

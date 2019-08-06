@@ -1,7 +1,8 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2017 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# documentBase.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from baseObject import AutoPropertyObject, ScriptableObject
 from scriptHandler import isScriptWaiting
@@ -32,7 +33,7 @@ class TextContainerObject(AutoPropertyObject):
 	def _get_caret(self):
 		return self.makeTextInfo(textInfos.POSITION_CARET)
 
-	def _set_caret(self,info):
+	def _set_caret(self, info):
 		info.updateCaret()
 
 class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
