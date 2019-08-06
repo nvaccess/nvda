@@ -14,7 +14,7 @@ import sayAllHandler
 import api
 import review
 from baseObject import ScriptableObject
-from documentBase import TextContainerObject
+from selectableText import SelectableText
 import braille
 import speech
 import config
@@ -24,18 +24,11 @@ import textInfos
 import controlTypes
 from logHandler import log
 
-class EditableText(TextContainerObject,ScriptableObject):
+class EditableText(SelectableText,ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle the selection change keys.
 	To have selection changes reported, the object must notify of selection changes.
 	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
-	
-	If the object notifies of selection changes, the following should be done:
-		* When the object gains focus, L{initAutoSelectDetection} must be called.
-		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
-		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
-	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
-	@type hasContentChangedSinceLastSelection: bool
 	"""
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
@@ -304,43 +297,6 @@ class EditableText(TextContainerObject,ScriptableObject):
 		"kb:backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
-
-	def initAutoSelectDetection(self):
-		"""Initialise automatic detection of selection changes.
-		This should be called when the object gains focus.
-		"""
-		try:
-			self._lastSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			self._lastSelectionPos=None
-		self.isTextSelectionAnchoredAtStart=True
-		self.hasContentChangedSinceLastSelection=False
-
-	def detectPossibleSelectionChange(self):
-		"""Detects if the selection has been changed, and if so it speaks the change.
-		"""
-		try:
-			newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
-			# Just leave the old selection, which is usually better than nothing.
-			return
-		oldInfo=getattr(self,'_lastSelectionPos',None)
-		self._lastSelectionPos=newInfo.copy()
-		if not oldInfo:
-			# There's nothing we can do, but at least the last selection will be right next time.
-			self.isTextSelectionAnchoredAtStart=True
-			return
-		self._updateSelectionAnchor(oldInfo,newInfo)
-		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
-		self.hasContentChangedSinceLastSelection=False
-		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
-
-	def _updateSelectionAnchor(self,oldInfo,newInfo):
-		# Only update the value if the selection changed.
-		if newInfo.compareEndPoints(oldInfo,"startToStart")!=0:
-			self.isTextSelectionAnchoredAtStart=False
-		elif newInfo.compareEndPoints(oldInfo,"endToEnd")!=0:
-			self.isTextSelectionAnchoredAtStart=True
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.
