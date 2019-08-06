@@ -31,9 +31,12 @@ TOP_DIR = os.path.dirname(os.path.dirname(UNIT_DIR))
 SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
+# Suppress Flake8 warning F401 (module imported but unused)
+# as this module is imported to expand the system path.
 import sourceEnv  # noqa: F401
 
-import wx  # noqa: F402
+# Suppress Flake8 warning E402 (Module level import not at top of file)
+import wx  # noqa: E402
 
 # Set options normally taken from the command line.
 import globalVars
@@ -75,7 +78,8 @@ appModuleHandler.initialize()
 # Vision needs a wx app to be available.
 app = wx.App()
 # Anything which notifies of cursor updates requires braille and vision to be initialized.
-import vision  # noqa: F402
+# Suppress Flake8 warning E402 (Module level import not at top of file)
+import vision  # noqa: E402
 vision.initialize()
 
 import braille
