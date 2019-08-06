@@ -10,7 +10,6 @@ from documentBase import TextContainerObject
 import braille
 import speech
 import textInfos
-import controlTypes
 
 
 class SelectableText(TextContainerObject):
@@ -61,12 +60,14 @@ class SelectableText(TextContainerObject):
 		self._updateSelectionAnchor(oldInfo, newInfo)
 		hasContentChanged = getattr(self, 'hasContentChangedSinceLastSelection', False)
 		self.hasContentChangedSinceLastSelection = False
-		if not self.speakUnselected:
-			# As the unselected state is not relevant here and all spoken content is selected,
-			# use speech.speakTextInfo to make sure the new selection is spoken.
-			speech.speakTextInfo(newInfo, reason=controlTypes.REASON_CARET)
-		else:
-			speech.speakSelectionChange(oldInfo, newInfo, generalize=hasContentChanged)
+		speech.speakSelectionChange(
+			oldInfo,
+			newInfo,
+			speakUnselected=self.speakUnselected,
+			# Do not speak redundant "selected" word if we only speak selected text.
+			speakStates=self.speakUnselected,
+			generalize=hasContentChanged
+		)
 
 		# Import late to avoid circular import
 		from editableText import EditableText

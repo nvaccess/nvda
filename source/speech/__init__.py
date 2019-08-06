@@ -30,6 +30,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from .commands import *
+from typing import Optional
 
 speechMode_off=0
 speechMode_beeps=1
@@ -593,16 +594,27 @@ def speakSelectionMessage(message,text,priority=None):
 		# Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 		speakMessage(message % _("%d characters") % len(text),priority=priority)
 
-def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False,priority=None):
+
+# C901 'speakSelectionChange' is too complex
+def speakSelectionChange(  # noqa: C901
+		oldInfo: textInfos.TextInfo,
+		newInfo: textInfos.TextInfo,
+		speakSelected: bool = True,
+		speakUnselected: bool = True,
+		speakStates: bool = True,
+		generalize: bool = False,
+		priority: Optional[int] = None
+):
 	"""Speaks a change in selection, either selected or unselected text.
 	@param oldInfo: a TextInfo instance representing what the selection was before
-	@type oldInfo: L{textInfos.TextInfo}
 	@param newInfo: a TextInfo instance representing what the selection is now
-	@type newInfo: L{textInfos.TextInfo}
-	@param generalize: if True, then this function knows that the text may have changed between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken more generally, rather than speaking the specific text, as the bounds may be all wrong.
-	@type generalize: boolean
+	@param speakSelected: Whether to speak the text that has been selected
+	@param speakUnselected: Whether to speak the text that has been unselected
+	@param speakStates: Whether to speak the "selected" and/or "unselected" message
+	@param generalize: if True, then this function knows that the text may have changed
+		between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken
+		more generally, rather than speaking the specific text, as the bounds may be all wrong.
 	@param priority: The speech priority.
-	@type priority: One of the C{SPRI_*} constants.
 	"""
 	selectedTextList=[]
 	unselectedTextList=[]
@@ -645,26 +657,41 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				speakTextSelected(text, priority=priority)
+				if speakStates:
+					speakTextSelected(text, priority=priority)
+				else:
+					speakMessage(text, priority=priority)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
-			speakTextSelected(text, priority=priority)
+			if speakStates:
+				speakTextSelected(text, priority=priority)
+			else:
+				speakMessage(text, priority=priority)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-				speakSelectionMessage(_("%s unselected"),text,priority=priority)
+				if speakStates:
+					# Translators: This is spoken to indicate what has been unselected.
+					# for example 'hello unselected'
+					speakSelectionMessage(_("%s unselected"), text, priority=priority)
+				else:
+					speakMessage(text, priority=priority)
 		elif len(unselectedTextList)>0:
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-				speakSelectionMessage(_("%s selected instead"),text,priority=priority)
+				if speakStates:
+					# Translators: This is spoken to indicate when the previous selection was removed
+					# and a new selection was made.
+					# for example 'hello world selected instead'
+					speakSelectionMessage(_("%s selected instead"), text, priority=priority)
+				else:
+					speakMessage(text, priority=priority)
 			else:
 				# Translators: Reported when selection is removed.
 				speakMessage(_("selection removed"),priority=priority)
