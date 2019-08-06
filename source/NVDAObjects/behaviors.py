@@ -29,6 +29,7 @@ import api
 import ui
 import braille
 import nvwave
+from selectableText import SelectableText
 
 class ProgressBar(NVDAObject):
 
@@ -201,19 +202,14 @@ class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAut
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
 
-class LiveText(NVDAObject):
-	"""An object for which new text should be reported automatically.
-	These objects present text as a single chunk
-	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+class TextMonitor(NVDAObject):
+	"""A basic object class which facilitates monitoring of changes in text or text formatting.
+	These objects only fire an event indicating that some part of the text or text formatting has changed; i.e. they don't provide the new text.
 	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
 	The object should notify of text changes using the textChange event.
 	"""
 	#: The time to wait before fetching text after a change event.
 	STABILIZE_DELAY = 0
-	# If the text is live, this is definitely content.
-	presentationType = NVDAObject.presType_content
-
-	announceNewLineText=False
 
 	def initOverlayClass(self):
 		self._event = threading.Event()
@@ -221,8 +217,7 @@ class LiveText(NVDAObject):
 		self._keepMonitoring = False
 
 	def startMonitoring(self):
-		"""Start monitoring for new text.
-		New text will be reported when it is detected.
+		"""Start monitoring for changes in text.
 		@note: If monitoring has already been started, this will have no effect.
 		@see: L{stopMonitoring}
 		"""
@@ -251,6 +246,39 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
+	def _monitor(self):
+		"""The monitoring method.
+		This is run in a separate thread using the L{startMonitoring} method.
+		Subclasses should override this method.
+		"""
+		raise NotImplementedError()
+
+	def _waitForTextChange(self):
+		"""
+		Waits until a text change has been detected and a possible stabilize delay has elapsed.
+		This method blocks, and therefore should be called from a background thread.
+		"""
+		self._event.wait()
+		if not self._keepMonitoring:
+			return
+		if self.STABILIZE_DELAY > 0:
+			# wait for the text to stabilise.
+			time.sleep(self.STABILIZE_DELAY)
+			if not self._keepMonitoring:
+				# Monitoring was stopped while waiting for the text to stabilise.
+				return
+		self._event.clear()
+
+class LiveText(TextMonitor):
+	"""An object for which new text should be reported automatically.
+	These objects present text as a single chunk
+	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+	"""
+	# If the text is live, this is definitely content.
+	presentationType = NVDAObject.presType_content
+
+	announceNewLineText=False
+
 	def _getTextLines(self):
 		"""Retrieve the text of this object in lines.
 		This will be used to determine the new text to speak.
@@ -274,16 +302,9 @@ class LiveText(NVDAObject):
 			oldLines = []
 
 		while self._keepMonitoring:
-			self._event.wait()
+			self._waitForTextChange()
 			if not self._keepMonitoring:
 				break
-			if self.STABILIZE_DELAY > 0:
-				# wait for the text to stabilise.
-				time.sleep(self.STABILIZE_DELAY)
-				if not self._keepMonitoring:
-					# Monitoring was stopped while waiting for the text to stabilise.
-					break
-			self._event.clear()
 
 			try:
 				newLines = self._getTextLines()
@@ -355,7 +376,7 @@ class LiveText(NVDAObject):
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
 	This is an L{EditableText} object,
-	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
+	as well as a L{LiveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
 	role = controlTypes.ROLE_TERMINAL
 
@@ -783,3 +804,31 @@ class WebDialog(NVDAObject):
 		if self.parent.treeInterceptor:
 			return True
 		return False
+
+class NonEditableSelectableText(TextMonitor, SelectableText):
+	"""An object that contains text which is selectable,
+	but that doesn't offer a caret.
+	Therefore, selection changes are reported based on text monitoring.
+	This inherrits from L{selectableText.SelectableText} which facilitates the detection of selection changes
+	using the L{TextInfo}.
+	This is also a L{TextMonitor} object
+	for which monitoring is automatically enabled and disabled based on whether it has focus.
+	"""
+
+	speakUnselected = False
+
+	def startMonitoring(self):
+		self.initAutoSelectDetection()
+		super().startMonitoring()
+
+	def event_gainFocus(self):
+		super().event_gainFocus()
+		self.startMonitoring()
+
+	def event_loseFocus(self):
+		self.stopMonitoring()
+
+	def _monitor(self):
+		while self._keepMonitoring:
+			self._waitForTextChange()
+			self.detectPossibleSelectionChange()
