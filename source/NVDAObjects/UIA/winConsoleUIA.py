@@ -164,11 +164,10 @@ class consoleUIATextInfo(UIATextInfo):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
 		return super().compareEndPoints(
 			other,
-			self._endPointHelper(other, which),
-			normalizeSrc=False
+			self._endPointHelper(other, which, normalizeSrc=False)
 		)
 
-	def _endPointHelper(self, other, which, normalizeSource=True):
+	def _endPointHelper(self, other, which, normalizeSrc=True):
 		"""Returns normalized endPoints to work around a Windows bug."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
