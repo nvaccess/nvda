@@ -16,8 +16,6 @@ Methods in test classes should have a C{test_} prefix.
 
 import os
 import sys
-import wx
-import vision
 
 import locale
 import gettext
@@ -33,7 +31,9 @@ TOP_DIR = os.path.dirname(os.path.dirname(UNIT_DIR))
 SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
-import sourceEnv
+import sourceEnv  # noqa: F401
+
+import wx  # noqa: F402
 
 # Set options normally taken from the command line.
 import globalVars
@@ -75,6 +75,7 @@ appModuleHandler.initialize()
 # Vision needs a wx app to be available.
 app = wx.App()
 # Anything which notifies of cursor updates requires braille and vision to be initialized.
+import vision  # noqa: F402
 vision.initialize()
 
 import braille
