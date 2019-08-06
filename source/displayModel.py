@@ -22,6 +22,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
+from typing import Set
 
 def wcharToInt(c):
 	i=ord(c)
@@ -156,7 +157,8 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 _getWindowTextInRect=None
 _requestTextChangeNotificationsForWindow=None
 #: Objects that have registered for text change notifications.
-_textChangeNotificationObjs=[]
+_textChangeNotificationObjs: Set = set()
+
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow, _getFocusRect
@@ -204,11 +206,12 @@ def requestTextChangeNotifications(obj, enable):
 	@param enable: C{True} to enable notifications, C{False} to disable them.
 	@type enable: bool
 	"""
-	if not enable:
+	if not enable and obj in _textChangeNotificationObjs:
 		_textChangeNotificationObjs.remove(obj)
 	watchdog.cancellableExecute(_requestTextChangeNotificationsForWindow, obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
 	if enable:
-		_textChangeNotificationObjs.append(obj)
+		_textChangeNotificationObjs.add(obj)
+
 
 def textChangeNotify(windowHandle, left, top, right, bottom):
 	for obj in _textChangeNotificationObjs:

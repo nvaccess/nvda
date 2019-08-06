@@ -12,6 +12,7 @@ import speech
 import textInfos
 import controlTypes
 
+
 class SelectableText(TextContainerObject):
 	"""
 	An object that contains text in which the selection can be fetched and changed.
@@ -20,8 +21,10 @@ class SelectableText(TextContainerObject):
 	If the object notifies of selection changes, the following should be done:
 		* When the object gains focus, L{initAutoSelectDetection} must be called.
 		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
-		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
-	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
+		* Optionally, if the object notifies of changes to its content,
+		L{hasContentChangedSinceLastSelection} should be set to C{True}.
+	@ivar hasContentChangedSinceLastSelection: Whether the content has changed
+		since the last selection occurred.
 	@type hasContentChangedSinceLastSelection: bool
 	"""
 
@@ -55,15 +58,15 @@ class SelectableText(TextContainerObject):
 			# There's nothing we can do, but at least the last selection will be right next time.
 			self.isTextSelectionAnchoredAtStart = True
 			return
-		self._updateSelectionAnchor(oldInfo,newInfo)
+		self._updateSelectionAnchor(oldInfo, newInfo)
 		hasContentChanged = getattr(self, 'hasContentChangedSinceLastSelection', False)
 		self.hasContentChangedSinceLastSelection = False
 		if not self.speakUnselected:
 			# As the unselected state is not relevant here and all spoken content is selected,
 			# use speech.speakTextInfo to make sure the new selection is spoken.
-			speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
+			speech.speakTextInfo(newInfo, reason=controlTypes.REASON_CARET)
 		else:
-			speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
+			speech.speakSelectionChange(oldInfo, newInfo, generalize=hasContentChanged)
 
 		# Import late to avoid circular import
 		from editableText import EditableText

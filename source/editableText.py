@@ -24,11 +24,14 @@ import textInfos
 import controlTypes
 from logHandler import log
 
-class EditableText(SelectableText,ScriptableObject):
+
+class EditableText(SelectableText, ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle the selection change keys.
 	To have selection changes reported, the object must notify of selection changes.
 	If the object supports selection but does not notify of selection changes, L{EditableTextWithoutAutoSelectDetection} should be used instead.
+	If the object doesn't have a caret but supports selection,
+	consider using NVDAObjects.behaviors.NonEditableSelectableText.
 	"""
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
@@ -297,6 +300,7 @@ class EditableText(SelectableText,ScriptableObject):
 		"kb:backspace": "caret_backspaceCharacter",
 		"kb:control+backspace": "caret_backspaceWord",
 	}
+
 
 class EditableTextWithoutAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, provides scripts to report appropriately when the selection changes.

@@ -14,7 +14,7 @@ import importlib
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
-import textInfos.offsets
+import textInfos
 import textUtils
 import colors
 import time
@@ -30,12 +30,13 @@ import braille
 import api
 import config
 import controlTypes
-from NVDAObjects.window import Window
+from NVDAObjects.window import Window, DisplayModelNonEditableSelectableText
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 from locationHelper import RectLTWH
+from selectableText import SelectableText
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -585,6 +586,14 @@ the NVDAObject for IAccessible
 			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
+				# The text of this window might expose relevant selection changes.
+				try:
+					displayModel.DisplayModelTextInfo(self, textInfos.POSITION_SELECTION)
+				except LookupError:
+					pass
+				else:
+					# Monitor for selection changes on this object
+					clsList.insert(0, DisplayModelNonEditableSelectableText)
 
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
@@ -1451,7 +1460,7 @@ the NVDAObject for IAccessible
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
 
 	def event_valueChange(self):
-		if isinstance(self, EditableTextWithAutoSelectDetection):
+		if isinstance(self, SelectableText):
 			self.hasContentChangedSinceLastSelection = True
 			return
 		return super(IAccessible, self).event_valueChange()

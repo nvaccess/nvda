@@ -202,10 +202,14 @@ class EditableTextWithoutAutoSelectDetection(editableText.EditableTextWithoutAut
 
 	initOverlayClass = editableText.EditableTextWithoutAutoSelectDetection.initClass
 
+
 class TextMonitor(NVDAObject):
 	"""A basic object class which facilitates monitoring of changes in text or text formatting.
-	These objects only fire an event indicating that some part of the text or text formatting has changed; i.e. they don't provide the new text.
-	Monitoring must be explicitly started and stopped using the L{startMonitoring} and L{stopMonitoring} methods.
+
+	These objects only fire an event indicating that some part of the text or text formatting has changed;
+	i.e. they don't provide the new text.
+	Monitoring must be explicitly started and stopped using the L{startMonitoring}
+	and L{stopMonitoring} methods.
 	The object should notify of text changes using the textChange event.
 	"""
 	#: The time to wait before fetching text after a change event.
@@ -269,15 +273,18 @@ class TextMonitor(NVDAObject):
 				return
 		self._event.clear()
 
+
 class LiveText(TextMonitor):
 	"""An object for which new text should be reported automatically.
+
 	These objects present text as a single chunk
-	and only fire an event indicating that some part of the text has changed; i.e. they don't provide the new text.
+	and only fire an event indicating that some part of the text has changed;
+	i.e. they don't provide the new text.
 	"""
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
-	announceNewLineText=False
+	announceNewLineText = False
 
 	def _getTextLines(self):
 		"""Retrieve the text of this object in lines.
@@ -373,10 +380,12 @@ class LiveText(TextMonitor):
 
 		return outLines
 
+
 class Terminal(LiveText, EditableText):
 	"""An object which both accepts text input and outputs text which should be reported automatically.
 	This is an L{EditableText} object,
-	as well as a L{LiveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
+	as well as a L{LiveText} object for which monitoring is automatically enabled and disabled
+	based on whether it has focus.
 	"""
 	role = controlTypes.ROLE_TERMINAL
 
@@ -805,12 +814,13 @@ class WebDialog(NVDAObject):
 			return True
 		return False
 
+
 class NonEditableSelectableText(TextMonitor, SelectableText):
 	"""An object that contains text which is selectable,
-	but that doesn't offer a caret.
+	but doesn't offer a caret.
 	Therefore, selection changes are reported based on text monitoring.
-	This inherrits from L{selectableText.SelectableText} which facilitates the detection of selection changes
-	using the L{TextInfo}.
+	This inherrits from L{selectableText.SelectableText} which facilitates the detection
+	of selection changes using the L{TextInfo}.
 	This is also a L{TextMonitor} object
 	for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
