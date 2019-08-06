@@ -162,7 +162,7 @@ class consoleUIATextInfo(UIATextInfo):
 
 	def setEndPoint(self, other, which):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
-		return super().compareEndPoints(
+		return super().setEndPoint(
 			other,
 			self._endPointHelper(other, which, normalizeSrc=False)
 		)
@@ -176,7 +176,7 @@ class consoleUIATextInfo(UIATextInfo):
 		# when collapsed.
 		src, target = which.split("To")
 		if normalizeSrc and src == "end" and not self._rangeObj.GetText(1):
-			src = "Start"
+			src = "start"
 		if target == "End" and not other._rangeObj.GetText(1):
 			target = "Start"
 		return f"{src}To{target}"
