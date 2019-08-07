@@ -296,8 +296,8 @@ class AppModule(appModuleHandler.AppModule):
 
 		nextHandler()
 
-	def isGoodUIAWindow(self,hwnd):
-		# #9204: In build 18305 and later (including 1903/build 18362), it is the shell that raises window open event for emoji panel.
+	def isGoodUIAWindow(self, hwnd):
+		# #9204: shell raises window open event for emoji panel in build 18305 and later.
 		if winVersion.isWin10(version=1903) and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
 			return True
 		return False
@@ -306,7 +306,8 @@ class AppModule(appModuleHandler.AppModule):
 		# Send UIA window open event to input app window.
 		if isinstance(obj, UIA) and obj.UIAElement.cachedClassName == "ApplicationFrameWindow":
 			inputPanelWindow = obj.firstChild
-			if inputPanelWindow and inputPanelWindow.appModule.appName == "windowsinternal_composableshell_experiences_textinput_inputapp":
+			inputPanelAppName = "windowsinternal_composableshell_experiences_textinput_inputapp"
+			if inputPanelWindow and inputPanelWindow.appModule.appName == inputPanelAppName:
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
 				return
 		nextHandler()
