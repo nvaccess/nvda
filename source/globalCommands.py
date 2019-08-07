@@ -582,15 +582,15 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off the reporting of graphics"),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
-	def script_toggleReportGraphics(self,gesture):
+	def script_toggleReportGraphics(self, gesture):
 		if config.conf["documentFormatting"]["reportGraphics"]:
 			# Translators: The message announced when toggling the report graphics document formatting setting.
 			state = _("report graphics off")
-			config.conf["documentFormatting"]["reportGraphics"]=False
+			config.conf["documentFormatting"]["reportGraphics"] = False
 		else:
 			# Translators: The message announced when toggling the report graphics document formatting setting.
 			state = _("report graphics on")
-			config.conf["documentFormatting"]["reportGraphics"]=True
+			config.conf["documentFormatting"]["reportGraphics"] = True
 		ui.message(state)
 
 	def script_toggleReportComments(self,gesture):
@@ -1352,7 +1352,7 @@ class GlobalCommands(ScriptableObject):
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
-		formatConfig={
+		formatConfig = {
 			"detectFormatAfterCursor": False,
 			"reportFontName": True,
 			"reportFontSize": True,
@@ -1368,7 +1368,7 @@ class GlobalCommands(ScriptableObject):
 			"reportLineIndentation": True,
 			"reportLineIndentationWithTones": False,
 			"reportParagraphIndentation": True,
-			"reportLineSpacing":True,
+			"reportLineSpacing": True,
 			"reportTables": False,
 			"reportLinks": False,
 			"reportGraphics": False,
@@ -1379,7 +1379,7 @@ class GlobalCommands(ScriptableObject):
 			"reportBorderStyle": True,
 			"reportBorderColor": True,
 		}
-		textList=[]
+		textList = []
 
 		# First, fetch indentation.
 		line=info.copy()
