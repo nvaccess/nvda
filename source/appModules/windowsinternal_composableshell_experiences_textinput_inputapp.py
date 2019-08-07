@@ -99,7 +99,7 @@ class AppModule(appModuleHandler.AppModule):
 			self._emojiPanelJustOpened = True
 			# On some systems, there is something else besides grouping controls,
 			# so another child control must be used.
-			if obj.firstChild.children[-2].UIAElement.cachedAutomationID != "TEMPLATE_PART_Items_GridView":
+			if inputPanel.children[-2].UIAElement.cachedAutomationID != "TEMPLATE_PART_Items_GridView":
 				emojisIndex = -3
 			else:
 				emojisIndex = -2
