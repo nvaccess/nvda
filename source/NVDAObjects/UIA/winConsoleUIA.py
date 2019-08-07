@@ -168,12 +168,12 @@ class consoleUIATextInfo(UIATextInfo):
 		)
 
 	def _endPointHelper(self, other, which, normalizeSrc=True):
-		"""Returns normalized endPoints to work around a Windows bug."""
-		# Even when a console textRange's start and end have been moved to the
-		# same position, the console incorrectly reports the end as being
-		# past the start.
-		# To work around this, compare to the start, not the end,
-		# when collapsed.
+		"""
+		Even when a console textRange's start and end have been moved to the
+		same position, the console incorrectly reports the end as being
+		past the start.
+		Returns normalized endPoints to work around this."""
+		# Compare to the start (not the end) when collapsed.
 		src, target = which.split("To")
 		if normalizeSrc and src == "end" and not self._rangeObj.GetText(1):
 			src = "start"
