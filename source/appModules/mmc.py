@@ -36,6 +36,7 @@ class MMCTableCell(IAccessible):
 		Disable reporting of position info all together. """
 		return None
 
+
 class emptyToolTip(ToolTip):
 	previousToolTipText = ''
 
@@ -46,10 +47,10 @@ class emptyToolTip(ToolTip):
 
 	def event_show(self):
 		# Stop repeating the same tooltip over and over again.
-		toolTipText=self.displayText
+		toolTipText = self.displayText
 		if toolTipText != emptyToolTip.previousToolTipText:
-			emptyToolTip.previousToolTipText=toolTipText
-			return super(emptyToolTip,self).event_show()
+			emptyToolTip.previousToolTipText = toolTipText
+			return super(emptyToolTip, self).event_show()
 		return None
 
 class AppModule(appModuleHandler.AppModule):
