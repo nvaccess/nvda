@@ -942,6 +942,21 @@ When in the table view of added books:
 | Context menu | applications | Opens the context menu for the selected book. |
 %kc:endInclude
 
+++ Windows Console ++[WinConsole]
+NVDA provides support for the Windows command console used by Command Prompt, PowerShell, and the Windows Subsystem for Linux.
+The console window is of fixed size, typically much smaller than the buffer that holds the output.
+As new text is written, the content scroll upwards and previous text is no longer visible. 
+Text that is not visibly displayed in the window is not accessible with NVDA's text review commands.
+Therefore, it is necessary to scroll the console window to read earlier text.
+%kc:beginInclude
+The following built-in Windows Console keyboard shortcuts may be useful when [reviewing text #ReviewingText] with NVDA:
+|| Name | Key | Description |
+| Scroll up | control+upArrow | Scrolls the console window up, so earlier text can be read. |
+| Scroll down | control+downArrow | Scrolls the console window down, so later text can be read. |
+| Scroll to start | control+home | Scrolls the console window to the beginning of the buffer. |
+| Scroll to end | control+end | Scrolls the console window to the end of the buffer. |
+%kc:endInclude
+
 + Configuring NVDA +[ConfiguringNVDA]
 Most configuration can be performed using dialog boxes accessed through the Preferences sub-menu of the NVDA menu.
 Many of these settings can be found in the multi-page [NVDA Settings dialog #NVDASettings].
@@ -1671,11 +1686,28 @@ This includes in Microsoft Word itself, and also the Microsoft Outlook message v
 However, There may be some information which is either not exposed, or exposed incorrectly in some versions of Microsoft Office, which means this UI automation support cannot always be relied upon.
 We still do not recommend that  the majority of users turn this on by default, though we do welcome users of Office 2016/365 to test this feature and provide feedback.
 
-==== Use UI Automation to access the Windows Console when available ====[AdvancedSettingsConsoleUIA]
-When this option is enabled, NVDA will use a new, work in progress version of its support for Windows Console which takes advantage of [accessibility improvements made by Microsoft https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/]. This feature is highly experimental and is still incomplete, so its use is not yet recommended. However, once completed, it is anticipated that this new support will become the default, improving NVDA's performance and stability in Windows command consoles.
+==== Windows Console support ====[AdvancedSettingsConsoleUIA]
+This option selects how NVDA interacts with the Windows Console used by command prompt, PowerShell, and the Windows Subsystem for Linux.
+It does not affect the modern Windows Terminal.
+In Windows 10 version 1709, Microsoft [added support for its UI Automation API to the console https://devblogs.microsoft.com/commandline/whats-new-in-windows-console-in-windows-10-fall-creators-update/], bringing vastly improved performance and stability for screen readers that support it.
+In situations where UI Automation is unavailable or known to result in an inferior user experience, NVDA's legacy console support is available as a fallback.
+The Windows Console support combo box has three options:
+- Automatic: Uses UI Automation in consoles on Windows 10 version 1803 and later. This option is recommended and set by default.
+- Prefer UIA: Uses UI Automation in consoles if available, even on Windows versions with incomplete or buggy implementations. While this limited functionality may be useful (and even sufficient for your usage), use of this option is entirely at your own risk and no support for it will be provided.
+- Legacy: UI Automation in the Windows Console will be completely disabled, so the legacy fallback will always be used.
+-
 
-==== Speak passwords in UIA consoles ====[AdvancedSettingsWinConsoleSpeakPasswords]
-This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in the Windows Console with UI automation support enabled. For security purposes, this setting should be left disabled. However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting while using NVDA's new experimental console support.
+==== Speak passwords in Windows Console ====[AdvancedSettingsWinConsoleSpeakPasswords]
+This setting controls whether characters are spoken by [speak typed characters #KeyboardSettingsSpeakTypedCharacters] or [speak typed words #KeyboardSettingsSpeakTypedWords] in situations where the screen does not update (such as password entry) in some terminal programs, such as the Windows Console with UI automation support enabled and Mintty.
+For security purposes, this setting should be left disabled.
+However, you may wish to enable it if you experience performance issues or instability with typed character and/or word reporting in consoles, or work in trusted environments and prefer password announcement.
+
+==== Use the new typed character support in legacy Windows consoles when available ====[AdvancedSettingsKeyboardSupportInLegacy]
+This option enables an alternative method for detecting typed characters in legacy Windows consoles.
+While it improves performance and prevents some console output from being spelled out, it may be incompatible with some terminal programs.
+This feature is available and enabled by default on Windows 10 versions 1607, 1703 and 1709 as well as on newer Windows 10 releases when UI Automation is unavailable or disabled.
+Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
+In untrusted environments, you may temporarily disable [speak typed characters #KeyboardSettingsSpeakTypedCharacters] and [speak typed words #KeyboardSettingsSpeakTypedWords] when entering passwords.
 
 ==== Automatically set system focus to focusable elements in Browse Mode ====[BrowseModeSettingsAutoFocusFocusableElements]
 Key: NVDA+8

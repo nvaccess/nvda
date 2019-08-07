@@ -4,18 +4,15 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 Bill Dengler
 
-import config
 import ctypes
 import NVDAHelper
-import speech
-import time
 import textInfos
 import UIAHandler
 
-from scriptHandler import script
-from winVersion import isWin10
+from comtypes import COMError
+from UIAUtils import isTextRangeOffscreen
 from . import UIATextInfo
-from ..behaviors import Terminal
+from ..behaviors import KeyboardHandlerBasedTypedCharSupport
 from ..window import Window
 
 
@@ -26,15 +23,28 @@ class consoleUIATextInfo(UIATextInfo):
 	#: to do much good either.
 	_expandCollapseBeforeReview = False
 
-	def collapse(self,end=False):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self).collapse(end=end)
+	def __init__(self, obj, position, _rangeObj=None):
+		super(consoleUIATextInfo, self).__init__(obj, position, _rangeObj)
+		# Re-implement POSITION_FIRST and POSITION_LAST in terms of
+		# visible ranges to fix review top/bottom scripts.
+		if position == textInfos.POSITION_FIRST:
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			firstVisiRange = visiRanges.GetElement(0)
+			self._rangeObj = firstVisiRange
+			self.collapse()
+		elif position == textInfos.POSITION_LAST:
+			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
+			lastVisiRange = visiRanges.GetElement(visiRanges.length - 1)
+			self._rangeObj = lastVisiRange
+			self.collapse(True)
+
+	def collapse(self, end=False):
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# When collapsing, consoles seem to incorrectly push the start of the
 		# textRange back one character.
 		# Correct this by bringing the start back up to where the end is.
-		oldInfo=self.copy()
-		super(consoleUIATextInfo,self).collapse(end=end)
+		oldInfo = self.copy()
+		super(consoleUIATextInfo, self).collapse(end=end)
 		if not end:
 			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
@@ -50,8 +60,6 @@ class consoleUIATextInfo(UIATextInfo):
 			visiRanges = self.obj.UIATextPattern.GetVisibleRanges()
 			visiLength = visiRanges.length
 			if visiLength > 0:
-				firstVisiRange = visiRanges.GetElement(0)
-				lastVisiRange = visiRanges.GetElement(visiLength - 1)
 				oldRange = self._rangeObj.clone()
 		if unit == textInfos.UNIT_WORD and direction != 0:
 			# UIA doesn't implement word movement, so we need to do it manually.
@@ -94,7 +102,6 @@ class consoleUIATextInfo(UIATextInfo):
 					lineInfo.expand(textInfos.UNIT_LINE)
 					offset = self._getCurrentOffsetInThisLine(lineInfo)
 				# Finally using the new offset,
-
 				# Calculate the current word offsets and move to the start of
 				# this word if we are not already there.
 				start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
@@ -108,15 +115,16 @@ class consoleUIATextInfo(UIATextInfo):
 		else:  # moving by a unit other than word
 			res = super(consoleUIATextInfo, self).move(unit, direction,
 														endPoint)
-		if oldRange and (
-			self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_Start) < 0
-			or self._rangeObj.CompareEndPoints(
-				UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
-				UIAHandler.TextPatternRangeEndpoint_End) >= 0):
-			self._rangeObj = oldRange
-			return 0
+		try:
+			if (
+				oldRange
+				and isTextRangeOffscreen(self._rangeObj, visiRanges)
+				and not isTextRangeOffscreen(oldRange, visiRanges)
+			):
+				self._rangeObj = oldRange
+				return 0
+		except (COMError, RuntimeError):
+			pass
 		return res
 
 	def expand(self, unit):
@@ -146,9 +154,7 @@ class consoleUIATextInfo(UIATextInfo):
 			return super(consoleUIATextInfo, self).expand(unit)
 
 	def _get_isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 1903 and later."""
-		if not isWin10(1903):
-			return super(consoleUIATextInfo, self)._get_isCollapsed()
+		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
@@ -204,9 +210,9 @@ class consoleUIATextInfo(UIATextInfo):
 			min(end.value, max(1, len(lineText) - 2))
 		)
 
-	def __ne__(self,other):
+	def __ne__(self, other):
 		"""Support more accurate caret move detection."""
-		return not self==other
+		return not self == other
 
 
 class consoleUIAWindow(Window):
@@ -223,89 +229,30 @@ class consoleUIAWindow(Window):
 		return None
 
 
-class WinConsoleUIA(Terminal):
+class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Disable the name as it won't be localized
 	name = ""
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
 	_TextInfo = consoleUIATextInfo
-	#: A queue of typed characters, to be dispatched on C{textChange}.
-	#: This queue allows NVDA to suppress typed passwords when needed.
-	_queuedChars = []
-	#: Whether the console got new text lines in its last update.
-	#: Used to determine if typed character/word buffers should be flushed.
-	_hasNewLines = False
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
-	def _reportNewText(self, line):
-		# Additional typed character filtering beyond that in LiveText
-		if len(line.strip()) < max(len(speech.curWordChars) + 1, 3):
-			return
-		if self._hasNewLines:
-			# Clear the queued characters buffer for new text lines.
-			self._queuedChars = []
-		super(WinConsoleUIA, self)._reportNewText(line)
-
-	def event_typedCharacter(self, ch):
-		if ch == '\t':
-			# Clear the typed word buffer for tab completion.
-			speech.clearTypedWordBuffer()
-		if (
-			(
-				config.conf['keyboard']['speakTypedCharacters']
-				or config.conf['keyboard']['speakTypedWords']
-			)
-			and not config.conf['UIA']['winConsoleSpeakPasswords']
-		):
-			self._queuedChars.append(ch)
-		else:
-			super(WinConsoleUIA, self).event_typedCharacter(ch)
-
-	def event_textChange(self):
-		while self._queuedChars:
-			ch = self._queuedChars.pop(0)
-			super(WinConsoleUIA, self).event_typedCharacter(ch)
-		super(WinConsoleUIA, self).event_textChange()
-
-	@script(gestures=[
-		"kb:enter",
-		"kb:numpadEnter",
-		"kb:tab",
-		"kb:control+c",
-		"kb:control+d",
-		"kb:control+pause"
-	])
-	def script_flush_queuedChars(self, gesture):
-		"""
-		Flushes the typed word buffer and queue of typedCharacter events if present.
-		Since these gestures clear the current word/line, we should flush the
-		queue to avoid erroneously reporting these chars.
-		"""
-		gesture.send()
-		self._queuedChars = []
-		speech.clearTypedWordBuffer()
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
 
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
-		ptr = self.UIATextPattern.GetVisibleRanges()
-		res = [ptr.GetElement(i).GetText(-1) for i in range(ptr.length)]
-		return res
-
-	def _calculateNewText(self, newLines, oldLines):
-		self._hasNewLines = (
-			self._findNonBlankIndices(newLines)
-			!= self._findNonBlankIndices(oldLines)
+		return (
+			self.makeTextInfo(textInfos.POSITION_ALL)
+			._rangeObj.getText(-1)
+			.rstrip()
+			.split("\r\n")
 		)
-		return super(WinConsoleUIA, self)._calculateNewText(newLines, oldLines)
 
-	def _findNonBlankIndices(self, lines):
-		"""
-		Given a list of strings, returns a list of indices where the strings
-		are not empty.
-		"""
-		return [index for index, line in enumerate(lines) if line]
 
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAElement.cachedAutomationId == "Text Area":
