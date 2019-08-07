@@ -7,8 +7,6 @@ Was ist neu in NVDA
 Zu den Highlights dieser Version gehören die automatische Erkennung von Freedom Scientific Braillezeilen, eine experimentelle Einstellung in DEN erweiterten Einstellungen, um die automatische Bewegung des systemfokus beim Verwenden des Lesemodus zu deaktivieren (was unter Umständen zu Leistungssteigerungen führen kann), eine Option zur Erhöhung der Geschwindigkeit für die Windows OneCore-Sprachausgabe, um sehr schnelle Geschwindigkeiten zu erzielen und viele andere Fehlerbehebungen.
 
 == Neue Funktionen ==
-- Der NVDA-spezifische Suchdialog enthält nun einen Verlauf der letzten 20 Sucheinträge. (#8482)
- - Der Suchverlauf wird gelöscht, wenn NVDA beendet oder neu gestartet wird.
 - NVDA unterstützt nun auch neuere Versionen des Miranda NG Clients. (#9053)
 - Sie können den Lesemodus nun standardmäßig deaktivieren, wenn eine Webseite geladen wird. Deaktivieren Sie dazu die neue Option "Lesemodus beim Laden von Webseiten verwenden" in den Lesemodus-Einstellungen im Einstellunfsfenster von NVDA. (#8716)
  - Beachten Sie, dass Sie den Lesemodus mit NVDA+Leertaste manuell aktivieren können, auch wenn diese Option deaktiviert ist.
@@ -2047,7 +2045,6 @@ Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen un
 - Unterstützung für mehrere Braillezeilen von Baum, HumanWare und APH. (#937)
 - Die Statuszeile in Media Player Classic Home Cinema wird nun erkannt.
 - Die Freedom Scientific Focus 40 Blue kann nun auch verwendet werden, wenn Sie per Bleutooth verbunden wird. (#1345)
--
 
 
 == Änderungen ==
@@ -2058,7 +2055,7 @@ Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen un
 - Wenn nach der Verwendung des Kommandos "Nächste Taste durchreichen" eine Tastenkombination gedrückt gehalten wird, werden alle Tastendrücke (einschließlich Wiederholungen) an die Anwendung durchgereicht, bis die letzte Taste losgelassen wird.
 - Wenn ein NVDA-Modifikator zwei Mal gedrückt (und beim zweiten Mal gedrückt gehalten) wird, werden alle Tastenanschläge einschließlich Wiederholungen ebenfalls an die anwendung durchgereicht.
 - Die Tasten für die lautstärkeregelung und Stummschaltung werden nun in der Eingabehilfe erkannt. Dies könnte hilfreich sein, falls sich Anwender über die Funktionsweise dieser Tasten unsicher sind.
--
+- Im NVDA-Einstellungsmenü wurden die Kurztasten für die Einstellen für Braille und nVDA-Cursor geändert, um Konflikte auszuschließen.
 
 
 == Fehlerbehebungen ==
