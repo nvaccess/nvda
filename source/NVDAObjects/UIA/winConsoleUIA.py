@@ -167,6 +167,12 @@ class consoleUIATextInfo(UIATextInfo):
 			self._endPointHelper(other, which, normalizeSrc=False)
 		)
 
+	def _get_isCollapsed(self):
+		"""Works around a UIA bug on Windows 10 1803 and later."""
+		# To decide if the textRange is collapsed,
+		# Check if it has no text.
+		return not bool(self._rangeObj.getText(1))
+
 	def _endPointHelper(self, other, which, normalizeSrc=True):
 		"""
 		Even when a console textRange's start and end have been moved to the
@@ -175,9 +181,9 @@ class consoleUIATextInfo(UIATextInfo):
 		Returns normalized endPoints to work around this."""
 		# Compare to the start (not the end) when collapsed.
 		src, target = which.split("To")
-		if normalizeSrc and src == "end" and not self._rangeObj.GetText(1):
+		if normalizeSrc and src == "end" and not self.isCollapsed:
 			src = "start"
-		if target == "End" and not other._rangeObj.GetText(1):
+		if target == "End" and not other.isCollapsed:
 			target = "Start"
 		return f"{src}To{target}"
 
