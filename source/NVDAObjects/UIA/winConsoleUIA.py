@@ -155,37 +155,39 @@ class consoleUIATextInfo(UIATextInfo):
 
 	def compareEndPoints(self, other, which):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
-		return super().compareEndPoints(
-			other,
-			self._endPointHelper(other, which)
-		)
+		# Even when a console textRange's start and end have been moved to the
+		# same position, the console incorrectly reports the end as being
+		# past the start.
+		# Compare to the start (not the end) when collapsed.
+		selfEndPoint, otherEndPoint = which.split("To")
+		if selfEndPoint == "end" and not self.hasNoText:
+			selfEndPoint = "start"
+		if otherEndPoint == "End" and not other.hasNoText:
+			otherEndPoint = "Start"
+		which = f"{selfEndPoint}To{otherEndPoint}"
+		return super().compareEndPoints(other, which=which)
 
 	def setEndPoint(self, other, which):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
-		return super().setEndPoint(
-			other,
-			self._endPointHelper(other, which, normalizeSrc=False)
-		)
+		# Even when a console textRange's start and end have been moved to the
+		# same position, the console incorrectly reports the end as being
+		# past the start.
+		selfEndPoint, otherEndPoint = which.split("To")
+		# In this case, there is no need to check selfEndPoint
+		# since it is about to be overwritten in the super call.
+		if otherEndPoint == "End" and not other.hasNoText:
+			otherEndPoint = "Start"
+		which = f"{selfEndPoint}To{otherEndPoint}"
+		return super().setEndPoint(other, which=which)
+
+	def _get_hasNoText(self):
+		return not bool(self._rangeObj.getText(1))
 
 	def _get_isCollapsed(self):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# To decide if the textRange is collapsed,
 		# Check if it has no text.
-		return not bool(self._rangeObj.getText(1))
-
-	def _endPointHelper(self, other, which, normalizeSrc=True):
-		"""
-		Even when a console textRange's start and end have been moved to the
-		same position, the console incorrectly reports the end as being
-		past the start.
-		Returns normalized endPoints to work around this."""
-		# Compare to the start (not the end) when collapsed.
-		src, target = which.split("To")
-		if normalizeSrc and src == "end" and not self.isCollapsed:
-			src = "start"
-		if target == "End" and not other.isCollapsed:
-			target = "Start"
-		return f"{src}To{target}"
+		return self.hasNoText
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
 		"""
