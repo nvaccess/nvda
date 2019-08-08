@@ -4,6 +4,72 @@ Our linting process with Flake8 consists of two main steps:
 - Generating a diff
 - Running Flake8 on the diff
 
+## Common problems
+There seem to be several common situations for which the Flake8 errors don't clearly indicate an error free solution.
+
+### Line-breaking functions and statements
+
+Lint errors you may encounter:
+- ET128 (flake8-tabs) *unexpected number of tabs and spaces at start of expression line*
+  - In particular, if this error message "expects x spaces", its likely that it is expecting a
+  code alignment style, rather than hanging indent style.
+  To change this expectation, first ensure that there is a newline after the opening
+  paren/bracket/brace.
+- ET121 (flake8-tabs) *unexpected number of tabs at start of definition line*
+
+#### Preferred formatting
+
+- Break after the parenthesis, putting the first parameter on a new line.
+- Double indent the params to avoid ET121
+
+```python
+# method with many parameters
+# start params on new line to avoid aligning with parenthesis.
+def foo(
+		arg1,  # double indent to avoid ET121
+		arg2
+):
+	# long expression
+	# start params on new line to avoid aligning with parenthesis.
+	if(
+		arg1 is not None
+		and arg2 is None
+	):
+		return None
+
+	values = [
+		"value1",
+		"value2",
+	]
+	return values
+
+```
+
+Note: A comment an inline comment causes an erroneous error from flake8-tabs:
+See https://gitlab.com/ntninja/flake8-tabs/issues/1
+EG:
+```python
+def foo(  # a comment here causes error ET128
+		arg1
+):
+	pass
+```
+
+#### Explanation
+
+An example of code that will trigger this lint error:
+```python
+def foo(arg1,
+	arg2,
+):
+	return None
+```
+
+The [Pep8 indentation guide](https://www.python.org/dev/peps/pep-0008/#indentation) seems to favour aligning the start of each parameter name to be to the right of the opening parenthesis (or bracket). 
+However, we don't use spaces which often makes this alignment impossible.
+Instead we choose the alternative style, hanging indent for parameters, and matching indentation for the closing bracket / parenthesis / brace.
+In function definitions we require double indentation of parameters to differentiate from the body of the function.
+
 ## Scons lint
 Executed with SCons.
 ```
