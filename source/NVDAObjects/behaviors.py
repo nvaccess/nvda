@@ -841,4 +841,5 @@ class NonEditableSelectableText(TextMonitor, SelectableText):
 	def _monitor(self):
 		while self._keepMonitoring:
 			self._waitForTextChange()
-			self.detectPossibleSelectionChange()
+			# Handle the sellection change from the main thread.
+			queueHandler.queueFunction(queueHandler.eventQueue, self.detectPossibleSelectionChange)
