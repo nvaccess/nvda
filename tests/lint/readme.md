@@ -5,70 +5,115 @@ Our linting process with Flake8 consists of two main steps:
 - Running Flake8 on the diff
 
 ## Common problems
-There seem to be several common situations for which the Flake8 errors don't clearly indicate an error free solution.
+There are several common situations for which the Flake8 errors don't clearly indicate an error free solution.
 
-### Line-breaking functions and statements
+### Continuation lines
 
-Lint errors you may encounter:
-- ET128 (flake8-tabs) *unexpected number of tabs and spaces at start of expression line*
-  - In particular, if this error message "expects x spaces", its likely that it is expecting a
-  code alignment style, rather than hanging indent style.
-  To change this expectation, first ensure that there is a newline after the opening
-  paren/bracket/brace.
-- ET121 (flake8-tabs) *unexpected number of tabs at start of definition line*
+According to the
+[Pep8 indentation guide](https://www.python.org/dev/peps/pep-0008/#indentation),
+continuation lines (Python's implicit line joining inside parentheses) are expected
+to follow one of two main styles:
 
-#### Preferred formatting
+- Vertical alignment
+  - The first parameter is on the same line as the opening parenthesis
+  - For each subsequent line, the first character should be aligned with the
+    first character of the first parameter.
+- Hanging indent
+  - There is no parameter on the same line as the opening parenthesis.
+  - The first parameter is indented by a standard amount on the following line.
+  - All subsequent parameters have the same indent.
 
-- Break after the parenthesis, putting the first parameter on a new line.
-- Double indent the params to avoid ET121
+What this means for us:
+- Vertical alignment
+  - Requires spaces to meet the length of arbitrary function/variable names
+  - Requires counting characters to determine the number of spaces before arguments
+  - Alignment must be changed if the function/variable name changes.
+- Hanging indent
+  - Fixed indentation
+  - Takes up more vertical space
+
+The Flake8 checkers don't know which style we intend, they allow for both. It guesses
+which one you want based on the location of the first token after the opening parenthesis.
+The expected indentation it suggests can cause confusion, especially if the indentation is
+as expected, but the first param/condition/item is on the same line as the opening parenthesis.
+
+#### Preferred formatting for continuation lines
+
+- Use hanging indent style.
+  - Line break after the opening parenthesis, putting the first parameter on a new line.
+- For function definitions, double indent the params to avoid ET121
 
 ```python
 # method with many parameters
-# start params on new line to avoid aligning with parenthesis.
+# use "hanging indent style" - start params on new line to avoid ET128
 def foo(
 		arg1,  # double indent to avoid ET121
 		arg2
-):
+):  # put the closing paren on a new line, reduce the diff when changing parameters.
 	# long expression
-	# start params on new line to avoid aligning with parenthesis.
+	# use "hanging indent style" - start params on new line to avoid ET128
 	if(
-		arg1 is not None
+		arg1 is not None  # not a function definition, no double indent required
 		and arg2 is None
-	):
+	):  # put the closing paren on a new line, reduce the diff when changing conditions
 		return None
 
+	# use "hanging indent style" - start params on new line to avoid ET128
 	values = [
-		"value1",
+		"value1", # not a function definition, no double indent required
 		"value2",
-	]
+	]  # put the closing bracket on a new line, reduce the diff when adding items.
 	return values
 
 ```
 
-Note: A comment an inline comment causes an erroneous error from flake8-tabs:
-See https://gitlab.com/ntninja/flake8-tabs/issues/1
+Note: An inline comment on an opening parenthesis/bracket/brace causes an
+erroneous message from flake8-tabs. See https://gitlab.com/ntninja/flake8-tabs/issues/1
 EG:
 ```python
 def foo(  # a comment here causes error ET128
 		arg1
 ):
-	pass
+	items = [  # a comment here causes error ET128
+		"item1",
+		"item2",
+	]
 ```
 
-#### Explanation
+#### ET128 (flake8-tabs)
 
-An example of code that will trigger this lint error:
+Error messages:
+- *unexpected number of tabs at start of definition line*
+- *unexpected number of tabs and spaces at start of expression line*s
+
+Its likely that this is triggered because the linter is expectig "vertical alignment"
+style for the set of continuation lines, rather than "hanging indent" style. To change this,
+ensure that there is a newline after the opening paren/bracket/brace.
+
+An example cause:
 ```python
 def foo(arg1,
+	arg2,  # arg2 not vertically aligned with start of first parameter.
+):
+	return None
+```
+
+#### ET121 (flake8-tabs)
+
+Error messages:
+- *unexpected number of tabs at start of definition line (expected 2, got 1)*
+
+Example cause:
+```python
+def foo(
+	arg1,  # one level of indentation, matches the function body
 	arg2,
 ):
 	return None
 ```
 
-The [Pep8 indentation guide](https://www.python.org/dev/peps/pep-0008/#indentation) seems to favour aligning the start of each parameter name to be to the right of the opening parenthesis (or bracket). 
-However, we don't use spaces which often makes this alignment impossible.
-Instead we choose the alternative style, hanging indent for parameters, and matching indentation for the closing bracket / parenthesis / brace.
-In function definitions we require double indentation of parameters to differentiate from the body of the function.
+In function definitions we require double indentation of parameters to differentiate from
+the body of the function.
 
 ## Scons lint
 Executed with SCons.
