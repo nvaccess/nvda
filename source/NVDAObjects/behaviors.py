@@ -834,6 +834,9 @@ class NonEditableSelectableText(TextMonitor, SelectableText):
 	def event_gainFocus(self):
 		super().event_gainFocus()
 		self.startMonitoring()
+		# Announce the current selection on focus.
+		if self._lastSelectionPos:
+			speech.speakTextInfo(self._lastSelectionPos, reason=controlTypes.REASON_FOCUS)
 
 	def event_loseFocus(self):
 		self.stopMonitoring()
