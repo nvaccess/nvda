@@ -32,12 +32,12 @@ class MMCTableCell(IAccessible):
 
 	def _get_positionInfo(self):
 		""" When 'Guess object position info when unavailable' is enabled
-		these controls reports very strange information such as 65537 of 12, especially in braille.
+		these controls report very strange information such as 65537 of 12, especially in braille.
 		Disable reporting of position info all together. """
 		return None
 
 
-class emptyToolTip(ToolTip):
+class toolTipWithEmptyName(ToolTip):
 	previousToolTipText = ''
 
 	def _get_name(self):
@@ -48,10 +48,10 @@ class emptyToolTip(ToolTip):
 	def event_show(self):
 		# Stop repeating the same tooltip over and over again.
 		toolTipText = self.displayText
-		if toolTipText != emptyToolTip.previousToolTipText:
-			emptyToolTip.previousToolTipText = toolTipText
-			return super(emptyToolTip, self).event_show()
-		return None
+		if toolTipText != toolTipWithEmptyName.previousToolTipText:
+			toolTipWithEmptyName.previousToolTipText = toolTipText
+			super().event_show()
+
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -62,4 +62,4 @@ class AppModule(appModuleHandler.AppModule):
 			controlTypes.ROLE_TABLEROWHEADER):
 				clsList.insert(0, MMCTableCell)
 		if obj.windowClassName == "tooltips_class32" and obj.name is None:
-			clsList.insert(0, emptyToolTip)
+			clsList.insert(0, toolTipWithEmptyName)
