@@ -168,19 +168,23 @@ class consoleUIATextInfo(UIATextInfo):
 		return super().compareEndPoints(other, which=which)
 
 	def setEndPoint(self, other, which):
-		"""Works around a UIA bug on Windows 10 1803 and later."""
+		"""Override of L{textInfos.TextInfo.setEndPoint}.
+		Works around a UIA bug on Windows 10 1803 and later that means we can not trust 
+		the "end" endpoint of a collapsed (empty) text range for comparisons.
+		"""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
 		selfEndPoint, otherEndPoint = which.split("To")
-		# In this case, there is no need to check selfEndPoint
-		# since it is about to be overwritten in the super call.
+		# In this case, there is no need to check if self is collapsed
+		# since the point of this method is to change its text range, modifying the "end" endpoint of a collapsed
+		# textrange is fine.
 		if otherEndPoint == "End" and not other.hasNoText:
 			otherEndPoint = "Start"
 		which = f"{selfEndPoint}To{otherEndPoint}"
 		return super().setEndPoint(other, which=which)
 
-	def _get_hasNoText(self):
+	def _get__isCollapsed(self):
 		return not bool(self._rangeObj.getText(1))
 
 	def _get_isCollapsed(self):
