@@ -133,28 +133,28 @@ class VisionHandler(AutoPropertyObject):
 				log.error("Error while reinitializing provider %s" % providerName, exc_info=True)
 				return False
 		else:
-			providerCls = getProviderClass(providerName)
-			if not providerCls.canStart():
-				log.error("Trying to initialize provider %s which reported being unable to start" % providerName)
-				return False
-			# Initialize the provider.
 			try:
+				providerCls = getProviderClass(providerName)
+				if not providerCls.canStart():
+					log.error("Trying to initialize provider %s which reported being unable to start" % providerName)
+					return False
+				# Initialize the provider.
 				providerInst = providerCls()
+				# Register extension points.
+				try:
+					providerInst.registerEventExtensionPoints(self.extensionPoints)
+				except Exception as registerEventExtensionPointsException:
+					log.error(f"Error while registering to extension points for provider {providerName}", exc_info=True)
+					try:
+						providerInst.terminate()
+					except Exception as terminateException:
+						log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
+					raise registerEventExtensionPointsException
 			except Exception:
 				# Purposely catch everything.
 				# A provider can raise whatever exception,
 				# therefore it is unknown what to expect.
 				log.error("Error while initializing provider %s" % providerName, exc_info=True)
-				return False
-			# Register extension points.
-			try:
-				providerInst.registerEventExtensionPoints(self.extensionPoints)
-			except Exception:
-				log.error(f"Error while registering to extension points for provider {providerName}", exc_info=True)
-				try:
-					providerInst.terminate()
-				except Exception:
-					log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
 				return False
 		providerInst.initSettings()
 		if not temporary and providerCls.name not in config.conf['vision']['providers']:
