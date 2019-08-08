@@ -169,8 +169,9 @@ class consoleUIATextInfo(UIATextInfo):
 
 	def setEndPoint(self, other, which):
 		"""Override of L{textInfos.TextInfo.setEndPoint}.
-		Works around a UIA bug on Windows 10 1803 and later that means we can not trust 
-		the "end" endpoint of a collapsed (empty) text range for comparisons.
+		Works around a UIA bug on Windows 10 1803 and later that means we can
+		not trust the "end" endpoint of a collapsed (empty) text range
+		for comparisons.
 		"""
 		selfEndPoint, otherEndPoint = which.split("To")
 		# In this case, there is no need to check if self is collapsed
@@ -182,8 +183,12 @@ class consoleUIATextInfo(UIATextInfo):
 		return super().setEndPoint(other, which=which)
 
 	def _get__isCollapsed(self):
-		"""Works around a UIA bug on Windows 10 1803 and later that means we can not trust the "end" endpoint of a collapsed (empty) text range for comparisons.
-		Instead we check to see if we can get the first character from the text range. A collapsed range will not have any characters and will return an empty string."""
+		"""Works around a UIA bug on Windows 10 1803 and later that means we
+		cannot trust the "end" endpoint of a collapsed (empty) text range
+		for comparisons.
+		Instead we check to see if we can get the first character from the
+		text range. A collapsed range will not have any characters
+		and will return an empty string."""
 		return not bool(self._rangeObj.getText(1))
 
 	def _get_isCollapsed(self):
