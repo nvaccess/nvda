@@ -235,7 +235,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	_TextInfo = consoleUIATextInfo
+	TextInfo = consoleUIATextInfo
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
