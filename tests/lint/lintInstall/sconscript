@@ -23,7 +23,7 @@ doInstall = env.Command(
 		# Install deps from requirements file.
 		[
 			sys.executable, "-m", "pip",
-			"install", "-r", "$SOURCE",
+			"install", "--user", "-r", "$SOURCE",
 		],
 		# Copy the requirements file, this is used to stop scons from
 		# triggering pip from attempting re-installing when nothing has
