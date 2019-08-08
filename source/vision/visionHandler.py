@@ -147,7 +147,7 @@ class VisionHandler(AutoPropertyObject):
 					log.error(f"Error while registering to extension points for provider {providerName}", exc_info=True)
 					try:
 						providerInst.terminate()
-					except Exception as terminateException:
+					except Exception:
 						log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
 					raise registerEventExtensionPointsException
 			except Exception:
