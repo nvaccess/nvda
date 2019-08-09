@@ -36,13 +36,12 @@ class IndexCommand(SynthCommand):
 	NVDA handles the indexing and dispatches callbacks as appropriate.
 	"""
 
-	def __init__(self,index):
+	def __init__(self, index: int):
 		"""
 		@param index: the value of this index
-		@type index: integer
 		"""
-		if not isinstance(index,int):
-			raise TypeError("index must be int, not %s"%type(index))
+		if not isinstance(index, int):
+			raise TypeError(f"index must be int, not {type(index)}")
 		self.index=index
 
 	def __repr__(self):
@@ -251,7 +250,9 @@ class BaseCallbackCommand(SpeechCommand, metaclass=ABCMeta):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 		"""
 
+
 SUPPORTED_CALLBACK_TYPES = (FunctionType, MethodType, partial)
+
 
 class CallbackCommand(BaseCallbackCommand):
 	"""

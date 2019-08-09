@@ -153,14 +153,18 @@ class _TextReader(object):
 			bookmark=bookmark,
 			state=self.speakTextInfoState.copy()
 		))
-		spoke = speech.speakTextInfo(self.reader, unit=textInfos.UNIT_READINGCHUNK,
-			reason=controlTypes.REASON_SAYALL, _prefixSpeechCommand=cb,
+		spoke = speech.speakTextInfo(
+			self.reader,
+			unit=textInfos.UNIT_READINGCHUNK,
+			reason=controlTypes.REASON_SAYALL,
+			_prefixSpeechCommand=cb,
 			_whiteSpaceReachedCallback=(
 				self.endOfWhiteSpaceReached
 				if config.conf["speech"]["increaseSayAllCaretUpdates"]
 				else None
 			),
-			useCache=self.speakTextInfoState)
+			useCache=self.speakTextInfoState
+		)
 		# Collapse to the end of this line, ready to read the next.
 		try:
 			self.reader.collapse(end=True)

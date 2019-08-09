@@ -30,9 +30,18 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from .commands import *
+from .commands import (
+	SpeechCommand,
+	PitchCommand,
+	LangChangeCommand,
+	CharacterModeCommand,
+	BeepCommand,
+	EndUtteranceCommand,
+	CallbackCommand,
+)
 from typing import Optional, Callable, Any
 from functools import partial
-from types import GeneratorType
+
 
 speechMode_off=0
 speechMode_beeps=1
@@ -769,15 +778,19 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 	except (NotImplementedError, LookupError):
 		return
 
+
 re_white_space = re.compile(r"(\s+|$)", re.DOTALL)
+
 
 class _TextChunk(str):
 	"""str subclass to distinguish normal text from field text when processing text info speech."""
 
-def speakTextInfo(
+
+# Ignore C901: 'speakTextInfo' is too complex
+def speakTextInfo(  # noqa: C901
 		info: textInfos.TextInfo,
 		useCache: bool = True,
-		formatConfig: Optional[dict]=None,
+		formatConfig: Optional[dict] = None,
 		unit: Optional[str] = None,
 		reason: str = controlTypes.REASON_QUERY,
 		_prefixSpeechCommand: SpeechCommand = None,
@@ -1030,7 +1043,7 @@ def speakTextInfo(
 	# only add this text if it is not blank.
 	notBlank = any(
 		not isBlank(x) for x in relativeSpeechSequence
-		if isinstance(x,str)
+		if isinstance(x, str)
 	)
 	if notBlank:
 		isTextBlank=False
@@ -1811,7 +1824,8 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
 
-re_last_pause=re.compile(r"^(.*?(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)", re.DOTALL)
+
+re_last_pause = re.compile(r"^(.*?(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)", re.DOTALL)
 
 def speakWithoutPauses(speechSequence,detectBreaks=True):
 	"""
