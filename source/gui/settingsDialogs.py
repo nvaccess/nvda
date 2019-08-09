@@ -1255,7 +1255,7 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 		# voice settings panel.
 		increaseSayAllCaretUpdatesText = _("Increase caret updates during say all")
 		self.increaseSayAllCaretUpdatesCheckBox = settingsSizerHelper.addItem(wx.CheckBox(self, label = increaseSayAllCaretUpdatesText))
-		self.increaseSayAllCaretUpdatesCheckBox.Value = config.conf["speech"]["increaseSayAllCaretUpdates"]
+		self.increaseSayAllCaretUpdatesCheckBox.Value = config.conf["speech"][self.driver.name]["increaseSayAllCaretUpdates"]
 
 	def onSave(self):
 		DriverSettingsMixin.onSave(self)
@@ -1273,7 +1273,8 @@ class VoiceSettingsPanel(DriverSettingsMixin, SettingsPanel):
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"]=self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"]=self.beepForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["useSpellingFunctionality"]=self.useSpellingFunctionalityCheckBox.IsChecked()
-		config.conf["speech"]["increaseSayAllCaretUpdates"] = self.increaseSayAllCaretUpdatesCheckBox.IsChecked()
+		config.conf["speech"][self.driver.name]["increaseSayAllCaretUpdates"] = self.increaseSayAllCaretUpdatesCheckBox.IsChecked()
+
 
 class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
