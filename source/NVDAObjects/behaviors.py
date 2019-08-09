@@ -826,6 +826,8 @@ class NonEditableSelectableText(TextMonitor, SelectableText):
 	"""
 
 	speakUnselected = False
+	# Content will be announced based on SelectableText
+	value = None
 
 	def startMonitoring(self):
 		self.initAutoSelectDetection()
