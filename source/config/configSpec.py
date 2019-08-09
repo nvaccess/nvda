@@ -11,11 +11,11 @@ from configobj import ConfigObj
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 2
+latestSchemaVersion = 3
 
 #: The configuration specification string
 #: @type: String
-configSpecString = ("""# NVDA Configuration File
+configSpecString = (f"""# NVDA Configuration File
 schemaVersion = integer(min=0, default={latestSchemaVersion})
 [general]
 	language = string(default="Windows")
@@ -189,7 +189,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=true)
 	useInMSWordWhenAvailable = boolean(default=false)
 	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
-	winConsoleSpeakPasswords = boolean(default=false)
+
+[terminals]
+	speakPasswords = boolean(default=false)
+	keyboardSupportInLegacy = boolean(default=True)
 
 [update]
 	autoCheck = boolean(default=true)
@@ -222,7 +225,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [development]
 	enableScratchpadDir = boolean(default=false)
-""").format(latestSchemaVersion=latestSchemaVersion)
+""")
 
 #: The configuration specification
 #: @type: ConfigObj

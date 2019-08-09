@@ -1,9 +1,11 @@
 # -*- coding: UTF-8 -*-
-#settingsDialogs.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# settingsDialogs.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import logging
 from abc import abstractmethod
@@ -42,6 +44,7 @@ except RuntimeError:
 import inputCore
 from . import nvdaControls
 from driverHandler import *
+from UIAUtils import shouldUseUIAConsole
 import touchHandler
 import winVersion
 import weakref
@@ -2060,20 +2063,66 @@ class AdvancedPanelControls(wx.Panel):
 		self.UIAInMSWordCheckBox.SetValue(config.conf["UIA"]["useInMSWordWhenAvailable"])
 		self.UIAInMSWordCheckBox.defaultValue = self._getDefaultValue(["UIA", "useInMSWordWhenAvailable"])
 
-		# Translators: This is the label for a checkbox in the
-		#  Advanced settings panel.
-		label = _("Use UI Automation to access the Windows Console when available")
-		consoleUIADevMap = True if config.conf['UIA']['winConsoleImplementation'] == 'UIA' else False
-		self.ConsoleUIACheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.ConsoleUIACheckBox.SetValue(consoleUIADevMap)
-		self.ConsoleUIACheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		# Translators: This is the label for a combo box for selecting the
+		# active console implementation in the advanced settings panel.
+		# Choices are automatic, prefer UIA, and legacy.
+		consoleComboText = _("Windows C&onsole support:")
+		consoleChoices = [
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA determine its Windows Console implementation
+			# automatically.
+			_("Automatic"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use UIA in the Windows Console when available.
+			_("Prefer UIA"),
+			# Translators: A choice in a combo box in the advanced settings
+			# panel to have NVDA use its legacy Windoes Console support
+			# in all cases.
+			_("Legacy")
+		]
+		#: The possible console config values, in the order they appear
+		#: in the combo box.
+		self.consoleVals = (
+			"auto",
+			"UIA",
+			"legacy"
+		)
+		self.consoleCombo = UIAGroup.addLabeledControl(consoleComboText, wx.Choice, choices=consoleChoices)
+		self.consoleCombo.Bind(
+			wx.EVT_CHOICE,
+			self.enableConsolePasswordsCheckBox,
+			self.consoleCombo
+		)
+		curChoice = self.consoleVals.index(
+			config.conf['UIA']['winConsoleImplementation']
+		)
+		self.consoleCombo.SetSelection(curChoice)
+		self.consoleCombo.defaultValue = self.consoleVals.index(
+			self._getDefaultValue(["UIA", "winConsoleImplementation"])
+		)
 
+		# Translators: This is the label for a group of advanced options in the
+		#  Advanced settings panel
+		label = _("Terminal programs")
+		terminalsGroup = guiHelper.BoxSizerHelper(
+			parent=self,
+			sizer=wx.StaticBoxSizer(parent=self, label=label, orient=wx.VERTICAL)
+		)
+		sHelper.addItem(terminalsGroup)
 		# Translators: This is the label for a checkbox in the
 		#  Advanced settings panel.
-		label = _("Speak &passwords in UIA consoles (may improve performance)")
-		self.winConsoleSpeakPasswordsCheckBox=UIAGroup.addItem(wx.CheckBox(self, label=label))
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(config.conf["UIA"]["winConsoleSpeakPasswords"])
-		self.winConsoleSpeakPasswordsCheckBox.defaultValue = self._getDefaultValue(["UIA", "winConsoleSpeakPasswords"])
+		label = _("Speak &passwords in Windows Console (may improve performance)")
+		self.speakPasswordsCheckBox = terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.speakPasswordsCheckBox.SetValue(config.conf["terminals"]["speakPasswords"])
+		self.speakPasswordsCheckBox.defaultValue = self._getDefaultValue(["terminals", "speakPasswords"])
+		self.enableConsolePasswordsCheckBox()
+		# Translators: This is the label for a checkbox in the
+		#  Advanced settings panel.
+		label = _("Use the new t&yped character support in legacy Windows consoles when available")
+		self.keyboardSupportInLegacyCheckBox=terminalsGroup.addItem(wx.CheckBox(self, label=label))
+		self.keyboardSupportInLegacyCheckBox.SetValue(config.conf["terminals"]["keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.defaultValue = self._getDefaultValue(["terminals", "keyboardSupportInLegacy"])
+		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.isWin10(1607))
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -2147,6 +2196,13 @@ class AdvancedPanelControls(wx.Panel):
 		]
 		self.Layout()
 
+	def enableConsolePasswordsCheckBox(self, evt=None):
+		return self.speakPasswordsCheckBox.Enable(
+			shouldUseUIAConsole(self.consoleVals[
+				self.consoleCombo.GetSelection()
+			])
+		)
+
 	def onOpenScratchpadDir(self,evt):
 		path=config.getScratchpadDir(ensureExists=True)
 		os.startfile(path)
@@ -2159,8 +2215,9 @@ class AdvancedPanelControls(wx.Panel):
 			self._defaultsRestored and
 			self.scratchpadCheckBox.IsChecked() == self.scratchpadCheckBox.defaultValue and
 			self.UIAInMSWordCheckBox.IsChecked() == self.UIAInMSWordCheckBox.defaultValue and
-			self.ConsoleUIACheckBox.IsChecked() == (self.ConsoleUIACheckBox.defaultValue=='UIA') and
-			self.winConsoleSpeakPasswordsCheckBox.IsChecked() == self.winConsoleSpeakPasswordsCheckBox.defaultValue and
+			self.consoleCombo.GetSelection() == self.consoleCombo.defaultValue and
+			self.speakPasswordsCheckBox.IsChecked() == self.speakPasswordsCheckBox.defaultValue and
+			self.keyboardSupportInLegacyCheckBox.IsChecked() == self.keyboardSupportInLegacyCheckBox.defaultValue and
 			self.autoFocusFocusableElementsCheckBox.IsChecked() == self.autoFocusFocusableElementsCheckBox.defaultValue and
 			self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue and
 			set(self.logCategoriesList.CheckedItems) == set(self.logCategoriesList.defaultCheckedItems) and
@@ -2170,8 +2227,9 @@ class AdvancedPanelControls(wx.Panel):
 	def restoreToDefaults(self):
 		self.scratchpadCheckBox.SetValue(self.scratchpadCheckBox.defaultValue)
 		self.UIAInMSWordCheckBox.SetValue(self.UIAInMSWordCheckBox.defaultValue)
-		self.ConsoleUIACheckBox.SetValue(self.ConsoleUIACheckBox.defaultValue=='UIA')
-		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
+		self.consoleCombo.SetSelection(self.consoleCombo.defaultValue == 'UIA')
+		self.speakPasswordsCheckBox.SetValue(self.speakPasswordsCheckBox.defaultValue)
+		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
 		self.autoFocusFocusableElementsCheckBox.SetValue(self.autoFocusFocusableElementsCheckBox.defaultValue)
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -2181,11 +2239,12 @@ class AdvancedPanelControls(wx.Panel):
 		log.debug("Saving advanced config")
 		config.conf["development"]["enableScratchpadDir"]=self.scratchpadCheckBox.IsChecked()
 		config.conf["UIA"]["useInMSWordWhenAvailable"]=self.UIAInMSWordCheckBox.IsChecked()
-		if self.ConsoleUIACheckBox.IsChecked():
-			config.conf['UIA']['winConsoleImplementation'] = "UIA"
-		else:
-			config.conf['UIA']['winConsoleImplementation'] = "auto"
-		config.conf["UIA"]["winConsoleSpeakPasswords"]=self.winConsoleSpeakPasswordsCheckBox.IsChecked()
+		consoleChoice = self.consoleCombo.GetSelection()
+		config.conf['UIA']['winConsoleImplementation'] = (
+			self.consoleVals[consoleChoice]
+		)
+		config.conf["terminals"]["speakPasswords"] = self.speakPasswordsCheckBox.IsChecked()
+		config.conf["terminals"]["keyboardSupportInLegacy"]=self.keyboardSupportInLegacyCheckBox.IsChecked()
 		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = self.autoFocusFocusableElementsCheckBox.IsChecked()
 		config.conf["editableText"]["caretMoveTimeoutMs"]=self.caretMoveTimeoutSpinControl.GetValue()
 		for index,key in enumerate(self.logCategories):

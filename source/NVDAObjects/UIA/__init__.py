@@ -26,6 +26,7 @@ import api
 import textInfos
 from logHandler import log
 from UIAUtils import *
+from UIAUtils import shouldUseUIAConsole
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog, Notification, EditableTextWithSuggestions, ToolTip
@@ -871,7 +872,7 @@ class UIA(Window):
 		# Support Windows Console's UIA interface
 		if (
 			self.windowClassName == "ConsoleWindowClass"
-			and config.conf['UIA']['winConsoleImplementation'] == "UIA"
+			and shouldUseUIAConsole()
 		):
 			from . import winConsoleUIA
 			winConsoleUIA.findExtraOverlayClasses(self, clsList)
