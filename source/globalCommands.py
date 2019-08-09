@@ -2250,8 +2250,8 @@ class GlobalCommands(ScriptableObject):
 			# Don't bother clicking when parts or the entire object is offscreen.
 			if min(left,top,width,height)<0:
 				return
-			x=left+(width/2)
-			y=top+(height/2)
+			x=left+(width//2)
+			y=top+(height//2)
 		winUser.setCursorPos(x,y)
 		self.script_rightMouseClick(gesture)
 	# Translators: Input help mode message for touch right click command.
