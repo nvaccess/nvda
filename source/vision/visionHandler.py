@@ -20,7 +20,7 @@ import api
 import config
 from logHandler import log
 import visionEnhancementProviders
-import wx
+import queueHandler
 from typing import Type, Dict, List
 
 
@@ -61,11 +61,11 @@ class VisionHandler(AutoPropertyObject):
 	def __init__(self):
 		self.providers: Dict[str, VisionEnhancementProvider] = dict()
 		self.extensionPoints: EventExtensionPoints = EventExtensionPoints()
-		wx.CallAfter(self.postGuiInit)
+		queueHandler.queueFunction(queueHandler.eventQueue, self.postGuiInit)
 
 	def postGuiInit(self) -> None:
 		"""Handles first initialization of the handler as a config profile switch.
-		This is executed on the main thread by L{__init__} using a {wx.CallAfter} call.
+		This is executed on the main thread by L{__init__} using the events queue.
 		This ensures that the gui is fully initialized before providers are initialized that might rely on it.
 		"""
 		self.handleConfigProfileSwitch()

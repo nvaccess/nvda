@@ -35,9 +35,6 @@ sys.path.insert(1, SOURCE_DIR)
 # as this module is imported to expand the system path.
 import sourceEnv  # noqa: F401
 
-# Suppress Flake8 warning E402 (Module level import not at top of file)
-import wx  # noqa: E402
-
 # Set options normally taken from the command line.
 import globalVars
 class AppArgs:
@@ -75,8 +72,6 @@ languageHandler.setLanguage("en")
 # NVDAObjects need appModuleHandler to be initialized.
 import appModuleHandler
 appModuleHandler.initialize()
-# Vision needs a wx app to be available.
-app = wx.App()
 # Anything which notifies of cursor updates requires braille and vision to be initialized.
 # Suppress Flake8 warning E402 (Module level import not at top of file)
 import vision  # noqa: E402
