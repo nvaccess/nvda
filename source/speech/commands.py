@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited
+# speech/commands.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 
 """Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running other callbacks."""
 
