@@ -86,7 +86,7 @@ Error messages:
 - *unexpected number of tabs at start of definition line*
 - *unexpected number of tabs and spaces at start of expression line*s
 
-Its likely that this is triggered because the linter is expectig "vertical alignment"
+Its likely that this is triggered because the linter is expecting "vertical alignment"
 style for the set of continuation lines, rather than "hanging indent" style. To change this,
 ensure that there is a newline after the opening paren/bracket/brace.
 
