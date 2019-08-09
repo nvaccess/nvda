@@ -1053,8 +1053,8 @@ def speakTextInfo(
 					if whiteSpaceTracker.compareEndPoints(info, "startToEnd") > 0:
 						break
 					bookmark = whiteSpaceTracker.bookmark
-					cb = partial(_whiteSpaceReachedCallback, bookmark=bookmark)
-					curCommandSequence.append(CallbackCommand(cb))
+					callback = partial(_whiteSpaceReachedCallback, bookmark=bookmark)
+					curCommandSequence.append(CallbackCommand(callback))
 					# The whiteSpaceTracker shouldn't move past the end of the info we're speaking.
 					start = end
 				relativeSpeechSequence[index] = curCommandSequence
