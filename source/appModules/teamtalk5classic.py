@@ -21,10 +21,53 @@ from NVDAObjects.IAccessible import IAccessible
 # These are name sets per client version.
 # Stored in reverse so current clients find the right list faster.
 _msgNames = {
-	"4.5": [_("Connected"), "sep", _("Push To Talk"), _("Voice Activation"), _("Video"), _("Desktop"), _("Stream To Channel"), "sep", _("Mute All"), _("Store Audio"), "sep", _("Show Channel Messages")],
-	"4.3": [_("Connected"), "sep", _("Push To Talk"), _("Voice Activation"), _("Video"), _("Desktop"), _("Mute All"), _("Store Audio"), "sep", _("Show Channel Messages")],
-	"4.2": [_("Connected"), "sep", _("Push To Talk"), _("Voice Activation"), "sep", _("Mute All"), _("Store Audio"), "sep", _("Show Channel Messages")],
-	"4.1": [_("Connected"), "sep", _("Push To Talk"), _("Voice Activation"), "sep", _("Mute All"), "sep", _("Show Channel Messages")],
+	"4.5": [
+		_("Connected"),
+		"sep",
+		_("Push To Talk"),
+		_("Voice Activation"),
+		_("Video"),
+		_("Desktop"),
+		_("Stream To Channel"),
+		"sep",
+		_("Mute All"),
+		_("Store Audio"),
+		"sep",
+		_("Show Channel Messages"),
+	],
+	"4.3": [
+		_("Connected"),
+		"sep",
+		_("Push To Talk"),
+		_("Voice Activation"),
+		_("Video"),
+		_("Desktop"),
+		_("Mute All"),
+		_("Store Audio"),
+		"sep",
+		_("Show Channel Messages"),
+	],
+	"4.2": [
+		_("Connected"),
+		"sep",
+		_("Push To Talk"),
+		_("Voice Activation"),
+		"sep",
+		_("Mute All"),
+		_("Store Audio"),
+		"sep",
+		_("Show Channel Messages"),
+	],
+	"4.1": [
+		_("Connected"),
+		"sep",
+		_("Push To Talk"),
+		_("Voice Activation"),
+		"sep",
+		_("Mute All"),
+		"sep",
+		_("Show Channel Messages"),
+	],
 }
 
 # How checkboxes on the toolbar are announced when activated (checked) or deactivated.
@@ -34,9 +77,11 @@ _msgInactive = _("%s disabled")
 _msgConnected = _("Connected")
 _msgDisconnected = _("Disconnected")
 
+
 class TTToolBarInfo(object):
 	"""Info about one TeamTalk toolbar and its items.
 	"""
+
 	def __init__(self, NVDAObj=None):
 		if not NVDAObj:
 			# Use the IAccessible for the active TeamTalk instance's toolbar.
@@ -55,24 +100,31 @@ class TTToolBarInfo(object):
 
 	def getToolBar(self):
 		# First lastChild is a Window object, then the client toolbar object.
-		try: tb = api.getForegroundObject().lastChild.lastChild
-		except AttributeError: tb = None
+		try:
+			tb = api.getForegroundObject().lastChild.lastChild
+		except AttributeError:
+			tb = None
 		return tb
 
 	def name(self, itemID):
 		"""The name of one item.
 		"""
-		if itemID <= 0: return ""
+		if itemID <= 0:
+			return ""
 		# ChildIDs are 1-based, but Python arrays are 0-based.
-		try: name = self.names[itemID-1]
-		except IndexError: return ""
-		if name == "sep": return ""
+		try:
+			name = self.names[itemID - 1]
+		except IndexError:
+			return ""
+		if name == "sep":
+			return ""
 		return name
 
 
 class TTToolBar(IAccessible):
 	def initOverlayClass(self):
 		self.info = TTToolBarInfo(self)
+
 
 class TTToolBarItem(IAccessible):
 	def event_valueChange(self):
@@ -84,10 +136,10 @@ class TTToolBarItem(IAccessible):
 
 
 class AppModule(appModuleHandler.AppModule):
-	def event_NVDAObject_init(self,obj):
+	def event_NVDAObject_init(self, obj):
 		# The richedit control displaying incoming chat does not return correct _isWindowUnicode flag.
-		if obj.windowClassName=="RichEdit20A":
-			obj._isWindowUnicode=False
+		if obj.windowClassName == "RichEdit20A":
+			obj._isWindowUnicode = False
 		# Label channel chat in/out controls.
 		if obj.windowControlID == 1204:
 			obj.name = _("Channel messages")
@@ -109,7 +161,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# There is a VU meter progress bar in the main window which we don't want to get anounced as all the other progress bars.
-		if obj.windowClassName=="msctls_progress32" and obj.name==_('VU'):
+		if obj.windowClassName == "msctls_progress32" and obj.name == _("VU"):
 			try:
 				clsList.remove(ProgressBar)
 			except ValueError:
@@ -132,22 +184,24 @@ class AppModule(appModuleHandler.AppModule):
 		On two presses, says all states.
 		"""
 		info = TTToolBarInfo()
-		if not info: return
+		if not info:
+			return
 		scnt = scriptHandler.getLastScriptRepeatCount()
 		if scnt > 0:
-			[speech.speakObject(o)
+			[
+				speech.speakObject(o)
 				for o in info.NVDAObj.children
 				if o.role == controlTypes.ROLE_CHECKBOX
 				and not (controlTypes.STATE_UNAVAILABLE in o.states)
 			]
 			return
 		for o in info.NVDAObj.children:
-			if o.role != controlTypes.ROLE_CHECKBOX: continue
-			if (controlTypes.STATE_UNAVAILABLE in o.states): continue
-			if controlTypes.STATE_CHECKED not in o.states: continue
+			if o.role != controlTypes.ROLE_CHECKBOX:
+				continue
+			if controlTypes.STATE_UNAVAILABLE in o.states:
+				continue
+			if controlTypes.STATE_CHECKED not in o.states:
+				continue
 			speech.speakText(o.name)
 
-	__gestures = {
-		"kb:control+shift+s": "sayToolbarInfo"
-	}
-
+	__gestures = {"kb:control+shift+s": "sayToolbarInfo"}
