@@ -771,7 +771,7 @@ def _speakTextInfo_addMath(speechSequence, info, field):
 
 re_white_space = re.compile(r"(\s+|$)", re.DOTALL)
 
-class _TextCommand(str):
+class _TextChunk(str):
 	"""str subclass to distinguish normal text from field text when processing text info speech."""
 
 def speakTextInfo(
@@ -963,9 +963,9 @@ def speakTextInfo(
 					indentationDone=True
 			if command:
 				if inTextChunk:
-					relativeSpeechSequence[-1] = _TextCommand(relativeSpeechSequence[-1] + command)
+					relativeSpeechSequence[-1] = _TextChunk(relativeSpeechSequence[-1] + command)
 				else:
-					relativeSpeechSequence.append(_TextCommand(command))
+					relativeSpeechSequence.append(_TextChunk(command))
 					inTextChunk=True
 		elif isinstance(command,textInfos.FieldCommand):
 			newLanguage=None
@@ -1041,7 +1041,7 @@ def speakTextInfo(
 			whiteSpaceTracker = info.copy()
 			whiteSpaceTracker.collapse()
 			for index, command in list(enumerate(relativeSpeechSequence)):
-				if not isinstance(command, _TextCommand):
+				if not isinstance(command, _TextChunk):
 					continue
 				curCommandSequence = []
 				endOfWhiteSpaceIndexes = [m.end() for m in re_white_space.finditer(command)]
