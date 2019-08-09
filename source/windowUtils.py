@@ -14,6 +14,7 @@ from winUser import WNDCLASSEXW, WNDPROC, LRESULT
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
+from typing import Optional
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
@@ -150,38 +151,34 @@ class CustomWindow(AutoPropertyObject):
 			lpszClassName=cls.className,
 		)
 
+	_abstract_className = True
+
 	@classmethod
-	def _get_className(cls):
-		"""The class name of this window.
-		@rtype: str
-		"""
+	def _get_className(cls) -> str:
+		"""The class name of this window."""
 		return None
 
 	_hwndsToInstances = weakref.WeakValueDictionary()
 
 	def __init__(
 			self,
-			windowName=None,
-			windowStyle=0,
-			extendedWindowStyle=0,
-			parent=None
+			windowName: Optional[str] = None,
+			windowStyle: int = 0,
+			extendedWindowStyle: int = 0,
+			parent: Optional[int] = None
 	):
 		"""Constructor.
 		@param windowName: The name of the window.
-		@type windowName: str
 		@param windowStyle: The style of the window.
 			This is a combination of the C{winUser.WS_*} constants.
-		@type windowStyle: int
 		@param extendedWindowStyle: The extended style of the window.
 			This is a combination of the C{winUser.WS_EX_*} constants.
-		@type extendedWindowStyle: int
 		@param parent: The handle of the parent window, if any.
-		@type parent: int
 		@raise WindowsError: If an error occurs.
 		"""
 		if not isinstance(self.className, str):
 			raise TypeError("className attribute must be a unicode string")
-		if windowName and not isinstance(windowName, str):
+		if windowName is not None and not isinstance(windowName, str):
 			raise TypeError("windowName must be a unicode string")
 		if not isinstance(windowStyle, int):
 			raise TypeError("windowStyle must be an integer")
@@ -209,8 +206,7 @@ class CustomWindow(AutoPropertyObject):
 		if res == 0:
 			raise ctypes.WinError()
 		#: The handle to the created window.
-		#: @type: int
-		self.handle = res
+		self.handle: int = res
 		self._hwndsToInstances[res] = self
 
 	def destroy(self):
@@ -218,12 +214,18 @@ class CustomWindow(AutoPropertyObject):
 		This will be called automatically when this instance is deleted,
 		but you may wish to call it earlier.
 		"""
-		ctypes.windll.user32.DestroyWindow(self.handle)
+		if not ctypes.windll.user32.DestroyWindow(self.handle):
+			log.error(f"Error destroying window for {self.__class__.__qualname__}", exc_info=ctypes.WinError())
 		self.handle = None
-		ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance)
+		if not ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance):
+			log.error(
+				f"Error unregistering window class for {self.__class__.__qualname__}",
+				exc_info=ctypes.WinError()
+			)
+		self._classAtom = None
 
 	def __del__(self):
-		if self.handle:
+		if getattr(self, "handle", None):
 			self.destroy()
 
 	@abstractmethod
