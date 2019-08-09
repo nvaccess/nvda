@@ -775,16 +775,16 @@ class _TextChunk(str):
 	"""str subclass to distinguish normal text from field text when processing text info speech."""
 
 def speakTextInfo(
-	info,
-	useCache=True,
-	formatConfig=None,
-	unit=None,
-	reason=controlTypes.REASON_QUERY,
-	_prefixSpeechCommand=None,
-	_whiteSpaceReachedCallback: Optional[Callable[[Any], None]] = None,
-	onlyInitialFields=False,
-	suppressBlanks=False,
-	priority=None
+		info: textInfos.TextInfo,
+		useCache: bool = True,
+		formatConfig: Optional[dict]=None,
+		unit: Optional[str] = None,
+		reason: str = controlTypes.REASON_QUERY,
+		_prefixSpeechCommand: SpeechCommand = None,
+		_whiteSpaceReachedCallback: Optional[Callable[[Any], None]] = None,
+		onlyInitialFields: bool = False,
+		suppressBlanks: bool = False,
+		priority: int = None
 ):
 	onlyCache=reason==controlTypes.REASON_ONLYCACHE
 	processWhiteSpace: bool = _whiteSpaceReachedCallback is not None
