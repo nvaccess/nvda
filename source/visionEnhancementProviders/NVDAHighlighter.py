@@ -66,13 +66,12 @@ class HighlightWindow(CustomWindow):
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
 	extendedWindowStyle = winUser.WS_EX_TOPMOST | winUser.WS_EX_LAYERED
 	transparentColor = 0  # Black
-	transparentBrush = winGDI.gdi32.CreateSolidBrush(COLORREF(transparentColor))
 
 	@classmethod
 	def _get__wClass(cls):
-		wClass = super(HighlightWindow, cls)._wClass
+		wClass = super()._wClass
 		wClass.style = winUser.CS_HREDRAW | winUser.CS_VREDRAW
-		wClass.hbrBackground = cls.transparentBrush
+		wClass.hbrBackground = winGDI.gdi32.CreateSolidBrush(COLORREF(cls.transparentColor))
 		return wClass
 
 	def updateLocationForDisplays(self):
@@ -250,8 +249,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
-			# Joining the thread here somehow stops the quit message from arriving.
-			# self._highlighterThread.join()
+			self._highlighterThread.join()
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
