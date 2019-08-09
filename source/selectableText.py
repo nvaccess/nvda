@@ -10,6 +10,7 @@ from documentBase import TextContainerObject
 import braille
 import speech
 import textInfos
+from logHandler import log
 
 
 class SelectableText(TextContainerObject):
@@ -50,12 +51,18 @@ class SelectableText(TextContainerObject):
 			newInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except Exception:
 			# Just leave the old selection, which is usually better than nothing.
+			# We want to know what happened, though.
+			log.debugWarning(
+				f"{self!s} assumed new selection, but fetching failed",
+				exc_info=True
+			)
 			return
 		oldInfo = getattr(self, '_lastSelectionPos', None)
 		self._lastSelectionPos = newInfo.copy()
 		if not oldInfo:
 			# There's nothing we can do, but at least the last selection will be right next time.
 			self.isTextSelectionAnchoredAtStart = True
+			log.debug(f"No old textInfo for {self!s} to calculate possible selection change")
 			return
 		self._updateSelectionAnchor(oldInfo, newInfo)
 		hasContentChanged = getattr(self, 'hasContentChangedSinceLastSelection', False)
