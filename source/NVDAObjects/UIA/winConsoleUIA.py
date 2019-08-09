@@ -160,9 +160,9 @@ class consoleUIATextInfo(UIATextInfo):
 		# past the start.
 		# Compare to the start (not the end) when collapsed.
 		selfEndPoint, otherEndPoint = which.split("To")
-		if selfEndPoint == "end" and not self._isCollapsed:
+		if selfEndPoint == "end" and not self._isCollapsed():
 			selfEndPoint = "start"
-		if otherEndPoint == "End" and not other._isCollapsed:
+		if otherEndPoint == "End" and not other._isCollapsed():
 			otherEndPoint = "Start"
 		which = f"{selfEndPoint}To{otherEndPoint}"
 		return super().compareEndPoints(other, which=which)
@@ -177,12 +177,12 @@ class consoleUIATextInfo(UIATextInfo):
 		# In this case, there is no need to check if self is collapsed
 		# since the point of this method is to change its text range, modifying the "end" endpoint of a collapsed
 		# text range is fine.
-		if otherEndPoint == "End" and not other._isCollapsed:
+		if otherEndPoint == "End" and not other._isCollapsed():
 			otherEndPoint = "Start"
 		which = f"{selfEndPoint}To{otherEndPoint}"
 		return super().setEndPoint(other, which=which)
 
-	def _get__isCollapsed(self):
+	def _isCollapsed(self):
 		"""Works around a UIA bug on Windows 10 1803 and later that means we
 		cannot trust the "end" endpoint of a collapsed (empty) text range
 		for comparisons.
