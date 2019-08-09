@@ -72,8 +72,10 @@ class SelectableText(TextContainerObject):
 		# Import late to avoid circular import
 		from editableText import EditableText
 		if not isinstance(self, EditableText):
-			# This object has no caret, manually trigger a braille update.
-			braille.handler.handleUpdate(self)
+			# This object has no caret.
+			# Yet, handleUpdate does not scroll the display to the selection when it has to.
+			# handleCaretMove is also suitable to cover selection changes.
+			braille.handler.handleCaretMove(self)
 
 	def _updateSelectionAnchor(self, oldInfo, newInfo):
 		# Only update the value if the selection changed.
