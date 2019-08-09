@@ -90,6 +90,8 @@ Additionally, the following build time dependencies are included in Git submodul
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
+There is also a [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/) included for convenience.
+
 ### Other Dependencies
 To lint using Flake 8 locally using our SCons integration, some dependencies are installed (automatically) via pip.
 Although this [must be run manually](#linting-your-changes), developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
@@ -263,6 +265,7 @@ scons lint base=origin/master
 ```
 
 To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
+The NVDA repository contains a submodule with a workspace configuration for Visual Studio Code that has support for NVDA's Flake8 configuration built in.
 For more details, see `tests/lint/readme.md`
 
 ### System Tests
