@@ -1811,7 +1811,7 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 		textList.append(_("row %s")%rowNumber)
 	return " ".join(textList)
 
-re_last_pause=re.compile(r"^(.*?(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",re.DOTALL|re.UNICODE)
+re_last_pause=re.compile(r"^(.*?(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)", re.DOTALL)
 
 def speakWithoutPauses(speechSequence,detectBreaks=True):
 	"""
