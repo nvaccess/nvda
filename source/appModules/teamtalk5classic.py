@@ -15,67 +15,79 @@ from NVDAObjects.behaviors import ProgressBar
 from NVDAObjects.IAccessible import IAccessible
 
 # Constants
-# The names, in order, of the toolbar items.
-# The count must match exactly or this module will not function.
-# The name "sep" is a placeholder for separators in the toolbar.
-# These are name sets per client version.
-# Stored in reverse so current clients find the right list faster.
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_CONNECTED = _("Connected")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_PTT = _("Push To Talk")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_VOX = _("Voice Activation")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_VIDEO = _("Video")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_DESKTOP = _("Desktop")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_STREAM = _("Stream To Channel")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_MUTE = _("Mute All")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_RECORD = _("Store Audio")
+# Translators: Status text in the TeamTalk voice conferencing client.
+LBL_MSG = _("Show Channel Messages")
+
+#: The names, in order, of the toolbar items.
+#: The count must match exactly or this module will not function.
+#: The name "sep" is a placeholder for separators in the toolbar.
+#: These are name sets per client version.
+#: Stored in reverse so current clients find the right list faster.
 _msgNames = {
 	"4.5": [
-		_("Connected"),
+		LBL_CONNECTED,
 		"sep",
-		_("Push To Talk"),
-		_("Voice Activation"),
-		_("Video"),
-		_("Desktop"),
-		_("Stream To Channel"),
+		LBL_PTT,
+		LBL_VOX,
+		LBL_VIDEO,
+		LBL_DESKTOP,
+		LBL_STREAM,
 		"sep",
-		_("Mute All"),
-		_("Store Audio"),
+		LBL_MUTE,
+		LBL_RECORD,
 		"sep",
-		_("Show Channel Messages"),
+		LBL_MSG,
 	],
 	"4.3": [
-		_("Connected"),
+		LBL_CONNECTED,
 		"sep",
-		_("Push To Talk"),
-		_("Voice Activation"),
-		_("Video"),
-		_("Desktop"),
-		_("Mute All"),
-		_("Store Audio"),
+		LBL_PTT,
+		LBL_VOX,
+		LBL_VIDEO,
+		LBL_DESKTOP,
+		LBL_MUTE,
+		LBL_RECORD,
 		"sep",
-		_("Show Channel Messages"),
+		LBL_MSG,
 	],
 	"4.2": [
-		_("Connected"),
+		LBL_CONNECTED,
 		"sep",
-		_("Push To Talk"),
-		_("Voice Activation"),
+		LBL_PTT,
+		LBL_VOX,
 		"sep",
-		_("Mute All"),
-		_("Store Audio"),
+		LBL_MUTE,
+		LBL_RECORD,
 		"sep",
-		_("Show Channel Messages"),
+		LBL_MSG,
 	],
 	"4.1": [
-		_("Connected"),
+		LBL_CONNECTED,
 		"sep",
-		_("Push To Talk"),
-		_("Voice Activation"),
+		LBL_PTT,
+		LBL_VOX,
 		"sep",
-		_("Mute All"),
+		LBL_MUTE,
 		"sep",
-		_("Show Channel Messages"),
+		LBL_MSG,
 	],
 }
-
-# How checkboxes on the toolbar are announced when activated (checked) or deactivated.
-# %1 is a name from the above list of item names.
-_msgActive = _("%s active")
-_msgInactive = _("%s disabled")
-_msgConnected = _("Connected")
-_msgDisconnected = _("Disconnected")
 
 
 class TTToolBarInfo(object):
