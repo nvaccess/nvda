@@ -149,7 +149,8 @@ class TTToolBarItem(IAccessible):
 
 class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
-		# The richedit control displaying incoming chat does not return correct _isWindowUnicode flag.
+		# For some TeamTalk versions, the incoming chat control does not
+		# return the correct _isWindowUnicode flag.
 		if obj.windowClassName == "RichEdit20A":
 			obj._isWindowUnicode = False
 		# Label channel chat in/out controls.
@@ -172,7 +173,8 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = _("Unbanned")
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		# There is a VU meter progress bar in the main window which we don't want to get anounced as all the other progress bars.
+		# There is a VU meter progress bar in the main window
+		# that shouldn't be monitored (it presents many spurious updates).
 		if obj.windowClassName == "msctls_progress32" and obj.name == _("VU"):
 			try:
 				clsList.remove(ProgressBar)
