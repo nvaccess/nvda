@@ -1,4 +1,4 @@
-# appModules/tt_classic.py
+# appModules/teamtalk5classic.py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2019 NVDA Contributors, Doug Lee, Tyler Spivey, Bill Dengler
 # This file is covered by the GNU General Public License.
