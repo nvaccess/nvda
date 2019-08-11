@@ -96,6 +96,7 @@ ID_CHATIN = 1206
 ID_BANNEDLIST = 1326
 ID_UNBANNEDLIST = 1327
 ID_TOOLBAR = 59392
+ID_VU = 1004
 
 
 class TTToolBarInfo(object):
@@ -193,7 +194,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# There is a VU meter progress bar in the main window
 		# that shouldn't be monitored (it presents many spurious updates).
-		if obj.windowClassName == "msctls_progress32" and obj.name == "VU":
+		if obj.windowClassName == "msctls_progress32" and (
+			obj.name == "VU"
+			or obj.windowControlID == ID_VU
+		):
 			try:
 				clsList.remove(ProgressBar)
 			except ValueError:
