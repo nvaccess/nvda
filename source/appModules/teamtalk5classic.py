@@ -24,7 +24,8 @@ LBL_VOX = _("Voice Activation")
 # Translators: Status text in the TeamTalk voice conferencing client.
 LBL_VIDEO = _("Video")
 # Translators: Status text in the TeamTalk voice conferencing client.
-# Note: this string is slightly different than the actual toolbar text to avoid a translatable string conflict.
+# Note: this string is slightly different from the actual toolbar text
+# to avoid a translatable string conflict.
 LBL_DESKTOP = _("Share desktop")
 # Translators: Status text in the TeamTalk voice conferencing client.
 LBL_STREAM = _("Stream To Channel")
