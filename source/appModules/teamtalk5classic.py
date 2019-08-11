@@ -24,7 +24,8 @@ LBL_VOX = _("Voice Activation")
 # Translators: Status text in the TeamTalk voice conferencing client.
 LBL_VIDEO = _("Video")
 # Translators: Status text in the TeamTalk voice conferencing client.
-LBL_DESKTOP = _("Desktop")
+# Note: this string is slightly different than the actual toolbar text to avoid a translatable string conflict.
+LBL_DESKTOP = _("Share desktop")
 # Translators: Status text in the TeamTalk voice conferencing client.
 LBL_STREAM = _("Stream To Channel")
 # Translators: Status text in the TeamTalk voice conferencing client.
@@ -185,7 +186,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# There is a VU meter progress bar in the main window
 		# that shouldn't be monitored (it presents many spurious updates).
-		if obj.windowClassName == "msctls_progress32" and obj.name == _("VU"):
+		if obj.windowClassName == "msctls_progress32" and obj.name == "VU":
 			try:
 				clsList.remove(ProgressBar)
 			except ValueError:
