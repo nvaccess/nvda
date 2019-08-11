@@ -186,10 +186,10 @@ class AppModule(appModuleHandler.AppModule):
 		# Name the lists in the Banned Users dialog.
 		elif obj.role == controlTypes.ROLE_LIST:
 			if obj.windowControlID == ID_BANNEDLIST:
-				# Translators: Label for a list control in TeamTalk
+				# Translators: Label for a list of banned users in TeamTalk
 				obj.name = _("Banned")
 			elif obj.windowControlID == ID_UNBANNEDLIST:
-				# Translators: Label for a list control in TeamTalk
+				# Translators: Label for a list of unbanned users in TeamTalk
 				obj.name = _("Unbanned")
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
