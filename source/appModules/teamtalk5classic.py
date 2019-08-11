@@ -207,7 +207,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, TTToolBarItem)
 
 	def script_sayToolbarInfo(self, gesture):
-		"""Say various on/off states from the toolbar. Depending
+		"""Says various on/off states from the toolbar. Depending
 		on TeamTalk version, these can include connection status,
 		status of voice activation, push-to-talk, and video
 		features, whether channel audio is being saved to files,

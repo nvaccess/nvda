@@ -957,6 +957,14 @@ The following built-in Windows Console keyboard shortcuts may be useful when [re
 | Scroll to end | control+end | Scrolls the console window to the end of the buffer. |
 %kc:endInclude
 
+++ TeamTalk ++[TeamTalk]
+NVDA supports the TeamTalk conferencing system popular in the vision impaired community.
+Note: you must select the "TeamTalk classic client for accessibility" during installation for full NVDA support.
+%kc:beginInclude
+|| Name | Key | Description |
+| Speak status | control+shift+s | Says various on/off states from the toolbar. Depending on TeamTalk version, these can include connection status, status of voice activation, push-to-talk, and video features, whether channel audio is being saved to files, and whether the channel message window is showing. On one press, just says which are checked (in effect). On two presses, says all states. |
+%kc:endInclude
+
 + Configuring NVDA +[ConfiguringNVDA]
 Most configuration can be performed using dialog boxes accessed through the Preferences sub-menu of the NVDA menu.
 Many of these settings can be found in the multi-page [NVDA Settings dialog #NVDASettings].
