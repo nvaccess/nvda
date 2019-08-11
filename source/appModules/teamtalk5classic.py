@@ -90,6 +90,13 @@ _msgNames = {
 	],
 }
 
+# window control IDs
+ID_CHATOUT = 1204
+ID_CHATIN = 1206
+ID_BANNEDLIST = 1326
+ID_UNBANNEDLIST = 1327
+ID_TOOLBAR = 59392
+
 
 class TTToolBarInfo(object):
 	"""Info about one TeamTalk toolbar and its items.
@@ -157,12 +164,12 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.windowClassName == "RichEdit20A":
 			obj._isWindowUnicode = False
 		# Label channel chat in/out controls.
-		if obj.windowControlID == 1204:
+		if obj.windowControlID == ID_CHATOUT:
 			# Translators: a label for a read only edit control
 			# in the TeamTalk voice conferencing client where incoming chat
 			# messages are displayed.
 			obj.name = _("Channel messages")
-		elif obj.windowControlID == 1206:
+		elif obj.windowControlID == ID_CHATIN:
 			# Translators: a label for the TeamTalk chat entry field
 			obj.name = _("Type a message to the channel")
 		# Better name Add/Remove buttons where they occur.
@@ -176,10 +183,10 @@ class AppModule(appModuleHandler.AppModule):
 				obj.name = _("Remove from unban list")
 		# Name the lists in the Banned Users dialog.
 		elif obj.role == controlTypes.ROLE_LIST:
-			if obj.windowControlID == 1326:
+			if obj.windowControlID == ID_BANNEDLIST:
 				# Translators: Label for a list control in TeamTalk
 				obj.name = _("Banned")
-			elif obj.windowControlID == 1327:
+			elif obj.windowControlID == ID_UNBANNEDLIST:
 				# Translators: Label for a list control in TeamTalk
 				obj.name = _("Unbanned")
 
@@ -192,7 +199,7 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 		# Name toolbar icons.
-		elif obj.windowControlID == 59392:
+		elif obj.windowControlID == ID_TOOLBAR:
 			# Applies to toolbar and its items.
 			if obj.role == controlTypes.ROLE_TOOLBAR:
 				clsList.insert(0, TTToolBar)
