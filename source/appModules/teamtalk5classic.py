@@ -99,7 +99,9 @@ class TTToolBarInfo(object):
 			# Use the IAccessible for the active TeamTalk instance's toolbar.
 			NVDAObj = self.getToolBar()
 			if not NVDAObj:
-				ui.message(_("Toolbar not found"))
+				# Translators: Reported when status information is unavailable
+				# in the TeamTalk voice conferencing client.
+				ui.message(_("Status unavailable"))
 				return
 		self.NVDAObj = NVDAObj
 		n = NVDAObj.childCount
@@ -155,21 +157,29 @@ class AppModule(appModuleHandler.AppModule):
 			obj._isWindowUnicode = False
 		# Label channel chat in/out controls.
 		if obj.windowControlID == 1204:
+			# Translators: a label for a read only edit control
+			# in the TeamTalk voice conferencing client where incoming chat
+			# messages are displayed.
 			obj.name = _("Channel messages")
 		elif obj.windowControlID == 1206:
+			# Translators: a label for the TeamTalk chat entry field
 			obj.name = _("Type a message to the channel")
 		# Better name Add/Remove buttons where they occur.
 		# Example: Banned Users dialog from the Server menu.
 		elif obj.role == controlTypes.ROLE_BUTTON:
 			if obj.name == ">":
+				# Translators: A TeamTalk button label.
 				obj.name = _("Add to unban list")
 			elif obj.name == "<":
+				# Translators: A TeamTalk button label.
 				obj.name = _("Remove from unban list")
 		# Name the lists in the Banned Users dialog.
 		elif obj.role == controlTypes.ROLE_LIST:
 			if obj.windowControlID == 1326:
+				# Translators: Label for a list control in TeamTalk
 				obj.name = _("Banned")
 			elif obj.windowControlID == 1327:
+				# Translators: Label for a list control in TeamTalk
 				obj.name = _("Unbanned")
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
