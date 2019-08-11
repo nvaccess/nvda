@@ -210,7 +210,7 @@ def removeOldProgramFiles(destPath):
 	# in a newer version of NVDA.
 	for curDestDir,subDirs,files in os.walk(destPath):
 		for f in files:
-			if f.endswith((".pyc", ".pyo")):
+			if f.endswith((".pyc", ".pyo", ".pyd")):
 				# This also removes compiled files from system config,
 				# but that is fine.
 				path=os.path.join(curDestDir, f)
