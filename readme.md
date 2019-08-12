@@ -103,9 +103,7 @@ The following dependencies aren't needed by most people, and are not included in
 * When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
-	```
-	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
-	```
+	```git clone https://github.com/nvaccess/vscode-nvda.git .vscode```
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
