@@ -104,7 +104,7 @@ The following dependencies aren't needed by most people, and are not included in
 	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
 	```
-	git clone https://github.com/nvaccess/vscode-nvda.git
+	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
 	```
 
 ## Preparing the Source Tree
