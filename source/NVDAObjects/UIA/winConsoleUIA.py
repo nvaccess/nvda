@@ -153,14 +153,48 @@ class consoleUIATextInfo(UIATextInfo):
 		else:
 			return super(consoleUIATextInfo, self).expand(unit)
 
-	def _get_isCollapsed(self):
+	def compareEndPoints(self, other, which):
 		"""Works around a UIA bug on Windows 10 1803 and later."""
 		# Even when a console textRange's start and end have been moved to the
 		# same position, the console incorrectly reports the end as being
 		# past the start.
-		# Therefore to decide if the textRange is collapsed,
-		# Check if it has no text.
+		# Compare to the start (not the end) when collapsed.
+		selfEndPoint, otherEndPoint = which.split("To")
+		if selfEndPoint == "end" and not self._isCollapsed():
+			selfEndPoint = "start"
+		if otherEndPoint == "End" and not other._isCollapsed():
+			otherEndPoint = "Start"
+		which = f"{selfEndPoint}To{otherEndPoint}"
+		return super().compareEndPoints(other, which=which)
+
+	def setEndPoint(self, other, which):
+		"""Override of L{textInfos.TextInfo.setEndPoint}.
+		Works around a UIA bug on Windows 10 1803 and later that means we can
+		not trust the "end" endpoint of a collapsed (empty) text range
+		for comparisons.
+		"""
+		selfEndPoint, otherEndPoint = which.split("To")
+		# In this case, there is no need to check if self is collapsed
+		# since the point of this method is to change its text range, modifying the "end" endpoint of a collapsed
+		# text range is fine.
+		if otherEndPoint == "End" and not other._isCollapsed():
+			otherEndPoint = "Start"
+		which = f"{selfEndPoint}To{otherEndPoint}"
+		return super().setEndPoint(other, which=which)
+
+	def _isCollapsed(self):
+		"""Works around a UIA bug on Windows 10 1803 and later that means we
+		cannot trust the "end" endpoint of a collapsed (empty) text range
+		for comparisons.
+		Instead we check to see if we can get the first character from the
+		text range. A collapsed range will not have any characters
+		and will return an empty string."""
 		return not bool(self._rangeObj.getText(1))
+
+	def _get_isCollapsed(self):
+		# To decide if the textRange is collapsed,
+		# Check if it has no text.
+		return self._isCollapsed
 
 	def _getCurrentOffsetInThisLine(self, lineInfo):
 		"""

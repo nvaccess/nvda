@@ -2169,6 +2169,7 @@ class AdvancedPanelControls(wx.Panel):
 			"gui",
 			"louis",
 			"timeSinceInput",
+			"vision",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel
