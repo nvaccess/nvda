@@ -90,8 +90,6 @@ Additionally, the following build time dependencies are included in Git submodul
 * [epydoc](http://epydoc.sourceforge.net/), version 3.0.1 with patch for bug #303
 * [Boost Optional (stand-alone header)](https://github.com/akrzemi1/Optional), from commit [3922965](https://github.com/akrzemi1/Optional/commit/3922965396fc455c6b1770374b9b4111799588a9)
 
-There is also a [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/) included for convenience.
-
 ### Other Dependencies
 To lint using Flake 8 locally using our SCons integration, some dependencies are installed (automatically) via pip.
 Although this [must be run manually](#linting-your-changes), developers may wish to first configure a Python Virtual Environment to ensure their general install is not affected.
@@ -102,6 +100,12 @@ Although this [must be run manually](#linting-your-changes), developers may wish
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 
 * To generate developer documentation for nvdaHelper: [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
+* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
+	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
+
+	```
+	git clone https://github.com/nvaccess/vscode-nvda.git
+	```
 
 ## Preparing the Source Tree
 Before you can run the NVDA source code, you must prepare the source tree.
@@ -265,7 +269,6 @@ scons lint base=origin/master
 ```
 
 To be warned about linting errors faster, you may wish to integrate Flake8 other development tools you are using.
-The NVDA repository contains a submodule with a workspace configuration for Visual Studio Code that has support for NVDA's Flake8 configuration built in.
 For more details, see `tests/lint/readme.md`
 
 ### System Tests
@@ -281,3 +284,7 @@ This filter accepts wildcard characters.
 ```
 scons systemTests filter="Read welcome dialog"
 ```
+
+## Contributing to NVDA
+
+If you would like to contribute code or documentation to NVDA, you can read more information in our [contributing guide](https://github.com/nvaccess/nvda/wiki/Contributing).
