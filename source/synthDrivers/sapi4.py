@@ -15,20 +15,26 @@ import speech
 from ._sapi4 import *
 import config
 import nvwave
+import weakref
+
 
 class SynthDriverBufSink(COMObject):
 	_com_interfaces_ = [ITTSBufNotifySink]
 
-	def __init__(self,synthDriver):
-		self._synthDriver=synthDriver
+	def __init__(self, synthDriver):
+		self.synthRef = weakref.ref(synthDriver)
 		self._allowDelete = True
 		super(SynthDriverBufSink,self).__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
-		synthIndexReached.notify(synth=self._synthDriver,index=dwMarkNum)
-		if self._synthDriver._finalIndex==dwMarkNum:
-			self._synthDriver._finalIndex=None
-			synthDoneSpeaking.notify(synth=self._synthDriver)
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning("Called ITTSBufNotifySink_BookMark method on ITTSBufNotifySink while driver is dead")
+			return
+		synthIndexReached.notify(synth=synth, index=dwMarkNum)
+		if synth._finalIndex == dwMarkNum:
+			synth._finalIndex = None
+			synthDoneSpeaking.notify(synth=synth)
 
 	def IUnknown_Release(self, this, *args, **kwargs):
 		if not self._allowDelete and self._refcnt.value == 1:
