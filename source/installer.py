@@ -23,7 +23,7 @@ import addonHandler
 import easeOfAccess
 import COMRegistrationFixes
 import winKernel
-
+import importlib.machinery
 _wsh=None
 def _getWSH():
 	global _wsh
@@ -210,7 +210,7 @@ def removeOldProgramFiles(destPath):
 	# in a newer version of NVDA.
 	for curDestDir,subDirs,files in os.walk(destPath):
 		for f in files:
-			if f.endswith((".pyc", ".pyo", ".pyd")):
+			if f.endswith((".pyc", ".pyo", ".pyd")) and not f.endswith(importlib.machinery.EXTENSION_SUFFIXES[0]):
 				# This also removes compiled files from system config,
 				# but that is fine.
 				path=os.path.join(curDestDir, f)
