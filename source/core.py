@@ -132,6 +132,13 @@ def restart(disableAddons=False, debugLogging=False):
 		sys.argv.remove("--ease-of-access")
 	except ValueError:
 		pass
+	if globalVars.appArgs.cmdLineLanguage:
+		import config
+		# We should better compare here with the saved value if not saveOnExit.
+		if config.conf["general"]["language"] != globalVars.appArgs.cmdLineLanguage:
+			for i, arg in list(enumerate(sys.argv)):
+				if arg.startswith("--lang="):
+					del sys.argv[i]
 	shellapi.ShellExecute(None, None,
 		sys.executable,
 		subprocess.list2cmdline(sys.argv + options),
@@ -163,7 +170,12 @@ def resetConfiguration(factoryDefaults=False):
 	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
 	#Language
-	lang = config.conf["general"]["language"]
+	lang = globalVars.appArgs.cmdLineLanguage
+	if lang:
+		# Ensure the language specified on the command line will be saved with the config.
+		config.conf["general"]["language"] = lang
+	else:
+		lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
 	# Addons
@@ -228,7 +240,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			pass
 	logHandler.setLogLevelFromConfig()
 	try:
-		lang = config.conf["general"]["language"]
+		lang = globalVars.appArgs.cmdLineLanguage
+		if lang:
+			# Ensure the language specified on the command line will be saved with the config.
+			config.conf["general"]["language"] = lang
+		else:
+			lang = config.conf["general"]["language"]
 		import languageHandler
 		log.debug("setting language to %s"%lang)
 		languageHandler.setLanguage(lang)
