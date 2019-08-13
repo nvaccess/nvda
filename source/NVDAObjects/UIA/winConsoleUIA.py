@@ -238,7 +238,11 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Use our custom textInfo for UIA consoles.
 	#: This fixes expand/collapse, implements word movement,
 	# and bounds review to the visible text.
-	TextInfo = consoleUIATextInfo
+	# Overriding _get_TextInfo and thus the TextInfo property on NVDAObjects.UIA.UIA
+	# consoleUIATextInfo fixes expand/collapse, implements word movement, and 
+	# bounds review to the visible text.
+	def _get_TextInfo(self):
+		return consoleUIATextInfo
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
