@@ -244,10 +244,6 @@ class WinConsoleUIA(Terminal):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	#: Use our custom textInfo for UIA consoles.
-	#: This fixes expand/collapse, implements word movement,
-	# and bounds review to the visible text.
-	TextInfo = consoleUIATextInfo
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
 	_queuedChars = []
@@ -256,6 +252,12 @@ class WinConsoleUIA(Terminal):
 	_hasNewLines = False
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
+
+	# Overriding _get_TextInfo and thus the TextInfo property on NVDAObjects.UIA.UIA
+	# consoleUIATextInfo fixes expand/collapse, implements word movement, and 
+	# bounds review to the visible text.
+	def _get_TextInfo(self):
+		return consoleUIATextInfo
 
 	def _reportNewText(self, line):
 		# Additional typed character filtering beyond that in LiveText
