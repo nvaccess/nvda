@@ -43,6 +43,7 @@ from baseObject import ScriptableObject
 import core
 import winVersion
 from base64 import b16encode
+import vision
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -68,6 +69,9 @@ SCRCAT_CONFIG_PROFILES = _("Configuration profiles")
 #: Script category for Braille commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_BRAILLE = _("Braille")
+#: Script category for Vision commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_VISION = _("Vision")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOOLS = pgettext('script category', 'Tools')
@@ -2277,6 +2281,45 @@ class GlobalCommands(ScriptableObject):
 		recogUi.recognizeNavigatorObject(recog)
 	# Translators: Describes a command.
 	script_recognizeWithUwpOcr.__doc__ = _("Recognizes the content of the current navigator object with Windows 10 OCR")
+
+	@script(
+		# Translators: Describes a command.
+		description=_(
+			"Toggles the state of the screen curtain, "
+			"either hiding or SHOWING the contents of the screen. "
+			"If pressed to enable once, the screen curtain is enabled until you restart NVDA. "
+			"If pressed tree times, it is enabled until you disable it"
+		),
+		gesture="kb:NVDA+control+/",
+		category=SCRCAT_VISION
+	)
+	def script_toggleScreenCurtain(self, gesture):
+		if not winVersion.isFullScreenMagnificationAvailable():
+			# Translators: Reported when the screen curtain is not available.
+			ui.message(_("Screen curtain not available"))
+			return
+		scriptCount = scriptHandler.getLastScriptRepeatCount()
+		screenCurtainName = "screenCurtain"
+		if scriptCount == 0 and screenCurtainName in vision.handler.providers:
+			vision.handler.terminateProvider(screenCurtainName)
+			# Translators: Reported when the screen curtain is disabled.
+			ui.message(_("Screen curtain disabled"))
+		elif scriptCount in (0, 2):
+			temporary = scriptCount == 0
+			if not vision.handler.initializeProvider(
+				screenCurtainName,
+				temporary=temporary,
+			):
+				# Translators: Reported when the screen curtain could not be enabled.
+				ui.message(_("Could not enable screen curtain"))
+				return
+			else:
+				if temporary:
+					# Translators: Reported when the screen curtain is temporarily enabled.
+					ui.message(_("Screen curtain enabled until next restart"))
+				else:
+					# Translators: Reported when the screen curtain is enabled.
+					ui.message(_("Screen curtain enabled"))
 
 	__gestures = {
 		# Basic

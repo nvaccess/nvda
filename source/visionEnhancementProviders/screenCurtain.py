@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 This implementation only works on Windows 8 and above.
@@ -9,16 +9,17 @@ This implementation only works on Windows 8 and above.
 
 import vision
 import winVersion
-from ctypes import Structure, windll, byref, c_int, c_float, POINTER, WINFUNCTYPE, WinError
-from ctypes.wintypes import BOOL, HWND, RECT, DWORD
-from collections import OrderedDict
-from comtypes import GUID
+from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
+from ctypes.wintypes import BOOL
+
 
 class MAGCOLOREFFECT(Structure):
-	_fields_ = (("transform", c_float*5*5),)
+	_fields_ = (("transform", c_float * 5 * 5),)
+
 
 TRANSFORM_BLACK = MAGCOLOREFFECT()
 TRANSFORM_BLACK.transform[4][4] = 1.0
+
 
 def _errCheck(result, func, args):
 	if result == 0:
@@ -43,9 +44,15 @@ class Magnification:
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
 	try:
-		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(("MagSetFullscreenColorEffect", _magnification), _MagSetFullscreenColorEffectArgTypes )
+		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
+			("MagSetFullscreenColorEffect", _magnification),
+			_MagSetFullscreenColorEffectArgTypes
+		)
 		MagSetFullscreenColorEffect.errcheck = _errCheck
-		MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(("MagGetFullscreenColorEffect", _magnification), _MagGetFullscreenColorEffectArgTypes)
+		MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
+			("MagGetFullscreenColorEffect", _magnification),
+			_MagGetFullscreenColorEffectArgTypes
+		)
 		MagGetFullscreenColorEffect.errcheck = _errCheck
 	except AttributeError:
 		MagSetFullscreenColorEffect = None
@@ -55,7 +62,7 @@ class Magnification:
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "screenCurtain"
 	# Translators: Description of a vision enhancement provider that disables output to the screen,
-	# making it black.
+	# making it blac	k.
 	description = _("Screen Curtain")
 	supportedRoles = frozenset([vision.constants.Role.COLORENHANCER])
 
