@@ -129,6 +129,13 @@ parser.add_argument('-k','--check-running',action="store_true",dest='check_runni
 parser.add_argument('-f','--log-file',dest='logFileName',type=str,help="The file where log messages should be written to")
 parser.add_argument('-l','--log-level',dest='logLevel',type=int,default=0,choices=[10, 12, 15, 20, 30, 40, 50, 100],help="The lowest level of message logged (debug 10, input/output 12, debugwarning 15, info 20, warning 30, error 40, critical 50, off 100), default is info")
 parser.add_argument('-c','--config-path',dest='configPath',default=None,type=str,help="The path where all settings for NVDA are stored")
+parser.add_argument(
+	'--lang',
+	dest='cmdLineLanguage',
+	default=None,
+	type=str,
+	help="Override the configured NVDA language. Set to \"Windows\" for current user default, \"en\" for English, etc."
+)
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_argument('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_argument('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
@@ -342,6 +349,17 @@ if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)
+
+# Perform basic case normalization for ease of use.
+lang = globalVars.appArgs.cmdLineLanguage
+if lang:
+	if lang.casefold() == "Windows".casefold():
+		lang = "Windows"
+	lang = lang.replace("-", "_")
+	if "_" in lang:
+		lang = lang.split("_")[0].lower() + "_" + lang.split("_")[1].upper()
+	globalVars.appArgs.cmdLineLanguage = lang
+
 log.debug("Debug level logging enabled")
 if customVenvDetected:
 	log.warning("NVDA launched using a custom Python virtual environment.")
