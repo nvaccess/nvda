@@ -1366,8 +1366,8 @@ class WordDocument(Window):
 	def script_tab(self,gesture):
 		"""
 		A script for the tab key which:
-		 * if in a table, announces the newly selected cell or new cell where the caret is, or 
-		 * If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
+		* if in a table, announces the newly selected cell or new cell where the caret is, or 
+		* If not in a table, announces the distance of the caret from the left edge of the document, and any remaining text on that line.
 		"""
 		gesture.send()
 		selectionObj=self.WinwordSelectionObject
