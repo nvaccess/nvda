@@ -253,10 +253,10 @@ class WinConsoleUIA(Terminal):
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
 
-	# Overriding _get_TextInfo and thus the TextInfo property on NVDAObjects.UIA.UIA
-	# consoleUIATextInfo fixes expand/collapse, implements word movement, and 
-	# bounds review to the visible text.
 	def _get_TextInfo(self):
+		"""Overriding _get_TextInfo and thus the TextInfo property on NVDAObjects.UIA.UIA
+		consoleUIATextInfo fixes expand/collapse, implements word movement, and 
+		bounds review to the visible text."""
 		return consoleUIATextInfo
 
 	def _reportNewText(self, line):
