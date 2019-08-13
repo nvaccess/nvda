@@ -1938,8 +1938,11 @@ class GlobalCommands(ScriptableObject):
 	script_review_markStartForCopy.category=SCRCAT_TEXTREVIEW
 
 	@script(
-		# Translators: Input help mode message for move review cursor to marked start position for a select or copy command
-		description=_("Move the review cursor to the position marked as the start of text to be selected or copied"),
+		# Translators: Input help mode message for move review cursor to marked start position for a
+		# select or copy command
+		description=_(
+			"Move the review cursor to the position marked as the start of text to be selected or copied"
+		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+shift+F9",
 	)
