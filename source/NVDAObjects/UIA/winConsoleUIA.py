@@ -279,11 +279,6 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		bounds review to the visible text."""
 		return consoleUIATextInfo
 
-	def _get_caretMovementDetectionUsesEvents(self):
-		"""Using caret events in consoles sometimes causes the last character of the
-		prompt to be read when quickly deleting text."""
-		return False
-
 	def _getTextLines(self):
 		# Filter out extraneous empty lines from UIA
 		return (
