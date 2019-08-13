@@ -235,16 +235,15 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 	#: Only process text changes every 30 ms, in case the console is getting
 	#: a lot of text.
 	STABILIZE_DELAY = 0.03
-	#: Use our custom textInfo for UIA consoles.
-	#: This fixes expand/collapse, implements word movement,
-	# and bounds review to the visible text.
-	# Overriding _get_TextInfo and thus the TextInfo property on NVDAObjects.UIA.UIA
-	# consoleUIATextInfo fixes expand/collapse, implements word movement, and 
-	# bounds review to the visible text.
-	def _get_TextInfo(self):
-		return consoleUIATextInfo
 	#: the caret in consoles can take a while to move on Windows 10 1903 and later.
 	_caretMovementTimeoutMultiplier = 1.5
+
+	def _get_TextInfo(self):
+		"""Overriding _get_TextInfo and thus the TextInfo property
+		on NVDAObjects.UIA.UIA
+		consoleUIATextInfo fixes expand/collapse, implements word movement, and
+		bounds review to the visible text."""
+		return consoleUIATextInfo
 
 	def _get_caretMovementDetectionUsesEvents(self):
 		"""Using caret events in consoles sometimes causes the last character of the
