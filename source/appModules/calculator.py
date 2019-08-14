@@ -60,6 +60,9 @@ class AppModule(appModuleHandler.AppModule):
 		except AttributeError:
 			# Another UI redesign in 2019, causing attribute error when changing categories.
 			resultElement = api.getForegroundObject().children[1].lastChild
+			# Another redesign in 2019 due to introduction of "always on top" i.e. compact overlay mode.
+			if resultElement.UIAElement.cachedClassName != "LandmarkTarget":
+				resultElement = resultElement.parent.children[1]
 			shouldAnnounceNotification = (
 				resultElement
 				and resultElement.firstChild
