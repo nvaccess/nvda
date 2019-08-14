@@ -73,8 +73,6 @@ What's New in NVDA
 Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
 == New Features ==
-- The find dialog now includes a history of the last 20 searches. (#8482)
- - The search history is cleared when NVDA exits or restarts.
 - NVDA's Miranda NG support  works with newer versions of the client. (#9053) 
 - You can now disable browse mode by default by disabling the new "Enable browse mode on page load" option in NVDA's browse mode settings. (#8716) 
  - Note that when this option is disabled, you can still enable browse mode manually by pressing NVDA+space.
@@ -106,7 +104,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - Updated eSpeak-NG to commit 67324cc.
 - Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
 - NVDA will now report the word 'selected' after reporting the text a user has just selected.(#9028, #9909)
-- In Microsoft Visual Studio Code, browse mode is now off by default. (#9828)
+- In Microsoft Visual Studio Code, NVDA is in focus mode by default. (#9828)
 
 
 == Bug Fixes ==
@@ -126,7 +124,7 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - Add-ons with names that only differ in capitalization are no longer treated as separate add-ons. (#9334)
 - For Windows OneCore voices, the rate set in NVDA is no longer affected by the rate set in Windows 10 Speech Settings. (#7498)
 - The log can now be opened with NVDA+F1 when there is no developer info for the current navigator object. (#8613)
-- It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
+- It is again possible to use NVDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 - The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 - When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
 - HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)

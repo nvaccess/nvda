@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
-"PO-Revision-Date: 2019-05-31 09:25+0300\n"
+"POT-Creation-Date: 2019-07-19 00:10+1000\n"
+"PO-Revision-Date: 2019-07-23 15:53+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -1759,12 +1759,6 @@ msgstr "%s sınır imi"
 msgid "lmk %s"
 msgstr "snrimi %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "%s seçildi"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Uzun tarif mevcut değil"
@@ -3118,10 +3112,6 @@ msgstr "sağ fare kilitli"
 msgid "Locks or unlocks the right mouse button"
 msgstr "Sağ fareyi kilitleyip açar"
 
-#, python-format
-msgid "Selected %s"
-msgstr "%s seçildi"
-
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
@@ -3791,6 +3781,30 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "İnceleme imlecini, konumlandığı satırın sonuna taşır ve okur"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"İnceleme imlecinin bulunduğu yerdeki sembolü seslendirir. İki kez basılırsa, "
+"sembol ve seslendirme metni tarama kipinde gösterilir."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Sembol için belirlenmiş seslendirme metni yok"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Karakter: {}\n"
+"Olarak değiştir: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Genişletilmiş sembol ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6033,15 +6047,24 @@ msgstr "Büyük %s"
 msgid "no indent"
 msgstr "girinti yok"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s seçildi"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s seçildi"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d karakter"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s seçildi"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9391,6 +9414,16 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr "Mevcutsa, Windows Konsoluna erişmek için UI Otomasyonu kullanın."
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "UIA konsollarında &şifreleri seslendir (performansı artırabilir)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
 msgstr "Sistem &odağını otomatik olarak odaklanabilir öğeye taşı"
 
@@ -11235,6 +11268,9 @@ msgstr "Çift satır aralığı"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "1.5 satır aralığı"
+
+#~ msgid "Selected %s"
+#~ msgstr "%s seçildi"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Şu Anda %s uygulaması çalışıyor"
