@@ -37,6 +37,9 @@ def getAppNameFromHost(processId):
 
 class AppModule(appModuleHandler.AppModule):
 
+	# WWAHost app content is treated as part of an app, not a browse mode document.
+	disableBrowseModeByDefault = True
+
 	def event_NVDAObject_init(self,obj):
 		#The root document of HTML Metro Apps must be treeted as an application. 
 		if isinstance(obj,Body) and obj.windowClassName=="Internet Explorer_Server":
