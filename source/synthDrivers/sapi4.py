@@ -21,8 +21,8 @@ import weakref
 class SynthDriverBufSink(COMObject):
 	_com_interfaces_ = [ITTSBufNotifySink]
 
-	def __init__(self, synthDriver):
-		self.synthRef = weakref.ref(synthDriver)
+	def __init__(self, synthRef: weakref.ReferenceType):
+		self.synthRef = synthRef
 		self._allowDelete = True
 		super(SynthDriverBufSink,self).__init__()
 
@@ -75,7 +75,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self._finalIndex=None
-		self._bufSink=SynthDriverBufSink(self)
+		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
