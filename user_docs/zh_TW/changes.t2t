@@ -2,7 +2,8 @@ What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
-= 2019.2 =
+
+ = 2019.2 =
 Highlights of this release include auto detection of Freedom Scientific braille displays, an experimental setting in the Advanced panel to stop browse mode from automatically moving focus (which may provide performance improvements), a rate boost option for the Windows OneCore synthesizer to achieve very fast rates, and many other bug fixes.
 
 == New Features ==
@@ -25,15 +26,21 @@ Highlights of this release include auto detection of Freedom Scientific braille 
  - Browse mode keystrokes are slow to respond.
 - For braille display drivers that support it, driver settings can now be changed from the braille settings category in NVDA's settings dialog. (#7452)
 - Freedom Scientific braille displays are now supported by braille display auto detection. (#7727)
+- Added a command to show the replacement for the symbol under the review cursor. (#9286)
+- Added an experimental option to the Advanced Settings panel that allows you to try out a new, work-in-progress rewrite of NVDA's Windows Console support using the Microsoft UI Automation API. (#9614)
+- In the Python Console, the input field now supports pasting multiple lines from the clipboard. (#9776)
 
 
 == Changes ==
 - Synthesizer volume is now increased and decreased by 5 instead of 10 when using the settings ring. (#6754)
 - Clarified the text in the add-on manager when NVDA is launched with the --disable-addons flag. (#9473)
 - Updated Unicode Common Locale Data Repository emoji annotations to version 35.0. (#9445)
-- Updated liblouis braille translator to version 3.9.0. (#9439)
 - The hotkey for the filter field in the elements list in browse mode has changed to alt+y. (#8728)
 - When an auto detected braille display is connected via Bluetooth, NVDA will keep searching for USB displays supported by the same driver and switch to a USB connection if it becomes available. (#8853)
+- Updated eSpeak-NG to commit 67324cc.
+- Updated liblouis braille translator to version 3.10.0. (#9439, #9678)
+- NVDA will now report the word 'selected' after reporting the text a user has just selected.(#9028, #9909)
+- In Microsoft Visual Studio Code, browse mode is now off by default. (#9828)
 
 
 == Bug Fixes ==
@@ -56,6 +63,9 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - It is again possible to use NvDA's table navigation commands in Google Docs, in Firefox and Chrome. (#9494)
 - The bumper keys now work correctly on Freedom Scientific braille displays. (#8849)
 - When reading the first character of a document in Notepad++ 7.7 X64, NVDA no longer freezes for up to ten seconds. (#9609)
+- HTCom can now be used with a Handy Tech Braille display in combination with NVDA. (#9691)
+- In Mozilla Firefox, updates to a live region are no longer reported if the live region is in a background tab. (#1318)
+- NVDA's browse mode Find dialog no longer fails to function if NVDA's About dialog is currently open in the background. (#8566)
 
 
 == Changes for Developers ==
@@ -64,6 +74,10 @@ Highlights of this release include auto detection of Freedom Scientific braille 
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
+- The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)
+- The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)
+ - Note that this shadows the gettext translation function also called "_". To access the translation function: del _
 
 
 = 2019.1.1 =
