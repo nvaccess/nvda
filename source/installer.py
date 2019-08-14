@@ -150,6 +150,7 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
+
 def removeOldLibFiles(destPath, rebootOK=False):
 	"""
 	Removes library files from previous versions of NVDA.
@@ -159,21 +160,21 @@ def removeOldLibFiles(destPath, rebootOK=False):
 	@type rebootOK: boolean
 	"""
 	for topDir in ('lib', 'lib64', 'libArm64'):
-		currentLibPath=os.path.join(destPath, topDir, versionInfo.version)
-		for parent, subdirs, files in os.walk(os.path.join(destPath,topDir),topdown=False):
+		currentLibPath = os.path.join(destPath, topDir, versionInfo.version)
+		for parent, subdirs, files in os.walk(os.path.join(destPath, topDir), topdown=False):
 			if parent==currentLibPath:
 				# Lib dir for current installation. Don't touch this!
 				log.debug("Skipping current install lib path: %r"%parent)
 				continue
 			for d in subdirs:
-				path=os.path.join(parent, d)
+				path = os.path.join(parent, d)
 				log.debug("Removing old lib directory: %r"%path)
 				try:
 					os.rmdir(path)
 				except OSError:
 					log.warning("Failed to remove a directory no longer needed. This can be manually removed after a reboot or the  installer will try removing it again next time. Directory: %r"%path)
 			for f in files:
-				path=os.path.join(parent, f)
+				path = os.path.join(parent, f)
 				log.debug("Removing old lib file: %r"%path)
 				try:
 					tryRemoveFile(path, numRetries=2, rebootOK=rebootOK)
