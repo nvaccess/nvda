@@ -13,6 +13,18 @@ import queueHandler
 import ui
 import scriptHandler
 
+# #9428: do not announce current values until calculations are done in order to avoid repetitions.
+noCalculatorEntryAnnouncements = [
+	# Display field with Calculator set to full screen mode.
+	"CalculatorResults",
+	# In the middle of a calculation expression entry.
+	"CalculatorExpression",
+	# Results display with Calculator set to compact overlay i.e. always on top mode.
+	"CalculatorAlwaysOnTopResults",
+	# Calculator expressions with Calculator set to always on top mode.
+	"ExpressionContainer"
+]
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -24,7 +36,7 @@ class AppModule(appModuleHandler.AppModule):
 		# No, announce value changes immediately except for calculator results and expressions.
 		if (
 			isinstance(obj, UIA)
-			and obj.UIAElement.cachedAutomationID not in ("CalculatorResults", "CalculatorExpression")
+			and obj.UIAElement.cachedAutomationID not in noCalculatorEntryAnnouncements
 			and obj.name != self._resultsCache
 		):
 			# For unit conversion, UIA notification event presents much better messages.
@@ -51,7 +63,7 @@ class AppModule(appModuleHandler.AppModule):
 			shouldAnnounceNotification = (
 				resultElement
 				and resultElement.firstChild
-				and resultElement.firstChild.UIAElement.cachedAutomationID != "CalculatorResults"
+				and resultElement.firstChild.UIAElement.cachedAutomationID not in noCalculatorEntryAnnouncements
 			)
 		# Also, warn users if maximum digit count has been reached (a different activity ID than display updates).
 		if shouldAnnounceNotification or activityId == "MaxDigitsReached":
