@@ -8,7 +8,7 @@
 This module assists in NVDA going global through language services such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-import __builtin__
+import builtins
 import os
 import sys
 import ctypes
@@ -37,7 +37,7 @@ def localeNameToWindowsLCID(localeName):
 	# Windows Vista (NT 6.0) and later is able to convert locale names to LCIDs.
 	# Because NVDA supports Windows 7 (NT 6.1) SP1 and later, just use it directly.
 	localeName=localeName.replace('_','-')
-	LCID=ctypes.windll.kernel32.LocaleNameToLCID(unicode(localeName),0)
+	LCID=ctypes.windll.kernel32.LocaleNameToLCID(localeName,0)
 	# #6259: In Windows 10, LOCALE_CUSTOM_UNSPECIFIED is returned for any locale name unknown to Windows.
 	# This was observed for Aragonese ("an").
 	# See https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.lcid(v=vs.110).aspx.
@@ -108,7 +108,8 @@ def getAvailableLanguages(presentational=False):
 		displayNames.append("%s, %s"%(desc,entry) if desc else entry)
 	#Prepare a zipped view of language codes and descriptions.
 	# #7284: especially for sorting by description.
-	langs = zip(locales,displayNames)
+	# Python 3: zip function changed from returning a list to an iterator, thus wrap this inside a list call.
+	langs = list(zip(locales,displayNames))
 	if presentational:
 		langs.sort(key=lambda lang: lang[1])
 	#include a 'user default, windows' language, which just represents the default language for this user account
@@ -120,20 +121,22 @@ def getAvailableLanguages(presentational=False):
 def makePgettext(translations):
 	"""Obtaina  pgettext function for use with a gettext translations instance.
 	pgettext is used to support message contexts,
-	but Python 2.7's gettext module doesn't support this,
+	but Python's gettext module doesn't support this,
 	so NVDA must provide its own implementation.
 	"""
 	if isinstance(translations, gettext.GNUTranslations):
 		def pgettext(context, message):
-			message = unicode(message)
 			try:
 				# Look up the message with its context.
 				return translations._catalog[u"%s\x04%s" % (context, message)]
 			except KeyError:
 				return message
-	else:
+	elif isinstance(translations, gettext.NullTranslations):
+		# A language with out a translation catalog, such as English.
 		def pgettext(context, message):
-			return unicode(message)
+			return message
+	else:
+		raise ValueError("%s is Not a GNUTranslations or NullTranslations object"%translations)
 	return pgettext
 
 def getWindowsLanguage():
@@ -190,9 +193,10 @@ def setLanguage(lang):
 	except IOError:
 		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-	trans.install(unicode=True)
+	trans.install()
 	# Install our pgettext function.
-	__builtin__.__dict__["pgettext"] = makePgettext(trans)
+	import builtins
+	builtins.pgettext = makePgettext(trans)
 
 def getLanguage():
 	return curLang

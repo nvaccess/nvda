@@ -16,6 +16,8 @@ Import(
 	'env',
 )
 
+import importlib.util
+
 def interfaceAction(target,source,env):
 	clsid=env.get('clsid')
 	if clsid:
@@ -46,12 +48,12 @@ COM_INTERFACES = {
 	"FlashAccessibility.py": "typelibs/FlashAccessibility.tlb",
 }
 
-for k,v in COM_INTERFACES.iteritems():
+for k,v in COM_INTERFACES.items():
 	targets=[Dir('comInterfaces').File(k),
 		# This buillds a .pyc file as well.
-		Dir('comInterfaces').File(k + "c")]
+		Dir('comInterfaces').File(importlib.util.cache_from_source(k))]
 	source=clsid=majorVersion=None
-	if isinstance(v,basestring):
+	if isinstance(v, str):
 		env.comtypesInterface(targets,v)
 	else:
 		env.comtypesInterface(targets,Dir('comInterfaces').File('__init__.py'),clsid=v[0],majorVersion=v[1],minorVersion=v[2])

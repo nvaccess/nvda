@@ -10,7 +10,6 @@
 import weakref
 from logHandler import log
 from abc import ABCMeta, abstractproperty
-from six import with_metaclass
 
 class Getter(object):
 
@@ -69,7 +68,7 @@ class AutoPropertyType(ABCMeta):
 			s=dict.get('_set_%s'%x,None)
 			d=dict.get('_del_%s'%x,None)
 			if x in dict:
-				methodsString=",".join([str(i) for i in g,s,d if i])
+				methodsString=",".join(str(i) for i in (g,s,d) if i)
 				raise TypeError("%s is already a class attribute, cannot create descriptor with methods %s"%(x,methodsString))
 			if not g:
 				# There's a setter or deleter, but no getter.
@@ -104,7 +103,7 @@ class AutoPropertyType(ABCMeta):
 			# The __abstractmethods__ set is frozen, therefore we ought to override it.
 			self.__abstractmethods__=(self.__abstractmethods__|newAbstractProps)-oldAbstractProps
 
-class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
+class AutoPropertyObject(object, metaclass=AutoPropertyType):
 	"""A class that dynamically supports properties, by looking up _get_*, _set_*, and _del_* methods at runtime.
 	_get_x will make property x with a getter (you can get its value).
 	_set_x will make a property x with a setter (you can set its value).
@@ -141,9 +140,12 @@ class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
 	def _getPropertyViaCache(self,getterMethod=None):
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
+		missing=False
 		try:
 			val=self._propertyCache[getterMethod]
 		except KeyError:
+			missing=True
+		if missing:
 			val=getterMethod(self)
 			self._propertyCache[getterMethod]=val
 		return val
@@ -155,9 +157,9 @@ class AutoPropertyObject(with_metaclass(AutoPropertyType, object)):
 	def invalidateCaches(cls):
 		"""Invalidate the caches for all current instances.
 		"""
-		# We use keys() here instead of iterkeys(), as invalidating the cache on an object may cause instances to disappear,
+		# We use a list here, as invalidating the cache on an object may cause instances to disappear,
 		# which would in turn cause an exception due to the dictionary changing size during iteration.
-		for instance in cls.__instances.keys():
+		for instance in list(cls.__instances):
 			instance.invalidateCache()
 
 class ScriptableType(AutoPropertyType):
@@ -173,8 +175,7 @@ class ScriptableType(AutoPropertyType):
 			# This class currently has no gestures dictionary,
 			# because no custom __gestures dictionary has been defined.
 			gestures = {}
-		# Python 3 incompatible.
-		for name, script in dict.iteritems():
+		for name, script in dict.items():
 			if not name.startswith('script_'):
 				continue
 			scriptName = name[len("script_"):]
@@ -185,7 +186,7 @@ class ScriptableType(AutoPropertyType):
 			setattr(cls, gesturesDictName, gestures)
 		return cls
 
-class ScriptableObject(with_metaclass(ScriptableType, AutoPropertyObject)):
+class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 	"""A class that implements NVDA's scripting interface.
 	Input gestures are bound to scripts such that the script will be executed when the appropriate input gesture is received.
 	Scripts are methods named with a prefix of C{script_}; e.g. C{script_foo}.
@@ -197,7 +198,7 @@ class ScriptableObject(with_metaclass(ScriptableType, AutoPropertyObject)):
 		e.g. in the Input Gestures dialog.
 		This can be overridden for individual scripts
 		by setting a C{category} attribute on the script method.
-	@type scriptCategory: basestring
+	@type scriptCategory: str
 	"""
 
 	def __init__(self):
@@ -261,7 +262,7 @@ class ScriptableObject(with_metaclass(ScriptableType, AutoPropertyObject)):
 		@param gestureMap: A mapping of gesture identifiers to script names.
 		@type gestureMap: dict of str to str
 		"""
-		for gestureIdentifier, scriptName in gestureMap.iteritems():
+		for gestureIdentifier, scriptName in gestureMap.items():
 			if scriptName:
 				try:
 					self.bindGesture(gestureIdentifier, scriptName)

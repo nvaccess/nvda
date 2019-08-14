@@ -9,7 +9,7 @@ package. This allows us to share utility methods between the global plugin and t
 """
 import globalPluginHandler
 import threading
-from systemTestUtils import _blockUntilConditionMet
+from .systemTestUtils import _blockUntilConditionMet
 from logHandler import log
 from time import clock as _timer
 
@@ -64,7 +64,7 @@ class SystemTestSpy(object):
 
 	def _getJoinedBaseStringsFromCommands(self, speechCommandArray):
 		wsChars = whitespaceMinusSlashN
-		baseStrings = [c.strip(wsChars) for c in speechCommandArray if isinstance(c, basestring)]
+		baseStrings = [c.strip(wsChars) for c in speechCommandArray if isinstance(c, str)]
 		return ''.join(baseStrings).strip()
 
 	# Public methods
@@ -95,7 +95,7 @@ class SystemTestSpy(object):
 		with threading.Lock():
 			for index, commands in enumerate(self._nvdaSpeech[startFromIndex:]):
 				index = index + startFromIndex
-				baseStrings = [c.strip() for c in commands if isinstance(c, basestring)]
+				baseStrings = [c.strip() for c in commands if isinstance(c, str)]
 				if any(speech in x for x in baseStrings):
 					return index
 			return -1

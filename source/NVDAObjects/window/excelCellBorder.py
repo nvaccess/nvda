@@ -107,7 +107,7 @@ borderStyleAndWeightLabels={
 
 def getCellBorderStyleDescription(bordersObj,reportBorderColor=False):
 	d=OrderedDict()
-	for pos in bordersIndexLabels.keys():
+	for pos in bordersIndexLabels:
 		border=bordersObj[pos]
 		if border.lineStyle != xlLineStyleNone:
 			style=border.lineStyle

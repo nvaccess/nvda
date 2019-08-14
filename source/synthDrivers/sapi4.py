@@ -1,18 +1,15 @@
 #synthDrivers/sapi4.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited 
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import locale
 from collections import OrderedDict
-try:
-	import _winreg as winreg # Python 2.7 import
-except ImportError:
-	import winreg # Python 3 import
+import winreg
 from comtypes import COMObject, COMError
 from ctypes import *
-from synthDriverHandler import SynthDriver,VoiceInfo
+from synthDriverHandler import SynthDriver,VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
 import speech
 from ._sapi4 import *
@@ -28,7 +25,10 @@ class SynthDriverBufSink(COMObject):
 		super(SynthDriverBufSink,self).__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
-		self._synthDriver.lastIndex=dwMarkNum
+		synthIndexReached.notify(synth=self._synthDriver,index=dwMarkNum)
+		if self._synthDriver._finalIndex==dwMarkNum:
+			self._synthDriver._finalIndex=None
+			synthDoneSpeaking.notify(synth=self._synthDriver)
 
 	def IUnknown_Release(self, this, *args, **kwargs):
 		if not self._allowDelete and self._refcnt.value == 1:
@@ -41,6 +41,7 @@ class SynthDriver(SynthDriver):
 	name="sapi4"
 	description="Microsoft Speech API version 4"
 	supportedSettings=[SynthDriver.VoiceSetting()]
+	supportedNotifications={synthIndexReached,synthDoneSpeaking}
 
 	@classmethod
 	def check(cls):
@@ -67,7 +68,7 @@ class SynthDriver(SynthDriver):
 		return enginesList
 
 	def __init__(self):
-		self.lastIndex=None
+		self._finalIndex=None
 		self._bufSink=SynthDriverBufSink(self)
 		self._bufSinkPtr=self._bufSink.QueryInterface(ITTSBufNotifySink)
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
@@ -85,8 +86,9 @@ class SynthDriver(SynthDriver):
 	def speak(self,speechSequence):
 		textList=[]
 		charMode=False
+		item=None
 		for item in speechSequence:
-			if isinstance(item,basestring):
+			if isinstance(item,str):
 				textList.append(item.replace('\\','\\\\'))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("\\mrk=%d\\"%item.index)
@@ -97,6 +99,9 @@ class SynthDriver(SynthDriver):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
+		if isinstance(item,speech.IndexCommand):
+			# This is the index denoting the end of the speech sequence.
+			self._finalIndex=item.index
 		if charMode:
 			# Some synths stay in character mode if we don't explicitly disable it.
 			textList.append("\\RmS=0\\")

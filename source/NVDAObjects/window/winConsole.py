@@ -2,16 +2,29 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2012 NV Access Limited
+#Copyright (C) 2007-2019 NV Access Limited, Bill Dengler
 
 import winConsoleHandler
 from . import Window
-from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
+from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection, KeyboardHandlerBasedTypedCharSupport
 import api
 import core
+from scriptHandler import script
+import speech
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
+	"""
+		NVDA's legacy Windows Console support.
+		This is used in situations where UIA isn't available.
+		Please consider using NVDAObjects.UIA.winConsoleUIA instead.
+	"""
 	STABILIZE_DELAY = 0.03
+
+	def initOverlayClass(self):
+		# Legacy consoles take quite a while to send textChange events.
+		# This significantly impacts typing performance, so don't queue chars.
+		if isinstance(self, KeyboardHandlerBasedTypedCharSupport):
+			self._supportsTextChange = False
 
 	def _get_TextInfo(self):
 		consoleObject=winConsoleHandler.consoleObject
@@ -65,6 +78,28 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				winConsoleHandler.connectConsole(self)
 				self.startMonitoring()
 		core.callLater(200,reconnect)
+
+	def _get_caretMovementDetectionUsesEvents(self):
+		"""Using caret events in consoles sometimes causes the last character of the
+		prompt to be read when quickly deleting text."""
+		return False
+
+	@script(gestures=[
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:tab",
+		"kb:control+c",
+		"kb:control+d",
+		"kb:control+pause"
+	])
+	def script_flush_queuedChars(self, gesture):
+		"""
+		Flushes the typed word buffer if present.
+		Since these gestures clear the current word/line, we should flush the
+		current words buffer to avoid erroneously reporting words that already have been processed.
+		"""
+		gesture.send()
+		speech.clearTypedWordBuffer()
 
 	__gestures={
 		"kb:alt+f4":"close",

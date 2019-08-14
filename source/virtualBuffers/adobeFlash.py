@@ -25,7 +25,7 @@ class AdobeFlash_TextInfo(VirtualBufferTextInfo):
 			accRole = accRole.lower()
 		role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
 		attrs['role']=role
 		attrs['states']=states
@@ -36,7 +36,7 @@ class AdobeFlash(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeFlash,self).__init__(rootNVDAObject,backendName="adobeFlash")
-		self.isWindowless = rootNVDAObject.event_objectID > 0
+		self.isWindowless = rootNVDAObject.event_objectID is not None and rootNVDAObject.event_objectID > 0
 
 	def __contains__(self,obj):
 		if self.isWindowless:
@@ -125,10 +125,8 @@ class AdobeFlash(VirtualBuffer):
 		if not l:
 			log.debugWarning("no location for field")
 			return
-		x=(l[0]+l[2]/2)
-		y=l[1]+(l[3]/2) 
 		oldX,oldY=winUser.getCursorPos()
-		winUser.setCursorPos(x,y)
+		winUser.setCursorPos(*l.center)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)

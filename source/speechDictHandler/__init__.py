@@ -125,7 +125,7 @@ It handles case when the synthesizer doesn't support voice setting.
 		log.error("error trying to upgrade dictionaries", exc_info=True)
 		pass
 	if synth.isSupported("voice"):
-		voice = synth.availableVoices[synth.voice].name
+		voice = synth.availableVoices[synth.voice].displayName
 		baseName = dictFormatUpgrade.createVoiceDictFileName(synth.name, voice)
 	else:
 		baseName=r"{synth}.dic".format(synth=synth.name)

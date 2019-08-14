@@ -40,7 +40,7 @@ if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
 
 # Ignore all warnings as the code is not ours
-env.Append(CCFLAGS='/W0')
+env.Replace(CCFLAGS='/W0')
 
 env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir,espeakSrcDir.Dir('ucd-tools/src/include')])
 
@@ -59,7 +59,7 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
 	espeak=AutoFreeCDLL(espeakLib[0].abspath)
-	espeak.espeak_ng_InitializePath(espeakRepo.abspath)
+	espeak.espeak_ng_InitializePath(os.fsencode(espeakRepo.abspath))
 	espeak.espeak_ng_CompileIntonation(None,None)
 	espeak.espeak_ng_CompilePhonemeData(22050,None,None)
 	espeak.espeak_Terminate()
@@ -72,14 +72,14 @@ def espeak_compileDict_buildAction(target,source,env):
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
 	espeak=AutoFreeCDLL(espeakLib[0].abspath)
-	espeak.espeak_Initialize(0,0,target[0].Dir('..').abspath,0x8000)
+	espeak.espeak_Initialize(0,0,os.fsencode(target[0].Dir('..').abspath),0x8000)
 	try:
-		lang=source[0].name.split('_')[0]
-		v=espeak_VOICE(languages=lang+'\x00')
+		lang=source[0].name.split('_')[0].encode()
+		v=espeak_VOICE(languages=lang+b'\x00')
 		if espeak.espeak_SetVoiceByProperties(ctypes.byref(v))!=0:
 			print("espeak_compileDict_action: failed to switch to language %s"%lang)
 			return 1
-		dictPath=os.path.split(source[0].abspath)[0]+'/'
+		dictPath=os.fsencode(os.path.split(source[0].abspath)[0]+'/')
 		if espeak.espeak_ng_CompileDictionary(dictPath,None,0,None)!=0:
 			print("espeak_compileDict_action: failed to compile dictionary for  language %s"%lang)
 			return

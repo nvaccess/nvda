@@ -24,6 +24,7 @@ from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
 from logHandler import log
+from scriptHandler import script
 import api
 import ui
 import braille
@@ -51,8 +52,8 @@ class ProgressBar(NVDAObject):
 			left,top,width,height=self.location
 		except:
 			left=top=width=height=0
-		x=left+(width/2)
-		y=top+(height/2)
+		x = left + (width // 2)
+		y = top+ (height // 2)
 		lastBeepProgressValue=self.progressValueCache.get("beep,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("beep","both") and (lastBeepProgressValue is None or abs(percentage-lastBeepProgressValue)>=pbConf["beepPercentageInterval"]):
 			tones.beep(pbConf["beepMinHZ"]*2**(percentage/25.0),40)
@@ -77,7 +78,7 @@ class Dialog(NVDAObject):
 		children=obj.children
 		textList=[]
 		childCount=len(children)
-		for index in xrange(childCount):
+		for index in range(childCount):
 			child=children[index]
 			childStates=child.states
 			childRole=child.role
@@ -85,7 +86,17 @@ class Dialog(NVDAObject):
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_UNKNOWN):
+			if childRole in (
+					controlTypes.ROLE_PROPERTYPAGE,
+					controlTypes.ROLE_PANE,
+					controlTypes.ROLE_PANEL,
+					controlTypes.ROLE_WINDOW,
+					controlTypes.ROLE_GROUPING,
+					controlTypes.ROLE_PARAGRAPH,
+					controlTypes.ROLE_SECTION,
+					controlTypes.ROLE_TEXTFRAME,
+					controlTypes.ROLE_UNKNOWN
+			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
 				childText=cls.getDialogText(child,not isinstance(child,Dialog))
@@ -278,7 +289,7 @@ class LiveText(NVDAObject):
 				newLines = self._getTextLines()
 				if config.conf["presentation"]["reportDynamicContentChanges"]:
 					outLines = self._calculateNewText(newLines, oldLines)
-					if len(outLines) == 1 and len(outLines[0]) == 1:
+					if len(outLines) == 1 and len(outLines[0].strip()) == 1:
 						# This is only a single character,
 						# which probably means it is just a typed character,
 						# so ignore it.
@@ -313,7 +324,7 @@ class LiveText(NVDAObject):
 				textLen = len(text)
 				prevTextLen = len(prevText)
 				# Find the first character that differs between the two lines.
-				for pos in xrange(min(textLen, prevTextLen)):
+				for pos in range(min(textLen, prevTextLen)):
 					if text[pos] != prevText[pos]:
 						start = pos
 						break
@@ -326,7 +337,7 @@ class LiveText(NVDAObject):
 					# The lines are different lengths, so assume the rest of the line changed.
 					end = textLen
 				else:
-					for pos in xrange(textLen - 1, start - 1, -1):
+					for pos in range(textLen - 1, start - 1, -1):
 						if text[pos] != prevText[pos]:
 							end = pos + 1
 							break
@@ -353,7 +364,108 @@ class Terminal(LiveText, EditableText):
 		self.startMonitoring()
 
 	def event_loseFocus(self):
+		super(Terminal, self).event_loseFocus()
 		self.stopMonitoring()
+
+
+class KeyboardHandlerBasedTypedCharSupport(Terminal):
+	"""A Terminal object that also provides typed character support for
+	console applications via keyboardHandler events.
+	These events are queued from NVDA's global keyboard hook.
+	Therefore, an event is fired for every single character that is being typed,
+	even when a character is not written to the console (e.g. in read only console applications).
+	This approach is an alternative to monitoring the console output for
+	characters close to the caret, or injecting in-process with NVDAHelper.
+	This class relies on the toUnicodeEx Windows function, and in particular
+	the flag to preserve keyboard state available in Windows 10 1607
+	and later."""
+	#: Whether this object quickly and reliably sends textChange events
+	#: when its contents update.
+	#: Timely and reliable textChange events are required
+	#: to support password suppression.
+	_supportsTextChange = True
+	#: A queue of typed characters, to be dispatched on C{textChange}.
+	#: This queue allows NVDA to suppress typed passwords when needed.
+	_queuedChars = []
+	#: Whether the last typed character is a tab.
+	#: If so, we should temporarily disable filtering as completions may
+	#: be short.
+	_hasTab = False
+
+	def _reportNewText(self, line):
+		# Perform typed character filtering, as typed characters are handled with events.
+		if (
+			not self._hasTab
+			and len(line.strip()) < max(len(speech.curWordChars) + 1, 3)
+		):
+			return
+		super()._reportNewText(line)
+
+	def event_typedCharacter(self, ch):
+		if ch == '\t':
+			self._hasTab = True
+			# Clear the typed word buffer for tab completion.
+			speech.clearTypedWordBuffer()
+		else:
+			self._hasTab = False
+		if (
+			(
+				config.conf['keyboard']['speakTypedCharacters']
+				or config.conf['keyboard']['speakTypedWords']
+			)
+			and not config.conf['terminals']['speakPasswords']
+			and self._supportsTextChange
+		):
+			self._queuedChars.append(ch)
+		else:
+			super().event_typedCharacter(ch)
+
+	def event_textChange(self):
+		self._dispatchQueue()
+		super().event_textChange()
+
+	@script(gestures=[
+		"kb:enter",
+		"kb:numpadEnter",
+		"kb:tab",
+		"kb:control+c",
+		"kb:control+d",
+		"kb:control+pause"
+	])
+	def script_flush_queuedChars(self, gesture):
+		"""
+		Flushes the typed word buffer and queue of typedCharacter events if present.
+		Since these gestures clear the current word/line, we should flush the
+		queue to avoid erroneously reporting these chars.
+		"""
+		self._queuedChars = []
+		speech.clearTypedWordBuffer()
+		gesture.send()
+
+	def _calculateNewText(self, newLines, oldLines):
+		hasNewLines = (
+			self._findNonBlankIndices(newLines)
+			!= self._findNonBlankIndices(oldLines)
+		)
+		if hasNewLines:
+			# Clear the typed word buffer for new text lines.
+			speech.clearTypedWordBuffer()
+			self._queuedChars = []
+		return super()._calculateNewText(newLines, oldLines)
+
+	def _dispatchQueue(self):
+		"""Sends queued typedCharacter events through to NVDA."""
+		while self._queuedChars:
+			ch = self._queuedChars.pop(0)
+			super().event_typedCharacter(ch)
+
+	def _findNonBlankIndices(self, lines):
+		"""
+		Given a list of strings, returns a list of indices where the strings
+		are not empty.
+		"""
+		return [index for index, line in enumerate(lines) if line]
+
 
 class CandidateItem(NVDAObject):
 
@@ -544,7 +656,7 @@ class RowWithoutCellObjects(NVDAObject):
 		return self._makeCell(1)
 
 	def _get_children(self):
-		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
+		return [self._makeCell(column) for column in range(1, self.childCount + 1)]
 
 	def getChild(self, index):
 		return self._makeCell(index + 1)

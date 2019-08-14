@@ -6,11 +6,11 @@
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
-from collections import namedtuple, Sequence
+from collections import namedtuple
+from collections.abc import Sequence
 import windowUtils
 import winUser
 from ctypes.wintypes import RECT, POINT, DWORD
-import textInfos
 import wx
 
 class Point(namedtuple("Point",("x","y"))):
@@ -151,6 +151,10 @@ class Point(namedtuple("Point",("x","y"))):
 		if not isinstance(other,POINT_CLASSES):
 			return NotImplemented
 		return self.x == other.x and self.y == other.y
+
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	def __hash__(self):
+		return super().__hash__()
 
 	def __ne__(self,other):
 		if not isinstance(other,POINT_CLASSES):
@@ -320,6 +324,10 @@ class _RectMixin:
 			return NotImplemented
 		return other.left == self.left and other.top == self.top and other.right == self.right and other.bottom == self.bottom
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		if not isinstance(other,RECT_CLASSES):
 			return NotImplemented
@@ -405,7 +413,7 @@ class RectLTRB(_RectMixin, namedtuple("RectLTRB",("left","top","right","bottom")
 
 #: Classes which support conversion to locationHelper Points using their x and y properties.
 #: type: tuple
-POINT_CLASSES=(Point, POINT, textInfos.Point, wx.Point)
+POINT_CLASSES=(Point, POINT, wx.Point)
 #: Classes which support conversion to locationHelper RectLTRB/LTWH using their left, top, right and bottom properties.
 #: type: tuple
-RECT_CLASSES=(RectLTRB, RectLTWH, RECT, textInfos.Rect)
+RECT_CLASSES=(RectLTRB, RectLTWH, RECT)

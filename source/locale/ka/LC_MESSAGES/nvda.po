@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA_georgian_translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 00:10+1000\n"
-"PO-Revision-Date: 2017-10-31 20:28-0700\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:54-0800\n"
 "Last-Translator: Nikoloz\n"
 "Language-Team: Georgian translation team <admin@gozaltech.org>\n"
 "Language: ka\n"
@@ -2269,7 +2269,7 @@ msgstr "აბზაცი"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See https://en.wikipedia.org/wiki/Block_quotation
+#. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "ციტატა"
 
@@ -4540,7 +4540,7 @@ msgstr "სხვადასხვა"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -6338,17 +6338,17 @@ msgid "no italic"
 msgstr "არ არის კურსივი"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "ორმაგი გადახაზვა"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "გახაზულია"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "არ არის გახაზული"
 
@@ -6378,12 +6378,12 @@ msgid "align right"
 msgstr "სწორება მარჯვენა ნაპირთან"
 
 #. Translators: Reported when text is justified.
-#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "სწორება სიგანეზე"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See https://kohei.us/2010/01/21/distributed-text-justification/
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "სწორება დისტრიბუციის მიხედვით"
 
@@ -6791,7 +6791,7 @@ msgstr "თავისუფალი ხმოვანი პროგრა�
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "საავტორო უფლება (C) {years} NVDA დამმუშავებლები"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6804,7 +6804,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -6825,8 +6825,8 @@ msgstr ""
 "მსურველტატვის. ეს ეკუტვნის ამ პროგრამული უზრუნველყოფის ორიგინალურ ვერსიას, "
 "მის შეცვლილ კოპიებს, და ასევე მის მწარმოებლებს\n"
 "დაწვრილებიტ იხილეტ ლიცენზია მენიუ \"დახმარებაში\".\n"
-"ის ასევე შეიძლება იქნეს მიღებული ონლაინ რეჟიმში: https://www.gnu.org/licenses/"
-"old-licenses/gpl-2.0.html\n"
+"ის ასევე შეიძლება იქნეს მიღებული ონლაინ რეჟიმში: https://www.gnu.org/"
+"licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} მუშავდება NV Access, არაკომერციული ორგანიზაციის მიერ, რომელიც შეიქმნა "
 "თავისუფალი პროგრამული უზრუნველყოფის გახსნილი გამომდინარე კოდიტ "
@@ -7031,6 +7031,21 @@ msgstr "წაუკითხავი"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr ""
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied"
+msgstr "შეცვლა"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "შეცვლა"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "წინ "
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8776,6 +8791,15 @@ msgstr "პუნქტუაციის დონე:"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
+msgstr "სიმბოლოების დამუშავებისას სინთეზატორის ხმის ნდობა"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
 msgstr "სიმბოლოების დამუშავებისას სინთეზატორის ხმის ნდობა"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -10932,6 +10956,16 @@ msgstr "შენიშვნა: {text} {author} {date}-ში"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} {author}  {date}-ში"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance:.3g} წერტილით სლაიდის მარცხენა კუთხიდან"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance:.3g} წერტილით სლაიდის ზემო კუთხიდან"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -11074,7 +11108,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} წერტილი"
 
 #. Translators: a measurement in Microsoft Word
-#. See https://support.microsoft.com/kb/76388 for details.
+#. See http://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} პიკი"
@@ -11090,212 +11124,3 @@ msgstr "ხაზებს შორის ინტერვალი ორმ
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "ხაზებს შორის ინტერვალი 1.5 "
-
-#, fuzzy
-#~ msgid "purple flag"
-#~ msgstr "იისფერი"
-
-#~ msgid "Use CapsLock as an NVDA modifier key"
-#~ msgstr "ქაპსლოკის nvda-ს მოდიფიკატორად გამოყენება "
-
-#~ msgid "Use numpad Insert as an NVDA modifier key"
-#~ msgstr "ციფრულ ბლოკზე ინსერტი გამოიყენოს როგორ nvda-ს მოდიფიკატორი "
-
-#~ msgid "Use extended Insert as an NVDA modifier key"
-#~ msgstr "ჩვეულებრივი ინსერტი გამოიყენოს როგორც nvda-ს მოდიფიკატორი"
-
-#~ msgid "Report &help balloons"
-#~ msgstr "წაიკითხოს&დამხმარე სისტემური შეტყობინებები"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} - {layout}"
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "Amharic"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "არაბული"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "Nepali"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "Serbian (Latin)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "გამოიძახებს NVDA მოქმედი ხმების არჩევანის დიალოგს."
-
-#~ msgid "&General settings..."
-#~ msgstr "& საერთო პარამეტრები"
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&სინთეზატორი..."
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "მიმდინარე სინთეზატორის შეცვლა"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr ""
-#~ "შეარჩიეთ ხმა, სიჩქარე, ტემბრი და ხმის სიმაღლე, რომელის გმოყენებაც გსურთ."
-
-#~ msgid "B&raille settings..."
-#~ msgstr "&ბრაილის პარამეტრები"
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "&კლავიატურის პარამეტრები..."
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "კლავიატურის წყობის, აკრეფილი სიმბოლოებისა და ბრძანების კლავიშების "
-#~ "გახმოვანების კონფიგურაცია."
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "&მაუსის პარამეტრები"
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr ""
-#~ "თაგვის მაჩვენებლის ფორმის ცვლილებისა და თაგვის ქვეშ ობიექტის წაკითხვა."
-
-#, fuzzy
-#~ msgid "&Touch interaction..."
-#~ msgstr "&ხმის ლექსიკონი......"
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "დაარეგულირეთ როდის და როგორ მოძრაობს ხილული კურსორი"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "შეყვანის პარამეტრები"
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "კონფიგურაცია nvda-ს მიერ შეყვანის კომპოზიციისა და ენის ვარიანტების "
-#~ "შერჩევის გახმოვანებისთვის."
-
-#~ msgid "&Object presentation..."
-#~ msgstr "&ობიექტის წარმოდგენა..."
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "ობიექტის წაკითხვის ცვლილება"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "მიმოხილვის რეჟიმი"
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "ვირტუალური ბუფერის სპეციალური პარამეტრების ცვლილება"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "&დოკუმენტის ფორმატირება"
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "შეცვალეთ დოკუმენტის მახასიათებლების პარამეტრები"
-
-#~ msgid "General Settings"
-#~ msgstr "ზოგადი პარამეტრები"
-
-#~ msgid "Voice Settings"
-#~ msgstr "ხმის პარამეტრები"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "კლავიატურა"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "თაგვის პარამეტრები"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "ხილული კურსორის პარამეტრები"
-
-#~ msgid "Braille Settings"
-#~ msgstr "ბრაილის პარამეტრები "
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "ფრანგული (კანადა) საფეხური 1"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "ფრანგული (კანადა) საფეხური 2"
-
-#~ msgid "Mongolian"
-#~ msgstr "Mongolian"
-
-#~ msgid "Download and &install update"
-#~ msgstr "განახლების ჩამოტვირთვა და &დაყენება"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "განახლება ჩამოიტვირთა და ახლა დაყენდება."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr ""
-#~ "გადაყავს მითითებულ ადგილას და აცხადებს ინფორმაციას ფორმატირების შესახებ."
-
-#~ msgid "r%s"
-#~ msgstr "r%s"
-
-#~ msgid "c%s"
-#~ msgstr "c%s"
-
-#~ msgid "suspended"
-#~ msgstr "შეჩერებულია"
-
-#~ msgid "running"
-#~ msgstr "მუშაობს"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "ALVA BC640/680 series"
-
-#~ msgid "review"
-#~ msgstr "განხილვა"
-
-#~ msgid "focus"
-#~ msgstr "ფოკუსი"
-
-#, fuzzy
-#~ msgid "B&raille tethered to:"
-#~ msgstr "ბრაილის მიბმა"
-
-#~ msgid "Not defined"
-#~ msgstr "არაა განსაზღვრული"
-
-#~ msgid "Value"
-#~ msgstr "მნიშვნელობა"
-
-#~ msgid "Series"
-#~ msgstr "სერია"
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "ღერძის ტიპი: {axisName} სათაურით: {axisTitle}"
-
-#~ msgid "Primary"
-#~ msgstr "ძირითად ღერძზე"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr ""
-#~ "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup}, სათაური: "
-#~ "{axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "დიაგრამის ღერძი, ტიპი: {axisType}, ჯგუფი: {axisGroup},"
-
-#~ msgid "Chart axis title"
-#~ msgstr "სქემის ვალიდაციის სათაური"
-
-#~ msgid "trendline"
-#~ msgstr "ტრენდის ხაზი"
-
-#~ msgid "Legend"
-#~ msgstr "ლეგენდა"
-
-#~ msgid "No legend"
-#~ msgstr "არაა ლეგენდა"
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "HIMS SyncBraille"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "აჩვენოს  Handy Tech კონფიგურაციის ფანჯარა."

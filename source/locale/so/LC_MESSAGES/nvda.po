@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA source-master-4ccb2ab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-10 10:30+1000\n"
-"PO-Revision-Date: 2018-12-12 09:28+0000\n"
+"POT-Creation-Date: 2019-02-01 00:10+1000\n"
+"PO-Revision-Date: 2019-02-06 09:48+0000\n"
 "Last-Translator: Osman H Baiia <othman82@hotmail.com>\n"
 "Language-Team: \n"
 "Language: so\n"
@@ -3836,6 +3836,10 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
+"isbedelka u dhexeeya habka booqashada iyo habka diiradda. Marka habka "
+"diiradda, Furaha ayaa toos u maraya codsiga, taas oo kuu ogolaaneysa inaad "
+"si toos ah ula shaqeyso xakamaynta. Marka la eego booqashada, waxaad ku dari "
+"kartaa dukumiintiga farta, nafigesshinka furayaasha degdeg ah, iwm."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3854,12 +3858,16 @@ msgid ""
 "Reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
+"Ka akhri calaamadda dib u eegista illaa dhammaadka qoraalka hadda, u gudub "
+"calaamadda dib u eegista sida uu u socdo"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
 "Reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
+"Ka akhri nadaamka karit ilaa dhammaadka qoraalka hadda, u gudub karitka sida "
+"uu u socdo"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -3874,22 +3882,27 @@ msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document. If pressed twice, presents the information in browse mode"
 msgstr ""
+"ka warbixi Xogta qaabeynta faafaahinta ee dib u eegista hadda meesha "
+"calaamada uu ku yaal dukumeentiga. Haddii laba jeer la cadaadiyo, waxay soo "
+"bandhigaysaa macluumaadka habka booqashada"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "Reports the object with focus. If pressed twice, spells the information"
 msgstr ""
+"ka warbixi shayga oo diiradda saaraya. Haddii laba jeer la cadaadiyo, "
+"Macluumaadka ayaa soo kordhinaya"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
-msgstr ""
+msgstr "Lama helin xariijinta sharciga"
 
 #. Translators: Reported when status line exist, but is empty.
 msgid "no status bar information"
-msgstr ""
+msgstr "Macluumaadka maqnaanshaha xaaladda"
 
 #. Translators: Reported when user attempts to copy content of the empty status line.
 msgid "unable to copy status bar content to clipboard"
-msgstr ""
+msgstr "aan awoodin in ay nuqul ka koobnaadaan xalada bar"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
@@ -3897,22 +3910,26 @@ msgid ""
 "pressed twice, spells the information. If pressed three times, copies the "
 "status bar to the clipboard"
 msgstr ""
+"Wuxuu aqriyaa barta codsiga ee hadda jirta waxayna u guurisaa marin-"
+"haweedka. Haddii laba jeer la cadaadiyo, waxay soo dhigtaa macluumaadka. "
+"Haddii sadex jeer la cadaadiyo, nuqullada xayeysiiska ku dheji sanduuqa"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr ""
+msgstr "Raadinta jiirka wuu dimsiyyahay"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr ""
+msgstr "Raadinta jiirka wuu shidiyyahay"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr ""
+"Waxay ka dhigtaa warbixinta ee macluumaadka madaama jiirku uu dhaqaaqayo"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "No title"
-msgstr ""
+msgstr "ma jirto cinwaan"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
@@ -3920,162 +3937,181 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
+"Wuxuu soo wargeliyaa magaca codsiga hadda ama daaqada hore. Haddii labo jeer "
+"la cadaadiyo, waxay ku sii kordheysaa cinwaanka. Haddii sadex jeer la "
+"cadaadiyo, koobi cinwaanka shaxanka"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "Speaks the current foreground object"
-msgstr ""
+msgstr "Wuxuu ka hadlayaa sheyga hore"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
+"Waxay gashaa macluumaadka ku saabsan sheyga socdaalka ee hadda jira kuwaas "
+"oo faa'iido u leh horumarinta iyo hirgaliya aragtida macaamiilka si "
+"macluumaadka loo baari karo."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "No progress bar updates"
-msgstr ""
+msgstr "cusboonaysiin ma jirto ee Horumarka bar"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "Speak progress bar updates"
-msgstr ""
+msgstr "cusbooneysiinta ka hadal  ee horumarka bar"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "Beep for progress bar updates"
-msgstr ""
+msgstr "boog ee horumarkan barta cusbooneysiinta"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "Beep and speak progress bar updates"
-msgstr ""
+msgstr "Boog iyo hadal ee horumarkan barta cusbooneysiinta"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
+"Isku dhafka u dhexeeya boog, hadalka, boog iyo hadalka, iyo haddii ay banaan "
+"tahay si loogu wargaliyo barashada horumarka"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr ""
+msgstr "soo sheegaan isbeddelada firfircooni ka baxsan"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr ""
+msgstr "soo sheegaan isbeddelada firfircooni ku saabsan"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
+"Isku duwidda iyo ka-warbixinta isbeddelada waxqabadka firfircoonaanta, sida "
+"qoraallada cusub ee ku yaal daaqadaha"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr ""
+msgstr "karit waxay dib u eegtaa dib u eegida wuu dimsiyyahay"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr ""
+msgstr "karit waxay dib u eegtaa dib u eegida wuu shidiyyahay"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
+"Dhex galka iyo maqnaashaha dhaqdhaqaaqa cursada dib u eegista sababta oo ah "
+"karetka u gudubka."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr ""
+msgstr "diiradda saaraa sheyga gawaarida wuu dimsiyyahay"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr ""
+msgstr "diiradda saaraa sheyga gawaarida wuu shidiyyahay"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
+"Dhex galka iyo maqnaashaha dhaqdhaqaaqa cursada sheyga socdaalka sababtuna "
+"waa isbedelka diiradda"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "No system battery"
-msgstr ""
+msgstr "Ma jiro batari nidaam ah"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
 msgid "%d percent"
-msgstr ""
+msgstr "%d boqolkiiba"
 
 #. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 msgid "AC power on"
-msgstr ""
+msgstr "AC awood wuu shidiyyahay"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #, python-brace-format
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr ""
+msgstr "{hours:d} saacadaha iyo {minutes:d} daqiiqo ka dhiman"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "Reports battery status and time remaining if AC is not plugged in"
 msgstr ""
+"Warbixinta xaaladda bateriga iyo waqtiga ku dhiman haddii AC aysan ku xirneyn"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
-msgstr ""
+msgstr "Ku dhaaf fureka xiga"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
+"Furaha xigta ee la cadaadiyay laguma xallin doono NVDA, waxaa si toos ah "
+"loogu gudbin doonaa Windows."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr ""
+msgstr "%s waa codsiga hadda socda"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr ""
+msgstr " and majoolka u hada lagu dhejeyay wa %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
+"Wuxuu ka hadlayaa faylka codsiga firfircoon ee ay la socoto magaca appModule "
+"ee hadda lagu soo buuxiyey"
 
 #. Translators: Input help mode message for go to general settings command.
 msgid "Shows NVDA's general settings"
-msgstr ""
+msgstr "Waxay muujisaa goobaha guud ee NVDA"
 
 #. Translators: Input help mode message for go to select synthesizer command.
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr ""
+msgstr "Waxay muujisaa wada-hadalka xulashada NVDA synthesizer"
 
 #. Translators: Input help mode message for go to speech settings command.
 msgid "Shows NVDA's speech settings"
-msgstr ""
+msgstr "Waxay muujisaa goobaha hadalka ee NVDA"
 
 #. Translators: Input help mode message for go to select braille display command.
 msgid "Shows the NVDA braille display selection dialog"
-msgstr ""
+msgstr "Waxay muujisaa wada-hadallada xulashada farta indoolishada NVDA"
 
 #. Translators: Input help mode message for go to braille settings command.
 msgid "Shows NVDA's braille settings"
-msgstr ""
+msgstr "Waxay muujisaa goobaha  breelka ee NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings command.
 msgid "Shows NVDA's keyboard settings"
-msgstr ""
+msgstr "Waxay muujinaysaa goobaha lawxadda furaha ee NVDA"
 
 #. Translators: Input help mode message for go to mouse settings command.
 msgid "Shows NVDA's mouse settings"
-msgstr ""
+msgstr "Muujiyaa NVDA habka jiirka"
 
 #. Translators: Input help mode message for go to review cursor settings command.
 msgid "Shows NVDA's review cursor settings"
-msgstr ""
+msgstr "Waxay muujineysaa goobaha dib u eegista kersada NVDA"
 
 #. Translators: Input help mode message for go to input composition settings command.
 msgid "Shows NVDA's input composition settings"
@@ -10696,6 +10732,3 @@ msgstr ""
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr ""
-
-#~ msgid "xrn"
-#~ msgstr "lnk"

@@ -11,49 +11,34 @@ import unicodedata
 import NVDAHelper
 import config
 import textInfos
-from locationHelper import RectLTWH
+import locationHelper
 from treeInterceptorHandler import TreeInterceptor
 import api
-from six.moves import range
+import textUtils
+from dataclasses import dataclass
+from typing import Optional
+import locale
+from logHandler import log
 
-HIGH_SURROGATE_FIRST = u"\uD800"
-HIGH_SURROGATE_LAST = u"\uDBFF"
-LOW_SURROGATE_FIRST = u"\uDC00"
-LOW_SURROGATE_LAST = u"\uDFFF"
-
-class Offsets(object):
+@dataclass
+class Offsets:
 	"""Represents two offsets."""
+	#: the first offset.
+	startOffset: int
+	#: the second offset.
+	endOffset: int
 
-	def __init__(self,startOffset,endOffset):
-		"""
-		@param startOffset: the first offset.
-		@type startOffset: integer
-		@param endOffset: the second offset.
-		@type endOffset: integer
-		"""
-		self.startOffset=startOffset
-		self.endOffset=endOffset
-
-	def __eq__(self,other):
-		if isinstance(other,self.__class__) and self.startOffset==other.startOffset and self.endOffset==other.endOffset:
-			return True
-		else:
-			return False
-
-	def __ne__(self,other):
-		return not self==other
- 
 def findStartOfLine(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
-@param text: the text to search
-@type text: string
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
+	@param text: the text to search
+	@type text: str
+	@param offset: the offset of the text to start at
+	@type offset: int
+	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	@type lineLength: int or None
+	@return: the found offset
+	@rtype: int 
+	"""
 	if not text:
 		return 0
 	if offset>=len(text):
@@ -71,15 +56,15 @@ def findStartOfLine(text,offset,lineLength=None):
 
 def findEndOfLine(text,offset,lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves forward to sit on a multiple of the line length.
-@param text: the text to search
-@type text: unicode
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
+	@param text: the text to search
+	@type text: str
+	@param offset: the offset of the text to start at
+	@type offset: int
+	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	@type lineLength: int or None
+	@return: the found offset
+	@rtype: int 
+	"""
 	if not text:
 		return 0
 	if offset>=len(text):
@@ -98,15 +83,15 @@ def findEndOfLine(text,offset,lineLength=None):
 
 def findStartOfWord(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
-@param text: the text to search
-@type text: unicode
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
+	@param text: the text to search
+	@type text: str
+	@param offset: the offset of the text to start at
+	@type offset: int
+	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	@type lineLength: int or None
+	@return: the found offset
+	@rtype: int 
+	"""
 	if offset>=len(text):
 		return offset
 	while offset>0 and text[offset].isspace():
@@ -120,15 +105,15 @@ def findStartOfWord(text,offset,lineLength=None):
 
 def findEndOfWord(text,offset,lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
-@param text: the text to search
-@type text: unicode
-@param offset: the offset of the text to start at
-@type offset: int
-@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
-@type lineLength: int or None
-@return: the found offset
-@rtype: int 
-"""
+	@param text: the text to search
+	@type text: str
+	@param offset: the offset of the text to start at
+	@type offset: int
+	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
+	@type lineLength: int or None
+	@return: the found offset
+	@rtype: int 
+	"""
 	if offset>=len(text):
 		return offset+1
 	if unicodedata.category(text[offset])[0] in "LMN":
@@ -158,14 +143,23 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	Note that the base implementation of L{_getPointFromOffset} uses L{_getBoundingRectFromOffset}.
 	"""
 
-	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
-	useUniscribe=True #Use uniscribe to calculate word offsets etc
+	#: Honours documentFormatting config option if true - set to false if this is not at all slow.
+	detectFormattingAfterCursorMaybeSlow: bool = True
+	#: Use uniscribe to calculate word offsets etc.
+	useUniscribe: bool = True
+	#: The encoding internal to the underlying text info implementation.
+	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
 	def __eq__(self,other):
 		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
 			return True
 		else:
 			return False
+
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
 
 	def _get_locationText(self):
 		textList=[]
@@ -231,15 +225,17 @@ class OffsetsTextInfo(textInfos.TextInfo):
 					# The end offset is in this line
 					inclusiveLineEnd = inclusiveEndOffset
 				rects.append(
-					RectLTWH.fromCollection(
+					locationHelper.RectLTWH.fromCollection(
 						startLocation if lineStart == startOffset else getLocationFromOffset(lineStart),
 						getLocationFromOffset(inclusiveLineEnd)
 					)
 				)
 				offset = inclusiveLineEnd + 1
 		else:
-			if isinstance(startLocation, textInfos.Point):
-				rects.append(RectLTWH.fromPoint(startLocation))
+			if isinstance(startLocation, locationHelper.Point):
+				rects.append(
+					locationHelper.RectLTWH.fromPoint(startLocation)
+				)
 			else:
 				rects.append(startLocation)
 		intersectedRects = []
@@ -269,7 +265,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getStoryText(self):
 		"""Retrieve the entire text of the object.
 		@return: The entire text of the object.
-		@rtype: unicode
+		@rtype: str
 		"""
 		raise NotImplementedError
 
@@ -280,10 +276,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		@param end: The end offset (exclusive).
 		@type end: int
 		@return: The text contained in the requested range.
-		@rtype: unicode
+		@rtype: str
 		"""
 		text=self._getStoryText()
-		return text[start:end] if text else u""
+		if self.encoding == textUtils.WCHAR_ENCODING:
+			offsetConverter = textUtils.WideStringOffsetConverter(text)
+			start, end = offsetConverter.wideToStrOffsets(start, end)
+		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+			raise NotImplementedError
+		return text[start:end]
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		"""Retrieve the formatting information for a given offset and the offsets spanned by that field.
@@ -301,43 +302,50 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
-		# Windows Unicode is UTF-16, so a character may be two offsets for code points beyond 16 bits.
-		if offset > 0:
-			chars = self._getTextRange(offset - 1, offset + 2)
-			# Slicing avoids the need to check length. If invalid, it'll be the empty string.
-			prevChar = chars[0:1]
-			curChar = chars[1:2]
-			nextChar = chars[2:3]
-		else:
-			chars = self._getTextRange(offset, offset + 2)
-			prevChar = u"" # Empty string, any subsequent comparisons will evaluate to False.
-			# Slicing avoids the need to check length. If invalid, it'll be the empty string.
-			curChar = chars[0:1]
-			nextChar = chars[1:2]
-		if HIGH_SURROGATE_FIRST <= curChar <= HIGH_SURROGATE_LAST and LOW_SURROGATE_FIRST <= nextChar <= LOW_SURROGATE_LAST:
-			# curChar is a high (leading) surrogate;
-			# nextChar is a low surrogate and also part of this character.
-			return offset, offset + 2
-		elif HIGH_SURROGATE_FIRST <= prevChar <= HIGH_SURROGATE_LAST and LOW_SURROGATE_FIRST <= curChar <= LOW_SURROGATE_LAST:
-			# curChar is a low (trailing) surrogate;
-			# prevChar is a high surrogate and also part of this character.
-			return offset - 1, offset + 1
+		if self.encoding == textUtils.WCHAR_ENCODING:
+			lineStart,lineEnd=self._getLineOffsets(offset)
+			lineText=self._getTextRange(lineStart,lineEnd)
+			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+			relOffset = offset - lineStart
+			relStrStart, relStrEnd = offsetConverter.wideToStrOffsets(relOffset, relOffset + 1)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
+			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
+		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+			raise NotImplementedError
 		return offset, offset + 1
 
 	def _getWordOffsets(self,offset):
-		lineStart,lineEnd=self._getLineOffsets(offset)
-		lineText=self._getTextRange(lineStart,lineEnd)
-		#Convert NULL and non-breaking space to space to make sure that words will break on them
-		lineText=lineText.translate({0:u' ',0xa0:u' '})
+		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
+			raise NotImplementedError
+		lineStart, lineEnd = self._getLineOffsets(offset)
+		relOffset = offset - lineStart
+		lineText = self._getTextRange(lineStart,lineEnd)
+		# Convert NULL and non-breaking space to space to make sure that words will break on them
+		lineText = lineText.translate({0:u' ',0xa0:u' '})
 		if self.useUniscribe:
-			start=ctypes.c_int()
-			end=ctypes.c_int()
-			#uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
-			#Inject two alphanumeric characters at the end to fix this 
-			lineText+="xx"
-			if NVDAHelper.localLib.calculateWordOffsets(lineText,len(lineText),offset-lineStart,ctypes.byref(start),ctypes.byref(end)):
-				return start.value+lineStart,min(end.value+lineStart,lineEnd)
+			relStart=ctypes.c_int()
+			relEnd=ctypes.c_int()
+			# uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
+			# Inject two alphanumeric characters at the end to fix this 
+			lineText += "xx"
+			# We can't rely on len(lineText) to calculate the length of the line.
+			lineLength = (lineEnd - lineStart) + 2
+			if NVDAHelper.localLib.calculateWordOffsets(lineText, lineLength, relOffset, ctypes.byref(relStart), ctypes.byref(relEnd)):
+				relStart = relStart.value
+				relEnd = relEnd.value
+				if self.encoding != textUtils.WCHAR_ENCODING:
+					# We need to convert the uniscribe based offsets to str offsets.
+					offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+					relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
+				return (relStart + lineStart , relEnd + lineStart)
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
+		if self.encoding == textUtils.WCHAR_ENCODING:
+			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+			relStrOffset = offsetConverter.wideToStrOffsets(relOffset, relOffset)[0]
+			relStrStart = findStartOfWord(lineText, relStrOffset)
+			relStrEnd = findEndOfWord(lineText, relStrOffset)
+			relWideStringStart, relWideStringEnd = offsetConverter.strToWideOffsets(relStrStart, relStrEnd)
+			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		start=findStartOfWord(lineText,offset-lineStart)+lineStart
 		end=findEndOfWord(lineText,offset-lineStart)+lineStart
 		return [start,end]
@@ -345,16 +353,22 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getLineNumFromOffset(self,offset):
 		return None
 
-
 	def _getLineOffsets(self,offset):
 		text=self._getStoryText()
+		if self.encoding == textUtils.WCHAR_ENCODING:
+			offsetConverter = textUtils.WideStringOffsetConverter(text)
+			strOffset = offsetConverter.wideToStrOffsets(offset, offset)[0]
+			strStart=findStartOfLine(text, strOffset)
+			strEnd=findEndOfLine(text, strOffset)
+			return offsetConverter.strToWideOffsets(strStart, strEnd)
+		elif self.encoding not in (None, "utf_32_le", locale.getlocale()[1]):
+			raise NotImplementedError
 		start=findStartOfLine(text,offset)
 		end=findEndOfLine(text,offset)
 		return [start,end]
 
 	def _getParagraphOffsets(self,offset):
 		return self._getLineOffsets(offset)
-
 
 	def _getReadingChunkOffsets(self,offset):
 		return self._getLineOffsets(offset)
@@ -364,9 +378,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _getPointFromOffset(self,offset):
 		# Purposely do not catch LookupError or NotImplementedError raised by _getBoundingRectFromOffset.
-		rect = self._getBoundingRectFromOffset(offset)
-		# For backwards compatibility, keep using textInfos.Point instead of locationHelper.Point
-		return textInfos.Point(*rect.center)
+		return self._getBoundingRectFromOffset(offset).center
 
 	def _getOffsetFromPoint(self,x,y):
 		raise NotImplementedError
@@ -385,7 +397,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		"""
 		super(OffsetsTextInfo,self).__init__(obj,position)
 		from NVDAObjects import NVDAObject
-		if isinstance(position,textInfos.Point):
+		if isinstance(position,locationHelper.Point):
 			offset=self._getOffsetFromPoint(position.x,position.y)
 			position=Offsets(offset,offset)
 		elif isinstance(position,NVDAObject):
@@ -396,7 +408,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			# This is a direct TextInfo to TextInfo copy.
 			# Copy over the contents of the property cache, and any private instance variables (includes the TextInfo's offsets) 
 			self._propertyCache.update(position._propertyCache)
-			self.__dict__.update({x:y for x,y in position.__dict__.iteritems() if x.startswith('_') and x!='_propertyCache'})
+			self.__dict__.update({x:y for x,y in position.__dict__.items() if x.startswith('_') and x!='_propertyCache'})
 		elif position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
@@ -438,7 +450,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def _get_pointAtStart(self):
 		try:
-			return textInfos.Point(*self._getBoundingRectFromOffset(self._startOffset).topLeft)
+			return self._getBoundingRectFromOffset(self._startOffset).topLeft
 		except NotImplementedError:
 			return self._getPointFromOffset(self._startOffset)
 

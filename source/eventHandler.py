@@ -276,7 +276,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			return True
 
 	fg = winUser.getForegroundWindow()
-	if wClass == "NetUIHWND" and winUser.getClassName(fg) == "Net UI Tool Window Layered":
+	fgClassName=winUser.getClassName(fg)
+	if wClass == "NetUIHWND" and fgClassName in ("Net UI Tool Window Layered","Net UI Tool Window"):
 		# #5504: In Office >= 2013 with the ribbon showing only tabs,
 		# when a tab is expanded, the window we get from the focus object is incorrect.
 		# This window isn't beneath the foreground window,

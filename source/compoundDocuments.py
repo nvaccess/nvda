@@ -17,6 +17,7 @@ from NVDAObjects import behaviors
 import api
 import config
 import review
+import vision
 from logHandler import log
 from locationHelper import RectLTWH
 
@@ -173,6 +174,11 @@ class CompoundTextInfo(textInfos.TextInfo):
 			return False
 		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self, other):
 		return not self == other
 
@@ -268,7 +274,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		embedIndex = None
 		for ti in self._getTextInfos():
 			for field in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
-				if isinstance(field, basestring):
+				if isinstance(field, str):
 					fields.append(field)
 				elif isinstance(field, int): # Embedded object
 					if embedIndex is None:
@@ -319,7 +325,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			return selfTi.compareEndPoints(otherTi, which)
 
 		# Different objects, so we have to compare the hierarchical positions of the objects.
-		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
+		# cmp no longer exists in Python3.
+	# Per the Python3 What's New docs:
+	# cmp can be replaced with (a>b)-(a<b).
+	# In other words, False and True coerce to 0 and 1 respectively.
+		selfPosition=self._getObjectPosition(selfObj)
+		otherPosition=other._getObjectPosition(otherObj)
+		return (selfPosition>otherPosition)-(selfPosition<otherPosition)
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:
@@ -446,13 +458,14 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
 			else:
-				speech.speakSelectionMessage(_("selected %s"), info.text)
+				speech.speakPreselectedText(info.text)
 			braille.handler.handleGainFocus(self)
 			self.initAutoSelectDetection()
 
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 		caret = self.makeTextInfo(textInfos.POSITION_CARET)
 		review.handleCaretMove(caret)
 

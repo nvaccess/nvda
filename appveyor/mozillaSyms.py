@@ -6,7 +6,6 @@ It expects the crash-stats auth token to be placed in the mozillaSymsAuthToken e
 To update the list of symbols uploaded to Mozilla, see the DLL_NAMES constant below.
 """
 
-from __future__ import print_function
 import argparse
 import os
 import subprocess
@@ -43,7 +42,8 @@ class ProcError(Exception):
 def check_output(command):
 	proc = subprocess.Popen(command,
 		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE)
+		stderr=subprocess.PIPE,
+		text=True)
 	stdout, stderr = proc.communicate()
 	if proc.returncode != 0:
 		raise ProcError(proc.returncode, stderr)

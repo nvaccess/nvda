@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 00:10+1000\n"
-"PO-Revision-Date: 2017-10-31 19:59-0700\n"
+"POT-Creation-Date: 2018-12-28 00:10+1000\n"
+"PO-Revision-Date: 2019-01-01 09:53-0800\n"
 "Last-Translator: Slann tonich <reydelasmaquinas@outlook.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -2265,7 +2265,7 @@ msgstr "Párrafo"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
-#. See https://en.wikipedia.org/wiki/Block_quotation
+#. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
 msgstr "cita"
 
@@ -4565,7 +4565,7 @@ msgstr "Miscelánea"
 #. This should normally be left as is, but might be changed for some locales
 #. if the default key causes problems for the normal locale keyboard layout.
 #. The key must be formatted as described in this article:
-#. https://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
 msgstr "CTRL+ALT+N"
 
@@ -6346,17 +6346,17 @@ msgid "no italic"
 msgstr "no hay cursivas"
 
 #. Translators: Reported when text is formatted with double strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "double strikethrough"
 msgstr "doble tachado"
 
 #. Translators: Reported when text is formatted with strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
 msgstr "tachado"
 
 #. Translators: Reported when text is formatted without strikethrough.
-#. See https://en.wikipedia.org/wiki/Strikethrough
+#. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
 msgstr "no hay tachado"
 
@@ -6386,12 +6386,12 @@ msgid "align right"
 msgstr "alineación a la derecha"
 
 #. Translators: Reported when text is justified.
-#. See https://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 msgid "align justify"
 msgstr "alineación justificada"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
-#. See https://kohei.us/2010/01/21/distributed-text-justification/
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
 msgid "align distributed"
 msgstr "alineación distribuida"
 
@@ -6799,7 +6799,7 @@ msgstr ""
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} colaboradores de NVDA"
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -6812,7 +6812,7 @@ msgid ""
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: https://www.gnu.org/licenses/old-licenses/"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
 "\n"
 "{name} is developed by NV Access, a non-profit organisation committed to "
@@ -7047,6 +7047,21 @@ msgstr "no leído"
 #, python-brace-format
 msgid "Editing profile {profile}"
 msgstr ""
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied"
+msgstr "reemplazar"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "replied all"
+msgstr "reemplazar"
+
+#. Translators: the last action taken on an Outlook mail message
+#, fuzzy
+msgid "forwarded"
+msgstr "Adelante"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -8802,6 +8817,15 @@ msgstr "&Nivel de Puntuación y símbolos:"
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
+msgstr "Confiar en el idioma de la voz al procesar caracteres y símbolos"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings panel (if checked, data from the unicode CLDR will be used
+#. to speak emoji descriptions).
+#, fuzzy
+msgid ""
+"Include Unicode Consortium data (including emoji) when processing characters "
+"and symbols"
 msgstr "Confiar en el idioma de la voz al procesar caracteres y símbolos"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
@@ -10954,6 +10978,16 @@ msgstr "comentario: {text} por {author} en {date}"
 msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType} {description}: {text} por {author} en {date}"
 
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from left edge of page"
+msgstr "{distance:.3g} puntos desde el borde izquierdo de la diapositiva"
+
+#. Translators: a distance from the left edge of the page in Microsoft Word
+#, fuzzy, python-brace-format
+msgid "{distance} from top edge of page"
+msgstr "{distance:.3g} puntos desde el borde superior de la diapositiva"
+
 #. Translators: single line spacing
 msgctxt "line spacing value"
 msgid "single"
@@ -11096,7 +11130,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} puntos"
 
 #. Translators: a measurement in Microsoft Word
-#. See https://support.microsoft.com/kb/76388 for details.
+#. See http://support.microsoft.com/kb/76388 for details.
 #, python-brace-format
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
@@ -11112,210 +11146,3 @@ msgstr "Espaciado doble"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Espaciado de 1.5"
-
-#, fuzzy
-#~ msgid "purple flag"
-#~ msgstr "púrpura"
-
-#~ msgid "Use CapsLock as an NVDA modifier key"
-#~ msgstr "Utilizar BloqueoMayúsculas como tecla modificadora de NVDA"
-
-#~ msgid "Use numpad Insert as an NVDA modifier key"
-#~ msgstr ""
-#~ "Utilizar Insertar del teclado numérico como tecla modificadora de NVDA"
-
-#~ msgid "Use extended Insert as an NVDA modifier key"
-#~ msgstr ""
-#~ "Utilizar Insertar del teclado extendido como tecla modificadora de NVDA"
-
-#~ msgid "Report &help balloons"
-#~ msgstr "Anunciar &globos de ayuda"
-
-#~ msgid "{language} - {layout}"
-#~ msgstr "{language} - {layout}"
-
-#~ msgctxt "languageName"
-#~ msgid "Amharic"
-#~ msgstr "Amárico"
-
-#~ msgctxt "languageName"
-#~ msgid "Arabic"
-#~ msgstr "Árabe"
-
-#~ msgctxt "languageName"
-#~ msgid "Nepali"
-#~ msgstr "Nepalí"
-
-#~ msgctxt "languageName"
-#~ msgid "Serbian (Latin)"
-#~ msgstr "Servio (Latino)"
-
-#~ msgid "Shows the NVDA voice settings dialog"
-#~ msgstr "Muestra el diálogo configuración de Voz de NVDA"
-
-#~ msgid "&General settings..."
-#~ msgstr "configuración &General..."
-
-#~ msgid "&Synthesizer..."
-#~ msgstr "&Sintetizador..."
-
-#~ msgid "Change the synthesizer to be used"
-#~ msgstr "Cambiar el sintetizador a utilizar"
-
-#~ msgid "Choose the voice, rate, pitch and volume to use"
-#~ msgstr "Elegir la voz, la velocidad, el tono y el volumen a utilizar"
-
-#~ msgid "B&raille settings..."
-#~ msgstr "configuración de B&raille..."
-
-#~ msgid "&Keyboard settings..."
-#~ msgstr "configuración de &Teclado..."
-
-#~ msgid ""
-#~ "Configure keyboard layout, speaking of typed characters, words or command "
-#~ "keys"
-#~ msgstr ""
-#~ "configurar la lectura de caracteres, palabras o teclas de comandos "
-#~ "escritas"
-
-#~ msgid "&Mouse settings..."
-#~ msgstr "configuración de &Ratón..."
-
-#~ msgid "Change reporting of mouse shape and object under mouse"
-#~ msgstr "Cambiar el anunciado de la forma del ratón y del objeto bajo él"
-
-#, fuzzy
-#~ msgid "&Touch interaction..."
-#~ msgstr "Diccionario por &Voces..."
-
-#~ msgid "Configure how and when the review cursor moves"
-#~ msgstr "Configurar cómo y cuándo se mueve el cursor de revisión"
-
-#~ msgid "&Input composition settings..."
-#~ msgstr "configuración de Composición de &Entrada"
-
-#~ msgid ""
-#~ "Configure how NVDA reports input composition and candidate selection for "
-#~ "certain languages"
-#~ msgstr ""
-#~ "Configurar cómo anuncia NVDA la composición de entrada y selección de "
-#~ "candidato para ciertos idiomas"
-
-#~ msgid "&Object presentation..."
-#~ msgstr "Presentación de &Objetos..."
-
-#~ msgid "Change reporting of objects"
-#~ msgstr "Cambiar el anunciado de los objetos"
-
-#~ msgid "&Browse mode..."
-#~ msgstr "Modo &exploración..."
-
-#~ msgid "Change virtual buffers specific settings"
-#~ msgstr "modificar configuraciones del modo virtual"
-
-#~ msgid "Document &formatting..."
-#~ msgstr "&Formateado de documentos..."
-
-#~ msgid "Change settings of document properties"
-#~ msgstr "Cambiar configuración de las propiedades del documento"
-
-#~ msgid "General Settings"
-#~ msgstr "configuración General"
-
-#~ msgid "Voice Settings"
-#~ msgstr "configuración de Voz"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "configuración de teclado"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "configuración de Ratón"
-
-#~ msgid "Review Cursor Settings"
-#~ msgstr "configuración del Cursor de Revisión"
-
-#~ msgid "Braille Settings"
-#~ msgstr "configuración de braille"
-
-#~ msgid "French (Canada) grade 1"
-#~ msgstr "Francés (Canadá) grado 1"
-
-#~ msgid "French (Canada) grade 2"
-#~ msgstr "Francés (Canadá) grado 2"
-
-#~ msgid "Mongolian"
-#~ msgstr "mongol"
-
-#~ msgid "Download and &install update"
-#~ msgstr "Descargar e &instalar actualización"
-
-#~ msgid "Update downloaded. It will now be installed."
-#~ msgstr "Actualización descargada. Ahora se instalará."
-
-#~ msgid "Route to and report formatting"
-#~ msgstr "Enruta y anuncia el formato"
-
-#~ msgid "r%s"
-#~ msgstr "f%s"
-
-#~ msgid "c%s"
-#~ msgstr "c%s"
-
-#~ msgid "suspended"
-#~ msgstr "suspendido"
-
-#~ msgid "running"
-#~ msgstr "ejecutando"
-
-#~ msgid "ALVA BC640/680 series"
-#~ msgstr "Series de la ALVA BC640/680"
-
-#~ msgid "review"
-#~ msgstr "revisión"
-
-#~ msgid "focus"
-#~ msgstr "foco"
-
-#, fuzzy
-#~ msgid "B&raille tethered to:"
-#~ msgstr "El Braille sigue a:"
-
-#~ msgid "Not defined"
-#~ msgstr "No definido"
-
-#~ msgid "Value"
-#~ msgstr "Valor"
-
-#~ msgid "Series"
-#~ msgstr "Serie"
-
-#~ msgid "{axisName} Axis is {axisTitle}"
-#~ msgstr "el eje {axisName} es {axisTitle}"
-
-#~ msgid "Primary"
-#~ msgstr "Primario"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-#~ msgstr ""
-#~ "Eje de Gráficos, tipo: {axisType}, grupo: {axisGroup}, título: {axisTitle}"
-
-#~ msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-#~ msgstr "Eje del gráfico, tipo: {axisType}, grupo: {axisGroup}"
-
-#~ msgid "Chart axis title"
-#~ msgstr "Título de eje de gráficos"
-
-#~ msgid "trendline"
-#~ msgstr "Línea de tendencias"
-
-#~ msgid "Legend"
-#~ msgstr "Leyenda"
-
-#~ msgid "No legend"
-#~ msgstr "Sin leyenda"
-
-#~ msgid "HIMS SyncBraille"
-#~ msgstr "HIMS SyncBraille"
-
-#~ msgid "Show the Handy Tech driver configuration window."
-#~ msgstr "Mostrar ventana de configuración del driver para Handy Tech."
