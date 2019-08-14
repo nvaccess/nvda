@@ -1,16 +1,18 @@
 #treeInterceptorHandler.py
 #A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 from logHandler import log
 import baseObject
+import documentBase
 import api
 import review
 import textInfos
 import config
 import braille
+import vision
 
 runningTable=set()
 
@@ -19,19 +21,28 @@ def getTreeInterceptor(obj):
 		if obj in ti:
 			return ti
 
-def update(obj):
+def update(obj, force=False):
 	# Don't create treeInterceptors for objects for which NVDA should sleep.
 	if obj.sleepMode:
 		return None
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:
-		if not obj.shouldCreateTreeInterceptor:
+		if not obj.shouldCreateTreeInterceptor and not force:
 			return None
 		try:
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
+		if not force and (
+			not config.conf['virtualBuffers']['enableOnPageLoad'] or
+			getattr(obj.appModule, "disableBrowseModeByDefault", False)
+		):
+			# Import late to avoid circular import.
+			from browseMode import BrowseModeTreeInterceptor
+			# Disabling enableOnPageLoad should only affect browse mode tree interceptors.
+			if issubclass(newClass, BrowseModeTreeInterceptor):
+				return None
 		ti=newClass(obj)
 		if not ti.isAlive:
 			return None
@@ -116,8 +127,10 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					if review.getCurrentMode()=='document':
 						# if focus is in this treeInterceptor and review mode is document, turning on passThrough should force object review
 						review.setCurrentMode('object')
-					api.setNavigatorObject(focusObj)
-			braille.handler.handleGainFocus(api.getFocusObject())
+					api.setNavigatorObject(focusObj, isFocus=True)
+			focusObj = api.getFocusObject()
+			braille.handler.handleGainFocus(focusObj)
+			vision.handler.handleGainFocus(focusObj)
 		else:
 			obj=api.getNavigatorObject()
 			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
@@ -125,6 +138,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review 
 					review.setCurrentMode('document',True)
 			braille.handler.handleGainFocus(self)
+			vision.handler.handleGainFocus(self)
 
 	_cache_shouldPrepare=True
 	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
@@ -133,14 +147,18 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
 		raise NotImplementedError
 
-class DocumentTreeInterceptor(TreeInterceptor):
+class DocumentTreeInterceptor(documentBase.TextContainerObject,TreeInterceptor):
 	"""A TreeInterceptor that supports document review."""
 
-	def _get_TextInfo(self):
-		raise NotImplementedError
-
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
+	#: Indicates if the text selection is anchored at the start.
+	#: The anchored position is the end that doesn't move when extending or shrinking the selection.
+	#: For example, if you have no selection and you press shift+rightArrow to select the next character,
+	#: this will be True.
+	#: In contrast, if you have no selection and you press shift+leftArrow to select the previous character,
+	#: this will be False.
+	#: If the selection is anchored at the end or there is no information this is C{False}.
+	#: @type: bool
+	isTextSelectionAnchoredAtStart=True
 
 class RootProxyTextInfo(textInfos.TextInfo):
 
@@ -202,6 +220,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_text(self):
 		return self.innerTextInfo.text
+
+	def _get_boundingRects(self):
+		return self.innerTextInfo.boundingRects
 
 	def getTextWithFields(self,formatConfig=None):
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)

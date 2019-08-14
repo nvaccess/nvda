@@ -1,21 +1,21 @@
 # -*- coding: UTF-8 -*-
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from cStringIO import StringIO
+from io import StringIO
 from configobj import ConfigObj
 
 #: The version of the schema outlined in this file. Increment this when modifying the schema and 
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config 
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 1
+latestSchemaVersion = 3
 
 #: The configuration specification string
 #: @type: String
-configSpecString = ("""# NVDA Configuration File
+configSpecString = (f"""# NVDA Configuration File
 schemaVersion = integer(min=0, default={latestSchemaVersion})
 [general]
 	language = string(default="Windows")
@@ -28,10 +28,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Speech settings
 [speech]
-	# The synthesiser to use
+	# The synthesizer to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
+	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -49,23 +50,33 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Braille settings
 [braille]
-	display = string(default=noBraille)
-	translationTable = string(default=en-us-comp8.ctb)
-	inputTable = string(default=en-us-comp8.ctb)
+	display = string(default=auto)
+	translationTable = string(default=en-ueb-g1.ctb)
+	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
 	showCursor = boolean(default=true)
 	cursorBlink = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=200,max=2000)
-	cursorShape = integer(default=192,min=1,max=255)
+	cursorShapeFocus = integer(default=192,min=1,max=255)
+	cursorShapeReview = integer(default=128,min=1,max=255)
 	noMessageTimeout = boolean(default=false)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
+	autoTether = boolean(default=true)
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
+	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 
 	# Braille display driver settings
 	[[__many__]]
 		port = string(default="")
+
+# Vision enhancement provider settings
+[vision]
+	providers = string_list(=default=list())
+
+	# Vision enhancement provider settings
+	[[__many__]]
 
 # Presentation settings
 [presentation]
@@ -97,6 +108,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	audioCoordinates_minPitch = integer(default=220)
 	audioCoordinates_maxPitch = integer(default=880)
 	reportMouseShapeChanges = boolean(default=false)
+	ignoreInjectedMouseInput = boolean(default=false)
 
 [speechViewer]
 	showSpeechViewerAtStartup = boolean(default=false)
@@ -133,6 +145,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
+	enableOnPageLoad = boolean(default=true)
+	autoFocusFocusableElements = boolean(default=True)
+
+[touch]
+	touchTyping = boolean(default=False)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -175,11 +192,19 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	followMouse = boolean(default=False)
 
 [UIA]
-	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
+	useInMSWordWhenAvailable = boolean(default=false)
+	winConsoleImplementation= option("auto", "legacy", "UIA", default="auto")
+
+[terminals]
+	speakPasswords = boolean(default=false)
+	keyboardSupportInLegacy = boolean(default=True)
 
 [update]
 	autoCheck = boolean(default=true)
+	startupNotification = boolean(default=true)
+	allowUsageStats = boolean(default=false)
+	askedAllowUsageStats = boolean(default=false)
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
@@ -191,10 +216,23 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [debugLog]
 	hwIo = boolean(default=false)
 	audioDucking = boolean(default=false)
+	gui = boolean(default=false)
+	louis = boolean(default=false)
+	timeSinceInput = boolean(default=false)
+	vision = boolean(default=false)
+
+[uwpOcr]
+	language = string(default="")
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
-""").format(latestSchemaVersion=latestSchemaVersion)
+
+[editableText]
+	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)
+
+[development]
+	enableScratchpadDir = boolean(default=false)
+""")
 
 #: The configuration specification
 #: @type: ConfigObj

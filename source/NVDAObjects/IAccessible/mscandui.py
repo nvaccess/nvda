@@ -3,12 +3,12 @@ import oleacc
 import queueHandler
 import eventHandler
 import controlTypes
-import characterProcessing
 import config
 import api
 import ui
-import speech
 import winUser
+import mouseHandler
+import NVDAObjects.window
 from . import IAccessible
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
@@ -91,9 +91,9 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 				y=l[1]
 				oldX,oldY=winUser.getCursorPos()
 				winUser.setCursorPos(x,y)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 				time.sleep(0.2)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+				mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 				winUser.setCursorPos(oldX,oldY)
 				return
 		raise NotImplementedError
@@ -160,7 +160,7 @@ class MSCandUI21(IAccessible):
 				reportSelectedCandidate(item)
 				return
 			elif config.conf["reviewCursor"]["followFocus"]:
-				api.setNavigatorObject(candidateList)
+				api.setNavigatorObject(candidateList, isFocus=True)
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
@@ -212,10 +212,61 @@ class MSCandUIWindow(IAccessible):
 		item=MSCandUIWindow_candidateListItem(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=3)
 		reportSelectedCandidate(item)
 
+class ModernCandidateUICandidateItem(BaseCandidateItem):
+
+	def _get_parent(self):
+		# Candidate list in Microsoft Quick cannot be obtained in IAccessible _get_parent.
+		# Use _get_parent in NVDAObject.window.
+		parent=NVDAObjects.window.Window._get_parent(self)
+		return parent
+
+	def _get_candidateCharacters(self):
+		return super(BaseCandidateItem,self).name
+
+	_candidateNumber=""
+
+	_visibleCandidateItemsText=""
+
+	def refreshCandidateList(self):
+		textList=[]
+		candidateItems = super(ModernCandidateUICandidateItem,self).parent.children
+		for child in candidateItems:
+			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.STATE_SELECTABLE not in child.states:
+				continue
+			textList.append(child.candidateCharacters)
+		if not len(textList)<=1:
+			self._visibleCandidateItemsText=(u", ".join(textList))+u", "
+			try:
+				self._candidateNumber = textList.index(self.candidateCharacters)+1
+			except ValueError:
+				pass
+
+
+	def _get_candidateNumber(self):
+		if not self._candidateNumber:
+			self.refreshCandidateList()
+		return self._candidateNumber
+
+	def _get_visibleCandidateItemsText(self):
+		if not self._visibleCandidateItemsText:
+			self.refreshCandidateList()
+		return self._visibleCandidateItemsText
+
+	def event_stateChange(self):
+		if controlTypes.STATE_SELECTED in self.states:
+			reportSelectedCandidate(self)
+
 def findExtraOverlayClasses(obj,clsList):
 	windowClassName=obj.windowClassName
 	role=obj.IAccessibleRole
-	if windowClassName=="MSCandUIWindow_Candidate":
+	if (
+		windowClassName=="Microsoft.IME.CandidateWindow.View"
+		and (
+			obj.role==controlTypes.ROLE_BUTTON
+			or obj.role==controlTypes.ROLE_LISTITEM
+	)):
+			clsList.append(ModernCandidateUICandidateItem)
+	elif windowClassName=="MSCandUIWindow_Candidate":
 		if role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(MSCandUIWindow)
 		elif role==oleacc.ROLE_SYSTEM_LISTITEM:

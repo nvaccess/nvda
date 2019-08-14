@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Babbage B.V.
+#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 import eventHandler
@@ -51,13 +51,13 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 	def _normalizeControlField(self,attrs):
 		level=None
 		ariaCurrent = attrs.get('HTMLAttrib::aria-current', None)
-		if ariaCurrent is not None:
+		if ariaCurrent not in (None, "false"):
 			attrs['current']=ariaCurrent
 		placeholder = self._getPlaceholderAttribute(attrs, 'HTMLAttrib::aria-placeholder')
 		if placeholder:
 			attrs['placeholder']=placeholder
 		accRole=attrs.get('IAccessible::role',0)
-		accRole=int(accRole) if isinstance(accRole,basestring) and accRole.isdigit() else accRole
+		accRole=int(accRole) if isinstance(accRole,str) and accRole.isdigit() else accRole
 		nodeName=attrs.get('IHTMLDOMNode::nodeName',"")
 		ariaRoles=attrs.get("HTMLAttrib::role", "").split(" ")
 		#choose role
@@ -67,7 +67,10 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_UNKNOWN)
 		if not role:
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		roleText=attrs.get('HTMLAttrib::aria-roledescription')
+		if roleText:
+			attrs['roleText']=roleText
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		if attrs.get('HTMLAttrib::longdesc'):
 			states.add(controlTypes.STATE_HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
@@ -77,7 +80,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_EDITABLE)
 		if 'HTMLAttrib::onclick' in attrs or 'HTMLAttrib::onmousedown' in attrs or 'HTMLAttrib::onmouseup' in attrs:
 			states.add(controlTypes.STATE_CLICKABLE)
-		if attrs.get('HTMLAttrib::aria-required','false')=='true':
+		if 'HTMLAttrib::required' in attrs or attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
 		description=None
 		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
@@ -164,8 +167,8 @@ class MSHTML(VirtualBuffer):
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
 		# As virtualBuffers must be created at all times for MSHTML to support live regions,
-		# Force focus mode for anything other than a document (e.g. dialog, application)
-		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)  
+		if rootNVDAObject.role==controlTypes.ROLE_APPLICATION or (rootNVDAObject.role==controlTypes.ROLE_DIALOG and (not rootNVDAObject.parent or not rootNVDAObject.parent.treeInterceptor or rootNVDAObject.parent.treeInterceptor.passThrough)):
 			self.disableAutoPassThrough=True
 			self.passThrough=True
 
@@ -188,33 +191,9 @@ class MSHTML(VirtualBuffer):
 	def __contains__(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
-		#'select' tag lists have MSAA list items which do not relate to real HTML nodes.
-		#Go up one parent for these and use it instead
-		if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and not isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.role==controlTypes.ROLE_LISTITEM:
-			parent=obj.parent
-			if parent and isinstance(parent,NVDAObjects.IAccessible.MSHTML.MSHTML):
-				obj=parent
-		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
-		#However only helps in IE8.
-		if obj.windowStyle&winUser.WS_POPUP:
-			parent=obj.parent
-			obj.parent=parent
-			while parent and parent.windowHandle==obj.windowHandle:
-				newParent=parent.parent
-				parent.parent=newParent
-				parent=newParent
-			if parent and parent.windowClassName.startswith('Internet Explorer_'):
-				obj=parent
 		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
 			return False
-		newObj=obj
-		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML):
-			if newObj==self.rootNVDAObject:
-				return True
-			if newObj.role in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
-				break
-			newObj=newObj.parent 
-		return False
+		return not self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -264,14 +243,23 @@ class MSHTML(VirtualBuffer):
 		elif nodeType=="formField":
 			attrs=[
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_OUTLINE],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_TEXT]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]},
+				# Focusable edit fields (input type=text, including readonly ones)
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
+				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
 				{"IHTMLDOMNode::nodeName":["SELECT"]},
 				{"HTMLAttrib::role":["listbox"]},
 			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1],"IHTMLElement::isContentEditable":[1]}
+			attrs=[
+				# Focusable edit fields (input type=text, including readonly ones)
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]},
+				# Any top-most content editable element (E.g. an editable div for rhich text editing) 
+				{"IHTMLElement::isContentEditable":[1],"parent::IHTMLElement::isContentEditable":[0,None]},
+			]
 		elif nodeType=="radioButton":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="comboBox":
@@ -315,7 +303,10 @@ class MSHTML(VirtualBuffer):
 				{"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word(lr.upper()) for lr in aria.htmlNodeNameToAriaLandmarkRoles]}
 				]
 		elif nodeType == "embeddedObject":
-			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
+			attrs = [
+				{"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET","AUDIO","VIDEO"]},
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+			]
 		elif nodeType == "separator":
 			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}
 		else:

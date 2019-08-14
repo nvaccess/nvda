@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 NV Access Limited
+#Copyright (C) 2010-2018 NV Access Limited, Bram Duvigneau
 
 import winUser
 import textInfos
@@ -17,6 +17,9 @@ from NVDAObjects import behaviors
 import api
 import config
 import review
+import vision
+from logHandler import log
+from locationHelper import RectLTWH
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -151,6 +154,17 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			# Row/column span is not supported by all implementations (e.g. LibreOffice)
+			try:
+				field['table-rowsspanned']=obj.rowSpan
+			except NotImplementedError:
+				log.debug("Row span not supported")
+				pass
+			try:
+				field['table-columnsspanned']=obj.columnSpan
+			except NotImplementedError:
+				log.debug("Column span not supported")
+				pass
 		return field
 
 	def __eq__(self, other):
@@ -159,6 +173,11 @@ class CompoundTextInfo(textInfos.TextInfo):
 		if type(self) is not type(other):
 			return False
 		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
+
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
 
 	def __ne__(self, other):
 		return not self == other
@@ -255,7 +274,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		embedIndex = None
 		for ti in self._getTextInfos():
 			for field in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
-				if isinstance(field, basestring):
+				if isinstance(field, str):
 					fields.append(field)
 				elif isinstance(field, int): # Embedded object
 					if embedIndex is None:
@@ -306,7 +325,13 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			return selfTi.compareEndPoints(otherTi, which)
 
 		# Different objects, so we have to compare the hierarchical positions of the objects.
-		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
+		# cmp no longer exists in Python3.
+	# Per the Python3 What's New docs:
+	# cmp can be replaced with (a>b)-(a<b).
+	# In other words, False and True coerce to 0 and 1 respectively.
+		selfPosition=self._getObjectPosition(selfObj)
+		otherPosition=other._getObjectPosition(otherObj)
+		return (selfPosition>otherPosition)-(selfPosition<otherPosition)
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:
@@ -388,6 +413,17 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		return direction - remainingMovement
 
+	def _get_boundingRects(self):
+		rects = []
+		for ti in self._getTextInfos():
+			if ti.obj.hasIrrelevantLocation:
+				continue
+			try:
+				rects.extend(ti.boundingRects)
+			except LookupError:
+				continue
+		return rects
+
 class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
@@ -422,13 +458,14 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
 			else:
-				speech.speakSelectionMessage(_("selected %s"), info.text)
+				speech.speakPreselectedText(info.text)
 			braille.handler.handleGainFocus(self)
 			self.initAutoSelectDetection()
 
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 		caret = self.makeTextInfo(textInfos.POSITION_CARET)
 		review.handleCaretMove(caret)
 

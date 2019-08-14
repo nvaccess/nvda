@@ -18,7 +18,7 @@ in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
-# identifier	replacement[[
+# identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	chấm	all	always
@@ -26,7 +26,7 @@ symbols:
 ? sentence ending	chấm hỏi	all	always
 ; phrase ending	chấm phẩy	most	always
 : phrase ending	hai chấm	most	always
-decimal chấm		none	always
+decimal point		none	always
 in-word '	nháy đơn	all	norep
 negative number	âm	none	norep
 
@@ -34,8 +34,8 @@ negative number	âm	none	norep
 \0	dòng trắng	char	# null
 \t	táp
 \n	xuống dòng	char
-\f	hết trang	none
-\r	cuối dòng	char
+\f	ngắt trang	none
+\r	xuống dòng	char
  	khoảng trắng	char
  	khoảng trắng	char	# no-break space
 
@@ -44,71 +44,75 @@ negative number	âm	none	norep
 "	ngoặc kép	most
 \#	báo số	some
 $	đô la	all	norep
-£	đồng bảng	all	norep
-€	u rô	all	norep
+£	bảng	all	norep
+€	ơ rô	all	norep
 ¢	Xen	all	norep
 ¥	Yên	all	norep
-₹	Ru Bi Ấn	some	norep
+₹	Ru pi	some	norep
 %	phần trăm	some
 &	và	some
 '	nháy đơn	all
-(	mở ngoặc tròn	always
-)	đóng ngoặc tròn	always
+(	mở ngoặc tròn	most	always
+)	đóng ngoặc tròn	most	always
 *	sao	some
 +	cộng	some
 ,	phẩy	all	always
 -	gạch ngang	most
 .	chấm	some
-/	gạch chéo	some
+/	trên	some
 :	hai chấm	most	norep
 ;	chấm phẩy	most
 <	nhỏ hơn	some
 >	lớn hơn	some
 =	bằng	some
 ?	chấm hỏi	all
-@	a còng	some
-[	Mở ngoặc vuông	most
-]	Đóng ngoặc vuông	most
+@	a móc	some
+[	mở ngoặc vuông	most
+]	đóng ngoặc vuông	most
 \\	chéo ngược	most
-^	dấu mũ	most
+^	mũ	most
 _	gạch dưới	most
-`	dấu huyền	most
-{	Mở ngoặc móc	most
-}	Đóng ngoặc móc	most
+`	huyền	most
+{	mở ngoặc nhọn	most
+}	đóng ngoặc nhọn	most
 |	gạch đứng	most
-~	dấu ngã	most
+~	ngã	most
 
 # Other characters
-•	bun lét	some
+•	bu lét	some
 …	ba chấm	all	always
 ...	ba chấm	all	always
-	bun lét	some
 “	mở ngoặc kép	most
 ”	đóng ngoặc kép	most
-‘	nháy đơn trái	most
-’	nháy đơn phải	most
-–	gạch ngang	always
+‘	mở ngoặc đơn	most
+’	đóng ngoặc đơn	most
+–	gạch ngang	most	always
 —	gạch nối	most
-●	bun lét tròn	most
-¨	dấu tách đôi	most
+●	bu lét tròn	most
+¨	tách đôi	most
 ‎	dấu trái qua phải	char
 ‏	dấu phải qua trái	char
-■	dấu vuông đen	some
-▪	dấu vuông đen	some
-◾	dấu vuông đen	some
-◦	bun lét ho lô	some
-➔	mũi tên phải	some
+■	vuông đen	some
+▪	vuông đen	some
+◾	vuông đen	some
+◦	bu lét trắng	some
+⇒	mũi tên phải	some
+⇨	mũi tên phải	some
+➢	mũi tên phải	some
+❖	black diamond minus white X	some
+♣	black club	some
+♦	black diamond	some
 §	phần	all
 °	độ	some
 «	mở ngoặc vuông kép
-»	đóng ngoặc vuông kép
-µ	mai rô	some
-¹	số một in trên	some
-²	số hai in trên	some
-³	số ba in trên	some
-®	đã được đăng ký	some
+đóng ngoặc vuông kép	double right pointing angle bracket
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	đã đăng kí	some
 ™	Thương hiệu	some
-©	bản quyền	some
+©	CopyrightBản quyền	some
 ±	cộng hoặc trừ	some
 ×	lần	some
 ÷	chia cho	some
@@ -120,15 +124,14 @@ _	gạch dưới	most
 ✔	dấu kiểm	some
 
 #Mathematical Operators U+2200 to U+220F
-
-∀	cho tất cả 	none
+∀	cho tất cả	none
 ∁	Bù	none
 ∂	Đạo hàm cục bộ	none
 ∃	có tồn	none
 ∄	Không có tồn	none
 ∅	tập rỗng	none
 ∆	số gia	none
-∇	NABLA	none
+∇	nabla	none
 ∈	Thuộc	none
 ∉	Không thuộc	none
 ∊	phần tử thuộc	none
@@ -137,8 +140,6 @@ _	gạch dưới	most
 ∍	Tập hợp con nhỏ của	none
 ∎	kết quả của sự chứng minh	none
 ∏	Tích	none
-
-# Miscellaneous Mathematical Operators
 
 # Miscellaneous Mathematical Operators
 ∑	Tổng	none
@@ -171,15 +172,18 @@ _	gạch dưới	most
 ⅐	Một phần bảy	none
 ⅑	Một phần chín	none
 ⅒	Một phần mười	none
-⅓	Một phần ba	none
-⅔	Hai phần ba	none
-⅕	Một phần năm	none
-⅖	Hai phần năm	none
-⅗	Ba phần tư	none
-⅘	Bốn phần năm	none
-⅙	Một phần sáu	none
-⅚	Năm phần sáu	none
-⅛	Một phần tám	none
-⅜	Ba phần tám		none
-⅝	Năm phần tám	none
-⅞	Bảy phần tám	none
+⅓	một phần ba	none
+⅔	hai phần ba	none
+⅕	một phần năm	none
+⅖	hai phần năm	none
+⅗	ba phần năm	none
+⅘	bốn phần năm	none
+⅙	một phần sáu	none
+⅚	năm phần sáu	none
+⅛	một phần tám	none
+⅜	ba phần tám	none
+⅝	năm phần tám	none
+⅞	bảy phần tám	none
+
+# Miscellaneous Technical
+⌘	Phím Mac Command	none

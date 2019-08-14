@@ -40,6 +40,7 @@ class TestSelection(unittest.TestCase):
 		cm = CursorManager(text="abc") # Caret at "a"
 		cm.script_selectCharacter_forward(None)
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selBackward(self):
 		"""Same as test_selForward, but with reversed direction.
@@ -47,6 +48,7 @@ class TestSelection(unittest.TestCase):
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_selectCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, False) # the start moved
 
 	def test_selForwardThenUnsel(self):
 		"""Depends on behavior tested by test_selForward.
@@ -72,6 +74,7 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_forward(None) # "a" selected
 		cm.script_selectCharacter_forward(None) # "b" selected
 		self.assertEqual(cm.selectionOffsets, (0, 2)) # "ab" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selBackwardTwice(self):
 		"""Depends on behavior tested in test_selBackward.
@@ -81,6 +84,7 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_back(None) # "b" selected
 		cm.script_selectCharacter_back(None) # "a" selected
 		self.assertEqual(cm.selectionOffsets, (0, 2)) # "ab" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, False) # the start moved
 
 	def test_selForwardThenUnselThenSelBackward(self):
 		"""Test selecting forward, then unselecting and selecting backward.
@@ -91,6 +95,7 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_back(None) # "b" unselected, caret at "b"
 		cm.script_selectCharacter_back(None)
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, False) # the start moved
 
 	def test_selBackwardThenUnselThenSelForward(self):
 		"""Test selecting backward, then unselecting and selecting forward.
@@ -102,6 +107,7 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_forward(None) # "a" unselected, caret at "b"
 		cm.script_selectCharacter_forward(None)
 		self.assertEqual(cm.selectionOffsets, (1, 2)) # "b" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selForwardThenSelBackward(self):
 		"""Test selecting forward, then selecting backward without unselecting.
@@ -111,6 +117,7 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_forward(None) # "b" selected
 		cm.script_selectWord_back(None) # "b" unselected, "a" selected
 		self.assertEqual(cm.selectionOffsets, (0, 1)) # "a" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, False) # the start moved
 
 	def test_selBackwardThenSelForward(self):
 		"""Test selecting backward, then selecting forward without unselecting.
@@ -120,6 +127,7 @@ class TestSelection(unittest.TestCase):
 		cm.script_selectCharacter_back(None) # "b" selected
 		cm.script_selectWord_forward(None) # "b" unselected, "c" selected
 		self.assertEqual(cm.selectionOffsets, (2, 3)) # "c" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selForwardThenSelBackwardThenUnsel(self):
 		"""Test selecting forward, then selecting backward without unselecting, then unselecting forward.
@@ -146,21 +154,25 @@ class TestSelection(unittest.TestCase):
 		cm = CursorManager(text="abc", selection=(1, 1)) # Caret at "b"
 		cm.script_selectToBottomOfDocument(None)
 		self.assertEqual(cm.selectionOffsets, (1, 3)) # "bc" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selToTop(self):
 		cm = CursorManager(text="abc", selection=(2, 2)) # Caret at "c"
 		cm.script_selectToTopOfDocument(None)
 		self.assertEqual(cm.selectionOffsets, (0, 2)) # "ab" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, False) # the start moved
 
 	def test_selToEndOfLine(self):
 		cm = CursorManager(text="ab\ncd", selection=(1, 1)) # Caret at "b"
 		cm.script_selectToEndOfLine(None)
 		self.assertEqual(cm.selectionOffsets, (1, 3)) # "b\n" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selToBeginningOfLine(self):
 		cm = CursorManager(text="ab\ncd", selection=(4, 4)) # Caret at "d"
 		cm.script_selectToBeginningOfLine(None)
 		self.assertEqual(cm.selectionOffsets, (3, 4)) # "c" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, False) # the start moved
 
 	def test_selToEndOfLineAtEnd(self):
 		"""Test selecting to the end of the line after moving to the end of the line (#7157).
@@ -170,6 +182,7 @@ class TestSelection(unittest.TestCase):
 		cm = CursorManager(text="ab", selection=(1, 1)) # Caret at "b"
 		cm.script_selectToEndOfLine(None)
 		self.assertEqual(cm.selectionOffsets, (1, 2)) # "b" selected
+		self.assertEqual(cm.isTextSelectionAnchoredAtStart, True) # the end moved
 
 	def test_selToBeginningOfLineAtBeginning(self):
 		"""Test selecting to the beginning of the line when the caret is already at the beginning of the line.

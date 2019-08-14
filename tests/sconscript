@@ -1,0 +1,58 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvaccess.org/
+#Copyright 2017 NV Access Limited.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import checkPot
+
+Import("env", "sourceDir", "pot")
+
+unitTests = env.SConscript("unit/sconscript", exports=["env"])
+env.Depends(unitTests, sourceDir)
+env.AlwaysBuild(unitTests)
+
+systemTests = env.SConscript("system/sconscript", exports=["env"])
+env.Depends(systemTests, sourceDir)
+env.AlwaysBuild(systemTests)
+env.Alias("systemTests", systemTests)
+
+
+lintInstall = env.SConscript("lint/lintInstall/sconscript", exports=["env"])
+env.Depends(lintInstall, env.Dir("tests/lint/lintInstall/requirements.txt"))
+env.Alias("lintInstall", lintInstall)
+
+lint = env.SConscript("lint/sconscript", exports=["env"])
+env.Depends(lint, lintInstall)
+env.AlwaysBuild(lint)
+env.Alias("lint", lint)
+
+def checkPotAction(target, source, env):
+	return checkPot.checkPot(source[0].abspath)
+checkPotTarget = env.Command("checkPot", pot, checkPotAction)
+env.Depends(checkPotTarget, pot)
+env.AlwaysBuild(checkPotTarget)
+env.Alias("checkPot", checkPotTarget)
+
+# Determine the targets for scons tests.
+# If specific tests are explicitly specified, only run those.
+explicitUnitTests = env.get("unitTests")
+explicitCheckPot = "checkPot" in COMMAND_LINE_TARGETS
+explicitSystemTests = "systemTests" in COMMAND_LINE_TARGETS
+explicit = explicitUnitTests or explicitCheckPot or explicitSystemTests
+tests = []
+if not explicit or explicitUnitTests:
+	tests.append(unitTests)
+if not explicit or explicitCheckPot:
+	tests.append(checkPotTarget)
+if explicit and explicitSystemTests: # only run system tests explicitly
+	tests.append(systemTests)
+env.Alias("tests", tests)

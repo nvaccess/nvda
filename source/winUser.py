@@ -1,13 +1,18 @@
 #winUser.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """Functions that wrap Windows API functions from user32.dll"""
 
+import contextlib
 from ctypes import *
+from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
+from ctypes.wintypes import HWND, RECT, DWORD
+import winKernel
+from textUtils import WCHAR_ENCODING
 
 #dll handles
 user32=windll.user32
@@ -16,6 +21,10 @@ LRESULT=c_long
 HCURSOR=c_long
 
 #Standard window class stuff
+#: Redraws the entire window if a movement or size adjustment changes the width of the client area.
+CS_HREDRAW = 0x0002
+#: Redraws the entire window if a movement or size adjustment changes the height of the client area.
+CS_VREDRAW = 0x0001
 
 WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
 
@@ -44,15 +53,15 @@ class NMHdrStruct(Structure):
 
 class GUITHREADINFO(Structure):
 	_fields_=[
-		('cbSize',DWORD),
-		('flags',DWORD),
-		('hwndActive',HWND),
- 		('hwndFocus',HWND),
-		('hwndCapture',HWND),
-		('hwndMenuOwner',HWND),
-		('hwndMoveSize',HWND),
-		('hwndCaret',HWND),
-		('rcCaret',RECT),
+		('cbSize', DWORD),
+		('flags', DWORD),
+		('hwndActive', HWND),
+		('hwndFocus', HWND),
+		('hwndCapture', HWND),
+		('hwndMenuOwner', HWND),
+		('hwndMoveSize', HWND),
+		('hwndCaret', HWND),
+		('rcCaret', RECT),
 	]
 
 #constants
@@ -85,7 +94,12 @@ WS_SYSMENU=0x80000
 WS_HSCROLL=0x100000
 WS_VSCROLL=0x200000
 WS_CAPTION=0xC00000
+WS_CLIPCHILDREN = 0x02000000
 WS_EX_TOPMOST=0x00000008
+WS_EX_LAYERED = 0x80000
+WS_EX_TOOLWINDOW = 0x00000080
+WS_EX_TRANSPARENT = 0x00000020
+WS_EX_APPWINDOW = 0x00040000
 BS_GROUPBOX=7
 ES_MULTILINE=4
 LBS_OWNERDRAWFIXED=0x0010
@@ -95,8 +109,10 @@ CBS_OWNERDRAWFIXED=0x0010
 CBS_OWNERDRAWVARIABLE=0x0020
 CBS_HASSTRINGS=0x00200
 WM_NULL=0
+WM_QUIT=18
 WM_COPYDATA=74
 WM_NOTIFY=78
+WM_DEVICECHANGE=537
 WM_USER=1024
 #PeekMessage
 PM_REMOVE=1
@@ -115,11 +131,35 @@ GWL_EXSTYLE=-20
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+# SetLayeredWindowAttributes
+LWA_ALPHA = 2
+LWA_COLORKEY = 1
 #Window messages
+WM_NULL = 0
+WM_COPYDATA = 74
+WM_NOTIFY = 78
+WM_USER = 1024
+WM_QUIT = 18
+WM_DISPLAYCHANGE = 0x7e
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
+WM_DESTROY = 2
 WM_PAINT=0x000F
+WM_SHOWWINDOW = 24
+WM_TIMER = 0x0113
 WM_GETOBJECT=0x003D
+#Edit control window messages
+EM_GETSEL=176
+EM_SETSEL=177
+EM_SCROLLCARET=0xb7
+EM_GETLINE=196
+EM_GETLINECOUNT=186
+EM_LINEFROMCHAR=201
+EM_LINEINDEX=187
+EM_LINELENGTH=193
+EM_POSFROMCHAR=214 
+EM_CHARFROMPOS=215
+EM_GETFIRSTVISIBLELINE=0x0ce
 #Clipboard formats
 CF_TEXT=1
 #mapVirtualKey constants
@@ -130,8 +170,8 @@ VK_LBUTTON=1
 VK_RBUTTON=2
 VK_CANCEL=3
 VK_MBUTTON=4
-VK_XBUTTON=15
-VK_XBUTTON=26
+VK_XBUTTON1=5
+VK_XBUTTON2=6
 VK_BACK=8
 VK_TAB=9
 VK_CLEAR=12
@@ -265,7 +305,7 @@ EVENT_OBJECT_PARENTCHANGE=0x800f
 EVENT_OBJECT_HELPCHANGE=0x8010
 EVENT_OBJECT_DEFACTIONCHANGE=0x8011
 EVENT_OBJECT_ACCELERATORCHANGE=0x8012
-
+EVENT_OBJECT_LIVEREGIONCHANGED=0x8019
 EVENT_SYSTEM_DESKTOPSWITCH=0x20
 EVENT_OBJECT_INVOKED=0x8013
 EVENT_OBJECT_TEXTSELECTIONCHANGED=0x8014
@@ -298,10 +338,37 @@ OBJID_NATIVEOM=-16
 # ShowWindow() commands
 SW_HIDE = 0
 SW_SHOWNORMAL = 1
+SW_SHOWNA = 8
+
+# SetWindowPos window constants
+HWND_TOPMOST = HWND(-1)
+
+# window sizing and positioning flags
+SWP_NOACTIVATE = 0x0010
+SWP_NOMOVE = 0x0002
+SWP_NOSIZE = 0x0001
+SWP_SHOWWINDOW = 0x0040
 
 # RedrawWindow() flags
 RDW_INVALIDATE = 0x0001
 RDW_UPDATENOW = 0x0100
+# MsgWaitForMultipleObjectsEx
+QS_ALLINPUT = 0x04ff
+MWMO_ALERTABLE = 0x0002
+
+# GetSystemMetrics constants
+# The width of the screen of the primary display monitor, in pixels.
+SM_CXSCREEN = 0
+# The height of the screen of the primary display monitor, in pixels.
+SM_CYSCREEN = 1
+# The coordinates for the left side of the virtual screen.
+SM_XVIRTUALSCREEN = 76
+# The coordinates for the top of the virtual screen.
+SM_YVIRTUALSCREEN = 77
+# The width of the virtual screen, in pixels.
+SM_CXVIRTUALSCREEN = 78
+# The height of the virtual screen, in pixels.
+SM_CYVIRTUALSCREEN = 79
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
@@ -322,9 +389,15 @@ def MAKEWORD(lo,hi):
 
 def LOWORD(long):
 	return long&0xFFFF
- 
+
 def HIWORD(long):
 	return long>>16
+
+def GET_X_LPARAM(lp):
+	return c_short(LOWORD(lp)).value
+
+def GET_Y_LPARAM(lp):
+	return c_short(HIWORD(lp)).value
 
 def MAKELONG(lo,hi):
 	return (hi<<16)+lo
@@ -376,14 +449,17 @@ def setFocus(hwnd):
 	user32.SetFocus(hwnd)
 
 def getDesktopWindow():
-		return user32.GetDesktopWindow()
+	return user32.GetDesktopWindow()
 
 def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_ID)
 
 
 def getClientRect(hwnd):
-	return user32.GetClientRect(hwnd)
+	r = RECT()
+	if not user32.GetClientRect(hwnd, byref(r)):
+		raise WinError()
+	return r
 
 HWINEVENTHOOK=HANDLE
 
@@ -412,6 +488,10 @@ def keybd_event(*args):
 	return user32.keybd_event(*args)
 
 def mouse_event(*args):
+	# #8452: This is just a wrapper for the user32 mouse_event function,
+	# i.e. events generated by calling this wrapper aren't ignored by NVDA.
+	# To generate mouse events that are ignored by NVDA,
+	# call L{mouseHandler.executeMouseEvent} instead.
 	return user32.mouse_event(*args)
 
 def getAncestor(hwnd,flags):
@@ -463,15 +543,26 @@ def getGUIThreadInfo(threadID):
 def getWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_STYLE)
 
+def getExtendedWindowStyle(hwnd):
+	return user32.GetWindowLongW(hwnd,GWL_EXSTYLE)
+
+
+def setExtendedWindowStyle(hwnd, exstyle):
+	return user32.SetWindowLongW(hwnd, GWL_EXSTYLE, exstyle)
+
+
+def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
+	return user32.SetLayeredWindowAttributes(hwnd, key, alpha, flags)
+
+
 def getPreviousWindow(hwnd):
-		try:
-			return user32.GetWindow(hwnd,GW_HWNDPREV)
-		except WindowsError:
-			return 0
+	try:
+		return user32.GetWindow(hwnd,GW_HWNDPREV)
+	except WindowsError:
+		return 0
 
 def getKeyboardLayout(idThread=0):
 	return user32.GetKeyboardLayout(idThread)
-
 
 def RedrawWindow(hwnd, rcUpdate, rgnUpdate, flags):
 	return user32.RedrawWindow(hwnd, byref(rcUpdate), rgnUpdate, flags)
@@ -514,6 +605,14 @@ def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
+
+def ClientToScreen(hwnd, x, y):
+	point = POINT(x, y)
+	user32.ClientToScreen(hwnd, byref(point))
+	return point.x, point.y
+
+def NotifyWinEvent(event, hwnd, idObject, idChild):
+	user32.NotifyWinEvent(event, hwnd, idObject, idChild)
 
 class STICKYKEYS(Structure):
 	_fields_ = (
@@ -573,3 +672,120 @@ def SendInput(inputs):
 	n = len(inputs)
 	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))
+
+
+class PAINTSTRUCT(Structure):
+	_fields_ = [
+		('hdc', c_int),
+		('fErase', c_int),
+		('rcPaint', RECT),
+		('fRestore', c_int),
+		('fIncUpdate', c_int),
+		('rgbReserved', c_char * 32)
+	]
+
+
+@contextlib.contextmanager
+def paint(hwnd, painStruct=None):
+	"""
+	Context manager that wraps BeginPaint and EndPaint.
+	@param painStruct: The paint structure used in the call to BeginPaint.
+		if C{None} (default), an empty structure is provided.
+	"""
+	if painStruct is None:
+		paintStruct = PAINTSTRUCT()
+	elif not isinstance(paintStruct, PAINTSTRUCT):
+		raise TypeError("Provided paintStruct is not of type PAINTSTRUCT")
+	hdc = user32.BeginPaint(hwnd, byref(paintStruct))
+	if hdc == 0:
+		raise WinError()
+	try:
+		yield hdc
+	finally:
+		user32.EndPaint(hwnd, byref(paintStruct))
+
+
+class WinTimer(object):
+	"""Object that wraps the SetTimer function in user32.
+	The timer is automatically destroyed using KillTimer when the object is terminated using L{terminate}.
+	"""
+
+	def __init__(self, hwnd, idEvent, elapse, timerFunc=None):
+		"""Constructor
+
+		See https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-settimer
+		for a description of the parameters.
+		"""
+		self.hwnd = hwnd
+		self.idEvent = idEvent
+		self.elapse = elapse
+		self.timerFunc = timerFunc
+		self.ident = user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		if self.ident == 0:
+			raise WinError()
+		if not hwnd:
+			# If the window handle passed to SetTimer is valid
+			# we need to keep the original idEvent to terminate the timer.
+			# If no hwnd is given, we need to pass l{ident} when killing it.
+			self.idEvent = self.ident
+
+	def terminate(self):
+		"""Terminates the timer.
+		This should be called from the thread that initiated the timer.
+		"""
+		if not user32.KillTimer(self.hwnd, self.idEvent):
+			raise WinError()
+
+# Windows Clipboard format constants
+CF_UNICODETEXT = 13
+
+@contextlib.contextmanager
+def openClipboard(hwndOwner=None):
+	"""
+	A context manager version of OpenClipboard from user32. 
+	Use as the expression of a 'with' statement, and CloseClipboard will automatically be called at the end. 
+	"""
+	if not windll.user32.OpenClipboard(hwndOwner):
+		raise ctypes.WinError()
+	try:
+		yield
+	finally:
+		windll.user32.CloseClipboard()
+
+def emptyClipboard():
+	if not windll.user32.EmptyClipboard():
+		raise ctypes.WinError()
+
+def getClipboardData(format):
+	# We only support unicode text for now
+	if format!=CF_UNICODETEXT:
+		raise ValueError("Unsupported format")
+	# Fetch the data from the clipboard as a global memory handle
+	h=windll.user32.GetClipboardData(format)
+	if not h:
+		raise ctypes.WinError()
+	# Lock the global memory  while we fetch the unicode string
+	# But make sure not to free the memory accidentally -- it is not ours
+	h=winKernel.HGLOBAL(h,autoFree=False)
+	with h.lock() as addr:
+		# Read the string from the local memory address
+		return wstring_at(addr)
+
+def setClipboardData(format,data):
+	# For now only unicode is a supported format
+	if format!=CF_UNICODETEXT:
+		raise ValueError("Unsupported format")
+	text = data
+	bufLen = len(text.encode(WCHAR_ENCODING, errors="surrogatepass")) + 2
+	# Allocate global memory
+	h=winKernel.HGLOBAL.alloc(winKernel.GMEM_MOVEABLE, bufLen)
+	# Acquire a lock to the global memory receiving a local memory address
+	with h.lock() as addr:
+		# Write the text into the allocated memory
+		buf=(c_wchar*bufLen).from_address(addr)
+		buf.value=text
+	# Set the clipboard data with the global memory
+	if not windll.user32.SetClipboardData(format,h):
+		raise ctypes.WinError()
+	# NULL the global memory handle so that it is not freed at the end of scope as the clipboard now has it.
+	h.forget()

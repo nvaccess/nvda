@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
+#Copyright (C) 2006-2017 NV Access Limited, Mozilla Corporation.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -12,18 +12,67 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
+import re
+
 Import('env')
 
-idlFile=env.Command("ia2.idl","#/miscDeps/include/ia2/ia2.idl",Copy("$TARGET","$SOURCE"))
+# We want a single merged IDL, rather than the separate IDL files in the IA2 source.
+RE_IDL_IMPORT = re.compile(r'import "[A-Z].*$', re.M)
+def buildMergedIdl(target, source, env):
+	outFile = open(str(target[0]), "w")
+	# The first source is a header and should be included unmodified.
+	inFile = open(str(source[0]), "r")
+	outFile.write(inFile.read())
+	outFile.write('\n')
+	for idl in source[1:]:
+		# This source should be included with import statements removed.
+		inFile = open(str(idl), "r")
+		outFile.write(RE_IDL_IMPORT.sub('',inFile.read()))
+		outFile.write('\n')
+	return None
+
+idlDir = env.Dir("#include/ia2/api")
+idlFiles = [
+	# This file contains the header for the merged IDL.
+	'api_all_headers.idl',
+	# These files must be ordered based on dependencies.
+	# The order should not be changed without confirming dependencies first.
+	'IA2CommonTypes.idl',
+	'AccessibleRelation.idl',
+	'AccessibleAction.idl',
+	'AccessibleRole.idl',
+	'AccessibleStates.idl',
+	'Accessible2.idl',
+	'Accessible2_2.idl',
+	'Accessible2_3.idl',
+	'AccessibleComponent.idl',
+	'AccessibleValue.idl',
+	'AccessibleText.idl',
+	'AccessibleText2.idl',
+	'AccessibleEditableText.idl',
+	'AccessibleHyperlink.idl',
+	'AccessibleHypertext.idl',
+	'AccessibleHypertext2.idl',
+	'AccessibleTable.idl',
+	'AccessibleTable2.idl',
+	'AccessibleTableCell.idl',
+	'AccessibleImage.idl',
+	'AccessibleEventID.idl',
+	'AccessibleApplication.idl',
+	'AccessibleDocument.idl',
+	'IA2TypeLibrary.idl',
+	]
+idlFile = env.Command('ia2.idl',
+	[idlDir.File(idl) for idl in idlFiles],
+	buildMergedIdl)
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
 
-proxyDll=env.SharedLibrary(
-	target='IAccessible2Proxy',
+proxyDll=env.COMProxyDll(
+	target='IAccessible2proxy',
 	source=[iidSourceFile,proxySourceFile,dlldataSourceFile],
-	LIBS=['rpcrt4','oleaut32','ole32'],
-	CPPDEFINES=[env['CPPDEFINES'],'WIN32','REGISTER_PROXY_DLL'],
-	LINKFLAGS=[env['LINKFLAGS'],'/export:DllGetClassObject,private','/export:DllCanUnloadNow,private'],
+	# This CLSID must be unique to this dll. A new one can be generated with import comtypes; comtypes.GUID.create_new()
+	proxyClsid="{62d295fe-2062-4369-a010-4f59b5e32d5e}"
 )
 
 Return(['proxyDll','tlbFile','headerFile','iidSourceFile','proxySourceFile','dlldataSourceFile'])

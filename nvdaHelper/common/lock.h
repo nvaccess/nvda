@@ -50,7 +50,23 @@ class LockableObject {
 		LeaveCriticalSection(&_cs);
 	}
 
-};
+	class ScopedLock {
+		private:
+		LockableObject* _lockRef;
+		public:
+		ScopedLock(LockableObject* lockRef): _lockRef(lockRef) {
+			_lockRef->acquire();
+		}
+		~ScopedLock() {
+			_lockRef->release();
+		}
+	};
+
+	ScopedLock scopedAcquire() {
+		return ScopedLock(this);
+	}
+
+	};
 
 /**
  * A class providing both exclusive locking, and reference counting with auto-deletion.

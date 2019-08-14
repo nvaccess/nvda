@@ -16,7 +16,7 @@ from logHandler import log
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.sysListView32 import ListItem
-import textInfos
+import locationHelper
 
 class DuplicateFocusListView(IAccessible):
 	"""A list view which annoyingly fires focus events every second, even when a menu is open.
@@ -46,7 +46,7 @@ class TorrentContentsListItem(ListItem):
 		# We need to use the display model to retrieve the Name column.
 		try:
 			left, top, width, height = self._getColumnLocation(column)
-			return displayModel.DisplayModelTextInfo(self, textInfos.Rect(
+			return displayModel.DisplayModelTextInfo(self, locationHelper.RectLTRB(
 				left, top, left + width, top + height)).text
 		except:
 			log.debugWarning("Error retrieving name using display model", exc_info=True)

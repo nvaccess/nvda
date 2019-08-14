@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION  Uživatelská příručka
+NVDA NVDA_VERSION  Uživatelská příručka
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -8,44 +8,47 @@
 %%toc
 
 + Úvod +
+Vítejte v NVDA!
+
 NonVisual Desktop Access (NVDA) je otevřený a volně šiřitelný odečítač obrazovky pro operační systém Microsoft Windows.
 Díky zpětné vazbě hlasových výstupů a braillských řádků zpřístupňuje NVDA nevidomým a zrakově postiženým práci na počítači s operačním systémem Windows za stejnou finanční částku jako vidícím osobám.
-Vývoj NVDA zastřešuje organizace [NV Access http://www.nvaccess.org/], za pomoci příspěvků od členů komunity.
+Vývoj NVDA zastřešuje organizace [NV Access https://www.nvaccess.org/], za pomoci příspěvků od členů komunity.
 
 ++ Základní  informace ++
-NVDA je odečítač obrazovky pro operační systém Windows umožňující uživateli pracovat s počítačem bez nutnosti vidět na obrazovku. NVDA získává od operačního systému informace o tom, kde se uživatel právě nachází, jaká okna a ovládací prvky jsou právě na obrazovce, sleduje, k jakým změnám v systému dochází. Získané informace pak zpracovává a prezentuje uživateli formou mluvené řeči tvořené hlasovým výstupem, aby uživatel věděl, co se na obrazovce děje. Texty uživatelského rozhraní a zprávy programu jsou nyní přeloženy do 40 různých jazyků. NVDA by měl být schopen číst texty v libovolném jazyce, pro který je v systému přítomen hlasový výstup.
+NVDA umožňuje nevidomým a zrakově postiženým pracovat s operačním systémem Windows a mnoha aplikacemi třetích stran.
 
 Nejvýznamnější přednosti programu: 
 - Podpora pro populární aplikace včetně internetových prohlížečů, emailových klientů, programů sloužících na okamžitou komunikaci a kancelářských balíků
-- Vestavěný hlasový výstup, s podporou více než čtyřiceti jazyků
+- Vestavěný hlasový výstup, s podporou více než 80 jazyků
 - Oznamování informací o formátování textu jako např. název a velikost písma, styl textu či pravopisné chyby
 - Automatické ohlašování textu pod kurzorem myši a volitelná akustická indikace pozice myši
-- Podpora mnoha braillských řádků
+- Podpora mnoha braillských řádků včetně vstupu pro počítačové Braillovo písmo pro řádky s braillskou klávesnicí
 - Možnost spuštění programu z USB klíče nebo jiného přenosného zařízení bez nutnosti instalace
 - Snadný ozvučený instalátor
-- Přeložený do 43 jazyků
+- Přeložený do 51 jazyků
 - Podpora pro moderní operační systémy Windows a to jak pro 32 bitové, tak i 64 bitové verze
 - Možnost spouštění na přihlašovací a jiných zabezpečených obrazovkách systému Windows
-- Kompatibilita s různými rozhraními sloužícími na spřístupnění aplikací: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation jen ve Windows 7 a novějších)
+- Kompatibilita s různými rozhraními sloužícími na spřístupnění aplikací: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation
 - Podpora prostředí příkazového řádku a konzolových aplikací
 -
 
 ++ Mezinárodní podpora ++
 Je nezbytné, aby lidé, kdekoli na světě, hovořící jakýmkoli jazykem, měli stejný přístup k speciálním technologiím. 
-NVDA byl dodnes přeložen do těchto 41 jazyků: afrikánština, albánština, amharština, arabština, brazilská portugalština, bulharština, čeština, dánština, finština, francouzština, galicíjština, gruzínština, hebrejština, hindština, holandština, chorvatština, islandština, italština, japonština, korejština, maďarština, nepálština, němčina, norština, polština, portugalština, rumunština, ruština, řečtina, slovenština, slovinština, srbština, španělština, švédština, tamilština, thajština, taiwanská čínština, tradiční čínština, turečtina, ukrajinština a vietnamština. 
+Vedle angličtiny byl NVDA dodnes přeložen do těchto 51 jazyků: afrikánština, albánština, amharština, arabština, aragónština, barmština, brazilská portugalština, bulharština, čeština, dánština, finština, francouzština, galicijština, gruzínština, hebrejština, hindština, holandština, chorvatština, irština, islandština, italština, japonština, kannadština, katalánština, kolumbijská španělština, korejština, litevština, maďarština, makedonština, nepálština, němčina, norština, pandžábština, perština, polština, portugalština, rumunština, ruština, řečtina, slovenština, slovinština, srbština, španělština, švédština, tamilština, thajština, taiwanská čínština, tradiční čínština, turečtina, ukrajinština a vietnamština. 
 
 ++ Podpora hlasového výstupu ++
 Bez ohledu na poskytování hlášení a rozhraní v několika jazycích NVDA nabízí možnost čtení textů v jakémkoli jazyce, jestliže je dostupný hlasový výstup pro daný jazyk. 
 
-NVDA je distribuován s vícejazyčným volně šiřitelným/open-source hlasovým výstupem [eSpeak http://espeak.sourceforge.net/].
+NVDA je distribuován s vícejazyčným volně šiřitelným/open-source hlasovým výstupem [eSpeak NG https://github.com/espeak-ng/espeak-ng].
 
 Informace o dalších hlasových výstupech podporovaných programem NVDA naleznete v kapitole [Podporované Hlasové Výstupy #SupportedSpeechSynths].
 
 ++ Podpora braillských řádků ++
 Pro uživatele, kteří vlastní braillský řádek, umožňuje NVDA hmatový výstup v braillově písmu. 
+Je podporován braillský vstup pro plnopis i zkratkopis přes braillskou klávesnici.
 Informace o podporovaných typech braillských řádků naleznete v kapitole [Podporované Braillské Řádky #SupportedBrailleDisplays].
 
-NVDA podporuje různé kódové tabulky, které tak umožňují číst hmatový výstup ve více jazycích. V mnoha případech existují tabulky pro plnopis i zkratkopis pro kterýkoli národ, který čte a píše braillovým písmem. 
+NVDA podporuje různé kódové tabulky včetně plnopisu, zkratkopisu a počítačového písma.
 
 ++ Licence a autorská práva ++
 NVDA je chráněn autorskými právy Copyright NVDA_COPYRIGHT_YEARS Tým NVDA 
@@ -53,17 +56,19 @@ NVDA je chráněn autorskými právy Copyright NVDA_COPYRIGHT_YEARS Tým NVDA
 NVDA je chráněn licencí GNU General Public License verze 2.0.
 Program můžete libovolně šířit a upravovat za předpokladu, že k němu přiložíte tuto licenci a zpřístupníte jeho zdrojový kód všem zájemcům.
 Toto se vztahuje jak na původní, tak upravené kopie tohoto programu a také na software užívající kód převzatý z tohoto programu.
-Kompletní licenci najdete na [této stránce http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
+Kompletní licenci najdete na [této stránce https://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
 + Systémové požadavky +
-- NVDA je možno spustit na všech 32 i 64 - bitových verzích systému Windows XP, Vista, 7, 8 a rovněž v serverových edicích Windows. 
+- NVDA je možno spustit na všech 32 i 64 - bitových verzích systému Windows 7, Windows 8, Windows 8.1, Windows 10 a rovněž v serverových edicích Windows od verze Windows Server 2008 R2. 
+ - Pro Windows 7 je vyžadována aktualizace Service Pack 1 nebo vyšší.
+ - Pro Windows Server 2008 R2 je vyžadována aktualizace Service Pack 1 nebo vyšší.
 - Měli byste mít nejméně 256 MB operační paměti.
-- Výkonnost procesoru se odhaduje na 1 GHz nebo rychlejší. NVDA lze spustit i na pomalejších počítačích, ale start programu bude pomalý a přinejmenším se to projeví např. na načítání internetových stránek.
-- Měli byste mít aspoň 50 MB volného místa na disku.
+- Výkonnost procesoru se odhaduje na 1 GHz nebo rychlejší.
+- Měli byste mít aspoň 90 MB volného místa na disku.
 -
 
 + Jak získat  a nainstalovat NVDA +
-Pokud dosud nevlastníte kopii programu NVDA, můžete si ji stáhnout ze stránek: [www.nvda-project.org NVDA_URL].
+Pokud dosud nevlastníte kopii programu NVDA, můžete si ji stáhnout ze stránek: [www.nvaccess.org NVDA_URL].
 
 Vejděte do sekce Download, kde naleznete přímý odkaz ke stažení nejnovější verze NVDA. 
 
@@ -80,6 +85,15 @@ Pokud však chcete NVDA na CD a jiných médiích jen pročtení, měli byste po
 Momentálně není možné spustit přenosnou kopii na médiích jen pro čtení.
 
 Je také možné používat dočasnou kopii pro demonstrační účely, ovšem spouštění NVDA pokaždé tímto způsobem může být zdlouhavé.
+
+++ Omezení přenosné a dočasné kopie ++
+Kromě toho, že nelze spustit přenosné či dočasné kopie automaticky po přihlášení, mají ještě následující omezení:
+- Nelze komunikovat s aplikacemi, které běží s administrátorským oprávněním, pokud NVDA sám nemá tato oprávnění (nedoporučuje se).
+- Nelze číst obrazovku kontroly uživatelského účtu (UAC) při spuštění aplikace s administrátorským oprávněním.
+- Windows 8 a pozdější: není podporován vstup z dotykové obrazovky.
+- Windows 8 a pozdější: nelze zpřístupnit režim prohlížení a hlášení psaných znaků v aplikacích Windows Store.
+- Windows 8 a pozdější: není podporováno tlumení zvuku.
+-
 
 ++ Instalace NVDA ++
 Pokud instalujete NVDA přímo z instalačního balíčku, stiskněte tlačítko nainstalovat NVDA.
@@ -104,14 +118,14 @@ Zde si můžete určit, jestli NVDA má nebo nemá zkopírovat nastavení práv�
 Tímto se nezkopírují nastavení do dalších uživatelských účtů v systému nebo do systémového nastavení pro přihlášení do Windows a dalších zabezpečených obrazovek.
 Tato možnost je dostupná jen, když instalujete z přenosné verze, nikoli při instalaci přímo ze staženého balíčku.
 
-++ Vytvoření přenosné verze ++
-Pro vytvoření přenosné verze přímo z instalačního balíčku stiskněte tlačítko vytvořit přenosnou kopii.
+++ Vytvoření přenosné kopie  ++
+Pro vytvoření přenosné kopie přímo z instalačního balíčku stiskněte tlačítko vytvořit přenosnou kopii.
 Pokud jste už zavřeli tento dialog nebo máte spuštěnou nainstalovanou verzi NVDA, vyberte položku vytvořit přenosnou kopii, která se nachází v nástrojích v nabídce NVDA.
 
 V následujícím dialogu si můžete vybrat, kde by se měla uložit přenosná kopie.
 Může to být adresář na hard disku, USB disku nebo dalších přenosných médiích.
-Také si můžete vybrat, jestli se mají zkopírovat aktuální nastavení právě přihlášeného uživatele, aby se dala použít s nově vytvořenou přenosnou kopií.
-Tato možnost je k dispozici pouze při instalaci přenosné verze z nainstalované, ne při vytváření přenosné kopie přímo z instalačního balíčku.
+Také si můžete vybrat, jestli se mají zkopírovat aktuální uživatelská nastavení, aby se dala použít s nově vytvořenou přenosnou kopií.
+ Tato možnost je k dispozici pouze při instalaci přenosné verze z nainstalované, nikoli při vytváření přenosné kopie přímo z instalačního balíčku.
 Stisknutím tlačítka pokračovat se vytvoří přenosná kopie.
 Když je hotová, potvrdí se úspěšná instalace.
 Pro uzavření tohoto dialogu stiskněte tlačítko OK.
@@ -959,7 +973,7 @@ Tato položka aktivuje znovu načtení zásuvných a aplikačních modulů bez n
 Tato kapitola obsahuje informace o hlasových výstupech podporovaných programem NVDA.
 
 ++ eSpeak ++
-Hlasový výstup [eSpeak http://espeak.sourceforge.net/] je vestavěný přímo v programu NVDA a nepožaduje žádné speciální ovladače nebo jiné komponenty, které by se musely doinstalovávat.
+Hlasový výstup [eSpeak https://espeak.sourceforge.net/] je vestavěný přímo v programu NVDA a nepožaduje žádné speciální ovladače nebo jiné komponenty, které by se musely doinstalovávat.
 Standardně se NVDA spouští s hlasovým výstupem eSpeak.
 Tento hlasový výstup  by měl fungovat v každém systému, kde pracuje NVDA, což znamená, že NVDA můžete spouštět na libovoľném počítači, dokonce i z USB klíčenky nebo CD.
 
@@ -972,7 +986,7 @@ SAPI 4 je starší standard vyvinutý společností Microsoft, který slouží n
 Mnoho hlasových výstupů kompatibilních s tímto standardem je možné koupit nebo zdarma stáhnout od různých dodavatelů nebo z různých webových stránek.
 Při použití SAPI 4 ovladače hlasových výstupů bude v [dialogu Nastavení hlasu #VoiceSettings] nebo v [kruhu nastavení hlasového výstupu #SynthSettingsRing] dostupný kompletní seznam všech SAPI 4 hlasů, které máte v systému nainstalované.
 
-Pokud máte nainstalované nějaké SAPI4 hlasy, ale některý z nich se v seznamu dostupných hlasů neobjeví, zkuste nainstalovat balík SAPI 4.0 runtime ze stránky http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+Pokud máte nainstalované nějaké SAPI4 hlasy, ale některý z nich se v seznamu dostupných hlasů neobjeví, zkuste nainstalovat balík SAPI 4.0 runtime ze stránky https://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API verze 5 (SAPI 5) ++
 SAPI 5 je standard vyvinutý společností Microsoft, který slouží na obsluhu softwarových hlasových výstupů v systému Windows.
@@ -986,33 +1000,33 @@ Pro více informací, prosím, navštivte domovskou stránku Audiologic www.audi
 
 ++ Newfon ++
 Newfon je volně dostupný komerční hlasový výstup Sergeye Šišminčeva, který podporuje ruský a ukrajinský jazyk.
-Tento hlasový výstup můžete stáhnout v sekci ke stažení na stránkách ruské komunity NVDA: http://ru.nvda-community.org/?page_id=10.
+Tento hlasový výstup můžete stáhnout v sekci ke stažení na stránkách ruské komunity NVDA: https://ru.nvda-community.org/?page_id=10.
 
 + Podporované braillské řádky +[SupportedBrailleDisplays]
 Tato kapitola obsahuje informace o braillských řádcích podporovaných programem NVDA..
 
 ++ Řádky Focus/PAC Mate společnosti Freedom Scientific ++
-NVDA podporuje všechny braillské řádky Focus a PAC Mate společnosti [Freedom Scientific http://www.freedomscientific.com/].
+NVDA podporuje všechny braillské řádky Focus a PAC Mate společnosti [Freedom Scientific https://www.freedomscientific.com/].
 Pro správnou funkčnost musíte mít v systému nainstalované ovladače braillských řádků Freedom scientific.
-Jestliže je ještě nemáte, můžete je stáhnout ze stránky: shttp://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Jestliže je ještě nemáte, můžete je stáhnout ze stránky: shttps://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 I když se na stránce mluví jen o řádku Focus 40 Blue, ovladačspolupracuje se všemi řádky Freedom scientific.
 
 ++ Optelec ALVA BC640/680 ++
-NVDA podporuje oba řádky [Optelec http://www.optelec.com/], jak ALVA BC640 tak BC680.
+NVDA podporuje oba řádky [Optelec https://www.optelec.com/], jak ALVA BC640 tak BC680.
 Pro použití těchto řádků se nemusí instalovat žádné ovladače.
 Stačí řádek zapojit a nastavit NVDA na jeho používání.
 
 ++ Braillské řádky společnosti Handy Tech ++
-NVDA podporuje všechny braillské řádky společnosti [Handy Tech http://www.handytech.de/].
+NVDA podporuje všechny braillské řádky společnosti [Handy Tech https://www.handytech.de/].
 Pro některé starší USB řádky je nutné do systému doinstalovat USB ovladače Handy Tech.
 
 ++ MDV Lilli ++
-Braillský řádek Lilli od [MDV http://www.mdvbologna.it/] je programem NVDA plně podporovaný.
+Braillský řádek Lilli od [MDV https://www.mdvbologna.it/] je programem NVDA plně podporovaný.
 Pro použití tohoto řádku se nemusí instalovat žádné ovladače.
 Stačí řádek zapojit a nastavit NVDA na jeho používání.
 
 ++ Braillské řádky Baum/Humanware/APH ++
-NVDA podporuje některé řádky od [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] a [APH http://www.aph.org/] připojené přez USB nebo bluetooth.
+NVDA podporuje některé řádky od [Baum https://www.baum.de/cms/en/], [HumanWare https://www.humanware.com/] a [APH https://www.aph.org/] připojené přez USB nebo bluetooth.
 Podporované řádky jsou:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
@@ -1024,8 +1038,8 @@ Pokud připojujete některý z těchto řádků přez USB, měli byste nejprve n
 V případě řádku APH Refreshabraille by měl režim USB být nastavený na serial.
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] je samostatná aplikace, jejímž prostřednictvím je možné použít mnoho dalších braillských řádků.
-pro použití ovladače BRLTTY je nutné nainstalovat [BRLTTY pro Windows http://brl.thefreecat.org/brltty/].
+[BRLTTY https://mielke.cc/brltty/] je samostatná aplikace, jejímž prostřednictvím je možné použít mnoho dalších braillských řádků.
+pro použití ovladače BRLTTY je nutné nainstalovat [BRLTTY pro Windows https://brl.thefreecat.org/brltty/].
 stáhněte si nejnovější instalační balíček, který najdete pod názvem např. brltty-win-4.2-3.exe.
 Při konfiguraci řádku a portu dávejte velký pozor na přesné dodržení instrukcí, hlavně pokud připojujete řádek přez USB a už máte nainstalované ovladače od výrobce.
 

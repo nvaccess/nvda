@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <wrl.h>
 #include <robuffer.h>
 #include <common/log.h>
+#include "utils.h"
 #include "oneCoreSpeech.h"
 
 using namespace std;
@@ -29,25 +30,23 @@ using namespace Windows::Storage::Streams;
 using namespace Microsoft::WRL;
 using namespace Windows::Media;
 using namespace Windows::Foundation::Collections;
+using Windows::Foundation::Metadata::ApiInformation;
 
-byte* getBytes(IBuffer^ buffer) {
-	// We want direct access to the buffer rather than copying it.
-	// To do this, we need to get to the IBufferByteAccess interface.
-	// See http://cm-bloggers.blogspot.com/2012/09/accessing-image-pixel-data-in-ccx.html
-	ComPtr<IInspectable> insp = reinterpret_cast<IInspectable*>(buffer);
-	ComPtr<IBufferByteAccess> bufferByteAccess;
-	if (FAILED(insp.As(&bufferByteAccess))) {
-		LOG_ERROR(L"Couldn't get IBufferByteAccess from IBuffer");
-		return nullptr;
-	}
-	byte* bytes = nullptr;
-	bufferByteAccess->Buffer(&bytes);
-	return bytes;
+bool __stdcall ocSpeech_supportsProsodyOptions() {
+	return ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 5, 0);
 }
 
 OcSpeech* __stdcall ocSpeech_initialize() {
 	auto instance = new OcSpeech;
 	instance->synth = ref new SpeechSynthesizer();
+	// By default, OneCore speech appends a  large annoying chunk of silence at the end of every utterance.
+	// Newer versions of OneCore speech allow disabling this feature, so turn it off where possible.
+	if (ApiInformation::IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6, 0)) {
+		auto options = instance->synth->Options;
+		options->AppendedSilence = SpeechAppendedSilence::Min;
+	} else {
+		LOG_DEBUGWARNING(L"AppendedSilence not supported");
+	}
 	return instance;
 }
 
@@ -112,6 +111,8 @@ BSTR __stdcall ocSpeech_getVoices(OcSpeech* instance) {
 		VoiceInformation^ info = instance->synth->AllVoices->GetAt(i);
 		voices += info->Id->Data();
 		voices += L":";
+		voices += info->Language->Data();
+		voices += L":";
 		voices += info->DisplayName->Data();
 		if (i != instance->synth->AllVoices->Size - 1) {
 			voices += L"|";
@@ -130,4 +131,28 @@ void __stdcall ocSpeech_setVoice(OcSpeech* instance, int index) {
 
 const char16 * __stdcall ocSpeech_getCurrentVoiceLanguage(OcSpeech* instance) {
 	return instance->synth->Voice->Language->Data();
+}
+
+double __stdcall ocSpeech_getPitch(OcSpeech* instance) {
+	return instance->synth->Options->AudioPitch;
+}
+
+void __stdcall ocSpeech_setPitch(OcSpeech* instance, double pitch) {
+	instance->synth->Options->AudioPitch = pitch;
+}
+
+double __stdcall ocSpeech_getVolume(OcSpeech* instance) {
+	return instance->synth->Options->AudioVolume;
+}
+
+void __stdcall ocSpeech_setVolume(OcSpeech* instance, double volume) {
+	instance->synth->Options->AudioVolume = volume;
+}
+
+double __stdcall ocSpeech_getRate(OcSpeech* instance) {
+	return instance->synth->Options->SpeakingRate;
+}
+
+void __stdcall ocSpeech_setRate(OcSpeech* instance, double rate) {
+	instance->synth->Options->SpeakingRate = rate;
 }

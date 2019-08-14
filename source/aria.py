@@ -66,22 +66,22 @@ ariaSortValuesToNVDAStates={
 
 landmarkRoles = {
 	# Translators: Reported for the banner landmark, normally found on web pages.
-	"banner": _("banner"),
+	"banner": pgettext("aria", "banner"),
 	# Translators: Reported for the complementary landmark, normally found on web pages.
-	"complementary": _("complementary"),
+	"complementary": pgettext("aria", "complementary"),
 	# Translators: Reported for the contentinfo landmark, normally found on web pages.
-	"contentinfo": _("content info"),
+	"contentinfo": pgettext("aria", "content info"),
 	# Translators: Reported for the main landmark, normally found on web pages.
-	"main": _("main"),
+	"main": pgettext("aria", "main"),
 	# Translators: Reported for the navigation landmark, normally found on web pages.
-	"navigation": _("navigation"),
+	"navigation": pgettext("aria", "navigation"),
 	# Translators: Reported for the search landmark, normally found on web pages.
-	"search": _("search"),
+	"search": pgettext("aria", "search"),
 	# Translators: Reported for the form landmark, normally found on web pages.
-	"form": _("form"),
+	"form": pgettext("aria", "form"),
 	# Strictly speaking, region isn't a landmark, but it is very similar.
 	# Translators: Reported for a significant region, normally found on web pages.
-	"region": _("region"),
+	"region": pgettext("aria", "region"),
 }
 
 htmlNodeNameToAriaLandmarkRoles = {

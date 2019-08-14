@@ -1,10 +1,11 @@
 #winVersion.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited
+#Copyright (C) 2006-2017 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import sys
+import os
 import winUser
 
 winVersion=sys.getwindowsversion()
@@ -15,17 +16,43 @@ if winVersion.service_pack_major!=0:
 		winVersionText+=".%d"%winVersion.service_pack_minor
 winVersionText+=" %s" % ("workstation","domain controller","server")[winVersion.product_type-1]
 
+def isSupportedOS():
+	# NVDA can only run on Windows 7 Service pack 1 and above
+	return (winVersion.major,winVersion.minor,winVersion.service_pack_major) >= (6,1,1)
+
 def canRunVc2010Builds():
-	if (winVersion.major, winVersion.minor) < (5, 1):
-		# Earlier than Windows XP.
+	return isSupportedOS()
+
+UWP_OCR_DATA_PATH = os.path.expandvars(r"$windir\OCR")
+def isUwpOcrAvailable():
+	return os.path.isdir(UWP_OCR_DATA_PATH)
+
+def isWin10(version=1507, atLeast=True):
+	"""
+	Returns True if NVDA is running on the supplied release version of Windows 10. If no argument is supplied, returns True for all public Windows 10 releases.
+	@param version: a release version of Windows 10 (such as 1903).
+	@param atLeast: return True if NVDA is running on at least this Windows 10 build (i.e. this version or higher).
+	"""
+	from logHandler import log
+	win10VersionsToBuilds={
+		1507: 10240,
+		1511: 10586,
+		1607: 14393,
+		1703: 15063,
+		1709: 16299,
+		1803: 17134,
+		1809: 17763,
+		1903: 18362
+	}
+	if atLeast and winVersion.major < 10:
 		return False
-	if winVersion.major == 5:
-		if winVersion.minor == 1:
-			# Windows XP for x86.
-			return winVersion.service_pack_major >= 2
-		if winVersion.minor == 2 and winVersion.product_type!=1: 
-			# Windows Server 2003.
-			# (5.2 x64 is Windows XP x64. Its RTM is based on Server 2003 sp1,
-			# so all versions should be fine.)
-			return winVersion.service_pack_major >= 1
-	return True
+	elif not atLeast and winVersion.major != 10:
+		return False
+	try:
+		if atLeast:
+			return winVersion.build >= win10VersionsToBuilds[version]
+		else:
+			return winVersion.build == win10VersionsToBuilds[version]
+	except KeyError:
+		log.error("Unknown Windows 10 version {}".format(version))
+		return False

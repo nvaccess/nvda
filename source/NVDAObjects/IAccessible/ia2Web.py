@@ -13,12 +13,14 @@ import oleacc
 import IAccessibleHandler
 import controlTypes
 from logHandler import log
-from NVDAObjects.behaviors import Dialog
+from documentBase import DocumentWithTableNavigation
+from NVDAObjects.behaviors import Dialog, WebDialog 
 from . import IAccessible
 from .ia2TextMozilla import MozillaCompoundTextInfo
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib=True
+	caretMovementDetectionUsesEvents = False
 
 	def _get_positionInfo(self):
 		info=super(Ia2Web,self).positionInfo
@@ -30,12 +32,38 @@ class Ia2Web(IAccessible):
 		return info
 
 	def _get_isCurrent(self):
-		current = self.IA2Attributes.get("current", False)
+		current = self.IA2Attributes.get("current", None)
+		if current == "false":
+			current = None
 		return current
 
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get('placeholder', None)
 		return placeholder
+
+	def _get_isPresentableFocusAncestor(self):
+		if self.role==controlTypes.ROLE_TABLEROW:
+			# It is not useful to present IAccessible2 table rows in the focus ancestry as  cells contain row and column information anyway.
+			# Also presenting the rows would cause duplication of information
+			return False
+		return super(Ia2Web,self).isPresentableFocusAncestor
+
+	def _get_roleText(self):
+		roleText=self.IA2Attributes.get('roledescription')
+		if roleText:
+			return roleText
+		return super(Ia2Web,self).roleText
+
+	def _get_states(self):
+		states=super(Ia2Web,self).states
+		# Ensure that ARIA gridcells always get the focusable state, even if the Browser fails to provide it.
+		# This is necessary for other code that calculates how selection of cells should be spoken.
+		if 'gridcell' in self.IA2Attributes.get('xml-roles','').split(' '):
+			states.add(controlTypes.STATE_FOCUSABLE)
+		# Google has a custom ARIA attribute to force a node's editable state off (such as in Google Slides).
+		if self.IA2Attributes.get('goog-editable')=="false":
+			states.discard(controlTypes.STATE_EDITABLE)
+		return states
 
 class Document(Ia2Web):
 	value = None
@@ -49,8 +77,36 @@ class Application(Document):
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
 
-class Editor(Ia2Web):
+class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
+
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		# Locate the table in the object ancestry of the given document position. 
+		obj=startPos.NVDAObjectAtStart
+		while not obj.table and obj!=self:
+			obj=obj.parent
+		if not obj.table:
+			# No table could be found
+			raise LookupError
+		table = obj.table
+		try:
+			# We support either IAccessibleTable or IAccessibleTable2 interfaces for locating table cells. 
+			# We will be able to get at least one of these.  
+			try:
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+			except AttributeError:
+				# No IAccessibleTable2, try IAccessibleTable instead.
+				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessibleHandler.IAccessible2)
+			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
+			# Return the position of the found cell
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			# Any of the above calls could throw a COMError, and sometimes a RuntimeError.
+			# Treet this as the cell not existing.
+			raise LookupError
 
 class EditorChunk(Ia2Web):
 	beTransparentToMouse = True
@@ -102,10 +158,11 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:
 		clsList.append(Math)
 
-	isApp = iaRole in (oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG)
-	if isApp:
+	if iaRole==oleacc.ROLE_SYSTEM_APPLICATION:
 		clsList.append(Application)
-	if isApp or iaRole == oleacc.ROLE_SYSTEM_DOCUMENT:
+	elif iaRole==oleacc.ROLE_SYSTEM_DIALOG:
+		clsList.append(WebDialog)
+	if iaRole in (oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_DOCUMENT):
 		clsList.append(documentClass)
 
 	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:

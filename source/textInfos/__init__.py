@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited
+#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -10,11 +10,13 @@ In order to access text content for a widget, a L{TextInfo} implementation is re
 A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
 """
 
+from abc import abstractmethod
 import weakref
 import re
 import baseObject
 import config
 import controlTypes
+import locationHelper
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -59,7 +61,7 @@ class ControlField(Field):
 						break
 				else:
 					table = None
-			if table and ((not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False)):
+			if not table or (not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False):
 				return self.PRESCAT_LAYOUT
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
@@ -68,18 +70,43 @@ class ControlField(Field):
 			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
+			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
+			role in (
+				controlTypes.ROLE_DELETED_CONTENT,
+				controlTypes.ROLE_INSERTED_CONTENT,
+				controlTypes.ROLE_LINK, 
+				controlTypes.ROLE_HEADING, 
+				controlTypes.ROLE_BUTTON, 
+				controlTypes.ROLE_RADIOBUTTON, 
+				controlTypes.ROLE_CHECKBOX, 
+				controlTypes.ROLE_GRAPHIC, 
+				controlTypes.ROLE_CHART, 
+				controlTypes.ROLE_MENUITEM, 
+				controlTypes.ROLE_TAB, 
+				controlTypes.ROLE_COMBOBOX, 
+				controlTypes.ROLE_SLIDER, 
+				controlTypes.ROLE_SPINBUTTON, 
+				controlTypes.ROLE_PROGRESSBAR, 
+				controlTypes.ROLE_TOGGLEBUTTON, 
+				controlTypes.ROLE_MENUBUTTON, 
+				controlTypes.ROLE_TREEVIEW, 
+				controlTypes.ROLE_CHECKMENUITEM, 
+				controlTypes.ROLE_RADIOMENUITEM
+			)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG, controlTypes.ROLE_MATH):
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_MATH):
 			return self.PRESCAT_MARKER
+		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
+			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
+			return self.PRESCAT_MARKER if ancestors else self.PRESCAT_LAYOUT 
 		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (
@@ -89,6 +116,13 @@ class ControlField(Field):
 			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
+
+		# If the author has provided specific role text, then this should be presented either as container or singleLine depending on whether the field is block or not. 
+		if self.get('roleText'):
+			if self.get('isBlock'):
+				return self.PRESCAT_CONTAINER
+			else:
+				return self.PRESCAT_SINGLELINE
 
 		return self.PRESCAT_LAYOUT
 
@@ -126,40 +160,6 @@ POSITION_CARET="caret"
 POSITION_SELECTION="selection"
 POSITION_ALL="all"
 
-class Point(object):
-	"""Represents a point on the screen.
-	This is used when associating a point on the screen with a piece of text.
-	"""
-
-	def __init__(self,x,y):
-		"""
-		@param x: the x coordinate
-		@type x: int
-		@param y: The y coordinate
-		@type y: int
-		"""
-		self.x=x
-		self.y=y
-
-class Rect(object):
-	"""Represents a rectangle on the screen."""
-
-	def __init__(self, left, top, right, bottom):
-		"""
-		@param left: The x coordinate of the upper left corner of the rectangle.
-		@type left: int
-		@param top: The y coordinate of the upper left corner of the rectangle.
-		@type top: int
-		@param right: The x coordinate of the lower right corner of the rectangle.
-		@type right: int
-		@param bottom: The y coordinate of the lower right corner of the rectangle.
-		@type bottom: int
-		"""
-		self.left = left
-		self.top = top
-		self.right = right
-		self.bottom = bottom
-
 class Bookmark(baseObject.AutoPropertyObject):
 	"""Represents a static absolute position in some text.
 	This is used to construct a L{TextInfo} at an exact previously obtained position.
@@ -181,6 +181,11 @@ class Bookmark(baseObject.AutoPropertyObject):
 		if isinstance(other,Bookmark) and self.infoClass==other.infoClass and self.data==other.data:
 			return True
 
+	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
+	# The default hash implementation is fine for  our purposes.
+	def __hash__(self):
+		return super().__hash__()
+
 	def __ne__(self,other):
 		return not self==other
 
@@ -199,6 +204,8 @@ UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
 UNIT_OFFSET="offset"
+
+MOUSE_TEXT_RESOLUTION_UNITS = (UNIT_CHARACTER,UNIT_WORD,UNIT_LINE,UNIT_PARAGRAPH)
 
 unitLabels={
 	UNIT_CHARACTER:_("character"),
@@ -220,13 +227,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 		* Support at least the L{POSITION_FIRST}, L{POSITION_LAST} and L{POSITION_ALL} positions.
 	If an implementation should support tracking with the mouse,
 	L{Points} must be supported as a position.
-	To support routing to a screen point from a given position, L{pointAtStart} must be implemented.
+	To support routing to a screen point from a given position, L{pointAtStart} or L{boundingRects} must be implemented.
 	In order to support text formatting or control information, L{getTextWithFields} should be overridden.
 	
 	@ivar bookmark: A unique identifier that can be used to make another textInfo object at this position.
 	@type bookmark: L{Bookmark}
 	"""
- 
+
+	#: whether this textInfo should be expanded then collapsed around its enclosing unit before review.
+	#: This can be problematic for some implementations.
+	_expandCollapseBeforeReview = True
+
 	def __init__(self,obj,position):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
@@ -246,11 +257,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	_abstract_text = True
 	def _get_text(self):
 		"""The text with in this range.
 		Subclasses must implement this.
 		@return: The text.
-		@rtype: unicode
+		@rtype: str
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
@@ -261,13 +273,27 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular configuration for a particular task.
 		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
-		@rtype: list of unicode and L{FieldCommand}
+		@rtype: list of str and L{FieldCommand}
 		""" 
 		return [self.text]
 
 	def _get_locationText(self):
 		"""A message that explains the location of the text position in friendly terms."""
-		return None
+		try:
+			curPoint = self.pointAtStart
+		except (NotImplementedError, LookupError):
+			return None
+		# Translators: the current position's screen coordinates in pixels
+		return _("Positioned at {x}, {y}").format(x=curPoint.x,y=curPoint.y)
+
+	def _get_boundingRects(self):
+		"""Per line bounding rectangles for the visible text in this range.
+		Implementations should ensure that the bounding rectangles don't contain off screen coordinates.
+		@rtype: [L{locationHelper.RectLTWH}]
+		@raise NotImplementedError: If not supported.
+		@raise LookupError: If not available (i.e. off screen, hidden, etc.)
+		"""
+		raise NotImplementedError
 
 	def unitIndex(self,unit):
 		"""
@@ -280,13 +306,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def unitCount(self,unit):
 		"""
-@param unit: a unit constant
-@type unit: string
-@returns: the number of units of this type in the object
-@rtype: int
-"""
+		@param unit: a unit constant
+		@type unit: string
+		@returns: the number of units of this type in the object
+		@rtype: int
+		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def compareEndPoints(self,other,which):
 		""" compares one end of this range to one end of another range.
 		Subclasses must implement this.
@@ -310,6 +337,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.compareEndPoints(other,"startToStart") == 0 or (self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0)
 
+	@abstractmethod
 	def setEndPoint(self,other,which):
 		"""Sets one end of this range to one end of another range.
 		Subclasses must implement this.
@@ -326,11 +354,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		return self.compareEndPoints(self,"startToEnd")==0
 
+	@abstractmethod
 	def expand(self,unit):
 		"""Expands the start and end of this text info object to a given unit
-@param unit: a unit constant
-@type unit: string
-"""
+		@param unit: a unit constant
+		@type unit: string
+		"""
 		raise NotImplementedError
 
 	def collapse(self, end=False):
@@ -340,9 +369,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	@abstractmethod
 	def copy(self):
 		"""duplicates this text info object so that changes can be made to either one with out afecting the other 
-"""
+		"""
 		raise NotImplementedError
 
 	def updateCaret(self):
@@ -353,9 +383,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""Moves the selection (usually the system caret) to the position of this text info object"""
 		raise NotImplementedError
 
+	_abstract_bookmark = True
 	def _get_bookmark(self):
 		raise NotImplementedError
 
+	@abstractmethod
 	def move(self,unit,direction,endPoint=None):
 		"""Moves one or both of the endpoints of this object by the given unit and direction.
 		@param unit: the unit to move by; one of the UNIT_* constants.
@@ -366,20 +398,20 @@ class TextInfo(baseObject.AutoPropertyObject):
 			negative indicates backward movement, positive indicates forward movement,
 			0 means no movement.
 		@rtype: int
-"""
+		"""
 		raise NotImplementedError
 
 	def find(self,text,caseSensitive=False,reverse=False):
 		"""Locates the given text and positions this TextInfo object at the start.
-@param text: the text to search for
-@type text: string
-@param caceSensitive: true if case sensitivity search should be used, False if not
-@type caseSensitive: bool
-@param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
-@type reverse: bool
-@returns: True if text is found, false otherwise
-@rtype: bool
-""" 
+		@param text: the text to search for
+		@type text: string
+		@param caceSensitive: true if case sensitivity search should be used, False if not
+		@type caseSensitive: bool
+		@param reverse: true then the search will go from current position towards the start of the text, if false then  towards the end.
+		@type reverse: bool
+		@returns: True if text is found, false otherwise
+		@rtype: bool
+		""" 
 		raise NotImplementedError
 
 	def _get_NVDAObjectAtStart(self):
@@ -395,8 +427,20 @@ class TextInfo(baseObject.AutoPropertyObject):
 		return self.obj
 
 	def _get_pointAtStart(self):
-		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point"""
-		raise NotImplementedError
+		"""Retrieves x and y coordinates corresponding with the textInfo start. It should return Point.
+		The base implementation uses L{boundingRects}.
+		@rtype: L{locationHelper.Point}
+		"""
+		if self.isCollapsed:
+			copy = self.copy()
+			# Expand the copy to character.
+			copy.expand(UNIT_CHARACTER)
+			boundingRects = copy.boundingRects
+		else:
+			boundingRects = self.boundingRects
+		if not boundingRects:
+			raise LookupError
+		return boundingRects[0].topLeft
 
 	def _get_clipboardText(self):
 		"""Text suitably formatted for copying to the clipboard. E.g. crlf characters inserted between lines."""
@@ -445,7 +489,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		If extended, the superclass should be called first.
 		@param separator: The text used to separate chunks of format information;
 			defaults to L{speech.CHUNK_SEPARATOR}.
-		@type separator: basestring
+		@type separator: str
 		"""
 		# Import late to avoid circular import.
 		import speech
@@ -462,12 +506,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		if not self.obj.isInForeground:
 			raise NotImplementedError
+		import mouseHandler
 		import winUser
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
+		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):

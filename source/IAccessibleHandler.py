@@ -92,12 +92,10 @@ class OrderedWinEventLimiter(object):
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return True
 		elif eventID==winUser.EVENT_OBJECT_HIDE:
 			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return True
 		elif eventID in MENU_EVENTIDS:
 			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
 			return True
@@ -113,7 +111,7 @@ class OrderedWinEventLimiter(object):
 		g=self._genericEventCache
 		self._genericEventCache={}
 		threadCounters={}
-		for k,v in sorted(g.iteritems(),key=lambda item: item[1],reverse=True):
+		for k,v in sorted(g.items(),key=lambda item: item[1],reverse=True):
 			threadCount=threadCounters.get(k[-1],0)
 			if threadCount>MAX_WINEVENTS_PER_THREAD:
 				continue
@@ -121,12 +119,12 @@ class OrderedWinEventLimiter(object):
 			threadCounters[k[-1]]=threadCount+1
 		f=self._focusEventCache
 		self._focusEventCache={}
-		for k,v in sorted(f.iteritems(),key=lambda item: item[1])[0-self.maxFocusItems:]:
+		for k,v in sorted(f.items(),key=lambda item: item[1])[0-self.maxFocusItems:]:
 			heapq.heappush(self._eventHeap,(v,)+k)
 		e=self._eventHeap
 		self._eventHeap=[]
 		r=[]
-		for count in xrange(len(e)):
+		for count in range(len(e)):
 			event=heapq.heappop(e)[1:-1]
 			r.append(event)
 		return r
@@ -254,6 +252,9 @@ IAccessibleRolesToNVDARoles={
 	IA2_ROLE_TEXT_FRAME:controlTypes.ROLE_TEXTFRAME,
 	IA2_ROLE_TOGGLE_BUTTON:controlTypes.ROLE_TOGGLEBUTTON,
 	IA2_ROLE_VIEW_PORT:controlTypes.ROLE_VIEWPORT,
+	IA2_ROLE_CONTENT_DELETION:controlTypes.ROLE_DELETED_CONTENT,
+	IA2_ROLE_CONTENT_INSERTION:controlTypes.ROLE_INSERTED_CONTENT,
+	IA2_ROLE_BLOCK_QUOTE:controlTypes.ROLE_BLOCKQUOTE,
 	#some common string roles
 	"frame":controlTypes.ROLE_FRAME,
 	"iframe":controlTypes.ROLE_INTERNALFRAME,
@@ -488,6 +489,7 @@ winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
 winUser.EVENT_OBJECT_SELECTIONWITHIN:"selectionWithIn",
 winUser.EVENT_OBJECT_STATECHANGE:"stateChange",
 winUser.EVENT_OBJECT_VALUECHANGE:"valueChange",
+winUser.EVENT_OBJECT_LIVEREGIONCHANGED:"liveRegionChange",
 IA2_EVENT_TEXT_CARET_MOVED:"caret",
 IA2_EVENT_DOCUMENT_LOAD_COMPLETE:"documentLoadComplete",
 IA2_EVENT_OBJECT_ATTRIBUTE_CHANGED:"IA2AttributeChange",
@@ -567,6 +569,10 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				window=tempWindow
 
 		windowClassName=winUser.getClassName(window)
+		# Modern IME candidate list windows fire menu events which confuse us
+		# and can't be used properly in conjunction with input composition support.
+		if windowClassName=="Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
+			return
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
 		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
@@ -830,7 +836,7 @@ def initialize():
 		accPropServices=comtypes.client.CreateObject(CAccPropServices)
 	except (WindowsError,COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s"%e)
-	for eventType in winEventIDsToNVDAEventNames.keys():
+	for eventType in winEventIDsToNVDAEventNames:
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
 			winEventHookIDs.append(hookID)
@@ -858,10 +864,18 @@ def pumpAll():
 	focusWinEvents=[]
 	validFocus=False
 	fakeFocusEvent=None
+	focus=eventHandler.lastQueuedFocusObject
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
+		showHideCaretEvent = focus and isEventOnCaret and winEvent[0] in [winUser.EVENT_OBJECT_SHOW, winUser.EVENT_OBJECT_HIDE]
 		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback,
 		# but this causes focus issues when starting applications.
-		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
+		# #7332: If this is a show event, which would normally be dropped by `shouldAcceptEvent` and this event is for the caret,
+		# later it will be mapped to a caret event, so skip `shouldAcceptEvent`
+		if showHideCaretEvent:
+			if not focus.shouldAcceptShowHideCaretEvent:
+				continue
+		elif not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
@@ -876,7 +890,9 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
-			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
+			# we dont want show caret events to be processed by `processShowWinEvent`, instead they should be 
+			# handled by `processGenericWinEvent`
+			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW and not isEventOnCaret:
 				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
 				# If there is no valid focus event, we may need to use this to fake the focus later.
@@ -979,8 +995,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in xrange(len(text)):
-		t=text[i]
+	for i, t in enumerate(text):
 		if ord(t)==0xFFFC:
 			try:
 				childTextObject=hypertextObject.hyperlink(hypertextObject.hyperlinkIndex(i+startOffset)).QueryInterface(IAccessible)

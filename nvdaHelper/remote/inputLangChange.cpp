@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
+#include <VersionHelpers.h>
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
 #include "ime.h"
@@ -38,10 +39,7 @@ LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM
 }
 
 void inputLangChange_inProcess_initialize() {
-	WORD version=LOWORD(GetVersion());
-	if(LOBYTE(version)>6||(LOBYTE(version)==6&&HIBYTE(version)>=2)) {
-		isWin8=true;
-	}
+	isWin8=IsWindows8OrGreater();
 	registerWindowsHook(WH_CALLWNDPROC,inputLangChange_callWndProcHook);
 }
 

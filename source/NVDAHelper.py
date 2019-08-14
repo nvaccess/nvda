@@ -1,7 +1,14 @@
+#NVDAHelper.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2008-2019 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import os
 import sys
-import _winreg
+import winreg
 import msvcrt
+import versionInfo
 import winKernel
 import config
 
@@ -17,13 +24,23 @@ from logHandler import log
 import time
 import globalVars
 
+versionedLibPath='lib'
+if os.environ.get('PROCESSOR_ARCHITEW6432') == 'ARM64':
+	versionedLib64Path = 'libArm64'
+else:
+	versionedLib64Path = 'lib64'
+if getattr(sys,'frozen',None):
+	# Not running from source. Libraries are in a version-specific directory
+	versionedLibPath=os.path.join(versionedLibPath,versionInfo.version)
+	versionedLib64Path=os.path.join(versionedLib64Path,versionInfo.version)
+
 _remoteLib=None
 _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
-lastInputLanguageName=None
-lastInputMethodName=None
+lastLanguageID=None
+lastLayoutString=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
 def _setDllFuncPointer(dll,name,cfunc):
@@ -64,7 +81,7 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf=create_unicode_buffer(1024)
 	bufSize=c_int(2048)
 	key=HKEY()
-	if windll.advapi32.RegOpenKeyExW(_winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,_winreg.KEY_QUERY_VALUE,byref(key))==0:
+	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:
 		try:
 			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
 				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)
@@ -128,7 +145,7 @@ def handleInputCompositionEnd(result):
 	import speech
 	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
-	from NVDAObjects.behaviors import CandidateItem
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	focus=api.getFocusObject()
 	result=result.lstrip(u'\u3000 ')
 	curInputComposition=None
@@ -142,6 +159,22 @@ def handleInputCompositionEnd(result):
 		#Candidate list is still up
 		curInputComposition=focus.parent
 		focus.parent=focus.parent.parent
+	if isinstance(focus, ModernCandidateUICandidateItem):
+		# Correct focus for ModernCandidateUICandidateItem
+		# Find the InputComposition object and
+		# correct focus to its parent
+		if isinstance(focus.container, InputComposition):
+			curInputComposition=focus.container
+			newFocus=curInputComposition.parent
+		else:
+			# Sometimes InputCompositon object is gone
+			# Correct to container of CandidateItem
+			newFocus=focus.container
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",newFocus)
+		speech.speechMode=oldSpeechMode
+
 	if curInputComposition and not result:
 		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
 	if result:
@@ -177,13 +210,15 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
 	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.IAccessible.mscandui import ModernCandidateUICandidateItem
 	if selectionStart==-1:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
 		return 0
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-	else:
+	# Eliminate InputCompositionStart events from Microsoft Pinyin to avoid reading composition string instead of candidates
+	elif not isinstance(focus,ModernCandidateUICandidateItem):
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
@@ -266,7 +301,7 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 		if msg:
 			textList.append(msg)
 	else:
-		for x in xrange(32):
+		for x in range(32):
 			x=2**x
 			msgs=inputConversionModeMessages.get(x)
 			if not msgs: continue
@@ -296,7 +331,11 @@ def nvdaControllerInternal_IMEOpenStatusUpdate(opened):
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
-	global lastInputMethodName, lastInputLanguageName
+	global lastLanguageID, lastLayoutString
+	languageID=winUser.LOWORD(hkl)
+	#Simple case where there is no change
+	if languageID==lastLanguageID and layoutString==lastLayoutString:
+		return 0
 	focus=api.getFocusObject()
 	#This callback can be called before NVDa is fully initialized
 	#So also handle focus object being None as well as checking for sleepMode
@@ -313,7 +352,6 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		return 0
 	import queueHandler
 	import ui
-	languageID=hkl&0xffff
 	buf=create_unicode_buffer(1024)
 	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
 	# Translators: the label for an unknown language when switching input methods.
@@ -321,8 +359,8 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	layoutStringCodes=[]
 	inputMethodName=None
 	#layoutString can either be a real input method name, a hex string for an input method name in the registry, or an empty string.
-	#If its a real input method name its used as is.
-	#If its a hex string or its empty, then the method name is looked up by trying:
+	#If it is a real input method name, then it is used as is.
+	#If it is a hex string or it is empty, then the method name is looked up by trying:
 	#The full hex string, the hkl as a hex string, the low word of the hex string or hkl, the high word of the hex string or hkl.
 	if layoutString:
 		try:
@@ -343,15 +381,17 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
 		# Translators: The label for an unknown input method when switching input methods. 
 		inputMethodName=_("unknown input method")
+	#Remove the language name if it is in the input method name.
 	if ' - ' in inputMethodName:
 		inputMethodName="".join(inputMethodName.split(' - ')[1:])
-	if inputLanguageName!=lastInputLanguageName:
-		lastInputLanguageName=inputLanguageName
-		# Translators: the message announcing the language and keyboard layout when it changes
-		inputMethodName=_("{language} - {layout}").format(language=inputLanguageName,layout=inputMethodName)
-	if inputMethodName!=lastInputMethodName:
-		lastInputMethodName=inputMethodName
-		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,inputMethodName)
+	#Include the language only if it changed.
+	if languageID!=lastLanguageID:
+		msg=u"{language} - {layout}".format(language=inputLanguageName,layout=inputMethodName)
+	else:
+		msg=inputMethodName
+	lastLanguageID=languageID
+	lastLayoutString=layoutString
+	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,msg)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_wchar)
@@ -369,10 +409,13 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
+	if globalVars.appArgs.launcher:
+		log.debugWarning("Unable to install addon into launcher.")
+		return
 	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
-	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
+	wx.CallAfter(addonGui.handleRemoteAddonInstall, addonPath)
 	return 0
 
 class RemoteLoader64(object):
@@ -384,7 +427,9 @@ class RemoteLoader64(object):
 		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
 		winKernel.closeHandle(pipeReadOrig)
 		# stdout/stderr of the loader process should go to nul.
-		with file("nul", "w") as nul:
+		# Though we aren't using pythonic functions to write to nul,
+		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
+		with open("nul", "wb") as nul:
 			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
 		# Set the process to start with the appropriate std* handles.
 		si = winKernel.STARTUPINFO(dwFlags=winKernel.STARTF_USESTDHANDLES, hSTDInput=pipeRead, hSTDOutput=nulHandle, hSTDError=nulHandle)
@@ -393,7 +438,7 @@ class RemoteLoader64(object):
 		# Therefore, explicitly specify our own process token, which causes them to be inherited.
 		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
-			winKernel.CreateProcessAsUser(token, None, u"lib64/nvdaHelperRemoteLoader.exe", None, None, True, None, None, None, si, pi)
+			winKernel.CreateProcessAsUser(token, None, os.path.join(versionedLib64Path,u"nvdaHelperRemoteLoader.exe"), None, None, True, None, None, None, si, pi)
 			# We don't need the thread handle.
 			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
@@ -416,8 +461,15 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(self._process)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange
-	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
+	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange, lastLanguageID, lastLayoutString
+	hkl=c_ulong(windll.User32.GetKeyboardLayout(0)).value
+	lastLanguageID=winUser.LOWORD(hkl)
+	KL_NAMELENGTH=9
+	buf=create_unicode_buffer(KL_NAMELENGTH)
+	res=windll.User32.GetKeyboardLayoutNameW(buf)
+	if res:
+		lastLayoutString=buf.value
+	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
@@ -444,12 +496,16 @@ def initialize():
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
 	generateBeep.restype=c_int
+	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
+	if config.isAppX:
+		log.info("Remote injection disabled due to running as a Windows Store Application")
+		return
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
-	h=windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+	h=windll.kernel32.LoadLibraryExW(os.path.abspath(os.path.join(versionedLibPath,u"nvdaHelperRemote.dll")),0,0x8)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
 		return
@@ -460,20 +516,41 @@ def initialize():
 		log.error("Error installing IA2 support")
 	#Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
-	if os.environ.get('PROCESSOR_ARCHITEW6432')=='AMD64':
+	if os.environ.get('PROCESSOR_ARCHITEW6432') in ('AMD64', 'ARM64'):
 		_remoteLoader64=RemoteLoader64()
 
 def terminate():
 	global _remoteLib, _remoteLoader64, localLib, generateBeep, VBuf_getTextInRange
-	if not _remoteLib.uninstallIA2Support():
-		log.debugWarning("Error uninstalling IA2 support")
-	if _remoteLib.injection_terminate() == 0:
-		raise RuntimeError("Error terminating NVDAHelperRemote")
-	_remoteLib=None
-	if _remoteLoader64:
-		_remoteLoader64.terminate()
-		_remoteLoader64=None
+	if not config.isAppX:
+		if not _remoteLib.uninstallIA2Support():
+			log.debugWarning("Error uninstalling IA2 support")
+		if _remoteLib.injection_terminate() == 0:
+			raise RuntimeError("Error terminating NVDAHelperRemote")
+		_remoteLib=None
+		if _remoteLoader64:
+			_remoteLoader64.terminate()
+			_remoteLoader64=None
 	generateBeep=None
 	VBuf_getTextInRange=None
 	localLib.nvdaHelperLocal_terminate()
 	localLib=None
+
+LOCAL_WIN10_DLL_PATH = os.path.join(versionedLibPath,"nvdaHelperLocalWin10.dll")
+def getHelperLocalWin10Dll():
+	"""Get a ctypes WinDLL instance for the nvdaHelperLocalWin10 dll.
+	This is a C++/CX dll used to provide access to certain UWP functionality.
+	"""
+	return windll[LOCAL_WIN10_DLL_PATH]
+
+def bstrReturn(address):
+	"""Handle a BSTR returned from a ctypes function call.
+	This includes freeing the memory.
+	This is needed for nvdaHelperLocalWin10 functions which return a BSTR.
+	"""
+	# comtypes.BSTR.from_address seems to cause a crash for some reason. Not sure why.
+	# Just access the string ourselves.
+	# This will terminate at a null character, even though BSTR allows nulls.
+	# We're only using this for normal, null-terminated strings anyway.
+	val = wstring_at(address)
+	windll.oleaut32.SysFreeString(address)
+	return val

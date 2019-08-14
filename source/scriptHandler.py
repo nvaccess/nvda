@@ -1,12 +1,13 @@
-#scriptHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2017 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# scriptHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import time
 import weakref
 import inspect
+import types
 import config
 import speech
 import sayAllHandler
@@ -17,7 +18,9 @@ from logHandler import log
 import inputCore
 import globalPluginHandler
 import braille
+import vision
 import keyLabels
+import baseObject
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
 #: Number of scripts that send their gestures on that are queued to be executed or are currently being executed.
@@ -32,9 +35,6 @@ def _makeKbEmulateScript(scriptName):
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
 	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
-	if isinstance(scriptName, unicode):
-		# __name__ must be str; i.e. can't be unicode.
-		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
@@ -96,6 +96,19 @@ def findScript(gesture):
 		if func:
 			return func
 
+	# Braille display level
+	if isinstance(braille.handler.display, baseObject.ScriptableObject):
+		func = _getObjScript(braille.handler.display, gesture, globalMapScripts)
+		if func:
+			return func
+
+	# Vision enhancement provider level
+	for provider in vision.handler.providers.values():
+		if isinstance(provider, baseObject.ScriptableObject):
+			func = _getObjScript(provider, gesture, globalMapScripts)
+			if func:
+				return func
+
 	# Tree interceptor level.
 	treeInterceptor = focus.treeInterceptor
 	if treeInterceptor and treeInterceptor.isReady:
@@ -114,6 +127,11 @@ def findScript(gesture):
 		func = _getObjScript(obj, gesture, globalMapScripts)
 		if func and getattr(func, 'canPropagate', False):
 			return func
+
+	# Configuration profile activation scripts
+	func = _getObjScript(globalCommands.configProfileActivationCommands, gesture, globalMapScripts)
+	if func:
+		return func
 
 	# Global commands.
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
@@ -230,4 +248,62 @@ def isCurrentScript(scriptFunc):
 		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
 		return False
 	return givenFunc==realFunc
+
+def script(
+	description="",
+	category=None,
+	gesture=None,
+	gestures=None,
+	canPropagate=False,
+	bypassInputHelp=False,
+	resumeSayAllMode=None
+):
+	"""Define metadata for a script.
+	This function is to be used as a decorator to set metadata used by the scripting system and gesture editor.
+	It can only decorate methods which name start swith "script_"
+	@param description: A short translatable description of the script to be used in the gesture editor, etc.
+	@type description: string 
+	@param category: The category of the script displayed in the gesture editor.
+	@type category: string
+	@param gesture: A gesture associated with this script.
+	@type gesture: string
+	@param gestures: A list of gestures associated with this script
+	@type gestures: list(string)
+	@param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
+	@type canPropagate: bool
+	@param bypassInputHelp: Whether this script should run when input help is active.
+	@type bypassInputHelp: bool
+	@param resumeSayAllMode: The say all mode that should be resumed when active before executing this script.
+		One of the C{sayAllHandler.CURSOR_*} constants.
+	@type resumeSayAllMode: int
+	"""
+	if gestures is None:
+		gestures = []
+	def script_decorator(decoratedScript):
+		# Decoratable scripts are functions, not bound instance methods.
+		if not isinstance(decoratedScript, types.FunctionType):
+			log.warning(
+				"Using the script decorator is unsupported for %r" % decoratedScript,
+				stack_info=True
+			)
+			return decoratedScript
+		if not decoratedScript.__name__.startswith("script_"):
+			log.warning(
+				"Can't apply  script decorator to %r which name does not start with 'script_'" % decoratedScript.__name__,
+				stack_info=True
+			)
+			return decoratedScript
+		decoratedScript.__doc__ = description
+		if category is not None:
+			decoratedScript.category = category
+		if gesture is not None:
+			gestures.append(gesture)
+		if gestures:
+			decoratedScript.gestures = gestures
+		decoratedScript.canPropagate = canPropagate
+		decoratedScript.bypassInputHelp = bypassInputHelp
+		if resumeSayAllMode is not None:
+			decoratedScript.resumeSayAllMode = resumeSayAllMode
+		return decoratedScript
+	return script_decorator
 

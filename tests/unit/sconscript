@@ -17,7 +17,7 @@ import sys
 Import("env")
 
 cmd = [sys.executable, "-m", "unittest"]
-tests = env["unitTests"]
+tests = env.get("unitTests")
 if tests:
 	# Run specific tests.
 	tests = tests.split(",")

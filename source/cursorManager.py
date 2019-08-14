@@ -1,6 +1,5 @@
 #cursorManager.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Joseph Lee, Derek Riemer
+#Copyright (C) 2006-2018 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -10,7 +9,9 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 """
 
 import wx
+import core
 import baseObject
+import documentBase
 import gui
 import sayAllHandler
 import review
@@ -20,16 +21,21 @@ import api
 import speech
 import config
 import braille
+import vision
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
 from textInfos import DocumentWithPageTurns
 
+# search history list constants
+SEARCH_HISTORY_MOST_RECENT_INDEX = 0
+SEARCH_HISTORY_LEAST_RECENT_INDEX = 19
+
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity):
+	def __init__(self, parent, cursorManager, caseSensitivity, searchEntries):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
@@ -40,33 +46,69 @@ class FindDialog(wx.Dialog):
 		# Translators: Dialog text for NvDA's find command.
 		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
 		findSizer.Add(textToFind)
-		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
-		self.findTextField.SetValue(text)
+		self.findTextField = wx.ComboBox(self, wx.ID_ANY, choices = searchEntries,style=wx.CB_DROPDOWN)
+
+		# if there is a previous list of searched entries, make sure we present the last searched term  selected by default
+		if searchEntries:
+			self.findTextField.Select(SEARCH_HISTORY_MOST_RECENT_INDEX)
 		findSizer.Add(self.findTextField)
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
-		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
+		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Case &sensitive"))
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
 		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
 
-		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
+		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL), flag=wx.ALIGN_RIGHT)
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.CentreOnScreen()
 		self.findTextField.SetFocus()
 
+	def updateSearchEntries(self, searchEntries, currentSearchTerm):
+		if not currentSearchTerm:
+			return
+		if not searchEntries:
+			searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
+			return
+		# we can not accept entries that differ only on text case
+		#because of a wxComboBox limitation on MS Windows
+		# see https://wxpython.org/Phoenix/docs/html/wx.ComboBox.html
+		#notice also that python 2 does not offer caseFold functionality
+		# so lower is the best we can have for comparing strings
+		for index, item in enumerate(searchEntries):
+			if(item.lower() == currentSearchTerm.lower()):
+				# if the user has selected a previous search term in the list or retyped an already listed term , we need to make sure the 
+				# current search term becomes the first item of the list, so that it will appear selected by default when the dialog is
+				# shown again. If the current search term differs from the current item only in case letters, we will choose to store the
+				# new search as we can not store both.
+				searchEntries.pop(index)
+				searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
+				return
+		# not yet listed. Save it.
+		if len(searchEntries) > SEARCH_HISTORY_LEAST_RECENT_INDEX:
+			self._truncateSearchHistory(searchEntries)
+		searchEntries.insert(SEARCH_HISTORY_MOST_RECENT_INDEX, currentSearchTerm)
+		
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
+		# update the list of searched entries so that it can be exibited in the next find dialog call
+		self.updateSearchEntries(self.activeCursorManager._searchEntries, text)
+		
 		caseSensitive = self.caseSensitiveCheckBox.GetValue()
-		wx.CallLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive)
+		# We must use core.callLater rather than wx.CallLater to ensure that the callback runs within NVDA's core pump.
+		# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
+		core.callLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive)
 		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
 
-class CursorManager(baseObject.ScriptableObject):
+	def _truncateSearchHistory(self, entries):
+		del entries[SEARCH_HISTORY_LEAST_RECENT_INDEX:]
+
+class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
 	"""
 	A mix-in providing caret navigation and selection commands for the object's virtual text range.
 	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.
@@ -82,8 +124,13 @@ class CursorManager(baseObject.ScriptableObject):
 	# Translators: the script category for browse mode
 	scriptCategory=SCRCAT_BROWSEMODE
 
-	_lastFindText=""
 	_lastCaseSensitivity=False
+	#  History of search terms.
+	# Sorted in most to least recently searched order.
+	# First, most recently searched item index: SEARCH_HISTORY_MOST_RECENT_INDEX
+	# Last, least recently searched item index: SEARCH_HISTORY_LEAST_RECENT_INDEX
+	# Items that differ only by case will only have one entry. 
+	_searchEntries = []
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -98,7 +145,7 @@ class CursorManager(baseObject.ScriptableObject):
 		This must be called before the cursor manager functionality can be used.
 		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
-		self._lastSelectionMovedStart=False
+		self.isTextSelectionAnchoredAtStart=True
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -107,12 +154,13 @@ class CursorManager(baseObject.ScriptableObject):
 		info.updateSelection()
 		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		oldInfo=self.makeTextInfo(posConstant)
 		info=oldInfo.copy()
-		info.collapse(end=not self._lastSelectionMovedStart)
-		if not self._lastSelectionMovedStart and not oldInfo.isCollapsed:
+		info.collapse(end=self.isTextSelectionAnchoredAtStart)
+		if self.isTextSelectionAnchoredAtStart and not oldInfo.isCollapsed:
 			info.move(textInfos.UNIT_CHARACTER,-1)
 		if posUnit is not None:
 			# expand and collapse to ensure that we are aligned with the end of the intended unit
@@ -154,30 +202,32 @@ class CursorManager(baseObject.ScriptableObject):
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
-		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
-		gui.mainFrame.prePopup()
-		d.Show()
-		gui.mainFrame.postPopup()
+		# #8566: We need this to be a modal dialog, but it mustn't block this script.
+		def run():
+			gui.mainFrame.prePopup()
+			d = FindDialog(gui.mainFrame, self, self._lastCaseSensitivity, self._searchEntries)
+			d.ShowModal()
+			gui.mainFrame.postPopup()
+		wx.CallAfter(run)
 	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
 	def script_findNext(self,gesture):
-		if not self._lastFindText:
+		if not self._searchEntries:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText, caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX], caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
 	def script_findPrevious(self,gesture):
-		if not self._lastFindText:
+		if not self._searchEntries:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText,reverse=True, caseSensitive = self._lastCaseSensitivity)
+		self.doFindText(self._searchEntries[SEARCH_HISTORY_MOST_RECENT_INDEX], reverse=True, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
@@ -244,7 +294,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if toPosition:
 			newInfo=self.makeTextInfo(toPosition)
 			if oldInfo.isCollapsed:
-				self._lastSelectionMovedStart = newInfo.compareEndPoints(oldInfo, "startToStart") < 0
+				self.isTextSelectionAnchoredAtStart = newInfo.compareEndPoints(oldInfo, "startToStart") >= 0
 		elif unit:
 			# position was not provided, so start from the old selection.
 			newInfo = oldInfo.copy()
@@ -252,14 +302,14 @@ class CursorManager(baseObject.ScriptableObject):
 			if oldInfo.isCollapsed:
 				# Starting a new selection, so set the selection direction
 				# based on the direction of this movement.
-				self._lastSelectionMovedStart = direction < 0
+				self.isTextSelectionAnchoredAtStart = direction > 0
 			# Find the requested unit starting from the active end of the selection.
 			# We can't just move the desired endpoint because this might cause
 			# the end to move before the start in some cases
 			# and some implementations don't support this.
 			# For example, you might shift+rightArrow to select a character in the middle of a word
 			# and then press shift+control+leftArrow to move to the previous word.
-			newInfo.collapse(end=not self._lastSelectionMovedStart)
+			newInfo.collapse(end=self.isTextSelectionAnchoredAtStart)
 			newInfo.move(unit, direction, endPoint="start" if direction < 0 else "end")
 			# Collapse this so we don't have to worry about which endpoint we used here.
 			newInfo.collapse(end=direction > 0)
@@ -267,7 +317,7 @@ class CursorManager(baseObject.ScriptableObject):
 		# Otherwise, newInfo is the collapsed new active endpoint
 		# and we need to set the anchor endpoint.
 		movingSingleEndpoint = toPosition != textInfos.POSITION_ALL
-		if movingSingleEndpoint and self._lastSelectionMovedStart:
+		if movingSingleEndpoint and not self.isTextSelectionAnchoredAtStart:
 			if newInfo.compareEndPoints(oldInfo, "startToEnd") > 0:
 				# We were selecting backwards, but now we're selecting forwards.
 				# For example:
@@ -275,7 +325,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 2. Shift+leftArrow: selection (0, 1)
 				# 3. Shift+control+rightArrow: next word at 3, so selection (1, 3)
 				newInfo.setEndPoint(oldInfo, "startToEnd")
-				self._lastSelectionMovedStart = False
+				self.isTextSelectionAnchoredAtStart = True
 			else:
 				# We're selecting backwards.
 				# For example:
@@ -290,7 +340,7 @@ class CursorManager(baseObject.ScriptableObject):
 				# 2. Shift+rightArrow: selection (1, 2)
 				# 3. Shift+control+leftArrow: previous word at 0, so selection (0, 1)
 				newInfo.setEndPoint(oldInfo, "endToStart")
-				self._lastSelectionMovedStart = True
+				self.isTextSelectionAnchoredAtStart = False
 			else:
 				# We're selecting forwards.
 				# For example:
@@ -336,7 +386,7 @@ class CursorManager(baseObject.ScriptableObject):
 		line=sel.copy()
 		line.collapse()
 		line.expand(textInfos.UNIT_LINE)
-		compOp="startToStart" if self._lastSelectionMovedStart else "endToStart"
+		compOp="startToStart" if not self.isTextSelectionAnchoredAtStart else "endToStart"
 		if sel.compareEndPoints(line,compOp)>0:
 			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
 

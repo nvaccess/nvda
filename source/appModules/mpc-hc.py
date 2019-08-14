@@ -1,1 +1,1 @@
-from mplayerc import AppModule
+from .mplayerc import AppModule

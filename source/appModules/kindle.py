@@ -3,6 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes import COMError
 import time
 from comtypes.hresult import S_OK
 import appModuleHandler
@@ -18,13 +19,16 @@ import browseMode
 from browseMode import BrowseModeDocumentTreeInterceptor
 import textInfos
 from textInfos import DocumentWithPageTurns
+from IAccessibleHandler import IAccessible2
 from NVDAObjects.IAccessible import IAccessible
 from globalCommands import SCRCAT_SYSTEMCARET
 from NVDAObjects.IAccessible.ia2TextMozilla import MozillaCompoundTextInfo
 import IAccessibleHandler
 import winUser
+import mouseHandler
 from logHandler import log
 import ui
+import config
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 	ELEMENT_TYPES = (
@@ -62,6 +66,29 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
 
+	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+		""" Override of documentBase.DocumentWithTableNavigation._getTableCellAt."""
+		# Locate the table in the object ancestry of the given document position. 
+		obj=startPos.NVDAObjectAtStart
+		while not obj.table and obj!=startPos.obj.rootNVDAObject:
+			obj=obj.parent
+		if not obj.table:
+			# No table could be found
+			raise LookupError
+		table = obj.table
+		try:
+			cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
+			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
+			if cell.IA2Attributes.get('hidden'):
+				raise LookupError("Found hidden cell") 
+			# Return the position of the found cell
+			return self.makeTextInfo(cell)
+		except (COMError, RuntimeError):
+			# Any of the above calls could throw a COMError, and sometimes a RuntimeError.
+			# Treet this as the cell not existing.
+			raise LookupError
+
 	def _changePageScriptHelper(self,gesture,previous=False):
 		if isScriptWaiting():
 			return
@@ -96,10 +123,10 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				return
 			log.debug("Double clicking")
 			winUser.setCursorPos(p.x, p.y)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
-			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+			mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
 			return
 
 		# The user makes a selection using browse mode virtual selection.
@@ -110,8 +137,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		# so retrieve and report the selection from Kindle.
 		# we can't just use self.makeTextInfo, as that will use our fake selection.
 		realSel = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION)
-		# Translators: Announces selected text. %s is replaced with the text.
-		speech.speakSelectionMessage(_("selected %s"), realSel.text)
+		speech.speakTextSelected(realSel.text)
 		# Remove our virtual selection and move the caret to the active end.
 		fakeSel.innerTextInfo = realSel
 		fakeSel.collapse(end=not self._lastSelectionMovedStart)
@@ -130,7 +156,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		"""Recursively iterate through all embedded objects in a given direction starting at a given hyperlink index.
 		"""
 		log.debug("Starting at hyperlink index %d" % startIndex)
-		for index in xrange(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
+		for index in range(startIndex, hypertext.nHyperlinks if direction == "next" else -1, 1 if direction == "next" else -1):
 			hl = hypertext.hyperlink(index)
 			obj = IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
 			log.debug("Yielding object at index %d" % index)
@@ -147,15 +173,24 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 	NODE_TYPES_TO_ROLES = {
 		"link": {controlTypes.ROLE_LINK, controlTypes.ROLE_FOOTNOTE},
 		"graphic": {controlTypes.ROLE_GRAPHIC},
+		"table": {controlTypes.ROLE_TABLE},
 	}
 
 	def _iterNodesByType(self, nodeType, direction="next", pos=None):
-		roles = self.NODE_TYPES_TO_ROLES.get(nodeType)
-		if not roles:
-			raise NotImplementedError
 		if not pos:
 			pos = self.makeTextInfo(textInfos.POSITION_FIRST if direction == "next" else textInfos.POSITION_LAST)
 		obj = pos.innerTextInfo._startObj
+		if nodeType=="container":
+			while obj!=self.rootNVDAObject:
+				if obj.role==controlTypes.ROLE_TABLE:
+					ti=self.makeTextInfo(obj)
+					yield browseMode.TextInfoQuickNavItem(nodeType, self, ti)
+					return
+				obj=obj.parent
+			return
+		roles = self.NODE_TYPES_TO_ROLES.get(nodeType)
+		if not roles:
+			raise NotImplementedError
 		# Find the first embedded object in the requested direction.
 		# Use the text, as enumerating IAccessibleHypertext means more cross-process calls.
 		offset = pos.innerTextInfo._start._startOffset
@@ -186,9 +221,13 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 				break # Can't go any further.
 			log.debug("Continuing in parent")
 			# Get the index of the embedded object we just came from.
+			parent = obj.parent
+			if not getattr(parent,'IAccessibleTextObject',None):
+				obj=parent
+				continue
 			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
 			offset = hl.startIndex
-			obj = obj.parent
+			obj=parent
 			hli = obj.iaHypertext.hyperlinkIndex(offset)
 			# Continue the walk from the next embedded object.
 			hli += 1 if direction == "next" else -1
@@ -220,11 +259,17 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		return text
 
 	def getTextWithFields(self, formatConfig=None):
+		if not formatConfig:
+			formatConfig = config.conf["documentFormatting"]
 		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
 		for item in items:
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
 				if formatConfig['reportPage']:
 					item.field['page-number'] = self.obj.pageNumber
+			elif (isinstance(item, textInfos.FieldCommand) and item.command == "controlStart"
+					and item.field.get("mathMl")):
+				# We have MathML, so don't report alt text (if any) as content.
+				item.field.pop("content", None)
 		return items
 
 	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=speech.CHUNK_SEPARATOR):
@@ -271,6 +316,21 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		log.debug("Setting selection to (%d, %d)" % (sel._startOffset, sel._endOffset))
 		sel.updateSelection()
 
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
+		if field and field["role"] == controlTypes.ROLE_MATH:
+			try:
+				field["mathMl"] = obj.mathMl
+			except LookupError:
+				pass
+		return field
+
+	def getMathMl(self, field):
+		mathMl = field.get("mathMl")
+		if not mathMl:
+			raise LookupError("No mathml attribute")
+		return mathMl
+
 class BookPageView(DocumentWithPageTurns,IAccessible):
 	"""Allows navigating page text content with the arrow keys."""
 
@@ -308,6 +368,14 @@ class PageTurnFocusIgnorer(IAccessible):
 			return False
 		return super(PageTurnFocusIgnorer,self).shouldAllowIAccessibleFocusEvent
 
+class Math(IAccessible):
+
+	def _get_mathMl(self):
+		mathMl = self.IA2Attributes.get("mathml")
+		if not mathMl:
+			raise LookupError
+		return mathMl
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
@@ -318,6 +386,8 @@ class AppModule(appModuleHandler.AppModule):
 				or (hasattr(obj,'IAccessibleTextObject') and obj.name=="Book Page View")
 			):
 				clsList.insert(0,BookPageView)
+			elif obj.role == controlTypes.ROLE_MATH:
+				clsList.insert(0, Math)
 		return clsList
 
 	def event_NVDAObject_init(self, obj):

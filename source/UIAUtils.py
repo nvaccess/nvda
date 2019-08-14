@@ -1,11 +1,14 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2015-2016 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2019 NV Access Limited, Bill Dengler
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+import operator
 from comtypes import COMError
+import config
 import ctypes
 import UIAHandler
+from winVersion import isWin10
 
 def createUIAMultiPropertyCondition(*dicts):
 	"""
@@ -18,7 +21,7 @@ def createUIAMultiPropertyCondition(*dicts):
 	outerOrList=[]
 	for dict in dicts:
 		andList=[]
-		for key,values in dict.iteritems():
+		for key,values in dict.items():
 			innerOrList=[]
 			if not isinstance(values,(list,set)):
 				values=[values]
@@ -83,12 +86,12 @@ class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 	pass
 
-def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
+def getUIATextAttributeValueFromRange(rangeObj,attrib,ignoreMixedValues=False):
 	"""
 	Wraps IUIAutomationTextRange::getAttributeValue, returning UIAutomation's reservedNotSupportedValue on COMError, and raising UIAMixedAttributeError if a mixed value would be returned and ignoreMixedValues is False.
 	"""
 	try:
-		val=range.GetAttributeValue(attrib)
+		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
 	if val==UIAHandler.handler.ReservedMixedAttributeValue:
@@ -96,29 +99,36 @@ def getUIATextAttributeValueFromRange(range,attrib,ignoreMixedValues=False):
 			raise UIAMixedAttributeError
 	return val
 
-def iterUIARangeByUnit(rangeObj,unit):
+def iterUIARangeByUnit(rangeObj,unit,reverse=False):
 	"""
 	Splits a given UI Automation text range into smaller text ranges the size of the given unit and yields them.
 	@param rangeObj: the UI Automation text range to split.
 	@type rangeObj: L{UIAHandler.IUIAutomationTextRange}
 	@param unit: a UI Automation text unit.
+	@param reverse: true if the range should be walked backwards (from end to start)
+	@type reverse: bool
 	@rtype: a generator that yields L{UIAHandler.IUIAutomationTextRange} objects.
 	"""
+	Endpoint_relativeEnd=UIAHandler.TextPatternRangeEndpoint_Start if reverse else UIAHandler.TextPatternRangeEndpoint_End
+	Endpoint_relativeStart=UIAHandler.TextPatternRangeEndpoint_End if reverse else UIAHandler.TextPatternRangeEndpoint_Start
+	minRelativeDistance=-1 if reverse else 1
+	relativeGTOperator=operator.lt if reverse else operator.gt
+	relativeLTOperator=operator.gt if reverse else operator.lt
 	tempRange=rangeObj.clone()
-	tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+	tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeStart)
 	endRange=tempRange.Clone()
-	while endRange.Move(unit,1)>0:
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,endRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
+	while relativeGTOperator(endRange.Move(unit,minRelativeDistance),0):
+		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,endRange,Endpoint_relativeStart)
+		pastEnd=relativeGTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0)
 		if pastEnd:
-			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
 		yield tempRange.clone()
 		if pastEnd:
 			return
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+		tempRange.MoveEndpointByRange(Endpoint_relativeStart,tempRange,Endpoint_relativeEnd)
 	# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
-	if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
-		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+	if relativeLTOperator(tempRange.CompareEndpoints(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd),0):
+		tempRange.MoveEndpointByRange(Endpoint_relativeEnd,rangeObj,Endpoint_relativeEnd)
 		yield tempRange.clone()
 
 def getEnclosingElementWithCacheFromUIATextRange(textRange,cacheRequest):
@@ -164,6 +174,23 @@ def getChildrenWithCacheFromUIATextRange(textRange,cacheRequest):
 	c=CacheableUIAElementArray(c)
 	return c
 
+def isTextRangeOffscreen(textRange, visiRanges):
+	"""Given a UIA text range and a visible textRanges array (returned from obj.UIATextPattern.GetVisibleRanges), determines if the given textRange is not within the visible textRanges."""
+	visiLength = visiRanges.length
+	if visiLength > 0:
+		firstVisiRange = visiRanges.GetElement(0)
+		lastVisiRange = visiRanges.GetElement(visiLength - 1)
+		return textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_Start
+		) < 0 or textRange.CompareEndPoints(
+			UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
+			UIAHandler.TextPatternRangeEndpoint_End) >= 0
+	else:
+		# Visible textRanges not available.
+		raise RuntimeError("Visible textRanges array is empty or invalid.")
+
+
 class UIATextRangeAttributeValueFetcher(object):
 
 	def __init__(self,textRange):
@@ -187,10 +214,29 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 		super(BulkUIATextRangeAttributeValueFetcher,self).__init__(textRange)
 		IDsArray=(ctypes.c_long*len(IDs))(*IDs)
 		values=textRange.GetAttributeValues(IDsArray,len(IDsArray))
-		self.IDsToValues={IDs[x]:values[x] for x in xrange(len(IDs))}
+		self.IDsToValues={IDs[x]:values[x] for x in range(len(IDs))}
 
 	def getValue(self,ID,ignoreMixedValues=False):
 		val=self.IDsToValues[ID]
 		if not ignoreMixedValues and val==UIAHandler.handler.ReservedMixedAttributeValue:
 			raise UIAMixedAttributeError
 		return val
+
+
+def shouldUseUIAConsole(setting=None):
+	"""Determines whether to use UIA in the Windows Console.
+@param setting: the config value to base this check on (if not provided,
+it is retrieved from config).
+	"""
+	if not setting:
+		setting = config.conf['UIA']['winConsoleImplementation']
+	if setting == "legacy":
+		return False
+	elif setting == "UIA":
+		return True
+	# #7497: Windows 10 Fall Creators Update has an incomplete UIA
+	# implementation for console windows, therefore for now we should
+	# ignore it.
+	# It does not implement caret/selection, and probably has no
+	# new text events.
+	return isWin10(1803)

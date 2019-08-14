@@ -1,0 +1,42 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvaccess.org/
+#Copyright 2017 NV Access Limited.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import sys
+Import("env")
+
+import os
+
+tests = env.get("filter")
+env = Environment(
+	ENV={
+		'PATH': os.environ['PATH'],
+		'TEMP': os.environ['TEMP'],
+		'TMP': os.environ['TMP'],
+	})
+
+
+cmd = [
+	sys.executable, "-m", "robot",
+	"--loglevel", "DEBUG",
+	"-d", "testOutput/system",
+	"-x", "systemTests.xml",
+	"-P", "./tests/system/libraries",
+	"-v", "whichNVDA:source",
+]
+if tests:
+	# run specific tests
+	cmd += ['--test="{}"'.format(tests)]
+cmd.append("./tests/system")
+target = env.Command(".", None, [cmd])
+Return('target')

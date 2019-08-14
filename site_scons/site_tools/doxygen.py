@@ -23,12 +23,13 @@ import os
 import os.path
 import glob
 from fnmatch import fnmatch
-import _winreg
+from functools import reduce
+import winreg
 
 def fetchDoxygenPath():
 	try:
-		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1", 0, _winreg.KEY_READ | _winreg.KEY_WOW64_64KEY) as doxygenKey:
-			doxygenPath= '"%s"'%os.path.join(_winreg.QueryValueEx(doxygenKey, "InstallLocation")[0], "Bin", "doxygen.exe")
+		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1", 0, winreg.KEY_READ | winreg.KEY_WOW64_64KEY) as doxygenKey:
+			doxygenPath= '"%s"'%os.path.join(winreg.QueryValueEx(doxygenKey, "InstallLocation")[0], "Bin", "doxygen.exe")
 	except WindowsError:
 		return 'doxygen'
 	return doxygenPath
@@ -71,7 +72,7 @@ def DoxyfileParse(file_contents):
          key_token = False
       else:
          if token == "+=":
-            if not data.has_key(key):
+            if key not in data:
                data[key] = list()
          elif token == "=":
             data[key] = list()
@@ -87,7 +88,8 @@ def DoxyfileParse(file_contents):
          append_data( data, key, new_data, '\\' )
 
    # compress lists of len 1 into single strings
-   for (k, v) in data.items():
+   # Wrap items into a list, since we're mutating the dictionary
+   for (k, v) in list(data.items()):
       if len(v) == 0:
          data.pop(k)
 
@@ -118,7 +120,8 @@ def DoxySourceScan(node, env, path):
 
    sources = []
 
-   data = DoxyfileParse(node.get_contents())
+   with open(node.abspath) as contents:
+      data = DoxyfileParse(contents)
 
    if data.get("RECURSIVE", "NO") == "YES":
       recursive = True
@@ -146,7 +149,7 @@ def DoxySourceScan(node, env, path):
             for pattern in file_patterns:
                sources.extend(glob.glob("/".join([node, pattern])))
 
-   sources = map( lambda path: env.File(path), sources )
+   sources = [env.File(path) for path in sources]
    return sources
 
 
@@ -165,13 +168,14 @@ def DoxyEmitter(source, target, env):
       "XML": ("NO", "xml"),
    }
 
-   data = DoxyfileParse(source[0].get_contents())
+   with open(source[0].abspath) as contents:
+      data = DoxyfileParse(contents)
 
    targets = []
    out_dir = source[0].Dir(data.get("OUTPUT_DIRECTORY", "."))
 
    # add our output locations
-   for (k, v) in output_formats.items():
+   for (k, v) in list(output_formats.items()):
       if data.get("GENERATE_" + k, v[0]) == "YES":
          targets.append(out_dir.Dir(v[1]))
 

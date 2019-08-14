@@ -1,8 +1,8 @@
-#A part of NonVisual Desktop Access (NVDA)
+#NVDAObjects/UIA/edge.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2015-2016 NV Access Limited
+#Copyright (C) 2015-2017 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -17,7 +17,7 @@ import re
 import aria
 import textInfos
 import UIAHandler
-from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo
+from UIABrowseMode import UIABrowseModeDocument, UIABrowseModeDocumentTextInfo, UIATextRangeQuickNavItem,UIAControlQuicknavIterator
 from UIAUtils import *
 from . import UIA, UIATextInfo
 
@@ -70,19 +70,22 @@ class EdgeTextInfo(UIATextInfo):
 		condition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),condition)
 		walker=UIAHandler.handler.clientObject.createTreeWalker(condition)
 		cacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		cacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
 		cacheRequest.addProperty(UIAHandler.UIA_AriaPropertiesPropertyId)
 		element=walker.normalizeElementBuildCache(element,cacheRequest)
 		while element and not UIAHandler.handler.clientObject.compareElements(element,self.obj.UIAElement):
-			ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-			if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
-				return element
-			try:
-				range=self.obj.UIATextPattern.rangeFromChild(element)
-			except COMEror:
-				return
-			text=range.getText(-1)
-			if not text or text.isspace():
-				return element
+			name=element.getCachedPropertyValue(UIAHandler.UIA_NamePropertyId)
+			if name:
+				ariaProperties=element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+				if ('label=' in ariaProperties)  or ('labelledby=' in ariaProperties):
+					return element
+				try:
+					textRange=self.obj.UIATextPattern.rangeFromChild(element)
+				except COMError:
+					return
+				text = textRange.getText(-1)
+				if not text or text.isspace():
+					return element
 			element=walker.getParentElementBuildCache(element,cacheRequest)
 
 	def _moveToEdgeOfReplacedContent(self,back=False):
@@ -91,15 +94,15 @@ class EdgeTextInfo(UIATextInfo):
 		if not element:
 			return
 		try:
-			range=self.obj.UIATextPattern.rangeFromChild(element)
+			textRange=self.obj.UIATextPattern.rangeFromChild(element)
 		except COMError:
 			return
 		if not back:
-			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,range,UIAHandler.TextPatternRangeEndpoint_End)
+			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start, textRange, UIAHandler.TextPatternRangeEndpoint_End)
+			textRange.move(UIAHandler.TextUnit_Character, -1)
 		else:
-			range.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,range,UIAHandler.TextPatternRangeEndpoint_Start)
-			range.move(UIAHandler.TextUnit_Character,1)
-		self._rangeObj=range
+			textRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End, textRange, UIAHandler.TextPatternRangeEndpoint_Start)
+		self._rangeObj=textRange
 
 	def _collapsedMove(self,unit,direction,skipReplacedContent):
 		"""A simple collapsed move (i.e. both ends move together), but whether it classes replaced content as one character stop can be configured via the skipReplacedContent argument."""
@@ -130,10 +133,15 @@ class EdgeTextInfo(UIATextInfo):
 	def _getControlFieldForObject(self,obj,isEmbedded=False,startOfNode=False,endOfNode=False):
 		field=super(EdgeTextInfo,self)._getControlFieldForObject(obj,isEmbedded=isEmbedded,startOfNode=startOfNode,endOfNode=endOfNode)
 		field['embedded']=isEmbedded
+		role=field.get('role')
+		# Fields should be treated as block for certain roles.
+		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting) 
+		if role in (controlTypes.ROLE_GROUPING,controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH):
+			field['isBlock']=True
+		# ARIA roledescription
+		field['roleText']=obj.roleText
 		# report landmarks
-		landmark=obj._getUIACacheablePropertyValue(UIAHandler.UIA_LocalizedLandmarkTypePropertyId)
-		if landmark and (landmark!='region' or field.get('name')):
-			field['landmark']=aria.landmarkRoles.get(landmark)
+		field['landmark']=obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role==controlTypes.ROLE_COMBOBOX and obj.UIATextPattern:
 			field['states'].add(controlTypes.STATE_EDITABLE)
@@ -194,7 +202,7 @@ class EdgeTextInfo(UIATextInfo):
 		index=0
 		while index<len(fields):
 			field=fields[index]
-			if index>1 and isinstance(field,basestring) and field.isspace():
+			if index>1 and isinstance(field,str) and field.isspace():
 				prevField=fields[index-2]
 				if isinstance(prevField,textInfos.FieldCommand) and prevField.command=="controlEnd":
 					del fields[index-1:index+1]
@@ -204,9 +212,9 @@ class EdgeTextInfo(UIATextInfo):
 		startCount=0
 		lastStartIndex=None
 		numFields=len(fields)
-		for index in xrange(numFields-1,-1,-1):
+		for index in range(numFields-1,-1,-1):
 			field=fields[index]
-			if isinstance(field,basestring):
+			if isinstance(field,str):
 				break
 			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlStart" and not field.field.get('embedded'):
 				startCount+=1
@@ -216,7 +224,7 @@ class EdgeTextInfo(UIATextInfo):
 		# Remove any content from fields with a content attribute
 		numFields=len(fields)
 		curField=None
-		for index in xrange(numFields-1,-1,-1):
+		for index in range(numFields-1,-1,-1):
 			field=fields[index]
 			if not curField and isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd" and field.field.get('content'):
 				curField=field.field
@@ -405,13 +413,13 @@ class EdgeNode(UIA):
 	_TextInfo=EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
 
 	def getNormalizedUIATextRangeFromElement(self,UIAElement):
-		range=super(EdgeNode,self).getNormalizedUIATextRangeFromElement(UIAElement)
-		if not range or not self._edgeIsPreGapRemoval:
-			return range
+		textRange = super().getNormalizedUIATextRangeFromElement(UIAElement)
+		if not textRange or not self._edgeIsPreGapRemoval:
+			return textRange
 		#Move the start of a UIA text range past any element start character stops
-		lastCharInfo=EdgeTextInfo_preGapRemoval(self,None,_rangeObj=range)
-		lastCharInfo._rangeObj=range
-		charInfo=lastCharInfo.copy()
+		lastCharInfo = EdgeTextInfo_preGapRemoval(self,None, _rangeObj=textRange)
+		lastCharInfo._rangeObj = textRange
+		charInfo = lastCharInfo.copy()
 		charInfo.collapse()
 		while super(EdgeTextInfo,charInfo).move(textInfos.UNIT_CHARACTER,1)!=0:
 			charInfo.setEndPoint(lastCharInfo,"startToStart")
@@ -419,13 +427,15 @@ class EdgeNode(UIA):
 				break
 			lastCharInfo.setEndPoint(charInfo,"startToEnd")
 			charInfo.collapse(True)
-		return range
+		return textRange
 
 	def _get_role(self):
 		role=super(EdgeNode,self).role
 		if not isinstance(self,EdgeHTMLRoot) and role==controlTypes.ROLE_PANE and self.UIATextPattern:
 			return controlTypes.ROLE_INTERNALFRAME
-		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId)
+		ariaRole=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
+		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
 		for ariaRole in ariaRole.split():
 			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
@@ -454,18 +464,22 @@ class EdgeNode(UIA):
 	# RegEx to get the value for the aria-current property. This will be looking for a the value of 'current'
 	# in a list of strings like "something=true;current=date;". We want to capture one group, after the '='
 	# character and before the ';' character.
-	# This could be one of: True, "page", "step", "location", "date", "time"
-	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(\w+);")
+	# This could be one of: "false", "true", "page", "step", "location", "date", "time"
+	# "false" is ignored by the regEx and will not produce a match
+	RE_ARIA_CURRENT_PROP_VALUE = re.compile("current=(?!false)(\w+);")
 
 	def _get_isCurrent(self):
 		ariaProperties=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-		match = self.RE_ARIA_CURRENT_PROP_VALUE.match(ariaProperties)
+		match = self.RE_ARIA_CURRENT_PROP_VALUE.search(ariaProperties)
 		log.debug("aria props = %s" % ariaProperties)
 		if match:
 			valueOfAriaCurrent = match.group(1)
 			log.debug("aria current value = %s" % valueOfAriaCurrent)
 			return valueOfAriaCurrent
-		return False
+		return None
+
+	def _get_roleText(self):
+		return self.ariaProperties.get('roledescription', None)
 
 	def _get_placeholder(self):
 		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
@@ -490,6 +504,18 @@ class EdgeNode(UIA):
 			return True
 		return False
 
+	def _get_landmark(self):
+		landmarkId=self._getUIACacheablePropertyValue(UIAHandler.UIA_LandmarkTypePropertyId)
+		if not landmarkId: # will be 0 for non-landmarks
+			return None
+		ariaRoles=self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
+		# #7333: It is valid to provide multiple, space separated aria roles in HTML
+		# If multiple roles or even multiple landmark roles are provided, the first one is used
+		for ariaRole in ariaRoles.split():
+			if ariaRole in aria.landmarkRoles and (ariaRole!='region' or self.name):
+				return ariaRole
+		return None
+
 class EdgeList(EdgeNode):
 
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
@@ -508,6 +534,36 @@ class EdgeHTMLRootContainer(EdgeNode):
 			return
 		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
+class EdgeHeadingQuickNavItem(UIATextRangeQuickNavItem):
+
+	@property
+	def level(self):
+		if not hasattr(self,'_level'):
+			styleVal=getUIATextAttributeValueFromRange(self.textInfo._rangeObj,UIAHandler.UIA_StyleIdAttributeId)
+			self._level=styleVal-(UIAHandler.StyleId_Heading1-1) if UIAHandler.StyleId_Heading1<=styleVal<=UIAHandler.StyleId_Heading6 else None
+		return self._level
+
+	def isChild(self,parent):
+		return self.level>parent.level
+
+def EdgeHeadingQuicknavIterator(itemType,document,position,direction="next"):
+	"""
+	A helper for L{EdgeHTMLTreeInterceptor._iterNodesByType} that specifically yields L{EdgeHeadingQuickNavItem} objects found in the given document, starting the search from the given position,  searching in the given direction.
+	See L{browseMode._iterNodesByType} for details on these specific arguments.
+	"""
+	# Edge exposes all headings as UIA elements with a controlType of text, and a level. Thus we can quickly search for these.
+	# However, sometimes when ARIA is used, the level on the element may not match the level in the text attributes.
+	# Therefore we need to search for all levels 1 through 6, even if a specific level is specified.
+	# Though this is still much faster than searching text attributes alone
+	# #9078: this must be wrapped inside a list, as Python 3 will treat this as iteration.
+	levels=list(range(1,7))
+	condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_TextControlTypeId,UIAHandler.UIA_LevelPropertyId:levels})
+	levelString=itemType[7:]
+	for item in UIAControlQuicknavIterator(itemType,document,position,condition,direction=direction,itemClass=EdgeHeadingQuickNavItem):
+		# Verify this is the correct heading level via text attributes 
+		if item.level and (not levelString or levelString==str(item.level)): 
+			yield item
+
 class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDocument):
 
 	TextInfo=UIABrowseModeDocumentTextInfo
@@ -515,11 +571,30 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,UIABrowseModeDoc
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
 
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if nodeType.startswith("heading"):
+			return EdgeHeadingQuicknavIterator(nodeType,self,pos,direction=direction)
+		else:
+			return super(EdgeHTMLTreeInterceptor,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+
 	def shouldPassThrough(self,obj,reason=None):
 		# Enter focus mode for selectable list items (<select> and role=listbox)
 		if reason==controlTypes.REASON_FOCUS and obj.role==controlTypes.ROLE_LISTITEM and controlTypes.STATE_SELECTABLE in obj.states:
 			return True
 		return super(EdgeHTMLTreeInterceptor,self).shouldPassThrough(obj,reason=reason)
+
+	def makeTextInfo(self,position):
+		try:
+			return super(EdgeHTMLTreeInterceptor,self).makeTextInfo(position)
+		except RuntimeError as e:
+			# sometimes the stored TextRange we have for the caret/selection can die if the page mutates too much.
+			# Therefore, if we detect this, just give back the first position in the document, updating our stored version as we go.
+			if position in (textInfos.POSITION_SELECTION,textInfos.POSITION_CARET):
+				log.debugWarning("%s died. Using first position instead."%position)
+				info=self.makeTextInfo(textInfos.POSITION_FIRST)
+				self._selection=info
+				return info
+			raise e
 
 class EdgeHTMLRoot(EdgeNode):
 

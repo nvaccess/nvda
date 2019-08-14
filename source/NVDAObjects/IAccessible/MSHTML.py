@@ -27,6 +27,7 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
+from locationHelper import RectLTRB
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -71,6 +72,7 @@ class HTMLAttribCache(object):
 	def __init__(self,HTMLNode):
 		self.HTMLNode=HTMLNode
 		self.cache={}
+		self.containsCache={}
 
 	def __getitem__(self,item):
 		try:
@@ -83,6 +85,20 @@ class HTMLAttribCache(object):
 			value=None
 		self.cache[item]=value
 		return value
+
+	def __contains__(self,item):
+		try:
+			return self.containsCache[item]
+		except LookupError:
+			pass
+		contains=item in self.cache
+		if not contains:
+			try:
+				contains=self.HTMLNode.hasAttribute(item)
+			except (COMError,NameError):
+				pass
+		self.containsCache[item]=contains
+		return contains
 
 nodeNamesToNVDARoles={
 	"FRAME":controlTypes.ROLE_FRAME,
@@ -140,7 +156,7 @@ def getZoomFactorsFromHTMLDocument(HTMLDocument):
 	except (COMError,NameError,AttributeError,TypeError):
 		log.debugWarning("unable to fetch DPI factors")
 		return (1,1)
-	return (devX/logX,devY/logY)
+	return (devX // logX, devY // logY)
 
 def IAccessibleFromHTMLNode(HTMLNode):
 	try:
@@ -467,7 +483,7 @@ class MSHTML(IAccessible):
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(p.x/xFactor,p.y/yFactor)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x // xFactor, p.y // yFactor)
 			except:
 				HTMLNode=None
 			if not HTMLNode:
@@ -518,7 +534,10 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).treeInterceptorClass
 
 	def _get_isCurrent(self):
-		return self.HTMLAttributes["aria-current"]
+		isCurrent = self.HTMLAttributes["aria-current"]
+		if isCurrent == "false":
+			isCurrent = None
+		return isCurrent
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
@@ -571,11 +590,7 @@ class MSHTML(IAccessible):
 			top=int(r.top*yFactor)
 			right=int(r.right*xFactor)
 			bottom=int(r.bottom*yFactor)
-			width=right-left
-			height=bottom-top
-			p=ctypes.wintypes.POINT(x=left,y=top)
-			ctypes.windll.user32.ClientToScreen(self.windowHandle,ctypes.byref(p))
-			return (p.x,p.y,width,height)
+			return RectLTRB(left,top,right,bottom).toScreen(self.windowHandle).toLTWH()
 		return None
 
 	def _get_TextInfo(self):
@@ -655,7 +670,7 @@ class MSHTML(IAccessible):
 			title=self.HTMLAttributes['title']
 			# #2121: MSHTML sometimes returns a node for the title attribute.
 			# This doesn't make any sense, so ignore it.
-			if title and isinstance(title,basestring):
+			if title and isinstance(title,str):
 				return title
 			return ""
 		return super(MSHTML,self).name
@@ -735,8 +750,9 @@ class MSHTML(IAccessible):
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
 		if state is not None:
 			states.add(state)
+		htmlRequired='required' in self.HTMLAttributes
 		ariaRequired=self.HTMLAttributes['aria-required']
-		if ariaRequired=="true":
+		if htmlRequired or ariaRequired=="true":
 			states.add(controlTypes.STATE_REQUIRED)
 		ariaSelected=self.HTMLAttributes['aria-selected']
 		if ariaSelected=="true":
@@ -988,6 +1004,13 @@ class MSHTML(IAccessible):
 		except LookupError:
 			return None
 
+	def event_liveRegionChange(self):
+		# MSHTML live regions are currently handled with custom code in-process
+		pass
+
+	def _get_roleText(self):
+		return self.HTMLAttributes['aria-roledescription']
+
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
 	"""
@@ -1116,7 +1139,7 @@ def findExtraIAccessibleOverlayClasses(obj, clsList):
 		clsList.append(MSAATextLeaf)
 		return
 
-	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:
+	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID is not None and obj.event_objectID > 0:
 		clsList.append(PluginWindow)
 	elif iaRole == oleacc.ROLE_SYSTEM_CLIENT and obj.event_objectID == winUser.OBJID_CLIENT:
 		clsList.append(RootClient)

@@ -2,23 +2,21 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2013 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
+#Copyright (C) 2012-2017 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited, Davy Kager
 #Author: Tobias Platen (nvda@lists.thm.de)
-#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com> and James Teh
+#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 #used braille port selection code from braillenote driver
 
 from collections import OrderedDict
 import time
-import itertools
+from typing import List, Optional
+
 import wx
 import braille
 import hwPortUtils
 from logHandler import log
 from baseObject import ScriptableObject
 import inputCore
-import globalCommands
-import scriptHandler
-import struct
 import serial
 
 #Control Flow
@@ -28,31 +26,33 @@ ETX = 0x03 #End of Text
 KEY_CHECK_INTERVAL = 10
 TIMEOUT = 0.5
 
-def brl_auto_id(): 
+def brl_auto_id() -> bytes:
 	"""send auto id command to braille display"""
-	return chr(STX)+'S'+chr(0)+chr(0)+chr(0)+chr(0)+chr(ETX)
 	#send a bad packet to the braille display
-	
-def brl_out(offset, data):
-	"""send data to braille display"""
-	ret = []
-	ret.append(struct.pack('BB', STX, 0x53)) #STX,'S'
-	d2 = len(data)+7
-	ret.append(struct.pack('BB', offset / 256, offset % 256))
-	ret.append(struct.pack('BB', 0, d2 % 256))
-	for d in data:
-		ret.append(struct.pack('B', d))
-	ret.append(struct.pack('B', ETX))
-	return "".join(ret)
+	return bytes([STX, ord(b'S'), 0x0, 0x0, 0x0, 0x0, ETX])
 
-def brl_poll(dev):
+def brl_out(offset: int, data: List[int]) -> bytes:
+	"""send data to braille display
+		@param offset: Must be positive.
+	"""
+	d2 = len(data)+7
+	ret = bytearray([
+		STX,
+		ord(b'S')
+	])
+	ret.extend(offset.to_bytes(2, "big", signed=False))
+	ret.extend(d2.to_bytes(2, "big", signed=False))
+	ret.extend(data)
+	ret.append(ETX)
+	return bytes(ret)
+
+def brl_poll(dev: serial.Serial) -> bytes:
 	"""read data from braille display, used by keypress handler"""
-	if dev.inWaiting() < 10: return ""
-	ret = []
-	ret.append(dev.read(dev.inWaiting()))
-	if ret[0][0] == chr(STX) and ret[0][9] == chr(ETX):
-		return "".join(ret)
-	return ""
+	if dev.in_waiting < 10: return b""
+	ret = dev.read(dev.in_waiting)
+	if ret[0] == STX and ret[9] == ETX:
+		return ret
+	return b""
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier_serial braille display driver.
@@ -76,8 +76,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def initTable(self):
 		"""do not use braille builtin table"""
-		table = []
-		for i in xrange(0, self.numCells): table +=[1]
+		table = [1] * self.numCells
 		self._dev.write(brl_out(512+self._offsetHorizontal, table))
 
 	def __init__(self, port):
@@ -98,8 +97,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				else: time.sleep(0.03)
 				displaytype = brl_poll(self._dev)
 				dic = -1
-				if(len(displaytype)==10 and ord(displaytype[0])==STX and displaytype[1]=='I'):
-					dic = ord(displaytype[2])
+				if len(displaytype) == 10 and displaytype[0] == STX and displaytype[1] == ord(b'I'):
+					dic = displaytype[2]
 					self._eab = (baud == 38400)
 				if(dic == -1):
 					self._dev.close()
@@ -150,13 +149,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
 		self._keyCheckTimer.Start(KEY_CHECK_INTERVAL)
 
-	def script_upperRouting(self, gesture):
-		globalCommands.commands.script_braille_routeTo(gesture)
-		wx.CallLater(50, scriptHandler.executeScript, globalCommands.commands.script_reportFormatting, gesture)
-
-	# Translators: Describes action of routing buttons on a braille display.
-	script_upperRouting.__doc__ = _("Route to and report formatting")
-
 	def terminate(self):
 		"""free resources"""
 		super(BrailleDisplayDriver, self).terminate()
@@ -169,7 +161,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		except:
 			pass
 
-	def display(self, cells):
+	def display(self, cells: List[int]):
 		"""write data to braille display"""
 		if(self._dev!=None):
 			try:
@@ -189,11 +181,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"""if a button was pressed an input gesture is executed"""
 		if(self._dev!=None):
 			data = brl_poll(self._dev)
-			if(len(data) == 10 and data[1]=='K'):
-				pos = ord(data[2])*256+ord(data[3])
-				pos = (pos-768)/3
-				pressed = ord(data[6])
-				keys = ord(data[8])
+			if len(data) == 10 and data[1] == ord(b'K'):
+				pos = (data[2] << 8) + data[3]
+				pos = (pos-768) // 3
+				pressed = data[6]
+				keys = data[8]
 				self._repeatcount = 0
 				self.executeGesture(InputGesture(pos, pressed, keys, self))
 			elif(len(data) == 0):
@@ -211,6 +203,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_previousLine": ("br(papenmeier_serial):up",),
 			"braille_nextLine": ("br(papenmeier_serial):dn",),
 			"braille_routeTo": ("br(papenmeier_serial):route",),
+			"braille_reportFormatting": ("br(papenmeier_serial):upperRouting",),
 
 			"braille_toggleTether": ("br(papenmeier_serial):r2",),
 			"review_currentCharacter": ("br(papenmeier_serial):l1",),
@@ -227,11 +220,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		}
 	})
 
-	__gestures = {
-		"br(papenmeier_serial):upperRouting": "upperRouting",
-	}
-
-def brl_keyname2(keys):
+def brl_keyname2(keys: int) -> str:
 	"""returns keyname for key index on displays with eab"""
 	if(keys & 4 == 4): return 'l1'
 	if(keys & 8 == 8): return 'l2'
@@ -239,7 +228,7 @@ def brl_keyname2(keys):
 	if(keys & 32 == 32): return 'r2'
 	return ''
 
-def brl_keyname(keyindex, driver):
+def brl_keyname(keyindex: int, driver: BrailleDisplayDriver) -> str:
 	"""returns keyname for key index"""
 	if(driver._eab):
 		if(keyindex==-255): return "left"
@@ -263,7 +252,13 @@ class InputGesture(braille.BrailleDisplayGesture):
 
 	source = BrailleDisplayDriver.name
 	
-	def __init__(self, keyindex, pressed, keys, driver):
+	def __init__(
+			self,
+			keyindex: Optional[int],
+			pressed: Optional[int],
+			keys: Optional[int],
+			driver: BrailleDisplayDriver
+	):
 		super(InputGesture, self).__init__()
 		self.id = ''
 		if(keyindex is None):
@@ -276,7 +271,7 @@ class InputGesture(braille.BrailleDisplayGesture):
 				self.routingIndex -= 256
 				self.id = "upperRouting"
 		elif(pressed == 0):
-			k = brl_keyname(keyindex, driver)
+			k: str = brl_keyname(keyindex, driver)
 			if(driver._lastkey!=k):
 				if(driver._lastkey!=''): self.id=driver._lastkey+','+k
 			else:

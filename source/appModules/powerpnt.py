@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2015 NV Access Limited
+#Copyright (C) 2012-2018 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -33,6 +33,8 @@ from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
 import scriptHandler
+from locationHelper import RectLTRB
+from NVDAObjects.window._msOfficeChart import OfficeChart
 
 # Window classes where PowerPoint's object model should be used 
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
@@ -242,7 +244,7 @@ def getBulletText(ppBulletFormat):
 	if t==ppBulletNumbered:
 		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
-		return unichr(ppBulletFormat.character)
+		return chr(ppBulletFormat.character)
 
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
@@ -330,6 +332,8 @@ class DocumentWindow(PaneClassDC):
 			#Specifically handle shapes representing a table as they have row and column counts etc
 			if ppObj.hasTable:
 				return Table(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+			elif ppObj.hasChart:
+				return ChartShape(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 			else: #Generic shape
 				return Shape(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 		elif selType==ppSelectionText: #Text frame
@@ -416,15 +420,6 @@ class DocumentWindow(PaneClassDC):
 				eventHandler.queueEvent("gainFocus",obj)
 		finally:
 			self._isHandlingSelectionChange=False
-
-	def event_gainFocus(self):
-		"""Bounces focus to the currently selected slide, shape or Text frame."""
-		obj=self.selection
-		if obj:
-			eventHandler.queueEvent("focusEntered",self)
-			eventHandler.queueEvent("gainFocus",obj)
-		else:
-			super(DocumentWindow,self).event_gainFocus()
 
 	def script_selectionChange(self,gesture):
 		gesture.send()
@@ -735,9 +730,7 @@ class Shape(PpObject):
 		top=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop)
 		right=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft+pointWidth)
 		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop+pointHeight)
-		width=right-left
-		height=bottom-top
-		return (left,top,width,height)
+		return RectLTRB(left,top,right,bottom).toLTWH()
 
 	def _get_ppShapeType(self):
 		"""Fetches and caches the type of this shape."""
@@ -836,6 +829,35 @@ class Shape(PpObject):
 		"kb:shift+downArrow":"moveVertical",
 		"kb:enter":"selectionChange",
 		"kb:f2":"selectionChange",
+	}
+
+class ChartShape(Shape):
+	"""
+	A PowerPoint Shape that holds an MS Office Chart.
+	When focused, press enter to interact with the actual chart.
+	"""
+
+	def _get_name(self):
+		chartObj=self.chart.officeChartObject
+		if chartObj.hasTitle:
+			return chartObj.chartTitle.text
+		return super(ChartShape,self).name
+
+	role=controlTypes.ROLE_CHART
+
+	def _get_chart(self):
+		return OfficeChart(windowHandle=self.windowHandle , officeApplicationObject = self.ppObject.Application , officeChartObject = self.ppObject.chart, initialDocument=self )
+
+	def focusOnActiveDocument(self,chart):
+		self.ppObject.select()
+		eventHandler.executeEvent("gainFocus",self)
+
+	def script_enterChart(self,gesture):
+		eventHandler.executeEvent("gainFocus",self.chart)
+
+	__gestures={
+		"kb:enter":"enterChart",
+		"kb:space":"enterChart",
 	}
 
 class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -1059,7 +1081,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 		else:
 			info = self.selection
 			if not info.isCollapsed:
-				speech.speakSelectionMessage(_("selected %s"), info.text)
+				speech.speakPreselectedText(info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
 				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
@@ -1229,13 +1251,16 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
-		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		d.CentreOnScreen()
 		gui.mainFrame.prePopup()
 		d.Show()
 		self.hasTriedPpAppSwitch=True
 		#Make sure NVDA detects and reports focus on the waiting dialog
 		api.processPendingEvents()
-		comtypes.client.PumpEvents(1)
+		try:
+			comtypes.client.PumpEvents(1)
+		except WindowsError:
+			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()
 

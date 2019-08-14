@@ -14,23 +14,8 @@
 
 Import([
 	'env',
-	'vbufBaseStaticLib',
 ])
 
-adobeFlashBackendLib=env.SharedLibrary(
-	target="VBufBackend_adobeFlash",
-	source=[
-		env['projectResFile'],
-		"adobeFlash.cpp",
-	],
-	LIBS=[
-		vbufBaseStaticLib,
-		"user32",
-		"kernel32",
-		"oleacc",
-		"oleaut32",
-		"ole32",
-	],
-)
+adobeFlashBackendLib=env.Object("adobeFlash.cpp")
 
 Return('adobeFlashBackendLib')

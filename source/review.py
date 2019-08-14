@@ -6,7 +6,8 @@
 from collections import OrderedDict
 import api
 import winUser
-from NVDAObjects import NVDAObject
+from logHandler import log
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from NVDAObjects.window import Window
 from treeInterceptorHandler import DocumentTreeInterceptor
 from displayModel import DisplayModelTextInfo
@@ -24,7 +25,13 @@ def getObjectPosition(obj):
 	try:
 		pos=obj.makeTextInfo(textInfos.POSITION_CARET)
 	except (NotImplementedError, RuntimeError):
-		pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		# No caret supported, try first position instead
+		try:
+			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
+		except (NotImplementedError, RuntimeError):
+			log.debugWarning("%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo"%obj.TextInfo)
+			# First position not supported either, return first position from a generic NVDAObjectTextInfo 
+			return NVDAObjectTextInfo(obj,textInfos.POSITION_FIRST),obj
 	return pos,pos.obj
 
 def getDocumentPosition(obj):
@@ -167,4 +174,4 @@ def handleCaretMove(pos):
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
 		except (NotImplementedError,RuntimeError):
 			return
-	api.setReviewPosition(info)
+	api.setReviewPosition(info, isCaret=True)

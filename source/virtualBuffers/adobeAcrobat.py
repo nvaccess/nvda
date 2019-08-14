@@ -18,6 +18,29 @@ import languageHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
+	def _getBoundingRectFromOffset(self,offset):
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(self.UNIT_FORMATFIELD, offset)
+		# The format field starts at the first character.
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
+				# This is no format field.
+				continue
+			attrs = field.field
+			indexInParent = attrs.get("_indexInParent")
+			if indexInParent is None:
+				continue
+			try:
+				obj = self._getNVDAObjectFromOffset(offset).getChild(indexInParent)
+			except IndexError:
+				obj = None
+			if not obj:
+				continue
+			if not obj.location:
+				# Older versions of Adobe Reader have per word objects, but they don't expose a location
+				break
+			return obj.location
+		return super(AdobeAcrobat_TextInfo, self)._getBoundingRectFromOffset(offset)
+
 	def _normalizeControlField(self,attrs):
 		stdName = attrs.get("acrobat::stdname", "")
 		try:
@@ -33,7 +56,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				accRole = accRole.lower()
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 
-		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in range(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 
 		if role == controlTypes.ROLE_EDITABLETEXT and {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
@@ -49,6 +72,10 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 	def _normalizeFormatField(self, attrs):
 		try:
 			attrs["language"] = languageHandler.normalizeLanguage(attrs["language"])
+		except KeyError:
+			pass
+		try:
+			attrs["_indexInParent"] = int(attrs["_indexInParent"])
 		except KeyError:
 			pass
 		return attrs

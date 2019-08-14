@@ -12,19 +12,22 @@ from . import profileUpgradeSteps
 
 SCHEMA_VERSION_KEY = "schemaVersion"
 
-def upgrade(profile, validator):
+def upgrade(profile, validator, writeProfileToFileFunc):
+	""" Upgrade a profile in memory and validate it
+	If it is safe to do so, as defined by shouldWriteProfileToFile, the profile is written out.
+	"""
 	# when profile is none or empty we can still validate. It should at least have a version set.
 	_ensureVersionProperty(profile)
 	startSchemaVersion = int(profile[SCHEMA_VERSION_KEY])
 	log.debug("Current config schema version: {0}, latest: {1}".format(startSchemaVersion, latestSchemaVersion))
-
-	for fromVersion in xrange(startSchemaVersion, latestSchemaVersion):
+	for fromVersion in range(startSchemaVersion, latestSchemaVersion):
 		_doConfigUpgrade(profile, fromVersion)
 	_doValidation(deepcopy(profile), validator) # copy the profile, since validating mutates the object
 	try:
 		# write out the configuration once the upgrade has been validated. This means that if NVDA crashes for some
 		# other reason the file does not need to be upgraded again.
-		profile.write()
+		if writeProfileToFileFunc:
+			writeProfileToFileFunc(profile.filename, profile)
 	except Exception as e:
 		log.warning("Error saving configuration; probably read only file system")
 		log.debugWarning("", exc_info=True)
@@ -63,7 +66,7 @@ def _doValidation(profile, validator):
 			raise ValueError(errorString)
 
 def _ensureVersionProperty(profile):
-	isEmptyProfile = 1 > len(profile.keys())
+	isEmptyProfile = 1 > len(profile)
 	if isEmptyProfile:
 		log.debug("Empty profile, triggering default schema version")
 		profile[SCHEMA_VERSION_KEY] = latestSchemaVersion

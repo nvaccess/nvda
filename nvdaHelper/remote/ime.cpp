@@ -444,8 +444,8 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 					break;
 
 				case IMN_PRIVATE:
-					// Needed in XP to support EasyDots IME
-					if (!isUIElementMgrSafe || !isTSFThread(true))
+					// Needed to support EasyDots IME when TSF is not available
+					if (!isTSFThread(true))
 						handleReadingStringUpdate(hwnd);
 					break;
 			}

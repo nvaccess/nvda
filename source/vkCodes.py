@@ -138,4 +138,9 @@ byCode = {
 #: This is the inverse of the L{byCode} map
 #: except that names are all lower case to make case insensitive lookup easier.
 #: @type: dict with keys of str and values of tuple(int, bool)
-byName = dict((name.lower(), code) for code, name in byCode.iteritems())
+byName = dict((name.lower(), code) for code, name in byCode.items())
+
+# Used by SendInput for non-keyboard input to pass Unicode characters as if they were keystrokes.
+# The scan code is the Unicode character.
+# See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646271(v=vs.85).aspx
+VK_PACKET = 0xE7

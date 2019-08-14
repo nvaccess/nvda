@@ -1,47 +1,53 @@
 ﻿symbols:
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2018 NVDA Simplified Chinese team All volunteers
+# This file may be used under the terms of the GNU Lesser General Public License, version 2.1.
+# For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
 $	美元
 /	斜杠
 ;	分号
 \\	反斜杠
-|	树杠
+|	竖线
 .	点
 :	冒号
-\0	
+\0	空白	char
 \r	航尾
-\n	航头
+\n	航首
 \t	制表符
  	空格	char
 ,	逗号
-，	逗号	most	always
+，	全角逗号	most	always
 。	句号	most	always
-...	点点点
-!	叹号
+...	省略号
+!	感叹号
 "	双引号
-\#	警号
+\#	井号
 %	百分号
-&	和
+&	与号
 '	单引号
 (	左括号
 )	右括号
-*	星
+*	星号
 +	加
 -	减
 _	下划线
-=	等于
+=	等号
 [	左方括号
 ]	右方括号
 {	左花括号
 }	右花括号
-　	空白	all
+　	全角空格	all
+₹	印度卢比	some	norep
 negative number	负
 ✔	选择
 ✓	选择
+# Other characters
 ©	版权所有
 ™	商标
 ®	已注册
-³	超级脚本3
-²	超级脚本2
-¹	超级脚本1
+³	注3
+²	注2
+¹	注1
 µ	百万分之一
 »	右双尖括号	most
 «	左双尖括号	most
@@ -50,152 +56,165 @@ negative number	负
 ‎	左至右符号	most
 ¨	分音符	most
 –	短破折号	most	always
-·	圆点	most	always
+·	间隔号	most	always
 •	着重号	most
 `	反撇号	most
-^	益阳号	most
+^	脱字符	most
 ?	问号	most	always
->	大于	most
-<	小于	most
+>	大于号	most
+<	小于号	most
 ¥	元	most
 ¢	分	most	always
 €	欧元	most	always
 £	英镑	most	always
 no-break space	空格	most
-、	頓號	most	always
-．	全形點	all
-；	分號	most	always
-？	問號	most	always
-！	驚嘆號	most	always
-：	冒號	most	always
-…	省略號	most	always
-‥	刪節號	most
-︱	直破折號	most
-—	破折號	most
-︳	直底線	most
-╴	左邊直線框	most
-︴	直波浪符號	most
-﹏	波浪符號	most
-（	左小括號	most	always
-）	右小括號	most	always
-︵	上小括號	most	always
-︶	下小括號	most	always
-｛	左大括號	most	always
-｝	右大括號	most	always
-︷	上大括號	most	always
-︸	下大括號	most	always
-〔	左中括號	most	always
-〕	右中括號	most	always
-︹	上中括號	most	always
-︺	下中括號	most	always
-【	左粗中括號	most	always
-】	右粗中括號	most	always
-︻	上粗中括號	most	always
-︼	下粗中括號	most	always
-《	左書名號	most	always
-》	右書名號	most	always
-︽	上書名號	most	always
-︾	下書名號	most	always
-〈	左單書名號	most	always
-〉	右單書名號	most	always
-︿	上角括號	most	always
-﹀	下角括號	most	always
-「	左單引號	most	always
-」	右單引號	most	always
-『	左雙引號	most	always
-』	右雙引號	most	always
-﹃	上雙引號	most
-﹄	下雙引號	most
-﹛	左大括號	most	always
-﹜	右大括號	most	always
-﹝	左中括號	most	always
-﹞	右中括號	most	always
-‘	左單引號	most	always
-’	右單引號	most	always
-“	左雙引號	most	always
-”	右雙引號	most	always
-〝	左雙引號	most	always
-〞	右雙引號	most	always
-‵	左單引號	most	always
-＃	井字號	most
-＆	連接號	most
-＊	星號	most
-※	重點符號	most
-§	章節符號	most
-〃	同上符號	most
-○	空心圓	most
-●	實心圓	most
+、	全角顿号	most	always
+．	全角点	all
+；	全角分号	most	always
+？	全角问号	most	always
+！	全角感叹号	most	always
+：	全角冒号	most	always
+…	水平省略号	most	always
+‥	二点前导符	most
+︱	直破折号	most
+—	破折号	most
+︳	直底线	most
+╴	左边直线框	most
+︴	直波浪号	most
+﹏	波浪号	most
+（	左小括号	most	always
+）	右小括号	most	always
+︵	上小括号	most	always
+︶	下小括号	most	always
+｛	左大括号	most	always
+｝	右大括号	most	always
+︷	上大括号	most	always
+︸	下大括号	most	always
+〔	左中括号	most	always
+〕	右中括号	most	always
+︹	上中括号	most	always
+︺	下中括号	most	always
+【	左粗中括号	most	always
+】	右粗中括号	most	always
+︻	上粗中括号	most	always
+︼	下粗中括号	most	always
+《	左书名号	most	always
+》	右书名号	most	always
+︽	上书名号	most	always
+︾	下书名号	most	always
+〈	左单书名号	most	always
+〉	右单书名号	most	always
+︿	上角括号	most	always
+﹀	下角括号	most	always
+「	左单引号	most	always
+」	右单引号	most	always
+『	左双引号	most	always
+』	右双引号	most	always
+﹃	上双引号	most
+﹄	下双引号	most
+﹛	左大括号	most	always
+﹜	右大括号	most	always
+﹝	左中括号	most	always
+﹞	右中括号	most	always
+‘	左单引号	most	always
+’	右单引号	most	always
+“	左双引号	most	always
+”	右双引号	most	always
+〝	左双引号	most	always
+〞	右双引号	most	always
+‵	左单引号	most	always
+＃	全角井号	most
+＆	全角与号	most
+＊	全角星号	most
+※	重点 符号	most
+§	章节号	most
+〃	同上符号	most
+○	空心圆	most
+●	实心圆	most
 △	空心上三角形	most
-▲	實心上三角形	most
-◎	雙圓圈	most
-☆	空心星號	most
-★	實心星號	most
+▲	实心上三角形	most
+◎	双圆圈	most
+☆	空心星号	most
+★	实心星号	most
 ◇	空心菱形	most
-◆	實心菱形	most
+◆	实心菱形	most
 □	空心方形	most
-■	實心方形	most
+■	实心方形	most
 ▽	空心下三角形	most
-▼	實心下三角形	most
-㊣	正字標記	none
-＋	加號	most
-－	減號	most
-×	乘號	most
-÷	除號	most
-±	正負號	most
-√	開根號	most
-＜	小於	most
-＞	大於	most
-＝	等於	most
-≦	小於等於	most
-≧	大於等於	most
-≠	不等於	most
-∞	無窮大	most
-≒	約等於	most
-≡	全等於	most
-﹢	正號	most
-﹣	負號	most
-﹤	小於	most
-﹥	大於	most
-﹦	等號	most
-～蚯蚓號	most
+▼	实心下三角形	most
+⇏	右双前頭連斜線	most
+⇍	左双前頭連斜線	most
+⇎	左右双箭头連斜線	most
+⋄	菱形	most
+∙	項目符號	most
+∘	環形	most
+⋅	點號運算符	most
+⋆	星號運算符	most
+㊣	正字标记	none
+＋	全角加号	most
+－	全角減号	most
+×	乘号	most
+÷	除号	most
+±	正负号	most
+√	根号	most
+＜	全角小于号	most
+＞	全角大于号	most
+＝	全角等号	most
+≦	全角小于等于号	most
+≧	全角大于等于号	most
+≠	全角不等号	most
+∞	无穷大	most
+≒	全角约等号	most
+≡	全等于	most
+﹢	全角正号	most
+﹣	全角负号	most
+﹤	全角小于号	most
+﹥	全角大于号	most
+﹦	全角等号	most
+～	全角波浪号	most
 ∩	交集	most
-∪	聯集	most
+∪	并集	most
 ⊥	垂直	most
 ∠	角	most
 ∟	直角	most
 ⊿	直角三角形	most
-㏒	常用對數	most
-㏑	自然對數	most
-∫	積分	most
-∮	線積分	most
-∵	因為	most
+㏒	常用对数	most
+㏑	自然对数	most
+∫	积分	most
+∮	路径积分	most
+∵	因为	most
 ∴	所以	most
-♀	女性符號	most
-♂	男性符號	most
-⊕	十字圓	most
-⊙	中心點圓	most
-↑	上箭頭	most
-↓	下箭頭	most
-←	左箭頭	most
-→	右箭頭	most
-↖	左上箭頭	most
-↗	右上箭頭	most
-↙	左下箭頭	most
-↘	右下箭頭	most
+♀	女性符号	most
+♂	男性符号	most
+⊕	十字圆	most
+⊙	中心点圆	most
+↑	上箭头	most
+↓	下箭头	most
+←	左箭头	most
+→	右箭头	most
+↖	左上箭头	most
+↗	右上箭头	most
+↙	左下箭头	most
+↘	右下箭头	most
+↕	上下箭头	most
+↔	左右箭头	most
+⇒	右双箭头	most
+⇐	左双箭头	most
+⇔	左右双箭头	most
 ∥	平行	most
-∣	直線	most
-／	斜線	some
-＼	反斜線	most
+∣	直线	most
+／	全角斜杠	some
+＼	全角反斜杠	most
+
+# 常用单位符号
 ￥	人民币	none
-￠	先令	none
+￠	全形分币标记	none
 ￡	英鎊	none
-％	啪	some
-＠	全形小老鼠	some
-℃	度C	none
-℉	度F	none
-﹩	錢號	all
-﹪	啪	none
-﹫	半形小老鼠	none
+＠	全角at	some
+℃	摄氏度	none
+℉	华氏度	none
+﹩	全角美元	all
+﹫	半角at	none
 ㏕	毫升	none
 ㎜	毫米	none
 ㎝	公分	none
@@ -209,7 +228,299 @@ no-break space	空格	most
 兙	十克	none
 兛	千克	none
 兡	百克	none
-嗧	加侖	none
+嗧	加仑	none
 瓩	千瓦	none
 糎	公分	none
-~	波浪号	most
+~	波浪号	none	always
+
+# 特殊数字
+１	全角一	char	always
+２	全角二	char	always
+３	全角三	char	always
+４	全角四	char	always
+５	全角五	char	always
+６	全角六	char	always
+７	全角七	char	always
+８	全角八	char	always
+９	全角九	char	always
+０	全角零	char	always
+①	第一	none
+②	第二	none
+③	第三	none
+④	第四	none
+⑤	第五	none
+⑥	第六	none
+⑦	第七	none
+⑧	第八	none
+⑨	第九	none
+⑩	第十	none
+⒈	1 .	none
+⒉	2 .	none
+⒊	3 .	none
+⒋	4 .	none
+⒌	5 .	none
+⒍	6 .	none
+⒎	7 .	none
+⒏	8 .	none
+⒐	9 .	none
+⒑	10 .	none
+Ⅰ	罗马数字一	none
+Ⅱ	罗马数字二	none
+Ⅲ	罗马数字三	none
+Ⅳ	罗马数字四	none
+Ⅴ	罗马数字五	none
+Ⅵ	罗马数字六	none
+Ⅶ	罗马数字七	none
+Ⅷ	罗马数字八	none
+Ⅸ	罗马数字九	none
+Ⅹ	罗马数字十	none
+Ⅺ	罗马数字十一	none
+Ⅻ	罗马数字十二	none
+Ⅼ	罗马数字五十	none
+Ⅽ	罗马数字一百	none
+Ⅾ	罗马数字五百	none
+Ⅿ	罗马数字一千	none
+ↁ	罗马数字五千	none
+ↂ	罗马数字十千	none
+ⅰ	小写罗马数字一	none
+ⅱ	小写罗马数字二	none
+ⅲ	小写罗马数字三	none
+ⅳ	小写罗马数字四	none
+ⅴ	小写罗马数字五	none
+ⅵ	小写罗马数字六	none
+ⅶ	小写罗马数字七	none
+ⅷ	小写罗马数字八	none
+ⅸ	小写罗马数字九	none
+ⅹ	小写罗马数字十	none
+ⅺ	小写罗马数字十一	none
+ⅻ	小写罗马数字十二	none
+ⅼ	小写罗马数字五十	none
+ⅽ	小写罗马数字一百	none
+ⅾ	小写罗马数字五百	none
+ⅿ	小写罗马数字一千	none
+# 特殊字母
+Ⓐ	圆圈大写字母A	none
+Ⓑ	圆圈大写字母B	none
+Ⓒ	圆圈大写字母C	none
+Ⓓ	圆圈大写字母D	none
+Ⓔ	圆圈大写字母E	none
+Ⓕ	圆圈大写字母F	none
+ⓐ	圆圈小写字母a	none
+ⓑ	圆圈小写字母b	none
+ⓒ	圆圈小写字母c	none
+ⓓ	圆圈小写字母d	none
+ⓔ	圆圈小写字母e	none
+ⓕ	圆圈小写字母f	none
+	选项A	none
+	选项B	none
+	选项C	none
+	选项D	none
+# 全角英文大写字母
+Ａ	A	none
+Ｂ	B	none
+Ｃ	C	none
+Ｄ	D	none
+Ｅ	E	none
+Ｆ	F	none
+Ｇ	G	none
+Ｈ	H	none
+Ｉ	I	none
+Ｊ	J	none
+Ｋ	K	none
+Ｌ	L	none
+Ｍ	M	none
+Ｎ	N	none
+Ｏ	O	none
+Ｐ	P	none
+Ｑ	Q	none
+Ｒ	R	none
+Ｓ	S	none
+Ｔ	T	none
+Ｕ	U	none
+Ｖ	V	none
+Ｗ	W	none
+Ｘ	X	none
+Ｙ	Y	none
+Ｚ	Z	none
+ī	一声一	all	never
+í	二声疑	all	never
+ǐ	三声已	all	never
+ì	四声艺	all	never
+ō	一声蜗	all	never
+ó	二声哦	all	never
+ǒ	三声我	all	never
+ò	四声卧	all	never
+ū	一声乌	all	never
+ú	二声吴	all	never
+ǔ	三声武	all	never
+ù	四声物	all	never
+ā	一声阿	all	never
+á	二声啊	all	never
+ǎ	三声啊	all	never
+à	四声啊	all	never
+ē	一声婀	all	never
+é	二声俄	all	never
+ě	三声峩	all	never
+è	四声饿	all	never
+ǖ	一声淤	all	never
+ǘ	二声愚	all	never
+ǚ	三声与	all	never
+ǜ	四声欲	all	never
+ˉ	长音符	none
+ˊ	锐音符	none
+ˇ	倒折音符	none
+ˋ	重音符	none
+
+
+٠	0	none
+٩	9	none
+٨	8	none
+٧	7	none
+٦	6	none
+٥	5	none
+٤	4	none
+٣	3	none
+٢	2	none
+١	1	none
+
+# 罗马字母
+α	Alpha	none
+Α	Alpha	none
+β	Beta	none
+Β	Beta	none
+γ	Gamma	none
+Γ	Gamma	none
+δ	Delta	none
+Δ	Delta	none
+ε	Eepsilon	none
+Ε	Eepsilon	none
+ζ	Zeta	none
+Ζ	Zeta	none
+η	eta	none
+Η	eta	none
+θ	theta	none
+Θ	theta	none
+ι	iota	none
+Ι	iota	none
+κ	kappa	none
+Κ	kappa	none
+λ	lanmd	none
+μ	mu	none
+Μ	mu	none
+ν	nu	none
+Ν	nu	none
+ξ	xi	none
+Ξ	xi	none
+ο	omicron	none
+Ο	omicron	none
+π	Pi	none
+ρ	rho	none
+Ρ	rho	none
+σ	sigma	none
+τ	tau	none
+Τ	tau	none
+υ	upsilon	none
+Υ	upsilon	none
+φ	phi	none
+Φ	phi	none
+χ	chi	none
+Χ	chi	none
+ψ	psi	none
+Ψ	psi	none
+ω	omega	none
+Ω	omega	none
+
+
+#数学运算符U + 2200 U + 220 f
+∀	所有	none
+∁	补集	none
+∂	偏微分	none
+∃	存在有	none
+∄	不存在有	none
+∅	空集	none
+∆	增量符	none
+∇	微分算符	none
+∈	属于	none
+∉	不属于	none
+∊	属于	none
+∋	包含成员	none
+∌	不包含成员	none
+∍	包含成员	none
+∎	证明完毕	none
+∏	pi	none
+# 各种各样的数学运算符
+∑	求和	none
+√	开根号	some
+∛	开立方根号	none
+∜	开四次方根号	none
+∝	正比	none
+∞	无穷大	some
+∟	直角	none
+∠	角	none
+∥	平行	none
+∦	不平型	none
+∧	逻辑「与」	none
+∨	逻辑「或」	none
+∩	交集	none
+∪	并集	none
+∫	积分	none
+∵	因为	none
+∴	所以	none
+∶	比	none
+∷	比重	none
+≤	小于等于	none
+≥	大于等于	none
+⊂	包含于	none
+⊃	包含	none
+⊆	包含于等于	none
+⊇	包含等于	none
+∽	相似	none
+‖	平行	none
+≪	遠遠小於	most
+≫	遠遠大於	most
+≮	不小於	most
+≯	不大於	most
+≰	不小於或等於	most
+≱	不大於或等於	most
+≶	小於或大於	most
+≷	大於或小於	most
+≸	不小於或大於	most
+≹	不大於或小於	most
+∓	減或加	most
+−	減號	most
+⁺	正數	most
+⁻	負數	most
+ℇ	歐拉常數	most
+ℒ	拉普拉斯变换	most
+ℱ	傅立叶变换	most
+ℎ	普朗克常數	most
+ℏ	普朗克常數	most
+К	开尔文	most
+Å	埃米	most
+Ω	欧姆	most
+℥	盎司	most
+
+#补充
+⇒	双线右箭头	some
+⇨	空心右箭头	some
+♣	黑桃	some
+➢	三维上光向右箭头尖	some
+❖	四个菱形	some
+♦	实心方块	some
+⅐	七分之一	none
+⅑	九分之一	none
+⅒	十分之一	none
+⅓	三分之一	none
+⅔	三分之二	none
+⅕	五分之一	none
+⅖	五分之二	none
+⅗	五分之三	none
+⅘	五分之四	none
+⅙	六分之一	none
+⅚	六分之五	none
+⅛	八分之一	none
+⅜	八分之三	none
+⅝	八分之五	none
+⅞	八分之七	none
+# 杂项符号
+⌘	Mac Command键	none
