@@ -8,7 +8,9 @@
 
 import contextlib
 from ctypes import *
+from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *
+from ctypes.wintypes import HWND, RECT, DWORD
 import winKernel
 from textUtils import WCHAR_ENCODING
 
@@ -19,6 +21,10 @@ LRESULT=c_long
 HCURSOR=c_long
 
 #Standard window class stuff
+#: Redraws the entire window if a movement or size adjustment changes the width of the client area.
+CS_HREDRAW = 0x0002
+#: Redraws the entire window if a movement or size adjustment changes the height of the client area.
+CS_VREDRAW = 0x0001
 
 WNDPROC=WINFUNCTYPE(LRESULT,HWND,c_uint,WPARAM,LPARAM)
 
@@ -47,15 +53,15 @@ class NMHdrStruct(Structure):
 
 class GUITHREADINFO(Structure):
 	_fields_=[
-		('cbSize',DWORD),
-		('flags',DWORD),
-		('hwndActive',HWND),
- 		('hwndFocus',HWND),
-		('hwndCapture',HWND),
-		('hwndMenuOwner',HWND),
-		('hwndMoveSize',HWND),
-		('hwndCaret',HWND),
-		('rcCaret',RECT),
+		('cbSize', DWORD),
+		('flags', DWORD),
+		('hwndActive', HWND),
+		('hwndFocus', HWND),
+		('hwndCapture', HWND),
+		('hwndMenuOwner', HWND),
+		('hwndMoveSize', HWND),
+		('hwndCaret', HWND),
+		('rcCaret', RECT),
 	]
 
 #constants
@@ -88,7 +94,12 @@ WS_SYSMENU=0x80000
 WS_HSCROLL=0x100000
 WS_VSCROLL=0x200000
 WS_CAPTION=0xC00000
+WS_CLIPCHILDREN = 0x02000000
 WS_EX_TOPMOST=0x00000008
+WS_EX_LAYERED = 0x80000
+WS_EX_TOOLWINDOW = 0x00000080
+WS_EX_TRANSPARENT = 0x00000020
+WS_EX_APPWINDOW = 0x00040000
 BS_GROUPBOX=7
 ES_MULTILINE=4
 LBS_OWNERDRAWFIXED=0x0010
@@ -120,10 +131,22 @@ GWL_EXSTYLE=-20
 GW_HWNDNEXT=2
 GW_HWNDPREV=3
 GW_OWNER=4
+# SetLayeredWindowAttributes
+LWA_ALPHA = 2
+LWA_COLORKEY = 1
 #Window messages
+WM_NULL = 0
+WM_COPYDATA = 74
+WM_NOTIFY = 78
+WM_USER = 1024
+WM_QUIT = 18
+WM_DISPLAYCHANGE = 0x7e
 WM_GETTEXT=13
 WM_GETTEXTLENGTH=14
+WM_DESTROY = 2
 WM_PAINT=0x000F
+WM_SHOWWINDOW = 24
+WM_TIMER = 0x0113
 WM_GETOBJECT=0x003D
 #Edit control window messages
 EM_GETSEL=176
@@ -315,6 +338,16 @@ OBJID_NATIVEOM=-16
 # ShowWindow() commands
 SW_HIDE = 0
 SW_SHOWNORMAL = 1
+SW_SHOWNA = 8
+
+# SetWindowPos window constants
+HWND_TOPMOST = HWND(-1)
+
+# window sizing and positioning flags
+SWP_NOACTIVATE = 0x0010
+SWP_NOMOVE = 0x0002
+SWP_NOSIZE = 0x0001
+SWP_SHOWWINDOW = 0x0040
 
 # RedrawWindow() flags
 RDW_INVALIDATE = 0x0001
@@ -322,6 +355,20 @@ RDW_UPDATENOW = 0x0100
 # MsgWaitForMultipleObjectsEx
 QS_ALLINPUT = 0x04ff
 MWMO_ALERTABLE = 0x0002
+
+# GetSystemMetrics constants
+# The width of the screen of the primary display monitor, in pixels.
+SM_CXSCREEN = 0
+# The height of the screen of the primary display monitor, in pixels.
+SM_CYSCREEN = 1
+# The coordinates for the left side of the virtual screen.
+SM_XVIRTUALSCREEN = 76
+# The coordinates for the top of the virtual screen.
+SM_YVIRTUALSCREEN = 77
+# The width of the virtual screen, in pixels.
+SM_CXVIRTUALSCREEN = 78
+# The height of the virtual screen, in pixels.
+SM_CYVIRTUALSCREEN = 79
 
 def setSystemScreenReaderFlag(val):
 	user32.SystemParametersInfoW(SPI_SETSCREENREADER,val,0,SPIF_UPDATEINIFILE|SPIF_SENDCHANGE)
@@ -409,7 +456,10 @@ def getControlID(hwnd):
 
 
 def getClientRect(hwnd):
-	return user32.GetClientRect(hwnd)
+	r = RECT()
+	if not user32.GetClientRect(hwnd, byref(r)):
+		raise WinError()
+	return r
 
 HWINEVENTHOOK=HANDLE
 
@@ -495,6 +545,15 @@ def getWindowStyle(hwnd):
 
 def getExtendedWindowStyle(hwnd):
 	return user32.GetWindowLongW(hwnd,GWL_EXSTYLE)
+
+
+def setExtendedWindowStyle(hwnd, exstyle):
+	return user32.SetWindowLongW(hwnd, GWL_EXSTYLE, exstyle)
+
+
+def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
+	return user32.SetLayeredWindowAttributes(hwnd, key, alpha, flags)
+
 
 def getPreviousWindow(hwnd):
 	try:
@@ -613,6 +672,69 @@ def SendInput(inputs):
 	n = len(inputs)
 	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))
+
+
+class PAINTSTRUCT(Structure):
+	_fields_ = [
+		('hdc', c_int),
+		('fErase', c_int),
+		('rcPaint', RECT),
+		('fRestore', c_int),
+		('fIncUpdate', c_int),
+		('rgbReserved', c_char * 32)
+	]
+
+
+@contextlib.contextmanager
+def paint(hwnd, painStruct=None):
+	"""
+	Context manager that wraps BeginPaint and EndPaint.
+	@param painStruct: The paint structure used in the call to BeginPaint.
+		if C{None} (default), an empty structure is provided.
+	"""
+	if painStruct is None:
+		paintStruct = PAINTSTRUCT()
+	elif not isinstance(paintStruct, PAINTSTRUCT):
+		raise TypeError("Provided paintStruct is not of type PAINTSTRUCT")
+	hdc = user32.BeginPaint(hwnd, byref(paintStruct))
+	if hdc == 0:
+		raise WinError()
+	try:
+		yield hdc
+	finally:
+		user32.EndPaint(hwnd, byref(paintStruct))
+
+
+class WinTimer(object):
+	"""Object that wraps the SetTimer function in user32.
+	The timer is automatically destroyed using KillTimer when the object is terminated using L{terminate}.
+	"""
+
+	def __init__(self, hwnd, idEvent, elapse, timerFunc=None):
+		"""Constructor
+
+		See https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-settimer
+		for a description of the parameters.
+		"""
+		self.hwnd = hwnd
+		self.idEvent = idEvent
+		self.elapse = elapse
+		self.timerFunc = timerFunc
+		self.ident = user32.SetTimer(hwnd, idEvent, elapse, timerFunc)
+		if self.ident == 0:
+			raise WinError()
+		if not hwnd:
+			# If the window handle passed to SetTimer is valid
+			# we need to keep the original idEvent to terminate the timer.
+			# If no hwnd is given, we need to pass l{ident} when killing it.
+			self.idEvent = self.ident
+
+	def terminate(self):
+		"""Terminates the timer.
+		This should be called from the thread that initiated the timer.
+		"""
+		if not user32.KillTimer(self.hwnd, self.idEvent):
+			raise WinError()
 
 # Windows Clipboard format constants
 CF_UNICODETEXT = 13

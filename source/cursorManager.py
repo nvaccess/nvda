@@ -21,6 +21,7 @@ import api
 import speech
 import config
 import braille
+import vision
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
 import ui
@@ -153,6 +154,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		info.updateSelection()
 		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
 		oldInfo=self.makeTextInfo(posConstant)

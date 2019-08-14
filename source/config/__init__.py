@@ -135,7 +135,15 @@ def getSystemConfigPath():
 			pass
 	return None
 
-SCRATCH_PAD_ONLY_DIRS = ('appModules','brailleDisplayDrivers','globalPlugins','synthDrivers')
+
+SCRATCH_PAD_ONLY_DIRS = (
+	'appModules',
+	'brailleDisplayDrivers',
+	'globalPlugins',
+	'synthDrivers',
+	'visionEnhancementProviders',
+)
+
 
 def getScratchpadDir(ensureExists=False):
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
