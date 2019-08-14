@@ -13,10 +13,15 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 from abc import abstractmethod
 import weakref
 import re
+from typing import Any, Union, List
+
 import baseObject
 import config
 import controlTypes
 import locationHelper
+
+
+SpeechSequence = List[Union[Any, str]]
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -472,17 +477,26 @@ class TextInfo(baseObject.AutoPropertyObject):
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
 
-	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+	def getControlFieldSpeech(
+			self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None
+	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
-		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
+		sequence = speech.getControlFieldSpeech(
+			attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason
+		)
+		# remove empty strings or empty sequences which originate from speech.getControlFieldSpeech
+		return list(item for item in sequence if bool(item))
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
 		import braille
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=None):
+	def getFormatFieldSpeech(
+			self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False,
+			initialFormat=False, separator=None
+	) -> SpeechSequence:
 		"""Get the spoken representation for given format information.
 		The base implementation just calls L{speech.getFormatFieldSpeech}.
 		This can be extended in order to support implementation specific attributes.
@@ -497,7 +511,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
 			# but that can't be specified as a default argument because of circular import issues.
 			separator = speech.CHUNK_SEPARATOR
-		return speech.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+		return speech.getFormatFieldSpeech(
+			attrs, attrsCache=attrsCache, formatConfig=formatConfig,
+			reason=reason, unit=unit, extraDetail=extraDetail,
+			initialFormat=initialFormat
+			# speech does not take a "separator" argument.
+		)
 
 	def activate(self):
 		"""Activate this position.

@@ -3,6 +3,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2007-2016 NV Access Limited, Babbage B.V.
+from typing import Dict
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -494,7 +495,7 @@ roleLabels={
 	ROLE_INSERTED_CONTENT:_("inserted"),
 }
 
-stateLabels={
+stateLabels: Dict[int, str] = {
 	# Translators: This is presented when a control or document is unavailable.
 	STATE_UNAVAILABLE:_("unavailable"),
 	# Translators: This is presented when a control has focus.

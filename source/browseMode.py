@@ -9,6 +9,8 @@ import collections
 import winsound
 import time
 import weakref
+from typing import Optional
+
 import wx
 import core
 from logHandler import log
@@ -36,6 +38,8 @@ import api
 import gui.guiHelper
 from NVDAObjects import NVDAObject
 from abc import ABCMeta, abstractmethod
+
+from speech import SpeechSequence, EndUtteranceCommand, LangChangeCommand
 
 REASON_QUICKNAV = "quickNav"
 
@@ -1104,23 +1108,41 @@ class ElementsListDialog(wx.Dialog):
 			# If it didn't, and it directly or indirectly called wx.Yield, it could start executing NVDA's core pump from within the yield, causing recursion.
 			core.callLater(100, move)
 
+
+def _checkType(value):
+	assert (
+		isinstance(value, (EndUtteranceCommand, LangChangeCommand, str)),
+		f"unexpectedType: {value!r}"
+	)
+	return value
+
+
 class BrowseModeDocumentTextInfo(textInfos.TextInfo):
 
-	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
+	def getControlFieldSpeech(
+			self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None
+	) -> SpeechSequence:
 		textList = []
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
 			# Ensure that the name of the field gets presented even if normally it wouldn't. 
 			name=attrs.get('name')
 			if name and attrs.getPresentationCategory(ancestorAttrs,formatConfig,reason) is None:
-				textList.append(name)
+				textList.append(_checkType(name))
 				if landmark == "region":
 					# The word landmark is superfluous for regions.
-					textList.append(aria.landmarkRoles[landmark])
+					landmarkRole = aria.landmarkRoles[landmark]
+					textList.append(_checkType(landmarkRole))
 			if landmark != "region":
 				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
-		textList.append(super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
-		return " ".join(textList)
+		baseSequence = super(BrowseModeDocumentTextInfo, self).getControlFieldSpeech(
+			attrs, ancestorAttrs, fieldType,
+			formatConfig, extraDetail, reason
+		)
+		textList.extend(baseSequence)
+		for item in textList:
+			_checkType(item)
+		return textList
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		textList = []

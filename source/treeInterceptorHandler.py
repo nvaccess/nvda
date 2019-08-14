@@ -13,6 +13,7 @@ import textInfos
 import config
 import braille
 import vision
+from speech.types import SpeechSequence
 
 runningTable=set()
 
@@ -239,13 +240,19 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.innerTextInfo.focusableNVDAObjectAtStart
 
-	def getFormatFieldSpeech(self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None, extraDetail=False , initialFormat=False, separator=None):
+	def getFormatFieldSpeech(
+			self, attrs, attrsCache=None, formatConfig=None, reason=None, unit=None,
+			extraDetail=False , initialFormat=False, separator=None
+	) -> SpeechSequence:
 		if separator is None:
 			# #6749: The default for this argument is actually speech.CHUNK_SEPARATOR,
 			# but that can't be specified as a default argument because of circular import issues.
 			import speech
 			separator = speech.CHUNK_SEPARATOR
-		return self.innerTextInfo.getFormatFieldSpeech(attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit, extraDetail=extraDetail , initialFormat=initialFormat, separator=separator)
+		return self.innerTextInfo.getFormatFieldSpeech(
+			attrs, attrsCache=attrsCache, formatConfig=formatConfig, reason=reason, unit=unit,
+			extraDetail=extraDetail, initialFormat=initialFormat, separator=separator
+		)
 
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart

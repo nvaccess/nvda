@@ -1434,9 +1434,11 @@ class ExcelCell(ExcelBase):
 				formatField.update(field.field)
 		if not hasattr(self.parent,'_formatFieldSpeechCache'):
 			self.parent._formatFieldSpeechCache={}
-		text=speech.getFormatFieldSpeech(formatField,attrsCache=self.parent._formatFieldSpeechCache,formatConfig=formatConfig) if formatField else None
-		if text:
-			speech.speakText(text)
+		if formatField:
+			sequence = speech.getFormatFieldSpeech(
+				formatField, attrsCache=self.parent._formatFieldSpeechCache, formatConfig=formatConfig
+			)
+			speech.speak(sequence)
 		super(ExcelCell,self).reportFocus()
 
 	__gestures = {

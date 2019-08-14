@@ -1356,7 +1356,7 @@ class GlobalCommands(ScriptableObject):
 		line.expand(textInfos.UNIT_LINE)
 		indentation,content=speech.splitTextIndentation(line.text)
 		if indentation:
-			textList.append(speech.getIndentationSpeech(indentation, formatConfig))
+			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
 		
 		info=info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1366,9 +1366,9 @@ class GlobalCommands(ScriptableObject):
 				formatField.update(field.field)
 
 		if not browseable:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig)
+				textList.extend(sequence)
 
 			if not textList:
 			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
@@ -1377,9 +1377,9 @@ class GlobalCommands(ScriptableObject):
 				
 			ui.message(" ".join(textList))
 		else:
-			text=info.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
-			if text:
-				textList.append(text)
+			if formatField:
+				sequence = info.getFormatFieldSpeech(formatField, formatConfig=formatConfig, separator="\n")
+				textList.extend(sequence)
 
 			if not textList:
 				# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
