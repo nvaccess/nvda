@@ -16,7 +16,7 @@ class Getter(object):
 	def __init__(self,fget, abstract=False):
 		self.fget=fget
 		if abstract:
-			self._abstract = self.__isabstractmethod__=abstract
+			self._abstract = self.__isabstractmethod__ = abstract
 
 	def __get__(self,instance,owner):
 		if isinstance(self.fget, classmethod):
