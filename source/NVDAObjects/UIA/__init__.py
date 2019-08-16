@@ -33,6 +33,7 @@ from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDete
 import braille
 import locationHelper
 import ui
+import winVersion
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -312,7 +313,9 @@ class UIATextInfo(textInfos.TextInfo):
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj: raise LookupError
 		elif isinstance(position,locationHelper.Point):
-			#rangeFromPoint used to cause a freeze in UIA client library!
+			if (winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1):
+				# #9435: RangeFromPoint causes a freeze in UIA client library in the Windows 7 start menu!
+				raise NotImplementedError("RangeFromPoint not supported on Windows 7")
 			self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position,UIAHandler.IUIAutomationTextRange):
 			self._rangeObj=position.clone()
