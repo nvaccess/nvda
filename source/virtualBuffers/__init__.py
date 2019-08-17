@@ -174,6 +174,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 
 	def _getBoundingRectFromOffset(self,offset):
 		o = self._getNVDAObjectFromOffset(offset)
+		if not o:
+			raise LookupError("no NVDAObject at offset %d" % offset)
 		if o.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
 		return o.location
