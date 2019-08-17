@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#virtualBuffers/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2007-2017 NV Access Limited, Peter Vágner
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Babbage B.V.
 
 import time
 import threading
@@ -205,7 +204,11 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 				break
 		raise LookupError
 
-	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+	def scrollIntoView(
+			self,
+			alignToTop: bool = True,
+			onlyWhenInvisible: bool = True
+	):
 		try:
 			obj = self._getNVDAObjectFromOffset(
 				self._startOffset if alignToTop else self._endOffset

@@ -400,7 +400,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return textInfos.Bookmark(self.__class__,self._rangeObj.getBookmark())
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		try:
 			self._rangeObj.scrollIntoView(alignToTop)
 		except COMError:
@@ -921,7 +921,11 @@ class MSHTML(IAccessible):
 			raise NotImplementedError
 
 	@classmethod
-	def _scrollHTMLNodeIntoView(cls, node, alignToTop=True):
+	def _scrollHTMLNodeIntoView(
+			cls,
+			node: comtypes.client.lazybind.Dispatch,
+			alignToTop: bool = True
+	):
 		try:
 			node.scrollIntoView(alignToTop)
 		except (COMError,NameError):
@@ -930,7 +934,7 @@ class MSHTML(IAccessible):
 
 	def scrollIntoView(self):
 		if self.HTMLNode:
-			self._scrollHTMLNodeIntoView(HTMLNode, True)
+			self._scrollHTMLNodeIntoView(self.HTMLNode, True)
 		raise NotImplementedError
 
 	def doAction(self, index=None):

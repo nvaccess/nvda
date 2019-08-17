@@ -1,8 +1,7 @@
-#treeInterceptorHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited, Davy Kager
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Davy Kager, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from logHandler import log
 import baseObject
@@ -250,8 +249,8 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self.innerTextInfo.pointAtStart
 
-	def _isVisibleInObject(self, end=False):
+	def _isVisibleInObject(self, end: bool = False) -> bool:
 		return self.innerTextInfo._isVisibleInObject(end=end)
 
-	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible: bool = True):
 		self.innerTextInfo.scrollIntoView(alignToTop=alignToTop, onlyWhenInvisible=onlyWhenInvisible)

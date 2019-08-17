@@ -1,8 +1,7 @@
-#virtualBuffers/gecko_ia2.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2008-2017 NV Access Limited, Babbage B.V., Mozilla Corporation
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2019 NV Access Limited, Babbage B.V., Mozilla Corporation
 
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
@@ -20,10 +19,15 @@ from comtypes import COMError
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
+from typing import Tuple
+import locationHelper
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
-	def _getNVDAObjectWithIA2TextOffsetFromOffset(self, offset):
+	def _getNVDAObjectWithIA2TextOffsetFromOffset(
+			self,
+			offset: int
+	) -> Tuple[NVDAObjects.IAccessible.IAccessible, int]:
 		"""
 		Gets the NVDAObject from the given offset,
 		along with the corresponding offset within the NVDAObject's IAccessibleTextObject.
@@ -47,14 +51,18 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			return (obj, relOffset)
 		raise LookupError("No appropriate format field found for offset %d" % offset)
 
-	def _getBoundingRectFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self, offset: int) -> locationHelper.RectLTWH:
 		try:
 			obj, relOffset = self._getNVDAObjectWithIA2TextOffsetFromOffset(offset)
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
 		except LookupError:
 			return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
 
-	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+	def scrollIntoView(
+			self,
+			alignToTop: bool = True,
+			onlyWhenInvisible: bool = True
+	):
 		try:
 			obj, relOffset = self._getNVDAObjectWithIA2TextOffsetFromOffset(
 				self._startOffset if alignToTop else self._endOffset

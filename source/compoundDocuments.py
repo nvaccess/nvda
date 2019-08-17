@@ -182,11 +182,11 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def __ne__(self, other):
 		return not self == other
 
-	def _isVisibleInObject(self, end=False):
+	def _isVisibleInObject(self, end: bool = False) -> bool:
 		info = self._end if end else self._start
 		return info._isVisibleInObject(end=end)
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		info = self._start if alignToTop else self._end
 		info._scrollIntoView(alignToTop=alignToTop)
 

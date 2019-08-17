@@ -1,8 +1,7 @@
-#virtualBuffers/MSHTML.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2017 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2019 NV Access Limited, Babbage B.V.
 
 from comtypes import COMError
 import eventHandler
@@ -30,7 +29,11 @@ FORMATSTATE_EMPH=16
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
-	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+	def scrollIntoView(
+			self,
+			alignToTop: bool = True,
+			onlyWhenInvisible: bool = True
+	):
 		# OnlyWhenInvisible is ignored here as it has serious performance implications.
 		try:
 			obj = self._getNVDAObjectFromOffset(

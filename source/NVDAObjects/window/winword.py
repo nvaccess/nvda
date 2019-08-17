@@ -1021,7 +1021,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise LookupError
 		return locationHelper.Point(left.value, top.value)
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		try:
 			self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj, alignToTop)
 		except COMError:

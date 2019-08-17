@@ -1,8 +1,7 @@
-#braille.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import api
 import controlTypes
@@ -195,7 +194,7 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 		except (ValueError, TypeError):
 			raise RuntimeError("Bad caret index")
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		try:
 			self.obj.pdDomNode.ScrollToEx(True, alignToTop)
 		except (AttributeError, COMError):

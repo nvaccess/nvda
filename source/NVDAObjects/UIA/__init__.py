@@ -725,7 +725,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 	updateCaret = updateSelection
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		self._rangeObj.ScrollIntoView(alignToTop)
 
 class UIA(Window):
@@ -998,7 +998,10 @@ class UIA(Window):
 		return self.UIASelectionItemPattern
 
 	def _get_UIAScrollItemPattern(self):
-		self.UIAScrollItemPattern=self._getUIAPattern(UIAHandler.UIA_ScrollItemPatternId,UIAHandler.IUIAutomationScrollItemPattern)
+		self.UIAScrollItemPattern = self._getUIAPattern(
+			UIAHandler.UIA_ScrollItemPatternId,
+			UIAHandler.IUIAutomationScrollItemPattern
+		)
 		return self.UIAScrollItemPattern
 
 	def _get_UIATextPattern(self):

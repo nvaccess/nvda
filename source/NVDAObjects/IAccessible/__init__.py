@@ -357,12 +357,16 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				chunkStart = chunkEnd + 1
 			offset += itemLen
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		try:
 			self.obj.IAccessibleTextObject.scrollSubstringTo(
 				self._startOffset,
 				self._endOffset,
-				IAccessibleHandler.IA2_SCROLL_TYPE_TOP_EDGE if alignToTop else IAccessibleHandler.IA2_SCROLL_TYPE_BOTTOM_EDGE
+				(
+					IAccessibleHandler.IA2_SCROLL_TYPE_TOP_EDGE
+					if alignToTop
+					else IAccessibleHandler.IA2_SCROLL_TYPE_BOTTOM_EDGE
+				)
 			)
 		except COMError:
 			log.debugWarning("IAccessible2text::scrollSubstringTo failed", exc_info=True)

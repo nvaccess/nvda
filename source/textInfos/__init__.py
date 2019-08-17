@@ -1,8 +1,7 @@
-#textInfos/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2018 NV Access Limited, Babbage B.V.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -295,13 +294,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def unitIndex(self,unit):
+	def unitIndex(self, unit: str) -> int:
 		"""
 		@param unit: a unit constant for which you want to retrieve an index
-		@type: string
 		@returns: The 1-based index of this unit, out of all the units of this type in the object
-		@rtype: int
-		"""  
+		"""
 		raise NotImplementedError
 
 	def unitCount(self,unit):
@@ -415,13 +412,17 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def _get_NVDAObjectAtStart(self):
-		"""retrieves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		"""retrieves the NVDAObject related to the start of the range.
+		Usually it is just the owner NVDAObject,
+		but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
 
 	def _get_focusableNVDAObjectAtStart(self):
-		"""retrieves the deepest focusable NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+		"""retrieves the deepest focusable NVDAObject related to the start of the range.
+		Usually it is just the owner NVDAObject,
+		but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
@@ -522,14 +523,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def _isVisibleInObject(self, end=False):
+	def _isVisibleInObject(self, end: bool = False) -> bool:
 		"""Checks whether the start or end of the range is visible in the originating object.
 		This relies on L{pointAtStart} and intentionally doesn't catch exceptions when fetching that property.
 		@param end: Whether to check the positioning of the end;
 			C{True} for the end, C{False} for the start.
-		@type end: bool
 		@returns: C{True} if the text is visible, C{False} otherwise.
-		@rtype: bool
 		"""
 		copy = self.copy()
 		copy.collapse(end=end)
@@ -538,18 +537,21 @@ class TextInfo(baseObject.AutoPropertyObject):
 		obj = self.obj.rootNVDAObject if isinstance(self.obj, TreeInterceptor) else self.obj
 		return copy.pointAtStart in obj.location
 
-	def _scrollIntoView(self, alignToTop=True):
+	def _scrollIntoView(self, alignToTop: bool = True):
 		"""
 		Scrolls the text range into the given position of the screen view, if possible.
 		This method is called by L{scrollIntoView} to perform scrolling and is usually never called directly.
 		@param alignToTop: C{True} if the text should be scrolled so the text range is
 			flush with the top of the viewport;
 			C{False} if it should be flush with the bottom of the viewport.
-		@type alignToTop: bool
 		"""
 		raise NotImplementedError
 
-	def scrollIntoView(self, alignToTop=True, onlyWhenInvisible=True):
+	def scrollIntoView(
+			self,
+			alignToTop: bool = True,
+			onlyWhenInvisible: bool = True
+	):
 		"""
 		Scrolls the text range into the given position of the screen view, if possible.
 		If scrolling should occur, this method calls L{_scrollIntoView} internally.
@@ -557,13 +559,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param alignToTop: C{True} if the text should be scrolled so the text range is
 			flush with the top of the viewport;
 			C{False} if it should be flush with the bottom of the viewport.
-		@type alignToTop: bool
 		@param onlyWhenInvisible: Whether scrolling should occur when the text is invisible (C{True}),
 			or when already visible as well(C{False}).
 			Defaults to C{True}.
-			When C{True}, subclasses can call L{_isVisibleInObject} to retrieve the visibility of the start or end of the range,
+			When C{True}, subclasses can call L{_isVisibleInObject}
+			to retrieve the visibility of the start or end of the range,
 			providing the negation of alignToTop to the end argument.
-		@type onlyWhenInvisible: bool
 		"""
 		if onlyWhenInvisible:
 			try:
