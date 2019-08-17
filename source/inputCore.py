@@ -70,8 +70,7 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: For example, the system is unaware of C{BrailleDisplayGesture} execution,
 	#: and might even get into sleep mode when reading a long portion of text in braille.
 	#: In contrast, the system is aware of C{KeyboardInputGesture} execution itself.
-	#: @type: bool
-	shouldPreventSystemIdle=False
+	shouldPreventSystemIdle: bool = False
 
 	_abstract_identifiers = True
 	def _get_identifiers(self):
