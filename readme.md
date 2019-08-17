@@ -256,6 +256,7 @@ scons checkPot
 
 ### Linting your changes
 In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
+Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
 Running via SCons will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
 If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
 ```

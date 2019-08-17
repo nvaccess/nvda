@@ -1,8 +1,8 @@
-#tests/unit/__init__.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017-2019 NV Access Limited
+# tests/unit/__init__.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017-2019 NV Access Limited, Babbage B.V.
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -31,7 +31,9 @@ TOP_DIR = os.path.dirname(os.path.dirname(UNIT_DIR))
 SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # Let us import modules from the NVDA source.
 sys.path.insert(1, SOURCE_DIR)
-import sourceEnv
+# Suppress Flake8 warning F401 (module imported but unused)
+# as this module is imported to expand the system path.
+import sourceEnv  # noqa: F401
 
 # Set options normally taken from the command line.
 import globalVars
@@ -70,7 +72,11 @@ languageHandler.setLanguage("en")
 # NVDAObjects need appModuleHandler to be initialized.
 import appModuleHandler
 appModuleHandler.initialize()
-# Anything which notifies of cursor updates requires braille to be initialized.
+# Anything which notifies of cursor updates requires braille and vision to be initialized.
+# Suppress Flake8 warning E402 (Module level import not at top of file)
+import vision  # noqa: E402
+vision.initialize()
+
 import braille
 # Disable auto detection of braille displays when unit testing.
 config.conf['braille']['display'] = "noBraille"
