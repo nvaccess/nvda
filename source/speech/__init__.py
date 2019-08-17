@@ -1094,7 +1094,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
 	if (
-		role==controlTypes.ROLE_CHARTELEMENT
+		role == controlTypes.ROLE_CHARTELEMENT
 		or (role == controlTypes.ROLE_LANDMARK and landmark == "region")
 	):
 		speakRole=False
