@@ -11,8 +11,6 @@ Os destaques desta versão incluem:
 - Muitas outras correções de bugs.
 
 == Novas Funcionalidades ==
-- O diálogo "Localizar" passa a incluir um histórico das últimas 20 pesquisas. (#8482)
- - O histórico de pesquisas é apagado quando o NVDA é encerrado ou reiniciado.
 - O suporte ao NVDA do Miranda NG já funciona com as novas versões clientes. (#9053) 
 - Já pode desactivar o modo de navegação por padrão, desactivando a nova opção "Activar o modo de navegação no carregamento de páginas" nas configurações do modo de navegação do NVDA. (#8716) 
  - Note que mesmo com esta opção desactivada pode activar o modo de navegação, manualmente, pressionando NVDA+barra de espaços.
@@ -31,14 +29,22 @@ Embora possa não ser adequado desactivar em todas as páginas, pode resolver:
  - Lentidão na resposta aos comandos em modo de navegação.
 - Para os drivers das linhas Braille que o suportem, as configurações específicas do driver podem ser alteradas nas configurações de Braille do diálogo de configurações do NVDA. (#7452)
 - As linhas Braille da Freedom Scientific passam a ser suportadas pela detecção automática de linhas Braille. (#7727)
+- Adicionado um comando para mostrar o substituto para um símbolo sob o cursor de revisão. (#9286)
+- Adicionada uma opção experimental às configurações Avançadas que permite testar uma, ainda em progresso, versão reescrita do suporte do NVDA à consola do Windows, usando a API Microsoft UI Automation. (#9614)
+- Na consola de Python, o campo de edição já suporta a colagem de múltiplas linhas daÁrea de transferência. (#9776)
+
 
 == Alterações ==
 - O volume do sintetizador passa a ser alterado de 5 em 5% em vez de 10% quando se usa o anel de configurações do sintetizador. (#6754)
 - Clarificada a informação no Gestor de extras quando se inicia o NVDA com os extras desactivados. (#9473)
 - Actualizado o Unicode Common Locale Data Repository emoji annotations para a versão 35.0. (#9445)
-- Actualizado o liblouis braille translator para a versão 3.9.0. (#9439)
+- Actualizado o liblouis braille translator para a versão 3.10.0. (#9439, #9678)
+- Actualizado o eSpeak-NG para a versão  commit 67324cc.
 - A tecla de atalho, em inglês, para o campo "Filtrar por:", no diálogo "Lista de elementos" foi alterada para alt+y. (#8728)
 - Quando uma linha Braille, ligada via Bluetooth, é detectada automaticamente, o NVDA continuará à procura por dispositivos suportados pelo mesmo driver, via USB, e alternará para uma ligação USB, se a encontrar. (# 8853)
+- O NVDA passa a anunciar a selecção ou des-selecção após o anúncio do texto respectivo. (#9028, #9909)
+- No código do  Microsoft Visual Studio, o modo de navegação é desactivado por padrão. (#9828)
+
 
 == Correcções ==
 - O NVDA já não cracha quando uma pasta de um extra está vazia. (#7686)
@@ -61,6 +67,9 @@ Embora possa não ser adequado desactivar em todas as páginas, pode resolver:
 - As teclas "bumper" das linhas Braille da Freedom Scientific já funcionam correctamente. (# 8849)
 - Ao ler o primeiro caractere de um documento, no Notepad ++ 7.7 X64, o NVDA já não congela por até dez segundos. (# 9609)
 - O HTCom já pode ser usado com uma linha Braille da Handy Tech em conjunto com o NVDA. (#9691)
+- No Mozilla Firefox, as actualizações de uma live region já não são anunciadas se a live region estiver numa aba em segundo plano. (#1318)
+- O diálogo Localizar do NVDA, em modo de navegação, já não falha, mesmo que o diálogo Sobre o NVDA esteja aberto em segundo plano. (#8566)
+
 
 == Alterações para desenvolvedores ==
 - You can now set the "disableBrowseModeByDefault" property on app modules to leave browse mode off by default. (#8846)
@@ -68,6 +77,10 @@ Embora possa não ser adequado desactivar em todas as páginas, pode resolver:
 - Updated comtypes package to 1.1.7. (#9440, #8522)
 - When using the report module info command, the order of information has changed to present the module first. (#7338)
 - Added an example to demonstrate using nvdaControllerClient.dll from C#. (#9600)
+- Added a new isWin10 function to the winVersion module which returns whether or not this copy of NVDA is running on (at least) the supplied release version of Windows 10 (such as 1903). (#9761)
+- The NVDA Python console now  contains more useful modules in its namespace (such as appModules, globalPlugins, config and textInfos). (#9789)
+- The result of the last executed command in the NVDA Python console is now accessible from the _ (line) variable. (#9782)
+ - Note that this shadows the gettext translation function also called "_". To access the translation function: del _
 
 
 = 2019.1.1 =
@@ -2748,3 +2761,4 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 - Quando um sintetizador não pode ser carregado ao ser escolhido a partir do Diálogo de Sintetizadores, uma caixa de diálogo agora avisa ao usuário desse fato.
 - Ao carregar um sintetizador pela primeira vez, o NVDA deixa que ele escolha os parâmetros mais adequados de voz, velocidade e tom, em lugar de forçá-lo a usar os padrões que este supõe estar adequados. Isso resolve um problema com os sintetizadores  Eloquence e Viavoice sapi4 que iniciavam a falar de forma excessivamente rápida para uma primeira vez.
 35230
+

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA-TW\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-11 23:26+1000\n"
-"PO-Revision-Date: 2019-07-05 23:48+0800\n"
+"POT-Creation-Date: 2019-07-19 00:10+1000\n"
+"PO-Revision-Date: 2019-07-19 14:23+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: NVDA-Taiwan Volunteers Team\n"
 "Language: zh_TW\n"
@@ -3777,21 +3777,24 @@ msgid ""
 "Reports the symbol where the review cursor is positioned. Pressed twice, "
 "shows the symbol and the text used to speak it in browse mode"
 msgstr ""
+"讀出當前檢閱游標所在的符號，連按兩下，在瀏覽模式視窗中顯示該符號及其對應的替"
+"代讀音的文字。"
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
-#, fuzzy
 msgid "No symbol replacement"
-msgstr "代替文字"
+msgstr "沒有符號替代文字"
 
 #. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
 msgid ""
 "Character: {}\n"
 "Replacement: {}"
 msgstr ""
+"符號： {}\n"
+"替代文字： {}"
 
 #. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 msgid "Expanded symbol ({})"
-msgstr ""
+msgstr "延伸符號 ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -4434,7 +4437,7 @@ msgstr "當有 NVDA 對話框開啟時，無法更改作用中的組態檔"
 #. {profile} is replaced with the profile's name.
 #, python-brace-format
 msgid "{profile} profile deactivated"
-msgstr "{profile} 組態檔已停用  "
+msgstr "{profile} 組態檔停用了  "
 
 #. Translators: a message when a configuration profile is manually activated.
 #. {profile} is replaced with the profile's name.
@@ -9278,14 +9281,13 @@ msgstr "使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支�
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
-#, fuzzy
 msgid "Use UI Automation to access the Windows Console when available"
-msgstr "使用 UI Automation 抓取微軟 Word 中的控制項資訊 (若有支援)(&W)"
+msgstr "在 Windows 主控台中使用 UI Automation(若有支援)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
 msgid "Speak &passwords in UIA consoles (may improve performance)"
-msgstr ""
+msgstr "在 UIA 主控台讀出密碼(可能提高效能)(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
@@ -9361,7 +9363,7 @@ msgstr "原來文字(&P)"
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 msgid "&Replacement"
-msgstr "代替文字(&R)"
+msgstr "替代文字(&R)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
@@ -9398,7 +9400,7 @@ msgstr "原來文字"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
-msgstr "代替文字"
+msgstr "替代文字"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"

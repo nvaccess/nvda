@@ -7,8 +7,6 @@
 Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowskich Freedom Scientific, eksperymentalne ustawienie zaawansowane wyłączenia podążania fokusu systemowego za kursorem trybu czytania (co może poprawić wydajność), możliwość podkręcania szybkości głosów mobilnych Windows,  oraz wiele poprawek.
 
 == Nowości ==
-- Okno Znajdź zawiera historię ostatnich 20 wyszukiwań. (#8482)
- - Historia wyszukiwania jest czyszczona po zamknięciu lub ponownym uruchomieniu NVDA.
 - Wsparcie NVDA dla Miranda NG działa z nowszymi wersjami klienta. (#9053) 
 - Można domyślnie wyłączyć tryb czytania poprzez odznaczenie nowej opcji "Włącz tryb czytania podczas wczytywania strony"  w ustawieniach trybu czytania NVDA. (#8716) 
  - Zauważ, że gdy opcja jest wyłączona, możesz włączać tryb czytania ręcznie, naciskając NVDA+spacja.
@@ -39,7 +37,7 @@ Najważniejsze zmiany w tej wersji, to automatyczne wykrywanie linijek brajlowsk
 - Gdy automatycznie wykryta linijka brajlowska  jest podłączona przez Bluetooth, NVDA będzie poszukiwał linijki podłączonej przez USB, a obsługiwanej przy użyciu tego samego sterownika,   i przełączy się na połączenie USB, gdy stanie się dostępne. (#8853)
 - eSpeak-NG zaktualizowany do commitu 67324cc.
 - Translator brajlowski liblouis zaktualizowany do wersji 3.10.0. (#9439, #9678)
-- NVDA wypowie słowo 'zaznaczone' po odczytaniu co jest zaznaczone. (#9028)
+- NVDA wypowie słowo 'zaznaczone' po odczytaniu tekstu zaznaczone przez użytkownika. (#9028)
 - W kodzie Microsoft Visual Studio, tryb czytania jest domyślnie wyłączony. (#9828)
 
 
