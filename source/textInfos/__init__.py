@@ -71,6 +71,7 @@ class ControlField(Field):
 			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
+			or role == controlTypes.ROLE_LANDMARK  # Presentation handled by BrowseModeDocumentTextInfo
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
@@ -110,8 +111,19 @@ class ControlField(Field):
 		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (
-			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
-			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
+			role in (
+				controlTypes.ROLE_BLOCKQUOTE,
+				controlTypes.ROLE_FRAME,
+				controlTypes.ROLE_INTERNALFRAME,
+				controlTypes.ROLE_TOOLBAR,
+				controlTypes.ROLE_MENUBAR,
+				controlTypes.ROLE_POPUPMENU,
+				controlTypes.ROLE_TABLE,
+			)
+			or (role == controlTypes.ROLE_EDITABLETEXT and (
+				controlTypes.STATE_READONLY not in states
+				or controlTypes.STATE_FOCUSABLE in states
+			) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
 			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
