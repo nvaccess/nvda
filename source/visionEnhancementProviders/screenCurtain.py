@@ -62,7 +62,7 @@ class Magnification:
 class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 	name = "screenCurtain"
 	# Translators: Description of a vision enhancement provider that disables output to the screen,
-	# making it blac	k.
+	# making it black.
 	description = _("Screen Curtain")
 	supportedRoles = frozenset([vision.constants.Role.COLORENHANCER])
 
