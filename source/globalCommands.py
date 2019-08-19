@@ -1332,7 +1332,7 @@ class GlobalCommands(ScriptableObject):
 	def script_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 	# Translators: Input help mode message for say all with system caret command.
-	script_sayAll.__doc__ = _("Reads from the system caret up to the end of the text, moving the caret as it goes")
+	script_sayAll.__doc__ = _("Reads from the system caret up to the end of the text while moving the caret as it goes")
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def _reportFormattingHelper(self, info, browseable=False):
