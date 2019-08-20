@@ -18,7 +18,7 @@ description = _("A free and open source screen reader for Microsoft Windows")
 url = "https://www.nvaccess.org/"
 copyrightYears = "2006-2019"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
-	years = copyrightYears)
+	years=copyrightYears)
 aboutMessage = _(u"""{longName} ({name})
 Version: {version}
 URL: {url}
