@@ -228,14 +228,21 @@ class SynthDriver(driverHandler.Driver):
 		# Translators: Label for a setting in synth settings ring.
 		displayName=pgettext('synth setting','Rate boost'),
 		availableInSettingsRing=True)
+
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
-		# Translators: Label for a setting in voice settings dialog.
-		return driverHandler.NumericDriverSetting("volume",_("V&olume"),minStep=minStep,normalStep=5,availableInSettingsRing=True,
+		return driverHandler.NumericDriverSetting(
+			"volume",
+			# Translators: Label for a setting in voice settings dialog.
+			_("V&olume"),
+			minStep=minStep,
+			normalStep=config.conf["speech"]["settingsRingVolumeStep"],
+			availableInSettingsRing=True,
+			# Translators: Label for a setting in synth settings ring.
+			displayName=pgettext('synth setting', 'Volume')
+		)
 
-		# Translators: Label for a setting in synth settings ring.
-		displayName=pgettext('synth setting','Volume'))
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""

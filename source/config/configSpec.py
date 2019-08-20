@@ -37,6 +37,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
+	settingsRingVolumeStep = integer(default=5, min=1, max=100)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
