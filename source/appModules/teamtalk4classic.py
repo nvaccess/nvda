@@ -5,6 +5,6 @@
 # See the file COPYING for more details.
 
 # The appModule we need lives in appModules.teamtalk5classic.
-# We don't actually use it here, hence the noqa.
+# We don't actually use it here, hence the module imported but used warning.
 # We just import it for compatibility.
 from .teamtalk5classic import AppModule # noqa F401

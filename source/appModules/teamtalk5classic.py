@@ -1,6 +1,6 @@
 # appModules/teamtalk5classic.py
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2019 NVDA Contributors, Doug Lee, Tyler Spivey, Bill Dengler
+# Copyright (C) 2012-2019 NV Access Limited, Doug Lee, Tyler Spivey, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -154,8 +154,7 @@ class TTToolBarItem(IAccessible):
 	def event_valueChange(self):
 		speech.speakObject(self)
 
-	@property
-	def name(self):
+	def _get_name(self):
 		return self.parent.info.name(self.IAccessibleChildID)
 
 
@@ -202,7 +201,8 @@ class AppModule(appModuleHandler.AppModule):
 			try:
 				clsList.remove(ProgressBar)
 			except ValueError:
-				pass
+				from logHandler import log
+				log.exception("Couldn't remove VU meter progress bar")
 		# Name toolbar icons.
 		elif obj.windowControlID == ID_TOOLBAR:
 			# Applies to toolbar and its items.
@@ -211,15 +211,18 @@ class AppModule(appModuleHandler.AppModule):
 			elif obj.parent and obj.parent.role == controlTypes.ROLE_TOOLBAR:
 				clsList.insert(0, TTToolBarItem)
 
-	def script_sayToolbarInfo(self, gesture):
-		"""Says various on/off states from the toolbar. Depending
-		on TeamTalk version, these can include connection status,
-		status of voice activation, push-to-talk, and video
-		features, whether channel audio is being saved to files,
-		and whether the channel message window is showing.
-		On one press, just says which are checked (in effect).
-		On two presses, says all states.
+	@scriptHandler.script(
+		gesture="kb:control+shift+s",
+		description="""Says various on/off states from the toolbar. Depending
+on TeamTalk version, these can include connection status,
+status of voice activation, push-to-talk, and video
+features, whether channel audio is being saved to files,
+and whether the channel message window is showing.
+On one press, just says which are checked (in effect).
+On two presses, says all states.
 		"""
+	)
+	def script_sayToolbarInfo(self, gesture):
 		info = TTToolBarInfo()
 		if not info:
 			return
@@ -240,5 +243,3 @@ class AppModule(appModuleHandler.AppModule):
 			if controlTypes.STATE_CHECKED not in o.states:
 				continue
 			speech.speakText(o.name)
-
-	__gestures = {"kb:control+shift+s": "sayToolbarInfo"}
