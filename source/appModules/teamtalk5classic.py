@@ -26,7 +26,7 @@ LBL_VIDEO = _("Video")
 # Translators: Status text in the TeamTalk voice conferencing client.
 # Note: this string is slightly different from the actual toolbar text
 # to avoid a translatable string conflict.
-LBL_DESKTOP = _("Share desktop")
+LBL_DESKTOP = pgettext("TeamTalk", "Desktop")
 # Translators: Status text in the TeamTalk voice conferencing client.
 LBL_STREAM = _("Stream To Channel")
 # Translators: Status text in the TeamTalk voice conferencing client.
