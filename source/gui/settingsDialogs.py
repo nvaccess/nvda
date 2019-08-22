@@ -278,7 +278,7 @@ class SettingsPanel(wx.Panel, DpiScalingHelperMixin, metaclass=guiHelper.SIPABCM
 		self.mainSizer=wx.BoxSizer(wx.VERTICAL)
 		self.settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		self.makeSettings(self.settingsSizer)
-		self.mainSizer.Add(self.settingsSizer, flag=wx.ALL)
+		self.mainSizer.Add(self.settingsSizer, flag=wx.ALL | wx.EXPAND)
 		self.mainSizer.Fit(self)
 		self.SetSizer(self.mainSizer)
 		if gui._isDebug():
@@ -497,7 +497,10 @@ class MultiCategorySettingsDialog(SettingsDialog):
 				raise ValueError("Unable to create panel for unknown category ID: {}".format(catId))
 			panel = cls(parent=self.container)
 			panel.Hide()
-			self.containerSizer.Add(panel, flag=wx.ALL, border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			self.containerSizer.Add(
+				panel, flag=wx.ALL | wx.EXPAND,
+				border=guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL
+			)
 			self.catIdToInstanceMap[catId] = panel
 			panelWidth = panel.Size[0]
 			availableWidth = self.containerSizer.GetSize()[0]
@@ -2877,13 +2880,18 @@ class VisionSettingsPanel(SettingsPanel):
 		# Translators: The label for a setting in vision settings to choose a vision enhancement provider.
 		providerLabelText = _("&Vision enhancement providers")
 
-		providersBox = wx.StaticBox(self, label=providerLabelText)
-		providersGroupDescription = _(
-			"Providers are activated and deactivated as soon as you check or uncheck check boxes.")
-		providersGroup = guiHelper.BoxSizerHelper(self, sizer=wx.StaticBoxSizer(providersBox, wx.HORIZONTAL))
-		providersGroup.addItem(wx.StaticText(self, label=providersGroupDescription))
-		self.providerList = providersGroup.addLabeledControl(
-			"{}:".format(providerLabelText),
+		# Translators: Description in vision settings to choose a vision enhancement provider.
+		providersListDescriptionText = _(
+			"Providers are activated and deactivated as soon as you check or uncheck check boxes."
+		)
+		providersSizer = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+		providerListDescTextCtrl = providersSizer.addItem(wx.StaticText(self, label=providersListDescriptionText))
+		# The width that is available to the text is 544.
+		# Using providerSizer.Size.Width would be prefered, but it is not correct during construction.
+		# The value is dependent on the nesting level of the text, and has to be checked manually.
+		providerListDescTextCtrl.Wrap(self.scaleSize(544))
+		self.providerList = providersSizer.addLabeledControl(
+			f"{providerLabelText}:",
 			nvdaControls.CustomCheckListBox,
 			choices=[]
 		)
@@ -2891,10 +2899,14 @@ class VisionSettingsPanel(SettingsPanel):
 
 		self.initializeProviderList()
 
-		settingsSizerHelper.addItem(providersGroup)
+		settingsSizerHelper.addItem(providersSizer, flag=wx.EXPAND)
+		settingsSizerHelper.addItem(
+			wx.StaticLine(self),
+			flag=wx.EXPAND
+		)
 
 		self.providerPanelsSizer = wx.BoxSizer(wx.VERTICAL)
-		settingsSizerHelper.addItem(self.providerPanelsSizer)
+		settingsSizerHelper.addItem(self.providerPanelsSizer, flag=wx.EXPAND)
 
 	def initializeProviderList(self):
 		providerList = vision.getProviderList()
@@ -2949,8 +2961,8 @@ class VisionSettingsPanel(SettingsPanel):
 					self.providerPanelsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
 				panelSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=providerInst.description), wx.VERTICAL)
 				panel = providerInst.guiPanelClass(self, providerCallable=weakref.ref(providerInst))
-				panelSizer.Add(panel)
-				self.providerPanelsSizer.Add(panelSizer)
+				panelSizer.Add(panel, flag=wx.EXPAND)
+				self.providerPanelsSizer.Add(panelSizer, flag=wx.EXPAND)
 				self.providerPanelInstances.append(panel)
 
 	def onPanelActivated(self):
