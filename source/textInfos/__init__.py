@@ -16,6 +16,9 @@ import baseObject
 import config
 import controlTypes
 import locationHelper
+import windowUtils
+import api
+
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -452,7 +455,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@return: C{True} if successful, C{False} otherwise.
 		@rtype: bool
 		"""
-		import api
 		return api.copyToClip(self.clipboardText)
 
 	def getTextInChunks(self, unit):
@@ -523,8 +525,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def _isVisibleInObject(self, end: bool = False) -> bool:
-		"""Checks whether the start or end of the range is visible in the originating object.
+	def _isVisibleInRootWindow(self, end: bool = False) -> bool:
+		"""Checks whether the start or end of the range is visible in the root window that holds the text.
 		This relies on L{pointAtStart} and intentionally doesn't catch exceptions when fetching that property.
 		@param end: Whether to check the positioning of the end;
 			C{True} for the end, C{False} for the start.
@@ -532,10 +534,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		copy = self.copy()
 		copy.collapse(end=end)
-		# Import late to avoid circular import.
-		from treeInterceptorHandler import TreeInterceptor
-		obj = self.obj.rootNVDAObject if isinstance(self.obj, TreeInterceptor) else self.obj
-		return copy.pointAtStart in obj.location
+		obj = self.obj.rootNVDAObject if api.isTreeInterceptor(self.obj) else self.obj
+		start = copy.pointAtStart
+		ownedRootWindowLocation = locationHelper.RectLTWH.fromCompatibleType(
+			windowUtils.getOwnedRootWindowLocation(obj.windowHandle)
+		)
+		return start in ownedRootWindowLocation
 
 	def _scrollIntoView(self, alignToTop: bool = True):
 		"""
@@ -562,13 +566,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param onlyWhenInvisible: Whether scrolling should occur when the text is invisible (C{True}),
 			or when already visible as well(C{False}).
 			Defaults to C{True}.
-			When C{True}, subclasses can call L{_isVisibleInObject}
+			When C{True}, subclasses can call L{__isVisibleInRootWindow}
 			to retrieve the visibility of the start or end of the range,
 			providing the negation of alignToTop to the end argument.
 		"""
 		if onlyWhenInvisible:
 			try:
-				visible = self._isVisibleInObject(end=not alignToTop)
+				visible = self._isVisibleInRootWindow(end=not alignToTop)
 			except (LookupError, NotImplementedError):
 				visible = False
 			if visible:

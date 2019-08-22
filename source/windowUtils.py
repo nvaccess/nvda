@@ -14,7 +14,7 @@ from winUser import WNDCLASSEXW, WNDPROC, LRESULT
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
-from typing import Optional
+from typing import Optional, Union
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
@@ -259,3 +259,13 @@ class CustomWindow(AutoPropertyObject):
 		except:
 			log.exception("Error in wndProc")
 		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+
+
+def getOwnedRootWindowLocation(hwnd: Union[int, ctypes.wintypes.HWND]) -> ctypes.wintypes.RECT:
+	"""Gets the location of the owned root window for the given window handle."""
+	ownedRootWindow = winUser.getAncestor(hwnd, winUser.GA_ROOTOWNER)
+	if not ownedRootWindow:
+		raise LookupError
+	r = ctypes.wintypes.RECT()
+	ctypes.windll.user32.GetWindowRect(hwnd, ctypes.byref(r))
+	return r
