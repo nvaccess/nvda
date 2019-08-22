@@ -358,18 +358,24 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			offset += itemLen
 
 	def _scrollIntoView(self, alignToTop: bool = True):
+		scrollType = (
+			IAccessibleHandler.IA2_SCROLL_TYPE_TOP_EDGE
+			if alignToTop
+			else IAccessibleHandler.IA2_SCROLL_TYPE_BOTTOM_EDGE
+		)
 		try:
-			self.obj.IAccessibleTextObject.scrollSubstringTo(
-				self._startOffset,
-				self._endOffset,
-				(
-					IAccessibleHandler.IA2_SCROLL_TYPE_TOP_EDGE
-					if alignToTop
-					else IAccessibleHandler.IA2_SCROLL_TYPE_BOTTOM_EDGE
+			if self.obj.hasIrrelevantLocation:
+				# The complete object is out of view.
+				# In these cases, scrollSUbStringTo is known to fail.
+				self.obj.IAccessibleObject.scrollTo(scrollType)
+			else:
+				self.obj.IAccessibleTextObject.scrollSubstringTo(
+					self._startOffset,
+					self._endOffset,
+					scrollType
 				)
-			)
 		except COMError:
-			log.debugWarning("IAccessible2text::scrollSubstringTo failed", exc_info=True)
+			log.debugWarning("IAccessible2 scrolling failed", exc_info=True)
 			raise NotImplementedError
 
 class IAccessible(Window):
