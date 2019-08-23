@@ -2302,15 +2302,25 @@ class GlobalCommands(ScriptableObject):
 				return
 			scriptCount = scriptHandler.getLastScriptRepeatCount()
 			if scriptCount == 0 and screenCurtainName in vision.handler.providers:
-				vision.handler.terminateProvider(screenCurtainName)
+				try:
+					vision.handler.terminateProvider(screenCurtainName)
+				except Exception:
+					# If the screen curtain was enabled, we do not expect exceptions.
+					log.error("Screen curtain termination error", exc_info=True)
+					# Translators: Reported when the screen curtain could not be enabled.
+					message = _("Could not disable screen curtain")
+					return
 				# Translators: Reported when the screen curtain is disabled.
 				message = _("Screen curtain disabled")
 			elif scriptCount in (0, 2):
 				temporary = scriptCount == 0
-				if not vision.handler.initializeProvider(
-					screenCurtainName,
-					temporary=temporary,
-				):
+				try:
+					vision.handler.initializeProvider(
+						screenCurtainName,
+						temporary=temporary,
+					)
+				except Exception:
+					log.error("Screen curtain initialization error", exc_info=True)
 					# Translators: Reported when the screen curtain could not be enabled.
 					message = _("Could not enable screen curtain")
 					return

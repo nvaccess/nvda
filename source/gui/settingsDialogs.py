@@ -34,7 +34,7 @@ import braille
 import brailleTables
 import brailleInput
 import vision
-from typing import Callable
+from typing import Callable, List
 import core
 import keyboardHandler
 import characterProcessing
@@ -2897,7 +2897,7 @@ class VisionSettingsPanel(SettingsPanel):
 		)
 		self.providerList.Bind(wx.EVT_CHECKLISTBOX, self.onProviderToggled)
 
-		self.initializeProviderList()
+		self.populateProviderList()
 
 		settingsSizerHelper.addItem(providersSizer, flag=wx.EXPAND)
 		settingsSizerHelper.addItem(
@@ -2908,7 +2908,7 @@ class VisionSettingsPanel(SettingsPanel):
 		self.providerPanelsSizer = wx.BoxSizer(wx.VERTICAL)
 		settingsSizerHelper.addItem(self.providerPanelsSizer, flag=wx.EXPAND)
 
-	def initializeProviderList(self):
+	def populateProviderList(self):
 		providerList = vision.getProviderList()
 		self.providerNames = [provider[0] for provider in providerList]
 		providerChoices = [provider[1] for provider in providerList]
@@ -2916,10 +2916,101 @@ class VisionSettingsPanel(SettingsPanel):
 		self.providerList.Items = providerChoices
 		self.providerList.Select(0)
 
+	def safeInitProviders(
+			self,
+			providerNames: List[str],
+			confirmInitWithUser: bool = True
+	) -> bool:
+		"""Initializes one or more providers in a way that is gui friendly,
+		showing an error if appropriate.
+		@returns: Whether initialization succeeded for all providers.
+		"""
+		success = True
+		initErrors = []
+		for providerName in providerNames:
+			try:
+				if confirmInitWithUser and not vision.handler.confirmInitWithUser(providerName):
+					success = False
+					continue
+				vision.handler.initializeProvider(providerName)
+			except Exception as e:
+				initErrors.append(providerName)
+				log.error(
+					f"Could not initialize the {providerName} vision enhancement provider",
+					exc_info=True
+				)
+				success = False
+		if not success and initErrors:
+			if len(initErrors) == 1:
+				# Translators: This message is presented when
+				# NVDA is unable to load a single vision enhancement provider.
+				message = _(
+					"Could not load the {provider} vision enhancement provider"
+				).format(provider=initErrors[0])
+			else:
+				# Translators: This message is presented when
+				# NVDA is unable to load multiple vision enhancement providers.
+				initErrorsList = ", ".join(initErrors)
+				message = _(f"Could not load the following vision enhancement providers:\n{initErrorsList}")
+			gui.messageBox(
+				message,
+				# Translators: The title of the vision enhancement provider error message box.
+				_("Vision Enhancement Provider Error"),
+				wx.OK | wx.ICON_WARNING,
+				self
+			)
+		return success
+
+	def safeTerminateProviders(
+			self,
+			providerNames: List[str],
+			verbose: bool = False
+	):
+		"""Terminates one or more providers in a way that is gui friendly,
+		@verbose: Whether to show a termination error.
+		@returns: Whether initialization succeeded for all providers.
+		"""
+		terminateErrors = []
+		for providerName in providerNames:
+			try:
+				# Terminating a provider from the gui should never save the settings.
+				# This is because termination happens on the fly when unchecking check boxes.
+				# Saving settings would be harmful if a user opens the vision panel,
+				# then changes some settings and disables the provider.
+				vision.handler.terminateProvider(providerName, saveSettings=False)
+			except Exception:
+				terminateErrors.append(providerName)
+				log.error(
+					f"Could not terminate the {providerName} vision enhancement provider",
+					exc_info=True
+				)
+
+		if terminateErrors:
+			if verbose:
+				if len(terminateErrors) == 1:
+					# Translators: This message is presented when
+					# NVDA is unable to gracefully terminate a single vision enhancement provider.
+					message = _(
+						"Could not gracefully terminate the {provider} vision enhancement provider"
+					).format(provider=list(terminateErrors)[0])
+				else:
+					terminateErrorsList = ", ".join(terminateErrors)
+					# Translators: This message is presented when
+					# NVDA is unable to termiante multiple vision enhancement providers.
+					message = _(f"Could not gracefully terminate the following vision enhancement providers:\n{initErrorsList}")
+				gui.messageBox(
+					message,
+					# Translators: The title of the vision enhancement provider error message box.
+					_("Vision Enhancement Provider Error"),
+					wx.OK | wx.ICON_WARNING,
+					self
+				)
+
 	def syncProviderCheckboxes(self):
 		self.providerList.CheckedItems = [self.providerNames.index(name) for name in vision.handler.providers]
 
 	def onProviderToggled(self, evt):
+		evt.Skip()
 		index = evt.Int
 		if index != self.providerList.Selection:
 			# Toggled an unselected provider
@@ -2927,20 +3018,10 @@ class VisionSettingsPanel(SettingsPanel):
 		providerName = self.providerNames[index]
 		isChecked = self.providerList.IsChecked(index)
 		if not isChecked:
-			vision.handler.terminateProvider(providerName)
-		elif not vision.handler.initializeProvider(providerName):
-			gui.messageBox(
-				# Translators: This message is presented when
-				# NVDA is unable to load just checked
-				# vision enhancement provider.
-				_(f"Could not load the {providerName} vision enhancement provider."),
-				_("Vision Enhancement Provider Error"),
-				wx.OK | wx.ICON_WARNING,
-				self
-			)
+			self.safeTerminateProviders([providerName], verbose=True)
+		elif not self.safeInitProviders([providerName]):
 			self.providerList.Check(index, False)
 			return
-		evt.Skip()
 		self.refreshPanel()
 
 	def refreshPanel(self):
@@ -2971,31 +3052,15 @@ class VisionSettingsPanel(SettingsPanel):
 		super().onPanelActivated()
 
 	def onDiscard(self):
-		initErrors = []
 		for panel in self.providerPanelInstances:
 			panel.onDiscard()
 
 		providersToInitialize = [name for name in self.initialProviders if name not in vision.handler.providers]
-		for provider in providersToInitialize:
-			if not vision.handler.initializeProvider(provider):
-				initErrors.append(provider)
-
+		# These providers were already initialized.
+		# Therefore, we do not display user confirmation messages, if any.
+		self.safeInitProviders(providersToInitialize, confirmInitWithUser=False)
 		providersToTerminate = [name for name in vision.handler.providers if name not in self.initialProviders]
-		for provider in providersToTerminate:
-			vision.handler.terminateProvider(provider)
-
-		if initErrors:
-			# Translators: This message is presented when
-			# NVDA is unable to load certain
-			# vision enhancement providers.
-			initErrorsList = ", ".join(initErrors)
-			gui.messageBox(
-				# Translators: This message is presented when
-				# NVDA is unable to load vision enhancement providers after discarding settings.
-				_(f"Could not load the following vision enhancement providers:\n{initErrorsList}"),
-				_("Vision Enhancement Provider Error"),
-				wx.OK | wx.ICON_WARNING,
-				self)
+		self.safeTerminateProviders(providersToTerminate)
 
 	def onSave(self):
 		for panel in self.providerPanelInstances:

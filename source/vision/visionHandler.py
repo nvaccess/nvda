@@ -22,6 +22,7 @@ from logHandler import log
 import visionEnhancementProviders
 import queueHandler
 from typing import Type, Dict, List
+from . import exceptions
 
 
 def getProviderClass(
@@ -71,28 +72,29 @@ class VisionHandler(AutoPropertyObject):
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	def terminateProvider(self, providerName: str) -> bool:
+	def terminateProvider(self, providerName: str, saveSettings: bool = True):
 		"""Terminates a currently active provider.
+		When termnation fails, an exception is raised.
+		Yet, the provider wil lbe removed from the providers dictionary,
+		so its instance goes out of scope and wil lbe garbage collected.
 		@param providerName: The provider to terminate.
-		@returns: Whether termination succeeded or failed.
-			When termnation fails, return False so the caller knows that something failed.
-			Yet, the provider wil lbe removed from the providers dictionary,
-			so its instance goes out of scope and wil lbe garbage collected.
+		@param saveSettings: Whether settings should be saved on termionation.
 		"""
 		success = True
 		# Remove the provider from the providers dictionary.
 		providerInstance = self.providers.pop(providerName, None)
 		if not providerInstance:
-			log.warning("Tried to terminate uninitialized provider %s" % providerName)
-			return False
+			raise exceptions.ProviderTerminateException(
+				f"Tried to terminate uninitialized provider {providerName!r}"
+			)
+		exception = None
 		try:
-			providerInstance.terminate()
-		except Exception:
+			providerInstance.terminate(saveSettings=saveSettings)
+		except Exception as e:
 			# Purposely catch everything.
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
-			log.error("Error while terminating vision provider %s" % providerName, exc_info=True)
-			success = False
+			exception = e
 		# Copy the configured providers before mutating the list.
 		# If we don't, configobj won't be aware of changes the list.
 		configuredProviders: List = config.conf['vision']['providers'][:]
@@ -109,53 +111,58 @@ class VisionHandler(AutoPropertyObject):
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception:
 				log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
-		return success
+		if exception:
+			raise exception
 
-	def initializeProvider(self, providerName: str, temporary: bool = False) -> bool:
+	@staticmethod
+	def confirmInitWithUser(providerName: str) -> bool:
+		"""Before initialisation of a provider,
+		confirm with the user that the provider should start.
+		This method calls confirmInitWithUser on the provider,
+		and should be executed on the main thread.
+		@returns: C{True} if initialisation should continue, C{False} otherwise.
+		"""
+		providerCls = getProviderClass(providerName)
+		return providerCls.confirmInitWithUser()
+
+	def initializeProvider(self, providerName: str, temporary: bool = False):
 		"""
 		Enables and activates the supplied provider.
 		@param providerName: The name of the registered provider.
 		@param temporary: Whether the selected provider is enabled temporarily (e.g. as a fallback).
 			This defaults to C{False}.
 			If C{True}, no changes will be performed to the configuration.
-		@returns: Whether initializing the requested provider succeeded.
 		"""
 		providerCls = None
 		providerInst = self.providers.pop(providerName, None)
 		if providerInst is not None:
 			providerCls = type(providerInst)
-			try:
-				providerInst.reinitialize()
-			except Exception:
-				# Purposely catch everything.
-				# A provider can raise whatever exception,
-				# therefore it is unknown what to expect.
-				log.error("Error while reinitializing provider %s" % providerName, exc_info=True)
-				return False
+			providerInst.reinitialize()
 		else:
 			try:
 				providerCls = getProviderClass(providerName)
+			except ModuleNotFoundError:
+				raise exceptions.ProviderInitException(f"No provider named {providerName!r}")
+			else:
 				if not providerCls.canStart():
-					log.error("Trying to initialize provider %s which reported being unable to start" % providerName)
-					return False
-				# Initialize the provider.
-				providerInst = providerCls()
-				# Register extension points.
+					raise exceptions.ProviderInitException(
+						f"Trying to initialize provider {providerName!r} which reported being unable to start"
+					)
+			# Initialize the provider.
+			providerInst = providerCls()
+			# Register extension points.
+			try:
+				providerInst.registerEventExtensionPoints(self.extensionPoints)
+			except Exception as registerEventExtensionPointsException:
+				log.error(
+					f"Error while registering to extension points for provider {providerName}",
+				)
 				try:
-					providerInst.registerEventExtensionPoints(self.extensionPoints)
-				except Exception as registerEventExtensionPointsException:
-					log.error(f"Error while registering to extension points for provider {providerName}", exc_info=True)
-					try:
-						providerInst.terminate()
-					except Exception:
-						log.error("Error while registering to extension points for provider %s" % providerName, exc_info=True)
-					raise registerEventExtensionPointsException
-			except Exception:
-				# Purposely catch everything.
-				# A provider can raise whatever exception,
-				# therefore it is unknown what to expect.
-				log.error("Error while initializing provider %s" % providerName, exc_info=True)
-				return False
+					providerInst.terminate()
+				except Exception:
+					log.error(
+						f"Error terminating provider {providerName} after registering to extension points", exc_info=True)
+				raise registerEventExtensionPointsException
 		providerInst.initSettings()
 		if not temporary and providerCls.name not in config.conf['vision']['providers']:
 			config.conf['vision']['providers'] = config.conf['vision']['providers'][:] + [providerCls.name]
@@ -168,7 +175,6 @@ class VisionHandler(AutoPropertyObject):
 			# We should handle this more gracefully, since this is no reason
 			# to stop a provider from loading successfully.
 			log.debugWarning("Error in initial focus after provider load", exc_info=True)
-		return True
 
 	def terminate(self) -> None:
 		self.extensionPoints = None
@@ -209,9 +215,21 @@ class VisionHandler(AutoPropertyObject):
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
 		for provider in providersToTerminate:
-			self.terminateProvider(provider)
-		for provider in providersToInitialize:
-			self.initializeProvider(provider)
+			try:
+				self.terminateProvider(provider)
+			except Exception:
+				log.error(
+					f"Could not terminate the {provider} vision enhancement provider",
+					exc_info=True
+				)
+		for provider in rovidersToInitialize:
+			try:
+				self.initializeProvider(provider)
+			except Exception:
+				log.error(
+					f"Could not initialize the {provider} vision enhancement provider",
+					exc_info=True
+				)
 
 	def initialFocus(self) -> None:
 		if not api.getDesktopObject():

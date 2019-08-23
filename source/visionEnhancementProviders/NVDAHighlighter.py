@@ -245,7 +245,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		self._highlighterThread.daemon = True
 		self._highlighterThread.start()
 
-	def terminate(self):
+	def terminate(self, *args, **kwargs):
 		if self._highlighterThread:
 			if not winUser.user32.PostThreadMessageW(self._highlighterThread.ident, winUser.WM_QUIT, 0, 0):
 				raise WinError()
@@ -253,7 +253,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 			self._highlighterThread = None
 		winGDI.gdiPlusTerminate()
 		self.contextToRectMap.clear()
-		super(VisionEnhancementProvider, self).terminate()
+		super().terminate(*args, **kwargs)
 
 	def _run(self):
 		if vision._isDebug():

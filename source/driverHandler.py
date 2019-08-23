@@ -11,6 +11,8 @@ from baseObject import AutoPropertyObject
 import config
 from copy import deepcopy
 from logHandler import log
+from typing import List, Dict
+
 
 class Driver(AutoPropertyObject):
 	"""
@@ -44,41 +46,58 @@ class Driver(AutoPropertyObject):
 		super(Driver, self).__init__()
 		config.pre_configSave.register(self.saveSettings)
 
+	@classmethod
+	def _initSpecificSettings(cls, clsOrInst, settings):
+		firstLoad = not config.conf[cls._configSection].isSet(cls.name)
+		if firstLoad:
+			# Create the new section.
+			config.conf[cls._configSection][cls.name] = {}
+		# Make sure the config spec is up to date, so the config validator does its work.
+		config.conf[cls._configSection][cls.name].spec.update(
+			cls._getConfigSPecForSettings(settings)
+		)
+		# Make sure the clsOrInst has attributes for every setting
+		for setting in settings:
+			if not hasattr(clsOrInst, setting.id):
+				setattr(clsOrInst, setting.id, setting.defaultVal)
+		if firstLoad:
+			cls._saveSpecificSettings(clsOrInst, settings) #save defaults
+		else:
+			cls._loadSpecificSettings(clsOrInst, settings)
+
 	def initSettings(self):
 		"""
 		Initializes the configuration for this driver.
 		This method is called when initializing the driver.
 		"""
-		firstLoad = not config.conf[self._configSection].isSet(self.name)
-		if firstLoad:
-			# Create the new section.
-			config.conf[self._configSection][self.name] = {}
-		# Make sure the config spec is up to date, so the config validator does its work.
-		config.conf[self._configSection][self.name].spec.update(self.getConfigSpec())
-		# Make sure the instance has attributes for every setting
-		for setting in self.supportedSettings:
-			if not hasattr(self, setting.id):
-				setattr(self, setting.id, setting.defaultVal)
-		if firstLoad:
-			self.saveSettings() #save defaults
-		else:
-			self.loadSettings()
+		self._initSpecificSettings(self, self.supportedSettings)
 
-	def terminate(self):
+	def terminate(self, saveSettings: bool = True):
 		"""Terminate this driver.
 		This should be used for any required clean up.
+		@param saveSettings: Whether settings should be saved on termination.
 		@precondition: L{initialize} has been called.
 		@postcondition: This driver can no longer be used.
 		"""
-		self.saveSettings()
+		if saveSettings:
+			self.saveSettings()
 		config.pre_configSave.unregister(self.saveSettings)
+
+	@classmethod
+	def _get_preInitSettings(self):
+		"""The settings supported by the driver at pre initialisation time.
+		@rtype: list or tuple of L{DriverSetting}
+		"""
+		return ()
 
 	_abstract_supportedSettings = True
 	def _get_supportedSettings(self):
 		"""The settings supported by the driver.
+		When overriding this property, subclasses are encouraged to extend the getter method
+		to ensure that L{preInitSettings} is part of the list of supported settings.
 		@rtype: list or tuple of L{DriverSetting}
 		"""
-		return ()
+		return self.preInitSettings
 
 	@classmethod
 	def check(cls):
@@ -98,13 +117,31 @@ class Driver(AutoPropertyObject):
 			if s.id == settingID: return True
 		return False
 
-	def getConfigSpec(self):
-		spec=deepcopy(config.confspec[self._configSection]["__many__"])
-		for setting in self.supportedSettings:
+	@classmethod
+	def _getConfigSPecForSettings(cls, settings) -> Dict:
+		spec=deepcopy(config.confspec[cls._configSection]["__many__"])
+		for setting in settings:
 			if not setting.useConfig:
 				continue
 			spec[setting.id]=setting.configSpec
 		return spec
+
+	def getConfigSpec(self):
+		return self._getConfigSPecForSettings(self.supportedSettings)
+
+	@classmethod
+	def _saveSpecificSettings(cls, clsOrInst, settings):
+		conf=config.conf[cls._configSection][cls.name]
+		for setting in settings:
+			if not setting.useConfig:
+				continue
+			try:
+				conf[setting.id] = getattr(clsOrInst, setting.id)
+			except UnsupportedConfigParameterError:
+				log.debugWarning(f"Unsupported setting {s.id!r}; ignoring", exc_info=True)
+				continue
+		if settings:
+			log.debug(f"Saved settings for {cls.__qualname__}")
 
 	def saveSettings(self):
 		"""
@@ -112,46 +149,38 @@ class Driver(AutoPropertyObject):
 		This method is also executed when the driver is loaded for the first time,
 		in order to populate the configuration with the initial settings..
 		"""
-		conf=config.conf[self._configSection][self.name]
-		for setting in self.supportedSettings:
-			if not setting.useConfig:
+		self._saveSpecificSettings(self, self.supportedSettings)
+
+	@classmethod
+	def _loadSpecificSettings(cls, clsOrInst, settings, onlyChanged=False):
+		conf = config.conf[cls._configSection][cls.name]
+		for setting in settings:
+			if not setting.useConfig or conf.get(setting.id) is None:
+				continue
+			val = conf[setting.id]
+			if onlyChanged and getattr(clsOrInst, setting.id) == val:
 				continue
 			try:
-				conf[setting.id] = getattr(self,setting.id)
+				setattr(clsOrInst, setting.id, val)
 			except UnsupportedConfigParameterError:
-				log.debugWarning("Unsupported setting %s; ignoring"%s.id, exc_info=True)
+				log.debugWarning(f"Unsupported setting {setting.name!r}; ignoring", exc_info=True)
 				continue
-		if self.supportedSettings:
-			log.debug("Saved settings for {} {}".format(self.__class__.__name__, self.name))
+		if settings:
+			log.debug(
+				f"Loaded changed settings for {cls.__qualname__}"
+				if onlyChanged else
+				f"Loaded settings for {cls.__qualname__}"
+			)
 
-	def loadSettings(self, onlyChanged=False):
+	def loadSettings(self, onlyChanged: bool = False):
 		"""
 		Loads settings for this driver from the configuration.
 		This method assumes that the instance has attributes o/properties
 		corresponding with the name of every setting in L{supportedSettings}.
 		@param onlyChanged: When loading settings, only apply those for which
 			the value in the configuration differs from the current value.
-		@type onlyChanged: bool
 		"""
-		conf=config.conf[self._configSection][self.name]
-		for setting in self.supportedSettings:
-			if not setting.useConfig or conf.get(setting.id) is None:
-				continue
-			val=conf[setting.id]
-			if onlyChanged and getattr(self,setting.id) == val:
-				continue
-			try:
-				setattr(self,setting.id, val)
-			except UnsupportedConfigParameterError:
-				log.debugWarning("Unsupported setting %s; ignoring"%setting.name, exc_info=True)
-				continue
-		if self.supportedSettings:
-			log.debug(
-				(
-					"Loaded changed settings for {} {}"
-					if onlyChanged else
-					"Loaded settings for {} {}"
-				).format(self.__class__.__name__, self.name))
+		self._loadSpecificSettings(self, self.supportedSettings, onlyChanged)
 
 	@classmethod
 	def _paramToPercent(cls, current, min, max):

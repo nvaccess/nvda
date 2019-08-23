@@ -20,12 +20,13 @@ class VisionEnhancementProvider(driverHandler.Driver):
 
 	_configSection = "vision"
 	cachePropertiesByDefault = True
-	#: Override of supportedSettings to be a class property.
-	supportedSettings = ()
 	#: The roles supported by this provider.
 	#: This attribute is currently not used,
 	#: but might be later for presentational purposes.
 	supportedRoles: FrozenSet[Role] = frozenset()
+
+	def _get_supportedSettings(self):
+		return super().supportedSettings
 
 	@classmethod
 	def _get_guiPanelClass(cls):
@@ -64,3 +65,12 @@ class VisionEnhancementProvider(driverHandler.Driver):
 	@classmethod
 	def check(cls) -> bool:
 		return cls.canStart()
+
+	@classmethod
+	def confirmInitWithUser(cls) -> bool:
+		"""Before initialisation of the provider,
+		confirm with the user that the provider should start.
+		This method should be executed on the main thread.
+		@returns: C{True} if initialisation should continue, C{False} otherwise.
+		"""
+		return True
