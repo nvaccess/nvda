@@ -28,7 +28,7 @@ def _errCheck(result, func, args):
 
 
 class Magnification:
-	"""Singleton that wraps necessary functions from the Windows magnification API."""
+	"""Static class that wraps necessary functions from the Windows magnification API."""
 
 	_magnification = windll.Magnification
 
