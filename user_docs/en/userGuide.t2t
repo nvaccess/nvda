@@ -605,7 +605,9 @@ MathPlayer is available as a free download from: https://www.dessci.com/en/produ
 NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox, Microsoft Internet Explorer and Google Chrome.
 - Design Science MathType in Microsoft Word and PowerPoint.
-MathType needs to be installed in order for this to work. The trial version is sufficient. It can be downloaded from https://www.dessci.com/en/products/mathtype/
+MathType needs to be installed in order for this to work.
+The trial version is sufficient.
+It can be downloaded from https://www.dessci.com/en/products/mathtype/
 - MathML in Adobe Reader.
 Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 - Math in Kindle for PC for books with accessible math.
@@ -1047,8 +1049,10 @@ The available logging levels are:
 - Disabled: Apart from a brief startup message, NVDA will not log anything while it runs.
 - Info: NVDA will log basic information such as startup messages and information useful for developers.
 - Debug warning: Warning messages that are not caused by severe errors will be logged.
-- Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged. If you are concerned about privacy, do not set the logging level to this option.
-- Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged. Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
+- Input/output: Input from keyboard and braille displays, as well as speech and braille output will be logged.
+ - If you are concerned about privacy, do not set the logging level to this option.
+- Debug: In addition to info, warning, and input/output messages, additional debug messages will be logged.
+ - Just like input/output, if you are concerned about privacy, you should not set the logging level to this option.
 -
 
 ==== Automatically start NVDA after I log on to Windows ====[GeneralSettingsStartAfterLogOn]
@@ -1560,7 +1564,7 @@ It has the following options:
 -
 
 ==== Report background progress bars ====[ObjectPresentationReportBackgroundProgressBars]
-This is an option that, when checked, tells NVDA to keep reporting a progress bar - even if it is not physically in the foreground.
+This is an option that, when checked, tells NVDA to keep reporting a progress bar, even if it is not physically in the foreground.
 If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
 
 %kc:setting
@@ -1572,7 +1576,7 @@ Toggles the announcement of new content in particular objects such as terminals 
 ==== Play a sound when auto-suggestions appear ====[ObjectPresentationSuggestionSounds]
 Toggles announcement of appearance of auto-suggestions, and if enabled, NVDA will play a sound to indicate this.
 Auto-suggestions are lists of suggested entries based on text entered into certain edit fields and documents.
-For example, when you enter text into the search box in Start menu in Windows 8 and later, Windows displays a list of suggestions based on what you typed.
+For example, when you enter text into the search box in Start menu in Windows Vista and later, Windows displays a list of suggestions based on what you typed.
 For some edit fields such as search fields in various Windows 10 apps, NVDA can notify you that a list of suggestions has appeared when you type text.
 The auto-suggestions list will close once you move away from the edit field, and for some fields, NVDA can notify you of this when this happens.
 
