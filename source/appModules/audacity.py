@@ -11,8 +11,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if (
-			obj.windowClassName=="Button"
-			and not obj.role in [controlTypes.ROLE_MENUBAR, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_POPUPMENU]
+			obj.windowClassName == "Button"
+			and obj.role not in [controlTypes.ROLE_MENUBAR, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_POPUPMENU]
 			and obj.name is not None
 		):
 			obj.name=obj.name.replace('&','')
