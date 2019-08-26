@@ -542,6 +542,12 @@ the NVDAObject for IAccessible
 		elif windowClassName.startswith("Chrome_"):
 			from . import chromium
 			chromium.findExtraOverlayClasses(self, clsList)
+		if (
+			windowClassName == "ConsoleWindowClass"
+			and role == oleacc.ROLE_SYSTEM_CLIENT
+		):
+			from . import winConsole
+			winConsole.findExtraOverlayClasses(self,clsList)
 
 
 		#Support for Windowless richEdit
@@ -863,7 +869,7 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
 			states.update(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in (y for y in (1<<z for z in range(32)) if y&IAccessibleStates) if x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
-		if not hasattr(self.IAccessibleObject,'states'):
+		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			# Not an IA2 object.
 			return states
 		IAccessible2States=self.IA2States
@@ -2023,5 +2029,4 @@ _staticMap={
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
     ("MsoCommandBar",oleacc.ROLE_SYSTEM_LISTITEM):"msOffice.CommandBarListItem",
-	("ConsoleWindowClass",oleacc.ROLE_SYSTEM_CLIENT):"winConsole.WinConsole",
 }

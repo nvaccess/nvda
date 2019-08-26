@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2017 NV Access Limited
+#Copyright (C) 2006-2019 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -65,7 +65,7 @@ def formatVersionForGUI(year, major, minor):
 
 name="NVDA"
 version_year=2019
-version_major=2
+version_major=3
 version_minor=0
 version_build=0
 version=_formatDevVersionString()

@@ -205,7 +205,15 @@ setup(
 			# We don't need this.
 			"winxptheme",
 		],
-		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
+		"packages": [
+			"NVDAObjects",
+			"virtualBuffers",
+			"appModules",
+			"comInterfaces",
+			"brailleDisplayDrivers",
+			"synthDrivers",
+			"visionEnhancementProviders",
+		],
 		"includes": [
 			"nvdaBuiltin",
 			# #3368: bisect was implicitly included with Python 2.7.3, but isn't with 2.7.5.

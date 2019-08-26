@@ -8,7 +8,6 @@ complexSymbols:
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<=\d)\.(?=\d{3})
-date separator	(?<=\d\d)\-(?=\d\d)
 begin-word '	((?<=\s)|(?<=^))'(?=\w(\s|$|[-.,?!]))
 
 symbols:
