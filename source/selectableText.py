@@ -44,6 +44,37 @@ class SelectableText(TextContainerObject):
 		self.isTextSelectionAnchoredAtStart = True
 		self.hasContentChangedSinceLastSelection = False
 
+	def reportSelection(
+			self,
+			oldInfo: textInfos.TextInfo,
+			newInfo: textInfos.TextInfo,
+			generalize: bool = False
+	):
+		"""Announces selection changes with speech and updates the braille display accordingly.
+
+		@param oldInfo: a TextInfo instance representing what the selection was before.
+		@param newInfo: a TextInfo instance representing what the selection is now.
+		@param generalize: if True, then this function knows that the text may have changed
+			between the creation of the oldInfo and newInfo objects, meaning that changes need to be spoken
+			more generally, rather than speaking the specific text, as the bounds may be all wrong.
+		"""
+		speech.speakSelectionChange(
+			oldInfo,
+			newInfo,
+			speakUnselected=self.speakUnselected,
+			# Do not speak redundant "selected" word if we only speak selected text.
+			speakStates=self.speakUnselected,
+			generalize=generalize
+		)
+
+		# Import late to avoid circular import
+		from editableText import EditableText
+		if not isinstance(self, EditableText):
+			# This object has no caret.
+			# Yet, handleUpdate does not scroll the display to the selection when it has to.
+			# handleCaretMove is also suitable to cover selection changes.
+			braille.handler.handleCaretMove(self)
+
 	def detectPossibleSelectionChange(self):
 		"""Detects if the selection has been changed, and if so it speaks the change.
 		"""
@@ -67,22 +98,7 @@ class SelectableText(TextContainerObject):
 		self._updateSelectionAnchor(oldInfo, newInfo)
 		hasContentChanged = getattr(self, 'hasContentChangedSinceLastSelection', False)
 		self.hasContentChangedSinceLastSelection = False
-		speech.speakSelectionChange(
-			oldInfo,
-			newInfo,
-			speakUnselected=self.speakUnselected,
-			# Do not speak redundant "selected" word if we only speak selected text.
-			speakStates=self.speakUnselected,
-			generalize=hasContentChanged
-		)
-
-		# Import late to avoid circular import
-		from editableText import EditableText
-		if not isinstance(self, EditableText):
-			# This object has no caret.
-			# Yet, handleUpdate does not scroll the display to the selection when it has to.
-			# handleCaretMove is also suitable to cover selection changes.
-			braille.handler.handleCaretMove(self)
+		self.reportSelectionChange(oldInfo, newInfo, generalize=hasContentChanged)
 
 	def _updateSelectionAnchor(self, oldInfo, newInfo):
 		# Only update the value if the selection changed.
