@@ -28,6 +28,7 @@ from scriptHandler import script
 import api
 import ui
 import braille
+import vision
 import nvwave
 from selectableText import SelectableText
 
@@ -834,18 +835,33 @@ class NonEditableSelectableText(TextMonitor, SelectableText):
 	# Content will be announced based on SelectableText
 	value = None
 
-	def startMonitoring(self):
-		self.initAutoSelectDetection()
-		super().startMonitoring()
+	def reportSelectionChange(
+			self,
+			oldInfo: textInfos.TextInfo,
+			newInfo: textInfos.TextInfo,
+			generalize: bool = False
+	):
+		super().reportSelectionChange(oldInfo, newInfo, generalize=generalize)
+		# This object has no caret.
+		# Yet, handleUpdate does not scroll a braille display  the selection when it has to.
+		# handleCaretMove is also suitable to cover selection changes.
+		braille.handler.handleCaretMove(self)
+
+		vision.handler.handleUpdate(self, property="selection")
 
 	def event_gainFocus(self):
+		self.initAutoSelectDetection()
 		super().event_gainFocus()
 		self.startMonitoring()
+
+	def reportFocus(self):
+		super().reportFocus()
 		# Announce the current selection on focus.
 		if self._lastSelectionPos:
 			speech.speakTextInfo(self._lastSelectionPos, reason=controlTypes.REASON_FOCUS)
 
 	def event_loseFocus(self):
+		super().event_loseFocus()
 		self.stopMonitoring()
 
 	def _monitor(self):
