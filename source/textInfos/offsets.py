@@ -318,24 +318,36 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if self.encoding not in (textUtils.WCHAR_ENCODING, None, "utf_32_le", locale.getlocale()[1]):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
-		relOffset = offset - lineStart
 		lineText = self._getTextRange(lineStart,lineEnd)
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
 		lineText = lineText.translate({0:u' ',0xa0:u' '})
+		relOffset = offset - lineStart
 		if self.useUniscribe:
 			relStart=ctypes.c_int()
 			relEnd=ctypes.c_int()
 			# uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
 			# Inject two alphanumeric characters at the end to fix this 
-			lineText += "xx"
+			uniscribeLineText = lineText + "xx"
 			# We can't rely on len(lineText) to calculate the length of the line.
-			lineLength = (lineEnd - lineStart) + 2
-			if NVDAHelper.localLib.calculateWordOffsets(lineText, lineLength, relOffset, ctypes.byref(relStart), ctypes.byref(relEnd)):
+			if self.encoding != textUtils.WCHAR_ENCODING:
+				# We need to convert the str based line offsets to wide string offsets.
+				offsetConverter = textUtils.WideStringOffsetConverter(lineText)
+				lineLength = offsetConverter.wideStringLength
+				relOffset = offsetConverter.strToWideOffsets(relOffset, relOffset)[0]
+			else:
+				lineLength = (lineEnd - lineStart)
+			uniscribeLineLength = lineLength + 2
+			if NVDAHelper.localLib.calculateWordOffsets(
+				uniscribeLineText,
+				uniscribeLineLength,
+				relOffset,
+				ctypes.byref(relStart),
+				ctypes.byref(relEnd)
+			):
 				relStart = relStart.value
 				relEnd = relEnd.value
 				if self.encoding != textUtils.WCHAR_ENCODING:
 					# We need to convert the uniscribe based offsets to str offsets.
-					offsetConverter = textUtils.WideStringOffsetConverter(lineText)
 					relStart, relEnd = offsetConverter.wideToStrOffsets(relStart, relEnd)
 				return (relStart + lineStart , relEnd + lineStart)
 		#Fall back to the older word offsets detection that only breaks on non alphanumeric
