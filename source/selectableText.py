@@ -7,7 +7,6 @@
 """Common support for selectable text."""
 
 from documentBase import TextContainerObject
-import braille
 import speech
 import textInfos
 from logHandler import log
