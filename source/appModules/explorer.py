@@ -179,6 +179,7 @@ class ReadOnlyEditBox(IAccessible):
 			return windowText.replace(CHAR_LTR_MARK,'').replace(CHAR_RTL_MARK,'')
 		return windowText
 
+
 class metadataEditField(RichEdit50):
 	""" Used for metadata edit fields in Windows Explorer in Windows 7.
 	By default these fields would use ITextDocumentTextInfo ,
@@ -230,7 +231,7 @@ class AppModule(appModuleHandler.AppModule):
 			and windowClass == 'RICHEDIT50W'
 		):
 			clsList.insert(0, metadataEditField)
-			return # Optimization: return early to avoid comparing class names and roles that will never match.
+			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
