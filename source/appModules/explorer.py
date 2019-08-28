@@ -180,12 +180,17 @@ class ReadOnlyEditBox(IAccessible):
 		return windowText
 
 
-class metadataEditField(RichEdit50):
+class MetadataEditField(RichEdit50):
 	""" Used for metadata edit fields in Windows Explorer in Windows 7.
 	By default these fields would use ITextDocumentTextInfo ,
 	but to avoid Windows Explorer crashes we need to use EditTextInfo here. """
-	def _get_TextInfo(self):
-		return EditTextInfo
+	@classmethod
+	def _get_TextInfo(cls):
+		if ((winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)):
+			cls.TextInfo = EditTextInfo
+		else:
+			cls.TextInfo = super().TextInfo
+		return cls.TextInfo
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -226,11 +231,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, StartButton)
 			return # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if(
-			(winVersion.winVersion.major, winVersion.winVersion.minor) == (6, 1)
-			and windowClass == 'RICHEDIT50W'
-		):
-			clsList.insert(0, metadataEditField)
+		if windowClass == 'RICHEDIT50W' and obj.windowControlID == 256:
+			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if isinstance(obj, UIA):
