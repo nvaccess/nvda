@@ -67,6 +67,7 @@ What's New in NVDA
  - A framework allowing developers to create vision enhancement providers; modules that can change screen contents, optionally based on input from NVDA about object locations. (#9064)
   - Add-ons can bundle their own providers in a visionEnhancementProviders folder.
   - See the vision and visionEnhancementProviders modules for the implementation of the framework and examples, respectively.
+ - Abstract class properties are now supported on objects that inherit from baseObject.AutoPropertyObject (e.g. NVDAObjects and TextInfos). (#10102)
 
 
 = 2019.2 =
