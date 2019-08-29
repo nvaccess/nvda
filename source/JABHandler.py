@@ -1,9 +1,8 @@
 # -*- coding: UTF-8 -*-
-#javaAccessBridgeHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2018 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2007-2019 NV Access Limited, Peter Vágner, Renaud Paquay, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import queue
 from ctypes import *
@@ -258,6 +257,15 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getAccessibleTextItems',c_long,JOBJECT64,POINTER(AccessibleTextItemsInfo),jint,errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextSelectionInfo',c_long,JOBJECT64,POINTER(AccessibleTextSelectionInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextAttributes',c_long,JOBJECT64,jint,POINTER(AccessibleTextAttributesInfo),errcheck=True)
+	_fixBridgeFunc(
+		BOOL,
+		'getAccessibleTextRect',
+		c_long,
+		JOBJECT64,
+		POINTER(AccessibleTextRectInfo),
+		jint,
+		errcheck=True
+	)
 	_fixBridgeFunc(BOOL,'getAccessibleTextLineBounds',c_long,JOBJECT64,jint,POINTER(jint),POINTER(jint),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextRange',c_long,JOBJECT64,jint,jint,POINTER(c_char),c_short,errcheck=True)
 	_fixBridgeFunc(BOOL,'getCurrentAccessibleValueFromContext',c_long,JOBJECT64,POINTER(c_wchar),c_short,errcheck=True)
@@ -493,6 +501,11 @@ class JABContext(object):
 		length = c_short()
 		bridgeDll.getTextAttributesInRange(self.vmID, self.accContext, startIndex, endIndex, byref(attributes), byref(length))
 		return attributes, length.value
+
+	def getAccessibleTextRect(self, index):
+		rect = AccessibleTextRectInfo()
+		bridgeDll.getAccessibleTextRect(self.vmID, self.accContext, byref(rect), index)
+		return rect
 
 	def getAccessibleRelationSet(self):
 		relations = AccessibleRelationSetInfo()
