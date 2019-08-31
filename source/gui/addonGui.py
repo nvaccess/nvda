@@ -715,7 +715,7 @@ class IncompatibleAddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		button = buttonSizer.addButton(self, label=_("&Close"), id=wx.ID_CLOSE)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		sHelper.addDialogDismissButtons(buttonSizer)
-		mainSizer.Add(settingsSizer, border=20, flag=wx.ALL)
+		mainSizer.Add(settingsSizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 
