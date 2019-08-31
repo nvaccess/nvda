@@ -253,7 +253,7 @@ class AddonsDialog(wx.Dialog, DpiScalingHelperMixin):
 		mainSizer.Add(
 			wx.StaticLine(self),
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.TOP | wx.BOTTOM | wx.EXPAND
+			flag=wx.ALL | wx.EXPAND
 		)
 
 		# Translators: The label of a button to close the Addons dialog.
