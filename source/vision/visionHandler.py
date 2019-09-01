@@ -206,11 +206,11 @@ class VisionHandler(AutoPropertyObject):
 	def handleConfigProfileSwitch(self) -> None:
 		configuredProviders = set(config.conf['vision']['providers'])
 		curProviders = set(self.providers)
-		rovidersToInitialize = configuredProviders - curProviders
+		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
 		for provider in providersToTerminate:
 			self.terminateProvider(provider)
-		for provider in rovidersToInitialize:
+		for provider in providersToInitialize:
 			self.initializeProvider(provider)
 
 	def initialFocus(self) -> None:
