@@ -160,6 +160,9 @@ addTable("en-gb-g1.utb", _("English (U.K.) grade 1"))
 addTable("en-GB-g2.ctb", _("English (U.K.) grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("en-nabcc.utb", _("English North American Braille Computer Code"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("en-ueb-g1.ctb", _("Unified English Braille Code grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
