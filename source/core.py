@@ -428,6 +428,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("initializing Java Access Bridge support")
 	try:
 		JABHandler.initialize()
+		log.info("Java Access Bridge support initialized")
 	except NotImplementedError:
 		log.warning("Java Access Bridge not available")
 	except:
