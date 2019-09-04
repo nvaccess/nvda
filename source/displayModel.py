@@ -293,11 +293,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineStartOffset=0
 		lineStartIndex=0
 		lineBaseline=None
-		lineEndOffsets=[]
+		lineEndOffsets = []
+		readingChunkEndOffsets = []
 		for index in range(len(commandList)):
 			item=commandList[index]
 			if isinstance(item,str):
 				lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
+				readingChunkEndOffsets.append(lastEndOffset)
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
 					curFormatField=item.field
@@ -323,13 +325,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						lineStartIndex=index
 						lineStartOffset=lastEndOffset
 						lineBaseline=baseline
-		return commandList,rects,lineEndOffsets
+		return commandList, rects, lineEndOffsets, readingChunkEndOffsets
 
 	def _getStoryOffsetLocations(self):
 		baseline=None
 		direction=0
 		lastEndOffset=0
-		commandList,rects,lineEndOffsets=self._storyFieldsAndRects
+		commandList, rects = self._storyFieldsAndRects[:2]
 		for item in commandList:
 			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 				baseline=item.field['baseline']
@@ -456,28 +458,44 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		offset=self._getClosestOffsetFromPoint(*l.center)
 		return offset,offset
 
-	def _getLineOffsets(self,offset):
-		lineEndOffsets=self._storyFieldsAndRects[2]
-		if not lineEndOffsets:
-			return offset,offset+1
-		limit=lineEndOffsets[-1]
+	def _getOffsetsInPreCalculatedOffsets(self, preCalculated, offset):
+		limit = preCalculated[-1]
 		if not limit:
-			return offset,offset+1
+			return (offset, offset + 1)
 		offset=min(offset,limit-1)
 		startOffset=0
 		endOffset=0
-		for lineEndOffset in lineEndOffsets: 
-			startOffset=endOffset
-			endOffset=lineEndOffset
-			if lineEndOffset>offset:
+		for preCalculatedEndOffset in preCalculated:
+			startOffset = endOffset
+			endOffset = preCalculatedEndOffset
+			if preCalculatedEndOffset > offset:
 				break
-		return startOffset,endOffset
+		return (startOffset, endOffset)
+
+	def _getLineOffsets(self, offset):
+		lineEndOffsets = self._storyFieldsAndRects[2]
+		if not lineEndOffsets:
+			return (offset, offset + 1)
+		return self._getOffsetsInPreCalculatedOffsets(lineEndOffsets, offset)
+
+	def _getReadingChunkOffsets(self, offset):
+		readingChunkEndOffsets = self._storyFieldsAndRects[3]
+		if not readingChunkEndOffsets:
+			return (offset, offset + 1)
+		return self._getOffsetsInPreCalculatedOffsets(readingChunkEndOffsets, offset)
 
 	def _get_clipboardText(self):
 		return "\r\n".join(x.strip('\r\n') for x in self.getTextInChunks(textInfos.UNIT_LINE))
 
 	def getTextInChunks(self,unit):
-		#Specifically handle the line unit as we have the line offsets pre-calculated, and we can not guarantee lines end with \n
+		# Specifically handle the line and reading chunk units.
+		# We have the line offsets pre-calculated, and we can not guarantee lines end with \n
+		if unit is textInfos.UNIT_READINGCHUNK:
+			for x in self._getFieldsInRange(self._startOffset, self._endOffset):
+				if not isinstance(x, str):
+					continue
+				yield x
+			return
 		if unit is textInfos.UNIT_LINE:
 			text=self.text
 			relStart=0
