@@ -188,6 +188,11 @@ if TARGET_ARCH=='x86':
 		env.AddPostAction(win10localLib[0],[signExec])
 	env.Install(libInstallDir,win10localLib)
 
+eventHandler = env.SConscript('eventHandler/eventHandler/sconscript')
+Export('eventHandler')
+# todo: sign?
+env.Install(libInstallDir,eventHandler)
+
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
 if signExec:

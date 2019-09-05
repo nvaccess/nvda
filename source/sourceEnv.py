@@ -21,6 +21,7 @@ PYTHON_DIRS = (
 	os.path.join(TOP_DIR, "include", "wxPython"),
 	os.path.join(TOP_DIR, "include", "py2exe"),
 	os.path.join(TOP_DIR, "miscDeps", "python"),
+	os.path.join(TOP_DIR, "NVDAHelper", "eventHandler"),
 )
 
 #Check for existance of each Python dir

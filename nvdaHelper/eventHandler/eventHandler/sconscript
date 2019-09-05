@@ -1,0 +1,39 @@
+###
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2019 NVDA contributors.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import([
+	'env',
+])
+
+eventHandler_static = env.SConscript('../eventHandler_lib/sconscript')
+eventHandlerEnv = env.Clone()
+eventHandlerEnv.Append(CXXFLAGS=['/std:c++17',])
+eventHandlerEnv.Prepend(CPPPATH=['.', '../eventHandler_lib'])
+eventHandler = eventHandlerEnv.SharedLibrary(
+	target="eventHandler",
+	source=[
+		"eventHandler.def",
+		"dllmain.cpp",
+		"stdafx.cpp",
+	],
+	LIBS=[
+		"user32",
+		"ole32",
+		"oleaut32",
+		eventHandler_static
+	],
+)
+
+env.Depends(eventHandler, eventHandler_static)
+Return('eventHandler')

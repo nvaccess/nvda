@@ -542,6 +542,11 @@ def getHelperLocalWin10Dll():
 	"""
 	return windll[LOCAL_WIN10_DLL_PATH]
 
+
+def getEventHandlerDllPath():
+	return os.path.join(versionedLibPath, r"eventHandler.dll")
+
+
 def bstrReturn(address):
 	"""Handle a BSTR returned from a ctypes function call.
 	This includes freeing the memory.
