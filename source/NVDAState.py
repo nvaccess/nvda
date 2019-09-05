@@ -260,6 +260,10 @@ class _ReadPaths:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
 
 	@property
+	def eventHandlerDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "eventHandler.dll")
+
+	@property
 	def cppjiebaDll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "cppjieba.dll")
 

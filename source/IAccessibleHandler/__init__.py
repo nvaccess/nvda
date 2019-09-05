@@ -14,6 +14,7 @@ from .types import RelationType  # noqa: F401
 import re
 import struct
 from typing import (
+	Iterable,
 	Optional,
 	Tuple,
 	Dict,
@@ -1017,23 +1018,31 @@ def initialize():
 
 # C901 'pumpAll' is too complex
 def pumpAll():  # noqa: C901
-	if not internalWinEventHandler._shouldGetEvents():
+	if (
+		not internalWinEventHandler._SHOULD_GET_EVENTS_FROM_EXTERNAL
+		and not internalWinEventHandler._shouldGetEvents()
+	):
 		return
 	focusWinEvents = []
 	validFocus = False
 	fakeFocusEvent = None
 	focus = eventHandler.lastQueuedFocusObject
 
-	alwaysAllowedObjects = []
-	# winEvents for the currently focused object are special,
-	# and should be never filtered out.
-	if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
-		alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
+	winEvents: Iterable[tuple[int, int, int, int]]
+	if internalWinEventHandler._SHOULD_GET_EVENTS_FROM_EXTERNAL:
+		# Receive all the winEvents collected by the external eventHandler dll for this cycle
+		winEvents = internalWinEventHandler._getEventsFromExternal()
+	else:
+		alwaysAllowedObjects = []
+		# winEvents for the currently focused object are special,
+		# and should be never filtered out.
+		if isinstance(focus, NVDAObjects.IAccessible.IAccessible) and focus.event_objectID is not None:
+			alwaysAllowedObjects.append((focus.event_windowHandle, focus.event_objectID, focus.event_childID))
 
-	# Receive all the winEvents from the limiter for this cycle
-	winEvents: list[tuple[int, int, int, int]] = internalWinEventHandler.winEventLimiter.flushEvents(
-		alwaysAllowedObjects,
-	)
+		# Receive all the winEvents from the limiter for this cycle
+		winEvents = internalWinEventHandler.winEventLimiter.flushEvents(
+			alwaysAllowedObjects,
+		)
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET

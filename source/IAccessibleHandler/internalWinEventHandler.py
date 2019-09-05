@@ -7,11 +7,12 @@
 Provides a non-threaded (limited by GIL) Windows Event Hook and processing.
 """
 
-from ctypes import c_int
+from ctypes import CDLL, POINTER, c_int
 
-from typing import Dict, Callable
+from typing import Dict, Callable, Generator, Optional
 
 import core
+from NVDAHelper import eventHandlerDll
 from winBindings.user32 import WINEVENTPROC
 import winUser
 from .utils import getWinEventLogInfo, isMSAADebugLoggingEnabled
@@ -24,6 +25,16 @@ from logHandler import log
 
 # The win event limiter for all winEvents
 winEventLimiter = OrderedWinEventLimiter()
+
+#: Whether to receive and limit winEvents on a dedicated thread in the external eventHandler dll,
+#: rather than hooking them on NVDA's main thread with the in-process (Python) limiter.
+_SHOULD_GET_EVENTS_FROM_EXTERNAL = True
+
+#: The maximum number of winEvents to fetch from the external eventHandler dll per core pump.
+MAX_WINEVENTS = 500
+
+#: The loaded eventHandler dll, only set while initialized in external mode.
+_externalEventHandlerDll: Optional[CDLL] = None
 
 # #3831: Stuff related to deferring of events for foreground changes.
 # See pumpAll for details.
@@ -201,6 +212,18 @@ cWinEventCallback = WINEVENTPROC(winEventCallback)
 winEventHookIDs = []
 
 
+@eventHandlerDll.NotifyCallback
+def _newEventsCallback():
+	core.requestPump()
+
+
+@eventHandlerDll.ObjectDestroyedCallback
+def _objDestroyedCallback(ePtr: "POINTER(eventHandlerDll.EventData)"):
+	e = ePtr.contents
+	window = int(e.hwnd) if e.hwnd else 0
+	_processDestroyWinEvent(window, int(e.idObject), int(e.idChild))
+
+
 def initialize(
 	processDestroyWinEventFunc: Callable[
 		[
@@ -213,6 +236,20 @@ def initialize(
 ):
 	global _processDestroyWinEvent
 	_processDestroyWinEvent = processDestroyWinEventFunc
+	if _SHOULD_GET_EVENTS_FROM_EXTERNAL:
+		global _externalEventHandlerDll
+		try:
+			_externalEventHandlerDll = eventHandlerDll.getEventHandlerDll()
+		except OSError:
+			log.error("initialize: Could not load eventHandler dll", exc_info=True)
+			return
+		ret = _externalEventHandlerDll.RegisterAndPump_Async(
+			_newEventsCallback,
+			_objDestroyedCallback,
+		)
+		if ret != 0:
+			log.error(f"initialize: Could not initialise eventHandler dll, error({ret})")
+		return
 	for eventType in winEventIDsToNVDAEventNames:
 		hookID = winUser.setWinEventHook(eventType, eventType, 0, cWinEventCallback, 0, 0, 0)
 		if hookID:
@@ -225,9 +262,42 @@ def initialize(
 
 
 def terminate():
+	global _externalEventHandlerDll
+	if _SHOULD_GET_EVENTS_FROM_EXTERNAL:
+		if _externalEventHandlerDll is None:
+			log.error("Unable to terminate the eventHandler dll as it was never loaded")
+		else:
+			_externalEventHandlerDll.RegisterAndPump_Join()
+			_externalEventHandlerDll = None
+	# When getting events from the external eventHandler dll,
+	# winEventHookIDs should be empty.
+	# However if it is not, those hooks should still be removed.
 	for handle in winEventHookIDs:
 		winUser.unhookWinEvent(handle)
 	winEventHookIDs.clear()
+
+
+def _getEventsFromExternal() -> Generator[tuple[int, int, int, int], None, None]:
+	"""Fetch the winEvents collected by the external eventHandler dll since the last core pump.
+
+	:return: Yields winEvents as ``(eventID, window, objectID, childID)`` tuples,
+		newest first, as playing newer events back first makes NVDA feel more responsive.
+	"""
+	_externalEventHandlerDll.FlushEvents()
+	eventCount = _externalEventHandlerDll.GetEventCount()
+	eventsToFetch = min(eventCount, MAX_WINEVENTS)
+	data = (eventHandlerDll.EventData * eventsToFetch)()
+	numberFetched = _externalEventHandlerDll.GetEvents(0, eventsToFetch, data)
+	if isMSAADebugLoggingEnabled():
+		log.debug(f"Number of events fetched from the eventHandler dll: {numberFetched}")
+	for i in reversed(range(numberFetched)):
+		e = data[i]
+		yield (
+			int(e.idEvent),
+			int(e.hwnd) if e.hwnd else 0,
+			int(e.idObject),
+			int(e.idChild),
+		)
 
 
 def _shouldGetEvents():
