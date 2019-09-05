@@ -9,6 +9,7 @@ import itertools
 import struct
 import weakref
 from ctypes import *
+from ctypes import POINTER
 from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
@@ -744,9 +745,9 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
+
 @EventHandlerDllWrapper.NotifyCallback
 def _newEventsCallback():
-	log.debug("Reef request corePump called")
 	core.requestPump()
 
 
@@ -787,11 +788,14 @@ def initialize():
 			)
 	else:  # old way
 		for eventType in winEventIDsToNVDAEventNames:
-			hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
+			hookID = winUser.setWinEventHook(eventType, eventType, 0, cWinEventCallback, 0, 0, 0)
 			if hookID:
 				winEventHookIDs.append(hookID)
 			else:
-				log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
+				log.error(
+					f"initialize: could not register callback for "
+					f"event {eventType} ({winEventIDsToNVDAEventNames[eventType]})"
+				)
 
 
 def _shouldGetEventFromInternal():
@@ -815,7 +819,7 @@ def _shouldGetEventFromInternal():
 def _getEventsFromInternal():
 	# Receive all the winEvents from the limiter for this cycle
 	winEvents = winEventLimiter.flushEvents()
-	return winEvents[0-MAX_WINEVENTS:]
+	return winEvents[0 - MAX_WINEVENTS:]
 
 
 def _getEventsFromExternal():
@@ -833,9 +837,12 @@ def _getEventsFromExternal():
 	for i in reversed(range(numberFetched)):
 		try:
 			e = data[i]
-		except:
-			log.error(f"Error getting event index {i} of {numberFetched}")
-			raise
+		except OSError:
+			log.critical(f"Error getting event index {i} of {numberFetched}")
+			return
+		except IndexError:
+			log.debug(f"Error getting event index {i} of {numberFetched}")
+			continue
 		try:
 			yield (
 				int(e.idEvent),
@@ -843,7 +850,7 @@ def _getEventsFromExternal():
 				int(e.idObject),
 				int(e.idChild),
 			)
-		except:
+		except ValueError:
 			log.error(
 				f"Unable to convert to tuple: {e!r}"
 				f" idEvent: {e.idEvent}"
@@ -853,10 +860,11 @@ def _getEventsFromExternal():
 				f", dwEventThread: {e.dwEventThread}"
 				f", dwmsEventTime: {e.dwmsEventTime}"
 			)
-			raise
+			pass
 
 
-def pumpAll():
+# C901: 'pumpAll' is too complex (18)
+def pumpAll():  # noqa: C901
 	if not _SHOULD_GET_EVENTS_FROM_EXTERNAL and not _shouldGetEventFromInternal():
 		return
 	focusWinEvents = []

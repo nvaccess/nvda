@@ -2,7 +2,6 @@ import heapq
 import itertools
 
 import winUser
-from logHandler import log
 
 MAX_WINEVENTS_PER_THREAD = 10
 

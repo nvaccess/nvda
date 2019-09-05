@@ -2,6 +2,7 @@ import ctypes
 from ctypes import wintypes
 from ctypes import c_uint
 
+
 class EventData(ctypes.Structure):
 	_fields_ = [
 		("idEvent", wintypes.DWORD),
@@ -24,24 +25,30 @@ ObjectDestroyedCallback = ctypes.CFUNCTYPE(None, ctypes.POINTER(EventData))
 
 
 class EventHandlerDll:
-	def GetEventCount(self) -> c_uint: ...
+
+	def GetEventCount(self) -> c_uint:
+		...
 
 	def GetEvents(
 			self,
 			index: c_uint,
 			maxEvents: c_uint,
 			data: ctypes.POINTER(EventData)
-	) -> ctypes.c_uint: ...
+	) -> ctypes.c_uint:
+		...
 
-	def FlushEvents(self) -> None: ...
+	def FlushEvents(self) -> None:
+		...
 
 	def RegisterAndPump_Async(
 			self,
 			notifyOfNewEvents: NotifyCallback,
 			objDestroyCallback: ObjectDestroyedCallback
-	) -> ctypes.c_int: ...
+	) -> ctypes.c_int:
+		...
 
-	def RegisterAndPump_Join(self) -> None: ...
+	def RegisterAndPump_Join(self) -> None:
+		...
 
 
 def getEventHandlerDll() -> EventHandlerDll:
