@@ -6,7 +6,9 @@
 #include "internalConstants.h"
 
 const int WinEventLimiter::MAX_EVENTS_FOR_THREAD = 10;
-const int WinEventLimiter::MAX_FOCUS_EVENTS = 4;
+// when MAX_FOCUS_EVENTS is greater than 1,
+// NVDA sometimes speaks multiple focus events, and in reverse order.
+const int WinEventLimiter::MAX_FOCUS_EVENTS = 1;
 
 struct cachedEvent {
 	EventData event;
@@ -96,6 +98,10 @@ bool WinEventLimiter::AddEvent(EventData& e) {
 	m_events.push_back(cachedEvent({ e, true }));
 	++m_validEventCount;
 
+	// TODO: Both this block and _addFocusEvent can invalidate events,
+	// this will lead to unexpected results.
+	// EG:
+	// Less than MAX_FOCUS_EVENTS or less than MAX_EVENTS_FOR_THREAD being returned
 	auto& eventsForThread = m_threadEventIndexes[e.dwEventThread];
 	eventsForThread.push_back(index);
 	if (eventsForThread.size() > MAX_EVENTS_FOR_THREAD) {
