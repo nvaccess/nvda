@@ -31,6 +31,7 @@ private:
 	void _addFocusEvent(VecSize_t index);
 	void _invalidateAnyMatchingFocusEvent(const EventData & e);
 	void _invalidateCachedEvent(cachedEvent & e);
+	void _invalidateEquivEvent(const EventData & e, const DWORD eventID);
 	void _reset();
 	bool _preFilter(const EventData & e);
 };

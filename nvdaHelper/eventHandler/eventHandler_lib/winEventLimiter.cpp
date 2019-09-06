@@ -78,6 +78,16 @@ void WinEventLimiter::_invalidateCachedEvent(cachedEvent & e) {
 	}
 }
 
+void WinEventLimiter::_invalidateEquivEvent(const EventData& e, const DWORD eventID){
+	EventData equivHideEvent = e;
+	equivHideEvent.idEvent = eventID;
+	for (auto& existing : m_events) {
+		if (existing.event == e) {
+			_invalidateCachedEvent(existing);
+		}
+	}
+}
+
 bool WinEventLimiter::AddEvent(EventData& e) {
 	if (!_preFilter(e)) {
 		return false;
@@ -95,40 +105,28 @@ bool WinEventLimiter::AddEvent(EventData& e) {
 		_invalidateCachedEvent(oldestEventForThread);
 	}
 
-	if (e.idEvent == EVENT_OBJECT_FOCUS) {
+	switch (e.idEvent) {
+	case EVENT_OBJECT_FOCUS:
 		_addFocusEvent(index);
-		return true;
-	}
-	else if (e.idEvent == EVENT_SYSTEM_FOREGROUND) {
+		break;
+	case EVENT_SYSTEM_FOREGROUND:
 		EventData equivFocusEvent = e;
 		equivFocusEvent.idEvent = EVENT_OBJECT_FOCUS;
 		_invalidateAnyMatchingFocusEvent(equivFocusEvent);
 		_addFocusEvent(index);
-	}
-	else if (e.idEvent == EVENT_OBJECT_SHOW) {
-		EventData equivHideEvent = e;
-		equivHideEvent.idEvent = EVENT_OBJECT_HIDE;
-		for(auto& existing : m_events) {
-			if (existing.event == e) {
+		break;
+	case EVENT_OBJECT_SHOW: _invalidateEquivEvent(e, EVENT_OBJECT_HIDE);
+		break;
+	case EVENT_OBJECT_HIDE: _invalidateEquivEvent(e, EVENT_OBJECT_SHOW);
+		break;
+	default:
+		if (_in(e.idEvent, MENU_EVENTIDS)) {
+			if (m_lastMenuEvent.has_value()) {
+				auto& existing = m_events[m_lastMenuEvent.value()];
 				_invalidateCachedEvent(existing);
 			}
+			m_lastMenuEvent = index;
 		}
-	}
-	else if (e.idEvent == EVENT_OBJECT_HIDE) {
-		EventData equivHideEvent = e;
-		equivHideEvent.idEvent = EVENT_OBJECT_SHOW;
-		for (auto& existing : m_events) {
-			if (existing.event == e) {
-				_invalidateCachedEvent(existing);
-			}
-		}
-	}
-	else if (_in(e.idEvent, MENU_EVENTIDS)) {
-		if (m_lastMenuEvent.has_value()) {
-			auto& existing = m_events[m_lastMenuEvent.value()];
-			_invalidateCachedEvent(existing);
-		}
-		m_lastMenuEvent = index;
 	}
 	return true;
 }
