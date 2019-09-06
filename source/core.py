@@ -221,12 +221,14 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	config.initialize()
 	if globalVars.appArgs.configPath == config.getUserDefaultConfigPath(useInstalledPathIfExists=True):
 		# Make sure not to offer the ability to copy the current configuration to the user account.
-		# This case always applies to the launcher when configPath is not overridden by the user, which is the default.
+		# This case always applies to the launcher when configPath is not overridden by the user,
+		# which is the default.
 		# However, if a user wants to run the launcher with a custom configPath,
 		# it is likely that he wants to copy that configuration when installing.
 		# This check also applies to cases where a portable copy is run using the installed configuration,
 		# in which case we want to avoid copying a configuration to itself.
-		# We set the value to C{None} in order for the gui to determine when to disable the checkbox for this feature.
+		# We set the value to C{None} in order for the gui to determine
+		# when to disable the checkbox for this feature.
 		globalVars.appArgs.copyPortableConfig = None
 	if config.conf['development']['enableScratchpadDir']:
 		log.info("Developer Scratchpad mode enabled")
@@ -477,7 +479,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
 		wx.CallAfter(
-			gui.installerGui.doSilentInstall, 
+			gui.installerGui.doSilentInstall,
 			copyPortableConfig=globalVars.appArgs.copyPortableConfig,
 			startAfterInstall=not globalVars.appArgs.installSilent
 		)

@@ -21,13 +21,14 @@ from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixin
 import tones
 
+
 def doInstall(
-	createDesktopShortcut=True,
-	startOnLogon=True,
-	isUpdate=False,
-	copyPortableConfig=False,
-	silent=False,
-	startAfterInstall=True
+		createDesktopShortcut=True,
+		startOnLogon=True,
+		isUpdate=False,
+		copyPortableConfig=False,
+		silent=False,
+		startAfterInstall=True
 ):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
@@ -92,9 +93,10 @@ def doInstall(
 	else:
 		wx.GetApp().ExitMainLoop()
 
+
 def doSilentInstall(
-	copyPortableConfig=False,
-	startAfterInstall=True
+		copyPortableConfig=False,
+		startAfterInstall=True
 ):
 	prevInstall=installer.comparePreviousInstall() is not None
 	startOnLogon=globalVars.appArgs.enableStartOnLogon
@@ -240,7 +242,9 @@ class InstallerDialog(wx.Dialog, DpiScalingHelperMixin):
 		)
 		incompatibleAddons.ShowModal()
 
+
 class InstallingOverNewerVersionDialog(wx.Dialog, DpiScalingHelperMixin):
+
 	def __init__(self):
 		# Translators: The title of a warning dialog.
 		wx.Dialog.__init__(self, gui.mainFrame, title=_("Warning"))
