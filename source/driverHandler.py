@@ -11,7 +11,7 @@ from baseObject import AutoPropertyObject
 import config
 from copy import deepcopy
 from logHandler import log
-from typing import List, Dict
+from typing import List, Tuple, Dict, Union
 
 
 class Driver(AutoPropertyObject):
@@ -47,7 +47,7 @@ class Driver(AutoPropertyObject):
 		config.pre_configSave.register(self.saveSettings)
 
 	@classmethod
-	def _initSpecificSettings(cls, clsOrInst, settings):
+	def _initSpecificSettings(cls, clsOrInst, settings: List):
 		firstLoad = not config.conf[cls._configSection].isSet(cls.name)
 		if firstLoad:
 			# Create the new section.
@@ -61,7 +61,7 @@ class Driver(AutoPropertyObject):
 			if not hasattr(clsOrInst, setting.id):
 				setattr(clsOrInst, setting.id, setting.defaultVal)
 		if firstLoad:
-			cls._saveSpecificSettings(clsOrInst, settings) #save defaults
+			cls._saveSpecificSettings(clsOrInst, settings)  # save defaults
 		else:
 			cls._loadSpecificSettings(clsOrInst, settings)
 
@@ -84,14 +84,15 @@ class Driver(AutoPropertyObject):
 		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
-	def _get_preInitSettings(self):
+	def _get_preInitSettings(self) -> Union[List, Tuple]:
 		"""The settings supported by the driver at pre initialisation time.
 		@rtype: list or tuple of L{DriverSetting}
 		"""
 		return ()
 
 	_abstract_supportedSettings = True
-	def _get_supportedSettings(self):
+
+	def _get_supportedSettings(self) -> Union[List, Tuple]:
 		"""The settings supported by the driver.
 		When overriding this property, subclasses are encouraged to extend the getter method
 		to ensure that L{preInitSettings} is part of the list of supported settings.
@@ -118,8 +119,11 @@ class Driver(AutoPropertyObject):
 		return False
 
 	@classmethod
-	def _getConfigSPecForSettings(cls, settings) -> Dict:
-		spec=deepcopy(config.confspec[cls._configSection]["__many__"])
+	def _getConfigSPecForSettings(
+			cls,
+			settings: Union[List, Tuple]
+	) -> Dict:
+		spec = deepcopy(config.confspec[cls._configSection]["__many__"])
 		for setting in settings:
 			if not setting.useConfig:
 				continue
@@ -130,15 +134,22 @@ class Driver(AutoPropertyObject):
 		return self._getConfigSPecForSettings(self.supportedSettings)
 
 	@classmethod
-	def _saveSpecificSettings(cls, clsOrInst, settings):
-		conf=config.conf[cls._configSection][cls.name]
+	def _saveSpecificSettings(
+			cls,
+			clsOrInst,
+			settings: Union[List, Tuple]
+	):
+		conf = config.conf[cls._configSection][cls.name]
 		for setting in settings:
 			if not setting.useConfig:
 				continue
 			try:
 				conf[setting.id] = getattr(clsOrInst, setting.id)
 			except UnsupportedConfigParameterError:
-				log.debugWarning(f"Unsupported setting {s.id!r}; ignoring", exc_info=True)
+				log.debugWarning(
+					f"Unsupported setting {setting.id!r}; ignoring",
+					exc_info=True
+				)
 				continue
 		if settings:
 			log.debug(f"Saved settings for {cls.__qualname__}")
@@ -152,7 +163,12 @@ class Driver(AutoPropertyObject):
 		self._saveSpecificSettings(self, self.supportedSettings)
 
 	@classmethod
-	def _loadSpecificSettings(cls, clsOrInst, settings, onlyChanged=False):
+	def _loadSpecificSettings(
+			cls,
+			clsOrInst,
+			settings: Union[List, Tuple],
+			onlyChanged: bool = False
+	):
 		conf = config.conf[cls._configSection][cls.name]
 		for setting in settings:
 			if not setting.useConfig or conf.get(setting.id) is None:
@@ -163,7 +179,10 @@ class Driver(AutoPropertyObject):
 			try:
 				setattr(clsOrInst, setting.id, val)
 			except UnsupportedConfigParameterError:
-				log.debugWarning(f"Unsupported setting {setting.name!r}; ignoring", exc_info=True)
+				log.debugWarning(
+					f"Unsupported setting {setting.name!r}; ignoring",
+					exc_info=True
+				)
 				continue
 		if settings:
 			log.debug(

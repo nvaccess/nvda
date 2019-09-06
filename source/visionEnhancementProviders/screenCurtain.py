@@ -134,6 +134,7 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 					cls._saveSpecificSettings(cls, cls.preInitSettings)
 		return True
 
+
 class WarnOnLoadDialog(gui.nvdaControls.MessageDialog):
 
 	def _addContents(self, contentsSizer):

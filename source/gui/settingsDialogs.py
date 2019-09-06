@@ -2933,7 +2933,7 @@ class VisionSettingsPanel(SettingsPanel):
 					success = False
 					continue
 				vision.handler.initializeProvider(providerName)
-			except Exception as e:
+			except Exception:
 				initErrors.append(providerName)
 				log.error(
 					f"Could not initialize the {providerName} vision enhancement provider",
@@ -2951,7 +2951,10 @@ class VisionSettingsPanel(SettingsPanel):
 				# Translators: This message is presented when
 				# NVDA is unable to load multiple vision enhancement providers.
 				initErrorsList = ", ".join(initErrors)
-				message = _(f"Could not load the following vision enhancement providers:\n{initErrorsList}")
+				message = _(
+					"Could not load the following vision enhancement providers:\n"
+					f"{initErrorsList}"
+				)
 			gui.messageBox(
 				message,
 				# Translators: The title of the vision enhancement provider error message box.
@@ -2997,7 +3000,10 @@ class VisionSettingsPanel(SettingsPanel):
 					terminateErrorsList = ", ".join(terminateErrors)
 					# Translators: This message is presented when
 					# NVDA is unable to termiante multiple vision enhancement providers.
-					message = _(f"Could not gracefully terminate the following vision enhancement providers:\n{initErrorsList}")
+					message = _(
+						"Could not gracefully terminate the following vision enhancement providers:\n"
+						f"{terminateErrorsList}"
+					)
 				gui.messageBox(
 					message,
 					# Translators: The title of the vision enhancement provider error message box.

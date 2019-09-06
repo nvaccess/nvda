@@ -222,7 +222,7 @@ class VisionHandler(AutoPropertyObject):
 					f"Could not terminate the {provider} vision enhancement provider",
 					exc_info=True
 				)
-		for provider in rovidersToInitialize:
+		for provider in providersToInitialize:
 			try:
 				self.initializeProvider(provider)
 			except Exception:
