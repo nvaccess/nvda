@@ -2317,7 +2317,7 @@ class GlobalCommands(ScriptableObject):
 				else:
 					if temporary:
 						# Translators: Reported when the screen curtain is temporarily enabled.
-						message = _("Screen curtain enabled until next restart")
+						message = _("Temporary Screen curtain, enabled until next restart")
 					else:
 						# Translators: Reported when the screen curtain is enabled.
 						message = _("Screen curtain enabled")
