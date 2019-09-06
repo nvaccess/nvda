@@ -92,6 +92,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_TEXTFRAME
 		level=attrs.get('IAccessible2::attribute_level',"")
 		xmlRoles=attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
+		if "treegrid" in xmlRoles:
+			role = controlTypes.ROLE_TABLE
 		# Get the first landmark role, if any.
 		landmark=next((xr for xr in xmlRoles if xr in aria.landmarkRoles),None)
 

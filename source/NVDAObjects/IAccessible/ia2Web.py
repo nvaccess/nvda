@@ -77,6 +77,10 @@ class Application(Document):
 class BlockQuote(Ia2Web):
 	role = controlTypes.ROLE_BLOCKQUOTE
 
+class Treegrid(Ia2Web):
+	role=controlTypes.ROLE_TABLE
+
+
 class Editor(Ia2Web, DocumentWithTableNavigation):
 	TextInfo = MozillaCompoundTextInfo
 
@@ -153,6 +157,8 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	iaRole = obj.IAccessibleRole
 	if iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		clsList.append(BlockQuote)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINE and "treegrid" in obj.IA2Attributes.get("xml-roles", ""):
+		clsList.append(Treegrid)
 	elif iaRole == oleacc.ROLE_SYSTEM_ALERT:
 		clsList.append(Dialog)
 	elif iaRole == oleacc.ROLE_SYSTEM_EQUATION:

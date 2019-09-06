@@ -664,10 +664,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	} else {
 		// If a node has children, it's visible.
 		isVisible = width > 0 && height > 0 || childCount > 0;
-		if ((role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
-			|| role == ROLE_SYSTEM_OUTLINE
-		) {
+		// Only render the selected item for interactive lists.
+		if (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) {
 			renderSelectedItemOnly = true;
+		} else if(role == ROLE_SYSTEM_OUTLINE) {
+			// Only render the selected item for treeviews (excluding ARIA treegrids).
+			const auto IA2AttribsMapIt = IA2AttribsMap.find(L"xml-roles");
+			if(IA2AttribsMapIt==IA2AttribsMap.end()||IA2AttribsMapIt->second.find(L"treegrid")==wstring::npos) {
+				renderSelectedItemOnly = true;
+			}
 		}
 		if (IA2TextIsUnneededSpace
 			|| role == ROLE_SYSTEM_COMBOBOX
