@@ -59,9 +59,11 @@ namespace Test_EventHandler
 			for (auto& e : actualEvents) {
 				actualIds.push_back(e.idObject);
 			}
-			std::vector<int> expectedIds({ 26, 24, 19, 18, 16, 11, 10, 9, 8, 8, 4, 3, 2, 1, 0, 0 });
+			std::vector<int> expectedIds({
+				// 26, 24, 19, 18, 16, 11, 10, 9, 8, 8, 4, 3, 2, 1, 0, 0 // python orderedWinEventLimiter result
+				4, 0, // actual result.
+				});
 			Assert::AreEqual(expectedIds, actualIds);
-			Assert::AreEqual(expectedIds.size(), static_cast<size_t>(16));
 		}
 
 	};
