@@ -112,6 +112,7 @@ if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION), None, winUser.MB_ICONERROR)
 	sys.exit(1)
 
+
 def stringToBool(string):
 	"""Wrapper for configobj.validate.is_boolean to raise the proper exception for wrong values."""
 	from configobj.validate import is_boolean, ValidateError
@@ -119,6 +120,25 @@ def stringToBool(string):
 		return is_boolean(string)
 	except ValidateError as e:
 		raise argparse.ArgumentTypeError(e.message)
+
+
+def stringToLang(value: str) -> str:
+	"""Perform basic case normalization for ease of use.
+	"""
+	if value.casefold() == "Windows".casefold():
+		return "Windows"
+	value = value.replace("-", "_")
+	lang = value.split("_")[0].lower()
+	dialect = value.split("_")[1].upper() if "_" in value else None
+	# Validating the size of the codes.
+	# Further validation would require L{languageHandler} to be initialized.
+	if len(lang) != 2 or (dialect and len(dialect) != 2):
+		raise argparse.ArgumentTypeError(
+			"Language code should be \"Windows\" or of the forms \"en\" or \"pt_BR\"."
+		)
+	if dialect:
+		return f"{lang}_{dialect}"
+	return lang
 
 
 #Process option arguments
@@ -133,7 +153,7 @@ parser.add_argument(
 	'--lang',
 	dest='cmdLineLanguage',
 	default=None,
-	type=str,
+	type=stringToLang,
 	help="Override the configured NVDA language. Set to \"Windows\" for current user default, \"en\" for English, etc."
 )
 parser.add_argument('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
@@ -349,16 +369,6 @@ if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
 import buildVersion
 log.info("Starting NVDA version %s" % buildVersion.version)
-
-# Perform basic case normalization for ease of use.
-lang = globalVars.appArgs.cmdLineLanguage
-if lang:
-	if lang.casefold() == "Windows".casefold():
-		lang = "Windows"
-	lang = lang.replace("-", "_")
-	if "_" in lang:
-		lang = lang.split("_")[0].lower() + "_" + lang.split("_")[1].upper()
-	globalVars.appArgs.cmdLineLanguage = lang
 
 log.debug("Debug level logging enabled")
 if customVenvDetected:
