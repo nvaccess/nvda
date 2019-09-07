@@ -1554,7 +1554,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		louisHelper.initialize()
 		self.display: Optional[BrailleDisplayDriver] = None
 		self.displaySize = 0
-		self.viewerTool = None
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1586,7 +1585,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		import brailleViewer
-		brailleViewer.destroyBrailleViewerTool()
+		brailleViewer.destroyBrailleViewer()
 		if self.display:
 			self.display.terminate()
 			self.display = None
@@ -1703,15 +1702,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _onBrailleViewerChangedState(self, created):
 		import brailleViewer
-		if not created:
-			self.viewerTool = None
+		if not created:  # the viewer was destroyed
+			# if we have a hardware display attached, use it's cell count
 			self.displaySize = None if not self.display else self.display.numCells
 			self.enabled = bool(self.displaySize)
 		else:
-			self.viewerTool = brailleViewer.getBrailleViewerTool()
-			if self.displaySize and self.displaySize != self.viewerTool.numCells:
+			viewerTool = brailleViewer.getBrailleViewerDriver()
+			if self.displaySize and self.displaySize != viewerTool.numCells:
 				raise RuntimeError("BrailleViewer and physical display sizes must match")
-			self.displaySize = self.viewerTool.numCells
+			self.displaySize = viewerTool.numCells
 			self.enabled = True
 			self._updateDisplay()
 		log.debug("Braille Viewer enabled: {}".format(self.enabled))

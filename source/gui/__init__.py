@@ -321,7 +321,10 @@ class MainFrame(wx.Frame):
 
 	def onToggleBrailleViewerCommand(self, evt):
 		import brailleViewer
-		brailleViewer.toggleBrailleViewerTool()
+		if brailleViewer.isBrailleViewerActive():
+			brailleViewer.destroyBrailleViewer()
+		else:
+			brailleViewer.createBrailleViewerTool()
 
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
@@ -451,7 +454,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
 		import brailleViewer
 		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
-		frame.onBrailleViewerChangedState(created=brailleViewer.isBrailleDisplayCreated())
+		frame.onBrailleViewerChangedState(created=brailleViewer.isBrailleViewerActive())
 
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
