@@ -1610,6 +1610,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
 	def setDisplayByName(self, name, isFallback=False, detected=None):
+		import brailleViewer
+		wasBrailleViewerActive = brailleViewer.isBrailleViewerActive()
 		if not isFallback:
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName=name
@@ -1665,10 +1667,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 						self.display.terminate()
 					except:
 						log.error("Error terminating previous display driver", exc_info=True)
+					brailleViewer.destroyBrailleViewer()
 				self.display = newDisplay
 			newDisplay.initSettings()
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
+			if wasBrailleViewerActive:
+				# this must happen after self.displaySize is set, the size of the braille viewer must match the
+				# connected display.
+				brailleViewer.createBrailleViewerTool()
 			if isFallback:
 				if self._detectionEnabled and not self._detector:
 					# As this is the fallback display, which is usually noBraille,
@@ -1732,9 +1739,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells):
-		if self.viewerTool:
-			self.viewerTool.rawText = self._rawText
-			self.viewerTool.display(cells)
+		import brailleViewer
+		viewerTool = brailleViewer.getBrailleViewerDriver()
+		if viewerTool:
+			viewerTool.display(cells, self._rawText)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
