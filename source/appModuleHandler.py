@@ -372,9 +372,9 @@ class AppModule(baseObject.ScriptableObject):
 		# which returns major, minor, build.
 		if winVersion.winVersion.platform_version >= (6, 2, 9200):
 			# Some apps such as File Explorer says it is an immersive process but error 15700 is shown.
-			# Therefore resort to file version info behavior becuase it is not a hosted app.
+			# Therefore resort to file version info behavior because it is not a hosted app.
 			# Others such as Store version of Office are not truly hosted apps,
-			# yet reutnrs an internal version anyway.
+			# yet returns an internal version anyway.
 			# For immersive apps, default implementation is generic - returns Windows version information.
 			# Thus probe package full name and parse the serialized representation of package info structure.
 			length = ctypes.c_uint()
