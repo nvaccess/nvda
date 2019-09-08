@@ -36,7 +36,7 @@ import collections
 import extensionPoints
 import hwPortUtils
 import bdDetect
-import winUser
+import brailleViewer
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is a
@@ -1571,7 +1571,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detectionEnabled = False
 		self._detector = None
 		self._rawText = u""
-		import brailleViewer
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
 
 	def terminate(self):
@@ -1584,7 +1583,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
-		import brailleViewer
 		brailleViewer.destroyBrailleViewer()
 		if self.display:
 			self.display.terminate()
@@ -1610,8 +1608,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	_lastRequestedDisplayName=None #: the name of the last requested braille display driver with setDisplayByName, even if it failed and has fallen back to no braille.
 	def setDisplayByName(self, name, isFallback=False, detected=None):
-		import brailleViewer
-		wasBrailleViewerActive = brailleViewer.isBrailleViewerActive()
 		if not isFallback:
 			# #8032: Take note of the display requested, even if it is going to fail.
 			self._lastRequestedDisplayName=name
@@ -1667,15 +1663,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 						self.display.terminate()
 					except:
 						log.error("Error terminating previous display driver", exc_info=True)
-					brailleViewer.destroyBrailleViewer()
 				self.display = newDisplay
 			newDisplay.initSettings()
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
-			if wasBrailleViewerActive:
-				# this must happen after self.displaySize is set, the size of the braille viewer must match the
-				# connected display.
-				brailleViewer.createBrailleViewerTool()
 			if isFallback:
 				if self._detectionEnabled and not self._detector:
 					# As this is the fallback display, which is usually noBraille,
@@ -1714,10 +1705,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = None if not self.display else self.display.numCells
 			self.enabled = bool(self.displaySize)
 		else:
-			viewerTool = brailleViewer.getBrailleViewerDriver()
-			if self.displaySize and self.displaySize != viewerTool.numCells:
-				raise RuntimeError("BrailleViewer and physical display sizes must match")
-			self.displaySize = viewerTool.numCells
+			if not self.displaySize:
+				self.displaySize = brailleViewer.DEFAULT_NUM_CELLS
 			self.enabled = True
 			self._updateDisplay()
 		log.debug("Braille Viewer enabled: {}".format(self.enabled))
@@ -1739,10 +1728,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			wx.CallAfter(self._cursorBlinkTimer.Start,blinkRate)
 
 	def _writeCells(self, cells):
-		import brailleViewer
-		viewerTool = brailleViewer.getBrailleViewerDriver()
-		if viewerTool:
-			viewerTool.display(cells, self._rawText)
+		brailleViewer.update(cells, self._rawText)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)

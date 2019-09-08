@@ -1,9 +1,9 @@
+from typing import List
 
 import wx
 import gui
 import config
 from logHandler import log
-
 
 BRAILLE_UNICODE_PATTERNS_START = 0x2800
 SPACE_CHARACTER = u" "
@@ -71,18 +71,32 @@ class BrailleViewerFrame(wx.Frame):
 		)
 		return lengthsMatch and allSizesMatch
 
-	def updateValues(self, braille, text):
-		if self.HasFocus() or self.IsActive():
+	def updateBrailleDisplayed(
+			self,
+			cells: List[int],
+			rawText: str = u""
+	):
+		if self.isDestroyed:
 			return
+		brailleUnicodeChars = (chr(BRAILLE_UNICODE_PATTERNS_START + cell) for cell in cells)
+		# replace braille "space" with regular space because the width of the braille space
+		# does not match the other braille characters, the result is better, but not perfect.
+		brailleSpace = chr(BRAILLE_UNICODE_PATTERNS_START)
+		spaceReplaced = (
+			cell.replace(brailleSpace, SPACE_CHARACTER)
+			for cell in brailleUnicodeChars
+		)
+		braille = u"".join(spaceReplaced)
+
 		brailleEqual = self.lastBraille == braille
-		textEqual = self.lastText == text
+		textEqual = self.lastText == rawText
 		if brailleEqual and textEqual:
 			return
 		self.Freeze()
 		if not brailleEqual:
 			self.output.Label = self.lastBraille = braille
 		if not textEqual:
-			self.rawoutput.Label = self.lastText = text
+			self.rawoutput.Label = self.lastText = rawText
 		self.Thaw()
 		self.Refresh()
 		self.Update()
