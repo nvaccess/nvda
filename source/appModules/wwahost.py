@@ -56,17 +56,3 @@ class AppModule(appModuleHandler.AppModule):
 				windowHandle=identity.get('windowHandle')
 				if windowHandle and winUser.getClassName(windowHandle)=="Web Platform Embedding":
 					obj.role=controlTypes.ROLE_APPLICATION
-
-	def _setProductInfo(self):
-		# #4259: default implementation is too generic - returns Windows version information.
-		# Therefore, probe package full name and parse the serialized representation of package info structure.
-		if not self.processHandle:
-			raise RuntimeError("processHandle is 0")
-		length = ctypes.c_uint()
-		winKernel.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
-		packageFullName = ctypes.create_unicode_buffer(length.value)
-		winKernel.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), packageFullName)
-		packageInfo = packageFullName.value.split("_")
-		# Product name is of the form publisher.name.
-		self.productName = packageInfo[0]
-		self.productVersion = packageInfo[1]
