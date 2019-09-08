@@ -1214,7 +1214,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		raise LookupError("No such position")
 
 	def bufferPositionsToRawText(self, startPos, endPos):
-		return self.rawText[self.brailleToRawPos[startPos]:self.brailleToRawPos[endPos-1]+1]
+		try:
+			rawTextStart = self.brailleToRawPos[startPos]
+			rawTextEnd = self.brailleToRawPos[endPos-1]+1
+			return self.rawText[rawTextStart:rawTextEnd]
+		except IndexError:
+			return ""
 
 	def bufferPosToWindowPos(self, bufferPos):
 		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
