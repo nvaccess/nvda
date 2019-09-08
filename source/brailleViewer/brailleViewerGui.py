@@ -88,7 +88,9 @@ class BrailleViewerFrame(wx.Frame):
 		self.Update()
 
 	def setFont(self, font, forBraille=False):
-		# Braille characters are much smaller than the raw text characters, override the size
+		# We would like the raw characters to align with the braille dots, however, the
+		# Braille characters are much smaller than the raw text characters so we override the size
+		# to make them closer. It is still not an exact match.
 		# I assume this is because the "Courier New" font does not support this unicode range
 		# so the system falls back to another font.
 		font.PointSize = 20 if not forBraille else 22
