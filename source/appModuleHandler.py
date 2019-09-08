@@ -355,7 +355,7 @@ class AppModule(baseObject.ScriptableObject):
 		# This is needed in case immersive app package returns an error,
 		# dealing with a native app, or a converted desktop app.
 
-		def _executableFileInfo():
+		def _getExecutableFileInfo():
 			# Create the buffer to get the executable name
 			exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 			length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
@@ -387,10 +387,10 @@ class AppModule(baseObject.ScriptableObject):
 				productInfo = packageFullName.value.split("_")
 			else:
 				# File Explorer and friends which are really native aps.
-				productInfo = _executableFileInfo()
+				productInfo = _getExecutableFileInfo()
 		else:
 			# Not only native apps, but also converted desktop aps such as Office.
-			productInfo = _executableFileInfo()
+			productInfo = _getExecutableFileInfo()
 		self.productName = productInfo[0]
 		self.productVersion = productInfo[1]
 
