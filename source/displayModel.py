@@ -23,6 +23,10 @@ import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
 
+#: A text info unit constant for a single chunk in a display model
+UNIT_DISPLAYCHUNK = "displayChunk"
+
+
 def wcharToInt(c):
 	i=ord(c)
 	return c_short(i).value
@@ -294,12 +298,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		lineStartIndex=0
 		lineBaseline=None
 		lineEndOffsets = []
-		readingChunkEndOffsets = []
+		displayChunkEndOffsets = []
 		for index in range(len(commandList)):
 			item=commandList[index]
 			if isinstance(item,str):
 				lastEndOffset += textUtils.WideStringOffsetConverter(item).wideStringLength
-				readingChunkEndOffsets.append(lastEndOffset)
+				displayChunkEndOffsets.append(lastEndOffset)
 			elif isinstance(item,textInfos.FieldCommand):
 				if isinstance(item.field,textInfos.FormatField):
 					curFormatField=item.field
@@ -325,7 +329,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 						lineStartIndex=index
 						lineStartOffset=lastEndOffset
 						lineBaseline=baseline
-		return commandList, rects, lineEndOffsets, readingChunkEndOffsets
+		return commandList, rects, lineEndOffsets, displayChunkEndOffsets
 
 	def _getStoryOffsetLocations(self):
 		baseline=None
@@ -478,19 +482,24 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return (offset, offset + 1)
 		return self._getOffsetsInPreCalculatedOffsets(lineEndOffsets, offset)
 
-	def _getReadingChunkOffsets(self, offset):
-		readingChunkEndOffsets = self._storyFieldsAndRects[3]
-		if not readingChunkEndOffsets:
+	def _getDisplayChunkOffsets(self, offset):
+		displayChunkEndOffsets = self._storyFieldsAndRects[3]
+		if not displayChunkEndOffsets:
 			return (offset, offset + 1)
-		return self._getOffsetsInPreCalculatedOffsets(readingChunkEndOffsets, offset)
+		return self._getOffsetsInPreCalculatedOffsets(displayChunkEndOffsets, offset)
+
+	def _getUnitOffsets(self, unit, offset):
+		if unit is UNIT_DISPLAYCHUNK:
+			return self._getDisplayChunkOffsets(offset)
+		return super()._getUnitOffsets(unit, offset)
 
 	def _get_clipboardText(self):
 		return "\r\n".join(x.strip('\r\n') for x in self.getTextInChunks(textInfos.UNIT_LINE))
 
 	def getTextInChunks(self,unit):
-		# Specifically handle the line and reading chunk units.
+		# Specifically handle the line and display chunk units.
 		# We have the line offsets pre-calculated, and we can not guarantee lines end with \n
-		if unit is textInfos.UNIT_READINGCHUNK:
+		if unit is textInfos.UNIT_DISPLAYCHUNK:
 			for x in self._getFieldsInRange(self._startOffset, self._endOffset):
 				if not isinstance(x, str):
 					continue
