@@ -92,9 +92,7 @@ def physicalToLogicalPoint(window, x, y):
 	point = ctypes.wintypes.POINT(x, y)
 	if not _physicalToLogicalPoint(window, ctypes.byref(point)):
 		raise RuntimeError(
-			"Couldn't convert point(x=%d,y=%d) from physical "
-			"to logical coordinates for window %d"
-			% (x, y, window)
+			f"Couldn't convert point(x={x}, y={y}) from physical to logical coordinates for window {window}"
 		)
 	return point.x, point.y
 

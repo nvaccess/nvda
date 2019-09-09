@@ -181,7 +181,12 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	characterLocations = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
-		left, top, right, bottom = wcharToInt(cp), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt)), wcharToInt(next(cpBufIt))
+		left, top, right, bottom = (
+			wcharToInt(cp),
+			wcharToInt(next(cpBufIt)),
+			wcharToInt(next(cpBufIt)),
+			wcharToInt(next(cpBufIt))
+		)
 		if right < left:
 			left, right = right, left
 		characterLocations.append(RectLTRB(left, top, right, bottom))
@@ -270,33 +275,33 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	_cache__storyFieldsAndRects = True
 	def _get__storyFieldsAndRects(self):
 		# All returned coordinates are logical coordinates.
-		if self._location:
-			left, top, right, bottom = self._location
-		else:
-			try:
-				left, top, width, height = self.obj.location
-			except TypeError:
-				# No location; nothing we can do.
-				return [],[],[]
-			right = left + width
-			bottom = top + height
+		location = self._location if self._location else self.obj.location
+		if location is None or not any(location):
+			# No location; nothing we can do.
+			return [], [], []
 		bindingHandle=self.obj.appModule.helperLocalBindingHandle
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
-			return [],[],[]
+			return [], [], []
 		try:
-			left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
+			location = location.toLogical(self.obj.windowHandle)
 		except RuntimeError:
-			log.error("physicalToLogicalPoint failed for top left", exc_info=True)
-			return [],[],[]
-		try:
-			right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
-		except RuntimeError:
-			log.error("physicalToLogicalPoint failed for bottom right", exc_info=True)
-			return [],[],[]
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
+			log.exception()
+			return [], [], []
+		text, rects = getWindowTextInRect(
+			bindingHandle,
+			self.obj.windowHandle,
+			location.left,
+			location.top,
+			location.right,
+			location.bottom,
+			self.minHorizontalWhitespace,
+			self.minVerticalWhitespace,
+			self.stripOuterWhitespace,
+			self.includeDescendantWindows
+		)
 		if not text:
-			return [],[],[]
+			return [], [], []
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
 		curFormatField=None
@@ -421,7 +426,11 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getOffsetFromPoint(self, x, y):
 		# Accepts physical coordinates.
 		try:
-			x,y=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,x,y)
+			x, y = windowUtils.physicalToLogicalPoint(
+				self.obj.windowHandle,
+				x,
+				y
+			)
 		except RuntimeError:
 			raise LookupError("physicalToLogicalPoint failed")
 		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._storyFieldsAndRects[1]):
@@ -432,7 +441,11 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getClosestOffsetFromPoint(self,x,y):
 		# Accepts physical coordinates.
 		try:
-			x,y=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,x,y)
+			x, y = windowUtils.physicalToLogicalPoint(
+				self.obj.windowHandle,
+				x,
+				y
+			)
 		except RuntimeError:
 			raise LookupError("physicalToLogicalPoint failed")
 		#Enumerate the character rectangles
@@ -531,13 +544,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		for lineEndOffset in lineEndOffsets:
 			startOffset=endOffset
 			endOffset=lineEndOffset
-			lineRect=RectLTWH.fromCollection(*self._storyFieldsAndRects[1][startOffset:endOffset])
+			lineRect = RectLTWH.fromCollection(*self._storyFieldsAndRects[1][startOffset:endOffset])
 			try:
-				lineRect = rect.toPhysical(self.obj.windowHandle)
+				lineRect = lineRect.toPhysical(self.obj.windowHandle)
 			except RuntimeError:
 				raise LookupError(
-					"Couldn't convert line rectangle at offsets %d to %d to physical coordinates"
-					% (startOffset, endOffset)
+					f"Couldn't convert line rectangle at offsets {startOffset} to {endOffset} "
+					"to physical coordinates"
 				)
 			rects.append(lineRect)
 		return rects
@@ -577,15 +590,17 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
 	def _getCaretOffset(self):
 		caretRect=getCaretRect(self.obj)
-		objRect=self.obj.location.toLTRB()
+		objRect = self.obj.location.toLTRB()
 		try:
-			objRect=objRect.toLogical(self.obj.windowHandle)
+			objRect = objRect.toLogical(self.obj.windowHandle)
 		except RuntimeError:
-			raise RuntimeError("Couldn't convert object location to logical coordinates when getting caret offset")
-		caretRect.left=max(objRect.left,caretRect.left)
-		caretRect.top=max(objRect.top,caretRect.top)
-		caretRect.right=min(objRect.right,caretRect.right)
-		caretRect.bottom=min(objRect.bottom,caretRect.bottom)
+			raise RuntimeError(
+				"Couldn't convert object location to logical coordinates when getting caret offset"
+			)
+		caretRect.left = max(objRect.left, caretRect.left)
+		caretRect.top = max(objRect.top, caretRect.top)
+		caretRect.right = min(objRect.right, caretRect.right)
+		caretRect.bottom = min(objRect.bottom, caretRect.bottom)
 		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
 		try:
 			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateDirection=True)
@@ -606,14 +621,14 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		rects=self._storyFieldsAndRects[1]
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
-		rect=rects[offset]
+		rect = rects[offset]
 		# Place the cursor at the left coordinate of the character, vertically centered.
-		point=Point(rect.left,rect.center.y)
+		point = Point(rect.left, rect.center.y)
 		try:
 			point = point.toPhysical(self.obj.windowHandle)
 		except RuntimeError:
 			raise RuntimeError("Conversion to physical coordinates failed when setting caret offset")
-		oldX,oldY=winUser.getCursorPos()
+		oldX, oldY = winUser.getCursorPos()
 		winUser.setCursorPos(*point)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
 		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)

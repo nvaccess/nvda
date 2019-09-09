@@ -489,9 +489,9 @@ class MSHTML(IAccessible):
 			# #3494: MSHTML's internal coordinates are always at a hardcoded DPI (usually 96) no matter the system DPI or zoom level.
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(point.x // xFactor, point.y // yFactor)
+				HTMLNode = HTMLNode.document.elementFromPoint(point.x // xFactor, point.y // yFactor)
 			except:
-				HTMLNode=None
+				HTMLNode = None
 			if not HTMLNode:
 				log.debugWarning("Error getting HTMLNode with elementFromPoint")
 				return False

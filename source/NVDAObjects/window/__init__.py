@@ -207,8 +207,10 @@ An NVDAObject for a window
 		# Conversion to client coordinates may fail if the window handle of this object is incorrect.
 		# This will most likely be caused by a died window.
 		location = self.location.toClient(self.windowHandle)
-		if not winUser.RedrawWindow(self.windowHandle,
-			location.toRECT(), None,
+		if not winUser.RedrawWindow(
+			self.windowHandle,
+			location.toRECT(),
+			None,
 			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW
 		):
 			raise ctypes.WinError()
