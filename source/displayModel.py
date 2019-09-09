@@ -22,6 +22,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
+from typing import Union, List, Tuple
 
 #: A text info unit constant for a single chunk in a display model
 UNIT_DISPLAYCHUNK = "displayChunk"
@@ -269,7 +270,13 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		super(DisplayModelTextInfo, self).__init__(obj, position)
 
 	_cache__storyFieldsAndRects = True
-	def _get__storyFieldsAndRects(self):
+
+	def _get__storyFieldsAndRects(self) -> Tuple[
+		List[Union[str, textInfos.FieldCommand]],
+		List[RectLTRB],
+		List[int],
+		List[int]
+	]:
 		# All returned coordinates are logical coordinates.
 		if self._location:
 			left, top, right, bottom = self._location
@@ -278,18 +285,18 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				left, top, width, height = self.obj.location
 			except TypeError:
 				# No location; nothing we can do.
-				return [],[],[]
+				return [], [], [], []
 			right = left + width
 			bottom = top + height
 		bindingHandle=self.obj.appModule.helperLocalBindingHandle
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
-			return [],[],[]
+			return [], [], [], []
 		left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
 		right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
 		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
 		if not text:
-			return [],[],[]
+			return [], [], [], []
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
 		curFormatField=None
