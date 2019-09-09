@@ -88,6 +88,8 @@ def _isDebug():
 
 
 def initialize(tablesDirs):
+	if _isDebug():
+		log.debug(f"Tables directories: {tablesDirs}")
 	# Register the liblouis logging callback.
 	louis.registerLogCallback(louis_log)
 	# Set the log level to debug.
