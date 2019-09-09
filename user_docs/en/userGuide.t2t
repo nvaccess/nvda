@@ -754,14 +754,12 @@ Additional vision enhancement providers can be provided in [NVDA add-ons #Addons
 NVDA's vision settings can be changed in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog.
 
 ++ NVDA Highlighter ++[VisionNVDAHighlighter]
-When the NVDA Highlighter is enabled, it draws lines on the computer screen around the [system focus #SystemFocus], [navigator object #ObjectNavigation] and/or [browse mode virtual caret #BrowseMode].
-This visual highlights make it much easier for sighted or low vision people to see the objects they are interacting with.
-It can also aid in accessibility testing by application developers.
-
-By default, the NVDA Highlighter highlights the focus, navigator object and browse mode position.
-- If the navigator object overlaps the system focus (e.g. because the navigator object follows the system focus), a solid blue line is drawn around the object.
-- If the navigator object does not overlap the system focus, the focus object is surrounded by a dashed blue rectangle. In this case, a solid pink line is drawn around the navigator object.
-- When browse mode is enabled in cases where there is no physical caret (such as in web browsers), the character at the virtual browse mode caret is surrounded by a solid yellow line.
+NVDA Highlighter can help to identify the [system focus #SystemFocus], [navigator object #ObjectNavigation] and [browse mode #BrowseMode] positions.
+These positions are highlighted with a colored rectangle outline.
+- Solid blue highlights a combined navigator object and system focus location (e.g. because [the navigator object follows the system focus #ReviewCursorFollowFocus]).
+- Dashed blue highlights just the system focus object.
+- Solid pink highlights just the navigator object.
+- Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers).
 -
 
 When the NVDA Highlighter is enabled in the [vision category #VisionSettings] of the [NVDA Settings #NVDASettings] dialog, you can [change whether or not to highlight the focus, navigator object or browse mode caret #VisionSettingsVisionEnhancementProviderSettings]
