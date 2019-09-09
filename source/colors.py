@@ -1,26 +1,26 @@
-#colors.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 from collections import namedtuple
 import math
 import colorsys
 from ctypes.wintypes import COLORREF
 import re
+from typing import Union
 
 class RGB(namedtuple('RGB',('red','green','blue'))):
 	"""Represents a color as an RGB (red green blue) value"""
 
 	@classmethod
-	def fromCOLORREF(cls, c) -> "RGB":
+	def fromCOLORREF(cls,c) -> "RGB":
 		"""factory method to create an RGB from a COLORREF ctypes instance"""
-		if isinstance(c,COLORREF):
-			c=c.value
-		if (c>>24)&0xff:
-			return cls(-1,-1,-1)
-		return cls(c&0xff,(c>>8)&0xff,(c>>16)&0xff)
+		if isinstance(c, COLORREF):
+			c = c.value
+		if (c >> 24) & 0xff:
+			return cls(-1, -1, -1)
+		return cls(c & 0xff, (c >> 8) & 0xff, (c >> 16) & 0xff)
 
 	_re_RGBFunctionString=re.compile(r'rgb\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)',re.I)
 	_re_RGBAFunctionString=re.compile(r'rgba\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*\d+(\.\d+)?\s*\)',re.I)
