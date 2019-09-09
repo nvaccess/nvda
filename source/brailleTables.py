@@ -431,10 +431,13 @@ def initialize():
 	# Reversing the order ensures that user defined configuration takes
 	# precedence over addons.
 	for dir_ in reversed(customDirs):
+		try:
+			dirList = os.listdir(dir_)
 		# Redundant check, in case an add-on added an external directory to the list.
-		if not os.path.isdir(dir_):
+		except FileNotFoundError:
+			log.error(f"Directory not found: {dir_}")
 			continue
-		for fileName in os.listdir(dir_):
+		for fileName in dirList:
 			path = os.path.join(dir_, fileName)
 			if os.path.isfile(path) and fileName.endswith(".ini"):
 				try:
