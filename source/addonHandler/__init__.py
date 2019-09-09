@@ -283,13 +283,13 @@ class Addon(AddonBase):
 		self.path = os.path.abspath(path)
 		self._extendedPackages = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
-		with open(manifest_path, 'r', encoding="utf_8") as f:
+		with open(manifest_path, 'rb') as f:
 			translatedInput = None
 			for translatedPath in _translatedManifestPaths():
 				p = os.path.join(self.path, translatedPath)
 				if os.path.exists(p):
 					log.debug("Using manifest translation from %s", p)
-					translatedInput = open(p, 'r', encoding="utf_8")
+					translatedInput = open(p, 'rb')
 					break
 			self.manifest = AddonManifest(f, translatedInput)
 
@@ -614,7 +614,7 @@ def createAddonBundleFromPath(path, destDir=None):
 	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
 	if not os.path.isfile(manifest_path):
 		raise AddonError("Can't find %s manifest file." % manifest_path)
-	with open(manifest_path, 'r', encoding="utf_8") as f:
+	with open(manifest_path, 'rb') as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)

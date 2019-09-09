@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 00:10+1000\n"
-"PO-Revision-Date: 2019-05-30 21:28+0300\n"
+"POT-Creation-Date: 2019-07-12 00:10+1000\n"
+"PO-Revision-Date: 2019-07-14 09:12+0300\n"
 "Last-Translator: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language-Team: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language: uk\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1760,12 +1760,6 @@ msgstr "%s орієнтир"
 msgid "lmk %s"
 msgstr "орі %s"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#. Translators: Announces selected text. %s is replaced with the text.
-#, python-format
-msgid "selected %s"
-msgstr "Виділено %s"
-
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
 msgstr "Немає детального опису"
@@ -2694,7 +2688,7 @@ msgstr "Необхідно"
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
 msgid "defunct"
-msgstr "Неіснуючий"
+msgstr "більше неіснує"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
@@ -3124,10 +3118,6 @@ msgstr "Праву кнопку мишки заблоковано"
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
 msgstr "Блокує або розблоковує праву кнопку миші"
-
-#, python-format
-msgid "Selected %s"
-msgstr "Виділено %s"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
@@ -3821,6 +3811,31 @@ msgid ""
 msgstr ""
 "Переміщає переглядовий курсор на останній символ рядка поточного об'єкта  і "
 "читає його"
+
+#. Translators: Input help mode message for Review Current Symbol command.
+msgid ""
+"Reports the symbol where the review cursor is positioned. Pressed twice, "
+"shows the symbol and the text used to speak it in browse mode"
+msgstr ""
+"Повідомляє символ, на якому розташований переглядовий курсор. При подвійному "
+"натисканні показує символ і текст, який використовується для його вимови в "
+"режимі огляду."
+
+#. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
+msgid "No symbol replacement"
+msgstr "Немає заміни символа"
+
+#. Translators: Character and its replacement used from the "Review current Symbol" command. Example: "Character: ? Replacement: question"
+msgid ""
+"Character: {}\n"
+"Replacement: {}"
+msgstr ""
+"Символ: {}\n"
+"Заміна: {}"
+
+#. Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
+msgid "Expanded symbol ({})"
+msgstr "Розширений символ ({})"
 
 #. Translators: A speech mode which disables speech output.
 msgid "Speech mode off"
@@ -6072,15 +6087,24 @@ msgstr "велика %s"
 msgid "no indent"
 msgstr "Немає відступу"
 
+#. Translators: This is spoken to indicate that some text is already selected.
+#. 'selected' preceding text is intentional.
+#. For example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "Виділено %s"
+
+#. Translators: This is spoken to indicate what has just been selected.
+#. The text preceding 'selected' is intentional.
+#. For example 'hello world selected'
+#, python-format
+msgid "%s selected"
+msgstr "%s виділено"
+
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
 msgid "%d characters"
 msgstr "%d Символів"
-
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
-#, python-format
-msgid "%s selected"
-msgstr "%s виділено"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
@@ -9438,8 +9462,19 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. Advanced settings panel.
+msgid "Use UI Automation to access the Windows Console when available"
+msgstr ""
+"Використовувати UI Automation для доступу до консолі Windows, якщо можливо"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
+msgid "Speak &passwords in UIA consoles (may improve performance)"
+msgstr "Промовляти &паролі в консолях UIA (може поліпшити продуктивність)"
+
+#. Translators: This is the label for a checkbox in the
+#. Advanced settings panel.
 msgid "Automatically set system &focus to focusable elements"
-msgstr "автоматично встановлює &системний фокус на фокусовані елементи"
+msgstr "автоматично встановлювати &системний фокус на фокусовані елементи"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
@@ -9678,7 +9713,7 @@ msgstr "Вимова символів та знаків пунктуації (%s
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
 msgctxt "speechSymbols"
 msgid "&Filter by:"
-msgstr "&Філтрувати за"
+msgstr "&Фільтрувати за"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
 msgid "&Symbols"
@@ -11287,6 +11322,9 @@ msgstr "Подвійний міжрядковий інтервал"
 #. Translators: a message when switching to 1.5 line spaceing  in Microsoft word
 msgid "1.5 line spacing"
 msgstr "Полуторний міжрядковий інтервал"
+
+#~ msgid "Selected %s"
+#~ msgstr "Виділено %s"
 
 #~ msgid "Currently running application is %s"
 #~ msgstr "Активний додаток %s"
