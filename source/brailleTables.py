@@ -429,7 +429,6 @@ def initialize():
 	tablesDirs[:0] = customDirs
 	# Reversing the order ensures that user defined configuration takes
 	# precedence over addons.
-	log.warning(f"customDirs={customDirs!r}")
 	for dir_ in reversed(customDirs):
 		# Redundant check, in case an add-on added an external directory to the list.
 		if not os.path.isdir(dir_):
