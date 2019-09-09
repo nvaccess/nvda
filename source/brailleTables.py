@@ -10,7 +10,7 @@
 import collections
 from configobj import ConfigObj
 from io import StringIO
-import typing
+from typing import BinaryIO, Generator
 
 
 #: The directory in which liblouis braille tables are located.
@@ -454,7 +454,7 @@ def terminate():
 	_tables = {}
 
 
-def _getCustomTablesDirs():
+def _getCustomTablesDirs() -> Generator[str, None, None]:
 	"""Retrieve the custom braille tables directories.
 	
 	These are "brailleTables" sub-directories searched after in order in:
@@ -463,7 +463,7 @@ def _getCustomTablesDirs():
 	"""
 	import os
 
-	def candidates():
+	def candidates() -> Generator[str, None, None]:
 		import config
 		import globalVars
 		if (
@@ -494,7 +494,7 @@ class CustomTablesManifest(ConfigObj):
 		__many__ = string()"""
 	))
 
-	def __init__(self, file_: typing.BinaryIO):
+	def __init__(self, file_: BinaryIO):
 		""" Initializes an L{CustomTablesManifest} instance from a file.
 		@param file_: The manifest file-like object, opened in binary mode.
 		"""

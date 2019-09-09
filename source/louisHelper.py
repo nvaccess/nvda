@@ -13,9 +13,11 @@ from ctypes import (
 	cast,
 )
 import os
+from typing import List
 import louis
 from logHandler import log
 import config
+
 
 LOUIS_TO_NVDA_LOG_LEVELS = {
 	louis.LOG_ALL: log.DEBUG,
@@ -87,7 +89,7 @@ def _isDebug():
 	return config.conf["debugLog"]["louis"]
 
 
-def initialize(tablesDirs):
+def initialize(tablesDirs: List[str]):
 	if _isDebug():
 		log.debug(f"Tables directories: {tablesDirs}")
 	# Register the liblouis logging callback.
