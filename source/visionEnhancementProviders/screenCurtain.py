@@ -99,9 +99,9 @@ class VisionEnhancementProvider(vision.providerBase.VisionEnhancementProvider):
 		# The screen curtain isn't interested in any events
 		pass
 
-	# Translators: A warning shown when activating the screen curtain.
-	# {description} is replaced by the translation of "screen curtain"
 	warnOnLoadText = _(
+		# Translators: A warning shown when activating the screen curtain.
+		# {description} is replaced by the translation of "screen curtain"
 		f"You are about to enable {description}.\n"
 		f"When {description} is enabled, the screen of your computer will go completely black.\n"
 		f"Do you really want to enable {description}?"

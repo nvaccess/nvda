@@ -2944,17 +2944,14 @@ class VisionSettingsPanel(SettingsPanel):
 			if len(initErrors) == 1:
 				# Translators: This message is presented when
 				# NVDA is unable to load a single vision enhancement provider.
-				message = _(
-					"Could not load the {provider} vision enhancement provider"
-				).format(provider=initErrors[0])
+				message = _("Could not load the {provider} vision enhancement provider").format(
+					provider=initErrors[0]
+				)
 			else:
+				initErrorsList = ", ".join(initErrors)
 				# Translators: This message is presented when
 				# NVDA is unable to load multiple vision enhancement providers.
-				initErrorsList = ", ".join(initErrors)
-				message = _(
-					"Could not load the following vision enhancement providers:\n"
-					f"{initErrorsList}"
-				)
+				message = _(f"Could not load the following vision enhancement providers:\n{initErrorsList}")
 			gui.messageBox(
 				message,
 				# Translators: The title of the vision enhancement provider error message box.

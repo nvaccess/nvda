@@ -82,7 +82,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	'Synthesizer Error',
 	'Dictionary Entry Error',
 	'Braille Display Error',
-	'Vision Enhancement Provider Error',
 	'word',
 	'Taskbar',
 	'%s items',
