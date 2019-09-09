@@ -17,6 +17,7 @@ from NVDAObjects import behaviors
 import api
 import config
 import review
+import vision
 from logHandler import log
 from locationHelper import RectLTWH
 
@@ -464,6 +465,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
+		vision.handler.handleCaretMove(self)
 		caret = self.makeTextInfo(textInfos.POSITION_CARET)
 		review.handleCaretMove(caret)
 
