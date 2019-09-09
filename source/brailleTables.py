@@ -443,7 +443,7 @@ def initialize():
 				try:
 					with open(path, "rb") as file_:
 						manifest = CustomTablesManifest(file_)
-						_loadCustomTablesConfig(manifest.dict())
+						loadCustomTablesConfig(manifest.dict())
 				except Exception:
 					log.exception(f"Error while applying custom braille tables config: {path}")
 
@@ -506,7 +506,7 @@ class CustomTablesManifest(ConfigObj):
 		)
 
 
-def _loadCustomTablesConfig(data: dict):
+def loadCustomTablesConfig(data: dict):
 	"""Load the configuration data for custom tables.
 	
 	The expected data is a dictionary, typically loaded from a ConfigObj .ini file, of the form:
